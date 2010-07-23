@@ -63,7 +63,7 @@ package com.efi.printsmith.components {
       protected static const BALL_COUNT:int = 9;
       protected static const BALL_RADIUS_SMALL:Number = 1.5;
       protected static const BALL_RADIUS_LARGE:Number = 2.0;
-      protected static const CIRCLE_RADIUS:int = 7;
+      protected static const CIRCLE_RADIUS:int = 20;
       protected static const BALL_COLOR:int = 0x000000; 
 
 
@@ -123,7 +123,7 @@ package com.efi.printsmith.components {
             r = i * (2 * Math.PI / BALL_COUNT);
             x = Math.cos(r) * CIRCLE_RADIUS;
             y = Math.sin(r) * CIRCLE_RADIUS;
-            gr.drawCircle(x, y, BALL_RADIUS_SMALL);
+            gr.drawCircle(x, y, BALL_RADIUS_LARGE);
          }
       }
 

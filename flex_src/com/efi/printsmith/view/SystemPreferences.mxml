@@ -122,6 +122,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>-->
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.components.preferences.events.ConfirmStatusEvent;
 	import com.efi.printsmith.components.preferences.PreferencesConfirmComponent;
 	import mx.utils.ObjectUtil;
@@ -185,6 +186,18 @@
 	private var enableSave:Boolean = true;
 	
 	[Bindable] private var isReverted:Boolean = false;
+	
+	[Bindable] private var isLoad:Boolean = false;
+	
+	[Bindable] private var isRevert:Boolean = false;
+	
+	[Bindable] private var isSave:Boolean = false;
+	
+	[Bindable] private var loadComponent:CommonLoadComponent;
+	
+	[Bindable] private var checkCount:int=0;
+	
+	[Bindable] private var successCheckCount:int=0;
 
 	[Bindable]
 	private var currentnumberstext:String = "";
@@ -365,6 +378,8 @@
 	[Bindable] public var selectedSection:String="";
 	
 	[Bindable] public var selectedIndexSelection:int;
+	
+	[Bindable] public var addressLayoutArray:ArrayCollection = new ArrayCollection();
 	
 	private var dollar:String = "$"; 
 	private var yen:String = "¥";
@@ -691,10 +706,38 @@
 		setting.name="Peachtree CSV";
 		fillArray.addItem(setting);
 	}
+	
+	private function fillAddressLayoutArray():void{
+		var layoutOption:Object = new Object();
+		layoutOption.name = "";
+		addressLayoutArray.addItem(layoutOption);
+		layoutOption = new Object();
+		layoutOption.name = "Street1";
+		addressLayoutArray.addItem(layoutOption);
+		layoutOption = new Object();
+		layoutOption.name = "Street2";
+		addressLayoutArray.addItem(layoutOption);
+		layoutOption = new Object();
+		layoutOption.name = "City";
+		addressLayoutArray.addItem(layoutOption);
+		layoutOption = new Object();
+		layoutOption.name = "State";
+		addressLayoutArray.addItem(layoutOption);
+		layoutOption = new Object();
+		layoutOption.name = "Zip";
+		addressLayoutArray.addItem(layoutOption);
+		layoutOption = new Object();
+		layoutOption.name = "Country";
+		addressLayoutArray.addItem(layoutOption);
+	}
 		
 	public function init():void {
 
 		this.currentState="";
+		
+		isLoad = true;
+		checkCount = 21;
+		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 
 		fillStaticData();
 		
@@ -787,6 +830,7 @@
 		fillRunToFinishGrainArray(RunToFinishGrainArray);
 		fillJobTicketStylesArray(JobTicketStylesArray);
 		fillAccountingPackagesArray(AccountingPackagesArray);
+		fillAddressLayoutArray();
 	}
 	
 	private function getPreferencesData():void{
@@ -815,22 +859,29 @@
 
 	private function updatePreferencesData():void{
 		var counter:int = 1;
+		checkCount = 0;
+		successCheckCount = 0;
+		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
 			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International" ||
 			selectedSection == "genericPrefCmd.AddressFormatting") {
+			checkCount = 1;
 			dataServiceSystem.addUpdate(preferencesSystem);
 		}
 		
 		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
+			checkCount = 1;
 			dataServicePOS.addUpdate(preferencesPOS);
 		}
 		
 		if(selectedSection == "genericPrefCmd.CashRegister"){
+			checkCount = 1;
 			dataServiceCashRegister.addUpdateDeleteList(PreferencesCashRegisterArray,PreferencesCashRegisterDeleteArray);
 			PreferencesCashRegisterDeleteArray.removeAll();
 		}
 		
 		if(selectedSection == "genericPrefCmd.PendingList"){
+			checkCount = 2;
 			dataServicePOS.addUpdate(preferencesPOS);
 			for each(var preferencesPendingList:PreferencesPendingList in PreferencesPendingListArray){
 				if (preferencesPendingList.columnOrder != counter){
@@ -843,15 +894,18 @@
 		
 		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
 			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			checkCount = 1;
 			dataServiceEstimator.addUpdate(preferencesEstimating);
 		}
 		
 		if(selectedSection == "genericPrefCmd.QuantityBreaks"){
+			checkCount = 1;
 			dataServiceQuantityBreaks.addUpdateDeleteList(PreferencesQuantityBreaksArray,PreferencesQuantityBreaksDeleteArray);
 			PreferencesQuantityBreaksDeleteArray.removeAll();
 		}
 		
 		if(selectedSection == "genericPrefCmd.Markups"){
+			checkCount = 2;
 			dataServiceMarkups.addUpdateDeleteList(PreferencesMarkupsArray,PreferencesMarkupsDeleteArray);
 			PreferencesMarkupsDeleteArray.removeAll();
 			dataServiceMarkupsMerchandise.addUpdateDeleteList(PreferencesMarkupsMerchandiseArray,PreferencesMarkupsMerchandiseDeleteArray);
@@ -859,10 +913,12 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.StocksandSizes"){
+			checkCount = 1;
 			dataServiceStocks.addUpdate(preferencesStocks);
 		}
 		
 		if(selectedSection == "genericPrefCmd.StockDefinitions"){
+			checkCount = 1;
 			for each(var preferencesStockDefinition:PreferencesStockDefinition in PreferencesStockDefinitionArray){
 				if (preferencesStockDefinition.columnOrder != counter){
 					preferencesStockDefinition.columnOrder = counter;
@@ -873,6 +929,7 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.PricingMethod"){
+			checkCount = 1;
 			dataServicePricingMethod.addUpdateDeleteList(PreferencesPricingMethodArray,PreferencesPricingMethodDeleteArray);
 			PreferencesPricingMethodDeleteArray.removeAll();
 		}
@@ -880,20 +937,24 @@
 		if(selectedSection == "genericPrefCmd.CreditDefaults" || selectedSection == "genericPrefCmd.AgingPeriods" || 
 			selectedSection == "genericPrefCmd.GLProfiles" || selectedSection == "genericPrefCmd.OrderNumberFormat" ||
 			selectedSection == "genericPrefCmd.JournalEntries"){
+				checkCount = 1;
 				dataServiceAccounting.addUpdate(preferencesAccounting);
 		}
 		
 		if(selectedSection == "genericPrefCmd.CreditCardInfo"){
+			checkCount = 2;
 			dataServiceAccounting.addUpdate(preferencesAccounting);
 			dataServiceCreditCard.addUpdateDeleteList(PreferencesCreditCardArray,PreferencesCreditCardDeleteArray);
 			PreferencesCreditCardDeleteArray.removeAll();
 		}
 		
 		if(selectedSection == "genericPrefCmd.Integration"){
+			checkCount = 1;
 			dataServiceIntegration.addUpdate(preferencesIntegration);
 		}
 		
 		if(selectedSection == "genericPrefCmd.SalesCategories"){
+			checkCount = 1;
 			dataServiceSalesCategory.addUpdateDeleteList(PreferencesSalesCategoryArray,PreferencesSalesCategoryDeleteArray);
 			PreferencesSalesCategoryDeleteArray.removeAll();
 		}
@@ -1043,6 +1104,21 @@
      
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
+		
+		if(isSave || isRevert || isLoad){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 		              
 		message = "Error: "                          
 		+ ev.fault.faultCode + " - "                                  
@@ -1081,26 +1157,116 @@
 
 	private function handleLoadEstimatorTypesResult(event:ResultEvent):void {
 		estimatorTypesArray = event.result as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	
 	private function handleLoadTaxTablesResult(event:ResultEvent):void {
 		taxTablesArray = event.result as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	
 	private function handleLoadTaxCodesResult(event:ResultEvent):void {
 		taxCodesArray = event.result as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	
 	private function handleLoadJobMethodsResult(event:ResultEvent):void {
 		jobMethodsArray = event.result as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	
 	private function handleLoadSalesRepsResult(event:ResultEvent):void {
 		salesRepsArray = event.result as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	
 	private function handleLoadShippingMethodsResult(event:ResultEvent):void {
 		shippingMethodsArray = event.result as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 
 	private function handleLoadIntegrationResult(ev:ResultEvent):void {
@@ -1114,7 +1280,21 @@
 		mapFromPrefereincesIntegrationData();
 		registerClassAlias("com.efi.printsmith.data.PreferencesIntegration",PreferencesIntegration);
 		preferencesIntegrationOrigObj = ObjectUtil.copy(preferencesIntegration) as PreferencesIntegration;
-		
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	
 	private function handleLoadSystemResult(ev:ResultEvent):void {
@@ -1128,6 +1308,21 @@
 		mapFromPreferencesSystemData();
 		registerClassAlias("com.efi.printsmith.data.PreferencesSystem",PreferencesSystem);
 		preferencesSystemOrigObj = ObjectUtil.copy(preferencesSystem) as PreferencesSystem;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadPOSResult(ev:ResultEvent):void {
 		var preferencesPOSArray:ArrayCollection = ev.result as ArrayCollection;
@@ -1139,6 +1334,21 @@
 		}
 		registerClassAlias("com.efi.printsmith.data.PreferencesPOS",PreferencesPOS);
 		preferencesPOSOrigObj = ObjectUtil.copy(preferencesPOS) as PreferencesPOS;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadEstimatorResult(ev:ResultEvent):void {
 		PreferencesEstimatingArray = ev.result as ArrayCollection;
@@ -1159,6 +1369,21 @@
 		}
 		registerClassAlias("com.efi.printsmith.data.PreferencesEstimating",PreferencesEstimating);
 		preferencesEstimatingOrigObj = ObjectUtil.copy(preferencesEstimating) as PreferencesEstimating;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadAccountingResult(ev:ResultEvent):void {
 		PreferencesAccountingArray = ev.result as ArrayCollection;
@@ -1176,6 +1401,21 @@
 		isReverted = false;
 		registerClassAlias("com.efi.printsmith.data.PreferencesAccounting",PreferencesAccounting);
 		preferencesAccountingOrigObj = ObjectUtil.copy(preferencesAccounting) as PreferencesAccounting;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	
 	private function handleLoadCountryResult(ev:ResultEvent):void {
@@ -1193,6 +1433,21 @@
 		} 
 		registerClassAlias("com.efi.printsmith.data.PreferencesCashRegister",PreferencesCashRegister);
 		preferencesCashRegisterOrigObj = ObjectUtil.copy(preferencesCashRegister) as PreferencesCashRegister;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadIntegrationPreferencesResult(ev:ResultEvent):void {
 		//preferencesIntegration.fieryConnectorURL = this.txtFieryURL.text;
@@ -1201,41 +1456,161 @@
 		PreferencesCreditCardArray = ev.result as ArrayCollection;
 		registerClassAlias("com.efi.printsmith.data.PreferencesCreditCard",PreferencesCreditCard);
 		PreferencesCreditCardOrigArray = ObjectUtil.copy(PreferencesCreditCardArray) as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadMarkupsResult(ev:ResultEvent):void {
 		PreferencesMarkupsArray = ev.result as ArrayCollection;
 		registerClassAlias("com.efi.printsmith.data.OutsideService",OutsideService);
 		PreferencesMarkupsOrigArray = ObjectUtil.copy(PreferencesMarkupsArray) as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadMarkupsMerchandiseResult(ev:ResultEvent):void {
 		PreferencesMarkupsMerchandiseArray = ev.result as ArrayCollection;
 		registerClassAlias("com.efi.printsmith.data.Merchandise",Merchandise);
 		PreferencesMarkupsMerchandiseOrigArray = ObjectUtil.copy(PreferencesMarkupsMerchandiseArray) as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadPendingListResult(ev:ResultEvent):void {
 		PreferencesPendingListArray = ev.result as ArrayCollection;
 		registerClassAlias("com.efi.printsmith.data.PreferencesPendingList",PreferencesPendingList);
 		PreferencesPendingListOrigArray = ObjectUtil.copy(PreferencesPendingListArray) as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadPricingMethodResult(ev:ResultEvent):void {
 		PreferencesPricingMethodArray = ev.result as ArrayCollection;
 		registerClassAlias("com.efi.printsmith.data.PreferencesPricingMethod",PreferencesPricingMethod);
 		PreferencesPricingMethodOrigArray = ObjectUtil.copy(PreferencesPricingMethodArray) as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadQuantityBreaksResult(ev:ResultEvent):void {
 		PreferencesQuantityBreaksArray = ev.result as ArrayCollection;
 		registerClassAlias("com.efi.printsmith.data.PreferencesQuantityBreaks",PreferencesQuantityBreaks);
 		PreferencesQuantityBreaksOrigArray = ObjectUtil.copy(PreferencesQuantityBreaksArray) as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
 		PreferencesSalesCategoryArray = ev.result as ArrayCollection;
 		registerClassAlias("com.efi.printsmith.data.SalesCategory",SalesCategory);
 		PreferencesSalesCategoryOrigArray = ObjectUtil.copy(PreferencesSalesCategoryArray) as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadStockDefinitionResult(ev:ResultEvent):void {
 		PreferencesStockDefinitionArray = ev.result as ArrayCollection;
 		registerClassAlias("com.efi.printsmith.data.PreferencesStockDefinition",PreferencesStockDefinition);
 		PreferencesStockDefinitionOrigArray = ObjectUtil.copy(PreferencesStockDefinitionArray) as ArrayCollection;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadStocksResult(ev:ResultEvent):void {
 		PreferencesStocksArray = ev.result as ArrayCollection;
@@ -1247,6 +1622,21 @@
 		}
 		registerClassAlias("com.efi.printsmith.data.PreferencesStocks",PreferencesStocks);
 		preferencesStocksOrigObj = ObjectUtil.copy(preferencesStocks) as PreferencesStocks;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadColumnNamesResult(ev:ResultEvent):void {
 	     ColumnNamesArray = ev.result as ArrayCollection;
@@ -1620,12 +2010,17 @@
 	}
 	
 	private function doSave():void{
+		isSave = true;
 		mapToPreferencesAllData();
 		updatePreferencesData();
 	}
 	
 	private function doRevert():void{
 		isReverted = true;
+		isRevert = true;
+		checkCount = 0;
+		successCheckCount = 0;
+		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 		PreferencesCashRegisterDeleteArray.removeAll();
 		PreferencesMarkupsDeleteArray.removeAll();
 		PreferencesMarkupsMerchandiseDeleteArray.removeAll();
@@ -1636,64 +2031,78 @@
 		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
 			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International" ||
 			selectedSection == "genericPrefCmd.AddressFormatting") {
+			checkCount = 1;
 			dataServiceSystem.getAll("PreferencesSystem");
 		}
 		
 		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
+			checkCount = 1;
 			dataServicePOS.getAll("PreferencesPOS");
 		}
 		
 		if(selectedSection == "genericPrefCmd.CashRegister"){
+			checkCount = 1;
 			dataServiceCashRegister.getAll("PreferencesCashRegister");
 		}
 		
 		if(selectedSection == "genericPrefCmd.PendingList"){
+			checkCount = 2;
 			dataServicePOS.getAll("PreferencesPOS");
 			dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
 		}
 		
 		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
 			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			checkCount = 1;
 			dataServiceEstimator.getAll("PreferencesEstimating");
 		}
 		
 		if(selectedSection == "genericPrefCmd.QuantityBreaks"){
+			checkCount = 1;
 			dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
 		}
 		
 		if(selectedSection == "genericPrefCmd.Markups"){
+			checkCount = 2;
 			dataServiceMarkups.getAll("OutsideService");
 			dataServiceMarkupsMerchandise.getAll("Merchandise");
 		}
 		
 		if(selectedSection == "genericPrefCmd.StocksandSizes"){
+			checkCount = 1;
 			dataServiceStocks.getAll("PreferencesStocks");
 		}
 		
 		if(selectedSection == "genericPrefCmd.StockDefinitions"){
+			checkCount = 1;
 			dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
 		}
 		
 		if(selectedSection == "genericPrefCmd.PricingMethod"){
+			checkCount = 1;
 			dataServicePricingMethod.getAll("PreferencesPricingMethod");
 		}
 		
 		if(selectedSection == "genericPrefCmd.CreditDefaults" || selectedSection == "genericPrefCmd.AgingPeriods" || 
 			selectedSection == "genericPrefCmd.GLProfiles" || selectedSection == "genericPrefCmd.OrderNumberFormat" ||
 			selectedSection == "genericPrefCmd.JournalEntries"){
+			checkCount = 1;
 			dataServiceAccounting.getAll("PreferencesAccounting");
 		}
 		
 		if(selectedSection == "genericPrefCmd.CreditCardInfo"){
+			checkCount = 2;
 			dataServiceAccounting.getAll("PreferencesAccounting");
 			dataServiceCreditCard.getAll("PreferencesCreditCard");
 		}
 		
 		if(selectedSection == "genericPrefCmd.Integration"){
+			checkCount = 1;
 			dataServiceIntegration.getAll("PreferencesIntegration");
 		}
 		
 		if(selectedSection == "genericPrefCmd.SalesCategories"){
+			checkCount = 1;
 			dataServiceSalesCategory.getAll("SalesCategory");
 		}
 		mapFromPreferencesAllData();
@@ -1812,7 +2221,7 @@
 					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:AddressFormattingCanvasComponent id="addressformatting_canvas" preferencesSystem="{preferencesSystem}" countryArray="{CountryArray}"
-					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					addressLayoutArray="{addressLayoutArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:ReceiptCanvasComponent id="receipt_canvas" preferencesPOS="{preferencesPOS}" 
 					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>

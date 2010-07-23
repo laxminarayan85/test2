@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="{initLoadComp()}" 
+	xmlns:components="com.efi.printsmith.components.*">
+
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.components.Throbber;
+			import mx.managers.PopUpManager;
+		
+			private function initLoadComp():void {
+				throbber.play();
+				PopUpManager.centerPopUp(this);
+			}
+			
+			public function close():void{
+				throbber.stop();
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	
+	<components:Throbber id="throbber"/>
+	
+</mx:Canvas>
