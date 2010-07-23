@@ -63,10 +63,10 @@
 				if (item=="outside")
 				{
 					var newItem1:OutsideService = new OutsideService();
-					preferencesMarkupsArray.addItem(newItem1);
+					preferencesMarkupsArray.addItemAt(newItem1,preferencesMarkupsArray.length-1);
 				}else {
 					var newItem2:Merchandise = new Merchandise();
-					preferencesMarkupsMerchandiseArray.addItem(newItem2);
+					preferencesMarkupsMerchandiseArray.addItemAt(newItem2,preferencesMarkupsMerchandiseArray.length-1);
 				}
 			}
 			private function doRemoveMarkup(item:String, dg:DataGrid):void{
@@ -74,12 +74,16 @@
 					if (item=="outside")
 					{
 						var newItem1:OutsideService = dg.selectedItem as OutsideService;
-						preferencesMarkupsDeleteArray.addItem(newItem1);
-						preferencesMarkupsArray.removeItemAt(dg.selectedIndex);
+						if(!newItem1.above){
+							preferencesMarkupsDeleteArray.addItem(newItem1);
+							preferencesMarkupsArray.removeItemAt(dg.selectedIndex);
+						}
 					}else {
 						var newItem2:Merchandise = dg.selectedItem as Merchandise;
-						preferencesMarkupsMerchandiseDeleteArray.addItem(newItem2);
-						preferencesMarkupsMerchandiseArray.removeItemAt(dg.selectedIndex);
+						if(!newItem2.above){
+							preferencesMarkupsMerchandiseDeleteArray.addItem(newItem2);
+							preferencesMarkupsMerchandiseArray.removeItemAt(dg.selectedIndex);
+						}
 					}
 				}
 			}
@@ -121,14 +125,24 @@
 									dataField="totalCost">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.totalCost)}"/>
+											<mx:HBox horizontalAlign="right">
+												<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.totalCost)}"
+													visible="{!data.above}" includeInLayout="{!data.above}" textAlign="right"/>
+												<mx:Text selectable="false" text="Above" visible="{data.above}" includeInLayout="{data.above}" enabled="false"
+													textAlign="right"/>
+											</mx:HBox>
 										</mx:Component>
 									</mx:itemRenderer>
 									<mx:itemEditor>
 										<mx:Component>
-											<components:CustomNumericTextInputComponent
-												datagridControl="true" variableName="totalCost" customText="{data.totalCost}"
-												precision="2" rounding="nearest" />
+											<mx:HBox horizontalAlign="right">
+												<components:CustomNumericTextInputComponent
+													dataHolder="{data}" variableName="totalCost" customText="{data.totalCost}"
+													precision="2" rounding="nearest" visible="{!data.above}" includeInLayout="{!data.above}"
+													textAlign="right" width="99%"/>
+												<mx:Text selectable="false" text="Above" visible="{data.above}" includeInLayout="{data.above}" enabled="false"
+													textAlign="right"/>
+											</mx:HBox>
 										</mx:Component>
 									</mx:itemEditor>
 								</mx:DataGridColumn>
@@ -138,7 +152,8 @@
 									dataField="markup">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,1,true,'nearest',data.markup)}" />
+											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,1,true,'nearest',data.markup)}"
+												textAlign="right"/>
 										</mx:Component>
 									</mx:itemRenderer>
 									<mx:itemEditor>
@@ -185,14 +200,24 @@
 									dataField="totalCost">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.totalCost)}" />
+											<mx:HBox horizontalAlign="right">
+												<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.totalCost)}"
+													visible="{!data.above}" includeInLayout="{!data.above}" textAlign="right"/>
+												<mx:Text selectable="false" text="Above" visible="{data.above}" includeInLayout="{data.above}" enabled="false"
+													textAlign="right"/>
+											</mx:HBox>
 										</mx:Component>
 									</mx:itemRenderer>
 									<mx:itemEditor>
 										<mx:Component>
-											<components:CustomNumericTextInputComponent
-												datagridControl="true" variableName="totalCost" customText="{data.totalCost}"
-												precision="2" rounding="nearest"/>
+											<mx:HBox horizontalAlign="right">
+												<components:CustomNumericTextInputComponent
+													dataHolder="{data}" variableName="totalCost" customText="{data.totalCost}"
+													precision="2" rounding="nearest" visible="{!data.above}" includeInLayout="{!data.above}"
+													textAlign="right" width="99%"/>
+												<mx:Text selectable="false" text="Above" visible="{data.above}" includeInLayout="{data.above}" enabled="false"
+													textAlign="right"/>
+											</mx:HBox>
 										</mx:Component>
 									</mx:itemEditor>
 								</mx:DataGridColumn>
@@ -202,7 +227,8 @@
 									dataField="markup">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,1,true,'nearest',data.markup)}" />
+											<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,1,true,'nearest',data.markup)}" 
+												textAlign="right"/>
 										</mx:Component>
 									</mx:itemRenderer>
 									<mx:itemEditor>

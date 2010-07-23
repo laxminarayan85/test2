@@ -1474,6 +1474,11 @@
 	}
 	private function handleLoadMarkupsResult(ev:ResultEvent):void {
 		PreferencesMarkupsArray = ev.result as ArrayCollection;
+		if(PreferencesMarkupsArray==null || PreferencesMarkupsArray.length==0){
+			var outsideService:OutsideService = new OutsideService();
+			outsideService.above = true;
+			PreferencesMarkupsArray.addItem(outsideService);
+		}
 		registerClassAlias("com.efi.printsmith.data.OutsideService",OutsideService);
 		PreferencesMarkupsOrigArray = ObjectUtil.copy(PreferencesMarkupsArray) as ArrayCollection;
 		successCheckCount++;
@@ -1494,6 +1499,11 @@
 	}
 	private function handleLoadMarkupsMerchandiseResult(ev:ResultEvent):void {
 		PreferencesMarkupsMerchandiseArray = ev.result as ArrayCollection;
+		if(PreferencesMarkupsMerchandiseArray==null || PreferencesMarkupsMerchandiseArray.length==0){
+			var merchandise:Merchandise = new Merchandise();
+			merchandise.above = true;
+			PreferencesMarkupsMerchandiseArray.addItem(merchandise);
+		}
 		registerClassAlias("com.efi.printsmith.data.Merchandise",Merchandise);
 		PreferencesMarkupsMerchandiseOrigArray = ObjectUtil.copy(PreferencesMarkupsMerchandiseArray) as ArrayCollection;
 		successCheckCount++;
