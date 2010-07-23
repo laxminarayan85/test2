@@ -10,6 +10,7 @@
 			import com.efi.printsmith.data.PreferencesSystem;
 			[Bindable] public var preferencesSystem:PreferencesSystem = new PreferencesSystem();
 			[Bindable] public var countryArray:ArrayCollection = new ArrayCollection();
+			[Bindable] public var addressLayoutArray:ArrayCollection = new ArrayCollection();
 		]]>
 	</mx:Script>
 	
