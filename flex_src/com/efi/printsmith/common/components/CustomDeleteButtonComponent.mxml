@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" click="{clickEventHandler(event)}">
+<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" click="{clickEventHandler(event)}"
+	creationComplete="{initDeleteComp()}">
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.listClasses.ListBase;
 			import mx.controls.DataGrid;
 			import mx.core.Application;
 			import mx.events.CloseEvent;
@@ -14,7 +16,17 @@
 			
 			[Bindable] public var inputArgumnets:Array;
 			
-			[Bindable] public var dataGridComp:DataGrid;
+			[Bindable] public var dataGridComp:ListBase;
+			
+			[Bindable] public var isIcon:Boolean = true;
+			
+			private function initDeleteComp():void {
+				if(isIcon) {
+					[Embed('../../../../../assets/delete.png')]
+					var deleteClass:Class;
+					this.setStyle("icon", deleteClass);
+				}	
+			}
 			
 			private function clickEventHandler(event:Event):void{
 				if(dataGridComp){
@@ -31,6 +43,18 @@
 						confirmWindow.setStyle("borderAlpha", 0.75);
 						confirmWindow.setStyle("color", 0x000000);
 					}
+				} else {
+					var confirmWindow:Alert;
+					if(deleteString!=null){
+						confirmWindow = Alert.show(deleteString, "Confirmation", Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);
+					} else {
+						confirmWindow = Alert.show("Are you sure you want to\ndelete the selected "+deleteLabel+"?", "Confirmation", Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);	
+					} 
+					confirmWindow.setStyle("backgroundColor", 0xffffff);
+					confirmWindow.setStyle("backgroundAlpha", 0.50);
+					confirmWindow.setStyle("borderColor", 0xffffff);
+					confirmWindow.setStyle("borderAlpha", 0.75);
+					confirmWindow.setStyle("color", 0x000000);
 				}
 			}
 			
@@ -43,5 +67,4 @@
 			}
 		]]>
 	</mx:Script>
-	<mx:icon>@Embed(source='../../../../../assets/delete.png')</mx:icon>
 </mx:Button>

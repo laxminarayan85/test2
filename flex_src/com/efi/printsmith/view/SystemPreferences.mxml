@@ -116,6 +116,10 @@
 	<mx:RemoteObject id="dataServiceShippingMethods" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethodsResult(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceAddressFormats" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadAddressFormatsResult(event)"/>
+	</mx:RemoteObject>
 
 	<!--<mx:Producer id="producer" destination="systempreferences"/>
 	<mx:Consumer id="consumer" destination="systempreferences" message="messageHandler(event.message)"/>
@@ -382,6 +386,8 @@
 	[Bindable] public var selectedIndexSelection:int;
 	
 	[Bindable] public var addressLayoutArray:ArrayCollection = new ArrayCollection();
+	
+	[Bindable] public var addressFormatArray:ArrayCollection = new ArrayCollection();
 	
 	private var dollar:String = "$"; 
 	private var yen:String = "¥";
@@ -738,7 +744,7 @@
 		this.currentState="";
 		
 		isLoad = true;
-		checkCount = 21;
+		checkCount = 22;
 		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 
 		fillStaticData();
@@ -857,6 +863,7 @@
 		dataServiceJobMethods.getAll("JobMethod");
 		dataServiceSalesReps.getAll("SalesRep");
 		dataServiceShippingMethods.getAll("ShippingMethod");
+		dataServiceAddressFormats.getAll("AddressFormatting");
 	}
 
 	private function updatePreferencesData():void{
@@ -865,10 +872,15 @@
 		successCheckCount = 0;
 		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
-			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International" ||
-			selectedSection == "genericPrefCmd.AddressFormatting") {
+			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International") {
 			checkCount = 1;
 			dataServiceSystem.addUpdate(preferencesSystem);
+		}
+		
+		if(selectedSection == "genericPrefCmd.AddressFormatting") {
+			checkCount = 2;
+			dataServiceSystem.addUpdate(preferencesSystem);
+			dataServiceAddressFormats.getAll("AddressFormatting");
 		}
 		
 		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
@@ -1262,6 +1274,25 @@
 		shippingMethod.name = "";
 		arrayList.addItemAt(shippingMethod,0);
 		shippingMethodsArray = arrayList;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
+	}
+	
+	private function handleLoadAddressFormatsResult(event:ResultEvent):void {
+		addressFormatArray = event.result as ArrayCollection;
 		successCheckCount++;
 		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
 			if(isSave) {
@@ -2078,10 +2109,15 @@
 		PreferencesCreditCardDeleteArray.removeAll();
 		PreferencesQuantityBreaksDeleteArray.removeAll();
 		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
-			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International" ||
-			selectedSection == "genericPrefCmd.AddressFormatting") {
+			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International") {
 			checkCount = 1;
 			dataServiceSystem.getAll("PreferencesSystem");
+		}
+		
+		if(selectedSection == "genericPrefCmd.AddressFormatting") {
+			checkCount = 2;
+			dataServiceSystem.getAll("PreferencesSystem");
+			dataServiceAddressFormats.getAll("AddressFormatting");
 		}
 		
 		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
@@ -2270,7 +2306,8 @@
 					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:AddressFormattingCanvasComponent id="addressformatting_canvas" preferencesSystem="{preferencesSystem}" countryArray="{CountryArray}"
-					addressLayoutArray="{addressLayoutArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					addressLayoutArray="{addressLayoutArray}" addressFormatArray="{addressFormatArray}"
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:ReceiptCanvasComponent id="receipt_canvas" preferencesPOS="{preferencesPOS}" 
 					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
