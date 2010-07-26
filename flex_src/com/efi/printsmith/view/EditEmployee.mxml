@@ -112,6 +112,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	    titleWindow.formIsEmpty = true;
 		dataService.getAll("Employee");   
 		employee = new Employee();
+		employee.comLinks = new ArrayCollection();
 		pressService.getAll("ProductionPress");
 		copierService.getAll("ProductionCopiers");
 		priceListService.getAll("PreferencesPricingMethod");
@@ -332,6 +333,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		
     private function doNew():void {
 	    employee = new Employee();
+	    employee.comLinks = new ArrayCollection();
 	    setEmployee(employee);
 	 	
 	}  
