@@ -122,6 +122,8 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>-->
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.ShippingMethod;
+	import com.efi.printsmith.data.SalesRep;
 	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.components.preferences.events.ConfirmStatusEvent;
 	import com.efi.printsmith.components.preferences.PreferencesConfirmComponent;
@@ -1232,7 +1234,11 @@
 	}
 	
 	private function handleLoadSalesRepsResult(event:ResultEvent):void {
-		salesRepsArray = event.result as ArrayCollection;
+		var arrayList:ArrayCollection = event.result as ArrayCollection;
+		var salesRep:SalesRep = new SalesRep();
+		salesRep.name = "";
+		arrayList.addItemAt(salesRep,0);
+		salesRepsArray = arrayList;
 		successCheckCount++;
 		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
 			if(isSave) {
@@ -1251,7 +1257,11 @@
 	}
 	
 	private function handleLoadShippingMethodsResult(event:ResultEvent):void {
-		shippingMethodsArray = event.result as ArrayCollection;
+		var arrayList:ArrayCollection = event.result as ArrayCollection;
+		var shippingMethod:ShippingMethod = new ShippingMethod();
+		shippingMethod.name = "";
+		arrayList.addItemAt(shippingMethod,0);
+		shippingMethodsArray = arrayList;
 		successCheckCount++;
 		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
 			if(isSave) {
