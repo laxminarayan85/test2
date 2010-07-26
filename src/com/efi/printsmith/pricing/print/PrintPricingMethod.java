@@ -29,10 +29,10 @@ public class PrintPricingMethod {
 		else
 			pressSpeed = pressDefinition.getAvgImpressPerHour();
 		
-		float runHours = job.getTotalImpositions() / pressSpeed.longValue();
+		double runHours = job.getTotalImpositions() / pressSpeed.doubleValue();
 		float setupHours = pressDefinition.getSetupMin().floatValue() / 60;
 		//float wasteHours = job.getEstWaste() / new Double(pressSpeed).floatValue();
-		float totalHours = runHours + setupHours;
+		float totalHours = (float) (runHours + setupHours);
 		float minimumHours = pressDefinition.getMinLabor().floatValue() / 60;
 		if (totalHours < minimumHours)
 			totalHours = minimumHours;
