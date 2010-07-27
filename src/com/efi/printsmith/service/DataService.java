@@ -1471,7 +1471,7 @@ public class DataService extends HibernateService {
 	 * @throws Exception
 	 */
 	public void addUpdateDeleteList(List<ModelBase> addUpdateList, List<ModelBase> deleteList) throws Exception {
-		if(deleteList!=null) {
+		if(deleteList!=null && deleteList.size()>0) {
 			for (ModelBase modelBase : deleteList) {
 				if(modelBase.getId()!=null && modelBase.getId().longValue()!=0) {
 					int classNameIndex=modelBase.getClass().getName().lastIndexOf ('.') + 1;
@@ -1480,8 +1480,10 @@ public class DataService extends HibernateService {
 				}
 			}
 		}
-		for (ModelBase modelBase : addUpdateList) {
-			addUpdate(modelBase);
+		if(addUpdateList!=null && addUpdateList.size()>0) {
+			for (ModelBase modelBase : addUpdateList) {
+				addUpdate(modelBase);
+			}
 		}
 	}
 

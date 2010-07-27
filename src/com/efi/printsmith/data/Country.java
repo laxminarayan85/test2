@@ -46,6 +46,8 @@ public class Country extends ModelBase {
 	 * @generated
 	 */
 	public static final String NAME = "Name";
+	
+	public static final String ADDRESSFORMATTINGS = "AddressFormattings";
 
 	/**
 	 * @generated
@@ -78,6 +80,26 @@ public class Country extends ModelBase {
     this.name = newVal;
   }
 	
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy="country", fetch=FetchType.EAGER)
+    @JoinTable( name = "addressformatting")
+	private List<AddressFormatting> addressFormattings;
+	
+	public List<AddressFormatting> getAddressFormattings(){
+		return this.addressFormattings; 
+	}
+	
+	public void addAddressFormattings(AddressFormatting obj) {
+	    if (addressFormattings == null) {
+	    	addressFormattings = new java.util.ArrayList<AddressFormatting>();
+	    }
+	    addressFormattings.add(obj);
+	}
+	
+	public void setAddressFormattings(List<AddressFormatting> newVal){
+		this.addressFormattings = newVal;
+	}
+	
+	
 	/**
 	 * @generated
 	 */		
@@ -85,6 +107,7 @@ public class Country extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (NAME.equals(propertyName)) return getName();
+    if(ADDRESSFORMATTINGS.equals(propertyName)) return getAddressFormattings();
     return super.getProperty(propertyName);
   }
 	
@@ -95,6 +118,7 @@ public class Country extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (NAME.equals(propertyName)) setName((String)newValue); else
+	if (ADDRESSFORMATTINGS.equals(propertyName)) setAddressFormattings((List<AddressFormatting>)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -105,7 +129,9 @@ public class Country extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {String.class};	
+    if (ADDRESSFORMATTINGS.equals(propertyName)) 
+        return new Class<?>[] {List.class,AddressFormatting.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -117,6 +143,7 @@ public class Country extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) return Country.class;
+    if (ADDRESSFORMATTINGS.equals(propertyName)) return Country.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -130,6 +157,8 @@ public class Country extends ModelBase {
     Country objT = (Country)obj;
     if (! SmartEquals(getName(), objT.getName()))
       return false;
+    if (! SmartEquals(getAddressFormattings(), objT.getAddressFormattings()))
+        return false;
     return true;
   }			
 }
