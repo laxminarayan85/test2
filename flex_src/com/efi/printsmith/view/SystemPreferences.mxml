@@ -1153,6 +1153,7 @@
 					var obj:Object = CountryArray.getItemAt(i);
 					if(obj.id == preferencesSystem.defaultCountry){
 						addressformatting_canvas.countryList.selectedIndex = i;
+						addressformatting_canvas.countryList.scrollToIndex(i);
 						addressformatting_canvas.txtSampleAddress.text = obj.name;
 						break;
 					}
@@ -1450,9 +1451,9 @@
 		CountryArray = ev.result as ArrayCollection;
 		registerClassAlias("com.efi.printsmith.data.Country",Country);
 		CountryOrigArray = ObjectUtil.copy(CountryArray) as ArrayCollection;
-		setCurrentCountry();
 		registerClassAlias("com.efi.printsmith.data.PreferencesSystem",PreferencesSystem);
 		preferencesSystemOrigObj = ObjectUtil.copy(preferencesSystem) as PreferencesSystem;
+		setCurrentCountry();
 		successCheckCount++;
 		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
 			if(isSave) {

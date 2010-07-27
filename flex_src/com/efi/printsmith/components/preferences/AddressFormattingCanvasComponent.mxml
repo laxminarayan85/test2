@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:components="com.efi.printsmith.common.components.*">
+	xmlns:components="com.efi.printsmith.common.components.*" updateComplete="{updateAddrComp()}">
 	
 	<mx:Script source="../../common/scripts/ComponentHelper.as"/>
 	
@@ -22,6 +22,12 @@
 			[Bindable] public var country:Country = new Country();
 			[Bindable] public var countryAddArray:ArrayCollection = new ArrayCollection();
 			[Bindable] public var countryDeleteArray:ArrayCollection = new ArrayCollection();
+			
+			private function updateAddrComp():void {
+				if(countryList.selectedIndex>0){
+					countryList.scrollToIndex(countryList.selectedIndex);
+				}
+			}
 			
 			private function openAddressLayout(addEditFlag:String):void {
 				var addressFormattingObj:AddressFormatting;
@@ -69,6 +75,7 @@
 							countryAddArray.addItem(country);
 							countryArray.refresh();
 							countryList.selectedIndex = countryArray.length-1;
+							countryList.scrollToIndex(countryArray.length-1);
 						} else {
 							var addPresent:Boolean = false;
 							var formatList:ArrayCollection = new ArrayCollection();
@@ -140,6 +147,7 @@
 					}
 					if(countryList.selectedIndex>0){
 						countryList.selectedIndex = index-1;
+						countryList.scrollToIndex(index-1);
 						if(countryComboBox.selectedIndex == index) {
 							countryComboBox.selectedIndex = index-1;
 							preferencesSystem.defaultCountry = countryComboBox.selectedItem.id; 
@@ -148,6 +156,7 @@
 					} else {
 						if(countryArray.length>1){
 							countryList.selectedIndex = index+1;
+							countryList.scrollToIndex(index+1);
 							if(countryComboBox.selectedIndex == index) {
 								countryComboBox.selectedIndex = index+1;
 								preferencesSystem.defaultCountry = countryComboBox.selectedItem.id;
@@ -209,6 +218,7 @@
 			
 			public function setListFocus(event:Event):void {
 				countryList.selectedIndex = countryComboBox.selectedIndex;
+				countryList.scrollToIndex(countryComboBox.selectedIndex);
 			}
 			
 			public function setFormatText(event:Event=null,countryObject:Country=null):void {
