@@ -212,7 +212,7 @@
 								
 							<components:CustomNumericTextInputComponent width="50"
 								dataHolder="{preferencesStocks}" variableName="customerQuantity" customText="{preferencesStocks.customerQuantity}"
-								precision="0" rounding="nearest" isInteger="true"/>
+								precision="0" rounding="nearest" isInteger="true" enabled="{!preferencesStocks.markupOnly}"/>
 					
 						</mx:HBox>
 						
