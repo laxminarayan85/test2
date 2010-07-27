@@ -25,6 +25,7 @@ public class PrintPricingMethod {
 		BigDecimal pressSpeed;
 		if (pressDefinition.getSpeedTable() != null) {
 			pressSpeed = new BigDecimal(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), job.getTotalImpositions()));
+			job.getPricingPress().setAvgImpressPerHour(pressSpeed);
 		}
 		else
 			pressSpeed = pressDefinition.getAvgImpressPerHour();
