@@ -37,26 +37,25 @@ public class InvoiceService extends SnowmassHibernateService {
 		
 		log.info("saveInvoice called. id: " + invoice.getId() + " invoiceNumber: " + invoice.getInvoiceNumber());
 
+		List<JobBase> jobs = invoice.getJobs();
+		List<Charge> charges = invoice.getCharges();
+		
 		/* First save the invoice itself */
 		DataService dataService = new DataService();
 		invoice = (InvoiceBase)dataService.addUpdate(invoice);
 		
-		/* Assign parent invoice to any associated jobs and save them */
-		List<JobBase> jobs = invoice.getJobs();
 		if (jobs != null) {
 			Iterator<JobBase> jobIter = jobs.iterator();
 			
 			while (jobIter.hasNext()) {
 				JobBase job = jobIter.next();
 				
-				log.info("assigining parentInvoice to job. Invoice: " + invoice.getId() + " Job: " + job.getId());
+				log.info("assigning parentInvoice to job. Invoice: " + invoice.getId() + " Job: " + job.getId());
 				job.setParentInvoice(invoice);
 				dataService.addUpdate(job);
 			}
 		}
 		
-		/* Assign parent invoice to any associated charges and save them */
-		List<Charge> charges = invoice.getCharges();
 		
 		if (charges != null) {
 			Iterator<Charge> chargeIter = charges.iterator();
@@ -64,13 +63,38 @@ public class InvoiceService extends SnowmassHibernateService {
 			while (chargeIter.hasNext()) {
 				Charge charge = chargeIter.next();
 
-				log.info("assigining parentInvoice to charge. Invoice: " + invoice.getId() + " Charge: " + charge.getId());
+				log.info("assigning parentInvoice to charge. Invoice: " + invoice.getId() + " Charge: " + charge.getId());
 				charge.setParentInvoice(invoice);
 				dataService.addUpdate(charge);
 			}
 		}
-
+		
 		return invoice;		
 	}
 
+	public InvoiceBase getInvoice(long invoiceId) throws Exception {
+		DataService dataService = new DataService();
+		InvoiceBase invoice = (InvoiceBase)dataService.getById("InvoiceBase", invoiceId);
+		
+		Iterator<JobBase> jobIter = invoice.getJobs().iterator();
+		while (jobIter.hasNext()) {
+			JobBase job = jobIter.next();
+			
+			if (job == null) {
+				log.error("Null job found in getInvoice");
+			}
+		}
+		
+		Iterator<Charge> chargeIter = invoice.getCharges().iterator();
+		
+		while(chargeIter.hasNext()) {
+			Charge charge = chargeIter.next();
+
+			if (charge == null) {
+				log.error("Null charge found in getInvoice");
+			}
+		}
+		return invoice;
+		
+	}
 }

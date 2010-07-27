@@ -30,6 +30,10 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleGetResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="invoiceService" destination="invoiceService">
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServicePendingList" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
@@ -522,10 +526,7 @@
 	}
 	private function doDoubleClick():void {
 		var invoiceBase:InvoiceBase = dgView.selectedItem as InvoiceBase;
-		dataService.getById("InvoiceBase", invoiceBase.id);
-		
-		
-		
+		dataService.getInvoice(invoiceBase.id);
 	}
 
 	public function getAccountLabel(item:Object, column:DataGridColumn):String{

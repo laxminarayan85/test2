@@ -1137,7 +1137,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	private PressDefinition pricingPress;
 	
 	/**
@@ -1159,7 +1159,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	private PressDefinition costingPress;
 	
 	/**
@@ -1561,7 +1561,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	private CopierDefinition pricingCopier;
 	
 	/**
@@ -1583,7 +1583,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	private CopierDefinition costingCopier;
 	
 	/**

@@ -35,9 +35,21 @@
 		<mx:method name="getById"
 					fault="handleFault(event)"
 					result="handleLoadJobForEdit(event)"/>
+		<mx:method name="getJob"
+					fault="handleFault(event)"
+					result="handleLoadJobForEdit(event)"/>
 		<mx:method name="getInvoice"
 					fault="handleFault(event)"
 					result="handleLoadInvoice(event)"/>
+		<mx:method name="saveInvoice"
+				   fault="handleFault(event)"
+				   result="handleSaveResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="invoiceService"
+					 destination="invoiceService">
+		<mx:method name="saveInvoice"
+				   fault="handleFault(event)"
+				   result="handleSaveResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="salesRepDataService"
 					 destination="dataService">
@@ -324,7 +336,7 @@
 			public function doSave():void
 			{
 				mapToInvoiceData();
-				dataService.addUpdate(invoice);
+				dataService.saveInvoice(invoice);
 			}
 
 			public function doGet():void
@@ -358,6 +370,31 @@
 				{
 					invoice.jobs.addItem(target.job);
 				}
+				
+				/* Hack code - needs to come out in favor of using the Pricing Engine asap */
+				if (invoice.jobs != null && invoice.jobs.length > 0) {0
+					var i:int;
+					invoice.subTotal = 0;
+					for (i=0; i<invoice.jobs.length; i++) {
+						var tmpJob:Job = invoice.jobs.getItemAt(i) as Job;	
+					
+						invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+					}
+				}
+				
+				invoice.grandTotal = invoice.subTotal;
+				invoice.amountDue = invoice.grandTotal;
+				this.showJobs();
+			}
+			
+			private function saveJob(event:Event):void
+			{
+				var target:EditJob=event.target as EditJob;
+
+//				if (target.job != null && !invoice.jobs.contains(target.job))
+//				{
+//					invoice.jobs.addItem(target.job);
+//				}
 				
 				/* Hack code - needs to come out in favor of using the Pricing Engine asap */
 				if (invoice.jobs != null && invoice.jobs.length > 0) {0
@@ -570,20 +607,21 @@
 			}
 			
 			private function handleLoadJobForEdit(evt:ResultEvent):void {
-				var job:Job = evt.result as Job;
+				var selectedJob:Job = evt.result as Job;
 				
-				if (job != null) {
-					var selectedJob:Job = invoice_job_grid.selectedItem as Job;
+				if (selectedJob != null) {
+					invoice.jobs.setItemAt(selectedJob, invoice_job_grid.selectedIndex);
+					invoice_job_grid.selectedItem = selectedJob;
 					var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
 					editJobWindow.setStyle("borderAlpha", 0.9);
 					editJobWindow.setJob(selectedJob);
-					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);	
+					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveJob);	
 				}	
 			}
 			
 			private function doDoubleclickInvoiceItem():void {
 				var selectedJob:Job = invoice_job_grid.selectedItem as Job;
-				dataService.getById("JobBase", selectedJob.id);
+				dataService.getJob(selectedJob.id);
 			}
 
 			private function gridJobPrice(item:Object, column:DataGridColumn):String {

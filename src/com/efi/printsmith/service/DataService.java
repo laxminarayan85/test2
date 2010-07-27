@@ -3,6 +3,7 @@ package com.efi.printsmith.service;
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.defaultdata.*;
 
+import java.security.InvalidParameterException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -1601,6 +1602,29 @@ public class DataService extends HibernateService {
 						log.error("Found null asset");
 					}
 				}
+				long tmpId;
+				
+				if (job.getCostingCopier() != null) {
+					tmpId = job.getCostingCopier().getId();
+					job.setCostingCopier((CopierDefinition)this.getById("CopierDefinition", tmpId));
+				}
+				if (job.getPricingCopier() != null) {
+					tmpId = job.getPricingCopier().getId();
+					job.setPricingCopier((CopierDefinition)this.getById("CopierDefinition", tmpId));
+				}
+				if (job.getCostingPress() != null) {
+					tmpId = job.getCostingPress().getId();
+					job.setCostingPress((PressDefinition)this.getById("PressDefinition", tmpId));
+				}
+				if (job.getPricingPress() != null) {
+					tmpId = job.getPricingPress().getId();
+					job.setPricingPress((PressDefinition)this.getById("PressDefinition", tmpId));
+				}
+				if (job.getParentInvoice() != null) {
+					tmpId = job.getParentInvoice().getId();
+					job.setParentInvoice((InvoiceBase)this.getById("InvoiceBase", tmpId));
+				}
+				
 			}
 		} catch (Exception e) {
 			log.error(e);
@@ -1632,12 +1656,120 @@ public class DataService extends HibernateService {
 					}
 				}
 			}
+		} catch (GenericJDBCException e) {
+			log.error(e);
+			log.error(e.getSQL());
+			System.out.println(e.getSQL());
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
 			em.close();
 		}
 		return invoice;
+	}
+	
+	public ModelBase saveInvoice(InvoiceBase invoice) throws Exception {
+		log.debug("** addUpdateAccount called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			if (invoice.getId() == null || invoice.getId() == 0) {
+				invoice.setId(null);
+				invoice.setCreated(new Timestamp(new Date().getTime()));
+				invoice.setModified(new Timestamp(new Date().getTime()));
+			} else {
+				// Existing object is updated - do nothing.
+			}
+			if (invoice instanceof Invoice) {
+				this.setInvoiceId((Invoice) invoice);
+			} else if (invoice instanceof Estimate) {
+				this.setEstimateId((Estimate) invoice);
+			}
+			List<JobBase> jobs = invoice.getJobs();
+			List<Charge> charges = invoice.getCharges();
+			
+			if (jobs != null) {
+				Iterator<JobBase> jobIter = jobs.iterator();
+				
+				while (jobIter.hasNext()) {
+					JobBase job = jobIter.next();
+					
+					log.info("assigning parentInvoice to job. Invoice: " + invoice.getId() + " Job: " + job.getId());
+					job.setParentInvoice(invoice);
+				}
+			}
+			
+			
+			if (charges != null) {
+				Iterator<Charge> chargeIter = charges.iterator();
+				
+				while (chargeIter.hasNext()) {
+					Charge charge = chargeIter.next();
+
+					log.info("assigning parentInvoice to charge. Invoice: " + invoice.getId() + " Charge: " + charge.getId());
+					charge.setParentInvoice(invoice);
+				}
+			}
+
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			try {
+				invoice = em.merge(invoice);
+				tx.commit();
+				jobs = invoice.getJobs();
+				charges = invoice.getCharges();
+				
+				if (jobs != null) {
+					Iterator<JobBase> jobIter = jobs.iterator();
+					
+					while (jobIter.hasNext()) {
+						JobBase job = jobIter.next();
+						
+						log.info("assigning parentInvoice to job. Invoice: " + invoice.getId() + " Job: " + job.getId());
+						job.setParentInvoice(invoice);
+						addUpdate(job);
+					}
+				}
+				
+				
+				if (charges != null) {
+					Iterator<Charge> chargeIter = charges.iterator();
+					
+					while (chargeIter.hasNext()) {
+						Charge charge = chargeIter.next();
+
+						log.info("assigning parentInvoice to charge. Invoice: " + invoice.getId() + " Charge: " + charge.getId());
+						charge.setParentInvoice(invoice);
+						addUpdate(charge);
+					}
+				}
+				MessageServiceAdapter.sendNotification(MessageTypes.ADDUPDATE,
+						invoice.getClass().getSimpleName(), invoice.getId());
+			} catch (RollbackException e) {
+				ConstraintViolationException cve = (ConstraintViolationException) e
+						.getCause();
+				SQLException sqle = cve.getSQLException().getNextException();
+				while (sqle != null) {
+					sqle = sqle.getNextException();
+				}
+			} catch (PersistenceException e) {
+				log.error("** Error: " + e.getMessage());
+				GenericJDBCException jdbcEx = (GenericJDBCException) e
+						.getCause();
+				System.out.println(jdbcEx.getSQL());
+				tx.rollback();
+				throw new Exception(e.getMessage());
+			} catch (Exception e) {
+				log.error("** Error: " + e.getMessage());
+				tx.rollback();
+				throw new Exception(e.getMessage());
+			}
+		} catch (Exception e) {
+			log.error("Exception caught");
+			throw new Exception(e.getMessage());
+		} finally {
+			em.close();
+		}
+		return invoice;	
 	}
 	
 	public StockDefinition getStockDefinition(Long id) throws Exception {
