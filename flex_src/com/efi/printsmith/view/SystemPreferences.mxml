@@ -1521,6 +1521,8 @@
 		}
 	}
 	private function handleLoadMarkupsResult(ev:ResultEvent):void {
+		var count:int=0;
+		var abovePosFlag:Boolean = false;
 		PreferencesMarkupsArray = ev.result as ArrayCollection;
 		if(PreferencesMarkupsArray==null || PreferencesMarkupsArray.length==0){
 			var outsideService:OutsideService = new OutsideService();
@@ -1539,6 +1541,24 @@
 				outsideServiceObject.above = true;
 				PreferencesMarkupsArray.addItem(outsideServiceObject);
 			}
+		}
+		for each(var outsideServiceObj:OutsideService in PreferencesMarkupsArray) {
+			count++;
+			if(outsideServiceObj.above){
+				if(count==PreferencesMarkupsArray.length){
+					abovePosFlag = true;
+					break;
+				} else {
+					break;
+				}
+			}
+		}
+		if(!abovePosFlag){
+			var outsideService:OutsideService = new OutsideService();
+			registerClassAlias("com.efi.printsmith.data.OutsideService",OutsideService);
+			outsideService = ObjectUtil.copy(PreferencesMarkupsArray.getItemAt(count-1)) as OutsideService;
+			PreferencesMarkupsArray.removeItemAt(count-1);
+			PreferencesMarkupsArray.addItem(outsideService);
 		}
 		registerClassAlias("com.efi.printsmith.data.OutsideService",OutsideService);
 		PreferencesMarkupsOrigArray = ObjectUtil.copy(PreferencesMarkupsArray) as ArrayCollection;
@@ -1559,6 +1579,8 @@
 		}
 	}
 	private function handleLoadMarkupsMerchandiseResult(ev:ResultEvent):void {
+		var count:int=0;
+		var abovePosFlag:Boolean = false;
 		PreferencesMarkupsMerchandiseArray = ev.result as ArrayCollection;
 		if(PreferencesMarkupsMerchandiseArray==null || PreferencesMarkupsMerchandiseArray.length==0){
 			var merchandise:Merchandise = new Merchandise();
@@ -1577,6 +1599,24 @@
 				merchandiseObject.above = true;
 				PreferencesMarkupsMerchandiseArray.addItem(merchandiseObject);
 			}
+		}
+		for each(var merchandiseObj:Merchandise in PreferencesMarkupsMerchandiseArray) {
+			count++;
+			if(merchandiseObj.above){
+				if(count==PreferencesMarkupsMerchandiseArray.length){
+					abovePosFlag = true;
+					break;
+				} else {
+					break;
+				}
+			}
+		}
+		if(!abovePosFlag){
+			var merchandise:Merchandise = new Merchandise();
+			registerClassAlias("com.efi.printsmith.data.Merchandise",Merchandise);
+			merchandise = ObjectUtil.copy(PreferencesMarkupsMerchandiseArray.getItemAt(count-1)) as Merchandise;
+			PreferencesMarkupsMerchandiseArray.removeItemAt(count-1);
+			PreferencesMarkupsMerchandiseArray.addItem(merchandise);
 		}
 		registerClassAlias("com.efi.printsmith.data.Merchandise",Merchandise);
 		PreferencesMarkupsMerchandiseOrigArray = ObjectUtil.copy(PreferencesMarkupsMerchandiseArray) as ArrayCollection;
