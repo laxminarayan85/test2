@@ -18,23 +18,28 @@
 			[Bindable] public var preferencesSystem:PreferencesSystem = new PreferencesSystem();
 			[Bindable] public var addressLayoutArray:ArrayCollection = new ArrayCollection();
 			[Bindable] public var countryArray:ArrayCollection = new ArrayCollection();
-			[Bindable] public var country:Country = new Country();
-			[Bindable] public var countryDeleteArray:ArrayCollection = new ArrayCollection();
 			[Bindable] public var addressFormatArray:ArrayCollection = new ArrayCollection();
-			[Bindable] public var addressFormatDeleteArray:ArrayCollection = new ArrayCollection();
+			[Bindable] public var country:Country = new Country();
+			[Bindable] public var countryAddArray:ArrayCollection = new ArrayCollection();
+			[Bindable] public var countryDeleteArray:ArrayCollection = new ArrayCollection();
 			
 			private function openAddressLayout(addEditFlag:String):void {
 				var addressFormattingObj:AddressFormatting;
 				var addressFormatBeanArray:ArrayCollection = new ArrayCollection();
+				if(addEditFlag=="add"){
+					country = new Country();
+					addressFormatArray = new ArrayCollection();
+				} else {
+					country = countryList.selectedItem as Country;
+					addressFormatArray = country.addressFormattings;
+				}
 				if(addressFormatArray!=null && addressFormatArray.length>0){
 					var isPresent:Boolean = false;
 					for each(var addressFormatting:AddressFormatting in addressFormatArray) {
-						if(addressFormatting.country!=null && addressFormatting.country.id==countryList.selectedItem.id){
-							addressFormattingObj = addressFormatting;
-							isPresent = true;
-							addressFormatBeanArray = createAddressBeanArray(addressFormatting);
-							break;
-						}
+						addressFormattingObj = addressFormatting;
+						isPresent = true;
+						addressFormatBeanArray = createAddressBeanArray(addressFormatting);
+						break;
 					}
 					if(!isPresent){
 						addressFormatBeanArray = createNewAddressBeanArray();
@@ -43,13 +48,9 @@
 					addressFormatBeanArray = createNewAddressBeanArray();
 				}
 				var addressLayoutComponent:AddressLayoutComponent = PopUpManager.createPopUp(this,AddressLayoutComponent,true) as AddressLayoutComponent;
-				if(addEditFlag=="add"){
-					country = new Country();
-				} else {
-					country = countryList.selectedItem as Country;
-				}
 				registerClassAlias("com.efi.printsmith.data.Country",Country);
 				var countryObject:Country = ObjectUtil.copy(country) as Country;
+				addressLayoutComponent.countryArray = countryArray;
 				addressLayoutComponent.country = countryObject;
 				addressLayoutComponent.addressLayoutArray = addressLayoutArray;
 				addressLayoutComponent.addressFormatBeanArray = addressFormatBeanArray;
@@ -57,28 +58,44 @@
 				addressLayoutComponent.addEventListener(AddressFormatEvent.ADDRESSFORMAT_CHANGED,function(event:AddressFormatEvent):void{
 					if(event.isSave){
 						if(addEditFlag=="add"){
-							countryArray.addItem(country);
+							var formatList:ArrayCollection = new ArrayCollection();
 							var addressFormatting:AddressFormatting = new AddressFormatting();
+							country.name = countryObject.name;
 							copyFromBeanToFormatting(addressFormatting,addressFormatBeanArray);
-							addressFormatArray.addItem(addressFormatting);
-							
-						} else {
-							for each(var countryObj:Country in countryArray){
-								if(countryObj.id == countryObject.id){
-									countryObj.name = countryObject.name;
-									break;
-								}
-							}
+							addressFormatting.country = country;
+							formatList.addItem(addressFormatting);
+							country.addressFormattings = formatList;
+							countryArray.addItem(country);
+							countryAddArray.addItem(country);
 							countryArray.refresh();
+							countryList.selectedIndex = countryArray.length-1;
+						} else {
+							var addPresent:Boolean = false;
+							var formatList:ArrayCollection = new ArrayCollection();
+							country.name = countryObject.name;
 							if(isPresent) {
 								copyFromBeanToFormatting(addressFormattingObj,addressFormatBeanArray);
+								formatList.addItem(addressFormattingObj);
+								country.addressFormattings = formatList;
 							} else {
 								var addressFormatting:AddressFormatting = new AddressFormatting();
 								copyFromBeanToFormatting(addressFormatting,addressFormatBeanArray);
 								addressFormatting.country = country;
-								addressFormatArray.addItem(addressFormatting);
+								formatList.addItem(addressFormatting);
+								country.addressFormattings = formatList;
+							}
+							for each(var countryObj:Country in countryAddArray){
+								if(countryObj.name==country.name) {
+									countryObj = country;
+									addPresent = true;
+									break;
+								}
+							}
+							if(!addPresent){
+								countryAddArray.addItem(country);
 							}
 						}
+						setFormatText(null,country);
 					}
 				});
 			}
@@ -108,8 +125,41 @@
 			
 			private function deleteCountry():void {
 				if(countryList.selectedIndex>-1){
-					countryArray.removeItemAt(countryList.selectedIndex);
+					var index:int = countryList.selectedIndex;
+					var countryIndex:int=-1;
 					countryDeleteArray.addItem(countryList.selectedItem);
+					for(var i:int=0;i<countryAddArray.length;i++){
+						var countryObj:Country = countryAddArray.getItemAt(i) as Country;
+						if(countryObj.name==countryList.selectedItem.name) {
+							countryIndex = i;
+							break;
+						}
+					}
+					if(countryIndex>-1){
+						countryAddArray.removeItemAt(countryIndex);
+					}
+					if(countryList.selectedIndex>0){
+						countryList.selectedIndex = index-1;
+						if(countryComboBox.selectedIndex == index) {
+							countryComboBox.selectedIndex = index-1;
+							preferencesSystem.defaultCountry = countryComboBox.selectedItem.id; 
+						}
+						setFormatText(null,countryList.selectedItem as Country);
+					} else {
+						if(countryArray.length>1){
+							countryList.selectedIndex = index+1;
+							if(countryComboBox.selectedIndex == index) {
+								countryComboBox.selectedIndex = index+1;
+								preferencesSystem.defaultCountry = countryComboBox.selectedItem.id;
+								countryComboBox.selectedIndex = index;
+							}
+							setFormatText(null,countryList.selectedItem as Country);
+						} else {
+							setFormatText(null,null);
+							preferencesSystem.defaultCountry = 0;
+						}
+					}
+					countryArray.removeItemAt(index);
 				}
 			}
 			
@@ -156,6 +206,79 @@
 				}
 				return addressFormatBeanArray;
 			}
+			
+			public function setListFocus(event:Event):void {
+				countryList.selectedIndex = countryComboBox.selectedIndex;
+			}
+			
+			public function setFormatText(event:Event=null,countryObject:Country=null):void {
+				var txtString:String = "Name\n";
+				var objCountry:Country;
+				if(event==null && countryObject==null){
+					txtString = "";
+				} else {
+					if(event && event.currentTarget.selectedItem){
+						 objCountry = event.currentTarget.selectedItem as Country;
+					} else {
+						objCountry = countryObject;
+					}
+					var addressFormatting:AddressFormatting = new AddressFormatting();
+					
+					if(objCountry.addressFormattings!=null && objCountry.addressFormattings.length>0){
+						addressFormatting = objCountry.addressFormattings.getItemAt(0) as AddressFormatting;
+					}
+					for(var i:int=1;i<=5;i++){
+						for(var j:int=1;j<=4;j++){
+							var strValue:String = "";
+							if(addressFormatting.cityPosition!=0) {
+								strValue = addressFormatting.cityPosition.toString();
+								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
+									txtString = txtString + "City ";
+									continue;
+								}
+							}
+							if(addressFormatting.street1Position!=0) {
+								strValue = addressFormatting.street1Position.toString();
+								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
+									txtString = txtString + "Street1 ";
+									continue;
+								}
+							}
+							if(addressFormatting.street2Position!=0) {
+								strValue = addressFormatting.street2Position.toString();
+								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
+									txtString = txtString + "Street2 ";
+									continue;
+								}
+							}
+							if(addressFormatting.statePosition!=0) {
+								strValue = addressFormatting.statePosition.toString();
+								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
+									txtString = txtString + "State ";
+									continue;
+								}
+							}
+							if(addressFormatting.zipPosition!=0) {
+								strValue = addressFormatting.zipPosition.toString();
+								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
+									txtString = txtString + "Zip ";
+									continue;
+								}
+							}
+							if(addressFormatting.countyPosition!=0) {
+								strValue = addressFormatting.countyPosition.toString();
+								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
+									txtString = txtString + objCountry.name+" ";
+									continue;
+								}
+							}
+							txtString = txtString + "\t";
+						}
+						txtString = txtString + "\n"; 
+					}
+				}
+				txtSampleAddressArea.text = txtString;
+			} 
 		]]>
 	</mx:Script>
 	
@@ -175,7 +298,8 @@
 			
 				<mx:HBox width="60%" height="25%">
 			
-					<mx:List id="countryList" dataProvider="{countryArray}" labelField="name" height="75%" width="50%"/>
+					<mx:List id="countryList" dataProvider="{countryArray}" labelField="name" height="75%" width="50%"
+						change="{setFormatText(event)}"/>
 					
 					<mx:VBox width="50%" height="100%" verticalAlign="middle">
 					
@@ -194,16 +318,16 @@
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Defaultcountry')}"
 						textAlign="right" />
 						
-					<components:CustomComboBoxComponent width="181"
+					<components:CustomComboBoxComponent id="countryComboBox" width="20%"
 						masterList="{countryArray}" labelFieldId="id" labelFieldName="name"
 						dataHolder="{preferencesSystem}" variableName="defaultCountry" customText="{getCustomTextData(countryArray,preferencesSystem)}" 
-						updateFirstElement="true" change="{parentDocument.setCurrentCountry(event)}"/>
+						updateFirstElement="true" change="{parentDocument.setCurrentCountry(event);setListFocus(event);setFormatText(event)}"/>
 						
 				</mx:HBox>
 				
 				<mx:Text text="Sample Address" id="txtSampleAddress" />
 					
-				<mx:TextArea height="25%" width="451"
+				<mx:TextArea height="25%" width="50%"
 					id="txtSampleAddressArea" enabled="false" />
 				
 			</mx:VBox>

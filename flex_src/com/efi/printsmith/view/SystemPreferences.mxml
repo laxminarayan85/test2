@@ -34,7 +34,7 @@
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceCountry" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCountryResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveCountryResult(event)"/>
 	</mx:RemoteObject>
 	 	<mx:RemoteObject id="dataServiceCashRegister" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashRegisterResult(event)"/>
@@ -115,10 +115,6 @@
 	
 	<mx:RemoteObject id="dataServiceShippingMethods" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethodsResult(event)"/>
-	</mx:RemoteObject>
-	
-	<mx:RemoteObject id="dataServiceAddressFormats" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadAddressFormatsResult(event)"/>
 	</mx:RemoteObject>
 
 	<!--<mx:Producer id="producer" destination="systempreferences"/>
@@ -273,6 +269,8 @@
 	[Bindable]
 	private var CountryArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
+	private var CountryOrigArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
 	private var ColumnNamesArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var SizeTableArray:ArrayCollection = new ArrayCollection();
@@ -387,7 +385,9 @@
 	
 	[Bindable] public var addressLayoutArray:ArrayCollection = new ArrayCollection();
 	
-	[Bindable] public var addressFormatArray:ArrayCollection = new ArrayCollection();
+	[Bindable] public var countryAddArray:ArrayCollection = new ArrayCollection();
+	
+	[Bindable] public var countryDeleteArray:ArrayCollection = new ArrayCollection();
 	
 	private var dollar:String = "$"; 
 	private var yen:String = "¥";
@@ -826,7 +826,7 @@
 		fillMonthsArray(MonthsArray);
 		fillReceiptPrinterArray(ReceiptPrinterArray);	
 
-		dataServiceCountry.getAll("Country");
+		
 		dataServiceColumnNames.getAll("ColumnNames");
 		dataServiceSizeTable.getAll("SizeTable");
 		dataServiceCategory.getAll("SalesCategory");
@@ -863,7 +863,7 @@
 		dataServiceJobMethods.getAll("JobMethod");
 		dataServiceSalesReps.getAll("SalesRep");
 		dataServiceShippingMethods.getAll("ShippingMethod");
-		dataServiceAddressFormats.getAll("AddressFormatting");
+		dataServiceCountry.getAll("Country");
 	}
 
 	private function updatePreferencesData():void{
@@ -880,7 +880,7 @@
 		if(selectedSection == "genericPrefCmd.AddressFormatting") {
 			checkCount = 2;
 			dataServiceSystem.addUpdate(preferencesSystem);
-			dataServiceAddressFormats.getAll("AddressFormatting");
+			dataServiceCountry.addUpdateDeleteList(countryAddArray,countryDeleteArray);
 		}
 		
 		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
@@ -1031,7 +1031,6 @@
 		setDisplayText(null,preferencesSystem.numbersIntegers,"Integers");
 		setAlternateCurrencyText(null,preferencesSystem.displayFormat);
 		setCurrentRange();
-		setCurrentCountry();
 		
 	}
 	private function mapFromPreferencesAccountingData():void {
@@ -1146,15 +1145,20 @@
 			addressformatting_canvas.txtSampleAddress.text = event.currentTarget.selectedItem.name;
 		} else {
 			if(preferencesSystem.defaultCountry==0){
+				preferencesSystem.defaultCountry = CountryArray.getItemAt(0).id;
+				addressformatting_canvas.countryList.selectedIndex=0;
 				addressformatting_canvas.txtSampleAddress.text = CountryArray.getItemAt(0).name;
 			} else {
-				for each(var obj:Object in CountryArray){
+				for(var i:int=0;i<CountryArray.length;i++){
+					var obj:Object = CountryArray.getItemAt(i);
 					if(obj.id == preferencesSystem.defaultCountry){
+						addressformatting_canvas.countryList.selectedIndex = i;
 						addressformatting_canvas.txtSampleAddress.text = obj.name;
 						break;
 					}
 				}
 			}
+			addressformatting_canvas.setFormatText(null,addressformatting_canvas.countryList.selectedItem as Country);
 		}
 	}
 
@@ -1291,24 +1295,7 @@
 		}
 	}
 	
-	private function handleLoadAddressFormatsResult(event:ResultEvent):void {
-		addressFormatArray = event.result as ArrayCollection;
-		successCheckCount++;
-		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
-			if(isSave) {
-				isSave = false;
-			}
-			if(isRevert) {
-				isRevert = false;
-			}
-			if(isLoad) {
-				isLoad = false;
-			}
-			if(loadComponent) {
-				loadComponent.close();
-			}
-		}
-	}
+	
 
 	private function handleLoadIntegrationResult(ev:ResultEvent):void {
 		var preferencesIntegrationArray:ArrayCollection = ev.result as ArrayCollection;
@@ -1461,6 +1448,26 @@
 	
 	private function handleLoadCountryResult(ev:ResultEvent):void {
 		CountryArray = ev.result as ArrayCollection;
+		registerClassAlias("com.efi.printsmith.data.Country",Country);
+		CountryOrigArray = ObjectUtil.copy(CountryArray) as ArrayCollection;
+		setCurrentCountry();
+		registerClassAlias("com.efi.printsmith.data.PreferencesSystem",PreferencesSystem);
+		preferencesSystemOrigObj = ObjectUtil.copy(preferencesSystem) as PreferencesSystem;
+		successCheckCount++;
+		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
+			if(isSave) {
+				isSave = false;
+			}
+			if(isRevert) {
+				isRevert = false;
+			}
+			if(isLoad) {
+				isLoad = false;
+			}
+			if(loadComponent) {
+				loadComponent.close();
+			}
+		}
 	}
 	private function handleLoadCashRegisterResult(ev:ResultEvent):void {
 		PreferencesCashRegisterArray = ev.result as ArrayCollection;
@@ -1745,8 +1752,9 @@
     	dataServiceAccounting.getAll("PreferencesAccounting");
 	}
 	private function handleSaveCountryResult(ev:ResultEvent):void {
-    	/* dataServiceCountry.getAll("Country");
-		country = ev.result as Country; */
+		countryAddArray.removeAll();
+		countryDeleteArray.removeAll();
+    	dataServiceCountry.getAll("Country");
 	}
 	private function handleSaveCashRegisterResult(ev:ResultEvent):void {
     	dataServiceCashRegister.getAll("PreferencesCashRegister");
@@ -1857,9 +1865,14 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
-			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International" ||
-			selectedSection == "genericPrefCmd.AddressFormatting") {
+			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International") {
 			if(!compareObject(preferencesSystem,preferencesSystemOrigObj)){
+				isObjEqual = false;
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.AddressFormatting") {
+			if(!compareObject(preferencesSystem,preferencesSystemOrigObj) || !compareObject(CountryArray,CountryOrigArray)){
 				isObjEqual = false;
 			}
 		}
@@ -2117,7 +2130,9 @@
 		if(selectedSection == "genericPrefCmd.AddressFormatting") {
 			checkCount = 2;
 			dataServiceSystem.getAll("PreferencesSystem");
-			dataServiceAddressFormats.getAll("AddressFormatting");
+			dataServiceCountry.getAll("Country");
+			countryAddArray.removeAll();
+			countryDeleteArray.removeAll();
 		}
 		
 		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
@@ -2306,7 +2321,7 @@
 					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:AddressFormattingCanvasComponent id="addressformatting_canvas" preferencesSystem="{preferencesSystem}" countryArray="{CountryArray}"
-					addressLayoutArray="{addressLayoutArray}" addressFormatArray="{addressFormatArray}"
+					addressLayoutArray="{addressLayoutArray}" countryAddArray="{countryAddArray}" countryDeleteArray="{countryDeleteArray}" 
 					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:ReceiptCanvasComponent id="receipt_canvas" preferencesPOS="{preferencesPOS}" 

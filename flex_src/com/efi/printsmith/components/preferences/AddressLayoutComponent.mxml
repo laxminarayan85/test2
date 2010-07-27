@@ -6,6 +6,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
+			import mx.utils.StringUtil;
 			import com.efi.printsmith.components.preferences.events.AddressFormatEvent;
 			import com.efi.printsmith.data.Country;
 			import com.efi.printsmith.model.AddressFormatBean;
@@ -17,6 +19,8 @@
 			[Bindable] public var addressFormatBeanArray:ArrayCollection = new ArrayCollection();
 			
 			[Bindable] public var country:Country = new Country();
+			
+			[Bindable] public var countryArray:ArrayCollection = new ArrayCollection();
 			
 			private function initLayoutComp():void{
 				PopUpManager.centerPopUp(this);
@@ -69,9 +73,20 @@
 			}
 			
 			private function saveUpdateData():void {
-				var event:AddressFormatEvent = new AddressFormatEvent(AddressFormatEvent.ADDRESSFORMAT_CHANGED,true);
-				dispatchEvent(event);
-				PopUpManager.removePopUp(this);
+				if(country.name!=null && StringUtil.trim(country.name)!=""){
+					for each(var countryObj:Country in countryArray) {
+						if(countryObj.name == country.name && countryObj.id!=country.id){
+							Alert.show("Entered Country Name already exists");
+							return;
+						}
+					}
+					var event:AddressFormatEvent = new AddressFormatEvent(AddressFormatEvent.ADDRESSFORMAT_CHANGED,true);
+					dispatchEvent(event);
+					PopUpManager.removePopUp(this);
+				} else {
+					Alert.show("Please enter Country Name");
+					return;
+				}
 			}
 			
 			public function setSelectedIndexes():void{

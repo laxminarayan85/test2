@@ -1,7 +1,6 @@
 package com.efi.printsmith.data
 {
-	import mx.collections.ArrayCollection; 
-	import com.efi.printsmith.data.*;
+	import mx.collections.ArrayCollection;
 	
 	[RemoteClass(alias="com.efi.printsmith.data.Country")]
 	[Managed]
@@ -14,6 +13,8 @@ package com.efi.printsmith.data
 		}
 				
 		public var name:String = "";
+		
+		public var addressFormattings:ArrayCollection;
 	
 	}
 }
