@@ -2143,9 +2143,14 @@
 	}
 	
 	private function doSave():void{
-		isSave = true;
-		mapToPreferencesAllData();
-		updatePreferencesData();
+		if(!validate(preferences_stack.selectedChild)) {
+			Alert.show("Validation Error");
+			return;
+		} else {
+			isSave = true;
+			mapToPreferencesAllData();
+			updatePreferencesData();
+		}
 	}
 	
 	private function doRevert():void{
