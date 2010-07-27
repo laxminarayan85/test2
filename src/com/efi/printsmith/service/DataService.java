@@ -260,7 +260,7 @@ public class DataService extends HibernateService {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
-		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect";
+		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect, a.externalAcctId ";
 		try {
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className + " a";
@@ -426,7 +426,7 @@ public class DataService extends HibernateService {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
-		columnstring = "a.id, a.firstName, a.lastName, a.contactId";
+		columnstring = "a.id, a.firstName, a.lastName, a.contactId, a.parentAccount ";
 		try {
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className + " a";

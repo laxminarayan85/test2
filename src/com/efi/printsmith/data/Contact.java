@@ -130,11 +130,12 @@ public class Contact extends Party {
     this.created = new Date();
     this.modified = new Date();
   }
-	public Contact(long id, String firstName, String lastName, String accountID) {
+	public Contact(long id, String firstName, String lastName, String accountID, Account parentAcct) {
 		this.id = id;
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.contactId = accountID;
+		this.parentAccount = parentAcct;
 	}
  	
 	

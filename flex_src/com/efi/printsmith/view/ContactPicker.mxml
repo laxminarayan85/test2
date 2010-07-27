@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="630" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
-    close="PopUpManager.removePopUp(this);"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="654" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
+    close="PopUpManager.removePopUp(this);" xmlns:common="com.efi.printsmith.common.components.filter.*" 
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.ContactPicker')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
 
 <!--<mx:RemoteObject id="dataService" destination="dataService">
@@ -16,6 +16,9 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.common.components.filter.FilterProperty;
+	import com.efi.printsmith.common.components.filter.FilterSearchBy;
+	import mx.collections.ArrayCollection;
 	import com.efi.printsmith.events.ContactPickerSelectEvent;
 	import com.efi.printsmith.data.Contact;           
     import com.efi.printsmith.view.EditContact;
@@ -81,7 +84,7 @@
 	}
 	                                
 	private function resetFocus():void {                           
-	     focusManager.setFocus(filter_field);                                    
+	     //focusManager.setFocus(filter_field);                                    
 	}    
 	
 	private function editContact():void {
@@ -119,12 +122,41 @@
 	private function updateDataGrid():void {
 		//dataService.getContactsByPartialName(filter_field.text);
 	}
+	 
+	private function getSearchBy():ArrayCollection {
+		var sc:ArrayCollection = new ArrayCollection();
+	
+		var fp:FilterProperty = new FilterProperty(null, "firstName");
+		var sc1:FilterSearchBy = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName'), fp);
+		sc.addItem(sc1);
+
+		fp = new FilterProperty(null, "lastName");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName'), fp);
+		sc.addItem(sc1);
+
+		fp = new FilterProperty(new FilterProperty(null, "externalAcctId"), "parentAccount");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Acct'), fp);
+		sc.addItem(sc1);
+		
+		fp = new FilterProperty(new FilterProperty(null, "externalRef"), "parentAccount");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Ref'), fp);
+		sc.addItem(sc1);
+		
+		// MS: need to add phone here...
+		
+		fp = new FilterProperty(new FilterProperty(null, "masterAcct"), "parentAccount");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling'), fp);
+		sc.addItem(sc1);
+		
+		return sc;
+
+	}
 ]]>        
 </mx:Script>
                              
-
+ 
                              
-	<mx:Canvas width="583" height="541">
+	<mx:Canvas width="604" height="557"> 
 		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{contacts}"
 		doubleClickEnabled="true" doubleClick="selectContact()"  showHeaders="true"  borderStyle="solid" borderThickness="3">               
 		<mx:columns>
@@ -133,10 +165,11 @@
 		 
 		</mx:columns>
 		</mx:DataGrid>
+		<common:PickerFilter x="10" y="495" width="417" height="26" searchComponent="{dataGrid}" listData="{contacts}" searchCriteria="{getSearchBy()}" />
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectContact();"  width="108" x="465" y="10"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.New')}" enabled="true" click="newContact();" id="new_button" width="108" x="465" y="40"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="cancelPicker();" id="cancel_button" width="108" x="465" y="93"/>
-		<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
+		<!--<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>
 				<mx:String>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Name')}</mx:String>
@@ -146,8 +179,7 @@
 				<mx:String>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling')}</mx:String>
 			</mx:ArrayCollection>
 		</mx:ComboBox>
-		<mx:Label x="10" y="495" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}"/>
-	</mx:Canvas>
-<mx:Spacer height="10" />        
+		<mx:Label x="10" y="495" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}"/>-->
+	</mx:Canvas>     
 
 </mx:TitleWindow>

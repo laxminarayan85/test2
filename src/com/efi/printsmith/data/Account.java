@@ -407,7 +407,15 @@ public class Account extends ModelBase {
 		this.prospect = prospect;
 	}
  	
-	
+	public Account(long id, String Name, String accountID,String externalID, long masterID, boolean prospect, String externalAcctId) {
+		this.id = id;
+		this.title = Name;
+		this.accountId = accountID;
+		this.externalRef = externalID;
+		this.masterAcct = masterID;
+		this.prospect = prospect;
+		this.externalAcctId = externalAcctId;
+	}
 	/**
 	 * @generated
 	 */	

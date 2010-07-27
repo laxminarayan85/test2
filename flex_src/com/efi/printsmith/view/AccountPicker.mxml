@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="630" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
-    close="PopUpManager.removePopUp(this);"
+    close="PopUpManager.removePopUp(this);" xmlns:common="com.efi.printsmith.common.components.filter.*"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCustPickerCommand.AccountPicker')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
 
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -15,7 +15,10 @@
 
 <mx:Script>
                                    
-<![CDATA[ 
+<![CDATA[
+	import com.efi.printsmith.common.components.filter.FilterProperty;
+	import com.efi.printsmith.common.components.filter.FilterSearchBy;
+	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.data.Contact;           
     import com.efi.printsmith.data.Account;    
@@ -87,7 +90,7 @@
 		prospect_radio.enabled = prospect_boolean;
 		accounts.filterFunction = accountFilter;
 	    PopUpManager.centerPopUp(this);
-	    resetFocus();                                     
+//	    resetFocus();                                     
 		dataService.getAccountPicker("Account");
 		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
 		if (editPage.className != "EditCustomer") {
@@ -121,9 +124,9 @@
 		dataGrid.invalidateList();
 		accounts.refresh();
 	}                              
-	private function resetFocus():void {                           
-	     focusManager.setFocus(filter_field);                                    
-	}    
+//	private function resetFocus():void {                           
+//	     focusManager.setFocus(filter_field);                                    
+//	}    
 	
 	private function editAccount():void {
 		
@@ -156,8 +159,33 @@
 		PopUpManager.removePopUp(this);
 	}
 	
-	private function updateDataGrid():void {
-		dataService.getAccountsByPartialName(filter_field.text);
+//	private function updateDataGrid():void {
+//		dataService.getAccountsByPartialName(filter_field.text);
+//	}
+	
+	private function getSearchBy():ArrayCollection {
+		var sc:ArrayCollection = new ArrayCollection();
+		
+		var fp:FilterProperty = new FilterProperty(null, "title");
+		var sc1:FilterSearchBy = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Name'), fp);
+		sc.addItem(sc1);
+
+		fp = new FilterProperty(null, "externalAcctId");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Acct'), fp);
+		sc.addItem(sc1);
+
+		fp = new FilterProperty(null, "externalRef");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Ref'), fp);
+		sc.addItem(sc1);
+
+		//MS: Need to add phone here
+		
+		fp = new FilterProperty(null, "masterAcct");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling'), fp);
+		sc.addItem(sc1);
+
+		return sc;
+
 	}
 ]]>        
 </mx:Script>
@@ -174,7 +202,8 @@
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectAccount();"  width="108" x="471" y="65"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.New')}" enabled="true" click="newAccount();" id="new_button" width="108" x="471" y="95"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="cancelPicker();" id="cancel_button" width="108" x="471" y="150"/>
-		<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
+		<common:PickerFilter x="10" y="495" width="417" height="26" searchComponent="{dataGrid}" listData="{accounts}" searchCriteria="{getSearchBy()}" />
+		<!--<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>
 				<mx:String>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Name')}</mx:String>
@@ -184,7 +213,7 @@
 				<mx:String>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling')}</mx:String>
 			</mx:ArrayCollection>
 		</mx:ComboBox>
-		<mx:Label x="10" y="495" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}"/>
+		<mx:Label x="10" y="495" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}"/>-->
 		<mx:RadioButtonGroup id="accountTypeRadio" change="accountTypeChange()"/>
 		<mx:RadioButton x="49" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Customers')}" groupName="accountTypeRadio" value="Customer" id="customer_radio"/>
 		<mx:RadioButton x="190" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Prospects')}" groupName="accountTypeRadio" value="Prospects" id="prospect_radio"/>
