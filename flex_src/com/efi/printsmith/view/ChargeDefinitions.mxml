@@ -1770,7 +1770,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:FormItem width="217" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kPSSharedFolderCmd.Filter')}" height="28" bottom="0">
 					<mx:TextInput width="100%" id="tree_filter" change="refreshData()"/>
 				</mx:FormItem>
-				<comp:Throbber id="throbber" height="20" width="20" x="103.5" y="95"/>
+				<comp:SmallThrobber id="throbber" height="20" width="20" x="103.5" y="95"/>
 			</mx:Canvas>
 		<mx:ViewStack id="charge_stack" width="70%" height="100%" minWidth="575" creationPolicy="all">
 			<mx:Canvas label="charge_blank_canvas" width="100%" height="100%" id="charge_blank_canvas">

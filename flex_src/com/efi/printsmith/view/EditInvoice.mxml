@@ -612,18 +612,25 @@
 				if (selectedJob != null) {
 					invoice.jobs.setItemAt(selectedJob, invoice_job_grid.selectedIndex);
 					invoice_job_grid.selectedItem = selectedJob;
-					var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
-					editJobWindow.setStyle("borderAlpha", 0.9);
-					editJobWindow.setJob(selectedJob);
-					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveJob);	
+					openEditJobWindow(selectedJob);
 				}	
 			}
 			
 			private function doDoubleclickInvoiceItem():void {
 				var selectedJob:Job = invoice_job_grid.selectedItem as Job;
-				dataService.getJob(selectedJob.id);
+				if (selectedJob.id != 0) { // this job had been persisted previously	
+					dataService.getJob(selectedJob.id);
+				} else {
+					openEditJobWindow(selectedJob);
+				}
 			}
 
+			private function openEditJobWindow(job:Job):void {
+				var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
+				editJobWindow.setStyle("borderAlpha", 0.9);
+				editJobWindow.setJob(job);
+				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveJob);	
+			}
 			private function gridJobPrice(item:Object, column:DataGridColumn):String {
 				var localJob:Job = item as Job;
 				

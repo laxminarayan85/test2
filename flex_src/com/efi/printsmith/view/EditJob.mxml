@@ -2413,7 +2413,7 @@
 									<mx:RadioButton x="107" y="78" click="changeJobSides(event)" id="copy_double_radio" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.DoubleSided')}" groupName="copierSides" fontSize="9"/>
 								</mx:Canvas>
 							</mx:ViewStack>
-							<ns1:Throbber visible="false" id="pricing_throbber" x="599" y="278" height="20" width="20"/>
+							<ns1:SmallThrobber visible="false" id="pricing_throbber" x="599" y="278" height="20" width="20"/>
 							<mx:LinkButton x="596" y="278" width="20" id="refresh_price_btn" height="20" click="updatePrice()">
 								<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
 							</mx:LinkButton>
@@ -2440,6 +2440,6 @@
 					  textAlign="center"/>
 		
 		</mx:Canvas>
-		<comp:Throbber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
+		<comp:SmallThrobber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
 	</mx:VBox>
 </mx:TitleWindow>
