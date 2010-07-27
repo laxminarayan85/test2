@@ -14,6 +14,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	import mx.collections.ArrayCollection;
 	import com.efi.printsmith.data.ChargeCost;
     import com.efi.printsmith.data.enums.ChargeCostMethod;
+    import com.efi.printsmith.events.ChargeCostingEvent;
                                 
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
@@ -63,12 +64,15 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	}
 	                     
 	public function saveUser():void {   
-		MaptoChargeCost()                                 
-		dataService.addUpdate(chargeCost);                                        
+		MaptoChargeCost()                    
+		var chargeCostingEvent:ChargeCostingEvent=new ChargeCostingEvent(ChargeCostingEvent.CHARGECOSTINGOK, chargeCost);
+		dispatchEvent(chargeCostingEvent);
+		PopUpManager.removePopUp(this);
+
+//		dataService.addUpdate(chargeCost);        
 	}
     private function MaptoChargeCost():void{
     	chargeCost.costingMethod = costing_method_combo.selectedItem as String
-    	chargeCost.created = createDate.text as Date;
     	chargeCost.fixedMaterials = parseFloat(fixed_materials_edit.text);
     	chargeCost.laborRate = parseFloat(labor_rate_edit.text);
     	chargeCost.piecesPerHour = parseFloat(pieces_per_hour_edit.text);
@@ -79,7 +83,6 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     	chargeCost.totalUnitCost= totalCost;
     	chargeCost.unitCost = parseFloat(unit_cost_edit.text);
     	chargeCost.unitMaterials = parseFloat(unit_materials_edit.text);
-    	chargeCost.modified = lastChangeDate.text as Date;
     }                              
     private function  calculateTotalUnit(event:Event):void{
     	textFocusOut(event)
