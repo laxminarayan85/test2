@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
 width="949" height="701" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" showCloseButton="true" close="PopUpManager.removePopUp(this);" 
-creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" name="Employee Editor" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
+creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" name="Employee Editor" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*" xmlns:components="com.efi.printsmith.common.components.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -42,6 +42,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 <mx:Script> 
                                   
 <![CDATA[
+	import mx.utils.StringUtil;
 	import com.efi.printsmith.data.ComLink;
 	import com.efi.printsmith.data.ProductionLocations;
 	import com.efi.printsmith.data.ChargeCommand;
@@ -241,8 +242,8 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		employee.trackerNextLocation = tracker_next_location.selected;
 		employee.trackerClockIn = show_tracker_console.selected;
 		employee.showWorkCenter = show_work_center.selected;
-		employee.pinRequired = requirePin.selected;
-		employee.pin = pin_edit.text;
+		/* employee.pinRequired = requirePin.selected;
+		employee.pin = pin_edit.text; */
 		employee.magCardReader = allow_mag_reader.selected
 		employee.includeInvoice = invoice_check.selected;
 		employee.includeEstimate = estimate_check.selected;
@@ -326,8 +327,33 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	
 	private function doSave():void {
 		mapToEmployeeData();
-		dataService.addUpdate(employee); 
-		                             		
+		if(validateEmployee()){
+			dataService.addUpdate(employee);
+		}                            		
+	}
+	
+	private function validateEmployee():Boolean {
+		if(employee!=null){
+			if(employee.firstName==null || StringUtil.trim(employee.firstName)==""){
+				Alert.show("Please enter First Name");
+				return false;
+			}
+			if(employee.lastName==null || StringUtil.trim(employee.lastName)==""){
+				Alert.show("Please enter Last Name");
+				return false;
+			}
+			if(employee.pinRequired) {
+				if(employee.pin==null || StringUtil.trim(employee.pin)==""){
+					Alert.show("Please enter PIN Number");
+					return false;
+				}
+				if(employee.pin.length<4){
+					Alert.show("An emplyee's PIN Number must be atleast 4 digits and can be no longer than 9 digits");
+					return false;
+				}
+			}
+		}
+		return true;
 	} 
 	
 		
@@ -613,9 +639,12 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 					<mx:RadioButton x="10" y="45" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Inactive')}" groupName="employee_status" value="InActive"/>
 				</mx:Panel>
 				<mx:Panel x="368" y="68" width="349" height="133" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PINSettings')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.RequirePIN')}" id="requirePin" selected="{employee.pinRequired}" width="282"/>
+					<components:CustomCheckBoxComponent x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.RequirePIN')}" width="282"
+						dataHolder="{employee}" variableName="pinRequired" customText="{employee.pinRequired}"
+						selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 					<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PIN')}"/>
-					<mx:TextInput x="47" y="38" id="pin_edit"  text="{employee.pin}"/>
+					<components:CustomStringTextInputComponent x="47" y="38" restrict="0-9" displayAsPassword="true" maxChars="9"
+						dataHolder="{employee}" variableName="pin" customText="{employee.pin}" enabled="{employee.pinRequired}"/>
 				</mx:Panel>
 				<mx:TextInput  restrict="0-9\." x="54" y="40" id="rate_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(employee.rate)}"/>
 				<mx:Panel x="10" y="224" width="295" height="290" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EditableProductionOp')}">

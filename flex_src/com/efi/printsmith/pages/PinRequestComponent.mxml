@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	title="Enter your Pin Number" layout="vertical" xmlns:components="com.efi.printsmith.common.components.*"
+	creationComplete="{initReqComp()}" width="400" height="150">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.events.PinRequestEvent;
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			import com.efi.printsmith.data.Employee;
+			[Bindable] public var employee:Employee = new Employee();
+			
+			[Bindable] public var counter:int=0;
+			
+			private function initReqComp():void {
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function expandOrCollapse():void {
+				if(expandTxt.text=="+"){
+					this.height = 300;
+					expandTxt.text="-";
+					pinBox.visible = true;
+					pinBox.includeInLayout = true;
+				} else {
+					this.height = 150;
+					expandTxt.text="+";
+					pinBox.visible = false;
+					pinBox.includeInLayout = false;
+				}
+			}
+			
+			private function enterValue(event:Event):void {
+				if(event.currentTarget.label=="Back"){
+					if(pinnumber.text!=""){
+						pinnumber.text = pinnumber.text.substr(0,pinnumber.text.length-1);
+					}
+				} else if(event.currentTarget.label=="Clear"){
+					pinnumber.text = "";
+				} else {
+					pinnumber.text = pinnumber.text+event.currentTarget.label;
+				}
+			}
+			
+			private function validatePinNumber():void {
+				var pinRequestEvent:PinRequestEvent;
+				if(pinnumber.text!=employee.pin){
+					counter++;
+					if(counter==3){
+						pinRequestEvent = new PinRequestEvent(PinRequestEvent.PINREQUEST,false);
+						dispatchEvent(pinRequestEvent);
+						PopUpManager.removePopUp(this);
+					} else {
+						Alert.show("PIN number you entered is incorrect. You have "+(3-counter)+" more chance(s)");	
+					}
+				} else if(pinnumber.text==employee.pin) {
+					pinRequestEvent = new PinRequestEvent(PinRequestEvent.PINREQUEST,true);
+					dispatchEvent(pinRequestEvent);
+					PopUpManager.removePopUp(this);
+				}
+			}
+			
+			private function cancel():void {
+				var pinRequestEvent:PinRequestEvent = new PinRequestEvent(PinRequestEvent.PINREQUEST,false);
+				dispatchEvent(pinRequestEvent);
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Label text="{employee.lastName}, {employee.firstName}"/>
+	
+	<mx:TextInput id="pinnumber" maxChars="9" restrict="0-9" displayAsPassword="true"
+		width="40%"/>
+	
+	<mx:HBox width="100%" height="80%">
+		<mx:Label id="expandTxt" text="+" click="{expandOrCollapse()}"/>
+		<mx:VBox width="100%" height="100%">
+			<mx:VBox id="pinBox" width="100%" height="100%" 
+				visible="false" includeInLayout="false">
+				<mx:HBox width="100%" height="25%">
+					<mx:Button label="1" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+					<mx:Button label="2" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+					<mx:Button label="3" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+				</mx:HBox>
+				<mx:HBox width="100%" height="25%">
+					<mx:Button label="4" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+					<mx:Button label="5" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+					<mx:Button label="6" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+				</mx:HBox>
+				<mx:HBox width="100%" height="25%">
+					<mx:Button label="7" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+					<mx:Button label="8" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+					<mx:Button label="9" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+				</mx:HBox>
+				<mx:HBox width="100%" height="25%">
+					<mx:Button label="Back" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+					<mx:Button label="0" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+					<mx:Button label="Clear" width="33%" height="100%"
+						click="{enterValue(event)}"/>
+				</mx:HBox>
+			</mx:VBox>
+			<mx:HBox width="100%" horizontalAlign="right">
+				<mx:Button label="Cancel" click="{cancel()}"/>
+				<mx:Button label="Ok" click="{validatePinNumber()}"/>
+			</mx:HBox>
+		</mx:VBox>
+	</mx:HBox>
+	
+</mx:TitleWindow>
