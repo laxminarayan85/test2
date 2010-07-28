@@ -110,6 +110,8 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesSystemField(key, fieldName, fieldValue);
 		else if (group.equals("Dongle"))
 			importPreferencesSystemField(key, fieldName, fieldValue);
+		else if (group.equals("Local Workstation"))
+			importPreferencesSystemField(key, fieldName, fieldValue);
 	}
 	private void importPreferencesCashRegisterField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
@@ -500,6 +502,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setSlogan(value);
 		else if (name.equals("PEK 4"))
 			preferencesSystem.setSettings(value);
+		else if (name.equals("app_AutoQuitText"))
+			preferencesSystem.setShutdownMessage(value);
 		dataService.addUpdate(preferencesSystem);
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
