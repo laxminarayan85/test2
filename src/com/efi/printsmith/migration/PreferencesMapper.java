@@ -441,9 +441,14 @@ public class PreferencesMapper extends ImportMapper {
 	private void importPreferencesSystemField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
 		PreferencesSystem preferencesSystem = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
-		if (preferencesSystem == null)
+		Address address = null;
+		if (preferencesSystem == null) {
 			preferencesSystem = new PreferencesSystem();
-		Address address = new Address();
+			address = new Address();
+			preferencesSystem.setCompanyAddress(address);
+		}
+		if (address == null)
+			address = preferencesSystem.getCompanyAddress();
 		if (name.equals("title"))
 			address.setName(value);
 		else if (name.equals("address1"))
@@ -504,6 +509,10 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setSettings(value);
 		else if (name.equals("app_AutoQuitText"))
 			preferencesSystem.setShutdownMessage(value);
+		else if (name.equals("companyIDLabel"))
+			preferencesSystem.setCompanyIdLabel(value);
+		else if (name.equals("companyID"))
+			preferencesSystem.setCompanyId(value);
 		dataService.addUpdate(preferencesSystem);
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
