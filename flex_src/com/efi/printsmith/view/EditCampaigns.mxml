@@ -175,7 +175,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var tempCamp:Campaigns;
 	 	var tempIndex:int
 		tempCamp =  GradeGrid.selectedItem as Campaigns;
-		if (tempCamp == null){
+		if (tempCamp != null){
 			tempIndex = findItem(tempCamp.name, campaignGradearray);
 			campaignGradearray.removeItemAt(tempIndex);
 		}
@@ -219,9 +219,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:Canvas width="100%" height="523">
 		<mx:TabNavigator x="0" y="10" width="100%" height="462" creationPolicy="all">
 			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Campaigns')}" width="100%" height="100%">
-				<mx:TextInput x="87" y="105" id="campaign_name" text="{campaign.name}"/>
-				<mx:Label x="44" y="107" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableConfigureCommand.Title')}" textAlign="right"/>
-				<mx:DataGrid x="44" y="149" id="dataGrid" dataProvider="{campaignsarray}" itemClick="dataRefresh();" editable="true"  height="271">
+				<mx:DataGrid x="44" y="82" id="dataGrid" dataProvider="{campaignsarray}" itemClick="dataRefresh();" editable="true"  height="271" width="299">
 					<mx:columns>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Slot')}"  editable="false" dataField="campaignId" width="40"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Global')}" dataField="globalCampaign" width="50" textAlign="center"
@@ -240,18 +238,18 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 				</mx:Button>
 				<mx:Label x="44" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
-				<mx:LinkButton x="244"
+				<mx:LinkButton x="368"
 							   id="remove_item_button"
 							   click="doDelete();"
 							   icon="@Embed(source='../../../../assets/delete16.png')"
 							   width="24"
-							   bottom="249"/>
-				<mx:LinkButton x="244"
+							   bottom="275"/>
+				<mx:LinkButton x="368"
 							   id="add_item_button"
 							   click="doNew()"
 							   icon="@Embed(source='../../../../assets/add16.png')"
 							   width="24"
-							   bottom="270"/>
+							   bottom="303"/>
 				
 			</mx:Canvas>
 			<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.Grades')}" width="100%" height="100%">
@@ -260,15 +258,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				</mx:Button>
 				<mx:Label x="32" y="100" width="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'campaignMgrCmd.ID')}" textAlign="right"/>
 				<mx:TextInput x="71" y="98" width="81" id="grade_ID" text="{grade.gradeId}" editable="false"/>
-				<mx:Text x="204" y="100" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.Title')}" width="34" textAlign="right"/>
+				<mx:Text x="180" y="100" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.Title')}" width="90" textAlign="right"/>
 				
-				<mx:DataGrid x="22" y="156" height="260" width="150" id="GradeGrid"  dataProvider="{campaignGradearray}" click="RemoveCampaign();" >
+				<mx:DataGrid x="22" y="156" height="260" width="150" id="GradeGrid"  dataProvider="{campaignGradearray}">
 					<mx:columns>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.CampaignsandGrades')}" dataField="name"/>
 						
 					</mx:columns>
 				</mx:DataGrid>
-				<mx:DataGrid x="246" y="156" height="260" width="150" id="dataGrid2" dataProvider="{campaignsarray}" click="AddCampaign();">
+				<mx:DataGrid x="246" y="156" height="260" width="150" id="dataGrid2" dataProvider="{campaignsarray}">
 					<mx:columns>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Campaigns')}" dataField="name"/>
 					</mx:columns>
@@ -276,7 +274,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Button x="90" y="10" label="Button" width="38" height="38" id="gradenew" icon="@Embed(source='../../../../assets/new.png')"  click="doNewGrade();"/>
 				<mx:Label x="44" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
 				<mx:Label x="90" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}"  width="38" textAlign="center"/>
-				<mx:ComboBox x="246" y="97.5" height="23" id="gradeList" dataProvider="{gradesarray}" labelField="name" width="160" change="updateGrade();" editable="true" enabled="true"></mx:ComboBox>
+				<mx:ComboBox x="278" y="98" height="23" id="gradeList" dataProvider="{gradesarray}" labelField="name" width="160" change="updateGrade();" editable="true" enabled="true"></mx:ComboBox>
+				<mx:Button x="180" y="218" label="&lt;&lt;&lt;" click="AddCampaign();"/>
+				<mx:Button x="180" y="257" label="&gt;&gt;&gt;" click="RemoveCampaign();"/>
 				
 			</mx:Canvas>
 		</mx:TabNavigator>
