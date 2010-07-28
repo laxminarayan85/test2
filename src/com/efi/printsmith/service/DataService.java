@@ -2411,6 +2411,30 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	/**
+	 * This method retrieves the list of active employees and inactive employees who are
+	 * clocked in 
+	 */
+	public List<Employee> getActiveEmployees() throws Exception {
+		log.debug("** getActiveEmployees called.");
+		List<Employee> activeEmployees = new ArrayList<Employee>();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from Employee where (active=true or clockin=true)";
+			Query query = em.createQuery(queryString);
+			activeEmployees = query.getResultList();
+			if (activeEmployees != null)
+				log.debug("** Found " + activeEmployees.size() + "records:");
+
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return activeEmployees;
+	}
 
 	@SuppressWarnings("unchecked")
 	public void deleteItem(String className, Long id) {
