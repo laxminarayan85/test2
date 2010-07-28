@@ -2,7 +2,7 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockInOut')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockInOut')}" 
 	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
 	<mx:RemoteObject id="dataService" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getActiveEmployees" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
@@ -56,11 +56,13 @@
 	private var OnOffBreak:String="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.OnBreak')}";
 		
 	public function init():void {
-		consumer.subscribe();
-		notification_consumer.subscribe();     
+		/* consumer.subscribe();
+		notification_consumer.subscribe(); */
 		var application:Snowmass = Snowmass.getInstance();
-
-		dataService.getAll("Employee");
+		clockIn.enabled = false;
+		clockOut.enabled = false;
+		clockBreak.enabled = false;
+		dataService.getActiveEmployees();
 		//user = application.currentUser;
 	} 
 	
@@ -73,7 +75,7 @@
 			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
 			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
 			if (payloadType == "Employee") {
-		  		dataService.getAll("Employee");
+		  		dataService.getActiveEmployees();
 			}
 		}
 	}
@@ -81,10 +83,10 @@
 		employeesArray = ev.result as ArrayCollection;
 	}
 	private function handleSaveResult(ev:ResultEvent):void {
-		dataService.getAll("Employee")
+		dataService.getActiveEmployees();
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getAll("Employee")
+		dataService.getActiveEmployees();
 	}  
 	
 	private function handleSaveTimeCardResult(ev:ResultEvent):void {
@@ -171,7 +173,9 @@
 			employee.clockBreak= false;
 			setEmployee();
 			setTimeCard("in");
-			employee = null;
+			clockIn.enabled = false;
+			clockOut.enabled = false;
+			clockBreak.enabled = false;
 		}
 	}
 	  
@@ -186,28 +190,34 @@
 			employee.clockBreak= false; 
 			setTimeCard("out");
 			setEmployee();
-			employee = null;
+			clockIn.enabled = false;
+			clockOut.enabled = false;
+			clockBreak.enabled = false;
 		}
 	}
 	
 	private function doClockBreak(): void{ 
 		if (employee != null){
-			if (employee.clockBreak == true)
-			{
-				setTimeCard("breakstop");
-				employee.clockIn= true;
-				employee.clockOut = false;
-				employee.clockBreak= false;
+			if(employee.active){
+				if (employee.clockBreak == true)
+				{
+					setTimeCard("breakstop");
+					employee.clockIn= true;
+					employee.clockOut = false;
+					employee.clockBreak= false;
+				}
+				else
+				{
+					employee.clockIn= false;
+					employee.clockOut = false;
+					employee.clockBreak= true;
+					setTimeCard("breakstart");
+				}
+				setEmployee();
+				clockIn.enabled = false;
+				clockOut.enabled = false;
+				clockBreak.enabled = false;
 			}
-			else
-			{
-				employee.clockIn= false;
-				employee.clockOut = false;
-				employee.clockBreak= true;
-				setTimeCard("breakstart");
-			}
-			setEmployee();
-			employee = null;
 		}
 	}
 	
@@ -225,6 +235,23 @@
 		employee = employeeGrid.selectedItem as Employee;
 		dataServiceTimeCard.getByClockInOut("TimeCard",employee);
 		dataServiceTimeCard.getByClockInOutBreak("TimeCard",employee);
+		if(employee.clockIn){
+			clockIn.enabled = false;
+			clockOut.enabled = true;
+			clockBreak.enabled = true;
+		} else if(employee.clockOut){
+			clockIn.enabled = true;
+			clockOut.enabled = false;
+			clockBreak.enabled = false;
+		} else if(employee.clockBreak){
+			clockIn.enabled = true;
+			clockOut.enabled = true;
+			clockBreak.enabled = false;
+		} else {
+			clockIn.enabled = true;
+			clockOut.enabled = false;
+			clockBreak.enabled = false;
+		}
 		if (employee.clockBreak == true){
 			OnOffBreak = "{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.OffBreak')}"
 		}else {
@@ -237,18 +264,24 @@
                              
 </mx:Script>
 
-	<mx:Button x="20" y="37" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockIn')}" width="132" height="107" icon="@Embed(source='../../../../assets/ClockIn.png')" id="clockIn" click="doClockIn();"/>
-	<mx:Button x="20" y="165" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockOut')}" width="132" height="107" icon="@Embed(source='../../../../assets/ClockOut.png')" id="clockOut" click="doClockOut();"/>
-	<mx:Button x="20" y="310" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.Break')}" width="132" height="107" id="clockBreak" icon="@Embed(source='../../../../assets/ClockOnBreak.png')" click="doClockBreak();"/>
+	<mx:Button x="20" y="37" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.ClockIn')}" 
+		width="132" height="107" icon="@Embed(source='../../../../assets/ClockIn.png')" id="clockIn" click="doClockIn();"/>
+	<mx:Button x="20" y="165" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.ClockOut')}" 
+		width="132" height="107" icon="@Embed(source='../../../../assets/ClockOut.png')" id="clockOut" click="doClockOut();"/>
+	<mx:Button x="20" y="310" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.Break')}" 
+		width="132" height="107" id="clockBreak" icon="@Embed(source='../../../../assets/ClockOnBreak.png')" click="doClockBreak();"/>
 	<mx:AdvancedDataGrid x="167" y="37" width="100%" id="employeeGrid" dataProvider="{employeesArray}" height="380" sortExpertMode="true"
 		itemClick="doGrid()">
 		<mx:groupedColumns>
 			<mx:AdvancedDataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" sortable="false" textAlign="center" dataField="firstName" />
 			<mx:AdvancedDataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" sortable="false" textAlign="center" dataField="lastName"/>
 				<mx:AdvancedDataGridColumnGroup id="Inout" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custRepCmd.Status')}" sortable="false" editable="false">
-				<mx:AdvancedDataGridColumn width="20" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardEditorCmd.Out')}" sortable="false" textAlign="center"  editable="false" dataField="clockOut" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer"  rendererIsEditor="false" editorDataField="selected"/>
-				<mx:AdvancedDataGridColumn width="20" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardEditorCmd.In')}" sortable="false" textAlign="center" editable="false" dataField="clockIn" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
-				<mx:AdvancedDataGridColumn width="20" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardEditorCmd.BreakTime')}" sortable="false" textAlign="center" editable="false" dataField="clockBreak" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="20" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardEditorCmd.Out')}" 
+					sortable="false" textAlign="center"  editable="false" dataField="clockOut" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer"  rendererIsEditor="false" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="20" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardEditorCmd.In')}" 
+					sortable="false" textAlign="center" editable="false" dataField="clockIn" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
+				<mx:AdvancedDataGridColumn width="20" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardEditorCmd.BreakTime')}" 
+					sortable="false" textAlign="center" editable="false" dataField="clockBreak" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
 			</mx:AdvancedDataGridColumnGroup>
 		</mx:groupedColumns>
 	</mx:AdvancedDataGrid>
