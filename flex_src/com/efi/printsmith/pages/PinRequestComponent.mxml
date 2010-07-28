@@ -72,7 +72,7 @@
 	<mx:Label text="{employee.lastName}, {employee.firstName}"/>
 	
 	<mx:TextInput id="pinnumber" maxChars="9" restrict="0-9" displayAsPassword="true"
-		width="40%"/>
+		width="90%"/>
 	
 	<mx:HBox width="100%" height="80%">
 		<mx:Label id="expandTxt" text="+" click="{expandOrCollapse()}"/>
