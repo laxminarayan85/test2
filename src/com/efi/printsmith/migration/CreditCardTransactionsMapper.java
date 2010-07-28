@@ -110,10 +110,10 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 			else if ("permanent".equals(currentFieldToken))
 				permanent = true;
 		}
-		if (permanent != true) {
+		//if (permanent != true) {
 			creditCardTransaction = (CreditCardTransactions)dataService.addUpdate(creditCardTransaction);
 			creditCard.addCreditCardTransactions(creditCardTransaction);
-		}
+		//}
 		creditCard = (CreditCard)dataService.addUpdate(creditCard);
 		if (contact != null) {
 			contact.setCreditCard(creditCard);
