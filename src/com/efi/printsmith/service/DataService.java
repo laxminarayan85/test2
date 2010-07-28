@@ -200,6 +200,24 @@ public class DataService extends HibernateService {
 		}
 		return resultList;
 	}
+	
+	public List<?> getAllOrderByDecsending(String className, String orderBy) {
+		log.debug("** getAll called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		List<?> resultList = new ArrayList<Object>();
+		try {
+			Query findAllQuery = em.createQuery("from " + className
+					+ " fetch all properties order by " + orderBy + " desc");
+			resultList = findAllQuery.getResultList();
+			if (resultList != null)
+				log.debug("** Found " + resultList.size() + "records:");
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return resultList;
+	}
 
 	public List<?> getAllNameIDOnly(String className) throws Exception {
 		log.debug("** getAllNameIDOnly.");
