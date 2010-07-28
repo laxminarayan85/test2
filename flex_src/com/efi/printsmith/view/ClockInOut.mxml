@@ -20,6 +20,8 @@
 	
 <mx:Script>  	
 <![CDATA[
+	import com.efi.printsmith.events.PinRequestEvent;
+	import com.efi.printsmith.pages.PinRequestComponent;
 	import com.efi.printsmith.data.TimeCard;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -164,18 +166,39 @@
 
 	private function doClockIn(): void{  
 		if (employee != null){
-			if (employee.clockBreak == true)
-			{
-				setTimeCard("breakstop");
+			if(employee.pinRequired){
+				var pinRequestComponent:PinRequestComponent = PopUpManager.createPopUp(this,PinRequestComponent,true) as PinRequestComponent;
+				pinRequestComponent.employee = employee;
+				pinRequestComponent.addEventListener(PinRequestEvent.PINREQUEST,function(event:PinRequestEvent):void{
+					if(event.success) {
+						if (employee.clockBreak == true)
+						{
+							setTimeCard("breakstop");
+						}
+						employee.clockIn= true;
+						employee.clockOut = false;
+						employee.clockBreak= false;
+						setEmployee();
+						setTimeCard("in");
+						clockIn.enabled = false;
+						clockOut.enabled = false;
+						clockBreak.enabled = false;
+					}
+				});
+			} else {
+				if (employee.clockBreak == true)
+				{
+					setTimeCard("breakstop");
+				}
+				employee.clockIn= true;
+				employee.clockOut = false;
+				employee.clockBreak= false;
+				setEmployee();
+				setTimeCard("in");
+				clockIn.enabled = false;
+				clockOut.enabled = false;
+				clockBreak.enabled = false;
 			}
-			employee.clockIn= true;
-			employee.clockOut = false;
-			employee.clockBreak= false;
-			setEmployee();
-			setTimeCard("in");
-			clockIn.enabled = false;
-			clockOut.enabled = false;
-			clockBreak.enabled = false;
 		}
 	}
 	  
@@ -199,24 +222,51 @@
 	private function doClockBreak(): void{ 
 		if (employee != null){
 			if(employee.active){
-				if (employee.clockBreak == true)
-				{
-					setTimeCard("breakstop");
-					employee.clockIn= true;
-					employee.clockOut = false;
-					employee.clockBreak= false;
+				if(employee.pinRequired){
+					var pinRequestComponent:PinRequestComponent = PopUpManager.createPopUp(this,PinRequestComponent,true) as PinRequestComponent;
+					pinRequestComponent.employee = employee;
+					pinRequestComponent.addEventListener(PinRequestEvent.PINREQUEST,function(event:PinRequestEvent):void{
+						if(event.success) {
+							if (employee.clockBreak == true)
+							{
+								setTimeCard("breakstop");
+								employee.clockIn= true;
+								employee.clockOut = false;
+								employee.clockBreak= false;
+							}
+							else
+							{
+								employee.clockIn= false;
+								employee.clockOut = false;
+								employee.clockBreak= true;
+								setTimeCard("breakstart");
+							}
+							setEmployee();
+							clockIn.enabled = false;
+							clockOut.enabled = false;
+							clockBreak.enabled = false;
+						}
+					});
+				} else {
+					if (employee.clockBreak == true)
+					{
+						setTimeCard("breakstop");
+						employee.clockIn= true;
+						employee.clockOut = false;
+						employee.clockBreak= false;
+					}
+					else
+					{
+						employee.clockIn= false;
+						employee.clockOut = false;
+						employee.clockBreak= true;
+						setTimeCard("breakstart");
+					}
+					setEmployee();
+					clockIn.enabled = false;
+					clockOut.enabled = false;
+					clockBreak.enabled = false;
 				}
-				else
-				{
-					employee.clockIn= false;
-					employee.clockOut = false;
-					employee.clockBreak= true;
-					setTimeCard("breakstart");
-				}
-				setEmployee();
-				clockIn.enabled = false;
-				clockOut.enabled = false;
-				clockBreak.enabled = false;
 			}
 		}
 	}
