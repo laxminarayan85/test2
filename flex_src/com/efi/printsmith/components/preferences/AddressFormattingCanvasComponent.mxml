@@ -22,6 +22,7 @@
 			[Bindable] public var country:Country = new Country();
 			[Bindable] public var countryAddArray:ArrayCollection = new ArrayCollection();
 			[Bindable] public var countryDeleteArray:ArrayCollection = new ArrayCollection();
+			[Bindable] public var separatorObject:Object = new Object();
 			
 			private function updateAddrComp():void {
 				if(countryList.selectedIndex>0){
@@ -32,6 +33,7 @@
 			private function openAddressLayout(addEditFlag:String):void {
 				var addressFormattingObj:AddressFormatting;
 				var addressFormatBeanArray:ArrayCollection = new ArrayCollection();
+				separatorObject = new Object();
 				if(addEditFlag=="add"){
 					country = new Country();
 					addressFormatArray = new ArrayCollection();
@@ -44,6 +46,7 @@
 					for each(var addressFormatting:AddressFormatting in addressFormatArray) {
 						addressFormattingObj = addressFormatting;
 						isPresent = true;
+						copyFromBeanToSeparatorObject(addressFormatting);
 						addressFormatBeanArray = createAddressBeanArray(addressFormatting);
 						break;
 					}
@@ -58,6 +61,7 @@
 				var countryObject:Country = ObjectUtil.copy(country) as Country;
 				addressLayoutComponent.countryArray = countryArray;
 				addressLayoutComponent.country = countryObject;
+				addressLayoutComponent.separatorObject = separatorObject;
 				addressLayoutComponent.addressLayoutArray = addressLayoutArray;
 				addressLayoutComponent.addressFormatBeanArray = addressFormatBeanArray;
 				addressLayoutComponent.setSelectedIndexes();
@@ -68,6 +72,7 @@
 							var addressFormatting:AddressFormatting = new AddressFormatting();
 							country.name = countryObject.name;
 							copyFromBeanToFormatting(addressFormatting,addressFormatBeanArray);
+							copyFromSeparatorObjectToBean(addressFormatting);
 							addressFormatting.country = country;
 							formatList.addItem(addressFormatting);
 							country.addressFormattings = formatList;
@@ -82,11 +87,13 @@
 							country.name = countryObject.name;
 							if(isPresent) {
 								copyFromBeanToFormatting(addressFormattingObj,addressFormatBeanArray);
+								copyFromSeparatorObjectToBean(addressFormattingObj);
 								formatList.addItem(addressFormattingObj);
 								country.addressFormattings = formatList;
 							} else {
 								var addressFormatting:AddressFormatting = new AddressFormatting();
 								copyFromBeanToFormatting(addressFormatting,addressFormatBeanArray);
+								copyFromSeparatorObjectToBean(addressFormatting);
 								addressFormatting.country = country;
 								formatList.addItem(addressFormatting);
 								country.addressFormattings = formatList;
@@ -107,26 +114,154 @@
 				});
 			}
 			
+			private function copyFromBeanToSeparatorObject(addressFormatting:AddressFormatting):void {
+				var pos:String;
+				if(addressFormatting.street1Separator!=null && addressFormatting.street1Separator!=""){
+					pos = addressFormatting.street1Position.toString();
+					if(pos.substr(1,2)!="4"){
+						separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)] = addressFormatting.street1Separator;
+					}
+				}
+				if(addressFormatting.street2Separator!=null && addressFormatting.street2Separator!=""){
+					pos = addressFormatting.street2Position.toString();
+					if(pos.substr(1,2)!="4"){
+						separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)] = addressFormatting.street2Separator;
+					}
+				}
+				if(addressFormatting.stateSeparator!=null && addressFormatting.stateSeparator!=""){
+					pos = addressFormatting.statePosition.toString();
+					if(pos.substr(1,2)!="4"){
+						separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)] = addressFormatting.stateSeparator;
+					}
+				}
+				if(addressFormatting.citySeparator!=null && addressFormatting.citySeparator!=""){
+					pos = addressFormatting.cityPosition.toString();
+					if(pos.substr(1,2)!="4"){
+						separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)] = addressFormatting.citySeparator;
+					}
+				}
+				if(addressFormatting.zipSeparator!=null && addressFormatting.zipSeparator!=""){
+					pos = addressFormatting.zipPosition.toString();
+					if(pos.substr(1,2)!="4"){
+						separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)] = addressFormatting.zipSeparator;
+					}
+				}
+				if(addressFormatting.countrySeparator!=null && addressFormatting.countrySeparator!=""){
+					pos = addressFormatting.countryPosition.toString();
+					if(pos.substr(1,2)!="4"){
+						separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)] = addressFormatting.countrySeparator;
+					}
+				}
+			}
+			
+			private function copyFromSeparatorObjectToBean(addressFormatting:AddressFormatting):void {
+				var pos:String;
+				if(addressFormatting.street1Position!=0){
+					pos = addressFormatting.street1Position.toString();
+					if(pos.substr(1,2)!="4"){
+						addressFormatting.street1Separator = separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)];
+					}
+				} else {
+					addressFormatting.street1Separator = "";
+				}
+				
+				if(addressFormatting.street2Position!=0){
+					pos = addressFormatting.street2Position.toString();
+					if(pos.substr(1,2)!="4"){
+						addressFormatting.street2Separator = separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)];
+					}
+				} else {
+					addressFormatting.street2Separator = "";
+				}
+
+				if(addressFormatting.statePosition!=0){
+					pos = addressFormatting.statePosition.toString();
+					if(pos.substr(1,2)!="4"){
+						addressFormatting.stateSeparator = separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)];
+					}
+				} else {
+					addressFormatting.stateSeparator = "";
+				}
+				
+				if(addressFormatting.cityPosition!=0){
+					pos = addressFormatting.cityPosition.toString();
+					if(pos.substr(1,2)!="4"){
+						addressFormatting.citySeparator = separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)];
+					}
+				} else {
+					addressFormatting.citySeparator = "";
+				}
+				
+				if(addressFormatting.zipPosition!=0){
+					pos = addressFormatting.zipPosition.toString();
+					if(pos.substr(1,2)!="4"){
+						addressFormatting.zipSeparator = separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)];
+					}
+				} else {
+					addressFormatting.zipSeparator = "";
+				}
+				
+				if(addressFormatting.countryPosition!=0){
+					pos = addressFormatting.countryPosition.toString();
+					if(pos.substr(1,2)!="4"){
+						addressFormatting.countrySeparator = separatorObject["row"+pos.substr(0,1)+"column"+pos.substr(1,2)];
+					}
+				} else {
+					addressFormatting.countrySeparator = "";
+				}
+				
+			}
+			
 			private function copyFromBeanToFormatting(addressFormatting:AddressFormatting,addressFormatBeanArray:ArrayCollection):void {
+				var cityFound:Boolean = false; 
+				var street1Found:Boolean = false;
+				var street2Found:Boolean = false;
+				var stateFound:Boolean = false;
+				var zipFound:Boolean = false;
+				var countryFound:Boolean = false;
 				for each(var addressFormatBean:AddressFormatBean in addressFormatBeanArray) {
 					if(addressFormatBean.valueStr!=null && addressFormatBean.valueStr == "City") {
+						cityFound = true;
 						addressFormatting.cityPosition = Number(addressFormatBean.row+""+addressFormatBean.column);
 					}
 					if(addressFormatBean.valueStr!=null && addressFormatBean.valueStr == "Country"){
-						addressFormatting.countyPosition = Number(addressFormatBean.row+""+addressFormatBean.column);
+						countryFound = true;
+						addressFormatting.countryPosition = Number(addressFormatBean.row+""+addressFormatBean.column);
 					}
 					if(addressFormatBean.valueStr!=null && addressFormatBean.valueStr == "Street1") {
+						street1Found = true;
 						addressFormatting.street1Position = Number(addressFormatBean.row+""+addressFormatBean.column);
 					}
 					if(addressFormatBean.valueStr!=null && addressFormatBean.valueStr == "Street2") {
+						street2Found = true;
 						addressFormatting.street2Position = Number(addressFormatBean.row+""+addressFormatBean.column);
 					}
 					if(addressFormatBean.valueStr!=null && addressFormatBean.valueStr == "State") {
+						stateFound = true;
 						addressFormatting.statePosition = Number(addressFormatBean.row+""+addressFormatBean.column);
 					}
 					if(addressFormatBean.valueStr!=null && addressFormatBean.valueStr == "Zip") {
+						zipFound = true;
 						addressFormatting.zipPosition = Number(addressFormatBean.row+""+addressFormatBean.column);
 					}
+				}
+				if(!cityFound){
+					addressFormatting.cityPosition=0;
+				}
+				if(!street1Found){
+					addressFormatting.street1Position=0;
+				}
+				if(!street2Found){
+					addressFormatting.street2Position=0;
+				}
+				if(!stateFound){
+					addressFormatting.statePosition=0;
+				}
+				if(!zipFound){
+					addressFormatting.zipPosition=0;
+				}
+				if(!countryFound){
+					addressFormatting.countryPosition=0;
 				}
 			}
 			
@@ -182,7 +317,7 @@
 						if(addressFormatting.cityPosition==Number(i+""+j)){
 							addressFormatBean.valueStr = "City";
 						}
-						if(addressFormatting.countyPosition==Number(i+""+j)){
+						if(addressFormatting.countryPosition==Number(i+""+j)){
 							addressFormatBean.valueStr = "Country";
 						}
 						if(addressFormatting.street1Position==Number(i+""+j)){
@@ -243,42 +378,42 @@
 							if(addressFormatting.cityPosition!=0) {
 								strValue = addressFormatting.cityPosition.toString();
 								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
-									txtString = txtString + "City ";
+									txtString = txtString + "City"+(addressFormatting.citySeparator==null?"":addressFormatting.citySeparator)+" ";
 									continue;
 								}
 							}
 							if(addressFormatting.street1Position!=0) {
 								strValue = addressFormatting.street1Position.toString();
 								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
-									txtString = txtString + "Street1 ";
+									txtString = txtString + "Street1"+(addressFormatting.street1Separator==null?"":addressFormatting.street1Separator)+" ";
 									continue;
 								}
 							}
 							if(addressFormatting.street2Position!=0) {
 								strValue = addressFormatting.street2Position.toString();
 								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
-									txtString = txtString + "Street2 ";
+									txtString = txtString + "Street2"+(addressFormatting.street2Separator==null?"":addressFormatting.street2Separator)+" ";
 									continue;
 								}
 							}
 							if(addressFormatting.statePosition!=0) {
 								strValue = addressFormatting.statePosition.toString();
 								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
-									txtString = txtString + "State ";
+									txtString = txtString + "State"+(addressFormatting.stateSeparator==null?"":addressFormatting.stateSeparator)+" ";
 									continue;
 								}
 							}
 							if(addressFormatting.zipPosition!=0) {
 								strValue = addressFormatting.zipPosition.toString();
 								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
-									txtString = txtString + "Zip ";
+									txtString = txtString + "Zip"+(addressFormatting.zipSeparator==null?"":addressFormatting.zipSeparator)+" ";
 									continue;
 								}
 							}
-							if(addressFormatting.countyPosition!=0) {
-								strValue = addressFormatting.countyPosition.toString();
+							if(addressFormatting.countryPosition!=0) {
+								strValue = addressFormatting.countryPosition.toString();
 								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
-									txtString = txtString + objCountry.name+" ";
+									txtString = txtString + objCountry.name+(addressFormatting.countrySeparator==null?"":addressFormatting.countrySeparator)+" ";
 									continue;
 								}
 							}
