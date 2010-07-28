@@ -184,7 +184,7 @@
 	
 	private function handleLoadFileComplete(event:Event):void {
 		progress_bar.visible = false;
-		if (fileTypeArrayIndex > -1 && fileTypeArrayIndex < 16) {
+		if (fileTypeArrayIndex > -1 && fileTypeArrayIndex < 17) {
 			fileTypeArrayIndex = fileTypeArrayIndex + 1;
 			importFile(event,fileTypeArray.getItemAt(fileTypeArrayIndex) as String);
 		}
@@ -225,6 +225,7 @@
 		fileTypeArray = new ArrayCollection;
 		fileTypeArray.addItem("Preferences.XML");
 		fileTypeArray.addItem("TableEditor.XML");
+		fileTypeArray.addItem("DL Address Data.TXT");
 		fileTypeArray.addItem("DL Price Lists Data.txt");
 		fileTypeArray.addItem("DL Charge Definitions Data.txt");
 		fileTypeArray.addItem("DL TaxTable DB Data.txt");
@@ -239,7 +240,7 @@
 		fileTypeArray.addItem("DL Job Data.txt");
 		fileTypeArray.addItem("DL Charges Data.txt");
 		fileTypeArray.addItem("DL Customer Logs Data.txt");
-		fileTypeArray.addItem("DL Credit Card Transactions Data.txt");
+		fileTypeArray.addItem("DL Credit Card Transaction Data.txt");
 		fileTypeArrayIndex = 0;
 		importFile(evt,fileTypeArray.getItemAt(fileTypeArrayIndex) as String);
 	}
@@ -390,8 +391,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Credit Card TransactionsData.txt") {
-			index = fileNameArray.getItemIndex("DL Credit Card Transactions Data.txt");
+		if (fileName == "DL Credit Card Transaction Data.txt") {
+			index = fileNameArray.getItemIndex("DL Credit Card Transaction Data.txt");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {

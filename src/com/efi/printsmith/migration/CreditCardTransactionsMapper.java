@@ -108,7 +108,7 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 					creditCardTransaction.setTaxTable(taxTable);
 			}
 			else if ("permanent".equals(currentFieldToken))
-				permanent = true;
+				creditCardTransaction.setPermanent(Utilities.tokenToBooleanValue(currentImportToken));
 		}
 		//if (permanent != true) {
 			creditCardTransaction = (CreditCardTransactions)dataService.addUpdate(creditCardTransaction);

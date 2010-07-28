@@ -512,9 +512,13 @@ public class CustomerMapper extends ImportMapper {
 						}
 						
 				} else if ("ship address ID".equals(currentFieldToken)) {
-					/* TODO */
+					shipToAddress = (Address)dataService.getByPrevId("Address", currentImportToken);
+					if (shipToAddress != null)
+						customer.setShipToAddress(shipToAddress);
 				} else if ("bill address ID".equals(currentFieldToken)) {
-					/* TODO */
+					billToAddress = (Address)dataService.getByPrevId("Address", currentImportToken);
+					if (billToAddress != null)
+						customer.setBillToAddress(billToAddress);
 				} else if ("tax table ID".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("tax table title".equals(currentFieldToken)) {
@@ -866,8 +870,8 @@ public class CustomerMapper extends ImportMapper {
 				}
 			}
 		}
-		customer.setShipToAddress(shipToAddress);
-		customer.setBillToAddress(billToAddress);
+		//customer.setShipToAddress(shipToAddress);
+		//customer.setBillToAddress(billToAddress);
 		if (shipToContact.getFirstName() != null || shipToContact.getLastName() != null)
 			customer.setContact(shipToContact);
 		if (contactId.equals(billContactId) && (shipToContact.getFirstName() != null || shipToContact.getLastName() != null)) {

@@ -161,9 +161,13 @@ public class ContactMapper extends ImportMapper {
 			} else if ("suffix".equals(currentFieldToken)) {
 				contact.setSuffix(currentImportToken);
 			} else if ("ship address ID".equals(currentFieldToken)) {
-				/* TODO */
+				address = (Address)dataService.getByPrevId("Address", currentImportToken);
+				if (address != null)
+					contact.addShipToAddress(address);
 			} else if ("bill address ID".equals(currentFieldToken)) {
-				/* TODO */
+				address = (Address)dataService.getByPrevId("Address", currentImportToken);
+				if (address != null)
+					contact.setAddress(address);
 			} else if ("sales ranking".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("external ref number".equals(currentFieldToken)) {
