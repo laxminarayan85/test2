@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -136,6 +137,9 @@ public class ImportServlet extends HttpServlet implements Servlet {
 						}
 					}
 				}
+				response.setContentType("text/xml");
+				ServletOutputStream out = response.getOutputStream();
+				out.println("<response/>");
 			}
 		} catch (Exception e) {
 			log.error(e);
