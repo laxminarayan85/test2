@@ -15,7 +15,10 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	import com.efi.printsmith.data.ChargeCost;
     import com.efi.printsmith.data.enums.ChargeCostMethod;
     import com.efi.printsmith.events.ChargeCostingEvent;
-                                
+    import com.efi.printsmith.events.PriceListPickerSelectEvent;    
+    import com.efi.printsmith.view.PriceListPicker;   
+    import com.efi.printsmith.data.SpeedTable;
+    import com.efi.printsmith.data.PriceList;                     
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;                                
@@ -77,7 +80,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     	chargeCost.laborRate = parseFloat(labor_rate_edit.text);
     	chargeCost.piecesPerHour = parseFloat(pieces_per_hour_edit.text);
     //	chargeCost.rateTable
-    	chargeCost.setupCost = totalSetup;
+    	chargeCost.setupCost = parseFloat(setup_cost_edit.text);
     	chargeCost.setupMinutes = parseFloat(setup_minutes_edit.text);
   //  	chargeCost.speedTable
     	chargeCost.totalUnitCost= totalCost;
@@ -120,13 +123,15 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	     		unit_materials_edit.text == "" && labor_rate_edit.text == "" && setup_minutes_edit.text == "" && 
 	     		pieces_per_hour_edit.text == "");
 	     
-	     validate(setupCostValidator);                 
-	     validate(unitCostValidator);      
+	     validate(setupCostValidator);   
+	     if ( unit_cost_edit.text != resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable') )         
+	 	    validate(unitCostValidator);      
 	     validate(fixedMaterialsValidator);                 
 	     validate(unitMaterialsValidator);      
 	     validate(laborRateValidator);                 
-	     validate(setupMinutesValidator);      
-	     validate(piecesPerHourValidator);                 
+	     validate(setupMinutesValidator);   
+	     if (pieces_per_hour_edit.text != resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable'))  
+	    	 validate(piecesPerHourValidator);                 
 	}
 	    
 	public function textFocusOut(event:Event):void {
@@ -174,17 +179,21 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 				labor_rate_edit.enabled = false;
 				setup_minutes_edit.enabled = false;
 				pieces_per_hour_edit.enabled = false;
+				speed_button.enabled = false;
+				rate_button.enabled = false;
 			
 			break;
 			
 			case ChargeCostMethod.TIMEANDMATERIAL:
 				setup_cost_edit.enabled = false;
 				unit_cost_edit.enabled = false;
+				rate_button.enabled = false;
 				fixed_materials_edit.enabled = true;
 				unit_materials_edit.enabled = true;
 				labor_rate_edit.enabled = true;
 				setup_minutes_edit.enabled = true;
 				pieces_per_hour_edit.enabled = true;
+				speed_button.enabled = true;
 			break;
 			
 			case ChargeCostMethod.UNITCOST:
@@ -195,11 +204,98 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 				labor_rate_edit.enabled = false;
 				setup_minutes_edit.enabled = false;
 				pieces_per_hour_edit.enabled = false;
+				speed_button.enabled = false;
+				rate_button.enabled = true;
 			break;
 		}
 	
 	
-	}                                
+	}  
+	private function doPriceList():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+	    priceListPickerWindow.itemType = "PriceList";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
+	     priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearPriceList);
+	}
+	 private function handleClearPriceList(evt:PriceListPickerSelectEvent):void {
+		chargeCost.rateTable = null;
+		rate_table_link.label = priceListLabel();
+		unit_cost_edit.enabled = true;
+		unit_cost_edit.text = Snowmass.getCurrencyFormatter(false,4).format(chargeCost.unitCost);
+		
+    }
+    private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
+ 		if (evt.priceList != null) {
+			chargeCost.rateTable = evt.priceList as PriceList;
+			rate_table_link.label = priceListLabel();	
+			unit_cost_edit.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable')
+			unit_cost_edit.enabled = false;
+		} else {
+			chargeCost.rateTable = null;
+			Alert.show("Price List Picker returned a null price list", "Error");
+		}     	
+    }
+    private function priceListLabel():String {
+		if (chargeCost.rateTable != null) {
+			if (chargeCost.rateTable.name != null) {
+				return chargeCost.rateTable.name;
+			} else {
+				return "No Name";
+			}
+		} else {
+			return "None";
+		}
+	}
+	private function speedTableLabel():String {
+		if (chargeCost.speedTable != null) {
+			if (chargeCost.speedTable.name != null) {
+				return chargeCost.speedTable.name;
+			} else {
+				return "No Name";
+			}
+		} else {
+			return "None";
+		}
+	}
+    private function handlePriceListPickerCancel(evt:PriceListPickerSelectEvent):void {
+    	
+    }
+     private function doSpeedTable():void {
+	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
+		priceListPickerWindow.itemType = "SpeedTable";
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectSpeedTable);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearSpeedTable);
+	}
+	 private function handleClearSpeedTable(evt:PriceListPickerSelectEvent):void {
+		chargeCost.speedTable = null;
+		
+		pieces_per_hour_edit.enabled = true;
+		pieces_per_hour_edit.text = Snowmass.getCurrencyFormatter(false,4).format(chargeCost.piecesPerHour);
+		total_cost_text.enabled = true;
+		total_cost_text.text = Snowmass.getCurrencyFormatter(false,4).format(chargeCost.totalUnitCost);
+    }
+    private function handleSelectSpeedTable(evt:PriceListPickerSelectEvent):void {
+		if (evt.priceList != null) {
+			chargeCost.speedTable = evt.priceList as SpeedTable;
+			speed_table_link.label = speedTableLabel();
+			pieces_per_hour_edit.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable')
+			pieces_per_hour_edit.enabled = false;
+			total_cost_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable')
+			total_cost_text.enabled = false;
+			
+		} else {
+			chargeCost.speedTable = null;
+			Alert.show("speed table Picker returned a null price list", "Error");
+			pieces_per_hour_edit.enabled = true;
+			pieces_per_hour_edit.text = Snowmass.getCurrencyFormatter(false,4).format(chargeCost.piecesPerHour);
+			total_cost_text.enabled = true;
+			total_cost_text.text = Snowmass.getCurrencyFormatter(false,4).format(chargeCost.totalUnitCost);
+		}  
+    }                         
 	private function clearFormHandler():void {
 		// Clear all input fields.
 		updateDates();
@@ -230,8 +326,8 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
                              
 
                              
-<mx:CurrencyValidator id="setupCostValidator" source="{setup_cost_edit}"  required="false" property="text"/>
-<mx:CurrencyValidator id="unitCostValidator" source="{unit_cost_edit}" required="false" property="text"/>
+<mx:CurrencyValidator id="setupCostValidator" source="{setup_cost_edit}"  precision="4" required="false" property="text"/>
+<mx:CurrencyValidator id="unitCostValidator" source="{unit_cost_edit}" precision="4" required="false" property="text"/>
 <mx:CurrencyValidator id="fixedMaterialsValidator" source="{fixed_materials_edit}" required="false" property="text"/>
 <mx:CurrencyValidator id="unitMaterialsValidator" source="{unit_materials_edit}" required="false" property="text"/>
 <mx:CurrencyValidator id="laborRateValidator" source="{labor_rate_edit}" required="false" property="text"/>
@@ -242,7 +338,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		<mx:Label x="10" y="15" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.CostingMethod')}" textAlign="right" width="126"/>
 		<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.SetupCost')}" textAlign="right" width="126"/>
 		<mx:Label x="10" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.UnitCost')}" textAlign="right" width="126"/>
-		<mx:TextInput x="144" y="38" width="186" id="setup_cost_edit" text="{chargeCost.setupCost}" change="validateForm(event);" focusOut="textFocusOut(event)" textAlign="right" height="20" />
+		<mx:TextInput x="144" y="38" width="186" id="setup_cost_edit" text="{Snowmass.getCurrencyFormatter(false,4).format(chargeCost.setupCost)}" change="validateForm(event);" focusOut="textFocusOut(event)" textAlign="right" height="20" />
 		<mx:TextInput x="144" y="62" width="186" id="unit_cost_edit" text="{chargeCost.unitCost}" change="validateForm(event);" focusOut="textFocusOut(event)" textAlign="right" height="20" />
 		<mx:Label x="10" y="149" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.FixedMaterials')}" textAlign="right" width="126"/>
 		<mx:TextInput x="144" y="147" width="186" id="fixed_materials_edit" text="{Snowmass.getCurrencyFormatter(false,2).format(chargeCost.fixedMaterials)}" change="validateForm(event);"  textAlign="right" height="20" focusOut="calculateTotalUnit(event)"/>
@@ -255,9 +351,9 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		<mx:Label x="10" y="245" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.PiecesHour')}" textAlign="right" width="126"/>
 		<mx:TextInput x="144" y="243" width="186" id="pieces_per_hour_edit" text="{chargeCost.piecesPerHour}" change="validateForm(event);"  textAlign="right" height="20" focusOut="calculateTotalUnit(event)"/>
 		<mx:Label x="10" y="267" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Totalunitcost')}" textAlign="right" width="126"/>
-		<mx:Button x="12" y="90" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Rate')}" width="93"/>
+		<mx:Button x="12" y="90" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Rate')}" width="106" click="doPriceList();" id="rate_button" />
 		<mx:LinkButton x="144" y="91" id="rate_table_link" width="186"/>
-		<mx:Button x="12" y="291" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Speed')}" width="93"/>
+		<mx:Button x="12" y="291" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Speed')}" width="93" click="doSpeedTable();" id="speed_button"/>
 		<mx:LinkButton x="144" y="292" id="speed_table_link" width="186"/>
 		<mx:HRule x="0" y="130" width="339" height="0"/>
 		<mx:HRule x="0" y="130" width="339" height="9"/>
