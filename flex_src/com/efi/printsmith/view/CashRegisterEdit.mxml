@@ -2,7 +2,7 @@
 <mx:TitleWindow 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	layout="absolute" 
-	width="800" 
+	width="892" 
 	height="686" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
@@ -708,7 +708,7 @@
 
 		    <mx:ComboBox x="77" y="8" change="UpdateCashRegister()" id="pickTaxTable" width="100" dataProvider="{TaxTableArray}" labelField="name" selectedItem="{data.name}"/>
 		    <mx:ComboBox x="77" y="33" change="UpdateCashRegister()" id="pickTaxCode" width="100" dataProvider="{TaxCodesArray}" labelField="name" selectedItem="{data.name}"/>
-		    <mx:CheckBox x="77" y="63" label="Non-Tax" id="chkNonTax"  change="UpdateCashRegister()"/>
+		    <mx:CheckBox x="77" y="63" label="Non-Tax" id="chkNonTax" />
 		</mx:Canvas>
 		<mx:Canvas x="198" y="40" width="210" height="95" id="tax_canvas0" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Format')}"/>
@@ -720,7 +720,7 @@
 			<mx:Button x="10" y="200" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Accept')}" click="doAccept();" width="176" enabled="true"/>
 			<mx:CheckBox x="10" y="243" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintReceipt')}" id="checkbox1"/>
 		</mx:Canvas>
-		<mx:Canvas x="407" y="40" width="210" height="216" id="tax_canvas2" hideEffect="effect" showEffect="effect" borderStyle="inset">
+		<mx:Canvas x="407" y="40" width="261" height="216" id="tax_canvas2" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="50" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PAYMENTMETHOD')}"/>
 			<mx:Button x="10" y="180" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Payment')}" width="186" id="btPayment" click="doPayment();" enabled="false"/>
 			<mx:RadioButtonGroup id="rgPaymentMethod" change="paymentMethodChanged(event)"/>
@@ -730,7 +730,7 @@
 			<mx:RadioButton x="131" y="60" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CHARGE')}" id="rbCharge" groupName="rgPaymentMethod" value="Charge"/>
 
 		</mx:Canvas>
-		<mx:Canvas x="407" y="252" width="210" height="160" id="tax_canvas3" hideEffect="effect" showEffect="effect" borderStyle="inset">
+		<mx:Canvas x="407" y="252" width="261" height="160" id="tax_canvas3" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="43" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.SubTotal')}"/>
 			<mx:Label x="76" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Tax')}"/>
 			<mx:Label x="69" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Total')}"/>
@@ -743,7 +743,7 @@
 			<mx:TextInput  id="change_edit" x="110" y="114" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(batch.change)}"/>
 
 		</mx:Canvas>
-		<mx:DataGrid x="2" y="408" width="613" id="cashReg_grid" dataProvider="{batch.transactions}">
+		<mx:DataGrid x="2" y="408" width="666" id="cashReg_grid" dataProvider="{batch.transactions}">
 			<mx:columns>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Description')}" labelFunction="doDescript"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Subtotal')}" labelFunction="doSubtotalPrice"/>
