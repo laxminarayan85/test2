@@ -18,6 +18,8 @@
 <![CDATA[
 	import com.efi.printsmith.common.components.filter.FilterProperty;
 	import com.efi.printsmith.common.components.filter.FilterSearchBy;
+	import mx.collections.Sort;
+	import mx.collections.SortField
 	import mx.collections.ArrayCollection;
 	import com.efi.printsmith.events.ContactPickerSelectEvent;
 	import com.efi.printsmith.data.Contact;           
@@ -51,10 +53,12 @@
 	         
 	// Holds a reference to the currently focussed control on the form.
  	private var focusedFormControl:DisplayObject;                           
-           
+          
 	                    
 	private function handleLoadResult(event:ResultEvent):void {
 		contacts = event.result as ArrayCollection;
+		
+
 	}
 	
 	private function handleFault(ev:FaultEvent):void {                               
@@ -69,6 +73,12 @@
 	}
 	public function setContactArray(temp:ArrayCollection):void{
 		contacts = temp;
+		 var sort:Sort = new Sort();
+        sort.fields = [new SortField("lastName", true)];
+       // Assign the Sort object to the view.
+     contacts.sort = sort;
+     // Apply the sort to the collection.
+       contacts.refresh();
 	}                                                      
 	private function init():void {   
 	//	consumer.subscribe();
@@ -134,7 +144,7 @@
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName'), fp);
 		sc.addItem(sc1);
 
-		fp = new FilterProperty(new FilterProperty(null, "externalAcctId"), "parentAccount");
+		fp = new FilterProperty(new FilterProperty(null, "accountId"), "parentAccount");
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Acct'), fp);
 		sc.addItem(sc1);
 		
@@ -151,6 +161,14 @@
 		return sc;
 
 	}
+	private function parentLabel(temp:Object,column:DataGridColumn):String{
+		var tempContact:Contact;
+		tempContact = temp as  Contact;
+		if ( tempContact != null)
+			return tempContact.parentAccount.title;
+		else
+			return "";
+	}
 ]]>        
 </mx:Script>
                              
@@ -158,11 +176,11 @@
                              
 	<mx:Canvas width="604" height="557"> 
 		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{contacts}"
-		doubleClickEnabled="true" doubleClick="selectContact()"  showHeaders="true"  borderStyle="solid" borderThickness="3">               
+		doubleClickEnabled="true"  sortableColumns="true" doubleClick="selectContact()"  showHeaders="true"  borderStyle="solid" borderThickness="3">               
 		<mx:columns>
-		     <mx:DataGridColumn dataField="firstName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" />  
-		     <mx:DataGridColumn dataField="lastName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" />                          
-		 
+		 <mx:DataGridColumn   sortDescending="false"  sortable="true" dataField="lastName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" />                          
+		 <mx:DataGridColumn dataField="firstName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" />
+		  <mx:DataGridColumn  labelFunction="parentLabel" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountName')}" />   
 		</mx:columns>
 		</mx:DataGrid>
 		<common:PickerFilter x="10" y="495" width="417" height="26" searchComponent="{dataGrid}" listData="{contacts}" searchCriteria="{getSearchBy()}" />

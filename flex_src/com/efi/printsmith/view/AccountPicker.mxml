@@ -170,7 +170,7 @@
 		var sc1:FilterSearchBy = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Name'), fp);
 		sc.addItem(sc1);
 
-		fp = new FilterProperty(null, "externalAcctId");
+		fp = new FilterProperty(null, "accountId");
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Acct'), fp);
 		sc.addItem(sc1);
 
