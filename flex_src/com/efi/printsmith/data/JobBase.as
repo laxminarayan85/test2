@@ -128,6 +128,7 @@ package com.efi.printsmith.data
 		public var outsideServiceDate:Date = new Date();
 		public var otherDate:Date = new Date();
 		public var deliveredDate:Date = new Date();
+		public var usePaperCalcUp:Boolean = false;
 	
 	}
 }

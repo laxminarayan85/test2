@@ -509,6 +509,10 @@ public class JobBase extends ModelBase {
    */
   public static final String DELIVEREDDATE = "DeliveredDate";
 	/**
+   * @generated
+   */
+  public static final String USEPAPERCALCUP = "UsePaperCalcUp";
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -1137,7 +1141,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne()
 	private PressDefinition pricingPress;
 	
 	/**
@@ -1159,7 +1163,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne()
 	private PressDefinition costingPress;
 	
 	/**
@@ -1561,7 +1565,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne()
 	private CopierDefinition pricingCopier;
 	
 	/**
@@ -1583,7 +1587,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne()
 	private CopierDefinition costingCopier;
 	
 	/**
@@ -3130,6 +3134,27 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean usePaperCalcUp;
+	/**
+   * @generated
+ 	 */
+  public Boolean getUsePaperCalcUp(){
+    return usePaperCalcUp; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUsePaperCalcUp(Boolean newVal) {
+    this.usePaperCalcUp = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -3250,6 +3275,7 @@ public class JobBase extends ModelBase {
     if (OUTSIDESERVICEDATE.equals(propertyName)) return getOutsideServiceDate();
     if (OTHERDATE.equals(propertyName)) return getOtherDate();
     if (DELIVEREDDATE.equals(propertyName)) return getDeliveredDate();
+    if (USEPAPERCALCUP.equals(propertyName)) return getUsePaperCalcUp();
     return super.getProperty(propertyName);
   }
 	
@@ -3374,6 +3400,7 @@ public class JobBase extends ModelBase {
     if (OUTSIDESERVICEDATE.equals(propertyName)) setOutsideServiceDate((Date)newValue); else
     if (OTHERDATE.equals(propertyName)) setOtherDate((Date)newValue); else
     if (DELIVEREDDATE.equals(propertyName)) setDeliveredDate((Date)newValue); else
+    if (USEPAPERCALCUP.equals(propertyName)) setUsePaperCalcUp((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3613,6 +3640,8 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (DELIVEREDDATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
+    if (USEPAPERCALCUP.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3738,6 +3767,7 @@ public class JobBase extends ModelBase {
     if (OUTSIDESERVICEDATE.equals(propertyName)) return JobBase.class;
     if (OTHERDATE.equals(propertyName)) return JobBase.class;
     if (DELIVEREDDATE.equals(propertyName)) return JobBase.class;
+    if (USEPAPERCALCUP.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -3978,6 +4008,8 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getOtherDate(), objT.getOtherDate()))
       return false;
     if (! SmartEquals(getDeliveredDate(), objT.getDeliveredDate()))
+      return false;
+    if (! SmartEquals(getUsePaperCalcUp(), objT.getUsePaperCalcUp()))
       return false;
     return true;
   }			
