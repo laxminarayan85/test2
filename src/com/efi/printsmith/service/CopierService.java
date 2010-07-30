@@ -1,5 +1,6 @@
 package com.efi.printsmith.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import com.efi.printsmith.data.*;
@@ -89,6 +90,61 @@ public class CopierService extends SnowmassHibernateService {
 		return copierDefinition;
 	}
 	
+	public CopierDefinition duplicateCopier(CopierDefinition copier) throws Exception {
+		CopierDefinition newCopier = copier;
+		
+		newCopier.setId(0L);
+		newCopier.setCreated(null);
+		newCopier.setModified(null);
+		newCopier.setPrevId("");
+		newCopier.setCopierId(null);
+		
+		Matrix matrix = new Matrix();
+
+		matrix.setHeader1(copier.getCopierMatrix().getHeader1());
+		matrix.setHeader2(copier.getCopierMatrix().getHeader2());
+		matrix.setHeader3(copier.getCopierMatrix().getHeader3());
+		matrix.setHeader4(copier.getCopierMatrix().getHeader4());
+		matrix.setHeader5(copier.getCopierMatrix().getHeader5());
+		matrix.setHeader6(copier.getCopierMatrix().getHeader6());
+		matrix.setHeader7(copier.getCopierMatrix().getHeader7());
+		matrix.setHeader8(copier.getCopierMatrix().getHeader8());
+		matrix.setHeader9(copier.getCopierMatrix().getHeader9());
+		matrix.setHeader10(copier.getCopierMatrix().getHeader10());
+		
+		Iterator<MatrixElement> iter = copier.getCopierMatrix().getElements().iterator();
+		while (iter.hasNext()) {
+			MatrixElement newElement = new MatrixElement();
+			MatrixElement element = iter.next();
+			newElement.setPrice1(element.getPrice1());
+			newElement.setPrice2(element.getPrice2());
+			newElement.setPrice3(element.getPrice3());
+			newElement.setPrice4(element.getPrice4());
+			newElement.setPrice5(element.getPrice5());
+			newElement.setPrice6(element.getPrice6());
+			newElement.setPrice7(element.getPrice7());
+			newElement.setPrice8(element.getPrice8());
+			newElement.setPrice9(element.getPrice9());
+			newElement.setPrice10(element.getPrice10());
+			newElement.setPrice11(element.getPrice11());
+			newElement.setPrice12(element.getPrice12());
+			newElement.setPrice13(element.getPrice13());
+			newElement.setPrice14(element.getPrice14());
+			newElement.setPrice15(element.getPrice15());
+			newElement.setPrice16(element.getPrice16());
+			newElement.setPrice17(element.getPrice17());
+			newElement.setPrice18(element.getPrice18());
+			newElement.setPrice19(element.getPrice19());
+			newElement.setPrice20(element.getPrice20());
+			matrix.addElements(newElement);
+		}
+		newCopier.setCopierMatrix(matrix);
+		
+		
+//		DataService dataService = new DataService();
+//		newCopier = (CopierDefinition)dataService.addUpdate(newCopier);
+		return newCopier;
+	}
 	public double calculateMachineCostPerCopy(CopierDefinition copierDefinition) {
 		/*
 		 * Copies per year = 

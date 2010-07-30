@@ -1464,6 +1464,18 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	     priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearWasteChart);
 	}
 	
+	private function doEditWasteChart():void {
+		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPriceList(charge.wasteChart as PriceListBase);		
+	}
+	
+	private function doEditPriceList():void {
+		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPriceList(charge.priceList as PriceListBase);				
+	}
+	
 	private function doPresetInfo():void {
 		this.mapToCharge();
 		var chargePresetInfoWindow:ChargePresetInfo = ChargePresetInfo(PopUpManager.createPopUp(this,ChargePresetInfo, true));
@@ -1807,7 +1819,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:TextInput x="134" y="235" width="56" id="base_linear_quantity_edit" text="{charge.baseLinearNumber}"/>
 					<mx:HRule x="3" y="194" width="710" height="8" id="hrule1"/>
 					<mx:HRule x="3" y="264" width="710" height="8" id="hrule2"/>
-					<mx:HRule x="3" y="388" width="555" height="8" id="hrule3"/>
+					<mx:HRule x="3" y="388" width="710" height="8" id="hrule3"/>
 					<mx:CheckBox x="209" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumCharge')}" id="minimum_charge_check" selected="{charge.useMinimumCharge}"/>
 					<mx:TextInput x="342" y="210" width="96" id="minimum_charge_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(charge.minimum)}" enabled="{minimum_charge_check.selected}"/>
 					<mx:CheckBox x="209" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumTime')}" id="minimum_time_check" selected="{charge.useMinimumTime}"/>
@@ -1880,9 +1892,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					</mx:ViewStack>
 					<mx:Button x="10" y="533" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PriceList')}" width="109" id="price_list_button" click="doPriceList()"/>
 					<mx:Button x="10" y="563" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.WasteChart')}" id="waste_chart_button" click="doWasteChart()" width="109"/>
-					<mx:LinkButton x="132" y="533" width="291" id="price_list_link" label="{priceListLabel()}" enabled="{charge.priceList != null}"/>
-					<mx:LinkButton x="132" y="564" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}"/>
-					<mx:HRule x="-7" y="523" width="565" height="8" id="hrule4"/>
+					<mx:LinkButton x="132" y="533" width="291" id="price_list_link" label="{priceListLabel()}" enabled="{charge.priceList != null}" click="doEditPriceList()"/>
+					<mx:LinkButton x="132" y="564" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}" click="doEditWasteChart()"/>
+					<mx:HRule x="-7" y="523" width="710" height="8" id="hrule4"/>
 					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMerchandiseSets}" id="in_set_mat_check" enabled="{material_check.selected}" width="118" change="UpdateAdjset();"/>
 					<mx:TextInput x="446" y="352" width="124" enabled="{in_set_mat_check.selected}"  text="{charge.materialSetCount}" id="in_sets_mat_edit"/>
 					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>

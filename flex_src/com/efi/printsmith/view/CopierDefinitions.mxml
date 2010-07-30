@@ -42,6 +42,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 </mx:RemoteObject>
 <mx:RemoteObject id="copierService" destination="copierService">
 	<mx:method name="newCopier" fault="handleFault(event)" result="handleNewCopier(event)"/>
+	<mx:method name="duplicateCopier" fault="handleFault(event)" result="handleDuplicateCopier(event)"/>	
 </mx:RemoteObject>
 	<mx:RemoteObject id="chargeDataService"
 					 destination="dataService">
@@ -216,13 +217,21 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	
 	private function doDuplicate():void { 
-		var tempCopier:CopierDefinition = new CopierDefinition();
-		tempCopier = copierDefinition;
-		tempCopier.id = 0; 
-		tempCopier.prevId = null;
-		tempCopier.copierId = null;
-		dataService.addUpdate(tempCopier);   		   
+//		var tempCopier:CopierDefinition = new CopierDefinition();
+//		tempCopier = copierDefinition;
+//		tempCopier.id = 0; 
+//		tempCopier.prevId = null;
+//		tempCopier.copierId = null;
+//		dataService.addUpdate(tempCopier);   	
+		
+			   
+		this.enabled = false;		
+		pricing_method_combo.selectedIndex = -1;
+		pricing_method_combo.text = "";
+		
+		copierService.duplicateCopier(copierDefinition);
 	}
+	
 	private function doMachineCost():void{
 	
 	 	var tempmachineCost: Number;
@@ -525,10 +534,24 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		dataGrid.selectedIndex = selectedIndex;
 		dataGrid.verticalScrollPosition = verticalScrollPosition;
 		if (selectedCopierId != -1) {
-			if (getSelectedCopierIndex(selectedCopierId) != -1) {
-				 
+			selectDataGridItem(selectedCopierId);
+		}
+	}
+	
+	private function selectDataGridItem(id:Number):void {
+		var i:int;
+		for (i = 0; i < copierDefinitionArray.length; i++) {
+			if ((copierDefinitionArray.getItemAt(i) as CopierDefinition).id == id) {
+				dataGrid.selectedIndex = i;
+				dataGrid.scrollToIndex(i);
 			}
 		}
+	}
+	
+	private function handleDuplicateCopier(ev:ResultEvent):void {
+		this.copierDefinition = ev.result as CopierDefinition;
+		dataService.addUpdate(this.copierDefinition);
+	 	this.enabled = true;
 	}
 	
 	private function handleNewCopier(ev:ResultEvent):void {

@@ -1836,7 +1836,7 @@
 							<mx:Text x="339"
 									 y="367"
 									 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Price')}" width="109" height="17" textAlign="right" id="text1" visible="false"/>
-							<ns2:Throbber visible="false" id="pricing_throbber" x="564" y="364" height="20" width="20"/>
+							<ns2:SmallThrobber visible="false" id="pricing_throbber" x="564" y="364" height="20" width="20"/>
 							<mx:LinkButton x="564" y="364" width="20" id="refresh_price_btn" height="20" click="updatePrice()" visible="false">
 								<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
 							</mx:LinkButton>

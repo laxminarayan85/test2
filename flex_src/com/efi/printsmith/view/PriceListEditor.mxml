@@ -337,12 +337,14 @@
 			this.quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.RunLength');
 			this.price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Spoilage');
 			this.chkInterpolate.selected = priceList.interpolate;
+			PopUpManager.centerPopUp(this);
 		} else if (priceList is SpeedTable) {
 			itemType = "SpeedTable";
 			this.currentState = "Speed Table";
 			this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefRpt.Speedtable');
 			this.quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.RunLength');
 			this.price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Speed');
+			PopUpManager.centerPopUp(this);
 		} else if (priceList is PaperPrice) {
 			itemType = "PaperPrice";
 			this.currentState = "Paper Price";
@@ -351,15 +353,18 @@
 			this.price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Price');
 			this.color_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Colors');
 			this.side_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobTicketCmd.Sides');
+			PopUpManager.centerPopUp(this);
 		} else if (priceList is com.efi.printsmith.data.Matrix) {
 			itemType = "Matrix";
 			this.currentState = "CopierMatrix";
 			this.label = "Copier Price Matrix"
 			this.quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Copies');
 			this.price_header = "Price/Side";
+			PopUpManager.centerPopUp(this);
 		} else {
 			itemType = "PriceList";
 			this.currentState = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PriceList');
+			PopUpManager.centerPopUp(this);
 		}
 		dataService.getPriceList(priceList.id);
 		updateTitle(priceList.name);

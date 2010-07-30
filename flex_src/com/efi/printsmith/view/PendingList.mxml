@@ -646,7 +646,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobCount')}" labelFunction="getJobCountLabel"/>
 				</mx:columns>
 			</mx:DataGrid>
-			<comp:Throbber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
+			<comp:SmallThrobber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
 		</mx:Canvas>
 	</mx:VBox>
 	<mx:Canvas width="100%" height="46" right="0" bottom="0" id="canvas1">

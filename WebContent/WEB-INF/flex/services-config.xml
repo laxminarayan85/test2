@@ -45,7 +45,7 @@
 				url="https://{server.name}:{server.port}/{context.root}/messagebroker/amfsecure"
 				class="flex.messaging.endpoints.SecureAMFEndpoint" />
 			<properties>
-				<add-no-cache-headers>false</add-no-cache-headers> 
+				<add-no-cache-headers>false</add-no-cache-headers>
 			</properties>
 		</channel-definition>
 
@@ -92,6 +92,22 @@
 			</channel-definition>
 		-->
 	</channels>
+    <logging>
+        <target class="flex.messaging.log.ConsoleTarget" level="Error">
+            <properties>
+                <prefix>[BlazeDS] </prefix>
+                <includeDate>false</includeDate>
+                <includeTime>false</includeTime>
+                <includeLevel>false</includeLevel>
+                <includeCategory>false</includeCategory>
+            </properties>
+            <filters>
+                <pattern>Endpoint.*</pattern>
+                <pattern>Service.*</pattern>
+                <pattern>Configuration</pattern>
+            </filters>
+        </target>
+    </logging>
 
 	<system>
 		<redeploy>
