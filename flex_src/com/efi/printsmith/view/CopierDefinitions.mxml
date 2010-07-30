@@ -76,6 +76,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.data.PreferencesStockDefinition;
 	import com.efi.printsmith.data.enums.CopierPricingMethod;
 	import com.efi.printsmith.data.enums.Price2Side;
+	import com.efi.printsmith.data.enums.Price2SideFlatRate;
 	import com.efi.printsmith.data.enums.StockPriceMethod;
 
 	import com.efi.printsmith.events.StockPickerSelectEvent;
@@ -762,6 +763,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				copymarkuplabel.visible = false;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
+				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 			
 			case CopierPricingMethod.FLATRATE:
@@ -781,6 +783,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				RateCopy.enabled = true;
 				baseratelabel.visible =false;
 				baseRate_edit.visible = false;
+				price_2_side.dataProvider = Price2SideFlatRate.toArray();
 				break;
 				
 			case CopierPricingMethod.COPIESANDORIGINALS:
@@ -799,6 +802,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
+				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
 			case CopierPricingMethod.COPIESPERORIGINALS:
@@ -817,6 +821,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
+				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
 			case CopierPricingMethod.TOTALOFALLCOPIES:
@@ -836,6 +841,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
+				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
 			case CopierPricingMethod.SQUAREAREAOFORIGINALS:
@@ -854,6 +860,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
+				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
 			case CopierPricingMethod.TOTALSQUAREAREA:
@@ -872,6 +879,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
+				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
 			case CopierPricingMethod.SQUAREAREAANDCOPIES:
@@ -890,6 +898,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
+				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
 			case CopierPricingMethod.SQUAREAREAPERCOPY:			
@@ -908,6 +917,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
+				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 			}
 			if (Matrix_button.visible == true){
