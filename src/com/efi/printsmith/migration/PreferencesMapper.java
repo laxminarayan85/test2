@@ -112,6 +112,8 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesSystemField(key, fieldName, fieldValue);
 		else if (group.equals("Local Workstation"))
 			importPreferencesSystemField(key, fieldName, fieldValue);
+		else if (group.equals("Def Customer"))
+			importPreferencesSystemField(key, fieldName, fieldValue);
 	}
 	private void importPreferencesCashRegisterField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
@@ -517,6 +519,22 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setCompanyIdLabel(value);
 		else if (name.equals("companyID"))
 			preferencesSystem.setCompanyId(value);
+		else if (name.equals("workDay_Sunday"))
+			preferencesSystem.setWorkSunday(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("workDay_Monday"))
+			preferencesSystem.setWorkMonday(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("workDay_Tuesday"))
+			preferencesSystem.setWorkTuesday(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("workDay_Wednesday"))
+			preferencesSystem.setWorkWednesday(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("workDay_Thursday"))
+			preferencesSystem.setWorkThursday(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("workDay_Friday"))
+			preferencesSystem.setWorkFriday(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("workDay_Saturday"))
+			preferencesSystem.setWorkSaturday(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("useBusinessDaysForFutureDateParsing"))
+			preferencesSystem.setFutureDatesExcludeClosed(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesSystem);
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
