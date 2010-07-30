@@ -753,7 +753,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("mQuant".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("use paper calc up".equals(currentFieldToken)) {
-				/* TODO */
+				job.setUsePaperCalcUp(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("completed".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("show notes".equals(currentFieldToken)) {
