@@ -184,7 +184,7 @@
 	
 	private function handleLoadFileComplete(event:Event):void {
 		progress_bar.visible = false;
-		if (fileTypeArrayIndex > -1 && fileTypeArrayIndex < 17) {
+		if (fileTypeArrayIndex > -1 && fileTypeArrayIndex < fileTypeArray.length - 1) {
 			fileTypeArrayIndex = fileTypeArrayIndex + 1;
 			importFile(event,fileTypeArray.getItemAt(fileTypeArrayIndex) as String);
 		}
