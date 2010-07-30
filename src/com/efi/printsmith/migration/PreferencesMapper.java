@@ -323,12 +323,16 @@ public class PreferencesMapper extends ImportMapper {
 		if (preferencesPOS == null)
 			preferencesPOS = new PreferencesPOS();
 		if (name.equals("Header Text")) {
-			String currentHeader = preferencesPOS.getReceiptHeader();
+			String currentHeader = "";
+			if (preferencesPOS.getReceiptHeader() != null)
+				currentHeader = preferencesPOS.getReceiptHeader();
 			if (Utilities.tokenToInt(key) > 1)
 				currentHeader = currentHeader + "\r";
 			preferencesPOS.setReceiptHeader(currentHeader + value);
 		} else if (name.equals("Footer Text")) {
-			String currentFooter = preferencesPOS.getReceiptFooter();
+			String currentFooter = "";
+			if (preferencesPOS.getReceiptFooter() != null)
+				currentFooter = preferencesPOS.getReceiptFooter();
 			if (Utilities.tokenToInt(key) > 1)
 				currentFooter = currentFooter + "\r";
 			preferencesPOS.setReceiptFooter(currentFooter + value);
