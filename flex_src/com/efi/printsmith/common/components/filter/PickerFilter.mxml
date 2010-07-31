@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" >
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
 	<mx:Script>
 		<![CDATA[
 			import mx.controls.DataGrid;
@@ -8,29 +8,36 @@
 			import mx.utils.StringUtil;
 			import mx.collections.ArrayCollection;
 			
-			[Bindable] private var _searchCriteria:ArrayCollection;
-			[Bindable] private var _searchComponent:DataGrid;
-			[Bindable] private var _listData:ArrayCollection;
+			[Bindable] protected var _searchCriteria:ArrayCollection;
+			[Bindable] protected var _searchComponent:UIComponent;
+			[Bindable] protected var _listData:ArrayCollection;
+		
 			
-			public function set searchComponent(val:DataGrid):void	{
+			public function set searchComponent(val:UIComponent):void	{
 				_searchComponent = val;
 			}	
 								
 			
 			public function set listData(val:ArrayCollection):void	{
+				setCustomListData(val);	
+			}
+			
+			protected function setCustomListData(val:ArrayCollection):void	{
 				_listData = val;	
 			}
 			
 			public function set searchCriteria(val:ArrayCollection):void	{
-				_searchCriteria = val;				
+				_searchCriteria = val;		
+				if (_searchCriteria.length == 1)	{
+					filterCanvas.removeChild(cboSearchBy); //.width = 0;
+					//cboSearchBy.visible = false;
+				}		
 			}
 			
-			private function search():void	{
+			protected function search():void	{
 				if (txtSearchString.text == "")		{
-					_searchComponent.dataProvider = _listData;
-					
+					_searchComponent["dataProvider"] = _listData;
 				}
-					
 				else	{	
 					var tmpArray:ArrayCollection = new ArrayCollection();
 					var selectedCriterion:FilterSearchBy = cboSearchBy.selectedItem as FilterSearchBy;
@@ -47,13 +54,13 @@
 						}
 					}
 					
-					_searchComponent.dataProvider = tmpArray;					
+					_searchComponent["dataProvider"] = tmpArray;					
 				}
 			
 			} 
 		]]>
 	</mx:Script>
-	<mx:HBox height="100%" width="100%">
+	<mx:HBox height="100%" width="100%" id="filterCanvas">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}:"  />
 		<mx:ComboBox id="cboSearchBy" dataProvider="{_searchCriteria}" labelField="displayLabel" />
 		<mx:TextInput id="txtSearchString"   change="search();" />		
