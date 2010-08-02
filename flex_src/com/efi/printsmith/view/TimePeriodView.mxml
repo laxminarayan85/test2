@@ -199,12 +199,32 @@
 
 
 	private function doSave():void{
-		addUpdatePeriodList = new ArrayCollection();
-		addUpdatePeriodList.addItem(period);
-		if(closedPeriod!=null){
-			addUpdatePeriodList.addItem(closedPeriod);
+		if(validateData()){
+			addUpdatePeriodList = new ArrayCollection();
+			addUpdatePeriodList.addItem(period);
+			if(closedPeriod!=null){
+				addUpdatePeriodList.addItem(closedPeriod);
+			}
+			dataService.addUpdateDeleteList(addUpdatePeriodList,null);
 		}
-		dataService.addUpdateDeleteList(addUpdatePeriodList,null);
+	}
+	
+	private function validateData():Boolean {
+		if(period.toDate<period.fromDate) {
+			Alert.show("Please ensure that To Time is greater than From Time");
+			return false;
+		}
+		return true;
+	}
+	
+	private function setFromDate(event:Event):void{
+		period.fromDate = event.currentTarget.selectedDate;
+		period.customfromDate = event.currentTarget.selectedDate;
+	}
+	
+	private function setToDate(event:Event):void{
+		period.toDate = event.currentTarget.selectedDate;
+		period.customtoDate = event.currentTarget.selectedDate;
 	}
 	
 	private function doCancel():void{
@@ -334,13 +354,13 @@
 			<mx:HBox width="100%">	
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.From')}"
 					width="30%" textAlign="right"/>
-				<mx:DateField id="txtCustomFrom"  selectedDate="{period.customfromDate}" 
+				<mx:DateField id="txtCustomFrom"  selectedDate="{period.customfromDate}" change="{setFromDate(event)}"
 					width="70%" formatString="MM/DD/YYYY" enabled="{period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')}"/>
 			</mx:HBox>
 			<mx:HBox width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.To')}"
 					width="30%" textAlign="right"/>
-				<mx:DateField id="txtCustomTo"  selectedDate="{period.customtoDate}"
+				<mx:DateField id="txtCustomTo"  selectedDate="{period.customtoDate}" change="{setToDate(event)}"
 					width="70%" formatString="MM/DD/YYYY" enabled="{period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')}"/>
 			</mx:HBox>
 		</mx:Panel>
