@@ -107,6 +107,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	public function init():void {
 		//consumer.subscribe();
 	//	notification_consumer.subscribe();  
+		PopUpManager.centerPopUp(this);
 		var titleWindow:EmployeePicker = EmployeePicker(PopUpManager.createPopUp(this, EmployeePicker, true));
 		titleWindow.parentContainer = this;
 	    titleWindow.setStyle("borderAlpha", 0.9);
