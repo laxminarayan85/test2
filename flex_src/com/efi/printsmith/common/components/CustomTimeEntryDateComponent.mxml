@@ -18,15 +18,19 @@
 					amPMText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
 				}
 				if(functionName!=null) {
-					hourText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
-					minuteText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
-					if(showSeconds){
-						secondText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
-					}
-					if(!is24Hour){
-						amPMText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
-					}	
+					callLater(parentFuncCall);
 				}
+			}
+			
+			private function parentFuncCall():void{
+				hourText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
+				minuteText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
+				if(showSeconds){
+					secondText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
+				}
+				if(!is24Hour){
+					amPMText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
+				}	
 			}
 			
 			private function updateDataEventListener(event:Event):void{

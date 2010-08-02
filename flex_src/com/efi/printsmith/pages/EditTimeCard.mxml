@@ -42,7 +42,11 @@
 			
 			private function setTimeDiffString(event:Event=null):void {
 				if(_timeCard.endDateTime>=_timeCard.startDateTime){
-					timeDifference = getTimeDifferenceFromMs(_timeCard.endDateTime.time-_timeCard.startDateTime.time);
+					var breakHour:Number = 0;
+					if(_timeCard.breakHour!=null && _timeCard.breakHour!=""){
+						breakHour = Number(_timeCard.breakHour.split(":")[0])*60*60*1000+Number(_timeCard.breakHour.split(":")[1])*60*1000;
+					}
+					timeDifference = getTimeDifferenceFromMs(_timeCard.endDateTime.time-_timeCard.startDateTime.time-breakHour);
 				}
 			}
 			
@@ -274,7 +278,7 @@
 					<mx:Label text="Total:"/>
 					<components:CustomTimeEntryStringComponent
 						dataHolder="{_timeCard}" variableName="breakHour" customText="{_timeCard.breakHour}" 
-						showSeconds="false" is24Hour="true" />
+						functionName="setTimeDiffString" showSeconds="false" is24Hour="true" />
 					
 				</mx:HBox>
 			

@@ -27,6 +27,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import mx.controls.dataGridClasses.DataGridColumn;
 	import com.efi.printsmith.events.EditTimeCardEvent;
 	import com.efi.printsmith.data.Period;
 	import mx.events.FlexEvent;
@@ -142,24 +143,38 @@
 		if(milliSeconds==0){
 			billableString = "00:00";
 		} else {
-			billableString = convertMilliSecondsToString(milliSeconds);
+			billableString = convertMilliSecondsToString(milliSeconds,false);
 		}
 	}
 	
-	private function convertMilliSecondsToString(milliSeconds:Number):String {
+	private function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
 		var txtString:String = "";
+		if(showSeconds){
+			if(milliSeconds<60000){
+				txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+			}
+		}
 		if(milliSeconds>=60000 && milliSeconds<60000*60){
 	    	txtString = "00:";
 	    	txtString = txtString + numFormatter.format(milliSeconds/60000);
+	    	if(showSeconds){
+	    		txtString = txtString + " " + numFormatter.format((milliSeconds%60000)/(1000))+"S";
+	    	}
 	    }
 	    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
 	    	txtString = numFormatter.format(milliSeconds/(60000*60))+":";
-	    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    	if(showSeconds){
+	    		txtString = txtString + " " + numFormatter.format(milliSeconds%60000/1000)+"S";
+	    	}
 	    }
 	    if(milliSeconds>=60000*60*24){
 	    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
 	    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+":";
 	    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    	if(showSeconds){
+	    		txtString = txtString+" "+numFormatter.format(milliSeconds%60000/1000)+"S";
+	    	}
 	    }
 	    return txtString;
 	}
@@ -265,6 +280,19 @@
 	public function getDateLabel(item:Object,column:DataGridColumn):String
 	{
 		return dateFormatter.format(item[column.dataField]);
+	}
+	
+	public function getOnClockTime(item:Object,column:DataGridColumn):String {
+		if(item.onClock==0){
+			if(item.endDateTime>=item.startDateTime){
+				var breakHour:Number = 0;
+				if(item.breakHour!=null && item.breakHour!=""){
+					breakHour = Number(item.breakHour.split(":")[0])*60*60*1000+Number(item.breakHour.split(":")[1])*60*1000;
+				}
+				return convertMilliSecondsToString(item.endDateTime.time-item.startDateTime.time-breakHour,true);
+			}
+		}
+		return "";
 	}
 	
 	private function openEditTimeCard(event:Event):void{
@@ -452,7 +480,7 @@
 									</mx:Component>
 								</mx:itemRenderer>
 							</mx:DataGridColumn>
-							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock">
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock" labelFunction="getOnClockTime">
 								<mx:itemRenderer>
 									<mx:Component>
 										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
@@ -501,7 +529,7 @@
 									</mx:Component>
 								</mx:itemRenderer>
 							</mx:DataGridColumn>
-							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock">
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock" labelFunction="getOnClockTime">
 								<mx:itemRenderer>
 									<mx:Component>
 										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
@@ -550,7 +578,7 @@
 									</mx:Component>
 								</mx:itemRenderer>
 							</mx:DataGridColumn>
-							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock">
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock" labelFunction="getOnClockTime">
 								<mx:itemRenderer>
 									<mx:Component>
 										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
@@ -599,7 +627,7 @@
 									</mx:Component>
 								</mx:itemRenderer>
 							</mx:DataGridColumn>
-							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock">
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock" labelFunction="getOnClockTime">
 								<mx:itemRenderer>
 									<mx:Component>
 										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
