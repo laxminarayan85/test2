@@ -145,14 +145,14 @@
 					<mx:Label text="Font:" textAlign="right" width="40"/>
 					<components:CustomComboBoxComponent
 						masterList="{fontStyleArray}" labelFieldId="fontName" labelFieldName="fontName"
-						dataHolder="{fontDefinition}" variableName="fontName" customText="{getCustomTextData(fontStyleArray,fontDefinition)}" updateFirstElement="true"
+						dataHolder="{fontDefinition}" variableName="fontName" customText="{getCustomTextData(fontStyleArray,fontDefinition,fontDefinition.fontName)}" updateFirstElement="true"
 						change="{updateStyle()}" width="240"/>
 				</mx:HBox>
 				<mx:HBox width="100%">
 					<mx:Label text="Size:" textAlign="right" width="40"/>
 					<components:CustomComboBoxComponent
 						masterList="{fontSizeArray}" labelFieldId="id" labelFieldName="name"
-						dataHolder="{fontDefinition}" variableName="size" customText="{getCustomTextData(fontSizeArray,fontDefinition)}" updateFirstElement="true"
+						dataHolder="{fontDefinition}" variableName="size" customText="{getCustomTextData(fontSizeArray,fontDefinition,fontDefinition.size)}" updateFirstElement="true"
 						change="{updateStyle()}" width="60"/>
 				</mx:HBox>
 				<mx:HBox width="100%">
