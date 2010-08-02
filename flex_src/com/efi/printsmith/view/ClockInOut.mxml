@@ -24,6 +24,7 @@
 	
 <mx:Script>  	
 <![CDATA[
+	import mx.utils.StringUtil;
 	import com.efi.printsmith.data.Period;
 	import com.efi.printsmith.events.PinRequestEvent;
 	import com.efi.printsmith.pages.PinRequestComponent;
@@ -212,6 +213,9 @@
 						{
 							setTimeCard("breakstop");
 						} else {
+							if(employee.showMessageClockin && employee.message!=null && StringUtil.trim(employee.message)!="") {
+								Alert.show(employee.message);
+							}
 							setTimeCard("in");	
 						}
 						employee.clockIn= true;
@@ -228,6 +232,9 @@
 				{
 					setTimeCard("breakstop");
 				} else {
+					if(employee.showMessageClockin && employee.message!=null && StringUtil.trim(employee.message)!="") {
+						Alert.show(employee.message);
+					}
 					setTimeCard("in");	
 				}
 				employee.clockIn= true;
@@ -248,6 +255,9 @@
 				setTimeCard("breakstopwithclockout");
 			} else {
 				setTimeCard("out");
+			}
+			if(employee.showMessageClockout && employee.message!=null && StringUtil.trim(employee.message)!="") {
+				Alert.show(employee.message);
 			}
 			employee.clockIn= false;
 			employee.clockOut = true;
@@ -368,11 +378,29 @@
 			<mx:AdvancedDataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" sortable="false" textAlign="center" dataField="lastName"/>
 				<mx:AdvancedDataGridColumnGroup id="Inout" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custRepCmd.Status')}" sortable="false" editable="false">
 				<mx:AdvancedDataGridColumn width="20" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardEditorCmd.Out')}" 
-					sortable="false" textAlign="center"  editable="false" dataField="clockOut" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer"  rendererIsEditor="false" editorDataField="selected"/>
+					sortable="false" textAlign="center"  editable="false" dataField="clockOut">
+					<mx:itemRenderer>
+						<mx:Component>
+							<mx:CheckBox enabled="false" selected="{data.clockOut || (!data.clockIn &amp;&amp; !data.clockBreak)}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:AdvancedDataGridColumn>	
 				<mx:AdvancedDataGridColumn width="20" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardEditorCmd.In')}" 
-					sortable="false" textAlign="center" editable="false" dataField="clockIn" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
+					sortable="false" textAlign="center" editable="false" dataField="clockIn">
+					<mx:itemRenderer>
+						<mx:Component>
+							<mx:CheckBox enabled="false" selected="{data.clockIn}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:AdvancedDataGridColumn>	
 				<mx:AdvancedDataGridColumn width="20" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardEditorCmd.BreakTime')}" 
-					sortable="false" textAlign="center" editable="false" dataField="clockBreak" itemRenderer="com.efi.printsmith.components.GenericCheckboxRenderer" rendererIsEditor="false" editorDataField="selected"/>
+					sortable="false" textAlign="center" editable="false" dataField="clockBreak">
+					<mx:itemRenderer>
+						<mx:Component>
+							<mx:CheckBox enabled="false" selected="{data.clockBreak}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:AdvancedDataGridColumn>	
 			</mx:AdvancedDataGridColumnGroup>
 		</mx:groupedColumns>
 	</mx:AdvancedDataGrid>

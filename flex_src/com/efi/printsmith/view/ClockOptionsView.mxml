@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="vertical" width="600" height="500" showCloseButton="true"
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ClockOptions')}"
+	close="{closeWindow()}" creationComplete="{initClockOptsWindow()}" xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.FaultEvent;
+			import mx.managers.PopUpManager;
+			import com.efi.printsmith.data.Employee;
+			
+			[Bindable] public var employeeList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var employee:Employee;
+			
+			private function initClockOptsWindow():void {
+				PopUpManager.centerPopUp(this);
+				dataService.getAll("Employee");
+			}
+			
+			private function setEmployeeObj(event:Event):void {
+				if(event.currentTarget.selectedIndex>-1){
+					var hours:Number = 0;
+					employee = event.currentTarget.selectedItem as Employee;
+					employee.autoOutTime = employee.autoHour+":"+employee.autoMin;
+				} else {
+					employee = null;
+				}
+			}
+			
+			private function handleLoadResult(event:ResultEvent):void {
+				employeeList = event.result as ArrayCollection;
+				employee = null;
+			}
+			
+			private function handleFault(ev:FaultEvent):void {  
+				var message:String;
+				              
+				message = "Error: "                          
+				+ ev.fault.faultCode + " - "                                  
+				+ ev.fault.faultDetail + " - "                                  
+				+ ev.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, 4);                                 
+			}
+			
+			private function setAutoHours(event:Event):void {
+				if(employee!=null){
+					if(employee.autoOutTime!=null && employee.autoOutTime!=""){
+						var hours:Number = Number(employee.autoOutTime.split(":")[0]);
+						var minutes:Number = Number(employee.autoOutTime.split(":")[1]);
+						employee.autoHour = hours;
+						employee.autoMin = minutes;
+					} else {
+						employee.autoHour = 0;
+						employee.autoMin = 0;
+					}
+				}
+			}
+			
+			private function getAutoOutText(timeStr:String):String {
+				if(timeStr!=null && timeStr!=""){
+					var am_pm_text:String = "AM";
+					var hours:Number = Number(timeStr.split(":")[0]);
+					var minutes:Number = Number(timeStr.split(":")[1]);
+					if(hours==0 && minutes==0){
+						return "";
+					} else {
+						if(hours>11 && hours<24){
+							am_pm_text = "PM";
+						}
+						if(hours>12){
+							hours = hours-12;
+						} else if(hours==0){
+							hours = 12;
+						}
+						return hours+":"+minutes+" "+am_pm_text;
+					}
+				}
+				return "";
+			}
+			
+			private function doSave():void {
+				dataService.addUpdateDeleteList(employeeList,null);
+			}
+			
+			private function handleSaveResult(event:ResultEvent):void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function doRevert():void {
+				dataService.getAll("Employee");
+			}
+			
+			private function closeWindow():void{
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:HBox width="100%" height="55%">
+		<mx:Spacer width="3%"/>
+		<mx:VBox width="95%" height="100%">
+		
+			<mx:HBox width="100%" height="10%">
+		
+				<mx:Button width="9%" height="100%" click="{doSave()}" id="btnSave" enabled="{employee!=null}">
+					<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+				</mx:Button>
+				
+				<mx:Button width="9%" height="100%" click="{doRevert()}" id="btnRevert" enabled="{employee!=null}">
+					<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
+				</mx:Button>
+				
+				<mx:Button width="9%" height="100%" click="{closeWindow()}" id="btnClose">
+					<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+				</mx:Button>
+				
+			</mx:HBox>
+			
+			<mx:HBox width="100%" height="10%">
+			
+				<mx:Label 
+					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"
+					width="9%" textAlign="center"/>
+				<mx:Label 
+					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}"
+					width="9%" textAlign="center"/>
+				<mx:Label 
+					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Close')}"
+					width="9%" textAlign="center"/>
+			
+			</mx:HBox>
+			
+			<mx:VBox width="100%" height="80%">
+			
+				<mx:HBox width="100%" height="50%">
+					
+					<mx:Panel title="Status" layout="vertical" width="30%" height="100%">
+					
+						<mx:RadioButtonGroup id="activeStatus" enabled="{employee!=null}"/>
+						
+						<components:CustomRadioButtonComponent value="true" label="Active" groupName="activeStatus"
+							dataHolder="{employee}" variableName="active" customText="{employee.active}" enabled="{employee!=null}"/>
+						
+						<components:CustomRadioButtonComponent value="false" label="Inactive" groupName="activeStatus"
+							dataHolder="{employee}" variableName="active" customText="{employee.active}" enabled="{employee!=null}"/>
+							
+					</mx:Panel>
+					
+					<mx:Panel title="Auto Out" layout="vertical" width="70%" height="100%">
+					
+						<mx:HBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
+							
+							<components:CustomTimeEntryStringComponent 
+								showSeconds="false" enabled="{employee!=null}" functionName="setAutoHours"
+								dataHolder="{employee}" variableName="autoOutTime" customText="{employee.autoOutTime}" is24Hour="true"/>
+							
+							<mx:TextInput id="autoOutText" enabled="false" text="{getAutoOutText(employee.autoOutTime)}"
+								textAlign="center"/>
+						</mx:HBox>
+							
+					</mx:Panel>
+					
+				</mx:HBox>
+				
+				<mx:Panel title="Message" layout="vertical" width="100%" height="50%">
+				
+					<components:CustomTextAreaComponent width="95%" height="50%" enabled="{employee!=null}"
+						dataHolder="{employee}" variableName="message" customText="{employee.message}"/>
+					
+					<components:CustomCheckBoxComponent height="25%" label="Show message at clock IN"
+						dataHolder="{employee}" variableName="showMessageClockin" customText="{employee.showMessageClockin}"
+						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee!=null}"/>
+						
+					<components:CustomCheckBoxComponent height="25%" label="Show message at clock OUT"
+						dataHolder="{employee}" variableName="showMessageClockout" customText="{employee.showMessageClockout}"
+						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee!=null}"/>
+				</mx:Panel>
+				
+			</mx:VBox>
+			
+		</mx:VBox>	
+		<mx:Spacer width="2%"/>
+	</mx:HBox>
+	
+	<mx:DataGrid dataProvider="{employeeList}" width="100%" height="45%" itemClick="{setEmployeeObj(event)}">
+		<mx:columns>
+			<mx:DataGridColumn width="100" headerText="Status" dataField="active" textAlign="center">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{data.active?'Active':'Inactive'}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn width="100" headerText="ID" dataField="employeeId" textAlign="center"/>
+			<mx:DataGridColumn width="300" headerText="Name" dataField="lastName" textAlign="center">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{data.lastName}, {data.firstName}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn width="100" headerText="IN" dataField="clockIn" textAlign="center">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:CheckBox enabled="false" selected="{data.clockIn}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn width="100" headerText="OUT" dataField="clockOut" textAlign="center">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:CheckBox enabled="false" selected="{data.clockOut || (!data.clockIn &amp;&amp; !data.clockBreak)}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn width="100" headerText="Break" dataField="clockBreak" textAlign="center">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:CheckBox enabled="false" selected="{data.clockBreak}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn width="100" headerText="Message" dataField="message" textAlign="center">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:CheckBox enabled="false" selected="{data.showMessageClockin || data.showMessageClockout}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn width="100" headerText="Auto Out" dataField="autoHour" textAlign="center">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:CheckBox enabled="false" selected="{data.autoHour!=0 || data.autoMin!=0}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+		</mx:columns>
+	</mx:DataGrid>
+		
+</mx:TitleWindow>

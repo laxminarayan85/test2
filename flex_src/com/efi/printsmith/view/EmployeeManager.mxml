@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" 
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="100%" height="100%" 
 	creationComplete="init()"
 	name="employeeManager" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.EmployeeManager')}" 
@@ -62,16 +62,30 @@
 	     titleWindow.setStyle("borderAlpha", 0.9);
 	     			
 	}		
-
+	
+	private function doClockOptionsView():void {
+		var titleWindow:ClockOptionsView = ClockOptionsView(PopUpManager.createPopUp(this, ClockOptionsView, true));
+     	titleWindow.setStyle("borderAlpha", 0.9);
+	}
 
 ]]>
                              
 </mx:Script>	
-
-	<mx:Button id="button_employees" x="176" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Employees')}" width="158" height="150" icon="@Embed(source='../../../../assets/EmployeeEdit.png')" click="doEmployee();" />
-	<mx:Button id="button_timeperiods" x="10" y="183" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.TimePeriods')}" height="159" width="158" icon="@Embed(source='../../../../assets/timeperiods.png')" labelPlacement="bottom" click="doTimePeriodView();"/>
-	<mx:Button id="button_timecards" x="176" y="183" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EditTimeCards')}" height="159" width="158" icon="@Embed(source='../../../../assets/edittimecard.png')" labelPlacement="bottom" click="doTimeCardView();"/>
-	<mx:Button id="button_clockinout" x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ClockInOut')}" width="158" height="150" icon="@Embed(source='../../../../assets/punchclock.png')" labelPlacement="bottom" click="doClockInOut();"/>
-
+	<mx:HBox width="100%" height="24%">
+		<mx:Button id="button_clockinout" width="15%" height="100%"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ClockInOut')}" icon="@Embed(source='../../../../assets/punchclock.png')" labelPlacement="bottom" click="{doClockInOut()}"/>
+		<mx:Button id="button_employees" width="15%" height="100%"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Employees')}" icon="@Embed(source='../../../../assets/EmployeeEdit.png')" click="{doEmployee()}" />	
+	</mx:HBox>
+	<mx:HBox width="100%" height="24%">
+		<mx:Button id="button_timeperiods" width="15%" height="100%" 
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.TimePeriods')}" icon="@Embed(source='../../../../assets/timeperiods.png')" labelPlacement="bottom" click="{doTimePeriodView()}"/>
+		<mx:Button id="button_timecards" width="15%" height="100%"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EditTimeCards')}" icon="@Embed(source='../../../../assets/edittimecard.png')" labelPlacement="bottom" click="{doTimeCardView()}"/>
+	</mx:HBox>
+	<mx:HBox width="100%" height="24%">
+		<mx:Button id="button_clockoptions" width="15%" height="100%" 
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ClockOptions')}" icon="@Embed(source='../../../../assets/ClockIndicator.png')" labelPlacement="bottom" click="{doClockOptionsView()}"/>
+	</mx:HBox>
 </mx:Panel>
 
