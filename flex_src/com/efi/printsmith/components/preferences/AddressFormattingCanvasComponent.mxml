@@ -465,7 +465,7 @@
 						
 					<components:CustomComboBoxComponent id="countryComboBox" width="20%"
 						masterList="{countryArray}" labelFieldId="id" labelFieldName="name"
-						dataHolder="{preferencesSystem}" variableName="defaultCountry" customText="{getCustomTextData(countryArray,preferencesSystem)}" 
+						dataHolder="{preferencesSystem}" variableName="defaultCountry" customText="{getCustomTextData(countryArray,preferencesSystem,preferencesSystem.defaultCountry)}" 
 						updateFirstElement="true" change="{parentDocument.setCurrentCountry(event);setListFocus(event);setFormatText(event)}"/>
 						
 				</mx:HBox>

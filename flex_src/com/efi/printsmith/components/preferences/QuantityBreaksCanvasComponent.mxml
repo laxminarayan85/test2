@@ -112,7 +112,7 @@
 									<components:CustomComboBoxComponent datagridControl="true" variableName="jobMethod"
 										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 										masterList="{outerDocument.jobMethodsArray}" updateFirstElement="true"
-										customText="{outerDocument.getCustomTextData(outerDocument.jobMethodsArray,data)}"/>
+										customText="{outerDocument.getCustomTextData(outerDocument.jobMethodsArray,data,data.jobMethod)}"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>

@@ -1,13 +1,13 @@
 // ActionScript file
 import mx.collections.ArrayCollection;
-import mx.controls.Alert;
 import mx.formatters.NumberFormatter;
 
 
-public function getCustomTextData(comboData:Object, temp:Object):ArrayCollection{
+public function getCustomTextData(comboData:Object, temp:Object, value:Object):ArrayCollection{
 	var tempCollection:ArrayCollection = new ArrayCollection();
 	tempCollection.addItem(comboData);
 	tempCollection.addItem(temp);
+	tempCollection.addItem(value);
 	return tempCollection;
 }
 

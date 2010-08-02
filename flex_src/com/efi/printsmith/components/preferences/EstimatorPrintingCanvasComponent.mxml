@@ -48,7 +48,7 @@
 						
 					<components:CustomComboBoxComponent width="250"
 						masterList="{defaultInvoiceArray}" labelFieldId="id" labelFieldName="name"
-						dataHolder="{preferencesEstimating}" variableName="defaultInvoice" customText="{getCustomTextData(defaultInvoiceArray,preferencesEstimating)}" 
+						dataHolder="{preferencesEstimating}" variableName="defaultInvoice" customText="{getCustomTextData(defaultInvoiceArray,preferencesEstimating,preferencesEstimating.defaultInvoice)}" 
 						updateFirstElement="true"/>
 					
 				</mx:HBox>
@@ -61,7 +61,7 @@
 						
 					<components:CustomComboBoxComponent width="250"
 						masterList="{defaultEstimateArray}" labelFieldId="id" labelFieldName="name"
-						dataHolder="{preferencesEstimating}" variableName="defaultEstimate" customText="{getCustomTextData(defaultEstimateArray,preferencesEstimating)}" 
+						dataHolder="{preferencesEstimating}" variableName="defaultEstimate" customText="{getCustomTextData(defaultEstimateArray,preferencesEstimating,preferencesEstimating.defaultEstimate)}" 
 						updateFirstElement="true"/>
 					
 				</mx:HBox>

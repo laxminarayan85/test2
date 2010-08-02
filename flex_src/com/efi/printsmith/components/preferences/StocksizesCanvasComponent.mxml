@@ -244,7 +244,7 @@
 						
 					<components:CustomComboBoxComponent 
 						masterList="{sizeTableArray}" labelFieldId="id" labelFieldName="name"
-						dataHolder="{preferencesStocks}" variableName="sizeTable" customText="{getCustomTextData(sizeTableArray,preferencesStocks)}" 
+						dataHolder="{preferencesStocks}" variableName="sizeTable" customText="{getCustomTextData(sizeTableArray,preferencesStocks,preferencesStocks.sizeTable)}" 
 						updateFirstElement="true" updateObject="true" objectLabelFieldId="id"/>
 					
 				</mx:HBox>

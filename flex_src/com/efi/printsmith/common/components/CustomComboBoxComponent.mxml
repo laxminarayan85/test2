@@ -38,15 +38,23 @@
 				if(updateFirstElement && masterList != null && masterList.length>0){
 					if(updateObject) {
 						if(data!= null && (data[variableName]==null || data[variableName]==0)){
-			   				data[variableName] = masterList.getItemAt(0);
+							if(data["nullUpdated"]==null){
+			   					data[variableName] = masterList.getItemAt(0);
+			   				}
 				   		}else if(dataHolder != null && (dataHolder[variableName]==null || dataHolder[variableName]==0)){
-				   			dataHolder[variableName] = masterList.getItemAt(0);
+				   			if(dataHolder["nullUpdated"]==null){
+				   				dataHolder[variableName] = masterList.getItemAt(0);
+				   			}
 				   		}
 					} else {
 						if(data!= null && (data[variableName] == null || data[variableName] == 0)){
-			   				data[variableName] = masterList.getItemAt(0)[labelFieldId];
+							if(data["nullUpdated"]==null){
+			   					data[variableName] = masterList.getItemAt(0)[labelFieldId];
+			   				}
 				   		}else if(dataHolder != null && ( dataHolder[variableName] == null || dataHolder[variableName] == 0)){
-				   			dataHolder[variableName] = masterList.getItemAt(0)[labelFieldId];
+				   			if(dataHolder["nullUpdated"]==null){
+				   				dataHolder[variableName] = masterList.getItemAt(0)[labelFieldId];
+				   			}
 				   		}
 			  		}
 				}
@@ -198,16 +206,25 @@
 							if(updateObject) {
 								event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem;
 							} else {
-								if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue)
+								if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue) {
+									event.currentTarget.getRepeaterItem()["nullUpdated"] = true;
 									event.currentTarget.getRepeaterItem()[variableName] = null;
-								else
+								}
+								else {
+									if(event.currentTarget.selectedItem[labelFieldId]==0){
+										event.currentTarget.getRepeaterItem()["nullUpdated"] = true;
+									}
 									event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem[labelFieldId];
+								}
 							}
 						}
 						else {
 							if(updateObject){
 								event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem;
-							} else { 
+							} else {
+								if(event.currentTarget.selectedItem[labelFieldId]==0){
+									event.currentTarget.getRepeaterItem()["nullUpdated"] = true;
+								} 
 								event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem[labelFieldId];
 							}
 						}
@@ -216,30 +233,48 @@
 				else {
 					if(dataHolder != null){
 						if(initialKeyValue){
-							if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue)
+							if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue) {
+								dataHolder["nullUpdated"] = true;
 								dataHolder[variableName] = null;
-							else
-								dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
+							}
+							else {
+									if(event.currentTarget.selectedItem[labelFieldId]==0){
+										dataHolder["nullUpdated"] = true;
+									}
+									dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
+								}
 							}
 						else {
 							if(updateObject) {
 								dataHolder[variableName] = event.currentTarget.selectedItem;
 							} else {
+								if(event.currentTarget.selectedItem[labelFieldId]==0){
+									dataHolder["nullUpdated"] = true;
+								}
 								dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
 							}
 						}
 					}
 					else {
 						if(initialKeyValue){
-							if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue)
+							if(event.currentTarget.selectedItem[labelFieldId] == initialKeyValue) {
+								data["nullUpdated"] = true;
 								data[variableName] = null;
-							else
+							}
+							else {
+								if(event.currentTarget.selectedItem[labelFieldId]==0){
+									data["nullUpdated"] = true;
+								}
 						 		data[variableName] = event.currentTarget.selectedItem[labelFieldId];
+						 	}
 						}
 						else {
 							if(updateObject) {
 								data[variableName] = event.currentTarget.selectedItem;
 							} else {
+								if(event.currentTarget.selectedItem[labelFieldId]==0){
+									data["nullUpdated"] = true;
+								}
 								data[variableName] = event.currentTarget.selectedItem[labelFieldId];
 							}
 						}

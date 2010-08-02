@@ -34,8 +34,8 @@
 						
 					<components:CustomComboBoxComponent id="cboFiscalYearStartMonth" width="260"
 						masterList="{monthsArray}" labelFieldId="name" labelFieldName="name"
-						dataHolder="{preferencesSystem}" variableName="fiscalYearStartMonth" customText="{getCustomTextData(monthsArray,preferencesSystem)}" 
-						initialKeyValue="January" updateFirstElement="true" change="parentDocument.setCurrentRange();"/>
+						dataHolder="{preferencesSystem}" variableName="fiscalYearStartMonth" customText="{getCustomTextData(monthsArray,preferencesSystem,preferencesSystem.fiscalYearStartMonth)}" 
+						updateFirstElement="true" change="parentDocument.setCurrentRange();"/>
 					
 				</mx:HBox>
 				

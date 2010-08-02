@@ -81,7 +81,7 @@
 					<components:CustomComboBoxComponent width="145"
 						labelFieldId="name" labelFieldName="name" updateFirstElement="true"
 						masterList="{salesRepArray}" dataHolder="{preferencesAccounting}" variableName="defaultSalesRep" 
-						customText="{getCustomTextData(salesRepArray,preferencesAccounting)}"/>
+						customText="{getCustomTextData(salesRepArray,preferencesAccounting,preferencesAccounting.defaultSalesRep)}"/>
 				
 				</mx:HBox>
 				
@@ -94,7 +94,7 @@
 					<components:CustomComboBoxComponent width="145"
 						labelFieldId="name" labelFieldName="name" updateFirstElement="true"
 						masterList="{shippingMethodArray}" dataHolder="{preferencesAccounting}" variableName="defaultShipping" 
-						customText="{getCustomTextData(shippingMethodArray,preferencesAccounting)}"/>
+						customText="{getCustomTextData(shippingMethodArray,preferencesAccounting,preferencesAccounting.defaultShipping)}"/>
 				
 				</mx:HBox>
 					

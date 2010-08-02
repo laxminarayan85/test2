@@ -56,7 +56,7 @@
 						
 					<components:CustomComboBoxComponent width="338"
 						masterList="{jobTicketStylesArray}" labelFieldId="name" labelFieldName="name"
-						dataHolder="{preferencesEstimating}" variableName="customJobTicket" customText="{getCustomTextData(jobTicketStylesArray,preferencesEstimating)}" 
+						dataHolder="{preferencesEstimating}" variableName="customJobTicket" customText="{getCustomTextData(jobTicketStylesArray,preferencesEstimating,preferencesEstimating.customJobTicket)}" 
 						updateFirstElement="true" enabled="{preferencesEstimating.jobTicketFormat=='customstyle'}"/>
 						
 				</mx:HBox>

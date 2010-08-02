@@ -40,7 +40,7 @@
 			
 					<components:CustomComboBoxComponent width="250"
 						masterList="{journalDocumentPreferenceArray}" labelFieldId="name" labelFieldName="name"
-						dataHolder="{preferencesAccounting}" variableName="journalDocumentPreference" customText="{getCustomTextData(journalDocumentPreferenceArray,preferencesAccounting)}"
+						dataHolder="{preferencesAccounting}" variableName="journalDocumentPreference" customText="{getCustomTextData(journalDocumentPreferenceArray,preferencesAccounting,preferencesAccounting.journalDocumentPreference)}"
 						updateFirstElement="true"/>
 		
 				</mx:HBox>

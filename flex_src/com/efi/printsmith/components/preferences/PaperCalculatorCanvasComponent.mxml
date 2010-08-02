@@ -543,7 +543,7 @@
 											
 										<components:CustomComboBoxComponent width="164"
 											masterList="{runToFinishGrainArray}" labelFieldId="name" labelFieldName="name"
-											dataHolder="{preferencesEstimating}" variableName="runToFinishGrain" customText="{getCustomTextData(runToFinishGrainArray,preferencesEstimating)}" 
+											dataHolder="{preferencesEstimating}" variableName="runToFinishGrain" customText="{getCustomTextData(runToFinishGrainArray,preferencesEstimating,preferencesEstimating.runToFinishGrain)}" 
 											updateFirstElement="true"/>
 										
 									</mx:HBox>

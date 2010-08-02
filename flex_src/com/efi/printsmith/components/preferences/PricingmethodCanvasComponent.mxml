@@ -164,7 +164,7 @@
 									<components:CustomComboBoxComponent datagridControl="true" variableName="category"
 										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 										masterList="{outerDocument.salesCategoryArray}" updateFirstElement="true"
-										customText="{outerDocument.getCustomTextData(outerDocument.salesCategoryArray,data)}"/>
+										customText="{outerDocument.getCustomTextData(outerDocument.salesCategoryArray,data,data.category)}"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>
@@ -182,7 +182,7 @@
 									<components:CustomComboBoxComponent datagridControl="true" variableName="estimator"
 										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 										masterList="{outerDocument.estimatorTypesArray}" updateFirstElement="true"
-										customText="{outerDocument.getCustomTextData(outerDocument.estimatorTypesArray,data)}"/>
+										customText="{outerDocument.getCustomTextData(outerDocument.estimatorTypesArray,data,data.estimator)}"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>
