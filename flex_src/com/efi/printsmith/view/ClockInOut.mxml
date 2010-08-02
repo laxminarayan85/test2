@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockInOut')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockInOut')}" 
 	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
-	<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getActiveEmployees" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
 
-	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService">
+	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService" showBusyCursor="true">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTimeCardResult(event)"/>
 		<mx:method name="getByClockInOut" fault="handleFault(event)" result="handleLoadTimeCardResult(event)"/>
-		<mx:method name="getByClockInOutBreak" fault="handleFault(event)" result="handleLoadTimeCardBreakResult(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServicePeriod" destination="dataService" showBusyCursor="true">
+		<mx:method name="getByPeriodOpen" fault="handleFault(event)" result="handlePeriodLoadResult(event)"/>
+	</mx:RemoteObject>
+	
 
 	
 	<mx:Producer id="producer" destination="employee"/>
@@ -20,6 +24,7 @@
 	
 <mx:Script>  	
 <![CDATA[
+	import com.efi.printsmith.data.Period;
 	import com.efi.printsmith.events.PinRequestEvent;
 	import com.efi.printsmith.pages.PinRequestComponent;
 	import com.efi.printsmith.data.TimeCard;
@@ -45,14 +50,14 @@
 
 	[Bindable]
 	private var timecardArray:ArrayCollection = new ArrayCollection();
-	[Bindable]
-	private var timecardBreakArray:ArrayCollection = new ArrayCollection();
 
 	[Bindable] 
 	private var employee:Employee;
 
 	[Bindable] 
 	private var timecard:TimeCard;
+	
+	[Bindable] private var period:Period;
 
 	[Bindable]
 	private var OnOffBreak:String="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.OnBreak')}";
@@ -65,6 +70,7 @@
 		clockOut.enabled = false;
 		clockBreak.enabled = false;
 		dataService.getActiveEmployees();
+		dataServicePeriod.getByPeriodOpen("Period");
 		//user = application.currentUser;
 	} 
 	
@@ -81,6 +87,14 @@
 			}
 		}
 	}
+	
+	private function handlePeriodLoadResult(event:ResultEvent):void {
+		var periodList:ArrayCollection = event.result as ArrayCollection;
+		if(periodList!=null && periodList.length>0){
+			period = periodList.getItemAt(0,0) as Period;
+		}
+	}
+	
 	private function handleLoadResult(ev:ResultEvent):void {
 		employeesArray = ev.result as ArrayCollection;
 	}
@@ -92,12 +106,10 @@
 	}  
 	
 	private function handleSaveTimeCardResult(ev:ResultEvent):void {
+		dataServiceTimeCard.getByClockInOut("TimeCard",employee);
 	}
 	private function handleLoadTimeCardResult(ev:ResultEvent):void {
 		timecardArray = ev.result as ArrayCollection;
-	}
-	private function handleLoadTimeCardBreakResult(ev:ResultEvent):void {
-		timecardBreakArray = ev.result as ArrayCollection;
 	}
 	
 	private function setEmployee():void
@@ -116,6 +128,9 @@
 			if (timecardArray == null || timecardArray.length == 0)
 			{
 				newCard = new TimeCard();
+				if(period!=null){
+					newCard.period = period.periodNumber;
+				}
 			}else {
 				newCard = timecardArray.getItemAt(0,0) as TimeCard;
 			}
@@ -133,35 +148,56 @@
 				newCard.onClock = 0;
 			}
 		} else {
-	
-			for each(item in timecardBreakArray) {
-				if (item.employee.id == employee.id && item.endDateTime == null)
-				{
-					newCard = item;
-					break;
-				}
-			}
-			if (newCard == null)
-			{
-				newCard = new TimeCard();
-			}
-
-			if (reason == "breakstart")
-			{
-				var breakstart:Date=new Date()
-				newCard.startDateTime = breakstart;
-				newCard.endDateTime = null;
-				newCard.employee = employee;
+			var totalBreakTime:Number = 0;
+			newCard = timecardArray.getItemAt(0,0) as TimeCard;
+			if(reason=="breakstop"){
+				totalBreakTime = (new Date().time-newCard.breakTime.time)+convertStringToMilliseconds(newCard.breakHour);
+				newCard.breakHour = convertMillisecondsToString(totalBreakTime);
+			} else if(reason=="breakstart"){
+				var breakstart:Date=new Date();
 				newCard.breakTime = breakstart;
+			} else if(reason=="breakstopwithclockout"){
+				var stopTime:Date = new Date();
+				totalBreakTime = (stopTime.time-newCard.breakTime.time)+convertStringToMilliseconds(newCard.breakHour);
+				newCard.breakHour = convertMillisecondsToString(totalBreakTime);
+				newCard.endDateTime = stopTime;
 				newCard.onClock = 0;
-			}
-			if (reason == "breakstop")
-			{
-				newCard.endDateTime = new Date();
 			}
 		}
 			
 		dataServiceTimeCard.addUpdate(newCard);
+	}
+	
+	private function convertStringToMilliseconds(timeStr:String):Number {
+		var milliSeconds:Number = 0;
+		if(timeStr==null||timeStr==""){
+			milliSeconds = 0;
+		} else {
+			if(timeStr.indexOf(":")>-1){
+				var hours:Number = Number(timeStr.split(":")[0]);
+				var minutes:Number = Number(timeStr.split(":")[1]);
+				milliSeconds = (hours*60*60*1000)+(minutes*60*1000);
+			} else {
+				milliSeconds = 0;
+			}
+		}
+		return milliSeconds;
+	}
+	
+	private function convertMillisecondsToString(milliSeconds:Number):String {
+		var txtString:String = "";
+		if(milliSeconds<60000){
+			txtString = "00:00";
+		}
+		if(milliSeconds>=60000 && milliSeconds<60000*60){
+	    	txtString = "00:";
+	    	txtString = txtString + numFormatter.format(milliSeconds/60000);
+	    }
+	    if(milliSeconds>=60000*60){
+	    	txtString = numFormatter.format(milliSeconds/(60000*60))+":";
+	    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    }
+	    return txtString;
 	}
 
 	private function doClockIn(): void{  
@@ -174,27 +210,29 @@
 						if (employee.clockBreak == true)
 						{
 							setTimeCard("breakstop");
+						} else {
+							setTimeCard("in");	
 						}
 						employee.clockIn= true;
 						employee.clockOut = false;
 						employee.clockBreak= false;
 						setEmployee();
-						setTimeCard("in");
 						clockIn.enabled = false;
 						clockOut.enabled = false;
 						clockBreak.enabled = false;
 					}
-				});
+				},false,0,true);
 			} else {
 				if (employee.clockBreak == true)
 				{
 					setTimeCard("breakstop");
+				} else {
+					setTimeCard("in");	
 				}
 				employee.clockIn= true;
 				employee.clockOut = false;
 				employee.clockBreak= false;
 				setEmployee();
-				setTimeCard("in");
 				clockIn.enabled = false;
 				clockOut.enabled = false;
 				clockBreak.enabled = false;
@@ -206,12 +244,13 @@
 		if (employee != null){
 			if (employee.clockBreak == true)
 			{
-				setTimeCard("breakstop");
+				setTimeCard("breakstopwithclockout");
+			} else {
+				setTimeCard("out");
 			}
 			employee.clockIn= false;
 			employee.clockOut = true;
-			employee.clockBreak= false; 
-			setTimeCard("out");
+			employee.clockBreak= false;
 			setEmployee();
 			clockIn.enabled = false;
 			clockOut.enabled = false;
@@ -236,17 +275,17 @@
 							}
 							else
 							{
+								setTimeCard("breakstart");
 								employee.clockIn= false;
 								employee.clockOut = false;
 								employee.clockBreak= true;
-								setTimeCard("breakstart");
 							}
 							setEmployee();
 							clockIn.enabled = false;
 							clockOut.enabled = false;
 							clockBreak.enabled = false;
 						}
-					});
+					},false,0,true);
 				} else {
 					if (employee.clockBreak == true)
 					{
@@ -257,10 +296,10 @@
 					}
 					else
 					{
+						setTimeCard("breakstart");
 						employee.clockIn= false;
 						employee.clockOut = false;
 						employee.clockBreak= true;
-						setTimeCard("breakstart");
 					}
 					setEmployee();
 					clockIn.enabled = false;
@@ -284,7 +323,6 @@
 	private function doGrid(): void{ 
 		employee = employeeGrid.selectedItem as Employee;
 		dataServiceTimeCard.getByClockInOut("TimeCard",employee);
-		dataServiceTimeCard.getByClockInOutBreak("TimeCard",employee);
 		if(employee.clockIn){
 			clockIn.enabled = false;
 			clockOut.enabled = true;
@@ -313,6 +351,8 @@
 ]]>
                              
 </mx:Script>
+
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 
 	<mx:Button x="20" y="37" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.ClockIn')}" 
 		width="132" height="107" icon="@Embed(source='../../../../assets/ClockIn.png')" id="clockIn" click="doClockIn();"/>

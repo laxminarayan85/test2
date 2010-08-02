@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TimeEntry xmlns="com.efi.printsmith.components.*" xmlns:mx="http://www.adobe.com/2006/mxml" initialize="{initTEComponent()}">
+	<mx:Script>
+		<![CDATA[
+			[Bindable] public var dataHolder:Object;
+			[Bindable] public var variableName:String;
+			[Bindable] public var functionName:Function;
+			private var _customText:Date;
+			
+			private function initTEComponent():void{
+				//timeStepper.addEventListener(Event.CHANGE,updateDataEventListener);
+				hourText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
+				minuteText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
+				if(showSeconds){
+					secondText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
+				}
+				if(!is24Hour){
+					amPMText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
+				}
+				if(functionName!=null) {
+					hourText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
+					minuteText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
+					if(showSeconds){
+						secondText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
+					}
+					if(!is24Hour){
+						amPMText.addEventListener(FocusEvent.FOCUS_OUT,functionName,false,0,true);
+					}	
+				}
+			}
+			
+			private function updateDataEventListener(event:Event):void{
+				if(dataHolder!=null){
+					if(dataHolder[variableName]!=null){
+						var dateObj:Date = dataHolder[variableName] as Date;
+						if(!is24Hour){
+							if(this.am_pm=="pm"){
+								if(this.hour==12){
+									dateObj.hours = this.hour;
+								} else {
+									dateObj.hours = this.hour+12;
+								}
+							} else {
+								if(this.hour==12){
+									dateObj.hours = 0;
+								} else {
+									dateObj.hours = this.hour;
+								}
+							}
+						} else {
+							dateObj.hours = this.hour;
+						} 
+						dateObj.minutes = this.minute;
+						if(showSeconds){
+							dateObj.seconds = this.second;
+						}
+					}
+				}
+			}
+			
+			public function get customText():Date{
+				return _customText;
+			}
+			
+			public function set customText(displayValue:Date):void{
+				if(displayValue!=null){
+					if(!is24Hour){
+						if(displayValue.hours>12){
+							this.hour = displayValue.hours-12;
+							this.defaultHour = displayValue.hours-12;
+						} else if(displayValue.hours==0){
+							this.hour = 12;
+							this.defaultHour = 12;
+						} else {
+							this.hour = displayValue.hours;
+							this.defaultHour = displayValue.hours;
+						}
+					} else {
+						this.hour = displayValue.hours;
+						this.defaultHour = displayValue.hours;
+					}
+					this.minute = displayValue.minutes;
+					if(showSeconds){
+						this.second = displayValue.seconds;
+					}
+					if(!is24Hour){
+						if(displayValue.hours>11 && displayValue.hours<24){
+							this.am_pm = "pm";
+						} else {
+							this.am_pm = "am";
+						}
+					}
+					_customText = displayValue;
+				}
+			}
+		]]>
+	</mx:Script>
+</TimeEntry>

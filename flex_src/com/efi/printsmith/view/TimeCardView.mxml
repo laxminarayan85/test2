@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" 
-	title="Time Cards" 
-	label="Time Cards" 
-	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="675" height="575" 
+	title="Employee Time Cards" label="Employee Time Cards" creationComplete="init()" 
+	xmlns:components="com.efi.printsmith.components.*" xmlns:common="com.efi.printsmith.common.components.*"
+	xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) " >
  
- 	<mx:RemoteObject id="dataService" destination="dataService">
+ 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	</mx:RemoteObject>
-	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService">
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTimeCardResult(event)"/>
-		<mx:method name="getByClockInOut" fault="handleFault(event)" result="handleLoadTimeCardResult(event)"/>
-		<mx:method name="getByClockInOutBreak" fault="handleFault(event)" result="handleLoadTimeCardBreakResult(event)"/>
-		<mx:method name="getByTimeCardByEmployee" fault="handleFault(event)" result="handleLoadTimeCardEmployeeResult(event)"/>
+	
+	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService" showBusyCursor="true">
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteTimeCardResult(event)"/>
+		<mx:method name="getByTimeCardByEmployeeByActivePeriod" fault="handleFault(event)" result="handleLoadTimeCardEmployeeResult(event)"/>
+		<mx:method name="getByTimeCardByEmployeeByClosePeriod" fault="handleFault(event)" result="handleLoadTimeCardEmployeeResult(event)"/>
+		<mx:method name="getByTimeCardByEmployeeByAllPeriod" fault="handleFault(event)" result="handleLoadTimeCardEmployeeResult(event)"/>
+		<mx:method name="getByTimeCardByEmployeeBySpecificPeriod" fault="handleFault(event)" result="handleLoadTimeCardEmployeeResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServicePeriod" destination="dataService" showBusyCursor="true">
+		<mx:method name="getByPeriodOpen" fault="handleFault(event)" result="handleActivePeriodLoadResult(event)"/>
+		<mx:method name="getAllClosePeriods" fault="handleFault(event)" result="handleClosePeriodLoadResult(event)"/>
+		<mx:method name="getAllPeriods" fault="handleFault(event)" result="handleAllPeriodLoadResult(event)"/>
 	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="employee"/>
@@ -20,6 +27,12 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import com.efi.printsmith.events.EditTimeCardEvent;
+	import com.efi.printsmith.data.Period;
+	import mx.events.FlexEvent;
+	import mx.utils.ObjectUtil;
+	import flash.net.registerClassAlias;
+	import com.efi.printsmith.pages.EditTimeCard;
 	import mx.controls.Text;
 
 	import mx.controls.Alert;                                         
@@ -39,11 +52,6 @@
 //Data field arrays
 	[Bindable]
 	private var employeesArray:ArrayCollection = new ArrayCollection();
-
-	[Bindable]
-	private var timecardArray:ArrayCollection = new ArrayCollection();
-	[Bindable]
-	private var timecardBreakArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var timecardEmployeeArray:ArrayCollection = new ArrayCollection();
 
@@ -52,22 +60,45 @@
 
 	[Bindable] 
 	private var timecard:TimeCard;
+	
+	[Bindable] public var activePeriod:Period;
+	
+	[Bindable] public var allPeriods:ArrayCollection = new ArrayCollection();
+	
+	[Bindable] public var closePeriods:ArrayCollection = new ArrayCollection();
+	
+	[Bindable] public var periodList:ArrayCollection = new ArrayCollection();
+	
+	[Bindable] public var specifyPeriod:int = -1;
+	
+	[Bindable] public var selectedTab:String = "Active Period";
+	
+	[Bindable] public var billableString:String = "";
+	
+	[Bindable] public var selectedIndex:int = -1;
 
 //Data view variables
 //	[Bindable]
 //	private var preferencesSystem:PreferencesSystem;
 
 	public function init():void {
-		consumer.subscribe();
-		notification_consumer.subscribe();
-
+		/* consumer.subscribe();
+		notification_consumer.subscribe(); */
+		PopUpManager.centerPopUp(this);
+		for (var i:int=0; i<tabNavigator.getChildren().length; i++)  
+		{  
+			var tab:Button = tabNavigator.getTabAt(i);  
+			tab.addEventListener(FlexEvent.BUTTON_DOWN,tabSelectEvent,false,0,true);  
+		}  
 		setup();
 		
 	}
 	
 	private function setup():void{
 		dataService.getAll("Employee");
-		
+		dataServicePeriod.getByPeriodOpen("Period");
+		dataServicePeriod.getAllClosePeriods("Period");
+		dataServicePeriod.getAllPeriods("Period");
 	}
 	
 	private function messageHandler(message:IMessage):void{
@@ -98,39 +129,136 @@
 	private function handleLoadResult(ev:ResultEvent):void {
 		employeesArray = ev.result as ArrayCollection;
 	}
-	private function handleLoadTimeCardResult(ev:ResultEvent):void {
-		timecardArray = ev.result as ArrayCollection;
-	}
-	private function handleLoadTimeCardBreakResult(ev:ResultEvent):void {
-		timecardBreakArray = ev.result as ArrayCollection;
-	}
 	private function handleLoadTimeCardEmployeeResult(ev:ResultEvent):void {
 		timecardEmployeeArray = ev.result as ArrayCollection;
-	}
-
-
-// Data Save Handlers
-	private function handleSaveResult(ev:ResultEvent):void {
-    	//dataService.getAll("PreferencesSystem");
-	}
-	private function handleSaveTimeCardResult(ev:ResultEvent):void {
-	}
-
-
-	private function doSave():void{
+		var milliSeconds:Number = 0;
+		for each(var timeCardObj:TimeCard in timecardEmployeeArray){
+			if(timeCardObj.billable!=null && timeCardObj.billable!=""){
+				 var hours:Number = Number(timeCardObj.billable.split(":")[0])*60*60*1000;
+				 var minutes:Number = Number(timeCardObj.billable.split(":")[1])*60*1000;
+				 milliSeconds = milliSeconds+hours+minutes;
+			}
+		}
+		if(milliSeconds==0){
+			billableString = "00:00";
+		} else {
+			billableString = convertMilliSecondsToString(milliSeconds);
+		}
 	}
 	
-	private function doCancel():void{
-		PopUpManager.removePopUp(this)
+	private function convertMilliSecondsToString(milliSeconds:Number):String {
+		var txtString:String = "";
+		if(milliSeconds>=60000 && milliSeconds<60000*60){
+	    	txtString = "00:";
+	    	txtString = txtString + numFormatter.format(milliSeconds/60000);
+	    }
+	    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
+	    	txtString = numFormatter.format(milliSeconds/(60000*60))+":";
+	    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    }
+	    if(milliSeconds>=60000*60*24){
+	    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
+	    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+":";
+	    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    }
+	    return txtString;
+	}
+	
+
+	private function doNew():void{
+		var employeeList:ArrayCollection = new ArrayCollection();
+		registerClassAlias("com.efi.printsmith.data.Employee",Employee);
+		employeeList = ObjectUtil.copy(employeesArray) as ArrayCollection;
+		for each(var employeeObj:Employee in employeeList) {
+			if(employeeObj.id == employee.id){
+				employeeObj.isSelected = true;
+				employeeObj.isDisabled = true;
+			}
+		}
+		timecard = new TimeCard();
+		timecard.startDateTime = new Date();
+		timecard.endDateTime = new Date();
+		timecard.breakTime = null;
+		timecard.period = activePeriod.periodNumber;
+		timecard.onClock = 0;
+		timecard.employee = employee;
+		var editTimeCard:EditTimeCard = PopUpManager.createPopUp(this,EditTimeCard,true) as EditTimeCard;
+		editTimeCard.addEventListener(EditTimeCardEvent.EDIT_DATA_SAVE,function(event:EditTimeCardEvent):void{
+			if(event.isSave) {
+				timecard = null;
+				selectedIndex = -1;
+				timecardEmployeeArray = new ArrayCollection();
+				billableString = "00:00";
+				getTimeCards();
+			}
+		},false,0,true);
+		editTimeCard.periodList = periodList;
+		editTimeCard.employeeList = employeeList;
+		editTimeCard.editData = false;
+		editTimeCard.timeCard = timecard;
+		if(timecard.employee!=null){
+			editTimeCard.title = employee.lastName+", "+employee.firstName;
+		}
+	}
+	
+	private function doChange():void{
+		if(selectedIndex>-1){
+			if(timecard.onClock==1){
+				Alert.show("Th employee timecard cannot be modified, timecard is active");
+				return;
+			} else {
+				registerClassAlias("com.efi.printsmith.data.TimeCard",TimeCard);
+				timecard = ObjectUtil.copy(timecard) as TimeCard;
+				var editTimeCard:EditTimeCard = PopUpManager.createPopUp(this,EditTimeCard,true) as EditTimeCard;
+				editTimeCard.addEventListener(EditTimeCardEvent.EDIT_DATA_SAVE,function(event:EditTimeCardEvent):void{
+					if(event.isSave) {
+						timecard = null;
+						selectedIndex = -1;
+						timecardEmployeeArray = new ArrayCollection();
+						billableString = "00:00";
+						getTimeCards();
+					}
+				},false,0,true);
+				editTimeCard.timeCard = timecard;
+				if(timecard.employee!=null){
+					editTimeCard.title = employee.lastName+", "+employee.firstName;
+				}
+			}
+		}
+	}
+	
+	private function doDelete():void {
+		if(selectedIndex>-1){
+			if(timecard.onClock==1){
+				Alert.show("Th employee timecard cannot be deleted, employee is currently clocked IN");
+				return;
+			} else {
+				dataServiceTimeCard.deleteItem("TimeCard",timecard.id);
+			}
+		}
+	}
+	
+	private function handleDeleteTimeCardResult(event:ResultEvent):void {
+		timecard = null;
+		selectedIndex = -1;
+		timecardEmployeeArray = new ArrayCollection();
+		billableString = "00:00";
+		getTimeCards();
 	}
 
-	private function doGrid(): void{ 
-		employee = employeeGrid.selectedItem as Employee;
-		dataServiceTimeCard.getByTimeCardByEmployee("TimeCard",employee);
-		
+	private function doGrid(event:Event): void{
+		if(event.currentTarget.selectedIndex>-1){
+			employee = event.currentTarget.selectedItem as Employee;
+			timecard = null;
+			selectedIndex = -1;
+			timecardEmployeeArray = new ArrayCollection();
+			billableString = "00:00";
+			getTimeCards();
+		}
 	}  
-	private function doTimeCardGrid(): void{
-		timecard = timecardGrid.selectedItem as TimeCard;
+	private function doTimeCardGrid(event:Event): void{
+		selectedIndex = event.currentTarget.selectedIndex;
+		timecard = event.currentTarget.selectedItem as TimeCard;
 		
 	}
 
@@ -138,41 +266,402 @@
 	{
 		return dateFormatter.format(item[column.dataField]);
 	}
+	
+	private function openEditTimeCard(event:Event):void{
+		if(event.currentTarget.selectedIndex>-1){
+			if(event.currentTarget.selectedItem.onClock==1){
+				Alert.show("Th employee timecard cannot be modified, timecard is active");
+				return;
+			} else {
+				registerClassAlias("com.efi.printsmith.data.TimeCard",TimeCard);
+				timecard = ObjectUtil.copy(event.currentTarget.selectedItem) as TimeCard;
+				var editTimeCard:EditTimeCard = PopUpManager.createPopUp(this,EditTimeCard,true) as EditTimeCard;
+				editTimeCard.addEventListener(EditTimeCardEvent.EDIT_DATA_SAVE,function(event:EditTimeCardEvent):void{
+					if(event.isSave) {
+						timecard = null;
+						selectedIndex = -1;
+						timecardEmployeeArray = new ArrayCollection();
+						billableString = "00:00";
+						getTimeCards();
+					}
+				},false,0,true);
+				editTimeCard.timeCard = timecard;
+				if(timecard.employee!=null){
+					editTimeCard.title = employee.lastName+", "+employee.firstName;
+				}
+			}
+		}
+	}
+	
+	private function tabSelectEvent(event:Event):void {
+		if(event.currentTarget.label!=selectedTab){
+			timecard = null;
+			selectedIndex = -1;
+			timecardEmployeeArray = new ArrayCollection();
+			billableString = "00:00";
+			selectedTab = event.currentTarget.label;
+			getTimeCards();
+		}
+	}
+	
+	private function getTimeCards():void {
+		if(employee!=null){
+			if(selectedTab=="Active Period"){
+				if(activePeriod!=null){
+					dataServiceTimeCard.getByTimeCardByEmployeeByActivePeriod("TimeCard",employee,activePeriod.periodNumber);
+				}
+			} else if(selectedTab=="Previous Period"){
+				if(closePeriods!=null && closePeriods.length>0){
+					var closePeriodNumbers:ArrayCollection = new ArrayCollection();
+					for(var k:int=0;k<closePeriods.length;k++){
+						closePeriodNumbers.addItem(closePeriods.getItemAt(k).periodNumber);
+					}
+					dataServiceTimeCard.getByTimeCardByEmployeeByClosePeriod("TimeCard",employee,closePeriodNumbers);
+				}
+			} else if(selectedTab=="All"){
+				allPeriods = new ArrayCollection();
+				if(activePeriod!=null || (closePeriods!=null && closePeriods.length>0)){
+					if(closePeriods==null || closePeriods.length==0){
+						if(activePeriod!=null){
+							allPeriods.addItem(activePeriod.periodNumber);
+						}
+					} else {
+						if(activePeriod!=null){
+							for(var i:int=0;i<closePeriods.length;i++){
+								allPeriods.addItem(closePeriods.getItemAt(i).periodNumber);
+							}
+							allPeriods.addItem(activePeriod.periodNumber);
+						} else {
+							for(var j:int=0;j<closePeriods.length;j++){
+								allPeriods.addItem(closePeriods.getItemAt(j).periodNumber);
+							}
+						} 
+					}
+					dataServiceTimeCard.getByTimeCardByEmployeeByAllPeriod("TimeCard",employee,allPeriods);
+				}
+			} else if(selectedTab=="Specify Period"){
+				if(periodList!=null && periodList.length>0) {
+					if(specifyPeriod==-1){
+						specifyPeriod = periodList.getItemAt(0,0).periodNumber;
+					}
+					dataServiceTimeCard.getByTimeCardByEmployeeBySpecificPeriod("TimeCard",employee,specifyPeriod);
+				}
+			}
+		}
+	}
+	
+	private function handleActivePeriodLoadResult(event:ResultEvent):void {
+		var activePeriodList:ArrayCollection = event.result as ArrayCollection;
+		if(activePeriodList!=null && activePeriodList.length>0){
+			activePeriod = activePeriodList.getItemAt(0,0) as Period;
+		}
+	}
+	
+	private function handleClosePeriodLoadResult(event:ResultEvent):void {
+		closePeriods = event.result as ArrayCollection;
+		/* var closePeriodList:ArrayCollection = event.result as ArrayCollection;
+		var periodStr:String = "";
+		if(closePeriodList!=null && closePeriodList.length>0){
+			var count:int=0;
+			for each(var period:Period in closePeriodList) {
+				if(count==0){
+					periodStr = ""+period.periodNumber;
+				} else {
+					periodStr = periodStr + "," + period.periodNumber;
+				}
+				count++;
+			}
+		}
+		closePeriodStr = periodStr; */
+	}
+	
+	private function handleAllPeriodLoadResult(event:ResultEvent):void {
+		periodList = event.result as ArrayCollection;
+	}
+	
+	private function setSpecificPerNum(event:Event):void {
+		specifyPeriod = event.currentTarget.selectedItem.periodNumber;
+		timecard = null;
+		selectedIndex = -1;
+		timecardEmployeeArray = new ArrayCollection();
+		billableString = "00:00";
+		getTimeCards();
+	}
 
 
 ]]>
                              
 </mx:Script>	
-	<mx:DateFormatter id="dateFormatter" formatString="HH:NN:SS A"/>
-
-	<mx:Button x="228" y="6" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
-		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
-	</mx:Button>
-	<mx:Button x="274" y="6" width="38" height="38" click="doCancel();" id="btnCancel">
-		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
-	</mx:Button>
-
-		<mx:DataGrid x="10" y="10" width="178" id="employeeGrid" dataProvider="{employeesArray}" height="478"
-			itemClick="doGrid()">
-			<mx:columns>
-				<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.ID')}" dataField="id" />
-				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" dataField="firstName" />
-				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" dataField="lastName"/>
-			</mx:columns>
-		</mx:DataGrid>
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
 	
-		<mx:DataGrid x="190" y="95" width="418" id="timecardGrid" dataProvider="{timecardEmployeeArray}" height="376"
-			itemClick="doTimeCardGrid()">
-			<mx:columns>
-				<mx:DataGridColumn width="60" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Period')}" dataField="period" />
-				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.In')}" dataField="startDateTime" labelFunction="getDateLabel" />
-				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Out')}" dataField="endDateTime" labelFunction="getDateLabel"/>
-				<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Break')}" dataField="breakTime" labelFunction="getDateLabel"/>
-				<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock" />
-				<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Billable')}" dataField="billable"/>
-			</mx:columns>
-		</mx:DataGrid>
-		<mx:Label x="231" y="52" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"/>
-		<mx:Label x="277" y="52" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"/>
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
+	
+	<mx:HBox width="100%" height="100%">
+	
+		<mx:VBox width="30%" height="100%">
+			<mx:Label text="Employees" height="5%"/>
+			<mx:DataGrid width="100%" id="employeeGrid" dataProvider="{employeesArray}" height="95%"
+				itemClick="{doGrid(event)}">
+				<mx:columns>
+					<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.ID')}" dataField="id" />
+					<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" dataField="firstName" />
+					<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" dataField="lastName"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:VBox>
+		
+		<mx:VBox width="70%" height="100%">
+			
+			<mx:HBox width="100%" height="5%">
+				<mx:Label text="Name:" width="15%"/>
+				<mx:TextInput enabled="false" text="{employee.lastName}, {employee.firstName}" width="40%"/>
+				<mx:Label text="Billable:" width="15%"/>
+				<mx:TextInput enabled="false" width="30%" text="{billableString}"/>
+			</mx:HBox>
+			
+			<mx:TabNavigator id="tabNavigator" width="100%" height="83%">
+				<mx:VBox label="Active Period" width="100%" height="100%">
+					<mx:DataGrid id="dg1" dataProvider="{timecardEmployeeArray}" width="100%" height="100%"
+						itemClick="{doTimeCardGrid(event)}" doubleClickEnabled="true" doubleClick="{openEditTimeCard(event)}">
+						<mx:columns>
+							<mx:DataGridColumn width="60" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Period')}" dataField="period">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.In')}" dataField="startDateTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Out')}" dataField="endDateTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Break')}" dataField="breakTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Billable')}" dataField="billable">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+						</mx:columns>
+					</mx:DataGrid>
+				</mx:VBox>
+				<mx:VBox label="Previous Period" width="100%" height="100%">
+					<mx:DataGrid id="dg2" dataProvider="{timecardEmployeeArray}" width="100%" height="100%"
+						itemClick="{doTimeCardGrid(event)}" doubleClickEnabled="true" doubleClick="{openEditTimeCard(event)}">
+						<mx:columns>
+							<mx:DataGridColumn width="60" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Period')}" dataField="period">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.In')}" dataField="startDateTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Out')}" dataField="endDateTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Break')}" dataField="breakTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Billable')}" dataField="billable">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+						</mx:columns>
+					</mx:DataGrid>
+				</mx:VBox>
+				<mx:VBox label="All" width="100%" height="100%">
+					<mx:DataGrid id="dg3" dataProvider="{timecardEmployeeArray}" width="100%" height="100%"
+						itemClick="{doTimeCardGrid(event)}" doubleClickEnabled="true" doubleClick="{openEditTimeCard(event)}">
+						<mx:columns>
+							<mx:DataGridColumn width="60" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Period')}" dataField="period">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.In')}" dataField="startDateTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Out')}" dataField="endDateTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Break')}" dataField="breakTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Billable')}" dataField="billable">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+						</mx:columns>
+					</mx:DataGrid>
+				</mx:VBox>
+				<mx:VBox label="Specify Period" width="100%" height="100%">
+					<mx:DataGrid id="dg4" dataProvider="{timecardEmployeeArray}" width="100%" height="100%"
+						itemClick="{doTimeCardGrid(event)}" doubleClickEnabled="true" doubleClick="{openEditTimeCard(event)}">
+						<mx:columns>
+							<mx:DataGridColumn width="60" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Period')}" dataField="period">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.In')}" dataField="startDateTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Out')}" dataField="endDateTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Break')}" dataField="breakTime" labelFunction="getDateLabel">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.OnClock')}" dataField="onClock">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn width="70" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.Billable')}" dataField="billable">
+								<mx:itemRenderer>
+									<mx:Component>
+										<common:CustomLabelComponent dataGridRowColor="true" columnName="onClock" fontColor="0xFF0000"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+						</mx:columns>
+					</mx:DataGrid>
+				</mx:VBox>
+			</mx:TabNavigator>
+			
+			<mx:VBox width="100%" height="12%">
+				<mx:HBox width="100%" height="85%">
+			
+					<mx:Button width="12%" height="100%" click="{doNew()}" id="btnNew"
+						enabled="{employee!=null}">
+						<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+					</mx:Button>
+					
+					<mx:Button width="12%" height="100%" click="{doChange()}" id="btnChange"
+						enabled="{timecard!=null}">
+						<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+					</mx:Button>
+					
+					<common:CustomDeleteButtonComponent width="12%" height="100%" id="btnDelete"
+						enabled="{timecard!=null}" clickFuncName="doDelete" deleteLabel="TimeCard"/>
+					
+					<!--<mx:Button width="12%" height="100%" click="{doDelete()}" id="btnDelete"
+						enabled="{timecard!=null}">
+						<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+					</mx:Button>-->
+					
+					<mx:Label text="Specify Period"/>
+					<mx:ComboBox change="{setSpecificPerNum(event)}" 
+						dataProvider="{periodList}" labelField="periodNumber" enabled="{selectedTab=='Specify Period'}"/>
+					
+				</mx:HBox>
+				<mx:HBox width="100%" height="15%">
+		
+					<mx:Label 
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}"
+						width="12%" textAlign="center" enabled="{employee!=null}"/>
+					<mx:Label 
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Change')}"
+						width="12%" textAlign="center" enabled="{timecard!=null}"/>
+					<mx:Label 
+						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}"
+						width="12%" textAlign="center" enabled="{timecard!=null}"/>
+				
+				</mx:HBox>
+			</mx:VBox>
+			
+		</mx:VBox>
+		
+	</mx:HBox>
+	
 </mx:TitleWindow>
 

@@ -2312,13 +2312,15 @@ public class DataService extends HibernateService {
 		log.debug("** getByEmployee Id called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
-			java.util.Date date = new java.util.Date();
+			/*DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date = new java.util.Date();*/
 
-			String queryString = "from " + className
+			/*String queryString = "from " + className
 					+ " where to_char(startdatetime,'YYYY-MM-DD') = '"
 					+ dateFormat.format(date).toString()
-					+ "' and employee = :employee and onClock = 1";
+					+ "' and employee = :employee and onClock = 1";*/
+			String queryString = "from " + className
+			+ " where employee = :employee and onClock = 1";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employee", employee);
 			List<TimeCard> timecardlist = query.getResultList();
@@ -2369,10 +2371,12 @@ public class DataService extends HibernateService {
 			DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
 			java.util.Date date = new java.util.Date();
 
-			String queryString = "from " + className
+			/*String queryString = "from " + className
 					+ " where to_char(created,'YYYY-MM-DD') = '"
 					+ dateFormat.format(date).toString()
-					+ "' and employee = :employee";
+					+ "' and employee = :employee";*/
+			String queryString = "from " + className
+					+ " where employee = :employee order by period desc";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employee", employee);
 			List<TimeCard> timecardlist = query.getResultList();
@@ -2387,13 +2391,218 @@ public class DataService extends HibernateService {
 		return null;
 	}
 
+	/**
+	 * This method retrieves Time Cards for Active Period and Employee 
+	 * @param className
+	 * @param employee
+	 * @param periodNumber
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TimeCard> getByTimeCardByEmployeeByActivePeriod(String className,
+			Employee employee, int periodNumber) throws Exception {
+		log.debug("** getByTimeCardByEmployeeByActivePeriod called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from " + className
+					+ " where employee = :employee and period = :periodNumber order by period desc";
+			Query query = em.createQuery(queryString);
+			query.setParameter("employee", employee);
+			query.setParameter("periodNumber", periodNumber);
+			List<TimeCard> timecardlist = query.getResultList();
+			if (timecardlist != null)
+				log.debug("** Found " + timecardlist.size() + "records:");
+			return timecardlist;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
+	/**
+	 * This method retrieves Time Cards for Close Periods and Employee 
+	 * @param className
+	 * @param employee
+	 * @param periodNumber
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TimeCard> getByTimeCardByEmployeeByClosePeriod(String className,
+			Employee employee, List closePeriods) throws Exception {
+		log.debug("** getByTimeCardByEmployeeByClosePeriod called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from " + className
+					+ " where employee = :employee and period in (:closePeriods) order by period desc";
+			Query query = em.createQuery(queryString);
+			query.setParameter("employee", employee);
+			query.setParameter("closePeriods", closePeriods);
+			List<TimeCard> timecardlist = query.getResultList();
+			if (timecardlist != null)
+				log.debug("** Found " + timecardlist.size() + "records:");
+			return timecardlist;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
+	/**
+	 * This method retrieves Time Cards for All Periods and Employee 
+	 * @param className
+	 * @param employee
+	 * @param periodNumber
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TimeCard> getByTimeCardByEmployeeByAllPeriod(String className,
+			Employee employee, List allPeriods) throws Exception {
+		log.debug("** getByTimeCardByEmployeeByAllPeriod called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from " + className
+					+ " where employee = :employee and period in (:allPeriods) order by period desc";
+			Query query = em.createQuery(queryString);
+			query.setParameter("employee", employee);
+			query.setParameter("allPeriods", allPeriods);
+			List<TimeCard> timecardlist = query.getResultList();
+			if (timecardlist != null)
+				log.debug("** Found " + timecardlist.size() + "records:");
+			return timecardlist;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
+	/**
+	 * This method retrieves Time Cards for Specific Period and Employee 
+	 * @param className
+	 * @param employee
+	 * @param periodNumber
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TimeCard> getByTimeCardByEmployeeBySpecificPeriod(String className,
+			Employee employee, int period) throws Exception {
+		log.debug("** getByTimeCardByEmployeeBySpecificPeriod called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from " + className
+					+ " where employee = :employee and period = :period order by period desc";
+			Query query = em.createQuery(queryString);
+			query.setParameter("employee", employee);
+			query.setParameter("period", period);
+			List<TimeCard> timecardlist = query.getResultList();
+			if (timecardlist != null)
+				log.debug("** Found " + timecardlist.size() + "records:");
+			return timecardlist;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<Period> getByPeriodOpen(String className) throws Exception {
+		log.debug("** getByPeriodOpen called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from " + className
+					+ " where periodClosed = false";
+			Query query = em.createQuery(queryString);
+			List<Period> periodlist = query.getResultList();
+			if (periodlist != null)
+				log.debug("** Found " + periodlist.size() + "records:");
+			return periodlist;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * This method retrieves Maximum PeriodNumber
+	 * @param className
+	 * @return
+	 * @throws Exception
+	 */
+	public int getMaxPeriod(String className) throws Exception {
+		log.debug("** getMaxPeriod called.");
+		int maxPeriod = -1;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Session session = (Session) em.getDelegate();
+			String queryString = "select max(periodNumber) from " + className
+					+ " where periodClosed = false";
+			org.hibernate.Query query = session.createQuery(queryString);
+			ScrollableResults rs = query.scroll();
+			if(rs.next()) {
+				maxPeriod = rs.getInteger(0).intValue();
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return maxPeriod;
+	}
+	
+	
+	
+	/**
+	 * This method retrieves all close periods 
+	 * @param className
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Period> getAllClosePeriods(String className) throws Exception {
 		log.debug("** getByEmployee Id called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			String queryString = "from " + className
-					+ " where periodClosed = 0";
+					+ " where periodClosed = true order by periodnumber desc";
+			Query query = em.createQuery(queryString);
+			List<Period> periodlist = query.getResultList();
+			if (periodlist != null)
+				log.debug("** Found " + periodlist.size() + "records:");
+			return periodlist;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
+	/**
+	 * This method retrieves all periods 
+	 * @param className
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Period> getAllPeriods(String className) throws Exception {
+		log.debug("** getAllPeriods called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from " + className+" order by periodnumber desc";
 			Query query = em.createQuery(queryString);
 			List<Period> periodlist = query.getResultList();
 			if (periodlist != null)

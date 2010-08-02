@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="442" height="580" 
-	title="Time Periods" 
-	label="Time Periods" 
-	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="450" height="600" 
+	title="Time Periods" label="Time Periods" creationComplete="init()"
+	xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
+	xmlns:common="com.efi.printsmith.common.components.*"
+	showCloseButton="true" close="PopUpManager.removePopUp(this) " >
+	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
  
- 	<mx:RemoteObject id="dataService" destination="dataService">
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+ 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="getByPeriodOpen" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getMaxPeriod" fault="handleFault(event)" result="handleLoadMaxResult(event)"/>
 	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="timeperiod"/>
@@ -14,6 +18,10 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import mx.utils.ObjectUtil;
+	import flash.net.registerClassAlias;
+	import com.efi.printsmith.common.scripts.DateUtil;
+	import mx.controls.RadioButton;
 	import com.efi.printsmith.data.Period;
 	import mx.controls.Text;
 
@@ -28,29 +36,30 @@
 
 	[Bindable]
 	private var enableSave:Boolean = true;
-	[Bindable]
-	private var opgPeriodTypeValue:String = "opbWeekly";
 
 //Data field arrays
-	[Bindable]
-	private var timeperiodArray:ArrayCollection = new ArrayCollection();
-	[Bindable]
-	private var DaysArray:ArrayCollection = new ArrayCollection();
+	[Bindable] private var timeperiodArray:ArrayCollection = new ArrayCollection();
+	[Bindable] private var DaysArray:ArrayCollection = new ArrayCollection();
+	[Bindable] public var closeCurrentPeriod:Boolean = false;
+	[Bindable] public var maxPeriod:int=0;
 
 //Data view variables
-	[Bindable]
-	private var period:Period;
+	[Bindable] private var period:Period;
+	[Bindable] public var closedPeriod:Period;
+	[Bindable] public var addUpdatePeriodList:ArrayCollection = new ArrayCollection();
+	
+	
 
 	public function init():void {
-		consumer.subscribe();
-		notification_consumer.subscribe();
+		/* consumer.subscribe();
+		notification_consumer.subscribe(); */
 
 		setup();
 		
 	}
 	
 	private function setup():void{
-		dataService.getByPeriodOpen("Period")
+		dataService.getByPeriodOpen("Period");
 		fillDaysArray(DaysArray);
 	}
 	
@@ -73,25 +82,129 @@
 		timeperiodArray = ev.result as ArrayCollection;
 		if (timeperiodArray != null && timeperiodArray.length > 0)
 		{
+			closeCurrentPeriod = true;
 			period = timeperiodArray.getItemAt(0,0) as Period;
+			if(period.type==null || period.type==""){
+				period.type = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly');
+			}
+			if(period.day==null || period.day==""){
+				period.day = weekDateFormatter.format(new Date());
+			}
 		} else
 		{
+			closeCurrentPeriod = false;
 			period = new Period();
-			if (timeperiodArray == null)
-			{
-				timeperiodArray = new ArrayCollection()
-			}
-			timeperiodArray.addItem(period);
+			period.periodNumber = 0;
+			period.periodClosed = false;
+			period.type = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly');
+			period.day = weekDateFormatter.format(new Date());
+			setDates();
 		}
+		dataService.getMaxPeriod("Period");
+	}
+	
+	private function handleLoadMaxResult(event:ResultEvent):void {
+		maxPeriod = event.result as int;
+		if(isNaN(period.id) || period.id==0){
+			enableSave = false;
+		} else {
+			enableSave = true;
+		}
+	}
+	
+	private function setDates():void {
+		var todayDate:Date = new Date();
+		var todayWeek:int;
+		var periodWeek:int;
+		var weekString:String;
+		if(period.day==null || period.day==""){
+			period.day = weekDateFormatter.format(new Date());
+		}
+		if(period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly') ||
+			period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.BiWeekly')){
+			weekString = dateFormatter.format(todayDate);
+			if(period.day.substr(0,3)!=weekString) {
+				todayWeek = getDayNumber(weekString);
+				periodWeek = getDayNumber(period.day.substr(0,3));
+				if(periodWeek>todayWeek){
+					todayDate = DateUtil.addDays(todayDate,-(todayWeek-periodWeek+7));
+				} else {
+					todayDate = DateUtil.addDays(todayDate,-(todayWeek-periodWeek));
+				}
+			}
+			period.fromDate = todayDate;
+			period.customfromDate = null;
+			period.customtoDate = null;
+		}
+		if(period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly')) {
+			period.toDate = DateUtil.addDays(todayDate,6);
+		}
+		if(period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.BiWeekly')) {
+			period.toDate = DateUtil.addDays(todayDate,13);
+		}
+		if(period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.SemiMonthly')) {
+			if(todayDate.date>15){
+				period.fromDate = new Date(todayDate.fullYear,todayDate.month,16);
+				period.toDate = new Date(todayDate.fullYear,todayDate.month+1,0);	
+			} else {
+				period.fromDate = new Date(todayDate.fullYear,todayDate.month,1);
+				period.toDate = new Date(todayDate.fullYear,todayDate.month,15);
+			}
+			period.customfromDate = null;
+			period.customtoDate = null;
+			period["nullUpdated"]=true;
+			period.day = null;
+		}
+		if(period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Monthly')) {
+			period.fromDate = new Date(todayDate.fullYear,todayDate.month,1);
+			period.toDate = new Date(todayDate.fullYear,todayDate.month+1,0);
+			period.customfromDate = null;
+			period.customtoDate = null;
+			period["nullUpdated"]=true;
+			period.day = null;
+		}
+		if(period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')) {
+			period.fromDate = new Date();
+			period.toDate = new Date();
+			period.customfromDate = new Date();
+			period.customtoDate = new Date();
+			period["nullUpdated"]=true;
+			period.day = null;
+		}
+	}
+	
+	private function getDayNumber(weekString:String):int {
+		if(weekString=="Sat"){
+			return 0;
+		} else if(weekString=="Sun"){
+			return 1;
+		} else if(weekString=="Mon"){
+			return 2;
+		} else if(weekString=="Tue"){
+			return 3;
+		} else if(weekString=="Wed"){
+			return 4;
+		} else if(weekString=="Thu"){
+			return 5;
+		} else if(weekString=="Fri"){
+			return 6;
+		}
+		return 0;
 	}
 
 // Data Save Handlers
 	private function handleSaveResult(ev:ResultEvent):void {
-    	dataService.getByPeriodOpen("Period");
+    	PopUpManager.removePopUp(this);
 	}
 
 
 	private function doSave():void{
+		addUpdatePeriodList = new ArrayCollection();
+		addUpdatePeriodList.addItem(period);
+		if(closedPeriod!=null){
+			addUpdatePeriodList.addItem(closedPeriod);
+		}
+		dataService.addUpdateDeleteList(addUpdatePeriodList,null);
 	}
 	
 	private function doCancel():void{
@@ -99,9 +212,20 @@
 	}
 
 	private function doClosePeriod():void{
+		closeCurrentPeriod = false;
 		period.periodClosed = true;
-		dataService.addUpdate(period);
-		dataService.getByPeriodOpen("Period")
+		registerClassAlias("com.efi.printsmith.data.Period",Period);
+		closedPeriod = ObjectUtil.copy(period) as Period;
+		createOpenPeriod();
+	}
+	
+	private function createOpenPeriod():void {
+		period.id = 0;
+		period.created = null;
+		period.modified = null;
+		period.prevId = "";
+		period.periodClosed = false;
+		period.periodNumber = maxPeriod+1;
 	}
 	
 	private function doClickPeriod(selectedButton:RadioButton):void{
@@ -117,25 +241,25 @@
 	
 	private function fillDaysArray(fillArray:ArrayCollection):void {
 		var day:Object=new Object();
-		day.name="Sunday";
+		day.displayName="Sunday";
 		fillArray.addItem(day);
 		day=new Object();
-		day.name="Monday";
+		day.displayName="Monday";
 		fillArray.addItem(day);
 		day=new Object();
-		day.name="Tuesday";
+		day.displayName="Tuesday";
 		fillArray.addItem(day);
 		day=new Object();
-		day.name="Wednesday";
+		day.displayName="Wednesday";
 		fillArray.addItem(day);
 		day=new Object();
-		day.name="Thursday";
+		day.displayName="Thursday";
 		fillArray.addItem(day);
 		day=new Object();
-		day.name="Friday";
+		day.displayName="Friday";
 		fillArray.addItem(day);
 		day=new Object();
-		day.name="Saturday";
+		day.displayName="Saturday";
 		fillArray.addItem(day);
 		
 	}
@@ -143,49 +267,114 @@
 ]]>
                              
 </mx:Script>	
-	<mx:DateFormatter id="dateFormatter" formatString="HH:NN:SS A"/>
-
-	<mx:Button x="10" y="446" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
-		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
-	</mx:Button>
-	<mx:Button x="56" y="446" width="38" height="38" click="doCancel();" id="btnCancel">
-		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
-	</mx:Button>
-
-	<mx:Panel x="10" y="10" width="199" height="196" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.CurrentPeriod')}">
-		<mx:Label x="17" y="11" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Period')}"/>
-		<mx:TextArea x="76" y="10" id="txtPeriodNumber" height="19" width="63" text="{period.periodNumber}"/>
-		<mx:Label x="36" y="57" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.From')}"/>
-		<mx:Label x="50" y="81" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.To')}"/>
-		<mx:DateField x="76" y="55" id="txtCurrentFrom"  editable="true" text="{period.fromDate}"/>
-		<mx:DateField x="76" y="79" id="txtCurrentTo"  editable="true" text="{period.toDate}"/>
+	
+	<mx:DateFormatter id="dateFormatter" formatString="EEE"/>
+	
+	<mx:DateFormatter id="weekDateFormatter" formatString="EEEE"/>
+	
+	<mx:HBox width="100%" height="50%">
 		
-		<mx:Button x="19.5" y="124" id="cmdCloseCurrentPeriod" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Closecurrentperiod')}" click="doClosePeriod();"/>
+		<mx:VBox width="50%" height="100%">
+			<mx:Panel width="100%" height="80%" layout="vertical" 
+				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.CurrentPeriod')}">
+				<mx:HBox width="100%">
+					<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Period')}"
+						textAlign="right"/>
+					<common:CustomStringTextInputComponent	enabled="false"
+						dataHolder="{period}" variableName="periodNumber" customText="{period.periodNumber}" width="70%"/>
+				</mx:HBox>
+				
+				<mx:HBox width="100%">	
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.From')}"
+						width="30%" textAlign="right"/>
+					<mx:DateField id="txtCurrentFrom"  selectedDate="{period.fromDate}" 
+						width="70%" formatString="MM/DD/YYYY" enabled="false"/>
+				</mx:HBox>
+				<mx:HBox width="100%">
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.To')}"
+						width="30%" textAlign="right"/>
+					<mx:DateField id="txtCurrentTo"  selectedDate="{period.toDate}"
+						width="70%" formatString="MM/DD/YYYY" enabled="false"/>
+				</mx:HBox>
+				<mx:HBox width="100%" horizontalAlign="center">
+					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Closecurrentperiod')}" 
+						enabled="{closeCurrentPeriod}" click="{doClosePeriod()}"/>
+				</mx:HBox>
+			</mx:Panel>
+			<mx:Panel width="100%" height="20%" layout="vertical"
+				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.StartofWorkWeek')}">
+				<mx:HBox width="100%" height="100%">
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Day')}"/>
+					<common:CustomComboBoxComponent id="cboStartOfWorkWeek" change="{setDates()}" 
+						masterList="{DaysArray}" labelFieldId="displayName" labelFieldName="displayName" updateFirstElement="true"
+						dataHolder="{period}" variableName="day" customText="{getCustomTextData(DaysArray,period,period.day)}"
+						enabled="{(period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly') ||
+						period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.BiWeekly'))}"/>
+				</mx:HBox>
+			</mx:Panel>
+		</mx:VBox>
+		<mx:Panel width="50%" height="100%" layout="vertical"
+			title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.PeriodType')}">
+			<mx:RadioButtonGroup id="opgPeriodType"/>
+			<common:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly')}" groupName="opgPeriodType"
+				value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly')}" 
+				dataHolder="{period}" variableName="type" customText="{period.type}" click="{setDates()}"/>
+			<common:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.BiWeekly')}" groupName="opgPeriodType"
+				value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.BiWeekly')}" 
+				dataHolder="{period}" variableName="type" customText="{period.type}" click="{setDates()}"/>
+			<common:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.SemiMonthly')}" groupName="opgPeriodType"
+				value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.SemiMonthly')}" 
+				dataHolder="{period}" variableName="type" customText="{period.type}" click="{setDates()}"/>
+			<common:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Monthly')}" groupName="opgPeriodType"
+				value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Monthly')}" 
+				dataHolder="{period}" variableName="type" customText="{period.type}" click="{setDates()}"/>
+			<common:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')}" groupName="opgPeriodType"
+				value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')}" 
+				dataHolder="{period}" variableName="type" customText="{period.type}" click="{setDates()}"/>
+			<mx:HBox width="100%">	
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.From')}"
+					width="30%" textAlign="right"/>
+				<mx:DateField id="txtCustomFrom"  selectedDate="{period.customfromDate}" 
+					width="70%" formatString="MM/DD/YYYY" enabled="{period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')}"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.To')}"
+					width="30%" textAlign="right"/>
+				<mx:DateField id="txtCustomTo"  selectedDate="{period.customtoDate}"
+					width="70%" formatString="MM/DD/YYYY" enabled="{period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')}"/>
+			</mx:HBox>
+		</mx:Panel>
+	</mx:HBox>
+	
+	<mx:Panel width="100%" height="30%" layout="vertical"
+		title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Comment')}">
+		<mx:TextArea width="100%" height="100%" id="txtComment" 
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Timeperiodscontrolth')}" editable="false"/>
+	</mx:Panel>
+	
+	<mx:VBox width="100%" height="12%">
+		<mx:HBox width="100%" height="85%">
+			
+			<mx:Button width="12%" height="100%" click="{doSave()}" id="btnSave">
+				<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+			</mx:Button>
+			
+			<mx:Button width="12%" height="100%" click="{doCancel()}" id="btnCancel">
+				<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+			</mx:Button>
+			
+		</mx:HBox>
+		<mx:HBox width="100%" height="15%">
+
+			<mx:Label 
+				text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"
+				width="12%" textAlign="center"/>
+			<mx:Label 
+				text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
+				width="12%" textAlign="center"/>
 		
-	</mx:Panel>
-
-	<mx:Panel x="10" y="214" width="199" height="79" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.StartofWorkWeek')}">
-		<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Day')}"/>
-		<mx:ComboBox x="42" y="8" id="cboStartOfWorkWeek" width="105" dataProvider="{DaysArray}" labelField="name"></mx:ComboBox>
-	</mx:Panel>
-
-	<mx:Panel x="213" y="10" width="199" height="283" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.PeriodType')}">
-		<mx:RadioButtonGroup id="opgPeriodType" selectedValue="{opgPeriodTypeValue}"/>
-		<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly')}" groupName="opgPeriodType" id="opbWeekly" click="doClickPeriod(opbWeekly);"/>
-		<mx:RadioButton x="10" y="30" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.BiWeekly')}" groupName="opgPeriodType" id="opbBiWeekly" click="doClickPeriod(opbBiWeekly);"/>
-		<mx:RadioButton x="10" y="60" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.SemiMonthly')}" groupName="opgPeriodType" id="opSemiMonthly" click="doClickPeriod(opSemiMonthly);"/>
-		<mx:RadioButton x="10" y="90" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Monthly')}" groupName="opgPeriodType" id="opbMonthly" click="doClickPeriod(opbMonthly);"/>
-		<mx:RadioButton x="10" y="120" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')}" groupName="opgPeriodType" id="opbCustom" click="doClickPeriod(opbCustom);"/>
-		<mx:Label x="34" y="147" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.From')}"/>
-		<mx:Label x="48" y="170" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.To')}"/>
-		<mx:DateField x="80" y="145" id="txtCustomFrom" editable="true" text="{period.customfromDate}" enabled="false"/>
-		<mx:DateField x="80" y="168" id="txtCustomTo"  editable="true" text="{period.customtoDate}" enabled="false"/>
-	</mx:Panel>
-	<mx:Panel x="10" y="301" width="402" height="137" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Comment')}">
-		<mx:TextArea x="0" y="0" width="100%" height="100%" id="txtComment" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Timeperiodscontrolth')}" editable="false"/>
-	</mx:Panel>
-	<mx:Label x="13" y="492" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"/>
-	<mx:Label x="59" y="492" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"/>
-
+		</mx:HBox>
+	</mx:VBox>
+	
 </mx:TitleWindow>
 

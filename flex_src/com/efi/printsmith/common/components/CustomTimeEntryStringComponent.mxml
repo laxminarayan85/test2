@@ -4,10 +4,12 @@
 		<![CDATA[
 			[Bindable] public var dataHolder:Object;
 			[Bindable] public var variableName:String;
+			[Bindable] public var splitString:String;
 			private var _customText:String;
 			
 			private function initTEComponent():void{
 				//timeStepper.addEventListener(Event.CHANGE,updateDataEventListener);
+				splitString = ":";
 				hourText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
 				minuteText.addEventListener(FocusEvent.FOCUS_OUT,updateDataEventListener,false,0,true);
 				if(showSeconds){
@@ -22,12 +24,12 @@
 				if(dataHolder!=null){
 					var timeString:String = "";
 					timeString = ""+hour;
-					timeString = timeString+"-"+minute;
+					timeString = timeString+splitString+minute;
 					if(showSeconds){
-						timeString = timeString+"-"+second;
+						timeString = timeString+splitString+second;
 					}
 					if(!is24Hour){
-						timeString = timeString+"-"+am_pm;
+						timeString = timeString+splitString+am_pm;
 					}
 					dataHolder[variableName] = timeString;
 				}
@@ -39,16 +41,22 @@
 			
 			public function set customText(displayValue:String):void{
 				if(displayValue!=null  && displayValue.length > 0){
-					this.hour = parseInt(displayValue.split("-")[0],0);
-					this.minute = parseInt(displayValue.split("-")[1],0);
+					if(displayValue.indexOf("-")>-1){
+						splitString = "-";
+					} else if(displayValue.indexOf(":")>-1){
+						splitString = ":";
+					}
+					this.hour = parseInt(displayValue.split(splitString)[0],0);
+					this.defaultHour = parseInt(displayValue.split(splitString)[0],0);
+					this.minute = parseInt(displayValue.split(splitString)[1],0);
 					if(showSeconds){
-						this.second = parseInt(displayValue.split("-")[2],0);
+						this.second = parseInt(displayValue.split(splitString)[2],0);
 						if(!is24Hour){
-							this.am_pm = displayValue.split("-")[3];		
+							this.am_pm = displayValue.split(splitString)[3];		
 						}
 					} else {
 						if(!is24Hour){
-							this.am_pm = displayValue.split("-")[2];		
+							this.am_pm = displayValue.split(splitString)[2];		
 						}
 					}
 					_customText = displayValue;

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="vertical" width="650" height="350" paddingLeft="10" paddingTop="10" 
+	xmlns:components="com.efi.printsmith.common.components.*" 
+	xmlns:component="com.efi.printsmith.components.*" 
+	showCloseButton="true" close="{closeWindow()}" creationComplete="{initEditTC()}">
+	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
+	
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.events.EditTimeCardEvent;
+			import mx.utils.ObjectUtil;
+			import flash.net.registerClassAlias;
+			import com.efi.printsmith.data.Employee;
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.managers.PopUpManager;
+			import com.efi.printsmith.data.TimeCard;
+			[Bindable] public var _timeCard:TimeCard = new TimeCard();
+			[Bindable] public var timeDifference:String;
+			[Bindable] public var editData:Boolean = true;
+			[Bindable] public var employeeList:ArrayCollection = new ArrayCollection();
+			[Bindable] public var employeeDGVisible:Boolean = false;
+			[Bindable] public var periodList:ArrayCollection = new ArrayCollection();
+			
+			public function get timeCard():TimeCard {
+				return _timeCard;
+			} 
+			
+			public function set timeCard(newValue:TimeCard):void {
+				_timeCard = newValue;
+				setTimeDiffString();
+			}
+			
+			private function setTimeDiffString(event:Event=null):void {
+				if(_timeCard.endDateTime>=_timeCard.startDateTime){
+					timeDifference = getTimeDifferenceFromMs(_timeCard.endDateTime.time-_timeCard.startDateTime.time);
+				}
+			}
+			
+			private function initEditTC():void {
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function closeWindow():void{
+				var editTimeCardEvent:EditTimeCardEvent = new EditTimeCardEvent(EditTimeCardEvent.EDIT_DATA_SAVE,false);
+				dispatchEvent(editTimeCardEvent);
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function setStartDate(event:Event):void {
+				var dateObj:Date = event.currentTarget.selectedDate as Date;
+				_timeCard.startDateTime.date = dateObj.date;
+				_timeCard.startDateTime.month = dateObj.month;
+				_timeCard.startDateTime.fullYear = dateObj.fullYear;
+				setTimeDiffString();
+			}
+			
+			private function setEndDate(event:Event):void {
+				var dateObj:Date = event.currentTarget.selectedDate as Date;
+				_timeCard.endDateTime.date = dateObj.date;
+				_timeCard.endDateTime.month = dateObj.month;
+				_timeCard.endDateTime.fullYear = dateObj.fullYear;
+				setTimeDiffString();
+			}
+			
+			private function doSave():void {
+				if(validateData()){
+					if(editData){
+						dataService.addUpdate(_timeCard);
+					} else {
+						var timeCardList:ArrayCollection = new ArrayCollection();
+						for each(var employee:Employee in employeeList){
+							if(employee.isSelected){
+								registerClassAlias("com.efi.printsmith.data.TimeCard",TimeCard);
+								var timeCardObject:TimeCard = ObjectUtil.copy(_timeCard) as TimeCard;
+								timeCardObject.employee = employee;
+								timeCardList.addItem(timeCardObject);
+							}
+						}
+						dataService.addUpdateDeleteList(timeCardList,null);
+					}
+				}
+			}
+			
+			private function validateData():Boolean {
+				if(_timeCard!=null){
+					if(_timeCard.endDateTime.time<_timeCard.startDateTime.time){
+						Alert.show("Please ensure that Out Time is greater than In Time");
+						return false;
+					}
+				}
+				return true;
+			}
+			
+			private function handleSaveResult(event:ResultEvent):void{
+				var editTimeCardEvent:EditTimeCardEvent = new EditTimeCardEvent(EditTimeCardEvent.EDIT_DATA_SAVE,true);
+				dispatchEvent(editTimeCardEvent);
+				PopUpManager.removePopUp(this);
+			} 
+			
+			private function handleFault(ev:FaultEvent):void {  
+				var message:String;
+				              
+				message = "Error: "                          
+				+ ev.fault.faultCode + " - "                                  
+				+ ev.fault.faultDetail + " - "                                  
+				+ ev.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, 4);                                 
+			}
+			
+			private function getTimeDifferenceFromMs(milliSeconds:Number):String {
+				var diffString:String = "";
+				if(milliSeconds<60000){
+					diffString = "OH"+" 0M ";
+			    	diffString = diffString + numFormatter.format(milliSeconds/1000)+"S";
+			    }  
+			    if(milliSeconds>=60000 && milliSeconds<60000*60){
+			    	diffString = "OH "
+			    	diffString = diffString + numFormatter.format(milliSeconds/60000)+"M ";
+			    	diffString = diffString + numFormatter.format((milliSeconds%60000)/(1000))+"S";
+			    }
+			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
+			    	diffString = numFormatter.format(milliSeconds/(60000*60))+"H ";
+			    	diffString = diffString+numFormatter.format(milliSeconds%(60000*60)/(60000))+"M ";
+			    	diffString = diffString+numFormatter.format(milliSeconds%60000/1000)+"S";
+			    }
+			    if(milliSeconds>=60000*60*24){
+			    	diffString = numFormatter.format( milliSeconds/(60000*60*24))+"D ";
+			    	diffString = diffString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+"H ";
+			    	diffString = diffString+numFormatter.format(milliSeconds%(60000*60)/(60000))+"M ";
+			    	diffString = diffString+numFormatter.format(milliSeconds%60000/1000)+"S";
+			    }
+			    return diffString;
+			}
+			
+			private function initItemsSelected():int {
+				var count:int=0;
+				for each(var employee:Employee in employeeList){
+					if(employee.selected){
+						count++;
+					}
+				}
+				return count;
+			}
+			
+			public function getNameLabel(item:Object,column:DataGridColumn):String
+			{
+				return item.lastName+", "+item.firstName;
+			}
+			
+			private function expandOrCollapse(event:Event):void {
+				if(event.currentTarget.text=="+"){
+					event.currentTarget.text = "-";
+					this.height = 550;
+					employeeDGVisible = true;
+				} else if(event.currentTarget.text=="-"){
+					event.currentTarget.text = "+";
+					this.height = 375;
+					employeeDGVisible = false;
+				}
+			}
+			
+			private function resetBillableHrs():void {
+				if(_timeCard.paidTimeOff){
+					_timeCard.billable = "00:00";
+				}
+			}
+				
+		]]>
+	</mx:Script>
+	
+	<mx:HBox width="100%" height="15%">
+		
+		<mx:Button width="8%" height="100%" click="{doSave()}" id="btnSave">
+			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		
+		<mx:Button width="8%" height="100%" click="{closeWindow()}" id="btnRevert">
+			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+		
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+	
+		<mx:Label 
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"
+			width="8%" textAlign="center"/>
+		<mx:Label 
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Close')}"
+			width="8%" textAlign="center"/>
+	
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label text="Period:"/>
+		<components:CustomStringTextInputComponent enabled="false"
+			dataHolder="{_timeCard}" variableName="" customText="{_timeCard.period}"
+			visible="{editData}" includeInLayout="{editData}"/>	
+		<components:CustomComboBoxComponent
+			masterList="{periodList}" updateFirstElement="true"
+			dataHolder="{_timeCard}" variableName="period" customText="{getCustomTextData(periodList,_timeCard,_timeCard.period)}"
+			labelFieldId="periodNumber" labelFieldName="periodNumber" visible="{!editData}" includeInLayout="{!editData}"/>
+			
+	</mx:HBox>
+	
+	<mx:HBox width="100%" height="100%">
+		
+		<mx:Panel title="Clock" layout="vertical" width="68%" height="100%">
+			
+			<mx:HBox width="100%">
+
+				<mx:Label text="In:" width="20%" textAlign="right"/>
+				<mx:DateField id="startDate" selectedDate="{_timeCard.startDateTime}" 
+					change="{setStartDate(event)}" formatString="MM/DD/YYYY" width="30%"/>
+				<mx:Label text="Time:" width="20%" textAlign="right"/>
+				<components:CustomTimeEntryDateComponent
+					dataHolder="{_timeCard}" variableName="startDateTime" customText="{_timeCard.startDateTime}" 
+					functionName="setTimeDiffString" showSeconds="true" is24Hour="false" />
+				
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+
+				<mx:Label text="Out:" width="20%" textAlign="right"/>
+				<mx:DateField id="endDate" selectedDate="{_timeCard.endDateTime}" 
+					change="{setEndDate(event)}" formatString="MM/DD/YYYY" width="30%"/>
+				<mx:Label text="Time:" width="20%" textAlign="right"/>
+				<components:CustomTimeEntryDateComponent
+					dataHolder="{_timeCard}" variableName="endDateTime" customText="{_timeCard.endDateTime}" 
+					functionName="setTimeDiffString" showSeconds="true" is24Hour="false" />
+				
+			</mx:HBox>
+			
+			<mx:HBox width="100%" horizontalAlign="right">
+				<mx:Label text="Total:"/>
+				<mx:TextInput enabled="false" text="{timeDifference}"/>
+			</mx:HBox>
+			
+			<components:CustomCheckBoxComponent label="Paid Time Off"
+				dataHolder="{_timeCard}" variableName="paidTimeOff" customText="{_timeCard.paidTimeOff}"
+				selectedValue="true" deSelectedValue="false" defaultValue="false" click="{resetBillableHrs()}"/>
+				
+		</mx:Panel>
+		
+		<mx:VBox width="32%" height="100%">
+			
+			<mx:Panel title="Billable Time" layout="vertical" width="100%" height="50%">
+			
+				<mx:HBox width="100%" horizontalAlign="right">
+				
+					<mx:Label text="Total:"/>
+					<components:CustomTimeEntryStringComponent
+						dataHolder="{_timeCard}" variableName="billable" customText="{_timeCard.billable}" 
+						showSeconds="false" is24Hour="true" enabled="{!_timeCard.paidTimeOff}"/>
+					
+				</mx:HBox>
+			
+			</mx:Panel>
+			
+			<mx:Panel title="Break Time" layout="vertical" width="100%" height="50%">
+			
+				<mx:HBox width="100%" horizontalAlign="right">
+				
+					<mx:Label text="Total:"/>
+					<components:CustomTimeEntryStringComponent
+						dataHolder="{_timeCard}" variableName="breakHour" customText="{_timeCard.breakHour}" 
+						showSeconds="false" is24Hour="true" />
+					
+				</mx:HBox>
+			
+			</mx:Panel>
+			
+			
+		</mx:VBox>
+		
+	</mx:HBox>
+	
+	<mx:VBox width="100%" includeInLayout="{!editData}" visible="{!editData}">
+		<mx:HBox width="100%" height="5%">
+			<mx:Label text="+" click="{expandOrCollapse(event)}"/>
+			<mx:Label text="Show Affected Employees"/>
+		</mx:HBox>
+		<mx:DataGrid id="employeeDG" dataProvider="{employeeList}" width="100%" height="200" 
+			visible="{employeeDGVisible}" includeInLayout="{employeeDGVisible}">
+			<mx:columns>
+				<mx:DataGridColumn id="checkAllCol" headerText=" "
+					sortable="false" dataField="isSelected" width="100">
+					<mx:headerRenderer>
+						<mx:Component>
+							<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled"/>
+						</mx:Component>
+					</mx:headerRenderer>
+					<mx:itemRenderer>
+						<mx:Component>
+							<components:CustomCheckBoxComponent 
+								datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!data.isDisabled}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="ID" dataField="employeeId" width="100"/>
+				<mx:DataGridColumn headerText="Employee" dataField="lastName" labelFunction="getNameLabel" width="800"/>
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:VBox>
+	
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
+	
+	
+</mx:TitleWindow>
