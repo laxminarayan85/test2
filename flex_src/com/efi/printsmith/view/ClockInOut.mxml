@@ -65,6 +65,7 @@
 	public function init():void {
 		/* consumer.subscribe();
 		notification_consumer.subscribe(); */
+		PopUpManager.centerPopUp(this);
 		var application:Snowmass = Snowmass.getInstance();
 		clockIn.enabled = false;
 		clockOut.enabled = false;
