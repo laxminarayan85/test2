@@ -385,9 +385,10 @@
 							height="418"
 							verticalScrollPolicy="off"
 							horizontalScrollPolicy="off">
-				<mx:Canvas width="235"
-						   height="410">
-					<mx:Tree width="100%"
+				<mx:Canvas width="210"
+						   height="400">
+					<mx:Tree width="200"
+							height="345"
 							 render="renderFunction()"
 							 folderClosedIcon="{null}"
 							 folderOpenIcon="{null}"
@@ -402,7 +403,7 @@
 							 bottom="35"
 							 top="19">
 					</mx:Tree>
-					<common:TreePickerFilter searchClassName="com.efi.printsmith.data::ChargeDefinition" x="0" y="385" width="217" height="28" searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}" />
+					<common:TreePickerFilter searchClassName="com.efi.printsmith.data::ChargeDefinition" x="0" y="370" width="200" height="22" searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}" />
 		
 					<!--<mx:TextInput width="172"
 								  id="tree_filter"

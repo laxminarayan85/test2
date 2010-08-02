@@ -1796,7 +1796,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:TextInput width="100%" id="tree_filter" change="refreshData()"/>
 				</mx:FormItem>-->
 				<comp:SmallThrobber id="throbber" height="20" width="20" x="103.5" y="95"/>
-				<common:TreePickerFilter width="217"  searchClassName="com.efi.printsmith.data::ChargeDefinition" height="28" bottom="0"   searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}" />
+				<common:TreePickerFilter width="217"  searchClassName="com.efi.printsmith.data::ChargeDefinition" height="22" bottom="5"   searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}" />
 			</mx:Canvas>
 				
 		<mx:ViewStack id="charge_stack" width="70%" height="100%" minWidth="575" creationPolicy="all">

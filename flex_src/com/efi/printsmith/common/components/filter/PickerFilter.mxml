@@ -61,9 +61,9 @@
 		]]>
 	</mx:Script>
 	<mx:HBox height="100%" width="100%" id="filterCanvas">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}:"  />
-		<mx:ComboBox id="cboSearchBy" dataProvider="{_searchCriteria}" labelField="displayLabel" />
-		<mx:TextInput id="txtSearchString"   change="search();" />		
+		<mx:Label height="100%" width="20%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}:"  />
+		<mx:ComboBox height="100%" width="30%" id="cboSearchBy" dataProvider="{_searchCriteria}" labelField="displayLabel" />
+		<mx:TextInput height="100%" width="50%" id="txtSearchString"   change="search();" />		
 	</mx:HBox>
 	
 </mx:Canvas>
