@@ -85,12 +85,12 @@ public class TimeCard extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private String period;
+	private Integer period;
 	
 	/**
 	 * @generated
  	 */
-	public String getPeriod(){
+	public Integer getPeriod(){
     return period; 
   }
 
@@ -98,7 +98,7 @@ public class TimeCard extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setPeriod(String newVal) {
+	public void setPeriod(Integer newVal) {
     this.period = newVal;
   }
 	
@@ -240,6 +240,46 @@ public class TimeCard extends ModelBase {
     this.employee = newVal;
   }
 	
+	@Basic
+	private String breakHour;
+	
+	
+	
+	/**
+	 * @return the breakHour
+	 */
+	public String getBreakHour() {
+		return breakHour;
+	}
+
+
+	/**
+	 * @param breakHour the breakHour to set
+	 */
+	public void setBreakHour(String breakHour) {
+		this.breakHour = breakHour;
+	}
+	
+	@Basic
+	private Boolean paidTimeOff;
+
+
+	/**
+	 * @return the paidTimeOff
+	 */
+	public Boolean getPaidTimeOff() {
+		return paidTimeOff;
+	}
+
+
+	/**
+	 * @param paidTimeOff the paidTimeOff to set
+	 */
+	public void setPaidTimeOff(Boolean paidTimeOff) {
+		this.paidTimeOff = paidTimeOff;
+	}
+
+
 	/**
 	 * @generated
 	 */		
@@ -262,7 +302,7 @@ public class TimeCard extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (PERIOD.equals(propertyName)) setPeriod((String)newValue); else
+    if (PERIOD.equals(propertyName)) setPeriod((Integer)newValue); else
     if (STARTDATETIME.equals(propertyName)) setStartDateTime((Date)newValue); else
     if (ENDDATETIME.equals(propertyName)) setEndDateTime((Date)newValue); else
     if (BILLABLE.equals(propertyName)) setBillable((String)newValue); else
@@ -279,7 +319,7 @@ public class TimeCard extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (PERIOD.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Integer.class};		
     if (STARTDATETIME.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
     if (ENDDATETIME.equals(propertyName)) 
