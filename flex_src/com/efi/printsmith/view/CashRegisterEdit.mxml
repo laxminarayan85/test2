@@ -686,8 +686,7 @@
 	<mx:Tree x="0" y="80" width="130"  
 		id="tvItems" 
 		dataProvider="{systemCashPreferencesArray}"
-		labelField="title"
-		height="100%" change="treeSelect(event);"></mx:Tree>
+		labelField="title" height="100%" change="treeSelect(event);"></mx:Tree>
 
 	<mx:Button x="150" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}" id="btnSave">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
