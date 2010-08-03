@@ -3,7 +3,7 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	layout="absolute" 
 	width="892" 
-	height="686" 
+	height="726" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
 	name="CashRegisterEdit" 
@@ -103,6 +103,11 @@
  	 	 	</mx:AddChild>
  	 	</mx:State>
  	 	<mx:State name="paymentCash" basedOn="paymentPaymentMethod">
+ 	 	 	<mx:SetProperty target="{button1}" name="y" value="585"/>
+ 	 	 	<mx:SetProperty target="{cashReg_grid}" name="x" value="0"/>
+ 	 	 	<mx:SetProperty target="{cashReg_grid}" name="y" value="420"/>
+ 	 	 	<mx:SetProperty name="height" value="746"/>
+ 	 	 	<mx:SetProperty target="{cashReg_grid}" name="width" value="668"/>
  	 	</mx:State>
  	 	<mx:State name="paymentCreditCard" basedOn="paymentPaymentMethod">
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
@@ -301,7 +306,7 @@
 		var tempString:String;
 		cashRegister = ev.result as CashRegister;
 		tempString = numberFormatter.format(cashRegister.subtotal + cashRegister.taxamount);
-		cashRegister.totalprice = parseFloat(tempString);
+		cashRegister.totalprice = parseFloat(tempString.replace(",",""));
 		
 		batch.subTotal = batch.subTotal+ cashRegister.subtotal;
 		batch.totalPrice= batch.totalPrice+ cashRegister.totalprice;
@@ -380,7 +385,7 @@
 	private function UpdateCashRegister():void{
 		var temp:Number;
 		var tempString:String;
-		temp = parseFloat(txtPaymentUnitPrice.text)* parseFloat(txtPaymentQuantity.text)
+		temp = parseFloat(txtPaymentUnitPrice.text.replace(",",""))* parseFloat(txtPaymentQuantity.text.replace(",",""))
 		txtPaymentTotal.text = numberFormatter.format(temp) ;
 		cashRegister.taxTable = pickTaxTable.selectedItem as TaxTable;
 		cashRegister.taxCode = pickTaxCode.selectedItem as TaxCodes;
@@ -513,7 +518,7 @@
 		if ((this.currentState = "invoiceCash") && (AustrailianRounding == true)) {
 			
 		}else{
-			payment.paymentAmount = parseFloat(payment_cash_edit.text);	
+			payment.paymentAmount = parseFloat(payment_cash_edit.text.replace(",",""));	
 			//payment.subtotal = parseFloat(payment_cash_edit.text);
 			batch.tendered = batch.tendered+ payment.paymentAmount;
 			batch.change = batch.tendered - batch.totalPrice;
@@ -588,13 +593,25 @@
 	private function doAccept():void{
 	
 		cashRegister.quantity = parseInt(txtPaymentQuantity.text);
-		cashRegister.unitprice = parseFloat(txtPaymentUnitPrice.text);
-		cashRegister.subtotal = parseFloat(txtPaymentTotal.text);
+		cashRegister.unitprice = parseFloat(txtPaymentUnitPrice.text.replace(",",""));
+		cashRegister.subtotal = parseFloat(txtPaymentTotal.text.replace(",",""));
 		
 		batch.transactions.addItem(cashRegister);			
 		
 		this.currentState = "";
 		openTree();
+	}
+	private function doVoid():void{
+		var temp :CashRegister;
+		var index:int;
+		temp = new CashRegister();
+		temp  = cashReg_grid.selectedItem as CashRegister;
+		index= batch.transactions.getItemIndex(temp)
+		batch.subTotal = batch.subTotal - temp.subtotal;
+		batch.totalPrice= batch.totalPrice- temp.totalprice;
+		batch.taxAmount = batch.taxAmount -temp.taxamount;
+		batch.change = batch.tendered - batch.totalPrice;
+		batch.transactions.removeItemAt(index);
 	}
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 		
@@ -749,6 +766,8 @@
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Total')}"  labelFunction="doTotalPrice" />
 			</mx:columns>
 		</mx:DataGrid>
+		<mx:Button x="10" y="558" click="doVoid();" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'tapeCmd.VoidTransaction')}" width="154" id="button1"/>
+		
 	</mx:Canvas>
 	<mx:Label x="150" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Post')}"/>
 	<mx:Label x="199" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Cancel')}"/>
