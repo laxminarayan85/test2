@@ -47,11 +47,6 @@
 					fault="handleFault(event)"
 					result="handleXpedxResult(event)"/>
 	</mx:RemoteObject>
-	<mx:RemoteObject id="paperCalculatorService" destination="paperCalculatorService">
-		<mx:method name="GeneratePaperCalculatorImage"
-					fault="handleFault(event)"
-					result="handleGenerateImage(event)"/>		
-	</mx:RemoteObject>
 	
 	<mx:Script>
 
@@ -87,6 +82,7 @@
 			import mx.validators.Validator;
 			import mx.messaging.messages.AsyncMessage;
 			import mx.messaging.messages.IMessage;
+			import com.efi.printsmith.Constants;
 
 			private var salesCategoryNames:Array = ["Print", "Bindery", "PrePress", "HS Copy", "Color Copy", "Merch", "Mailing", "Misc...",
 													"Design", "Graphics", "Large Format", "Outside Svcs", "Disc-Markups", "Postage", "Interest", "Shipping"];
@@ -290,20 +286,6 @@
 				
 			}
 			
-			private function handleGenerateImage(evt:ResultEvent):void {
-				var imageByteArray:ByteArray = evt.result as ByteArray;
-				
-				var loader:Loader = new Loader();
-				loader.loadBytes(imageByteArray);				 
-				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loaderCompleteHandler);
-			}
-			
-			private function loaderCompleteHandler(evt:Event):void {
-				var loader:Loader = evt.target as Loader;
-				var bmp:Bitmap = Bitmap(loader.content);
-				
-			}
-
 			private function doStockOrder():void {
 				var importWindow : OrderStock = OrderStock(PopUpManager.createPopUp(this, OrderStock, true));
 				PopUpManager.centerPopUp(importWindow);
@@ -366,9 +348,6 @@
 				encryptCCEvent.dispatch();
 			}
 			
-			private function getImage():void {
-				this.paperCalculatorService.GeneratePaperCalculatorImage(200, 200);
-			}
 		]]>
 	</mx:Script>
 
@@ -422,7 +401,6 @@
 		<mx:Button x="206" y="100" label="Stock Order" width="188" click="doStockOrder()"/>
 		<mx:Button x="206" y="154" label="sales tax" width="188" click="doSalesTax()"/>
 		<mx:Button x="209" y="130" label="Report Stock order" width="188" click="doStockOrderReport()"/>
-		<mx:Button x="209" y="264" label="Draw Paper Calc Image" width="188"  click="getImage();"  id="btn_paper_calc_image"/>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">
