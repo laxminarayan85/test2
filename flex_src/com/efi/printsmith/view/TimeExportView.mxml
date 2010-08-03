@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="750" height="500"
+	showCloseButton="true" close="{closeWindow()}" creationComplete="{initExportWindow()}"
+	paddingTop="20" paddingBottom="20" paddingLeft="20" paddingRight="20" xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.common.scripts.DateUtil;
+			import com.efi.printsmith.data.ComLink;
+			import flash.net.navigateToURL;
+			import com.efi.printsmith.data.TimeCard;
+			import mx.controls.Alert;
+			import com.efi.printsmith.data.Employee;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import com.efi.printsmith.model.EmployeeTimeExportBean;
+			import mx.collections.ArrayCollection;
+			import mx.managers.PopUpManager;
+			
+			[Bindable] public var employeeList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var periodList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var formatList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var fieldNamesList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var employeeTimeExportBean:EmployeeTimeExportBean = new EmployeeTimeExportBean(); 
+			
+			[Bindable] public var timeCardList:ArrayCollection = new ArrayCollection();
+			
+			private function initExportWindow():void {
+				PopUpManager.centerPopUp(this);
+				employeeTimeExportBean.format = "firstName";
+				employeeTimeExportBean.rangeType = "period";
+				employeeTimeExportBean.includeFieldNames = true;
+				employeeTimeExportBean.delimitedType = "comma";
+				employeeTimeExportBean.lineEndType = "pc"; 
+				var todayDate:Date = new Date();
+				employeeTimeExportBean.dateFrom = new Date(todayDate.fullYear,todayDate.month,1);
+				employeeTimeExportBean.dateTo = new Date(todayDate.fullYear,todayDate.month+1,0);
+				initStaticSetUp();
+				dataServiceEmployee.getAll("Employee");
+				dataServicePeriod.getAllPeriods("Period");
+			}
+			
+			private function initStaticSetUp():void {
+				var obj:Object = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="employee.firstName";
+				obj.fieldValue="First Name";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="employee.lastName";
+				obj.fieldValue="Last Name";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="employee.socialSecurity";
+				obj.fieldValue="SSN";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="employee.exportCode";
+				obj.fieldValue="Export Code";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="employee.address.street1";
+				obj.fieldValue="Street1";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="employee.address.street2";
+				obj.fieldValue="Street2";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="employee.address.city";
+				obj.fieldValue="City";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="comLinks.Phone";
+				obj.fieldValue="Phone";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="comLinks.E-Mail";
+				obj.fieldValue="Email";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="employee.rate";
+				obj.fieldValue="Rate";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="period";
+				obj.fieldValue="Period Number";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="startDateTime";
+				obj.fieldValue="Date IN";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="endDateTime";
+				obj.fieldValue="Date OUT";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="onClock";
+				obj.fieldValue="Time On Clock";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="onClockMinutes";
+				obj.fieldValue="On Clock Minutes";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="dayOfWeek";
+				obj.fieldValue="Day of week";
+				fieldNamesList.addItem(obj);
+				obj = new Object();
+				obj.isSelected=true;
+				obj.fieldKey="weekNumber";
+				obj.fieldValue="Week Number";
+				fieldNamesList.addItem(obj);
+				
+				/*
+				 Format List 
+				 */ 
+				var formatObj:Object = new Object();
+				formatObj.id = "firstName";
+				formatObj.name= "By Name";
+				formatList.addItem(formatObj);
+				formatObj = new Object();
+				formatObj.id = "socialSecurity";
+				formatObj.name= "By SSN";
+				formatList.addItem(formatObj);
+			}
+			
+			private function handleEmployeeLoadResult(event:ResultEvent):void {
+				var list:ArrayCollection = event.result as ArrayCollection;
+				for each(var employee:Employee in list){
+					employee.isSelected = true;
+				}
+				employeeList = list;
+			}
+			
+			private function handlePeriodLoadResult(event:ResultEvent):void {
+				periodList = event.result as ArrayCollection;
+				if(periodList!=null && periodList.length>0){
+					employeeTimeExportBean.periodFrom = periodList.getItemAt(0).periodNumber;
+					employeeTimeExportBean.periodTo = periodList.getItemAt(0).periodNumber;
+				}
+			}
+
+			private function handleTimeCardLoadResult(event:ResultEvent):void {
+				timeCardList = event.result as ArrayCollection;
+				exportListToFile();
+			}
+						
+			private function handleFault(ev:FaultEvent):void {  
+				var message:String;
+				              
+				message = "Error: "                          
+				+ ev.fault.faultCode + " - "                                  
+				+ ev.fault.faultDetail + " - "                                  
+				+ ev.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, 4);                                 
+			}
+			
+			private function doExport():void {
+				if(validateData()){
+					var selectedEmployees:ArrayCollection = new ArrayCollection();
+					for each(var employee:Employee in employeeList){
+						if(employee.isSelected){
+							selectedEmployees.addItem(employee.employeeId);
+						}
+					}
+					if(employeeTimeExportBean.rangeType=="period"){
+						dataServiceTimeCard.getEmployeeTimeExports(employeeTimeExportBean.format,null,null,employeeTimeExportBean.periodFrom,employeeTimeExportBean.periodTo,selectedEmployees);
+					} else {
+						dataServiceTimeCard.getEmployeeTimeExports(employeeTimeExportBean.format,employeeTimeExportBean.dateFrom,employeeTimeExportBean.dateTo,0,0,selectedEmployees);
+					}
+				}
+			}
+			
+			private function validateData():Boolean {
+				var counter:int=0;
+				if(employeeTimeExportBean.periodFrom>employeeTimeExportBean.periodTo) {
+					Alert.show("Please ensure that Period To is greater than Period From");
+					return false;
+				}
+				if(employeeTimeExportBean.dateFrom>employeeTimeExportBean.dateTo) {
+					Alert.show("Please ensure that Date To is greater than Date From");
+					return false;
+				}
+				for each(var employee:Employee in employeeList) {
+					if(employee.isSelected){
+						counter++;
+					}
+				}
+				if(counter==0){
+					Alert.show("Please select Employee");
+					return false;
+				}
+				counter = 0;
+				for each(var obj:Object in fieldNamesList) {
+					if(obj.isSelected){
+						counter++;
+					}
+				}
+				if(counter==0){
+					Alert.show("Please select Fields to export");
+					return false;
+				}
+				return true;
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function getNameLabel(item:Object,column:DataGridColumn):String {
+				return item.lastName+", "+item.firstName;
+			}
+			
+			private function setDateFrom(event:Event):void {
+				employeeTimeExportBean.dateFrom = event.currentTarget.selectedDate;
+			}
+			
+			private function setDateTo(event:Event):void {
+				employeeTimeExportBean.dateTo = event.currentTarget.selectedDate;
+			}
+			
+			private function exportListToFile():void {
+				var todayDate:Date = new Date();
+				var exportString:String = "";
+				var counter:int = 0;
+				var selectedCount:int = 0;
+				for each(var fieldNameObj:Object in fieldNamesList){
+					if(fieldNameObj.isSelected){
+						selectedCount++;
+					}
+				}
+				if(employeeTimeExportBean.includeFieldNames){
+					for each(var obj:Object in fieldNamesList){
+						if(obj.isSelected){
+							counter++;
+							if(counter==selectedCount){
+								if(employeeTimeExportBean.delimitedType=="tab"){
+									exportString = exportString + obj.fieldValue;
+								} else if(employeeTimeExportBean.delimitedType=="comma"){
+									exportString = exportString + "\"" + obj.fieldValue+"\"";
+								}
+							} else {
+								if(employeeTimeExportBean.delimitedType=="tab"){
+									exportString = exportString + obj.fieldValue+"\t";
+								} else if(employeeTimeExportBean.delimitedType=="comma"){
+									exportString = exportString + "\"" + obj.fieldValue+"\",";
+								}
+							}
+						}
+					}
+					exportString = exportString + "\r";
+				}
+				for each(var timeCard:TimeCard in timeCardList){
+					counter = 0;
+					for each(var fieldNameObject:Object in fieldNamesList){
+						if(fieldNameObject.isSelected){
+							counter++;
+							if(counter==selectedCount){
+								if(employeeTimeExportBean.delimitedType=="tab"){
+									exportString = exportString + getFieldValue(fieldNameObject,timeCard);
+								} else if(employeeTimeExportBean.delimitedType=="comma"){
+									exportString = exportString + "\"" + getFieldValue(fieldNameObject,timeCard)+"\"";
+								}
+							} else {
+								if(employeeTimeExportBean.delimitedType=="tab"){
+									exportString = exportString + getFieldValue(fieldNameObject,timeCard)+"\t";
+								} else if(employeeTimeExportBean.delimitedType=="comma"){
+									exportString = exportString + "\"" + getFieldValue(fieldNameObject,timeCard)+"\",";
+								}
+							}
+						}
+					}
+					exportString = exportString + "\r";
+				}
+				var urlRequest:URLRequest = new URLRequest();
+				var urlVariables:URLVariables = new URLVariables();
+				urlVariables.data = exportString;
+				urlVariables.fileName = "Timecard Export "+(todayDate.month+1)+"_"+todayDate.date+"_"+todayDate.fullYear;
+				urlRequest.data = urlVariables;
+				urlRequest.url = "/Snowmass/flexExport.jsp";
+				urlRequest.method = URLRequestMethod.POST;
+				navigateToURL(urlRequest,"_self");
+			}
+			
+			private function getFieldValue(fieldNameObject:Object,timeCard:TimeCard):Object {
+				var valueStr:String = "";
+				if(fieldNameObject.fieldKey.indexOf(".")>-1){
+					if(fieldNameObject.fieldKey.split(".").length==2) {
+						if(fieldNameObject.fieldKey.split(".")[0]=="comLinks"){
+							var comLinksList:ArrayCollection = timeCard.employee[fieldNameObject.fieldKey.split(".")[0]] as ArrayCollection;
+							if(comLinksList!=null && comLinksList.length>0){
+								for each(var comLink:ComLink in comLinksList) {
+									if(comLink.type==fieldNameObject.fieldKey.split(".")[1]){
+										return comLink.value;
+									}
+								}
+							}
+						} else {
+							return timeCard[fieldNameObject.fieldKey.split(".")[0]][fieldNameObject.fieldKey.split(".")[1]];
+						}
+					}
+					if(fieldNameObject.fieldKey.split(".").length==3) {
+						if(timeCard[fieldNameObject.fieldKey.split(".")[0]][fieldNameObject.fieldKey.split(".")[1]]==null){
+							return "";	
+						} else {
+							return timeCard[fieldNameObject.fieldKey.split(".")[0]][fieldNameObject.fieldKey.split(".")[1]][fieldNameObject.fieldKey.split(".")[2]];
+						}
+					}
+				} else {
+					var breakHour:Number = 0;
+					if(fieldNameObject.fieldKey=="onClock"){
+						if(timeCard.breakHour!=null && timeCard.breakHour!=""){
+							breakHour = Number(timeCard.breakHour.split(":")[0])*60*60*1000+Number(timeCard.breakHour.split(":")[1])*60*1000;
+						}
+						return getTimeDifferenceFromMs(timeCard.endDateTime.time-timeCard.startDateTime.time-breakHour);
+					}
+					if(fieldNameObject.fieldKey=="onClockMinutes") {
+						if(timeCard.breakHour!=null && timeCard.breakHour!=""){
+							breakHour = Number(timeCard.breakHour.split(":")[0])*60*60*1000+Number(timeCard.breakHour.split(":")[1])*60*1000;
+						}
+						return numFormatter.format((timeCard.endDateTime.time-timeCard.startDateTime.time-breakHour)/1000/60);
+					}
+					if(fieldNameObject.fieldKey=="dayOfWeek"){
+						return timeCard.startDateTime.day;
+					}
+					if(fieldNameObject.fieldKey=="weekNumber"){
+						return DateUtil.getWeek(timeCard.startDateTime);
+					}
+					if(fieldNameObject.fieldKey.indexOf("Date")>-1){
+						return dateFormatter.format(timeCard[fieldNameObject.fieldKey]);
+					}
+					return timeCard[fieldNameObject.fieldKey];
+				}
+				return "";
+			}
+			
+			private function getTimeDifferenceFromMs(milliSeconds:Number):String {
+				var diffString:String = "";
+				if(milliSeconds<60000){
+					diffString = "Oh"+" 0m";
+			    }  
+			    if(milliSeconds>=60000 && milliSeconds<60000*60){
+			    	diffString = "Oh "
+			    	diffString = diffString + numFormatter.format(milliSeconds/60000)+"m";
+			    }
+			    if(milliSeconds>=60000*60){
+			    	diffString = numFormatter.format(milliSeconds/(60000*60))+"h ";
+			    	diffString = diffString+numFormatter.format(milliSeconds%(60000*60)/(60000))+"m";
+			    }
+			    return diffString;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:RemoteObject id="dataServiceEmployee" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleEmployeeLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServicePeriod" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAllPeriods" fault="handleFault(event)" result="handlePeriodLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService" showBusyCursor="true">
+		<mx:method name="getEmployeeTimeExports" fault="handleFault(event)" result="handleTimeCardLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
+	
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A"/>
+	
+	
+	<mx:HBox width="100%" height="10%">
+		
+		<mx:Button width="8%" height="100%" click="{doExport()}" id="btnExport">
+			<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
+		</mx:Button>
+		
+		<mx:Button width="8%" height="100%" click="{closeWindow()}" id="btnClose">
+			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+				
+	</mx:HBox>
+	
+	<mx:HBox width="100%" height="10%">
+	
+		<mx:Label 
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}"
+			width="8%" textAlign="center"/>
+		<mx:Label 
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Close')}"
+			width="9%" textAlign="center"/>
+	
+	</mx:HBox>
+	
+	<mx:HBox width="100%" height="40%">
+		
+		<mx:VBox width="50%" height="100%">
+		
+			<mx:HBox width="100%" height="30%">
+				<mx:Label text="Format:"/>
+				<components:CustomComboBoxComponent width="30%"
+					masterList="{formatList}" labelFieldId="id" labelFieldName="name" updateFirstElement="true"
+					dataHolder="{employeeTimeExportBean}" variableName="format" customText="{getCustomTextData(formatList,employeeTimeExportBean,employeeTimeExportBean.format)}"/>
+			</mx:HBox>
+			<mx:Panel title="Range" layout="vertical" width="100%" height="70%">
+			
+				<mx:RadioButtonGroup id="rangeGroup"/>
+			
+				<mx:HBox width="100%" height="50%">
+					<components:CustomRadioButtonComponent width="30%" groupName="rangeGroup"
+						label="Period" value="period" dataHolder="{employeeTimeExportBean}" variableName="rangeType"
+						customText="{employeeTimeExportBean.rangeType}"/>
+					<components:CustomComboBoxComponent width="30%"
+						masterList="{periodList}" labelFieldId="periodNumber" labelFieldName="periodNumber" updateFirstElement="true"
+						dataHolder="{employeeTimeExportBean}" variableName="periodFrom" customText="{getCustomTextData(periodList,employeeTimeExportBean,employeeTimeExportBean.periodFrom)}"
+						enabled="{employeeTimeExportBean.rangeType=='period'}"/>
+					<mx:Label text="To" width="10%"/>
+					<components:CustomComboBoxComponent width="30%"
+						masterList="{periodList}" labelFieldId="periodNumber" labelFieldName="periodNumber" updateFirstElement="true"
+						dataHolder="{employeeTimeExportBean}" variableName="periodTo" customText="{getCustomTextData(periodList,employeeTimeExportBean,employeeTimeExportBean.periodTo)}"
+						enabled="{employeeTimeExportBean.rangeType=='period'}"/>
+				</mx:HBox>
+				
+				<mx:HBox width="100%" height="50%">
+					<components:CustomRadioButtonComponent width="30%" groupName="rangeGroup"
+						label="Date" value="date" dataHolder="{employeeTimeExportBean}" variableName="rangeType"
+						customText="{employeeTimeExportBean.rangeType}"/>
+					<mx:DateField id="dateFrom" width="30%" enabled="{employeeTimeExportBean.rangeType=='date'}"
+						selectedDate="{employeeTimeExportBean.dateFrom}" change="{setDateFrom(event)}"/>
+					<mx:Label text="To" width="10%"/>
+					<mx:DateField id="dateTo" width="30%" enabled="{employeeTimeExportBean.rangeType=='date'}"
+						selectedDate="{employeeTimeExportBean.dateTo}" change="{setDateTo(event)}"/>
+				</mx:HBox>
+				
+			</mx:Panel>
+			
+		</mx:VBox>
+		
+		<mx:Panel title="Options" layout="vertical" width="50%" height="100%">
+			
+			<components:CustomCheckBoxComponent label="Include field names"
+				dataHolder="{employeeTimeExportBean}" variableName="includeFieldNames" customText="{employeeTimeExportBean.includeFieldNames}"
+				selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+				
+			<mx:HBox width="100%">
+			
+				<mx:Label text="Delimited:" width="25%"/>
+				<mx:VBox width="75%">
+					<mx:RadioButtonGroup id="delimitGroup"/>
+					<components:CustomRadioButtonComponent label="Tab" value="tab" groupName="delimitGroup"
+						dataHolder="{employeeTimeExportBean}" variableName="delimitedType" customText="{employeeTimeExportBean.delimitedType}"/>
+					<components:CustomRadioButtonComponent label="Comma" value="comma" groupName="delimitGroup"
+						dataHolder="{employeeTimeExportBean}" variableName="delimitedType" customText="{employeeTimeExportBean.delimitedType}"/>
+				</mx:VBox>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+			
+				<mx:Label text="Line End:" width="25%"/>
+				<mx:VBox width="75%">
+					<mx:RadioButtonGroup id="lineEndGroup"/>
+					<components:CustomRadioButtonComponent label="&lt;cr&gt; - (Mac)" value="mac" groupName="lineEndGroup"
+						dataHolder="{employeeTimeExportBean}" variableName="lineEndType" customText="{employeeTimeExportBean.lineEndType}"/>
+					<components:CustomRadioButtonComponent label="&lt;cr,If&gt; - (PC)" value="pc" groupName="lineEndGroup"
+						dataHolder="{employeeTimeExportBean}" variableName="lineEndType" customText="{employeeTimeExportBean.lineEndType}"/>
+				</mx:VBox>
+			</mx:HBox>
+		</mx:Panel>
+		
+	</mx:HBox>
+	
+	<mx:Spacer height="5%"/>
+	
+	<mx:HBox width="100%" height="40%">
+	
+		<mx:DataGrid id="employeesDG" dataProvider="{employeeList}" width="50%" height="100%">
+			<mx:columns>
+				<mx:DataGridColumn headerText=" "
+					sortable="false" dataField="isSelected" width="100">
+					<mx:headerRenderer>
+						<mx:Component>
+							<components:CheckBoxHeaderRenderer/>
+						</mx:Component>
+					</mx:headerRenderer>
+					<mx:itemRenderer>
+						<mx:Component>
+							<components:CustomCheckBoxComponent 
+								datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!data.isDisabled}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="ID" dataField="employeeId" width="100"/>
+				<mx:DataGridColumn headerText="Employee" dataField="lastName" labelFunction="getNameLabel" width="800"/>
+			</mx:columns>
+		</mx:DataGrid>
+		
+		<mx:DataGrid id="fieldNamesDG" dataProvider="{fieldNamesList}" width="50%" height="100%">
+			<mx:columns>
+				<mx:DataGridColumn headerText=" "
+					sortable="false" dataField="isSelected" width="100">
+					<mx:headerRenderer>
+						<mx:Component>
+							<components:CheckBoxHeaderRenderer/>
+						</mx:Component>
+					</mx:headerRenderer>
+					<mx:itemRenderer>
+						<mx:Component>
+							<components:CustomCheckBoxComponent 
+								datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn headerText="Field" dataField="fieldValue" width="900"/>
+			</mx:columns>
+		</mx:DataGrid>
+	
+	</mx:HBox>
+	
+</mx:TitleWindow>

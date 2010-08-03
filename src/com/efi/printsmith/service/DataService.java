@@ -7,6 +7,7 @@ import java.security.InvalidParameterException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -2608,6 +2609,50 @@ public class DataService extends HibernateService {
 			if (periodlist != null)
 				log.debug("** Found " + periodlist.size() + "records:");
 			return periodlist;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
+	/**
+	 * This method retrieves List of TimeCards required for Export functionality
+	 * @param orderByField
+	 * @param fromDate
+	 * @param toDate
+	 * @param periodFrom
+	 * @param periodTo
+	 * @param selectedEmployeeList
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TimeCard> getEmployeeTimeExports(String orderByField, Date fromDate, Date toDate,
+			int periodFrom, int periodTo, List selectedEmployeeList) throws Exception {
+		log.debug("** getEmployeeTimeExports called.");
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from TimeCard tc fetch all properties";
+			if(fromDate==null && toDate==null) {	
+				queryString = queryString+" where period between "+periodFrom+" and "+periodTo;
+			} else {
+				queryString = queryString+" where (startDateTime between '"+dateFormat.format(fromDate)+"' and '"+dateFormat.format(toDate)+"' " +
+						"or endDateTime between '"+dateFormat.format(fromDate)+"' and '"+dateFormat.format(toDate)+"')";
+			}
+			queryString = queryString + " and tc.onClock=0 and tc.endDateTime is not null and tc.employee.employeeId in (:employeeIds)";
+			queryString = queryString + " order by tc.employee."+orderByField+" asc";
+			Query query = em.createQuery(queryString);
+			query.setParameter("employeeIds", selectedEmployeeList);
+			List<TimeCard> timeCardList = query.getResultList();
+			for(TimeCard timeCard : timeCardList) {
+				timeCard.setEmployee((Employee) getEmployee(timeCard.getEmployee().getId()));
+			}
+			if (timeCardList != null)
+				log.debug("** Found " + timeCardList.size() + "records:");
+			return timeCardList;
 		} catch (Exception e) {
 			log.error(e);
 		} finally {

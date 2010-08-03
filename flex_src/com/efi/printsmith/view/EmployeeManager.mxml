@@ -67,6 +67,11 @@
 		var titleWindow:ClockOptionsView = ClockOptionsView(PopUpManager.createPopUp(this, ClockOptionsView, true));
      	titleWindow.setStyle("borderAlpha", 0.9);
 	}
+	
+	private function doExportView():void {
+		var titleWindow:TimeExportView = TimeExportView(PopUpManager.createPopUp(this, TimeExportView, true));
+     	titleWindow.setStyle("borderAlpha", 0.9);
+	}
 
 ]]>
                              
@@ -86,6 +91,8 @@
 	<mx:HBox width="100%" height="24%">
 		<mx:Button id="button_clockoptions" width="15%" height="100%" 
 			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ClockOptions')}" icon="@Embed(source='../../../../assets/ClockIndicator.png')" labelPlacement="bottom" click="{doClockOptionsView()}"/>
+		<mx:Button id="button_export" width="15%" height="100%" 
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Exports')}" icon="@Embed(source='../../../../assets/exportEmployee.png')" labelPlacement="bottom" click="{doExportView()}"/>
 	</mx:HBox>
 </mx:Panel>
 
