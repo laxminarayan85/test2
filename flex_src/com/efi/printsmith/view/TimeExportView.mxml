@@ -299,7 +299,7 @@
 				urlVariables.data = exportString;
 				urlVariables.fileName = "Timecard Export "+(todayDate.month+1)+"_"+todayDate.date+"_"+todayDate.fullYear;
 				urlRequest.data = urlVariables;
-				urlRequest.url = "/Snowmass/flexExport.jsp";
+				urlRequest.url = contextRoot.rootURL+"/flexExport.jsp";
 				urlRequest.method = URLRequestMethod.POST;
 				navigateToURL(urlRequest,"_self");
 			}
@@ -385,6 +385,8 @@
 	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService" showBusyCursor="true">
 		<mx:method name="getEmployeeTimeExports" fault="handleFault(event)" result="handleTimeCardLoadResult(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:HTTPService id="contextRoot" rootURL="@ContextRoot()"/>
 	
 	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 	
