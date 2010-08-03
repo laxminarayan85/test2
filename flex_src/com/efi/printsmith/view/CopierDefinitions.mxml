@@ -230,6 +230,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		pricing_method_combo.selectedIndex = -1;
 		pricing_method_combo.text = "";
 		
+		copierDefinition.name = copierDefinition.name + ' ' + resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Copy')
 		copierService.duplicateCopier(copierDefinition);
 	}
 	

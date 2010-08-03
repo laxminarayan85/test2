@@ -223,6 +223,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 	}
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+		
+		account = new Account();
+		
 		if (evt.account != null) {
 			this.setAccount(evt.account);
 			
@@ -333,6 +336,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 	}	                                                                    
 	private function setDefaultContact():void{
+		if (contact.parentAccount != null){
 			if (contact.parentAccount.contact == contact){
 				defaultContact = true;
 				use_contact_check.enabled = false;
@@ -353,6 +357,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				use_contact_check.enabled = true;
 				AccountsPicker.enabled = true;
 			}
+		}
 		
 	}	
 	private function mapToContactData():void {
@@ -583,13 +588,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function doNew():void {
 	    contact = new Contact();
 	    contact.creditCard = new CreditCard();
-	     contact_editor.setContact(contact);
+	    contact.shipToAddress = new ArrayCollection();
+	    contact_editor.setContact(contact);
 	    
 	    setMarketing();
 	    setCreditCard();
 	    setContact(contact);
-	    account = new Account();
-		this.setAccount(account);
+	   
 		setDefaultContact();
 	 	
 	}  
