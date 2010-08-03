@@ -20,95 +20,468 @@
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:states>
 	<mx:State name="COPIESANDORIGINALS">
-		<mx:SetProperty name="height" value="448"/>
+		<mx:SetProperty name="height" value="484"/>
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyMatrix id="copies_and_originals_editor" x="0" y="0" matrix="{matrix}">
+			<mtrx:ByCopyMatrix id="copies_and_originals_editor" x="1" y="0" matrix="{matrix}">
 			</mtrx:ByCopyMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
 		<mx:SetProperty name="width" value="706"/>
-		<mx:SetProperty target="{canvas1}" name="height" value="401"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="446"/>
+		<mx:SetProperty target="{label1}" name="y" value="375"/>
+		<mx:SetProperty target="{price1}" name="y" value="373"/>
+		<mx:SetProperty target="{price1}" name="x" value="63"/>
+		<mx:SetProperty target="{price1}" name="width" value="65"/>
+		<mx:SetProperty target="{price2}" name="x" value="127"/>
+		<mx:SetProperty target="{price2}" name="y" value="373"/>
+		<mx:SetProperty target="{price2}" name="width" value="60"/>
+		<mx:SetProperty target="{price3}" name="x" value="186"/>
+		<mx:SetProperty target="{price3}" name="y" value="373"/>
+		<mx:SetProperty target="{price3}" name="width" value="66"/>
+		<mx:SetProperty target="{price4}" name="x" value="248"/>
+		<mx:SetProperty target="{price4}" name="y" value="373"/>
+		<mx:SetProperty target="{price4}" name="width" value="60.5"/>
+		<mx:SetProperty target="{price5}" name="x" value="306.5"/>
+		<mx:SetProperty target="{price5}" name="y" value="373"/>
+		<mx:SetProperty target="{price5}" name="width" value="59.5"/>
+		<mx:SetProperty target="{select_button}" name="y"/>
+		<mx:SetStyle target="{select_button}" name="bottom" value="19"/>
+		<mx:SetStyle target="{clear_button}" name="bottom" value="19"/>
+		<mx:SetStyle target="{select_button}" name="right" value="110"/>
+		<mx:SetStyle target="{clear_button}" name="right" value="0"/>
+		<mx:SetProperty target="{label1}" name="x" value="3"/>
+		<mx:SetProperty target="{price6}" name="x" value="363"/>
+		<mx:SetProperty target="{price6}" name="y" value="373"/>
+		<mx:SetProperty target="{price6}" name="width" value="67"/>
+		<mx:SetProperty target="{price7}" name="x" value="428"/>
+		<mx:SetProperty target="{price7}" name="y" value="373"/>
+		<mx:SetProperty target="{price7}" name="width" value="62"/>
+		<mx:SetProperty target="{price8}" name="x" value="485"/>
+		<mx:SetProperty target="{price8}" name="y" value="373"/>
+		<mx:SetProperty target="{price8}" name="width" value="67"/>
+		<mx:SetProperty target="{price9}" name="x" value="551"/>
+		<mx:SetProperty target="{price9}" name="y" value="373"/>
+		<mx:SetProperty target="{price9}" name="width" value="66"/>
+		<mx:SetProperty target="{price10}" name="x" value="615"/>
+		<mx:SetProperty target="{price10}" name="y" value="373"/>
+		<mx:RemoveChild target="{price10}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild" target="{price10}"/>
+		<mx:SetProperty target="{price10}" name="width" value="60"/>
 	</mx:State>
 	<mx:State name="COPIESANDORIGINALSTWOSIDES">
-		<mx:SetProperty name="height" value="460"/>
+		<mx:SetProperty name="height" value="490"/>
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyDoubleMatrix id="copies_and_originals_two_sides_editor" x="0" y="0" matrix="{matrix}">
+			<mtrx:ByCopyDoubleMatrix id="copies_and_originals_two_sides_editor" x="2" y="-11" matrix="{matrix}">
 			</mtrx:ByCopyDoubleMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="1202"/>
-		<mx:SetProperty name="width" value="1232"/>
-		<mx:SetProperty target="{canvas1}" name="height" value="411"/>
+		<mx:SetProperty name="width" value="1242"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="445"/>
+		<mx:SetProperty target="{label1}" name="y" value="381"/>
+		<mx:SetProperty target="{price1}" name="y" value="379"/>
+		<mx:SetProperty target="{price1}" name="x" value="60"/>
+		<mx:SetProperty target="{price1}" name="width" value="59"/>
+		<mx:SetProperty target="{price2}" name="x" value="118"/>
+		<mx:SetProperty target="{price2}" name="y" value="379"/>
+		<mx:SetProperty target="{price2}" name="width" value="59"/>
+		<mx:SetProperty target="{price3}" name="x" value="175"/>
+		<mx:SetProperty target="{price3}" name="y" value="379"/>
+		<mx:SetProperty target="{price3}" name="width" value="59"/>
+		<mx:SetProperty target="{price4}" name="x" value="232"/>
+		<mx:SetProperty target="{price4}" name="y" value="379"/>
+		<mx:SetProperty target="{price4}" name="width" value="59"/>
+		<mx:SetProperty target="{price5}" name="x" value="289"/>
+		<mx:SetProperty target="{price5}" name="y" value="379"/>
+		<mx:SetProperty target="{price5}" name="width" value="59"/>
+		<mx:SetProperty target="{price6}" name="x" value="347"/>
+		<mx:SetProperty target="{price6}" name="y" value="379"/>
+		<mx:SetProperty target="{price6}" name="width" value="59"/>
+		<mx:SetProperty target="{price7}" name="x" value="403"/>
+		<mx:SetProperty target="{price7}" name="y" value="379"/>
+		<mx:SetProperty target="{price7}" name="width" value="59"/>
+		<mx:SetProperty target="{price8}" name="x" value="460"/>
+		<mx:SetProperty target="{price8}" name="y" value="379"/>
+		<mx:SetProperty target="{price8}" name="width" value="59"/>
+		<mx:SetProperty target="{price9}" name="x" value="518"/>
+		<mx:SetProperty target="{price9}" name="y" value="379"/>
+		<mx:SetProperty target="{price9}" name="width" value="59"/>
+		<mx:SetProperty target="{price10}" name="x" value="575"/>
+		<mx:SetProperty target="{price10}" name="y" value="379"/>
+		<mx:SetProperty target="{price10}" name="width" value="59"/>
+		<mx:SetProperty target="{price11}" name="x" value="632"/>
+		<mx:SetProperty target="{price11}" name="y" value="379"/>
+		<mx:SetProperty target="{price11}" name="width" value="58"/>
+		<mx:SetProperty target="{price12}" name="x" value="689"/>
+		<mx:SetProperty target="{price12}" name="y" value="379"/>
+		<mx:SetProperty target="{price12}" name="width" value="58"/>
+		<mx:SetProperty target="{price13}" name="x" value="745"/>
+		<mx:SetProperty target="{price13}" name="y" value="379"/>
+		<mx:SetProperty target="{price13}" name="width" value="58"/>
+		<mx:SetProperty target="{price14}" name="x" value="800"/>
+		<mx:SetProperty target="{price14}" name="y" value="379"/>
+		<mx:SetProperty target="{price14}" name="width" value="58"/>
+		<mx:SetProperty target="{price15}" name="x" value="857"/>
+		<mx:SetProperty target="{price15}" name="y" value="379"/>
+		<mx:SetProperty target="{price15}" name="width" value="58"/>
+		<mx:SetProperty target="{price16}" name="x" value="914"/>
+		<mx:SetProperty target="{price16}" name="y" value="379"/>
+		<mx:SetProperty target="{price16}" name="width" value="58"/>
+		<mx:SetProperty target="{price17}" name="x" value="972"/>
+		<mx:SetProperty target="{price17}" name="y" value="379"/>
+		<mx:SetProperty target="{price17}" name="width" value="58"/>
+		<mx:SetProperty target="{price18}" name="x" value="1029"/>
+		<mx:SetProperty target="{price18}" name="y" value="379"/>
+		<mx:SetProperty target="{price18}" name="width" value="58"/>
+		<mx:SetProperty target="{price19}" name="x" value="1085"/>
+		<mx:SetProperty target="{price19}" name="y" value="379"/>
+		<mx:SetProperty target="{price19}" name="width" value="58"/>
+		<mx:SetProperty target="{price20}" name="x" value="1144"/>
+		<mx:SetProperty target="{price20}" name="y" value="379"/>
+		<mx:SetProperty target="{price20}" name="width" value="58"/>
+		<mx:SetProperty target="{label1}" name="width" value="63"/>
 	</mx:State>
 	<mx:State name="COPIESPERORIGINALS">
+		<mx:RemoveChild target="{price2}"/>
+		<mx:RemoveChild target="{price5}"/>
+		<mx:RemoveChild target="{price6}"/>
+		<mx:RemoveChild target="{price7}"/>
+		<mx:RemoveChild target="{price8}"/>
+		<mx:RemoveChild target="{price9}"/>
+		<mx:RemoveChild target="{price10}"/>
+		<mx:RemoveChild target="{price11}"/>
+		<mx:RemoveChild target="{price20}"/>
+		<mx:RemoveChild target="{price19}"/>
+		<mx:RemoveChild target="{price18}"/>
+		<mx:RemoveChild target="{price17}"/>
+		<mx:RemoveChild target="{price16}"/>
+		<mx:RemoveChild target="{price15}"/>
+		<mx:RemoveChild target="{price14}"/>
+		<mx:RemoveChild target="{price4}"/>
+		<mx:RemoveChild target="{price3}"/>
+		<mx:RemoveChild target="{price12}"/>
+		<mx:RemoveChild target="{price13}"/>
 		
 	</mx:State>
 	<mx:State name="COPIESPERORIGINALSTWOSIDES">
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix id="copies_per_originals_two_sides_editor" x="0" y="0" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="copies_per_originals_two_sides_editor" x="-1" y="-1" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>
+		<mx:SetProperty name="height" value="490"/>
+		<mx:SetProperty target="{label1}" name="x" value="5"/>
+		<mx:SetProperty target="{label1}" name="y" value="369"/>
+		<mx:SetProperty target="{price1}" name="x" value="74"/>
+		<mx:SetProperty target="{price1}" name="y" value="367"/>
+		<mx:SetProperty target="{price1}" name="width" value="69"/>
+		<mx:SetProperty target="{price2}" name="x" value="142"/>
+		<mx:SetProperty target="{price2}" name="y" value="367"/>
+		<mx:SetProperty target="{price2}" name="width" value="78"/>
+		<mx:RemoveChild target="{price5}"/>
+		<mx:RemoveChild target="{price6}"/>
+		<mx:RemoveChild target="{price7}"/>
+		<mx:RemoveChild target="{price8}"/>
+		<mx:RemoveChild target="{price9}"/>
+		<mx:RemoveChild target="{price10}"/>
+		<mx:RemoveChild target="{price11}"/>
+		<mx:RemoveChild target="{price20}"/>
+		<mx:RemoveChild target="{price19}"/>
+		<mx:RemoveChild target="{price18}"/>
+		<mx:RemoveChild target="{price17}"/>
+		<mx:RemoveChild target="{price16}"/>
+		<mx:RemoveChild target="{price15}"/>
+		<mx:RemoveChild target="{price14}"/>
+		<mx:RemoveChild target="{price4}"/>
+		<mx:RemoveChild target="{price3}"/>
+		<mx:RemoveChild target="{price12}"/>
+		<mx:RemoveChild target="{price13}"/>
 	</mx:State>
 	<mx:State name="TOTALOFALLCOPIES">
+		<mx:RemoveChild target="{price20}"/>
+		<mx:RemoveChild target="{price19}"/>
+		<mx:RemoveChild target="{price18}"/>
+		<mx:RemoveChild target="{price17}"/>
+		<mx:RemoveChild target="{price16}"/>
+		<mx:RemoveChild target="{price15}"/>
+		<mx:RemoveChild target="{price14}"/>
+		<mx:RemoveChild target="{price4}"/>
+		<mx:RemoveChild target="{price12}"/>
+		<mx:RemoveChild target="{price13}"/>
+		<mx:RemoveChild target="{price3}"/>
+		<mx:RemoveChild target="{price2}"/>
+		<mx:RemoveChild target="{price5}"/>
+		<mx:RemoveChild target="{price6}"/>
+		<mx:RemoveChild target="{price7}"/>
+		<mx:RemoveChild target="{price8}"/>
+		<mx:RemoveChild target="{price9}"/>
+		<mx:RemoveChild target="{price10}"/>
+		<mx:RemoveChild target="{price11}"/>
 		
 	</mx:State>	
 	<mx:State name="TOTALOFALLCOPIESTWOSIDES">
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix id="total_of_all_copies_two_sides_editor" x="0" y="0" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="total_of_all_copies_two_sides_editor" x="0" y="10" height="378" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
+		<mx:SetProperty name="height" value="518"/>
+		<mx:SetProperty target="{label1}" name="x" value="5"/>
+		<mx:SetProperty target="{label1}" name="y" value="398"/>
+		<mx:SetProperty target="{price1}" name="x" value="74"/>
+		<mx:SetProperty target="{price1}" name="y" value="396"/>
+		<mx:SetProperty target="{price2}" name="x" value="144"/>
+		<mx:SetProperty target="{price2}" name="y" value="396"/>
+		<mx:RemoveChild target="{price11}"/>
+		<mx:RemoveChild target="{price10}"/>
+		<mx:RemoveChild target="{price9}"/>
+		<mx:RemoveChild target="{price8}"/>
+		<mx:RemoveChild target="{price7}"/>
+		<mx:RemoveChild target="{price6}"/>
+		<mx:RemoveChild target="{price5}"/>
+		<mx:RemoveChild target="{price3}"/>
+		<mx:RemoveChild target="{price4}"/>
+		<mx:RemoveChild target="{price14}"/>
+		<mx:RemoveChild target="{price12}"/>
+		<mx:RemoveChild target="{price13}"/>
+		<mx:RemoveChild target="{price15}"/>
+		<mx:RemoveChild target="{price16}"/>
+		<mx:RemoveChild target="{price17}"/>
+		<mx:RemoveChild target="{price18}"/>
+		<mx:RemoveChild target="{price19}"/>
+		<mx:RemoveChild target="{price20}"/>
+		<mx:SetProperty target="{price1}" name="width" value="72"/>
+		<mx:SetProperty target="{price2}" name="width" value="76"/>
 	</mx:State>	
 	<mx:State name="SQUAREAREAOFORIGINALS">
+		<mx:RemoveChild target="{price20}"/>
+		<mx:RemoveChild target="{price19}"/>
+		<mx:RemoveChild target="{price18}"/>
+		<mx:RemoveChild target="{price17}"/>
+		<mx:RemoveChild target="{price16}"/>
+		<mx:RemoveChild target="{price15}"/>
+		<mx:RemoveChild target="{price14}"/>
+		<mx:RemoveChild target="{price4}"/>
+		<mx:RemoveChild target="{price3}"/>
+		<mx:RemoveChild target="{price12}"/>
+		<mx:RemoveChild target="{price2}"/>
+		<mx:RemoveChild target="{price5}"/>
+		<mx:RemoveChild target="{price13}"/>
+		<mx:RemoveChild target="{price6}"/>
+		<mx:RemoveChild target="{price7}"/>
+		<mx:RemoveChild target="{price8}"/>
+		<mx:RemoveChild target="{price9}"/>
+		<mx:RemoveChild target="{price10}"/>
+		<mx:RemoveChild target="{price11}"/>
 		
 	</mx:State>
 	<mx:State name="SQUAREAREAOFORIGINALSTWOSIDES">
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix id="square_area_of_originals_two_sides_editor" x="0" y="0" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="square_area_of_originals_two_sides_editor" x="-2" y="-4" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
+		<mx:SetProperty name="height" value="486"/>
+		<mx:SetProperty target="{label1}" name="y" value="366"/>
+		<mx:SetProperty target="{price1}" name="y" value="364"/>
+		<mx:SetProperty target="{price2}" name="x" value="143"/>
+		<mx:SetProperty target="{price2}" name="y" value="364"/>
+		<mx:RemoveChild target="{price3}"/>
+		<mx:RemoveChild target="{price4}"/>
+		<mx:RemoveChild target="{price14}"/>
+		<mx:RemoveChild target="{price15}"/>
+		<mx:RemoveChild target="{price12}"/>
+		<mx:RemoveChild target="{price16}"/>
+		<mx:RemoveChild target="{price13}"/>
+		<mx:RemoveChild target="{price17}"/>
+		<mx:RemoveChild target="{price18}"/>
+		<mx:RemoveChild target="{price19}"/>
+		<mx:RemoveChild target="{price20}"/>
+		<mx:RemoveChild target="{price5}"/>
+		<mx:RemoveChild target="{price6}"/>
+		<mx:RemoveChild target="{price7}"/>
+		<mx:RemoveChild target="{price8}"/>
+		<mx:RemoveChild target="{price9}"/>
+		<mx:RemoveChild target="{price10}"/>
+		<mx:RemoveChild target="{price11}"/>
+		<mx:SetProperty target="{price1}" name="x" value="69"/>
+		<mx:SetProperty target="{price1}" name="width" value="77"/>
+		<mx:SetProperty target="{price2}" name="width" value="77"/>
 	</mx:State>
 	<mx:State name="TOTALSQUAREAREA">
+		<mx:RemoveChild target="{price20}"/>
+		<mx:RemoveChild target="{price19}"/>
+		<mx:RemoveChild target="{price18}"/>
+		<mx:RemoveChild target="{price17}"/>
+		<mx:RemoveChild target="{price16}"/>
+		<mx:RemoveChild target="{price15}"/>
+		<mx:RemoveChild target="{price14}"/>
+		<mx:RemoveChild target="{price4}"/>
+		<mx:RemoveChild target="{price3}"/>
+		<mx:RemoveChild target="{price12}"/>
+		<mx:RemoveChild target="{price13}"/>
+		<mx:RemoveChild target="{price2}"/>
+		<mx:RemoveChild target="{price5}"/>
+		<mx:RemoveChild target="{price6}"/>
+		<mx:RemoveChild target="{price7}"/>
+		<mx:RemoveChild target="{price8}"/>
+		<mx:RemoveChild target="{price9}"/>
+		<mx:RemoveChild target="{price10}"/>
+		<mx:RemoveChild target="{price11}"/>
 		
 	</mx:State>
 	<mx:State name="TOTALSQUAREAREATWOSIDES">
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix id="total_square_area_two_sides_editor" x="0" y="0" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="total_square_area_two_sides_editor" x="-2" y="0" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
+		<mx:SetProperty name="height" value="496"/>
+		<mx:SetProperty target="{label1}" name="x" value="5"/>
+		<mx:SetProperty target="{label1}" name="y" value="377"/>
+		<mx:SetProperty target="{price1}" name="x" value="74"/>
+		<mx:SetProperty target="{price1}" name="y" value="375"/>
+		<mx:SetProperty target="{price2}" name="x" value="146"/>
+		<mx:SetProperty target="{price2}" name="y" value="375"/>
+		<mx:SetProperty target="{price1}" name="width" value="75"/>
+		<mx:SetProperty target="{price2}" name="width" value="74"/>
 	</mx:State>
 	<mx:State name="SQUAREAREAANDCOPIES">
 		<mx:SetProperty name="height" value="448"/>
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyMatrix id="square_area_and_copies_editor" x="0" y="0" matrix="{matrix}">
+			<mtrx:ByCopyMatrix id="square_area_and_copies_editor" x="-9" y="-27" matrix="{matrix}">
 			</mtrx:ByCopyMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
 		<mx:SetProperty name="width" value="706"/>
 		<mx:SetProperty target="{canvas1}" name="height" value="401"/>		
+		<mx:SetProperty target="{label1}" name="y" value="348"/>
+		<mx:SetProperty target="{price1}" name="y" value="346"/>
+		<mx:SetProperty target="{price1}" name="x" value="54"/>
+		<mx:SetProperty target="{price2}" name="x" value="114"/>
+		<mx:SetProperty target="{price2}" name="y" value="346"/>
+		<mx:SetProperty target="{price1}" name="width" value="61"/>
+		<mx:SetProperty target="{price2}" name="width" value="61"/>
+		<mx:SetProperty target="{price3}" name="x" value="177"/>
+		<mx:SetProperty target="{price3}" name="y" value="346"/>
+		<mx:SetProperty target="{price3}" name="width" value="61"/>
+		<mx:SetProperty target="{price4}" name="x" value="238"/>
+		<mx:SetProperty target="{price4}" name="y" value="346"/>
+		<mx:SetProperty target="{price4}" name="width" value="61"/>
+		<mx:SetProperty target="{price5}" name="x" value="297"/>
+		<mx:SetProperty target="{price5}" name="y" value="346"/>
+		<mx:SetProperty target="{price5}" name="width" value="61"/>
+		<mx:SetProperty target="{price6}" name="x" value="357"/>
+		<mx:SetProperty target="{price6}" name="y" value="346"/>
+		<mx:SetProperty target="{price6}" name="width" value="61"/>
+		<mx:SetProperty target="{price7}" name="x" value="419"/>
+		<mx:SetProperty target="{price7}" name="y" value="346"/>
+		<mx:SetProperty target="{price7}" name="width" value="61"/>
+		<mx:SetProperty target="{price8}" name="x" value="479"/>
+		<mx:SetProperty target="{price8}" name="y" value="346"/>
+		<mx:SetProperty target="{price8}" name="width" value="61"/>
+		<mx:SetProperty target="{price9}" name="x" value="541"/>
+		<mx:SetProperty target="{price9}" name="y" value="346"/>
+		<mx:SetProperty target="{price9}" name="width" value="61"/>
+		<mx:SetProperty target="{price10}" name="x" value="602"/>
+		<mx:SetProperty target="{price10}" name="y" value="346"/>
+		<mx:SetProperty target="{price10}" name="width" value="61"/>
+		<mx:RemoveChild target="{price11}"/>
+		<mx:RemoveChild target="{price20}"/>
+		<mx:RemoveChild target="{price19}"/>
+		<mx:RemoveChild target="{price18}"/>
+		<mx:RemoveChild target="{price17}"/>
+		<mx:RemoveChild target="{price16}"/>
+		<mx:RemoveChild target="{price15}"/>
+		<mx:RemoveChild target="{price14}"/>
+		<mx:RemoveChild target="{price12}"/>
+		<mx:RemoveChild target="{price13}"/>
+		<mx:SetProperty target="{label1}" name="x" value="-4"/>
 	</mx:State>
 	<mx:State name="SQUAREAREAANDCOPIESTWOSIDES">
-		<mx:SetProperty name="height" value="448"/>
+		<mx:SetProperty name="height" value="482"/>
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyMatrix id="square_area_and_copies_two_sides_editor" x="0" y="0" matrix="{matrix}">
+			<mtrx:ByCopyMatrix id="square_area_and_copies_two_sides_editor" x="-3" y="-1" matrix="{matrix}">
 			</mtrx:ByCopyMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
 		<mx:SetProperty name="width" value="706"/>
-		<mx:SetProperty target="{canvas1}" name="height" value="401"/>		
+		<mx:SetProperty target="{canvas1}" name="height" value="434"/>		
+		<mx:SetProperty target="{label1}" name="y" value="374"/>
+		<mx:SetProperty target="{price2}" name="x" value="122"/>
+		<mx:SetProperty target="{price2}" name="y" value="372"/>
+		<mx:SetProperty target="{price2}" name="width" value="61"/>
+		<mx:SetProperty target="{price3}" name="x" value="183"/>
+		<mx:SetProperty target="{price3}" name="y" value="372"/>
+		<mx:SetProperty target="{price3}" name="width" value="61"/>
+		<mx:SetProperty target="{price4}" name="x" value="244"/>
+		<mx:SetProperty target="{price4}" name="y" value="372"/>
+		<mx:SetProperty target="{price4}" name="width" value="61"/>
+		<mx:SetProperty target="{price5}" name="x" value="305"/>
+		<mx:SetProperty target="{price5}" name="y" value="372"/>
+		<mx:SetProperty target="{price5}" name="width" value="61"/>
+		<mx:SetProperty target="{price6}" name="x" value="366"/>
+		<mx:SetProperty target="{price6}" name="y" value="372"/>
+		<mx:SetProperty target="{price6}" name="width" value="61"/>
+		<mx:SetProperty target="{price7}" name="x" value="426"/>
+		<mx:SetProperty target="{price7}" name="y" value="372"/>
+		<mx:SetProperty target="{price7}" name="width" value="61"/>
+		<mx:SetProperty target="{price8}" name="x" value="488"/>
+		<mx:SetProperty target="{price8}" name="y" value="372"/>
+		<mx:SetProperty target="{price8}" name="width" value="61"/>
+		<mx:SetProperty target="{price9}" name="x" value="550"/>
+		<mx:SetProperty target="{price9}" name="y" value="372"/>
+		<mx:SetProperty target="{price9}" name="width" value="61"/>
+		<mx:SetProperty target="{price10}" name="x" value="611"/>
+		<mx:SetProperty target="{price10}" name="y" value="372"/>
+		<mx:SetProperty target="{price10}" name="width" value="61"/>
+		<mx:RemoveChild target="{price11}"/>
+		<mx:RemoveChild target="{price12}"/>
+		<mx:RemoveChild target="{price14}"/>
+		<mx:RemoveChild target="{price13}"/>
+		<mx:RemoveChild target="{price15}"/>
+		<mx:RemoveChild target="{price16}"/>
+		<mx:RemoveChild target="{price17}"/>
+		<mx:RemoveChild target="{price18}"/>
+		<mx:RemoveChild target="{price19}"/>
+		<mx:RemoveChild target="{price20}"/>
+		<mx:RemoveChild target="{price1}"/>
+		<mx:SetProperty target="{label1}" name="x" value="-8"/>
 	</mx:State>
 	<mx:State name="SQUAREAREAPERCOPY">
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix id="square_area_per_copy_editor" x="0" y="0" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="square_area_per_copy_editor" x="-1" y="6" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>		
+		<mx:SetProperty name="height" value="498"/>
+		<mx:SetProperty target="{label1}" name="y" value="376"/>
+		<mx:SetProperty target="{price1}" name="y" value="374"/>
+		<mx:SetProperty target="{price1}" name="x" value="69"/>
+		<mx:SetProperty target="{price2}" name="x" value="143"/>
+		<mx:SetProperty target="{price2}" name="y" value="374"/>
+		<mx:RemoveChild target="{price5}"/>
+		<mx:RemoveChild target="{price6}"/>
+		<mx:RemoveChild target="{price7}"/>
+		<mx:RemoveChild target="{price8}"/>
+		<mx:RemoveChild target="{price9}"/>
+		<mx:RemoveChild target="{price10}"/>
+		<mx:RemoveChild target="{price11}"/>
+		<mx:RemoveChild target="{price3}"/>
+		<mx:RemoveChild target="{price4}"/>
+		<mx:RemoveChild target="{price12}"/>
+		<mx:RemoveChild target="{price13}"/>
+		<mx:RemoveChild target="{price14}"/>
+		<mx:RemoveChild target="{price15}"/>
+		<mx:RemoveChild target="{price16}"/>
+		<mx:RemoveChild target="{price17}"/>
+		<mx:RemoveChild target="{price18}"/>
+		<mx:RemoveChild target="{price19}"/>
+		<mx:RemoveChild target="{price20}"/>
+		<mx:SetProperty target="{price2}" name="width" value="77"/>
 	</mx:State>
 </mx:states>
 <mx:Script>
@@ -163,7 +536,41 @@
 	public function setMatrix(matrix:com.efi.printsmith.data.Matrix):void {
 		if (matrix == null) return;
 		this.matrix = matrix;
+		for (var i:int=0;i<this.matrix.elements.length;i++) {
+			var element:com.efi.printsmith.data.MatrixElement = this.matrix.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
+			if (element.lastLine == true)
+				this.price1.text = element.price1.toString();
+				this.price2.text = element.price2.toString();
+				this.price3.text = element.price3.toString();
+				this.price4.text = element.price4.toString();
+				this.price5.text = element.price5.toString();
+				this.price6.text = element.price6.toString();
+				this.price7.text = element.price7.toString();
+				this.price8.text = element.price8.toString();
+				this.price9.text = element.price9.toString();
+				this.price10.text = element.price10.toString();
+				this.price11.text = element.price11.toString();
+				this.price12.text = element.price12.toString();
+				this.price13.text = element.price13.toString();
+				this.price14.text = element.price14.toString();
+				this.price15.text = element.price15.toString();
+				this.price16.text = element.price16.toString();
+				this.price17.text = element.price17.toString();
+				this.price18.text = element.price18.toString();
+				this.price19.text = element.price19.toString();
+				this.price20.text = element.price20.toString();
+		}
+		this.matrix.elements.filterFunction = filterMatrix;
+		this.matrix.elements.refresh();
 	}   
+	
+	public function filterMatrix(item:com.efi.printsmith.data.MatrixElement):Boolean {
+		return item.lastLine != true;
+	}
+	
+	public function unfilterMatrix(item:Object):Boolean {
+		return true;
+	}
 	                 
 	private function doSelect():void {	
 		switch(this.currentState) {
@@ -211,6 +618,32 @@
 			matrixeditor.mapToMatrix();
 			matrix = matrixeditor.matrix;
 			break;
+		}
+		matrix.elements.filterFunction = unfilterMatrix;
+		matrix.elements.refresh();
+		for (var i:int=0;i<this.matrix.elements.length;i++) {
+			var element:com.efi.printsmith.data.MatrixElement = this.matrix.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
+			if (element.lastLine == true)
+				element.price1 = parseFloat(this.price1.text);
+				element.price2 = parseFloat(this.price2.text);
+				element.price3 = parseFloat(this.price3.text);
+				element.price4 = parseFloat(this.price4.text);
+				element.price5 = parseFloat(this.price5.text);
+				element.price6 = parseFloat(this.price6.text);
+				element.price7 = parseFloat(this.price7.text);
+				element.price8 = parseFloat(this.price8.text);
+				element.price9 = parseFloat(this.price9.text);
+				element.price10 = parseFloat(this.price10.text);
+				element.price11 = parseFloat(this.price11.text);
+				element.price12 = parseFloat(this.price12.text);
+				element.price13 = parseFloat(this.price13.text);
+				element.price14 = parseFloat(this.price14.text);
+				element.price15 = parseFloat(this.price15.text);
+				element.price16 = parseFloat(this.price16.text);
+				element.price17 = parseFloat(this.price17.text);
+				element.price18 = parseFloat(this.price18.text);
+				element.price19 = parseFloat(this.price19.text);
+				element.price20 = parseFloat(this.price20.text);
 		}
 		dataService.addUpdate(matrix);
 		PopUpManager.removePopUp(this);
@@ -291,6 +724,27 @@
 		</mtrx:BasicMatrix>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" y="373" right="112" bottom="5"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" right="2" bottom="5"/>
+		<mx:Label x="0" y="315" text="Over Quantity" id="label1"/>
+		<mx:TextInput x="110" y="313" width="100" id="price1"/>
+		<mx:TextInput x="110" y="269" width="100" id="price20"/>
+		<mx:TextInput x="110" y="239" width="100" id="price19"/>
+		<mx:TextInput x="110" y="209" width="100" id="price18"/>
+		<mx:TextInput x="110" y="179" width="100" id="price17"/>
+		<mx:TextInput x="110" y="149" width="100" id="price16"/>
+		<mx:TextInput x="110" y="119" width="100" id="price15"/>
+		<mx:TextInput x="110" y="89" width="100" id="price14"/>
+		<mx:TextInput x="29" y="78" width="100" id="price13"/>
+		<mx:TextInput x="75" y="59" width="100" id="price12"/>
+		<mx:TextInput x="10" y="239" width="100" id="price11"/>
+		<mx:TextInput x="10" y="209" width="100" id="price10"/>
+		<mx:TextInput x="10" y="179" width="100" id="price9"/>
+		<mx:TextInput x="10" y="149" width="100" id="price8"/>
+		<mx:TextInput x="10" y="119" width="100" id="price7"/>
+		<mx:TextInput x="10" y="89" width="100" id="price6"/>
+		<mx:TextInput x="10" y="59" width="100" id="price5"/>
+		<mx:TextInput x="45" y="78" width="100" id="price4"/>
+		<mx:TextInput x="110" y="29" width="100" id="price3"/>
+		<mx:TextInput x="45" y="48" width="100" id="price2"/>
 
 	</mx:Canvas>
 </mx:TitleWindow>
