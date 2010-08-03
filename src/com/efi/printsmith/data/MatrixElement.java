@@ -128,6 +128,11 @@ public class MatrixElement extends ModelBase {
 	public static final String PRICE11 = "Price11";
 
 	/**
+   * @generated
+   */
+  public static final String LASTLINE = "LastLine";
+
+	/**
 	 * @generated
 	 */
 	public MatrixElement() {
@@ -821,6 +826,28 @@ public class MatrixElement extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean lastLine;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getLastLine(){
+    return lastLine; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLastLine(Boolean newVal) {
+    this.lastLine = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -847,6 +874,7 @@ public class MatrixElement extends ModelBase {
     if (PRICE20.equals(propertyName)) return getPrice20();
     if (PRICE10.equals(propertyName)) return getPrice10();
     if (PRICE11.equals(propertyName)) return getPrice11();
+    if (LASTLINE.equals(propertyName)) return getLastLine();
     return super.getProperty(propertyName);
   }
 	
@@ -877,6 +905,7 @@ public class MatrixElement extends ModelBase {
     if (PRICE20.equals(propertyName)) setPrice20((BigDecimal)newValue); else
     if (PRICE10.equals(propertyName)) setPrice10((BigDecimal)newValue); else
     if (PRICE11.equals(propertyName)) setPrice11((BigDecimal)newValue); else
+    if (LASTLINE.equals(propertyName)) setLastLine((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -928,6 +957,8 @@ public class MatrixElement extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (PRICE11.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
+    if (LASTLINE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -959,6 +990,7 @@ public class MatrixElement extends ModelBase {
     if (PRICE20.equals(propertyName)) return MatrixElement.class;
     if (PRICE10.equals(propertyName)) return MatrixElement.class;
     if (PRICE11.equals(propertyName)) return MatrixElement.class;
+    if (LASTLINE.equals(propertyName)) return MatrixElement.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1011,6 +1043,8 @@ public class MatrixElement extends ModelBase {
     if (! SmartEquals(getPrice10(), objT.getPrice10()))
       return false;
     if (! SmartEquals(getPrice11(), objT.getPrice11()))
+      return false;
+    if (! SmartEquals(getLastLine(), objT.getLastLine()))
       return false;
     return true;
   }			

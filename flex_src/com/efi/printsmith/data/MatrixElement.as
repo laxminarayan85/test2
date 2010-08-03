@@ -34,6 +34,7 @@ package com.efi.printsmith.data
 		public var price20:Number = 0;
 		public var price10:Number = 0;
 		public var price11:Number = 0;
+		public var lastLine:Boolean = false;
 	
 	}
 }

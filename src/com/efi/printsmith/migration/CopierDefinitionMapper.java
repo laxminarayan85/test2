@@ -324,6 +324,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 					matrixElement.setPrice1(Utilities.tokenToDouble(currentImportToken));
 				} else if ("chart factor[15]".equals(currentFieldToken) && x == 15) {
 					matrixElement.setPrice1(Utilities.tokenToDouble(currentImportToken));
+					matrixElement.setLastLine(true);
 				} else if ("chart factor[16]".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("chart factor[17]".equals(currentFieldToken)) {
