@@ -102,6 +102,7 @@ package com.efi.printsmith.common.components
 	            	obj[column.dataField] = true;
 	            }
 	        }
+	        ListBase(owner).dataProvider.refresh();
 		}
 	
 		/* center the checkbox if we're in a datagrid */
