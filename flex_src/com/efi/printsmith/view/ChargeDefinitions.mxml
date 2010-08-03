@@ -107,7 +107,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.data.enums.ChargeInkCoverage;
 	import com.efi.printsmith.data.enums.ChargeMarkupType;
 	import com.efi.printsmith.data.enums.ChargePriceMethod;
-	import com.efi.printsmith.data.enums.JobQuantity;
 	import com.efi.printsmith.data.enums.ChargeJobQuantity;
 	
 	import com.efi.printsmith.events.ModelAddUpdateEvent;
@@ -316,13 +315,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
     private function charge_group_1_change(evt:Event):void {
-		/* if (charge_group_1.selectedValue == "Ordered") {
-			charge.jobQty = ChargeJobQuantity.PRESS;
-		} else if (charge_group_1.selectedValue == "Press") {
-			charge.quantityType = ChargeJobQuantity.FINISH;
-		} else {
-			charge.quantityType = ChargeJobQuantity.NONE;
-		} */
 		charge.jobQty = charge_group_1.selectedValue as String;
     }
 
@@ -779,43 +771,43 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		index = charge_quantity_combo.selectedIndex;
 		qtyTypes.removeAll();
 		switch (chargeMethod) {
-		case ChargeMethod.ASK: 
-			qtyTypes.addItem(ChargeQtyType.SETS);
-			qtyTypes.addItem(ChargeQtyType.QUANTITY);
-			qtyTypes.addItem(ChargeQtyType.TIME);
-			qtyTypes.addItem(ChargeQtyType.NONE);
-			qtyTypes.addItem(ChargeQtyType.SETUPSETS);
+		case ChargeMethod.Ask: 
+			qtyTypes.addItem(ChargeQtyType.Sets);
+			qtyTypes.addItem(ChargeQtyType.Quantity);
+			qtyTypes.addItem(ChargeQtyType.Time);
+			qtyTypes.addItem(ChargeQtyType.None);
+			qtyTypes.addItem(ChargeQtyType.SetupSets);
 			break;
-		case ChargeMethod.CUT:
-			qtyTypes.addItem(ChargeQtyType.SETS);
-			qtyTypes.addItem(ChargeQtyType.SETUPSETS);
+		case ChargeMethod.Cut:
+			qtyTypes.addItem(ChargeQtyType.Sets);
+			qtyTypes.addItem(ChargeQtyType.SetupSets);
 			break;
-		case ChargeMethod.FLATRATE:
-		case ChargeMethod.MARKUP:
-			qtyTypes.addItem(ChargeQtyType.NONE);
+		case ChargeMethod.FlatRate:
+		case ChargeMethod.Markup:
+			qtyTypes.addItem(ChargeQtyType.None);
 			break;
-		case ChargeMethod.FOLD:
-		case ChargeMethod.JOBAWARE:
-		case ChargeMethod.LINEAR:
-			qtyTypes.addItem(ChargeQtyType.SETS);
-			qtyTypes.addItem(ChargeQtyType.QUANTITY);
-			qtyTypes.addItem(ChargeQtyType.SETUPSETS);
+		case ChargeMethod.Fold:
+		case ChargeMethod.JobAware:
+		case ChargeMethod.Linear:
+			qtyTypes.addItem(ChargeQtyType.Sets);
+			qtyTypes.addItem(ChargeQtyType.Quantity);
+			qtyTypes.addItem(ChargeQtyType.SetupSets);
 			break;
-		case ChargeMethod.INK:
-			qtyTypes.addItem(ChargeQtyType.SETS);
-			qtyTypes.addItem(ChargeQtyType.QUANTITY);
+		case ChargeMethod.Ink:
+			qtyTypes.addItem(ChargeQtyType.Sets);
+			qtyTypes.addItem(ChargeQtyType.Quantity);
 			break;
-		case ChargeMethod.PRICELIST:
-		case ChargeMethod.RATELIST:
-			qtyTypes.addItem(ChargeQtyType.QUANTITY);
+		case ChargeMethod.PriceList:
+		case ChargeMethod.RateList:
+			qtyTypes.addItem(ChargeQtyType.Quantity);
 			break;
-		case ChargeMethod.SHIPPING:
-			qtyTypes.addItem(ChargeQtyType.TOTALWEIGHT);
-			qtyTypes.addItem(ChargeQtyType.SHIPPINGQTY);
+		case ChargeMethod.Shipping:
+			qtyTypes.addItem(ChargeQtyType.TotalWeight);
+			qtyTypes.addItem(ChargeQtyType.ShippingQty);
 			break;
-		case ChargeMethod.SQUAREAREA:
-			qtyTypes.addItem(ChargeQtyType.SETS);
-			qtyTypes.addItem(ChargeQtyType.QUANTITY);
+		case ChargeMethod.SquareArea:
+			qtyTypes.addItem(ChargeQtyType.Sets);
+			qtyTypes.addItem(ChargeQtyType.Quantity);
 			break;
 		}
 		charge_quantity_combo.selectedIndex = index;
@@ -826,7 +818,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (charge_method_combo.selectedItem != null)
 			updateQtyComboBox(charge_method_combo.selectedItem.toString());
 		switch (charge_method_combo.selectedItem) {
-		case ChargeMethod.ASK:
+		case ChargeMethod.Ask:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -865,7 +857,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			
 			break;
 			
-		case ChargeMethod.CUT:
+		case ChargeMethod.Cut:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -902,7 +894,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			Ignorecuts_radio.visible =true;
 			charge_group_2.enabled = false;
 			break;
-		case ChargeMethod.FLATRATE:
+		case ChargeMethod.FlatRate:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -938,7 +930,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
-		case ChargeMethod.FOLD:
+		case ChargeMethod.Fold:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -975,7 +967,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
 			break;
-		case ChargeMethod.INK:
+		case ChargeMethod.Ink:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1012,7 +1004,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
 			break;
-		case ChargeMethod.JOBAWARE:
+		case ChargeMethod.JobAware:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1048,7 +1040,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
-		case ChargeMethod.LINEAR:
+		case ChargeMethod.Linear:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1085,7 +1077,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
 			break;
-		case ChargeMethod.MARKUP:
+		case ChargeMethod.Markup:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1121,7 +1113,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
-		case ChargeMethod.PRICELIST:
+		case ChargeMethod.PriceList:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1157,7 +1149,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
-		case ChargeMethod.RATELIST:
+		case ChargeMethod.RateList:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1193,7 +1185,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
-		case ChargeMethod.SHIPPING:
+		case ChargeMethod.Shipping:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1229,7 +1221,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			break;
-		case ChargeMethod.SQUAREAREA:
+		case ChargeMethod.SquareArea:
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1657,8 +1649,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		else
 		{
 			switch (charge_method_combo.selectedItem) {
-				case ChargeMethod.FLATRATE:
-				case ChargeMethod.MARKUP:
+				case ChargeMethod.FlatRate:
+				case ChargeMethod.Markup:
 					markup_edit.text = "";
 					sale_price_per_unit_edit.text = "";
 					cost_plus_radio.enabled= false;					
@@ -1680,16 +1672,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					break;
 					
 					
-				case ChargeMethod.ASK: 
-				case ChargeMethod.CUT:
-				case ChargeMethod.FOLD:
-				case ChargeMethod.JOBAWARE:
-				case ChargeMethod.LINEAR:
-				case ChargeMethod.INK:
-				case ChargeMethod.PRICELIST:
-				case ChargeMethod.RATELIST:
-				case ChargeMethod.SHIPPING:
-				case ChargeMethod.SQUAREAREA:
+				case ChargeMethod.Ask: 
+				case ChargeMethod.Cut:
+				case ChargeMethod.Fold:
+				case ChargeMethod.JobAware:
+				case ChargeMethod.Linear:
+				case ChargeMethod.Ink:
+				case ChargeMethod.PriceList:
+				case ChargeMethod.RateList:
+				case ChargeMethod.Shipping:
+				case ChargeMethod.SquareArea:
 					markup_edit.text = "";
 					sale_price_per_unit_edit.text = "";
 					cost_plus_radio.enabled =true;					

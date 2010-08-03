@@ -5,14 +5,19 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.PeriodType")]
 	public class PeriodType
 	{
-	 	public static const WEEKLY:String = "Weekly";
-	 	public static const BIWEEKLY:String = "BiWeekly";
-	 	public static const SEMIMONTHLY:String = "SemiMonthly";
-	 	public static const MONTHLY:String = "Monthly";
-	 	public static const CUSTOM:String = "Custom";
+	 	public static const Weekly:String = "Weekly";
+	 	public static const BiWeekly:String = "BiWeekly";
+	 	public static const SemiMonthly:String = "SemiMonthly";
+	 	public static const Monthly:String = "Monthly";
+	 	public static const Custom:String = "Custom";
 	
 		public function PeriodType() {}
 	 
+	 	public static function getString(value:String):String
+	 	{
+	 		return Snowmass.getInstance().getLocalizedEnum("PeriodType", value);
+	 	}
+	 	
 		public static function toArray():Array
 		{
 			var returnArray:Array = new Array();
@@ -20,12 +25,11 @@ package com.efi.printsmith.data.enums
 			for each (var v:XML in classInfo..constant)
 			{
 				var name:String = String(v.@name);
-			    	var value:String = PeriodType[name];
-			    	returnArray.push(value);
+				var value:String = getString(v.@name);
+			    returnArray.push(value);
 			}
 			returnArray.sort();
 			return returnArray;
 		}
-
 	}
 }

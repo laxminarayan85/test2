@@ -72,6 +72,15 @@ public class TimeCard extends ModelBase {
 	public static final String EMPLOYEE = "Employee";
 
 	/**
+   * @generated
+   */
+  public static final String BREAKHOUR = "BreakHour";
+	/**
+   * @generated
+   */
+  public static final String PAIDTIMEOFF = "PaidTimeOff";
+
+	/**
 	 * @generated
 	 */
 	public TimeCard() {
@@ -96,14 +105,13 @@ public class TimeCard extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPeriod(Integer newVal) {
+   * @generated
+   */	
+  public void setPeriod(Integer newVal) {
     this.period = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -293,6 +301,8 @@ public class TimeCard extends ModelBase {
     if (ONCLOCK.equals(propertyName)) return getOnClock();
     if (BREAKTIME.equals(propertyName)) return getBreakTime();
     if (EMPLOYEE.equals(propertyName)) return getEmployee();
+    if (BREAKHOUR.equals(propertyName)) return getBreakHour();
+    if (PAIDTIMEOFF.equals(propertyName)) return getPaidTimeOff();
     return super.getProperty(propertyName);
   }
 	
@@ -309,6 +319,8 @@ public class TimeCard extends ModelBase {
     if (ONCLOCK.equals(propertyName)) setOnClock((Integer)newValue); else
     if (BREAKTIME.equals(propertyName)) setBreakTime((Date)newValue); else
     if (EMPLOYEE.equals(propertyName)) setEmployee((Employee)newValue); else
+    if (BREAKHOUR.equals(propertyName)) setBreakHour((String)newValue); else
+    if (PAIDTIMEOFF.equals(propertyName)) setPaidTimeOff((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -332,6 +344,10 @@ public class TimeCard extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (EMPLOYEE.equals(propertyName)) 
       return new Class<?>[] {Employee.class};		
+    if (BREAKHOUR.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PAIDTIMEOFF.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -349,6 +365,8 @@ public class TimeCard extends ModelBase {
     if (ONCLOCK.equals(propertyName)) return TimeCard.class;
     if (BREAKTIME.equals(propertyName)) return TimeCard.class;
     if (EMPLOYEE.equals(propertyName)) return TimeCard.class;
+    if (BREAKHOUR.equals(propertyName)) return TimeCard.class;
+    if (PAIDTIMEOFF.equals(propertyName)) return TimeCard.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -373,6 +391,10 @@ public class TimeCard extends ModelBase {
     if (! SmartEquals(getBreakTime(), objT.getBreakTime()))
       return false;
     if (! SmartEquals(getEmployee(), objT.getEmployee()))
+      return false;
+    if (! SmartEquals(getBreakHour(), objT.getBreakHour()))
+      return false;
+    if (! SmartEquals(getPaidTimeOff(), objT.getPaidTimeOff()))
       return false;
     return true;
   }			

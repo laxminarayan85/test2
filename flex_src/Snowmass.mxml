@@ -765,6 +765,10 @@
         public function getApplicationRootURL():String {
         	return this.url.substr(0, this.url.lastIndexOf("/"));
         }
+        
+        public function getLocalizedEnum(enumerationName:String, enumerationValue:String):String {
+        	return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, enumerationName + '_' + enumerationValue);
+        }
 ]]>		
 </mx:Script>
 	<business:Services id="services" />

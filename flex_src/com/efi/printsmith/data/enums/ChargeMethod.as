@@ -5,21 +5,26 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.ChargeMethod")]
 	public class ChargeMethod
 	{
-	 	public static const JOBAWARE:String = "JobAware";
-	 	public static const MARKUP:String = "Markup";
-	 	public static const FLATRATE:String = "FlatRate";
-	 	public static const ASK:String = "Ask";
-	 	public static const PRICELIST:String = "PriceList";
-	 	public static const RATELIST:String = "RateList";
-	 	public static const CUT:String = "Cut";
-	 	public static const INK:String = "Ink";
-	 	public static const SHIPPING:String = "Shipping";
-	 	public static const FOLD:String = "Fold";
-	 	public static const LINEAR:String = "Linear";
-	 	public static const SQUAREAREA:String = "SquareArea";
+	 	public static const JobAware:String = "JobAware";
+	 	public static const Markup:String = "Markup";
+	 	public static const FlatRate:String = "FlatRate";
+	 	public static const Ask:String = "Ask";
+	 	public static const PriceList:String = "PriceList";
+	 	public static const RateList:String = "RateList";
+	 	public static const Cut:String = "Cut";
+	 	public static const Ink:String = "Ink";
+	 	public static const Shipping:String = "Shipping";
+	 	public static const Fold:String = "Fold";
+	 	public static const Linear:String = "Linear";
+	 	public static const SquareArea:String = "SquareArea";
 	
 		public function ChargeMethod() {}
 	 
+	 	public static function getString(value:String):String
+	 	{
+	 		return Snowmass.getInstance().getLocalizedEnum("ChargeMethod", value);
+	 	}
+	 	
 		public static function toArray():Array
 		{
 			var returnArray:Array = new Array();
@@ -27,12 +32,11 @@ package com.efi.printsmith.data.enums
 			for each (var v:XML in classInfo..constant)
 			{
 				var name:String = String(v.@name);
-			    	var value:String = ChargeMethod[name];
-			    	returnArray.push(value);
+				var value:String = getString(v.@name);
+			    returnArray.push(value);
 			}
 			returnArray.sort();
 			return returnArray;
 		}
-
 	}
 }

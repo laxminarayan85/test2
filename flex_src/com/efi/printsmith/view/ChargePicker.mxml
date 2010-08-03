@@ -1393,51 +1393,51 @@
 			}
 
 			private function updateCurrentState():void {
-				if (chargeDefinition.method == ChargeMethod.SQUAREAREA) {
+				if (chargeDefinition.method == ChargeMethod.SquareArea) {
 					this.currentState = "SquareArea";
-				} else if (chargeDefinition.method == ChargeMethod.CUT) {
+				} else if (chargeDefinition.method == ChargeMethod.Cut) {
 					this.currentState = "CuttingCharge";
-				} else if (chargeDefinition.method == ChargeMethod.INK) {
+				} else if (chargeDefinition.method == ChargeMethod.Ink) {
 					this.currentState = "InkCharge";
-				} else if (chargeDefinition.method == ChargeMethod.SHIPPING) {
+				} else if (chargeDefinition.method == ChargeMethod.Shipping) {
 					this.currentState = "ShippingCharge";
-				} else if (chargeDefinition.method == ChargeMethod.ASK) {
-					if (chargeDefinition.quantityType == ChargeQtyType.NONE) {
+				} else if (chargeDefinition.method == ChargeMethod.Ask) {
+					if (chargeDefinition.quantityType == ChargeQtyType.None) {
 						this.currentState = "AlwaysAsk1";
-					} else if (chargeDefinition.quantityType == ChargeQtyType.QUANTITY) {
+					} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
 						this.currentState = "AlwaysAsk2";
-					} else if (chargeDefinition.quantityType == ChargeQtyType.SETS) {
+					} else if (chargeDefinition.quantityType == ChargeQtyType.Sets) {
 						this.currentState = "AlwaysAsk4";
-					} else if (chargeDefinition.quantityType == ChargeQtyType.SETUPSETS) {
+					} else if (chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
 						this.currentState = "AlwaysAsk4";
-					} else if (chargeDefinition.quantityType == ChargeQtyType.TIME) {
+					} else if (chargeDefinition.quantityType == ChargeQtyType.Time) {
 						this.currentState = "AlwaysAsk3";
 					}
-				} else if (chargeDefinition.method == ChargeMethod.FLATRATE) {
+				} else if (chargeDefinition.method == ChargeMethod.FlatRate) {
 					this.currentState = "FlatRate";
-				} else if (chargeDefinition.method == ChargeMethod.FOLD) {
+				} else if (chargeDefinition.method == ChargeMethod.Fold) {
 					this.currentState = "Fold";
-				} else if (chargeDefinition.method == ChargeMethod.JOBAWARE) {
+				} else if (chargeDefinition.method == ChargeMethod.JobAware) {
 					this.currentState = "JobAware";
-				} else if (chargeDefinition.method == ChargeMethod.LINEAR) {
+				} else if (chargeDefinition.method == ChargeMethod.Linear) {
 					this.currentState = "Linear";
-				} else if (chargeDefinition.method == ChargeMethod.MARKUP) {
+				} else if (chargeDefinition.method == ChargeMethod.Markup) {
 					this.currentState = "Markup";
-				} else if (chargeDefinition.method == ChargeMethod.PRICELIST) {
+				} else if (chargeDefinition.method == ChargeMethod.PriceList) {
 					this.currentState = "PriceList";
-				} else if (chargeDefinition.method == ChargeMethod.RATELIST) {
+				} else if (chargeDefinition.method == ChargeMethod.RateList) {
 					this.currentState = "RateList";
 				}			
 			}
 			private function handleNewChargeResult(event:ResultEvent):void
 			{
-				if (chargeDefinition.method == ChargeMethod.SQUAREAREA) {
+				if (chargeDefinition.method == ChargeMethod.SquareArea) {
 					charge = event.result as SquareAreaCharge;
-				} else if (chargeDefinition.method == ChargeMethod.CUT) {
+				} else if (chargeDefinition.method == ChargeMethod.Cut) {
 					charge = event.result as CuttingCharge;
-				} else if (chargeDefinition.method == ChargeMethod.INK) {
+				} else if (chargeDefinition.method == ChargeMethod.Ink) {
 					charge = event.result as InkCharge;
-				} else if (chargeDefinition.method == ChargeMethod.SHIPPING) {
+				} else if (chargeDefinition.method == ChargeMethod.Shipping) {
 					charge = event.result as ShippingCharge;
 				} else {
 					charge = event.result as Charge;
@@ -1529,7 +1529,7 @@
 				this.charge.price=parseFloat(price_edit.text);
 				this.charge.quantity=parseFloat(quantity_edit.text);
 				this.charge.materialQty=parseFloat(material_quantity_edit.text);
-				if (this.chargeDefinition.quantityType == ChargeQtyType.TIME) {
+				if (this.chargeDefinition.quantityType == ChargeQtyType.Time) {
 					var startDate:Date = new Date();
 					var endDate:Date = new Date();
 					

@@ -353,7 +353,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function openEditMatrixWindow():void {
 		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
 		var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, true));
-		var doubleSidedPricing:Boolean = this.price_2_side.selectedItem == Price2Side.USINGSECONDSIDERATE?true:false;
+		var doubleSidedPricing:Boolean = this.price_2_side.selectedItem == Price2Side.UsingSecondSideRate?true:false;
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setMatrix(copierDefinition.copierMatrix);	
 		titleWindow.setMatrixType(pricing_method_combo.selectedItem as String,doubleSidedPricing);
@@ -714,20 +714,20 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		methodType.removeAll();
 		
 		if (copierDefinition.largeFormat == true  || largeformatCheck.selected){
-			methodType.addItem(CopierPricingMethod.SQUAREAREAOFORIGINALS);
-			methodType.addItem(CopierPricingMethod.TOTALSQUAREAREA);
-			methodType.addItem(CopierPricingMethod.SQUAREAREAANDCOPIES); 
-			methodType.addItem(CopierPricingMethod.SQUAREAREAPERCOPY);
+			methodType.addItem(CopierPricingMethod.SquareAreaOfOriginals);
+			methodType.addItem(CopierPricingMethod.TotalSquareArea);
+			methodType.addItem(CopierPricingMethod.SquareAreaAndCopies); 
+			methodType.addItem(CopierPricingMethod.SquareAreaPerCopy);
 			pricing_method_combo.selectedIndex = tempIndex;
 			maxWidthsize.enabled = true;
 			minWidthsize.enabled = true;
 		}else{
 					
-			methodType.addItem(CopierPricingMethod.COSTPLUS);
-			methodType.addItem(CopierPricingMethod.FLATRATE);
-			methodType.addItem(CopierPricingMethod.COPIESANDORIGINALS);
-			methodType.addItem(CopierPricingMethod.COPIESPERORIGINALS);
-			methodType.addItem(CopierPricingMethod.TOTALOFALLCOPIES);
+			methodType.addItem(CopierPricingMethod.CostPlus);
+			methodType.addItem(CopierPricingMethod.FlatRate);
+			methodType.addItem(CopierPricingMethod.CopiesAndOriginals);
+			methodType.addItem(CopierPricingMethod.CopiesPerOriginals);
+			methodType.addItem(CopierPricingMethod.TotalOfAllCopies);
 			pricing_method_combo.selectedIndex = tempIndex;
 			maxWidthsize.enabled = false;
 			minWidthsize.enabled = false;
@@ -752,7 +752,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function updateControlState():void {
 		
 		switch (pricing_method_combo.selectedItem) {
-			case CopierPricingMethod.COSTPLUS:
+			case CopierPricingMethod.CostPlus:
 				Matrix_button.visible = false;
 				matrixcopycost.visible= false;
 				matrixdiscount.visible= false;
@@ -768,7 +768,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 			
-			case CopierPricingMethod.FLATRATE:
+			case CopierPricingMethod.FlatRate:
 				Matrix_button.visible = false;
 				matrixcopycost.visible= false;
 				matrixdiscount.visible= false;
@@ -788,7 +788,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				price_2_side.dataProvider = Price2SideFlatRate.toArray();
 				break;
 				
-			case CopierPricingMethod.COPIESANDORIGINALS:
+			case CopierPricingMethod.CopiesAndOriginals:
 				Matrix_button.visible = true;
 				matrixcopycost.visible= true;
 				matrixdiscount.visible= true;
@@ -807,7 +807,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
-			case CopierPricingMethod.COPIESPERORIGINALS:
+			case CopierPricingMethod.CopiesPerOriginals:
 				Matrix_button.visible = true;
 				matrixcopycost.visible= true;
 				matrixdiscount.visible= true;
@@ -826,7 +826,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
-			case CopierPricingMethod.TOTALOFALLCOPIES:
+			case CopierPricingMethod.TotalOfAllCopies:
 				Matrix_button.visible = true;
 				matrixcopycost.visible= true;
 				matrixdiscount.visible= true;
@@ -846,7 +846,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
-			case CopierPricingMethod.SQUAREAREAOFORIGINALS:
+			case CopierPricingMethod.SquareAreaOfOriginals:
 				Matrix_button.visible = true;
 				matrixcopycost.visible= true;
 				matrixdiscount.visible= true;
@@ -865,7 +865,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
-			case CopierPricingMethod.TOTALSQUAREAREA:
+			case CopierPricingMethod.TotalSquareArea:
 				Matrix_button.visible = true;
 				matrixcopycost.visible= true;
 				matrixdiscount.visible= true;
@@ -884,7 +884,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
-			case CopierPricingMethod.SQUAREAREAANDCOPIES:
+			case CopierPricingMethod.SquareAreaAndCopies:
 				Matrix_button.visible = true;
 				matrixcopycost.visible= true;
 				matrixdiscount.visible= true;
@@ -903,7 +903,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				price_2_side.dataProvider = Price2Side.toArray();
 				break;
 
-			case CopierPricingMethod.SQUAREAREAPERCOPY:			
+			case CopierPricingMethod.SquareAreaPerCopy:			
 				Matrix_button.visible = true;
 				matrixcopycost.visible= true;
 				matrixdiscount.visible= true;
@@ -962,17 +962,17 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				}
 			}
 			switch ( stock_Price_is_combo.selectedItem){
-				case StockPriceMethod.MARKEDUPSTOCKCOST:
+				case StockPriceMethod.MarkedUpStockCost:
 					copierDigitalStockmarkup.enabled = true;
 					stockMarkup.enabled =true;
 					break;
-	 			case StockPriceMethod.FROMCOPIER1INSTOCKDEFINITION:
-	 			case StockPriceMethod.FROMCOPIER2INSTOCKDEFINITION:
-	 			case StockPriceMethod.FROMCOPIER3INSTOCKDEFINITION:
+	 			case StockPriceMethod.FromCopier1InStockDefinition:
+	 			case StockPriceMethod.FromCopier2InStockDefinition:
+	 			case StockPriceMethod.FromCopier3InStockDefinition:
 					 copierDigitalStockmarkup.enabled = false;
 					 stockMarkup.enabled = false;
 					 break;
-				case StockPriceMethod.INCLUDEINRATE:
+				case StockPriceMethod.IncludeInRate:
 					copierDigitalStockmarkup.enabled = false;
 					stockMarkup.enabled = false;
 			}

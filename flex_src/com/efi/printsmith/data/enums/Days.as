@@ -5,16 +5,21 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.Days")]
 	public class Days
 	{
-	 	public static const MONDAY:String = "Monday";
-	 	public static const TUESDAY:String = "Tuesday";
-	 	public static const WEDNESDAY:String = "Wednesday";
-	 	public static const THURSDAY:String = "Thursday";
-	 	public static const FRIDAY:String = "Friday";
-	 	public static const SATURDAY:String = "Saturday";
-	 	public static const SUNDAY:String = "Sunday";
+	 	public static const Monday:String = "Monday";
+	 	public static const Tuesday:String = "Tuesday";
+	 	public static const Wednesday:String = "Wednesday";
+	 	public static const Thursday:String = "Thursday";
+	 	public static const Friday:String = "Friday";
+	 	public static const Saturday:String = "Saturday";
+	 	public static const Sunday:String = "Sunday";
 	
 		public function Days() {}
 	 
+	 	public static function getString(value:String):String
+	 	{
+	 		return Snowmass.getInstance().getLocalizedEnum("Days", value);
+	 	}
+	 	
 		public static function toArray():Array
 		{
 			var returnArray:Array = new Array();
@@ -22,12 +27,11 @@ package com.efi.printsmith.data.enums
 			for each (var v:XML in classInfo..constant)
 			{
 				var name:String = String(v.@name);
-			    	var value:String = Days[name];
-			    	returnArray.push(value);
+				var value:String = getString(v.@name);
+			    returnArray.push(value);
 			}
 			returnArray.sort();
 			return returnArray;
 		}
-
 	}
 }

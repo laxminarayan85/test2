@@ -5,16 +5,21 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.ChargeQtyType")]
 	public class ChargeQtyType
 	{
-	 	public static const SETS:String = "Sets";
-	 	public static const QUANTITY:String = "Quantity";
-	 	public static const TIME:String = "Time";
-	 	public static const NONE:String = "None";
-	 	public static const SETUPSETS:String = "SetupSets";
-	 	public static const TOTALWEIGHT:String = "TotalWeight";
-	 	public static const SHIPPINGQTY:String = "ShippingQty";
+	 	public static const Sets:String = "Sets";
+	 	public static const Quantity:String = "Quantity";
+	 	public static const Time:String = "Time";
+	 	public static const None:String = "None";
+	 	public static const SetupSets:String = "SetupSets";
+	 	public static const TotalWeight:String = "TotalWeight";
+	 	public static const ShippingQty:String = "ShippingQty";
 	
 		public function ChargeQtyType() {}
 	 
+	 	public static function getString(value:String):String
+	 	{
+	 		return Snowmass.getInstance().getLocalizedEnum("ChargeQtyType", value);
+	 	}
+	 	
 		public static function toArray():Array
 		{
 			var returnArray:Array = new Array();
@@ -22,12 +27,11 @@ package com.efi.printsmith.data.enums
 			for each (var v:XML in classInfo..constant)
 			{
 				var name:String = String(v.@name);
-			    	var value:String = ChargeQtyType[name];
-			    	returnArray.push(value);
+				var value:String = getString(v.@name);
+			    returnArray.push(value);
 			}
 			returnArray.sort();
 			return returnArray;
 		}
-
 	}
 }

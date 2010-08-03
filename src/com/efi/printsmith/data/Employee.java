@@ -208,6 +208,15 @@ public class Employee extends Party {
 	public static final String EMPLOYEEID = "EmployeeId";
 
 	/**
+   * @generated
+   */
+  public static final String ISSELECTED = "IsSelected";
+	/**
+   * @generated
+   */
+  public static final String ISDISABLED = "IsDisabled";
+
+	/**
 	 * @generated
 	 */
 	public Employee() {
@@ -1216,6 +1225,51 @@ public class Employee extends Party {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean isSelected;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getIsSelected(){
+    return isSelected; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setIsSelected(Boolean newVal) {
+    this.isSelected = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean isDisabled;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getIsDisabled(){
+    return isDisabled; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setIsDisabled(Boolean newVal) {
+    this.isDisabled = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1262,6 +1316,8 @@ public class Employee extends Party {
     if (SHOWMESSAGECLOCKOUT.equals(propertyName)) return getShowMessageClockout();
     if (SHOWMESSAGECLOCKIN.equals(propertyName)) return getShowMessageClockin();
     if (EMPLOYEEID.equals(propertyName)) return getEmployeeId();
+    if (ISSELECTED.equals(propertyName)) return getIsSelected();
+    if (ISDISABLED.equals(propertyName)) return getIsDisabled();
     return super.getProperty(propertyName);
   }
 	
@@ -1312,6 +1368,8 @@ public class Employee extends Party {
     if (SHOWMESSAGECLOCKOUT.equals(propertyName)) setShowMessageClockout((Boolean)newValue); else
     if (SHOWMESSAGECLOCKIN.equals(propertyName)) setShowMessageClockin((Boolean)newValue); else
     if (EMPLOYEEID.equals(propertyName)) setEmployeeId((String)newValue); else
+    if (ISSELECTED.equals(propertyName)) setIsSelected((Boolean)newValue); else
+    if (ISDISABLED.equals(propertyName)) setIsDisabled((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1403,6 +1461,10 @@ public class Employee extends Party {
       return new Class<?>[] {Boolean.class};		
     if (EMPLOYEEID.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (ISSELECTED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ISDISABLED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1454,6 +1516,8 @@ public class Employee extends Party {
     if (SHOWMESSAGECLOCKOUT.equals(propertyName)) return Employee.class;
     if (SHOWMESSAGECLOCKIN.equals(propertyName)) return Employee.class;
     if (EMPLOYEEID.equals(propertyName)) return Employee.class;
+    if (ISSELECTED.equals(propertyName)) return Employee.class;
+    if (ISDISABLED.equals(propertyName)) return Employee.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1546,6 +1610,10 @@ public class Employee extends Party {
     if (! SmartEquals(getShowMessageClockin(), objT.getShowMessageClockin()))
       return false;
     if (! SmartEquals(getEmployeeId(), objT.getEmployeeId()))
+      return false;
+    if (! SmartEquals(getIsSelected(), objT.getIsSelected()))
+      return false;
+    if (! SmartEquals(getIsDisabled(), objT.getIsDisabled()))
       return false;
     return true;
   }			

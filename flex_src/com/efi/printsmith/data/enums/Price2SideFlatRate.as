@@ -5,11 +5,16 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.Price2SideFlatRate")]
 	public class Price2SideFlatRate
 	{
-	 	public static const NOTCHANGINGPRICE:String = "NotChangingPrice";
-	 	public static const USINGSIDEFACTOR:String = "UsingSideFactor";
+	 	public static const NotChangingPrice:String = "NotChangingPrice";
+	 	public static const UsingSideFactor:String = "UsingSideFactor";
 	
 		public function Price2SideFlatRate() {}
 	 
+	 	public static function getString(value:String):String
+	 	{
+	 		return Snowmass.getInstance().getLocalizedEnum("Price2SideFlatRate", value);
+	 	}
+	 	
 		public static function toArray():Array
 		{
 			var returnArray:Array = new Array();
@@ -17,12 +22,11 @@ package com.efi.printsmith.data.enums
 			for each (var v:XML in classInfo..constant)
 			{
 				var name:String = String(v.@name);
-			    	var value:String = Price2SideFlatRate[name];
-			    	returnArray.push(value);
+				var value:String = getString(v.@name);
+			    returnArray.push(value);
 			}
 			returnArray.sort();
 			return returnArray;
 		}
-
 	}
 }

@@ -5,13 +5,18 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.ChargeCostMethod")]
 	public class ChargeCostMethod
 	{
-	 	public static const TIMEANDMATERIAL:String = "TimeAndMaterial";
-	 	public static const NOCOST:String = "NoCost";
-	 	public static const HUNDREDPERCENT:String = "HundredPercent";
-	 	public static const UNITCOST:String = "UnitCost";
+	 	public static const TimeAndMaterial:String = "TimeAndMaterial";
+	 	public static const NoCost:String = "NoCost";
+	 	public static const HundredPercent:String = "HundredPercent";
+	 	public static const UnitCost:String = "UnitCost";
 	
 		public function ChargeCostMethod() {}
 	 
+	 	public static function getString(value:String):String
+	 	{
+	 		return Snowmass.getInstance().getLocalizedEnum("ChargeCostMethod", value);
+	 	}
+	 	
 		public static function toArray():Array
 		{
 			var returnArray:Array = new Array();
@@ -19,12 +24,11 @@ package com.efi.printsmith.data.enums
 			for each (var v:XML in classInfo..constant)
 			{
 				var name:String = String(v.@name);
-			    	var value:String = ChargeCostMethod[name];
-			    	returnArray.push(value);
+				var value:String = getString(v.@name);
+			    returnArray.push(value);
 			}
 			returnArray.sort();
 			return returnArray;
 		}
-
 	}
 }

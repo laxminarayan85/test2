@@ -139,7 +139,7 @@
 	public var matrix:com.efi.printsmith.data.Matrix;
 	
 	public var doubleSided:Boolean = false;
-	public var pricingType:String = CopierPricingMethod.COPIESANDORIGINALS;
+	public var pricingType:String = CopierPricingMethod.CopiesAndOriginals;
 	
 	public var parentContainer:Container;
    	
@@ -231,49 +231,49 @@
 	
 	public function setMatrixType(pricingMethod:String,doubleSidedPricing:Boolean):void {
 		switch (pricingMethod) {
-		case CopierPricingMethod.COPIESANDORIGINALS:
+		case CopierPricingMethod.CopiesAndOriginals:
 			if (doubleSidedPricing) {
 				this.currentState = "COPIESANDORIGINALSTWOSIDES";
 			} else {
 				this.currentState = "COPIESANDORIGINALS";
 			}
 			break;
-		case CopierPricingMethod.COPIESPERORIGINALS:
+		case CopierPricingMethod.CopiesPerOriginals:
 			if (doubleSidedPricing) {
 				this.currentState = "COPIESPERORIGINALSTWOSIDES";
 			} else {
 				this.currentState = "COPIESPERORIGINALS";
 			}
 			break;
-		case CopierPricingMethod.SQUAREAREAANDCOPIES:
+		case CopierPricingMethod.SquareAreaAndCopies:
 			if (doubleSidedPricing) {
 				this.currentState = "SQUAREAREAANDCOPIESTWOSIDES";
 			} else {
 				this.currentState = "SQUAREAREAANDCOPIES";
 			}
 			break;
-		case CopierPricingMethod.SQUAREAREAOFORIGINALS:
+		case CopierPricingMethod.SquareAreaOfOriginals:
 			if (doubleSidedPricing) {
 				this.currentState = "SQUAREAREAOFORIGINALSTWOSIDES";
 			} else {
 				this.currentState = "SQUAREAREAOFORIGINALS";
 			}
 			break;
-		case CopierPricingMethod.SQUAREAREAPERCOPY:
+		case CopierPricingMethod.SquareAreaPerCopy:
 			if (doubleSidedPricing) {
 				this.currentState = "SQUAREAREAPERCOPYTWOSIDES";
 			} else {
 				this.currentState = "SQUAREAREAPERCOPY";
 			}
 			break;
-		case CopierPricingMethod.TOTALOFALLCOPIES:
+		case CopierPricingMethod.TotalOfAllCopies:
 			if (doubleSidedPricing) {
 				this.currentState = "TOTALOFALLCOPIESTWOSIDES";
 			} else {
 				this.currentState = "TOTALOFALLCOPIES";
 			}
 			break;
-		case CopierPricingMethod.TOTALSQUAREAREA:
+		case CopierPricingMethod.TotalSquareArea:
 			if (doubleSidedPricing) {
 				this.currentState = "TOTALSQUAREAREATWOSIDES";
 			} else {

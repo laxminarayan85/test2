@@ -13,15 +13,15 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.TimeCard";
 		}
 				
-		public var period:int;
+		public var period:int = 0;
 		public var startDateTime:Date = new Date();
 		public var endDateTime:Date = new Date();
 		public var billable:String = "";
 		public var onClock:int = 0;
 		public var breakTime:Date = new Date();
-		public var breakHour:String = "";
 		public var employee:Employee;
-		public var paidTimeOff:Boolean;
+		public var breakHour:String = "";
+		public var paidTimeOff:Boolean = false;
 	
 	}
 }

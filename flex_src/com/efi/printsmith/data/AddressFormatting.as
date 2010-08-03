@@ -18,14 +18,8 @@ package com.efi.printsmith.data
 		public var street2Position:int = 0;
 		public var cityPosition:int = 0;
 		public var statePosition:int = 0;
-		public var countryPosition:int = 0;
+		public var countyPosition:int = 0;
 		public var zipPosition:int = 0;
-		public var street1Separator:String;
-		public var street2Separator:String;
-		public var stateSeparator:String;	
-		public var citySeparator:String;
-		public var zipSeparator:String;
-		public var countrySeparator:String;
 	
 	}
 }

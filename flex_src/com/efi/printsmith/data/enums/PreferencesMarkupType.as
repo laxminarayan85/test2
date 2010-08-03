@@ -5,11 +5,16 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.PreferencesMarkupType")]
 	public class PreferencesMarkupType
 	{
-	 	public static const OUTSIDESERVICES:String = "OutsideServices";
-	 	public static const MERCHANDISE:String = "Merchandise";
+	 	public static const OutsideServices:String = "OutsideServices";
+	 	public static const Merchandise:String = "Merchandise";
 	
 		public function PreferencesMarkupType() {}
 	 
+	 	public static function getString(value:String):String
+	 	{
+	 		return Snowmass.getInstance().getLocalizedEnum("PreferencesMarkupType", value);
+	 	}
+	 	
 		public static function toArray():Array
 		{
 			var returnArray:Array = new Array();
@@ -17,12 +22,11 @@ package com.efi.printsmith.data.enums
 			for each (var v:XML in classInfo..constant)
 			{
 				var name:String = String(v.@name);
-			    	var value:String = PreferencesMarkupType[name];
-			    	returnArray.push(value);
+				var value:String = getString(v.@name);
+			    returnArray.push(value);
 			}
 			returnArray.sort();
 			return returnArray;
 		}
-
 	}
 }

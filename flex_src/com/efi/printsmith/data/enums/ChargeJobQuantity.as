@@ -5,13 +5,18 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.ChargeJobQuantity")]
 	public class ChargeJobQuantity
 	{
-	 	public static const NONE:String = "None";
-	 	public static const PRESS:String = "Press";
-	 	public static const FINISH:String = "Finish";
-	 	public static const PARENT:String = "Parent";
+	 	public static const None:String = "None";
+	 	public static const Press:String = "Press";
+	 	public static const Finish:String = "Finish";
+	 	public static const Parent:String = "Parent";
 	
 		public function ChargeJobQuantity() {}
 	 
+	 	public static function getString(value:String):String
+	 	{
+	 		return Snowmass.getInstance().getLocalizedEnum("ChargeJobQuantity", value);
+	 	}
+	 	
 		public static function toArray():Array
 		{
 			var returnArray:Array = new Array();
@@ -19,12 +24,11 @@ package com.efi.printsmith.data.enums
 			for each (var v:XML in classInfo..constant)
 			{
 				var name:String = String(v.@name);
-			    	var value:String = ChargeJobQuantity[name];
-			    	returnArray.push(value);
+				var value:String = getString(v.@name);
+			    returnArray.push(value);
 			}
 			returnArray.sort();
 			return returnArray;
 		}
-
 	}
 }

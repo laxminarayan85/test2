@@ -1,6 +1,7 @@
 package com.efi.printsmith.data
 {
-	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayCollection; 
+	import com.efi.printsmith.data.*;
 	
 	[RemoteClass(alias="com.efi.printsmith.data.Employee")]
 	[Managed]
@@ -53,12 +54,8 @@ package com.efi.printsmith.data
 		public var showMessageClockout:Boolean = false;
 		public var showMessageClockin:Boolean = false;
 		public var employeeId:String = "";
-		
-		/*Added property for New TimeCard
-		**/
 		public var isSelected:Boolean = false;
 		public var isDisabled:Boolean = false;
-		public var autoOutTime:String = "";
 	
 	}
 }

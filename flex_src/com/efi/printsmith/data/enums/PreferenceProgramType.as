@@ -5,12 +5,17 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.PreferenceProgramType")]
 	public class PreferenceProgramType
 	{
-	 	public static const FULLSYSTEM:String = "FullSystem";
-	 	public static const ESTIMATORONLY:String = "EstimatorOnly";
-	 	public static const COPYSHOP:String = "CopyShop";
+	 	public static const FullSystem:String = "FullSystem";
+	 	public static const EstimatorOnly:String = "EstimatorOnly";
+	 	public static const CopyShop:String = "CopyShop";
 	
 		public function PreferenceProgramType() {}
 	 
+	 	public static function getString(value:String):String
+	 	{
+	 		return Snowmass.getInstance().getLocalizedEnum("PreferenceProgramType", value);
+	 	}
+	 	
 		public static function toArray():Array
 		{
 			var returnArray:Array = new Array();
@@ -18,12 +23,11 @@ package com.efi.printsmith.data.enums
 			for each (var v:XML in classInfo..constant)
 			{
 				var name:String = String(v.@name);
-			    	var value:String = PreferenceProgramType[name];
-			    	returnArray.push(value);
+				var value:String = getString(v.@name);
+			    returnArray.push(value);
 			}
 			returnArray.sort();
 			return returnArray;
 		}
-
 	}
 }

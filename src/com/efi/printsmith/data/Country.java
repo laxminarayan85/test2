@@ -107,7 +107,6 @@ public class Country extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (NAME.equals(propertyName)) return getName();
-    if(ADDRESSFORMATTINGS.equals(propertyName)) return getAddressFormattings();
     return super.getProperty(propertyName);
   }
 	
@@ -118,7 +117,6 @@ public class Country extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (NAME.equals(propertyName)) setName((String)newValue); else
-	if (ADDRESSFORMATTINGS.equals(propertyName)) setAddressFormattings((List<AddressFormatting>)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -129,9 +127,7 @@ public class Country extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) 
-      return new Class<?>[] {String.class};	
-    if (ADDRESSFORMATTINGS.equals(propertyName)) 
-        return new Class<?>[] {List.class,AddressFormatting.class};		
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -143,7 +139,6 @@ public class Country extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) return Country.class;
-    if (ADDRESSFORMATTINGS.equals(propertyName)) return Country.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -157,8 +152,6 @@ public class Country extends ModelBase {
     Country objT = (Country)obj;
     if (! SmartEquals(getName(), objT.getName()))
       return false;
-    if (! SmartEquals(getAddressFormattings(), objT.getAddressFormattings()))
-        return false;
     return true;
   }			
 }

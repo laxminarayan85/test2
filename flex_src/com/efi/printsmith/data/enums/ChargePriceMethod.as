@@ -5,11 +5,16 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.ChargePriceMethod")]
 	public class ChargePriceMethod
 	{
-	 	public static const PIECEPRICE:String = "PiecePrice";
-	 	public static const COSTPLUS:String = "CostPlus";
+	 	public static const PiecePrice:String = "PiecePrice";
+	 	public static const CostPlus:String = "CostPlus";
 	
 		public function ChargePriceMethod() {}
 	 
+	 	public static function getString(value:String):String
+	 	{
+	 		return Snowmass.getInstance().getLocalizedEnum("ChargePriceMethod", value);
+	 	}
+	 	
 		public static function toArray():Array
 		{
 			var returnArray:Array = new Array();
@@ -17,12 +22,11 @@ package com.efi.printsmith.data.enums
 			for each (var v:XML in classInfo..constant)
 			{
 				var name:String = String(v.@name);
-			    	var value:String = ChargePriceMethod[name];
-			    	returnArray.push(value);
+				var value:String = getString(v.@name);
+			    returnArray.push(value);
 			}
 			returnArray.sort();
 			return returnArray;
 		}
-
 	}
 }

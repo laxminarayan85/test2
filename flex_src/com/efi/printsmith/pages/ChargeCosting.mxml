@@ -97,7 +97,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     	else
     		total_cost_text.text = Snowmass.getCurrencyFormatter(false,2).format(totalCost);
     		
-    	if(ChargeCostMethod.UNITCOST != costing_method_combo.selectedItem as String)
+    	if(ChargeCostMethod.UnitCost != costing_method_combo.selectedItem as String)
     		setup_cost_edit.text ="";
     	
     	
@@ -170,8 +170,8 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		temp = costing_method_combo.selectedItem as String;
 		switch (temp) {
 			
-			case ChargeCostMethod.HUNDREDPERCENT:
-			case ChargeCostMethod.NOCOST:
+			case ChargeCostMethod.HundredPercent:
+			case ChargeCostMethod.NoCost:
 				setup_cost_edit.enabled = false;
 				unit_cost_edit.enabled = false;
 				fixed_materials_edit.enabled = false;
@@ -184,7 +184,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 			
 			break;
 			
-			case ChargeCostMethod.TIMEANDMATERIAL:
+			case ChargeCostMethod.TimeAndMaterial:
 				setup_cost_edit.enabled = false;
 				unit_cost_edit.enabled = false;
 				rate_button.enabled = false;
@@ -196,7 +196,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 				speed_button.enabled = true;
 			break;
 			
-			case ChargeCostMethod.UNITCOST:
+			case ChargeCostMethod.UnitCost:
 				setup_cost_edit.enabled = true;
 				unit_cost_edit.enabled = true;
 				fixed_materials_edit.enabled = false;
