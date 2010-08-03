@@ -131,10 +131,10 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		}
 		
 		// know state for each
-		papercal.setDAcross(0);
-		papercal.setDDown(0);
-		papercal.setRMargin(0.0);
-		papercal.setBMargin(0.0);
+		papercal.setdAcross(0);
+		papercal.setdDown(0);
+		papercal.setrMargin(0.0);
+		papercal.setbMargin(0.0);
 		papercal.setAcross(0);
 		papercal.setDown(0);
 		papercal.setDutchBottom(0);
@@ -172,8 +172,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			
 			papercal.setAcross(3);
 			papercal.setDown(2);
-			papercal.setDAcross(2);
-			papercal.setDDown(2);
+			papercal.setdAcross(2);
+			papercal.setdDown(2);
 	
 			papercal.setDutchBottom(1);
 			papercal.setUsedSqrArea(results * (sheetX * sheetY));
@@ -190,8 +190,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			
 			papercal.setAcross(3);
 			papercal.setDown(2);
-			papercal.setDAcross(2);
-			papercal.setDDown(2);
+			papercal.setdAcross(2);
+			papercal.setdDown(2);
 	
 			papercal.setDutchBottom(1);
 			papercal.setUsedSqrArea(results * (sheetX * sheetY));
@@ -208,8 +208,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			
 			papercal.setAcross(2);
 			papercal.setDown(3);
-			papercal.setDAcross(2);
-			papercal.setDDown(2);
+			papercal.setdAcross(2);
+			papercal.setdDown(2);
 	
 			papercal.setDutchBottom(0);
 			papercal.setUsedSqrArea(results * (sheetX * sheetY));
@@ -226,8 +226,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			
 			papercal.setAcross(2);
 			papercal.setDown(3);
-			papercal.setDAcross(2);
-			papercal.setDDown(2);
+			papercal.setdAcross(2);
+			papercal.setdDown(2);
 	
 			papercal.setDutchBottom(0);
 			papercal.setUsedSqrArea(results * (sheetX * sheetY));
@@ -249,12 +249,12 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			
 			papercal.setAcross(2);
 			papercal.setDown(3);
-			papercal.setDAcross(1);
-			papercal.setDDown(4);
+			papercal.setdAcross(1);
+			papercal.setdDown(4);
 	
 			papercal.setDutchBottom(0);
-			papercal.setBMargin(2.0);
-			papercal.setRMargin(11.0);
+			papercal.setbMargin(2.0);
+			papercal.setrMargin(11.0);
 			papercal.setUsedSqrArea(results * (sheetX * sheetY));
 			papercal.setParentSqrArea(parentX * parentY);
 		} else if (sheetY != 0 && sheetX != 0) {
@@ -367,8 +367,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 
 				/* number sheets w/o dutch */
 				results = papercal.getAcross().intValue() * papercal.getDown().intValue();				
-				papercal.setRMargin((parentX - (papercal.getAcross().intValue() * sheetX) + (papercal.getAcross().intValue()-1) * gutterX));
-				papercal.setBMargin((parentY - (papercal.getDown().intValue()*sheetY)+ (papercal.getDown().intValue()-1)*gutterY));
+				papercal.setrMargin((parentX - (papercal.getAcross().intValue() * sheetX) + (papercal.getAcross().intValue()-1) * gutterX));
+				papercal.setbMargin((parentY - (papercal.getDown().intValue()*sheetY)+ (papercal.getDown().intValue()-1)*gutterY));
 			
 				//
 				// add the DUTCH or Swing cut numbers to the results
@@ -394,12 +394,12 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 					
 					/* see if a dutch cut is possible - and if it is calculate */
 					/*	if there's more sheets on right or left */
-					if (papercal.getRMargin().doubleValue() >= sheetY && parentY >= sheetX )	/* calculate right side */
-						rDutch = (MaxPageWillFit(papercal.getRMargin().doubleValue(), sheetY, gutterY) * MaxPageWillFit(parentY, sheetX, gutterX) );
+					if (papercal.getrMargin().doubleValue() >= sheetY && parentY >= sheetX )	/* calculate right side */
+						rDutch = (MaxPageWillFit(papercal.getrMargin().doubleValue(), sheetY, gutterY) * MaxPageWillFit(parentY, sheetX, gutterX) );
 						// ROUND DOWN rDutch
 					
-					if ( parentX >= sheetY && papercal.getBMargin().doubleValue() >= sheetX ) 	/* calc bottom */
-						bDutch = ( MaxPageWillFit(parentX, sheetY, gutterY) * MaxPageWillFit(papercal.getBMargin().doubleValue(), sheetX, gutterX) );
+					if ( parentX >= sheetY && papercal.getbMargin().doubleValue() >= sheetX ) 	/* calc bottom */
+						bDutch = ( MaxPageWillFit(parentX, sheetY, gutterY) * MaxPageWillFit(papercal.getbMargin().doubleValue(), sheetX, gutterX) );
 						// floor - round DOWN
 					
 					if (bDutch > rDutch)
@@ -408,28 +408,28 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 						papercal.setDutchBottom(0);
 					
 					/* its on right */
-					if ( papercal.getRMargin().doubleValue() >= sheetY && parentY >= sheetX )	{	
-						papercal.setDAcross(MaxPageWillFit(papercal.getRMargin().doubleValue(), sheetY, gutterY));
-						papercal.setDDown(MaxPageWillFit(parentY, sheetX, gutterX));
+					if ( papercal.getrMargin().doubleValue() >= sheetY && parentY >= sheetX )	{	
+						papercal.setdAcross(MaxPageWillFit(papercal.getrMargin().doubleValue(), sheetY, gutterY));
+						papercal.setdDown(MaxPageWillFit(parentY, sheetX, gutterX));
 						papercal.setDutchBottom(0);
 					}
 					if (papercal.getDutchBottom() > 0) {
-						papercal.setDAcross(MaxPageWillFit(parentX, sheetY, gutterY));
-						papercal.setDDown(MaxPageWillFit(papercal.getBMargin().doubleValue(), sheetX, gutterX));
+						papercal.setdAcross(MaxPageWillFit(parentX, sheetY, gutterY));
+						papercal.setdDown(MaxPageWillFit(papercal.getbMargin().doubleValue(), sheetX, gutterX));
 
 					} else {
-						papercal.setDAcross(MaxPageWillFit(papercal.getRMargin().doubleValue(), sheetY, gutterY));
-						papercal.setDDown(MaxPageWillFit(parentY, sheetX, gutterX));
+						papercal.setdAcross(MaxPageWillFit(papercal.getrMargin().doubleValue(), sheetY, gutterY));
+						papercal.setdDown(MaxPageWillFit(parentY, sheetX, gutterX));
 					}
 					
 					// set both to zero if the sheet want fit
 					//
-					if (papercal.getDDown().intValue() == 0 || papercal.getDAcross().intValue() == 0) {		
-						papercal.setDAcross(0);
-						papercal.setDDown(0);
+					if (papercal.getdDown().intValue() == 0 || papercal.getdAcross().intValue() == 0) {		
+						papercal.setdAcross(0);
+						papercal.setdDown(0);
 					}
 					
-					results += (papercal.getDAcross().intValue() * papercal.getDDown().intValue());
+					results += (papercal.getdAcross().intValue() * papercal.getdDown().intValue());
 				}
 				
 				// compute the square area used by the cut out sheets
@@ -668,15 +668,15 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		results.add(runCuts);
 		results.add(finishCuts);
 		
-		results.add(job.getPaperCal().getDAcross());
-		results.add(job.getPaperCal().getDDown());
+		results.add(job.getPaperCal().getdAcross());
+		results.add(job.getPaperCal().getdDown());
 		results.add(job.getPaperCal().getAcross());
 		results.add(job.getPaperCal().getDown());
 		results.add(job.getPaperCal().getDutchBottom());
 		results.add(job.getPaperCal().getUsedSqrArea());
 		results.add(job.getPaperCal().getParentSqrArea());
-		results.add(job.getPaperCal().getRMargin());
-		results.add(job.getPaperCal().getBMargin());
+		results.add(job.getPaperCal().getrMargin());
+		results.add(job.getPaperCal().getbMargin());
 		results.add(job.getPaperCal().getSwap());
 		
 		results.add(runOut);
@@ -755,9 +755,9 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				out += 4;
 			}
 			else {
-				if (job.getPaperCal().getRMargin().doubleValue() > 0)			/* add trim cut for waste on right */
+				if (job.getPaperCal().getrMargin().doubleValue() > 0)			/* add trim cut for waste on right */
 					out++;
-				if (job.getPaperCal().getBMargin().doubleValue() > 0)			/* add trim cut for waste on bottom */
+				if (job.getPaperCal().getbMargin().doubleValue() > 0)			/* add trim cut for waste on bottom */
 					out++;
 			}
 		}
@@ -828,12 +828,12 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				}
 				
 				// add the margin area cut if any exist and the side has not all ready been cut	
-				if (job.getPaperCal().getRMargin().doubleValue() > 0 && runEdgeRight == 0) {	/* add trim cut for waste on right */
+				if (job.getPaperCal().getrMargin().doubleValue() > 0 && runEdgeRight == 0) {	/* add trim cut for waste on right */
 					out++;
 					runEdgeRight += 1;
 				}
 				
-				if (job.getPaperCal().getBMargin().doubleValue() > 0 && runEdgeBottom == 0) {	/* add trim cut for waste on bottom */
+				if (job.getPaperCal().getbMargin().doubleValue() > 0 && runEdgeBottom == 0) {	/* add trim cut for waste on bottom */
 					out++;
 					runEdgeBottom += 1;
 				}
@@ -860,7 +860,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		// calculate the cuts for swing/dutch cut pages
 		//
 		
-		dout = (job.getPaperCal().getDAcross().intValue() * job.getPaperCal().getDDown().intValue());
+		dout = (job.getPaperCal().getdAcross().intValue() * job.getPaperCal().getdDown().intValue());
 		
 		if (dout > 0) {		/* add 2 cuts for busting out swing cut sheets plus 1 trim cut */
 			if (dout > 1) --dout;	// if greater than (1) then only cut in between each sheet
@@ -1236,8 +1236,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		runY = job.getRunSize().getHeight().doubleValue();
 		finishX = job.getFinishSize().getWidth().doubleValue();
 		finishY = job.getFinishSize().getHeight().doubleValue();
-		dAcross = papercal.getDAcross().intValue();
-		dDown = papercal.getDDown().intValue();
+		dAcross = papercal.getdAcross().intValue();
+		dDown = papercal.getdDown().intValue();
 			
 		// default image when the sizes are not within normal parameters
 		//

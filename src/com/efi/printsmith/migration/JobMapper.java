@@ -713,15 +713,15 @@ public class JobMapper extends ImportMapper {
 			} else if ("down".equals(currentFieldToken)) {
 				tempPaper.setDown(Utilities.tokenToInt(currentImportToken));
 			} else if ("dAcross".equals(currentFieldToken)) {
-				tempPaper.setDAcross(Utilities.tokenToInt(currentImportToken));
+				tempPaper.setdAcross(Utilities.tokenToInt(currentImportToken));
 			} else if ("dDown".equals(currentFieldToken)) {
-				tempPaper.setDDown(Utilities.tokenToInt(currentImportToken));
+				tempPaper.setdDown(Utilities.tokenToInt(currentImportToken));
 			} else if ("r margin".equals(currentFieldToken)) {
-				tempPaper.setRMargin(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setrMargin(Utilities.tokenToDouble(currentImportToken));
 			} else if ("b margin".equals(currentFieldToken)) {
-				tempPaper.setBMargin(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.setbMargin(Utilities.tokenToDouble(currentImportToken));
 			} else if ("t margin".equals(currentFieldToken)) {
-				tempPaper.setTMargin(Utilities.tokenToDouble(currentImportToken));
+				tempPaper.settMargin(Utilities.tokenToDouble(currentImportToken));
 			} else if ("used area".equals(currentFieldToken)) {
 				tempPaper.setUsedSqrArea(Utilities.tokenToDouble(currentImportToken));
 			} else if ("parent area".equals(currentFieldToken)) {

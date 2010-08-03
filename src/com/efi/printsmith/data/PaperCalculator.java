@@ -1225,22 +1225,21 @@ public class PaperCalculator extends ModelBase {
 	private Integer dAcross;
 	
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Integer getDAcross(){
+  public Integer getdAcross(){
     return dAcross; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setDAcross(Integer newVal) {
+   * @generated
+   */	
+  public void setdAcross(Integer newVal) {
     this.dAcross = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1248,22 +1247,21 @@ public class PaperCalculator extends ModelBase {
 	private Integer dDown;
 	
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Integer getDDown(){
+  public Integer getdDown(){
     return dDown; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setDDown(Integer newVal) {
+   * @generated
+   */	
+  public void setdDown(Integer newVal) {
     this.dDown = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1340,22 +1338,21 @@ public class PaperCalculator extends ModelBase {
 	private Double rMargin;
 	
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Double getRMargin(){
+  public Double getrMargin(){
     return rMargin; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setRMargin(Double newVal) {
+   * @generated
+   */	
+  public void setrMargin(Double newVal) {
     this.rMargin = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1363,22 +1360,21 @@ public class PaperCalculator extends ModelBase {
 	private Double bMargin;
 	
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Double getBMargin(){
+  public Double getbMargin(){
     return bMargin; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setBMargin(Double newVal) {
+   * @generated
+   */	
+  public void setbMargin(Double newVal) {
     this.bMargin = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1386,22 +1382,21 @@ public class PaperCalculator extends ModelBase {
 	private Double tMargin;
 	
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Double getTMargin(){
+  public Double gettMargin(){
     return tMargin; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setTMargin(Double newVal) {
+   * @generated
+   */	
+  public void settMargin(Double newVal) {
     this.tMargin = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1409,22 +1404,21 @@ public class PaperCalculator extends ModelBase {
 	private Double lMargin;
 	
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Double getLMargin(){
+  public Double getlMargin(){
     return lMargin; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setLMargin(Double newVal) {
+   * @generated
+   */	
+  public void setlMargin(Double newVal) {
     this.lMargin = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1539,15 +1533,15 @@ public class PaperCalculator extends ModelBase {
     if (CUTSTORUN.equals(propertyName)) return getCutstoRun();
     if (DISABLEFSC.equals(propertyName)) return getDisableFSC();
     if (DOWN.equals(propertyName)) return getDown();
-    if (DACROSS.equals(propertyName)) return getDAcross();
-    if (DDOWN.equals(propertyName)) return getDDown();
+    if (DACROSS.equals(propertyName)) return getdAcross();
+    if (DDOWN.equals(propertyName)) return getdDown();
     if (DUTCHBOTTOM.equals(propertyName)) return getDutchBottom();
     if (PARENTSQRAREA.equals(propertyName)) return getParentSqrArea();
     if (USEDSQRAREA.equals(propertyName)) return getUsedSqrArea();
-    if (RMARGIN.equals(propertyName)) return getRMargin();
-    if (BMARGIN.equals(propertyName)) return getBMargin();
-    if (TMARGIN.equals(propertyName)) return getTMargin();
-    if (LMARGIN.equals(propertyName)) return getLMargin();
+    if (RMARGIN.equals(propertyName)) return getrMargin();
+    if (BMARGIN.equals(propertyName)) return getbMargin();
+    if (TMARGIN.equals(propertyName)) return gettMargin();
+    if (LMARGIN.equals(propertyName)) return getlMargin();
     if (BACKTRIMRUN.equals(propertyName)) return getBackTrimRun();
     if (SWAP.equals(propertyName)) return getSwap();
     if (RUNOUT.equals(propertyName)) return getRunout();
@@ -1601,15 +1595,15 @@ public class PaperCalculator extends ModelBase {
     if (CUTSTORUN.equals(propertyName)) setCutstoRun((Integer)newValue); else
     if (DISABLEFSC.equals(propertyName)) setDisableFSC((Boolean)newValue); else
     if (DOWN.equals(propertyName)) setDown((Integer)newValue); else
-    if (DACROSS.equals(propertyName)) setDAcross((Integer)newValue); else
-    if (DDOWN.equals(propertyName)) setDDown((Integer)newValue); else
+    if (DACROSS.equals(propertyName)) setdAcross((Integer)newValue); else
+    if (DDOWN.equals(propertyName)) setdDown((Integer)newValue); else
     if (DUTCHBOTTOM.equals(propertyName)) setDutchBottom((Integer)newValue); else
     if (PARENTSQRAREA.equals(propertyName)) setParentSqrArea((Double)newValue); else
     if (USEDSQRAREA.equals(propertyName)) setUsedSqrArea((Double)newValue); else
-    if (RMARGIN.equals(propertyName)) setRMargin((Double)newValue); else
-    if (BMARGIN.equals(propertyName)) setBMargin((Double)newValue); else
-    if (TMARGIN.equals(propertyName)) setTMargin((Double)newValue); else
-    if (LMARGIN.equals(propertyName)) setLMargin((Double)newValue); else
+    if (RMARGIN.equals(propertyName)) setrMargin((Double)newValue); else
+    if (BMARGIN.equals(propertyName)) setbMargin((Double)newValue); else
+    if (TMARGIN.equals(propertyName)) settMargin((Double)newValue); else
+    if (LMARGIN.equals(propertyName)) setlMargin((Double)newValue); else
     if (BACKTRIMRUN.equals(propertyName)) setBackTrimRun((Boolean)newValue); else
     if (SWAP.equals(propertyName)) setSwap((Boolean)newValue); else
     if (RUNOUT.equals(propertyName)) setRunout((Integer)newValue); else
@@ -1884,9 +1878,9 @@ public class PaperCalculator extends ModelBase {
       return false;
     if (! SmartEquals(getDown(), objT.getDown()))
       return false;
-    if (! SmartEquals(getDAcross(), objT.getDAcross()))
+    if (! SmartEquals(getdAcross(), objT.getdAcross()))
       return false;
-    if (! SmartEquals(getDDown(), objT.getDDown()))
+    if (! SmartEquals(getdDown(), objT.getdDown()))
       return false;
     if (! SmartEquals(getDutchBottom(), objT.getDutchBottom()))
       return false;
@@ -1894,13 +1888,13 @@ public class PaperCalculator extends ModelBase {
       return false;
     if (! SmartEquals(getUsedSqrArea(), objT.getUsedSqrArea()))
       return false;
-    if (! SmartEquals(getRMargin(), objT.getRMargin()))
+    if (! SmartEquals(getrMargin(), objT.getrMargin()))
       return false;
-    if (! SmartEquals(getBMargin(), objT.getBMargin()))
+    if (! SmartEquals(getbMargin(), objT.getbMargin()))
       return false;
-    if (! SmartEquals(getTMargin(), objT.getTMargin()))
+    if (! SmartEquals(gettMargin(), objT.gettMargin()))
       return false;
-    if (! SmartEquals(getLMargin(), objT.getLMargin()))
+    if (! SmartEquals(getlMargin(), objT.getlMargin()))
       return false;
     if (! SmartEquals(getBackTrimRun(), objT.getBackTrimRun()))
       return false;
