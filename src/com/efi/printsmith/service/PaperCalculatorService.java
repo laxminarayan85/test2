@@ -1,7 +1,16 @@
 package com.efi.printsmith.service;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Stroke;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -23,6 +32,8 @@ import net.digitalprimates.persistence.hibernate.utils.services.HibernateService
 
 import org.hibernate.HibernateException;
 import org.hibernate.classic.Session;
+import org.jfree.util.PaintUtilities;
+import org.jfree.util.StrokeList;
 
 import com.efi.printsmith.data.Invoice;
 //import com.efi.printsmith.pricing.utilities.PriceListUtilities;
@@ -99,6 +110,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		int			dutch = 0, grain = 0;
 		long		rDutch = 0;	/* dutch cut count on right */
 		long		bDutch = 0;	/* dutch cut count on bottom */
+		PaperCalculator	papercal = job.getPaperCal();
 
 		// should round to 3 decimal places
 		sheetX = RoundDbl(x, 3);	
@@ -108,48 +120,43 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		gutterY = 0.0;
 		
 		if (whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH || whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
-			if (job.getPaperCal().getUseGutter()) {
-				gutterX = job.getPaperCal().getGutterHorizontal();		
-				gutterY = job.getPaperCal().getGutter();
+			if (papercal.getUseGutter().booleanValue() == true) {
+				gutterX = papercal.getGutterHorizontal().doubleValue();		
+				gutterY = papercal.getGutter().doubleValue();
 			}	
-			if (job.getPaperCal().getUseBleed()) {
-				sheetX += job.getPaperCal().getBleedLeft() + job.getPaperCal().getBleedRight();
-				sheetY += job.getPaperCal().getBleedTop() + job.getPaperCal().getBleedBottom();
+			if (papercal.getUseBleed().booleanValue() == true) {
+				sheetX += papercal.getBleedLeft().doubleValue() + papercal.getBleedRight().doubleValue();
+				sheetY += papercal.getBleedTop().doubleValue() + papercal.getBleedBottom().doubleValue();
 			}
 		}
 		
 		// know state for each
-		job.getPaperCal().setDAcross(0);
-		job.getPaperCal().setDDown(0);
-		job.getPaperCal().setRMargin(0.0);
-		job.getPaperCal().setBMargin(0.0);
-		job.getPaperCal().setAcross(0);
-		job.getPaperCal().setDown(0);
-		job.getPaperCal().setDutchBottom(0);
-		job.getPaperCal().setUsedSqrArea(0.0);
-		job.getPaperCal().setParentSqrArea(0.0);
+		papercal.setDAcross(0);
+		papercal.setDDown(0);
+		papercal.setRMargin(0.0);
+		papercal.setBMargin(0.0);
+		papercal.setAcross(0);
+		papercal.setDown(0);
+		papercal.setDutchBottom(0);
+		papercal.setUsedSqrArea(0.0);
+		papercal.setParentSqrArea(0.0);
 		
 		/* Finish Grain Example */
-		if (job.getPaperCal().getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER)) {
+		if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER)) {
 			dutch = 0;
 			grain = 0;
-		} else if (job.getPaperCal().getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN)) {
+		} else if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN)) {
 			dutch = 0;
 			grain = 1;
-		} else if (job.getPaperCal().getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION)) {
+		} else if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION)) {
 			dutch = 1;
 			grain = 0;
 		}
 
-		parentX = job.getPaperCal().getParentSize().getWidth().doubleValue();
-		parentY = job.getPaperCal().getParentSize().getHeight().doubleValue();
-		runX = job.getPaperCal().getRunSize().getWidth().doubleValue();
-		runY = job.getPaperCal().getRunSize().getHeight().doubleValue();
-
-	//	parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
-//		parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
-	//	runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
-	//	runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
+		parentX = job.getParentSize().getWidth().doubleValue();
+		parentY = job.getParentSize().getHeight().doubleValue();
+		runX = job.getRunSize().getWidth().doubleValue();
+		runY = job.getRunSize().getHeight().doubleValue();
 
 		// these are the special case sheet sizes and output options.
 		//
@@ -163,14 +170,14 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			cut if you use 2 rows of dutch cut */
 			results = 10;
 			
-			job.getPaperCal().setAcross(3);
-			job.getPaperCal().setDown(2);
-			job.getPaperCal().setDAcross(2);
-			job.getPaperCal().setDDown(2);
+			papercal.setAcross(3);
+			papercal.setDown(2);
+			papercal.setDAcross(2);
+			papercal.setDDown(2);
 	
-			job.getPaperCal().setDutchBottom(1);
-			job.getPaperCal().setUsedSqrArea(results * (sheetX * sheetY));
-			job.getPaperCal().setParentSqrArea(parentX * parentY);
+			papercal.setDutchBottom(1);
+			papercal.setUsedSqrArea(results * (sheetX * sheetY));
+			papercal.setParentSqrArea(parentX * parentY);
 		} else if (whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH && 
 				runX == 26 && runY == 40 && 
 				sheetX == 8.5 && sheetY == 11 && 
@@ -181,14 +188,14 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			//cut if you use 2 rows of dutch cut 
 			results = 10;
 			
-			job.getPaperCal().setAcross(3);
-			job.getPaperCal().setDown(2);
-			job.getPaperCal().setDAcross(2);
-			job.getPaperCal().setDDown(2);
+			papercal.setAcross(3);
+			papercal.setDown(2);
+			papercal.setDAcross(2);
+			papercal.setDDown(2);
 	
-			job.getPaperCal().setDutchBottom(1);
-			job.getPaperCal().setUsedSqrArea(results * (sheetX * sheetY));
-			job.getPaperCal().setParentSqrArea(parentX * parentY);
+			papercal.setDutchBottom(1);
+			papercal.setUsedSqrArea(results * (sheetX * sheetY));
+			papercal.setParentSqrArea(parentX * parentY);
 		}  else if (whichToStart != Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH && 
 				parentX == 40 && parentY == 26 && 
 				sheetY == 8.5 && sheetX == 11 && 
@@ -199,14 +206,14 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			//cut if you use 2 rows of dutch cut 
 			results = 10;
 			
-			job.getPaperCal().setAcross(2);
-			job.getPaperCal().setDown(3);
-			job.getPaperCal().setDAcross(2);
-			job.getPaperCal().setDDown(2);
+			papercal.setAcross(2);
+			papercal.setDown(3);
+			papercal.setDAcross(2);
+			papercal.setDDown(2);
 	
-			job.getPaperCal().setDutchBottom(0);
-			job.getPaperCal().setUsedSqrArea(results * (sheetX * sheetY));
-			job.getPaperCal().setParentSqrArea(parentX * parentY);
+			papercal.setDutchBottom(0);
+			papercal.setUsedSqrArea(results * (sheetX * sheetY));
+			papercal.setParentSqrArea(parentX * parentY);
 		} else if (whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH && 
 				runX == 40 && runY == 26 && 
 				sheetY == 8.5 && sheetX == 11 && 
@@ -217,14 +224,14 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			//cut if you use 2 rows of dutch cut 
 			results = 10;
 			
-			job.getPaperCal().setAcross(2);
-			job.getPaperCal().setDown(3);
-			job.getPaperCal().setDAcross(2);
-			job.getPaperCal().setDDown(2);
+			papercal.setAcross(2);
+			papercal.setDown(3);
+			papercal.setDAcross(2);
+			papercal.setDDown(2);
 	
-			job.getPaperCal().setDutchBottom(0);
-			job.getPaperCal().setUsedSqrArea(results * (sheetX * sheetY));
-			job.getPaperCal().setParentSqrArea(parentX * parentY);
+			papercal.setDutchBottom(0);
+			papercal.setUsedSqrArea(results * (sheetX * sheetY));
+			papercal.setParentSqrArea(parentX * parentY);
 		}  else if (whichToStart != Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH && 
 				parentX == 28 && (parentY == 35 || parentY == 34) && 
 				sheetY == 8.5 && sheetX == 11 && 
@@ -240,16 +247,16 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			// since 11/17 gets 5 out you can get twice as many 8.5/11's - this does it 
 			results = 10;
 			
-			job.getPaperCal().setAcross(2);
-			job.getPaperCal().setDown(3);
-			job.getPaperCal().setDAcross(1);
-			job.getPaperCal().setDDown(4);
+			papercal.setAcross(2);
+			papercal.setDown(3);
+			papercal.setDAcross(1);
+			papercal.setDDown(4);
 	
-			job.getPaperCal().setDutchBottom(0);
-			job.getPaperCal().setBMargin(2.0);
-			job.getPaperCal().setRMargin(11.0);
-			job.getPaperCal().setUsedSqrArea(results * (sheetX * sheetY));
-			job.getPaperCal().setParentSqrArea(parentX * parentY);
+			papercal.setDutchBottom(0);
+			papercal.setBMargin(2.0);
+			papercal.setRMargin(11.0);
+			papercal.setUsedSqrArea(results * (sheetX * sheetY));
+			papercal.setParentSqrArea(parentX * parentY);
 		} else if (sheetY != 0 && sheetX != 0) {
 
 				ajustX = 0.0;
@@ -262,35 +269,35 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				//
 				// Folio edge logic, add in the folio edge amount
 				//
-				if (job.getPaperCal().getUseFolioEdge() && whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
-					if (job.getPaperCal().getFolioLocation().equals(Constants.PAPER_CALCULATOR_FOLIO_TOP)) {
-						ajustY = job.getPaperCal().getFolioEdge();
-					} else if(job.getPaperCal().getFolioLocation().equals( Constants.PAPER_CALCULATOR_FOLIO_LEFT)) {
-						ajustX = job.getPaperCal().getFolioEdge();
+				if (papercal.getUseFolioEdge().booleanValue() == true && whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
+					if (papercal.getFolioLocation().equals(Constants.PAPER_CALCULATOR_FOLIO_TOP)) {
+						ajustY = papercal.getFolioEdge().doubleValue();
+					} else if(papercal.getFolioLocation().equals( Constants.PAPER_CALCULATOR_FOLIO_LEFT)) {
+						ajustX = papercal.getFolioEdge().doubleValue();
 					}
 				}
 				
 				//
 				// Gripper edge logic, add in the gripper edge amount
 				//		
-				if ((job.getPaperCal().getUseGripEdgeGap() || job.getPaperCal().getUseColorBar()) && whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
+				if ((papercal.getUseGripEdgeGap().booleanValue() == true || papercal.getUseColorBar().booleanValue() == true) && whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
 					
-					if (job.getPaperCal().getUseGripEdgeGap()) {
-						if (job.getPaperCal().getFolioLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)) {
-							ajust2Y = job.getPaperCal().getGripEdgeGap();
-						} else if (job.getPaperCal().getFolioLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT)) {
-							ajust2X = job.getPaperCal().getGripEdgeGap();
+					if (papercal.getUseGripEdgeGap().booleanValue() == true) {
+						if (papercal.getFolioLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)) {
+							ajust2Y = papercal.getGripEdgeGap().doubleValue();
+						} else if (papercal.getFolioLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT)) {
+							ajust2X = papercal.getGripEdgeGap().doubleValue();
 						}
 					}
 					
 					//
 					// Take into account the color bar on the opposite side of the gripper
 					//
-					if (job.getPaperCal().getUseColorBar()) {
-						if (job.getPaperCal().getGripLocation() == Constants.PAPER_CALCULATOR_GRIPPER_TOP){
-							ajust3Y = job.getPaperCal().getColorBar();
-						} else if (job.getPaperCal().getGripLocation() == Constants.PAPER_CALCULATOR_GRIPPER_LEFT){
-							ajust3X = job.getPaperCal().getColorBar();
+					if (papercal.getUseColorBar().booleanValue() == true) {
+						if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)){
+							ajust3Y = papercal.getColorBar().doubleValue();
+						} else if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT)){
+							ajust3X = papercal.getColorBar().doubleValue();
 						} 
 					}
 					
@@ -303,13 +310,13 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 					//
 					// work and tumble adds another gripper or color bar to the opposite side, which ever is larger
 					//
-					if (job.getRunMethod() == "WorkAndTumble") {		// (GetJobRunDirection(job) & kJobRunDirectionRunAndTumble)
-						if (job.getPaperCal().getGripLocation() == Constants.PAPER_CALCULATOR_GRIPPER_TOP){
+					if (job.getRunMethod().equals("WorkAndTumble")) {		// (GetJobRunDirection(job) & kJobRunDirectionRunAndTumble)
+						if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)){
 							if (ajust2Y >= ajust3Y)
 								ajustY += ajust2Y;
 							else
 								ajustY += ajust3Y;
-						} else if (job.getPaperCal().getGripLocation() == Constants.PAPER_CALCULATOR_GRIPPER_LEFT){
+						} else if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT)){
 							if (ajust2X >= ajust3X)
 								ajustX += ajust2X;
 							else
@@ -328,9 +335,9 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				//
 				// White space - subtract the edge amounts around the run sheet
 				//		
-				if (job.getPaperCal().getUseWhiteSpace() && whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
-					ajustX += (job.getPaperCal().getWhiteSpaceLeft() + job.getPaperCal().getWhiteSpaceRight());
-					ajustY += (job.getPaperCal().getWhiteSpaceTop() + job.getPaperCal().getWhiteSpaceBottom());
+				if (papercal.getUseWhiteSpace().booleanValue() == true && whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
+					ajustX += (papercal.getWhiteSpaceLeft().doubleValue() + papercal.getWhiteSpaceRight().doubleValue());
+					ajustY += (papercal.getWhiteSpaceTop().doubleValue() + papercal.getWhiteSpaceBottom().doubleValue());
 				}
 				
 				//
@@ -349,19 +356,19 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				// compute the maximum number of pages that will fit with a gutter in between
 				//
 				if (parentX >= sheetX)
-					job.getPaperCal().setAcross(MaxPageWillFit(parentX, sheetX, gutterX));
+					papercal.setAcross(MaxPageWillFit(parentX, sheetX, gutterX));
 				else
-					job.getPaperCal().setAcross(0);
+					papercal.setAcross(0);
 				
 				if (parentY >= sheetY)
-					job.getPaperCal().setDown(MaxPageWillFit(parentY, sheetY, gutterY));
+					papercal.setDown(MaxPageWillFit(parentY, sheetY, gutterY));
 				else
-					job.getPaperCal().setDown(0);
+					papercal.setDown(0);
 
 				/* number sheets w/o dutch */
-				results = job.getPaperCal().getAcross() * job.getPaperCal().getDown();				
-				job.getPaperCal().setRMargin((parentX - (job.getPaperCal().getAcross() * sheetX) + (job.getPaperCal().getAcross()-1) * gutterX));
-				job.getPaperCal().setBMargin((parentY - (job.getPaperCal().getDown()*sheetY)+ (job.getPaperCal().getDown()-1)*gutterY));
+				results = papercal.getAcross().intValue() * papercal.getDown().intValue();				
+				papercal.setRMargin((parentX - (papercal.getAcross().intValue() * sheetX) + (papercal.getAcross().intValue()-1) * gutterX));
+				papercal.setBMargin((parentY - (papercal.getDown().intValue()*sheetY)+ (papercal.getDown().intValue()-1)*gutterY));
 			
 				//
 				// add the DUTCH or Swing cut numbers to the results
@@ -375,77 +382,72 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 					// add to the paper size, gutters and bleeds.
 					//		
 					if (whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH || whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
-						if (job.getPaperCal().getUseGutter()) {
-							gutterX = job.getPaperCal().getGutter();		// rotate sides
-							gutterY = job.getPaperCal().getGutterHorizontal();
+						if (papercal.getUseGutter().booleanValue() == true) {
+							gutterX = papercal.getGutter().doubleValue();		// rotate sides
+							gutterY = papercal.getGutterHorizontal().doubleValue();
 						}	
-						if (job.getPaperCal().getUseBleed()) {
-							sheetX += (job.getPaperCal().getBleedLeft() + job.getPaperCal().getBleedRight());
-							sheetY += (job.getPaperCal().getBleedTop() + job.getPaperCal().getBleedBottom());
+						if (papercal.getUseBleed().booleanValue() == true) {
+							sheetX += (papercal.getBleedLeft().doubleValue() + papercal.getBleedRight().doubleValue());
+							sheetY += (papercal.getBleedTop().doubleValue() + papercal.getBleedBottom().doubleValue());
 						}
 					}
 					
 					/* see if a dutch cut is possible - and if it is calculate */
 					/*	if there's more sheets on right or left */
-					if (job.getPaperCal().getRMargin() >= sheetY && parentY >= sheetX )	/* calculate right side */
-						rDutch = (MaxPageWillFit(job.getPaperCal().getRMargin(), sheetY, gutterY) * MaxPageWillFit(parentY, sheetX, gutterX) );
+					if (papercal.getRMargin().doubleValue() >= sheetY && parentY >= sheetX )	/* calculate right side */
+						rDutch = (MaxPageWillFit(papercal.getRMargin().doubleValue(), sheetY, gutterY) * MaxPageWillFit(parentY, sheetX, gutterX) );
 						// ROUND DOWN rDutch
 					
-					if ( parentX >= sheetY && job.getPaperCal().getBMargin() >= sheetX ) 	/* calc bottom */
-						bDutch = ( MaxPageWillFit(parentX, sheetY, gutterY) * MaxPageWillFit(job.getPaperCal().getBMargin(), sheetX, gutterX) );
+					if ( parentX >= sheetY && papercal.getBMargin().doubleValue() >= sheetX ) 	/* calc bottom */
+						bDutch = ( MaxPageWillFit(parentX, sheetY, gutterY) * MaxPageWillFit(papercal.getBMargin().doubleValue(), sheetX, gutterX) );
 						// floor - round DOWN
 					
 					if (bDutch > rDutch)
-						job.getPaperCal().setDutchBottom(1);	/* position dutch cut on bottom */
+						papercal.setDutchBottom(1);	/* position dutch cut on bottom */
 					else
-						job.getPaperCal().setDutchBottom(0);
+						papercal.setDutchBottom(0);
 					
 					/* its on right */
-					if ( job.getPaperCal().getRMargin() >= sheetY && parentY >= sheetX )	{	
-						job.getPaperCal().setDAcross(MaxPageWillFit(job.getPaperCal().getRMargin(), sheetY, gutterY));
-						job.getPaperCal().setDDown(MaxPageWillFit(parentY, sheetX, gutterX));
-						job.getPaperCal().setDutchBottom(0);
+					if ( papercal.getRMargin().doubleValue() >= sheetY && parentY >= sheetX )	{	
+						papercal.setDAcross(MaxPageWillFit(papercal.getRMargin().doubleValue(), sheetY, gutterY));
+						papercal.setDDown(MaxPageWillFit(parentY, sheetX, gutterX));
+						papercal.setDutchBottom(0);
 					}
-					if (job.getPaperCal().getDutchBottom() > 0) {
-						job.getPaperCal().setDAcross(MaxPageWillFit(parentX, sheetY, gutterY));
-						job.getPaperCal().setDDown(MaxPageWillFit(job.getPaperCal().getBMargin(), sheetX, gutterX));
+					if (papercal.getDutchBottom() > 0) {
+						papercal.setDAcross(MaxPageWillFit(parentX, sheetY, gutterY));
+						papercal.setDDown(MaxPageWillFit(papercal.getBMargin().doubleValue(), sheetX, gutterX));
 
 					} else {
-						job.getPaperCal().setDAcross(MaxPageWillFit(job.getPaperCal().getRMargin(), sheetY, gutterY));
-						job.getPaperCal().setDDown(MaxPageWillFit(parentY, sheetX, gutterX));
+						papercal.setDAcross(MaxPageWillFit(papercal.getRMargin().doubleValue(), sheetY, gutterY));
+						papercal.setDDown(MaxPageWillFit(parentY, sheetX, gutterX));
 					}
 					
 					// set both to zero if the sheet want fit
 					//
-					if (job.getPaperCal().getDDown() == 0 || job.getPaperCal().getDAcross() == 0) {		
-						job.getPaperCal().setDAcross(0);
-						job.getPaperCal().setDDown(0);
+					if (papercal.getDDown().intValue() == 0 || papercal.getDAcross().intValue() == 0) {		
+						papercal.setDAcross(0);
+						papercal.setDDown(0);
 					}
 					
-					results += (job.getPaperCal().getDAcross() * job.getPaperCal().getDDown());
+					results += (papercal.getDAcross().intValue() * papercal.getDDown().intValue());
 				}
 				
 				// compute the square area used by the cut out sheets
 				//
-				job.getPaperCal().setUsedSqrArea((results * (sheetX * sheetY)));
+				papercal.setUsedSqrArea((results * (sheetX * sheetY)));
 				
 				//
 				// compute the square area used by the parent
 				//
-				parentX = job.getPaperCal().getParentSize().getWidth().doubleValue();
-				parentY = job.getPaperCal().getParentSize().getHeight().doubleValue();
-				runX = job.getPaperCal().getRunSize().getWidth().doubleValue();
-				runY = job.getPaperCal().getRunSize().getHeight().doubleValue();
-
-		//		parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
-		//		parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
-		//		runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
-		//		runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
+				parentX = job.getParentSize().getWidth().doubleValue();
+				parentY = job.getParentSize().getHeight().doubleValue();
+				runX = job.getRunSize().getWidth().doubleValue();
+				runY = job.getRunSize().getHeight().doubleValue();
 
 				if (whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH || whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN) {
-					job.getPaperCal().setParentSqrArea(parentX * parentY);
+					papercal.setParentSqrArea(parentX * parentY);
 				} else {
-					job.getPaperCal().setParentSqrArea(runX * runY);
+					papercal.setParentSqrArea(runX * runY);
 				}
 		}
 		
@@ -471,18 +473,13 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		int			out1 = 0;		/* temp values to figure out maximum */
 		int			out2 = 0;	/* temp values to figure out maximum */
 		
-		parentX = job.getPaperCal().getParentSize().getWidth().doubleValue();
-		parentY = job.getPaperCal().getParentSize().getHeight().doubleValue();
-		runX = job.getPaperCal().getRunSize().getWidth().doubleValue();
-		runY = job.getPaperCal().getRunSize().getHeight().doubleValue();
-		finishX = job.getPaperCal().getFinishSize().getWidth().doubleValue();
-		finishY = job.getPaperCal().getFinishSize().getHeight().doubleValue();
-	//	parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
-	//	parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
-	//	runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
-	//	runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
-	//	finishX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getFinishSize());
-	//	finishY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getFinishSize());
+		parentX = job.getParentSize().getWidth().doubleValue();
+		parentY = job.getParentSize().getHeight().doubleValue();
+		runX = job.getRunSize().getWidth().doubleValue();
+		runY = job.getRunSize().getHeight().doubleValue();
+		finishX = job.getFinishSize().getWidth().doubleValue();
+		finishY = job.getFinishSize().getHeight().doubleValue();
+
 		grain = 0;
 		
 		/* Finish Grain */
@@ -593,6 +590,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 	public List CalcOut(JobBase job, int whichToStart) throws Exception {
 	
 		int 	out= 0;
+		int		runOut = 0;
+		int		finishOut = 0;
 		int		runCuts;
 		int		finishCuts;
 
@@ -614,14 +613,14 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				// find the other options at the same time
 				if (job.getOrFinishCuts().equals(false))
 				{
-					CalcMaximumSheets(job, Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH);
+					finishOut = CalcMaximumSheets(job, Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH);
 					finishCuts = ExtCutCount(job, Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH);
 				}
 				
 				// find the other options at the same time
 				if (job.getOrRunCuts().equals(false))
 				{
-					CalcMaximumSheets(job, Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN);
+					runOut = CalcMaximumSheets(job, Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN);
 					runCuts = ExtCutCount(job, Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN);
 				}
 				// the one asked for
@@ -632,12 +631,12 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				// find the other options at the same time
 				if (job.getOrFinishCuts().equals(false))
 				{
-					CalcMaximumSheets(job, Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH);
+					finishOut = CalcMaximumSheets(job, Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH);
 					finishCuts = ExtCutCount(job, Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH);
 				}
 				
 				// use run size as parent
-				out = CalcMaximumSheets(job, whichToStart);
+				runOut = out = CalcMaximumSheets(job, whichToStart);
 				if (job.getOrRunCuts().equals(false))
 				{
 					runCuts = ExtCutCount(job, whichToStart);
@@ -648,12 +647,12 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				// find the other options at the same time
 				if (job.getOrRunCuts().equals(false))
 				{
-					CalcMaximumSheets(job, Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN);
+					runOut = CalcMaximumSheets(job, Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN);
 					runCuts = ExtCutCount(job, Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN);
 				}
 				
 				// use parent size
-				out = CalcMaximumSheets(job, whichToStart);
+				finishOut = out = CalcMaximumSheets(job, whichToStart);
 				
 				if (job.getOrFinishCuts().equals(false))
 				{
@@ -665,6 +664,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		log.info("CalcOut returned: " + out);
 		
 		results.add(out);
+		
 		results.add(runCuts);
 		results.add(finishCuts);
 		
@@ -678,6 +678,9 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		results.add(job.getPaperCal().getRMargin());
 		results.add(job.getPaperCal().getBMargin());
 		results.add(job.getPaperCal().getSwap());
+		
+		results.add(runOut);
+		results.add(finishOut);
 		
 		return results;
 	}
@@ -697,24 +700,24 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		//
 		// Count of pages across minus (1) plus the number of pages down - (1)
 		//
-		out = ((job.getPaperCal().getAcross()-1) + job.getPaperCal().getDown()-1);		/* gross estimate of cuts needed */
+		out = ((job.getPaperCal().getAcross().intValue()-1) + job.getPaperCal().getDown().intValue()-1);		/* gross estimate of cuts needed */
 		if (out < 0)
 			out = 0;
 				
 		if (whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
 		
-			if (job.getPaperCal().getUseBleed() == true) {			// bleeds will double the cuts in the effected sides
+			if (job.getPaperCal().getUseBleed().booleanValue() == true) {			// bleeds will double the cuts in the effected sides
 				
 				// bleeds out in the across direction
 				//
-				if (job.getPaperCal().getBleedLeft() > 0.0 || job.getPaperCal().getBleedRight() > 0.0) {
-					out += (job.getPaperCal().getAcross()+1);
+				if (job.getPaperCal().getBleedLeft().doubleValue() > 0.0 || job.getPaperCal().getBleedRight().doubleValue() > 0.0) {
+					out += (job.getPaperCal().getAcross().intValue()+1);
 				}
 				
 				// bleeds out in the down direction
 				//
-				if (job.getPaperCal().getBleedTop() > 0.0 || job.getPaperCal().getBleedBottom() > 0.0) {
-					out += (job.getPaperCal().getDown() + 1);
+				if (job.getPaperCal().getBleedTop().doubleValue() > 0.0 || job.getPaperCal().getBleedBottom().doubleValue() > 0.0) {
+					out += (job.getPaperCal().getDown().intValue() + 1);
 				}
 				
 				//
@@ -722,24 +725,24 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				//	If the left or right is cut then both are counted, so the edge
 				//	is covered already and should be marked as done here.
 				//
-				if (job.getPaperCal().getBleedLeft() > 0.0 || job.getPaperCal().getBleedRight() > 0.0)
+				if (job.getPaperCal().getBleedLeft().doubleValue() > 0.0 || job.getPaperCal().getBleedRight().doubleValue() > 0.0)
 					runEdgeLeft += 1;
-				if (job.getPaperCal().getBleedRight() > 0.0 || job.getPaperCal().getBleedLeft() > 0.0)
+				if (job.getPaperCal().getBleedRight().doubleValue() > 0.0 || job.getPaperCal().getBleedLeft().doubleValue() > 0.0)
 					runEdgeRight += 1;
-				if (job.getPaperCal().getBleedTop() > 0.0 || job.getPaperCal().getBleedBottom() > 0.0)
+				if (job.getPaperCal().getBleedTop().doubleValue() > 0.0 || job.getPaperCal().getBleedBottom().doubleValue() > 0.0)
 					runEdgeTop += 1;
-				if (job.getPaperCal().getBleedBottom() > 0.0 || job.getPaperCal().getBleedTop() > 0.0)
+				if (job.getPaperCal().getBleedBottom().doubleValue() > 0.0 || job.getPaperCal().getBleedTop().doubleValue() > 0.0)
 					runEdgeBottom += 1;
 			}
 			
 			//
 			// count up the extra cuts needed for gutters
 			//
-			if (job.getPaperCal().getUseGutter()) {
-				if (job.getPaperCal().getGutterHorizontal() > 0.0)
-					out += job.getPaperCal().getAcross() - 1;
-				if (job.getPaperCal().getGutter() > 0.0)
-					out += job.getPaperCal().getDown() - 1;
+			if (job.getPaperCal().getUseGutter().booleanValue() == true) {
+				if (job.getPaperCal().getGutterHorizontal().doubleValue() > 0.0)
+					out += job.getPaperCal().getAcross().intValue() - 1;
+				if (job.getPaperCal().getGutter().doubleValue() > 0.0)
+					out += job.getPaperCal().getDown().intValue() - 1;
 			}
 		}
 	
@@ -748,19 +751,19 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			//
 			// trim all the way around
 			//
-			if (job.getPaperCal().getBackTrimParent()) {			// back trim cuts all the way around
+			if (job.getPaperCal().getBackTrimParent().booleanValue() == true) {			// back trim cuts all the way around
 				out += 4;
 			}
 			else {
-				if (job.getPaperCal().getRMargin() > 0)			/* add trim cut for waste on right */
+				if (job.getPaperCal().getRMargin().doubleValue() > 0)			/* add trim cut for waste on right */
 					out++;
-				if (job.getPaperCal().getBMargin() > 0)			/* add trim cut for waste on bottom */
+				if (job.getPaperCal().getBMargin().doubleValue() > 0)			/* add trim cut for waste on bottom */
 					out++;
 			}
 		}
 		
 		if (whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
-			if (job.getPaperCal().getTrimFourSides()) {	// back trim cuts all the way around
+			if (job.getPaperCal().getTrimFourSides().booleanValue() == true) {	// back trim cuts all the way around
 				
 				// back trim any edge not already counted
 				if (runEdgeLeft == 0)	out += 1;
@@ -769,17 +772,17 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				if (runEdgeBottom == 0)	out += 1;
 			}
 			else {
-				if (job.getPaperCal().getUseGripEdgeGap()) {		// gripper in on
-					if (job.getPaperCal().getGripEdgeGap() != 0.0) {		// gripper has a value
+				if (job.getPaperCal().getUseGripEdgeGap().booleanValue() == true) {		// gripper in on
+					if (job.getPaperCal().getGripEdgeGap().doubleValue() != 0.0) {		// gripper has a value
 						out++;								// add one for the gripper
-						if (job.getPaperCal().getGripLocation() == Constants.PAPER_CALCULATOR_GRIPPER_LEFT)		//job->gripSide == kEdgeLeftRight) 
+						if (job.getPaperCal().getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT))		//job->gripSide == kEdgeLeftRight) 
 							runEdgeLeft += 1;
 						else
 							runEdgeTop += 1;
 								
-						if (job.getRunMethod() == "WorkAndTumble") {		// work and tumble is on
+						if (job.getRunMethod().equals("WorkAndTumble")) {		// work and tumble is on
 							out++;							// add one for the oposite site
-							if (job.getPaperCal().getGripLocation() == Constants.PAPER_CALCULATOR_GRIPPER_LEFT)
+							if (job.getPaperCal().getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT))
 								runEdgeRight += 1;
 							else
 								runEdgeBottom += 1;
@@ -790,29 +793,29 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				//
 				// Count any extra needed by white space
 				//
-				if (job.getPaperCal().getUseWhiteSpace()) {
-					if (job.getPaperCal().getWhiteSpaceLeft() > 0.0 && runEdgeLeft == 0) {
+				if (job.getPaperCal().getUseWhiteSpace().booleanValue() == true) {
+					if (job.getPaperCal().getWhiteSpaceLeft().doubleValue() > 0.0 && runEdgeLeft == 0) {
 						runEdgeLeft += 1;
 						out += 1;
 					}
-					if (job.getPaperCal().getWhiteSpaceRight() > 0.0 && runEdgeRight == 0) {
+					if (job.getPaperCal().getWhiteSpaceRight().doubleValue() > 0.0 && runEdgeRight == 0) {
 						runEdgeRight += 1;
 						out += 1;
 					}
-					if (job.getPaperCal().getWhiteSpaceTop() > 0.0 && runEdgeTop == 0) {
+					if (job.getPaperCal().getWhiteSpaceTop().doubleValue() > 0.0 && runEdgeTop == 0) {
 						runEdgeTop += 1;
 						out += 1;
 					}
-					if (job.getPaperCal().getWhiteSpaceBottom() > 0.0 && runEdgeBottom == 0) {
+					if (job.getPaperCal().getWhiteSpaceBottom().doubleValue() > 0.0 && runEdgeBottom == 0) {
 						runEdgeBottom += 1;
 						out += 1;
 					}
 				}
 	
 				// only count a folio edge if no gripper exist on the same side as the folio edge
-				if (job.getPaperCal().getUseFolioEdge() && ((job.getPaperCal().getUseGripEdgeGap() == false) 
-							|| job.getPaperCal().getGripLocation() != job.getPaperCal().getFolioLocation())) {
-					if (job.getPaperCal().getFolioEdge() != 0.0) {
+				if (job.getPaperCal().getUseFolioEdge().booleanValue() == true && ((job.getPaperCal().getUseGripEdgeGap() == false) 
+							|| false == job.getPaperCal().getGripLocation().equals(job.getPaperCal().getFolioLocation()))) {
+					if (job.getPaperCal().getFolioEdge().doubleValue() != 0.0) {
 						if (job.getPaperCal().getFolioLocation().equals(Constants.PAPER_CALCULATOR_FOLIO_LEFT) && runEdgeLeft == 0) {
 							runEdgeLeft += 1;
 							out++;
@@ -825,25 +828,25 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				}
 				
 				// add the margin area cut if any exist and the side has not all ready been cut	
-				if (job.getPaperCal().getRMargin() > 0 && runEdgeRight == 0) {	/* add trim cut for waste on right */
+				if (job.getPaperCal().getRMargin().doubleValue() > 0 && runEdgeRight == 0) {	/* add trim cut for waste on right */
 					out++;
 					runEdgeRight += 1;
 				}
 				
-				if (job.getPaperCal().getBMargin() > 0 && runEdgeBottom == 0) {	/* add trim cut for waste on bottom */
+				if (job.getPaperCal().getBMargin().doubleValue() > 0 && runEdgeBottom == 0) {	/* add trim cut for waste on bottom */
 					out++;
 					runEdgeBottom += 1;
 				}
 				
 				// Does the color bar need a seprate cut, that is no folio or gripper is already being trimmed
-				if (job.getPaperCal().getUseColorBar()) {
+				if (job.getPaperCal().getUseColorBar().booleanValue() == true) {
 					// color bar is on opposite side from gripper edge
-					if (job.getPaperCal().getGripLocation() == Constants.PAPER_CALCULATOR_GRIPPER_TOP){
+					if (job.getPaperCal().getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)){
 						if (runEdgeBottom == 0) {
 							out++;
 							runEdgeBottom += 1;
 						}
-					} else if (job.getPaperCal().getGripLocation() == Constants.PAPER_CALCULATOR_GRIPPER_LEFT){
+					} else if (job.getPaperCal().getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT)){
 						if (runEdgeRight == 0) {
 							out++;
 							runEdgeRight += 1;
@@ -857,7 +860,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		// calculate the cuts for swing/dutch cut pages
 		//
 		
-		dout = (job.getPaperCal().getDAcross() * job.getPaperCal().getDDown());
+		dout = (job.getPaperCal().getDAcross().intValue() * job.getPaperCal().getDDown().intValue());
 		
 		if (dout > 0) {		/* add 2 cuts for busting out swing cut sheets plus 1 trim cut */
 			if (dout > 1) --dout;	// if greater than (1) then only cut in between each sheet
@@ -894,22 +897,15 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		int		runCuts;
 		int		finishCuts;
 		
-		parentX = job.getPaperCal().getParentSize().getWidth().doubleValue();
-		parentY = job.getPaperCal().getParentSize().getHeight().doubleValue();
-		runX = job.getPaperCal().getRunSize().getWidth().doubleValue();
-		runY = job.getPaperCal().getRunSize().getHeight().doubleValue();
-		finishX = job.getPaperCal().getFinishSize().getWidth().doubleValue();
-		finishY = job.getPaperCal().getFinishSize().getHeight().doubleValue();
-		
-	//	parentX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getParentSize());
-	//	parentY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getParentSize());
-	//	runX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getRunSize());
-	//	runY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getRunSize());
-	//	finishX = PriceListUtilities.getWidthFromSizeString(job.getPaperCal().getFinishSize());
-	//	finishY = PriceListUtilities.getLengthFromSizeString(job.getPaperCal().getFinishSize());
-		
-		runCuts = job.getPaperCal().getCutstoRun();
-		finishCuts = job.getPaperCal().getCutstoFinish();
+		parentX = job.getParentSize().getWidth().doubleValue();
+		parentY = job.getParentSize().getHeight().doubleValue();
+		runX = job.getRunSize().getWidth().doubleValue();
+		runY = job.getRunSize().getHeight().doubleValue();
+		finishX = job.getFinishSize().getWidth().doubleValue();
+		finishY = job.getFinishSize().getHeight().doubleValue();
+				
+		runCuts = job.getPaperCal().getCutstoRun().intValue();
+		finishCuts = job.getPaperCal().getCutstoFinish().intValue();
 		
 		if ((parentX > 0 && parentY > 0) || (finishX > 0 && finishY > 0) || (runX > 0 && runY > 0))
 		{			
@@ -933,11 +929,1012 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		return(results);
 	} /* CalculateCutCounts */		
 
-	public byte[] GeneratePaperCalculatorImage(int width, int height) {
+	//  -- xx --
+	//  --------  
+	//  |      |  
+	//  |      |  
+	//  |      |  
+	//  |	   |  
+	//	--------
+	private void PaintXDim(Graphics2D g, Rectangle r,double dim, int dv)
+		{
+			Font		c;			// 
+			FontMetrics fm;
+			int				lineht;				// 
+			int				charht;				// used to offset line from text baseline
+			int				charwidth;			// width of string
+			int				ypos;				// 
+			String			buf;				// for setting up text to print
+			int				xpos;				// 
+			int				x;					// 
+			double 			scale = 1.0;
+			Rectangle		box = new Rectangle();
+			
+			if (dim > 0 && r.width > 0 && r.height > 0)
+			{
+				box.setRect(r.x*scale, r.y*scale, r.width*scale, r.height*scale);
+
+				c=new Font("Courier",Font.PLAIN,9);
+				g.setFont(c);
+				buf = String.valueOf(dim);
+
+				fm = g.getFontMetrics();
+				lineht = fm.getHeight();
+				charht = lineht / 2;
+				charwidth = fm.stringWidth(buf);
+				
+				x = box.x + (((box.width) - charwidth) / 2);
+				ypos = (box.y + dv + 2) - charht;
+				xpos = box.x + 2;
+				g.setColor(Color.gray);
+				g.drawLine(xpos, ypos, x-5, ypos);	
+				g.drawString(buf, x, ypos + charht);
+				g.drawLine(x + charwidth + 2, ypos, box.y+box.width-3, ypos);
+				g.setColor(Color.black);
+			}
+		}	// PaintXDim
+
+		//
+		//  ------  |
+		//  |    |  |
+		//  |    |  XX
+		//  |    |  |
+		//  |	 |  |
+		//	------
+		//
+		private void PaintYDim(Graphics2D g, Rectangle r,double dim, int dv)
+		{
+			Font		c;			// 
+			FontMetrics fm;
+			int				lineht;				// 
+			int				charwide;			// used to offset line from text baseline
+			int				ypos;				// 
+			int				cpos;				// 
+			String			buf;				// for setting up text to print
+			int				xpos;				// 
+			double 			scale = 1.0;
+			Rectangle		box = new Rectangle();
+			
+			if (dim > 0 && r.width > 0 && r.height > 0)
+			{
+				box.setRect(r.x*scale, r.y*scale, r.width*scale, r.height*scale);
+
+				c=new Font("Courier",Font.PLAIN,9);
+				g.setFont(c);
+				buf = String.valueOf(dim);
+				
+				fm = g.getFontMetrics();
+				lineht = fm.getHeight();
+				cpos = box.y + (box.height/2) + lineht/2;
+				charwide = fm.stringWidth(buf);
+								
+				xpos = box.x + box.width + dv + (charwide / 2);				
+				ypos = (box.x+box.width) - 3;
+				g.setColor(Color.gray);
+				g.drawLine(xpos, box.y, xpos, cpos-8);	
+				g.drawLine(xpos, cpos+4, xpos, box.y+box.height);
+				
+				xpos = box.x+box.width + dv;
+				
+				g.drawString(buf, xpos, cpos);
+				g.setColor(Color.black);
+			}
+		}	// PaintYDim
+		
+	// default image when values are not properly set
+	//
+	private void DrawNoImageAvailable(Graphics2D g, Rectangle r) {
+	    float strokeThickness = 3.0f;
+		Rectangle	box = new Rectangle();
+	    BasicStroke stroke = new BasicStroke(strokeThickness);
+	    g.setStroke(stroke);
+
+	    g.setColor(Color.gray);
+		box.setRect(r.x+20, r.y+20, r.width-20, r.height-20);
+
+		g.drawOval(box.x,box.y,box.width,box.height);
+		g.drawLine(box.x, box.y, box.x+box.width, box.y+box.height);
+	}
+	
+	//*******************************************************************************
+	//	PaintColorBar - draw a (cyclic) color bar across box.
+	//
+	//
+	//*******************************************************************************
+	static void PaintColorBar(Graphics2D g, Rectangle2D.Double box)
+	{
+		Boolean			orientation;		// e.g., horizontal or vertical
+		Boolean			lastCell = false;	// 
+		double			size;				// length of "short" edge (of box)
+		int				i = 0;				// counter (used for color selection)
+		Rectangle2D.Double			node = new Rectangle2D.Double();				// 
+		Rectangle2D.Double			cell = new Rectangle2D.Double();				// 
+		Rectangle2D.Double			r1 = new Rectangle2D.Double();					// 
+		Rectangle2D.Double			r2 = new Rectangle2D.Double();					// 
+		
+		//
+		// setup direction and size of cells
+		//
+		orientation = (box.height) > (box.width);
+		size = orientation ? (box.width) : (box.height);
+	//	SetDblRect(&node, box->left, box->top, box->left + size, box->top + size);
+		node.setRect(box.x, box.y, size, size);		// make square of small side
+		
+		do
+		{
+			if (i > 0)
+			{	// iterations 1 - N
+				if (orientation)
+				{	// move down
+				//	OffsetDblRect(&node, 0, size);
+					node.y += size;
+				}
+				else
+				{	// move right
+				//	OffsetDblRect(&node, size, 0);
+					node.x += size;
+				}
+			}
+			
+			if (orientation)
+			{	// move down
+				if (node.y >= box.y+box.height)
+					lastCell = true;
+			}
+			else
+			{	// move right
+				if (node.x >= box.x+box.width)
+					lastCell = true;
+			}
+			
+			switch (i++ % 7)
+			{	// select a color
+				case 0:
+				{
+				//	ForeColor(cyanColor);
+					g.setColor(Color.cyan);
+					break;
+				}
+				case 1:
+				{
+				//	ForeColor(blueColor);
+					g.setColor(Color.blue);
+					break;
+				}
+				case 2:
+				{
+				//	ForeColor(magentaColor);
+					g.setColor(Color.magenta);
+					break;
+				}
+				case 3:
+				{
+				//	ForeColor(redColor);
+					g.setColor(Color.red);
+					break;
+				}
+				case 4:
+				{
+				//	ForeColor(yellowColor);
+					g.setColor(Color.yellow);
+					break;
+				}
+				case 5:
+				{
+				//	ForeColor(greenColor);
+					g.setColor(Color.green);
+					break;
+				}
+				case 6:
+				{
+				//	ForeColor(blackColor);
+					g.setColor(Color.black);
+					break;
+				}
+			}
+			
+		//	DblRectToShortRect( box, &r1);
+		//	DblRectToShortRect( &node, &r2);
+		//	SectRect(&r1, &r2, &cell);
+			
+			Rectangle2D.intersect(box, node, cell);
+			
+
+			//
+			// if the image gets scales out of existence, then use a line in place
+			//
+			if (cell.height <  2)
+			{
+			//	MoveTo(cell.left,cell.bottom);
+			//	LineTo(cell.right,cell.bottom);
+				g.drawLine((int)cell.x, (int)cell.y, (int)(cell.x+cell.width), (int)cell.y);
+			}
+			else
+			{
+			//	PaintRect(&cell);
+				g.fill(cell);
+			}
+		}
+		while (!lastCell);
+	}	// PaintColorBar
+
+		
+	private void CreateCutDiagram(JobBase job, int whichToStart, Graphics2D g, Rectangle imageArea)
+	{		
+		PaperCalculator	papercal = job.getPaperCal();
+		Point			origin = new Point();
+		double			aspect = 1.0;			// for now always is set to 1.0
+		double			parentX,parentY;	/* working vars parent sheet size */
+		double			runX,runY;			// local working copies
+		double			finishX,finishY;	// local working copies
+		Rectangle2D.Double		tmpRect = new Rectangle2D.Double();				// 
+		Rectangle2D.Double		baseRect = new Rectangle2D.Double();
+		Rectangle2D.Double		sheetRect = new Rectangle2D.Double(); 
+		Rectangle2D.Double		folioRect = new Rectangle2D.Double();				// 
+		Rectangle2D.Double		headGripRect = new Rectangle2D.Double();			// 
+		Rectangle2D.Double		tailGripRect = new Rectangle2D.Double();			// 
+		Rectangle2D.Double		colorbarRect = new Rectangle2D.Double();			// 
+		Rectangle2D.Double		whitespaceRectL = new Rectangle2D.Double();			// 
+		Rectangle2D.Double		whitespaceRectT = new Rectangle2D.Double();			// 
+		Rectangle2D.Double		whitespaceRectR = new Rectangle2D.Double();			// 
+		Rectangle2D.Double		whitespaceRectB = new Rectangle2D.Double();			// 
+		Rectangle2D.Double		formRect = new Rectangle2D.Double();				// full value
+		Rectangle2D.Double		dutchRect = new Rectangle2D.Double();				// 
+		Rectangle2D.Double		trimRect = new Rectangle2D.Double();				// 
+		Rectangle2D.Double		bleedRect = new Rectangle2D.Double();				// 
+		double			marginL = 0;			// base to image margin (pixels)
+		double			marginT = 0;			// base to image margin (pixels) (bigger to account for xdim)
+		double			marginR = 50;			// base to image margin (pixels) (bigger to account for ydim)
+		double			marginB = 50;			// volatile ... base to image margin (pixels)
+		double			inset = 0;				// volatile ... some current inset
+		double			width = 0;				// volatile ... some current width
+		double			height = 0;				// volatile ... some current height
+		double			basewidth = 0;				// volatile ... some current width
+		double			baseheight = 0;				// volatile ... some current height
+		double			dutchwidth = 0;			// volatile ... overall width of dutch content
+		double			dutchheight = 0;		// volatile ... overall height of dutch content
+		int				dutch = 0, grain = 0;
+		double			xscale = 1.0;			// helper for determining scale
+		double			yscale = 1.0;			// helper for determining scale
+		double			scale = 1.0;			// base (i.e., r) to art scale
+		String			buf;					// volatile
+		double			gutterH = 0.0;			// scaled form of job-> gutter horizontal
+		double			gutterV = 0.0;			// scaled form of job-> gutter vertical
+		double			bleedL = 0.0;			// scaled form of job-> bleed left
+		double			bleedT = 0.0;			// scaled form of job-> bleed top
+		double			bleedR = 0.0;			// scaled form of job-> bleed right
+		double			bleedB = 0.0;			// scaled form of job-> bleed bottom
+		Rectangle		r1 = new Rectangle();
+		Rectangle		r2 = new Rectangle();					// temp buffers
+		Rectangle2D		intersectRect = new Rectangle();	// volatile ... grip to folio intersection(s)
+	//	Pattern			intersectPat;			// pattern for painting grip to folio intersection(s)
+		Rectangle2D.Double		labelRect = new Rectangle2D.Double();		// 
+		int				lineht;					// volatile ... current line height
+		int				numlines = 0;			// 
+		int				i;						// volatile ... loop control
+		int				row = 0;				// volatile ... current signature/dutch row
+		int				column = 0;				// volatile ... current signature/dutch column
+		int				dAcross;	
+		int				dDown;
+		Point2D.Double	sheetSize = new Point2D.Double();				// x/y of sheet (run or parent)
+		Point2D.Double	trimSize = new Point2D.Double();				// x/y of trimmed page (i.e., trim marks and things the utilize the same rect)
+		Point			xy = new Point();				// volatile ... for capturing text dimensions
+		double			colorBarWidth = 0.25;	// 1/4 inch
+		BasicStroke 	strokeTwoPixel = new BasicStroke(2.0f);
+
+		baseRect.setRect(imageArea.x, imageArea.y, imageArea.width, imageArea.height);
+		
+		if (baseRect.x > 0 || baseRect.y > 0)
+		{	// don't want to build margin into picture
+			baseRect.x = 0;
+			baseRect.y = 0;
+		}
+	
+		parentX = job.getParentSize().getWidth().doubleValue();
+		parentY = job.getParentSize().getHeight().doubleValue();
+		runX = job.getRunSize().getWidth().doubleValue();
+		runY = job.getRunSize().getHeight().doubleValue();
+		finishX = job.getFinishSize().getWidth().doubleValue();
+		finishY = job.getFinishSize().getHeight().doubleValue();
+		dAcross = papercal.getDAcross().intValue();
+		dDown = papercal.getDDown().intValue();
+			
+		// default image when the sizes are not within normal parameters
+		//
+		switch (whichToStart)
+		{	
+			case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
+				if (parentX <= 0 || parentY <= 0 || finishX <= 0 || finishY <= 0) {
+					DrawNoImageAvailable(g, imageArea);
+					return;
+				}
+				break;
+			case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
+				if ((parentX <= 0 || parentY <= 0 || runX <= 0 || runY <= 0)) {
+					DrawNoImageAvailable(g, imageArea);
+					return;
+				}
+				break;
+			case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
+				if ((runX <= 0 || runY <= 0 || finishX <= 0 || finishY <= 0)) {
+					DrawNoImageAvailable(g, imageArea);
+					return;
+				}
+				break;
+		}	
+		
+		/* Finish Grain Example */
+		if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER)) {
+			dutch = 0;
+			grain = 0;
+		} else if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN)) {
+			dutch = 0;
+			grain = 1;
+		} else if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION)) {
+			dutch = 1;
+			grain = 0;
+		}
+		
+		switch (whichToStart)
+		{	
+			case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
+				// parent to run sheet and sheet items (up to and including the form itself ... nothing within the form ... that comes later (after this switch block))
+				sheetSize.x = parentX;
+				sheetSize.y = parentY;
+				
+				if (papercal.getSwap().booleanValue() == true && grain == 0) {
+					trimSize.x = finishY;
+					trimSize.y = finishX;
+				} else {
+					trimSize.x = finishX;
+					trimSize.y = finishY;
+				}
+								
+				width = (sheetSize.x);
+				height = (sheetSize.y);
+				basewidth = width;
+				baseheight = height;
+				xscale = (baseRect.width - (marginL + marginR)) / (width);
+				yscale = (baseRect.height - (marginT + marginB)) / (height);
+				scale = (yscale < xscale) ? yscale : xscale;
+					
+				// calc and set sheet rect
+				width = ((sheetSize.x) * scale);
+				height = ((sheetSize.y) * scale);
+				sheetRect.setRect(baseRect.x + marginL, baseRect.y + marginT, width, height);
+				formRect.setRect(sheetRect);	// initial state
+
+				// draw the sheet
+				g.setColor(Color.gray);
+				r1.setRect(sheetRect);
+				g.drawRect(r1.x,r1.y,r1.width, r1.height);
+
+				PaintXDim(g,r1,basewidth, -4);
+				PaintYDim(g,r1,baseheight, 12);
+				break;
+				
+			case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
+				// parent to run sheet and sheet items (up to and including the form itself ... nothing within the form ... that comes later (after this switch block))
+				sheetSize.x = parentX;
+				sheetSize.y = parentY;
+				
+				if (papercal.getSwap().booleanValue() == true && grain == 0) {
+					trimSize.x = runY;
+					trimSize.y = runX;
+				} else {
+					trimSize.x = runX;
+					trimSize.y = runY;
+				}
+				// calc base (pixel) to art (abstract) scale
+				width = (sheetSize.x);
+				height = (sheetSize.y);
+				basewidth = width;
+				baseheight = height;
+				xscale = (baseRect.width - (marginL + marginR)) / (width);
+				yscale = (baseRect.height - (marginT + marginB)) / (height);
+				scale = (yscale < xscale) ? yscale : xscale;
+				
+				// calc and set sheet rect
+				width = ((sheetSize.x) * scale);
+				height = ((sheetSize.y) * scale);
+				sheetRect.setRect(baseRect.x + marginL, baseRect.y + marginT, width, height);
+				formRect.setRect(sheetRect);	// initial state
+				
+				// render...
+				// draw the sheet
+				g.setColor(Color.gray);
+				
+				r1.setRect(sheetRect);
+				g.drawRect(r1.x,r1.y,r1.width, r1.height);
+								
+				PaintXDim(g,r1,basewidth, -4);
+				PaintYDim(g,r1,baseheight, 12);
+				break;
+				
+			case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
+				// run to finish sheet and sheet items (up to and including the form itself ... nothing within the form ... that comes later (after this switch block))
+				sheetSize.x = runX;
+				sheetSize.y = runY;
+				if (papercal.getSwap().booleanValue() == true && grain == 0) {
+					trimSize.x = finishY;
+					trimSize.y = finishX;
+				} else {
+					trimSize.x = finishX;
+					trimSize.y = finishY;
+				}
+				
+				width = (sheetSize.x);
+				height = (sheetSize.y);
+				basewidth = width;
+				baseheight = height;
+				xscale = (baseRect.width - (marginL + marginR)) / (width);
+				yscale = (baseRect.height - (marginT + marginB)) / (height);
+				scale = (yscale < xscale) ? yscale : xscale;
+					
+				// calc and set sheet rect
+				width = ((sheetSize.x) * scale);
+				height = ((sheetSize.y) * scale);
+				sheetRect.setRect(baseRect.x + marginL, baseRect.y + marginT, width, height);
+				formRect.setRect(sheetRect);	// initial state
+				
+				// initialize folio rect ... top or left side of sheet
+				//
+				if (papercal.getUseFolioEdge().booleanValue() == true) {
+					width = ((papercal.getFolioEdge().doubleValue()) * scale);
+					folioRect.setRect(sheetRect);
+
+					if (papercal.getFolioLocation().equals(Constants.PAPER_CALCULATOR_FOLIO_TOP)) {
+						folioRect.height =  width;
+						
+						if (formRect.y < folioRect.height)
+						{	// update (i.e., inset) the form
+							formRect.y = folioRect.height;
+							formRect.height -= width;
+						}
+
+					} else if(papercal.getFolioLocation().equals( Constants.PAPER_CALCULATOR_FOLIO_LEFT)) {
+						folioRect.width = width;
+						
+						if (formRect.x < folioRect.width)
+						{	// update (i.e., inset) the form
+							formRect.x = folioRect.width;
+							formRect.width -= width;
+						}
+					}
+				}
+				
+				//
+				// initialize the Gripper edge
+				// top or left side of sheet ... work and tumble happens during paint operation 
+				if (papercal.getUseGripEdgeGap().booleanValue() == true)
+				{	
+					width = papercal.getGripEdgeGap().doubleValue()*scale;
+					headGripRect.setRect(sheetRect);
+					
+					if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)) {
+						headGripRect.height = width;
+						tailGripRect.setRect(headGripRect);
+						
+						if (papercal.getUseFolioEdge().booleanValue() == true && papercal.getFolioLocation().equals(Constants.PAPER_CALCULATOR_FOLIO_TOP))
+						{	// grip and folio share the same edge
+							headGripRect.width -= ((headGripRect.width) / 2.0);
+						}
+						
+						if (formRect.y < headGripRect.height)
+						{	// update (i.e., inset) the form
+							formRect.y = headGripRect.height;
+							
+							if (papercal.getUseFolioEdge().booleanValue() == true && papercal.getFolioLocation().equals(Constants.PAPER_CALCULATOR_FOLIO_TOP))
+							{	// grip and folio share the same edge
+								if (headGripRect.height > folioRect.height) {
+									formRect.height -= (headGripRect.height-folioRect.height);
+								}
+							} else {
+								formRect.height -= width;
+							}
+						}
+
+						if (job.getRunMethod().equals("WorkAndTumble"))
+						{	// finish work and tumble (tail) grip (and form inset)
+							// place the tail grip
+							tailGripRect.y = (sheetRect.y+sheetRect.height) - tailGripRect.height;
+							
+							if (formRect.y+formRect.height > sheetRect.height - width)
+							{	// update (i.e., inset) the form
+								formRect.height = (sheetRect.height - width) - formRect.y;
+							}
+						}
+					} else if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT)) {
+						headGripRect.width = width;
+						tailGripRect.setRect(headGripRect);
+						
+						if (papercal.getUseFolioEdge().booleanValue() == true && papercal.getFolioLocation().equals( Constants.PAPER_CALCULATOR_FOLIO_LEFT))
+						{	// grip and folio share the same edge
+							headGripRect.height -= ((headGripRect.height) / 2.0);
+						}
+						
+						if (formRect.x < headGripRect.width)
+						{	// update (i.e., inset) the form
+							formRect.x = headGripRect.width;
+							formRect.width -= width;
+						}
+
+						if (job.getRunMethod().equals("WorkAndTumble"))
+						{	// finish work and tumble (tail ... right side) grip (and form inset)
+							
+							// place the tail grip
+							tailGripRect.x = (sheetRect.x+sheetRect.width)-tailGripRect.width;
+							
+							if (formRect.x+formRect.width > sheetRect.width - width)
+							{	// update (i.e., inset) the form
+								formRect.width = (sheetRect.width - width) - formRect.x;
+							}
+
+						}
+					}
+				}
+				
+				//
+				// initilize the color bar area
+				//
+				if (papercal.getUseColorBar().booleanValue() == true)
+				{	// initialize color bar rect ... bottom or right side of sheet ... work and tumble happens during paint operation
+					colorBarWidth = papercal.getColorBar().doubleValue();
+					width = colorBarWidth * scale;
+					inset = 0;	// todo - expose inset value to user
+					colorbarRect.setRect(sheetRect);
+					
+					if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)) {
+						colorbarRect.height = width;
+						colorbarRect.y = (sheetRect.y + sheetRect.height) - width;
+						colorbarRect.x += inset;		// logic allows colorbars to be inset from sheet edge
+						colorbarRect.width -= inset;	// logic allows colorbars to be inset from sheet edge
+
+						if (formRect.y+formRect.height > colorbarRect.y)
+						{	// update (i.e., inset) the form
+							formRect.height = (colorbarRect.y);
+						}
+
+						if (job.getRunMethod().equals("WorkAndTumble"))
+						{	// work and tumble (head) color bar form inset
+							if (formRect.y < sheetRect.y + inset + width)
+							{	// update (i.e., inset) the form
+								formRect.y = sheetRect.y + inset + width;
+							}
+						}
+
+					} else if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT)) {
+						colorbarRect.width = width;
+						colorbarRect.x = (sheetRect.x + sheetRect.width) - width;
+						colorbarRect.x += inset;		// logic allows colorbars to be inset from sheet edge
+						colorbarRect.height -= inset;	// logic allows colorbars to be inset from sheet edge
+						colorbarRect.x -= inset;
+						
+						if (formRect.x+formRect.width > colorbarRect.x)
+						{	// update (i.e., inset) the form
+							formRect.width = colorbarRect.x;
+						}
+						if (job.getRunMethod().equals("WorkAndTumble"))
+						{	// work and tumble (left side) color bar form inset
+							if (formRect.x < sheetRect.x + inset + width)
+							{	// update (i.e., inset) the form
+								formRect.x = sheetRect.x + inset + width;
+							}
+						}
+					}
+				}
+					
+				if (papercal.getUseWhiteSpace().booleanValue() == true)
+				{	// reduce form (rect) by white space (white space rect becomes old form rect)
+					if (papercal.getWhiteSpaceLeft().doubleValue() > 0.0) {
+						whitespaceRectL.setRect(formRect);
+						whitespaceRectL.width = papercal.getWhiteSpaceLeft().doubleValue() * scale;
+						formRect.x += papercal.getWhiteSpaceLeft().doubleValue() * scale;
+						formRect.width -= papercal.getWhiteSpaceLeft().doubleValue() * scale;
+					}
+					if (papercal.getWhiteSpaceTop().doubleValue() > 0.0) {
+						whitespaceRectT.setRect(formRect);
+						whitespaceRectT.height = papercal.getWhiteSpaceTop().doubleValue() * scale;
+						formRect.y += papercal.getWhiteSpaceTop().doubleValue() * scale;
+						formRect.height -= papercal.getWhiteSpaceTop().doubleValue() * scale;
+					}
+					if (papercal.getWhiteSpaceRight().doubleValue() > 0.0) {
+						whitespaceRectR.setRect(formRect);
+						whitespaceRectR.x = (formRect.x + formRect.width) - papercal.getWhiteSpaceRight().doubleValue() * scale;
+						whitespaceRectR.width = papercal.getWhiteSpaceRight().doubleValue() * scale;
+						formRect.width -= papercal.getWhiteSpaceRight().doubleValue() * scale;		
+					}
+					if (papercal.getWhiteSpaceBottom().doubleValue() > 0.0) {
+						whitespaceRectB.setRect(formRect);
+						whitespaceRectB.y = (formRect.y + formRect.height) - papercal.getWhiteSpaceBottom().doubleValue() * scale;
+						whitespaceRectB.height = papercal.getWhiteSpaceBottom().doubleValue() * scale;
+						formRect.height -= papercal.getWhiteSpaceBottom().doubleValue() * scale;
+					}
+				}
+					
+				if (papercal.getUseGutter().booleanValue() == true) {
+					gutterH = papercal.getGutterHorizontal().doubleValue() * scale;
+					gutterV = papercal.getGutter().doubleValue() * scale;
+				}
+				
+				if (papercal.getUseBleed().booleanValue() == true) {			// bleeds will double the cuts in the effected sides
+					bleedL = papercal.getBleedLeft().doubleValue() * scale;
+					bleedT = papercal.getBleedTop().doubleValue() * scale;
+					bleedR = papercal.getBleedRight().doubleValue() * scale;
+					bleedB = papercal.getBleedBottom().doubleValue() * scale;
+				}
+				
+				// 
+				// Start of image render pages inside the parent sheet
+				//
+				g.setColor(Color.lightGray);
+				g.fill(formRect);
+				
+				r1.setRect(sheetRect);
+				g.drawRect(r1.x,r1.y,r1.width, r1.height);
+				
+				PaintXDim(g,r1,basewidth, -4);
+				PaintYDim(g,r1,baseheight, 12);
+					
+				if (papercal.getUseFolioEdge().booleanValue() == true)
+				{	// paint the folio
+					g.setColor(Color.green);	
+					g.fill(folioRect);
+				}
+					
+				if (papercal.getUseGripEdgeGap().booleanValue() == true)
+				{	// paint the grip(s)					
+					g.setColor(Color.red);	
+					g.fill(headGripRect);
+					
+					if (papercal.getUseFolioEdge().booleanValue() == true)
+					{	// paint area(s) where folio and grip intersect with a red/green hatch
+						r1.setRect(headGripRect);
+						r2.setRect(folioRect);
+						
+						if (r1.width > r2.width)
+							r1.width = r2.width;
+						if (r1.height > r2.height)
+							r1.height = r2.height;
+						intersectRect.setRect(r1);
+						
+					//	StuffHex(&intersectPat,"\p1122448811224488");				// slant line
+						g.setColor(Color.orange);	
+						g.fill(intersectRect);
+					}
+					
+					if (job.getRunMethod().equals("WorkAndTumble"))
+					{	// paint the tail grip
+						g.setColor(Color.red);	
+						g.fill(tailGripRect);
+						
+						if (papercal.getUseFolioEdge().booleanValue() == true && papercal.getUseGripEdgeGap().booleanValue() == true)
+						{	// paint area(s) where folio and grip intersect with a red/green hatch
+							
+							r1.setRect(tailGripRect);
+							r2.setRect(folioRect);
+							if (r1.width > r2.width)
+								r1.width = r2.width;
+							if (r1.height > r2.height)
+								r1.height = r2.height;
+							intersectRect.setRect(r1);
+							
+						//	StuffHex(&intersectPat,"\p1122448811224488");				// slant line
+							g.setColor(Color.orange);	
+							g.fill(intersectRect);
+						}
+					}
+				}
+					
+				if (papercal.getUseColorBar().booleanValue() == true && colorBarWidth > 0)
+				{	// paint the color bar(s)
+					PaintColorBar(g, colorbarRect);
+					
+					if (job.getRunMethod().equals("WorkAndTumble"))
+					{	// draw it again across the sheet (work and tumble) ... don't forget that we're staying within the sheet
+						width = colorBarWidth * scale;
+						inset = 0;	// todo - expose inset value to user
+						
+						if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)) {
+							colorbarRect.y -= (sheetRect.height - ((inset * 2) + width));
+						} else {
+							colorbarRect.x -= (sheetRect.width - ((inset * 2) + width));
+						}
+						PaintColorBar(g, colorbarRect);
+					}
+				}
+
+				if (papercal.getUseWhiteSpace().booleanValue() == true)
+				{	// paint the white space
+					g.setColor(Color.gray);	
+					g.fill(whitespaceRectT);
+					g.fill(whitespaceRectL);
+					g.fill(whitespaceRectB);
+					g.fill(whitespaceRectR);
+				}
+				break;
+				}
+		
+		// 
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		// Draw in page images inside the parent sheet, minus the grippers, folio, color bars
+		//
+		if (trimSize.x > 0.0 && trimSize.y > 0.0)
+		{	// compose and paint the form *content* (we already know the overall form size/orientation)
+			width = ((trimSize.x) * scale);
+			height = ((trimSize.y) * scale * aspect);	// todo - aspect is used to express match grain
+			
+			////////////////////////////////////////////////////////////////////////////
+				
+			trimRect.setRect(0, 0, width, height);
+			bleedRect.setRect(0, 0, width, height);
+			bleedRect.width += (bleedL + bleedR);
+			bleedRect.height += (bleedT + bleedB);
+			
+			if ((whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH && papercal.getBackTrimRun().booleanValue() == true) || 
+						((whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN || whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH) && 
+									papercal.getBackTrimRun().booleanValue() == true))
+			{	// set origin so that items are centered in the form
+				width = (papercal.getAcross().doubleValue() * (bleedRect.width + gutterH)) - gutterH;
+				height = (papercal.getDown().doubleValue() * (bleedRect.height + gutterV)) - gutterV;
+				if (dutch == 1)
+				{	// add dutch compensation
+					if (papercal.getDutchBottom().intValue() > 0)
+					{	// under main signature
+						if (dAcross > 0)
+						{	
+							dutchwidth = (dAcross * (bleedRect.height + gutterV)) - gutterV;
+							if (dutchwidth > width)
+							{	// use this signature height instead
+								width = dutchwidth;
+							}
+						}
+						if (dDown > 0)
+						{	
+							height += (dDown * (bleedRect.width + gutterH)) - gutterH;
+						}
+					}
+					else
+					{	// right of main signature
+						if (dAcross > 0)
+						{	// compensate for dutch section too
+							width += (dAcross * (bleedRect.height + gutterV)) - gutterV;
+						}
+						if (dDown > 0)
+						{	
+							dutchheight = (dDown * (bleedRect.width + gutterH)) - gutterH;
+							if (dutchheight > height)
+							{	// use this signature height instead
+								height = dutchheight;
+							}
+						}
+					}
+				}
+				
+				
+				origin.x = (int)(formRect.x + (((formRect.width) - width) / 2.0));
+				origin.y = (int)(formRect.y + (((formRect.height) - height) / 2.0));
+			}
+			else
+			{	// set origin to upper left (of form)
+				origin.x = (int)formRect.x;
+				origin.y = (int)formRect.y;
+			}
+			
+			row = 0;
+			while (row < papercal.getDown().intValue())
+			{	// draw L->R :: 0 - N-1, T->B :: 0 - N-1 (start each iteration from origin)
+				bleedRect.x = origin.x;
+				bleedRect.y = origin.y;
+				for (i = 0; i < row; i++)
+				{	// move to row
+					bleedRect.y += bleedRect.height + gutterV;
+				}
+				
+				column = 0;	// left-most column
+				while (column < papercal.getAcross().intValue())
+				{	
+					if (column > 0)
+					{	// select next column (1-N)
+						bleedRect.x += bleedRect.width + gutterH;
+					}
+					trimRect.x = bleedRect.x;
+					trimRect.y = bleedRect.y;
+					trimRect.x += bleedL;
+					trimRect.y += bleedT;
+					
+					if (column == 0 && row == 0)
+					{	// cache this rect ... we use it later to rendering a trim dimensions tag
+						labelRect.setRect(trimRect);
+					}
+					
+					if (bleedRect.equals(trimRect) == false)
+					{	// flood fill the bleed
+						g.setColor(Color.blue);	
+						g.fill(bleedRect);
+					}
+					
+					// fill trim (we're relying on an opaque drawing environment)
+					g.setColor(Color.white);
+					g.fill(trimRect);
+										
+					// stroke trim (for visual clarity)
+					g.setColor(Color.lightGray);
+					g.draw(trimRect);
+					g.setColor(Color.black);
+					
+					++column;
+				}
+				++row;
+			}
+			
+			if (sheetRect.equals(labelRect) == false)
+			{	// paint the trim dimensions tag
+				r1.setRect(labelRect);
+				PaintXDim(g,r1,trimSize.x, 11);
+				PaintYDim(g,r1,trimSize.y, 6);
+			}
+
+			// DUTCH CUT //
+			if (dutch > 0 && dDown > 0 && dAcross > 0)
+			{	// there are dutch cut items to render
+				dutchRect.setRect(formRect);
+				if (papercal.getDutchBottom().intValue() > 0)
+				{	// calculate space remaining below (standard set)
+					dutchRect.x = origin.x;
+					dutchRect.y = origin.y + (row * (bleedRect.height + gutterV));
+				}
+				else
+				{	// calculate space remaining right (of standard set)
+					dutchRect.x = origin.y + (column * (bleedRect.width + gutterH));
+					dutchRect.y = origin.x;
+				}
+				
+				// rotate the trim
+				width = ((trimSize.x) * scale);
+				height = ((trimSize.y) * scale * aspect);	// todo - aspect is used to express match grain
+				
+				////////////////////////////////////////////////////////////////////////////
+				
+				// remember ... we're rotated!
+				trimRect.setRect(0, 0, height, width);
+				bleedRect.setRect(0, 0, height, width);
+				bleedRect.width += (bleedT + bleedB);
+				bleedRect.height += (bleedL + bleedR);
+				
+				////////////////////////////////////////////////////////////////////////////
+				
+				row = 0;
+				while (row < dDown)
+				{	// from a UL basis ... draw L->R,T->B
+					bleedRect.x = dutchRect.x;
+					bleedRect.y = dutchRect.y;
+					
+					for (i = 0; i < row; i++)
+					{	// move to row
+						bleedRect.y += bleedRect.height + gutterV;
+					}
+					
+					column = 0;	// left-most column
+					while (column < dAcross)
+					{	
+						if (column > 0)
+						{	// select next column (1-N)
+							bleedRect.x += bleedRect.width + gutterH;
+						}						
+						// remember ... we're rotated!
+						trimRect.x = bleedRect.x;
+						trimRect.y = bleedRect.y;
+						trimRect.x += bleedT;
+						trimRect.y += bleedR;
+						
+						if (column == 0 && row == 0)
+						{	// cache this rect ... we use it later to rendering a trim dimensions tag
+							labelRect.setRect(trimRect);
+						}
+						
+						if (bleedRect.equals(trimRect) == false)
+						{	// flood fill the bleed
+							g.setColor(Color.blue);
+							g.fill(bleedRect);
+						}
+						
+						// fill trim (we're relying on an opaque drawing environment)
+						g.setColor(Color.white);
+						g.fill(trimRect);
+
+						// stroke trim (for visual clarity)
+						g.setColor(Color.lightGray);
+						g.draw(trimRect);
+						g.setColor(Color.black);
+
+						++column;
+					}
+					++row;
+				}
+				
+				if (sheetRect.equals(labelRect) == false)
+				{	// paint a trim dimensions tag
+					r1.setRect(labelRect);
+					PaintXDim(g,r1,trimSize.y, 11);
+					PaintYDim(g,r1,trimSize.x, 6);
+				}				
+			}
+			
+			////////////////////////////////////////////////////////////////////////////
+			
+			switch (whichToStart)
+			{	
+				case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
+					break;
+				case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
+					if (job.getOrRunOut().booleanValue() == true)
+					{	// If the "Run Out" is overridden show an "X" across the diagram and the word "Overridden"
+						
+					    g.setStroke(strokeTwoPixel);
+					    g.setColor(Color.red);
+					    
+						// build a square rect that is the same as the short edge of the sheet
+						if (sheetRect.width > sheetRect.height)
+						{
+							tmpRect.setRect(0, 0, sheetRect.height, sheetRect.height);
+						}
+						else
+						{
+							tmpRect.setRect(0, 0, sheetRect.width, sheetRect.width);
+						}
+						tmpRect.x = sheetRect.x;
+						tmpRect.y = sheetRect.y;
+											
+						g.drawLine((int)tmpRect.x,(int) tmpRect.y,(int) (tmpRect.x+tmpRect.width-2), (int)(tmpRect.y+tmpRect.height-2));
+						g.drawLine((int)(tmpRect.x+tmpRect.width), (int)tmpRect.y, (int)(tmpRect.x-2), (int)(tmpRect.y+tmpRect.height-2));
+					}
+					break;
+				case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
+					//job->usePaperCalcUp == 0 && 
+					if (job.getNumUp() != papercal.getRunout().intValue())		// job->finishOut
+					{
+					    g.setStroke(strokeTwoPixel);
+					    g.setColor(Color.red);
+						
+						// build a square rect that is the same as the short edge of the sheet
+						if (sheetRect.width > sheetRect.height)
+						{
+							tmpRect.setRect(0, 0, sheetRect.height, sheetRect.height);
+						}
+						else
+						{
+							tmpRect.setRect(0, 0, sheetRect.width, sheetRect.width);
+						}
+						
+						tmpRect.x = sheetRect.x;
+						tmpRect.y = sheetRect.y;
+						
+						g.drawOval((int)tmpRect.x, (int)tmpRect.y, (int)tmpRect.width, (int)tmpRect.height);
+						g.drawLine((int)tmpRect.x,(int) tmpRect.y,(int) (tmpRect.x+tmpRect.width-2), (int)(tmpRect.y+tmpRect.height-2));
+					}
+					break;
+			}	
+			
+			// if the ledger is active, print the text to the right of the image
+			//
+		}
+	}
+	
+	public byte[] GeneratePaperCalculatorImage(JobBase job, int whichToStart, int width, int height) {
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2d = image.createGraphics();
-		g2d.drawRect(20, 20, 30, 50);
-		g2d.dispose();
+		Graphics2D g = image.createGraphics();
+		Rectangle	r = new Rectangle();
+		
+		g.setColor(Color.white);
+		g.fillRect(0, 0, width, height);		// erase to a white background
+		g.setColor(Color.black);
+		r.setRect(0, 0, width, height);
+		g.translate(5,10);			// leave space on the left and top
+				
+		CreateCutDiagram(job, whichToStart, g, r);
+		
+		g.dispose();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
 		//	ImageIO.write(image, "PNG", new File("/Users/bknabel/BRADSEXCELLENTPNG.png"));

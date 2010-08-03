@@ -475,7 +475,20 @@
 		<mx:method name="sendJobToFiery"
 				fault="handleFault(event)"
 				result="sendJobToFieryResult(event)"/>
-	</mx:RemoteObject>			
+	</mx:RemoteObject>		
+	<mx:RemoteObject id="paperCalculatorService"
+					 destination="paperCalculatorService">
+		<mx:method name="CalcOut"
+				   fault="handleFault(event)"
+				   result="handleCalcOutResult(event)"/>
+		<mx:method name="GeneratePaperCalculatorImage"
+					fault="handleFault(event)"
+					result="handleGenerateImage(event)"/>
+		<mx:method name="CalculateCutCounts"
+					fault="handleFault(event)"
+					result="handleCalculateCuts(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.data.Users;
@@ -520,6 +533,7 @@
 
 			import com.efi.printsmith.Constants;
 			
+			import mx.controls.Image;
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			import mx.containers.TitleWindow;
@@ -681,6 +695,14 @@
 					job.parentInvoice = this.invoice as InvoiceBase;
 					job.paperCal = new com.efi.printsmith.data.PaperCalculator();
 					setPaperCalculatorData = true;
+					
+					job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH;
+					job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER;
+					job.paperCal.gripLocation = Constants.PAPER_CALCULATOR_GRIPPER_TOP;
+					job.paperCal.folioLocation = Constants.PAPER_CALCULATOR_FOLIO_TOP;
+					
+					job.paperCal.dAcross = 0;
+					job.paperCal.dDown = 0;
 				}
 				
 				this.copy_single_radio.selected = this.job.singleSided;
@@ -904,6 +926,8 @@
 					job.foldedSize = job_fold_size.selectedItem as Dimension;
 				if ( job.finishSize != null)
 					job.finishSize = job_finish_size.selectedItem as Dimension;
+		
+
 				if (cutOff_edit != null)
 					job.cutOff= parseInt(cutOff_edit.text);
 				if (job_imp != null)
@@ -1043,6 +1067,8 @@
 			{
 				this.job = ev.result as Job;
 				updatePrice();
+				
+				refreshCalcAndImage();		// new cut diagram to match existing values
 			}
 			
 			private function handleLoadResult(ev:ResultEvent):void
@@ -1408,6 +1434,127 @@
 				}
 			}
 			
+			
+			private function handleCalculateCuts(ev:ResultEvent):void
+			{
+				if (ev.result != null) {
+					var results:ArrayCollection = ev.result as ArrayCollection;
+					var intValue:Number;
+
+					intValue = results.getItemAt(0) as Number;
+					this.job.paperCal.cutstoRun = intValue;
+					intValue = results.getItemAt(1) as Number;
+					this.job.paperCal.cutstoFinish = intValue;
+				}
+			}
+			
+			private function handleCalcOutResult(ev:ResultEvent):void
+			{
+				if (ev.result != null) {
+					var results:ArrayCollection = ev.result as ArrayCollection;
+					var intValue:Number;
+					
+	// maintain same order in PaperCalcualtorService.java
+	/*
+		results.add(out);
+		results.add(runCuts);
+		results.add(finishCuts);
+		
+		results.add(job.getPaperCal().getDAcross());
+		results.add(job.getPaperCal().getDDown());
+		results.add(job.getPaperCal().getAcross());
+		results.add(job.getPaperCal().getDown());
+		results.add(job.getPaperCal().getDutchBottom());
+		results.add(job.getPaperCal().getUsedSqrArea());
+		results.add(job.getPaperCal().getParentSqrArea());
+		results.add(job.getPaperCal().getRMargin());
+		results.add(job.getPaperCal().getBMargin());
+		results.add(job.getPaperCal().getSwap());
+		results.add(runOut);
+		results.add(finishOut);
+	*/
+					
+					// paper image numbers
+					
+			//		this.job.paperCal.sheetsOut = intValue;
+			//		this.job.paperCal.runout = intValue;
+	
+					if (job.orRunOut == 0)						// run out was not over-ridden in job production window
+					{
+						intValue = results.getItemAt(13) as Number;		// runOut
+						job.paperCal.runout = intValue;
+					}
+					
+					intValue = results.getItemAt(14) as Number;		// finishOut
+			//		job.pa finishOut = intValue;
+					if (job.orUp == 0)
+						job.numUp = intValue;
+					
+					// cut counts, the override logic is handled in JAVA
+					intValue = results.getItemAt(1) as Number;
+					job.paperCal.cutstoRun = intValue;
+					intValue = results.getItemAt(2) as Number;
+					job.paperCal.cutstoFinish = intValue;
+					
+					intValue = results.getItemAt(3) as Number;
+					job.paperCal.dAcross = intValue;
+					intValue = results.getItemAt(4) as Number;
+					job.paperCal.dDown = intValue;
+					intValue = results.getItemAt(5) as Number;
+					job.paperCal.across = intValue;
+					intValue = results.getItemAt(6) as Number;
+					job.paperCal.down = intValue;
+					intValue = results.getItemAt(7) as Number;
+					job.paperCal.dutchBottom = intValue;
+					
+					// floating point numbers
+					job.paperCal.usedSqrArea = results.getItemAt(8) as Number;
+					job.paperCal.parentSqrArea = results.getItemAt(9) as Number;
+					job.paperCal.rMargin = results.getItemAt(10) as Number;
+					job.paperCal.bMargin = results.getItemAt(11) as Number;
+					
+					// does the image render with swapped sheet values
+					job.paperCal.swap = results.getItemAt(12) as Boolean;
+										
+					// the values are back, now request the image to be generated
+					//
+			// TEMP - should be called in real application
+			//		paperCalculatorService.GeneratePaperCalculatorImage(job, job.paperCal.whichStartSize, cutDiagram.width, cutDiagram.height);
+				}
+			}
+
+			private function handleGenerateImage(evt:ResultEvent):void {
+				var imageByteArray:ByteArray = evt.result as ByteArray;
+				
+				var loader:Loader = new Loader();
+				loader.loadBytes(imageByteArray);				 
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loaderCompleteHandler);
+			}
+			
+			private function loaderCompleteHandler(evt:Event):void {
+				var loader:LoaderInfo = evt.target as LoaderInfo;
+				var bmp:Bitmap = Bitmap(loader.content);
+				
+				var myImage:Image = new Image();
+				myImage.source = bmp;
+				this.cutDiagram.removeAllChildren();
+				this.cutDiagram.addChild(myImage);
+			}			
+						
+			private function refreshCalcAndImage():void
+			{				
+				mapToJobData();
+
+				paperCalculatorService.CalcOut(job, job.paperCal.whichStartSize);
+			}
+
+			private function refreshImageAndWeight():void
+			{
+				refreshCalcAndImage();
+				updateWeight();
+			}
+
+
 			private function fieldChanged(evt:FocusEvent):void
 			{	
 				var doUpdatePrice:Boolean = false;
@@ -1468,6 +1615,8 @@
 					break;
 				}
 				if (doUpdatePrice) updatePrice();
+				
+				paperCalculatorService.CalcOut(job, job.paperCal.whichStartSize);
 			}
 			
 			public function changeJobSides(evt:Event):void {
@@ -1590,6 +1739,8 @@
 	    		}
 	    	}
 	    	private function doPaperCal():void{
+	    		mapToJobData();
+	    		
 	    		var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
 				paperCalWindow.setStyle("borderAlpha", 0.9);
 				if (job.paperCal.colorBar == 0 && estimatingPreferences != null)
@@ -1599,7 +1750,7 @@
 			 	
 			   
 			//    paperCalWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
-			//    paperCalWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+			    paperCalWindow.addEventListener(JobEditCompleteEvent.SAVE, handleJobEditSave);
 			 }
 	    	private function doDigitalAssets():void {
 	    		var digitalAssetsWindow:JobDigitalAssets = JobDigitalAssets(PopUpManager.createPopUp(this, JobDigitalAssets, true));
@@ -1613,6 +1764,26 @@
 	    			this.job.digitalAssets = event.assetArray;
 	    		}
 	    	}
+	    	
+	    	private function handleJobEditSave(event:JobEditCompleteEvent):void {
+	    		var localJob:Job = event.job as Job;
+	    		
+				job.parentSize = localJob.parentSize;
+				job.runSize = localJob.runSize;
+				job.finishSize = localJob.finishSize;
+				
+				if (job.parentSize != null)
+					this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
+				if (job.runSize != null)
+					this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
+				if (job.foldedSize != null)
+					this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
+				if ( job.finishSize != null)
+					this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
+	    		
+	    		refreshCalcAndImage();
+	    	}
+	    	
 	    	
 	    	private function doXpedxStockStatus():void{
 				var statusWindow:XpdexStockAvailability = XpdexStockAvailability(PopUpManager.createPopUp(this,XpdexStockAvailability,true));
@@ -2185,10 +2356,20 @@
 											   fontSize="9"
 											   height="18"
 											   id="special_order_button" width="108"/>
-									<mx:Image x="215"
+							<!--		<mx:Image x="215"
 											  y="81"
 											  width="139"
+											  id="cutDiagram"
 											  height="124" click="doPaperCal();" source="assets/Original PS Icons/380.png"/>
+								-->	
+									<mx:Canvas x="215"
+											   y="81"
+											   width="140"
+											   height="127"
+											   borderStyle="inset"
+											   click="doPaperCal();"
+											   id="cutDiagram">
+									</mx:Canvas>
 									<mx:HRule x="2"
 											  y="215"
 											  width="356"
@@ -2200,9 +2381,9 @@
 											   height="18"
 											   id="chage_stock_button"
 											   click="changeStockDefinition()" width="62"/>
-									<mx:ComboBox x="108" y="79" width="99" id="job_parent" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="updateWeight()"></mx:ComboBox>
-									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
-									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" dataProvider="{dimensionsArray}"  focusOut="updateWeight()" editable="true"></mx:ComboBox>
+									<mx:ComboBox x="108" y="79" width="99" id="job_parent" labelField = "name" dataProvider="{dimensionsArray}" editable="true" change="refreshImageAndWeight()"></mx:ComboBox>
+									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" dataProvider="{dimensionsArray}" editable="true" change="refreshCalcAndImage()"></mx:ComboBox>
+									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" dataProvider="{dimensionsArray}"  change="refreshImageAndWeight()" editable="true"></mx:ComboBox>
 									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
 								</mx:Canvas>
 								<mx:Canvas label="merchandise_canvas"
