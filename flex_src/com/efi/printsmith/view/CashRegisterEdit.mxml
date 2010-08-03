@@ -103,11 +103,11 @@
  	 	 	</mx:AddChild>
  	 	</mx:State>
  	 	<mx:State name="paymentCash" basedOn="paymentPaymentMethod">
- 	 	 	<mx:SetProperty target="{button1}" name="y" value="585"/>
- 	 	 	<mx:SetProperty target="{cashReg_grid}" name="x" value="0"/>
+ 	 	 	<mx:SetProperty target="{button1}" name="y" value="608"/>
  	 	 	<mx:SetProperty target="{cashReg_grid}" name="y" value="420"/>
- 	 	 	<mx:SetProperty name="height" value="746"/>
+ 	 	 	<mx:SetProperty name="height" value="760"/>
  	 	 	<mx:SetProperty target="{cashReg_grid}" name="width" value="668"/>
+ 	 	 	<mx:SetProperty target="{cashReg_grid}" name="x" value="0"/>
  	 	</mx:State>
  	 	<mx:State name="paymentCreditCard" basedOn="paymentPaymentMethod">
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
@@ -606,12 +606,14 @@
 		var index:int;
 		temp = new CashRegister();
 		temp  = cashReg_grid.selectedItem as CashRegister;
-		index= batch.transactions.getItemIndex(temp)
-		batch.subTotal = batch.subTotal - temp.subtotal;
-		batch.totalPrice= batch.totalPrice- temp.totalprice;
-		batch.taxAmount = batch.taxAmount -temp.taxamount;
-		batch.change = batch.tendered - batch.totalPrice;
-		batch.transactions.removeItemAt(index);
+		if ( temp != null){
+			index= batch.transactions.getItemIndex(temp)
+			batch.subTotal = batch.subTotal - temp.subtotal;
+			batch.totalPrice= batch.totalPrice- temp.totalprice;
+			batch.taxAmount = batch.taxAmount -temp.taxamount;
+			batch.change = batch.tendered - batch.totalPrice;
+			batch.transactions.removeItemAt(index);
+		}
 	}
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 		
