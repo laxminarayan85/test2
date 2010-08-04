@@ -206,7 +206,7 @@
 	</mx:HBox>
 	
 	<mx:HBox width="100%">
-		<mx:Label text="Period:"/>
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Period')}:"/>
 		<components:CustomStringTextInputComponent enabled="false"
 			dataHolder="{_timeCard}" variableName="" customText="{_timeCard.period}"
 			visible="{editData}" includeInLayout="{editData}"/>	
@@ -219,14 +219,14 @@
 	
 	<mx:HBox width="100%" height="100%">
 		
-		<mx:Panel title="Clock" layout="vertical" width="68%" height="100%">
+		<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Clock')}" layout="vertical" width="68%" height="100%">
 			
 			<mx:HBox width="100%">
 
-				<mx:Label text="In:" width="20%" textAlign="right"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.In')}:" width="20%" textAlign="right"/>
 				<mx:DateField id="startDate" selectedDate="{_timeCard.startDateTime}" 
 					change="{setStartDate(event)}" formatString="MM/DD/YYYY" width="30%"/>
-				<mx:Label text="Time:" width="20%" textAlign="right"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Time')}:" width="20%" textAlign="right"/>
 				<components:CustomTimeEntryDateComponent
 					dataHolder="{_timeCard}" variableName="startDateTime" customText="{_timeCard.startDateTime}" 
 					functionName="setTimeDiffString" showSeconds="true" is24Hour="false" />
@@ -235,10 +235,10 @@
 			
 			<mx:HBox width="100%">
 
-				<mx:Label text="Out:" width="20%" textAlign="right"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Out')}:" width="20%" textAlign="right"/>
 				<mx:DateField id="endDate" selectedDate="{_timeCard.endDateTime}" 
 					change="{setEndDate(event)}" formatString="MM/DD/YYYY" width="30%"/>
-				<mx:Label text="Time:" width="20%" textAlign="right"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Time')}:" width="20%" textAlign="right"/>
 				<components:CustomTimeEntryDateComponent
 					dataHolder="{_timeCard}" variableName="endDateTime" customText="{_timeCard.endDateTime}" 
 					functionName="setTimeDiffString" showSeconds="true" is24Hour="false" />
@@ -246,11 +246,11 @@
 			</mx:HBox>
 			
 			<mx:HBox width="100%" horizontalAlign="right">
-				<mx:Label text="Total:"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Total')}:"/>
 				<mx:TextInput enabled="false" text="{timeDifference}"/>
 			</mx:HBox>
 			
-			<components:CustomCheckBoxComponent label="Paid Time Off"
+			<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Paidtimeoff')}"
 				dataHolder="{_timeCard}" variableName="paidTimeOff" customText="{_timeCard.paidTimeOff}"
 				selectedValue="true" deSelectedValue="false" defaultValue="false" click="{resetBillableHrs()}"/>
 				
@@ -258,11 +258,11 @@
 		
 		<mx:VBox width="32%" height="100%">
 			
-			<mx:Panel title="Billable Time" layout="vertical" width="100%" height="50%">
+			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.BillableTime')}" layout="vertical" width="100%" height="50%">
 			
 				<mx:HBox width="100%" horizontalAlign="right">
 				
-					<mx:Label text="Total:"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Total')}:"/>
 					<components:CustomTimeEntryStringComponent
 						dataHolder="{_timeCard}" variableName="billable" customText="{_timeCard.billable}" 
 						showSeconds="false" is24Hour="true" enabled="{!_timeCard.paidTimeOff}"/>
@@ -271,11 +271,11 @@
 			
 			</mx:Panel>
 			
-			<mx:Panel title="Break Time" layout="vertical" width="100%" height="50%">
+			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.BreakTime')}" layout="vertical" width="100%" height="50%">
 			
 				<mx:HBox width="100%" horizontalAlign="right">
 				
-					<mx:Label text="Total:"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Total')}:"/>
 					<components:CustomTimeEntryStringComponent
 						dataHolder="{_timeCard}" variableName="breakHour" customText="{_timeCard.breakHour}" 
 						functionName="setTimeDiffString" showSeconds="false" is24Hour="true" />
