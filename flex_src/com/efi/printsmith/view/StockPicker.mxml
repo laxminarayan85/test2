@@ -20,6 +20,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.data.StockType;
 
 	import mx.collections.SortField;
 	import mx.collections.Sort;
@@ -171,10 +172,24 @@
 		}
 	}
 	private function doLargeFormatChange():void{
+		
+		if (chkShowLargeFormatStock.selected)	{
+			chkShowRollStock.enabled = false;
+		}
+		else	{
+			chkShowRollStock.enabled = true;
+		}
 		UpdateSize();
 	}
 	private function doRollStockChanged():void{
-		
+		if (chkShowRollStock.selected)	{
+			chkShowLargeFormatStock.enabled = false;
+			chkShowShells.enabled = false;
+		}
+		else	{
+			chkShowLargeFormatStock.enabled = true;
+			chkShowShells.enabled = true;
+		}
 		UpdateSize();
 			
 	}
@@ -314,7 +329,187 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 			return "None";
 		}
 	}   
-
+	
+	private function search():void	{
+		var ac:ArrayCollection = stockDefinitions;
+		var acFiltered:ArrayCollection = new ArrayCollection();
+		
+		for (var i:int=0; i<ac.length; i++)	{
+			var stock:StockDefinition = ac.getItemAt(i) as StockDefinition;
+			if (txtGroup.text != "")	{
+				if ((stock.stkgroup != null) 
+						&& ((stock.stkgroup as StockGroup).name != null)
+						&& (match((stock.stkgroup as StockGroup).name, txtGroup.text) == false)	)
+						continue;		
+			}
+			if (txtName.text != "")	{
+				if ((stock.name != null) 
+						&& (match(stock.name, txtName.text) == false)	)
+						continue;	
+			}
+			if (txtFinish.text != "")	{
+				if ((stock.finish != null) 
+						&& ((stock.finish as StockFinish).name != null)
+						&& (match((stock.finish as StockFinish).name, txtFinish.text) == false)	)
+						continue;	
+			}
+			if (txtColor.text != "")	{
+				if ((stock.color != null) 
+						&& ((stock.color as StockColors).name != null)
+						&& (match((stock.color as StockColors).name, txtColor.text) == false)	)
+						continue;	
+			}
+			if (txtGrade.text != "")	{
+				if ((stock.grade != null) 
+						&& ((stock.grade as StockGrade).name != null)
+						&& (match((stock.grade as StockGrade).name, txtGrade.text) == false)	)
+						continue;	
+			}
+			if (txtMinOrder.text != "")	{
+				if (match(stock.minorder, txtMinOrder.text) == false)	
+						continue;	
+			}
+			if (txtVendor.text != "")	{
+				if ((stock.vendor != null) 
+						&& ((stock.vendor as Vendor).name != null)
+						&& (match((stock.vendor as Vendor).name, txtVendor.text) == false)	)
+						continue;	
+			}
+			if (txtStockType.text != "")	{
+				if ((stock.stktype != null) 
+						&& ((stock.stktype as StockType).name != null)
+						&& (match((stock.stktype as StockType).name, txtStockType.text) == false)	)
+						continue;	
+			}
+			if (txtProductId.text != "")	{
+				if (match(stock.id as String , txtProductId.text) == false)	
+						continue;	
+			}
+			if (txtCoatedSides.text != "")	{
+				if ((stock.coated != null) 
+						&& (match(stock.coated , txtCoatedSides.text) == false)	)
+						continue;	
+			}
+			if (txtGenericColors.text != "")	{
+				if ((stock.genericColor != null) 
+						&& ((stock.genericColor as GenericColors).name != null)
+						&& (match((stock.genericColor as GenericColors).name, txtGenericColors.text) == false)	)
+						continue;	
+			}
+			if (txtThickness.text != "")	{
+				if (match(stock.thickness, txtThickness.text) == false)	
+						continue;	
+			}
+			if (txtSheetsPerSet.text != "")	{
+				if (match(stock.sheetsPerSet, txtSheetsPerSet.text) == false)	
+						continue;
+			}
+			if (txtStockNumber.text != "")	{
+				if ((stock.stocknumber != null) 
+						&& (match(stock.stocknumber, txtStockNumber.text) == false)	)
+						continue;
+			}
+			if (!chkShowRollStock.selected && !chkShowLargeFormatStock.selected 
+				&& (txtSizeMin.text != ""))	{
+					if (stock.parentsize != null)	{
+						if (matchMin(stock.parentsize.width, txtSizeMin.text) == false)		
+							continue;
+						
+					}	
+			}
+			if (!chkShowRollStock.selected && !chkShowLargeFormatStock.selected 
+				&& (txtSizeMax.text != ""))	{
+					if (stock.parentsize != null)	{
+						if (matchMax(stock.parentsize.width, txtSizeMax.text) == false)		
+							continue;						
+					}	
+			}
+			if ((chkShowRollStock.selected || chkShowLargeFormatStock.selected) 
+				&& (txtRollWidthMin.text != ""))	{
+					if (stock.parentsize != null)	{
+						if (matchMin(stock.parentsize.width, txtRollWidthMin.text) == false)		
+							continue;						
+					}	
+			}
+			if ((chkShowRollStock.selected || chkShowLargeFormatStock.selected) 
+				&& (txtRollWidthMax.text != ""))	{
+					if (stock.parentsize != null)	{
+						if (matchMax(stock.parentsize.width, txtRollWidthMax.text) == false)		
+							continue;						
+					}	
+			}
+			if (txtWeightMax.text != "")	{
+				if (matchMax(stock.weight, txtWeightMax.text) == false)	
+						continue;
+			}
+			if (txtWeightMin.text != "")	{
+				if (matchMin(stock.weight, txtWeightMin.text) == false)	
+						continue;
+			}
+			if (txtQtyOnHandMax.text != "")	{
+				if (matchMax(stock.onHand, txtQtyOnHandMax.text) == false)	
+						continue;
+			}
+			if (txtQtyOnHandMin.text != "")	{
+				if (matchMin(stock.onHand, txtQtyOnHandMin.text) == false)	
+						continue;
+			}
+			if (txtCwtMax.text != "")	{
+				if (matchMax(stock.cwt1, txtCwtMax.text) == false)	
+						continue;
+			}
+			if (txtCwtMin.text != "")	{
+				if (matchMin(stock.cwt1, txtCwtMin.text) == false)	
+						continue;
+			}
+			if (chkShowShells.selected)	{
+				if (stock.shellItem != null)	{
+					var strShellItem:String = "t";
+					if (stock.shellItem == false)	
+						strShellItem = "f";
+					if (match(strShellItem, "t") == false) 	
+						continue;
+				}
+			}	
+			if (chkShowInventoriedStock.selected)	{
+				if (stock.standardItem != null)	{
+					var strStdItem:String = "t";
+					if (stock.standardItem == false)	
+						strStdItem = "f";
+					if (match(strStdItem, "t") == false) 	
+						continue;
+				}
+			}			
+			acFiltered.addItem(stock);
+		}
+		dataGrid.dataProvider = acFiltered;
+		
+	}
+	
+	private function match(data:Object, searchString:String):Boolean	{
+		if (data is String)	{
+			if ((data as String).toLowerCase().indexOf(StringUtil.trim(searchString).toLowerCase()) == -1)
+				return false;
+		}
+		if ((data is int) || (data is Number))	{
+			if (Number(txtMinOrder.text) != data)
+				return false;
+		}
+		
+		return true;
+	}
+	
+	private function matchMax(data:Object, searchString:String):Boolean	{
+		if (Number(searchString) < Number(data))
+			return false;
+		return true;		
+	}
+	
+	private function matchMin(data:Object, searchString:String):Boolean	{
+		if (Number(searchString) > Number(data))
+			return false;
+		return true;		
+	}
 ]]>        
 </mx:Script>
                              
@@ -382,33 +577,33 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		<mx:CheckBox x="418" y="192" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRollStock')}" id="chkShowRollStock" change="doRollStockChanged();"/>
 		<mx:CheckBox x="418" y="207" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock" change="doLargeFormatChange();"/>
 		<mx:CheckBox x="418" y="222" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate"/>
-		<mx:CheckBox x="418" y="237" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock"/>
-		<mx:CheckBox x="418" y="252" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells"/>
+		<mx:CheckBox x="418" y="237" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock" change="search();"/>
+		<mx:CheckBox x="418" y="252" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="search();"/>
 
-		<mx:TextInput x="99" y="62" width="98" id="txtGroup"/>
-		<mx:TextInput x="99" y="114" width="98" id="txtName"/>
-		<mx:TextInput x="99" y="140" width="98" id="txtFinish"/>
-		<mx:TextInput x="99" y="166" width="98" id="txtColor"/>
-		<mx:TextInput x="99" y="192" width="98" id="txtGrade"/>
-		<mx:TextInput x="99" y="218" width="98" id="txtMinOrder"/>
-		<mx:TextInput x="99" y="244" width="98" id="txtVendor"/>
-		<mx:TextInput x="295" y="62" width="98" id="txtStockType"/>
-		<mx:TextInput x="478" y="62" width="48" id="txtSizeMin"/>
-		<mx:TextInput x="478" y="88" width="48" id="txtWeightMin"/>
-		<mx:TextInput x="534" y="88" width="48" id="txtWeightMax"/>
-		<mx:TextInput x="478" y="114" width="48" id="txtCwtMin"/>
-		<mx:TextInput x="534" y="114" width="48" id="txtCwtMax"/>
-		<mx:TextInput x="478" y="140" width="48" id="txtQtyOnHandMin"/>
-		<mx:TextInput x="534" y="140" width="48" id="txtQtyOnHandMax"/>
-		<mx:TextInput x="478" y="166" width="48" enabled="false" id="txtRollWidthMin"/>
-		<mx:TextInput x="534" y="166" width="48" enabled="false" id="txtRollWidthMax"/>
-		<mx:TextInput x="534" y="62" width="48" id="txtSizeMax"/>
-		<mx:TextInput x="295" y="114" width="98" id="txtProductId"/>
-		<mx:TextInput x="295" y="140" width="98" id="txtCoatedSides"/>
-		<mx:TextInput x="295" y="166" width="98" id="txtGenericColors"/>
-		<mx:TextInput x="295" y="192" width="98" id="txtThickness"/>
-		<mx:TextInput x="295" y="218" width="98" id="txtSheetsPerSet"/>
-		<mx:TextInput x="295" y="244" width="98" id="txtStockNumber"/>
+		<mx:TextInput x="99" y="62" width="98" id="txtGroup" change="search();"/>
+		<mx:TextInput x="99" y="114" width="98" id="txtName" change="search();"/>
+		<mx:TextInput x="99" y="140" width="98" id="txtFinish" change="search();"/>
+		<mx:TextInput x="99" y="166" width="98" id="txtColor" change="search();"/>
+		<mx:TextInput x="99" y="192" width="98" id="txtGrade" change="search();"/>
+		<mx:TextInput x="99" y="218" width="98" id="txtMinOrder" change="search();"/>
+		<mx:TextInput x="99" y="244" width="98" id="txtVendor" change="search();"/>
+		<mx:TextInput x="295" y="62" width="98" id="txtStockType" change="search();"/>
+		<mx:TextInput x="478" y="62" width="48" id="txtSizeMin" change="search();"/>
+		<mx:TextInput x="478" y="88" width="48" id="txtWeightMin" change="search();"/>
+		<mx:TextInput x="534" y="88" width="48" id="txtWeightMax" change="search();"/>
+		<mx:TextInput x="478" y="114" width="48" id="txtCwtMin" change="search();"/>
+		<mx:TextInput x="534" y="114" width="48" id="txtCwtMax" change="search();"/>
+		<mx:TextInput x="478" y="140" width="48" id="txtQtyOnHandMin" change="search();"/>
+		<mx:TextInput x="534" y="140" width="48" id="txtQtyOnHandMax" change="search();"/>
+		<mx:TextInput x="478" y="166" width="48" enabled="false" id="txtRollWidthMin" change="search();"/>
+		<mx:TextInput x="534" y="166" width="48" enabled="false" id="txtRollWidthMax" change="search();"/>
+		<mx:TextInput x="534" y="62" width="48" id="txtSizeMax" change="search();"/>
+		<mx:TextInput x="295" y="114" width="98" id="txtProductId" change="search();"/>
+		<mx:TextInput x="295" y="140" width="98" id="txtCoatedSides" change="search();"/>
+		<mx:TextInput x="295" y="166" width="98" id="txtGenericColors" change="search();"/>
+		<mx:TextInput x="295" y="192" width="98" id="txtThickness" change="search();"/>
+		<mx:TextInput x="295" y="218" width="98" id="txtSheetsPerSet" change="search();"/>
+		<mx:TextInput x="295" y="244" width="98" id="txtStockNumber" change="search();"/>
 		<mx:Button x="363" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="102" id="status_button" click="doStatus()"/>
 		<mx:Image x="0" y="246" width="15" height="19" source="assets/Original PS Icons/WebStatus.png" id="web_status"/>
 	</mx:Canvas>
