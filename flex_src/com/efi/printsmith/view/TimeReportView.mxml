@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="750" height="500"
+	showCloseButton="true" close="{closeWindow()}" creationComplete="{initExportWindow()}"
+	paddingTop="20" paddingBottom="20" paddingLeft="20" paddingRight="20" xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.common.scripts.DateUtil;
+			import com.efi.printsmith.data.ComLink;
+			import flash.net.navigateToURL;
+			import com.efi.printsmith.data.TimeCard;
+			import mx.controls.Alert;
+			import com.efi.printsmith.data.Employee;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import com.efi.printsmith.model.EmployeeTimeExportBean;
+			import mx.collections.ArrayCollection;
+			import mx.managers.PopUpManager;
+			
+			[Bindable] public var employeeList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var periodList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var formatList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var employeeTimeExportBean:EmployeeTimeExportBean = new EmployeeTimeExportBean(); 
+			
+			[Bindable] public var timeCardList:ArrayCollection = new ArrayCollection();
+			
+			private function initExportWindow():void {
+				PopUpManager.centerPopUp(this);
+				employeeTimeExportBean.format = "firstName";
+				employeeTimeExportBean.rangeType = "period";
+				employeeTimeExportBean.detail = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Showfulltimecard');
+				var todayDate:Date = new Date();
+				employeeTimeExportBean.dateFrom = new Date(todayDate.fullYear,todayDate.month,1);
+				employeeTimeExportBean.dateTo = new Date(todayDate.fullYear,todayDate.month+1,0);
+				initStaticSetUp();
+				dataServiceEmployee.getAll("Employee");
+				dataServicePeriod.getAllPeriods("Period");
+			}
+			
+			private function initStaticSetUp():void {
+				/*
+				 Format List 
+				 */ 
+				var formatObj:Object = new Object();
+				formatObj.id = "firstName";
+				formatObj.name= "By Name";
+				formatList.addItem(formatObj);
+				formatObj = new Object();
+				formatObj.id = "socialSecurity";
+				formatObj.name= "By SSN";
+				formatList.addItem(formatObj);
+			}
+			
+			private function handleEmployeeLoadResult(event:ResultEvent):void {
+				var list:ArrayCollection = event.result as ArrayCollection;
+				for each(var employee:Employee in list){
+					employee.isSelected = true;
+				}
+				employeeList = list;
+			}
+			
+			private function handlePeriodLoadResult(event:ResultEvent):void {
+				periodList = event.result as ArrayCollection;
+				if(periodList!=null && periodList.length>0){
+					employeeTimeExportBean.periodFrom = periodList.getItemAt(0).periodNumber;
+					employeeTimeExportBean.periodTo = periodList.getItemAt(0).periodNumber;
+				}
+			}
+
+			private function handleTimeCardLoadResult(event:ResultEvent):void {
+				timeCardList = event.result as ArrayCollection;
+			}
+						
+			private function handleFault(ev:FaultEvent):void {  
+				var message:String;
+				              
+				message = "Error: "                          
+				+ ev.fault.faultCode + " - "                                  
+				+ ev.fault.faultDetail + " - "                                  
+				+ ev.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, 4);                                 
+			}
+			
+			private function doPreview():void {
+				if(validateData()){
+					
+				}
+			}
+			
+			private function validateData():Boolean {
+				var counter:int=0;
+				if(employeeTimeExportBean.periodFrom>employeeTimeExportBean.periodTo) {
+					Alert.show("Please ensure that Period To is greater than Period From");
+					return false;
+				}
+				if(employeeTimeExportBean.dateFrom>employeeTimeExportBean.dateTo) {
+					Alert.show("Please ensure that Date To is greater than Date From");
+					return false;
+				}
+				for each(var employee:Employee in employeeList) {
+					if(employee.isSelected){
+						counter++;
+					}
+				}
+				if(counter==0){
+					Alert.show("Please select Employee");
+					return false;
+				}
+				return true;
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function getNameLabel(item:Object,column:DataGridColumn):String {
+				return item.lastName+", "+item.firstName;
+			}
+			
+			private function setDateFrom(event:Event):void {
+				employeeTimeExportBean.dateFrom = event.currentTarget.selectedDate;
+			}
+			
+			private function setDateTo(event:Event):void {
+				employeeTimeExportBean.dateTo = event.currentTarget.selectedDate;
+			}
+			
+			private function getTimeDifferenceFromMs(milliSeconds:Number):String {
+				var diffString:String = "";
+				if(milliSeconds<60000){
+					diffString = "Oh"+" 0m";
+			    }  
+			    if(milliSeconds>=60000 && milliSeconds<60000*60){
+			    	diffString = "Oh "
+			    	diffString = diffString + numFormatter.format(milliSeconds/60000)+"m";
+			    }
+			    if(milliSeconds>=60000*60){
+			    	diffString = numFormatter.format(milliSeconds/(60000*60))+"h ";
+			    	diffString = diffString+numFormatter.format(milliSeconds%(60000*60)/(60000))+"m";
+			    }
+			    return diffString;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:RemoteObject id="dataServiceEmployee" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleEmployeeLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServicePeriod" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAllPeriods" fault="handleFault(event)" result="handlePeriodLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService" showBusyCursor="true">
+		<mx:method name="getEmployeeTimeExports" fault="handleFault(event)" result="handleTimeCardLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:HTTPService id="contextRoot" rootURL="@ContextRoot()"/>
+	
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
+	
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A"/>
+	
+	
+	<mx:HBox width="100%" height="10%">
+		
+		<mx:Button width="8%" height="100%" click="{doPreview()}" id="btnPreview">
+			<mx:icon>@Embed(source='../../../../assets/preview.png')</mx:icon>
+		</mx:Button>
+		
+		<mx:Button width="8%" height="100%" click="{closeWindow()}" id="btnClose">
+			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+				
+	</mx:HBox>
+	
+	<mx:HBox width="100%" height="10%">
+	
+		<mx:Label 
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeReportsCmd.Preview')}"
+			width="8%" textAlign="center"/>
+		<mx:Label 
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Close')}"
+			width="9%" textAlign="center"/>
+	
+	</mx:HBox>
+	
+	<mx:HBox width="100%" height="40%">
+		
+		<mx:VBox width="50%" height="100%">
+		
+			<mx:HBox width="100%" height="30%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Format')}:"/>
+				<components:CustomComboBoxComponent width="30%"
+					masterList="{formatList}" labelFieldId="id" labelFieldName="name" updateFirstElement="true"
+					dataHolder="{employeeTimeExportBean}" variableName="format" customText="{getCustomTextData(formatList,employeeTimeExportBean,employeeTimeExportBean.format)}"/>
+			</mx:HBox>
+			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Range')}" layout="vertical" width="100%" height="70%">
+			
+				<mx:RadioButtonGroup id="rangeGroup"/>
+			
+				<mx:HBox width="100%" height="50%">
+					<components:CustomRadioButtonComponent width="30%" groupName="rangeGroup"
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Period')}" value="period" dataHolder="{employeeTimeExportBean}" variableName="rangeType"
+						customText="{employeeTimeExportBean.rangeType}"/>
+					<components:CustomComboBoxComponent width="30%"
+						masterList="{periodList}" labelFieldId="periodNumber" labelFieldName="periodNumber" updateFirstElement="true"
+						dataHolder="{employeeTimeExportBean}" variableName="periodFrom" customText="{getCustomTextData(periodList,employeeTimeExportBean,employeeTimeExportBean.periodFrom)}"
+						enabled="{employeeTimeExportBean.rangeType=='period'}"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.To')}" width="10%"/>
+					<components:CustomComboBoxComponent width="30%"
+						masterList="{periodList}" labelFieldId="periodNumber" labelFieldName="periodNumber" updateFirstElement="true"
+						dataHolder="{employeeTimeExportBean}" variableName="periodTo" customText="{getCustomTextData(periodList,employeeTimeExportBean,employeeTimeExportBean.periodTo)}"
+						enabled="{employeeTimeExportBean.rangeType=='period'}"/>
+				</mx:HBox>
+				
+				<mx:HBox width="100%" height="50%">
+					<components:CustomRadioButtonComponent width="30%" groupName="rangeGroup"
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Date')}" value="date" dataHolder="{employeeTimeExportBean}" variableName="rangeType"
+						customText="{employeeTimeExportBean.rangeType}"/>
+					<mx:DateField id="dateFrom" width="30%" enabled="{employeeTimeExportBean.rangeType=='date'}"
+						selectedDate="{employeeTimeExportBean.dateFrom}" change="{setDateFrom(event)}"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.To')}" width="10%"/>
+					<mx:DateField id="dateTo" width="30%" enabled="{employeeTimeExportBean.rangeType=='date'}"
+						selectedDate="{employeeTimeExportBean.dateTo}" change="{setDateTo(event)}"/>
+				</mx:HBox>
+				
+			</mx:Panel>
+			
+		</mx:VBox>
+		
+		<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Detail')}" layout="vertical" width="50%" height="100%">
+			
+			<mx:RadioButtonGroup id="detailGroup"/>
+			
+			<components:CustomRadioButtonComponent
+				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Showfulltimecard')}"
+				value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Showfulltimecard')}"
+				groupName="detailGroup" dataHolder="{employeeTimeExportBean}" customText="{employeeTimeExportBean.detail}" variableName="detail"/>
+				
+			<components:CustomRadioButtonComponent
+				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Showtotalsonly')}"
+				value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Showtotalsonly')}"
+				groupName="detailGroup" dataHolder="{employeeTimeExportBean}" customText="{employeeTimeExportBean.detail}" variableName="detail"/>
+			
+		</mx:Panel>
+		
+	</mx:HBox>
+	
+	<mx:Spacer height="5%"/>
+	
+	<mx:DataGrid id="employeesDG" dataProvider="{employeeList}" width="100%" height="40%">
+		<mx:columns>
+			<mx:DataGridColumn headerText=" "
+				sortable="false" dataField="isSelected" width="100">
+				<mx:headerRenderer>
+					<mx:Component>
+						<components:CheckBoxHeaderRenderer/>
+					</mx:Component>
+				</mx:headerRenderer>
+				<mx:itemRenderer>
+					<mx:Component>
+						<components:CustomCheckBoxComponent 
+							datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+							selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!data.isDisabled}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.ID')}" dataField="employeeId" width="100"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Employee')}" dataField="lastName" labelFunction="getNameLabel" width="800"/>
+		</mx:columns>
+	</mx:DataGrid>
+	
+</mx:TitleWindow>

@@ -26,6 +26,8 @@ package com.efi.printsmith.model
 		public var selectedEmployees:ArrayCollection = new ArrayCollection();
 		
 		public var selectedFields:ArrayCollection = new ArrayCollection();
+		
+		public var detail:String = "";
 
 	}
 }
