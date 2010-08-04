@@ -1546,6 +1546,81 @@ public class PreferencesEstimating extends ModelBase {
     this.chargeDescription = newVal;
   }
 	
+	private Boolean showAmountsOnTicket;
+  
+  	private Boolean addBarCodes;
+  
+  	private Boolean showRefNumber;
+	
+  	@ManyToOne(cascade = {CascadeType.ALL})
+  	private FontDefinition barCodeFont;
+  	
+  	
+	
+	/**
+	 * @return the showAmountsOnTicket
+	 */
+	public Boolean getShowAmountsOnTicket() {
+		return showAmountsOnTicket;
+	}
+
+
+	/**
+	 * @param showAmountsOnTicket the showAmountsOnTicket to set
+	 */
+	public void setShowAmountsOnTicket(Boolean showAmountsOnTicket) {
+		this.showAmountsOnTicket = showAmountsOnTicket;
+	}
+
+
+	/**
+	 * @return the addBarCodes
+	 */
+	public Boolean getAddBarCodes() {
+		return addBarCodes;
+	}
+
+
+	/**
+	 * @param addBarCodes the addBarCodes to set
+	 */
+	public void setAddBarCodes(Boolean addBarCodes) {
+		this.addBarCodes = addBarCodes;
+	}
+
+
+	/**
+	 * @return the showRefNumber
+	 */
+	public Boolean getShowRefNumber() {
+		return showRefNumber;
+	}
+
+
+	/**
+	 * @param showRefNumber the showRefNumber to set
+	 */
+	public void setShowRefNumber(Boolean showRefNumber) {
+		this.showRefNumber = showRefNumber;
+	}
+
+
+	/**
+	 * @return the barCodeFont
+	 */
+	public FontDefinition getBarCodeFont() {
+		return barCodeFont;
+	}
+
+
+	/**
+	 * @param barCodeFont the barCodeFont to set
+	 */
+	public void setBarCodeFont(FontDefinition barCodeFont) {
+		this.barCodeFont = barCodeFont;
+	}
+
+
 	/**
 	 * @generated
 	 */		

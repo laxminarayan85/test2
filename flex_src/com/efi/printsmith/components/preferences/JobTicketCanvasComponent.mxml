@@ -6,11 +6,21 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.managers.PopUpManager;
+			import com.efi.printsmith.common.components.CustomFontComponent;
 			import mx.collections.ArrayCollection;
 			import com.efi.printsmith.data.PreferencesEstimating;
 			[Bindable] public var preferencesEstimating:PreferencesEstimating = new PreferencesEstimating();
 			
 			[Bindable] public var jobTicketStylesArray:ArrayCollection = new ArrayCollection();
+			
+			private function openFontComponent():void {
+				var fontComponent:CustomFontComponent = PopUpManager.createPopUp(this,CustomFontComponent,true) as CustomFontComponent;
+				fontComponent.dataHolder = preferencesEstimating;
+				fontComponent.variableName = "barCodeFont";
+				fontComponent.customText = preferencesEstimating.barCodeFont;
+				PopUpManager.centerPopUp(fontComponent);
+			}
 		]]>
 	</mx:Script>
 	
@@ -30,7 +40,7 @@
 			<mx:VBox width="100%" height="100%">
 	
 				<mx:Label
-					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TicketFormat')}"
+					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.TicketFormat')}:"
 					textAlign="left" width="231" />
 					
 				<mx:Spacer height="10"/>
@@ -60,6 +70,51 @@
 						updateFirstElement="true" enabled="{preferencesEstimating.jobTicketFormat=='customstyle'}"/>
 						
 				</mx:HBox>
+				
+				<mx:Label
+					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Options')}:"
+					textAlign="left"/>
+					
+				<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ShowAmountsonticket')}"
+					dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.showAmountsOnTicket}" variableName="showAmountsOnTicket"
+					selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{preferencesEstimating.jobTicketFormat=='standardstyle'}"/>
+					
+				<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.AddTrackingBarCodes')}"
+					dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.addBarCodes}" variableName="addBarCodes"
+					selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{preferencesEstimating.jobTicketFormat=='standardstyle'}"/>
+					
+				<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showcustomerextrefer')}"
+					dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.showRefNumber}" variableName="showRefNumber"
+					selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{preferencesEstimating.jobTicketFormat=='standardstyle'}"/>
+					
+				<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.ChargeDescription')}"
+					layout="vertical" width="35%">
+					
+					<mx:RadioButtonGroup id="chargeDescriptionGroup"/>
+					
+					<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showname')}"
+						value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showname')}" groupName="chargeDescriptionGroup"
+						dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.chargeDescription}" variableName="chargeDescription"
+						enabled="{preferencesEstimating.jobTicketFormat=='standardstyle'}"/>
+						
+					<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showdescription')}"
+						value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showdescription')}" groupName="chargeDescriptionGroup"
+						dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.chargeDescription}" variableName="chargeDescription"
+						enabled="{preferencesEstimating.jobTicketFormat=='standardstyle'}"/>
+						
+					<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showbothifdifferent')}"
+						value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showbothifdifferent')}" groupName="chargeDescriptionGroup"
+						dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.chargeDescription}" variableName="chargeDescription"
+						enabled="{preferencesEstimating.jobTicketFormat=='standardstyle'}"/>
+						
+				</mx:Panel>
+				
+				<mx:Button
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.SetBarCodeFont')}"
+					click="{openFontComponent()}" enabled="{preferencesEstimating.jobTicketFormat!='oldstyle'}"/>
+					
+				<mx:Button
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.PrintBarCodes')}"/>
 				
 			</mx:VBox>
 			
