@@ -170,6 +170,16 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="getAccount" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceUnPurchase" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveUnPurchaseResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceCashDrawer" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashDrawerResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCashDrawerResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceTape" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTapeResult(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServiceCashRegisterBatch" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleBatchSaveResult(event)"/>
 	</mx:RemoteObject>
@@ -197,6 +207,9 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import com.efi.printsmith.data.CashDrawer;
+	import com.efi.printsmith.data.Tape;
+	import com.efi.printsmith.data.UnpurchasedMerchandise;
 	import com.hillelcoren.utils.ArrayCollectionUtils;
 	import com.efi.printsmith.data.PreferencesCashRegister;
 	import mx.events.StateChangeEvent;
@@ -210,6 +223,7 @@
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.data.PreferencesCreditCard;
 	import com.efi.printsmith.data.Account;
+	import com.efi.printsmith.data.UnpurchasedMerchandise;
 
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -256,7 +270,8 @@
 	private var payChange:String;
 	[Bindable]
 	private var AustrailianRounding:Boolean;
-	
+	[Bindable]
+	private	var unPurchase:UnpurchasedMerchandise;
 	[Bindable]
 	private var posTransactions:ArrayCollection;
 	
@@ -271,10 +286,13 @@
 	private var FormatArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
     private var creditCardPreferencesArray:ArrayCollection = new ArrayCollection();
-   
+   [Bindable]
+	private var cashDrawer:CashDrawer;
 //Data view variables
 	[Bindable]
 	private var batch:CashRegisterBatch;
+	[Bindable]
+	private var tape:Tape;
 	[Bindable]
 	private var cashRegister:CashRegister;
 	[Bindable]
@@ -286,6 +304,12 @@
 	}
 	private function handleLoadTaxCodesResult(ev:ResultEvent):void {
 	     TaxCodesArray = ev.result as ArrayCollection;
+	}
+	private function handleLoadCashDrawerResult(ev:ResultEvent):void {
+	     cashDrawer = ev.result as CashDrawer;
+	}
+	private function handleSaveCashDrawerResult(ev:ResultEvent):void {
+		cashDrawer = ev.result as CashDrawer;
 	}
 	private function handleLoadCashRegPreferencesResult(ev:ResultEvent):void{
 		systemCashPreferencesArray = ev.result as ArrayCollection;
@@ -319,8 +343,11 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		batch = new CashRegisterBatch();
+		tape = new Tape();
+		unPurchase = new UnpurchasedMerchandise();
 		batch.transactions = new ArrayCollection();
 		cashRegister = new CashRegister();
+		cashDrawer = new CashDrawer();
 		cashRegister.cashRegisterDept = new PreferencesCashRegister();
 		//batch.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.POS');
 		cashRegister.customerAccount = new Account();
@@ -328,6 +355,7 @@
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServiceCashPreferences.getAll("PreferencesCashRegister");
 		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
+		dataServiceCashDrawer.getAll("CashDrawer");
 		//openTree();
 		setup();
 	}
@@ -377,6 +405,12 @@
 // Data Save Handlers
 	private function handleSaveResult(ev:ResultEvent):void {
     	//dataService.getAll("PreferencesSystem");
+	}
+	private function handleSaveUnPurchaseResult(ev:ResultEvent):void{
+		unPurchase = new UnpurchasedMerchandise();
+	}
+	private function handleSaveTapeResult(ev:ResultEvent):void{
+		tape = ev.result as Tape;
 	}
 	private function handleBatchSaveResult(ev:ResultEvent):void{
 		batch = new CashRegisterBatch();
@@ -530,8 +564,15 @@
 				payment.refNumber = card_ref.text;
 			}
 			if (payment.paymentMethod=="Charge"){
-				customerAccount.balance=  customerAccount.balance+ payment.paymentAmount;
-				dataService.addUpdate(customerAccount);
+				unPurchase.account = customerAccount
+				unPurchase.amount =unPurchase.amount + payment.paymentAmount;
+				unPurchase.tax =  unPurchase.tax + cashRegister.taxamount;
+				unPurchase.taxCode = cashRegister.taxCode;
+				unPurchase.taxTable = cashRegister.taxTable;
+				unPurchase.subtotal = cashRegister.subtotal;
+				
+				/* customerAccount.balance=  customerAccount.balance+ payment.paymentAmount;
+				dataService.addUpdate(customerAccount); */
 				payment.customerAccount = customerAccount;
 				
 				
@@ -627,9 +668,52 @@
 	}
 	
 	private function doSave():void{
+		var tempT : CashRegister;
 		batch.posted = true;
 		batch.postedDate = new Date();
+		for( var i:int = 0; i< batch.transactions.length; i++)
+		{
+			tempT  = batch.transactions.getItemAt(i) as CashRegister;
+			tape.aR = false
+			tape.pOS = true;
+			tape.transactionDate = new Date();
+			
+			switch (tempT.paymentMethod){
+				case "Cash":{
+					tape.ar = false
+					tape.pos = true;
+					tape.type = "Cash";
+				}
+				case "Credit Card":{
+					tape.ar = false
+					tape.pos = true;
+					tape.ref = tempT.refNumber;
+					tape.type = "Credit"
+				}
+				case "Check":{
+					tape.ar= false
+					tape.pos = true;
+					tape.checkNum = tempT.checkNumber;
+					tape.type = "Check"
+				}
+				case "Charge":{
+					tape.ar = true
+					tape.pos = false;
+					tape.type = "Charge"
+				}
+			}
+			tape.paymentAmount = tempT.paymentAmount;
+			tape.subTotal = tempT.subtotal;
+			tape.taxAmount = tempT.taxamount;
+			tape.taxCode = tempT.taxCode;
+			tape.taxTable = tempT.taxTable;
+			tape.total = tempT.totalprice;
+		
+			dataServiceTape.addUpdate(tape);
+		}
+		
 		dataServiceCashRegisterBatch.addUpdate(batch);
+		dataServiceUnPurchase.addUpdate(unPurchase);
 	}
 	
 	private function doRevert():void{

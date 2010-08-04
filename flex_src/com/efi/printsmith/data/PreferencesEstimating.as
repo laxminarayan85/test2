@@ -68,12 +68,9 @@ package com.efi.printsmith.data
 		public var jobTicketFormat:String = "";
 		public var customJobTicket:String = "";
 		public var chargeDescription:String = "";
-		
-		/*Options Fields*/
 		public var showAmountsOnTicket:Boolean = false;
 		public var addBarCodes:Boolean = false;
 		public var showRefNumber:Boolean = false;
-		
 		public var barCodeFont:FontDefinition;
 	
 	}

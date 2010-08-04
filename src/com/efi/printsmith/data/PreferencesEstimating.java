@@ -264,6 +264,23 @@ public class PreferencesEstimating extends ModelBase {
 	public static final String CHARGEDESCRIPTION = "ChargeDescription";
 
 	/**
+   * @generated
+   */
+  public static final String SHOWAMOUNTSONTICKET = "ShowAmountsOnTicket";
+	/**
+   * @generated
+   */
+  public static final String ADDBARCODES = "AddBarCodes";
+	/**
+   * @generated
+   */
+  public static final String SHOWREFNUMBER = "ShowRefNumber";
+	/**
+   * @generated
+   */
+  public static final String BARCODEFONT = "BarCodeFont";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesEstimating() {
@@ -1682,6 +1699,10 @@ public class PreferencesEstimating extends ModelBase {
     if (JOBTICKETFORMAT.equals(propertyName)) return getJobTicketFormat();
     if (CUSTOMJOBTICKET.equals(propertyName)) return getCustomJobTicket();
     if (CHARGEDESCRIPTION.equals(propertyName)) return getChargeDescription();
+    if (SHOWAMOUNTSONTICKET.equals(propertyName)) return getShowAmountsOnTicket();
+    if (ADDBARCODES.equals(propertyName)) return getAddBarCodes();
+    if (SHOWREFNUMBER.equals(propertyName)) return getShowRefNumber();
+    if (BARCODEFONT.equals(propertyName)) return getBarCodeFont();
     return super.getProperty(propertyName);
   }
 	
@@ -1746,6 +1767,10 @@ public class PreferencesEstimating extends ModelBase {
     if (JOBTICKETFORMAT.equals(propertyName)) setJobTicketFormat((String)newValue); else
     if (CUSTOMJOBTICKET.equals(propertyName)) setCustomJobTicket((String)newValue); else
     if (CHARGEDESCRIPTION.equals(propertyName)) setChargeDescription((String)newValue); else
+    if (SHOWAMOUNTSONTICKET.equals(propertyName)) setShowAmountsOnTicket((Boolean)newValue); else
+    if (ADDBARCODES.equals(propertyName)) setAddBarCodes((Boolean)newValue); else
+    if (SHOWREFNUMBER.equals(propertyName)) setShowRefNumber((Boolean)newValue); else
+    if (BARCODEFONT.equals(propertyName)) setBarCodeFont((FontDefinition)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1865,6 +1890,14 @@ public class PreferencesEstimating extends ModelBase {
       return new Class<?>[] {String.class};		
     if (CHARGEDESCRIPTION.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (SHOWAMOUNTSONTICKET.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ADDBARCODES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWREFNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (BARCODEFONT.equals(propertyName)) 
+      return new Class<?>[] {FontDefinition.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1930,6 +1963,10 @@ public class PreferencesEstimating extends ModelBase {
     if (JOBTICKETFORMAT.equals(propertyName)) return PreferencesEstimating.class;
     if (CUSTOMJOBTICKET.equals(propertyName)) return PreferencesEstimating.class;
     if (CHARGEDESCRIPTION.equals(propertyName)) return PreferencesEstimating.class;
+    if (SHOWAMOUNTSONTICKET.equals(propertyName)) return PreferencesEstimating.class;
+    if (ADDBARCODES.equals(propertyName)) return PreferencesEstimating.class;
+    if (SHOWREFNUMBER.equals(propertyName)) return PreferencesEstimating.class;
+    if (BARCODEFONT.equals(propertyName)) return PreferencesEstimating.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2050,6 +2087,14 @@ public class PreferencesEstimating extends ModelBase {
     if (! SmartEquals(getCustomJobTicket(), objT.getCustomJobTicket()))
       return false;
     if (! SmartEquals(getChargeDescription(), objT.getChargeDescription()))
+      return false;
+    if (! SmartEquals(getShowAmountsOnTicket(), objT.getShowAmountsOnTicket()))
+      return false;
+    if (! SmartEquals(getAddBarCodes(), objT.getAddBarCodes()))
+      return false;
+    if (! SmartEquals(getShowRefNumber(), objT.getShowRefNumber()))
+      return false;
+    if (! SmartEquals(getBarCodeFont(), objT.getBarCodeFont()))
       return false;
     return true;
   }			
