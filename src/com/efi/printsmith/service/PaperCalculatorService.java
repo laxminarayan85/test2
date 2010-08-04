@@ -1184,8 +1184,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		Rectangle2D.Double		bleedRect = new Rectangle2D.Double();				// 
 		double			marginL = 0;			// base to image margin (pixels)
 		double			marginT = 0;			// base to image margin (pixels) (bigger to account for xdim)
-		double			marginR = 50;			// base to image margin (pixels) (bigger to account for ydim)
-		double			marginB = 50;			// volatile ... base to image margin (pixels)
+		double			marginR = 45;			// base to image margin (pixels) (bigger to account for ydim)
+		double			marginB = 15;			// volatile ... base to image margin (pixels)
 		double			inset = 0;				// volatile ... some current inset
 		double			width = 0;				// volatile ... some current width
 		double			height = 0;				// volatile ... some current height
@@ -1786,8 +1786,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				}
 				else
 				{	// calculate space remaining right (of standard set)
-					dutchRect.x = origin.y + (column * (bleedRect.width + gutterH));
-					dutchRect.y = origin.x;
+					dutchRect.x = origin.x + (column * (bleedRect.width + gutterH));
+					dutchRect.y = origin.y;
 				}
 				
 				// rotate the trim

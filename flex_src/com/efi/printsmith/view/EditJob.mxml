@@ -1490,6 +1490,9 @@
 					if (job.orUp == 0)
 						job.numUp = intValue;
 					
+					job.paperCal.runout = job.numUp;		// TEMP
+					job.paperCal.sheetsOut = job.paperCal.runout;
+					
 					// cut counts, the override logic is handled in JAVA
 					intValue = results.getItemAt(1) as Number;
 					job.paperCal.cutstoRun = intValue;
@@ -1518,8 +1521,7 @@
 										
 					// the values are back, now request the image to be generated
 					//
-			// TEMP - should be called in real application
-			//		paperCalculatorService.GeneratePaperCalculatorImage(job, job.paperCal.whichStartSize, cutDiagram.width, cutDiagram.height);
+					paperCalculatorService.GeneratePaperCalculatorImage(job, job.paperCal.whichStartSize, cutDiagram.width-15, cutDiagram.height-15);
 				}
 			}
 
