@@ -190,6 +190,8 @@
 					</mx:columns>
 				</mx:DataGrid>
 				
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pmethSetCmd.BBrokeredTTaxableFFi')}"/>
+				
 				<mx:HBox width="100%">
 				
 					<mx:Button width="38" height="38" click="doNewPriceMethod();">
