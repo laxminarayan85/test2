@@ -50,87 +50,87 @@
 				var obj:Object = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="employee.firstName";
-				obj.fieldValue="First Name";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.FirstName');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="employee.lastName";
-				obj.fieldValue="Last Name";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.LastName');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="employee.socialSecurity";
-				obj.fieldValue="SSN";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.SSN');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="employee.exportCode";
-				obj.fieldValue="Export Code";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.ExportCode');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="employee.address.street1";
-				obj.fieldValue="Street1";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Street1');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="employee.address.street2";
-				obj.fieldValue="Street2";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Street2');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="employee.address.city";
-				obj.fieldValue="City";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.City');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="comLinks.Phone";
-				obj.fieldValue="Phone";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Phone');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="comLinks.E-Mail";
-				obj.fieldValue="Email";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Email');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="employee.rate";
-				obj.fieldValue="Rate";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Rate');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="period";
-				obj.fieldValue="Period Number";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.PeriodNumber');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="startDateTime";
-				obj.fieldValue="Date IN";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.DateIN');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="endDateTime";
-				obj.fieldValue="Date OUT";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.DateOUT');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="onClock";
-				obj.fieldValue="Time On Clock";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.TimeOnClock');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="onClockMinutes";
-				obj.fieldValue="On Clock Minutes";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.OnClockMinutes');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="dayOfWeek";
-				obj.fieldValue="Day of week";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Dayofweek');
 				fieldNamesList.addItem(obj);
 				obj = new Object();
 				obj.isSelected=true;
 				obj.fieldKey="weekNumber";
-				obj.fieldValue="Week Number";
+				obj.fieldValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.WeekNumber');
 				fieldNamesList.addItem(obj);
 				
 				/*
@@ -421,24 +421,24 @@
 		<mx:VBox width="50%" height="100%">
 		
 			<mx:HBox width="100%" height="30%">
-				<mx:Label text="Format:"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Format')}:"/>
 				<components:CustomComboBoxComponent width="30%"
 					masterList="{formatList}" labelFieldId="id" labelFieldName="name" updateFirstElement="true"
 					dataHolder="{employeeTimeExportBean}" variableName="format" customText="{getCustomTextData(formatList,employeeTimeExportBean,employeeTimeExportBean.format)}"/>
 			</mx:HBox>
-			<mx:Panel title="Range" layout="vertical" width="100%" height="70%">
+			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Range')}" layout="vertical" width="100%" height="70%">
 			
 				<mx:RadioButtonGroup id="rangeGroup"/>
 			
 				<mx:HBox width="100%" height="50%">
 					<components:CustomRadioButtonComponent width="30%" groupName="rangeGroup"
-						label="Period" value="period" dataHolder="{employeeTimeExportBean}" variableName="rangeType"
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Period')}" value="period" dataHolder="{employeeTimeExportBean}" variableName="rangeType"
 						customText="{employeeTimeExportBean.rangeType}"/>
 					<components:CustomComboBoxComponent width="30%"
 						masterList="{periodList}" labelFieldId="periodNumber" labelFieldName="periodNumber" updateFirstElement="true"
 						dataHolder="{employeeTimeExportBean}" variableName="periodFrom" customText="{getCustomTextData(periodList,employeeTimeExportBean,employeeTimeExportBean.periodFrom)}"
 						enabled="{employeeTimeExportBean.rangeType=='period'}"/>
-					<mx:Label text="To" width="10%"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.To')}" width="10%"/>
 					<components:CustomComboBoxComponent width="30%"
 						masterList="{periodList}" labelFieldId="periodNumber" labelFieldName="periodNumber" updateFirstElement="true"
 						dataHolder="{employeeTimeExportBean}" variableName="periodTo" customText="{getCustomTextData(periodList,employeeTimeExportBean,employeeTimeExportBean.periodTo)}"
@@ -447,11 +447,11 @@
 				
 				<mx:HBox width="100%" height="50%">
 					<components:CustomRadioButtonComponent width="30%" groupName="rangeGroup"
-						label="Date" value="date" dataHolder="{employeeTimeExportBean}" variableName="rangeType"
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Date')}" value="date" dataHolder="{employeeTimeExportBean}" variableName="rangeType"
 						customText="{employeeTimeExportBean.rangeType}"/>
 					<mx:DateField id="dateFrom" width="30%" enabled="{employeeTimeExportBean.rangeType=='date'}"
 						selectedDate="{employeeTimeExportBean.dateFrom}" change="{setDateFrom(event)}"/>
-					<mx:Label text="To" width="10%"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.To')}" width="10%"/>
 					<mx:DateField id="dateTo" width="30%" enabled="{employeeTimeExportBean.rangeType=='date'}"
 						selectedDate="{employeeTimeExportBean.dateTo}" change="{setDateTo(event)}"/>
 				</mx:HBox>
@@ -460,32 +460,32 @@
 			
 		</mx:VBox>
 		
-		<mx:Panel title="Options" layout="vertical" width="50%" height="100%">
+		<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Options')}" layout="vertical" width="50%" height="100%">
 			
-			<components:CustomCheckBoxComponent label="Include field names"
+			<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Includefieldnames')}"
 				dataHolder="{employeeTimeExportBean}" variableName="includeFieldNames" customText="{employeeTimeExportBean.includeFieldNames}"
 				selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 				
 			<mx:HBox width="100%">
 			
-				<mx:Label text="Delimited:" width="25%"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Delimted')}:" width="25%"/>
 				<mx:VBox width="75%">
 					<mx:RadioButtonGroup id="delimitGroup"/>
-					<components:CustomRadioButtonComponent label="Tab" value="tab" groupName="delimitGroup"
+					<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Tab')}" value="tab" groupName="delimitGroup"
 						dataHolder="{employeeTimeExportBean}" variableName="delimitedType" customText="{employeeTimeExportBean.delimitedType}"/>
-					<components:CustomRadioButtonComponent label="Comma" value="comma" groupName="delimitGroup"
+					<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Comma')}" value="comma" groupName="delimitGroup"
 						dataHolder="{employeeTimeExportBean}" variableName="delimitedType" customText="{employeeTimeExportBean.delimitedType}"/>
 				</mx:VBox>
 			</mx:HBox>
 			
 			<mx:HBox width="100%">
 			
-				<mx:Label text="Line End:" width="25%"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.LineEnd')}:" width="25%"/>
 				<mx:VBox width="75%">
 					<mx:RadioButtonGroup id="lineEndGroup"/>
-					<components:CustomRadioButtonComponent label="&lt;cr&gt; - (Mac)" value="mac" groupName="lineEndGroup"
+					<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.crMac')}" value="mac" groupName="lineEndGroup"
 						dataHolder="{employeeTimeExportBean}" variableName="lineEndType" customText="{employeeTimeExportBean.lineEndType}"/>
-					<components:CustomRadioButtonComponent label="&lt;cr,If&gt; - (PC)" value="pc" groupName="lineEndGroup"
+					<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.crlfPC')}" value="pc" groupName="lineEndGroup"
 						dataHolder="{employeeTimeExportBean}" variableName="lineEndType" customText="{employeeTimeExportBean.lineEndType}"/>
 				</mx:VBox>
 			</mx:HBox>
@@ -514,8 +514,8 @@
 						</mx:Component>
 					</mx:itemRenderer>
 				</mx:DataGridColumn>
-				<mx:DataGridColumn headerText="ID" dataField="employeeId" width="100"/>
-				<mx:DataGridColumn headerText="Employee" dataField="lastName" labelFunction="getNameLabel" width="800"/>
+				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.ID')}" dataField="employeeId" width="100"/>
+				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Employee')}" dataField="lastName" labelFunction="getNameLabel" width="800"/>
 			</mx:columns>
 		</mx:DataGrid>
 		
@@ -536,7 +536,7 @@
 						</mx:Component>
 					</mx:itemRenderer>
 				</mx:DataGridColumn>
-				<mx:DataGridColumn headerText="Field" dataField="fieldValue" width="900"/>
+				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeExportsCmd.Field')}" dataField="fieldValue" width="900"/>
 			</mx:columns>
 		</mx:DataGrid>
 	
