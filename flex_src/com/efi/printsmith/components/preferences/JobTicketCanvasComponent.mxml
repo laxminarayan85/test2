@@ -99,17 +99,17 @@
 					<mx:RadioButtonGroup id="chargeDescriptionGroup"/>
 					
 					<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showname')}"
-						value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showname')}" groupName="chargeDescriptionGroup"
+						value="showname" groupName="chargeDescriptionGroup"
 						dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.chargeDescription}" variableName="chargeDescription"
 						enabled="{preferencesEstimating.jobTicketFormat=='standardstyle'}"/>
 						
 					<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showdescription')}"
-						value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showdescription')}" groupName="chargeDescriptionGroup"
+						value="showdescription" groupName="chargeDescriptionGroup"
 						dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.chargeDescription}" variableName="chargeDescription"
 						enabled="{preferencesEstimating.jobTicketFormat=='standardstyle'}"/>
 						
 					<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showbothifdifferent')}"
-						value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showbothifdifferent')}" groupName="chargeDescriptionGroup"
+						value="showboth" groupName="chargeDescriptionGroup"
 						dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.chargeDescription}" variableName="chargeDescription"
 						enabled="{preferencesEstimating.jobTicketFormat=='standardstyle'}"/>
 						
