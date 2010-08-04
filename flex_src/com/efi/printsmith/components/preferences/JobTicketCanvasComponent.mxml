@@ -71,9 +71,13 @@
 						
 				</mx:HBox>
 				
+				<mx:Spacer height="10"/>
+				
 				<mx:Label
 					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Options')}:"
 					textAlign="left"/>
+					
+				<mx:Spacer height="10"/>
 					
 				<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.ShowAmountsonticket')}"
 					dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.showAmountsOnTicket}" variableName="showAmountsOnTicket"
@@ -86,6 +90,8 @@
 				<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Showcustomerextrefer')}"
 					dataHolder="{preferencesEstimating}" customText="{preferencesEstimating.showRefNumber}" variableName="showRefNumber"
 					selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{preferencesEstimating.jobTicketFormat=='standardstyle'}"/>
+					
+				<mx:Spacer height="10"/>
 					
 				<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.ChargeDescription')}"
 					layout="vertical" width="35%">
@@ -109,12 +115,14 @@
 						
 				</mx:Panel>
 				
+				<mx:Spacer height="10"/>
+				
 				<mx:Button
 					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.SetBarCodeFont')}"
-					click="{openFontComponent()}" enabled="{preferencesEstimating.jobTicketFormat!='oldstyle'}"/>
+					click="{openFontComponent()}" enabled="{preferencesEstimating.jobTicketFormat!='oldstyle'}" width="20%"/>
 					
 				<mx:Button
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.PrintBarCodes')}"/>
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.PrintBarCodes')}" width="20%"/>
 				
 			</mx:VBox>
 			
