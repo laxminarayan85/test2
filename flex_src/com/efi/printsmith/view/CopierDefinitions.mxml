@@ -361,7 +361,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	
 	private function findItemArray(name:String, array:Array):int {
 		for each(var element:Object in array) {
-			if (name == element) {
+			if (name == element.data) {
 				return array.indexOf(element,0)
 			}
 		}
@@ -434,7 +434,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		copierDefinition.hoursOpen = parseFloat(openhours.text);
 		copierDefinition.machineCostPerCopy = parseFloat(machineCostperCopy.text);
 		if (pricing_method_combo.selectedItem != null)
-			copierDefinition.method = pricing_method_combo.selectedItem.toString();
+			copierDefinition.method = pricing_method_combo.selectedItem.value.toString();
 		if (stock_Price_is_combo.selectedItem != null)
 			copierDefinition.stockPriceMethod = stock_Price_is_combo.selectedItem.toString();
 		if (price_2_side.selectedItem != null)
@@ -711,31 +711,49 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function updateMethodBox():void { //cej
 		var tempIndex:int = -1;
 		tempIndex = pricing_method_combo.selectedIndex;
-		methodType.removeAll();
+		methodType = new ArrayCollection(CopierPricingMethod.toArray());
+		var i:int;
 		
-		if (copierDefinition.largeFormat == true  || largeformatCheck.selected){
-			methodType.addItem(CopierPricingMethod.SquareAreaOfOriginals);
-			methodType.addItem(CopierPricingMethod.TotalSquareArea);
-			methodType.addItem(CopierPricingMethod.SquareAreaAndCopies); 
-			methodType.addItem(CopierPricingMethod.SquareAreaPerCopy);
+		if (copierDefinition.largeFormat == true  || largeformatCheck.selected) {
+			// Remove unused elements
+			for (i = methodType.length-1; i  >= 0 ; i--) {
+				if (methodType.getItemAt(i).data == CopierPricingMethod.CostPlus) {
+					methodType.removeItemAt(i);
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.FlatRate) {
+					methodType.removeItemAt(i);
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.CopiesAndOriginals) {
+					methodType.removeItemAt(i);
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.CopiesPerOriginals) {
+					methodType.removeItemAt(i);
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.TotalOfAllCopies) {
+					methodType.removeItemAt(i);
+				}
+			}
 			pricing_method_combo.selectedIndex = tempIndex;
 			maxWidthsize.enabled = true;
 			minWidthsize.enabled = true;
-		}else{
-					
-			methodType.addItem(CopierPricingMethod.CostPlus);
-			methodType.addItem(CopierPricingMethod.FlatRate);
-			methodType.addItem(CopierPricingMethod.CopiesAndOriginals);
-			methodType.addItem(CopierPricingMethod.CopiesPerOriginals);
-			methodType.addItem(CopierPricingMethod.TotalOfAllCopies);
+		} else {
+			// Remove unused elements
+			for (i = methodType.length-1; i  >= 0 ; i--) {
+				if (methodType.getItemAt(i).data == CopierPricingMethod.SquareAreaOfOriginals) {
+					methodType.removeItemAt(i);
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.TotalSquareArea) {
+					methodType.removeItemAt(i);
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.SquareAreaAndCopies) {
+					methodType.removeItemAt(i);
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.SquareAreaPerCopy) {
+					methodType.removeItemAt(i);
+				}
+			}
 			pricing_method_combo.selectedIndex = tempIndex;
 			maxWidthsize.enabled = false;
 			minWidthsize.enabled = false;
 		}
 		if (pricing_method_combo.selectedIndex != -1){
 			pricing_method_combo.selectedIndex = findItemArray(pricing_method_combo.selectedItem.toString(), methodType.toArray());
-		}else
+		} else {
 			pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodType.toArray());
+		}
 	}
 	
 	

@@ -23,9 +23,10 @@ package com.efi.printsmith.data.enums
 			var classInfo:XML = describeType(ChargeMarkupType);
 			for each (var v:XML in classInfo..constant)
 			{
-				var name:String = String(v.@name);
-				var value:String = getString(v.@name);
-			    returnArray.push(value);
+				var object:Object = new Object();
+				object.label = getString(v.@name);
+				object.data = String(v.@name);
+			    returnArray.push(object);
 			}
 			returnArray.sort();
 			return returnArray;
