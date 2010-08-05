@@ -110,10 +110,14 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesSystemField(key, fieldName, fieldValue);
 		else if (group.equals("Dongle"))
 			importPreferencesSystemField(key, fieldName, fieldValue);
-		else if (group.equals("Local Workstation"))
+		else if (group.equals("Local Workstation")) {
 			importPreferencesSystemField(key, fieldName, fieldValue);
-		else if (group.equals("Def Customer"))
+			importPreferencesEstimatingField(key, fieldName, fieldValue);
+		}
+		else if (group.equals("Def Customer")) {
 			importPreferencesSystemField(key, fieldName, fieldValue);
+			importPreferencesEstimatingField(key, fieldName, fieldValue);
+		}
 	}
 	private void importPreferencesCashRegisterField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
@@ -442,6 +446,24 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setShowPaperCalculator(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("pressCutoff_default"))
 			preferencesEstimating.setDefaultPressCuttOff(Utilities.tokenToDouble(value));
+		else if (name.equals("Estimator_enterStock_cost_in_job"))
+			preferencesEstimating.setStockCostInEstimator(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Estimator_invAddreessEditable"))
+			preferencesEstimating.setCanChangeAddress(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Estimator_autocalcReorder"))
+			preferencesEstimating.setCalculateReOrderDate(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("validateSalesRep"))
+			preferencesEstimating.setValidateSalesRep(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("foldedSizeIsManual_leave_empty"))
+			preferencesEstimating.setLeaveFoldedSizeEmpty(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Estimator_skipAutoShowJobCharges"))
+			preferencesEstimating.setAutoShowCharges(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("ignorePresetPress_from_stock"))
+			preferencesEstimating.setNeverUsePresetPressOnStockChanges(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("fixedWastePass_from_press"))
+			preferencesEstimating.setAddFixedWasteForEachPass(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("fixedWasteColor_from_press"))
+			preferencesEstimating.setAddFixedWasteForEachColor(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesEstimating);
 	}
 	private void importPreferencesSystemField(String key, String name, String value) throws Exception {
