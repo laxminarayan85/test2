@@ -464,6 +464,10 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setAddFixedWasteForEachPass(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("fixedWasteColor_from_press"))
 			preferencesEstimating.setAddFixedWasteForEachColor(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Estimator_ticketClose_after_print"))
+			preferencesEstimating.setCloseInvoiceAfterPrintingTicket(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Estimator_dueDate_days_out"))
+			preferencesEstimating.setDueFrom(Utilities.tokenToInt(value));
 		dataService.addUpdate(preferencesEstimating);
 	}
 	private void importPreferencesSystemField(String key, String name, String value) throws Exception {
