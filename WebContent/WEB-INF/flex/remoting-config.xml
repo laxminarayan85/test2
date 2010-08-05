@@ -186,6 +186,9 @@
 			<source>
 				com.efi.printsmith.service.TaxService
 			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
 		</properties>
 	</destination>
 	<destination id="priceListService">
