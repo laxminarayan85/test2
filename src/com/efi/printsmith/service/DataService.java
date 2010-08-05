@@ -253,7 +253,7 @@ public class DataService extends HibernateService {
 		columnstring = "a.id, a.name, a.weight, a.parentsize, a.color, a.genericColor, a.finish, a.thickness, a.grade, "
 				+ "a.cwt1, a.vendor, a.stocknumber, a.onHand, a.committed, a.onOrder, a.shellItem, a.normalRunSize, "
 				+ "a.stktype, a.stkgroup, a.coated, a.minorder, a.cost1, a.priceExpires, a.forestManagement, "
-				+ "a.pcwRecycledPercent, a.fscCertified, a.sfiCertified, a.greenSealCertified, a.sheetsPerSet  ";
+				+ "a.pcwRecycledPercent, a.fscCertified, a.sfiCertified, a.greenSealCertified, a.sheetsPerSet, a.uom  ";
 		try {
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className + " a ";

@@ -578,7 +578,7 @@ public class StockDefinition extends ModelBase {
 			StockFinish finish, Double thickness, StockGrade grade, Double cwt1, Vendor vendor, String stocknumber, Integer onhand,
 			Integer committed, Integer ordered, Boolean shellitem, Dimension normalrunsize, StockType stocktype,
 			StockGroup stkgroup, String coated, Integer minorder, BigDecimal cost1, Date priceexpire, String forestmanagement,
-			Double pcwrecycledpercent, Boolean fsccertified, Boolean sficertified, Boolean greensealcertified, Integer sheetsPerSet) {
+			Double pcwrecycledpercent, Boolean fsccertified, Boolean sficertified, Boolean greensealcertified, Integer sheetsPerSet, String uom) {
 		this.id = id;
 		this.name = Name;
 		this.weight = weight;
@@ -608,6 +608,7 @@ public class StockDefinition extends ModelBase {
 		this.sfiCertified =sficertified;
 		this.greenSealCertified = greensealcertified;
 		this.sheetsPerSet = sheetsPerSet;
+		this.uom = uom;
 		
 		
 	}

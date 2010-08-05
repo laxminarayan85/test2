@@ -400,6 +400,10 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 				if (match(stock.thickness, txtThickness.text) == false)	
 						continue;	
 			}
+			if (txtThicknessUOM.text != "")	{
+				if (match(stock.uom, txtThicknessUOM.text) == false)	
+						continue;	
+			}
 			if (txtSheetsPerSet.text != "")	{
 				if (match(stock.sheetsPerSet, txtSheetsPerSet.text) == false)	
 						continue;
@@ -479,7 +483,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 					if (match(strStdItem, "t") == false) 	
 						continue;
 				}
-			}			
+			}			 
 			acFiltered.addItem(stock);
 		}
 		dataGrid.dataProvider = acFiltered;
@@ -492,7 +496,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 				return false;
 		}
 		if ((data is int) || (data is Number))	{
-			if (Number(txtMinOrder.text) != data)
+			if (Number(searchString) != data)
 				return false;
 		}
 		
@@ -601,7 +605,8 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		<mx:TextInput x="295" y="114" width="98" id="txtProductId" change="search();"/>
 		<mx:TextInput x="295" y="140" width="98" id="txtCoatedSides" change="search();"/>
 		<mx:TextInput x="295" y="166" width="98" id="txtGenericColors" change="search();"/>
-		<mx:TextInput x="295" y="192" width="98" id="txtThickness" change="search();"/>
+		<mx:TextInput x="295" y="192" width="40" id="txtThickness" change="search();"/>
+		<mx:TextInput x="340" y="192" width="58" id="txtThicknessUOM" change="search();"/>
 		<mx:TextInput x="295" y="218" width="98" id="txtSheetsPerSet" change="search();"/>
 		<mx:TextInput x="295" y="244" width="98" id="txtStockNumber" change="search();"/>
 		<mx:Button x="363" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="102" id="status_button" click="doStatus()"/>
