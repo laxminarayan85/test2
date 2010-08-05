@@ -250,22 +250,47 @@
 	  
 	private function doClockOut(): void{ 
 		if (employee != null){
-			if (employee.clockBreak == true)
-			{
-				setTimeCard("breakstopwithclockout");
+			if(employee.pinRequired){
+				var pinRequestComponent:PinRequestComponent = PopUpManager.createPopUp(this,PinRequestComponent,true) as PinRequestComponent;
+				pinRequestComponent.employee = employee;
+				pinRequestComponent.addEventListener(PinRequestEvent.PINREQUEST,function(event:PinRequestEvent):void{
+					if(event.success) {
+						if (employee.clockBreak == true)
+						{
+							setTimeCard("breakstopwithclockout");
+						} else {
+							setTimeCard("out");
+						}
+						if(employee.showMessageClockout && employee.message!=null && StringUtil.trim(employee.message)!="") {
+							Alert.show(employee.message);
+						}
+						employee.clockIn= false;
+						employee.clockOut = true;
+						employee.clockBreak= false;
+						setEmployee();
+						clockIn.enabled = false;
+						clockOut.enabled = false;
+						clockBreak.enabled = false;
+					}
+				},false,0,true);
 			} else {
-				setTimeCard("out");
+				if (employee.clockBreak == true)
+				{
+					setTimeCard("breakstopwithclockout");
+				} else {
+					setTimeCard("out");
+				}
+				if(employee.showMessageClockout && employee.message!=null && StringUtil.trim(employee.message)!="") {
+					Alert.show(employee.message);
+				}
+				employee.clockIn= false;
+				employee.clockOut = true;
+				employee.clockBreak= false;
+				setEmployee();
+				clockIn.enabled = false;
+				clockOut.enabled = false;
+				clockBreak.enabled = false;
 			}
-			if(employee.showMessageClockout && employee.message!=null && StringUtil.trim(employee.message)!="") {
-				Alert.show(employee.message);
-			}
-			employee.clockIn= false;
-			employee.clockOut = true;
-			employee.clockBreak= false;
-			setEmployee();
-			clockIn.enabled = false;
-			clockOut.enabled = false;
-			clockBreak.enabled = false;
 		}
 	}
 	
