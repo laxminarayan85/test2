@@ -371,6 +371,22 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesAccounting.setDelinquent(Utilities.tokenToInt(value));
 		else if (name.equals("frozenDays"))
 			preferencesAccounting.setFrozen(Utilities.tokenToInt(value));
+		else if (name.equals("invordnoPrefix"))
+			preferencesAccounting.setInvoicePrefix(value);
+		else if (name.equals("invordnoSuffix"))
+			preferencesAccounting.setInvoiceSuffix(value);
+		else if (name.equals("invAllowPrefixMod"))
+			preferencesAccounting.setInvoiceAllowPrefixMod(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("invAllowSuffixMod"))
+			preferencesAccounting.setInvoiceAllowSuffixMod(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("estordnoPrefix"))
+			preferencesAccounting.setEstimatePrefix(value);
+		else if (name.equals("estordnoSuffix"))
+			preferencesAccounting.setEstimateSuffix(value);
+		else if (name.equals("estAllowPrefixMod"))
+			preferencesAccounting.setEstimateAllowPrefixMod(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("estAllowSuffixMod"))
+			preferencesAccounting.setEstimateAllowSuffixMod(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesAccounting);
 	}
 	private void importPreferencesPOSField(String key, String name, String value) throws Exception {
