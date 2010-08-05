@@ -441,9 +441,9 @@ public class PreferencesMapper extends ImportMapper {
 		else if (name.equals("reportParent_show_cut_diagram"))
 			preferencesEstimating.setShowPaperCalculator(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("reportRun_show_cut_diagram"))
-			preferencesEstimating.setShowPaperCalculator(Utilities.tokenToBooleanValue(value));
+			preferencesEstimating.setPrintParentToRunSection(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("reportFinish_show_cut_diagram"))
-			preferencesEstimating.setShowPaperCalculator(Utilities.tokenToBooleanValue(value));
+			preferencesEstimating.setPrintRunToFinishSection(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("pressCutoff_default"))
 			preferencesEstimating.setDefaultPressCuttOff(Utilities.tokenToDouble(value));
 		else if (name.equals("Estimator_enterStock_cost_in_job"))
@@ -468,6 +468,10 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setCloseInvoiceAfterPrintingTicket(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("Estimator_dueDate_days_out"))
 			preferencesEstimating.setDueFrom(Utilities.tokenToInt(value));
+		else if (name.equals("finishGutterX"))
+			preferencesEstimating.setGutterHorizontal(Utilities.tokenToDouble(value));
+		else if (name.equals("finishGutterY"))
+			preferencesEstimating.setGutter(Utilities.tokenToDouble(value));
 		dataService.addUpdate(preferencesEstimating);
 	}
 	private void importPreferencesSystemField(String key, String name, String value) throws Exception {
