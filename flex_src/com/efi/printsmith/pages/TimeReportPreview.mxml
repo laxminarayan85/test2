@@ -1,0 +1,328 @@
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="700" height="500"
+	creationComplete="{initPreviewWindow()}" showCloseButton="true" close="{closeWindow()}">
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.model.EmployeeTimeExportBean;
+			import mx.core.Application;
+			import mx.controls.AdvancedDataGrid;
+			import mx.collections.GroupingCollection;
+			import mx.collections.Grouping;
+			import com.efi.printsmith.data.TimeCard;
+			import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
+			import mx.controls.dataGridClasses.DataGridColumn;
+			import mx.collections.CursorBookmark;
+			import mx.collections.IViewCursor;
+			import mx.collections.HierarchicalCollectionView;
+			import mx.collections.Sort;
+			import mx.collections.SortField;
+			import mx.managers.PopUpManager;
+			import mx.collections.ArrayCollection;
+			import mx.collections.GroupingField;
+			
+			[Bindable] public var groupingCollection:GroupingCollection;
+			
+			[Bindable] public var advancedDataGrid:AdvancedDataGrid;
+			
+			[Bindable] public var timeCardList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var employeeTimeExportBean:EmployeeTimeExportBean = new EmployeeTimeExportBean();
+			
+			private function initPreviewWindow():void {
+				PopUpManager.centerPopUp(this);
+			}
+			
+			public function set inputDataList(dataList:ArrayCollection):void {
+				timeCardList = dataList.getItemAt(0) as ArrayCollection;
+				employeeTimeExportBean = dataList.getItemAt(1) as EmployeeTimeExportBean;
+				groupingCollection = new GroupingCollection();
+				var fields:Array = new Array();
+				var groupingField:GroupingField = new GroupingField();
+				getGroupingFieldName(groupingField);
+				fields.push(groupingField);
+				var grouping:Grouping = new Grouping();
+				grouping.fields = fields;
+				groupingCollection.childrenField = "childObjects";
+				groupingCollection.grouping = grouping;
+				groupingCollection.source = timeCardList;
+				advancedDataGrid = new AdvancedDataGrid();
+				advancedDataGrid.setStyle("defaultLeafIcon",null);
+				advancedDataGrid.percentWidth = 100;
+				advancedDataGrid.percentHeight = 100;
+				var columns:Array = new Array();
+				getDataGridColumns(columns);
+				var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
+				advancedDataGridColumn.dataField = "startDateTime";
+				advancedDataGridColumn.headerText = "Date";
+				advancedDataGridColumn.labelFunction = getDateLabel;
+				columns.push(advancedDataGridColumn);
+				advancedDataGridColumn = new AdvancedDataGridColumn();
+				advancedDataGridColumn.dataField = "endDateTime";
+				advancedDataGridColumn.headerText = "Out";
+				advancedDataGridColumn.labelFunction = getDateLabel;
+				columns.push(advancedDataGridColumn);
+				advancedDataGridColumn = new AdvancedDataGridColumn();
+				advancedDataGridColumn.dataField = "onClock";
+				advancedDataGridColumn.headerText = "On Clock";
+				advancedDataGridColumn.labelFunction = getTotalTime;
+				columns.push(advancedDataGridColumn);
+				advancedDataGridColumn = new AdvancedDataGridColumn();
+				advancedDataGridColumn.dataField = "billable";
+				advancedDataGridColumn.headerText = "Billable";
+				advancedDataGridColumn.labelFunction = getTotalTime;
+				columns.push(advancedDataGridColumn);
+				advancedDataGrid.columns = columns;
+				dgBox.addChild(advancedDataGrid);
+				advDataGridHandler();
+			}
+			
+			private function getGroupingFieldName(groupingField:GroupingField):void {
+				if(employeeTimeExportBean.format=="employee.firstName"){
+					groupingField.name = "employeeName";	
+				} else if(employeeTimeExportBean.format=="employee.socialSecurity"){
+					groupingField.name = "socialSecurity";	
+				} else if(employeeTimeExportBean.format=="period"){
+					groupingField.name = "period";	
+				}
+			}
+			
+			private function getDataGridColumns(columns:Array):void {
+				var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
+				if(employeeTimeExportBean.format=="employee.firstName"){
+					advancedDataGridColumn.headerText = "Name"; 
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "socialSecurity";
+					advancedDataGridColumn.headerText = "SSN";
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "period";
+					advancedDataGridColumn.headerText = "Period";
+					columns.push(advancedDataGridColumn);
+				} else if(employeeTimeExportBean.format=="employee.socialSecurity"){
+					advancedDataGridColumn.headerText = "SSN";
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "employeeName";
+					advancedDataGridColumn.headerText = "Name"; 
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "period";
+					advancedDataGridColumn.headerText = "Period";
+					columns.push(advancedDataGridColumn);
+				} else if(employeeTimeExportBean.format=="period"){
+					advancedDataGridColumn.headerText = "Period";
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "employeeName";
+					advancedDataGridColumn.headerText = "Name";
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "socialSecurity";
+					advancedDataGridColumn.headerText = "SSN";
+					columns.push(advancedDataGridColumn);
+				}
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+	        
+	        private function advDataGridHandler():void{
+	        	groupingCollection.refresh();
+	        	advancedDataGrid.dataProvider = groupingCollection;
+	        }
+	        
+	        private function nameSummaryFunction(iterator:IViewCursor, dataField:String, operation:String):Object{
+				var summaryString:String = ""; 
+				iterator.seek(CursorBookmark.FIRST);
+	            while(!iterator.afterLast)
+	            {
+	            	summaryString = iterator.current[dataField];
+	            	iterator.moveNext();
+	            }
+	            return summaryString;
+			}
+			
+			private function blankSummaryFunction(iterator:IViewCursor, dataField:String, operation:String):Object{
+				return "";
+			}
+			
+			private function sumOnClockSummaryFunction(iterator:IViewCursor, dataField:String, operation:String):Object{
+				var summaryString:String = ""; 
+				var totalTime:Number = 0;
+				iterator.seek(CursorBookmark.FIRST);
+	            while(!iterator.afterLast)
+	            {
+            		totalTime = totalTime + getTotalOnClockTime(iterator.current);
+	            	iterator.moveNext();
+	            }
+	            summaryString = convertMilliSecondsToString(totalTime,true);
+	            return summaryString;
+			}
+			
+			private function sumBillableSummaryFunction(iterator:IViewCursor, dataField:String, operation:String):Object{
+				var summaryString:String = ""; 
+				var totalTime:Number = 0;
+				iterator.seek(CursorBookmark.FIRST);
+	            while(!iterator.afterLast)
+	            {
+            		totalTime = totalTime + getTotalBillableTime(iterator.current);
+	            	iterator.moveNext();
+	            }
+	            summaryString = convertMilliSecondsToString(totalTime,true);
+	            return summaryString;
+			}
+			
+			public function getDateLabel(item:Object,column:AdvancedDataGridColumn):String
+			{
+				return dateFormatter.format(item[column.dataField]);
+			}
+			
+			public function getTotalOnClockTime(item:Object):Number {
+				if(item.onClock==0){
+					if(item.endDateTime>=item.startDateTime){
+						var breakHour:Number = 0;
+						if(item.breakHour!=null && item.breakHour!=""){
+							breakHour = Number(item.breakHour.split(":")[0])*60*60*1000+Number(item.breakHour.split(":")[1])*60*1000;
+						}
+						return item.endDateTime.time-item.startDateTime.time-breakHour;
+					}
+				}
+				return 0;
+			}
+			
+			public function getTotalBillableTime(item:Object):Number {
+				var billable:Number = 0;
+				if(item.billable!=null && item.billable!=""){
+					billable = Number(item.billable.split(":")[0])*60*60*1000+Number(item.billable.split(":")[1])*60*1000;
+				}
+				return billable;
+			}
+			
+			public function getOnClockTime(item:Object):String {
+				if(item.onClock==0){
+					if(item.endDateTime>=item.startDateTime){
+						var breakHour:Number = 0;
+						if(item.breakHour!=null && item.breakHour!=""){
+							breakHour = Number(item.breakHour.split(":")[0])*60*60*1000+Number(item.breakHour.split(":")[1])*60*1000;
+						}
+						return convertMilliSecondsToString(item.endDateTime.time-item.startDateTime.time-breakHour,true);
+					}
+				}
+				return "0:00";
+			}
+			
+			public function getBillableTime(item:Object):String {
+				var billable:Number = 0;
+				if(item.billable!=null && item.billable!=""){
+					billable = Number(item.billable.split(":")[0])*60*60*1000+Number(item.billable.split(":")[1])*60*1000;
+				}
+				return convertMilliSecondsToString(billable,true);
+			}
+			
+			private function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
+				var txtString:String = "";
+				if(showSeconds){
+					if(milliSeconds<60000){
+						txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+					}
+				}
+				if(milliSeconds>=60000 && milliSeconds<60000*60){
+			    	txtString = "00:";
+			    	txtString = txtString + numFormatter.format(milliSeconds/60000);
+			    	if(showSeconds){
+			    		txtString = txtString + " " + numFormatter.format((milliSeconds%60000)/(1000))+"S";
+			    	}
+			    }
+			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
+			    	txtString = numFormatter.format(milliSeconds/(60000*60))+":";
+			    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString + " " + numFormatter.format(milliSeconds%60000/1000)+"S";
+			    	}
+			    }
+			    if(milliSeconds>=60000*60*24){
+			    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+":";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString+" "+numFormatter.format(milliSeconds%60000/1000)+"S";
+			    	}
+			    }
+			    if(txtString==""){
+			    	txtString = "0:00";
+			    }
+			    return txtString;
+			}
+			
+			private function getTotalTime(item:Object, column:AdvancedDataGridColumn):String {
+				if(item is TimeCard){
+					if(column.dataField=='onClock'){
+						return getOnClockTime(item);
+					} else {
+						return getBillableTime(item);
+					}
+				} else {
+					if(item.childObjects!=null){
+						var totalTime:Number = 0;
+						var list:ArrayCollection = item.childObjects as ArrayCollection;
+						for each(var obj:Object in list) {
+							if(obj is TimeCard){
+								if(column.dataField=='onClock'){
+									totalTime = totalTime + getTotalOnClockTime(obj);
+								} else {
+									totalTime = totalTime + getTotalBillableTime(obj);
+								}
+							}
+						}
+						return convertMilliSecondsToString(totalTime,true);
+					}
+				}
+				return "";
+			}
+	        
+		]]>
+	</mx:Script>
+	
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
+	
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
+	
+	<mx:VBox id="dgBox" width="100%" height="100%">
+		
+	</mx:VBox>
+	
+	<!--<mx:AdvancedDataGrid id="previewDetails" defaultLeafIcon="{null}" width="100%" height="100%">
+		<mx:columns>
+			<mx:AdvancedDataGridColumn headerText="Name"/>
+			<mx:AdvancedDataGridColumn dataField="socialSecurity" headerText="SSN"/>
+			<mx:AdvancedDataGridColumn dataField="period" headerText="Period"/>
+			<mx:AdvancedDataGridColumn dataField="startDateTime" headerText="Date">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getDateLabel(data,'startDateTime')}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:AdvancedDataGridColumn>
+			<mx:AdvancedDataGridColumn dataField="endDateTime" headerText="Out">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getDateLabel(data,'endDateTime')}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:AdvancedDataGridColumn>
+			<mx:AdvancedDataGridColumn dataField="onClock" headerText="On Clock" labelFunction="getTotalTime"/>
+			<mx:AdvancedDataGridColumn dataField="billable" headerText="Billable" labelFunction="getTotalTime"/>
+		</mx:columns>
+	</mx:AdvancedDataGrid>
+	
+	<mx:GroupingCollection id="gc" source="{timeCardList}" childrenField="childObjects">
+		<mx:Grouping>
+			<mx:fields>
+				<mx:GroupingField name="employeeName"/>
+			</mx:fields>
+		</mx:Grouping>
+	</mx:GroupingCollection>-->
+		
+						
+</mx:TitleWindow>

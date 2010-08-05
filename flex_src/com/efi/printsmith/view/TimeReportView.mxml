@@ -7,6 +7,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.core.Application;
+			import com.efi.printsmith.pages.TimeReportPreview;
 			import com.efi.printsmith.common.scripts.DateUtil;
 			import com.efi.printsmith.data.ComLink;
 			import flash.net.navigateToURL;
@@ -31,7 +33,7 @@
 			
 			private function initExportWindow():void {
 				PopUpManager.centerPopUp(this);
-				employeeTimeExportBean.format = "firstName";
+				employeeTimeExportBean.format = "employee.firstName";
 				employeeTimeExportBean.rangeType = "period";
 				employeeTimeExportBean.detail = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Showfulltimecard');
 				var todayDate:Date = new Date();
@@ -47,12 +49,16 @@
 				 Format List 
 				 */ 
 				var formatObj:Object = new Object();
-				formatObj.id = "firstName";
+				formatObj.id = "employee.firstName";
 				formatObj.name= "By Name";
 				formatList.addItem(formatObj);
 				formatObj = new Object();
-				formatObj.id = "socialSecurity";
+				formatObj.id = "employee.socialSecurity";
 				formatObj.name= "By SSN";
+				formatList.addItem(formatObj);
+				formatObj = new Object();
+				formatObj.id = "period";
+				formatObj.name= "By Period";
 				formatList.addItem(formatObj);
 			}
 			
@@ -73,7 +79,15 @@
 			}
 
 			private function handleTimeCardLoadResult(event:ResultEvent):void {
+				var dataList:ArrayCollection = new ArrayCollection();
 				timeCardList = event.result as ArrayCollection;
+				for each(var timeCard:TimeCard in timeCardList){
+					timeCard.employeeName = timeCard.employee.lastName+", "+timeCard.employee.firstName;
+				}
+				dataList.addItem(timeCardList);
+				dataList.addItem(employeeTimeExportBean);
+				var timeReportPreview:TimeReportPreview = PopUpManager.createPopUp(this,TimeReportPreview,true) as TimeReportPreview;
+				timeReportPreview.inputDataList = dataList;
 			}
 						
 			private function handleFault(ev:FaultEvent):void {  
@@ -88,7 +102,17 @@
 			
 			private function doPreview():void {
 				if(validateData()){
-					
+					var selectedEmployees:ArrayCollection = new ArrayCollection();
+					for each(var employee:Employee in employeeList){
+						if(employee.isSelected){
+							selectedEmployees.addItem(employee.employeeId);
+						}
+					}
+					if(employeeTimeExportBean.rangeType=="period"){
+						dataServiceTimeCard.getEmployeeTimeExports(employeeTimeExportBean.format,null,null,employeeTimeExportBean.periodFrom,employeeTimeExportBean.periodTo,selectedEmployees);
+					} else {
+						dataServiceTimeCard.getEmployeeTimeExports(employeeTimeExportBean.format,employeeTimeExportBean.dateFrom,employeeTimeExportBean.dateTo,0,0,selectedEmployees);
+					}
 				}
 			}
 			
