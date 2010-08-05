@@ -43,7 +43,7 @@
 				<components:MultiLineLabelButton x="176" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Accounts')}" width="158" height="90" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doAccounts()" fontSize="9"/>
 				<components:MultiLineLabelButton x="176" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.UserDefinitions')}" width="158" height="90" id="users" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doUsers();" fontSize="9"/>
 				<components:MultiLineLabelButton x="176" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Contacts')}" width="158" height="90" id="contacts" labelPlacement="bottom" icon="@Embed(source='assets/contacts.png')" click="doContacts();" fontSize="9"/>
-				<components:MultiLineLabelButton x="674" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PostPayments')}" width="158" height="90" id="post_payment" labelPlacement="bottom" icon="@Embed(source='assets/postPayment.png')" fontSize="9"/>
+				<components:MultiLineLabelButton x="674" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PostPayments')}" width="158" height="90" id="post_payment" labelPlacement="bottom" icon="@Embed(source='assets/postPayment.png')" click="doPayments();" fontSize="9"/>
 				<components:MultiLineLabelButton x="675" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Closeout')}" width="158" height="90" id="closeout" labelPlacement="bottom" icon="@Embed(source='assets/closeout.png')" fontSize="9"/>
 				<components:MultiLineLabelButton x="674" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.MonthlyCloseout')}" width="158" height="90" id="monthly_closeout" labelPlacement="bottom" icon="@Embed(source='assets/monthlyCloseout.png')" fontSize="9"/>
 				<components:MultiLineLabelButton x="508" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.DeliveryTicketManage')}" width="158" height="90" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')" click="doDeliveryTicket();" fontSize="9"/>
@@ -207,6 +207,10 @@
 		}
 		private function doContacts():void {
 			var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		private function doPayments():void {
+			var event:EditPaymentEvent = new EditPaymentEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 		private function doPressDefinitions():void {

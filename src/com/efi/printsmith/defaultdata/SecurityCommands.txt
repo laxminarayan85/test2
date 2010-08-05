@@ -101,7 +101,7 @@ rStandardMenuText.AR,	rStandardMenuText.DeleteAccount,CMD_Contact_Account_Delete
 rStandardMenuText.AR,	rStandardMenuText.CreditInfo,CMD_Contact_CreditInfoPanel
 rStandardMenuText.AR,	rStandardMenuText.CampaignsandGrades,CMD_Contact_CampaignsPanel
 rStandardMenuText.AR,	rStandardMenuText.WEBPanel,CMD_Contact_WEBPanel
-rStandardMenuText.AR,rStandardMenuText.PostPayments,CMD_
+rStandardMenuText.AR,rStandardMenuText.PostPayments,CMD_Payment
 rStandardMenuText.AR,rStandardMenuText.DailyCloseout,CMD_
 rStandardMenuText.AR,rStandardMenuText.MonthlyCloseout,CMD_
 rStandardMenuText.AR,rStandardMenuText.GenerateStatements,CMD_
