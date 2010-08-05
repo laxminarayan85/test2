@@ -90,9 +90,9 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 				}
 			} else if (copierDefinition.getMatrixType().equals("StepTable")) {
 				if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
-					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(copierDefinition.getCopierMatrix(), job.getTotalCopies()*2);
+					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(copierDefinition.getCopierMatrix(), job.getPressQty()*2);
 				} else {
-					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(copierDefinition.getCopierMatrix(), job.getTotalCopies());
+					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(copierDefinition.getCopierMatrix(), job.getPressQty());
 				}
 				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 				if (job.getDoubleSided()) {
