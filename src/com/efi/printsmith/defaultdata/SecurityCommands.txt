@@ -203,7 +203,7 @@ rStandardMenuText.Admin,	rStandardMenuText.1,CMD_
 rStandardMenuText.Admin,	scheduleBoardMgrCmd.ViewTagdetails,CMD_
 rStandardMenuText.Admin,	scheduleBoardMgrCmd.ModifyTagProductionT,CMD_
 rStandardMenuText.Admin,rStandardMenuText.SystemMonitor,CMD_
-rStandardMenuText.Admin,rStandardMenuText.CreditCardManager,CMD_
+rStandardMenuText.Admin,rStandardMenuText.CreditCardManager,CMD_CreditCardMgr
 rStandardMenuText.Admin,	rAltMenuText.ReadMagneticCardSwip,CMD_
 rStandardMenuText.Admin,rStandardMenuText.ShowHelpBar,CMD_
 rStandardMenuText.Admin,rStandardMenuText.1,CMD_

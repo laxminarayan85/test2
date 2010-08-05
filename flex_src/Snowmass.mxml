@@ -64,8 +64,8 @@
 				<components:MultiLineLabelButton x="342" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Preferences')}" width="158" height="90" id="preferences" labelPlacement="bottom" icon="@Embed(source='assets/preference.png')" click="doSystemPreferences()" fontSize="9"/>
 				<components:MultiLineLabelButton x="342" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.DocumentPreferences')}" width="158" height="90" id="document_preferences" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" fontSize="9"/>
 				<components:MultiLineLabelButton x="508" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.MailingLabels')}" width="158" height="90" id="mailing_labels" labelPlacement="bottom" icon="@Embed(source='assets/mailingLabels.png')" fontSize="9"/>
-				<components:MultiLineLabelButton x="508" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ReportManager')}" width="158" height="90" id="report_manager" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')" fontSize="9"/>
-				<components:MultiLineLabelButton x="508" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ReportWriter')}" width="158" height="90" id="report_writer" labelPlacement="bottom" icon="@Embed(source='assets/reportWriter.png')" fontSize="9"/>
+				<components:MultiLineLabelButton x="508" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ReportManager')}" width="158" height="90" id="report_manager" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')" click="doCreditCardManager()" fontSize="9"/>
+				<components:MultiLineLabelButton x="508" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CreditCardManager')}" width="158" height="90" id="report_writer" labelPlacement="bottom" icon="@Embed(source='assets/reportWriter.png')" fontSize="9"/>
 				<mx:Image x="91" y="574" id="efi_logo" source="assets/logo-efi-print-to-win.gif" visible="true" alpha="0.0" width="89" height="28"/>
 				<mx:Text x="10" y="587" text="Powered by:&#xd;" id="powered_by" alpha="0.0"/>
 				<components:MultiLineLabelButton x="176" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" width="158" height="90" icon="@Embed(source='assets/employeeManager.png')" labelPlacement="bottom" click="doEmployee();" fontSize="9"/>
@@ -90,6 +90,7 @@
 		import mx.formatters.DateFormatter;
 		import mx.formatters.CurrencyFormatter;
 		import com.efi.printsmith.events.commandEvents.EditForms.*;
+		import com.efi.printsmith.events.ShowCreditCardMgrEvent;
 		
 		import com.efi.printsmith.view.*;
 
@@ -232,6 +233,11 @@
 			event.dispatch();
 		}
 		
+		private function doCreditCardManager():void {
+			var event:ShowCreditCardMgrEvent = new ShowCreditCardMgrEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+
 		private function doAccountHistory():void {
 			var event:EditAccountHistoryEvent = new EditAccountHistoryEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
