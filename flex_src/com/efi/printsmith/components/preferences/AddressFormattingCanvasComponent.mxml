@@ -410,11 +410,13 @@
 									continue;
 								}
 							}
-							if(addressFormatting.countryPosition!=0) {
-								strValue = addressFormatting.countryPosition.toString();
-								if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
-									txtString = txtString + objCountry.name+(addressFormatting.countrySeparator==null?"":addressFormatting.countrySeparator)+" ";
-									continue;
+							if (addressFormatting.country != null) {
+								if(addressFormatting.countryPosition!=0) {
+									strValue = addressFormatting.countryPosition.toString();
+									if(Number(strValue.substr(0,1))==i && Number(strValue.substr(1,2))==j) {
+										txtString = txtString + objCountry.name+(addressFormatting.countrySeparator==null?"":addressFormatting.countrySeparator)+" ";
+										continue;
+									}
 								}
 							}
 							txtString = txtString + "\t";
