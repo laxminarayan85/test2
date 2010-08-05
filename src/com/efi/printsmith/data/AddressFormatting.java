@@ -73,7 +73,7 @@ public class AddressFormatting extends ModelBase {
 	/**
    * @generated
    */
-  public static final String COUNTYPOSITION = "CountyPosition";
+  public static final String COUNTRYPOSITION = "CountryPosition";
 	/**
 	 * @generated
 	 */
@@ -208,21 +208,21 @@ public class AddressFormatting extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Integer countyPosition;
+  private Integer countryPosition;
 
 	/**
    * @generated
  	 */
-  public Integer getCountyPosition(){
-    return countyPosition; 
+  public Integer getCountryPosition(){
+    return countryPosition; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setCountyPosition(Integer newVal) {
-    this.countyPosition = newVal;
+  public void setCountryPosition(Integer newVal) {
+    this.countryPosition = newVal;
   }
 
 
@@ -369,7 +369,7 @@ public class AddressFormatting extends ModelBase {
     if (STREET2POSITION.equals(propertyName)) return getStreet2Position();
     if (CITYPOSITION.equals(propertyName)) return getCityPosition();
     if (STATEPOSITION.equals(propertyName)) return getStatePosition();
-    if (COUNTYPOSITION.equals(propertyName)) return getCountyPosition();
+    if (COUNTRYPOSITION.equals(propertyName)) return getCountryPosition();
     if (ZIPPOSITION.equals(propertyName)) return getZipPosition();
     return super.getProperty(propertyName);
   }
@@ -385,7 +385,7 @@ public class AddressFormatting extends ModelBase {
     if (STREET2POSITION.equals(propertyName)) setStreet2Position((Integer)newValue); else
     if (CITYPOSITION.equals(propertyName)) setCityPosition((Integer)newValue); else
     if (STATEPOSITION.equals(propertyName)) setStatePosition((Integer)newValue); else
-    if (COUNTYPOSITION.equals(propertyName)) setCountyPosition((Integer)newValue); else
+    if (COUNTRYPOSITION.equals(propertyName)) setCountryPosition((Integer)newValue); else
     if (ZIPPOSITION.equals(propertyName)) setZipPosition((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -406,7 +406,7 @@ public class AddressFormatting extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (STATEPOSITION.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
-    if (COUNTYPOSITION.equals(propertyName)) 
+    if (COUNTRYPOSITION.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (ZIPPOSITION.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
@@ -425,7 +425,7 @@ public class AddressFormatting extends ModelBase {
     if (STREET2POSITION.equals(propertyName)) return AddressFormatting.class;
     if (CITYPOSITION.equals(propertyName)) return AddressFormatting.class;
     if (STATEPOSITION.equals(propertyName)) return AddressFormatting.class;
-    if (COUNTYPOSITION.equals(propertyName)) return AddressFormatting.class;
+    if (COUNTRYPOSITION.equals(propertyName)) return AddressFormatting.class;
     if (ZIPPOSITION.equals(propertyName)) return AddressFormatting.class;
     return super.getPropertyOwner(propertyName);
   }
@@ -448,7 +448,7 @@ public class AddressFormatting extends ModelBase {
       return false;
     if (! SmartEquals(getStatePosition(), objT.getStatePosition()))
       return false;
-    if (! SmartEquals(getCountyPosition(), objT.getCountyPosition()))
+    if (! SmartEquals(getCountryPosition(), objT.getCountryPosition()))
       return false;
     if (! SmartEquals(getZipPosition(), objT.getZipPosition()))
       return false;
