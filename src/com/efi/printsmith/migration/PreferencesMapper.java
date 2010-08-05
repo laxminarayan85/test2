@@ -535,6 +535,10 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setWorkSaturday(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("useBusinessDaysForFutureDateParsing"))
 			preferencesSystem.setFutureDatesExcludeClosed(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("inkWeightSingular"))
+			preferencesSystem.setInkWeightSingular(value);
+		else if (name.equals("inkWeightPlural"))
+			preferencesSystem.setInkWeightPlural(value);
 		dataService.addUpdate(preferencesSystem);
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
