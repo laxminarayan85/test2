@@ -121,6 +121,7 @@ public class PreferencesMapper extends ImportMapper {
 		else if (group.equals("Def Customer")) {
 			importPreferencesSystemField(key, fieldName, fieldValue);
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
+			importPreferencesAccountingField(key, fieldName, fieldValue);
 		}
 	}
 	private void importPreferencesMarkupsField(String group, String key, String name, String value) throws Exception {
@@ -363,7 +364,10 @@ public class PreferencesMapper extends ImportMapper {
 		} else if (name.equals("frozen")) {
 			preferencesAccounting.setFrozen(Utilities.tokenToInt(key));
 			preferencesAccounting.setFrozenNote(value);
-		}
+		} else if (name.equals("FinanceCharge"))
+			preferencesAccounting.setFinanceChange(Utilities.tokenToDouble(value));
+		else if (name.equals("daysinactive"))
+			preferencesAccounting.setInactivePeriod(Utilities.tokenToDouble(value));
 		dataService.addUpdate(preferencesAccounting);
 	}
 	private void importPreferencesPOSField(String key, String name, String value) throws Exception {
