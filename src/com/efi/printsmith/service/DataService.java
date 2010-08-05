@@ -2643,7 +2643,7 @@ public class DataService extends HibernateService {
 						"or endDateTime between '"+dateFormat.format(fromDate)+"' and '"+dateFormat.format(toDate)+"')";
 			}
 			queryString = queryString + " and tc.onClock=0 and tc.endDateTime is not null and tc.employee.employeeId in (:employeeIds)";
-			queryString = queryString + " order by tc.employee."+orderByField+" asc";
+			queryString = queryString + " order by tc."+orderByField+" asc";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employeeIds", selectedEmployeeList);
 			List<TimeCard> timeCardList = query.getResultList();

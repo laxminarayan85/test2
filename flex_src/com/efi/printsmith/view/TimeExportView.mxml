@@ -33,7 +33,7 @@
 			
 			private function initExportWindow():void {
 				PopUpManager.centerPopUp(this);
-				employeeTimeExportBean.format = "firstName";
+				employeeTimeExportBean.format = "employee.firstName";
 				employeeTimeExportBean.rangeType = "period";
 				employeeTimeExportBean.includeFieldNames = true;
 				employeeTimeExportBean.delimitedType = "comma";
@@ -137,11 +137,11 @@
 				 Format List 
 				 */ 
 				var formatObj:Object = new Object();
-				formatObj.id = "firstName";
+				formatObj.id = "employee.firstName";
 				formatObj.name= "By Name";
 				formatList.addItem(formatObj);
 				formatObj = new Object();
-				formatObj.id = "socialSecurity";
+				formatObj.id = "employee.socialSecurity";
 				formatObj.name= "By SSN";
 				formatList.addItem(formatObj);
 			}
