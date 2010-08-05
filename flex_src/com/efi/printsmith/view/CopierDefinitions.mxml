@@ -356,7 +356,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		var doubleSidedPricing:Boolean = this.price_2_side.selectedItem == Price2Side.UsingSecondSideRate?true:false;
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setMatrix(copierDefinition.copierMatrix);	
-		titleWindow.setMatrixType(pricing_method_combo.selectedItem as String,doubleSidedPricing);
+		titleWindow.setMatrixType(pricing_method_combo.selectedItem.data as String,doubleSidedPricing);
 	}
 	
 	private function findItemArray(name:String, array:Array):int {
