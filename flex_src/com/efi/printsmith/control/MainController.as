@@ -70,6 +70,7 @@ package com.efi.printsmith.control
 			this.addCommand(EditWorkInProgressEvent.COMMANDID, EditWorkInProgressCommand);
 			this.addCommand(EditWebAdminEvent.COMMANDID, EditWebAdminCommand);
 			this.addCommand(EditPaymentEvent.COMMANDID, EditPaymentCommand);
+			this.addCommand(ShowCreditCardMgrEvent.COMMANDID, ShowCreditCardMgrCommand);
 
 			//form level items
 			this.addCommand(DeleteStockDefinitionEvent.COMMANDID, DeleteStockDefinitionCommand);
