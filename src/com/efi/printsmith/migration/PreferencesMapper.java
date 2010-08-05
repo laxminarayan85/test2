@@ -28,6 +28,8 @@ import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.PreferencesCashRegister;
 import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.TaxCodes;
+import com.efi.printsmith.data.Merchandise;
+import com.efi.printsmith.data.Merchandise;
 
 import com.efi.printsmith.service.DataService;
 
@@ -99,8 +101,10 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesQuantityBreaksField(fieldValue);
 		else if (group.equals("Blank Stock Setup"))
 			importPreferencesStocksField(group, key, fieldName, fieldValue);
-		else if (group.equals("Standard Markup"))
+		else if (group.equals("Standard Markup")) {
 			importPreferencesStocksField(group, key, fieldName, fieldValue);
+			importPreferencesMarkupsField(group, key, fieldName, fieldValue);
+		}
 		else if (group.equals("Pricing Methods"))
 			importPreferencesPricingMethodField(key, fieldName, fieldValue);
 		else if (group.equals("Cash Register")) {
@@ -117,6 +121,45 @@ public class PreferencesMapper extends ImportMapper {
 		else if (group.equals("Def Customer")) {
 			importPreferencesSystemField(key, fieldName, fieldValue);
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
+		}
+	}
+	private void importPreferencesMarkupsField(String group, String key, String name, String value) throws Exception {
+		DataService dataService = new DataService();
+		if (group.equals("OutsideMatrix_cost") || group.equals("OutsideMatrix_markup")) {
+			Merchandise Merchandise = (Merchandise)dataService.getByPrevId("Merchandise", key);
+			if (Merchandise == null) {
+				Merchandise = new Merchandise();
+				Merchandise.setPrevId(key);
+			}
+			if (group.equals("OutsideMatrix_cost")) {
+				double cost = Utilities.tokenToDouble(value);
+				if (cost == 999999.0)
+					Merchandise.setAbove(true);
+				else {
+					Merchandise.setAbove(false);
+					Merchandise.setTotalCost(cost);
+				}
+			} else if (group.equals("OutsideMatrix_markup"))
+				Merchandise.setMarkup(Utilities.tokenToDouble(value));
+			dataService.addUpdate(Merchandise);
+		}
+		if (group.equals("MerchMatrix_cost") || group.equals("MerchMatrix_markup")) {
+			Merchandise merchandise = (Merchandise)dataService.getByPrevId("Merchandise", key);
+			if (merchandise == null) {
+				merchandise = new Merchandise();
+				merchandise.setPrevId(key);
+			}
+			if (group.equals("MerchMatrix_cost")) {
+				double cost = Utilities.tokenToDouble(value);
+				if (cost == 999999.0)
+					merchandise.setAbove(true);
+				else {
+					merchandise.setAbove(false);
+					merchandise.setTotalCost(cost);
+				}
+			} else if (group.equals("MerchMatrix_markup"))
+				merchandise.setMarkup(Utilities.tokenToDouble(value));
+			dataService.addUpdate(merchandise);
 		}
 	}
 	private void importPreferencesCashRegisterField(String key, String name, String value) throws Exception {
