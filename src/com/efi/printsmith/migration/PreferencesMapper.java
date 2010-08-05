@@ -356,18 +356,21 @@ public class PreferencesMapper extends ImportMapper {
 		if (preferencesAccounting == null)
 			preferencesAccounting = new PreferencesAccounting();
 		if (name.equals("pastDue")) {
-			preferencesAccounting.setPastDue(Utilities.tokenToInt(key));
 			preferencesAccounting.setPastDueNote(value);
 		} else if (name.equals("delinquint")) {
-			preferencesAccounting.setDelinquent(Utilities.tokenToInt(key));
 			preferencesAccounting.setDelinquentNote(value);
 		} else if (name.equals("frozen")) {
-			preferencesAccounting.setFrozen(Utilities.tokenToInt(key));
 			preferencesAccounting.setFrozenNote(value);
 		} else if (name.equals("FinanceCharge"))
 			preferencesAccounting.setFinanceChange(Utilities.tokenToDouble(value));
 		else if (name.equals("daysinactive"))
 			preferencesAccounting.setInactivePeriod(Utilities.tokenToDouble(value));
+		else if (name.equals("pastDueDays"))
+			preferencesAccounting.setPastDue(Utilities.tokenToInt(value));
+		else if (name.equals("delinquentDays"))
+			preferencesAccounting.setDelinquent(Utilities.tokenToInt(value));
+		else if (name.equals("frozenDays"))
+			preferencesAccounting.setFrozen(Utilities.tokenToInt(value));
 		dataService.addUpdate(preferencesAccounting);
 	}
 	private void importPreferencesPOSField(String key, String name, String value) throws Exception {
