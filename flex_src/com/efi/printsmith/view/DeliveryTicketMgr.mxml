@@ -39,6 +39,7 @@ width="100%" height="100%"  creationComplete="init()"
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.events.FaultEvent;
 	import mx.controls.Alert;
+	import mx.managers.PopUpManager;
 	
 	[Bindable]
 	private var deliveryTicketLines:ArrayCollection=new ArrayCollection();
@@ -53,7 +54,9 @@ width="100%" height="100%"  creationComplete="init()"
 	private var lineItem:DeliveryTicketJobs;	
 	
 	private function doNew(item:Button):void{
-		
+	    var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
+		deliveryTicketEditWindow.setStyle("borderAlpha", 0.9);
+	 //	deliveryTicketEditWindow.setJob(job);
 	}
 	public function init():void{
 		deliveryTickets = new ArrayCollection();
