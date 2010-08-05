@@ -610,6 +610,10 @@
 			square_area_per_copy_editor.mapToMatrix();
 			matrix = square_area_per_copy_editor.matrix;
 			break;
+		case "TOTALOFALLCOPIESTWOSIDES":
+			this.total_of_all_copies_two_sides_editor.mapToMatrix();
+			matrix = this.total_of_all_copies_two_sides_editor.matrix;
+			break;
 		case "TOTALOFALLCOPIES":
 		case "TOTALSQUAREAREA":
 		case "SQUAREAREAOFORIGINALS":
@@ -623,7 +627,7 @@
 		matrix.elements.refresh();
 		for (var i:int=0;i<this.matrix.elements.length;i++) {
 			var element:com.efi.printsmith.data.MatrixElement = this.matrix.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
-			if (element.lastLine == true)
+			if (element.lastLine == true) {
 				element.price1 = parseFloat(this.price1.text);
 				element.price2 = parseFloat(this.price2.text);
 				element.price3 = parseFloat(this.price3.text);
@@ -644,6 +648,7 @@
 				element.price18 = parseFloat(this.price18.text);
 				element.price19 = parseFloat(this.price19.text);
 				element.price20 = parseFloat(this.price20.text);
+			}
 		}
 		dataService.addUpdate(matrix);
 		PopUpManager.removePopUp(this);
