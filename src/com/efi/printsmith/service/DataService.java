@@ -660,6 +660,23 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+	public UnpurchasedMerchandise getUnPurchaseByAccountId(Long Id) {
+		log.debug("** getBypurchasesAccountId called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+		
+			String queryString = "select a from UnpurchasedMerchandise a where a.account.id = :id";
+			Query query = em.createQuery(queryString);
+			query.setParameter("id", Id);
+			UnpurchasedMerchandise object = (UnpurchasedMerchandise) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
 
 	public ModelBase getByName(String className, String name) {
 		log.debug("** getByName called.");
