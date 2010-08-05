@@ -28,7 +28,7 @@ import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.PreferencesCashRegister;
 import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.TaxCodes;
-import com.efi.printsmith.data.Merchandise;
+import com.efi.printsmith.data.OutsideService;
 import com.efi.printsmith.data.Merchandise;
 
 import com.efi.printsmith.service.DataService;
@@ -127,22 +127,22 @@ public class PreferencesMapper extends ImportMapper {
 	private void importPreferencesMarkupsField(String group, String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
 		if (group.equals("OutsideMatrix_cost") || group.equals("OutsideMatrix_markup")) {
-			Merchandise Merchandise = (Merchandise)dataService.getByPrevId("Merchandise", key);
-			if (Merchandise == null) {
-				Merchandise = new Merchandise();
-				Merchandise.setPrevId(key);
+			OutsideService outsideService = (OutsideService)dataService.getByPrevId("OutsideService", key);
+			if (outsideService == null) {
+				outsideService = new OutsideService();
+				outsideService.setPrevId(key);
 			}
 			if (group.equals("OutsideMatrix_cost")) {
 				double cost = Utilities.tokenToDouble(value);
 				if (cost == 999999.0)
-					Merchandise.setAbove(true);
+					outsideService.setAbove(true);
 				else {
-					Merchandise.setAbove(false);
-					Merchandise.setTotalCost(cost);
+					outsideService.setAbove(false);
+					outsideService.setTotalCost(cost);
 				}
 			} else if (group.equals("OutsideMatrix_markup"))
-				Merchandise.setMarkup(Utilities.tokenToDouble(value));
-			dataService.addUpdate(Merchandise);
+				outsideService.setMarkup(Utilities.tokenToDouble(value));
+			dataService.addUpdate(outsideService);
 		}
 		if (group.equals("MerchMatrix_cost") || group.equals("MerchMatrix_markup")) {
 			Merchandise merchandise = (Merchandise)dataService.getByPrevId("Merchandise", key);
