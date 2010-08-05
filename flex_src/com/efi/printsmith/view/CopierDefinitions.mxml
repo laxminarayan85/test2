@@ -434,11 +434,11 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		copierDefinition.hoursOpen = parseFloat(openhours.text);
 		copierDefinition.machineCostPerCopy = parseFloat(machineCostperCopy.text);
 		if (pricing_method_combo.selectedItem != null)
-			copierDefinition.method = pricing_method_combo.selectedItem.value.toString();
+			copierDefinition.method = pricing_method_combo.selectedItem.data;
 		if (stock_Price_is_combo.selectedItem != null)
-			copierDefinition.stockPriceMethod = stock_Price_is_combo.selectedItem.toString();
+			copierDefinition.stockPriceMethod = stock_Price_is_combo.selectedItem.data;
 		if (price_2_side.selectedItem != null)
-			copierDefinition.priceTwoSide = price_2_side.selectedItem.toString();	
+			copierDefinition.priceTwoSide = price_2_side.selectedItem.data;
 		
 		copierDefinition.salesCat = charge_sales_category_combo.selectedItem as SalesCategory;
 		
