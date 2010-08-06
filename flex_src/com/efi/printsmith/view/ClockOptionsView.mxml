@@ -21,6 +21,10 @@
 			
 			[Bindable] public var autoClockOutDetectortList:ArrayCollection = new ArrayCollection();
 			
+			[Bindable] public var requestCount:int=0;
+			
+			[Bindable] public var checkCount:int=0;
+			
 			private function initClockOptsWindow():void {
 				PopUpManager.centerPopUp(this);
 				dataService.getAll("Employee");
@@ -88,47 +92,67 @@
 			}
 			
 			private function doSave():void {
-				if(employee!=null){
-					autoClockOutDetectortList = parentDocument.autoClockOutDetectortList;
-					var count:int=-1;
-					for each(var autoClockOutDetectorObj:AutoClockOutDetector in autoClockOutDetectortList){
-						if(autoClockOutDetectorObj.employee.id==employee.id){
-							count++;
-							break;	
-						}
-					}
-					if(count!=-1){
-						var autoClockOutDetectorObject:AutoClockOutDetector = autoClockOutDetectortList.getItemAt(count) as AutoClockOutDetector;
-						if(employee.autoHour==0 && employee.autoMin==0){
-							autoClockOutDetectorObject.stop();
-							autoClockOutDetectortList.removeItemAt(count);
-						} else {
-							if(autoClockOutDetectorObject.employee.autoHour!=employee.autoHour || autoClockOutDetectorObject.employee.autoMin!=employee.autoMin){
-								autoClockOutDetectorObject.employee = employee;
-							}
-						}
-					} else {
-						if(employee.clockIn || employee.clockBreak){
-							if(employee.autoHour!=0 || employee.autoMin!=0){
-								dataServiceTimeCard.getByClockInOut("TimeCard",employee);
-							}
-						}
-					}
-				}
 				dataService.addUpdateDeleteList(employeeList,null);
+				
+			}
+			
+			private function triggerAutoClockoutDetector(autoClockOutEmployeeList:ArrayCollection):void {
+				for each(var employeeObj:Employee in autoClockOutEmployeeList){
+					dataServiceTimeCard.getByClockInOut("TimeCard",employeeObj);
+				}
 			}
 			
 			private function handleLoadTimeCardResult(ev:ResultEvent):void {
+				checkCount++;
 				var timecardArray:ArrayCollection = ev.result as ArrayCollection;
 				var autoClockOutDetector:AutoClockOutDetector = new AutoClockOutDetector();
 				autoClockOutDetector.employee = employee;
 				autoClockOutDetector.timeCard =	timecardArray.getItemAt(0,0) as TimeCard; 
 				autoClockOutDetector.start();
 				autoClockOutDetectortList.addItem(autoClockOutDetector);
+				if(requestCount==checkCount){
+					PopUpManager.removePopUp(this);
+				}
 			}
 			
 			private function handleSaveResult(event:ResultEvent):void {
-				PopUpManager.removePopUp(this);
+				var requestSent:Boolean = false;
+				var autoClockOutEmployeeList:ArrayCollection = new ArrayCollection();
+				for each(var employeeObj:Employee in employeeList){
+					autoClockOutDetectortList = parentDocument.autoClockOutDetectortList;
+					var count:int=-1;
+					for each(var autoClockOutDetectorObj:AutoClockOutDetector in autoClockOutDetectortList){
+						if(autoClockOutDetectorObj.employee.id==employeeObj.id){
+							count++;
+							break;	
+						}
+					}
+					if(count!=-1){
+						var autoClockOutDetectorObject:AutoClockOutDetector = autoClockOutDetectortList.getItemAt(count) as AutoClockOutDetector;
+						if(employeeObj.autoHour==0 && employeeObj.autoMin==0){
+							autoClockOutDetectorObject.stop();
+							autoClockOutDetectortList.removeItemAt(count);
+						} else {
+							if(autoClockOutDetectorObject.employee.autoHour!=employeeObj.autoHour || autoClockOutDetectorObject.employee.autoMin!=employeeObj.autoMin){
+								autoClockOutDetectorObject.employee = employeeObj;
+							}
+						}
+					} else {
+						if(employeeObj.clockIn || employeeObj.clockBreak){
+							if(employeeObj.autoHour!=0 || employeeObj.autoMin!=0){
+								requestSent = true;
+								requestCount++; 
+								autoClockOutEmployeeList.addItem(employeeObj);
+							}
+						}
+					}
+				}
+				if(requestSent){
+					triggerAutoClockoutDetector(autoClockOutEmployeeList);
+				}
+				if(!requestSent){
+					PopUpManager.removePopUp(this);
+				}
 			}
 			
 			private function doRevert():void {

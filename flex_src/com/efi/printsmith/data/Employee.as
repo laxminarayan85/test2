@@ -56,6 +56,6 @@ package com.efi.printsmith.data
 		public var employeeId:String = "";
 		public var isSelected:Boolean = false;
 		public var isDisabled:Boolean = false;
-	
+		public var autoOutTime:String = "";
 	}
 }
