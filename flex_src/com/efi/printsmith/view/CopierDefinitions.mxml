@@ -800,6 +800,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
 				price_2_side.dataProvider = Price2Side.toArray();
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 			
 			case CopierPricingMethod.FlatRate:
@@ -840,6 +841,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
 				price_2_side.dataProvider = Price2Side.toArray();
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
 			case CopierPricingMethod.CopiesPerOriginals:
@@ -859,6 +861,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
 				price_2_side.dataProvider = Price2Side.toArray();
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
 			case CopierPricingMethod.TotalOfAllCopies:
@@ -879,6 +882,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
 				price_2_side.dataProvider = Price2Side.toArray();
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
 			case CopierPricingMethod.SquareAreaOfOriginals:
@@ -898,6 +902,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
 				price_2_side.dataProvider = Price2Side.toArray();
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
 			case CopierPricingMethod.TotalSquareArea:
@@ -917,6 +922,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
 				price_2_side.dataProvider = Price2Side.toArray();
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
 			case CopierPricingMethod.SquareAreaAndCopies:
@@ -936,6 +942,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
 				price_2_side.dataProvider = Price2Side.toArray();
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
 			case CopierPricingMethod.SquareAreaPerCopy:			
@@ -955,6 +962,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
 				price_2_side.dataProvider = Price2Side.toArray();
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 			}
 			if (Matrix_button.visible == true){
