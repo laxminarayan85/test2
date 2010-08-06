@@ -769,6 +769,17 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		updateControlState();	
 	}
 	
+	private function filterFlatRatePrice2Side(item:*, index:int, arr:Array):Boolean {
+		if (item.data == Price2Side.CountingAsMoreOriginals.toString())
+			return false;
+		else if (item.data == Price2Side.UsingFirstSideRate.toString())
+			return false;
+		else if (item.data == Price2Side.UsingSecondSideRate.toString())
+			return false;
+		else
+			return true;
+	}
+	
 	private function updateControlState():void {
 		var tempMethod:CopierPricingMethod;
 		tempMethod = pricing_method_combo.value as CopierPricingMethod;
@@ -808,7 +819,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				RateCopy.enabled = true;
 				baseratelabel.visible =false;
 				baseRate_edit.visible = false;
-				price_2_side.dataProvider = Price2SideFlatRate.toArray();
+				var price2SideArray:Array = Price2Side.toArray().filter(filterFlatRatePrice2Side);
+				price_2_side.dataProvider = price2SideArray;
 				break;
 				
 			case CopierPricingMethod.CopiesAndOriginals:
