@@ -296,6 +296,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		if (ev.token.operation == "getCopierDefinition") {
 			copierDefinition = ev.result as CopierDefinition;
 			if (copierDefinition != null) {
+				updateMethodBox();
 				if ( copierDefinition.largeFormat)
 					this.currentState = "Large Format";
 				else
