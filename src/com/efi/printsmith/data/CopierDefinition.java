@@ -942,7 +942,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	@Column(name="machineCostPerCopy", precision=19, scale=2)
+	@Column(name="machineCostPerCopy", precision=19, scale=4)
 	private BigDecimal machineCostPerCopy;
 	
 	/**
@@ -958,7 +958,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMachineCostPerCopy(BigDecimal newVal) {
     this.machineCostPerCopy = newVal;
-    this.machineCostPerCopy.setScale(2, RoundingMode.HALF_UP);
+    this.machineCostPerCopy.setScale(4, RoundingMode.HALF_UP);
   }
 
 	/**
@@ -966,7 +966,7 @@ public class CopierDefinition extends ModelBase {
    */	
   public void setMachineCostPerCopy(double newVal) {
     this.machineCostPerCopy = BigDecimal.valueOf(newVal);
-    this.machineCostPerCopy.setScale(2, RoundingMode.HALF_UP);
+    this.machineCostPerCopy.setScale(4, RoundingMode.HALF_UP);
   }
 
 	/**
