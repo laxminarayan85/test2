@@ -154,9 +154,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		dataServiceProductionLocation.getAll("ProductionLocations");
 		dataServiceProductionCopiers.getAll("ProductionCopiers");
 		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
-		copierService.newCopier();
-		stockDefinitions = new StockDefinition;
 		doNew();
+		stockDefinitions = new StockDefinition;
+		
 	}
 	
 	public function loadStockDefinitions():void { 
@@ -301,8 +301,6 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				else
 					this.currentState = "";
 			}
-			updateMethodBox();
-			
 			stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
 			price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 			copierDigitalStockmarkup.selected = copierDefinition.useCopierStockMarkup;
@@ -328,6 +326,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			else
 				salesCatName = "";
 		
+			if ( copierDefinition.method != null)
+				pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodType.toArray());
 			if(copierDefinition.matrixType != null){
 				matrixTypeRadioValue = copierDefinition.matrixType;
 			}
@@ -754,6 +754,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		} else {
 			pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodType.toArray());
 		}
+		updateControlState();
 	}
 	
 	
@@ -768,8 +769,11 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	
 	private function updateControlState():void {
+		var tempMethod:CopierPricingMethod;
+		tempMethod = pricing_method_combo.value as CopierPricingMethod;
 		
-		switch (pricing_method_combo.selectedItem) {
+		
+		switch ( pricing_method_combo.value) {
 			case CopierPricingMethod.CostPlus:
 				Matrix_button.visible = false;
 				matrixcopycost.visible= false;
