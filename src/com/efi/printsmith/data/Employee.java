@@ -43,9 +43,9 @@ import org.hibernate.annotations.Type;
 @Table(name = "employee")
 public class Employee extends Party {
 	/**
-   * @generated
-   */
-  public static final String SOCIALSECURITY = "SocialSecurity";
+	 * @generated
+	 */
+	public static final String SOCIALSECURITY = "SocialSecurity";
 	/**
 	 * @generated
 	 */
@@ -206,15 +206,14 @@ public class Employee extends Party {
 	 * @generated
 	 */
 	public static final String EMPLOYEEID = "EmployeeId";
-
 	/**
-   * @generated
-   */
-  public static final String ISSELECTED = "IsSelected";
+	 * @generated
+	 */
+	public static final String ISSELECTED = "IsSelected";
 	/**
-   * @generated
-   */
-  public static final String ISDISABLED = "IsDisabled";
+	 * @generated
+	 */
+	public static final String ISDISABLED = "IsDisabled";
 
 	/**
 	 * @generated
@@ -227,28 +226,28 @@ public class Employee extends Party {
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String socialSecurity;
-
+	private String socialSecurity;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getSocialSecurity(){
+	public String getSocialSecurity(){
     return socialSecurity; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setSocialSecurity(String newVal) {
+	 * @generated
+	 */	
+	public void setSocialSecurity(String newVal) {
     this.socialSecurity = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -356,21 +355,20 @@ public class Employee extends Party {
 
 	
 	/**
-   * @generated
-   */	
-  public void setRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setRate(BigDecimal newVal) {
     this.rate = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setRate(double newVal) {
+	 * @generated
+	 */	
+	public void setRate(double newVal) {
     this.rate = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1224,51 +1222,52 @@ public class Employee extends Party {
     this.employeeId = newVal;
   }
 	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean isSelected;
-
+	private Boolean isSelected;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getIsSelected(){
+	public Boolean getIsSelected(){
     return isSelected; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setIsSelected(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setIsSelected(Boolean newVal) {
     this.isSelected = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean isDisabled;
-
+	private Boolean isDisabled;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getIsDisabled(){
+	public Boolean getIsDisabled(){
     return isDisabled; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setIsDisabled(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setIsDisabled(Boolean newVal) {
     this.isDisabled = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

@@ -262,23 +262,22 @@ public class PreferencesEstimating extends ModelBase {
 	 * @generated
 	 */
 	public static final String CHARGEDESCRIPTION = "ChargeDescription";
-
 	/**
-   * @generated
-   */
-  public static final String SHOWAMOUNTSONTICKET = "ShowAmountsOnTicket";
+	 * @generated
+	 */
+	public static final String SHOWAMOUNTSONTICKET = "ShowAmountsOnTicket";
 	/**
-   * @generated
-   */
-  public static final String ADDBARCODES = "AddBarCodes";
+	 * @generated
+	 */
+	public static final String ADDBARCODES = "AddBarCodes";
 	/**
-   * @generated
-   */
-  public static final String SHOWREFNUMBER = "ShowRefNumber";
+	 * @generated
+	 */
+	public static final String SHOWREFNUMBER = "ShowRefNumber";
 	/**
-   * @generated
-   */
-  public static final String BARCODEFONT = "BarCodeFont";
+	 * @generated
+	 */
+	public static final String BARCODEFONT = "BarCodeFont";
 
 	/**
 	 * @generated
@@ -1295,23 +1294,22 @@ public class PreferencesEstimating extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setDefaultPressCuttOff(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setDefaultPressCuttOff(BigDecimal newVal) {
     this.defaultPressCuttOff = newVal;
     this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setDefaultPressCuttOff(double newVal) {
+	 * @generated
+	 */	
+	public void setDefaultPressCuttOff(double newVal) {
     this.defaultPressCuttOff = BigDecimal.valueOf(newVal);
     this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1563,81 +1561,98 @@ public class PreferencesEstimating extends ModelBase {
     this.chargeDescription = newVal;
   }
 	
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
 	private Boolean showAmountsOnTicket;
-  
-  	private Boolean addBarCodes;
-  
-  	private Boolean showRefNumber;
-	
-  	@ManyToOne(cascade = {CascadeType.ALL})
-  	private FontDefinition barCodeFont;
-  	
-  	
 	
 	/**
-	 * @return the showAmountsOnTicket
-	 */
-	public Boolean getShowAmountsOnTicket() {
-		return showAmountsOnTicket;
-	}
+	 * @generated
+ 	 */
+	public Boolean getShowAmountsOnTicket(){
+    return showAmountsOnTicket; 
+  }
 
-
+	
 	/**
-	 * @param showAmountsOnTicket the showAmountsOnTicket to set
-	 */
-	public void setShowAmountsOnTicket(Boolean showAmountsOnTicket) {
-		this.showAmountsOnTicket = showAmountsOnTicket;
-	}
-
-
+	 * @generated
+	 */	
+	public void setShowAmountsOnTicket(Boolean newVal) {
+    this.showAmountsOnTicket = newVal;
+  }
+	
+ 	
+	
 	/**
-	 * @return the addBarCodes
-	 */
-	public Boolean getAddBarCodes() {
-		return addBarCodes;
-	}
-
-
+	 * @generated
+	 */	
+ 	@Basic
+	private Boolean addBarCodes;
+	
 	/**
-	 * @param addBarCodes the addBarCodes to set
-	 */
-	public void setAddBarCodes(Boolean addBarCodes) {
-		this.addBarCodes = addBarCodes;
-	}
+	 * @generated
+ 	 */
+	public Boolean getAddBarCodes(){
+    return addBarCodes; 
+  }
 
-
+	
 	/**
-	 * @return the showRefNumber
-	 */
-	public Boolean getShowRefNumber() {
-		return showRefNumber;
-	}
-
-
+	 * @generated
+	 */	
+	public void setAddBarCodes(Boolean newVal) {
+    this.addBarCodes = newVal;
+  }
+	
+ 	
+	
 	/**
-	 * @param showRefNumber the showRefNumber to set
-	 */
-	public void setShowRefNumber(Boolean showRefNumber) {
-		this.showRefNumber = showRefNumber;
-	}
-
-
+	 * @generated
+	 */	
+ 	@Basic
+	private Boolean showRefNumber;
+	
 	/**
-	 * @return the barCodeFont
-	 */
-	public FontDefinition getBarCodeFont() {
-		return barCodeFont;
-	}
+	 * @generated
+ 	 */
+	public Boolean getShowRefNumber(){
+    return showRefNumber; 
+  }
 
-
+	
 	/**
-	 * @param barCodeFont the barCodeFont to set
-	 */
-	public void setBarCodeFont(FontDefinition barCodeFont) {
-		this.barCodeFont = barCodeFont;
-	}
+	 * @generated
+	 */	
+	public void setShowRefNumber(Boolean newVal) {
+    this.showRefNumber = newVal;
+  }
+	
+ 	
+	
+	/**
+	 * @generated
+	 */	
+    @ManyToOne()
+	private FontDefinition barCodeFont;
+	
+	/**
+	 * @generated
+ 	 */
+	public FontDefinition getBarCodeFont(){
+    return barCodeFont; 
+  }
 
-
+	
+	/**
+	 * @generated
+	 */	
+	public void setBarCodeFont(FontDefinition newVal) {
+    this.barCodeFont = newVal;
+  }
+	
 	/**
 	 * @generated
 	 */		

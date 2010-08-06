@@ -274,89 +274,87 @@ public class PreferencesSystem extends ModelBase {
 	 * @generated
 	 */
 	public static final String DEFAULTCOUNTRY = "DefaultCountry";
+	/**
+	 * @generated
+	 */
+	public static final String SERIALNUMBER = "SerialNumber";
+	/**
+	 * @generated
+	 */
+	public static final String PROGRAMTYPE = "ProgramType";
+	/**
+	 * @generated
+	 */
+	public static final String WEBENABLED = "WebEnabled";
+	/**
+	 * @generated
+	 */
+	public static final String PAYMENTPLANENABLED = "PaymentPlanEnabled";
+	/**
+	 * @generated
+	 */
+	public static final String SCHEDULERENABLED = "SchedulerEnabled";
+	/**
+	 * @generated
+	 */
+	public static final String TRACKERENABLED = "TrackerEnabled";
+	/**
+	 * @generated
+	 */
+	public static final String MAXIMUMNODECOUNT = "MaximumNodeCount";
+	/**
+	 * @generated
+	 */
+	public static final String EXPIRATIONDATE = "ExpirationDate";
+	/**
+	 * @generated
+	 */
+	public static final String CCENCRYPTIONDATA = "CCEncryptionData";
+	/**
+	 * @generated
+	 */
+	public static final String CONFIG = "Config";
+	/**
+	 * @generated
+	 */
+	public static final String PROCESS = "Process";
+	/**
+	 * @generated
+	 */
+	public static final String SLOGAN = "Slogan";
+	/**
+	 * @generated
+	 */
+	public static final String REPORTWRITERENABLED = "ReportWriterEnabled";
+	/**
+	 * @generated
+	 */
+	public static final String EXTENDEDPRICEBOOKENABLED = "ExtendedPriceBookEnabled";
+	/**
+	 * @generated
+	 */
+	public static final String MAXIMUMTRANSACTIONCOUNT = "MaximumTransactionCount";
+	/**
+	 * @generated
+	 */
+	public static final String SETTINGS = "Settings";
+	/**
+	 * @generated
+	 */
+	public static final String OCONFIG = "Oconfig";
+	/**
+	 * @generated
+	 */
+	public static final String OPROCESS = "Oprocess";
+	/**
+	 * @generated
+	 */
+	public static final String OSLOGAN = "Oslogan";
+	/**
+	 * @generated
+	 */
+	public static final String OSETTINGS = "Osettings";
 
-	/**
-   * @generated
-   */
-  public static final String SERIALNUMBER = "SerialNumber";
-	/**
-   * @generated
-   */
-  public static final String PROGRAMTYPE = "ProgramType";
-	/**
-   * @generated
-   */
-  public static final String WEBENABLED = "WebEnabled";
-	/**
-   * @generated
-   */
-  public static final String PAYMENTPLANENABLED = "PaymentPlanEnabled";
-	/**
-   * @generated
-   */
-  public static final String SCHEDULERENABLED = "SchedulerEnabled";
-	/**
-   * @generated
-   */
-  public static final String TRACKERENABLED = "TrackerEnabled";
-	/**
-   * @generated
-   */
-  public static final String MAXIMUMNODECOUNT = "MaximumNodeCount";
-	/**
-   * @generated
-   */
-  public static final String EXPIRATIONDATE = "ExpirationDate";
-	/**
-   * @generated
-   */
-  public static final String CCENCRYPTIONDATA = "CCEncryptionData";
-
-	/**
-   * @generated
-   */
-  public static final String CONFIG = "Config";
-	/**
-   * @generated
-   */
-  public static final String PROCESS = "Process";
-	/**
-   * @generated
-   */
-  public static final String SLOGAN = "Slogan";
-	/**
-   * @generated
-   */
-  public static final String REPORTWRITERENABLED = "ReportWriterEnabled";
-	/**
-   * @generated
-   */
-  public static final String EXTENDEDPRICEBOOKENABLED = "ExtendedPriceBookEnabled";
-	/**
-   * @generated
-   */
-  public static final String MAXIMUMTRANSACTIONCOUNT = "MaximumTransactionCount";
-
-	/**
-   * @generated
-   */
-  public static final String SETTINGS = "Settings";
-	/**
-   * @generated
-   */
-  public static final String OCONFIG = "Oconfig";
-	/**
-   * @generated
-   */
-  public static final String OPROCESS = "Oprocess";
-	/**
-   * @generated
-   */
-  public static final String OSLOGAN = "Oslogan";
-	/**
-   * @generated
-   */
-  public static final String OSETTINGS = "Osettings";
 	/**
 	 * @generated
 	 */
@@ -387,6 +385,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setEliminateWarningMessages(Boolean newVal) {
     this.eliminateWarningMessages = newVal;
   }
+	
  	
 	
 	/**
@@ -409,6 +408,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setOnlyPostMarkedReadyInvoices(Boolean newVal) {
     this.onlyPostMarkedReadyInvoices = newVal;
   }
+	
  	
 	
 	/**
@@ -431,6 +431,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setEnablePricingSystem(Boolean newVal) {
     this.enablePricingSystem = newVal;
   }
+	
  	
 	
 	/**
@@ -453,6 +454,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setActivateUserEventLogging(Boolean newVal) {
     this.activateUserEventLogging = newVal;
   }
+	
  	
 	
 	/**
@@ -475,6 +477,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setEnableAutoLogOut(Boolean newVal) {
     this.enableAutoLogOut = newVal;
   }
+	
  	
 	
 	/**
@@ -497,6 +500,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setSecondsOfInactivity(Boolean newVal) {
     this.secondsOfInactivity = newVal;
   }
+	
  	
 	
 	/**
@@ -519,6 +523,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setAutoLogOutSeconds(Integer newVal) {
     this.autoLogOutSeconds = newVal;
   }
+	
  	
 	
 	/**
@@ -541,6 +546,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setTriggerAfterPosting(Boolean newVal) {
     this.triggerAfterPosting = newVal;
   }
+	
  	
 	
 	/**
@@ -563,6 +569,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setShowInvoicesWithToday(Boolean newVal) {
     this.showInvoicesWithToday = newVal;
   }
+	
  	
 	
 	/**
@@ -585,6 +592,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setLineItemTaxes(Boolean newVal) {
     this.lineItemTaxes = newVal;
   }
+	
  	
 	
 	/**
@@ -607,6 +615,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setAutomaticQuit(Boolean newVal) {
     this.automaticQuit = newVal;
   }
+	
  	
 	
 	/**
@@ -629,6 +638,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setQuitTime(String newVal) {
     this.quitTime = newVal;
   }
+	
  	
 	
 	/**
@@ -651,6 +661,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setShutdownMessage(String newVal) {
     this.shutdownMessage = newVal;
   }
+	
  	
 	
 	/**
@@ -673,6 +684,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCompanyAddress(Address newVal) {
     this.companyAddress = newVal;
   }
+	
  	
 	
 	/**
@@ -695,6 +707,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCompanyPhone(String newVal) {
     this.companyPhone = newVal;
   }
+	
  	
 	
 	/**
@@ -717,6 +730,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCompanyFax(String newVal) {
     this.companyFax = newVal;
   }
+	
  	
 	
 	/**
@@ -739,6 +753,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCompanyEmail(String newVal) {
     this.companyEmail = newVal;
   }
+	
  	
 	
 	/**
@@ -761,6 +776,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCompanyOther1(String newVal) {
     this.companyOther1 = newVal;
   }
+	
  	
 	
 	/**
@@ -783,6 +799,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCompanyOther2(String newVal) {
     this.companyOther2 = newVal;
   }
+	
  	
 	
 	/**
@@ -805,6 +822,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCompanyIdLabel(String newVal) {
     this.companyIdLabel = newVal;
   }
+	
  	
 	
 	/**
@@ -827,6 +845,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCompanyId(String newVal) {
     this.companyId = newVal;
   }
+	
  	
 	
 	/**
@@ -849,6 +868,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCompanyStoreNumber(String newVal) {
     this.companyStoreNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -871,6 +891,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCompanyStoreLocationRef(String newVal) {
     this.companyStoreLocationRef = newVal;
   }
+	
  	
 	
 	/**
@@ -893,6 +914,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setFiscalYearStartMonth(String newVal) {
     this.fiscalYearStartMonth = newVal;
   }
+	
  	
 	
 	/**
@@ -915,6 +937,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setWorkSunday(Boolean newVal) {
     this.workSunday = newVal;
   }
+	
  	
 	
 	/**
@@ -937,6 +960,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setWorkMonday(Boolean newVal) {
     this.workMonday = newVal;
   }
+	
  	
 	
 	/**
@@ -959,6 +983,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setWorkTuesday(Boolean newVal) {
     this.workTuesday = newVal;
   }
+	
  	
 	
 	/**
@@ -981,6 +1006,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setWorkWednesday(Boolean newVal) {
     this.workWednesday = newVal;
   }
+	
  	
 	
 	/**
@@ -1003,6 +1029,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setWorkThursday(Boolean newVal) {
     this.workThursday = newVal;
   }
+	
  	
 	
 	/**
@@ -1025,6 +1052,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setWorkFriday(Boolean newVal) {
     this.workFriday = newVal;
   }
+	
  	
 	
 	/**
@@ -1047,6 +1075,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setWorkSaturday(Boolean newVal) {
     this.workSaturday = newVal;
   }
+	
  	
 	
 	/**
@@ -1069,6 +1098,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setWorkFirstDayOfWeek(Integer newVal) {
     this.workFirstDayOfWeek = newVal;
   }
+	
  	
 	
 	/**
@@ -1091,6 +1121,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setFutureDatesExcludeClosed(Boolean newVal) {
     this.futureDatesExcludeClosed = newVal;
   }
+	
  	
 	
 	/**
@@ -1113,6 +1144,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setNumbersIntegers(String newVal) {
     this.numbersIntegers = newVal;
   }
+	
  	
 	
 	/**
@@ -1135,6 +1167,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setNumbersPercentages(String newVal) {
     this.numbersPercentages = newVal;
   }
+	
  	
 	
 	/**
@@ -1157,6 +1190,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setNumbersAmount(String newVal) {
     this.numbersAmount = newVal;
   }
+	
  	
 	
 	/**
@@ -1179,6 +1213,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setNumbersTaxRate(String newVal) {
     this.numbersTaxRate = newVal;
   }
+	
  	
 	
 	/**
@@ -1201,6 +1236,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setNumbersRate(String newVal) {
     this.numbersRate = newVal;
   }
+	
  	
 	
 	/**
@@ -1223,6 +1259,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setNumbersFactor(String newVal) {
     this.numbersFactor = newVal;
   }
+	
  	
 	
 	/**
@@ -1245,6 +1282,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setNumbersInvoice(String newVal) {
     this.numbersInvoice = newVal;
   }
+	
  	
 	
 	/**
@@ -1267,6 +1305,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setNumbersShortPercent(String newVal) {
     this.numbersShortPercent = newVal;
   }
+	
  	
 	
 	/**
@@ -1289,6 +1328,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setNumbersRoundto(Integer newVal) {
     this.numbersRoundto = newVal;
   }
+	
  	
 	
 	/**
@@ -1311,6 +1351,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setAlwaysRoundDown(Boolean newVal) {
     this.alwaysRoundDown = newVal;
   }
+	
  	
 	
 	/**
@@ -1333,6 +1374,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setRoundTaxUp(Boolean newVal) {
     this.roundTaxUp = newVal;
   }
+	
  	
 	
 	/**
@@ -1355,6 +1397,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setUseAlternateCurrency(Boolean newVal) {
     this.useAlternateCurrency = newVal;
   }
+	
  	
 	
 	/**
@@ -1377,6 +1420,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setDisplayFormat(String newVal) {
     this.displayFormat = newVal;
   }
+	
  	
 	
 	/**
@@ -1399,6 +1443,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setConversionFactor(Double newVal) {
     this.conversionFactor = newVal;
   }
+	
  	
 	
 	/**
@@ -1421,6 +1466,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setAlternateRoundto(Integer newVal) {
     this.alternateRoundto = newVal;
   }
+	
  	
 	
 	/**
@@ -1443,6 +1489,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setAlternateAlwaysRoundDown(Boolean newVal) {
     this.alternateAlwaysRoundDown = newVal;
   }
+	
  	
 	
 	/**
@@ -1465,6 +1512,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setDisableTextStyles(Boolean newVal) {
     this.disableTextStyles = newVal;
   }
+	
  	
 	
 	/**
@@ -1487,6 +1535,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setAustrailianInvoiceRounding(Boolean newVal) {
     this.austrailianInvoiceRounding = newVal;
   }
+	
  	
 	
 	/**
@@ -1509,6 +1558,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setDisableNonTaxableOptions(Boolean newVal) {
     this.disableNonTaxableOptions = newVal;
   }
+	
  	
 	
 	/**
@@ -1531,6 +1581,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setInkWeightSingular(String newVal) {
     this.inkWeightSingular = newVal;
   }
+	
  	
 	
 	/**
@@ -1553,6 +1604,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setInkWeightPlural(String newVal) {
     this.inkWeightPlural = newVal;
   }
+	
  	
 	
 	/**
@@ -1575,6 +1627,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setAuthorizeDecrypt(String newVal) {
     this.authorizeDecrypt = newVal;
   }
+	
  	
 	
 	/**
@@ -1597,6 +1650,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setCreditCardApproval(String newVal) {
     this.creditCardApproval = newVal;
   }
+	
  	
 	
 	/**
@@ -1619,6 +1673,7 @@ public class PreferencesSystem extends ModelBase {
 	public void setTrackerDataCollection(String newVal) {
     this.trackerDataCollection = newVal;
   }
+	
  	
 	
 	/**
@@ -1641,457 +1696,467 @@ public class PreferencesSystem extends ModelBase {
 	public void setDefaultCountry(Integer newVal) {
     this.defaultCountry = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Long serialNumber;
-
+	private Long serialNumber;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Long getSerialNumber(){
+	public Long getSerialNumber(){
     return serialNumber; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setSerialNumber(Long newVal) {
+	 * @generated
+	 */	
+	public void setSerialNumber(Long newVal) {
     this.serialNumber = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
-    @Basic
-  private String programType;
-
+	 * @generated
+	 */	
+ 	@Basic
+	private String programType;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getProgramType(){
+	public String getProgramType(){
     return programType; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setProgramType(String newVal) {
+	 * @generated
+	 */	
+	public void setProgramType(String newVal) {
     this.programType = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean webEnabled;
-
+	private Boolean webEnabled;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getWebEnabled(){
+	public Boolean getWebEnabled(){
     return webEnabled; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setWebEnabled(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setWebEnabled(Boolean newVal) {
     this.webEnabled = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean paymentPlanEnabled;
-
+	private Boolean paymentPlanEnabled;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getPaymentPlanEnabled(){
+	public Boolean getPaymentPlanEnabled(){
     return paymentPlanEnabled; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPaymentPlanEnabled(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setPaymentPlanEnabled(Boolean newVal) {
     this.paymentPlanEnabled = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean schedulerEnabled;
-
+	private Boolean schedulerEnabled;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getSchedulerEnabled(){
+	public Boolean getSchedulerEnabled(){
     return schedulerEnabled; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setSchedulerEnabled(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setSchedulerEnabled(Boolean newVal) {
     this.schedulerEnabled = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean trackerEnabled;
-
+	private Boolean trackerEnabled;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getTrackerEnabled(){
+	public Boolean getTrackerEnabled(){
     return trackerEnabled; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTrackerEnabled(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setTrackerEnabled(Boolean newVal) {
     this.trackerEnabled = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Integer maximumNodeCount;
-
+	private Integer maximumNodeCount;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Integer getMaximumNodeCount(){
+	public Integer getMaximumNodeCount(){
     return maximumNodeCount; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setMaximumNodeCount(Integer newVal) {
+	 * @generated
+	 */	
+	public void setMaximumNodeCount(Integer newVal) {
     this.maximumNodeCount = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Date expirationDate;
-
+	private Date expirationDate;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Date getExpirationDate(){
+	public Date getExpirationDate(){
     return expirationDate; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setExpirationDate(Date newVal) {
+	 * @generated
+	 */	
+	public void setExpirationDate(Date newVal) {
     this.expirationDate = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String cCEncryptionData;
-
+	private String cCEncryptionData;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getCCEncryptionData(){
+	public String getCCEncryptionData(){
     return cCEncryptionData; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setCCEncryptionData(String newVal) {
+	 * @generated
+	 */	
+	public void setCCEncryptionData(String newVal) {
     this.cCEncryptionData = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String config;
-
+	private String config;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getConfig(){
+	public String getConfig(){
     return config; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setConfig(String newVal) {
+	 * @generated
+	 */	
+	public void setConfig(String newVal) {
     this.config = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String process;
-
+	private String process;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getProcess(){
+	public String getProcess(){
     return process; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setProcess(String newVal) {
+	 * @generated
+	 */	
+	public void setProcess(String newVal) {
     this.process = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String slogan;
-
+	private String slogan;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getSlogan(){
+	public String getSlogan(){
     return slogan; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setSlogan(String newVal) {
+	 * @generated
+	 */	
+	public void setSlogan(String newVal) {
     this.slogan = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean reportWriterEnabled;
-
+	private Boolean reportWriterEnabled;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getReportWriterEnabled(){
+	public Boolean getReportWriterEnabled(){
     return reportWriterEnabled; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setReportWriterEnabled(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setReportWriterEnabled(Boolean newVal) {
     this.reportWriterEnabled = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean extendedPriceBookEnabled;
-
+	private Boolean extendedPriceBookEnabled;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getExtendedPriceBookEnabled(){
+	public Boolean getExtendedPriceBookEnabled(){
     return extendedPriceBookEnabled; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setExtendedPriceBookEnabled(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setExtendedPriceBookEnabled(Boolean newVal) {
     this.extendedPriceBookEnabled = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Integer maximumTransactionCount;
-
+	private Integer maximumTransactionCount;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Integer getMaximumTransactionCount(){
+	public Integer getMaximumTransactionCount(){
     return maximumTransactionCount; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setMaximumTransactionCount(Integer newVal) {
+	 * @generated
+	 */	
+	public void setMaximumTransactionCount(Integer newVal) {
     this.maximumTransactionCount = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String settings;
-
+	private String settings;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getSettings(){
+	public String getSettings(){
     return settings; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setSettings(String newVal) {
+	 * @generated
+	 */	
+	public void setSettings(String newVal) {
     this.settings = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String oconfig;
+	private String oconfig;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getOconfig(){
+	public String getOconfig(){
     return oconfig; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setOconfig(String newVal) {
+	 * @generated
+	 */	
+	public void setOconfig(String newVal) {
     this.oconfig = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String oprocess;
+	private String oprocess;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getOprocess(){
+	public String getOprocess(){
     return oprocess; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setOprocess(String newVal) {
+	 * @generated
+	 */	
+	public void setOprocess(String newVal) {
     this.oprocess = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String oslogan;
+	private String oslogan;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getOslogan(){
+	public String getOslogan(){
     return oslogan; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setOslogan(String newVal) {
+	 * @generated
+	 */	
+	public void setOslogan(String newVal) {
     this.oslogan = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String osettings;
+	private String osettings;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getOsettings(){
+	public String getOsettings(){
     return osettings; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setOsettings(String newVal) {
+	 * @generated
+	 */	
+	public void setOsettings(String newVal) {
     this.osettings = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

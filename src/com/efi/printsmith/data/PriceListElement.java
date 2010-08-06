@@ -107,21 +107,20 @@ public class PriceListElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setAmount(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setAmount(BigDecimal newVal) {
     this.amount = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setAmount(double newVal) {
+	 * @generated
+	 */	
+	public void setAmount(double newVal) {
     this.amount = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	

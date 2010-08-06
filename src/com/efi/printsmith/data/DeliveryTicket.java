@@ -589,21 +589,20 @@ public class DeliveryTicket extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setShipCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setShipCost(BigDecimal newVal) {
     this.shipCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setShipCost(double newVal) {
+	 * @generated
+	 */	
+	public void setShipCost(double newVal) {
     this.shipCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	

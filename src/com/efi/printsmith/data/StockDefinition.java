@@ -550,21 +550,18 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String DEFAULTLARGECOPIER = "DefaultLargeCopier";
-
 	/**
-   * @generated
-   */
-  public static final String JDFSTOCKID = "JdfStockId";
-
+	 * @generated
+	 */
+	public static final String JDFSTOCKID = "JdfStockId";
 	/**
-   * @generated
-   */
-  public static final String EXCLUDEFROMWEB = "ExcludeFromWeb";
-
+	 * @generated
+	 */
+	public static final String EXCLUDEFROMWEB = "ExcludeFromWeb";
 	/**
-   * @generated
-   */
-  public static final String WEBENABLED = "WebEnabled";
+	 * @generated
+	 */
+	public static final String WEBENABLED = "WebEnabled";
 
 	/**
 	 * @generated
@@ -574,44 +571,7 @@ public class StockDefinition extends ModelBase {
     this.modified = new Date();
   }
 
-	public StockDefinition(Long id, String Name, Double weight,Dimension parentsize,StockColors color, GenericColors genericcolor,
-			StockFinish finish, Double thickness, StockGrade grade, Double cwt1, Vendor vendor, String stocknumber, Integer onhand,
-			Integer committed, Integer ordered, Boolean shellitem, Dimension normalrunsize, StockType stocktype,
-			StockGroup stkgroup, String coated, Integer minorder, BigDecimal cost1, Date priceexpire, String forestmanagement,
-			Double pcwrecycledpercent, Boolean fsccertified, Boolean sficertified, Boolean greensealcertified, Integer sheetsPerSet, String uom) {
-		this.id = id;
-		this.name = Name;
-		this.weight = weight;
-		this.parentsize= parentsize;
-		this.color =color;
-		this.genericColor =genericcolor;
-		this.finish =finish;
-		this.thickness =thickness;
-		this.grade = grade;
-		this.cwt1 = cwt1;
-		this.vendor =vendor;
-		this.stocknumber =stocknumber;
-		this.onHand= onhand;
-		this.committed =committed;
-		this.onOrder = ordered;
-		this.shellItem =shellitem;
-		this.normalRunSize =normalrunsize;
-		this.stktype =stocktype;
-		this.stkgroup =stkgroup;
-		this.coated =coated;
-		this.minorder =minorder;
-		this.cost1 =cost1;
-		this.priceExpires =priceexpire;
-		this.forestManagement =forestmanagement;
-		this.pcwRecycledPercent =pcwrecycledpercent;
-		this.fscCertified =fsccertified;
-		this.sfiCertified =sficertified;
-		this.greenSealCertified = greensealcertified;
-		this.sheetsPerSet = sheetsPerSet;
-		this.uom = uom;
-		
-		
-	}
+ 	
 	
 	/**
 	 * @generated
@@ -633,6 +593,7 @@ public class StockDefinition extends ModelBase {
 	public void setStockunit(Integer newVal) {
     this.stockunit = newVal;
   }
+	
  	
 	
 	/**
@@ -655,6 +616,7 @@ public class StockDefinition extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -677,6 +639,7 @@ public class StockDefinition extends ModelBase {
 	public void setStkgroup(StockGroup newVal) {
     this.stkgroup = newVal;
   }
+	
  	
 	
 	/**
@@ -699,6 +662,7 @@ public class StockDefinition extends ModelBase {
 	public void setStkclass(StockClass newVal) {
     this.stkclass = newVal;
   }
+	
  	
 	
 	/**
@@ -721,6 +685,7 @@ public class StockDefinition extends ModelBase {
 	public void setStktype(StockType newVal) {
     this.stktype = newVal;
   }
+	
  	
 	
 	/**
@@ -743,6 +708,7 @@ public class StockDefinition extends ModelBase {
 	public void setIsMetric(Boolean newVal) {
     this.isMetric = newVal;
   }
+	
  	
 	
 	/**
@@ -765,6 +731,7 @@ public class StockDefinition extends ModelBase {
 	public void setFinish(StockFinish newVal) {
     this.finish = newVal;
   }
+	
  	
 	
 	/**
@@ -787,6 +754,7 @@ public class StockDefinition extends ModelBase {
 	public void setWeight(Double newVal) {
     this.weight = newVal;
   }
+	
  	
 	
 	/**
@@ -809,6 +777,7 @@ public class StockDefinition extends ModelBase {
 	public void setColor(StockColors newVal) {
     this.color = newVal;
   }
+	
  	
 	
 	/**
@@ -831,6 +800,7 @@ public class StockDefinition extends ModelBase {
 	public void setGrade(StockGrade newVal) {
     this.grade = newVal;
   }
+	
  	
 	
 	/**
@@ -853,6 +823,7 @@ public class StockDefinition extends ModelBase {
 	public void setCoated(String newVal) {
     this.coated = newVal;
   }
+	
  	
 	
 	/**
@@ -875,6 +846,7 @@ public class StockDefinition extends ModelBase {
 	public void setStocknumber(String newVal) {
     this.stocknumber = newVal;
   }
+	
  	
 	
 	/**
@@ -897,6 +869,7 @@ public class StockDefinition extends ModelBase {
 	public void setVendor(Vendor newVal) {
     this.vendor = newVal;
   }
+	
  	
 	
 	/**
@@ -919,13 +892,13 @@ public class StockDefinition extends ModelBase {
 	public void setBasicsize(String newVal) {
     this.basicsize = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
- 	@ManyToOne( cascade = {CascadeType.ALL})
-	@Basic
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private Dimension parentsize;
 	
 	/**
@@ -937,12 +910,14 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setParentsize(Dimension newVal) {
+	 * @generated
+	 */	
+	public void setParentsize(Dimension newVal) {
     this.parentsize = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -963,6 +938,7 @@ public class StockDefinition extends ModelBase {
 	public void setThickness(Double newVal) {
     this.thickness = newVal;
   }
+	
  	
 	
 	/**
@@ -985,6 +961,7 @@ public class StockDefinition extends ModelBase {
 	public void setMweight(Double newVal) {
     this.mweight = newVal;
   }
+	
  	
 	
 	/**
@@ -1007,6 +984,7 @@ public class StockDefinition extends ModelBase {
 	public void setSheetspercarton(Integer newVal) {
     this.sheetspercarton = newVal;
   }
+	
  	
 	
 	/**
@@ -1029,6 +1007,7 @@ public class StockDefinition extends ModelBase {
 	public void setMinorder(Integer newVal) {
     this.minorder = newVal;
   }
+	
  	
 	
 	/**
@@ -1051,6 +1030,7 @@ public class StockDefinition extends ModelBase {
 	public void setComments(String newVal) {
     this.comments = newVal;
   }
+	
  	
 	
 	/**
@@ -1073,6 +1053,7 @@ public class StockDefinition extends ModelBase {
 	public void setUom(String newVal) {
     this.uom = newVal;
   }
+	
  	
 	
 	/**
@@ -1095,6 +1076,7 @@ public class StockDefinition extends ModelBase {
 	public void setCostunits(Integer newVal) {
     this.costunits = newVal;
   }
+	
  	
 	
 	/**
@@ -1117,6 +1099,7 @@ public class StockDefinition extends ModelBase {
 	public void setEntireOrderCharge(Boolean newVal) {
     this.entireOrderCharge = newVal;
   }
+	
  	
 	
 	/**
@@ -1139,6 +1122,7 @@ public class StockDefinition extends ModelBase {
 	public void setSheetsPerSet(Integer newVal) {
     this.sheetsPerSet = newVal;
   }
+	
  	
 	
 	/**
@@ -1161,6 +1145,7 @@ public class StockDefinition extends ModelBase {
 	public void setIsCostInSets(Boolean newVal) {
     this.isCostInSets = newVal;
   }
+	
  	
 	
 	/**
@@ -1183,6 +1168,7 @@ public class StockDefinition extends ModelBase {
 	public void setPriceExpires(Date newVal) {
     this.priceExpires = newVal;
   }
+	
  	
 	
 	/**
@@ -1205,6 +1191,7 @@ public class StockDefinition extends ModelBase {
 	public void setQtybreak1(Integer newVal) {
     this.qtybreak1 = newVal;
   }
+	
  	
 	
 	/**
@@ -1227,6 +1214,7 @@ public class StockDefinition extends ModelBase {
 	public void setQtybreak2(Integer newVal) {
     this.qtybreak2 = newVal;
   }
+	
  	
 	
 	/**
@@ -1249,6 +1237,7 @@ public class StockDefinition extends ModelBase {
 	public void setQtybreak3(Integer newVal) {
     this.qtybreak3 = newVal;
   }
+	
  	
 	
 	/**
@@ -1271,6 +1260,7 @@ public class StockDefinition extends ModelBase {
 	public void setQtybreak4(Integer newVal) {
     this.qtybreak4 = newVal;
   }
+	
  	
 	
 	/**
@@ -1293,6 +1283,7 @@ public class StockDefinition extends ModelBase {
 	public void setQtybreak5(Integer newVal) {
     this.qtybreak5 = newVal;
   }
+	
  	
 	
 	/**
@@ -1315,6 +1306,7 @@ public class StockDefinition extends ModelBase {
 	public void setQtybreak6(Integer newVal) {
     this.qtybreak6 = newVal;
   }
+	
  	
 	
 	/**
@@ -1332,19 +1324,20 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCost1(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCost1(BigDecimal newVal) {
     this.cost1 = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setCost1(double newVal) {
+	 * @generated
+	 */	
+	public void setCost1(double newVal) {
     this.cost1 = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1360,19 +1353,20 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCost2(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCost2(BigDecimal newVal) {
     this.cost2 = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setCost2(double newVal) {
+	 * @generated
+	 */	
+	public void setCost2(double newVal) {
     this.cost2 = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1388,19 +1382,20 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCost3(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCost3(BigDecimal newVal) {
     this.cost3 = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setCost3(double newVal) {
+	 * @generated
+	 */	
+	public void setCost3(double newVal) {
     this.cost3 = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1416,19 +1411,20 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCost4(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCost4(BigDecimal newVal) {
     this.cost4 = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setCost4(double newVal) {
+	 * @generated
+	 */	
+	public void setCost4(double newVal) {
     this.cost4 = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1444,19 +1440,20 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCost5(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCost5(BigDecimal newVal) {
     this.cost5 = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setCost5(double newVal) {
+	 * @generated
+	 */	
+	public void setCost5(double newVal) {
     this.cost5 = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1472,19 +1469,20 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCost6(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCost6(BigDecimal newVal) {
     this.cost6 = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setCost6(double newVal) {
+	 * @generated
+	 */	
+	public void setCost6(double newVal) {
     this.cost6 = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1505,6 +1503,7 @@ public class StockDefinition extends ModelBase {
 	public void setCwt1(Double newVal) {
     this.cwt1 = newVal;
   }
+	
  	
 	
 	/**
@@ -1527,6 +1526,7 @@ public class StockDefinition extends ModelBase {
 	public void setCwt2(Double newVal) {
     this.cwt2 = newVal;
   }
+	
  	
 	
 	/**
@@ -1549,6 +1549,7 @@ public class StockDefinition extends ModelBase {
 	public void setCwt3(Double newVal) {
     this.cwt3 = newVal;
   }
+	
  	
 	
 	/**
@@ -1571,6 +1572,7 @@ public class StockDefinition extends ModelBase {
 	public void setCwt4(Double newVal) {
     this.cwt4 = newVal;
   }
+	
  	
 	
 	/**
@@ -1593,6 +1595,7 @@ public class StockDefinition extends ModelBase {
 	public void setCwt5(Double newVal) {
     this.cwt5 = newVal;
   }
+	
  	
 	
 	/**
@@ -1615,6 +1618,7 @@ public class StockDefinition extends ModelBase {
 	public void setCwt6(Double newVal) {
     this.cwt6 = newVal;
   }
+	
  	
 	
 	/**
@@ -1637,6 +1641,7 @@ public class StockDefinition extends ModelBase {
 	public void setMarkup1(Double newVal) {
     this.markup1 = newVal;
   }
+	
  	
 	
 	/**
@@ -1659,6 +1664,7 @@ public class StockDefinition extends ModelBase {
 	public void setMarkup2(Double newVal) {
     this.markup2 = newVal;
   }
+	
  	
 	
 	/**
@@ -1681,6 +1687,7 @@ public class StockDefinition extends ModelBase {
 	public void setMarkup3(Double newVal) {
     this.markup3 = newVal;
   }
+	
  	
 	
 	/**
@@ -1703,6 +1710,7 @@ public class StockDefinition extends ModelBase {
 	public void setMarkup4(Double newVal) {
     this.markup4 = newVal;
   }
+	
  	
 	
 	/**
@@ -1725,6 +1733,7 @@ public class StockDefinition extends ModelBase {
 	public void setMarkup5(Double newVal) {
     this.markup5 = newVal;
   }
+	
  	
 	
 	/**
@@ -1747,6 +1756,7 @@ public class StockDefinition extends ModelBase {
 	public void setMarkup6(Double newVal) {
     this.markup6 = newVal;
   }
+	
  	
 	
 	/**
@@ -1769,6 +1779,7 @@ public class StockDefinition extends ModelBase {
 	public void setListPerM1(Integer newVal) {
     this.listPerM1 = newVal;
   }
+	
  	
 	
 	/**
@@ -1791,6 +1802,7 @@ public class StockDefinition extends ModelBase {
 	public void setListPerM2(Integer newVal) {
     this.listPerM2 = newVal;
   }
+	
  	
 	
 	/**
@@ -1813,6 +1825,7 @@ public class StockDefinition extends ModelBase {
 	public void setListPerM3(Integer newVal) {
     this.listPerM3 = newVal;
   }
+	
  	
 	
 	/**
@@ -1835,6 +1848,7 @@ public class StockDefinition extends ModelBase {
 	public void setListPerM4(Integer newVal) {
     this.listPerM4 = newVal;
   }
+	
  	
 	
 	/**
@@ -1857,6 +1871,7 @@ public class StockDefinition extends ModelBase {
 	public void setListPerM5(Integer newVal) {
     this.listPerM5 = newVal;
   }
+	
  	
 	
 	/**
@@ -1879,13 +1894,13 @@ public class StockDefinition extends ModelBase {
 	public void setListPerM6(Integer newVal) {
     this.listPerM6 = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
- 	@ManyToOne( cascade = {CascadeType.ALL})
-	@Basic
+    @ManyToOne( cascade = {CascadeType.ALL})
 	private Dimension normalRunSize;
 	
 	/**
@@ -1897,12 +1912,14 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setNormalRunSize(Dimension newVal) {
+	 * @generated
+	 */	
+	public void setNormalRunSize(Dimension newVal) {
     this.normalRunSize = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1923,6 +1940,7 @@ public class StockDefinition extends ModelBase {
 	public void setCutsPer100(Integer newVal) {
     this.cutsPer100 = newVal;
   }
+	
  	
 	
 	/**
@@ -1945,6 +1963,7 @@ public class StockDefinition extends ModelBase {
 	public void setMinCutCharge(Double newVal) {
     this.minCutCharge = newVal;
   }
+	
  	
 	
 	/**
@@ -1967,6 +1986,7 @@ public class StockDefinition extends ModelBase {
 	public void setDefaultPress(PressDefinition newVal) {
     this.defaultPress = newVal;
   }
+	
  	
 	
 	/**
@@ -1989,6 +2009,7 @@ public class StockDefinition extends ModelBase {
 	public void setAutoCalculateBlank(Boolean newVal) {
     this.autoCalculateBlank = newVal;
   }
+	
  	
 	
 	/**
@@ -2011,6 +2032,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetqty1(Integer newVal) {
     this.blankSheetqty1 = newVal;
   }
+	
  	
 	
 	/**
@@ -2033,6 +2055,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetqty2(Integer newVal) {
     this.blankSheetqty2 = newVal;
   }
+	
  	
 	
 	/**
@@ -2055,6 +2078,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetqty3(Integer newVal) {
     this.blankSheetqty3 = newVal;
   }
+	
  	
 	
 	/**
@@ -2077,6 +2101,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetqty4(Integer newVal) {
     this.blankSheetqty4 = newVal;
   }
+	
  	
 	
 	/**
@@ -2099,6 +2124,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetqty5(Integer newVal) {
     this.blankSheetqty5 = newVal;
   }
+	
  	
 	
 	/**
@@ -2121,6 +2147,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetqty6(Integer newVal) {
     this.blankSheetqty6 = newVal;
   }
+	
  	
 	
 	/**
@@ -2143,6 +2170,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetPrice1(Double newVal) {
     this.blankSheetPrice1 = newVal;
   }
+	
  	
 	
 	/**
@@ -2165,6 +2193,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetPrice2(Double newVal) {
     this.blankSheetPrice2 = newVal;
   }
+	
  	
 	
 	/**
@@ -2187,6 +2216,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetPrice3(Double newVal) {
     this.blankSheetPrice3 = newVal;
   }
+	
  	
 	
 	/**
@@ -2209,6 +2239,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetPrice4(Double newVal) {
     this.blankSheetPrice4 = newVal;
   }
+	
  	
 	
 	/**
@@ -2231,6 +2262,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetPrice5(Double newVal) {
     this.blankSheetPrice5 = newVal;
   }
+	
  	
 	
 	/**
@@ -2253,6 +2285,7 @@ public class StockDefinition extends ModelBase {
 	public void setBlankSheetPrice6(Double newVal) {
     this.blankSheetPrice6 = newVal;
   }
+	
  	
 	
 	/**
@@ -2275,6 +2308,7 @@ public class StockDefinition extends ModelBase {
 	public void setDefaultBW(String newVal) {
     this.defaultBW = newVal;
   }
+	
  	
 	
 	/**
@@ -2297,6 +2331,7 @@ public class StockDefinition extends ModelBase {
 	public void setDefaultColor(String newVal) {
     this.defaultColor = newVal;
   }
+	
  	
 	
 	/**
@@ -2319,6 +2354,7 @@ public class StockDefinition extends ModelBase {
 	public void setDefaultLargeFormat(String newVal) {
     this.defaultLargeFormat = newVal;
   }
+	
  	
 	
 	/**
@@ -2341,6 +2377,7 @@ public class StockDefinition extends ModelBase {
 	public void setAdditional1(String newVal) {
     this.additional1 = newVal;
   }
+	
  	
 	
 	/**
@@ -2363,6 +2400,7 @@ public class StockDefinition extends ModelBase {
 	public void setAdditional2(String newVal) {
     this.additional2 = newVal;
   }
+	
  	
 	
 	/**
@@ -2385,6 +2423,7 @@ public class StockDefinition extends ModelBase {
 	public void setAdditional3(String newVal) {
     this.additional3 = newVal;
   }
+	
  	
 	
 	/**
@@ -2407,6 +2446,7 @@ public class StockDefinition extends ModelBase {
 	public void setAdditional4(String newVal) {
     this.additional4 = newVal;
   }
+	
  	
 	
 	/**
@@ -2429,6 +2469,7 @@ public class StockDefinition extends ModelBase {
 	public void setAdditional5(String newVal) {
     this.additional5 = newVal;
   }
+	
  	
 	
 	/**
@@ -2451,6 +2492,7 @@ public class StockDefinition extends ModelBase {
 	public void setAdditional6(String newVal) {
     this.additional6 = newVal;
   }
+	
  	
 	
 	/**
@@ -2473,6 +2515,7 @@ public class StockDefinition extends ModelBase {
 	public void setAdditional7(String newVal) {
     this.additional7 = newVal;
   }
+	
  	
 	
 	/**
@@ -2495,6 +2538,7 @@ public class StockDefinition extends ModelBase {
 	public void setAdditional8(String newVal) {
     this.additional8 = newVal;
   }
+	
  	
 	
 	/**
@@ -2517,6 +2561,7 @@ public class StockDefinition extends ModelBase {
 	public void setAdditional9(String newVal) {
     this.additional9 = newVal;
   }
+	
  	
 	
 	/**
@@ -2539,6 +2584,7 @@ public class StockDefinition extends ModelBase {
 	public void setAdditional10(String newVal) {
     this.additional10 = newVal;
   }
+	
  	
 	
 	/**
@@ -2561,6 +2607,7 @@ public class StockDefinition extends ModelBase {
 	public void setStandardItem(Boolean newVal) {
     this.standardItem = newVal;
   }
+	
  	
 	
 	/**
@@ -2583,6 +2630,7 @@ public class StockDefinition extends ModelBase {
 	public void setOnHand(Integer newVal) {
     this.onHand = newVal;
   }
+	
  	
 	
 	/**
@@ -2605,6 +2653,7 @@ public class StockDefinition extends ModelBase {
 	public void setCommitted(Integer newVal) {
     this.committed = newVal;
   }
+	
  	
 	
 	/**
@@ -2627,6 +2676,7 @@ public class StockDefinition extends ModelBase {
 	public void setAvailable(Integer newVal) {
     this.available = newVal;
   }
+	
  	
 	
 	/**
@@ -2649,6 +2699,7 @@ public class StockDefinition extends ModelBase {
 	public void setOnOrder(Integer newVal) {
     this.onOrder = newVal;
   }
+	
  	
 	
 	/**
@@ -2671,6 +2722,7 @@ public class StockDefinition extends ModelBase {
 	public void setTargetLevel(Integer newVal) {
     this.targetLevel = newVal;
   }
+	
  	
 	
 	/**
@@ -2693,6 +2745,7 @@ public class StockDefinition extends ModelBase {
 	public void setReOrderPoint(Integer newVal) {
     this.reOrderPoint = newVal;
   }
+	
  	
 	
 	/**
@@ -2715,6 +2768,7 @@ public class StockDefinition extends ModelBase {
 	public void setMinOrderQty(Integer newVal) {
     this.minOrderQty = newVal;
   }
+	
  	
 	
 	/**
@@ -2737,6 +2791,7 @@ public class StockDefinition extends ModelBase {
 	public void setEvenIncrements(Boolean newVal) {
     this.evenIncrements = newVal;
   }
+	
  	
 	
 	/**
@@ -2759,6 +2814,7 @@ public class StockDefinition extends ModelBase {
 	public void setExpires(Date newVal) {
     this.expires = newVal;
   }
+	
  	
 	
 	/**
@@ -2781,6 +2837,7 @@ public class StockDefinition extends ModelBase {
 	public void setBinLocation(String newVal) {
     this.binLocation = newVal;
   }
+	
  	
 	
 	/**
@@ -2803,6 +2860,7 @@ public class StockDefinition extends ModelBase {
 	public void setShellItem(Boolean newVal) {
     this.shellItem = newVal;
   }
+	
  	
 	
 	/**
@@ -2825,6 +2883,7 @@ public class StockDefinition extends ModelBase {
 	public void setForestManagement(String newVal) {
     this.forestManagement = newVal;
   }
+	
  	
 	
 	/**
@@ -2847,6 +2906,7 @@ public class StockDefinition extends ModelBase {
 	public void setPcwRecycledPercent(Double newVal) {
     this.pcwRecycledPercent = newVal;
   }
+	
  	
 	
 	/**
@@ -2869,6 +2929,7 @@ public class StockDefinition extends ModelBase {
 	public void setFscCertified(Boolean newVal) {
     this.fscCertified = newVal;
   }
+	
  	
 	
 	/**
@@ -2891,6 +2952,7 @@ public class StockDefinition extends ModelBase {
 	public void setSfiCertified(Boolean newVal) {
     this.sfiCertified = newVal;
   }
+	
  	
 	
 	/**
@@ -2913,6 +2975,7 @@ public class StockDefinition extends ModelBase {
 	public void setGreenSealCertified(Boolean newVal) {
     this.greenSealCertified = newVal;
   }
+	
  	
 	
 	/**
@@ -2935,6 +2998,7 @@ public class StockDefinition extends ModelBase {
 	public void setDefaultPriceList(PaperPrice newVal) {
     this.defaultPriceList = newVal;
   }
+	
  	
 	
 	/**
@@ -2957,6 +3021,7 @@ public class StockDefinition extends ModelBase {
 	public void setGenericColor(GenericColors newVal) {
     this.genericColor = newVal;
   }
+	
  	
 	
 	/**
@@ -2979,6 +3044,7 @@ public class StockDefinition extends ModelBase {
 	public void setAccount(Account newVal) {
     this.account = newVal;
   }
+	
  	
 	
 	/**
@@ -3001,13 +3067,12 @@ public class StockDefinition extends ModelBase {
 	public void setStockId(String newVal) {
     this.stockId = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
-	 */
-
-	@JoinTable( name = "stockdefinition_charges")
+	 */	
 	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
 	private java.util.List<ChargeDefinition> charges;
 	
@@ -3034,6 +3099,7 @@ public class StockDefinition extends ModelBase {
 	public void setCharges(java.util.List<ChargeDefinition> newVal) {
     this.charges = newVal;
   }
+	
  	
 	
 	/**
@@ -3051,19 +3117,20 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCopier1PricePerSheet(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCopier1PricePerSheet(BigDecimal newVal) {
     this.copier1PricePerSheet = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setCopier1PricePerSheet(double newVal) {
+	 * @generated
+	 */	
+	public void setCopier1PricePerSheet(double newVal) {
     this.copier1PricePerSheet = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -3079,19 +3146,20 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCopier2PricePerSheet(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCopier2PricePerSheet(BigDecimal newVal) {
     this.copier2PricePerSheet = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setCopier2PricePerSheet(double newVal) {
+	 * @generated
+	 */	
+	public void setCopier2PricePerSheet(double newVal) {
     this.copier2PricePerSheet = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -3107,19 +3175,20 @@ public class StockDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCopier3PricePerSheet(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCopier3PricePerSheet(BigDecimal newVal) {
     this.copier3PricePerSheet = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setCopier3PricePerSheet(double newVal) {
+	 * @generated
+	 */	
+	public void setCopier3PricePerSheet(double newVal) {
     this.copier3PricePerSheet = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -3150,6 +3219,7 @@ public class StockDefinition extends ModelBase {
 	public void setStockChanges(java.util.List<StockChanges> newVal) {
     this.stockChanges = newVal;
   }
+	
  	
 	
 	/**
@@ -3172,6 +3242,7 @@ public class StockDefinition extends ModelBase {
 	public void setMill(Integer newVal) {
     this.mill = newVal;
   }
+	
  	
 	
 	/**
@@ -3194,6 +3265,7 @@ public class StockDefinition extends ModelBase {
 	public void setLotcount(Integer newVal) {
     this.lotcount = newVal;
   }
+	
  	
 	
 	/**
@@ -3216,6 +3288,7 @@ public class StockDefinition extends ModelBase {
 	public void setCartonWeight(Double newVal) {
     this.cartonWeight = newVal;
   }
+	
  	
 	
 	/**
@@ -3238,6 +3311,7 @@ public class StockDefinition extends ModelBase {
 	public void setSheetperSkid(Integer newVal) {
     this.sheetperSkid = newVal;
   }
+	
  	
 	
 	/**
@@ -3260,6 +3334,7 @@ public class StockDefinition extends ModelBase {
 	public void setWeightperSkid(Double newVal) {
     this.weightperSkid = newVal;
   }
+	
  	
 	
 	/**
@@ -3282,6 +3357,7 @@ public class StockDefinition extends ModelBase {
 	public void setShortgain(Integer newVal) {
     this.shortgain = newVal;
   }
+	
  	
 	
 	/**
@@ -3304,6 +3380,7 @@ public class StockDefinition extends ModelBase {
 	public void setNoBrokenCarton(Boolean newVal) {
     this.noBrokenCarton = newVal;
   }
+	
  	
 	
 	/**
@@ -3326,6 +3403,7 @@ public class StockDefinition extends ModelBase {
 	public void setPricedinSets(Boolean newVal) {
     this.pricedinSets = newVal;
   }
+	
  	
 	
 	/**
@@ -3348,6 +3426,7 @@ public class StockDefinition extends ModelBase {
 	public void setImported(Boolean newVal) {
     this.imported = newVal;
   }
+	
  	
 	
 	/**
@@ -3370,6 +3449,7 @@ public class StockDefinition extends ModelBase {
 	public void setMeasure(Boolean newVal) {
     this.measure = newVal;
   }
+	
  	
 	
 	/**
@@ -3392,6 +3472,7 @@ public class StockDefinition extends ModelBase {
 	public void setAllownegative(Boolean newVal) {
     this.allownegative = newVal;
   }
+	
  	
 	
 	/**
@@ -3414,6 +3495,7 @@ public class StockDefinition extends ModelBase {
 	public void setRollWeight(Double newVal) {
     this.rollWeight = newVal;
   }
+	
  	
 	
 	/**
@@ -3436,6 +3518,7 @@ public class StockDefinition extends ModelBase {
 	public void setDefaultBWCopier(CopierDefinition newVal) {
     this.defaultBWCopier = newVal;
   }
+	
  	
 	
 	/**
@@ -3458,6 +3541,7 @@ public class StockDefinition extends ModelBase {
 	public void setDefaultColorCopier(CopierDefinition newVal) {
     this.defaultColorCopier = newVal;
   }
+	
  	
 	
 	/**
@@ -3480,66 +3564,76 @@ public class StockDefinition extends ModelBase {
 	public void setDefaultLargeCopier(CopierDefinition newVal) {
     this.defaultLargeCopier = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String jdfStockId;
-
+	private String jdfStockId;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getJdfStockId(){
+	public String getJdfStockId(){
     return jdfStockId; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setJdfStockId(String newVal) {
+	 * @generated
+	 */	
+	public void setJdfStockId(String newVal) {
     this.jdfStockId = newVal;
   }
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean excludeFromWeb;
-
+	private Boolean excludeFromWeb;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getExcludeFromWeb(){
+	public Boolean getExcludeFromWeb(){
     return excludeFromWeb; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setExcludeFromWeb(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setExcludeFromWeb(Boolean newVal) {
     this.excludeFromWeb = newVal;
   }
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean webEnabled;
-
+	private Boolean webEnabled;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getWebEnabled(){
+	public Boolean getWebEnabled(){
     return webEnabled; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setWebEnabled(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setWebEnabled(Boolean newVal) {
     this.webEnabled = newVal;
   }
-
+	
 	/**
 	 * @generated
 	 */		

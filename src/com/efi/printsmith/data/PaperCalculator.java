@@ -764,23 +764,22 @@ public class PaperCalculator extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setDefaultPressCuttOff(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setDefaultPressCuttOff(BigDecimal newVal) {
     this.defaultPressCuttOff = newVal;
     this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setDefaultPressCuttOff(double newVal) {
+	 * @generated
+	 */	
+	public void setDefaultPressCuttOff(double newVal) {
     this.defaultPressCuttOff = BigDecimal.valueOf(newVal);
     this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1225,21 +1224,22 @@ public class PaperCalculator extends ModelBase {
 	private Integer dAcross;
 	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Integer getdAcross(){
+	public Integer getdAcross(){
     return dAcross; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setdAcross(Integer newVal) {
+	 * @generated
+	 */	
+	public void setdAcross(Integer newVal) {
     this.dAcross = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1247,21 +1247,22 @@ public class PaperCalculator extends ModelBase {
 	private Integer dDown;
 	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Integer getdDown(){
+	public Integer getdDown(){
     return dDown; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setdDown(Integer newVal) {
+	 * @generated
+	 */	
+	public void setdDown(Integer newVal) {
     this.dDown = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1338,21 +1339,22 @@ public class PaperCalculator extends ModelBase {
 	private Double rMargin;
 	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getrMargin(){
+	public Double getrMargin(){
     return rMargin; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setrMargin(Double newVal) {
+	 * @generated
+	 */	
+	public void setrMargin(Double newVal) {
     this.rMargin = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1360,21 +1362,22 @@ public class PaperCalculator extends ModelBase {
 	private Double bMargin;
 	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getbMargin(){
+	public Double getbMargin(){
     return bMargin; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setbMargin(Double newVal) {
+	 * @generated
+	 */	
+	public void setbMargin(Double newVal) {
     this.bMargin = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1382,21 +1385,22 @@ public class PaperCalculator extends ModelBase {
 	private Double tMargin;
 	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double gettMargin(){
+	public Double gettMargin(){
     return tMargin; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void settMargin(Double newVal) {
+	 * @generated
+	 */	
+	public void settMargin(Double newVal) {
     this.tMargin = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1404,21 +1408,22 @@ public class PaperCalculator extends ModelBase {
 	private Double lMargin;
 	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getlMargin(){
+	public Double getlMargin(){
     return lMargin; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setlMargin(Double newVal) {
+	 * @generated
+	 */	
+	public void setlMargin(Double newVal) {
     this.lMargin = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	

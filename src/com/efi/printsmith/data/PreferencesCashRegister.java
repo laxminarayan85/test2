@@ -161,21 +161,20 @@ public class PreferencesCashRegister extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setRate(BigDecimal newVal) {
     this.rate = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setRate(double newVal) {
+	 * @generated
+	 */	
+	public void setRate(double newVal) {
     this.rate = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	

@@ -242,11 +242,10 @@ public class PreferencesAccounting extends ModelBase {
 	 * @generated
 	 */
 	public static final String PROMPTUSERFORVALIDATIONINFO = "PromptUserForValidationInfo";
-
 	/**
-   * @generated
-   */
-  public static final String CREDITCARDPROCESSOR = "CreditCardProcessor";
+	 * @generated
+	 */
+	public static final String CREDITCARDPROCESSOR = "CreditCardProcessor";
 
 	/**
 	 * @generated
@@ -273,21 +272,20 @@ public class PreferencesAccounting extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCreditLimit(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCreditLimit(BigDecimal newVal) {
     this.creditLimit = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setCreditLimit(double newVal) {
+	 * @generated
+	 */	
+	public void setCreditLimit(double newVal) {
     this.creditLimit = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1413,28 +1411,29 @@ public class PreferencesAccounting extends ModelBase {
     this.promptUserForValidationInfo = newVal;
   }
 	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String creditCardProcessor;
-
+	private String creditCardProcessor;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getCreditCardProcessor(){
+	public String getCreditCardProcessor(){
     return creditCardProcessor; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setCreditCardProcessor(String newVal) {
+	 * @generated
+	 */	
+	public void setCreditCardProcessor(String newVal) {
     this.creditCardProcessor = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

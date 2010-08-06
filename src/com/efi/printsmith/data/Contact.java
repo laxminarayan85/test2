@@ -130,20 +130,14 @@ public class Contact extends Party {
     this.created = new Date();
     this.modified = new Date();
   }
-	public Contact(long id, String firstName, String lastName, String accountID, Account parentAcct) {
-		this.id = id;
-		this.setFirstName(firstName);
-		this.setLastName(lastName);
-		this.contactId = accountID;
-		this.parentAccount = parentAcct;
-	}
+
  	
 	
 	/**
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-	@JoinTable( name = "contact_shiptoaddress")
+    @JoinTable( name = "contact_shiptoaddress")
 	private java.util.List<Address> shipToAddress;
 	
 	/**
@@ -153,22 +147,25 @@ public class Contact extends Party {
     return shipToAddress; 
   }
 
-	
 	/**
-   * @generated
-   */	
-  public void addShipToAddress(Address obj) {
+	 * @generated
+	 */	
+	public void addShipToAddress(Address obj) {
     if (shipToAddress == null) {
       shipToAddress = new java.util.ArrayList<Address>();
     }
     shipToAddress.add(obj);
   }
+	
 	/**
-   * @generated
-   */	
-  public void setShipToAddress(java.util.List<Address> newVal) {
+	 * @generated
+	 */	
+	public void setShipToAddress(java.util.List<Address> newVal) {
     this.shipToAddress = newVal;
   }
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	

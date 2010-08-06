@@ -55,13 +55,14 @@ public class TaxElement extends ModelBase {
 	 */
 	public static final String USERFORSEPARATESHIPPINGTAX = "UserForSeparateShippingTax";
 	/**
-   * @generated
-   */
-  public static final String TAX = "Tax";
+	 * @generated
+	 */
+	public static final String TAX = "Tax";
 	/**
-   * @generated
-   */
-  public static final String SEQUENCEID = "Sequenceid";
+	 * @generated
+	 */
+	public static final String SEQUENCEID = "Sequenceid";
+
 	/**
 	 * @generated
 	 */
@@ -87,21 +88,20 @@ public class TaxElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setRate(BigDecimal newVal) {
     this.rate = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setRate(double newVal) {
+	 * @generated
+	 */	
+	public void setRate(double newVal) {
     this.rate = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -149,48 +149,49 @@ public class TaxElement extends ModelBase {
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private TaxTablesElements tax;
+	private TaxTablesElements tax;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public TaxTablesElements getTax(){
+	public TaxTablesElements getTax(){
     return tax; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTax(TaxTablesElements newVal) {
+	 * @generated
+	 */	
+	public void setTax(TaxTablesElements newVal) {
     this.tax = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Integer sequenceid;
+	private Integer sequenceid;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Integer getSequenceid(){
+	public Integer getSequenceid(){
     return sequenceid; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setSequenceid(Integer newVal) {
+	 * @generated
+	 */	
+	public void setSequenceid(Integer newVal) {
     this.sequenceid = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

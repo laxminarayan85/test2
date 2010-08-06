@@ -82,35 +82,34 @@ public class TaxTable extends ModelBase {
 	 * @generated
 	 */
 	public static final String NAME = "Name";
-
 	/**
-   * @generated
-   */
-  public static final String ABBR = "Abbr";
+	 * @generated
+	 */
+	public static final String ABBR = "Abbr";
 	/**
-   * @generated
-   */
-  public static final String TABLECREATEDATETIME = "TableCreateDateTime";
+	 * @generated
+	 */
+	public static final String TABLECREATEDATETIME = "TableCreateDateTime";
 	/**
-   * @generated
-   */
-  public static final String TABLECREATELOCALDATETIME = "TableCreateLocalDateTime";
+	 * @generated
+	 */
+	public static final String TABLECREATELOCALDATETIME = "TableCreateLocalDateTime";
 	/**
-   * @generated
-   */
-  public static final String MINAMOUNT = "MinAmount";
+	 * @generated
+	 */
+	public static final String MINAMOUNT = "MinAmount";
 	/**
-   * @generated
-   */
-  public static final String DEFAULTTABLE = "DefaultTable";
+	 * @generated
+	 */
+	public static final String DEFAULTTABLE = "DefaultTable";
 	/**
-   * @generated
-   */
-  public static final String SEPARATESHIPPING = "SeparateShipping";
+	 * @generated
+	 */
+	public static final String SEPARATESHIPPING = "SeparateShipping";
 	/**
-   * @generated
-   */
-  public static final String DISABLETABLE = "DisableTable";
+	 * @generated
+	 */
+	public static final String DISABLETABLE = "DisableTable";
 
 	/**
 	 * @generated
@@ -138,23 +137,22 @@ public class TaxTable extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setEffectiveTaxRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setEffectiveTaxRate(BigDecimal newVal) {
     this.effectiveTaxRate = newVal;
     this.effectiveTaxRate.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setEffectiveTaxRate(double newVal) {
+	 * @generated
+	 */	
+	public void setEffectiveTaxRate(double newVal) {
     this.effectiveTaxRate = BigDecimal.valueOf(newVal);
     this.effectiveTaxRate.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -185,6 +183,7 @@ public class TaxTable extends ModelBase {
 	public void setTaxElements(java.util.List<TaxElement> newVal) {
     this.taxElements = newVal;
   }
+	
  	
 	
 	/**
@@ -207,6 +206,7 @@ public class TaxTable extends ModelBase {
 	public void setTaxTableIsCurrent(Boolean newVal) {
     this.taxTableIsCurrent = newVal;
   }
+	
  	
 	
 	/**
@@ -229,6 +229,7 @@ public class TaxTable extends ModelBase {
 	public void setTaxShipping(Boolean newVal) {
     this.taxShipping = newVal;
   }
+	
  	
 	
 	/**
@@ -251,6 +252,7 @@ public class TaxTable extends ModelBase {
 	public void setTaxOnTax(Boolean newVal) {
     this.taxOnTax = newVal;
   }
+	
  	
 	
 	/**
@@ -273,6 +275,7 @@ public class TaxTable extends ModelBase {
 	public void setRoundTaxUp(Boolean newVal) {
     this.roundTaxUp = newVal;
   }
+	
  	
 	
 	/**
@@ -295,6 +298,7 @@ public class TaxTable extends ModelBase {
 	public void setTaxInPrice(Boolean newVal) {
     this.taxInPrice = newVal;
   }
+	
  	
 	
 	/**
@@ -317,6 +321,7 @@ public class TaxTable extends ModelBase {
 	public void setDoDetail(Boolean newVal) {
     this.doDetail = newVal;
   }
+	
  	
 	
 	/**
@@ -339,6 +344,7 @@ public class TaxTable extends ModelBase {
 	public void setDontRoundShownTaxElements(Integer newVal) {
     this.dontRoundShownTaxElements = newVal;
   }
+	
  	
 	
 	/**
@@ -361,174 +367,174 @@ public class TaxTable extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String abbr;
-
+	private String abbr;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getAbbr(){
+	public String getAbbr(){
     return abbr; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setAbbr(String newVal) {
+	 * @generated
+	 */	
+	public void setAbbr(String newVal) {
     this.abbr = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Date tableCreateDateTime;
-
+	private Date tableCreateDateTime;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Date getTableCreateDateTime(){
+	public Date getTableCreateDateTime(){
     return tableCreateDateTime; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTableCreateDateTime(Date newVal) {
+	 * @generated
+	 */	
+	public void setTableCreateDateTime(Date newVal) {
     this.tableCreateDateTime = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Date tableCreateLocalDateTime;
-
+	private Date tableCreateLocalDateTime;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Date getTableCreateLocalDateTime(){
+	public Date getTableCreateLocalDateTime(){
     return tableCreateLocalDateTime; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTableCreateLocalDateTime(Date newVal) {
+	 * @generated
+	 */	
+	public void setTableCreateLocalDateTime(Date newVal) {
     this.tableCreateLocalDateTime = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private BigDecimal minAmount;
-
+	private BigDecimal minAmount;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public BigDecimal getMinAmount(){
+	public BigDecimal getMinAmount(){
     return minAmount; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setMinAmount(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setMinAmount(BigDecimal newVal) {
     this.minAmount = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setMinAmount(double newVal) {
+	 * @generated
+	 */	
+	public void setMinAmount(double newVal) {
     this.minAmount = BigDecimal.valueOf(newVal);
   }
-
-
-
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean defaultTable;
-
+	private Boolean defaultTable;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getDefaultTable(){
+	public Boolean getDefaultTable(){
     return defaultTable; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setDefaultTable(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setDefaultTable(Boolean newVal) {
     this.defaultTable = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean separateShipping;
-
+	private Boolean separateShipping;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getSeparateShipping(){
+	public Boolean getSeparateShipping(){
     return separateShipping; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setSeparateShipping(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setSeparateShipping(Boolean newVal) {
     this.separateShipping = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean disableTable;
-
+	private Boolean disableTable;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getDisableTable(){
+	public Boolean getDisableTable(){
     return disableTable; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setDisableTable(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setDisableTable(Boolean newVal) {
     this.disableTable = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

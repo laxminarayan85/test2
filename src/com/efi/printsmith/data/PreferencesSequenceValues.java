@@ -95,13 +95,14 @@ public class PreferencesSequenceValues extends ModelBase {
 	 */
 	public static final String CREDITCARD = "CreditCard";
 	/**
-   * @generated
-   */
-  public static final String ESTIMATE = "Estimate";
+	 * @generated
+	 */
+	public static final String ESTIMATE = "Estimate";
 	/**
-   * @generated
-   */
-  public static final String STOCKORDER = "StockOrder";
+	 * @generated
+	 */
+	public static final String STOCKORDER = "StockOrder";
+
 	/**
 	 * @generated
 	 */
@@ -412,48 +413,49 @@ public class PreferencesSequenceValues extends ModelBase {
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Long estimate;
+	private Long estimate;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Long getEstimate(){
+	public Long getEstimate(){
     return estimate; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setEstimate(Long newVal) {
+	 * @generated
+	 */	
+	public void setEstimate(Long newVal) {
     this.estimate = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Long stockOrder;
+	private Long stockOrder;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Long getStockOrder(){
+	public Long getStockOrder(){
     return stockOrder; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setStockOrder(Long newVal) {
+	 * @generated
+	 */	
+	public void setStockOrder(Long newVal) {
     this.stockOrder = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

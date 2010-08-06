@@ -84,21 +84,20 @@ public class CostingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setUnitCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setUnitCost(BigDecimal newVal) {
     this.unitCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setUnitCost(double newVal) {
+	 * @generated
+	 */	
+	public void setUnitCost(double newVal) {
     this.unitCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -114,21 +113,20 @@ public class CostingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setTotalCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setTotalCost(BigDecimal newVal) {
     this.totalCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setTotalCost(double newVal) {
+	 * @generated
+	 */	
+	public void setTotalCost(double newVal) {
     this.totalCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -144,21 +142,20 @@ public class CostingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setLaborCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setLaborCost(BigDecimal newVal) {
     this.laborCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setLaborCost(double newVal) {
+	 * @generated
+	 */	
+	public void setLaborCost(double newVal) {
     this.laborCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -174,21 +171,18 @@ public class CostingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setStockCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setStockCost(BigDecimal newVal) {
     this.stockCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setStockCost(double newVal) {
+	 * @generated
+	 */	
+	public void setStockCost(double newVal) {
     this.stockCost = BigDecimal.valueOf(newVal);
   }
-
-
 	/**
 	 * @generated
 	 */		

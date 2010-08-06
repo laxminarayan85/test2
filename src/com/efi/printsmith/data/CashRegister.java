@@ -102,16 +102,14 @@ public class CashRegister extends ModelBase {
 	 * @generated
 	 */
 	public static final String CHECKNUMBER = "CheckNumber";
-
 	/**
-   * @generated
-   */
-  public static final String CASHREGISTERDEPT = "CashRegisterDept";
-
+	 * @generated
+	 */
+	public static final String CASHREGISTERDEPT = "CashRegisterDept";
 	/**
-   * @generated
-   */
-  public static final String NOTAX = "NoTax";
+	 * @generated
+	 */
+	public static final String NOTAX = "NoTax";
 
 	/**
 	 * @generated
@@ -230,21 +228,20 @@ public class CashRegister extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setUnitprice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setUnitprice(BigDecimal newVal) {
     this.unitprice = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setUnitprice(double newVal) {
+	 * @generated
+	 */	
+	public void setUnitprice(double newVal) {
     this.unitprice = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -260,21 +257,20 @@ public class CashRegister extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setTotalprice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setTotalprice(BigDecimal newVal) {
     this.totalprice = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setTotalprice(double newVal) {
+	 * @generated
+	 */	
+	public void setTotalprice(double newVal) {
     this.totalprice = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -359,21 +355,20 @@ public class CashRegister extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setSubtotal(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setSubtotal(BigDecimal newVal) {
     this.subtotal = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setSubtotal(double newVal) {
+	 * @generated
+	 */	
+	public void setSubtotal(double newVal) {
     this.subtotal = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -389,21 +384,20 @@ public class CashRegister extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setTaxamount(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setTaxamount(BigDecimal newVal) {
     this.taxamount = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setTaxamount(double newVal) {
+	 * @generated
+	 */	
+	public void setTaxamount(double newVal) {
     this.taxamount = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -465,21 +459,20 @@ public class CashRegister extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPaymentAmount(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPaymentAmount(BigDecimal newVal) {
     this.paymentAmount = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setPaymentAmount(double newVal) {
+	 * @generated
+	 */	
+	public void setPaymentAmount(double newVal) {
     this.paymentAmount = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -501,50 +494,52 @@ public class CashRegister extends ModelBase {
     this.checkNumber = newVal;
   }
 	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private PreferencesCashRegister cashRegisterDept;
-
+	private PreferencesCashRegister cashRegisterDept;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public PreferencesCashRegister getCashRegisterDept(){
+	public PreferencesCashRegister getCashRegisterDept(){
     return cashRegisterDept; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setCashRegisterDept(PreferencesCashRegister newVal) {
+	 * @generated
+	 */	
+	public void setCashRegisterDept(PreferencesCashRegister newVal) {
     this.cashRegisterDept = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean noTax;
-
+	private Boolean noTax;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getNoTax(){
+	public Boolean getNoTax(){
     return noTax; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setNoTax(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setNoTax(Boolean newVal) {
     this.noTax = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

@@ -103,9 +103,9 @@ public class CreditCardTransactions extends ModelBase {
 	 */
 	public static final String FAILEDAVS = "FailedAVS";
 	/**
-   * @generated
-   */
-  public static final String HASCVVDATA = "HasCVVdata";
+	 * @generated
+	 */
+	public static final String HASCVVDATA = "HasCVVdata";
 	/**
 	 * @generated
 	 */
@@ -126,24 +126,22 @@ public class CreditCardTransactions extends ModelBase {
 	 * @generated
 	 */
 	public static final String TAXTABLE = "TaxTable";
-
 	/**
-   * @generated
-   */
-  public static final String USERNAME = "UserName";
-
+	 * @generated
+	 */
+	public static final String USERNAME = "UserName";
 	/**
-   * @generated
-   */
-  public static final String TRACKONE = "TrackOne";
+	 * @generated
+	 */
+	public static final String TRACKONE = "TrackOne";
 	/**
-   * @generated
-   */
-  public static final String TRACKTWO = "TrackTwo";
+	 * @generated
+	 */
+	public static final String TRACKTWO = "TrackTwo";
 	/**
-   * @generated
-   */
-  public static final String TEMPCVV2 = "TempCVV2";
+	 * @generated
+	 */
+	public static final String TEMPCVV2 = "TempCVV2";
 
 	/**
 	 * @generated
@@ -175,6 +173,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setTransactionDate(Date newVal) {
     this.transactionDate = newVal;
   }
+	
  	
 	
 	/**
@@ -197,6 +196,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setTransactionType(String newVal) {
     this.transactionType = newVal;
   }
+	
  	
 	
 	/**
@@ -219,6 +219,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setTransactionStatus(String newVal) {
     this.transactionStatus = newVal;
   }
+	
  	
 	
 	/**
@@ -241,6 +242,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setTransactionResults(String newVal) {
     this.transactionResults = newVal;
   }
+	
  	
 	
 	/**
@@ -263,6 +265,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setAmount(Double newVal) {
     this.amount = newVal;
   }
+	
  	
 	
 	/**
@@ -285,6 +288,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setTaxInAmount(Boolean newVal) {
     this.taxInAmount = newVal;
   }
+	
  	
 	
 	/**
@@ -307,6 +311,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setInvoice(Invoice newVal) {
     this.invoice = newVal;
   }
+	
  	
 	
 	/**
@@ -329,6 +334,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setPoNumber(String newVal) {
     this.poNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -351,6 +357,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setReferenceNumber(String newVal) {
     this.referenceNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -373,6 +380,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setApprovalCode(String newVal) {
     this.approvalCode = newVal;
   }
+	
  	
 	
 	/**
@@ -395,6 +403,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setApprovalDate(Date newVal) {
     this.approvalDate = newVal;
   }
+	
  	
 	
 	/**
@@ -417,6 +426,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setMessage(String newVal) {
     this.message = newVal;
   }
+	
  	
 	
 	/**
@@ -439,6 +449,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setPermanent(Boolean newVal) {
     this.permanent = newVal;
   }
+	
  	
 	
 	/**
@@ -461,6 +472,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setManualCode(String newVal) {
     this.manualCode = newVal;
   }
+	
  	
 	
 	/**
@@ -483,31 +495,32 @@ public class CreditCardTransactions extends ModelBase {
 	public void setFailedAVS(Boolean newVal) {
     this.failedAVS = newVal;
   }
+	
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean hasCVVdata;
-
+	private Boolean hasCVVdata;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getHasCVVdata(){
+	public Boolean getHasCVVdata(){
     return hasCVVdata; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setHasCVVdata(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setHasCVVdata(Boolean newVal) {
     this.hasCVVdata = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -528,6 +541,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setTrackDataUsed(Boolean newVal) {
     this.trackDataUsed = newVal;
   }
+	
  	
 	
 	/**
@@ -550,6 +564,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setTaxExempt(Boolean newVal) {
     this.taxExempt = newVal;
   }
+	
  	
 	
 	/**
@@ -572,6 +587,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setTax(Double newVal) {
     this.tax = newVal;
   }
+	
  	
 	
 	/**
@@ -594,6 +610,7 @@ public class CreditCardTransactions extends ModelBase {
 	public void setTaxCode(TaxCodes newVal) {
     this.taxCode = newVal;
   }
+	
  	
 	
 	/**
@@ -616,96 +633,99 @@ public class CreditCardTransactions extends ModelBase {
 	public void setTaxTable(TaxTable newVal) {
     this.taxTable = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String userName;
-
+	private String userName;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getUserName(){
+	public String getUserName(){
     return userName; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setUserName(String newVal) {
+	 * @generated
+	 */	
+	public void setUserName(String newVal) {
     this.userName = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String trackOne;
-
+	private String trackOne;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getTrackOne(){
+	public String getTrackOne(){
     return trackOne; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTrackOne(String newVal) {
+	 * @generated
+	 */	
+	public void setTrackOne(String newVal) {
     this.trackOne = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String trackTwo;
-
+	private String trackTwo;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getTrackTwo(){
+	public String getTrackTwo(){
     return trackTwo; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTrackTwo(String newVal) {
+	 * @generated
+	 */	
+	public void setTrackTwo(String newVal) {
     this.trackTwo = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String tempCVV2;
-
+	private String tempCVV2;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getTempCVV2(){
+	public String getTempCVV2(){
     return tempCVV2; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTempCVV2(String newVal) {
+	 * @generated
+	 */	
+	public void setTempCVV2(String newVal) {
     this.tempCVV2 = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

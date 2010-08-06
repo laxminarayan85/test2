@@ -126,11 +126,10 @@ public class MatrixElement extends ModelBase {
 	 * @generated
 	 */
 	public static final String PRICE11 = "Price11";
-
 	/**
-   * @generated
-   */
-  public static final String LASTLINE = "LastLine";
+	 * @generated
+	 */
+	public static final String LASTLINE = "LastLine";
 
 	/**
 	 * @generated
@@ -145,7 +144,7 @@ public class MatrixElement extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic  	
+ 	@Basic
 	private Integer qty;
 	
 	/**
@@ -169,7 +168,7 @@ public class MatrixElement extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
- 	@Column(name="price1", precision=19, scale=8)
+	@Column(name="price1", precision=19, scale=8)
 	private BigDecimal price1;
 	
 	/**
@@ -181,28 +180,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice1(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice1(BigDecimal newVal) {
     this.price1 = newVal;
     this.price1.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice1(double newVal) {
-    this.price1 = BigDecimal.valueOf(newVal);
-    this.price1.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
- 	@Basic  	
- 	@Column(name="price12", precision=19, scale=8)
+	public void setPrice1(double newVal) {
+    this.price1 = BigDecimal.valueOf(newVal);
+    this.price1.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price12", precision=19, scale=8)
 	private BigDecimal price12;
 	
 	/**
@@ -214,28 +212,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice12(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice12(BigDecimal newVal) {
     this.price12 = newVal;
     this.price12.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice12(double newVal) {
-    this.price12 = BigDecimal.valueOf(newVal);
-    this.price12.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
- 	@Basic  	
- 	@Column(name="price2", precision=19, scale=8)
+	public void setPrice12(double newVal) {
+    this.price12 = BigDecimal.valueOf(newVal);
+    this.price12.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price2", precision=19, scale=8)
 	private BigDecimal price2;
 	
 	/**
@@ -247,28 +244,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice2(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice2(BigDecimal newVal) {
     this.price2 = newVal;
     this.price2.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice2(double newVal) {
-    this.price2 = BigDecimal.valueOf(newVal);
-    this.price2.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price13", precision=19, scale=8)
+	public void setPrice2(double newVal) {
+    this.price2 = BigDecimal.valueOf(newVal);
+    this.price2.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price13", precision=19, scale=8)
 	private BigDecimal price13;
 	
 	/**
@@ -280,28 +276,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice13(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice13(BigDecimal newVal) {
     this.price13 = newVal;
     this.price13.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice13(double newVal) {
-    this.price13 = BigDecimal.valueOf(newVal);
-    this.price13.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price3", precision=19, scale=8)
+	public void setPrice13(double newVal) {
+    this.price13 = BigDecimal.valueOf(newVal);
+    this.price13.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price3", precision=19, scale=8)
 	private BigDecimal price3;
 	
 	/**
@@ -313,28 +308,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice3(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice3(BigDecimal newVal) {
     this.price3 = newVal;
     this.price3.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice3(double newVal) {
-    this.price3 = BigDecimal.valueOf(newVal);
-    this.price3.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price14", precision=19, scale=8)
+	public void setPrice3(double newVal) {
+    this.price3 = BigDecimal.valueOf(newVal);
+    this.price3.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price14", precision=19, scale=8)
 	private BigDecimal price14;
 	
 	/**
@@ -346,28 +340,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice14(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice14(BigDecimal newVal) {
     this.price14 = newVal;
     this.price14.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice14(double newVal) {
-    this.price14 = BigDecimal.valueOf(newVal);
-    this.price14.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price4", precision=19, scale=8)
+	public void setPrice14(double newVal) {
+    this.price14 = BigDecimal.valueOf(newVal);
+    this.price14.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price4", precision=19, scale=8)
 	private BigDecimal price4;
 	
 	/**
@@ -379,28 +372,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice4(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice4(BigDecimal newVal) {
     this.price4 = newVal;
     this.price4.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice4(double newVal) {
-    this.price4 = BigDecimal.valueOf(newVal);
-    this.price4.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price15", precision=19, scale=8)
+	public void setPrice4(double newVal) {
+    this.price4 = BigDecimal.valueOf(newVal);
+    this.price4.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price15", precision=19, scale=8)
 	private BigDecimal price15;
 	
 	/**
@@ -412,28 +404,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice15(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice15(BigDecimal newVal) {
     this.price15 = newVal;
     this.price15.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice15(double newVal) {
-    this.price15 = BigDecimal.valueOf(newVal);
-    this.price15.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price5", precision=19, scale=8)
+	public void setPrice15(double newVal) {
+    this.price15 = BigDecimal.valueOf(newVal);
+    this.price15.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price5", precision=19, scale=8)
 	private BigDecimal price5;
 	
 	/**
@@ -445,28 +436,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice5(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice5(BigDecimal newVal) {
     this.price5 = newVal;
     this.price5.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice5(double newVal) {
-    this.price5 = BigDecimal.valueOf(newVal);
-    this.price5.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price16", precision=19, scale=8)
+	public void setPrice5(double newVal) {
+    this.price5 = BigDecimal.valueOf(newVal);
+    this.price5.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price16", precision=19, scale=8)
 	private BigDecimal price16;
 	
 	/**
@@ -478,28 +468,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice16(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice16(BigDecimal newVal) {
     this.price16 = newVal;
     this.price16.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice16(double newVal) {
-    this.price16 = BigDecimal.valueOf(newVal);
-    this.price16.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price6", precision=19, scale=8)
+	public void setPrice16(double newVal) {
+    this.price16 = BigDecimal.valueOf(newVal);
+    this.price16.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price6", precision=19, scale=8)
 	private BigDecimal price6;
 	
 	/**
@@ -511,28 +500,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice6(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice6(BigDecimal newVal) {
     this.price6 = newVal;
     this.price6.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice6(double newVal) {
-    this.price6 = BigDecimal.valueOf(newVal);
-    this.price6.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price17", precision=19, scale=8)
+	public void setPrice6(double newVal) {
+    this.price6 = BigDecimal.valueOf(newVal);
+    this.price6.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price17", precision=19, scale=8)
 	private BigDecimal price17;
 	
 	/**
@@ -544,28 +532,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice17(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice17(BigDecimal newVal) {
     this.price17 = newVal;
     this.price17.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice17(double newVal) {
-    this.price17 = BigDecimal.valueOf(newVal);
-    this.price17.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price7", precision=19, scale=8)
+	public void setPrice17(double newVal) {
+    this.price17 = BigDecimal.valueOf(newVal);
+    this.price17.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price7", precision=19, scale=8)
 	private BigDecimal price7;
 	
 	/**
@@ -577,28 +564,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice7(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice7(BigDecimal newVal) {
     this.price7 = newVal;
     this.price7.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice7(double newVal) {
-    this.price7 = BigDecimal.valueOf(newVal);
-    this.price7.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price18", precision=19, scale=8)
+	public void setPrice7(double newVal) {
+    this.price7 = BigDecimal.valueOf(newVal);
+    this.price7.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price18", precision=19, scale=8)
 	private BigDecimal price18;
 	
 	/**
@@ -610,28 +596,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice18(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice18(BigDecimal newVal) {
     this.price18 = newVal;
     this.price18.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice18(double newVal) {
-    this.price18 = BigDecimal.valueOf(newVal);
-    this.price18.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price8", precision=19, scale=8)
+	public void setPrice18(double newVal) {
+    this.price18 = BigDecimal.valueOf(newVal);
+    this.price18.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price8", precision=19, scale=8)
 	private BigDecimal price8;
 	
 	/**
@@ -643,28 +628,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice8(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice8(BigDecimal newVal) {
     this.price8 = newVal;
     this.price8.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice8(double newVal) {
-    this.price8 = BigDecimal.valueOf(newVal);
-    this.price8.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price19", precision=19, scale=8)
+	public void setPrice8(double newVal) {
+    this.price8 = BigDecimal.valueOf(newVal);
+    this.price8.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price19", precision=19, scale=8)
 	private BigDecimal price19;
 	
 	/**
@@ -676,28 +660,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice19(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice19(BigDecimal newVal) {
     this.price19 = newVal;
     this.price19.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice19(double newVal) {
-    this.price19 = BigDecimal.valueOf(newVal);
-    this.price19.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price9", precision=19, scale=8)
+	public void setPrice19(double newVal) {
+    this.price19 = BigDecimal.valueOf(newVal);
+    this.price19.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price9", precision=19, scale=8)
 	private BigDecimal price9;
 	
 	/**
@@ -709,28 +692,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice9(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice9(BigDecimal newVal) {
     this.price9 = newVal;
     this.price9.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice9(double newVal) {
-    this.price9 = BigDecimal.valueOf(newVal);
-    this.price9.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price20", precision=19, scale=8)
+	public void setPrice9(double newVal) {
+    this.price9 = BigDecimal.valueOf(newVal);
+    this.price9.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price20", precision=19, scale=8)
 	private BigDecimal price20;
 	
 	/**
@@ -742,28 +724,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice20(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice20(BigDecimal newVal) {
     this.price20 = newVal;
     this.price20.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice20(double newVal) {
-    this.price20 = BigDecimal.valueOf(newVal);
-    this.price20.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price10", precision=19, scale=8)
+	public void setPrice20(double newVal) {
+    this.price20 = BigDecimal.valueOf(newVal);
+    this.price20.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price10", precision=19, scale=8)
 	private BigDecimal price10;
 	
 	/**
@@ -775,28 +756,27 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice10(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice10(BigDecimal newVal) {
     this.price10 = newVal;
     this.price10.setScale(8, RoundingMode.HALF_UP);
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrice10(double newVal) {
-    this.price10 = BigDecimal.valueOf(newVal);
-    this.price10.setScale(8, RoundingMode.HALF_UP);
-  }
-
-
+	
 	/**
 	 * @generated
 	 */	
-	@Basic  	
- 	@Column(name="price11", precision=19, scale=8)
+	public void setPrice10(double newVal) {
+    this.price10 = BigDecimal.valueOf(newVal);
+    this.price10.setScale(8, RoundingMode.HALF_UP);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	@Column(name="price11", precision=19, scale=8)
 	private BigDecimal price11;
 	
 	/**
@@ -808,45 +788,43 @@ public class MatrixElement extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice11(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice11(BigDecimal newVal) {
     this.price11 = newVal;
     this.price11.setScale(8, RoundingMode.HALF_UP);
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setPrice11(double newVal) {
+	 * @generated
+	 */	
+	public void setPrice11(double newVal) {
     this.price11 = BigDecimal.valueOf(newVal);
     this.price11.setScale(8, RoundingMode.HALF_UP);
   }
-
-
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean lastLine;
-
+	private Boolean lastLine;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getLastLine(){
+	public Boolean getLastLine(){
     return lastLine; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setLastLine(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setLastLine(Boolean newVal) {
     this.lastLine = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

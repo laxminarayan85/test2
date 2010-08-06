@@ -319,21 +319,20 @@ public class PreferencesStocks extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCustomerCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCustomerCost(BigDecimal newVal) {
     this.customerCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setCustomerCost(double newVal) {
+	 * @generated
+	 */	
+	public void setCustomerCost(double newVal) {
     this.customerCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	

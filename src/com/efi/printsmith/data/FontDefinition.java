@@ -51,29 +51,29 @@ public class FontDefinition extends ModelBase {
 	 */
 	public static final String SIZE = "Size";
 	/**
-   * @generated
-   */
-  public static final String ISBOLD = "IsBold";
+	 * @generated
+	 */
+	public static final String ISBOLD = "IsBold";
 	/**
-   * @generated
-   */
-  public static final String ISITALIC = "IsItalic";
+	 * @generated
+	 */
+	public static final String ISITALIC = "IsItalic";
 	/**
-   * @generated
-   */
-  public static final String ISUNDERLINE = "IsUnderline";
+	 * @generated
+	 */
+	public static final String ISUNDERLINE = "IsUnderline";
 	/**
-   * @generated
-   */
-  public static final String ISOUTLINE = "IsOutline";
+	 * @generated
+	 */
+	public static final String ISOUTLINE = "IsOutline";
 	/**
-   * @generated
-   */
-  public static final String ISSHADOW = "IsShadow";
+	 * @generated
+	 */
+	public static final String ISSHADOW = "IsShadow";
 	/**
-   * @generated
-   */
-  public static final String ISCONDENSED = "IsCondensed";
+	 * @generated
+	 */
+	public static final String ISCONDENSED = "IsCondensed";
 	/**
 	 * @generated
 	 */
@@ -136,143 +136,143 @@ public class FontDefinition extends ModelBase {
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean isBold;
-
+	private Boolean isBold;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getIsBold(){
+	public Boolean getIsBold(){
     return isBold; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setIsBold(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setIsBold(Boolean newVal) {
     this.isBold = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean isItalic;
-
+	private Boolean isItalic;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getIsItalic(){
+	public Boolean getIsItalic(){
     return isItalic; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setIsItalic(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setIsItalic(Boolean newVal) {
     this.isItalic = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean isUnderline;
-
+	private Boolean isUnderline;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getIsUnderline(){
+	public Boolean getIsUnderline(){
     return isUnderline; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setIsUnderline(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setIsUnderline(Boolean newVal) {
     this.isUnderline = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean isOutline;
-
+	private Boolean isOutline;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getIsOutline(){
+	public Boolean getIsOutline(){
     return isOutline; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setIsOutline(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setIsOutline(Boolean newVal) {
     this.isOutline = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean isShadow;
-
+	private Boolean isShadow;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getIsShadow(){
+	public Boolean getIsShadow(){
     return isShadow; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setIsShadow(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setIsShadow(Boolean newVal) {
     this.isShadow = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean isCondensed;
-
+	private Boolean isCondensed;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getIsCondensed(){
+	public Boolean getIsCondensed(){
     return isCondensed; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setIsCondensed(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setIsCondensed(Boolean newVal) {
     this.isCondensed = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	

@@ -54,31 +54,30 @@ public class PreferencesPendingList extends ModelBase {
 	 * @generated
 	 */
 	public static final String COLUMNORDER = "ColumnOrder";
-
 	/**
-   * @generated
-   */
-  public static final String PASTDUECOLOR = "PastDueColor";
+	 * @generated
+	 */
+	public static final String PASTDUECOLOR = "PastDueColor";
 	/**
-   * @generated
-   */
-  public static final String READYFORPICKUPCOLOR = "ReadyForPickupColor";
+	 * @generated
+	 */
+	public static final String READYFORPICKUPCOLOR = "ReadyForPickupColor";
 	/**
-   * @generated
-   */
-  public static final String INVOICECOLOR = "InvoiceColor";
+	 * @generated
+	 */
+	public static final String INVOICECOLOR = "InvoiceColor";
 	/**
-   * @generated
-   */
-  public static final String ESTIMATECOLOR = "EstimateColor";
+	 * @generated
+	 */
+	public static final String ESTIMATECOLOR = "EstimateColor";
 	/**
-   * @generated
-   */
-  public static final String LISTFONT = "ListFont";
+	 * @generated
+	 */
+	public static final String LISTFONT = "ListFont";
 	/**
-   * @generated
-   */
-  public static final String HEADERFONT = "HeaderFont";
+	 * @generated
+	 */
+	public static final String HEADERFONT = "HeaderFont";
 
 	/**
 	 * @generated
@@ -157,138 +156,144 @@ public class PreferencesPendingList extends ModelBase {
     this.columnOrder = newVal;
   }
 	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String pastDueColor;
-
+	private String pastDueColor;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getPastDueColor(){
+	public String getPastDueColor(){
     return pastDueColor; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPastDueColor(String newVal) {
+	 * @generated
+	 */	
+	public void setPastDueColor(String newVal) {
     this.pastDueColor = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String readyForPickupColor;
-
+	private String readyForPickupColor;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getReadyForPickupColor(){
+	public String getReadyForPickupColor(){
     return readyForPickupColor; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setReadyForPickupColor(String newVal) {
+	 * @generated
+	 */	
+	public void setReadyForPickupColor(String newVal) {
     this.readyForPickupColor = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String invoiceColor;
-
+	private String invoiceColor;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getInvoiceColor(){
+	public String getInvoiceColor(){
     return invoiceColor; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setInvoiceColor(String newVal) {
+	 * @generated
+	 */	
+	public void setInvoiceColor(String newVal) {
     this.invoiceColor = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String estimateColor;
-
+	private String estimateColor;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getEstimateColor(){
+	public String getEstimateColor(){
     return estimateColor; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setEstimateColor(String newVal) {
+	 * @generated
+	 */	
+	public void setEstimateColor(String newVal) {
     this.estimateColor = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private FontDefinition listFont;
-
+	private FontDefinition listFont;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public FontDefinition getListFont(){
+	public FontDefinition getListFont(){
     return listFont; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setListFont(FontDefinition newVal) {
+	 * @generated
+	 */	
+	public void setListFont(FontDefinition newVal) {
     this.listFont = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private FontDefinition headerFont;
-
+	private FontDefinition headerFont;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public FontDefinition getHeaderFont(){
+	public FontDefinition getHeaderFont(){
     return headerFont; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setHeaderFont(FontDefinition newVal) {
+	 * @generated
+	 */	
+	public void setHeaderFont(FontDefinition newVal) {
     this.headerFont = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

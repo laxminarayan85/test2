@@ -90,11 +90,10 @@ public class Tape extends ModelBase {
 	 * @generated
 	 */
 	public static final String AR = "Ar";
-
 	/**
-   * @generated
-   */
-  public static final String PAYMENTAMOUNT = "PaymentAmount";
+	 * @generated
+	 */
+	public static final String PAYMENTAMOUNT = "PaymentAmount";
 
 	/**
 	 * @generated
@@ -265,13 +264,14 @@ public class Tape extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCheckNum(String newVal) {
+	 * @generated
+	 */	
+	public void setCheckNum(String newVal) {
     this.checkNum = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -354,82 +354,78 @@ public class Tape extends ModelBase {
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean pos;
-
+	private Boolean pos;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getPos(){
+	public Boolean getPos(){
     return pos; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPos(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setPos(Boolean newVal) {
     this.pos = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean ar;
-
+	private Boolean ar;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getAr(){
+	public Boolean getAr(){
     return ar; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setAr(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setAr(Boolean newVal) {
     this.ar = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private BigDecimal paymentAmount;
-
+	private BigDecimal paymentAmount;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public BigDecimal getPaymentAmount(){
+	public BigDecimal getPaymentAmount(){
     return paymentAmount; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPaymentAmount(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPaymentAmount(BigDecimal newVal) {
     this.paymentAmount = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setPaymentAmount(double newVal) {
+	 * @generated
+	 */	
+	public void setPaymentAmount(double newVal) {
     this.paymentAmount = BigDecimal.valueOf(newVal);
   }
-
-
-
 	/**
 	 * @generated
 	 */		

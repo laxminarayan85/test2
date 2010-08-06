@@ -227,13 +227,13 @@ public class CopierDefinition extends ModelBase {
 	 */
 	public static final String USECOPIERSTOCKMARKUP = "UseCopierStockMarkup";
 	/**
-   * @generated
-   */
-  public static final String MATRIXTYPE = "MatrixType";
+	 * @generated
+	 */
+	public static final String MATRIXTYPE = "MatrixType";
 	/**
-   * @generated
-   */
-  public static final String SQUAREAREATYPE = "SquareAreaType";
+	 * @generated
+	 */
+	public static final String SQUAREAREATYPE = "SquareAreaType";
 	/**
 	 * @generated
 	 */
@@ -242,11 +242,10 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String STOCKMARKUP = "StockMarkup";
-
 	/**
-   * @generated
-   */
-  public static final String BASERATE = "BaseRate";
+	 * @generated
+	 */
+	public static final String BASERATE = "BaseRate";
 
 	/**
 	 * @generated
@@ -256,21 +255,7 @@ public class CopierDefinition extends ModelBase {
     this.modified = new Date();
   }
 
-	public CopierDefinition(long id, String Name) {
-		this.id = id;
-		this.name = Name;
-	}
-	
-	public CopierDefinition(long id, String name, int copyID, String machineName, boolean blackwhite,
-			boolean color, boolean largeformat) {
-		this.id = id;
-		this.name =name;
-		this.copyID= copyID;
-		this.machineName = machineName;
-		this.blackwhite=  blackwhite;
-		this.color= color;
-		this.largeFormat = largeformat;
-	}
+ 	
 	
 	/**
 	 * @generated
@@ -292,6 +277,7 @@ public class CopierDefinition extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -314,6 +300,7 @@ public class CopierDefinition extends ModelBase {
 	public void setMachineName(String newVal) {
     this.machineName = newVal;
   }
+	
  	
 	
 	/**
@@ -336,6 +323,7 @@ public class CopierDefinition extends ModelBase {
 	public void setOutputDescrip(String newVal) {
     this.outputDescrip = newVal;
   }
+	
  	
 	
 	/**
@@ -358,6 +346,7 @@ public class CopierDefinition extends ModelBase {
 	public void setProductionLocation(String newVal) {
     this.productionLocation = newVal;
   }
+	
  	
 	
 	/**
@@ -380,6 +369,7 @@ public class CopierDefinition extends ModelBase {
 	public void setCostCenter(String newVal) {
     this.costCenter = newVal;
   }
+	
  	
 	
 	/**
@@ -402,6 +392,7 @@ public class CopierDefinition extends ModelBase {
 	public void setOemDeviceID(String newVal) {
     this.oemDeviceID = newVal;
   }
+	
  	
 	
 	/**
@@ -424,6 +415,7 @@ public class CopierDefinition extends ModelBase {
 	public void setCostingCopy(Boolean newVal) {
     this.costingCopy = newVal;
   }
+	
  	
 	
 	/**
@@ -446,6 +438,7 @@ public class CopierDefinition extends ModelBase {
 	public void setBlackwhite(Boolean newVal) {
     this.blackwhite = newVal;
   }
+	
  	
 	
 	/**
@@ -468,6 +461,7 @@ public class CopierDefinition extends ModelBase {
 	public void setColor(Boolean newVal) {
     this.color = newVal;
   }
+	
  	
 	
 	/**
@@ -490,6 +484,7 @@ public class CopierDefinition extends ModelBase {
 	public void setIntegratedDevice(Boolean newVal) {
     this.integratedDevice = newVal;
   }
+	
  	
 	
 	/**
@@ -512,6 +507,7 @@ public class CopierDefinition extends ModelBase {
 	public void setMaxSize(String newVal) {
     this.maxSize = newVal;
   }
+	
  	
 	
 	/**
@@ -534,6 +530,7 @@ public class CopierDefinition extends ModelBase {
 	public void setMinSize(String newVal) {
     this.minSize = newVal;
   }
+	
  	
 	
 	/**
@@ -552,21 +549,22 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setMonthlyLabor(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setMonthlyLabor(BigDecimal newVal) {
     this.monthlyLabor = newVal;
     this.monthlyLabor.setScale(2, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setMonthlyLabor(double newVal) {
+	 * @generated
+	 */	
+	public void setMonthlyLabor(double newVal) {
     this.monthlyLabor = BigDecimal.valueOf(newVal);
     this.monthlyLabor.setScale(2, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -583,21 +581,22 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setClickCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setClickCost(BigDecimal newVal) {
     this.clickCost = newVal;
     this.clickCost.setScale(4, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setClickCost(double newVal) {
+	 * @generated
+	 */	
+	public void setClickCost(double newVal) {
     this.clickCost = BigDecimal.valueOf(newVal);
     this.clickCost.setScale(4, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -614,21 +613,22 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setLaborCopy(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setLaborCopy(BigDecimal newVal) {
     this.laborCopy = newVal;
     this.laborCopy.setScale(4, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setLaborCopy(double newVal) {
+	 * @generated
+	 */	
+	public void setLaborCopy(double newVal) {
     this.laborCopy = BigDecimal.valueOf(newVal);
     this.laborCopy.setScale(4, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -649,6 +649,7 @@ public class CopierDefinition extends ModelBase {
 	public void setLargeFormat(Boolean newVal) {
     this.largeFormat = newVal;
   }
+	
  	
 	
 	/**
@@ -671,6 +672,7 @@ public class CopierDefinition extends ModelBase {
 	public void setMaxWidth(String newVal) {
     this.maxWidth = newVal;
   }
+	
  	
 	
 	/**
@@ -693,6 +695,7 @@ public class CopierDefinition extends ModelBase {
 	public void setMinWidth(String newVal) {
     this.minWidth = newVal;
   }
+	
  	
 	
 	/**
@@ -715,6 +718,7 @@ public class CopierDefinition extends ModelBase {
 	public void setDaysOpen(Integer newVal) {
     this.daysOpen = newVal;
   }
+	
  	
 	
 	/**
@@ -733,21 +737,22 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setMonthlyPayment(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setMonthlyPayment(BigDecimal newVal) {
     this.monthlyPayment = newVal;
     this.monthlyPayment.setScale(2, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setMonthlyPayment(double newVal) {
+	 * @generated
+	 */	
+	public void setMonthlyPayment(double newVal) {
     this.monthlyPayment = BigDecimal.valueOf(newVal);
     this.monthlyPayment.setScale(2, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -768,6 +773,7 @@ public class CopierDefinition extends ModelBase {
 	public void setPercentUsage(Double newVal) {
     this.percentUsage = newVal;
   }
+	
  	
 	
 	/**
@@ -786,21 +792,22 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setHourCostRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setHourCostRate(BigDecimal newVal) {
     this.hourCostRate = newVal;
     this.hourCostRate.setScale(2, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setHourCostRate(double newVal) {
+	 * @generated
+	 */	
+	public void setHourCostRate(double newVal) {
     this.hourCostRate = BigDecimal.valueOf(newVal);
     this.hourCostRate.setScale(2, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -817,21 +824,22 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setTonerCopy(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setTonerCopy(BigDecimal newVal) {
     this.tonerCopy = newVal;
     this.tonerCopy.setScale(4, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setTonerCopy(double newVal) {
+	 * @generated
+	 */	
+	public void setTonerCopy(double newVal) {
     this.tonerCopy = BigDecimal.valueOf(newVal);
     this.tonerCopy.setScale(4, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -848,21 +856,22 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setDeveloperCopy(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setDeveloperCopy(BigDecimal newVal) {
     this.developerCopy = newVal;
     this.developerCopy.setScale(4, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setDeveloperCopy(double newVal) {
+	 * @generated
+	 */	
+	public void setDeveloperCopy(double newVal) {
     this.developerCopy = BigDecimal.valueOf(newVal);
     this.developerCopy.setScale(4, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -883,6 +892,7 @@ public class CopierDefinition extends ModelBase {
 	public void setCopyMarkup(Double newVal) {
     this.copyMarkup = newVal;
   }
+	
  	
 	
 	/**
@@ -905,6 +915,7 @@ public class CopierDefinition extends ModelBase {
 	public void setHoursOpen(Integer newVal) {
     this.hoursOpen = newVal;
   }
+	
  	
 	
 	/**
@@ -923,21 +934,22 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setMonthlyMaintenance(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setMonthlyMaintenance(BigDecimal newVal) {
     this.monthlyMaintenance = newVal;
     this.monthlyMaintenance.setScale(2, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setMonthlyMaintenance(double newVal) {
+	 * @generated
+	 */	
+	public void setMonthlyMaintenance(double newVal) {
     this.monthlyMaintenance = BigDecimal.valueOf(newVal);
     this.monthlyMaintenance.setScale(2, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -954,21 +966,22 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setMachineCostPerCopy(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setMachineCostPerCopy(BigDecimal newVal) {
     this.machineCostPerCopy = newVal;
     this.machineCostPerCopy.setScale(4, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setMachineCostPerCopy(double newVal) {
+	 * @generated
+	 */	
+	public void setMachineCostPerCopy(double newVal) {
     this.machineCostPerCopy = BigDecimal.valueOf(newVal);
     this.machineCostPerCopy.setScale(4, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -989,6 +1002,7 @@ public class CopierDefinition extends ModelBase {
 	public void setMethod(String newVal) {
     this.method = newVal;
   }
+	
  	
 	
 	/**
@@ -1011,6 +1025,7 @@ public class CopierDefinition extends ModelBase {
 	public void setSalesCat(SalesCategory newVal) {
     this.salesCat = newVal;
   }
+	
  	
 	
 	/**
@@ -1033,6 +1048,7 @@ public class CopierDefinition extends ModelBase {
 	public void setCopyID(Integer newVal) {
     this.copyID = newVal;
   }
+	
  	
 	
 	/**
@@ -1051,21 +1067,22 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setMonthlyBurdenRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setMonthlyBurdenRate(BigDecimal newVal) {
     this.monthlyBurdenRate = newVal;
     this.monthlyBurdenRate.setScale(2, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setMonthlyBurdenRate(double newVal) {
+	 * @generated
+	 */	
+	public void setMonthlyBurdenRate(double newVal) {
     this.monthlyBurdenRate = BigDecimal.valueOf(newVal);
     this.monthlyBurdenRate.setScale(2, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1086,13 +1103,12 @@ public class CopierDefinition extends ModelBase {
 	public void setCopyMinutes(Double newVal) {
     this.copyMinutes = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
-
-	@JoinTable( name = "copierdefinition_charges")
 	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
 	private java.util.List<ChargeDefinition> charges;
 	
@@ -1119,6 +1135,7 @@ public class CopierDefinition extends ModelBase {
 	public void setCharges(java.util.List<ChargeDefinition> newVal) {
     this.charges = newVal;
   }
+	
  	
 	
 	/**
@@ -1141,6 +1158,7 @@ public class CopierDefinition extends ModelBase {
 	public void setCopierId(String newVal) {
     this.copierId = newVal;
   }
+	
  	
 	
 	/**
@@ -1158,19 +1176,20 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setFlateRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setFlateRate(BigDecimal newVal) {
     this.flateRate = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setFlateRate(double newVal) {
+	 * @generated
+	 */	
+	public void setFlateRate(double newVal) {
     this.flateRate = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1191,6 +1210,7 @@ public class CopierDefinition extends ModelBase {
 	public void setCopyMarkup2(Double newVal) {
     this.copyMarkup2 = newVal;
   }
+	
  	
 	
 	/**
@@ -1208,19 +1228,20 @@ public class CopierDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setFlatRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setFlatRate(BigDecimal newVal) {
     this.flatRate = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setFlatRate(double newVal) {
+	 * @generated
+	 */	
+	public void setFlatRate(double newVal) {
     this.flatRate = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1241,6 +1262,7 @@ public class CopierDefinition extends ModelBase {
 	public void setWasteChart(WasteChart newVal) {
     this.wasteChart = newVal;
   }
+	
  	
 	
 	/**
@@ -1263,6 +1285,7 @@ public class CopierDefinition extends ModelBase {
 	public void setStockPriceList(PriceList newVal) {
     this.stockPriceList = newVal;
   }
+	
  	
 	
 	/**
@@ -1285,6 +1308,7 @@ public class CopierDefinition extends ModelBase {
 	public void setCopierPriceList(PriceList newVal) {
     this.copierPriceList = newVal;
   }
+	
  	
 	
 	/**
@@ -1307,6 +1331,7 @@ public class CopierDefinition extends ModelBase {
 	public void setPriceTwoSide(String newVal) {
     this.priceTwoSide = newVal;
   }
+	
  	
 	
 	/**
@@ -1329,6 +1354,7 @@ public class CopierDefinition extends ModelBase {
 	public void setStockPriceMethod(String newVal) {
     this.stockPriceMethod = newVal;
   }
+	
  	
 	
 	/**
@@ -1351,6 +1377,7 @@ public class CopierDefinition extends ModelBase {
 	public void setSideTwoFactor(Double newVal) {
     this.sideTwoFactor = newVal;
   }
+	
  	
 	
 	/**
@@ -1373,6 +1400,7 @@ public class CopierDefinition extends ModelBase {
 	public void setCopierMatrix(Matrix newVal) {
     this.copierMatrix = newVal;
   }
+	
  	
 	
 	/**
@@ -1395,48 +1423,55 @@ public class CopierDefinition extends ModelBase {
 	public void setUseCopierStockMarkup(Boolean newVal) {
     this.useCopierStockMarkup = newVal;
   }
+	
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String matrixType;
-
+	private String matrixType;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getMatrixType(){
+	public String getMatrixType(){
     return matrixType; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setMatrixType(String newVal) {
+	 * @generated
+	 */	
+	public void setMatrixType(String newVal) {
     this.matrixType = newVal;
   }
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String squareAreaType;
-
+	private String squareAreaType;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getSquareAreaType(){
+	public String getSquareAreaType(){
     return squareAreaType; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setSquareAreaType(String newVal) {
+	 * @generated
+	 */	
+	public void setSquareAreaType(String newVal) {
     this.squareAreaType = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1457,6 +1492,7 @@ public class CopierDefinition extends ModelBase {
 	public void setInterpolateMatrix(Boolean newVal) {
     this.interpolateMatrix = newVal;
   }
+	
  	
 	
 	/**
@@ -1479,33 +1515,36 @@ public class CopierDefinition extends ModelBase {
 	public void setStockMarkup(Double newVal) {
     this.stockMarkup = newVal;
   }
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private BigDecimal baseRate;
-
+	private BigDecimal baseRate;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public BigDecimal getBaseRate(){
+	public BigDecimal getBaseRate(){
     return baseRate; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setBaseRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setBaseRate(BigDecimal newVal) {
     this.baseRate = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setBaseRate(double newVal) {
+	 * @generated
+	 */	
+	public void setBaseRate(double newVal) {
     this.baseRate = BigDecimal.valueOf(newVal);
   }
-
 	/**
 	 * @generated
 	 */		

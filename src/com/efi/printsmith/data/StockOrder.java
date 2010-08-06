@@ -425,21 +425,20 @@ public class StockOrder extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCost(BigDecimal newVal) {
     this.cost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setCost(double newVal) {
+	 * @generated
+	 */	
+	public void setCost(double newVal) {
     this.cost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	

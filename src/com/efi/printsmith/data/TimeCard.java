@@ -70,15 +70,14 @@ public class TimeCard extends ModelBase {
 	 * @generated
 	 */
 	public static final String EMPLOYEE = "Employee";
-
 	/**
-   * @generated
-   */
-  public static final String BREAKHOUR = "BreakHour";
+	 * @generated
+	 */
+	public static final String BREAKHOUR = "BreakHour";
 	/**
-   * @generated
-   */
-  public static final String PAIDTIMEOFF = "PaidTimeOff";
+	 * @generated
+	 */
+	public static final String PAIDTIMEOFF = "PaidTimeOff";
 
 	/**
 	 * @generated
@@ -105,13 +104,14 @@ public class TimeCard extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPeriod(Integer newVal) {
+	 * @generated
+	 */	
+	public void setPeriod(Integer newVal) {
     this.period = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -248,46 +248,52 @@ public class TimeCard extends ModelBase {
     this.employee = newVal;
   }
 	
-	@Basic
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
 	private String breakHour;
 	
-	
+	/**
+	 * @generated
+ 	 */
+	public String getBreakHour(){
+    return breakHour; 
+  }
+
 	
 	/**
-	 * @return the breakHour
-	 */
-	public String getBreakHour() {
-		return breakHour;
-	}
-
-
-	/**
-	 * @param breakHour the breakHour to set
-	 */
-	public void setBreakHour(String breakHour) {
-		this.breakHour = breakHour;
-	}
+	 * @generated
+	 */	
+	public void setBreakHour(String newVal) {
+    this.breakHour = newVal;
+  }
 	
-	@Basic
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
 	private Boolean paidTimeOff;
-
-
+	
 	/**
-	 * @return the paidTimeOff
-	 */
-	public Boolean getPaidTimeOff() {
-		return paidTimeOff;
-	}
+	 * @generated
+ 	 */
+	public Boolean getPaidTimeOff(){
+    return paidTimeOff; 
+  }
 
-
+	
 	/**
-	 * @param paidTimeOff the paidTimeOff to set
-	 */
-	public void setPaidTimeOff(Boolean paidTimeOff) {
-		this.paidTimeOff = paidTimeOff;
-	}
-
-
+	 * @generated
+	 */	
+	public void setPaidTimeOff(Boolean newVal) {
+    this.paidTimeOff = newVal;
+  }
+	
 	/**
 	 * @generated
 	 */		

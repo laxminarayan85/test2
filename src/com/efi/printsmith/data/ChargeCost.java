@@ -112,21 +112,20 @@ public class ChargeCost extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setSetupCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setSetupCost(BigDecimal newVal) {
     this.setupCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setSetupCost(double newVal) {
+	 * @generated
+	 */	
+	public void setSetupCost(double newVal) {
     this.setupCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -142,21 +141,20 @@ public class ChargeCost extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setUnitCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setUnitCost(BigDecimal newVal) {
     this.unitCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setUnitCost(double newVal) {
+	 * @generated
+	 */	
+	public void setUnitCost(double newVal) {
     this.unitCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -195,21 +193,20 @@ public class ChargeCost extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setFixedMaterials(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setFixedMaterials(BigDecimal newVal) {
     this.fixedMaterials = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setFixedMaterials(double newVal) {
+	 * @generated
+	 */	
+	public void setFixedMaterials(double newVal) {
     this.fixedMaterials = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -225,21 +222,20 @@ public class ChargeCost extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setUnitMaterials(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setUnitMaterials(BigDecimal newVal) {
     this.unitMaterials = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setUnitMaterials(double newVal) {
+	 * @generated
+	 */	
+	public void setUnitMaterials(double newVal) {
     this.unitMaterials = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -255,21 +251,20 @@ public class ChargeCost extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setLaborRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setLaborRate(BigDecimal newVal) {
     this.laborRate = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setLaborRate(double newVal) {
+	 * @generated
+	 */	
+	public void setLaborRate(double newVal) {
     this.laborRate = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -331,21 +326,20 @@ public class ChargeCost extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setTotalUnitCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setTotalUnitCost(BigDecimal newVal) {
     this.totalUnitCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setTotalUnitCost(double newVal) {
+	 * @generated
+	 */	
+	public void setTotalUnitCost(double newVal) {
     this.totalUnitCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	

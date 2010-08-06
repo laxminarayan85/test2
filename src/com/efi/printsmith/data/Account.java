@@ -379,17 +379,18 @@ public class Account extends ModelBase {
 	 */
 	public static final String JOBCHARGES = "JobCharges";
 	/**
-   * @generated
-   */
-  public static final String WEBREGISTERED = "WebRegistered";
+	 * @generated
+	 */
+	public static final String WEBREGISTERED = "WebRegistered";
 	/**
-   * @generated
-   */
-  public static final String WEBCOMPANYID = "WebCompanyId";
+	 * @generated
+	 */
+	public static final String WEBCOMPANYID = "WebCompanyId";
 	/**
-   * @generated
-   */
-  public static final String WEBCATALOG = "WebCatalog";
+	 * @generated
+	 */
+	public static final String WEBCATALOG = "WebCatalog";
+
 	/**
 	 * @generated
 	 */
@@ -398,24 +399,8 @@ public class Account extends ModelBase {
     this.modified = new Date();
   }
 
-	public Account(long id, String Name, String accountID,String externalID, long masterID, boolean prospect) {
-		this.id = id;
-		this.title = Name;
-		this.accountId = accountID;
-		this.externalRef = externalID;
-		this.masterAcct = masterID;
-		this.prospect = prospect;
-	}
  	
-	public Account(long id, String Name, String accountID,String externalID, long masterID, boolean prospect, String externalAcctId) {
-		this.id = id;
-		this.title = Name;
-		this.accountId = accountID;
-		this.externalRef = externalID;
-		this.masterAcct = masterID;
-		this.prospect = prospect;
-		this.externalAcctId = externalAcctId;
-	}
+	
 	/**
 	 * @generated
 	 */	
@@ -436,6 +421,7 @@ public class Account extends ModelBase {
 	public void setStatus(String newVal) {
     this.status = newVal;
   }
+	
  	
 	
 	/**
@@ -458,6 +444,7 @@ public class Account extends ModelBase {
 	public void setMasterAcct(Long newVal) {
     this.masterAcct = newVal;
   }
+	
  	
 	
 	/**
@@ -480,6 +467,7 @@ public class Account extends ModelBase {
 	public void setResaleNumber(String newVal) {
     this.resaleNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -502,6 +490,7 @@ public class Account extends ModelBase {
 	public void setTitle(String newVal) {
     this.title = newVal;
   }
+	
  	
 	
 	/**
@@ -524,6 +513,7 @@ public class Account extends ModelBase {
 	public void setCustomerPO(String newVal) {
     this.customerPO = newVal;
   }
+	
  	
 	
 	/**
@@ -546,6 +536,7 @@ public class Account extends ModelBase {
 	public void setShipToAddress(Address newVal) {
     this.shipToAddress = newVal;
   }
+	
  	
 	
 	/**
@@ -568,6 +559,7 @@ public class Account extends ModelBase {
 	public void setBillToAddress(Address newVal) {
     this.billToAddress = newVal;
   }
+	
  	
 	
 	/**
@@ -590,6 +582,7 @@ public class Account extends ModelBase {
 	public void setContact(Contact newVal) {
     this.contact = newVal;
   }
+	
  	
 	
 	/**
@@ -612,6 +605,7 @@ public class Account extends ModelBase {
 	public void setBillToContact(Contact newVal) {
     this.billToContact = newVal;
   }
+	
  	
 	
 	/**
@@ -634,6 +628,7 @@ public class Account extends ModelBase {
 	public void setSalesRank(Long newVal) {
     this.salesRank = newVal;
   }
+	
  	
 	
 	/**
@@ -656,6 +651,7 @@ public class Account extends ModelBase {
 	public void setUserAcctId(String newVal) {
     this.userAcctId = newVal;
   }
+	
  	
 	
 	/**
@@ -678,6 +674,7 @@ public class Account extends ModelBase {
 	public void setExternalAcctId(String newVal) {
     this.externalAcctId = newVal;
   }
+	
  	
 	
 	/**
@@ -700,6 +697,7 @@ public class Account extends ModelBase {
 	public void setDollarDiscount(Boolean newVal) {
     this.dollarDiscount = newVal;
   }
+	
  	
 	
 	/**
@@ -722,6 +720,7 @@ public class Account extends ModelBase {
 	public void setOneTimeDiscount(Boolean newVal) {
     this.oneTimeDiscount = newVal;
   }
+	
  	
 	
 	/**
@@ -744,6 +743,7 @@ public class Account extends ModelBase {
 	public void setFileOriginals(Boolean newVal) {
     this.fileOriginals = newVal;
   }
+	
  	
 	
 	/**
@@ -766,6 +766,7 @@ public class Account extends ModelBase {
 	public void setWebAccessEnabled(Boolean newVal) {
     this.webAccessEnabled = newVal;
   }
+	
  	
 	
 	/**
@@ -788,6 +789,7 @@ public class Account extends ModelBase {
 	public void setProspect(Boolean newVal) {
     this.prospect = newVal;
   }
+	
  	
 	
 	/**
@@ -810,6 +812,7 @@ public class Account extends ModelBase {
 	public void setAutoPayEnabled(Boolean newVal) {
     this.autoPayEnabled = newVal;
   }
+	
  	
 	
 	/**
@@ -832,6 +835,7 @@ public class Account extends ModelBase {
 	public void setOptOutMarketing(Boolean newVal) {
     this.optOutMarketing = newVal;
   }
+	
  	
 	
 	/**
@@ -854,6 +858,7 @@ public class Account extends ModelBase {
 	public void setAcctIsIndividual(Boolean newVal) {
     this.acctIsIndividual = newVal;
   }
+	
  	
 	
 	/**
@@ -876,6 +881,7 @@ public class Account extends ModelBase {
 	public void setTaxExempt(Boolean newVal) {
     this.taxExempt = newVal;
   }
+	
  	
 	
 	/**
@@ -898,6 +904,7 @@ public class Account extends ModelBase {
 	public void setPayCommissions(Boolean newVal) {
     this.payCommissions = newVal;
   }
+	
  	
 	
 	/**
@@ -920,6 +927,7 @@ public class Account extends ModelBase {
 	public void setPoRequired(Boolean newVal) {
     this.poRequired = newVal;
   }
+	
  	
 	
 	/**
@@ -942,6 +950,7 @@ public class Account extends ModelBase {
 	public void setApplyFinanceCharges(Boolean newVal) {
     this.applyFinanceCharges = newVal;
   }
+	
  	
 	
 	/**
@@ -964,6 +973,7 @@ public class Account extends ModelBase {
 	public void setGenerateStatements(Boolean newVal) {
     this.generateStatements = newVal;
   }
+	
  	
 	
 	/**
@@ -986,6 +996,7 @@ public class Account extends ModelBase {
 	public void setExternalRef(String newVal) {
     this.externalRef = newVal;
   }
+	
  	
 	
 	/**
@@ -1008,6 +1019,7 @@ public class Account extends ModelBase {
 	public void setSalesRep(SalesRep newVal) {
     this.salesRep = newVal;
   }
+	
  	
 	
 	/**
@@ -1030,6 +1042,7 @@ public class Account extends ModelBase {
 	public void setShippingMode(ShippingMethod newVal) {
     this.shippingMode = newVal;
   }
+	
  	
 	
 	/**
@@ -1052,6 +1065,7 @@ public class Account extends ModelBase {
 	public void setLastInvoiceDate(Date newVal) {
     this.lastInvoiceDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1074,6 +1088,7 @@ public class Account extends ModelBase {
 	public void setLastEstimateDate(Date newVal) {
     this.lastEstimateDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1096,6 +1111,7 @@ public class Account extends ModelBase {
 	public void setFirstInvoiceDate(Date newVal) {
     this.firstInvoiceDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1118,6 +1134,7 @@ public class Account extends ModelBase {
 	public void setFirstEstimateDate(Date newVal) {
     this.firstEstimateDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1140,6 +1157,7 @@ public class Account extends ModelBase {
 	public void setLastAgedDate(Date newVal) {
     this.lastAgedDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1162,6 +1180,7 @@ public class Account extends ModelBase {
 	public void setLastBilledDate(Date newVal) {
     this.lastBilledDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1184,6 +1203,7 @@ public class Account extends ModelBase {
 	public void setMarketing(Marketing newVal) {
     this.marketing = newVal;
   }
+	
  	
 	
 	/**
@@ -1206,6 +1226,7 @@ public class Account extends ModelBase {
 	public void setLastPaymentDate(Date newVal) {
     this.lastPaymentDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1228,6 +1249,7 @@ public class Account extends ModelBase {
 	public void setLastPostingDate(Integer newVal) {
     this.lastPostingDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1250,6 +1272,7 @@ public class Account extends ModelBase {
 	public void setLastRankingDate(Date newVal) {
     this.lastRankingDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1272,6 +1295,7 @@ public class Account extends ModelBase {
 	public void setCreditCardExpiration(Date newVal) {
     this.creditCardExpiration = newVal;
   }
+	
  	
 	
 	/**
@@ -1294,6 +1318,7 @@ public class Account extends ModelBase {
 	public void setCreditCardInfo(String newVal) {
     this.creditCardInfo = newVal;
   }
+	
  	
 	
 	/**
@@ -1316,6 +1341,7 @@ public class Account extends ModelBase {
 	public void setAutoPayMode(Long newVal) {
     this.autoPayMode = newVal;
   }
+	
  	
 	
 	/**
@@ -1338,6 +1364,7 @@ public class Account extends ModelBase {
 	public void setAutoPayInterval(Long newVal) {
     this.autoPayInterval = newVal;
   }
+	
  	
 	
 	/**
@@ -1360,6 +1387,7 @@ public class Account extends ModelBase {
 	public void setCreditCardType(String newVal) {
     this.creditCardType = newVal;
   }
+	
  	
 	
 	/**
@@ -1377,19 +1405,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setAutoPayMinimum(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setAutoPayMinimum(BigDecimal newVal) {
     this.autoPayMinimum = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setAutoPayMinimum(double newVal) {
+	 * @generated
+	 */	
+	public void setAutoPayMinimum(double newVal) {
     this.autoPayMinimum = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1405,19 +1434,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setAutoPayMaximum(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setAutoPayMaximum(BigDecimal newVal) {
     this.autoPayMaximum = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setAutoPayMaximum(double newVal) {
+	 * @generated
+	 */	
+	public void setAutoPayMaximum(double newVal) {
     this.autoPayMaximum = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1433,19 +1463,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setAutoPayTotal(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setAutoPayTotal(BigDecimal newVal) {
     this.autoPayTotal = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setAutoPayTotal(double newVal) {
+	 * @generated
+	 */	
+	public void setAutoPayTotal(double newVal) {
     this.autoPayTotal = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1461,19 +1492,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setAutoPayAmount(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setAutoPayAmount(BigDecimal newVal) {
     this.autoPayAmount = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setAutoPayAmount(double newVal) {
+	 * @generated
+	 */	
+	public void setAutoPayAmount(double newVal) {
     this.autoPayAmount = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1494,6 +1526,7 @@ public class Account extends ModelBase {
 	public void setAutoPayStop(Date newVal) {
     this.autoPayStop = newVal;
   }
+	
  	
 	
 	/**
@@ -1516,6 +1549,7 @@ public class Account extends ModelBase {
 	public void setAutoPayStart(Date newVal) {
     this.autoPayStart = newVal;
   }
+	
  	
 	
 	/**
@@ -1538,6 +1572,7 @@ public class Account extends ModelBase {
 	public void setAutoPayLastPosted(Date newVal) {
     this.autoPayLastPosted = newVal;
   }
+	
  	
 	
 	/**
@@ -1560,6 +1595,7 @@ public class Account extends ModelBase {
 	public void setAutoPayPaymentQty(Long newVal) {
     this.autoPayPaymentQty = newVal;
   }
+	
  	
 	
 	/**
@@ -1582,6 +1618,7 @@ public class Account extends ModelBase {
 	public void setLastNotifiedDate(Date newVal) {
     this.lastNotifiedDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1604,6 +1641,7 @@ public class Account extends ModelBase {
 	public void setResaleCertExpirationDate(Date newVal) {
     this.resaleCertExpirationDate = newVal;
   }
+	
  	
 	
 	/**
@@ -1621,19 +1659,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setOnAccount(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setOnAccount(BigDecimal newVal) {
     this.onAccount = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setOnAccount(double newVal) {
+	 * @generated
+	 */	
+	public void setOnAccount(double newVal) {
     this.onAccount = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1649,19 +1688,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setBalance(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setBalance(BigDecimal newVal) {
     this.balance = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setBalance(double newVal) {
+	 * @generated
+	 */	
+	public void setBalance(double newVal) {
     this.balance = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1677,19 +1717,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setSalesMonth(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setSalesMonth(BigDecimal newVal) {
     this.salesMonth = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setSalesMonth(double newVal) {
+	 * @generated
+	 */	
+	public void setSalesMonth(double newVal) {
     this.salesMonth = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1710,6 +1751,7 @@ public class Account extends ModelBase {
 	public void setOrdersMonth(Long newVal) {
     this.ordersMonth = newVal;
   }
+	
  	
 	
 	/**
@@ -1727,19 +1769,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setSalesYear(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setSalesYear(BigDecimal newVal) {
     this.salesYear = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setSalesYear(double newVal) {
+	 * @generated
+	 */	
+	public void setSalesYear(double newVal) {
     this.salesYear = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1755,19 +1798,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setSalesPriorYear(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setSalesPriorYear(BigDecimal newVal) {
     this.salesPriorYear = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setSalesPriorYear(double newVal) {
+	 * @generated
+	 */	
+	public void setSalesPriorYear(double newVal) {
     this.salesPriorYear = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1788,6 +1832,7 @@ public class Account extends ModelBase {
 	public void setOrdersYear(Long newVal) {
     this.ordersYear = newVal;
   }
+	
  	
 	
 	/**
@@ -1810,6 +1855,7 @@ public class Account extends ModelBase {
 	public void setOrdersTotal(Long newVal) {
     this.ordersTotal = newVal;
   }
+	
  	
 	
 	/**
@@ -1832,6 +1878,7 @@ public class Account extends ModelBase {
 	public void setEstimateCount(Long newVal) {
     this.estimateCount = newVal;
   }
+	
  	
 	
 	/**
@@ -1849,19 +1896,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCreditLimit(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCreditLimit(BigDecimal newVal) {
     this.creditLimit = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setCreditLimit(double newVal) {
+	 * @generated
+	 */	
+	public void setCreditLimit(double newVal) {
     this.creditLimit = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1882,6 +1930,7 @@ public class Account extends ModelBase {
 	public void setDiscount(Double newVal) {
     this.discount = newVal;
   }
+	
  	
 	
 	/**
@@ -1904,6 +1953,7 @@ public class Account extends ModelBase {
 	public void setTermsNet(Long newVal) {
     this.termsNet = newVal;
   }
+	
  	
 	
 	/**
@@ -1926,6 +1976,7 @@ public class Account extends ModelBase {
 	public void setTermsDiscount(Double newVal) {
     this.termsDiscount = newVal;
   }
+	
  	
 	
 	/**
@@ -1948,6 +1999,7 @@ public class Account extends ModelBase {
 	public void setFinanceRate(Double newVal) {
     this.financeRate = newVal;
   }
+	
  	
 	
 	/**
@@ -1970,6 +2022,7 @@ public class Account extends ModelBase {
 	public void setFinanceYear(Double newVal) {
     this.financeYear = newVal;
   }
+	
  	
 	
 	/**
@@ -1992,6 +2045,7 @@ public class Account extends ModelBase {
 	public void setEstimatesWon(Long newVal) {
     this.estimatesWon = newVal;
   }
+	
  	
 	
 	/**
@@ -2014,6 +2068,7 @@ public class Account extends ModelBase {
 	public void setEstimatesLost(Long newVal) {
     this.estimatesLost = newVal;
   }
+	
  	
 	
 	/**
@@ -2031,19 +2086,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setDiscountDollarAmt(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setDiscountDollarAmt(BigDecimal newVal) {
     this.discountDollarAmt = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setDiscountDollarAmt(double newVal) {
+	 * @generated
+	 */	
+	public void setDiscountDollarAmt(double newVal) {
     this.discountDollarAmt = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -2059,19 +2115,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setBalance30Day(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setBalance30Day(BigDecimal newVal) {
     this.balance30Day = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setBalance30Day(double newVal) {
+	 * @generated
+	 */	
+	public void setBalance30Day(double newVal) {
     this.balance30Day = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -2087,19 +2144,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setBalance60Day(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setBalance60Day(BigDecimal newVal) {
     this.balance60Day = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setBalance60Day(double newVal) {
+	 * @generated
+	 */	
+	public void setBalance60Day(double newVal) {
     this.balance60Day = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -2115,19 +2173,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setBalance90Day(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setBalance90Day(BigDecimal newVal) {
     this.balance90Day = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setBalance90Day(double newVal) {
+	 * @generated
+	 */	
+	public void setBalance90Day(double newVal) {
     this.balance90Day = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -2143,19 +2202,20 @@ public class Account extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setBalanceCurrent(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setBalanceCurrent(BigDecimal newVal) {
     this.balanceCurrent = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setBalanceCurrent(double newVal) {
+	 * @generated
+	 */	
+	public void setBalanceCurrent(double newVal) {
     this.balanceCurrent = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -2176,6 +2236,7 @@ public class Account extends ModelBase {
 	public void setType(String newVal) {
     this.type = newVal;
   }
+	
  	
 	
 	/**
@@ -2198,6 +2259,7 @@ public class Account extends ModelBase {
 	public void setTaxTable(TaxTable newVal) {
     this.taxTable = newVal;
   }
+	
  	
 	
 	/**
@@ -2220,6 +2282,7 @@ public class Account extends ModelBase {
 	public void setTaxCode(TaxCodes newVal) {
     this.taxCode = newVal;
   }
+	
  	
 	
 	/**
@@ -2242,6 +2305,7 @@ public class Account extends ModelBase {
 	public void setStatementNote(String newVal) {
     this.statementNote = newVal;
   }
+	
  	
 	
 	/**
@@ -2264,6 +2328,7 @@ public class Account extends ModelBase {
 	public void setJobNote(String newVal) {
     this.jobNote = newVal;
   }
+	
  	
 	
 	/**
@@ -2286,6 +2351,7 @@ public class Account extends ModelBase {
 	public void setAccountNote(String newVal) {
     this.accountNote = newVal;
   }
+	
  	
 	
 	/**
@@ -2308,13 +2374,13 @@ public class Account extends ModelBase {
 	public void setAccountId(String newVal) {
     this.accountId = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @IndexColumn(name="invoiceestimatechargesaccount")
     @JoinTable( name = "account_invoiceestimatecharges")
 	private java.util.List<ChargeDefinition> invoiceEstimateCharges;
 	
@@ -2341,13 +2407,13 @@ public class Account extends ModelBase {
 	public void setInvoiceEstimateCharges(java.util.List<ChargeDefinition> newVal) {
     this.invoiceEstimateCharges = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @IndexColumn(name="jobchargesaccount")
     @JoinTable( name = "account_jobcharges")
 	private java.util.List<ChargeDefinition> jobCharges;
 	
@@ -2374,67 +2440,76 @@ public class Account extends ModelBase {
 	public void setJobCharges(java.util.List<ChargeDefinition> newVal) {
     this.jobCharges = newVal;
   }
+	
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean webRegistered;
+	private Boolean webRegistered;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getWebRegistered(){
+	public Boolean getWebRegistered(){
     return webRegistered; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setWebRegistered(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setWebRegistered(Boolean newVal) {
     this.webRegistered = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private WebCompany webCompanyId;
+	private WebCompany webCompanyId;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public WebCompany getWebCompanyId(){
+	public WebCompany getWebCompanyId(){
     return webCompanyId; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setWebCompanyId(WebCompany newVal) {
+	 * @generated
+	 */	
+	public void setWebCompanyId(WebCompany newVal) {
     this.webCompanyId = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private WebCatalogs webCatalog;
+	private WebCatalogs webCatalog;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public WebCatalogs getWebCatalog(){
+	public WebCatalogs getWebCatalog(){
     return webCatalog; 
   }
 
+	
 	/**
-   * @generated
-   */	
-  public void setWebCatalog(WebCatalogs newVal) {
+	 * @generated
+	 */	
+	public void setWebCatalog(WebCatalogs newVal) {
     this.webCatalog = newVal;
   }
-
+	
 	/**
 	 * @generated
 	 */		

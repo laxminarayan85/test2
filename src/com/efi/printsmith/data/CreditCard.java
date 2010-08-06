@@ -66,20 +66,18 @@ public class CreditCard extends ModelBase {
 	 * @generated
 	 */
 	public static final String TYPE = "Type";
-
 	/**
-   * @generated
-   */
-  public static final String ENCRYPTION = "Encryption";
+	 * @generated
+	 */
+	public static final String ENCRYPTION = "Encryption";
 	/**
-   * @generated
-   */
-  public static final String CARDDISPLAYNUMBER = "CardDisplayNumber";
-
+	 * @generated
+	 */
+	public static final String CARDDISPLAYNUMBER = "CardDisplayNumber";
 	/**
-   * @generated
-   */
-  public static final String CREDITCARDTRANSACTIONS = "CreditCardTransactions";
+	 * @generated
+	 */
+	public static final String CREDITCARDTRANSACTIONS = "CreditCardTransactions";
 
 	/**
 	 * @generated
@@ -227,85 +225,85 @@ public class CreditCard extends ModelBase {
     this.type = newVal;
   }
 	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String encryption;
-
+	private String encryption;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getEncryption(){
+	public String getEncryption(){
     return encryption; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setEncryption(String newVal) {
+	 * @generated
+	 */	
+	public void setEncryption(String newVal) {
     this.encryption = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String cardDisplayNumber;
-
+	private String cardDisplayNumber;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getCardDisplayNumber(){
+	public String getCardDisplayNumber(){
     return cardDisplayNumber; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setCardDisplayNumber(String newVal) {
+	 * @generated
+	 */	
+	public void setCardDisplayNumber(String newVal) {
     this.cardDisplayNumber = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
     @JoinTable( name = "creditcard_creditcardtransactions")
-  private java.util.List<CreditCardTransactions> creditCardTransactions;
-
+	private java.util.List<CreditCardTransactions> creditCardTransactions;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public java.util.List<CreditCardTransactions> getCreditCardTransactions(){
+	public java.util.List<CreditCardTransactions> getCreditCardTransactions(){
     return creditCardTransactions; 
   }
 
-
 	/**
-   * @generated
-   */	
-  public void addCreditCardTransactions(CreditCardTransactions obj) {
+	 * @generated
+	 */	
+	public void addCreditCardTransactions(CreditCardTransactions obj) {
     if (creditCardTransactions == null) {
       creditCardTransactions = new java.util.ArrayList<CreditCardTransactions>();
     }
     creditCardTransactions.add(obj);
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setCreditCardTransactions(java.util.List<CreditCardTransactions> newVal) {
+	 * @generated
+	 */	
+	public void setCreditCardTransactions(java.util.List<CreditCardTransactions> newVal) {
     this.creditCardTransactions = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

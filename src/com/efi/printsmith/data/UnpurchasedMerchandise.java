@@ -54,23 +54,22 @@ public class UnpurchasedMerchandise extends ModelBase {
 	 * @generated
 	 */
 	public static final String TRANSACTIONDATE = "TransactionDate";
-
 	/**
-   * @generated
-   */
-  public static final String TAXTABLE = "TaxTable";
+	 * @generated
+	 */
+	public static final String TAXTABLE = "TaxTable";
 	/**
-   * @generated
-   */
-  public static final String TAXCODE = "TaxCode";
+	 * @generated
+	 */
+	public static final String TAXCODE = "TaxCode";
 	/**
-   * @generated
-   */
-  public static final String TAX = "Tax";
+	 * @generated
+	 */
+	public static final String TAX = "Tax";
 	/**
-   * @generated
-   */
-  public static final String SUBTOTAL = "Subtotal";
+	 * @generated
+	 */
+	public static final String SUBTOTAL = "Subtotal";
 
 	/**
 	 * @generated
@@ -155,113 +154,110 @@ public class UnpurchasedMerchandise extends ModelBase {
     this.transactionDate = newVal;
   }
 	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private TaxTable taxTable;
-
+	private TaxTable taxTable;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public TaxTable getTaxTable(){
+	public TaxTable getTaxTable(){
     return taxTable; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTaxTable(TaxTable newVal) {
+	 * @generated
+	 */	
+	public void setTaxTable(TaxTable newVal) {
     this.taxTable = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private TaxCodes taxCode;
-
+	private TaxCodes taxCode;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public TaxCodes getTaxCode(){
+	public TaxCodes getTaxCode(){
     return taxCode; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTaxCode(TaxCodes newVal) {
+	 * @generated
+	 */	
+	public void setTaxCode(TaxCodes newVal) {
     this.taxCode = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private BigDecimal tax;
-
+	private BigDecimal tax;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public BigDecimal getTax(){
+	public BigDecimal getTax(){
     return tax; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTax(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setTax(BigDecimal newVal) {
     this.tax = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setTax(double newVal) {
+	 * @generated
+	 */	
+	public void setTax(double newVal) {
     this.tax = BigDecimal.valueOf(newVal);
   }
-
-
-
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private BigDecimal subtotal;
-
+	private BigDecimal subtotal;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public BigDecimal getSubtotal(){
+	public BigDecimal getSubtotal(){
     return subtotal; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setSubtotal(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setSubtotal(BigDecimal newVal) {
     this.subtotal = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setSubtotal(double newVal) {
+	 * @generated
+	 */	
+	public void setSubtotal(double newVal) {
     this.subtotal = BigDecimal.valueOf(newVal);
   }
-
-
 	/**
 	 * @generated
 	 */		

@@ -43,13 +43,13 @@ import org.hibernate.annotations.Type;
 @Table(name = "cashregisterbatch")
 public class CashRegisterBatch extends ModelBase {
 	/**
-   * @generated
-   */
-  public static final String CHANGE = "Change";
+	 * @generated
+	 */
+	public static final String CHANGE = "Change";
 	/**
-   * @generated
-   */
-  public static final String TENDERED = "Tendered";
+	 * @generated
+	 */
+	public static final String TENDERED = "Tendered";
 	/**
 	 * @generated
 	 */
@@ -70,20 +70,18 @@ public class CashRegisterBatch extends ModelBase {
 	 * @generated
 	 */
 	public static final String TRANSACTIONS = "Transactions";
-
 	/**
-   * @generated
-   */
-  public static final String NAME = "Name";
-
+	 * @generated
+	 */
+	public static final String NAME = "Name";
 	/**
-   * @generated
-   */
-  public static final String POSTED = "Posted";
+	 * @generated
+	 */
+	public static final String POSTED = "Posted";
 	/**
-   * @generated
-   */
-  public static final String POSTEDDATE = "PostedDate";
+	 * @generated
+	 */
+	public static final String POSTEDDATE = "PostedDate";
 
 	/**
 	 * @generated
@@ -96,51 +94,51 @@ public class CashRegisterBatch extends ModelBase {
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Double change;
-
+	private Double change;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getChange(){
+	public Double getChange(){
     return change; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setChange(Double newVal) {
+	 * @generated
+	 */	
+	public void setChange(Double newVal) {
     this.change = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Double tendered;
-
+	private Double tendered;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Double getTendered(){
+	public Double getTendered(){
     return tendered; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setTendered(Double newVal) {
+	 * @generated
+	 */	
+	public void setTendered(Double newVal) {
     this.tendered = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -282,73 +280,75 @@ public class CashRegisterBatch extends ModelBase {
     this.transactions = newVal;
   }
 	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String name;
-
+	private String name;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getName(){
+	public String getName(){
     return name; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setName(String newVal) {
+	 * @generated
+	 */	
+	public void setName(String newVal) {
     this.name = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean posted;
-
+	private Boolean posted;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getPosted(){
+	public Boolean getPosted(){
     return posted; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPosted(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setPosted(Boolean newVal) {
     this.posted = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Date postedDate;
-
+	private Date postedDate;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Date getPostedDate(){
+	public Date getPostedDate(){
     return postedDate; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPostedDate(Date newVal) {
+	 * @generated
+	 */	
+	public void setPostedDate(Date newVal) {
     this.postedDate = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

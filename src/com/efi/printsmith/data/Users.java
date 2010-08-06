@@ -99,21 +99,22 @@ public class Users extends ModelBase {
 	 */
 	public static final String DISABLEUSER = "DisableUser";
 	/**
-   * @generated
-   */
-  public static final String PREVPASSWORD1 = "PrevPassword1";
+	 * @generated
+	 */
+	public static final String PREVPASSWORD1 = "PrevPassword1";
 	/**
-   * @generated
-   */
-  public static final String PREVPASSWORD2 = "PrevPassword2";
+	 * @generated
+	 */
+	public static final String PREVPASSWORD2 = "PrevPassword2";
 	/**
-   * @generated
-   */
-  public static final String PREVPASSWORD3 = "PrevPassword3";
+	 * @generated
+	 */
+	public static final String PREVPASSWORD3 = "PrevPassword3";
 	/**
-   * @generated
-   */
-  public static final String PREVPASSWORD4 = "PrevPassword4";
+	 * @generated
+	 */
+	public static final String PREVPASSWORD4 = "PrevPassword4";
+
 	/**
 	 * @generated
 	 */
@@ -447,92 +448,95 @@ public class Users extends ModelBase {
  	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String prevPassword1;
+	private String prevPassword1;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getPrevPassword1(){
+	public String getPrevPassword1(){
     return prevPassword1; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPrevPassword1(String newVal) {
+	 * @generated
+	 */	
+	public void setPrevPassword1(String newVal) {
     this.prevPassword1 = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String prevPassword2;
+	private String prevPassword2;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getPrevPassword2(){
+	public String getPrevPassword2(){
     return prevPassword2; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPrevPassword2(String newVal) {
+	 * @generated
+	 */	
+	public void setPrevPassword2(String newVal) {
     this.prevPassword2 = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String prevPassword3;
+	private String prevPassword3;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getPrevPassword3(){
+	public String getPrevPassword3(){
     return prevPassword3; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPrevPassword3(String newVal) {
+	 * @generated
+	 */	
+	public void setPrevPassword3(String newVal) {
     this.prevPassword3 = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String prevPassword4;
+	private String prevPassword4;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getPrevPassword4(){
+	public String getPrevPassword4(){
     return prevPassword4; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPrevPassword4(String newVal) {
+	 * @generated
+	 */	
+	public void setPrevPassword4(String newVal) {
     this.prevPassword4 = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

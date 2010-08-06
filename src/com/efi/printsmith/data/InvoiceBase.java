@@ -630,16 +630,15 @@ public class InvoiceBase extends ModelBase {
   }
 
 	/**
-   * @generated
-   */	
-  public void addJobs(JobBase obj) {
+	 * @generated
+	 */	
+	public void addJobs(JobBase obj) {
     if (jobs == null) {
       jobs = new java.util.ArrayList<JobBase>();
     }
     jobs.add(obj);
   }
-
-
+	
 	/**
 	 * @generated
 	 */	

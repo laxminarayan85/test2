@@ -161,21 +161,20 @@ public class PriceLogEntry extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setValue(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setValue(BigDecimal newVal) {
     this.value = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setValue(double newVal) {
+	 * @generated
+	 */	
+	public void setValue(double newVal) {
     this.value = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	

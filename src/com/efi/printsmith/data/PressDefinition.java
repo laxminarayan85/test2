@@ -211,18 +211,7 @@ public class PressDefinition extends ModelBase {
     this.modified = new Date();
   }
 
-	public PressDefinition(long id, String Name) {
-		this.id = id;
-		this.name = Name;
-	}
-	
-	public PressDefinition(long id, String name, long MachineID, String machineName) {
-		this.id = id;
-		this.name =name;
-		this.machineID= MachineID;
-		this.machineName = machineName;
-		
-	}
+ 	
 	
 	/**
 	 * @generated
@@ -244,6 +233,7 @@ public class PressDefinition extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -266,6 +256,7 @@ public class PressDefinition extends ModelBase {
 	public void setMachineName(String newVal) {
     this.machineName = newVal;
   }
+	
  	
 	
 	/**
@@ -288,6 +279,7 @@ public class PressDefinition extends ModelBase {
 	public void setOutputDescrip(String newVal) {
     this.outputDescrip = newVal;
   }
+	
  	
 	
 	/**
@@ -310,6 +302,7 @@ public class PressDefinition extends ModelBase {
 	public void setProductionLocation(String newVal) {
     this.productionLocation = newVal;
   }
+	
  	
 	
 	/**
@@ -332,6 +325,7 @@ public class PressDefinition extends ModelBase {
 	public void setCostCenter(String newVal) {
     this.costCenter = newVal;
   }
+	
  	
 	
 	/**
@@ -354,6 +348,7 @@ public class PressDefinition extends ModelBase {
 	public void setOemDeviceID(String newVal) {
     this.oemDeviceID = newVal;
   }
+	
  	
 	
 	/**
@@ -376,6 +371,7 @@ public class PressDefinition extends ModelBase {
 	public void setMachineID(Long newVal) {
     this.machineID = newVal;
   }
+	
  	
 	
 	/**
@@ -398,6 +394,7 @@ public class PressDefinition extends ModelBase {
 	public void setCostingPress(Boolean newVal) {
     this.costingPress = newVal;
   }
+	
  	
 	
 	/**
@@ -420,6 +417,7 @@ public class PressDefinition extends ModelBase {
 	public void setIntegratedDevice(Boolean newVal) {
     this.integratedDevice = newVal;
   }
+	
  	
 	
 	/**
@@ -442,6 +440,7 @@ public class PressDefinition extends ModelBase {
 	public void setMaxPaperSize(String newVal) {
     this.maxPaperSize = newVal;
   }
+	
  	
 	
 	/**
@@ -464,6 +463,7 @@ public class PressDefinition extends ModelBase {
 	public void setMinPaperSize(String newVal) {
     this.minPaperSize = newVal;
   }
+	
  	
 	
 	/**
@@ -481,19 +481,20 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setLaborRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setLaborRate(BigDecimal newVal) {
     this.laborRate = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setLaborRate(double newVal) {
+	 * @generated
+	 */	
+	public void setLaborRate(double newVal) {
     this.laborRate = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -514,6 +515,7 @@ public class PressDefinition extends ModelBase {
 	public void setLaborMarkup(Double newVal) {
     this.laborMarkup = newVal;
   }
+	
  	
 	
 	/**
@@ -531,19 +533,20 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setFixedWaste(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setFixedWaste(BigDecimal newVal) {
     this.fixedWaste = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setFixedWaste(double newVal) {
+	 * @generated
+	 */	
+	public void setFixedWaste(double newVal) {
     this.fixedWaste = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -559,19 +562,20 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setMinLabor(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setMinLabor(BigDecimal newVal) {
     this.minLabor = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setMinLabor(double newVal) {
+	 * @generated
+	 */	
+	public void setMinLabor(double newVal) {
     this.minLabor = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -587,19 +591,20 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setSetupMin(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setSetupMin(BigDecimal newVal) {
     this.setupMin = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setSetupMin(double newVal) {
+	 * @generated
+	 */	
+	public void setSetupMin(double newVal) {
     this.setupMin = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -620,6 +625,7 @@ public class PressDefinition extends ModelBase {
 	public void setSetupAddSig(Long newVal) {
     this.setupAddSig = newVal;
   }
+	
  	
 	
 	/**
@@ -637,19 +643,20 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setWorkTurnSetup(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setWorkTurnSetup(BigDecimal newVal) {
     this.workTurnSetup = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setWorkTurnSetup(double newVal) {
+	 * @generated
+	 */	
+	public void setWorkTurnSetup(double newVal) {
     this.workTurnSetup = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -670,6 +677,7 @@ public class PressDefinition extends ModelBase {
 	public void setSetupAddHead(Long newVal) {
     this.setupAddHead = newVal;
   }
+	
  	
 	
 	/**
@@ -687,19 +695,20 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setWashupFee(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setWashupFee(BigDecimal newVal) {
     this.washupFee = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setWashupFee(double newVal) {
+	 * @generated
+	 */	
+	public void setWashupFee(double newVal) {
     this.washupFee = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -720,6 +729,7 @@ public class PressDefinition extends ModelBase {
 	public void setAddSigAddHead(Long newVal) {
     this.addSigAddHead = newVal;
   }
+	
  	
 	
 	/**
@@ -742,6 +752,7 @@ public class PressDefinition extends ModelBase {
 	public void setWashupMin(Long newVal) {
     this.washupMin = newVal;
   }
+	
  	
 	
 	/**
@@ -759,19 +770,20 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setWashupPerFountain(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setWashupPerFountain(BigDecimal newVal) {
     this.washupPerFountain = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setWashupPerFountain(double newVal) {
+	 * @generated
+	 */	
+	public void setWashupPerFountain(double newVal) {
     this.washupPerFountain = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -788,21 +800,22 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setGripEdge(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setGripEdge(BigDecimal newVal) {
     this.gripEdge = newVal;
     this.gripEdge.setScale(4, RoundingMode.HALF_UP);
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setGripEdge(double newVal) {
+	 * @generated
+	 */	
+	public void setGripEdge(double newVal) {
     this.gripEdge = BigDecimal.valueOf(newVal);
     this.gripEdge.setScale(4, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -823,6 +836,7 @@ public class PressDefinition extends ModelBase {
 	public void setPerfector(Boolean newVal) {
     this.perfector = newVal;
   }
+	
  	
 	
 	/**
@@ -840,19 +854,20 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setAvgImpressPerHour(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setAvgImpressPerHour(BigDecimal newVal) {
     this.avgImpressPerHour = newVal;
   }
-
+	
 	/**
-   * @generated
-   */	
-  public void setAvgImpressPerHour(double newVal) {
+	 * @generated
+	 */	
+	public void setAvgImpressPerHour(double newVal) {
     this.avgImpressPerHour = BigDecimal.valueOf(newVal);
   }
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -873,6 +888,7 @@ public class PressDefinition extends ModelBase {
 	public void setNumberHeads(Long newVal) {
     this.numberHeads = newVal;
   }
+	
  	
 	
 	/**
@@ -895,6 +911,7 @@ public class PressDefinition extends ModelBase {
 	public void setSetupAddRun(Long newVal) {
     this.setupAddRun = newVal;
   }
+	
  	
 	
 	/**
@@ -917,6 +934,7 @@ public class PressDefinition extends ModelBase {
 	public void setSheetFed(Boolean newVal) {
     this.sheetFed = newVal;
   }
+	
  	
 	
 	/**
@@ -939,6 +957,7 @@ public class PressDefinition extends ModelBase {
 	public void setRollFed(Boolean newVal) {
     this.rollFed = newVal;
   }
+	
  	
 	
 	/**
@@ -961,6 +980,7 @@ public class PressDefinition extends ModelBase {
 	public void setWasteChart(WasteChart newVal) {
     this.wasteChart = newVal;
   }
+	
  	
 	
 	/**
@@ -983,6 +1003,7 @@ public class PressDefinition extends ModelBase {
 	public void setPressPriceList(PriceList newVal) {
     this.pressPriceList = newVal;
   }
+	
  	
 	
 	/**
@@ -1005,6 +1026,7 @@ public class PressDefinition extends ModelBase {
 	public void setStockPriceList(PriceList newVal) {
     this.stockPriceList = newVal;
   }
+	
  	
 	
 	/**
@@ -1022,11 +1044,12 @@ public class PressDefinition extends ModelBase {
 
 	
 	/**
-	 * @generated 
+	 * @generated
 	 */	
 	public void setSpeedTable(SpeedTable newVal) {
     this.speedTable = newVal;
   }
+	
  	
 	
 	/**
@@ -1049,6 +1072,7 @@ public class PressDefinition extends ModelBase {
 	public void setCutoffLength(Double newVal) {
     this.cutoffLength = newVal;
   }
+	
  	
 	
 	/**
@@ -1071,13 +1095,12 @@ public class PressDefinition extends ModelBase {
 	public void setPressId(String newVal) {
     this.pressId = newVal;
   }
+	
  	
 	
 	/**
 	 * @generated
 	 */	
-
-	@JoinTable( name = "pressdefinition_charges")
 	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
 	private java.util.List<ChargeDefinition> charges;
 	
@@ -1104,6 +1127,7 @@ public class PressDefinition extends ModelBase {
 	public void setCharges(java.util.List<ChargeDefinition> newVal) {
     this.charges = newVal;
   }
+	
  	
 	
 	/**
@@ -1126,6 +1150,7 @@ public class PressDefinition extends ModelBase {
 	public void setMaxRollWidth(String newVal) {
     this.maxRollWidth = newVal;
   }
+	
  	
 	
 	/**
@@ -1148,6 +1173,7 @@ public class PressDefinition extends ModelBase {
 	public void setMinRollWidth(String newVal) {
     this.minRollWidth = newVal;
   }
+	
  	
 	
 	/**
@@ -1170,6 +1196,7 @@ public class PressDefinition extends ModelBase {
 	public void setSalesCat(SalesCategory newVal) {
     this.salesCat = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

@@ -204,21 +204,20 @@ public class ChargeCostingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setActualMaterials(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setActualMaterials(BigDecimal newVal) {
     this.actualMaterials = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setActualMaterials(double newVal) {
+	 * @generated
+	 */	
+	public void setActualMaterials(double newVal) {
     this.actualMaterials = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -280,21 +279,20 @@ public class ChargeCostingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setLaborUnitCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setLaborUnitCost(BigDecimal newVal) {
     this.laborUnitCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setLaborUnitCost(double newVal) {
+	 * @generated
+	 */	
+	public void setLaborUnitCost(double newVal) {
     this.laborUnitCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -310,21 +308,20 @@ public class ChargeCostingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setLaborCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setLaborCost(BigDecimal newVal) {
     this.laborCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setLaborCost(double newVal) {
+	 * @generated
+	 */	
+	public void setLaborCost(double newVal) {
     this.laborCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -340,21 +337,20 @@ public class ChargeCostingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setTotalCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setTotalCost(BigDecimal newVal) {
     this.totalCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setTotalCost(double newVal) {
+	 * @generated
+	 */	
+	public void setTotalCost(double newVal) {
     this.totalCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -370,21 +366,18 @@ public class ChargeCostingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setActualCount(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setActualCount(BigDecimal newVal) {
     this.actualCount = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setActualCount(double newVal) {
+	 * @generated
+	 */	
+	public void setActualCount(double newVal) {
     this.actualCount = BigDecimal.valueOf(newVal);
   }
-
-
 	/**
 	 * @generated
 	 */		

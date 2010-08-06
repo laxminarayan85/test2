@@ -157,21 +157,20 @@ public class InkCharge extends Charge {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPricePerPound(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPricePerPound(BigDecimal newVal) {
     this.pricePerPound = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setPricePerPound(double newVal) {
+	 * @generated
+	 */	
+	public void setPricePerPound(double newVal) {
     this.pricePerPound = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	

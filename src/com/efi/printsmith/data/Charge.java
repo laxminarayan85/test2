@@ -261,13 +261,14 @@ public class Charge extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setProductionLocation(ProductionLocations newVal) {
+	 * @generated
+	 */	
+	public void setProductionLocation(ProductionLocations newVal) {
     this.productionLocation = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -444,21 +445,20 @@ public class Charge extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice(BigDecimal newVal) {
     this.price = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setPrice(double newVal) {
     this.price = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -589,21 +589,20 @@ public class Charge extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setRate(BigDecimal newVal) {
     this.rate = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setRate(double newVal) {
+	 * @generated
+	 */	
+	public void setRate(double newVal) {
     this.rate = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -700,7 +699,6 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne(fetch=FetchType.LAZY, optional=true)
-    @JoinColumn(name="parentinvoice_id", insertable=false, updatable=false)
 	private InvoiceBase parentInvoice;
 	
 	/**
@@ -712,13 +710,14 @@ public class Charge extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setParentInvoice(InvoiceBase newVal) {
+	 * @generated
+	 */	
+	public void setParentInvoice(InvoiceBase newVal) {
     this.parentInvoice = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -734,21 +733,20 @@ public class Charge extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setMinimumCharge(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setMinimumCharge(BigDecimal newVal) {
     this.minimumCharge = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setMinimumCharge(double newVal) {
+	 * @generated
+	 */	
+	public void setMinimumCharge(double newVal) {
     this.minimumCharge = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	

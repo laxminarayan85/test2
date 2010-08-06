@@ -45,15 +45,11 @@ public class PricingRecord extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String PRICELOGENTRY = "PriceLogEntry";
+	public static final String PREPPRICE = "PrepPrice";
 	/**
 	 * @generated
 	 */
-	public static final String UNITPRICE = "UnitPrice";
-	/**
-	 * @generated
-	 */
-	public static final String TOTALPRICE = "TotalPrice";
+	public static final String OVERSTOTALPRICE = "OversTotalPrice";
 	/**
 	 * @generated
 	 */
@@ -61,11 +57,15 @@ public class PricingRecord extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String PREPPRICE = "PrepPrice";
+	public static final String PRICELOGENTRY = "PriceLogEntry";
 	/**
 	 * @generated
 	 */
-	public static final String OVERSTOTALPRICE = "OversTotalPrice";
+	public static final String TOTALPRICE = "TotalPrice";
+	/**
+	 * @generated
+	 */
+	public static final String UNITPRICE = "UnitPrice";
 	/**
 	 * @generated
 	 */
@@ -116,6 +116,93 @@ public class PricingRecord extends ModelBase {
 	/**
 	 * @generated
 	 */	
+ 	@Basic
+	private BigDecimal prepPrice;
+	
+	/**
+	 * @generated
+ 	 */
+	public BigDecimal getPrepPrice(){
+    return prepPrice; 
+  }
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setPrepPrice(BigDecimal newVal) {
+    this.prepPrice = newVal;
+  }
+	
+	/**
+	 * @generated
+	 */	
+	public void setPrepPrice(double newVal) {
+    this.prepPrice = BigDecimal.valueOf(newVal);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private BigDecimal oversTotalPrice;
+	
+	/**
+	 * @generated
+ 	 */
+	public BigDecimal getOversTotalPrice(){
+    return oversTotalPrice; 
+  }
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setOversTotalPrice(BigDecimal newVal) {
+    this.oversTotalPrice = newVal;
+  }
+	
+	/**
+	 * @generated
+	 */	
+	public void setOversTotalPrice(double newVal) {
+    this.oversTotalPrice = BigDecimal.valueOf(newVal);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private BigDecimal otherChargePrice;
+	
+	/**
+	 * @generated
+ 	 */
+	public BigDecimal getOtherChargePrice(){
+    return otherChargePrice; 
+  }
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setOtherChargePrice(BigDecimal newVal) {
+    this.otherChargePrice = newVal;
+  }
+	
+	/**
+	 * @generated
+	 */	
+	public void setOtherChargePrice(double newVal) {
+    this.otherChargePrice = BigDecimal.valueOf(newVal);
+  }
+ 	
+	
+	/**
+	 * @generated
+	 */	
     @ManyToOne()
 	private PriceLogEntry priceLogEntry;
 	
@@ -132,6 +219,36 @@ public class PricingRecord extends ModelBase {
 	 */	
 	public void setPriceLogEntry(PriceLogEntry newVal) {
     this.priceLogEntry = newVal;
+  }
+	
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private BigDecimal totalPrice;
+	
+	/**
+	 * @generated
+ 	 */
+	public BigDecimal getTotalPrice(){
+    return totalPrice; 
+  }
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setTotalPrice(BigDecimal newVal) {
+    this.totalPrice = newVal;
+  }
+	
+	/**
+	 * @generated
+	 */	
+	public void setTotalPrice(double newVal) {
+    this.totalPrice = BigDecimal.valueOf(newVal);
   }
  	
 	
@@ -150,141 +267,20 @@ public class PricingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setUnitPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setUnitPrice(BigDecimal newVal) {
     this.unitPrice = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setUnitPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setUnitPrice(double newVal) {
     this.unitPrice = BigDecimal.valueOf(newVal);
   }
-
-
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal totalPrice;
+ 	
 	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getTotalPrice(){
-    return totalPrice; 
-  }
-
-	
-	/**
-   * @generated
-   */	
-  public void setTotalPrice(BigDecimal newVal) {
-    this.totalPrice = newVal;
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setTotalPrice(double newVal) {
-    this.totalPrice = BigDecimal.valueOf(newVal);
-  }
-
-
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal otherChargePrice;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getOtherChargePrice(){
-    return otherChargePrice; 
-  }
-
-	
-	/**
-   * @generated
-   */	
-  public void setOtherChargePrice(BigDecimal newVal) {
-    this.otherChargePrice = newVal;
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setOtherChargePrice(double newVal) {
-    this.otherChargePrice = BigDecimal.valueOf(newVal);
-  }
-
-
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal prepPrice;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getPrepPrice(){
-    return prepPrice; 
-  }
-
-	
-	/**
-   * @generated
-   */	
-  public void setPrepPrice(BigDecimal newVal) {
-    this.prepPrice = newVal;
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setPrepPrice(double newVal) {
-    this.prepPrice = BigDecimal.valueOf(newVal);
-  }
-
-
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal oversTotalPrice;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getOversTotalPrice(){
-    return oversTotalPrice; 
-  }
-
-	
-	/**
-   * @generated
-   */	
-  public void setOversTotalPrice(BigDecimal newVal) {
-    this.oversTotalPrice = newVal;
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setOversTotalPrice(double newVal) {
-    this.oversTotalPrice = BigDecimal.valueOf(newVal);
-  }
-
-
 	/**
 	 * @generated
 	 */	
@@ -300,21 +296,20 @@ public class PricingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setBindPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setBindPrice(BigDecimal newVal) {
     this.bindPrice = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setBindPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setBindPrice(double newVal) {
     this.bindPrice = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -330,21 +325,20 @@ public class PricingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setOversUnitPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setOversUnitPrice(BigDecimal newVal) {
     this.oversUnitPrice = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setOversUnitPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setOversUnitPrice(double newVal) {
     this.oversUnitPrice = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -365,6 +359,7 @@ public class PricingRecord extends ModelBase {
 	public void setUnitPriceOverride(Boolean newVal) {
     this.unitPriceOverride = newVal;
   }
+	
  	
 	
 	/**
@@ -387,6 +382,7 @@ public class PricingRecord extends ModelBase {
 	public void setTotalPriceOverride(Boolean newVal) {
     this.totalPriceOverride = newVal;
   }
+	
  	
 	
 	/**
@@ -404,21 +400,20 @@ public class PricingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setLaborTotalPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setLaborTotalPrice(BigDecimal newVal) {
     this.laborTotalPrice = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setLaborTotalPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setLaborTotalPrice(double newVal) {
     this.laborTotalPrice = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -439,6 +434,7 @@ public class PricingRecord extends ModelBase {
 	public void setLaborTotalPriceOverride(Boolean newVal) {
     this.laborTotalPriceOverride = newVal;
   }
+	
  	
 	
 	/**
@@ -456,21 +452,20 @@ public class PricingRecord extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setStockTotalPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setStockTotalPrice(BigDecimal newVal) {
     this.stockTotalPrice = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setStockTotalPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setStockTotalPrice(double newVal) {
     this.stockTotalPrice = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -491,6 +486,7 @@ public class PricingRecord extends ModelBase {
 	public void setStockTotalPriceOverride(Boolean newVal) {
     this.stockTotalPriceOverride = newVal;
   }
+	
  	
 	
 	/**
@@ -513,6 +509,7 @@ public class PricingRecord extends ModelBase {
 	public void setStockMarkup(Double newVal) {
     this.stockMarkup = newVal;
   }
+	
 	/**
 	 * @generated
 	 */		

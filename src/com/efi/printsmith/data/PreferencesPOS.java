@@ -139,42 +139,41 @@ public class PreferencesPOS extends ModelBase {
 	 */
 	public static final String DATASIZE = "DataSize";
 	/**
-   * @generated
-   */
-  public static final String PASTDUECOLOR = "PastDueColor";
+	 * @generated
+	 */
+	public static final String PASTDUECOLOR = "PastDueColor";
 	/**
-   * @generated
-   */
-  public static final String PICKUPCOLOR = "PickupColor";
+	 * @generated
+	 */
+	public static final String PICKUPCOLOR = "PickupColor";
 	/**
-   * @generated
-   */
-  public static final String INVOICECOLOR = "InvoiceColor";
+	 * @generated
+	 */
+	public static final String INVOICECOLOR = "InvoiceColor";
 	/**
-   * @generated
-   */
-  public static final String ESTIMATECOLOR = "EstimateColor";
+	 * @generated
+	 */
+	public static final String ESTIMATECOLOR = "EstimateColor";
 	/**
-   * @generated
-   */
-  public static final String LISTFONTBEAN = "ListFontBean";
+	 * @generated
+	 */
+	public static final String LISTFONTBEAN = "ListFontBean";
 	/**
-   * @generated
-   */
-  public static final String HEADERFONTBEAN = "HeaderFontBean";
-
+	 * @generated
+	 */
+	public static final String HEADERFONTBEAN = "HeaderFontBean";
 	/**
-   * @generated
-   */
-  public static final String SHOWDOCUMENTTYPE = "ShowDocumentType";
+	 * @generated
+	 */
+	public static final String SHOWDOCUMENTTYPE = "ShowDocumentType";
 	/**
-   * @generated
-   */
-  public static final String INCLUDEPASTDUEDOCUMENTS = "IncludePastDueDocuments";
+	 * @generated
+	 */
+	public static final String INCLUDEPASTDUEDOCUMENTS = "IncludePastDueDocuments";
 	/**
-   * @generated
-   */
-  public static final String COLORPASTDUEENTRIES = "ColorPastDueEntries";
+	 * @generated
+	 */
+	public static final String COLORPASTDUEENTRIES = "ColorPastDueEntries";
 
 	/**
 	 * @generated
@@ -735,211 +734,214 @@ public class PreferencesPOS extends ModelBase {
 	public void setDataSize(String newVal) {
     this.dataSize = newVal;
   }
-		
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String pastDueColor;
-
+	private String pastDueColor;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getPastDueColor(){
+	public String getPastDueColor(){
     return pastDueColor; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPastDueColor(String newVal) {
+	 * @generated
+	 */	
+	public void setPastDueColor(String newVal) {
     this.pastDueColor = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String pickupColor;
-
+	private String pickupColor;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getPickupColor(){
+	public String getPickupColor(){
     return pickupColor; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPickupColor(String newVal) {
+	 * @generated
+	 */	
+	public void setPickupColor(String newVal) {
     this.pickupColor = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String invoiceColor;
-
+	private String invoiceColor;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getInvoiceColor(){
+	public String getInvoiceColor(){
     return invoiceColor; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setInvoiceColor(String newVal) {
+	 * @generated
+	 */	
+	public void setInvoiceColor(String newVal) {
     this.invoiceColor = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private String estimateColor;
-
+	private String estimateColor;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public String getEstimateColor(){
+	public String getEstimateColor(){
     return estimateColor; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setEstimateColor(String newVal) {
+	 * @generated
+	 */	
+	public void setEstimateColor(String newVal) {
     this.estimateColor = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
-  	@ManyToOne()
-  private FontDefinition listFontBean;
-
+	 * @generated
+	 */	
+    @ManyToOne()
+	private FontDefinition listFontBean;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public FontDefinition getListFontBean(){
+	public FontDefinition getListFontBean(){
     return listFontBean; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setListFontBean(FontDefinition newVal) {
+	 * @generated
+	 */	
+	public void setListFontBean(FontDefinition newVal) {
     this.listFontBean = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
-  	@ManyToOne()
-  private FontDefinition headerFontBean;
-
+	 * @generated
+	 */	
+    @ManyToOne()
+	private FontDefinition headerFontBean;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public FontDefinition getHeaderFontBean(){
+	public FontDefinition getHeaderFontBean(){
     return headerFontBean; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setHeaderFontBean(FontDefinition newVal) {
+	 * @generated
+	 */	
+	public void setHeaderFontBean(FontDefinition newVal) {
     this.headerFontBean = newVal;
   }
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean showDocumentType;
-
+	private Boolean showDocumentType;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getShowDocumentType(){
+	public Boolean getShowDocumentType(){
     return showDocumentType; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setShowDocumentType(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setShowDocumentType(Boolean newVal) {
     this.showDocumentType = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean includePastDueDocuments;
-
+	private Boolean includePastDueDocuments;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getIncludePastDueDocuments(){
+	public Boolean getIncludePastDueDocuments(){
     return includePastDueDocuments; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setIncludePastDueDocuments(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setIncludePastDueDocuments(Boolean newVal) {
     this.includePastDueDocuments = newVal;
   }
-
-
-
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Boolean colorPastDueEntries;
-
+	private Boolean colorPastDueEntries;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Boolean getColorPastDueEntries(){
+	public Boolean getColorPastDueEntries(){
     return colorPastDueEntries; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setColorPastDueEntries(Boolean newVal) {
+	 * @generated
+	 */	
+	public void setColorPastDueEntries(Boolean newVal) {
     this.colorPastDueEntries = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

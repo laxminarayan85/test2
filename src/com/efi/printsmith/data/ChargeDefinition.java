@@ -514,20 +514,18 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */
 	public static final String SETUPPRICE = "SetupPrice";
-
 	/**
-   * @generated
-   */
-  public static final String COSTINGUNITPRICE = "CostingUnitPrice";
+	 * @generated
+	 */
+	public static final String COSTINGUNITPRICE = "CostingUnitPrice";
 	/**
-   * @generated
-   */
-  public static final String COSTINGSETUPPRICE = "CostingSetupPrice";
-
+	 * @generated
+	 */
+	public static final String COSTINGSETUPPRICE = "CostingSetupPrice";
 	/**
-   * @generated
-   */
-  public static final String PRODUCTCODE = "ProductCode";
+	 * @generated
+	 */
+	public static final String PRODUCTCODE = "ProductCode";
 
 	/**
 	 * @generated
@@ -559,6 +557,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setMethod(String newVal) {
     this.method = newVal;
   }
+	
  	
 	
 	/**
@@ -581,6 +580,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setQuantityType(String newVal) {
     this.quantityType = newVal;
   }
+	
  	
 	
 	/**
@@ -603,6 +603,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setMarkupType(String newVal) {
     this.markupType = newVal;
   }
+	
  	
 	
 	/**
@@ -625,6 +626,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setJobQty(String newVal) {
     this.jobQty = newVal;
   }
+	
  	
 	
 	/**
@@ -647,6 +649,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setPriceMethod(String newVal) {
     this.priceMethod = newVal;
   }
+	
  	
 	
 	/**
@@ -669,6 +672,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setInkCoverage(String newVal) {
     this.inkCoverage = newVal;
   }
+	
  	
 	
 	/**
@@ -691,6 +695,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseSides(Boolean newVal) {
     this.useSides = newVal;
   }
+	
  	
 	
 	/**
@@ -713,6 +718,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setDoNotDiscount(Boolean newVal) {
     this.doNotDiscount = newVal;
   }
+	
  	
 	
 	/**
@@ -735,6 +741,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setNoMaterialQuantity(Boolean newVal) {
     this.noMaterialQuantity = newVal;
   }
+	
  	
 	
 	/**
@@ -757,6 +764,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setNoOverrides(Boolean newVal) {
     this.noOverrides = newVal;
   }
+	
  	
 	
 	/**
@@ -779,6 +787,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setAdjustableSets(Boolean newVal) {
     this.adjustableSets = newVal;
   }
+	
  	
 	
 	/**
@@ -801,6 +810,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setAdjustableRate(Boolean newVal) {
     this.adjustableRate = newVal;
   }
+	
  	
 	
 	/**
@@ -823,6 +833,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setAdjustableMaterial(Boolean newVal) {
     this.adjustableMaterial = newVal;
   }
+	
  	
 	
 	/**
@@ -845,6 +856,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseMaterial(Boolean newVal) {
     this.useMaterial = newVal;
   }
+	
  	
 	
 	/**
@@ -867,6 +879,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseRate(Boolean newVal) {
     this.useRate = newVal;
   }
+	
  	
 	
 	/**
@@ -889,6 +902,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseRateSets(Boolean newVal) {
     this.useRateSets = newVal;
   }
+	
  	
 	
 	/**
@@ -911,6 +925,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseMerchandiseSets(Boolean newVal) {
     this.useMerchandiseSets = newVal;
   }
+	
  	
 	
 	/**
@@ -933,6 +948,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseMinimumCharge(Boolean newVal) {
     this.useMinimumCharge = newVal;
   }
+	
  	
 	
 	/**
@@ -955,6 +971,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseColors(Boolean newVal) {
     this.useColors = newVal;
   }
+	
  	
 	
 	/**
@@ -977,6 +994,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseOriginals(Boolean newVal) {
     this.useOriginals = newVal;
   }
+	
  	
 	
 	/**
@@ -999,6 +1017,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setRateSetCount(Double newVal) {
     this.rateSetCount = newVal;
   }
+	
  	
 	
 	/**
@@ -1021,6 +1040,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setMaterialSetCount(Double newVal) {
     this.materialSetCount = newVal;
   }
+	
  	
 	
 	/**
@@ -1039,23 +1059,22 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setRate(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setRate(BigDecimal newVal) {
     this.rate = newVal;
     this.rate.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setRate(double newVal) {
+	 * @generated
+	 */	
+	public void setRate(double newVal) {
     this.rate = BigDecimal.valueOf(newVal);
     this.rate.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1072,23 +1091,22 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setMaterial(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setMaterial(BigDecimal newVal) {
     this.material = newVal;
     this.material.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setMaterial(double newVal) {
+	 * @generated
+	 */	
+	public void setMaterial(double newVal) {
     this.material = BigDecimal.valueOf(newVal);
     this.material.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1104,21 +1122,20 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setMinimum(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setMinimum(BigDecimal newVal) {
     this.minimum = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setMinimum(double newVal) {
+	 * @generated
+	 */	
+	public void setMinimum(double newVal) {
     this.minimum = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1139,6 +1156,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setMarkup(Double newVal) {
     this.markup = newVal;
   }
+	
  	
 	
 	/**
@@ -1161,6 +1179,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setPriceList(PriceList newVal) {
     this.priceList = newVal;
   }
+	
  	
 	
 	/**
@@ -1183,6 +1202,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setWasteChart(WasteChart newVal) {
     this.wasteChart = newVal;
   }
+	
  	
 	
 	/**
@@ -1205,6 +1225,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setFixedWaste(Long newVal) {
     this.fixedWaste = newVal;
   }
+	
  	
 	
 	/**
@@ -1227,6 +1248,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setWastePercentage(Double newVal) {
     this.wastePercentage = newVal;
   }
+	
  	
 	
 	/**
@@ -1249,6 +1271,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setBaseLinearNumber(Long newVal) {
     this.baseLinearNumber = newVal;
   }
+	
  	
 	
 	/**
@@ -1266,13 +1289,14 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setLocation(ProductionLocations newVal) {
+	 * @generated
+	 */	
+	public void setLocation(ProductionLocations newVal) {
     this.location = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1293,6 +1317,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setCostCenter(CostCenter newVal) {
     this.costCenter = newVal;
   }
+	
  	
 	
 	/**
@@ -1315,6 +1340,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setSubstrate(Substrate newVal) {
     this.substrate = newVal;
   }
+	
  	
 	
 	/**
@@ -1337,6 +1363,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setMinimumTime(Long newVal) {
     this.minimumTime = newVal;
   }
+	
  	
 	
 	/**
@@ -1359,6 +1386,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setSizeX(Double newVal) {
     this.sizeX = newVal;
   }
+	
  	
 	
 	/**
@@ -1381,6 +1409,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setSizeY(Double newVal) {
     this.sizeY = newVal;
   }
+	
  	
 	
 	/**
@@ -1403,6 +1432,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setPlateThickness(Double newVal) {
     this.plateThickness = newVal;
   }
+	
  	
 	
 	/**
@@ -1425,6 +1455,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setFoldTemplate(FoldTemplate newVal) {
     this.foldTemplate = newVal;
   }
+	
  	
 	
 	/**
@@ -1447,6 +1478,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setExcludedFromWorkflow(Boolean newVal) {
     this.excludedFromWorkflow = newVal;
   }
+	
  	
 	
 	/**
@@ -1469,6 +1501,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setPreproduction(Boolean newVal) {
     this.preproduction = newVal;
   }
+	
  	
 	
 	/**
@@ -1491,6 +1524,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseMinimumTime(Boolean newVal) {
     this.useMinimumTime = newVal;
   }
+	
  	
 	
 	/**
@@ -1513,6 +1547,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseDivideByUpCount(Boolean newVal) {
     this.useDivideByUpCount = newVal;
   }
+	
  	
 	
 	/**
@@ -1535,6 +1570,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseMultiplyUpCount(Boolean newVal) {
     this.useMultiplyUpCount = newVal;
   }
+	
  	
 	
 	/**
@@ -1557,6 +1593,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setAdjustUps(Boolean newVal) {
     this.adjustUps = newVal;
   }
+	
  	
 	
 	/**
@@ -1579,6 +1616,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setCutsArePrePress(Boolean newVal) {
     this.cutsArePrePress = newVal;
   }
+	
  	
 	
 	/**
@@ -1601,6 +1639,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setIntegratedCTP(Boolean newVal) {
     this.integratedCTP = newVal;
   }
+	
  	
 	
 	/**
@@ -1623,6 +1662,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setSku(String newVal) {
     this.sku = newVal;
   }
+	
  	
 	
 	/**
@@ -1645,6 +1685,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setCategory(String newVal) {
     this.category = newVal;
   }
+	
  	
 	
 	/**
@@ -1667,6 +1708,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setOverrideRate(Boolean newVal) {
     this.overrideRate = newVal;
   }
+	
  	
 	
 	/**
@@ -1689,6 +1731,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setTitle(String newVal) {
     this.title = newVal;
   }
+	
  	
 	
 	/**
@@ -1711,6 +1754,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setNote(String newVal) {
     this.note = newVal;
   }
+	
  	
 	
 	/**
@@ -1733,6 +1777,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setChargeGroup(String newVal) {
     this.chargeGroup = newVal;
   }
+	
  	
 	
 	/**
@@ -1755,6 +1800,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setSalesCategory(SalesCategory newVal) {
     this.salesCategory = newVal;
   }
+	
  	
 	
 	/**
@@ -1777,6 +1823,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setTaxTable(TaxTable newVal) {
     this.taxTable = newVal;
   }
+	
  	
 	
 	/**
@@ -1799,6 +1846,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setRateQty(Double newVal) {
     this.rateQty = newVal;
   }
+	
  	
 	
 	/**
@@ -1821,6 +1869,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setMaterialQty(Double newVal) {
     this.materialQty = newVal;
   }
+	
  	
 	
 	/**
@@ -1843,6 +1892,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setGroupQty(Double newVal) {
     this.groupQty = newVal;
   }
+	
  	
 	
 	/**
@@ -1860,21 +1910,20 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setPrice(BigDecimal newVal) {
     this.price = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setPrice(double newVal) {
     this.price = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -1895,6 +1944,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setTimeStart(Date newVal) {
     this.timeStart = newVal;
   }
+	
  	
 	
 	/**
@@ -1917,6 +1967,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setTimeEnd(Date newVal) {
     this.timeEnd = newVal;
   }
+	
  	
 	
 	/**
@@ -1939,6 +1990,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setCustomerCharge(Boolean newVal) {
     this.customerCharge = newVal;
   }
+	
  	
 	
 	/**
@@ -1961,6 +2013,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setPressCharge(Boolean newVal) {
     this.pressCharge = newVal;
   }
+	
  	
 	
 	/**
@@ -1983,6 +2036,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setHideChargeInPrintouts(Boolean newVal) {
     this.hideChargeInPrintouts = newVal;
   }
+	
  	
 	
 	/**
@@ -2005,6 +2059,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setDeletedPreset(Boolean newVal) {
     this.deletedPreset = newVal;
   }
+	
  	
 	
 	/**
@@ -2027,6 +2082,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setIgnoreCuts(Boolean newVal) {
     this.ignoreCuts = newVal;
   }
+	
  	
 	
 	/**
@@ -2049,6 +2105,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseSignatures(Boolean newVal) {
     this.useSignatures = newVal;
   }
+	
  	
 	
 	/**
@@ -2071,6 +2128,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setStockCharge(Boolean newVal) {
     this.stockCharge = newVal;
   }
+	
  	
 	
 	/**
@@ -2093,6 +2151,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setOverrideNumberOfCuts(Boolean newVal) {
     this.overrideNumberOfCuts = newVal;
   }
+	
  	
 	
 	/**
@@ -2115,6 +2174,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setShowNotes(Boolean newVal) {
     this.showNotes = newVal;
   }
+	
  	
 	
 	/**
@@ -2137,6 +2197,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setFinished(Boolean newVal) {
     this.finished = newVal;
   }
+	
  	
 	
 	/**
@@ -2159,6 +2220,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setBrokered(Boolean newVal) {
     this.brokered = newVal;
   }
+	
  	
 	
 	/**
@@ -2181,6 +2243,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setTaxable(Boolean newVal) {
     this.taxable = newVal;
   }
+	
  	
 	
 	/**
@@ -2203,6 +2266,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setDisplayQty(Boolean newVal) {
     this.displayQty = newVal;
   }
+	
  	
 	
 	/**
@@ -2225,6 +2289,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setOverridePrice(Boolean newVal) {
     this.overridePrice = newVal;
   }
+	
  	
 	
 	/**
@@ -2247,6 +2312,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setOverrideRateQuantity(Boolean newVal) {
     this.overrideRateQuantity = newVal;
   }
+	
  	
 	
 	/**
@@ -2269,6 +2335,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setOverrideMaterialQty(Boolean newVal) {
     this.overrideMaterialQty = newVal;
   }
+	
  	
 	
 	/**
@@ -2291,6 +2358,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setVersion(Integer newVal) {
     this.version = newVal;
   }
+	
  	
 	
 	/**
@@ -2313,6 +2381,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setShipMode(ShippingMethod newVal) {
     this.shipMode = newVal;
   }
+	
  	
 	
 	/**
@@ -2335,6 +2404,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setAdjustUpsCount(Integer newVal) {
     this.adjustUpsCount = newVal;
   }
+	
  	
 	
 	/**
@@ -2357,6 +2427,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setHasLinkPrice(Boolean newVal) {
     this.hasLinkPrice = newVal;
   }
+	
  	
 	
 	/**
@@ -2379,6 +2450,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setNeedLinkPrice(Boolean newVal) {
     this.needLinkPrice = newVal;
   }
+	
  	
 	
 	/**
@@ -2401,6 +2473,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setHasShipped(Boolean newVal) {
     this.hasShipped = newVal;
   }
+	
  	
 	
 	/**
@@ -2423,6 +2496,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setShouldShip(Boolean newVal) {
     this.shouldShip = newVal;
   }
+	
  	
 	
 	/**
@@ -2445,6 +2519,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setJobTaskList(Boolean newVal) {
     this.jobTaskList = newVal;
   }
+	
  	
 	
 	/**
@@ -2467,6 +2542,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setHidePrice(Boolean newVal) {
     this.hidePrice = newVal;
   }
+	
  	
 	
 	/**
@@ -2489,6 +2565,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setIgnoreGlobalPriceChanges(Boolean newVal) {
     this.ignoreGlobalPriceChanges = newVal;
   }
+	
  	
 	
 	/**
@@ -2511,6 +2588,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setCostingPressCharge(Boolean newVal) {
     this.costingPressCharge = newVal;
   }
+	
  	
 	
 	/**
@@ -2533,6 +2611,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setLinearX1(Boolean newVal) {
     this.linearX1 = newVal;
   }
+	
  	
 	
 	/**
@@ -2555,6 +2634,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setLinearX2(Boolean newVal) {
     this.linearX2 = newVal;
   }
+	
  	
 	
 	/**
@@ -2577,6 +2657,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setLinearY1(Boolean newVal) {
     this.linearY1 = newVal;
   }
+	
  	
 	
 	/**
@@ -2599,6 +2680,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setLinearY2(Boolean newVal) {
     this.linearY2 = newVal;
   }
+	
  	
 	
 	/**
@@ -2621,6 +2703,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setLabel(String newVal) {
     this.label = newVal;
   }
+	
  	
 	
 	/**
@@ -2643,6 +2726,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setBinderyCharge(Boolean newVal) {
     this.binderyCharge = newVal;
   }
+	
  	
 	
 	/**
@@ -2665,6 +2749,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
+	
  	
 	
 	/**
@@ -2687,6 +2772,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setParent(ChargeCategory newVal) {
     this.parent = newVal;
   }
+	
  	
 	
 	/**
@@ -2709,6 +2795,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseArea(Boolean newVal) {
     this.useArea = newVal;
   }
+	
  	
 	
 	/**
@@ -2731,6 +2818,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseSetup(Boolean newVal) {
     this.useSetup = newVal;
   }
+	
  	
 	
 	/**
@@ -2739,7 +2827,7 @@ public class ChargeDefinition extends ModelBase {
     @ManyToOne( cascade = {CascadeType.ALL})
 	private ChargeCost chargeCost;
 	
-	/** 
+	/**
 	 * @generated
  	 */
 	public ChargeCost getChargeCost(){
@@ -2753,6 +2841,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setChargeCost(ChargeCost newVal) {
     this.chargeCost = newVal;
   }
+	
  	
 	
 	/**
@@ -2775,6 +2864,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setArea(Double newVal) {
     this.area = newVal;
   }
+	
  	
 	
 	/**
@@ -2797,6 +2887,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setCoverlb_check(Boolean newVal) {
     this.coverlb_check = newVal;
   }
+	
  	
 	
 	/**
@@ -2819,6 +2910,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setSheet_lift_check(Boolean newVal) {
     this.sheet_lift_check = newVal;
   }
+	
  	
 	
 	/**
@@ -2841,6 +2933,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setShip_markup_check(Boolean newVal) {
     this.ship_markup_check = newVal;
   }
+	
  	
 	
 	/**
@@ -2859,23 +2952,22 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setCoverlbInk(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCoverlbInk(BigDecimal newVal) {
     this.coverlbInk = newVal;
     this.coverlbInk.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setCoverlbInk(double newVal) {
+	 * @generated
+	 */	
+	public void setCoverlbInk(double newVal) {
     this.coverlbInk = BigDecimal.valueOf(newVal);
     this.coverlbInk.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -2891,13 +2983,14 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setSheetliftCut(Double newVal) {
+	 * @generated
+	 */	
+	public void setSheetliftCut(Double newVal) {
     this.sheetliftCut = newVal;
   }
-
-
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -2918,6 +3011,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setShipMarkup(Double newVal) {
     this.shipMarkup = newVal;
   }
+	
  	
 	
 	/**
@@ -2940,6 +3034,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setDescriptionLabel(String newVal) {
     this.descriptionLabel = newVal;
   }
+	
  	
 	
 	/**
@@ -2962,6 +3057,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setNotesLabel(String newVal) {
     this.notesLabel = newVal;
   }
+	
  	
 	
 	/**
@@ -2984,6 +3080,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setDescriptionDefault(String newVal) {
     this.descriptionDefault = newVal;
   }
+	
  	
 	
 	/**
@@ -3006,6 +3103,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setNotesDefault(String newVal) {
     this.notesDefault = newVal;
   }
+	
  	
 	
 	/**
@@ -3028,6 +3126,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setQuantityLabel(String newVal) {
     this.quantityLabel = newVal;
   }
+	
  	
 	
 	/**
@@ -3050,6 +3149,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setQuantityDefault(Double newVal) {
     this.quantityDefault = newVal;
   }
+	
  	
 	
 	/**
@@ -3072,6 +3172,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setRateLabel(String newVal) {
     this.rateLabel = newVal;
   }
+	
  	
 	
 	/**
@@ -3094,6 +3195,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setRateDefault(Double newVal) {
     this.rateDefault = newVal;
   }
+	
  	
 	
 	/**
@@ -3116,6 +3218,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setPriceLabel(String newVal) {
     this.priceLabel = newVal;
   }
+	
  	
 	
 	/**
@@ -3138,6 +3241,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setPriceDefault(Double newVal) {
     this.priceDefault = newVal;
   }
+	
  	
 	
 	/**
@@ -3160,6 +3264,7 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseRunArea(Boolean newVal) {
     this.useRunArea = newVal;
   }
+	
  	
 	
 	/**
@@ -3178,106 +3283,101 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setSetupPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setSetupPrice(BigDecimal newVal) {
     this.setupPrice = newVal;
     this.setupPrice.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setSetupPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setSetupPrice(double newVal) {
     this.setupPrice = BigDecimal.valueOf(newVal);
     this.setupPrice.setScale(4, RoundingMode.HALF_UP);
   }
-
-
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private BigDecimal costingUnitPrice;
-
+	private BigDecimal costingUnitPrice;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public BigDecimal getCostingUnitPrice(){
+	public BigDecimal getCostingUnitPrice(){
     return costingUnitPrice; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setCostingUnitPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCostingUnitPrice(BigDecimal newVal) {
     this.costingUnitPrice = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setCostingUnitPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setCostingUnitPrice(double newVal) {
     this.costingUnitPrice = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private BigDecimal costingSetupPrice;
-
+	private BigDecimal costingSetupPrice;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public BigDecimal getCostingSetupPrice(){
+	public BigDecimal getCostingSetupPrice(){
     return costingSetupPrice; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setCostingSetupPrice(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setCostingSetupPrice(BigDecimal newVal) {
     this.costingSetupPrice = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setCostingSetupPrice(double newVal) {
+	 * @generated
+	 */	
+	public void setCostingSetupPrice(double newVal) {
     this.costingSetupPrice = BigDecimal.valueOf(newVal);
   }
-
-
-
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
-  private ProductCode productCode;
-
+	private ProductCode productCode;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public ProductCode getProductCode(){
+	public ProductCode getProductCode(){
     return productCode; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setProductCode(ProductCode newVal) {
+	 * @generated
+	 */	
+	public void setProductCode(ProductCode newVal) {
     this.productCode = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		

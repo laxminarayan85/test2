@@ -54,11 +54,10 @@ public class PreferencesMarkups extends ModelBase {
 	 * @generated
 	 */
 	public static final String ABOVE = "Above";
-
 	/**
-   * @generated
-   */
-  public static final String MARKUPTYPE = "MarkupType";
+	 * @generated
+	 */
+	public static final String MARKUPTYPE = "MarkupType";
 
 	/**
 	 * @generated
@@ -85,21 +84,20 @@ public class PreferencesMarkups extends ModelBase {
 
 	
 	/**
-   * @generated
-   */	
-  public void setTotalCost(BigDecimal newVal) {
+	 * @generated
+	 */	
+	public void setTotalCost(BigDecimal newVal) {
     this.totalCost = newVal;
   }
-
-
+	
 	/**
-   * @generated
-   */	
-  public void setTotalCost(double newVal) {
+	 * @generated
+	 */	
+	public void setTotalCost(double newVal) {
     this.totalCost = BigDecimal.valueOf(newVal);
   }
-
-
+ 	
+	
 	/**
 	 * @generated
 	 */	
@@ -144,28 +142,29 @@ public class PreferencesMarkups extends ModelBase {
     this.above = newVal;
   }
 	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Integer markupType;
-
+	private Integer markupType;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Integer getMarkupType(){
+	public Integer getMarkupType(){
     return markupType; 
   }
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setMarkupType(Integer newVal) {
+	 * @generated
+	 */	
+	public void setMarkupType(Integer newVal) {
     this.markupType = newVal;
   }
-
-
+	
 	/**
 	 * @generated
 	 */		
