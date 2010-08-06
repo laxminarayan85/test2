@@ -66,7 +66,10 @@ public class TotalOfSquareAreaPricingMethod extends
 					}
 				} else {
 					pricingRecord.setTotalPrice((pricePerCopy * area) + stockPrice*area);
-					unitPrice = pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies();
+					if (job.getTotalCopies() > 0)
+						unitPrice = pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies();
+					else
+						unitPrice = 0.0;
 					pricingRecord.setUnitPrice(unitPrice);
 				}
 			} else if (copierDefinition.getMatrixType().equals("DiscountTable")) {
@@ -100,7 +103,10 @@ public class TotalOfSquareAreaPricingMethod extends
 					}
 				} else {
 					pricingRecord.setTotalPrice((pricePerCopy * area) + stockPrice*job.getTotalCopies());
-					unitPrice = pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies();
+					if (job.getTotalCopies() > 0)
+						unitPrice = pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies();
+					else
+						unitPrice = 0.0;
 					pricingRecord.setUnitPrice(unitPrice);
 				}
 			} else if (copierDefinition.getMatrixType().equals("StepTable")) {
@@ -131,7 +137,10 @@ public class TotalOfSquareAreaPricingMethod extends
 					}
 				} else {
 					pricingRecord.setTotalPrice((pricePerCopy * area) + stockPrice*job.getTotalCopies());
-					unitPrice = pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies();
+					if (job.getTotalCopies() > 0)
+						unitPrice = pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies();
+					else
+						unitPrice = 0.0;
 					pricingRecord.setUnitPrice(unitPrice);
 				}
 			} else if (copierDefinition.getMatrixType().equals("MarkupTable")) {
@@ -165,7 +174,10 @@ public class TotalOfSquareAreaPricingMethod extends
 					}
 				} else {
 					pricingRecord.setTotalPrice((pricePerCopy * area) + stockPrice*job.getTotalCopies());
-					unitPrice = pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies();
+					if (job.getTotalCopies() > 0)
+						unitPrice = pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies();
+					else
+						unitPrice = 0.0;
 					pricingRecord.setUnitPrice(unitPrice);
 				}
 			}				

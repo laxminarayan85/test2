@@ -924,7 +924,7 @@
 					job.runSize = job_size.selectedItem as Dimension;
 				if ( job.foldedSize != null)
 					job.foldedSize = job_fold_size.selectedItem as Dimension;
-				if ( job.finishSize != null)
+				if ( job.finishSize != null && job_finish_size.selectedItem != null)
 					job.finishSize = job_finish_size.selectedItem as Dimension;
 		
 
@@ -1301,7 +1301,9 @@
 						this.roll_width.text = job.parentSize.name;
 						this.job.cutOff = cutoff;
 						this.cutOff_edit.text = cutoff.toString();
-						this.job.finishSize.name = evt.stockDefinition.parentsize + " x " + cutoff.toString();
+						if (job.finishSize == null)
+							job.finishSize = new Dimension();
+						this.job.finishSize.name = evt.stockDefinition.parentsize.name + " x " + cutoff.toString();
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 						if (this.job_finish_size.selectedIndex == -1)
 							this.job_finish_size.text = job.finishSize.name;
