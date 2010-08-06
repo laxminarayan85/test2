@@ -84,6 +84,7 @@
 
 <mx:Script>
 	<![CDATA[
+		import mx.collections.ArrayCollection;
 		import mx.managers.IFocusManagerComponent;
 		import mx.managers.FocusManager;
 		import mx.core.ComponentDescriptor;
@@ -156,6 +157,8 @@
 		public var security:com.efi.printsmith.security.PSSecurity;
 		
         private var bm:IBrowserManager;
+        
+        [Bindable] public var autoClockOutDetectortList:ArrayCollection = new ArrayCollection();
         		
 		[Bindable]
 		public var currentUser:Users;

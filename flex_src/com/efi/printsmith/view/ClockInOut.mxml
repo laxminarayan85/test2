@@ -24,6 +24,7 @@
 	
 <mx:Script>  	
 <![CDATA[
+	import com.efi.printsmith.model.AutoClockOutDetector;
 	import mx.utils.StringUtil;
 	import com.efi.printsmith.data.Period;
 	import com.efi.printsmith.events.PinRequestEvent;
@@ -59,13 +60,17 @@
 	private var timecard:TimeCard;
 	
 	[Bindable] private var period:Period;
+	
+	[Bindable] public var autoClockOutDetectortList:ArrayCollection = new ArrayCollection();
 
 	[Bindable]
 	private var OnOffBreak:String="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.OnBreak')}";
+	
+	[Bindable] public var timeCardStatus:String = "";
 		
 	public function init():void {
-		/* consumer.subscribe();
-		notification_consumer.subscribe(); */
+		consumer.subscribe();
+		notification_consumer.subscribe();
 		PopUpManager.centerPopUp(this);
 		var application:Snowmass = Snowmass.getInstance();
 		clockIn.enabled = false;
@@ -73,6 +78,7 @@
 		clockBreak.enabled = false;
 		dataService.getActiveEmployees();
 		dataServicePeriod.getByPeriodOpen("Period");
+		autoClockOutDetectortList = parentDocument.autoClockOutDetectortList;
 		//user = application.currentUser;
 	} 
 	
@@ -112,6 +118,8 @@
 	}
 	private function handleLoadTimeCardResult(ev:ResultEvent):void {
 		timecardArray = ev.result as ArrayCollection;
+		triggerAutoClockOutDetector();
+		
 	}
 	
 	private function setEmployee():void
@@ -209,42 +217,58 @@
 				pinRequestComponent.employee = employee;
 				pinRequestComponent.addEventListener(PinRequestEvent.PINREQUEST,function(event:PinRequestEvent):void{
 					if(event.success) {
-						if (employee.clockBreak == true)
-						{
-							setTimeCard("breakstop");
-						} else {
-							if(employee.showMessageClockin && employee.message!=null && StringUtil.trim(employee.message)!="") {
-								Alert.show(employee.message);
-							}
-							setTimeCard("in");	
-						}
-						employee.clockIn= true;
-						employee.clockOut = false;
-						employee.clockBreak= false;
-						setEmployee();
-						clockIn.enabled = false;
-						clockOut.enabled = false;
-						clockBreak.enabled = false;
+						clockInUpdate();
 					}
 				},false,0,true);
 			} else {
-				if (employee.clockBreak == true)
-				{
-					setTimeCard("breakstop");
-				} else {
-					if(employee.showMessageClockin && employee.message!=null && StringUtil.trim(employee.message)!="") {
-						Alert.show(employee.message);
-					}
-					setTimeCard("in");	
-				}
-				employee.clockIn= true;
-				employee.clockOut = false;
-				employee.clockBreak= false;
-				setEmployee();
-				clockIn.enabled = false;
-				clockOut.enabled = false;
-				clockBreak.enabled = false;
+				clockInUpdate();
 			}
+		}
+	}
+	
+	private function clockInUpdate():void {
+		if (employee.clockBreak == true)
+		{
+			timeCardStatus = "breakstop";
+			setTimeCard("breakstop");
+		} else {
+			if(employee.showMessageClockin && employee.message!=null && StringUtil.trim(employee.message)!="") {
+				Alert.show(employee.message);
+			}
+			timeCardStatus = "in";
+			setTimeCard("in");	
+		}
+		employee.clockIn= true;
+		employee.clockOut = false;
+		employee.clockBreak= false;
+		setEmployee();
+		clockIn.enabled = false;
+		clockOut.enabled = false;
+		clockBreak.enabled = false;
+	}
+	
+	private function triggerAutoClockOutDetector():void {
+		var count:int=-1;
+		if(timeCardStatus=="in"){
+			for each(var autoClockOutDetectorObj:AutoClockOutDetector in autoClockOutDetectortList){
+				if(autoClockOutDetectorObj.employee.id==employee.id){
+					count++;
+					break;	
+				}
+			}
+			if(count!=-1){
+				var autoClockOutDetectorObject:AutoClockOutDetector = autoClockOutDetectortList.getItemAt(count) as AutoClockOutDetector;
+				autoClockOutDetectorObject.stop();
+				autoClockOutDetectortList.removeItemAt(count);
+			}
+			if(employee.autoHour!=0 || employee.autoMin!=0){
+				var autoClockOutDetector:AutoClockOutDetector = new AutoClockOutDetector();
+				autoClockOutDetector.employee = employee;
+				autoClockOutDetector.timeCard =	timecardArray.getItemAt(0,0) as TimeCard; 
+				autoClockOutDetector.start();
+				autoClockOutDetectortList.addItem(autoClockOutDetector);
+			}
+			timeCardStatus = "";
 		}
 	}
 	  
@@ -255,42 +279,45 @@
 				pinRequestComponent.employee = employee;
 				pinRequestComponent.addEventListener(PinRequestEvent.PINREQUEST,function(event:PinRequestEvent):void{
 					if(event.success) {
-						if (employee.clockBreak == true)
-						{
-							setTimeCard("breakstopwithclockout");
-						} else {
-							setTimeCard("out");
-						}
-						if(employee.showMessageClockout && employee.message!=null && StringUtil.trim(employee.message)!="") {
-							Alert.show(employee.message);
-						}
-						employee.clockIn= false;
-						employee.clockOut = true;
-						employee.clockBreak= false;
-						setEmployee();
-						clockIn.enabled = false;
-						clockOut.enabled = false;
-						clockBreak.enabled = false;
+						clockOutUpdate();
 					}
 				},false,0,true);
 			} else {
-				if (employee.clockBreak == true)
-				{
-					setTimeCard("breakstopwithclockout");
-				} else {
-					setTimeCard("out");
-				}
-				if(employee.showMessageClockout && employee.message!=null && StringUtil.trim(employee.message)!="") {
-					Alert.show(employee.message);
-				}
-				employee.clockIn= false;
-				employee.clockOut = true;
-				employee.clockBreak= false;
-				setEmployee();
-				clockIn.enabled = false;
-				clockOut.enabled = false;
-				clockBreak.enabled = false;
+				clockOutUpdate();
 			}
+		}
+	}
+	
+	private function clockOutUpdate():void {
+		if (employee.clockBreak == true)
+		{
+			timeCardStatus = "breakstopwithclockout";
+			setTimeCard("breakstopwithclockout");
+		} else {
+			timeCardStatus = "out";
+			setTimeCard("out");
+		}
+		if(employee.showMessageClockout && employee.message!=null && StringUtil.trim(employee.message)!="") {
+			Alert.show(employee.message);
+		}
+		employee.clockIn= false;
+		employee.clockOut = true;
+		employee.clockBreak= false;
+		setEmployee();
+		clockIn.enabled = false;
+		clockOut.enabled = false;
+		clockBreak.enabled = false;
+		var count:int=-1;
+		for each(var autoClockOutDetectorObj:AutoClockOutDetector in autoClockOutDetectortList){
+			if(autoClockOutDetectorObj.employee.id==employee.id){
+				count++;
+				break;	
+			}
+		}
+		if(count!=-1){
+			var autoClockOutDetectorObject:AutoClockOutDetector = autoClockOutDetectortList.getItemAt(count) as AutoClockOutDetector;
+			autoClockOutDetectorObject.stop();
+			autoClockOutDetectortList.removeItemAt(count);
 		}
 	}
 	
@@ -302,48 +329,37 @@
 					pinRequestComponent.employee = employee;
 					pinRequestComponent.addEventListener(PinRequestEvent.PINREQUEST,function(event:PinRequestEvent):void{
 						if(event.success) {
-							if (employee.clockBreak == true)
-							{
-								setTimeCard("breakstop");
-								employee.clockIn= true;
-								employee.clockOut = false;
-								employee.clockBreak= false;
-							}
-							else
-							{
-								setTimeCard("breakstart");
-								employee.clockIn= false;
-								employee.clockOut = false;
-								employee.clockBreak= true;
-							}
-							setEmployee();
-							clockIn.enabled = false;
-							clockOut.enabled = false;
-							clockBreak.enabled = false;
+							clockBreakUpdate();
 						}
 					},false,0,true);
 				} else {
-					if (employee.clockBreak == true)
-					{
-						setTimeCard("breakstop");
-						employee.clockIn= true;
-						employee.clockOut = false;
-						employee.clockBreak= false;
-					}
-					else
-					{
-						setTimeCard("breakstart");
-						employee.clockIn= false;
-						employee.clockOut = false;
-						employee.clockBreak= true;
-					}
-					setEmployee();
-					clockIn.enabled = false;
-					clockOut.enabled = false;
-					clockBreak.enabled = false;
+					clockBreakUpdate();
 				}
 			}
 		}
+	}
+	
+	private function clockBreakUpdate():void {
+		if (employee.clockBreak == true)
+		{
+			timeCardStatus = "breakstop";
+			setTimeCard("breakstop");
+			employee.clockIn= true;
+			employee.clockOut = false;
+			employee.clockBreak= false;
+		}
+		else
+		{
+			timeCardStatus = "breakstart";
+			setTimeCard("breakstart");
+			employee.clockIn= false;
+			employee.clockOut = false;
+			employee.clockBreak= true;
+		}
+		setEmployee();
+		clockIn.enabled = false;
+		clockOut.enabled = false;
+		clockBreak.enabled = false;
 	}
 	
 	private function handleFault(ev:FaultEvent):void {  

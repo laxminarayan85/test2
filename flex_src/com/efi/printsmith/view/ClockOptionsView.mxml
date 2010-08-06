@@ -6,6 +6,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.TimeCard;
+			import com.efi.printsmith.model.AutoClockOutDetector;
 			import mx.controls.Alert;
 			import mx.rpc.events.ResultEvent;
 			import mx.collections.ArrayCollection;
@@ -16,6 +18,8 @@
 			[Bindable] public var employeeList:ArrayCollection = new ArrayCollection();
 			
 			[Bindable] public var employee:Employee;
+			
+			[Bindable] public var autoClockOutDetectortList:ArrayCollection = new ArrayCollection();
 			
 			private function initClockOptsWindow():void {
 				PopUpManager.centerPopUp(this);
@@ -84,7 +88,43 @@
 			}
 			
 			private function doSave():void {
+				if(employee!=null){
+					autoClockOutDetectortList = parentDocument.autoClockOutDetectortList;
+					var count:int=-1;
+					for each(var autoClockOutDetectorObj:AutoClockOutDetector in autoClockOutDetectortList){
+						if(autoClockOutDetectorObj.employee.id==employee.id){
+							count++;
+							break;	
+						}
+					}
+					if(count!=-1){
+						var autoClockOutDetectorObject:AutoClockOutDetector = autoClockOutDetectortList.getItemAt(count) as AutoClockOutDetector;
+						if(employee.autoHour==0 && employee.autoMin==0){
+							autoClockOutDetectorObject.stop();
+							autoClockOutDetectortList.removeItemAt(count);
+						} else {
+							if(autoClockOutDetectorObject.employee.autoHour!=employee.autoHour || autoClockOutDetectorObject.employee.autoMin!=employee.autoMin){
+								autoClockOutDetectorObject.employee = employee;
+							}
+						}
+					} else {
+						if(employee.clockIn || employee.clockBreak){
+							if(employee.autoHour!=0 || employee.autoMin!=0){
+								dataServiceTimeCard.getByClockInOut("TimeCard",employee);
+							}
+						}
+					}
+				}
 				dataService.addUpdateDeleteList(employeeList,null);
+			}
+			
+			private function handleLoadTimeCardResult(ev:ResultEvent):void {
+				var timecardArray:ArrayCollection = ev.result as ArrayCollection;
+				var autoClockOutDetector:AutoClockOutDetector = new AutoClockOutDetector();
+				autoClockOutDetector.employee = employee;
+				autoClockOutDetector.timeCard =	timecardArray.getItemAt(0,0) as TimeCard; 
+				autoClockOutDetector.start();
+				autoClockOutDetectortList.addItem(autoClockOutDetector);
 			}
 			
 			private function handleSaveResult(event:ResultEvent):void {
@@ -104,6 +144,10 @@
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService" showBusyCursor="true">
+		<mx:method name="getByClockInOut" fault="handleFault(event)" result="handleLoadTimeCardResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:HBox width="100%" height="55%">
