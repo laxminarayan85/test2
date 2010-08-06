@@ -1,7 +1,9 @@
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="700" height="500"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="850" height="650"
 	creationComplete="{initPreviewWindow()}" showCloseButton="true" close="{closeWindow()}">
 	<mx:Script>
 		<![CDATA[
+			import mx.events.FlexEvent;
+			import mx.collections.ICollectionView;
 			import com.efi.printsmith.model.EmployeeTimeExportBean;
 			import mx.core.Application;
 			import mx.controls.AdvancedDataGrid;
@@ -46,6 +48,7 @@
 				groupingCollection.source = timeCardList;
 				advancedDataGrid = new AdvancedDataGrid();
 				advancedDataGrid.setStyle("defaultLeafIcon",null);
+				advancedDataGrid.styleFunction = dgStyleFunction;
 				advancedDataGrid.percentWidth = 100;
 				advancedDataGrid.percentHeight = 100;
 				var columns:Array = new Array();
@@ -84,6 +87,15 @@
 					groupingField.name = "period";	
 				}
 			}
+			
+			private function dgStyleFunction(data:Object, column:AdvancedDataGridColumn):Object{
+	        	var output:Object;
+				if ( data.childObjects != null )
+				{
+					output = {fontWeight:"bold"} ;
+				}
+				return output; 
+	        }
 			
 			private function getDataGridColumns(columns:Array):void {
 				var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
@@ -130,6 +142,20 @@
 	        private function advDataGridHandler():void{
 	        	groupingCollection.refresh();
 	        	advancedDataGrid.dataProvider = groupingCollection;
+	        	callLater(expandDataGridItems);
+	        }
+	        
+	        private function expandDataGridItems():void{
+	        	var collectionList:ICollectionView = ICollectionView(advancedDataGrid.dataProvider);
+				var iterator:IViewCursor = collectionList.createCursor();
+				iterator.seek(CursorBookmark.FIRST);
+	            while(!iterator.afterLast)
+	            {
+	            	if(groupingCollection.hasChildren(iterator.current)){
+	        			advancedDataGrid.expandItem(iterator.current, true);
+	        		}
+	        		iterator.moveNext();
+	            }
 	        }
 	        
 	        private function nameSummaryFunction(iterator:IViewCursor, dataField:String, operation:String):Object{

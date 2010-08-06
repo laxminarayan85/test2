@@ -83,6 +83,7 @@
 				timeCardList = event.result as ArrayCollection;
 				for each(var timeCard:TimeCard in timeCardList){
 					timeCard.employeeName = timeCard.employee.lastName+", "+timeCard.employee.firstName;
+					timeCard.socialSecurity = timeCard.employee.socialSecurity;
 				}
 				dataList.addItem(timeCardList);
 				dataList.addItem(employeeTimeExportBean);
