@@ -13,10 +13,13 @@
 	<mx:RemoteObject id="dataServiceUnpost" destination="dataService">
 		<mx:method name="getUnPurchaseByAccountId" fault="handleFault(event)" result="handleGetUnpostResult(event)"/>
 	</mx:RemoteObject>
-	
+	<mx:RemoteObject id="dataServiceAccountHistory" destination="dataService">
+		<mx:method name="getAccountHistoryByAccountId" fault="handleFault(event)" result="handleGetUnpostResult(event)"/>
+	</mx:RemoteObject>
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.data.AccountHistoryData;
 	import com.efi.printsmith.data.UnpurchasedMerchandise;
 	import com.efi.printsmith.data.Account;
 	import mx.containers.Accordion;
@@ -39,6 +42,8 @@
 	[Bindable]                             
 	private var account: Account;
 	[Bindable]                             
+	private var accountHistoryDate: AccountHistoryData;;
+	[Bindable]                             
 	private var unPurchase: Number;
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 		
@@ -54,7 +59,8 @@
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
 	}
-	private function init():void {   
+	private function init():void {  
+		accountHistoryDate = new AccountHistoryData(); 
 		doGet();
 	 }
 	 private function handleFault(ev:FaultEvent):void {  
@@ -71,6 +77,7 @@
 		
 		setStatus();
 		setType();	 
+		dataServiceAccountHistory.getAccountHistoryByAccountId(account.id);
 		dataServiceUnpost.getUnPurchaseByAccountId(account.id);  
 	}
 	private function handleGetUnpostResult(ev:ResultEvent):void{
@@ -157,7 +164,7 @@
 		<mx:TextInput x="663" y="10" text="" id="account_status" width="77" enabled="false"/>
 		<mx:Label  textAlign="right" x="10" y="70" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.MasterAccount')}"/>
 		<mx:TextInput x="134" y="70" text="{account.masterAcct}"/>
-		<mx:DataGrid x="10" y="96" width="506" height="257">
+		<mx:DataGrid x="10" y="113" width="506" height="257">
 			<mx:columns>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.Ref')}" dataField="col1"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.Date')}" dataField="col2"/>

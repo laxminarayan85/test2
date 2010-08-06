@@ -660,6 +660,25 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+	
+	public AccountHistoryData getAccountHistoryByAccountId(Long Id) {
+		log.debug("** AccountHistoryData called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+		
+			String queryString = "select a from AccountHistoryData a where a.account.id = :id";
+			Query query = em.createQuery(queryString);
+			query.setParameter("id", Id);
+			AccountHistoryData object = (AccountHistoryData) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
 	public UnpurchasedMerchandise getUnPurchaseByAccountId(Long Id) {
 		log.debug("** getBypurchasesAccountId called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
