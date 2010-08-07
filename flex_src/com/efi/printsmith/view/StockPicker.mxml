@@ -65,6 +65,18 @@
                                                                      
 	[Bindable]                               
 	private var stockDefinitionRecords:int = 0;
+	
+	[Bindable] private var stockGroups:ArrayCollection;
+	[Bindable] private var stockTypes:ArrayCollection;
+	[Bindable] private var finishes:ArrayCollection;
+	[Bindable] private var colors:ArrayCollection;
+	[Bindable] private var genericColors:ArrayCollection;
+	[Bindable] private var grades:ArrayCollection;
+	[Bindable] private var vendors:ArrayCollection;
+	[Bindable] private var uoms:ArrayCollection;
+	//[Bindable] private var coatedSides:ArrayCollection;
+	
+	
 	         
 	// Holds a reference to the currently focussed control on the form.
  	private var focusedFormControl:DisplayObject;                           
@@ -119,7 +131,7 @@
 //		notification_consumer.subscribe();     
 	    PopUpManager.centerPopUp(this);
 	    ShellLabel();
-	//	dataService.getAllNameIDOnly("StockDefinition");
+	  // dataService.getAllNameIDOnly("StockDefinition");
 	//	dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 	}
 	                                
@@ -200,8 +212,31 @@
 		temp = dataGrid.selectedItem as StockDefinition;
 	 	statusWindow.setStock(temp);
 	 }
-	public function setStockArray(temp:ArrayCollection):void{
-		stockDefinitions = temp;
+	 
+	 public function setStockArray(data:ArrayCollection)	{
+	 	this.stockDefinitions = data;
+	 }
+	public function setStocksData(stockDefs:ArrayCollection, groups:ArrayCollection, types:ArrayCollection,
+					finishes:ArrayCollection, colors:ArrayCollection, genericColors:ArrayCollection, 
+					grades:ArrayCollection, vendors:ArrayCollection, uoms:ArrayCollection):void{
+		this.stockDefinitions = stockDefs;
+		groups.addItemAt("", 0);
+		this.stockGroups = groups;
+		types.addItemAt("",0);
+		this.stockTypes = types;
+		finishes.addItemAt("", 0);
+		this.finishes = finishes;
+		colors.addItemAt("", 0);
+		this.colors = colors;
+		genericColors.addItemAt("", 0);
+		this.genericColors = genericColors;
+		grades.addItemAt("", 0);
+		this.grades = grades;
+		vendors.addItemAt("", 0);
+		this.vendors = vendors;
+		uoms.addItemAt("", 0);
+		this.uoms = uoms;
+		
 	}
 	public function setStockPref(temp:ArrayCollection):void{
 		
@@ -339,7 +374,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 			if (txtGroup.text != "")	{
 				if ((stock.stkgroup != null) 
 						&& ((stock.stkgroup as StockGroup).name != null)
-						&& (match((stock.stkgroup as StockGroup).name, txtGroup.text) == false)	)
+						&& (match((stock.stkgroup as StockGroup).name, txtGroup.text,true) == false)	)
 						continue;		
 			}
 			if (txtName.text != "")	{
@@ -350,19 +385,19 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 			if (txtFinish.text != "")	{
 				if ((stock.finish != null) 
 						&& ((stock.finish as StockFinish).name != null)
-						&& (match((stock.finish as StockFinish).name, txtFinish.text) == false)	)
+						&& (match((stock.finish as StockFinish).name, txtFinish.text, true) == false)	)
 						continue;	
 			}
 			if (txtColor.text != "")	{
 				if ((stock.color != null) 
 						&& ((stock.color as StockColors).name != null)
-						&& (match((stock.color as StockColors).name, txtColor.text) == false)	)
+						&& (match((stock.color as StockColors).name, txtColor.text, true) == false)	)
 						continue;	
 			}
 			if (txtGrade.text != "")	{
 				if ((stock.grade != null) 
 						&& ((stock.grade as StockGrade).name != null)
-						&& (match((stock.grade as StockGrade).name, txtGrade.text) == false)	)
+						&& (match((stock.grade as StockGrade).name, txtGrade.text, true) == false)	)
 						continue;	
 			}
 			if (txtMinOrder.text != "")	{
@@ -372,13 +407,13 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 			if (txtVendor.text != "")	{
 				if ((stock.vendor != null) 
 						&& ((stock.vendor as Vendor).name != null)
-						&& (match((stock.vendor as Vendor).name, txtVendor.text) == false)	)
+						&& (match((stock.vendor as Vendor).name, txtVendor.text, true) == false)	)
 						continue;	
 			}
 			if (txtStockType.text != "")	{
 				if ((stock.stktype != null) 
 						&& ((stock.stktype as StockType).name != null)
-						&& (match((stock.stktype as StockType).name, txtStockType.text) == false)	)
+						&& (match((stock.stktype as StockType).name, txtStockType.text, true) == false)	)
 						continue;	
 			}
 			if (txtProductId.text != "")	{
@@ -393,7 +428,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 			if (txtGenericColors.text != "")	{
 				if ((stock.genericColor != null) 
 						&& ((stock.genericColor as GenericColors).name != null)
-						&& (match((stock.genericColor as GenericColors).name, txtGenericColors.text) == false)	)
+						&& (match((stock.genericColor as GenericColors).name, txtGenericColors.text, true) == false)	)
 						continue;	
 			}
 			if (txtThickness.text != "")	{
@@ -401,7 +436,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 						continue;	
 			}
 			if (txtThicknessUOM.text != "")	{
-				if (match(stock.uom, txtThicknessUOM.text) == false)	
+				if (match(stock.uom, txtThicknessUOM.text, true) == false)	
 						continue;	
 			}
 			if (txtSheetsPerSet.text != "")	{
@@ -490,10 +525,16 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		
 	}
 	
-	private function match(data:Object, searchString:String):Boolean	{
+	private function match(data:Object, searchString:String, exactIfString:Boolean=false):Boolean	{
 		if (data is String)	{
-			if ((data as String).toLowerCase().indexOf(StringUtil.trim(searchString).toLowerCase()) == -1)
-				return false;
+			if (!exactIfString)	{
+				if ((data as String).toLowerCase().indexOf(StringUtil.trim(searchString).toLowerCase()) == -1)
+					return false;
+			}
+			else	{
+				if (StringUtil.trim((data as String).toLowerCase()) != StringUtil.trim(searchString).toLowerCase())
+					return false;
+			}
 		}
 		if ((data is int) || (data is Number))	{
 			if (Number(searchString) != data)
@@ -514,12 +555,17 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 			return false;
 		return true;		
 	}
+	
+
+	
+	
+
 ]]>        
-</mx:Script>
+</mx:Script> 
                              
 
                              
-	<mx:Canvas width="100%" height="100%" creationPolicy="all">
+	<mx:Canvas id="base" width="100%" height="100%" creationPolicy="all" >
 		<mx:DataGrid id="dataGrid" dataProvider="{stockDefinitions}"
 		doubleClickEnabled="true" doubleClick="selectStockDefinition()" verticalScrollPolicy="auto" horizontalScrollPolicy="on" showHeaders="true" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273" change="doEnableWebStatus();">               
 		<mx:columns>
@@ -583,15 +629,15 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		<mx:CheckBox x="418" y="222" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate"/>
 		<mx:CheckBox x="418" y="237" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock" change="search();"/>
 		<mx:CheckBox x="418" y="252" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="search();"/>
-
-		<mx:TextInput x="99" y="62" width="98" id="txtGroup" change="search();"/>
+		
+		<mx:ComboBox x="99" y="62" width="98" id="txtGroup" dataProvider="{stockGroups}" labelField="name" change="search();"/>
 		<mx:TextInput x="99" y="114" width="98" id="txtName" change="search();"/>
-		<mx:TextInput x="99" y="140" width="98" id="txtFinish" change="search();"/>
-		<mx:TextInput x="99" y="166" width="98" id="txtColor" change="search();"/>
-		<mx:TextInput x="99" y="192" width="98" id="txtGrade" change="search();"/>
+		<mx:ComboBox x="99" y="140" width="98" id="txtFinish" dataProvider="{finishes}" labelField="name"  change="search();"/>
+		<mx:ComboBox x="99" y="166" width="98" id="txtColor" dataProvider="{colors}" labelField="name" change="search();"/>
+		<mx:ComboBox x="99" y="192" width="98" id="txtGrade" dataProvider="{grades}" labelField="name" change="search();"/>
 		<mx:TextInput x="99" y="218" width="98" id="txtMinOrder" change="search();"/>
-		<mx:TextInput x="99" y="244" width="98" id="txtVendor" change="search();"/>
-		<mx:TextInput x="295" y="62" width="98" id="txtStockType" change="search();"/>
+		<mx:ComboBox x="99" y="244" width="98" id="txtVendor" dataProvider="{vendors}" labelField="name" change="search();"/>
+		<mx:ComboBox x="295" y="62" width="98" id="txtStockType" dataProvider="{stockTypes}" labelField="name" change="search();"/>
 		<mx:TextInput x="478" y="62" width="48" id="txtSizeMin" change="search();"/>
 		<mx:TextInput x="478" y="88" width="48" id="txtWeightMin" change="search();"/>
 		<mx:TextInput x="534" y="88" width="48" id="txtWeightMax" change="search();"/>
@@ -604,9 +650,9 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		<mx:TextInput x="534" y="62" width="48" id="txtSizeMax" change="search();"/>
 		<mx:TextInput x="295" y="114" width="98" id="txtProductId" change="search();"/>
 		<mx:TextInput x="295" y="140" width="98" id="txtCoatedSides" change="search();"/>
-		<mx:TextInput x="295" y="166" width="98" id="txtGenericColors" change="search();"/>
+		<mx:ComboBox x="295" y="166" width="98" id="txtGenericColors" dataProvider="{genericColors}" labelField="name" change="search();"/>
 		<mx:TextInput x="295" y="192" width="40" id="txtThickness" change="search();"/>
-		<mx:TextInput x="340" y="192" width="58" id="txtThicknessUOM" change="search();"/>
+		<mx:ComboBox x="340" y="192" width="58" id="txtThicknessUOM" dataProvider="{uoms}" labelField="name" change="search();"/>
 		<mx:TextInput x="295" y="218" width="98" id="txtSheetsPerSet" change="search();"/>
 		<mx:TextInput x="295" y="244" width="98" id="txtStockNumber" change="search();"/>
 		<mx:Button x="363" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="102" id="status_button" click="doStatus()"/>

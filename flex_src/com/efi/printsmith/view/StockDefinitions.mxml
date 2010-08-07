@@ -553,7 +553,7 @@
 		var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 		stockPickerWindow.setStyle("borderAlpha", 0.9);
 	    stockPickerWindow.formIsEmpty = true;
-	   	stockPickerWindow.setStockArray(StockDefinitionArray);
+	   	stockPickerWindow.setStocksData(StockDefinitionArray,stockGroup, stockType, stockFinish, stockColor, stockGenericColor, stockGrade, stockVendor, stockUom);
 	   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
