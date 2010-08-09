@@ -211,7 +211,13 @@ public class PressDefinition extends ModelBase {
     this.modified = new Date();
   }
 
- 	
+	public PressDefinition(long id, String name, long MachineID, String machineName) {
+		this.id = id;
+		this.name =name;
+		this.machineID= MachineID;
+		this.machineName = machineName;
+		
+	}
 	
 	/**
 	 * @generated

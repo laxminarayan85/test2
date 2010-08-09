@@ -131,7 +131,14 @@ public class Contact extends Party {
     this.modified = new Date();
   }
 
- 	
+	public Contact(long id, String firstName, String lastName, String accountID, Account parentAcct) {
+		this.id = id;
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.contactId = accountID;
+		this.parentAccount = parentAcct;
+	}
+
 	
 	/**
 	 * @generated
