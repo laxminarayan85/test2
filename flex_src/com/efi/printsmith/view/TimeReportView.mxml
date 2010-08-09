@@ -34,6 +34,7 @@
 			private function initExportWindow():void {
 				PopUpManager.centerPopUp(this);
 				employeeTimeExportBean.format = "employee.firstName";
+				employeeTimeExportBean.formatName = "By Name";
 				employeeTimeExportBean.rangeType = "period";
 				employeeTimeExportBean.detail = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Showfulltimecard');
 				var todayDate:Date = new Date();
@@ -60,6 +61,18 @@
 				formatObj.id = "period";
 				formatObj.name= "By Period";
 				formatList.addItem(formatObj);
+				formatObj = new Object();
+				formatObj.id = "startDateTime";
+				formatObj.name= "By Week";
+				formatList.addItem(formatObj);
+				formatObj = new Object();
+				formatObj.id = "endDateTime";
+				formatObj.name= "By Month";
+				formatList.addItem(formatObj);
+				formatObj = new Object();
+				formatObj.id = "onClock";
+				formatObj.name= "By Year";
+				formatList.addItem(formatObj);
 			}
 			
 			private function handleEmployeeLoadResult(event:ResultEvent):void {
@@ -84,6 +97,15 @@
 				for each(var timeCard:TimeCard in timeCardList){
 					timeCard.employeeName = timeCard.employee.lastName+", "+timeCard.employee.firstName;
 					timeCard.socialSecurity = timeCard.employee.socialSecurity;
+					if(formatComboBox.selectedItem!=null){
+						if(employeeTimeExportBean.formatName=="By Week"){
+							timeCard.week = DateUtil.getWeek(timeCard.startDateTime);
+						} else if(employeeTimeExportBean.formatName=="By Month"){
+							timeCard.month = timeCard.startDateTime.month+1;
+						} else if(employeeTimeExportBean.formatName=="By Year"){
+							timeCard.year = timeCard.startDateTime.fullYear;
+						}
+					}
 				}
 				dataList.addItem(timeCardList);
 				dataList.addItem(employeeTimeExportBean);
@@ -99,6 +121,12 @@
 				+ ev.fault.faultDetail + " - "                                  
 				+ ev.fault.faultString;
 				Alert.show(message, "Error", 0, null, null, null, 4);                                 
+			}
+			
+			private function setSelectedName(event:Event):void {
+				if(event.currentTarget.selectedItem!=null){
+					employeeTimeExportBean.formatName = event.currentTarget.selectedItem.name;
+				}
 			}
 			
 			private function doPreview():void {
@@ -221,9 +249,10 @@
 		
 			<mx:HBox width="100%" height="30%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Format')}:"/>
-				<components:CustomComboBoxComponent width="30%"
+				<components:CustomComboBoxComponent id="formatComboBox" width="30%"
 					masterList="{formatList}" labelFieldId="id" labelFieldName="name" updateFirstElement="true"
-					dataHolder="{employeeTimeExportBean}" variableName="format" customText="{getCustomTextData(formatList,employeeTimeExportBean,employeeTimeExportBean.format)}"/>
+					dataHolder="{employeeTimeExportBean}" variableName="format" customText="{getCustomTextData(formatList,employeeTimeExportBean,employeeTimeExportBean.format)}"
+					change="{setSelectedName(event)}"/>
 			</mx:HBox>
 			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Range')}" layout="vertical" width="100%" height="70%">
 			

@@ -79,12 +79,18 @@
 			}
 			
 			private function getGroupingFieldName(groupingField:GroupingField):void {
-				if(employeeTimeExportBean.format=="employee.firstName"){
+				if(employeeTimeExportBean.formatName=="By Name"){
 					groupingField.name = "employeeName";	
-				} else if(employeeTimeExportBean.format=="employee.socialSecurity"){
+				} else if(employeeTimeExportBean.formatName=="By SSN"){
 					groupingField.name = "socialSecurity";	
-				} else if(employeeTimeExportBean.format=="period"){
+				} else if(employeeTimeExportBean.formatName=="By Period"){
 					groupingField.name = "period";	
+				} else if(employeeTimeExportBean.formatName=="By Week"){
+					groupingField.name = "week";	
+				} else if(employeeTimeExportBean.formatName=="By Month"){
+					groupingField.name = "month";	
+				} else if(employeeTimeExportBean.formatName=="By Year"){
+					groupingField.name = "year";	
 				}
 			}
 			
@@ -99,7 +105,7 @@
 			
 			private function getDataGridColumns(columns:Array):void {
 				var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
-				if(employeeTimeExportBean.format=="employee.firstName"){
+				if(employeeTimeExportBean.formatName=="By Name"){
 					advancedDataGridColumn.headerText = "Name"; 
 					columns.push(advancedDataGridColumn);
 					advancedDataGridColumn = new AdvancedDataGridColumn();
@@ -110,7 +116,7 @@
 					advancedDataGridColumn.dataField = "period";
 					advancedDataGridColumn.headerText = "Period";
 					columns.push(advancedDataGridColumn);
-				} else if(employeeTimeExportBean.format=="employee.socialSecurity"){
+				} else if(employeeTimeExportBean.formatName=="By SSN"){
 					advancedDataGridColumn.headerText = "SSN";
 					columns.push(advancedDataGridColumn);
 					advancedDataGridColumn = new AdvancedDataGridColumn();
@@ -121,8 +127,41 @@
 					advancedDataGridColumn.dataField = "period";
 					advancedDataGridColumn.headerText = "Period";
 					columns.push(advancedDataGridColumn);
-				} else if(employeeTimeExportBean.format=="period"){
+				} else if(employeeTimeExportBean.formatName=="By Period"){
 					advancedDataGridColumn.headerText = "Period";
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "employeeName";
+					advancedDataGridColumn.headerText = "Name";
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "socialSecurity";
+					advancedDataGridColumn.headerText = "SSN";
+					columns.push(advancedDataGridColumn);
+				} else if(employeeTimeExportBean.formatName=="By Week"){
+					advancedDataGridColumn.headerText = "Week";
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "employeeName";
+					advancedDataGridColumn.headerText = "Name";
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "socialSecurity";
+					advancedDataGridColumn.headerText = "SSN";
+					columns.push(advancedDataGridColumn);
+				} else if(employeeTimeExportBean.formatName=="By Month"){
+					advancedDataGridColumn.headerText = "Month";
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "employeeName";
+					advancedDataGridColumn.headerText = "Name";
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "socialSecurity";
+					advancedDataGridColumn.headerText = "SSN";
+					columns.push(advancedDataGridColumn);
+				} else if(employeeTimeExportBean.formatName=="By Year"){
+					advancedDataGridColumn.headerText = "Year";
 					columns.push(advancedDataGridColumn);
 					advancedDataGridColumn = new AdvancedDataGridColumn();
 					advancedDataGridColumn.dataField = "employeeName";

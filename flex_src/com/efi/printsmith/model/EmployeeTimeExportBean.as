@@ -7,6 +7,8 @@ package com.efi.printsmith.model
 	{
 		public var format:String;
 		
+		public var formatName:String;
+		
 		public var rangeType:String;
 		
 		public var periodFrom:Number;
