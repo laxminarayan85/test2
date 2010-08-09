@@ -321,26 +321,6 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String SHOWNOTES = "ShowNotes";
-	/**
-	 * @generated
-	 */
-	public static final String FINISHED = "Finished";
-	/**
-	 * @generated
-	 */
-	public static final String BROKERED = "Brokered";
-	/**
-	 * @generated
-	 */
-	public static final String TAXABLE = "Taxable";
-	/**
-	 * @generated
-	 */
-	public static final String DISPLAYQTY = "DisplayQty";
-	/**
-	 * @generated
-	 */
 	public static final String OVERRIDEPRICE = "OverridePrice";
 	/**
 	 * @generated
@@ -469,63 +449,147 @@ public class ChargeDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String DESCRIPTIONLABEL = "DescriptionLabel";
-	/**
-	 * @generated
-	 */
-	public static final String NOTESLABEL = "NotesLabel";
-	/**
-	 * @generated
-	 */
-	public static final String DESCRIPTIONDEFAULT = "DescriptionDefault";
-	/**
-	 * @generated
-	 */
-	public static final String NOTESDEFAULT = "NotesDefault";
-	/**
-	 * @generated
-	 */
-	public static final String QUANTITYLABEL = "QuantityLabel";
-	/**
-	 * @generated
-	 */
-	public static final String QUANTITYDEFAULT = "QuantityDefault";
-	/**
-	 * @generated
-	 */
-	public static final String RATELABEL = "RateLabel";
-	/**
-	 * @generated
-	 */
-	public static final String RATEDEFAULT = "RateDefault";
-	/**
-	 * @generated
-	 */
-	public static final String PRICELABEL = "PriceLabel";
-	/**
-	 * @generated
-	 */
-	public static final String PRICEDEFAULT = "PriceDefault";
-	/**
-	 * @generated
-	 */
 	public static final String USERUNAREA = "UseRunArea";
 	/**
 	 * @generated
 	 */
 	public static final String SETUPPRICE = "SetupPrice";
+
 	/**
-	 * @generated
-	 */
-	public static final String COSTINGUNITPRICE = "CostingUnitPrice";
+   * @generated
+   */
+  public static final String COSTINGUNITPRICE = "CostingUnitPrice";
 	/**
-	 * @generated
-	 */
-	public static final String COSTINGSETUPPRICE = "CostingSetupPrice";
+   * @generated
+   */
+  public static final String COSTINGSETUPPRICE = "CostingSetupPrice";
+
 	/**
-	 * @generated
-	 */
-	public static final String PRODUCTCODE = "ProductCode";
+   * @generated
+   */
+  public static final String PRODUCTCODE = "ProductCode";
+
+	/**
+   * @generated
+   */
+  public static final String PRESETDESCRIPTION = "PresetDescription";
+	/**
+   * @generated
+   */
+  public static final String PRESETDESCRIPTIONLABEL = "PresetDescriptionLabel";
+	/**
+   * @generated
+   */
+  public static final String PRESETNOTES = "PresetNotes";
+	/**
+   * @generated
+   */
+  public static final String PRESETNOTESLABEL = "PresetNotesLabel";
+	/**
+   * @generated
+   */
+  public static final String PRESETQUANTITY = "PresetQuantity";
+	/**
+   * @generated
+   */
+  public static final String PRESETQUANTITYLABEL = "PresetQuantityLabel";
+	/**
+   * @generated
+   */
+  public static final String PRESETSHOWNOTES = "PresetShowNotes";
+	/**
+   * @generated
+   */
+  public static final String PRESETPRODUCTIONLOCATION = "PresetProductionLocation";
+	/**
+   * @generated
+   */
+  public static final String PRESETPRICE = "PresetPrice";
+	/**
+   * @generated
+   */
+  public static final String PRESETPRICELABEL = "PresetPriceLabel";
+	/**
+   * @generated
+   */
+  public static final String PRESETTAXTABLE = "PresetTaxTable";
+	/**
+   * @generated
+   */
+  public static final String PRESETFINISHED = "PresetFinished";
+	/**
+   * @generated
+   */
+  public static final String PRESETTAXABLE = "PresetTaxable";
+	/**
+   * @generated
+   */
+  public static final String PRESETRATE = "PresetRate";
+	/**
+   * @generated
+   */
+  public static final String PRESETRATELABEL = "PresetRateLabel";
+	/**
+   * @generated
+   */
+  public static final String PRESETBROKERED = "PresetBrokered";
+	/**
+   * @generated
+   */
+  public static final String PRESETDISPLAYQUANTITY = "PresetDisplayQuantity";
+	/**
+   * @generated
+   */
+  public static final String PRESETHIDDEN = "PresetHidden";
+	/**
+   * @generated
+   */
+  public static final String PRESETUP = "PresetUp";
+	/**
+   * @generated
+   */
+  public static final String PRESETUPLABEL = "PresetUpLabel";
+	/**
+   * @generated
+   */
+  public static final String PRESETINSETSOF = "PresetInSetsOf";
+	/**
+   * @generated
+   */
+  public static final String PRESETINSETSOFLABEL = "PresetInSetsOfLabel";
+	/**
+   * @generated
+   */
+  public static final String PRESETMATERIALQUANTITY = "PresetMaterialQuantity";
+	/**
+   * @generated
+   */
+  public static final String PRESETMATERIALQUANTITYLABEL = "PresetMaterialQuantityLabel";
+	/**
+   * @generated
+   */
+  public static final String PRESETMATERIALSETSOF = "PresetMaterialSetsOf";
+	/**
+   * @generated
+   */
+  public static final String PRESETMATERIALSETSOFLABEL = "PresetMaterialSetsOfLabel";
+	/**
+   * @generated
+   */
+  public static final String PRESETMATERIALRATE = "PresetMaterialRate";
+	/**
+   * @generated
+   */
+  public static final String PRESETMATERIALRATELABEL = "PresetMaterialRateLabel";
+
+	/**
+   * @generated
+   */
+  public static final String PRESETQUANTITYPERSET = "PresetQuantityPerSet";
+	/**
+   * @generated
+   */
+  public static final String PRESETQUANTITYPERSETLABEL = "PresetQuantityPerSetLabel";
 
 	/**
 	 * @generated
@@ -557,7 +621,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setMethod(String newVal) {
     this.method = newVal;
   }
-	
  	
 	
 	/**
@@ -580,7 +643,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setQuantityType(String newVal) {
     this.quantityType = newVal;
   }
-	
  	
 	
 	/**
@@ -603,7 +665,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setMarkupType(String newVal) {
     this.markupType = newVal;
   }
-	
  	
 	
 	/**
@@ -626,7 +687,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setJobQty(String newVal) {
     this.jobQty = newVal;
   }
-	
  	
 	
 	/**
@@ -649,7 +709,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setPriceMethod(String newVal) {
     this.priceMethod = newVal;
   }
-	
  	
 	
 	/**
@@ -672,7 +731,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setInkCoverage(String newVal) {
     this.inkCoverage = newVal;
   }
-	
  	
 	
 	/**
@@ -695,7 +753,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseSides(Boolean newVal) {
     this.useSides = newVal;
   }
-	
  	
 	
 	/**
@@ -718,7 +775,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setDoNotDiscount(Boolean newVal) {
     this.doNotDiscount = newVal;
   }
-	
  	
 	
 	/**
@@ -741,7 +797,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setNoMaterialQuantity(Boolean newVal) {
     this.noMaterialQuantity = newVal;
   }
-	
  	
 	
 	/**
@@ -764,7 +819,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setNoOverrides(Boolean newVal) {
     this.noOverrides = newVal;
   }
-	
  	
 	
 	/**
@@ -787,7 +841,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setAdjustableSets(Boolean newVal) {
     this.adjustableSets = newVal;
   }
-	
  	
 	
 	/**
@@ -810,7 +863,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setAdjustableRate(Boolean newVal) {
     this.adjustableRate = newVal;
   }
-	
  	
 	
 	/**
@@ -833,7 +885,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setAdjustableMaterial(Boolean newVal) {
     this.adjustableMaterial = newVal;
   }
-	
  	
 	
 	/**
@@ -856,7 +907,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseMaterial(Boolean newVal) {
     this.useMaterial = newVal;
   }
-	
  	
 	
 	/**
@@ -879,7 +929,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseRate(Boolean newVal) {
     this.useRate = newVal;
   }
-	
  	
 	
 	/**
@@ -902,7 +951,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseRateSets(Boolean newVal) {
     this.useRateSets = newVal;
   }
-	
  	
 	
 	/**
@@ -925,7 +973,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseMerchandiseSets(Boolean newVal) {
     this.useMerchandiseSets = newVal;
   }
-	
  	
 	
 	/**
@@ -948,7 +995,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseMinimumCharge(Boolean newVal) {
     this.useMinimumCharge = newVal;
   }
-	
  	
 	
 	/**
@@ -971,7 +1017,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseColors(Boolean newVal) {
     this.useColors = newVal;
   }
-	
  	
 	
 	/**
@@ -994,7 +1039,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseOriginals(Boolean newVal) {
     this.useOriginals = newVal;
   }
-	
  	
 	
 	/**
@@ -1017,7 +1061,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setRateSetCount(Double newVal) {
     this.rateSetCount = newVal;
   }
-	
  	
 	
 	/**
@@ -1040,7 +1083,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setMaterialSetCount(Double newVal) {
     this.materialSetCount = newVal;
   }
-	
  	
 	
 	/**
@@ -1059,22 +1101,23 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRate(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setRate(BigDecimal newVal) {
     this.rate = newVal;
     this.rate.setScale(4, RoundingMode.HALF_UP);
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setRate(double newVal) {
+   * @generated
+   */	
+  public void setRate(double newVal) {
     this.rate = BigDecimal.valueOf(newVal);
     this.rate.setScale(4, RoundingMode.HALF_UP);
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1091,22 +1134,23 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMaterial(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setMaterial(BigDecimal newVal) {
     this.material = newVal;
     this.material.setScale(4, RoundingMode.HALF_UP);
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setMaterial(double newVal) {
+   * @generated
+   */	
+  public void setMaterial(double newVal) {
     this.material = BigDecimal.valueOf(newVal);
     this.material.setScale(4, RoundingMode.HALF_UP);
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1122,20 +1166,21 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMinimum(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setMinimum(BigDecimal newVal) {
     this.minimum = newVal;
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setMinimum(double newVal) {
+   * @generated
+   */	
+  public void setMinimum(double newVal) {
     this.minimum = BigDecimal.valueOf(newVal);
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1156,7 +1201,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setMarkup(Double newVal) {
     this.markup = newVal;
   }
-	
  	
 	
 	/**
@@ -1179,7 +1223,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setPriceList(PriceList newVal) {
     this.priceList = newVal;
   }
-	
  	
 	
 	/**
@@ -1202,7 +1245,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setWasteChart(WasteChart newVal) {
     this.wasteChart = newVal;
   }
-	
  	
 	
 	/**
@@ -1225,7 +1267,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setFixedWaste(Long newVal) {
     this.fixedWaste = newVal;
   }
-	
  	
 	
 	/**
@@ -1248,7 +1289,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setWastePercentage(Double newVal) {
     this.wastePercentage = newVal;
   }
-	
  	
 	
 	/**
@@ -1271,7 +1311,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setBaseLinearNumber(Long newVal) {
     this.baseLinearNumber = newVal;
   }
-	
  	
 	
 	/**
@@ -1289,14 +1328,13 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLocation(ProductionLocations newVal) {
+   * @generated
+   */	
+  public void setLocation(ProductionLocations newVal) {
     this.location = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1317,7 +1355,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setCostCenter(CostCenter newVal) {
     this.costCenter = newVal;
   }
-	
  	
 	
 	/**
@@ -1340,7 +1377,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setSubstrate(Substrate newVal) {
     this.substrate = newVal;
   }
-	
  	
 	
 	/**
@@ -1363,7 +1399,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setMinimumTime(Long newVal) {
     this.minimumTime = newVal;
   }
-	
  	
 	
 	/**
@@ -1386,7 +1421,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setSizeX(Double newVal) {
     this.sizeX = newVal;
   }
-	
  	
 	
 	/**
@@ -1409,7 +1443,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setSizeY(Double newVal) {
     this.sizeY = newVal;
   }
-	
  	
 	
 	/**
@@ -1432,7 +1465,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setPlateThickness(Double newVal) {
     this.plateThickness = newVal;
   }
-	
  	
 	
 	/**
@@ -1455,7 +1487,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setFoldTemplate(FoldTemplate newVal) {
     this.foldTemplate = newVal;
   }
-	
  	
 	
 	/**
@@ -1478,7 +1509,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setExcludedFromWorkflow(Boolean newVal) {
     this.excludedFromWorkflow = newVal;
   }
-	
  	
 	
 	/**
@@ -1501,7 +1531,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setPreproduction(Boolean newVal) {
     this.preproduction = newVal;
   }
-	
  	
 	
 	/**
@@ -1524,7 +1553,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseMinimumTime(Boolean newVal) {
     this.useMinimumTime = newVal;
   }
-	
  	
 	
 	/**
@@ -1547,7 +1575,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseDivideByUpCount(Boolean newVal) {
     this.useDivideByUpCount = newVal;
   }
-	
  	
 	
 	/**
@@ -1570,7 +1597,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseMultiplyUpCount(Boolean newVal) {
     this.useMultiplyUpCount = newVal;
   }
-	
  	
 	
 	/**
@@ -1593,7 +1619,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setAdjustUps(Boolean newVal) {
     this.adjustUps = newVal;
   }
-	
  	
 	
 	/**
@@ -1616,7 +1641,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setCutsArePrePress(Boolean newVal) {
     this.cutsArePrePress = newVal;
   }
-	
  	
 	
 	/**
@@ -1639,7 +1663,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setIntegratedCTP(Boolean newVal) {
     this.integratedCTP = newVal;
   }
-	
  	
 	
 	/**
@@ -1662,7 +1685,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setSku(String newVal) {
     this.sku = newVal;
   }
-	
  	
 	
 	/**
@@ -1685,7 +1707,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setCategory(String newVal) {
     this.category = newVal;
   }
-	
  	
 	
 	/**
@@ -1708,7 +1729,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setOverrideRate(Boolean newVal) {
     this.overrideRate = newVal;
   }
-	
  	
 	
 	/**
@@ -1731,7 +1751,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setTitle(String newVal) {
     this.title = newVal;
   }
-	
  	
 	
 	/**
@@ -1754,7 +1773,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setNote(String newVal) {
     this.note = newVal;
   }
-	
  	
 	
 	/**
@@ -1777,7 +1795,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setChargeGroup(String newVal) {
     this.chargeGroup = newVal;
   }
-	
  	
 	
 	/**
@@ -1800,7 +1817,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setSalesCategory(SalesCategory newVal) {
     this.salesCategory = newVal;
   }
-	
  	
 	
 	/**
@@ -1823,7 +1839,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setTaxTable(TaxTable newVal) {
     this.taxTable = newVal;
   }
-	
  	
 	
 	/**
@@ -1846,7 +1861,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setRateQty(Double newVal) {
     this.rateQty = newVal;
   }
-	
  	
 	
 	/**
@@ -1869,7 +1883,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setMaterialQty(Double newVal) {
     this.materialQty = newVal;
   }
-	
  	
 	
 	/**
@@ -1892,7 +1905,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setGroupQty(Double newVal) {
     this.groupQty = newVal;
   }
-	
  	
 	
 	/**
@@ -1910,20 +1922,21 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPrice(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setPrice(BigDecimal newVal) {
     this.price = newVal;
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setPrice(double newVal) {
+   * @generated
+   */	
+  public void setPrice(double newVal) {
     this.price = BigDecimal.valueOf(newVal);
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1944,7 +1957,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setTimeStart(Date newVal) {
     this.timeStart = newVal;
   }
-	
  	
 	
 	/**
@@ -1967,7 +1979,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setTimeEnd(Date newVal) {
     this.timeEnd = newVal;
   }
-	
  	
 	
 	/**
@@ -1990,7 +2001,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setCustomerCharge(Boolean newVal) {
     this.customerCharge = newVal;
   }
-	
  	
 	
 	/**
@@ -2013,7 +2023,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setPressCharge(Boolean newVal) {
     this.pressCharge = newVal;
   }
-	
  	
 	
 	/**
@@ -2036,7 +2045,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setHideChargeInPrintouts(Boolean newVal) {
     this.hideChargeInPrintouts = newVal;
   }
-	
  	
 	
 	/**
@@ -2059,7 +2067,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setDeletedPreset(Boolean newVal) {
     this.deletedPreset = newVal;
   }
-	
  	
 	
 	/**
@@ -2082,7 +2089,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setIgnoreCuts(Boolean newVal) {
     this.ignoreCuts = newVal;
   }
-	
  	
 	
 	/**
@@ -2105,7 +2111,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseSignatures(Boolean newVal) {
     this.useSignatures = newVal;
   }
-	
  	
 	
 	/**
@@ -2128,7 +2133,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setStockCharge(Boolean newVal) {
     this.stockCharge = newVal;
   }
-	
  	
 	
 	/**
@@ -2151,122 +2155,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setOverrideNumberOfCuts(Boolean newVal) {
     this.overrideNumberOfCuts = newVal;
   }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean showNotes;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getShowNotes(){
-    return showNotes; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setShowNotes(Boolean newVal) {
-    this.showNotes = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean finished;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getFinished(){
-    return finished; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setFinished(Boolean newVal) {
-    this.finished = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean brokered;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getBrokered(){
-    return brokered; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setBrokered(Boolean newVal) {
-    this.brokered = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean taxable;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getTaxable(){
-    return taxable; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTaxable(Boolean newVal) {
-    this.taxable = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean displayQty;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getDisplayQty(){
-    return displayQty; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setDisplayQty(Boolean newVal) {
-    this.displayQty = newVal;
-  }
-	
  	
 	
 	/**
@@ -2289,7 +2177,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setOverridePrice(Boolean newVal) {
     this.overridePrice = newVal;
   }
-	
  	
 	
 	/**
@@ -2312,7 +2199,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setOverrideRateQuantity(Boolean newVal) {
     this.overrideRateQuantity = newVal;
   }
-	
  	
 	
 	/**
@@ -2335,7 +2221,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setOverrideMaterialQty(Boolean newVal) {
     this.overrideMaterialQty = newVal;
   }
-	
  	
 	
 	/**
@@ -2358,7 +2243,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setVersion(Integer newVal) {
     this.version = newVal;
   }
-	
  	
 	
 	/**
@@ -2381,7 +2265,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setShipMode(ShippingMethod newVal) {
     this.shipMode = newVal;
   }
-	
  	
 	
 	/**
@@ -2404,7 +2287,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setAdjustUpsCount(Integer newVal) {
     this.adjustUpsCount = newVal;
   }
-	
  	
 	
 	/**
@@ -2427,7 +2309,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setHasLinkPrice(Boolean newVal) {
     this.hasLinkPrice = newVal;
   }
-	
  	
 	
 	/**
@@ -2450,7 +2331,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setNeedLinkPrice(Boolean newVal) {
     this.needLinkPrice = newVal;
   }
-	
  	
 	
 	/**
@@ -2473,7 +2353,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setHasShipped(Boolean newVal) {
     this.hasShipped = newVal;
   }
-	
  	
 	
 	/**
@@ -2496,7 +2375,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setShouldShip(Boolean newVal) {
     this.shouldShip = newVal;
   }
-	
  	
 	
 	/**
@@ -2519,7 +2397,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setJobTaskList(Boolean newVal) {
     this.jobTaskList = newVal;
   }
-	
  	
 	
 	/**
@@ -2542,7 +2419,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setHidePrice(Boolean newVal) {
     this.hidePrice = newVal;
   }
-	
  	
 	
 	/**
@@ -2565,7 +2441,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setIgnoreGlobalPriceChanges(Boolean newVal) {
     this.ignoreGlobalPriceChanges = newVal;
   }
-	
  	
 	
 	/**
@@ -2588,7 +2463,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setCostingPressCharge(Boolean newVal) {
     this.costingPressCharge = newVal;
   }
-	
  	
 	
 	/**
@@ -2611,7 +2485,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setLinearX1(Boolean newVal) {
     this.linearX1 = newVal;
   }
-	
  	
 	
 	/**
@@ -2634,7 +2507,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setLinearX2(Boolean newVal) {
     this.linearX2 = newVal;
   }
-	
  	
 	
 	/**
@@ -2657,7 +2529,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setLinearY1(Boolean newVal) {
     this.linearY1 = newVal;
   }
-	
  	
 	
 	/**
@@ -2680,7 +2551,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setLinearY2(Boolean newVal) {
     this.linearY2 = newVal;
   }
-	
  	
 	
 	/**
@@ -2703,7 +2573,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setLabel(String newVal) {
     this.label = newVal;
   }
-	
  	
 	
 	/**
@@ -2726,7 +2595,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setBinderyCharge(Boolean newVal) {
     this.binderyCharge = newVal;
   }
-	
  	
 	
 	/**
@@ -2749,7 +2617,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setName(String newVal) {
     this.name = newVal;
   }
-	
  	
 	
 	/**
@@ -2772,7 +2639,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setParent(ChargeCategory newVal) {
     this.parent = newVal;
   }
-	
  	
 	
 	/**
@@ -2795,7 +2661,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseArea(Boolean newVal) {
     this.useArea = newVal;
   }
-	
  	
 	
 	/**
@@ -2818,7 +2683,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseSetup(Boolean newVal) {
     this.useSetup = newVal;
   }
-	
  	
 	
 	/**
@@ -2827,7 +2691,7 @@ public class ChargeDefinition extends ModelBase {
     @ManyToOne( cascade = {CascadeType.ALL})
 	private ChargeCost chargeCost;
 	
-	/**
+	/** 
 	 * @generated
  	 */
 	public ChargeCost getChargeCost(){
@@ -2841,7 +2705,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setChargeCost(ChargeCost newVal) {
     this.chargeCost = newVal;
   }
-	
  	
 	
 	/**
@@ -2864,7 +2727,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setArea(Double newVal) {
     this.area = newVal;
   }
-	
  	
 	
 	/**
@@ -2887,7 +2749,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setCoverlb_check(Boolean newVal) {
     this.coverlb_check = newVal;
   }
-	
  	
 	
 	/**
@@ -2910,7 +2771,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setSheet_lift_check(Boolean newVal) {
     this.sheet_lift_check = newVal;
   }
-	
  	
 	
 	/**
@@ -2933,7 +2793,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setShip_markup_check(Boolean newVal) {
     this.ship_markup_check = newVal;
   }
-	
  	
 	
 	/**
@@ -2952,22 +2811,23 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCoverlbInk(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setCoverlbInk(BigDecimal newVal) {
     this.coverlbInk = newVal;
     this.coverlbInk.setScale(4, RoundingMode.HALF_UP);
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setCoverlbInk(double newVal) {
+   * @generated
+   */	
+  public void setCoverlbInk(double newVal) {
     this.coverlbInk = BigDecimal.valueOf(newVal);
     this.coverlbInk.setScale(4, RoundingMode.HALF_UP);
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -2983,14 +2843,13 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSheetliftCut(Double newVal) {
+   * @generated
+   */	
+  public void setSheetliftCut(Double newVal) {
     this.sheetliftCut = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -3011,237 +2870,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setShipMarkup(Double newVal) {
     this.shipMarkup = newVal;
   }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String descriptionLabel;
-	
-	/**
-	 * @generated
- 	 */
-	public String getDescriptionLabel(){
-    return descriptionLabel; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setDescriptionLabel(String newVal) {
-    this.descriptionLabel = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String notesLabel;
-	
-	/**
-	 * @generated
- 	 */
-	public String getNotesLabel(){
-    return notesLabel; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setNotesLabel(String newVal) {
-    this.notesLabel = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String descriptionDefault;
-	
-	/**
-	 * @generated
- 	 */
-	public String getDescriptionDefault(){
-    return descriptionDefault; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setDescriptionDefault(String newVal) {
-    this.descriptionDefault = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String notesDefault;
-	
-	/**
-	 * @generated
- 	 */
-	public String getNotesDefault(){
-    return notesDefault; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setNotesDefault(String newVal) {
-    this.notesDefault = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String quantityLabel;
-	
-	/**
-	 * @generated
- 	 */
-	public String getQuantityLabel(){
-    return quantityLabel; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setQuantityLabel(String newVal) {
-    this.quantityLabel = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Double quantityDefault;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getQuantityDefault(){
-    return quantityDefault; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setQuantityDefault(Double newVal) {
-    this.quantityDefault = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String rateLabel;
-	
-	/**
-	 * @generated
- 	 */
-	public String getRateLabel(){
-    return rateLabel; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setRateLabel(String newVal) {
-    this.rateLabel = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Double rateDefault;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getRateDefault(){
-    return rateDefault; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setRateDefault(Double newVal) {
-    this.rateDefault = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String priceLabel;
-	
-	/**
-	 * @generated
- 	 */
-	public String getPriceLabel(){
-    return priceLabel; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setPriceLabel(String newVal) {
-    this.priceLabel = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Double priceDefault;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getPriceDefault(){
-    return priceDefault; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setPriceDefault(Double newVal) {
-    this.priceDefault = newVal;
-  }
-	
  	
 	
 	/**
@@ -3264,7 +2892,6 @@ public class ChargeDefinition extends ModelBase {
 	public void setUseRunArea(Boolean newVal) {
     this.useRunArea = newVal;
   }
-	
  	
 	
 	/**
@@ -3283,101 +2910,817 @@ public class ChargeDefinition extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSetupPrice(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setSetupPrice(BigDecimal newVal) {
     this.setupPrice = newVal;
     this.setupPrice.setScale(4, RoundingMode.HALF_UP);
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setSetupPrice(double newVal) {
+   * @generated
+   */	
+  public void setSetupPrice(double newVal) {
     this.setupPrice = BigDecimal.valueOf(newVal);
     this.setupPrice.setScale(4, RoundingMode.HALF_UP);
   }
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private BigDecimal costingUnitPrice;
-	
+  private BigDecimal costingUnitPrice;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public BigDecimal getCostingUnitPrice(){
+  public BigDecimal getCostingUnitPrice(){
     return costingUnitPrice; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setCostingUnitPrice(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setCostingUnitPrice(BigDecimal newVal) {
     this.costingUnitPrice = newVal;
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setCostingUnitPrice(double newVal) {
+   * @generated
+   */	
+  public void setCostingUnitPrice(double newVal) {
     this.costingUnitPrice = BigDecimal.valueOf(newVal);
   }
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private BigDecimal costingSetupPrice;
-	
+  private BigDecimal costingSetupPrice;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public BigDecimal getCostingSetupPrice(){
+  public BigDecimal getCostingSetupPrice(){
     return costingSetupPrice; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setCostingSetupPrice(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setCostingSetupPrice(BigDecimal newVal) {
     this.costingSetupPrice = newVal;
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setCostingSetupPrice(double newVal) {
+   * @generated
+   */	
+  public void setCostingSetupPrice(double newVal) {
     this.costingSetupPrice = BigDecimal.valueOf(newVal);
   }
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne()
-	private ProductCode productCode;
-	
+  private ProductCode productCode;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public ProductCode getProductCode(){
+  public ProductCode getProductCode(){
     return productCode; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setProductCode(ProductCode newVal) {
+   * @generated
+   */	
+  public void setProductCode(ProductCode newVal) {
     this.productCode = newVal;
   }
-	
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetDescription;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetDescription(){
+    return presetDescription; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetDescription(String newVal) {
+    this.presetDescription = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetDescriptionLabel;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetDescriptionLabel(){
+    return presetDescriptionLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetDescriptionLabel(String newVal) {
+    this.presetDescriptionLabel = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetNotes;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetNotes(){
+    return presetNotes; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetNotes(String newVal) {
+    this.presetNotes = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetNotesLabel;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetNotesLabel(){
+    return presetNotesLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetNotesLabel(String newVal) {
+    this.presetNotesLabel = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer presetQuantity;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getPresetQuantity(){
+    return presetQuantity; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetQuantity(Integer newVal) {
+    this.presetQuantity = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer presetQuantityLabel;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getPresetQuantityLabel(){
+    return presetQuantityLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetQuantityLabel(Integer newVal) {
+    this.presetQuantityLabel = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean presetShowNotes;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPresetShowNotes(){
+    return presetShowNotes; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetShowNotes(Boolean newVal) {
+    this.presetShowNotes = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+  private ProductionLocations presetProductionLocation;
+
+	/**
+   * @generated
+ 	 */
+  public ProductionLocations getPresetProductionLocation(){
+    return presetProductionLocation; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetProductionLocation(ProductionLocations newVal) {
+    this.presetProductionLocation = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal presetPrice;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getPresetPrice(){
+    return presetPrice; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetPrice(BigDecimal newVal) {
+    this.presetPrice = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetPrice(double newVal) {
+    this.presetPrice = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetPriceLabel;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetPriceLabel(){
+    return presetPriceLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetPriceLabel(String newVal) {
+    this.presetPriceLabel = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+  private TaxTable presetTaxTable;
+
+	/**
+   * @generated
+ 	 */
+  public TaxTable getPresetTaxTable(){
+    return presetTaxTable; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetTaxTable(TaxTable newVal) {
+    this.presetTaxTable = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean presetFinished;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPresetFinished(){
+    return presetFinished; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetFinished(Boolean newVal) {
+    this.presetFinished = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean presetTaxable;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPresetTaxable(){
+    return presetTaxable; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetTaxable(Boolean newVal) {
+    this.presetTaxable = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal presetRate;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getPresetRate(){
+    return presetRate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetRate(BigDecimal newVal) {
+    this.presetRate = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetRate(double newVal) {
+    this.presetRate = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetRateLabel;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetRateLabel(){
+    return presetRateLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetRateLabel(String newVal) {
+    this.presetRateLabel = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean presetBrokered;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPresetBrokered(){
+    return presetBrokered; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetBrokered(Boolean newVal) {
+    this.presetBrokered = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean presetDisplayQuantity;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPresetDisplayQuantity(){
+    return presetDisplayQuantity; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetDisplayQuantity(Boolean newVal) {
+    this.presetDisplayQuantity = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean presetHidden;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPresetHidden(){
+    return presetHidden; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetHidden(Boolean newVal) {
+    this.presetHidden = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double presetUp;
+
+	/**
+   * @generated
+ 	 */
+  public Double getPresetUp(){
+    return presetUp; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetUp(Double newVal) {
+    this.presetUp = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetUpLabel;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetUpLabel(){
+    return presetUpLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetUpLabel(String newVal) {
+    this.presetUpLabel = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long presetInSetsOf;
+
+	/**
+   * @generated
+ 	 */
+  public Long getPresetInSetsOf(){
+    return presetInSetsOf; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetInSetsOf(Long newVal) {
+    this.presetInSetsOf = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetInSetsOfLabel;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetInSetsOfLabel(){
+    return presetInSetsOfLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetInSetsOfLabel(String newVal) {
+    this.presetInSetsOfLabel = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double presetMaterialQuantity;
+
+	/**
+   * @generated
+ 	 */
+  public Double getPresetMaterialQuantity(){
+    return presetMaterialQuantity; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetMaterialQuantity(Double newVal) {
+    this.presetMaterialQuantity = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetMaterialQuantityLabel;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetMaterialQuantityLabel(){
+    return presetMaterialQuantityLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetMaterialQuantityLabel(String newVal) {
+    this.presetMaterialQuantityLabel = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long presetMaterialSetsOf;
+
+	/**
+   * @generated
+ 	 */
+  public Long getPresetMaterialSetsOf(){
+    return presetMaterialSetsOf; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetMaterialSetsOf(Long newVal) {
+    this.presetMaterialSetsOf = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetMaterialSetsOfLabel;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetMaterialSetsOfLabel(){
+    return presetMaterialSetsOfLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetMaterialSetsOfLabel(String newVal) {
+    this.presetMaterialSetsOfLabel = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal presetMaterialRate;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getPresetMaterialRate(){
+    return presetMaterialRate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetMaterialRate(BigDecimal newVal) {
+    this.presetMaterialRate = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetMaterialRate(double newVal) {
+    this.presetMaterialRate = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetMaterialRateLabel;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetMaterialRateLabel(){
+    return presetMaterialRateLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetMaterialRateLabel(String newVal) {
+    this.presetMaterialRateLabel = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long presetQuantityPerSet;
+
+	/**
+   * @generated
+ 	 */
+  public Long getPresetQuantityPerSet(){
+    return presetQuantityPerSet; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetQuantityPerSet(Long newVal) {
+    this.presetQuantityPerSet = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String presetQuantityPerSetLabel;
+
+	/**
+   * @generated
+ 	 */
+  public String getPresetQuantityPerSetLabel(){
+    return presetQuantityPerSetLabel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetQuantityPerSetLabel(String newVal) {
+    this.presetQuantityPerSetLabel = newVal;
+  }
+
+
 	/**
 	 * @generated
 	 */		
@@ -3453,11 +3796,6 @@ public class ChargeDefinition extends ModelBase {
     if (USESIGNATURES.equals(propertyName)) return getUseSignatures();
     if (STOCKCHARGE.equals(propertyName)) return getStockCharge();
     if (OVERRIDENUMBEROFCUTS.equals(propertyName)) return getOverrideNumberOfCuts();
-    if (SHOWNOTES.equals(propertyName)) return getShowNotes();
-    if (FINISHED.equals(propertyName)) return getFinished();
-    if (BROKERED.equals(propertyName)) return getBrokered();
-    if (TAXABLE.equals(propertyName)) return getTaxable();
-    if (DISPLAYQTY.equals(propertyName)) return getDisplayQty();
     if (OVERRIDEPRICE.equals(propertyName)) return getOverridePrice();
     if (OVERRIDERATEQUANTITY.equals(propertyName)) return getOverrideRateQuantity();
     if (OVERRIDEMATERIALQTY.equals(propertyName)) return getOverrideMaterialQty();
@@ -3490,21 +3828,41 @@ public class ChargeDefinition extends ModelBase {
     if (COVERLBINK.equals(propertyName)) return getCoverlbInk();
     if (SHEETLIFTCUT.equals(propertyName)) return getSheetliftCut();
     if (SHIPMARKUP.equals(propertyName)) return getShipMarkup();
-    if (DESCRIPTIONLABEL.equals(propertyName)) return getDescriptionLabel();
-    if (NOTESLABEL.equals(propertyName)) return getNotesLabel();
-    if (DESCRIPTIONDEFAULT.equals(propertyName)) return getDescriptionDefault();
-    if (NOTESDEFAULT.equals(propertyName)) return getNotesDefault();
-    if (QUANTITYLABEL.equals(propertyName)) return getQuantityLabel();
-    if (QUANTITYDEFAULT.equals(propertyName)) return getQuantityDefault();
-    if (RATELABEL.equals(propertyName)) return getRateLabel();
-    if (RATEDEFAULT.equals(propertyName)) return getRateDefault();
-    if (PRICELABEL.equals(propertyName)) return getPriceLabel();
-    if (PRICEDEFAULT.equals(propertyName)) return getPriceDefault();
     if (USERUNAREA.equals(propertyName)) return getUseRunArea();
     if (SETUPPRICE.equals(propertyName)) return getSetupPrice();
     if (COSTINGUNITPRICE.equals(propertyName)) return getCostingUnitPrice();
     if (COSTINGSETUPPRICE.equals(propertyName)) return getCostingSetupPrice();
     if (PRODUCTCODE.equals(propertyName)) return getProductCode();
+    if (PRESETDESCRIPTION.equals(propertyName)) return getPresetDescription();
+    if (PRESETDESCRIPTIONLABEL.equals(propertyName)) return getPresetDescriptionLabel();
+    if (PRESETNOTES.equals(propertyName)) return getPresetNotes();
+    if (PRESETNOTESLABEL.equals(propertyName)) return getPresetNotesLabel();
+    if (PRESETQUANTITY.equals(propertyName)) return getPresetQuantity();
+    if (PRESETQUANTITYLABEL.equals(propertyName)) return getPresetQuantityLabel();
+    if (PRESETSHOWNOTES.equals(propertyName)) return getPresetShowNotes();
+    if (PRESETPRODUCTIONLOCATION.equals(propertyName)) return getPresetProductionLocation();
+    if (PRESETPRICE.equals(propertyName)) return getPresetPrice();
+    if (PRESETPRICELABEL.equals(propertyName)) return getPresetPriceLabel();
+    if (PRESETTAXTABLE.equals(propertyName)) return getPresetTaxTable();
+    if (PRESETFINISHED.equals(propertyName)) return getPresetFinished();
+    if (PRESETTAXABLE.equals(propertyName)) return getPresetTaxable();
+    if (PRESETRATE.equals(propertyName)) return getPresetRate();
+    if (PRESETRATELABEL.equals(propertyName)) return getPresetRateLabel();
+    if (PRESETBROKERED.equals(propertyName)) return getPresetBrokered();
+    if (PRESETDISPLAYQUANTITY.equals(propertyName)) return getPresetDisplayQuantity();
+    if (PRESETHIDDEN.equals(propertyName)) return getPresetHidden();
+    if (PRESETUP.equals(propertyName)) return getPresetUp();
+    if (PRESETUPLABEL.equals(propertyName)) return getPresetUpLabel();
+    if (PRESETINSETSOF.equals(propertyName)) return getPresetInSetsOf();
+    if (PRESETINSETSOFLABEL.equals(propertyName)) return getPresetInSetsOfLabel();
+    if (PRESETMATERIALQUANTITY.equals(propertyName)) return getPresetMaterialQuantity();
+    if (PRESETMATERIALQUANTITYLABEL.equals(propertyName)) return getPresetMaterialQuantityLabel();
+    if (PRESETMATERIALSETSOF.equals(propertyName)) return getPresetMaterialSetsOf();
+    if (PRESETMATERIALSETSOFLABEL.equals(propertyName)) return getPresetMaterialSetsOfLabel();
+    if (PRESETMATERIALRATE.equals(propertyName)) return getPresetMaterialRate();
+    if (PRESETMATERIALRATELABEL.equals(propertyName)) return getPresetMaterialRateLabel();
+    if (PRESETQUANTITYPERSET.equals(propertyName)) return getPresetQuantityPerSet();
+    if (PRESETQUANTITYPERSETLABEL.equals(propertyName)) return getPresetQuantityPerSetLabel();
     return super.getProperty(propertyName);
   }
 	
@@ -3583,11 +3941,6 @@ public class ChargeDefinition extends ModelBase {
     if (USESIGNATURES.equals(propertyName)) setUseSignatures((Boolean)newValue); else
     if (STOCKCHARGE.equals(propertyName)) setStockCharge((Boolean)newValue); else
     if (OVERRIDENUMBEROFCUTS.equals(propertyName)) setOverrideNumberOfCuts((Boolean)newValue); else
-    if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
-    if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
-    if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
-    if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
-    if (DISPLAYQTY.equals(propertyName)) setDisplayQty((Boolean)newValue); else
     if (OVERRIDEPRICE.equals(propertyName)) setOverridePrice((Boolean)newValue); else
     if (OVERRIDERATEQUANTITY.equals(propertyName)) setOverrideRateQuantity((Boolean)newValue); else
     if (OVERRIDEMATERIALQTY.equals(propertyName)) setOverrideMaterialQty((Boolean)newValue); else
@@ -3620,21 +3973,41 @@ public class ChargeDefinition extends ModelBase {
     if (COVERLBINK.equals(propertyName)) setCoverlbInk((BigDecimal)newValue); else
     if (SHEETLIFTCUT.equals(propertyName)) setSheetliftCut((Double)newValue); else
     if (SHIPMARKUP.equals(propertyName)) setShipMarkup((Double)newValue); else
-    if (DESCRIPTIONLABEL.equals(propertyName)) setDescriptionLabel((String)newValue); else
-    if (NOTESLABEL.equals(propertyName)) setNotesLabel((String)newValue); else
-    if (DESCRIPTIONDEFAULT.equals(propertyName)) setDescriptionDefault((String)newValue); else
-    if (NOTESDEFAULT.equals(propertyName)) setNotesDefault((String)newValue); else
-    if (QUANTITYLABEL.equals(propertyName)) setQuantityLabel((String)newValue); else
-    if (QUANTITYDEFAULT.equals(propertyName)) setQuantityDefault((Double)newValue); else
-    if (RATELABEL.equals(propertyName)) setRateLabel((String)newValue); else
-    if (RATEDEFAULT.equals(propertyName)) setRateDefault((Double)newValue); else
-    if (PRICELABEL.equals(propertyName)) setPriceLabel((String)newValue); else
-    if (PRICEDEFAULT.equals(propertyName)) setPriceDefault((Double)newValue); else
     if (USERUNAREA.equals(propertyName)) setUseRunArea((Boolean)newValue); else
     if (SETUPPRICE.equals(propertyName)) setSetupPrice((BigDecimal)newValue); else
     if (COSTINGUNITPRICE.equals(propertyName)) setCostingUnitPrice((BigDecimal)newValue); else
     if (COSTINGSETUPPRICE.equals(propertyName)) setCostingSetupPrice((BigDecimal)newValue); else
     if (PRODUCTCODE.equals(propertyName)) setProductCode((ProductCode)newValue); else
+    if (PRESETDESCRIPTION.equals(propertyName)) setPresetDescription((String)newValue); else
+    if (PRESETDESCRIPTIONLABEL.equals(propertyName)) setPresetDescriptionLabel((String)newValue); else
+    if (PRESETNOTES.equals(propertyName)) setPresetNotes((String)newValue); else
+    if (PRESETNOTESLABEL.equals(propertyName)) setPresetNotesLabel((String)newValue); else
+    if (PRESETQUANTITY.equals(propertyName)) setPresetQuantity((Integer)newValue); else
+    if (PRESETQUANTITYLABEL.equals(propertyName)) setPresetQuantityLabel((Integer)newValue); else
+    if (PRESETSHOWNOTES.equals(propertyName)) setPresetShowNotes((Boolean)newValue); else
+    if (PRESETPRODUCTIONLOCATION.equals(propertyName)) setPresetProductionLocation((ProductionLocations)newValue); else
+    if (PRESETPRICE.equals(propertyName)) setPresetPrice((BigDecimal)newValue); else
+    if (PRESETPRICELABEL.equals(propertyName)) setPresetPriceLabel((String)newValue); else
+    if (PRESETTAXTABLE.equals(propertyName)) setPresetTaxTable((TaxTable)newValue); else
+    if (PRESETFINISHED.equals(propertyName)) setPresetFinished((Boolean)newValue); else
+    if (PRESETTAXABLE.equals(propertyName)) setPresetTaxable((Boolean)newValue); else
+    if (PRESETRATE.equals(propertyName)) setPresetRate((BigDecimal)newValue); else
+    if (PRESETRATELABEL.equals(propertyName)) setPresetRateLabel((String)newValue); else
+    if (PRESETBROKERED.equals(propertyName)) setPresetBrokered((Boolean)newValue); else
+    if (PRESETDISPLAYQUANTITY.equals(propertyName)) setPresetDisplayQuantity((Boolean)newValue); else
+    if (PRESETHIDDEN.equals(propertyName)) setPresetHidden((Boolean)newValue); else
+    if (PRESETUP.equals(propertyName)) setPresetUp((Double)newValue); else
+    if (PRESETUPLABEL.equals(propertyName)) setPresetUpLabel((String)newValue); else
+    if (PRESETINSETSOF.equals(propertyName)) setPresetInSetsOf((Long)newValue); else
+    if (PRESETINSETSOFLABEL.equals(propertyName)) setPresetInSetsOfLabel((String)newValue); else
+    if (PRESETMATERIALQUANTITY.equals(propertyName)) setPresetMaterialQuantity((Double)newValue); else
+    if (PRESETMATERIALQUANTITYLABEL.equals(propertyName)) setPresetMaterialQuantityLabel((String)newValue); else
+    if (PRESETMATERIALSETSOF.equals(propertyName)) setPresetMaterialSetsOf((Long)newValue); else
+    if (PRESETMATERIALSETSOFLABEL.equals(propertyName)) setPresetMaterialSetsOfLabel((String)newValue); else
+    if (PRESETMATERIALRATE.equals(propertyName)) setPresetMaterialRate((BigDecimal)newValue); else
+    if (PRESETMATERIALRATELABEL.equals(propertyName)) setPresetMaterialRateLabel((String)newValue); else
+    if (PRESETQUANTITYPERSET.equals(propertyName)) setPresetQuantityPerSet((Long)newValue); else
+    if (PRESETQUANTITYPERSETLABEL.equals(propertyName)) setPresetQuantityPerSetLabel((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3782,16 +4155,6 @@ public class ChargeDefinition extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (OVERRIDENUMBEROFCUTS.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (SHOWNOTES.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (FINISHED.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (BROKERED.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (TAXABLE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (DISPLAYQTY.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
     if (OVERRIDEPRICE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (OVERRIDERATEQUANTITY.equals(propertyName)) 
@@ -3856,26 +4219,6 @@ public class ChargeDefinition extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (SHIPMARKUP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
-    if (DESCRIPTIONLABEL.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (NOTESLABEL.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (DESCRIPTIONDEFAULT.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (NOTESDEFAULT.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (QUANTITYLABEL.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (QUANTITYDEFAULT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (RATELABEL.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (RATEDEFAULT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (PRICELABEL.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (PRICEDEFAULT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
     if (USERUNAREA.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (SETUPPRICE.equals(propertyName)) 
@@ -3886,6 +4229,66 @@ public class ChargeDefinition extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (PRODUCTCODE.equals(propertyName)) 
       return new Class<?>[] {ProductCode.class};		
+    if (PRESETDESCRIPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETDESCRIPTIONLABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETNOTES.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETNOTESLABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETQUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (PRESETQUANTITYLABEL.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (PRESETSHOWNOTES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRESETPRODUCTIONLOCATION.equals(propertyName)) 
+      return new Class<?>[] {ProductionLocations.class};		
+    if (PRESETPRICE.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (PRESETPRICELABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETTAXTABLE.equals(propertyName)) 
+      return new Class<?>[] {TaxTable.class};		
+    if (PRESETFINISHED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRESETTAXABLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRESETRATE.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (PRESETRATELABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETBROKERED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRESETDISPLAYQUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRESETHIDDEN.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PRESETUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PRESETUPLABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETINSETSOF.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (PRESETINSETSOFLABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETMATERIALQUANTITY.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PRESETMATERIALQUANTITYLABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETMATERIALSETSOF.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (PRESETMATERIALSETSOFLABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETMATERIALRATE.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (PRESETMATERIALRATELABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PRESETQUANTITYPERSET.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (PRESETQUANTITYPERSETLABEL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3965,11 +4368,6 @@ public class ChargeDefinition extends ModelBase {
     if (USESIGNATURES.equals(propertyName)) return ChargeDefinition.class;
     if (STOCKCHARGE.equals(propertyName)) return ChargeDefinition.class;
     if (OVERRIDENUMBEROFCUTS.equals(propertyName)) return ChargeDefinition.class;
-    if (SHOWNOTES.equals(propertyName)) return ChargeDefinition.class;
-    if (FINISHED.equals(propertyName)) return ChargeDefinition.class;
-    if (BROKERED.equals(propertyName)) return ChargeDefinition.class;
-    if (TAXABLE.equals(propertyName)) return ChargeDefinition.class;
-    if (DISPLAYQTY.equals(propertyName)) return ChargeDefinition.class;
     if (OVERRIDEPRICE.equals(propertyName)) return ChargeDefinition.class;
     if (OVERRIDERATEQUANTITY.equals(propertyName)) return ChargeDefinition.class;
     if (OVERRIDEMATERIALQTY.equals(propertyName)) return ChargeDefinition.class;
@@ -4002,21 +4400,41 @@ public class ChargeDefinition extends ModelBase {
     if (COVERLBINK.equals(propertyName)) return ChargeDefinition.class;
     if (SHEETLIFTCUT.equals(propertyName)) return ChargeDefinition.class;
     if (SHIPMARKUP.equals(propertyName)) return ChargeDefinition.class;
-    if (DESCRIPTIONLABEL.equals(propertyName)) return ChargeDefinition.class;
-    if (NOTESLABEL.equals(propertyName)) return ChargeDefinition.class;
-    if (DESCRIPTIONDEFAULT.equals(propertyName)) return ChargeDefinition.class;
-    if (NOTESDEFAULT.equals(propertyName)) return ChargeDefinition.class;
-    if (QUANTITYLABEL.equals(propertyName)) return ChargeDefinition.class;
-    if (QUANTITYDEFAULT.equals(propertyName)) return ChargeDefinition.class;
-    if (RATELABEL.equals(propertyName)) return ChargeDefinition.class;
-    if (RATEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
-    if (PRICELABEL.equals(propertyName)) return ChargeDefinition.class;
-    if (PRICEDEFAULT.equals(propertyName)) return ChargeDefinition.class;
     if (USERUNAREA.equals(propertyName)) return ChargeDefinition.class;
     if (SETUPPRICE.equals(propertyName)) return ChargeDefinition.class;
     if (COSTINGUNITPRICE.equals(propertyName)) return ChargeDefinition.class;
     if (COSTINGSETUPPRICE.equals(propertyName)) return ChargeDefinition.class;
     if (PRODUCTCODE.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETDESCRIPTION.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETDESCRIPTIONLABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETNOTES.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETNOTESLABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETQUANTITY.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETQUANTITYLABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETSHOWNOTES.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETPRODUCTIONLOCATION.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETPRICE.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETPRICELABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETTAXTABLE.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETFINISHED.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETTAXABLE.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETRATE.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETRATELABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETBROKERED.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETDISPLAYQUANTITY.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETHIDDEN.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETUP.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETUPLABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETINSETSOF.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETINSETSOFLABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETMATERIALQUANTITY.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETMATERIALQUANTITYLABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETMATERIALSETSOF.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETMATERIALSETSOFLABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETMATERIALRATE.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETMATERIALRATELABEL.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETQUANTITYPERSET.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETQUANTITYPERSETLABEL.equals(propertyName)) return ChargeDefinition.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -4166,16 +4584,6 @@ public class ChargeDefinition extends ModelBase {
       return false;
     if (! SmartEquals(getOverrideNumberOfCuts(), objT.getOverrideNumberOfCuts()))
       return false;
-    if (! SmartEquals(getShowNotes(), objT.getShowNotes()))
-      return false;
-    if (! SmartEquals(getFinished(), objT.getFinished()))
-      return false;
-    if (! SmartEquals(getBrokered(), objT.getBrokered()))
-      return false;
-    if (! SmartEquals(getTaxable(), objT.getTaxable()))
-      return false;
-    if (! SmartEquals(getDisplayQty(), objT.getDisplayQty()))
-      return false;
     if (! SmartEquals(getOverridePrice(), objT.getOverridePrice()))
       return false;
     if (! SmartEquals(getOverrideRateQuantity(), objT.getOverrideRateQuantity()))
@@ -4240,26 +4648,6 @@ public class ChargeDefinition extends ModelBase {
       return false;
     if (! SmartEquals(getShipMarkup(), objT.getShipMarkup()))
       return false;
-    if (! SmartEquals(getDescriptionLabel(), objT.getDescriptionLabel()))
-      return false;
-    if (! SmartEquals(getNotesLabel(), objT.getNotesLabel()))
-      return false;
-    if (! SmartEquals(getDescriptionDefault(), objT.getDescriptionDefault()))
-      return false;
-    if (! SmartEquals(getNotesDefault(), objT.getNotesDefault()))
-      return false;
-    if (! SmartEquals(getQuantityLabel(), objT.getQuantityLabel()))
-      return false;
-    if (! SmartEquals(getQuantityDefault(), objT.getQuantityDefault()))
-      return false;
-    if (! SmartEquals(getRateLabel(), objT.getRateLabel()))
-      return false;
-    if (! SmartEquals(getRateDefault(), objT.getRateDefault()))
-      return false;
-    if (! SmartEquals(getPriceLabel(), objT.getPriceLabel()))
-      return false;
-    if (! SmartEquals(getPriceDefault(), objT.getPriceDefault()))
-      return false;
     if (! SmartEquals(getUseRunArea(), objT.getUseRunArea()))
       return false;
     if (! SmartEquals(getSetupPrice(), objT.getSetupPrice()))
@@ -4269,6 +4657,66 @@ public class ChargeDefinition extends ModelBase {
     if (! SmartEquals(getCostingSetupPrice(), objT.getCostingSetupPrice()))
       return false;
     if (! SmartEquals(getProductCode(), objT.getProductCode()))
+      return false;
+    if (! SmartEquals(getPresetDescription(), objT.getPresetDescription()))
+      return false;
+    if (! SmartEquals(getPresetDescriptionLabel(), objT.getPresetDescriptionLabel()))
+      return false;
+    if (! SmartEquals(getPresetNotes(), objT.getPresetNotes()))
+      return false;
+    if (! SmartEquals(getPresetNotesLabel(), objT.getPresetNotesLabel()))
+      return false;
+    if (! SmartEquals(getPresetQuantity(), objT.getPresetQuantity()))
+      return false;
+    if (! SmartEquals(getPresetQuantityLabel(), objT.getPresetQuantityLabel()))
+      return false;
+    if (! SmartEquals(getPresetShowNotes(), objT.getPresetShowNotes()))
+      return false;
+    if (! SmartEquals(getPresetProductionLocation(), objT.getPresetProductionLocation()))
+      return false;
+    if (! SmartEquals(getPresetPrice(), objT.getPresetPrice()))
+      return false;
+    if (! SmartEquals(getPresetPriceLabel(), objT.getPresetPriceLabel()))
+      return false;
+    if (! SmartEquals(getPresetTaxTable(), objT.getPresetTaxTable()))
+      return false;
+    if (! SmartEquals(getPresetFinished(), objT.getPresetFinished()))
+      return false;
+    if (! SmartEquals(getPresetTaxable(), objT.getPresetTaxable()))
+      return false;
+    if (! SmartEquals(getPresetRate(), objT.getPresetRate()))
+      return false;
+    if (! SmartEquals(getPresetRateLabel(), objT.getPresetRateLabel()))
+      return false;
+    if (! SmartEquals(getPresetBrokered(), objT.getPresetBrokered()))
+      return false;
+    if (! SmartEquals(getPresetDisplayQuantity(), objT.getPresetDisplayQuantity()))
+      return false;
+    if (! SmartEquals(getPresetHidden(), objT.getPresetHidden()))
+      return false;
+    if (! SmartEquals(getPresetUp(), objT.getPresetUp()))
+      return false;
+    if (! SmartEquals(getPresetUpLabel(), objT.getPresetUpLabel()))
+      return false;
+    if (! SmartEquals(getPresetInSetsOf(), objT.getPresetInSetsOf()))
+      return false;
+    if (! SmartEquals(getPresetInSetsOfLabel(), objT.getPresetInSetsOfLabel()))
+      return false;
+    if (! SmartEquals(getPresetMaterialQuantity(), objT.getPresetMaterialQuantity()))
+      return false;
+    if (! SmartEquals(getPresetMaterialQuantityLabel(), objT.getPresetMaterialQuantityLabel()))
+      return false;
+    if (! SmartEquals(getPresetMaterialSetsOf(), objT.getPresetMaterialSetsOf()))
+      return false;
+    if (! SmartEquals(getPresetMaterialSetsOfLabel(), objT.getPresetMaterialSetsOfLabel()))
+      return false;
+    if (! SmartEquals(getPresetMaterialRate(), objT.getPresetMaterialRate()))
+      return false;
+    if (! SmartEquals(getPresetMaterialRateLabel(), objT.getPresetMaterialRateLabel()))
+      return false;
+    if (! SmartEquals(getPresetQuantityPerSet(), objT.getPresetQuantityPerSet()))
+      return false;
+    if (! SmartEquals(getPresetQuantityPerSetLabel(), objT.getPresetQuantityPerSetLabel()))
       return false;
     return true;
   }			

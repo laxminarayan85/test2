@@ -156,27 +156,27 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					} else if ("stop".equals(currentFieldToken)) {
 						/* TODO */
 					} else if ("shownotes".equals(currentFieldToken)) {
-						chargeDefinition.setShowNotes(Utilities
+						chargeDefinition.setPresetShowNotes(Utilities
 								.tokenToBooleanValue(currentImportToken));
 						charge.setShowNotes(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("finished".equals(currentFieldToken)) {
-						chargeDefinition.setFinished(Utilities
+						chargeDefinition.setPresetFinished(Utilities
 								.tokenToBooleanValue(currentImportToken));
 						charge.setFinished(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("brokered".equals(currentFieldToken)) {
-						chargeDefinition.setBrokered(Utilities
+						chargeDefinition.setPresetBrokered(Utilities
 								.tokenToBooleanValue(currentImportToken));
 						charge.setBrokered(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("taxable".equals(currentFieldToken)) {
-						chargeDefinition.setTaxable(Utilities
+						chargeDefinition.setPresetTaxable(Utilities
 								.tokenToBooleanValue(currentImportToken));
 						charge.setTaxable(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("displayqty".equals(currentFieldToken)) {
-						chargeDefinition.setDisplayQty(Utilities
+						chargeDefinition.setPresetDisplayQuantity(Utilities
 								.tokenToBooleanValue(currentImportToken));
 						charge.setDisplayQty(Utilities
 								.tokenToBooleanValue(currentImportToken));
@@ -797,27 +797,27 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else if ("stop".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("shownotes".equals(currentFieldToken)) {
-				chargeDefinition.setShowNotes(Utilities
+				chargeDefinition.setPresetShowNotes(Utilities
 						.tokenToBooleanValue(currentImportToken));
 				charge.setShowNotes(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("finished".equals(currentFieldToken)) {
-				chargeDefinition.setFinished(Utilities
+				chargeDefinition.setPresetFinished(Utilities
 						.tokenToBooleanValue(currentImportToken));
 				charge.setFinished(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("brokered".equals(currentFieldToken)) {
-				chargeDefinition.setBrokered(Utilities
+				chargeDefinition.setPresetBrokered(Utilities
 						.tokenToBooleanValue(currentImportToken));
 				charge.setBrokered(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("taxable".equals(currentFieldToken)) {
-				chargeDefinition.setTaxable(Utilities
+				chargeDefinition.setPresetTaxable(Utilities
 						.tokenToBooleanValue(currentImportToken));
 				charge.setTaxable(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("displayqty".equals(currentFieldToken)) {
-				chargeDefinition.setDisplayQty(Utilities
+				chargeDefinition.setPresetDisplayQuantity(Utilities
 						.tokenToBooleanValue(currentImportToken));
 				charge.setDisplayQty(Utilities
 						.tokenToBooleanValue(currentImportToken));

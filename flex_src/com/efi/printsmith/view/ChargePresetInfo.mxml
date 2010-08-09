@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
-width="641" height="381" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargePresetCmd.PresetInfo')}"
-creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargePresetCmd.PresetInfo')}" name="Customer Editor" horizontalScrollPolicy="off" verticalScrollPolicy="off">
-                             
+width="725" height="481" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargePresetCmd.PresetInfo')}"
+creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargePresetCmd.PresetInfo')}" name="Customer Editor" horizontalScrollPolicy="off" verticalScrollPolicy="off">                        
+<mx:states>
+	<mx:State name="Job Aware">
+	</mx:State>
+	<mx:State name="Markup">
+	</mx:State>
+	<mx:State name="Flat Rate">
+	</mx:State>
+	<mx:State name="Always Ask">
+	</mx:State>
+	<mx:State name="Price List">
+	</mx:State>
+	<mx:State name="Rate List">
+	</mx:State>
+	<mx:State name="Cut">
+	</mx:State>
+	<mx:State name="Ink">		
+	</mx:State>
+	<mx:State name="Shipping">
+	</mx:State>
+	<mx:State name="Fold">
+	</mx:State>
+	<mx:State name="Literal">
+	</mx:State>
+	<mx:State name="Square Area">
+	</mx:State>
+</mx:states>
 <mx:Script>                                   
 <![CDATA[
 	import com.efi.printsmith.data.ChargeDefinition;
@@ -37,21 +62,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function doOK():void {
 		chargeDefinition.rateLabel = rate_label_text.text;
-		chargeDefinition.notesLabel = notes_label_text.text;
-		chargeDefinition.priceLabel = price_label_text.text;
-		chargeDefinition.priceDefault = parseFloat(price_default_text.text);
-		chargeDefinition.rate = parseFloat(rate_default_text.text);
-		chargeDefinition.notesDefault = notes_default_text.text;
-		chargeDefinition.descriptionDefault = description_default_text.text;
-		chargeDefinition.descriptionLabel = description_label_text.text;
+		chargeDefinition.presetNotesLabel = notes_label_text.text;
+		chargeDefinition.presetPriceLabel = price_label_text.text;
+		chargeDefinition.presetPrice = parseFloat(price_default_text.text);
+		chargeDefinition.presetRate = parseFloat(rate_default_text.text);
+		chargeDefinition.presetNotes = notes_default_text.text;
+		chargeDefinition.presetDescription = description_default_text.text;
+		chargeDefinition.presetDescriptionLabel = description_label_text.text;
 
-		chargeDefinition.hidePrice = hidePrice_check.selected;
-		chargeDefinition.hideChargeInPrintouts = hidden_check.selected;
-		chargeDefinition.displayQty = displayQty_check.selected;
-		chargeDefinition.brokered = brokered_check.selected;
-		chargeDefinition.taxable = taxable_check.selected;
-		chargeDefinition.showNotes = show_notes_check.selected;
-		chargeDefinition.finished = finished_check.selected;
+		chargeDefinition.presetHidden = hidden_check.selected;
+		chargeDefinition.presetDisplayQuantity = displayQty_check.selected;
+		chargeDefinition.presetBrokered = brokered_check.selected;
+		chargeDefinition.presetTaxable = taxable_check.selected;
+		chargeDefinition.presetShowNotes = show_notes_check.selected;
+		chargeDefinition.presetFinished = finished_check.selected;
 
 		var selectEvent:ChargePresetInfoEvent = new ChargePresetInfoEvent(ChargePresetInfoEvent.CHARGEPRESETOK, chargeDefinition);
 		dispatchEvent(selectEvent);
@@ -74,60 +98,70 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 ]]>
                              
 </mx:Script>
-	<mx:Canvas width="617" height="324">
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="77" id="ok_button" click="doOK()" x="421" y="292"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" id="cancel_button" click="doCancel()" width="77" x="506" y="292"/>
-		<mx:CheckBox x="20"
-					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
-					 id="finished_check"
-					 fontSize="9"
-					 y="4"
-					 selected="{chargeDefinition.finished}" width="75"/>
-		<mx:CheckBox x="176"
-					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.ShowNotes')}"
-					 id="show_notes_check"
-					 fontSize="9"
-					 y="134"
-					 selected="{chargeDefinition.showNotes}" width="156"/>
-		<mx:CheckBox x="103"
-					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
-					 id="taxable_check"
-					 fontSize="9"
-					 y="4"
-					 selected="{chargeDefinition.taxable}" width="65"/>
-		<mx:CheckBox x="176"
-					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Brokered')}"
-					 id="brokered_check"
-					 fontSize="9"
-					 y="4"
-					 selected="{chargeDefinition.brokered}" width="70"/>
-		<mx:CheckBox x="254"
-					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.DisplayQuantity')}"
-					 id="displayQty_check"
-					 fontSize="9"
-					 y="4"
-					 selected="{chargeDefinition.displayQty}"/>
-		<mx:CheckBox x="381"
-					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Hidden')}"
-					 id="hidden_check"
-					 fontSize="9"
-					 y="4"
-					 selected="{chargeDefinition.hideChargeInPrintouts}" width="64"/>
-		<mx:CheckBox x="453"
-					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.HidePrice')}"
-					 id="hidePrice_check"
-					 fontSize="9"
-					 labelPlacement="right"
-					 y="4"
-					 selected="{chargeDefinition.hidePrice}"/>
-		<mx:TextInput x="10" y="33" text="{chargeDefinition.descriptionLabel}" width="158" id="description_label_text" height="20" textAlign="right"/>
-		<mx:TextInput x="176" y="33" text="{chargeDefinition.descriptionDefault}" width="431" id="description_default_text" height="33"/>
-		<mx:TextInput x="176" y="67" text="{chargeDefinition.notesDefault}" width="431" id="notes_default_text" height="33"/>
-		<mx:TextInput x="207" y="252" text="{chargeDefinition.rate}" width="101" id="rate_default_text" height="20"/>
-		<mx:TextInput x="506" y="252" text="{chargeDefinition.priceDefault}" width="101" id="price_default_text" height="20"/>
-		<mx:TextInput x="340" y="252" text="{chargeDefinition.priceLabel}" width="158" id="price_label_text" height="20" textAlign="right"/>
-		<mx:TextInput x="10" y="67" text="{chargeDefinition.notesLabel}" width="158" id="notes_label_text" height="20" textAlign="right"/>
-		<mx:TextInput x="41" y="252" text="{chargeDefinition.rateLabel}" width="158" id="rate_label_text" height="20" textAlign="right"/>
-		<mx:Text x="10" y="107" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionLocation')}" width="158" id="production_location_label" height="17" textAlign="right"/>
+	<mx:Canvas width="100%" height="100%">
+		<mx:VBox width="100%">
+			<mx:HBox width="100%">
+				<mx:CheckBox
+							 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
+							 id="finished_check"
+							 fontSize="9"
+							 selected="{chargeDefinition.presetFinished}" width="75"/>
+				<mx:CheckBox
+							 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
+							 id="taxable_check"
+							 fontSize="9"
+							 selected="{chargeDefinition.presetTaxable}" width="65"/>
+				<mx:CheckBox
+							 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Brokered')}"
+							 id="brokered_check"
+							 fontSize="9"
+							 selected="{chargeDefinition.presetBrokered}" width="70"/>
+				<mx:CheckBox
+							 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.DisplayQuantity')}"
+							 id="displayQty_check"
+							 fontSize="9"
+							 selected="{chargeDefinition.presetDisplayQuantity}"/>
+				<mx:CheckBox
+							 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Hidden')}"
+							 id="hidden_check"
+							 fontSize="9"
+							 selected="{chargeDefinition.presetHidden}" width="64"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+				<mx:TextInput text="{chargeDefinition.presetDescriptionLabel}" width="25%" id="description_label_text" textAlign="right"/>
+				<mx:TextInput text="{chargeDefinition.presetDescription}" width="100%" id="description_default_text"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+				<mx:TextInput text="{chargeDefinition.presetNotesLabel}" width="25%" id="notes_label_text" textAlign="right"/>
+				<mx:TextInput text="{chargeDefinition.presetNotes}" width="100%" id="notes_default_text"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+				<mx:Text text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionLocation')}" width="25%" id="production_location_label" textAlign="right"/>
+				<mx:TextInput text="{chargeDefinition.location.name}" width="100%" id="location_text" enabled="false"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+				<mx:Spacer width="25%"/>
+				<mx:CheckBox
+							 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.ShowNotes')}"
+							 id="show_notes_check"
+							 fontSize="9"
+							 selected="{chargeDefinition.presetShowNotes}" width="100%"/>
+			</mx:HBox>
+			<mx:Spacer height="50"/>
+			<mx:HBox width="100%">
+				<mx:TextInput text="{chargeDefinition.presetQuantityLabel}" width="25%" id="quantity_label_text" textAlign="right"/>
+				<mx:TextInput text="{chargeDefinition.presetQuantity}" width="25%" id="quantity_default_text"/>
+				<mx:TextInput text="{chargeDefinition.presetInSetsOfLabel}" width="25%" id="in_sets_of_default_text"/>
+				<mx:TextInput text="{chargeDefinition.presetInSetsOf}" width="25%" id="in_sets_of_label_text" textAlign="right"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+				<mx:TextInput text="{chargeDefinition.presetRateLabel}" width="25%" id="rate_label_text" textAlign="right"/>
+				<mx:TextInput text="{chargeDefinition.presetRate}" width="25%" id="rate_default_text"/>
+				<mx:TextInput text="{chargeDefinition.presetPriceLabel}" width="25%" id="price_label_text" textAlign="right"/>
+				<mx:TextInput text="{chargeDefinition.presetPrice}" width="25%" id="price_default_text"/>
+			</mx:HBox>
+		</mx:VBox>
+		<mx:Button width="80" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOK();" bottom="5" right="100"/>
+		<mx:Button width="80" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" right="5" bottom="5"/>
 	</mx:Canvas>
 </mx:TitleWindow>

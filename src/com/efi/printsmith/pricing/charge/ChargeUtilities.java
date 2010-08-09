@@ -31,16 +31,16 @@ public class ChargeUtilities {
 			charge=new Charge();
 		}
 		charge.setChargeDefinition(chargeDefinition);
-		if (chargeDefinition.getDescriptionDefault() != null &&
-				chargeDefinition.getDescriptionDefault().length() > 0) {
-			charge.setDescription(chargeDefinition.getDescriptionDefault());
+		if (chargeDefinition.getPresetDescription() != null &&
+				chargeDefinition.getPresetDescription().length() > 0) {
+			charge.setDescription(chargeDefinition.getPresetDescription());
 		} else {
 			charge.setDescription(chargeDefinition.getName());
 		}
 		
-		if (chargeDefinition.getNotesDefault() != null &&
-				chargeDefinition.getNotesDefault().length() > 0) {
-			charge.setNotes(chargeDefinition.getNotesDefault());
+		if (chargeDefinition.getPresetNotes() != null &&
+				chargeDefinition.getPresetNotes().length() > 0) {
+			charge.setNotes(chargeDefinition.getPresetNotes());
 		}
 		
 		if (chargeDefinition.getPriceMethod() == "CostPlus") {
@@ -48,11 +48,11 @@ public class ChargeUtilities {
 		} else {
 			
 		}
-		charge.setShowNotes(chargeDefinition.getShowNotes());
-		charge.setFinished(chargeDefinition.getFinished());
-		charge.setTaxable(chargeDefinition.getTaxable());
-		charge.setBrokered(chargeDefinition.getBrokered());
-		charge.setDisplayQty(chargeDefinition.getDisplayQty());
+		charge.setShowNotes(chargeDefinition.getPresetShowNotes());
+		charge.setFinished(chargeDefinition.getPresetFinished());
+		charge.setTaxable(chargeDefinition.getPresetTaxable());
+		charge.setBrokered(chargeDefinition.getPresetBrokered());
+		charge.setDisplayQty(chargeDefinition.getPresetDisplayQuantity());
 		charge.setHidden(chargeDefinition.getHideChargeInPrintouts());
 		charge.setHidePrice(chargeDefinition.getHidePrice());
 		charge.setPrice(0.0);
