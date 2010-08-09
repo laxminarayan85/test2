@@ -124,7 +124,7 @@ package com.efi.printsmith.data
 		public var presetNotes:String = "";
 		public var presetNotesLabel:String = "";
 		public var presetQuantity:int = 0;
-		public var presetQuantityLabel:int = 0;
+		public var presetQuantityLabel:String = "";
 		public var presetShowNotes:Boolean = false;
 		public var presetProductionLocation:ProductionLocations;
 		public var presetPrice:Number = 0;

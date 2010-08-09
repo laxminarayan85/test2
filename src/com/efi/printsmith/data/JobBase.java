@@ -270,243 +270,248 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */
 	public static final String CUTOFF = "CutOff";
-	/**
-	 * @generated
-	 */
-	public static final String IMPOSITIONSPERRUN = "ImpositionsPerRun";
-	/**
-	 * @generated
-	 */
-	public static final String TOTALIMPOSITIONS = "TotalImpositions";
-	/**
-	 * @generated
-	 */
-	public static final String MARKUP = "Markup";
-	/**
-	 * @generated
-	 */
-	public static final String TOTALCOST = "TotalCost";
-	/**
-	 * @generated
-	 */
-	public static final String UNITCOST = "UnitCost";
-	/**
-	 * @generated
-	 */
-	public static final String NOTES = "Notes";
-	/**
-	 * @generated
-	 */
-	public static final String SHOWNOTES = "ShowNotes";
-	/**
-	 * @generated
-	 */
-	public static final String VENDOR = "Vendor";
-	/**
-	 * @generated
-	 */
-	public static final String NUMBEROFLINES = "NumberOfLines";
-	/**
-	 * @generated
-	 */
-	public static final String NUMBEROFINCHES = "NumberOfInches";
-	/**
-	 * @generated
-	 */
-	public static final String SPECIALORDERSTOCK = "SpecialOrderStock";
-	/**
-	 * @generated
-	 */
-	public static final String CUSTOMERSUPPLIEDSTOCK = "CustomerSuppliedStock";
-	/**
-	 * @generated
-	 */
-	public static final String PAPERPRICE = "PaperPrice";
-	/**
-	 * @generated
-	 */
-	public static final String JDFSTATUS = "JdfStatus";
-	/**
-	 * @generated
-	 */
-	public static final String PAPERCAL = "PaperCal";
-	/**
-	 * @generated
-	 */
-	public static final String ORQTYORDER = "OrQtyOrder";
-	/**
-	 * @generated
-	 */
-	public static final String ORSETS = "OrSets";
-	/**
-	 * @generated
-	 */
-	public static final String ORRUNTIME = "OrRuntime";
-	/**
-	 * @generated
-	 */
-	public static final String ORSETUPTIME = "OrSetupTime";
-	/**
-	 * @generated
-	 */
-	public static final String ORWASHUPTIME = "OrWashupTime";
-	/**
-	 * @generated
-	 */
-	public static final String ORSTOCKUNITS = "OrStockUnits";
-	/**
-	 * @generated
-	 */
-	public static final String ORSTOCKMARKUP = "OrStockMarkup";
-	/**
-	 * @generated
-	 */
-	public static final String ORSTOCKCOST = "OrStockCost";
-	/**
-	 * @generated
-	 */
-	public static final String ORWASTE = "OrWaste";
-	/**
-	 * @generated
-	 */
-	public static final String ORPRODUCTION = "OrProduction";
-	/**
-	 * @generated
-	 */
-	public static final String ORUNIT = "OrUnit";
-	/**
-	 * @generated
-	 */
-	public static final String ORPRICE = "OrPrice";
-	/**
-	 * @generated
-	 */
-	public static final String ORRUNOUT = "OrRunOut";
-	/**
-	 * @generated
-	 */
-	public static final String ORLABORMARKUP = "OrLaborMarkup";
-	/**
-	 * @generated
-	 */
-	public static final String ORLABORRATE = "OrLaborRate";
-	/**
-	 * @generated
-	 */
-	public static final String ORAVGIMPRESSION = "OrAvgImpression";
-	/**
-	 * @generated
-	 */
-	public static final String ORPASSFRONT = "OrPassFront";
-	/**
-	 * @generated
-	 */
-	public static final String ORPASSBACK = "OrPassBack";
-	/**
-	 * @generated
-	 */
-	public static final String ORPARENTSIZE = "OrParentSize";
-	/**
-	 * @generated
-	 */
-	public static final String ORBINDERYWASTE = "OrBinderyWaste";
-	/**
-	 * @generated
-	 */
-	public static final String ORRUNCUTS = "OrRunCuts";
-	/**
-	 * @generated
-	 */
-	public static final String ORFINISHCUTS = "OrFinishCuts";
-	/**
-	 * @generated
-	 */
-	public static final String ORUP = "OrUp";
-	/**
-	 * @generated
-	 */
-	public static final String ORPARENTOUT = "OrParentOut";
-	/**
-	 * @generated
-	 */
-	public static final String PARENTINVOICE = "ParentInvoice";
-	/**
-	 * @generated
-	 */
-	public static final String ROOTCHARGERECORD = "RootChargeRecord";
-	/**
-	 * @generated
-	 */
-	public static final String DIGITALASSETS = "DigitalAssets";
-	/**
-	 * @generated
-	 */
-	public static final String TYPESETTINGDATE = "TypeSettingDate";
-	/**
-	 * @generated
-	 */
-	public static final String PROOFBACKDATE = "ProofBackDate";
-	/**
-	 * @generated
-	 */
-	public static final String BLUELINEDATE = "BluelineDate";
-	/**
-	 * @generated
-	 */
-	public static final String BLUELINEBACKDATE = "BluelineBackDate";
-	/**
-	 * @generated
-	 */
-	public static final String STOCKCUTDATE = "StockCutDate";
-	/**
-	 * @generated
-	 */
-	public static final String ATPRESSDATE = "AtPressDate";
-	/**
-	 * @generated
-	 */
-	public static final String PRINTEDDATE = "PrintedDate";
-	/**
-	 * @generated
-	 */
-	public static final String COPIEDDATE = "CopiedDate";
-	/**
-	 * @generated
-	 */
-	public static final String BINDERYDATE = "BinderyDate";
-	/**
-	 * @generated
-	 */
-	public static final String CUTDATE = "CutDate";
-	/**
-	 * @generated
-	 */
-	public static final String FOLDEDDATE = "FoldedDate";
-	/**
-	 * @generated
-	 */
-	public static final String FINISHEDDATE = "FinishedDate";
-	/**
-	 * @generated
-	 */
-	public static final String MAILINGDATE = "MailingDate";
-	/**
-	 * @generated
-	 */
-	public static final String OUTSIDESERVICEDATE = "OutsideServiceDate";
-	/**
-	 * @generated
-	 */
-	public static final String OTHERDATE = "OtherDate";
-	/**
-	 * @generated
-	 */
-	public static final String DELIVEREDDATE = "DeliveredDate";
-	/**
-	 * @generated
-	 */
-	public static final String USEPAPERCALCUP = "UsePaperCalcUp";
 
+	/**
+   * @generated
+   */
+  public static final String IMPOSITIONSPERRUN = "ImpositionsPerRun";
+	/**
+   * @generated
+   */
+  public static final String TOTALIMPOSITIONS = "TotalImpositions";
+
+	/**
+   * @generated
+   */
+  public static final String MARKUP = "Markup";
+	/**
+   * @generated
+   */
+  public static final String TOTALCOST = "TotalCost";
+	/**
+   * @generated
+   */
+  public static final String UNITCOST = "UnitCost";
+	/**
+   * @generated
+   */
+  public static final String NOTES = "Notes";
+	/**
+   * @generated
+   */
+  public static final String SHOWNOTES = "ShowNotes";
+	/**
+   * @generated
+   */
+  public static final String VENDOR = "Vendor";
+
+	/**
+   * @generated
+   */
+  public static final String NUMBEROFLINES = "NumberOfLines";
+	/**
+   * @generated
+   */
+  public static final String NUMBEROFINCHES = "NumberOfInches";
+
+	/**
+   * @generated
+   */
+  public static final String SPECIALORDERSTOCK = "SpecialOrderStock";
+	/**
+   * @generated
+   */
+  public static final String CUSTOMERSUPPLIEDSTOCK = "CustomerSuppliedStock";
+
+	/**
+   * @generated
+   */
+  public static final String PAPERPRICE = "PaperPrice";
+	/**
+   * @generated
+   */
+  public static final String JDFSTATUS = "JdfStatus";
+
+	/**
+   * @generated
+   */
+  public static final String PAPERCAL = "PaperCal";
+	/**
+   * @generated
+   */
+  public static final String ORQTYORDER = "OrQtyOrder";
+	/**
+   * @generated
+   */
+  public static final String ORSETS = "OrSets";
+	/**
+   * @generated
+   */
+  public static final String ORRUNTIME = "OrRuntime";
+	/**
+   * @generated
+   */
+  public static final String ORSETUPTIME = "OrSetupTime";
+	/**
+   * @generated
+   */
+  public static final String ORWASHUPTIME = "OrWashupTime";
+	/**
+   * @generated
+   */
+  public static final String ORSTOCKUNITS = "OrStockUnits";
+	/**
+   * @generated
+   */
+  public static final String ORSTOCKMARKUP = "OrStockMarkup";
+	/**
+   * @generated
+   */
+  public static final String ORSTOCKCOST = "OrStockCost";
+	/**
+   * @generated
+   */
+  public static final String ORWASTE = "OrWaste";
+	/**
+   * @generated
+   */
+  public static final String ORPRODUCTION = "OrProduction";
+	/**
+   * @generated
+   */
+  public static final String ORUNIT = "OrUnit";
+	/**
+   * @generated
+   */
+  public static final String ORPRICE = "OrPrice";
+	/**
+   * @generated
+   */
+  public static final String ORRUNOUT = "OrRunOut";
+	/**
+   * @generated
+   */
+  public static final String ORLABORMARKUP = "OrLaborMarkup";
+	/**
+   * @generated
+   */
+  public static final String ORLABORRATE = "OrLaborRate";
+	/**
+   * @generated
+   */
+  public static final String ORAVGIMPRESSION = "OrAvgImpression";
+	/**
+   * @generated
+   */
+  public static final String ORPASSFRONT = "OrPassFront";
+	/**
+   * @generated
+   */
+  public static final String ORPASSBACK = "OrPassBack";
+	/**
+   * @generated
+   */
+  public static final String ORPARENTSIZE = "OrParentSize";
+	/**
+   * @generated
+   */
+  public static final String ORBINDERYWASTE = "OrBinderyWaste";
+	/**
+   * @generated
+   */
+  public static final String ORRUNCUTS = "OrRunCuts";
+	/**
+   * @generated
+   */
+  public static final String ORFINISHCUTS = "OrFinishCuts";
+	/**
+   * @generated
+   */
+  public static final String ORUP = "OrUp";
+	/**
+   * @generated
+   */
+  public static final String ORPARENTOUT = "OrParentOut";
+	/**
+   * @generated
+   */
+  public static final String PARENTINVOICE = "ParentInvoice";
+	/**
+   * @generated
+   */
+  public static final String ROOTCHARGERECORD = "RootChargeRecord";
+	/**
+   * @generated
+   */
+  public static final String DIGITALASSETS = "DigitalAssets";
+	/**
+   * @generated
+   */
+  public static final String TYPESETTINGDATE = "TypeSettingDate";
+	/**
+   * @generated
+   */
+  public static final String PROOFBACKDATE = "ProofBackDate";
+	/**
+   * @generated
+   */
+  public static final String BLUELINEDATE = "BluelineDate";
+	/**
+   * @generated
+   */
+  public static final String BLUELINEBACKDATE = "BluelineBackDate";
+	/**
+   * @generated
+   */
+  public static final String STOCKCUTDATE = "StockCutDate";
+	/**
+   * @generated
+   */
+  public static final String ATPRESSDATE = "AtPressDate";
+	/**
+   * @generated
+   */
+  public static final String PRINTEDDATE = "PrintedDate";
+	/**
+   * @generated
+   */
+  public static final String COPIEDDATE = "CopiedDate";
+	/**
+   * @generated
+   */
+  public static final String BINDERYDATE = "BinderyDate";
+	/**
+   * @generated
+   */
+  public static final String CUTDATE = "CutDate";
+	/**
+   * @generated
+   */
+  public static final String FOLDEDDATE = "FoldedDate";
+	/**
+   * @generated
+   */
+  public static final String FINISHEDDATE = "FinishedDate";
+	/**
+   * @generated
+   */
+  public static final String MAILINGDATE = "MailingDate";
+	/**
+   * @generated
+   */
+  public static final String OUTSIDESERVICEDATE = "OutsideServiceDate";
+	/**
+   * @generated
+   */
+  public static final String OTHERDATE = "OtherDate";
+	/**
+   * @generated
+   */
+  public static final String DELIVEREDDATE = "DeliveredDate";
+	/**
+   * @generated
+   */
+  public static final String USEPAPERCALCUP = "UsePaperCalcUp";
 	/**
 	 * @generated
 	 */
@@ -537,7 +542,6 @@ public class JobBase extends ModelBase {
 	public void setJobNumber(String newVal) {
     this.jobNumber = newVal;
   }
-	
  	
 	
 	/**
@@ -560,7 +564,6 @@ public class JobBase extends ModelBase {
 	public void setJobIndex(Long newVal) {
     this.jobIndex = newVal;
   }
-	
  	
 	
 	/**
@@ -583,7 +586,6 @@ public class JobBase extends ModelBase {
 	public void setSalesCategory(SalesCategory newVal) {
     this.salesCategory = newVal;
   }
-	
  	
 	
 	/**
@@ -606,14 +608,14 @@ public class JobBase extends ModelBase {
 	public void setProductCode(ProductCode newVal) {
     this.productCode = newVal;
   }
-	
  	
 	
 	/**
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "jobbase_children")
+    @IndexColumn(name="childrenjobbase")
+	@JoinTable( name = "jobbase_children")
 	private java.util.List<JobBase> children;
 	
 	/**
@@ -639,14 +641,14 @@ public class JobBase extends ModelBase {
 	public void setChildren(java.util.List<JobBase> newVal) {
     this.children = newVal;
   }
-	
  	
 	
 	/**
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "jobbase_charges")
+    @IndexColumn(name="chargesjobbase")
+	@JoinTable( name = "jobbase_charges")
 	private java.util.List<Charge> charges;
 	
 	/**
@@ -672,7 +674,6 @@ public class JobBase extends ModelBase {
 	public void setCharges(java.util.List<Charge> newVal) {
     this.charges = newVal;
   }
-	
  	
 	
 	/**
@@ -695,7 +696,6 @@ public class JobBase extends ModelBase {
 	public void setJobNotes(String newVal) {
     this.jobNotes = newVal;
   }
-	
  	
 	
 	/**
@@ -718,7 +718,6 @@ public class JobBase extends ModelBase {
 	public void setJobTicketNotes(Boolean newVal) {
     this.jobTicketNotes = newVal;
   }
-	
  	
 	
 	/**
@@ -741,7 +740,6 @@ public class JobBase extends ModelBase {
 	public void setBrokered(Boolean newVal) {
     this.brokered = newVal;
   }
-	
  	
 	
 	/**
@@ -764,7 +762,6 @@ public class JobBase extends ModelBase {
 	public void setTaxable(Boolean newVal) {
     this.taxable = newVal;
   }
-	
  	
 	
 	/**
@@ -787,7 +784,6 @@ public class JobBase extends ModelBase {
 	public void setFinished(Boolean newVal) {
     this.finished = newVal;
   }
-	
  	
 	
 	/**
@@ -805,14 +801,13 @@ public class JobBase extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLocation(ProductionLocations newVal) {
+   * @generated
+   */	
+  public void setLocation(ProductionLocations newVal) {
     this.location = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -833,7 +828,6 @@ public class JobBase extends ModelBase {
 	public void setComment(String newVal) {
     this.comment = newVal;
   }
-	
  	
 	
 	/**
@@ -856,7 +850,6 @@ public class JobBase extends ModelBase {
 	public void setDescription(String newVal) {
     this.description = newVal;
   }
-	
  	
 	
 	/**
@@ -879,7 +872,6 @@ public class JobBase extends ModelBase {
 	public void setQtyOrdered(Long newVal) {
     this.qtyOrdered = newVal;
   }
-	
  	
 	
 	/**
@@ -902,7 +894,6 @@ public class JobBase extends ModelBase {
 	public void setOversUnders(Long newVal) {
     this.oversUnders = newVal;
   }
-	
  	
 	
 	/**
@@ -925,7 +916,6 @@ public class JobBase extends ModelBase {
 	public void setInSetsOf(Long newVal) {
     this.inSetsOf = newVal;
   }
-	
  	
 	
 	/**
@@ -948,7 +938,6 @@ public class JobBase extends ModelBase {
 	public void setInSetsOfOverride(Boolean newVal) {
     this.inSetsOfOverride = newVal;
   }
-	
  	
 	
 	/**
@@ -971,7 +960,6 @@ public class JobBase extends ModelBase {
 	public void setSheets(Long newVal) {
     this.sheets = newVal;
   }
-	
  	
 	
 	/**
@@ -994,7 +982,6 @@ public class JobBase extends ModelBase {
 	public void setNumUp(Long newVal) {
     this.numUp = newVal;
   }
-	
  	
 	
 	/**
@@ -1017,7 +1004,6 @@ public class JobBase extends ModelBase {
 	public void setNumOn(Long newVal) {
     this.numOn = newVal;
   }
-	
  	
 	
 	/**
@@ -1040,7 +1026,6 @@ public class JobBase extends ModelBase {
 	public void setPress(PressDefinition newVal) {
     this.press = newVal;
   }
-	
  	
 	
 	/**
@@ -1063,7 +1048,6 @@ public class JobBase extends ModelBase {
 	public void setBinderyWaste(Long newVal) {
     this.binderyWaste = newVal;
   }
-	
  	
 	
 	/**
@@ -1086,7 +1070,6 @@ public class JobBase extends ModelBase {
 	public void setBinderyWasteOverride(Boolean newVal) {
     this.binderyWasteOverride = newVal;
   }
-	
  	
 	
 	/**
@@ -1109,7 +1092,6 @@ public class JobBase extends ModelBase {
 	public void setEstWaste(Long newVal) {
     this.estWaste = newVal;
   }
-	
  	
 	
 	/**
@@ -1132,7 +1114,6 @@ public class JobBase extends ModelBase {
 	public void setEstWasteOverride(Boolean newVal) {
     this.estWasteOverride = newVal;
   }
-	
  	
 	
 	/**
@@ -1155,13 +1136,12 @@ public class JobBase extends ModelBase {
 	public void setSignatures(Long newVal) {
     this.signatures = newVal;
   }
-	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	private PressDefinition pricingPress;
 	
 	/**
@@ -1178,13 +1158,12 @@ public class JobBase extends ModelBase {
 	public void setPricingPress(PressDefinition newVal) {
     this.pricingPress = newVal;
   }
-	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	private PressDefinition costingPress;
 	
 	/**
@@ -1201,7 +1180,6 @@ public class JobBase extends ModelBase {
 	public void setCostingPress(PressDefinition newVal) {
     this.costingPress = newVal;
   }
-	
  	
 	
 	/**
@@ -1224,7 +1202,6 @@ public class JobBase extends ModelBase {
 	public void setRunMethod(String newVal) {
     this.runMethod = newVal;
   }
-	
  	
 	
 	/**
@@ -1247,13 +1224,13 @@ public class JobBase extends ModelBase {
 	public void setStock(StockDefinition newVal) {
     this.stock = newVal;
   }
-	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+ 	@ManyToOne()
+	@Basic
 	private Dimension parentSize;
 	
 	/**
@@ -1265,18 +1242,18 @@ public class JobBase extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setParentSize(Dimension newVal) {
+   * @generated
+   */	
+  public void setParentSize(Dimension newVal) {
     this.parentSize = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+ 	@ManyToOne()
+	@Basic
 	private Dimension runSize;
 	
 	/**
@@ -1288,18 +1265,18 @@ public class JobBase extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRunSize(Dimension newVal) {
+   * @generated
+   */	
+  public void setRunSize(Dimension newVal) {
     this.runSize = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+ 	@ManyToOne()
+	@Basic
 	private Dimension finishSize;
 	
 	/**
@@ -1311,18 +1288,18 @@ public class JobBase extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFinishSize(Dimension newVal) {
+   * @generated
+   */	
+  public void setFinishSize(Dimension newVal) {
     this.finishSize = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+ 	@ManyToOne()
+	@Basic
 	private Dimension foldedSize;
 	
 	/**
@@ -1334,14 +1311,13 @@ public class JobBase extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFoldedSize(Dimension newVal) {
+   * @generated
+   */	
+  public void setFoldedSize(Dimension newVal) {
     this.foldedSize = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1362,7 +1338,6 @@ public class JobBase extends ModelBase {
 	public void setFrontColors(Integer newVal) {
     this.frontColors = newVal;
   }
-	
  	
 	
 	/**
@@ -1385,7 +1360,6 @@ public class JobBase extends ModelBase {
 	public void setBackColors(Integer newVal) {
     this.backColors = newVal;
   }
-	
  	
 	
 	/**
@@ -1408,7 +1382,6 @@ public class JobBase extends ModelBase {
 	public void setFrontPasses(Integer newVal) {
     this.frontPasses = newVal;
   }
-	
  	
 	
 	/**
@@ -1431,7 +1404,6 @@ public class JobBase extends ModelBase {
 	public void setBackPasses(Integer newVal) {
     this.backPasses = newVal;
   }
-	
  	
 	
 	/**
@@ -1454,7 +1426,6 @@ public class JobBase extends ModelBase {
 	public void setFrontWashes(Integer newVal) {
     this.frontWashes = newVal;
   }
-	
  	
 	
 	/**
@@ -1477,14 +1448,14 @@ public class JobBase extends ModelBase {
 	public void setBackWashes(Integer newVal) {
     this.backWashes = newVal;
   }
-	
  	
 	
 	/**
 	 * @generated
 	 */	
     @OneToMany()
-    @JoinTable( name = "jobbase_frontinks")
+    @IndexColumn(name="frontinksjobbase")
+	@JoinTable( name = "jobbase_frontinks")
 	private java.util.List<InkColor> frontInks;
 	
 	/**
@@ -1510,14 +1481,14 @@ public class JobBase extends ModelBase {
 	public void setFrontInks(java.util.List<InkColor> newVal) {
     this.frontInks = newVal;
   }
-	
  	
 	
 	/**
 	 * @generated
 	 */	
     @OneToMany()
-    @JoinTable( name = "jobbase_backinks")
+    @IndexColumn(name="backinksjobbase")
+	@JoinTable( name = "jobbase_backinks")
 	private java.util.List<InkColor> backInks;
 	
 	/**
@@ -1527,25 +1498,26 @@ public class JobBase extends ModelBase {
     return backInks; 
   }
 
+	
 	/**
-	 * @generated
-	 */	
-	public void addBackInks(InkColor obj) {
+   * @generated
+   */	
+  public void addBackInks(InkColor obj) {
     if (backInks == null) {
       backInks = new java.util.ArrayList<InkColor>();
     }
     backInks.add(obj);
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setBackInks(java.util.List<InkColor> newVal) {
+   * @generated
+   */	
+  public void setBackInks(java.util.List<InkColor> newVal) {
     this.backInks = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1566,7 +1538,6 @@ public class JobBase extends ModelBase {
 	public void setPressQty(Long newVal) {
     this.pressQty = newVal;
   }
-	
  	
 	
 	/**
@@ -1589,13 +1560,12 @@ public class JobBase extends ModelBase {
 	public void setPricingRecord(PricingRecord newVal) {
     this.pricingRecord = newVal;
   }
-	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	private CopierDefinition pricingCopier;
 	
 	/**
@@ -1612,13 +1582,12 @@ public class JobBase extends ModelBase {
 	public void setPricingCopier(CopierDefinition newVal) {
     this.pricingCopier = newVal;
   }
-	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	private CopierDefinition costingCopier;
 	
 	/**
@@ -1635,7 +1604,6 @@ public class JobBase extends ModelBase {
 	public void setCostingCopier(CopierDefinition newVal) {
     this.costingCopier = newVal;
   }
-	
  	
 	
 	/**
@@ -1658,7 +1626,6 @@ public class JobBase extends ModelBase {
 	public void setPricingMethod(PreferencesPricingMethod newVal) {
     this.pricingMethod = newVal;
   }
-	
  	
 	
 	/**
@@ -1681,7 +1648,6 @@ public class JobBase extends ModelBase {
 	public void setDoubleSided(Boolean newVal) {
     this.doubleSided = newVal;
   }
-	
  	
 	
 	/**
@@ -1704,7 +1670,6 @@ public class JobBase extends ModelBase {
 	public void setSingleSided(Boolean newVal) {
     this.singleSided = newVal;
   }
-	
  	
 	
 	/**
@@ -1727,7 +1692,6 @@ public class JobBase extends ModelBase {
 	public void setCostingRecord(CostingRecord newVal) {
     this.costingRecord = newVal;
   }
-	
  	
 	
 	/**
@@ -1750,7 +1714,6 @@ public class JobBase extends ModelBase {
 	public void setWeight(Double newVal) {
     this.weight = newVal;
   }
-	
  	
 	
 	/**
@@ -1773,7 +1736,6 @@ public class JobBase extends ModelBase {
 	public void setTotalCopies(Long newVal) {
     this.totalCopies = newVal;
   }
-	
  	
 	
 	/**
@@ -1796,7 +1758,6 @@ public class JobBase extends ModelBase {
 	public void setNumCopies(Long newVal) {
     this.numCopies = newVal;
   }
-	
  	
 	
 	/**
@@ -1819,7 +1780,6 @@ public class JobBase extends ModelBase {
 	public void setNumCopiesOverride(Boolean newVal) {
     this.numCopiesOverride = newVal;
   }
-	
  	
 	
 	/**
@@ -1842,7 +1802,6 @@ public class JobBase extends ModelBase {
 	public void setStockQty(Long newVal) {
     this.stockQty = newVal;
   }
-	
  	
 	
 	/**
@@ -1865,1386 +1824,1336 @@ public class JobBase extends ModelBase {
 	public void setCutOff(Double newVal) {
     this.cutOff = newVal;
   }
-	
- 	
-	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Long impositionsPerRun;
-	
+  private Long impositionsPerRun;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Long getImpositionsPerRun(){
+  public Long getImpositionsPerRun(){
     return impositionsPerRun; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setImpositionsPerRun(Long newVal) {
+   * @generated
+   */	
+  public void setImpositionsPerRun(Long newVal) {
     this.impositionsPerRun = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Long totalImpositions;
-	
+  private Long totalImpositions;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Long getTotalImpositions(){
+  public Long getTotalImpositions(){
     return totalImpositions; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setTotalImpositions(Long newVal) {
+   * @generated
+   */	
+  public void setTotalImpositions(Long newVal) {
     this.totalImpositions = newVal;
   }
-	
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Double markup;
-	
+  private Double markup;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Double getMarkup(){
+  public Double getMarkup(){
     return markup; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setMarkup(Double newVal) {
+   * @generated
+   */	
+  public void setMarkup(Double newVal) {
     this.markup = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private BigDecimal totalCost;
-	
+  private BigDecimal totalCost;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public BigDecimal getTotalCost(){
+  public BigDecimal getTotalCost(){
     return totalCost; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setTotalCost(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setTotalCost(BigDecimal newVal) {
     this.totalCost = newVal;
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setTotalCost(double newVal) {
+   * @generated
+   */	
+  public void setTotalCost(double newVal) {
     this.totalCost = BigDecimal.valueOf(newVal);
   }
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private BigDecimal unitCost;
-	
+  private BigDecimal unitCost;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public BigDecimal getUnitCost(){
+  public BigDecimal getUnitCost(){
     return unitCost; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setUnitCost(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setUnitCost(BigDecimal newVal) {
     this.unitCost = newVal;
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setUnitCost(double newVal) {
+   * @generated
+   */	
+  public void setUnitCost(double newVal) {
     this.unitCost = BigDecimal.valueOf(newVal);
   }
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private String notes;
-	
+  private String notes;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public String getNotes(){
+  public String getNotes(){
     return notes; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setNotes(String newVal) {
+   * @generated
+   */	
+  public void setNotes(String newVal) {
     this.notes = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean showNotes;
-	
+  private Boolean showNotes;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getShowNotes(){
+  public Boolean getShowNotes(){
     return showNotes; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setShowNotes(Boolean newVal) {
+   * @generated
+   */	
+  public void setShowNotes(Boolean newVal) {
     this.showNotes = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne()
-	private Vendor vendor;
-	
+  private Vendor vendor;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Vendor getVendor(){
+  public Vendor getVendor(){
     return vendor; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setVendor(Vendor newVal) {
+   * @generated
+   */	
+  public void setVendor(Vendor newVal) {
     this.vendor = newVal;
   }
-	
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Long numberOfLines;
-	
+  private Long numberOfLines;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Long getNumberOfLines(){
+  public Long getNumberOfLines(){
     return numberOfLines; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setNumberOfLines(Long newVal) {
+   * @generated
+   */	
+  public void setNumberOfLines(Long newVal) {
     this.numberOfLines = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Long numberOfInches;
-	
+  private Long numberOfInches;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Long getNumberOfInches(){
+  public Long getNumberOfInches(){
     return numberOfInches; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setNumberOfInches(Long newVal) {
+   * @generated
+   */	
+  public void setNumberOfInches(Long newVal) {
     this.numberOfInches = newVal;
   }
-	
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean specialOrderStock;
-	
+  private Boolean specialOrderStock;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getSpecialOrderStock(){
+  public Boolean getSpecialOrderStock(){
     return specialOrderStock; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setSpecialOrderStock(Boolean newVal) {
+   * @generated
+   */	
+  public void setSpecialOrderStock(Boolean newVal) {
     this.specialOrderStock = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean customerSuppliedStock;
-	
+  private Boolean customerSuppliedStock;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getCustomerSuppliedStock(){
+  public Boolean getCustomerSuppliedStock(){
     return customerSuppliedStock; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setCustomerSuppliedStock(Boolean newVal) {
+   * @generated
+   */	
+  public void setCustomerSuppliedStock(Boolean newVal) {
     this.customerSuppliedStock = newVal;
   }
-	
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne()
-	private PaperPrice paperPrice;
-	
+  private PaperPrice paperPrice;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public PaperPrice getPaperPrice(){
+  public PaperPrice getPaperPrice(){
     return paperPrice; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setPaperPrice(PaperPrice newVal) {
+   * @generated
+   */	
+  public void setPaperPrice(PaperPrice newVal) {
     this.paperPrice = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
-    @ManyToOne( cascade = {CascadeType.ALL})
-	private JobJDFStatus jdfStatus;
-	
+   * @generated
+   */	
+  @ManyToOne( cascade = {CascadeType.ALL})
+  private JobJDFStatus jdfStatus;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public JobJDFStatus getJdfStatus(){
+  public JobJDFStatus getJdfStatus(){
     return jdfStatus; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setJdfStatus(JobJDFStatus newVal) {
+   * @generated
+   */	
+  public void setJdfStatus(JobJDFStatus newVal) {
     this.jdfStatus = newVal;
   }
-	
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne( cascade = {CascadeType.ALL})
-	private PaperCalculator paperCal;
-	
+  private PaperCalculator paperCal;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public PaperCalculator getPaperCal(){
+  public PaperCalculator getPaperCal(){
     return paperCal; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setPaperCal(PaperCalculator newVal) {
+   * @generated
+   */	
+  public void setPaperCal(PaperCalculator newVal) {
     this.paperCal = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orQtyOrder;
-	
+  private Boolean orQtyOrder;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrQtyOrder(){
+  public Boolean getOrQtyOrder(){
     return orQtyOrder; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrQtyOrder(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrQtyOrder(Boolean newVal) {
     this.orQtyOrder = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orSets;
-	
+  private Boolean orSets;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrSets(){
+  public Boolean getOrSets(){
     return orSets; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrSets(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrSets(Boolean newVal) {
     this.orSets = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orRuntime;
-	
+  private Boolean orRuntime;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrRuntime(){
+  public Boolean getOrRuntime(){
     return orRuntime; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrRuntime(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrRuntime(Boolean newVal) {
     this.orRuntime = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orSetupTime;
-	
+  private Boolean orSetupTime;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrSetupTime(){
+  public Boolean getOrSetupTime(){
     return orSetupTime; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrSetupTime(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrSetupTime(Boolean newVal) {
     this.orSetupTime = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orWashupTime;
-	
+  private Boolean orWashupTime;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrWashupTime(){
+  public Boolean getOrWashupTime(){
     return orWashupTime; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrWashupTime(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrWashupTime(Boolean newVal) {
     this.orWashupTime = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orStockUnits;
-	
+  private Boolean orStockUnits;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrStockUnits(){
+  public Boolean getOrStockUnits(){
     return orStockUnits; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrStockUnits(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrStockUnits(Boolean newVal) {
     this.orStockUnits = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orStockMarkup;
-	
+  private Boolean orStockMarkup;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrStockMarkup(){
+  public Boolean getOrStockMarkup(){
     return orStockMarkup; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrStockMarkup(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrStockMarkup(Boolean newVal) {
     this.orStockMarkup = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orStockCost;
-	
+  private Boolean orStockCost;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrStockCost(){
+  public Boolean getOrStockCost(){
     return orStockCost; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrStockCost(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrStockCost(Boolean newVal) {
     this.orStockCost = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orWaste;
-	
+  private Boolean orWaste;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrWaste(){
+  public Boolean getOrWaste(){
     return orWaste; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrWaste(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrWaste(Boolean newVal) {
     this.orWaste = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orProduction;
-	
+  private Boolean orProduction;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrProduction(){
+  public Boolean getOrProduction(){
     return orProduction; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrProduction(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrProduction(Boolean newVal) {
     this.orProduction = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orUnit;
-	
+  private Boolean orUnit;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrUnit(){
+  public Boolean getOrUnit(){
     return orUnit; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrUnit(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrUnit(Boolean newVal) {
     this.orUnit = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orPrice;
-	
+  private Boolean orPrice;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrPrice(){
+  public Boolean getOrPrice(){
     return orPrice; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrPrice(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrPrice(Boolean newVal) {
     this.orPrice = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orRunOut;
-	
+  private Boolean orRunOut;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrRunOut(){
+  public Boolean getOrRunOut(){
     return orRunOut; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrRunOut(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrRunOut(Boolean newVal) {
     this.orRunOut = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orLaborMarkup;
-	
+  private Boolean orLaborMarkup;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrLaborMarkup(){
+  public Boolean getOrLaborMarkup(){
     return orLaborMarkup; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrLaborMarkup(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrLaborMarkup(Boolean newVal) {
     this.orLaborMarkup = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orLaborRate;
-	
+  private Boolean orLaborRate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrLaborRate(){
+  public Boolean getOrLaborRate(){
     return orLaborRate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrLaborRate(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrLaborRate(Boolean newVal) {
     this.orLaborRate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orAvgImpression;
-	
+  private Boolean orAvgImpression;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrAvgImpression(){
+  public Boolean getOrAvgImpression(){
     return orAvgImpression; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrAvgImpression(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrAvgImpression(Boolean newVal) {
     this.orAvgImpression = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orPassFront;
-	
+  private Boolean orPassFront;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrPassFront(){
+  public Boolean getOrPassFront(){
     return orPassFront; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrPassFront(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrPassFront(Boolean newVal) {
     this.orPassFront = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orPassBack;
-	
+  private Boolean orPassBack;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrPassBack(){
+  public Boolean getOrPassBack(){
     return orPassBack; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrPassBack(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrPassBack(Boolean newVal) {
     this.orPassBack = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orParentSize;
-	
+  private Boolean orParentSize;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrParentSize(){
+  public Boolean getOrParentSize(){
     return orParentSize; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrParentSize(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrParentSize(Boolean newVal) {
     this.orParentSize = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orBinderyWaste;
-	
+  private Boolean orBinderyWaste;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrBinderyWaste(){
+  public Boolean getOrBinderyWaste(){
     return orBinderyWaste; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrBinderyWaste(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrBinderyWaste(Boolean newVal) {
     this.orBinderyWaste = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orRunCuts;
-	
+  private Boolean orRunCuts;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrRunCuts(){
+  public Boolean getOrRunCuts(){
     return orRunCuts; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrRunCuts(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrRunCuts(Boolean newVal) {
     this.orRunCuts = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orFinishCuts;
-	
+  private Boolean orFinishCuts;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrFinishCuts(){
+  public Boolean getOrFinishCuts(){
     return orFinishCuts; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrFinishCuts(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrFinishCuts(Boolean newVal) {
     this.orFinishCuts = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orUp;
-	
+  private Boolean orUp;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrUp(){
+  public Boolean getOrUp(){
     return orUp; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrUp(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrUp(Boolean newVal) {
     this.orUp = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean orParentOut;
-	
+  private Boolean orParentOut;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getOrParentOut(){
+  public Boolean getOrParentOut(){
     return orParentOut; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOrParentOut(Boolean newVal) {
+   * @generated
+   */	
+  public void setOrParentOut(Boolean newVal) {
     this.orParentOut = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
-    @ManyToOne(fetch=FetchType.LAZY, optional=true)
-	private InvoiceBase parentInvoice;
-	
+   * @generated
+   */	
+  @ManyToOne(fetch=FetchType.LAZY, optional=true)
+  private InvoiceBase parentInvoice;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public InvoiceBase getParentInvoice(){
+  public InvoiceBase getParentInvoice(){
     return parentInvoice; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setParentInvoice(InvoiceBase newVal) {
+   * @generated
+   */	
+  public void setParentInvoice(InvoiceBase newVal) {
     this.parentInvoice = newVal;
   }
-	
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private String rootChargeRecord;
-	
+  private String rootChargeRecord;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public String getRootChargeRecord(){
+  public String getRootChargeRecord(){
     return rootChargeRecord; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setRootChargeRecord(String newVal) {
+   * @generated
+   */	
+  public void setRootChargeRecord(String newVal) {
     this.rootChargeRecord = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @OneToMany(  cascade = {CascadeType.ALL})
     @JoinTable( name = "jobbase_digitalassets")
-	private java.util.List<DigitalAsset> digitalAssets;
-	
+  private java.util.List<DigitalAsset> digitalAssets;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public java.util.List<DigitalAsset> getDigitalAssets(){
+  public java.util.List<DigitalAsset> getDigitalAssets(){
     return digitalAssets; 
   }
 
+
 	/**
-	 * @generated
-	 */	
-	public void addDigitalAssets(DigitalAsset obj) {
+   * @generated
+   */	
+  public void addDigitalAssets(DigitalAsset obj) {
     if (digitalAssets == null) {
       digitalAssets = new java.util.ArrayList<DigitalAsset>();
     }
     digitalAssets.add(obj);
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setDigitalAssets(java.util.List<DigitalAsset> newVal) {
+   * @generated
+   */	
+  public void setDigitalAssets(java.util.List<DigitalAsset> newVal) {
     this.digitalAssets = newVal;
   }
-	
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date typeSettingDate;
-	
+  private Date typeSettingDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getTypeSettingDate(){
+  public Date getTypeSettingDate(){
     return typeSettingDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setTypeSettingDate(Date newVal) {
+   * @generated
+   */	
+  public void setTypeSettingDate(Date newVal) {
     this.typeSettingDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date proofBackDate;
-	
+  private Date proofBackDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getProofBackDate(){
+  public Date getProofBackDate(){
     return proofBackDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setProofBackDate(Date newVal) {
+   * @generated
+   */	
+  public void setProofBackDate(Date newVal) {
     this.proofBackDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date bluelineDate;
-	
+  private Date bluelineDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getBluelineDate(){
+  public Date getBluelineDate(){
     return bluelineDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setBluelineDate(Date newVal) {
+   * @generated
+   */	
+  public void setBluelineDate(Date newVal) {
     this.bluelineDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date bluelineBackDate;
-	
+  private Date bluelineBackDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getBluelineBackDate(){
+  public Date getBluelineBackDate(){
     return bluelineBackDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setBluelineBackDate(Date newVal) {
+   * @generated
+   */	
+  public void setBluelineBackDate(Date newVal) {
     this.bluelineBackDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date stockCutDate;
-	
+  private Date stockCutDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getStockCutDate(){
+  public Date getStockCutDate(){
     return stockCutDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setStockCutDate(Date newVal) {
+   * @generated
+   */	
+  public void setStockCutDate(Date newVal) {
     this.stockCutDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date atPressDate;
-	
+  private Date atPressDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getAtPressDate(){
+  public Date getAtPressDate(){
     return atPressDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setAtPressDate(Date newVal) {
+   * @generated
+   */	
+  public void setAtPressDate(Date newVal) {
     this.atPressDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date printedDate;
-	
+  private Date printedDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getPrintedDate(){
+  public Date getPrintedDate(){
     return printedDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setPrintedDate(Date newVal) {
+   * @generated
+   */	
+  public void setPrintedDate(Date newVal) {
     this.printedDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date copiedDate;
-	
+  private Date copiedDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getCopiedDate(){
+  public Date getCopiedDate(){
     return copiedDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setCopiedDate(Date newVal) {
+   * @generated
+   */	
+  public void setCopiedDate(Date newVal) {
     this.copiedDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date binderyDate;
-	
+  private Date binderyDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getBinderyDate(){
+  public Date getBinderyDate(){
     return binderyDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setBinderyDate(Date newVal) {
+   * @generated
+   */	
+  public void setBinderyDate(Date newVal) {
     this.binderyDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date cutDate;
-	
+  private Date cutDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getCutDate(){
+  public Date getCutDate(){
     return cutDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setCutDate(Date newVal) {
+   * @generated
+   */	
+  public void setCutDate(Date newVal) {
     this.cutDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date foldedDate;
-	
+  private Date foldedDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getFoldedDate(){
+  public Date getFoldedDate(){
     return foldedDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setFoldedDate(Date newVal) {
+   * @generated
+   */	
+  public void setFoldedDate(Date newVal) {
     this.foldedDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date finishedDate;
-	
+  private Date finishedDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getFinishedDate(){
+  public Date getFinishedDate(){
     return finishedDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setFinishedDate(Date newVal) {
+   * @generated
+   */	
+  public void setFinishedDate(Date newVal) {
     this.finishedDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date mailingDate;
-	
+  private Date mailingDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getMailingDate(){
+  public Date getMailingDate(){
     return mailingDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setMailingDate(Date newVal) {
+   * @generated
+   */	
+  public void setMailingDate(Date newVal) {
     this.mailingDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date outsideServiceDate;
-	
+  private Date outsideServiceDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getOutsideServiceDate(){
+  public Date getOutsideServiceDate(){
     return outsideServiceDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOutsideServiceDate(Date newVal) {
+   * @generated
+   */	
+  public void setOutsideServiceDate(Date newVal) {
     this.outsideServiceDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date otherDate;
-	
+  private Date otherDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getOtherDate(){
+  public Date getOtherDate(){
     return otherDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setOtherDate(Date newVal) {
+   * @generated
+   */	
+  public void setOtherDate(Date newVal) {
     this.otherDate = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date deliveredDate;
-	
+  private Date deliveredDate;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getDeliveredDate(){
+  public Date getDeliveredDate(){
     return deliveredDate; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setDeliveredDate(Date newVal) {
+   * @generated
+   */	
+  public void setDeliveredDate(Date newVal) {
     this.deliveredDate = newVal;
   }
-	
- 	
-	
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean usePaperCalcUp;
-	
+  private Boolean usePaperCalcUp;
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getUsePaperCalcUp(){
+  public Boolean getUsePaperCalcUp(){
     return usePaperCalcUp; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setUsePaperCalcUp(Boolean newVal) {
+   * @generated
+   */	
+  public void setUsePaperCalcUp(Boolean newVal) {
     this.usePaperCalcUp = newVal;
   }
-	
+
+
 	/**
 	 * @generated
 	 */		

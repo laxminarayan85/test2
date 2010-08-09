@@ -3129,12 +3129,12 @@ public class ChargeDefinition extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Integer presetQuantityLabel;
+  private String presetQuantityLabel;
 
 	/**
    * @generated
  	 */
-  public Integer getPresetQuantityLabel(){
+  public String getPresetQuantityLabel(){
     return presetQuantityLabel; 
   }
 
@@ -3142,10 +3142,9 @@ public class ChargeDefinition extends ModelBase {
 	/**
    * @generated
    */	
-  public void setPresetQuantityLabel(Integer newVal) {
+  public void setPresetQuantityLabel(String newVal) {
     this.presetQuantityLabel = newVal;
   }
-
 
 
 	/**
@@ -3983,7 +3982,7 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETNOTES.equals(propertyName)) setPresetNotes((String)newValue); else
     if (PRESETNOTESLABEL.equals(propertyName)) setPresetNotesLabel((String)newValue); else
     if (PRESETQUANTITY.equals(propertyName)) setPresetQuantity((Integer)newValue); else
-    if (PRESETQUANTITYLABEL.equals(propertyName)) setPresetQuantityLabel((Integer)newValue); else
+    if (PRESETQUANTITYLABEL.equals(propertyName)) setPresetQuantityLabel((String)newValue); else
     if (PRESETSHOWNOTES.equals(propertyName)) setPresetShowNotes((Boolean)newValue); else
     if (PRESETPRODUCTIONLOCATION.equals(propertyName)) setPresetProductionLocation((ProductionLocations)newValue); else
     if (PRESETPRICE.equals(propertyName)) setPresetPrice((BigDecimal)newValue); else
@@ -4240,7 +4239,7 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETQUANTITY.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (PRESETQUANTITYLABEL.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {String.class};		
     if (PRESETSHOWNOTES.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (PRESETPRODUCTIONLOCATION.equals(propertyName)) 

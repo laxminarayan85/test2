@@ -43,9 +43,9 @@ import org.hibernate.annotations.Type;
 @Table(name = "employee")
 public class Employee extends Party {
 	/**
-	 * @generated
-	 */
-	public static final String SOCIALSECURITY = "SocialSecurity";
+   * @generated
+   */
+  public static final String SOCIALSECURITY = "SocialSecurity";
 	/**
 	 * @generated
 	 */
@@ -206,14 +206,20 @@ public class Employee extends Party {
 	 * @generated
 	 */
 	public static final String EMPLOYEEID = "EmployeeId";
+
 	/**
-	 * @generated
-	 */
-	public static final String ISSELECTED = "IsSelected";
+   * @generated
+   */
+  public static final String ISSELECTED = "IsSelected";
 	/**
-	 * @generated
-	 */
-	public static final String ISDISABLED = "IsDisabled";
+   * @generated
+   */
+  public static final String ISDISABLED = "IsDisabled";
+
+	/**
+   * @generated
+   */
+  public static final String AUTOOUTTIME = "AutoOutTime";
 
 	/**
 	 * @generated
@@ -226,28 +232,28 @@ public class Employee extends Party {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private String socialSecurity;
-	
+  private String socialSecurity;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public String getSocialSecurity(){
+  public String getSocialSecurity(){
     return socialSecurity; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setSocialSecurity(String newVal) {
+   * @generated
+   */	
+  public void setSocialSecurity(String newVal) {
     this.socialSecurity = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -355,20 +361,21 @@ public class Employee extends Party {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRate(BigDecimal newVal) {
+   * @generated
+   */	
+  public void setRate(BigDecimal newVal) {
     this.rate = newVal;
   }
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setRate(double newVal) {
+   * @generated
+   */	
+  public void setRate(double newVal) {
     this.rate = BigDecimal.valueOf(newVal);
   }
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -1222,52 +1229,73 @@ public class Employee extends Party {
     this.employeeId = newVal;
   }
 	
- 	
-	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean isSelected;
-	
+  private Boolean isSelected;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getIsSelected(){
+  public Boolean getIsSelected(){
     return isSelected; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setIsSelected(Boolean newVal) {
+   * @generated
+   */	
+  public void setIsSelected(Boolean newVal) {
     this.isSelected = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean isDisabled;
-	
+  private Boolean isDisabled;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getIsDisabled(){
+  public Boolean getIsDisabled(){
     return isDisabled; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setIsDisabled(Boolean newVal) {
+   * @generated
+   */	
+  public void setIsDisabled(Boolean newVal) {
     this.isDisabled = newVal;
   }
-	
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String autoOutTime;
+
+	/**
+   * @generated
+ 	 */
+  public String getAutoOutTime(){
+    return autoOutTime; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAutoOutTime(String newVal) {
+    this.autoOutTime = newVal;
+  }
+
+
 	/**
 	 * @generated
 	 */		
@@ -1317,6 +1345,7 @@ public class Employee extends Party {
     if (EMPLOYEEID.equals(propertyName)) return getEmployeeId();
     if (ISSELECTED.equals(propertyName)) return getIsSelected();
     if (ISDISABLED.equals(propertyName)) return getIsDisabled();
+    if (AUTOOUTTIME.equals(propertyName)) return getAutoOutTime();
     return super.getProperty(propertyName);
   }
 	
@@ -1369,6 +1398,7 @@ public class Employee extends Party {
     if (EMPLOYEEID.equals(propertyName)) setEmployeeId((String)newValue); else
     if (ISSELECTED.equals(propertyName)) setIsSelected((Boolean)newValue); else
     if (ISDISABLED.equals(propertyName)) setIsDisabled((Boolean)newValue); else
+    if (AUTOOUTTIME.equals(propertyName)) setAutoOutTime((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1464,6 +1494,8 @@ public class Employee extends Party {
       return new Class<?>[] {Boolean.class};		
     if (ISDISABLED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (AUTOOUTTIME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1517,6 +1549,7 @@ public class Employee extends Party {
     if (EMPLOYEEID.equals(propertyName)) return Employee.class;
     if (ISSELECTED.equals(propertyName)) return Employee.class;
     if (ISDISABLED.equals(propertyName)) return Employee.class;
+    if (AUTOOUTTIME.equals(propertyName)) return Employee.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1613,6 +1646,8 @@ public class Employee extends Party {
     if (! SmartEquals(getIsSelected(), objT.getIsSelected()))
       return false;
     if (! SmartEquals(getIsDisabled(), objT.getIsDisabled()))
+      return false;
+    if (! SmartEquals(getAutoOutTime(), objT.getAutoOutTime()))
       return false;
     return true;
   }			
