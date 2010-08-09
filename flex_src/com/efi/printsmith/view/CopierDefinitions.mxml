@@ -273,7 +273,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
   
 	
        		 tempmachineCost= temp2 +laborCopy+tonerCopy+developerCopy+ click;
-       		 machineCostperCopy.text = tempmachineCost.toPrecision(4)
+       		 machineCostperCopy.text = tempmachineCost.toPrecision(3)
   			 }
 		}
 
@@ -354,7 +354,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function openEditMatrixWindow():void {
 		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
 		var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, true));
-		var doubleSidedPricing:Boolean = this.price_2_side.selectedItem == Price2Side.UsingSecondSideRate?true:false;
+		var doubleSidedPricing:Boolean = this.price_2_side.selectedItem.data == Price2Side.UsingSecondSideRate.toString()?true:false;
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setMatrix(copierDefinition.copierMatrix);	
 		titleWindow.setMatrixType(pricing_method_combo.selectedItem.data as String,doubleSidedPricing);

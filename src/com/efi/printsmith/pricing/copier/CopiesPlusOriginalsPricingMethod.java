@@ -35,7 +35,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 			if (pricingMatrix != null) {
 				int i;
 				for (i = 0; i < pricingMatrix.getElements().size(); i++) {
-					if (pricingMatrix.getElements().get(i).getQty() > job.getQtyOrdered()) break;
+					if (pricingMatrix.getElements().get(i).getQty() > job.getTotalCopies()) break;
 				}
 				if (i > 0) i--; /* Use the price in the matrix prior to qty > qtyordered */
 				
@@ -45,16 +45,16 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 //				}
 //				if (j > 0) j--;
 				
-				if (pricingMatrix.getHeader1() > job.getSheets()) j = 0;
-				else if (pricingMatrix.getHeader2() > job.getSheets()) j = 1;
-				else if (pricingMatrix.getHeader3() > job.getSheets()) j = 2;
-				else if (pricingMatrix.getHeader4() > job.getSheets()) j = 3;
-				else if (pricingMatrix.getHeader5() > job.getSheets()) j = 4;
-				else if (pricingMatrix.getHeader6() > job.getSheets()) j = 5;
-				else if (pricingMatrix.getHeader7() > job.getSheets()) j = 6;
-				else if (pricingMatrix.getHeader8() > job.getSheets()) j = 7;
-				else if (pricingMatrix.getHeader9() > job.getSheets()) j = 8;
-				else if (pricingMatrix.getHeader10() > job.getSheets()) j = 9;
+				if (pricingMatrix.getHeader1() >= job.getSheets()) j = 0;
+				else if (pricingMatrix.getHeader2() >= job.getSheets()) j = 1;
+				else if (pricingMatrix.getHeader3() >= job.getSheets()) j = 2;
+				else if (pricingMatrix.getHeader4() >= job.getSheets()) j = 3;
+				else if (pricingMatrix.getHeader5() >= job.getSheets()) j = 4;
+				else if (pricingMatrix.getHeader6() >= job.getSheets()) j = 5;
+				else if (pricingMatrix.getHeader7() >= job.getSheets()) j = 6;
+				else if (pricingMatrix.getHeader8() >= job.getSheets()) j = 7;
+				else if (pricingMatrix.getHeader9() >= job.getSheets()) j = 8;
+				else if (pricingMatrix.getHeader10() >= job.getSheets()) j = 9;
 
 				double unitPrice = 0.0;
 				switch (j) {
@@ -197,7 +197,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());
 							}
 						} else {
-							pricingRecord.setTotalPrice((pricePerCopy * calcQty) + stockPrice*job.getTotalCopies() + wastePrice);				
+							pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies() + wastePrice);				
 						}
 					} else if (pricingCopier.getMatrixType().equals("DiscountTable")) {
 						double discountPct = unitPrice;
@@ -222,7 +222,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());
 							}
 						} else {
-							pricingRecord.setTotalPrice((pricePerCopy * calcQty) + stockPrice*job.getTotalCopies());				
+							pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
 						}
 					} else if (pricingCopier.getMatrixType().equals("StepTable")) {
 						
@@ -243,7 +243,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());
 							}
 						} else {
-							pricingRecord.setTotalPrice((pricePerCopy * calcQty) + stockPrice*job.getTotalCopies());				
+							pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
 						}
 					} else if (pricingCopier.getMatrixType().equals("MarkupTable")) {
 						double markup = unitPrice;
@@ -268,7 +268,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());
 							}
 						} else {
-							pricingRecord.setTotalPrice((pricePerCopy * calcQty) + stockPrice*job.getTotalCopies());				
+							pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
 						}
 					}
 				}
