@@ -25,10 +25,6 @@
             }
 		]]>
     </mx:Script>
-    
-    <mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
-	
-	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 
     <!-- The template for the printed page, 
         with the contents for all pages. -->
