@@ -43,6 +43,7 @@ package com.efi.printsmith.common.components
 	                addedListener = true;
 	                owner.addEventListener("valueCommit", owner_changeHandler, false, 0, true);
 	                owner.addEventListener("change", owner_changeHandler, false, 0, true);
+	                owner.addEventListener("click", owner_changeHandler, false, 0, true);
 	            }
 	            
 	            var list:ArrayCollection = ListBase(owner).dataProvider as ArrayCollection;
