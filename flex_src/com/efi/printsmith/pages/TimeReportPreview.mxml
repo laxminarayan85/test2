@@ -2,6 +2,7 @@
 	creationComplete="{initPreviewWindow()}" showCloseButton="true" close="{closeWindow()}">
 	<mx:Script>
 		<![CDATA[
+			import mx.printing.FlexPrintJob;
 			import mx.events.FlexEvent;
 			import mx.collections.ICollectionView;
 			import com.efi.printsmith.model.EmployeeTimeExportBean;
@@ -497,6 +498,87 @@
 			private function getTotalTimeLabelFunc(item:Object, column:AdvancedDataGridColumn):String {
 				return convertMilliSecondsToString(item[column.dataField],true);
 			}
+			
+			public function doPrint():void {
+	        	var printJob:FlexPrintJob = new FlexPrintJob();
+		        
+		        // Start the print job.
+		        if (printJob.start()) {
+		            // Create a FormPrintView control 
+		            // as a child of the application.
+		            var thePrintView:PrintTimeReportView = new PrintTimeReportView();
+		            
+		            addChild(thePrintView);
+		            // Set the data provider of the FormPrintView 
+		            // component's DataGrid to be the data provider of 
+		            // the displayed DataGrid.
+		            thePrintView.myDataGrid.dataProvider = advancedDataGrid.dataProvider;
+		            thePrintView.myDataGrid.columns = advancedDataGrid.columns;
+		            // Set the print view properties.
+		            thePrintView.width=printJob.pageWidth;
+		            thePrintView.height=printJob.pageHeight;
+		            thePrintView.prodTotal = timeCardList.length;
+		            if(employeeTimeExportBean.detail==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Showfulltimecard')){
+			            thePrintView.myDataGrid.setStyle("defaultLeafIcon",null);
+						thePrintView.myDataGrid.styleFunction = dgStyleFunction;
+		            }
+		            // Create a single-page image.
+		            thePrintView.showPage("single");
+		            
+		            // If the print image's DataGrid can hold all the  
+		            // data provider's rows, add the page to the print job. 
+		            if(!thePrintView.myDataGrid.validNextPage)
+		            {
+		                printJob.addObject(thePrintView);
+		            }
+		            // Otherwise, the job requires multiple pages.
+		            else
+		            {
+		                // Create the first page and add it to the print job.
+		                thePrintView.showPage("first");
+		                printJob.addObject(thePrintView);
+		                thePrintView.pageNumber++;
+		                
+		                // Loop through the following code 
+		                // until all pages are queued.
+		                while(true)
+		                {
+		                    // Move the next page of data to the top of 
+		                    // the PrintDataGrid.
+		                    thePrintView.myDataGrid.nextPage();
+		
+		                    // Try creating a last page.
+		                    thePrintView.showPage("last");  
+		
+		                    // If the page holds the remaining data, or if 
+		                    // the last page was completely filled by the last  
+		                    // grid data, queue it for printing.
+		                    // Test if there is data for another 
+		                    // PrintDataGrid page.
+		                    if(!thePrintView.myDataGrid.validNextPage) 
+		                    {
+		                        // This is the last page; 
+		                        // queue it and exit the print loop.
+		                        printJob.addObject(thePrintView);
+		                        break;
+		                    }
+		                    else
+		                    // This is not the last page. Queue a middle page. 
+		                    {
+		                        thePrintView.showPage("middle");
+		                        printJob.addObject(thePrintView);
+		                        thePrintView.pageNumber++;
+		                    }
+		                }
+		            }
+		            // All pages are queued; remove the FormPrintView 
+		            // control to free memory.
+		            removeChild(thePrintView);
+		        }
+		        // Send the job to the printer.
+		        printJob.send();
+		    }
+
 	        
 		]]>
 	</mx:Script>
@@ -507,7 +589,7 @@
 	
 	<mx:HBox width="100%" height="7%">
 		
-		<mx:Button width="6%" height="100%" id="btnPrint">
+		<mx:Button width="6%" height="100%" click="{doPrint()}" id="btnPrint">
 			<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
 		</mx:Button>
 		
