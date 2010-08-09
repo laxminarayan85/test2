@@ -48,6 +48,8 @@ package com.efi.printsmith.model
 				var startDateTime:Number = (timeCard.startDateTime.hours*60*60*1000)+(timeCard.startDateTime.minutes*60*1000);
 				var todayTime:Number = (todayDate.hours*60*60*1000)+(todayDate.minutes*60*1000);
 				var autoClcokOutTime:Number = (employee.autoHour*60*60*1000)+(employee.autoMin*60*1000);
+				trace("Employee =="+employee.lastName+", "+employee.firstName);
+				trace("Auto Time=="+employee.autoHour+":"+employee.autoMin);
 				if((todayDate>=timeCardStartDate) || (todayTime>=autoClcokOutTime && startDateTime<autoClcokOutTime)) {
 					timer.stop();
 					var remoteObject:RemoteObject = new RemoteObject();

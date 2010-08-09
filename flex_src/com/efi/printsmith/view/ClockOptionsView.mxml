@@ -121,13 +121,15 @@
 				for each(var employeeObj:Employee in employeeList){
 					autoClockOutDetectortList = parentDocument.autoClockOutDetectortList;
 					var count:int=-1;
+					var checkFlag:Boolean = false;
 					for each(var autoClockOutDetectorObj:AutoClockOutDetector in autoClockOutDetectortList){
+						count++;
 						if(autoClockOutDetectorObj.employee.id==employeeObj.id){
-							count++;
-							break;	
+							checkFlag = true;
+							break;
 						}
 					}
-					if(count!=-1){
+					if(count!=-1 && checkFlag){
 						var autoClockOutDetectorObject:AutoClockOutDetector = autoClockOutDetectortList.getItemAt(count) as AutoClockOutDetector;
 						if(employeeObj.autoHour==0 && employeeObj.autoMin==0){
 							autoClockOutDetectorObject.stop();
