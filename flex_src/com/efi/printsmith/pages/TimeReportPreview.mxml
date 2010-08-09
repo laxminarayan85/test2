@@ -36,46 +36,176 @@
 			public function set inputDataList(dataList:ArrayCollection):void {
 				timeCardList = dataList.getItemAt(0) as ArrayCollection;
 				employeeTimeExportBean = dataList.getItemAt(1) as EmployeeTimeExportBean;
-				groupingCollection = new GroupingCollection();
-				var fields:Array = new Array();
-				var groupingField:GroupingField = new GroupingField();
-				getGroupingFieldName(groupingField);
-				fields.push(groupingField);
-				var grouping:Grouping = new Grouping();
-				grouping.fields = fields;
-				groupingCollection.childrenField = "childObjects";
-				groupingCollection.grouping = grouping;
-				groupingCollection.source = timeCardList;
-				advancedDataGrid = new AdvancedDataGrid();
-				advancedDataGrid.setStyle("defaultLeafIcon",null);
-				advancedDataGrid.styleFunction = dgStyleFunction;
-				advancedDataGrid.percentWidth = 100;
-				advancedDataGrid.percentHeight = 100;
-				var columns:Array = new Array();
-				getDataGridColumns(columns);
-				var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
-				advancedDataGridColumn.dataField = "startDateTime";
-				advancedDataGridColumn.headerText = "Date";
-				advancedDataGridColumn.labelFunction = getDateLabel;
-				columns.push(advancedDataGridColumn);
-				advancedDataGridColumn = new AdvancedDataGridColumn();
-				advancedDataGridColumn.dataField = "endDateTime";
-				advancedDataGridColumn.headerText = "Out";
-				advancedDataGridColumn.labelFunction = getDateLabel;
-				columns.push(advancedDataGridColumn);
-				advancedDataGridColumn = new AdvancedDataGridColumn();
-				advancedDataGridColumn.dataField = "onClock";
-				advancedDataGridColumn.headerText = "On Clock";
-				advancedDataGridColumn.labelFunction = getTotalTime;
-				columns.push(advancedDataGridColumn);
-				advancedDataGridColumn = new AdvancedDataGridColumn();
-				advancedDataGridColumn.dataField = "billable";
-				advancedDataGridColumn.headerText = "Billable";
-				advancedDataGridColumn.labelFunction = getTotalTime;
-				columns.push(advancedDataGridColumn);
-				advancedDataGrid.columns = columns;
-				dgBox.addChild(advancedDataGrid);
-				advDataGridHandler();
+				if(employeeTimeExportBean.detail==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Showfulltimecard')){
+					groupingCollection = new GroupingCollection();
+					var fields:Array = new Array();
+					var groupingField:GroupingField = new GroupingField();
+					getGroupingFieldName(groupingField);
+					fields.push(groupingField);
+					var grouping:Grouping = new Grouping();
+					grouping.fields = fields;
+					groupingCollection.childrenField = "childObjects";
+					groupingCollection.grouping = grouping;
+					groupingCollection.source = timeCardList;
+					advancedDataGrid = new AdvancedDataGrid();
+					advancedDataGrid.setStyle("defaultLeafIcon",null);
+					advancedDataGrid.styleFunction = dgStyleFunction;
+					advancedDataGrid.percentWidth = 100;
+					advancedDataGrid.percentHeight = 100;
+					var columns:Array = new Array();
+					getDataGridColumns(columns,false);
+					var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "startDateTime";
+					advancedDataGridColumn.headerText = "Date";
+					advancedDataGridColumn.labelFunction = getDateLabel;
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "endDateTime";
+					advancedDataGridColumn.headerText = "Out";
+					advancedDataGridColumn.labelFunction = getDateLabel;
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "onClock";
+					advancedDataGridColumn.headerText = "On Clock";
+					advancedDataGridColumn.labelFunction = getTotalTime;
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "billable";
+					advancedDataGridColumn.headerText = "Billable";
+					advancedDataGridColumn.labelFunction = getTotalTime;
+					columns.push(advancedDataGridColumn);
+					advancedDataGrid.columns = columns;
+					dgBox.addChild(advancedDataGrid);
+					advDataGridHandler();
+				} else if(employeeTimeExportBean.detail==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeReportsCmd.Showtotalsonly')){
+					groupRecords();
+					advancedDataGrid = new AdvancedDataGrid();
+					advancedDataGrid.dataProvider = timeCardList;
+					advancedDataGrid.percentWidth = 100;
+					advancedDataGrid.percentHeight = 100;
+					var columns:Array = new Array();
+					getDataGridColumns(columns,true);
+					var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "totalClock";
+					advancedDataGridColumn.headerText = "Total Clock";
+					advancedDataGridColumn.labelFunction = getTotalTimeLabelFunc;
+					columns.push(advancedDataGridColumn);
+					advancedDataGridColumn = new AdvancedDataGridColumn();
+					advancedDataGridColumn.dataField = "totalBillable";
+					advancedDataGridColumn.headerText = "Total Billable";
+					advancedDataGridColumn.labelFunction = getTotalTimeLabelFunc;
+					columns.push(advancedDataGridColumn);
+					advancedDataGrid.columns = columns;
+					dgBox.addChild(advancedDataGrid);
+				}
+			}
+			
+			private function groupRecords():void {
+				var dummyTimeCardList:ArrayCollection = new ArrayCollection();
+				if(employeeTimeExportBean.formatName=="By Name"){
+					for each(var timeCard:TimeCard in timeCardList) {
+						var checkFlag:int = 0;
+						for each(var timeCardObj:TimeCard in dummyTimeCardList){
+							if(timeCardObj.employeeName==timeCard.employeeName){
+								timeCardObj.totalClock = timeCardObj.totalClock + getTotalOnClockTime(timeCard); 
+								timeCardObj.totalBillable = timeCardObj.totalBillable + getTotalBillableTime(timeCard);
+								checkFlag=1;
+								break;
+							}
+						}
+						if(checkFlag==0) {
+							timeCard.totalClock = getTotalOnClockTime(timeCard);
+							timeCard.totalBillable = getTotalBillableTime(timeCard);
+							dummyTimeCardList.addItem(timeCard);
+						}
+					}
+				} else if(employeeTimeExportBean.formatName=="By SSN"){
+					for each(var timeCard:TimeCard in timeCardList) {
+						var checkFlag:int = 0;
+						for each(var timeCardObj:TimeCard in dummyTimeCardList){
+							if(timeCardObj.socialSecurity == timeCard.socialSecurity && timeCardObj.employeeName==timeCard.employeeName){
+								timeCardObj.totalClock = timeCardObj.totalClock + getTotalOnClockTime(timeCard); 
+								timeCardObj.totalBillable = timeCardObj.totalBillable + getTotalBillableTime(timeCard);
+								checkFlag=1;
+								break;
+							}
+						}
+						if(checkFlag==0) {
+							timeCard.totalClock = getTotalOnClockTime(timeCard);
+							timeCard.totalBillable = getTotalBillableTime(timeCard);
+							dummyTimeCardList.addItem(timeCard);
+						}
+					}
+				} else if(employeeTimeExportBean.formatName=="By Period"){
+					for each(var timeCard:TimeCard in timeCardList) {
+						var checkFlag:int = 0;
+						for each(var timeCardObj:TimeCard in dummyTimeCardList){
+							if(timeCardObj.period == timeCard.period && timeCardObj.employeeName==timeCard.employeeName){
+								timeCardObj.totalClock = timeCardObj.totalClock + getTotalOnClockTime(timeCard); 
+								timeCardObj.totalBillable = timeCardObj.totalBillable + getTotalBillableTime(timeCard);
+								checkFlag=1;
+								break;
+							}
+						}
+						if(checkFlag==0) {
+							timeCard.totalClock = getTotalOnClockTime(timeCard);
+							timeCard.totalBillable = getTotalBillableTime(timeCard);
+							dummyTimeCardList.addItem(timeCard);
+						}
+					}
+				} else if(employeeTimeExportBean.formatName=="By Week"){
+					for each(var timeCard:TimeCard in timeCardList) {
+						var checkFlag:int = 0;
+						for each(var timeCardObj:TimeCard in dummyTimeCardList){
+							if(timeCardObj.week == timeCard.week && timeCardObj.employeeName==timeCard.employeeName){
+								timeCardObj.totalClock = timeCardObj.totalClock + getTotalOnClockTime(timeCard); 
+								timeCardObj.totalBillable = timeCardObj.totalBillable + getTotalBillableTime(timeCard);
+								checkFlag=1;
+								break;
+							}
+						}
+						if(checkFlag==0) {
+							timeCard.totalClock = getTotalOnClockTime(timeCard);
+							timeCard.totalBillable = getTotalBillableTime(timeCard);
+							dummyTimeCardList.addItem(timeCard);
+						}
+					}
+				} else if(employeeTimeExportBean.formatName=="By Month"){
+					for each(var timeCard:TimeCard in timeCardList) {
+						var checkFlag:int = 0;
+						for each(var timeCardObj:TimeCard in dummyTimeCardList){
+							if(timeCardObj.month == timeCard.month && timeCardObj.employeeName==timeCard.employeeName){
+								timeCardObj.totalClock = timeCardObj.totalClock + getTotalOnClockTime(timeCard); 
+								timeCardObj.totalBillable = timeCardObj.totalBillable + getTotalBillableTime(timeCard);
+								checkFlag=1;
+								break;
+							}
+						}
+						if(checkFlag==0) {
+							timeCard.totalClock = getTotalOnClockTime(timeCard);
+							timeCard.totalBillable = getTotalBillableTime(timeCard);
+							dummyTimeCardList.addItem(timeCard);
+						}
+					}
+				} else if(employeeTimeExportBean.formatName=="By Year"){
+					for each(var timeCard:TimeCard in timeCardList) {
+						var checkFlag:int = 0;
+						for each(var timeCardObj:TimeCard in dummyTimeCardList){
+							if(timeCardObj.year == timeCard.year && timeCardObj.employeeName==timeCard.employeeName){
+								timeCardObj.totalClock = timeCardObj.totalClock + getTotalOnClockTime(timeCard); 
+								timeCardObj.totalBillable = timeCardObj.totalBillable + getTotalBillableTime(timeCard);
+								checkFlag=1;
+								break;
+							}
+						}
+						if(checkFlag==0) {
+							timeCard.totalClock = getTotalOnClockTime(timeCard);
+							timeCard.totalBillable = getTotalBillableTime(timeCard);
+							dummyTimeCardList.addItem(timeCard);
+						}
+					}
+				}
+				timeCardList = dummyTimeCardList;
 			}
 			
 			private function getGroupingFieldName(groupingField:GroupingField):void {
@@ -103,9 +233,12 @@
 				return output; 
 	        }
 			
-			private function getDataGridColumns(columns:Array):void {
+			private function getDataGridColumns(columns:Array, showDataField:Boolean):void {
 				var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
 				if(employeeTimeExportBean.formatName=="By Name"){
+					if(showDataField){
+						advancedDataGridColumn.dataField = "employeeName";
+					}
 					advancedDataGridColumn.headerText = "Name"; 
 					columns.push(advancedDataGridColumn);
 					advancedDataGridColumn = new AdvancedDataGridColumn();
@@ -117,6 +250,9 @@
 					advancedDataGridColumn.headerText = "Period";
 					columns.push(advancedDataGridColumn);
 				} else if(employeeTimeExportBean.formatName=="By SSN"){
+					if(showDataField){
+						advancedDataGridColumn.dataField = "socialSecurity";
+					}
 					advancedDataGridColumn.headerText = "SSN";
 					columns.push(advancedDataGridColumn);
 					advancedDataGridColumn = new AdvancedDataGridColumn();
@@ -128,6 +264,9 @@
 					advancedDataGridColumn.headerText = "Period";
 					columns.push(advancedDataGridColumn);
 				} else if(employeeTimeExportBean.formatName=="By Period"){
+					if(showDataField){
+						advancedDataGridColumn.dataField = "period";
+					}
 					advancedDataGridColumn.headerText = "Period";
 					columns.push(advancedDataGridColumn);
 					advancedDataGridColumn = new AdvancedDataGridColumn();
@@ -139,6 +278,9 @@
 					advancedDataGridColumn.headerText = "SSN";
 					columns.push(advancedDataGridColumn);
 				} else if(employeeTimeExportBean.formatName=="By Week"){
+					if(showDataField){
+						advancedDataGridColumn.dataField = "week";
+					}
 					advancedDataGridColumn.headerText = "Week";
 					columns.push(advancedDataGridColumn);
 					advancedDataGridColumn = new AdvancedDataGridColumn();
@@ -150,6 +292,9 @@
 					advancedDataGridColumn.headerText = "SSN";
 					columns.push(advancedDataGridColumn);
 				} else if(employeeTimeExportBean.formatName=="By Month"){
+					if(showDataField){
+						advancedDataGridColumn.dataField = "month";
+					}
 					advancedDataGridColumn.headerText = "Month";
 					columns.push(advancedDataGridColumn);
 					advancedDataGridColumn = new AdvancedDataGridColumn();
@@ -161,6 +306,9 @@
 					advancedDataGridColumn.headerText = "SSN";
 					columns.push(advancedDataGridColumn);
 				} else if(employeeTimeExportBean.formatName=="By Year"){
+					if(showDataField){
+						advancedDataGridColumn.dataField = "year";
+					}
 					advancedDataGridColumn.headerText = "Year";
 					columns.push(advancedDataGridColumn);
 					advancedDataGridColumn = new AdvancedDataGridColumn();
@@ -344,6 +492,10 @@
 					}
 				}
 				return "";
+			}
+			
+			private function getTotalTimeLabelFunc(item:Object, column:AdvancedDataGridColumn):String {
+				return convertMilliSecondsToString(item[column.dataField],true);
 			}
 	        
 		]]>
