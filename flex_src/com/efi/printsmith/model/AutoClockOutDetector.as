@@ -6,6 +6,7 @@ package com.efi.printsmith.model
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
+	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.formatters.NumberFormatter;
 	import mx.rpc.events.FaultEvent;
@@ -24,6 +25,8 @@ package com.efi.printsmith.model
 		
 		public var dataServiceTimeCard:RemoteObject;
 		
+		public var dataServiceTimeCardRetrieval:RemoteObject;
+		
 		public var dataServiceEmployee:RemoteObject;
 		
 		public var numFormatter:NumberFormatter;
@@ -38,6 +41,10 @@ package com.efi.printsmith.model
 			dataServiceEmployee = new RemoteObject();
 			dataServiceEmployee.destination = "dataService";
 			dataServiceEmployee.addEventListener(FaultEvent.FAULT,faultHandler,false,0,true);
+			dataServiceTimeCardRetrieval = new RemoteObject();
+			dataServiceTimeCardRetrieval.destination = "dataService";
+			dataServiceTimeCardRetrieval.addEventListener(ResultEvent.RESULT,resultHandler,false,0,true);
+			dataServiceTimeCardRetrieval.addEventListener(FaultEvent.FAULT,faultHandler,false,0,true);
 		}
 		
 		public function start():void {
@@ -48,29 +55,11 @@ package com.efi.printsmith.model
 				var startDateTime:Number = (timeCard.startDateTime.hours*60*60*1000)+(timeCard.startDateTime.minutes*60*1000);
 				var todayTime:Number = (todayDate.hours*60*60*1000)+(todayDate.minutes*60*1000);
 				var autoClcokOutTime:Number = (employee.autoHour*60*60*1000)+(employee.autoMin*60*1000);
-				trace("Employee =="+employee.lastName+", "+employee.firstName);
-				trace("Auto Time=="+employee.autoHour+":"+employee.autoMin);
+				trace("AutoClockOut Employee =="+employee.lastName+", "+employee.firstName);
+				trace("AutoClockOut Time=="+employee.autoHour+":"+employee.autoMin);
 				if((todayDate>=timeCardStartDate) || (todayTime>=autoClcokOutTime && startDateTime<autoClcokOutTime)) {
 					timer.stop();
-					var remoteObject:RemoteObject = new RemoteObject();
-					remoteObject.destination = "dataService";
-					remoteObject.addEventListener(ResultEvent.RESULT,function(event:ResultEvent):void {
-						employee = event.result as Employee;
-						if(employee.clockIn || employee.clockBreak){
-							if (employee.clockBreak == true)
-							{
-								setTimeCard("breakstopwithclockout");
-							} else {
-								setTimeCard("out");
-							}
-							employee.clockIn= false;
-							employee.clockOut = true;
-							employee.clockBreak= false;
-							setEmployee();
-						}
-					},false,0,true);
-					remoteObject.addEventListener(FaultEvent.FAULT,faultHandler,false,0,true);
-					remoteObject.getById("Employee",employee.id);
+					dataServiceTimeCardRetrieval.getByClockInOut("TimeCard",employee);
 				}
 			});
 			timer.start();
@@ -81,6 +70,33 @@ package com.efi.printsmith.model
 				if(timer.running){
 					timer.stop();
 				}
+			}
+		}
+		
+		private function resultHandler(event:ResultEvent):void {
+			var timeCardList:ArrayCollection = event.result as ArrayCollection;
+			if(timeCardList!=null && timeCardList.length>0) {
+				timeCard = timeCardList.getItemAt(0,0) as TimeCard;
+				var remoteObject:RemoteObject = new RemoteObject();
+				remoteObject.destination = "dataService";
+				remoteObject.addEventListener(ResultEvent.RESULT,function(event:ResultEvent):void {
+					employee = event.result as Employee;
+					if(employee.clockIn || employee.clockBreak){
+						if (employee.clockBreak == true)
+						{
+							setTimeCard("breakstopwithclockout");
+						} else {
+							setTimeCard("out");
+						}
+						employee.clockIn= false;
+						employee.clockOut = true;
+						employee.clockBreak= false;
+						setEmployee();
+					}
+				},false,0,true);
+				remoteObject.addEventListener(FaultEvent.FAULT,faultHandler,false,0,true);
+				remoteObject.getById("Employee",employee.id);
+				trace("AutoClockOut Employee =="+employee.lastName+", "+employee.firstName+" Clocked Out at "+new Date());
 			}
 		}
 		
