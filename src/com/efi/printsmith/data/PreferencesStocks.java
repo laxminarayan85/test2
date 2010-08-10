@@ -975,6 +975,96 @@ public class PreferencesStocks extends ModelBase {
     this.sizeTable = newVal;
   }
 	
+	/*Properties for Chain of Custody section*/
+	
+	private String open;
+  	private String close;
+  	private Boolean includeCerifiedOption;
+  	private Boolean includeManagementType;
+  	private Boolean includeRecyclePercent;
+  	
+  	
+	
+	/**
+	 * @return the open
+	 */
+	public String getOpen() {
+		return open;
+	}
+
+
+	/**
+	 * @param open the open to set
+	 */
+	public void setOpen(String open) {
+		this.open = open;
+	}
+
+
+	/**
+	 * @return the close
+	 */
+	public String getClose() {
+		return close;
+	}
+
+
+	/**
+	 * @param close the close to set
+	 */
+	public void setClose(String close) {
+		this.close = close;
+	}
+
+
+	/**
+	 * @return the includeCerifiedOption
+	 */
+	public Boolean getIncludeCerifiedOption() {
+		return includeCerifiedOption;
+	}
+
+
+	/**
+	 * @param includeCerifiedOption the includeCerifiedOption to set
+	 */
+	public void setIncludeCerifiedOption(Boolean includeCerifiedOption) {
+		this.includeCerifiedOption = includeCerifiedOption;
+	}
+
+
+	/**
+	 * @return the includeManagementType
+	 */
+	public Boolean getIncludeManagementType() {
+		return includeManagementType;
+	}
+
+
+	/**
+	 * @param includeManagementType the includeManagementType to set
+	 */
+	public void setIncludeManagementType(Boolean includeManagementType) {
+		this.includeManagementType = includeManagementType;
+	}
+
+
+	/**
+	 * @return the includeRecyclePercent
+	 */
+	public Boolean getIncludeRecyclePercent() {
+		return includeRecyclePercent;
+	}
+
+
+	/**
+	 * @param includeRecyclePercent the includeRecyclePercent to set
+	 */
+	public void setIncludeRecyclePercent(Boolean includeRecyclePercent) {
+		this.includeRecyclePercent = includeRecyclePercent;
+	}
+
+
 	/**
 	 * @generated
 	 */		
