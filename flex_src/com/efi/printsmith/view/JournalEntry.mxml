@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init();" width="828" height="596"
+	 close="PopUpManager.removePopUp(this);"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.JournalEntry')}" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.JournalEntry')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
+	
+	
+	<mx:RemoteObject id="dataService" destination="dataService">
+	  <mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	</mx:RemoteObject> 
+	<mx:RemoteObject id="datataxTableService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxTableResult(event)"/>
+	</mx:RemoteObject> 
+	<mx:RemoteObject id="dataSaleRepService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesRepResult(event)"/>
+	</mx:RemoteObject> 
+	
+<mx:Script>
+                                   
+<![CDATA[
+	import com.efi.printsmith.data.Invoice;
+	import mx.collections.ArrayCollection;        
+    import com.efi.printsmith.data.Account;          
+	import mx.managers.PopUpManager;                                 
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
+
+	[Bindable]                                
+	private var salesCat:ArrayCollection = new ArrayCollection();
+	[Bindable]                                
+	private var salesReps:ArrayCollection = new ArrayCollection();
+	[Bindable]                                
+	private var taxTables:ArrayCollection = new ArrayCollection();
+	[Bindable]                                
+	private var salesCatQuantity:ArrayCollection = new ArrayCollection();
+	[Bindable]                                
+	private var account:Account;
+	[Bindable]
+	private var invoice:Invoice;
+	
+	
+	public function init():void{
+		taxTables = new  ArrayCollection();
+		datataxTableService.getAll("TaxTable");
+	}	
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error");                                 
+	}
+	private function handleLoadTaxTableResult(ev:ResultEvent):void{
+		taxTables = ev.result as ArrayCollection;
+	}
+	
+	private function handleSaveResult(ev:ResultEvent):void {
+		
+	}
+	
+	private function handleLoadSalesRepResult(ev:ResultEvent):void {
+		
+	}
+]]>        
+</mx:Script>
+	<mx:Canvas x="0" y="0" width="100%" height="100%">
+		<mx:Button x="16" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.SelectCustomer')}" id="select_account"/>
+		<mx:Button x="167" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.SelectInvoice')}" id="select_invoice"/>
+		<mx:Label x="-1" y="40"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Name')}"/>
+
+		<mx:TextInput x="145" y="38" text="test" id="customer_name"/>
+		<mx:Label x="10" y="70" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Status')}"/>
+		<mx:TextInput x="145" y="68" id="customer_status" text="status"/>
+		<mx:CheckBox x="371" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.PrintDocument')}"/>
+		<mx:CheckBox x="517" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.UpdateCustomerStatis')}"/>
+		<mx:CheckBox x="371" y="38" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.AffectSales')}"/>
+		<mx:Label x="313" y="70"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.TaxTable')}" width="99"/>
+		<mx:Label x="550" y="70" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Balance')}"/>
+		<mx:ComboBox x="420" y="68" width="122" id="salestax_combo" dataProvider="{taxTables}"></mx:ComboBox>
+		<mx:TextInput x="686" y="68" id="header_balance" width="106"/>
+		<mx:Canvas x="10" y="98" width="782" height="442">
+			<mx:DataGrid x="10" y="19" width="321" height="403">
+				<mx:columns>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.SalesCategory')}" dataField="col1"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Adjustment')}" dataField="col2"/>
+					
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:Label x="361" y="44"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Shipping')}"/>
+			<mx:Label x="361" y="22" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Discounts')}"/>
+			<mx:Label x="349" y="52" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Markups')}"/>
+			<mx:Label x="361" y="82" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.SubTotal')}"/>
+			<mx:Label x="347" y="112" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.TaxSub')}"/>
+			<mx:Label x="350" y="138" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Tax')}"/>
+			<mx:Label x="350" y="168" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Total')}"/>
+			<mx:Label x="358" y="198" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.NewBalance')}"/>
+			<mx:TextInput x="489" y="20" id="discount_input" width="113"/>
+			<mx:TextInput x="489" y="50" id="markup_input" width="113"/>
+			<mx:TextInput x="489" y="80" id="subTotal_input" width="113"/>
+			<mx:TextInput x="489" y="110" id="taxSub_input" width="113"/>
+			<mx:TextInput x="489" y="136" id="tax_input" width="113"/>
+			<mx:TextInput x="489" y="166" id="total_input" width="113"/>
+			<mx:TextInput x="489" y="196" id="newBalance_input" width="113"/>
+			<mx:Button x="639" y="20" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Reverse')}" width="116"/>
+			<mx:Button x="639" y="64" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.OnlyTax')}" width="116"/>
+			<mx:CheckBox x="636" y="110" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxDetRpt.Taxable')}"/>
+			<mx:Label x="372" y="245" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Description')}"/>
+			<mx:TextInput x="489" y="243" id="description_input"/>
+			<mx:Label x="358" y="271" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custRepCmd.SalesRep')}"/>
+			<mx:ComboBox x="489" y="269" width="113" id="salesRep_combo" dataProvider="{salesReps}"></mx:ComboBox>
+			<mx:Label x="339" y="313"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Comment')}"/>
+			<mx:TextArea x="489" y="312" height="68" width="283" id="comment_area"/>
+			<mx:Button x="339" y="400" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.CalcAdjustment')}"/>
+			<mx:TextInput x="491" y="400" width="82" id="adjust_input"/>
+		</mx:Canvas>
+		
+	</mx:Canvas>
+                	 
+	 
+</mx:TitleWindow>

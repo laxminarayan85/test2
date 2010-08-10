@@ -16,8 +16,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
@@ -41,7 +44,7 @@ import com.inet.report.Section;
 /**
  * @author <a href="proyal@pace2020.com">peter royal</a>
  */
-public class CrystalClearServlet {
+public class CrystalClearServlet extends HttpServlet implements Servlet {
 	public static final String CCPROPS_LOCATION = "properties.location";
 	private static final Pattern LOADKEY = Pattern.compile("\"key=(.*)\"");
 
