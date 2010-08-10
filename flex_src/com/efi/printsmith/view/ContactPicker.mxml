@@ -16,6 +16,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.data.ComLink;
 	import com.efi.printsmith.common.components.filter.FilterProperty;
 	import com.efi.printsmith.common.components.filter.FilterSearchBy;
 	import mx.collections.Sort;
@@ -152,7 +153,9 @@
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Ref'), fp);
 		sc.addItem(sc1);
 		
-		// MS: need to add phone here...
+		fp = new FilterProperty(null, "comLinks",true, "value","type","Phone");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Phone'), fp);
+		sc.addItem(sc1);
 		
 		fp = new FilterProperty(new FilterProperty(null, "masterAcct"), "parentAccount");
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling'), fp);
@@ -169,6 +172,20 @@
 		else
 			return "";
 	}
+//	private function phoneFunction(temp:Object,column:DataGridColumn):String{
+//		var tempContact:Contact = temp as Contact;
+//		
+//		var ac:ArrayCollection =  tempContact.comLinks ;
+//		if (ac!= null)	{
+//			for (var i:int=0; i<ac.length; i++)	{
+//				var cl:ComLink = ac.getItemAt(i) as ComLink;
+//				if (cl.type == "Phone")	{
+//					return cl.value;
+//				}
+//			}
+//		}
+//		return "";
+//	}
 ]]>        
 </mx:Script>
                              
@@ -180,7 +197,8 @@
 		<mx:columns>
 		 <mx:DataGridColumn   sortDescending="false"  sortable="true" dataField="lastName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" />                          
 		 <mx:DataGridColumn dataField="firstName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" />
-		  <mx:DataGridColumn  labelFunction="parentLabel" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountName')}" />   
+		  <mx:DataGridColumn  labelFunction="parentLabel" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountName')}" />
+		  <!--<mx:DataGridColumn  labelFunction="phoneFunction" headerText="Phone" />-->      
 		</mx:columns>
 		</mx:DataGrid>
 		<common:PickerFilter x="10" y="495" width="417" height="26" searchComponent="{dataGrid}" listData="{contacts}" searchCriteria="{getSearchBy()}" />

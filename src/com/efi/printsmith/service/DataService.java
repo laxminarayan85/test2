@@ -442,16 +442,25 @@ public class DataService extends HibernateService {
 	public List<?> getContactPicker(String className) throws Exception {
 		log.debug("** getContactPicker .");
 		EntityManager em = entityManagerFactory.createEntityManager();
-		List<?> resultList = new ArrayList<Object>();
+		List<Object> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
 		columnstring = "a.id, a.firstName, a.lastName, a.contactId, a.parentAccount ";
 		try {
-			String queryString = "select new " + className + "( "
-					+ columnstring + ") from " + className + " a";
+			//String queryString = "select new " + className + "( "
+			//		+ columnstring + ") from " + className + " a";
+			String queryString = " from " + className;
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
+			
+			if (resultList != null){
+				for (int i=0; i<resultList.size(); i++)	{
+					Contact c = (Contact) (resultList.get(i));
+					Hibernate.initialize(c.getComLinks());									 
+				}
+			} 
+			 
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
@@ -1992,7 +2001,7 @@ public class DataService extends HibernateService {
 				for (int i = 0; i < contact.getComLinks().size(); i++) {
 					 ComLink link = contact.getComLinks().get(i);
 					if (link == null) {
-						log.error("null charge found");
+						log.error("null contact found");
 					}
 				}
 				for (int i = 0; i < contact.getShipToAddress().size(); i++) {
