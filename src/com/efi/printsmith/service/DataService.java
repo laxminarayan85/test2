@@ -282,7 +282,7 @@ public class DataService extends HibernateService {
 		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect, a.externalAcctId, a.contact ";
 		try {
 			String queryString = "select new " + className + "( "
-					+ columnstring + ") from " + className + " a";
+					+ columnstring + ") from " + className + " a order by title";
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();

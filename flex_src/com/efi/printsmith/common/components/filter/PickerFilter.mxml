@@ -33,7 +33,11 @@
 					//cboSearchBy.visible = false;
 				}		
 			}
-			
+			public function clearFilter(resetDataProvider:Boolean):void	{
+				txtSearchString.text = "";
+				if (resetDataProvider)	
+					_searchComponent["dataProvider"] = _listData;
+			}
 			protected function search():void	{
 				if (txtSearchString.text == "")		{
 					_searchComponent["dataProvider"] = _listData;

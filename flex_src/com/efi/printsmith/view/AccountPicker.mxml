@@ -16,6 +16,10 @@
 <mx:Script>
                                    
 <![CDATA[
+	import mx.collections.SortField;
+	import mx.collections.Sort;
+	import mx.events.DataGridEvent;
+	import mx.controls.dataGridClasses.DataGridColumn;
 	import com.efi.printsmith.common.components.filter.FilterProperty;
 	import com.efi.printsmith.common.components.filter.FilterSearchBy;
 	import mx.collections.ArrayCollection; 
@@ -59,6 +63,7 @@
 	                    
 	private function handleLoadResult(event:ResultEvent):void {
 		accounts = event.result as ArrayCollection;
+		
 		accounts.filterFunction = accountFilter;
 		refreshData();
 	}
@@ -87,7 +92,7 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();   
 		accountTypeRadio.selectedValue = "Customer";  
-		prospect_radio.enabled = prospect_boolean;
+//		prospect_radio.enabled = prospect_boolean;
 		accounts.filterFunction = accountFilter;
 	    PopUpManager.centerPopUp(this);
 //	    resetFocus();                                     
@@ -118,8 +123,38 @@
 		return showItem
 	}
 	private function accountTypeChange():void {
+		pickerFilter.clearFilter(true);
+		
+		if (accountTypeRadio.selectedValue == "Contacts") {
+			buildContactList();	
+		}
+		else	{
+			buildCustProspectList();
+			
+		}
 		refreshData();	
+	}
+	
+	private function buildCustProspectList():void	{
+		accounts.filterFunction = accountFilter;
+		dgCol.dataField = "title";
+		dgCol.labelFunction = null;
+		pickerFilter.searchCriteria = getSearchByForAccount();
+ 
 	}  
+	private function buildContactList():void	{
+		accounts.filterFunction = null;
+		dgCol.dataField = null;
+		dgCol.labelFunction = contactLabel;
+		pickerFilter.searchCriteria = getSearchByForContact();
+		
+	}
+	
+	private function contactLabel(item:Object, column:DataGridColumn):String	{
+		var acct:Account = item as Account;
+		return acct.contact.lastName + ", " + acct.contact.firstName;
+	}
+	
 	private function refreshData():void{
 		dataGrid.invalidateList();
 		accounts.refresh();
@@ -162,8 +197,38 @@
 //	private function updateDataGrid():void {
 //		dataService.getAccountsByPartialName(filter_field.text);
 //	}
-	
-	private function getSearchBy():ArrayCollection {
+
+	private function getSearchByForContact():ArrayCollection {
+		var sc:ArrayCollection = new ArrayCollection();
+		
+		var fp:FilterProperty = new FilterProperty(new FilterProperty(null, "firstName"), "contact");
+		var sc1:FilterSearchBy = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName'), fp);
+		sc.addItem(sc1);
+
+		fp = new FilterProperty(new FilterProperty(null, "lastName"), "contact");
+		var sc1:FilterSearchBy = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName'), fp);
+		sc.addItem(sc1);
+		
+		fp = new FilterProperty(null, "accountId");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Acct'), fp);
+		sc.addItem(sc1);
+
+		fp = new FilterProperty(null, "externalRef");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Ref'), fp);
+		sc.addItem(sc1);
+
+		fp = new FilterProperty(new FilterProperty(null, "comLinks",true, "value","type","Phone"), "contact");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Phone'), fp);
+		sc.addItem(sc1);
+		
+		fp = new FilterProperty(null, "masterAcct");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling'), fp);
+		sc.addItem(sc1);
+
+		return sc;
+		
+	}
+	private function getSearchByForAccount():ArrayCollection {
 		var sc:ArrayCollection = new ArrayCollection();
 		
 		var fp:FilterProperty = new FilterProperty(null, "title");
@@ -198,13 +263,13 @@
 		<mx:DataGrid id="dataGrid" width="457" height="420" dataProvider="{accounts}"
 		doubleClickEnabled="true" doubleClick="selectAccount()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" y="65">               
 		<mx:columns>
-		     <mx:DataGridColumn dataField="title" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Name')}" />                         
+		     <mx:DataGridColumn id="dgCol" dataField="title" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Name')}" />                         
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectAccount();"  width="108" x="471" y="65"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.New')}" enabled="true" click="newAccount();" id="new_button" width="108" x="471" y="95"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="cancelPicker();" id="cancel_button" width="108" x="471" y="150"/>
-		<common:PickerFilter x="10" y="495" width="417" height="26" searchComponent="{dataGrid}" listData="{accounts}" searchCriteria="{getSearchBy()}" />
+		<common:PickerFilter id="pickerFilter" x="10" y="495" width="417" height="26" searchComponent="{dataGrid}" listData="{accounts}" searchCriteria="{getSearchByForAccount()}" />
 		<!--<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>
@@ -219,6 +284,7 @@
 		<mx:RadioButtonGroup id="accountTypeRadio" change="accountTypeChange()"/>
 		<mx:RadioButton x="49" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Customers')}" groupName="accountTypeRadio" value="Customer" id="customer_radio"/>
 		<mx:RadioButton x="190" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Prospects')}" groupName="accountTypeRadio" value="Prospects" id="prospect_radio"/>
+		<mx:RadioButton x="300" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}" groupName="accountTypeRadio" value="Contacts" id="contact_radio"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
