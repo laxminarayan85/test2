@@ -165,16 +165,15 @@ public class MatrixUtilities {
 		long lastQty = 0;
 		double lastPrice = 0.0;
 		for (i = 0; i < elements.size(); i++) {
-			if (elements.get(i).getQty() > 0 && elements.get(i).getQty() >= lookup) {
-				break;
-			}
-			if (i >= elements.size()) i = i - 1;
 			if (i > 0) {
 				lastQty = elements.get(i-1).getQty();
 				lastPrice = elements.get(i-1).getPrice1().doubleValue();
 			} else {
 				lastQty = 0;
 				lastPrice = 0.0;
+			}
+			if (elements.get(i).getQty() > 0 && elements.get(i).getQty() >= lookup) {
+				break;
 			}
 		}
 		if (i >= elements.size()) i = i - 1;

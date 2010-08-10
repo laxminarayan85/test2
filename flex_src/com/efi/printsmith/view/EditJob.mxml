@@ -102,6 +102,10 @@
 			<mx:SetProperty target="{job_price}" name="text">
 				<mx:value>{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice)}</mx:value>
 			</mx:SetProperty>
+			<mx:RemoveChild target="{label14}"/>
+			<mx:RemoveChild target="{number_lines}"/>
+			<mx:RemoveChild target="{job_unit_price}"/>
+			<mx:RemoveChild target="{label15}"/>
 		</mx:State>
 		<mx:State name="LargeFormat">
 			<mx:RemoveChild target="{runsize_label}"/>
