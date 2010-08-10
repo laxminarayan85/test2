@@ -310,13 +310,15 @@
 		clockOut.enabled = false;
 		clockBreak.enabled = false;
 		var count:int=-1;
+		var checkFlag:Boolean = false
 		for each(var autoClockOutDetectorObj:AutoClockOutDetector in autoClockOutDetectortList){
+			count++;
 			if(autoClockOutDetectorObj.employee.id==employee.id){
-				count++;
+				checkFlag = true;
 				break;	
 			}
 		}
-		if(count!=-1){
+		if(count!=-1 && checkFlag){
 			var autoClockOutDetectorObject:AutoClockOutDetector = autoClockOutDetectortList.getItemAt(count) as AutoClockOutDetector;
 			autoClockOutDetectorObject.stop();
 			autoClockOutDetectortList.removeItemAt(count);
