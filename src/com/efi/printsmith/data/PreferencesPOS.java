@@ -832,7 +832,7 @@ public class PreferencesPOS extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.ALL}, optional=true)
 	private FontDefinition listFontBean;
 	
 	/**
@@ -855,7 +855,7 @@ public class PreferencesPOS extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.ALL}, optional=true)
 	private FontDefinition headerFontBean;
 	
 	/**
