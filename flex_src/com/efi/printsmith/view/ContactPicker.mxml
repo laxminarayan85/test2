@@ -172,6 +172,20 @@
 		else
 			return "";
 	}
+	
+	private function parentAcctSort(obj1:Object, obj2:Object):int 	{
+		var con1:Contact = obj1 as Contact;
+		var con2:Contact = obj2 as Contact;
+		
+		if (con1.parentAccount.title < con2.parentAccount.title)	{
+			return -1;
+		}
+		else if (con1.parentAccount.title > con2.parentAccount.title)	{
+			return 1;
+		}
+		else
+			return 0;
+	}
 //	private function phoneFunction(temp:Object,column:DataGridColumn):String{
 //		var tempContact:Contact = temp as Contact;
 //		
@@ -197,7 +211,7 @@
 		<mx:columns>
 		 <mx:DataGridColumn   sortDescending="false"  sortable="true" dataField="lastName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" />                          
 		 <mx:DataGridColumn dataField="firstName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" />
-		  <mx:DataGridColumn  labelFunction="parentLabel" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountName')}" />
+		  <mx:DataGridColumn  labelFunction="parentLabel" sortCompareFunction="parentAcctSort" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountName')}" />
 		  <!--<mx:DataGridColumn  labelFunction="phoneFunction" headerText="Phone" />-->      
 		</mx:columns>
 		</mx:DataGrid>
