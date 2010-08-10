@@ -1,13 +1,9 @@
 <?xml version="1.0"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-    backgroundColor="#FFFFFF"
-    paddingTop="50" paddingBottom="50" paddingLeft="50">
+    backgroundColor="#FFFFFF">
 
     <mx:Script>
         <![CDATA[
-        	import mx.collections.ArrayCollection;
-        	import com.efi.printsmith.data.TimeCard;
-        	import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
             import mx.core.*
             
             // Declare and initialize the variables used in the component.
@@ -34,7 +30,7 @@
     
     <!-- The sizeToPage property is true by default, so the last
         page has only as many grid rows as are needed for the data. -->
-    <mx:PrintAdvancedDataGrid id="myDataGrid" width="60%" height="100%">
+    <mx:PrintAdvancedDataGrid id="myDataGrid" width="100%" height="100%">
     <!-- Specify the columns to ensure that their order is correct. -->
     </mx:PrintAdvancedDataGrid>
     
