@@ -178,7 +178,9 @@
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Ref'), fp);
 		sc.addItem(sc1);
 
-		//MS: Need to add phone here
+		fp = new FilterProperty(new FilterProperty(null, "comLinks",true, "value","type","Phone"), "contact");
+		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Phone'), fp);
+		sc.addItem(sc1);
 		
 		fp = new FilterProperty(null, "masterAcct");
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling'), fp);

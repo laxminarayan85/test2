@@ -279,13 +279,19 @@ public class DataService extends HibernateService {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
-		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect, a.externalAcctId ";
+		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect, a.externalAcctId, a.contact ";
 		try {
 			String queryString = "select new " + className + "( "
 					+ columnstring + ") from " + className + " a";
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
+			if (resultList != null){
+				for (int i=0; i<resultList.size(); i++){
+					Contact c = ((Account) (resultList.get(i))).getContact();
+					Hibernate.initialize(c.getComLinks());
+				}
+			}
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;

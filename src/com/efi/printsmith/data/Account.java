@@ -408,7 +408,7 @@ public class Account extends ModelBase {
 		this.prospect = prospect;
 	}
  	
-	public Account(long id, String Name, String accountID,String externalID, long masterID, boolean prospect, String externalAcctId) {
+	public Account(long id, String Name, String accountID,String externalID, long masterID, boolean prospect, String externalAcctId, Contact contact) {
 		this.id = id;
 		this.title = Name;
 		this.accountId = accountID;
@@ -416,6 +416,7 @@ public class Account extends ModelBase {
 		this.masterAcct = masterID;
 		this.prospect = prospect;
 		this.externalAcctId = externalAcctId;
+		this.contact = contact;
 	}
 
  	
