@@ -2048,27 +2048,7 @@ public class DataService extends HibernateService {
 		}
 		return taxTable;
 	}
-	
-	public CreditCard getCreditCardByPrevId(String prevId) throws Exception {
-		log.debug("** getCreditCardByPrevId called.");
-		CreditCard creditCard = null;
-		EntityManager em = entityManagerFactory.createEntityManager();
-		try {
-			Session session = (Session) em.getDelegate();
-			Query findQuery = em.createQuery("from CreditCard where prevId = '" + prevId + "'");
-			creditCard = (CreditCard) findQuery.getSingleResult();
-			if (creditCard != null) {
-				for (int i = 0; i < creditCard.getCreditCardTransactions().size(); i++) {
-					CreditCardTransactions creditCardTransactions = creditCard.getCreditCardTransactions().get(i);
-				}
-			}
-		} catch (Exception e) {
-			log.error(e);
-		} finally {
-			em.close();
-		}
-		return creditCard;
-	}
+
 	public InvoiceBase getInvoiceByInvoiceNumber(String invoiceNumber,
 			String docType) throws Exception {
 		log.debug("** getInvoice called.");

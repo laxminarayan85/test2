@@ -69,7 +69,7 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 			else if ("CC Number".equals(currentFieldToken)) {
 				CreditCard checkForCard = (CreditCard)dataService.getQuery("CreditCard", " where cardNumber = '" + currentImportToken + "'");
 				if (checkForCard != null) {
-					creditCard = dataService.getCreditCardByPrevId(checkForCard.getPrevId());
+					creditCard = checkForCard;
 				}
 				creditCard.setCardNumber(currentImportToken);
 			}
@@ -119,15 +119,13 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 			else if ("permanent".equals(currentFieldToken))
 				creditCardTransaction.setPermanent(Utilities.tokenToBooleanValue(currentImportToken));
 		}
-		//if (permanent != true) {
-			creditCardTransaction = (CreditCardTransactions)dataService.addUpdate(creditCardTransaction);
-			creditCard.addCreditCardTransactions(creditCardTransaction);
-		//}
-		creditCard = (CreditCard)dataService.addUpdate(creditCard);
 		if (contact != null) {
 			contact.setCreditCard(creditCard);
-			dataService.addUpdate(contact);
+			creditCard = (CreditCard)dataService.addUpdate(contact);
 		}
+		creditCard = (CreditCard)dataService.addUpdate(creditCard);
+		creditCardTransaction.setCreditCard(creditCard);
+		dataService.addUpdate(creditCardTransaction);
 		return null;
 	}
 }
