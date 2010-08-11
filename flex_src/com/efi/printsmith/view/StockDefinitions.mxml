@@ -204,6 +204,8 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import mx.collections.Sort;
+	import mx.collections.SortField;
 	import com.efi.printsmith.events.commandEvents.StockDefinitions.DeleteStockDefinitionEvent;
 	import com.efi.printsmith.data.PressDefinition;
 	import com.efi.printsmith.data.StockDefinition;
@@ -990,7 +992,7 @@
 	
 	private function handleLoadVendor(ev:ResultEvent):void {
 		 stockVendor = ev.result as ArrayCollection;
-		 
+		 sortArray(stockVendor, "name");
 		 if ( stockDefinitions.vendor != null){
 		 	cboVendor.selectedIndex = findItem(stockDefinitions.vendor.name, stockVendor);
 		 }
@@ -1001,10 +1003,8 @@
 		 if ( stockDefinitions.grade != null){
 		 	cboStockGrade.selectedIndex = findItem(stockDefinitions.grade.name, stockGrade);
 		 }
-		 
-		 	
-		
 	}
+	
 	private function handleLoadStockType(ev:ResultEvent):void {
 		 stockType = ev.result as ArrayCollection;
 		 
@@ -1012,14 +1012,27 @@
 	
 	private function handleLoadStockColor(ev:ResultEvent):void {
 		 stockColor = ev.result as ArrayCollection;
+		 sortArray(stockColor, "name");
 		 if ( stockDefinitions.color != null){
 		 	cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
 		 }
 		 
 	}
-
+	
+	private function sortArray(ac:ArrayCollection, prop:String):void	{
+		var sortField:SortField = new SortField();
+		sortField.name = prop;
+		sortField.caseInsensitive = true;
+		sortField.numeric = false;
+		var sort:Sort = new Sort();
+		sort.fields = [sortField];
+		ac.sort = sort;
+		ac.refresh();	
+	}
+	
 	private function handleLoadStockGenericColor(ev:ResultEvent):void {
 		 stockGenericColor = ev.result as ArrayCollection;
+		 sortArray(stockGenericColor, "name");
 		 if ( stockDefinitions.genericColor != null){
 		 	cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor.name, stockGenericColor);
 		 }
@@ -1027,6 +1040,7 @@
 	
 	private function handleLoadStockFinish(ev:ResultEvent):void {
 		 stockFinish = ev.result as ArrayCollection;
+		 sortArray(stockFinish, "name"); 
 		  if ( stockDefinitions.finish != null){
 		 	cboFinish.selectedIndex = findItem(stockDefinitions.finish.name, stockFinish);
 		 }
