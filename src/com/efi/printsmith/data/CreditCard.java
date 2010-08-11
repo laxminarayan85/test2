@@ -77,11 +77,6 @@ public class CreditCard extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String CREDITCARDTRANSACTIONS = "CreditCardTransactions";
-
-	/**
-	 * @generated
-	 */
 	public CreditCard() {
     this.created = new Date();
     this.modified = new Date();
@@ -275,37 +270,6 @@ public class CreditCard extends ModelBase {
 	
 	/**
 	 * @generated
-	 */	
-    @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "creditcard_creditcardtransactions")
-	private java.util.List<CreditCardTransactions> creditCardTransactions;
-	
-	/**
-	 * @generated
- 	 */
-	public java.util.List<CreditCardTransactions> getCreditCardTransactions(){
-    return creditCardTransactions; 
-  }
-
-	/**
-	 * @generated
-	 */	
-	public void addCreditCardTransactions(CreditCardTransactions obj) {
-    if (creditCardTransactions == null) {
-      creditCardTransactions = new java.util.ArrayList<CreditCardTransactions>();
-    }
-    creditCardTransactions.add(obj);
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setCreditCardTransactions(java.util.List<CreditCardTransactions> newVal) {
-    this.creditCardTransactions = newVal;
-  }
-	
-	/**
-	 * @generated
 	 */		
 	@Transient
 	@Override
@@ -318,7 +282,6 @@ public class CreditCard extends ModelBase {
     if (TYPE.equals(propertyName)) return getType();
     if (ENCRYPTION.equals(propertyName)) return getEncryption();
     if (CARDDISPLAYNUMBER.equals(propertyName)) return getCardDisplayNumber();
-    if (CREDITCARDTRANSACTIONS.equals(propertyName)) return getCreditCardTransactions();
     return super.getProperty(propertyName);
   }
 	
@@ -336,7 +299,6 @@ public class CreditCard extends ModelBase {
     if (TYPE.equals(propertyName)) setType((String)newValue); else
     if (ENCRYPTION.equals(propertyName)) setEncryption((String)newValue); else
     if (CARDDISPLAYNUMBER.equals(propertyName)) setCardDisplayNumber((String)newValue); else
-    if (CREDITCARDTRANSACTIONS.equals(propertyName)) setCreditCardTransactions((java.util.List<CreditCardTransactions>)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -362,8 +324,6 @@ public class CreditCard extends ModelBase {
       return new Class<?>[] {String.class};		
     if (CARDDISPLAYNUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (CREDITCARDTRANSACTIONS.equals(propertyName)) 
-      return new Class<?>[] {java.util.List.class, CreditCardTransactions.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -382,7 +342,6 @@ public class CreditCard extends ModelBase {
     if (TYPE.equals(propertyName)) return CreditCard.class;
     if (ENCRYPTION.equals(propertyName)) return CreditCard.class;
     if (CARDDISPLAYNUMBER.equals(propertyName)) return CreditCard.class;
-    if (CREDITCARDTRANSACTIONS.equals(propertyName)) return CreditCard.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -409,8 +368,6 @@ public class CreditCard extends ModelBase {
     if (! SmartEquals(getEncryption(), objT.getEncryption()))
       return false;
     if (! SmartEquals(getCardDisplayNumber(), objT.getCardDisplayNumber()))
-      return false;
-    if (! SmartEquals(getCreditCardTransactions(), objT.getCreditCardTransactions()))
       return false;
     return true;
   }			
