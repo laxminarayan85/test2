@@ -160,6 +160,8 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 			this.employee.employeePricing = new ArrayCollection();
 		if( this.employee.productionParents == null)
 			this.employee.productionParents = new ArrayCollection();
+		if( this.employee.comLinks == null)
+			this.employee.comLinks = new ArrayCollection();
 		mapFromEmployeeData();
 
 	}
@@ -277,7 +279,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		 	else{
 		 		tempCom = new ComLink();
 	 		tempCom.value = phone_edit.text;
-	 		tempCom.type = "Phone"
+	 		tempCom.type = "Phone";
 	 		employee.comLinks.addItem(tempCom);
 	 		}
 	 	
