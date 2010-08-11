@@ -129,6 +129,7 @@ package com.efi.printsmith.data
 		public var otherDate:Date = new Date();
 		public var deliveredDate:Date = new Date();
 		public var usePaperCalcUp:Boolean = false;
+		public var rollWidth:Number = 0;
 	
 	}
 }

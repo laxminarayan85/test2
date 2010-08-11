@@ -513,6 +513,10 @@ public class JobBase extends ModelBase {
    */
   public static final String USEPAPERCALCUP = "UsePaperCalcUp";
 	/**
+   * @generated
+   */
+  public static final String ROLLWIDTH = "RollWidth";
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -3155,6 +3159,27 @@ public class JobBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double rollWidth;
+	/**
+   * @generated
+ 	 */
+  public Double getRollWidth(){
+    return rollWidth; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setRollWidth(Double newVal) {
+    this.rollWidth = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -3276,6 +3301,7 @@ public class JobBase extends ModelBase {
     if (OTHERDATE.equals(propertyName)) return getOtherDate();
     if (DELIVEREDDATE.equals(propertyName)) return getDeliveredDate();
     if (USEPAPERCALCUP.equals(propertyName)) return getUsePaperCalcUp();
+    if (ROLLWIDTH.equals(propertyName)) return getRollWidth();
     return super.getProperty(propertyName);
   }
 	
@@ -3401,6 +3427,7 @@ public class JobBase extends ModelBase {
     if (OTHERDATE.equals(propertyName)) setOtherDate((Date)newValue); else
     if (DELIVEREDDATE.equals(propertyName)) setDeliveredDate((Date)newValue); else
     if (USEPAPERCALCUP.equals(propertyName)) setUsePaperCalcUp((Boolean)newValue); else
+    if (ROLLWIDTH.equals(propertyName)) setRollWidth((Double)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3642,6 +3669,8 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (USEPAPERCALCUP.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (ROLLWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3768,6 +3797,7 @@ public class JobBase extends ModelBase {
     if (OTHERDATE.equals(propertyName)) return JobBase.class;
     if (DELIVEREDDATE.equals(propertyName)) return JobBase.class;
     if (USEPAPERCALCUP.equals(propertyName)) return JobBase.class;
+    if (ROLLWIDTH.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -4010,6 +4040,8 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getDeliveredDate(), objT.getDeliveredDate()))
       return false;
     if (! SmartEquals(getUsePaperCalcUp(), objT.getUsePaperCalcUp()))
+      return false;
+    if (! SmartEquals(getRollWidth(), objT.getRollWidth()))
       return false;
     return true;
   }			
