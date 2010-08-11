@@ -7,9 +7,6 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:method name="getAll"
 				   fault="handleFault(event)"
 				   result="handleLoadResult(event)"/>
-		<mx:method name="getAllOrderByDescending"
-				   fault="handleFault(event)"
-				   result="handleLoadResult(event)"/>
 	</mx:RemoteObject>
 	
 <mx:Script>                                   
@@ -22,12 +19,14 @@ width="100%" height="100%"  creationComplete="init()"
 	import mx.managers.PopUpManager;
 	import com.efi.printsmith.data.CreditCardTransactions;
 	import com.efi.printsmith.data.CreditCard;
+	import mx.rpc.IResponder;
+	import com.efi.printsmith.events.EncryptDataEvent;
 		
 	[Bindable]
 	private var creditCards:ArrayCollection=new ArrayCollection();
 		
 	public function init():void{		
-		dataService.getAllOrderByDescending("CreditCard");
+		dataService.getAll("CreditCard");
 	}
 	private function doDoubleClick():void{
 	//	lineItem = dataGrid.selectedItem as CreditCardTransactions
@@ -43,16 +42,48 @@ width="100%" height="100%"  creationComplete="init()"
 	private function handleLoadResult(ev:ResultEvent):void{
 		creditCards = ev.result as ArrayCollection;
 	}
-	private function getHistoricDate(item:Object, column:DataGridColumn):String{
+	
+	private function getHistoricCardNumber(item:Object, column:DataGridColumn):String{
 		var temp:CreditCard =  item as CreditCard;
-//		return temp.creditCardTransactions.transactionDate as String;
-		return "Temp Date";
+		return temp.cardDisplayNumber as String;
 	}
-	private function getHistoricType(item:Object, column:DataGridColumn):String{
+	private function getHistoricCardHolder(item:Object, column:DataGridColumn):String{
 		var temp:CreditCard =  item as CreditCard;
-//		return temp.creditCardTransactions.transactionType as String;
-		return "Temp Type";
+		return temp.cardHolderName as String;
 	}
+	
+	private function getHistoricCardDecrypt(item:Object, column:DataGridColumn):String{
+		var temp:CreditCard =  item as CreditCard;
+	//	decryptCardData(temp.cardNumber);
+		return "";
+	}
+	private function getHistoricCardExpire(item:Object, column:DataGridColumn):String{
+		var temp:CreditCard =  item as CreditCard;
+		return temp.expiresDate as String;
+	}
+	private function getHistoricTransAmount(item:Object, column:DataGridColumn):String{
+		var temp:CreditCard =  item as CreditCard;
+	//	return temp.creditCardTransactions.getItemAt(0) as String;
+		return "";
+	}
+	
+	private function handleDecryptionResult(event:ResultEvent):void {
+		if (event.result != null) {
+			var encryptionResult:String = event.result as String;
+		}
+	}
+	
+	private function decryptCardData(data:String):void {
+		var callbacks:IResponder = new mx.rpc.Responder(handleDecryptionResult, handleFault);	
+		var encryptCCEvent:EncryptDataEvent = new EncryptDataEvent(EncryptDataEvent.DECRYPTDATA, data, "AES256WITHSERIALNUMBER", callbacks);
+		encryptCCEvent.dispatch();
+	}
+
+
+//	private function getHistoricTransactionDate(item:Object, column:DataGridColumn):String{
+//		var temp:CreditCard =  item as CreditCard;
+//		return temp.creditCardTransactions.getItemAt( as String;
+//	}
 ]]>
                              
 </mx:Script>
@@ -67,9 +98,9 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:Canvas label="Current" width="100%" height="100%">
 			<mx:TabNavigator width="100%" height="378" y="90">
 				<mx:Canvas label="Current" width="100%" height="100%">
-					<mx:DataGrid  id="dataGrid" width="100%" dataProvider="" 
+					<mx:DataGrid  id="dataGrid" width="100%" 
 						horizontalScrollPolicy="on"
-						doubleClick="" height="100%">
+						height="100%">
 						<mx:columns>
 							<mx:DataGridColumn headerText="Transaction"/>
 							<mx:DataGridColumn headerText="Amount" />
@@ -81,16 +112,16 @@ width="100%" height="100%"  creationComplete="init()"
 				</mx:Canvas>
 				<mx:Canvas label="Historic" width="100%" height="100%">
 					<mx:DataGrid  id="dataGrid0" width="100%" 
-						dataProvider="creditCardTransactions" 
+						dataProvider="{creditCards}" 
 						horizontalScrollPolicy="on"
-						doubleClick="" height="100%" columnWidth="100">
+						height="100%" columnWidth="100">
 						<mx:columns>
 							<mx:DataGridColumn headerText="Date"/>
 							<mx:DataGridColumn headerText="Type" />
-							<mx:DataGridColumn headerText="Card Number" />
-							<mx:DataGridColumn headerText="Card Holder" />
-							<mx:DataGridColumn headerText="Expiration" />
-							<mx:DataGridColumn headerText="Amount" />
+							<mx:DataGridColumn headerText="Card Number" labelFunction="getHistoricCardNumber"/>
+							<mx:DataGridColumn headerText="Card Holder" labelFunction="getHistoricCardHolder" />
+							<mx:DataGridColumn headerText="Expiration" labelFunction="getHistoricCardExpire"/>
+							<mx:DataGridColumn headerText="Amount" labelFunction="getHistoricTransAmount"/>
 							<mx:DataGridColumn headerText="Status" />
 							<mx:DataGridColumn headerText="Order#" />
 							<mx:DataGridColumn headerText="Cust#" />
