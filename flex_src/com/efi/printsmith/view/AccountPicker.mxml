@@ -63,7 +63,6 @@
 	                    
 	private function handleLoadResult(event:ResultEvent):void {
 		accounts = event.result as ArrayCollection;
-		
 		accounts.filterFunction = accountFilter;
 		refreshData();
 	}
@@ -130,13 +129,13 @@
 		}
 		else	{
 			buildCustProspectList();
-			
 		}
 		refreshData();	
 	}
 	
 	private function buildCustProspectList():void	{
 		accounts.filterFunction = accountFilter;
+		sortAccountsByTitle();
 		dgCol.dataField = "title";
 		dgCol.labelFunction = null;
 		pickerFilter.searchCriteria = getSearchByForAccount();
@@ -144,12 +143,45 @@
 	}  
 	private function buildContactList():void	{
 		accounts.filterFunction = null;
+		sortAccountsByLastName();
 		dgCol.dataField = null;
 		dgCol.labelFunction = contactLabel;
 		pickerFilter.searchCriteria = getSearchByForContact();
 		
 	}
 	
+	private function sortAccountsByTitle():void	{
+		var sortField:SortField = new SortField();
+		sortField.name = "title";
+		sortField.numeric = false;
+		var titleSort:Sort = new Sort();
+		titleSort.fields = [sortField];
+		accounts.sort = titleSort;
+		refreshData();	
+	}
+	private function sortAccountsByLastName():void	{
+		var sortField:SortField = new SortField();
+		sortField.compareFunction = compareByLastName;
+		sortField.numeric = false;
+		var nameSort:Sort = new Sort();
+		nameSort.fields = [sortField];
+		accounts.sort = nameSort;
+		refreshData();	
+	}
+	
+	private function compareByLastName(a:Object, b:Object):int{
+		var acctA:Account = a as Account;
+		var acctB:Account = b as Account;
+		
+		if (acctA.contact.lastName < acctB.contact.lastName)	{
+			return -1;
+		}
+		else if (acctA.contact.lastName > acctB.contact.lastName)	{
+			return 1;
+		}
+		else
+			return 0;
+	}
 	private function contactLabel(item:Object, column:DataGridColumn):String	{
 		var acct:Account = item as Account;
 		return acct.contact.lastName + ", " + acct.contact.firstName;
