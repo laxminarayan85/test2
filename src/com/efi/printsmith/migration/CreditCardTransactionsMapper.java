@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -65,8 +66,13 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 					creditCard.setAddress(address);
 			} else if ("CC Holder Name".equals(currentFieldToken))
 				creditCard.setCardHolderName(currentImportToken);
-			else if ("CC Number".equals(currentFieldToken))
+			else if ("CC Number".equals(currentFieldToken)) {
+				CreditCard checkForCard = (CreditCard)dataService.getQuery("CreditCard", " where cardNumber = '" + currentImportToken + "'");
+				if (checkForCard != null) {
+					creditCard = dataService.getCreditCardByPrevId(checkForCard.getPrevId());
+				}
 				creditCard.setCardNumber(currentImportToken);
+			}
 			else if ("CC Number Display".equals(currentFieldToken))
 				creditCard.setCardDisplayNumber(currentImportToken);
 			else if ("amount".equals(currentFieldToken))
@@ -81,8 +87,11 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 				creditCardTransaction.setReferenceNumber(currentImportToken);
 			else if ("approval code".equals(currentFieldToken))
 				creditCardTransaction.setApprovalCode(currentImportToken);
-			else if ("approval date".equals(currentFieldToken))
-				creditCardTransaction.setApprovalDate(Utilities.tokenToDate(currentImportToken));
+			else if ("approval date".equals(currentFieldToken)) {
+				if (currentImportToken.equals("") == false) {
+					creditCardTransaction.setApprovalDate(Utilities.tokenToDate(currentImportToken));
+				}
+			}
 			else if ("message".equals(currentFieldToken))
 				creditCardTransaction.setMessage(currentImportToken);
 			else if ("manual code".equals(currentFieldToken))
