@@ -38,6 +38,7 @@ package com.efi.printsmith.data
 		public var trackOne:String = "";
 		public var trackTwo:String = "";
 		public var tempCVV2:String = "";
+		public var creditCard:CreditCard;
 	
 	}
 }
