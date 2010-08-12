@@ -32,9 +32,7 @@
 			
 			private function setEmployeeObj(event:Event):void {
 				if(event.currentTarget.selectedIndex>-1){
-					var hours:Number = 0;
 					employee = event.currentTarget.selectedItem as Employee;
-					employee.autoOutTime = employee.autoHour+":"+employee.autoMin;
 				} else {
 					employee = null;
 				}
@@ -42,6 +40,9 @@
 			
 			private function handleLoadResult(event:ResultEvent):void {
 				employeeList = event.result as ArrayCollection;
+				for each(var employeeObj:Employee in employeeList){
+					employeeObj.autoOutTime = employeeObj.autoHour+":"+employeeObj.autoMin;
+				}
 				employee = null;
 			}
 			
