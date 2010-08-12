@@ -225,6 +225,8 @@
 						  y="289"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" textAlign="right" width="108" id="label40"/>
 			</mx:AddChild>
+			<mx:SetProperty target="{job_total}" name="y" value="448"/>
+			<mx:SetProperty target="{job_total}" name="x" value="501"/>
 		</mx:State>
 		<mx:State name="Mailing">
 			<mx:RemoveChild target="{customer_suppliled_stock}"/>
