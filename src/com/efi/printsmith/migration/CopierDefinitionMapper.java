@@ -1066,7 +1066,8 @@ public class CopierDefinitionMapper extends ImportMapper {
 			} else if ("use originals".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("o stock markup".equals(currentFieldToken)) {
-				/* TODO */
+				copierDefinition.setUseCopierStockMarkup(Utilities
+						.tokenToBooleanValue(currentImportToken));
 			} else if ("special".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("rstatus".equals(currentFieldToken)) {

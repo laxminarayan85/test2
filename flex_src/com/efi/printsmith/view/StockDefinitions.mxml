@@ -527,9 +527,10 @@
 
 	private function findItem(name:String, array:ArrayCollection):int {
 		for each(var element:Object in array) {
-			if (name == element.name) {
-				return array.getItemIndex(element);
-			}
+			if (element != "")
+				if (name == element.name) {
+					return array.getItemIndex(element);
+				}
 		}
 		return -1;
 	}
@@ -1179,6 +1180,7 @@
 			chksfiCertified.selected = stockDefinitions.sfiCertified
 			chkgreensealCertified.selected = stockDefinitions.greenSealCertified;
 			chkExcludeFromWebUpdate.selected = stockDefinitions.excludeFromWeb;
+			ShellItem.selected = stockDefinitions.shellItem;
 			
 			this.charges = stockDefinitions.charges;
 			standardItemCheckEvent();
@@ -1245,6 +1247,7 @@
 	 stockDefinitions.sfiCertified = chksfiCertified.selected;
 	 stockDefinitions.greenSealCertified = chkgreensealCertified.selected;
 	 stockDefinitions.excludeFromWeb = chkExcludeFromWebUpdate.selected;
+	 stockDefinitions.shellItem = ShellItem.selected;
 	 
 	 //text and textboxes
 	
