@@ -18,12 +18,20 @@ public abstract class CopierPricingMethod {
 	
 	private void calculateTotalCopies(Job job) {
 		long totalCopies = job.getQtyOrdered() * job.getInSetsOf() * job.getSheets();
-			
-		job.setNumCopies(totalCopies / (job.getSheets() / (job.getNumUp() / job.getNumOn())));
+		long sheets = job.getSheets();
+		long numUp = job.getNumUp();
+		long numOn = job.getNumOn();
+		if (sheets == 0)
+			sheets = 1;
+		if (numUp == 0)
+			numUp = 1;
+		if (numOn == 0)
+			numOn = 1;
+		job.setNumCopies(totalCopies / (sheets / (numUp / numOn)));
 		calculateEstWaste(job);
 		long wasteSheets = job.getBinderyWaste() + job.getEstWaste();
 		wasteSheets *= job.getSheets();	
-		job.setTotalCopies(totalCopies / (job.getNumUp() / job.getNumOn()) + (wasteSheets * (job.getNumUp() / job.getNumOn())));
+		job.setTotalCopies(totalCopies / (numUp / numOn) + (wasteSheets * (numUp / numOn)));
 		if (job.getDoubleSided()) {
 			job.setTotalCopies(job.getTotalCopies() * 2);
 		}

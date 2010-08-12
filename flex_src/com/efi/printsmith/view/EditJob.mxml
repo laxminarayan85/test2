@@ -132,7 +132,7 @@
 			<mx:RemoveChild target="{job_parent}"/>
 			<mx:RemoveChild target="{job_size}"/>
 			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
-				<mx:TextInput x="108" y="81" width="100" height="20" id="roll_width"  text="{job.parentSize}"/>
+				<mx:TextInput x="108" y="81" width="100" height="20" id="roll_width"  text="{job.rollWidth}"/>
 			</mx:AddChild>
 			<mx:RemoveChild target="{label9}"/>
 			<mx:RemoveChild target="{job_imp}"/>
@@ -1301,13 +1301,15 @@
 							cutoff = estimatingPreferences.defaultPressCuttOff;
 						else
 							cutoff = 0;
-						this.job.parentSize = evt.stockDefinition.parentsize;
-						this.roll_width.text = job.parentSize.name;
+						this.job.rollWidth = evt.stockDefinition.parentsize.width;
+						this.roll_width.text = job.rollWidth.toString();
 						this.job.cutOff = cutoff;
 						this.cutOff_edit.text = cutoff.toString();
 						if (job.finishSize == null)
 							job.finishSize = new Dimension();
 						this.job.finishSize.name = evt.stockDefinition.parentsize.name + " x " + cutoff.toString();
+						this.job.finishSize.width = evt.stockDefinition.parentsize.width;
+						this.job.finishSize.height = cutoff;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 						if (this.job_finish_size.selectedIndex == -1)
 							this.job_finish_size.text = job.finishSize.name;
@@ -1706,7 +1708,7 @@
 				var basic:Number;
 				if ( job.parentSize != null)
 						job.parentSize = job_parent.selectedItem as Dimension;
-				if ( job.finishSize != null)
+				if ( job.finishSize != null && job_finish_size.selectedIndex > -1)
 					job.finishSize = job_finish_size.selectedItem as Dimension;
 				
 				if ( job.stock != null)
