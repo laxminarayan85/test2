@@ -218,36 +218,47 @@
 	
 	private function addFile(file:FileReference):void {
 		fileArray.addItem(file);
-		fileNameArray.addItem(file.name);
+		var extensionIndex:int = -1;
+		var fileName:String;
+		extensionIndex = file.name.indexOf(".");
+		if (extensionIndex > -1)
+			fileName = file.name.substr(0,extensionIndex);
+		else
+			fileName = file.name;
+		fileNameArray.addItem(fileName);
 	}
 	
 	private function uploadFiles(evt:Event): void {
 		fileTypeArray = new ArrayCollection;
-		fileTypeArray.addItem("Preferences.XML");
-		fileTypeArray.addItem("TableEditor.XML");
-		fileTypeArray.addItem("DL Address Data.TXT");
-		fileTypeArray.addItem("DL Price Lists Data.txt");
-		fileTypeArray.addItem("DL Charge Definitions Data.txt");
-		fileTypeArray.addItem("DL TaxTable DB Data.txt");
-		fileTypeArray.addItem("DL Price Schedules Data.txt");
-		fileTypeArray.addItem("DL Charge Costing Data.txt");
-		fileTypeArray.addItem("DL Customers Data.txt");
-		fileTypeArray.addItem("DL Contacts Data.txt");
-		fileTypeArray.addItem("DL Press Definitions Data.txt");
-		fileTypeArray.addItem("DL Copier Definitions Data.txt");
-		fileTypeArray.addItem("DL Stock Definitions Data.txt");
-		fileTypeArray.addItem("DL Invoice Data.txt");
-		fileTypeArray.addItem("DL Job Data.txt");
-		fileTypeArray.addItem("DL Charges Data.txt");
-		fileTypeArray.addItem("DL Customer Logs Data.txt");
-		fileTypeArray.addItem("DL Credit Card Transaction Data.txt");
+		fileTypeArray.addItem("Preferences");
+		fileTypeArray.addItem("TableEditor");
+		fileTypeArray.addItem("DL Address Data");
+		fileTypeArray.addItem("DL Price Lists Data");
+		fileTypeArray.addItem("DL Charge Definitions Data");
+		fileTypeArray.addItem("DL TaxTable DB Data");
+		fileTypeArray.addItem("DL Price Schedules Data");
+		fileTypeArray.addItem("DL Charge Costing Data");
+		fileTypeArray.addItem("DL Customers Data");
+		fileTypeArray.addItem("DL Contacts Data");
+		fileTypeArray.addItem("DL Press Definitions Data");
+		fileTypeArray.addItem("DL Copier Definitions Data");
+		fileTypeArray.addItem("DL Stock Definitions Data");
+		fileTypeArray.addItem("DL Invoice Data");
+		fileTypeArray.addItem("DL Job Data");
+		fileTypeArray.addItem("DL Charges Data");
+		fileTypeArray.addItem("DL Customer Logs Data");
+		fileTypeArray.addItem("DL Credit Card Transaction Data");
 		fileTypeArrayIndex = 0;
 		importFile(evt,fileTypeArray.getItemAt(fileTypeArrayIndex) as String);
 	}
 	private function importFile(evt:Event, fileName:String): void {
 		var index:int = -1;
-		if (fileName == "Preferences.XML") {
-			index = fileNameArray.getItemIndex("Preferences.XML");
+		var extensionIndex:int = -1;
+		extensionIndex = fileName.indexOf(".");
+		if (extensionIndex > -1)
+			fileName = fileName.substr(0,extensionIndex);
+		if (fileName == "Preferences") {
+			index = fileNameArray.getItemIndex("Preferences");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -255,8 +266,8 @@
 				}
 			}
 		}
-		if (fileName == "TableEditor.XML") {
-			index = fileNameArray.getItemIndex("TableEditor.XML");
+		if (fileName == "TableEditor") {
+			index = fileNameArray.getItemIndex("TableEditor");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -264,8 +275,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Price Lists Data.txt") {
-			index = fileNameArray.getItemIndex("DL Price Lists Data.txt");
+		if (fileName == "DL Price Lists Data") {
+			index = fileNameArray.getItemIndex("DL Price Lists Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -273,8 +284,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Charge Definitions Data.txt") {
-			index = fileNameArray.getItemIndex("DL Charge Definitions Data.txt");
+		if (fileName == "DL Charge Definitions Data") {
+			index = fileNameArray.getItemIndex("DL Charge Definitions Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -282,8 +293,8 @@
 				}
 			}
 		}
-		if (fileName == "DL TaxTable DB Data.txt") {
-			index = fileNameArray.getItemIndex("DL TaxTable DB Data.txt");
+		if (fileName == "DL TaxTable DB Data") {
+			index = fileNameArray.getItemIndex("DL TaxTable DB Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -291,8 +302,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Price Schedules Data.txt") {
-			index = fileNameArray.getItemIndex("DL Price Schedules Data.txt");
+		if (fileName == "DL Price Schedules Data") {
+			index = fileNameArray.getItemIndex("DL Price Schedules Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -300,8 +311,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Charge Costing Data.txt") {
-			index = fileNameArray.getItemIndex("DL Charge Costing Data.txt");
+		if (fileName == "DL Charge Costing Data") {
+			index = fileNameArray.getItemIndex("DL Charge Costing Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -309,8 +320,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Customers Data.txt") {
-			index = fileNameArray.getItemIndex("DL Customers Data.txt");
+		if (fileName == "DL Customers Data") {
+			index = fileNameArray.getItemIndex("DL Customers Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -318,8 +329,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Contacts Data.txt") {
-			index = fileNameArray.getItemIndex("DL Contacts Data.txt");
+		if (fileName == "DL Contacts Data") {
+			index = fileNameArray.getItemIndex("DL Contacts Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -327,8 +338,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Press Definitions Data.txt") {
-			index = fileNameArray.getItemIndex("DL Press Definitions Data.txt");
+		if (fileName == "DL Press Definitions Data") {
+			index = fileNameArray.getItemIndex("DL Press Definitions Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -336,8 +347,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Copier Definitions Data.txt") {
-			index = fileNameArray.getItemIndex("DL Copier Definitions Data.txt");
+		if (fileName == "DL Copier Definitions Data") {
+			index = fileNameArray.getItemIndex("DL Copier Definitions Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -345,8 +356,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Stock Definitions Data.txt") {
-			index = fileNameArray.getItemIndex("DL Stock Definitions Data.txt");
+		if (fileName == "DL Stock Definitions Data") {
+			index = fileNameArray.getItemIndex("DL Stock Definitions Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -354,8 +365,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Invoice Data.txt") {
-			index = fileNameArray.getItemIndex("DL Invoice Data.txt");
+		if (fileName == "DL Invoice Data") {
+			index = fileNameArray.getItemIndex("DL Invoice Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -363,8 +374,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Job Data.txt") {
-			index = fileNameArray.getItemIndex("DL Job Data.txt");
+		if (fileName == "DL Job Data") {
+			index = fileNameArray.getItemIndex("DL Job Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -372,8 +383,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Charges Data.txt") {
-			index = fileNameArray.getItemIndex("DL Charges Data.txt");
+		if (fileName == "DL Charges Data") {
+			index = fileNameArray.getItemIndex("DL Charges Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -381,8 +392,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Customer Logs Data.txt") {
-			index = fileNameArray.getItemIndex("DL Customer Logs Data.txt");
+		if (fileName == "DL Customer Logs Data") {
+			index = fileNameArray.getItemIndex("DL Customer Logs Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
@@ -391,8 +402,8 @@
 				}
 			}
 		}
-		if (fileName == "DL Credit Card Transaction Data.txt") {
-			index = fileNameArray.getItemIndex("DL Credit Card Transaction Data.txt");
+		if (fileName == "DL Credit Card Transaction Data") {
+			index = fileNameArray.getItemIndex("DL Credit Card Transaction Data");
 			if (index.valueOf() > -1) {
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
