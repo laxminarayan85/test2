@@ -53,11 +53,11 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 			else if ("card type".equals(currentFieldToken))
 				creditCard.setType(currentImportToken);
 			else if ("transaction type".equals(currentFieldToken))
-				creditCardTransaction.setTransactionType(currentImportToken);
+				creditCardTransaction.setTransactionType(Utilities.tokenToInt(currentImportToken));
 			else if ("transaction status".equals(currentFieldToken))
-				creditCardTransaction.setTransactionStatus(currentImportToken);
+				creditCardTransaction.setTransactionStatus(Utilities.tokenToInt(currentImportToken));
 			else if ("transaction results".equals(currentFieldToken))
-				creditCardTransaction.setTransactionResults(currentImportToken);
+				creditCardTransaction.setTransactionResults(Utilities.tokenToInt(currentImportToken));
 			else if ("encryption".equals(currentFieldToken))
 				creditCard.setEncryption(currentImportToken);
 			else if ("address ID".equals(currentFieldToken)) {
@@ -73,6 +73,18 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 				}
 				creditCard.setCardNumber(currentImportToken);
 			}
+			else if ("customer number".equals(currentFieldToken)) {
+				Account account = (Account)dataService.getByAccountId(currentImportToken);
+				if (account != null)
+					creditCardTransaction.setAccount(account);
+			}
+			else if ("contact ID".equals(currentFieldToken)) {
+				Contact contact2 = (Contact)dataService.getByPrevId("Contact",currentImportToken);
+				if (contact2 != null)
+					creditCardTransaction.setContact(contact2);
+			}
+			else if ("ws ID".equals(currentFieldToken))
+				creditCardTransaction.setWsId(Utilities.tokenToInt(currentImportToken));
 			else if ("CC Number Display".equals(currentFieldToken))
 				creditCard.setCardDisplayNumber(currentImportToken);
 			else if ("amount".equals(currentFieldToken))
