@@ -9,10 +9,6 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			<mx:SetProperty target="{blackwhitecheck}" name="enabled" value="false"/>
 			<mx:SetProperty target="{blackwhitecheck}" name="selected" value="false"/>
 			<mx:SetProperty target="{label1}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.LengthMinute')}"/>
-			<mx:RemoveChild target="{label2}"/>
-			<mx:RemoveChild target="{MaxSize}"/>
-			<mx:RemoveChild target="{minSize}"/>
-			<mx:RemoveChild target="{label3}"/>
 			<mx:SetProperty target="{label4}"  name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MachineCostperSqUnit')}"/>
 			<mx:SetProperty target="{label4}" name="x" value="509"/>
 			<mx:SetProperty target="{label4}" name="y" value="342"/>
@@ -1050,7 +1046,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Label x="346" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.ID')}" width="89" textAlign="right"/>
 		<mx:TextInput x="443" y="124" width="83" id="copyID" text="{copierDefinition.copyID}" editable="true" height="20"/>
 		<mx:CheckBox x="346" y="151" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CostingCopier')}" id="CostingCopier" selected="{copierDefinition.costingCopy}"/>
-		<mx:CheckBox x="345" y="211" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.IntegratedDevice')}" id="IntegratedDevice" selected="{copierDefinition.integratedDevice}"/>
+		<mx:CheckBox x="348" y="234" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.IntegratedDevice')}" id="IntegratedDevice" selected="{copierDefinition.integratedDevice}"/>
 		<mx:HRule y="304" height="13" left="0" right="10"/>
 		<mx:Label x="9" y="413" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumSize')}" id="label2" width="141" textAlign="right"/>
 		<mx:Label x="9" y="435" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MinimumSize')}" id="label3" width="141" textAlign="right"/>
