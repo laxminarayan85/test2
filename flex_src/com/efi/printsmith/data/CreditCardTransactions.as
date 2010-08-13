@@ -14,9 +14,9 @@ package com.efi.printsmith.data
 		}
 				
 		public var transactionDate:Date = new Date();
-		public var transactionType:String = "";
-		public var transactionStatus:String = "";
-		public var transactionResults:String = "";
+		public var transactionType:int = 0;
+		public var transactionStatus:int = 0;
+		public var transactionResults:int = 0;
 		public var amount:Number = 0;
 		public var taxInAmount:Boolean = false;
 		public var invoice:Invoice;
@@ -39,6 +39,9 @@ package com.efi.printsmith.data
 		public var trackTwo:String = "";
 		public var tempCVV2:String = "";
 		public var creditCard:CreditCard;
+		public var account:Account;
+		public var contact:Contact;
+		public var wsId:int = 0;
 	
 	}
 }
