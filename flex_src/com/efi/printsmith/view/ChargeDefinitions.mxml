@@ -590,8 +590,34 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 		if (category != null) {
 			localCharge = new ChargeDefinition();				
-			localCharge.name = "Untitled";
-			localCharge.title = "Untitled";
+			localCharge.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.untitled');
+			localCharge.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.untitled');
+			localCharge.method = ChargeMethod.Ask;
+			localCharge.quantityType = ChargeQtyType.Quantity;
+			localCharge.presetDescriptionLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Description');
+			localCharge.presetInSetsOfLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Insetsof');
+			localCharge.presetMaterialRateLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Material');
+			localCharge.presetMaterialQuantityLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.MtrlQty');
+			localCharge.presetMaterialSetsOfLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Insetsof');
+			localCharge.presetNotesLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Notes');
+			localCharge.presetPriceLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Price');
+			localCharge.presetQuantityLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Quantity');
+			localCharge.presetQuantityPerSetLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Qtyset');
+			localCharge.presetRateLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Rate');
+			localCharge.presetSetupLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Setup');
+			localCharge.presetUpLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Up');
+			localCharge.presetTimeStartLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Timestart');
+			localCharge.presetTimeStopLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Timestop');
+			localCharge.presetNumberOfColorsLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ofColors');
+			localCharge.presetCoverageLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.PctCoverage');
+			localCharge.presetPricePerPoundLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Price0');
+			localCharge.presetPoundsOfInkLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.0ofInk');
+			localCharge.presetTotalWeightLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.TotalWeight');
+			localCharge.presetAreaLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Area');
+			localCharge.presetUpLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Up');				
+			localCharge.presetCutsLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cuts');				
+			localCharge.presetSheetsPerLiftLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift');				
+
 			dataService.addChargeToCategory(localCharge, category);
 		}
 //		chargeCommandDataService.getAll("ChargeCommand");
@@ -657,7 +683,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			}
 		
 			charge_quantity_combo.selectedIndex = findItem(charge.quantityType,qtyTypes.toArray());
-			charge_sales_category_combo.selectedIndex = findItem2(charge.salesCategory.name, salesCategories);
+			if (charge.salesCategory != null) {
+				charge_sales_category_combo.selectedIndex = findItem2(charge.salesCategory.name, salesCategories);
+			}
 			charge_group_1.selectedValue = charge.jobQty;
 			if(charge.useColors)
 				charge_group_2.selectedValue = "Colors";
@@ -679,6 +707,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				charge_group_4.selectedValue = "/Up";
 			else
 				charge_group_4.selectedValue = "NA";
+				
 		waste_chart_link.label = wasteChartLabel();	
 		price_list_link.label = priceListLabel();	
 		UpdateAdjset();
@@ -690,7 +719,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	private function findItem(name:String, array:Array):int {
 		for each(var element:Object in array) {
-			if (name == element) {
+			if (name == element.data) {
 				return array.indexOf(element);
 			}
 		}
@@ -709,8 +738,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		charge.name = charge_name_edit.text;
 		charge.location = location_combo.selectedItem as ProductionLocations;
 		charge.costCenter = cost_center_combo.selectedItem as CostCenter;
-		charge.method = charge_method_combo.selectedItem as String;
-		charge.quantityType = charge_quantity_combo.selectedItem as String;
+		charge.method = charge_method_combo.selectedItem.data as String;
+		charge.quantityType = charge_quantity_combo.selectedItem.data as String;
 		charge.salesCategory = charge_sales_category_combo.selectedItem as SalesCategory;
 		charge.productCode = product_code_combo.selectedItem as ProductCode;
 		charge.ignoreCuts = Ignorecuts_radio.selected;
@@ -762,52 +791,153 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		charge.coverlbInk = parseFloat(cover_ink_edit.text);
 		charge.ship_markup_check = ship_markup_check.selected;
 		charge.shipMarkup= parseFloat(ship_markup_edit.text);
-		charge.useMerchandiseSets =  in_set_mat_check.selected;
+		charge.useMaterialSets =  in_set_mat_check.selected;
 		charge.materialSetCount = parseInt(in_sets_mat_edit.text);
 	}
 	
 	private function updateQtyComboBox(chargeMethod:String):void {
 		var index:int;
+		var i:int;
 		index = charge_quantity_combo.selectedIndex;
 		qtyTypes.removeAll();
+		qtyTypes = new ArrayCollection(ChargeQtyType.toArray());
 		switch (chargeMethod) {
 		case ChargeMethod.Ask: 
-			qtyTypes.addItem(ChargeQtyType.Sets);
-			qtyTypes.addItem(ChargeQtyType.Quantity);
-			qtyTypes.addItem(ChargeQtyType.Time);
-			qtyTypes.addItem(ChargeQtyType.None);
-			qtyTypes.addItem(ChargeQtyType.SetupSets);
+			for (i = qtyTypes.length-1; i  >= 0 ; i--) {
+				if (qtyTypes.getItemAt(i).data == ChargeQtyType.TotalWeight) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.ShippingQty) {
+					qtyTypes.removeItemAt(i);
+				}
+			}
+//			qtyTypes.addItem(ChargeQtyType.Sets);
+//			qtyTypes.addItem(ChargeQtyType.Quantity);
+//			qtyTypes.addItem(ChargeQtyType.Time);
+//			qtyTypes.addItem(ChargeQtyType.None);
+//			qtyTypes.addItem(ChargeQtyType.SetupSets);
 			break;
 		case ChargeMethod.Cut:
-			qtyTypes.addItem(ChargeQtyType.Sets);
-			qtyTypes.addItem(ChargeQtyType.SetupSets);
+			for (i = qtyTypes.length-1; i  >= 0 ; i--) {
+				if (qtyTypes.getItemAt(i).data == ChargeQtyType.Quantity) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.Time) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.None) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.TotalWeight) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.ShippingQty) {
+					qtyTypes.removeItemAt(i);
+				}
+			}
+//			qtyTypes.addItem(ChargeQtyType.Sets);
+//			qtyTypes.addItem(ChargeQtyType.SetupSets);
 			break;
 		case ChargeMethod.FlatRate:
 		case ChargeMethod.Markup:
-			qtyTypes.addItem(ChargeQtyType.None);
+			for (i = qtyTypes.length-1; i  >= 0 ; i--) {
+				if (qtyTypes.getItemAt(i).data == ChargeQtyType.Sets) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.Quantity) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.Time) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.SetupSets) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.TotalWeight) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.ShippingQty) {
+					qtyTypes.removeItemAt(i);
+				}
+			}
+//			qtyTypes.addItem(ChargeQtyType.None);
 			break;
 		case ChargeMethod.Fold:
 		case ChargeMethod.JobAware:
 		case ChargeMethod.Linear:
-			qtyTypes.addItem(ChargeQtyType.Sets);
-			qtyTypes.addItem(ChargeQtyType.Quantity);
-			qtyTypes.addItem(ChargeQtyType.SetupSets);
+			// Remove unused elements
+			for (i = qtyTypes.length-1; i  >= 0 ; i--) {
+				if (qtyTypes.getItemAt(i).data == ChargeQtyType.Time) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.None) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.TotalWeight) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.ShippingQty) {
+					qtyTypes.removeItemAt(i);
+				}
+			}
+//			qtyTypes.addItem(ChargeQtyType.Sets);
+//			qtyTypes.addItem(ChargeQtyType.Quantity);
+//			qtyTypes.addItem(ChargeQtyType.SetupSets);
 			break;
 		case ChargeMethod.Ink:
-			qtyTypes.addItem(ChargeQtyType.Sets);
-			qtyTypes.addItem(ChargeQtyType.Quantity);
+			for (i = qtyTypes.length-1; i  >= 0 ; i--) {
+				if (qtyTypes.getItemAt(i).data == ChargeQtyType.Time) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.None) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.SetupSets) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.TotalWeight) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.ShippingQty) {
+					qtyTypes.removeItemAt(i);
+				}
+			}
+//			qtyTypes.addItem(ChargeQtyType.Sets);
+//			qtyTypes.addItem(ChargeQtyType.Quantity);
 			break;
 		case ChargeMethod.PriceList:
 		case ChargeMethod.RateList:
-			qtyTypes.addItem(ChargeQtyType.Quantity);
+			for (i = qtyTypes.length-1; i  >= 0 ; i--) {
+				if (qtyTypes.getItemAt(i).data == ChargeQtyType.Time) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.None) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.SetupSets) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.TotalWeight) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.ShippingQty) {
+					qtyTypes.removeItemAt(i);
+				}
+			}
+//			qtyTypes.addItem(ChargeQtyType.Quantity);
 			break;
 		case ChargeMethod.Shipping:
-			qtyTypes.addItem(ChargeQtyType.TotalWeight);
-			qtyTypes.addItem(ChargeQtyType.ShippingQty);
+			for (i = qtyTypes.length-1; i  >= 0 ; i--) {
+				if (qtyTypes.getItemAt(i).data == ChargeQtyType.Sets) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.Quantity) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.Time) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.None) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.SetupSets) {
+					qtyTypes.removeItemAt(i);
+				}
+			}
+//			qtyTypes.addItem(ChargeQtyType.TotalWeight);
+//			qtyTypes.addItem(ChargeQtyType.ShippingQty);
 			break;
 		case ChargeMethod.SquareArea:
-			qtyTypes.addItem(ChargeQtyType.Sets);
-			qtyTypes.addItem(ChargeQtyType.Quantity);
+			for (i = qtyTypes.length-1; i  >= 0 ; i--) {
+				if (qtyTypes.getItemAt(i).data == ChargeQtyType.Time) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.None) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.SetupSets) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.TotalWeight) {
+					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.ShippingQty) {
+					qtyTypes.removeItemAt(i);
+				}
+			}
+//			qtyTypes.addItem(ChargeQtyType.Sets);
+//			qtyTypes.addItem(ChargeQtyType.Quantity);
 			break;
 		}
 		charge_quantity_combo.selectedIndex = index;
@@ -817,8 +947,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var newCanvas:Canvas=blank_canvas;
 		if (charge_method_combo.selectedItem != null)
 			updateQtyComboBox(charge_method_combo.selectedItem.toString());
-		switch (charge_method_combo.selectedItem) {
-		case ChargeMethod.Ask:
+		if (charge_method_combo.selectedItem.data == ChargeMethod.Ask) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -853,11 +982,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = true;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
-			
-			
-			break;
-			
-		case ChargeMethod.Cut:
+		} else if (charge_method_combo.selectedItem.data == ChargeMethod.Cut) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -893,8 +1018,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = true;
 			Ignorecuts_radio.visible =true;
 			charge_group_2.enabled = false;
-			break;
-		case ChargeMethod.FlatRate:
+		} else if (charge_method_combo.selectedItem.data == ChargeMethod.FlatRate) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -929,8 +1053,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
-			break;
-		case ChargeMethod.Fold:
+	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Fold) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -966,8 +1089,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
-			break;
-		case ChargeMethod.Ink:
+	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Ink) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1003,8 +1125,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
-			break;
-		case ChargeMethod.JobAware:
+	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.JobAware) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1039,8 +1160,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
-			break;
-		case ChargeMethod.Linear:
+	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Linear) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1076,8 +1196,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
-			break;
-		case ChargeMethod.Markup:
+	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Markup) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1112,8 +1231,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
-			break;
-		case ChargeMethod.PriceList:
+	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.PriceList) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1148,8 +1266,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
-			break;
-		case ChargeMethod.RateList:
+	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.RateList) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1184,8 +1301,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
-			break;
-		case ChargeMethod.Shipping:
+	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Shipping) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1220,8 +1336,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
-			break;
-		case ChargeMethod.SquareArea:
+	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.SquareArea) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1257,7 +1372,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
-			break;
 		}
 		price_calc_stack.selectedChild = newCanvas;	
 		UpdatePriceMethod();	
@@ -1902,7 +2016,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:LinkButton x="132" y="533" width="291" id="price_list_link" label="{priceListLabel()}" enabled="{charge.priceList != null}" click="doEditPriceList()"/>
 					<mx:LinkButton x="132" y="564" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}" click="doEditWasteChart()"/>
 					<mx:HRule x="-7" y="523" width="710" height="8" id="hrule4"/>
-					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMerchandiseSets}" id="in_set_mat_check" enabled="{material_check.selected}" width="118" change="UpdateAdjset();"/>
+					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMaterialSets}" id="in_set_mat_check" enabled="{material_check.selected}" width="118" change="UpdateAdjset();"/>
 					<mx:TextInput x="446" y="352" width="124" enabled="{in_set_mat_check.selected}"  text="{charge.materialSetCount}" id="in_sets_mat_edit"/>
 					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
 					<mx:TextInput x="446" y="329" id="sheet_lift_edit" text="{charge.sheetliftCut}" width="124"  enabled="{sheet_lift_check.selected}"/>

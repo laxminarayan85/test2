@@ -102,7 +102,7 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		double retVal = 0.0;
 		
 		if (charge.getChargeDefinition().getUseMaterial()) {
-			if (charge.getChargeDefinition().getUseMerchandiseSets()) {
+			if (charge.getChargeDefinition().getUseMaterialSets()) {
 				materialQuantity = this.calculateChargeSets(materialQuantity, 1, 1, charge.getChargeDefinition().getMaterialSetCount());
 			}
 			retVal = materialQuantity * charge.getChargeDefinition().getMaterial().doubleValue();

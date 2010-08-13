@@ -124,7 +124,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 				}
 			}
 			else if (chargeDefinition.getUseMaterial()) {
-				if (chargeDefinition.getUseMerchandiseSets()) {
+				if (chargeDefinition.getUseMaterialSets()) {
 					setCount = chargeDefinition.getMaterialSetCount();
 				} else {
 					setCount = 1.0;

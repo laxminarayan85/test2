@@ -29,7 +29,7 @@ package com.efi.printsmith.data
 		public var useMaterial:Boolean = false;
 		public var useRate:Boolean = false;
 		public var useRateSets:Boolean = false;
-		public var useMerchandiseSets:Boolean = false;
+		public var useMaterialSets:Boolean = false;
 		public var useMinimumCharge:Boolean = false;
 		public var useColors:Boolean = false;
 		public var useOriginals:Boolean = false;
@@ -129,6 +129,8 @@ package com.efi.printsmith.data
 		public var presetProductionLocation:ProductionLocations;
 		public var presetPrice:Number = 0;
 		public var presetPriceLabel:String = "";
+		public var presetCoverPerPoundLabel:String = "";
+		public var presetCoverPerPound:Number = 0;
 		public var presetTaxTable:TaxTable;
 		public var presetFinished:Boolean = false;
 		public var presetTaxable:Boolean = false;
@@ -149,6 +151,28 @@ package com.efi.printsmith.data
 		public var presetMaterialRateLabel:String = "";
 		public var presetQuantityPerSet:Number = 0;
 		public var presetQuantityPerSetLabel:String = "";
+		public var presetSetupLabel:String = "";
+		public var presetSetup:Number = 0;
+		public var presetTimeStartLabel:String = "";
+		public var presetTimeStart:Date = new Date();
+		public var presetTimeStopLabel:String = "";
+		public var presetTimeStop:Date = new Date();
+		public var presetNumberOfColorsLabel:String = "";
+		public var presetNumberOfColors:int = 0;
+		public var presetCoverageLabel:String = "";
+		public var presetCoverage:Number = 0;
+		public var presetPricePerPoundLabel:String = "";
+		public var presetPricePerPound:Number = 0;
+		public var presetPoundsOfInkLabel:String = "";
+		public var presetPoundsofInk:Number = 0;
+		public var presetTotalWeightLabel:String = "";
+		public var presetTotalWeight:Number = 0;
+		public var presetAreaLabel:String = "";
+		public var presetArea:Number = 0;
+		public var presetCutsLabel:String = "";
+		public var presetCuts:int = 0;
+		public var presetSheetsPerLiftLabel:String = "";
+		public var presetSheetsPerLift:Number = 0;
 	
 	}
 }

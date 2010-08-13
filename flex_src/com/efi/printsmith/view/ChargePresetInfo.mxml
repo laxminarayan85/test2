@@ -31,6 +31,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:Script>                                   
 <![CDATA[
 	import com.efi.printsmith.data.ChargeDefinition;
+	import com.efi.printsmith.data.enums.ChargeMethod;
+	import com.efi.printsmith.data.enums.ChargeQtyType;
 	import com.efi.printsmith.data.Invoice;
 	import com.efi.printsmith.data.Job;
 	import com.efi.printsmith.data.NotePad;
@@ -58,14 +60,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	public function init():void {
 	    PopUpManager.centerPopUp(this);
+	    this.updateFieldVisibility();
 	}      
 	
 	private function doOK():void {
 		chargeDefinition.rateLabel = rate_label_text.text;
 		chargeDefinition.presetNotesLabel = notes_label_text.text;
 		chargeDefinition.presetPriceLabel = price_label_text.text;
-		chargeDefinition.presetPrice = parseFloat(price_default_text.text);
-		chargeDefinition.presetRate = parseFloat(rate_default_text.text);
+		chargeDefinition.presetPrice = parseFloat(price_text.text);
+		chargeDefinition.presetRate = parseFloat(rate_text.text);
 		chargeDefinition.presetNotes = notes_default_text.text;
 		chargeDefinition.presetDescription = description_default_text.text;
 		chargeDefinition.presetDescriptionLabel = description_label_text.text;
@@ -93,8 +96,414 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 		this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargePresetCmd.PresetInfo') + " " + chargeDefinition.title;
 		this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargePresetCmd.PresetInfo') + " " + chargeDefinition.title;
+		
+		this.updateFieldVisibility();
 	}
 
+	public function updateFieldVisibility():void {
+		if (this.chargeDefinition.method == ChargeMethod.Ask) {
+			this.rate_box.visible = false;
+			if (chargeDefinition.quantityType == ChargeQtyType.Sets ||
+				chargeDefinition.quantityType == ChargeQtyType.Quantity ||
+				chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
+				quantity_box.includeInLayout = quantity_box.visible = true;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
+				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = false;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+			} else if (chargeDefinition.quantityType == ChargeQtyType.Time) {
+				
+			} else if (chargeDefinition.quantityType == ChargeQtyType.None) {
+				quantity_box.includeInLayout = quantity_box.visible = false;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
+				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets && chargeDefinition.adjustableMaterial;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = false;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+			}
+		} else if (this.chargeDefinition.method == ChargeMethod.Cut) {
+			quantity_box.includeInLayout = quantity_box.visible = true;
+			material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
+			material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+			in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+			rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+			material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+			price_box.includeInLayout = price_box.visible = true;
+			price_text.editable = !chargeDefinition.noOverrides;
+			setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+			number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+			pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+			coverage_box.includeInLayout = coverage_box.visible = false;
+			quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+			price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+			cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+			weight_box.includeInLayout = weight_box.visible = false;
+			area_box.includeInLayout = area_box.visible = false;
+			up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+			cuts_box.includeInLayout = cuts_box.visible = true;
+			sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = chargeDefinition.sheet_lift_check && chargeDefinition.adjustableSets;
+		} else if (this.chargeDefinition.method == ChargeMethod.FlatRate) {
+			quantity_box.includeInLayout = quantity_box.visible = false;
+			material_quantity_box.includeInLayout = material_quantity_box.visible = false
+			material_rate_box.includeInLayout = material_rate_box.visible = false;
+			in_sets_of_box.includeInLayout = in_sets_of_box.visible = false;
+			rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+			material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+			price_box.includeInLayout = price_box.visible = true;
+			price_text.editable = !chargeDefinition.noOverrides;
+			setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+			number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+			pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+			coverage_box.includeInLayout = coverage_box.visible = false;
+			quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+			price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+			cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+			weight_box.includeInLayout = weight_box.visible = false;
+			area_box.includeInLayout = area_box.visible = false;
+			up_box.includeInLayout = up_box.visible = false;
+			cuts_box.includeInLayout = cuts_box.visible = false;
+			sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;			
+		} else if (this.chargeDefinition.method == ChargeMethod.Fold) {			
+			if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+				quantity_box.includeInLayout = quantity_box.visible = true;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
+				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+				cuts_box.includeInLayout = cuts_box.visible = true;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = chargeDefinition.sheet_lift_check && chargeDefinition.adjustableSets;				
+			} else if (chargeDefinition.quantityType == ChargeQtyType.Sets ||
+					   chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
+				quantity_box.includeInLayout = quantity_box.visible = false;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
+				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = true;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+				cuts_box.includeInLayout = cuts_box.visible = true;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = chargeDefinition.sheet_lift_check && chargeDefinition.adjustableSets;				
+			}			
+		} else if (this.chargeDefinition.method == ChargeMethod.Ink) {
+			if (chargeDefinition.quantityType == ChargeQtyType.Sets) {
+				quantity_box.includeInLayout = quantity_box.visible = false;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+				material_rate_box.includeInLayout = material_rate_box.visible = false;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = false;
+				rate_box.includeInLayout = rate_box.visible = false
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = true;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = true;
+				coverage_box.includeInLayout = coverage_box.visible = true;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = true;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = chargeDefinition.adjustableRate;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = chargeDefinition.coverlb_check && chargeDefinition.adjustableSets;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
+			} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+				quantity_box.includeInLayout = quantity_box.visible = false;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+				material_rate_box.includeInLayout = material_rate_box.visible = false;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = false;
+				rate_box.includeInLayout = rate_box.visible = false
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = true;
+				coverage_box.includeInLayout = coverage_box.visible = true;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = true;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = chargeDefinition.adjustableRate;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = chargeDefinition.coverlb_check && chargeDefinition.adjustableSets;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
+			}			
+		} else if (this.chargeDefinition.method == ChargeMethod.JobAware) {
+			if (chargeDefinition.quantityType == ChargeQtyType.Sets ||
+				chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
+				quantity_box.includeInLayout = quantity_box.visible = false;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
+				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = true;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;				
+			} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+				quantity_box.includeInLayout = quantity_box.visible = true;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
+				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
+			}
+		} else if (this.chargeDefinition.method == ChargeMethod.Linear) {
+			if (chargeDefinition.quantityType == ChargeQtyType.Sets ||
+				chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
+				quantity_box.includeInLayout = quantity_box.visible = false;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
+				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = true;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;				
+			} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+				quantity_box.includeInLayout = quantity_box.visible = true;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
+				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
+			}
+		} else if (this.chargeDefinition.method == ChargeMethod.Markup) {
+				quantity_box.includeInLayout = quantity_box.visible = true;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+				material_rate_box.includeInLayout = material_rate_box.visible = false;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = false;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;				
+		} else if (this.chargeDefinition.method == ChargeMethod.PriceList ||
+				   this.chargeDefinition.method == ChargeMethod.RateList) {
+				quantity_box.includeInLayout = quantity_box.visible = true;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+				material_rate_box.includeInLayout = material_rate_box.visible = false;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+				weight_box.includeInLayout = weight_box.visible = false;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = false;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;						
+		} else if (this.chargeDefinition.method == ChargeMethod.Shipping) {
+			if (chargeDefinition.quantityType == ChargeQtyType.TotalWeight) {
+				quantity_box.includeInLayout = quantity_box.visible = false;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+				material_rate_box.includeInLayout = material_rate_box.visible = false;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = true;
+				weight_box.includeInLayout = weight_box.visible = true;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = false;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+			} else if (chargeDefinition.quantityType == ChargeQtyType.ShippingQty) {
+				quantity_box.includeInLayout = quantity_box.visible = true;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+				material_rate_box.includeInLayout = material_rate_box.visible = false;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = true;
+				weight_box.includeInLayout = weight_box.visible = true;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = false;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+			}
+		} else if (this.chargeDefinition.method == ChargeMethod.SquareArea) {
+			if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+				quantity_box.includeInLayout = quantity_box.visible = true;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+				material_rate_box.includeInLayout = material_rate_box.visible = false;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = true;
+				weight_box.includeInLayout = weight_box.visible = true;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = false;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+			} else if (chargeDefinition.quantityType == ChargeQtyType.Sets) {
+				quantity_box.includeInLayout = quantity_box.visible = true;
+				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+				material_rate_box.includeInLayout = material_rate_box.visible = false;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+				price_box.includeInLayout = price_box.visible = true;
+				price_text.editable = !chargeDefinition.noOverrides;
+				setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+				coverage_box.includeInLayout = coverage_box.visible = false;
+				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+				cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = true;
+				weight_box.includeInLayout = weight_box.visible = true;
+				area_box.includeInLayout = area_box.visible = false;
+				up_box.includeInLayout = up_box.visible = false;
+				cuts_box.includeInLayout = cuts_box.visible = false;
+				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+			}
+		}
+	}
 ]]>
                              
 </mx:Script>
@@ -127,38 +536,113 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 							 fontSize="9"
 							 selected="{chargeDefinition.presetHidden}" width="64"/>
 			</mx:HBox>
-			<mx:HBox width="100%">
+			<mx:HBox width="100%" id="description_box">
 				<mx:TextInput text="{chargeDefinition.presetDescriptionLabel}" width="25%" id="description_label_text" textAlign="right"/>
 				<mx:TextInput text="{chargeDefinition.presetDescription}" width="100%" id="description_default_text"/>
 			</mx:HBox>
-			<mx:HBox width="100%">
+			<mx:HBox width="100%" id="notes_box">
 				<mx:TextInput text="{chargeDefinition.presetNotesLabel}" width="25%" id="notes_label_text" textAlign="right"/>
 				<mx:TextInput text="{chargeDefinition.presetNotes}" width="100%" id="notes_default_text"/>
 			</mx:HBox>
-			<mx:HBox width="100%">
+			<mx:HBox width="100%" id="production_location_box">
 				<mx:Text text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionLocation')}" width="25%" id="production_location_label" textAlign="right"/>
 				<mx:TextInput text="{chargeDefinition.location.name}" width="100%" id="location_text" enabled="false"/>
 			</mx:HBox>
 			<mx:HBox width="100%">
-				<mx:Spacer width="25%"/>
+				<mx:Spacer width="25%" height="5"/>
 				<mx:CheckBox
 							 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.ShowNotes')}"
 							 id="show_notes_check"
 							 fontSize="9"
 							 selected="{chargeDefinition.presetShowNotes}" width="100%"/>
 			</mx:HBox>
-			<mx:Spacer height="50"/>
-			<mx:HBox width="100%">
-				<mx:TextInput text="{chargeDefinition.presetQuantityLabel}" width="25%" id="quantity_label_text" textAlign="right"/>
-				<mx:TextInput text="{chargeDefinition.presetQuantity}" width="25%" id="quantity_default_text"/>
-				<mx:TextInput text="{chargeDefinition.presetInSetsOfLabel}" width="25%" id="in_sets_of_default_text"/>
-				<mx:TextInput text="{chargeDefinition.presetInSetsOf}" width="25%" id="in_sets_of_label_text" textAlign="right"/>
+			<mx:HBox width="100%" height="130">
+				<mx:VBox width="50%" height="100%">
+					<mx:HBox width="100%" id="setup_box">
+						<mx:TextInput text="{chargeDefinition.presetSetupLabel}" width="50%" id="setup_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetSetup}" width="50%" id="setup_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="cuts_box">
+						<mx:TextInput text="{chargeDefinition.presetCutsLabel}" width="50%" id="cuts_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetCuts}" width="50%" id="cuts_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="number_of_colors_box">
+						<mx:TextInput text="{chargeDefinition.presetNumberOfColorsLabel}" width="50%" id="number_of_colors_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetNumberOfColors}" width="50%" id="number_of_colors_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="pounds_of_ink_box">
+						<mx:TextInput text="{chargeDefinition.presetPoundsofInkLabel}" width="50%" id="pounds_of_ink_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetPoundsofInk}" width="50%" id="pounds_of_ink_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="coverage_box">
+						<mx:TextInput text="{chargeDefinition.presetCoverageLabel}" width="50%" id="coverage_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetCoverage}" width="50%" id="coverage_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="quantity_per_set_box">
+						<mx:TextInput text="{chargeDefinition.presetQuantityPerSetLabel}" width="50%" id="quantity_per_set_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetQuantityPerSet}" width="50%" id="quantity_per_set_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="quantity_box">
+						<mx:TextInput text="{chargeDefinition.presetQuantityLabel}" width="50%" id="quantity_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetQuantity}" width="50%" id="quantity_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="material_quantity_box">
+						<mx:TextInput text="{chargeDefinition.presetMaterialQuantityLabel}" width="50%" id="material_quantity_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetMaterialQuantity}" width="50%" id="material_quantity" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="material_rate_box">
+						<mx:TextInput text="{chargeDefinition.presetMaterialRateLabel}" width="50%" id="material_rate_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetMaterialRate}" width="50%" id="material_rate" textAlign="right"/>
+					</mx:HBox>					
+				</mx:VBox>
+				<mx:VBox width="50%" height="100%">					
+					<mx:HBox width="100%" id="price_per_pound_box">
+						<mx:TextInput text="{chargeDefinition.presetPricePerPoundLabel}" width="50%" id="price_per_pound_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetPricePerPound}" width="50%" id="price_per_pound_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="cover_per_pound_box">
+						<mx:TextInput text="{chargeDefinition.presetCoverPerPoundLabel}" width="50%" id="cover_per_pound_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetCoverPerPound}" width="50%" id="cover_per_pound_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="weight_box">
+						<mx:TextInput text="{chargeDefinition.presetTotalWeightLabel}" width="50%" id="total_weight_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetTotalWeightLabel}" width="50%" id="total_weight_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="in_sets_of_box">
+						<mx:TextInput text="{chargeDefinition.presetInSetsOfLabel}" width="50%" id="in_sets_of_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetInSetsOf}" width="50%" id="in_sets_of_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="rate_box">
+						<mx:TextInput text="{chargeDefinition.presetRateLabel}" width="50%" id="rate_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetRate}" width="50%" id="rate_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="sheets_per_lift_box">
+						<mx:TextInput text="{chargeDefinition.presetSheetsPerLiftLabel}" width="50%" id="sheets_per_lift_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetSheetsPerLift}" width="50%" id="sheets_per_lift_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="material_sets_of_box">
+						<mx:TextInput text="{chargeDefinition.presetMaterialSetsOfLabel}" width="50%" id="material_sets_of_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetMaterialSetsOf}" width="50%" id="material_sets_of_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="area_box">
+						<mx:TextInput text="{chargeDefinition.presetAreaLabel}" width="50%" id="area_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetArea}" width="50%" id="area_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="up_box">
+						<mx:TextInput text="{chargeDefinition.presetUpLabel}" width="50%" id="up_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetUp}" width="50%" id="up_text" textAlign="right"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="price_box">
+						<mx:TextInput text="{chargeDefinition.presetPriceLabel}" width="50%" id="price_label_text" textAlign="right"/>
+						<mx:TextInput text="{chargeDefinition.presetPrice}" width="50%" id="price_text" textAlign="right"/>
+					</mx:HBox>
+				</mx:VBox>
 			</mx:HBox>
-			<mx:HBox width="100%">
-				<mx:TextInput text="{chargeDefinition.presetRateLabel}" width="25%" id="rate_label_text" textAlign="right"/>
-				<mx:TextInput text="{chargeDefinition.presetRate}" width="25%" id="rate_default_text"/>
-				<mx:TextInput text="{chargeDefinition.presetPriceLabel}" width="25%" id="price_label_text" textAlign="right"/>
-				<mx:TextInput text="{chargeDefinition.presetPrice}" width="25%" id="price_default_text"/>
+			<mx:HBox width="100%" id="tax_table_box">
+				<mx:Spacer width="25%" height="5"/>
+				<mx:Spacer width="25%" height="5"/>				
+				<mx:Text text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" width="25%" id="tax_table_label_text"/>
+				<mx:Text text="{chargeDefinition.presetTaxTable.name}" width="25%" id="tax_table_text"/>				
 			</mx:HBox>
 		</mx:VBox>
 		<mx:Button width="80" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOK();" bottom="5" right="100"/>

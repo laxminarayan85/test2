@@ -1640,7 +1640,6 @@ public class DataService extends HibernateService {
 					List<ChargeCategory> categories = chargeCommand
 							.getChildren();
 					for (ChargeCategory category : categories) {
-						System.out.println(category.getName());
 						List<ChargeDefinition> charges = category.getChildren();
 						for (ChargeDefinition charge : charges) {
 							if (charge == null) {

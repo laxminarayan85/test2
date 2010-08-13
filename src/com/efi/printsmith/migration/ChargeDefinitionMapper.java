@@ -310,7 +310,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						}
 									
 					} else if ("use material sets".equals(currentFieldToken)) {
-						chargeDefinition.setUseMerchandiseSets(Utilities
+						chargeDefinition.setUseMaterialSets(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("use setup".equals(currentFieldToken)) {
 						chargeDefinition.setUseSetup(Utilities
@@ -862,7 +862,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				chargeDefinition.setUseRateSets(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("use material sets".equals(currentFieldToken)) {
-				chargeDefinition.setUseMerchandiseSets(Utilities
+				chargeDefinition.setUseMaterialSets(Utilities
 						.tokenToBooleanValue(currentImportToken));
 			} else if ("use setup".equals(currentFieldToken)) {
 				chargeDefinition.setUseSetup(Utilities

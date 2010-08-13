@@ -26,7 +26,7 @@
 	<!--<mx:Style source="styles/darkroom.css"/>-->
 	
     <!--mx:TraceTarget/-->
- 	<mx:TraceTarget fieldSeparator="->" includeCategory="true" includeLevel="true" includeTime="true" />
+ 	<mx:TraceTarget fieldSeparator="->" level="6" includeCategory="true" includeLevel="true" includeTime="true" />
     <mx:HBox x="0" y="32" width="100%" height="100%">
     <mx:Canvas width="2" height="100%">
     </mx:Canvas>
@@ -133,6 +133,8 @@
 		import flexlib.events.TabReorderEvent;
 		import flexlib.controls.tabBarClasses.SuperTab;
 		import com.efi.printsmith.components.MultiLineLabelButton;
+		import mx.logging.ILogger;
+		import mx.logging.Log;
 		
 		public var timer : Timer;
 		public var nf:NumberFormatter;
@@ -152,7 +154,6 @@
 		private var gCaptureCardData:Boolean = false;
 		private var gComponent:IFocusManagerComponent = null;
 		private var gTimer:Timer = null;
-
 		
 		public var security:com.efi.printsmith.security.PSSecurity;
 		
