@@ -139,7 +139,7 @@
 //	    case "Matrix":
 //	    	newPriceList = new com.efi.printsmith.data.Matrix();
 //	    	break;
-	    }
+	    } 
 	    if (newPriceList == null) {
 	    	Alert.show("Unknown Price List type to create.", "Error", 0, this, null);
 	    	return
@@ -148,11 +148,9 @@
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setPriceList(newPriceList);
-	    doSelect();
-		PopUpManager.removePopUp(this);
-		dataService.getAll(this.itemType);
-	
-		
+//	    doSelect();
+//		PopUpManager.removePopUp(this);
+//		dataService.getAll(this.itemType);	
 	}
 
 	private function doEdit():void {

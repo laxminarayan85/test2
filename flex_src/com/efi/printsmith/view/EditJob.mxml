@@ -821,6 +821,7 @@
 			}
 			
 			private function handleJobMethodPickerCancel(evt:JobMethodSelectEvent):void {
+				this.enabled = true;
 				PopUpManager.removePopUp(this);
 			}
 

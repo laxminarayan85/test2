@@ -32,6 +32,6 @@ public class InvoiceRepository extends RepositoryService {
 
 	public InvoiceRepository() {
 		defaultRepositoryName = "../invoiceRepository";
-		repositoryPropertyName = "com.efi.printsmith.invoiceRepository";
+		repositoryPropertyName = "com.efi.printsmith.invoiceTemplateRepository";
 	}	
 }

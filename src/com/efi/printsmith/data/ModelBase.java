@@ -47,6 +47,10 @@ abstract public class ModelBase extends HibernateProxy {
 	@Column(name = "previd", nullable = true)
 	String prevId;
 	
+//	@Basic
+//	@Column(name="isdeleted", nullable = false)
+//	Boolean isDeleted = false;
+	
 	public Long getId() {
 		return id;
 	}
@@ -71,6 +75,12 @@ abstract public class ModelBase extends HibernateProxy {
 	public void setPrevId(String prevId) {
 		this.prevId = prevId;
 	}
+//	public Boolean getIsDeleted() {
+//		return isDeleted;
+//	}
+//	public void setIsDeleted(Boolean isDeleted) {
+//		this.isDeleted = isDeleted;
+//	}
 //	public static final String GUID = "GUID";
 //	protected String guid;
 //	@Column(name = "guid", nullable = false, length = 36)
