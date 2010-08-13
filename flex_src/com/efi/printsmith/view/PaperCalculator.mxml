@@ -51,6 +51,7 @@
 			import com.efi.printsmith.Constants;
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.data.Job;
+			import com.efi.printsmith.view.PaperCalculatorTemplate;
 			
 			[Bindable]
 			private var job:Job;
@@ -421,6 +422,12 @@
 				dispatchEvent(selectEvent);						
 			}
 			
+			private function doTemplate():void
+			{
+				var paperTemplateWindow:PaperCalculatorTemplate = PaperCalculatorTemplate(PopUpManager.createPopUp(this, PaperCalculatorTemplate, true));
+				paperTemplateWindow.setStyle("borderAlpha", 0.9);
+			}
+
 			private function doParentBoolean():void{
 				parentBoolean = true;
 				runBoolean = false;
@@ -817,6 +824,7 @@
 				   y="21"
 				   width="38"
 				   height="38"
+				   click="doTemplate()"
 				   icon="@Embed(source='../../../../assets/find.png')"/>
 		<mx:Button x="241"
 				   y="21"

@@ -4,6 +4,9 @@ width="100%" height="100%"  creationComplete="init()"
      title="Credit Card Manager" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*">
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
+		<mx:method name="getAllOrderByDecsending"
+				   fault="handleFault(event)"
+				   result="handleLoadResult(event)"/>
 		<mx:method name="getAll"
 				   fault="handleFault(event)"
 				   result="handleLoadResult(event)"/>
@@ -23,10 +26,10 @@ width="100%" height="100%"  creationComplete="init()"
 	import com.efi.printsmith.events.EncryptDataEvent;
 		
 	[Bindable]
-	private var creditCards:ArrayCollection=new ArrayCollection();
+	private var creditCardTransactions:ArrayCollection=new ArrayCollection();
 		
 	public function init():void{		
-		dataService.getAll("CreditCard");
+		dataService.getAll("CreditCardTransactions");
 	}
 	private function doDoubleClick():void{
 	//	lineItem = dataGrid.selectedItem as CreditCardTransactions
@@ -40,31 +43,33 @@ width="100%" height="100%"  creationComplete="init()"
 		Alert.show(message, "Error", 0, null);
 	}
 	private function handleLoadResult(ev:ResultEvent):void{
-		creditCards = ev.result as ArrayCollection;
+		creditCardTransactions = ev.result as ArrayCollection;
 	}
 	
 	private function getHistoricCardNumber(item:Object, column:DataGridColumn):String{
-		var temp:CreditCard =  item as CreditCard;
-		return temp.cardDisplayNumber as String;
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		return temp.creditCard.cardDisplayNumber as String;
 	}
 	private function getHistoricCardHolder(item:Object, column:DataGridColumn):String{
-		var temp:CreditCard =  item as CreditCard;
-		return temp.cardHolderName as String;
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		return temp.creditCard.cardHolderName as String;
 	}
 	
 	private function getHistoricCardDecrypt(item:Object, column:DataGridColumn):String{
-		var temp:CreditCard =  item as CreditCard;
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
 	//	decryptCardData(temp.cardNumber);
 		return "";
 	}
 	private function getHistoricCardExpire(item:Object, column:DataGridColumn):String{
-		var temp:CreditCard =  item as CreditCard;
-		return temp.expiresDate as String;
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		if (temp.creditCard.expiresDate != null)
+			return temp.creditCard.expiresDate.toString();
+		else
+			return "";
 	}
 	private function getHistoricTransAmount(item:Object, column:DataGridColumn):String{
-		var temp:CreditCard =  item as CreditCard;
-	//	return temp.creditCardTransactions.getItemAt(0) as String;
-		return "";
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		return temp.amount.toString();
 	}
 	
 	private function handleDecryptionResult(event:ResultEvent):void {
@@ -78,12 +83,112 @@ width="100%" height="100%"  creationComplete="init()"
 		var encryptCCEvent:EncryptDataEvent = new EncryptDataEvent(EncryptDataEvent.DECRYPTDATA, data, "AES256WITHSERIALNUMBER", callbacks);
 		encryptCCEvent.dispatch();
 	}
+	
+	private function getHistoricTransactionDate(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		if(temp.approvalDate != null)
+			return temp.approvalDate.toString();
+		else
+			return "";
+	}
+	
+	private function getHistoricTransactionOrderNumber(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		if (temp.invoice != null)
+			return temp.invoice.invoiceNumber.toString();
+		else
+			return "";
+	}
+	
+	private function getHistoricTransactionUser(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		return temp.userName as String;
+	}
+	
+	private function getHistoricTransactionMessage(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		return temp.message as String;
+	}
+	
+	private function getHistoricTransactionReference(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		return temp.referenceNumber as String;
+	}
+	
+	private function getHistoricTransType(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		switch (temp.transactionType) {
+			case 1:			//kTransactionTypeManualEntry
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Manualapproval');
+				break;
+			case 2:	//kTransactionTypePurchase,	
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Charge');
+				break;
+			case 3:	//kTransactionTypeCredit,				
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Credit');
+				break;
+			case 4:	//kTransactionTypeAuthOnly,				
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Authorize');
+				break;
+			case 5:	//kTransactionTypeReversal,				
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Reverse');
+				break;
+			case 6:	//kTransactionTypeAdjustment,				
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Adjustment');
+				break;
+			case 7:	//kTransactionTypeKeepOnFile,				
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Keeponfile');
+				break;
+			case 8:	//kTransactionTypeReAutorize	
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.ChangeAuthorize');
+				break;
 
+		}
+		return "Bad type";
+	}
+	
+	private function getHistoricTransStatus(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		switch (temp.transactionStatus) {
+			case 0:			// kTransactionStatusUnknown
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.HoldingcouldbeWEBord');
+				break;
+			case 1:			//kTransactionStatusWaiting
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Waiting');
+				break;
+			case 2:	//kTransactionStatusComplete,	
+				switch(temp.transactionResults) {
+				case 0:			//kTransactionResultsUnknown
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Unknownresults');
+				case 1:		//kTransactionResultsApproved
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approved') + " -> " + temp.approvalCode.toString()
+				case 2:		//kTransactionResultsDeclined
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Declined');
+				case 3:		//kTransactionResultsError
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Errorinapprovalsyste');
+				case 4:		//kTransactionResultsAuthHold
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Holdamountapproved');
+				case 5:		//kTransactionResultsCallCenter
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Callcreditcardcenter');
+				case 6:		//kTransactionResultsReversed
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approved');
+				case 7:		//kTransactionResultsTimeOut
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approvalsystemtimedo');
+				}
+				return "Bad results";
+			case 3:	//kTransactionStatusTimedOut,				
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.PrintSmithtimedout');
+				break;
+			case 4:	//kTransactionStatusVoided				
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approvalsystemnotrea');
+				break;
+			case 5:	//kTransactionStatusCanceled,				
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Canceledbyuser');
+				break;
+		}
+		return "Bad type";
+	}
 
-//	private function getHistoricTransactionDate(item:Object, column:DataGridColumn):String{
-//		var temp:CreditCard =  item as CreditCard;
-//		return temp.creditCardTransactions.getItemAt( as String;
-//	}
 ]]>
                              
 </mx:Script>
@@ -94,7 +199,6 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:Button x="80" y="10" width="38" height="38" click="">
 				<mx:icon>@Embed(source='../../../../assets/receipt.png')</mx:icon>
 			</mx:Button>
-		<mx:List x="539" y="79" height="21" id="Current"></mx:List>
 		<mx:Canvas label="Current" width="100%" height="100%">
 			<mx:TabNavigator width="100%" height="378" y="90">
 				<mx:Canvas label="Current" width="100%" height="100%">
@@ -103,7 +207,7 @@ width="100%" height="100%"  creationComplete="init()"
 						height="100%">
 						<mx:columns>
 							<mx:DataGridColumn headerText="Transaction"/>
-							<mx:DataGridColumn headerText="Amount" />
+							<mx:DataGridColumn headerText="Amount" textAlign="right"/>
 							<mx:DataGridColumn headerText="Status" />
 							<mx:DataGridColumn headerText="Order#" />
 							<mx:DataGridColumn headerText="User" />
@@ -112,22 +216,22 @@ width="100%" height="100%"  creationComplete="init()"
 				</mx:Canvas>
 				<mx:Canvas label="Historic" width="100%" height="100%">
 					<mx:DataGrid  id="dataGrid0" width="100%" 
-						dataProvider="{creditCards}" 
+						dataProvider="{creditCardTransactions}" 
 						horizontalScrollPolicy="on"
 						height="100%" columnWidth="100">
 						<mx:columns>
-							<mx:DataGridColumn headerText="Date"/>
-							<mx:DataGridColumn headerText="Type" />
+							<mx:DataGridColumn headerText="Date"  labelFunction="getHistoricTransactionDate"/>
+							<mx:DataGridColumn headerText="Type" labelFunction="getHistoricTransType"/>
 							<mx:DataGridColumn headerText="Card Number" labelFunction="getHistoricCardNumber"/>
 							<mx:DataGridColumn headerText="Card Holder" labelFunction="getHistoricCardHolder" />
 							<mx:DataGridColumn headerText="Expiration" labelFunction="getHistoricCardExpire"/>
-							<mx:DataGridColumn headerText="Amount" labelFunction="getHistoricTransAmount"/>
-							<mx:DataGridColumn headerText="Status" />
-							<mx:DataGridColumn headerText="Order#" />
+							<mx:DataGridColumn headerText="Amount" labelFunction="getHistoricTransAmount" textAlign="right"/>
+							<mx:DataGridColumn headerText="Status" labelFunction="getHistoricTransStatus"/>
+							<mx:DataGridColumn headerText="Order#" labelFunction="getHistoricTransactionOrderNumber"/>
 							<mx:DataGridColumn headerText="Cust#" />
-							<mx:DataGridColumn headerText="User" />
-							<mx:DataGridColumn headerText="Reference#" />
-							<mx:DataGridColumn headerText="Message" />
+							<mx:DataGridColumn headerText="User" labelFunction="getHistoricTransactionUser"/>
+							<mx:DataGridColumn headerText="Reference#" labelFunction="getHistoricTransactionReference"/>
+							<mx:DataGridColumn headerText="Message" labelFunction="getHistoricTransactionMessage"/>
 							<mx:DataGridColumn headerText="Flags" />
 							<mx:DataGridColumn headerText="File / Order#" />
 						</mx:columns>

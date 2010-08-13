@@ -87,6 +87,8 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 				creditCardTransaction.setWsId(Utilities.tokenToInt(currentImportToken));
 			else if ("CC Number Display".equals(currentFieldToken))
 				creditCard.setCardDisplayNumber(currentImportToken);
+			else if ("CC Expire Date".equals(currentFieldToken))
+				creditCard.setExpiresDate(Utilities.tokenToDate(currentImportToken));
 			else if ("amount".equals(currentFieldToken))
 				creditCardTransaction.setAmount(Utilities.tokenToDouble(currentImportToken));
 			else if ("taxInAmount".equals(currentFieldToken))

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Paper Calculator Template" name="Paper Calculator Template"
+width="100%" height="100%"  creationComplete="init()" 
+	 showCloseButton="true" 
+     title="Paper Calculator Template" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*">
+	<mx:RemoteObject id="dataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+<mx:Script>                                   
+<![CDATA[
+	import mx.rpc.events.ResultEvent;
+	import mx.collections.ArrayCollection;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.events.FaultEvent;
+	import mx.controls.Alert;
+	import mx.managers.PopUpManager;
+	import mx.rpc.IResponder;
+		
+	[Bindable]
+	private var templates:ArrayCollection=new ArrayCollection();
+		
+	public function init():void{		
+		// dataService.getAll("Templates");
+	}
+	private function doDoubleClick():void{
+
+	}
+	private function handleFault(ev:FaultEvent):void
+	{
+		var message:String;
+
+		message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+		Alert.show(message, "Error", 0, null);
+	}
+	private function handleLoadResult(ev:ResultEvent):void{
+		templates = ev.result as ArrayCollection;
+	}
+]]>
+                             
+</mx:Script>
+	<mx:Canvas width="100%" height="100%">
+		<mx:Button x="10" y="10" width="38" height="38" click="">
+				<mx:icon>@Embed(source='../../../../assets/edit.png')</mx:icon>
+			</mx:Button>
+		<mx:Button x="102" y="10" width="38" height="38" click="">
+				<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
+			</mx:Button>
+		<mx:Button x="56" y="10" width="38" height="38" click="">
+				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+			</mx:Button>	
+		<mx:RadioButtonGroup id="WhichStart"/>
+		<mx:RadioButton x="285" y="10" label="Parent to Run" groupName="WhichStart"/>
+		<mx:RadioButton x="285" y="36" label="Run to Finish" groupName="WhichStart"/>
+	</mx:Canvas>
+	<mx:DataGrid  id="dataGrid" width="100%" 
+		horizontalScrollPolicy="on"
+		rowHeight="150"
+		columnWidth="150"
+		height="418">
+		<mx:columns>
+			<mx:DataGridColumn headerText=""/>
+			<mx:DataGridColumn headerText=""/>
+			<mx:DataGridColumn headerText="" />
+		</mx:columns>
+	</mx:DataGrid>
+	
+</mx:TitleWindow>
