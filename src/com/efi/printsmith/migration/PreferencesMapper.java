@@ -357,7 +357,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesAccounting = new PreferencesAccounting();
 		if (name.equals("pastDue")) {
 			preferencesAccounting.setPastDueNote(value);
-		} else if (name.equals("delinquint")) {
+		} else if (name.equals("delinquent")) {
 			preferencesAccounting.setDelinquentNote(value);
 		} else if (name.equals("frozen")) {
 			preferencesAccounting.setFrozenNote(value);
