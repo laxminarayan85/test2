@@ -126,13 +126,13 @@ public class PreferencesMapper extends ImportMapper {
 	}
 	private void importPreferencesMarkupsField(String group, String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
-		if (group.equals("OutsideMatrix_cost") || group.equals("OutsideMatrix_markup")) {
+		if (name.equals("OutsideMatrix_cost") || name.equals("OutsideMatrix_markup")) {
 			OutsideService outsideService = (OutsideService)dataService.getByPrevId("OutsideService", key);
 			if (outsideService == null) {
 				outsideService = new OutsideService();
 				outsideService.setPrevId(key);
 			}
-			if (group.equals("OutsideMatrix_cost")) {
+			if (name.equals("OutsideMatrix_cost")) {
 				double cost = Utilities.tokenToDouble(value);
 				if (cost == 999999.0)
 					outsideService.setAbove(true);
@@ -140,17 +140,17 @@ public class PreferencesMapper extends ImportMapper {
 					outsideService.setAbove(false);
 					outsideService.setTotalCost(cost);
 				}
-			} else if (group.equals("OutsideMatrix_markup"))
+			} else if (name.equals("OutsideMatrix_markup"))
 				outsideService.setMarkup(Utilities.tokenToDouble(value));
 			dataService.addUpdate(outsideService);
 		}
-		if (group.equals("MerchMatrix_cost") || group.equals("MerchMatrix_markup")) {
+		if (name.equals("MechMatrix_cost") || name.equals("MechMatrix_markup")) {
 			Merchandise merchandise = (Merchandise)dataService.getByPrevId("Merchandise", key);
 			if (merchandise == null) {
 				merchandise = new Merchandise();
 				merchandise.setPrevId(key);
 			}
-			if (group.equals("MerchMatrix_cost")) {
+			if (name.equals("MechMatrix_cost")) {
 				double cost = Utilities.tokenToDouble(value);
 				if (cost == 999999.0)
 					merchandise.setAbove(true);
@@ -158,7 +158,7 @@ public class PreferencesMapper extends ImportMapper {
 					merchandise.setAbove(false);
 					merchandise.setTotalCost(cost);
 				}
-			} else if (group.equals("MerchMatrix_markup"))
+			} else if (name.equals("MechMatrix_markup"))
 				merchandise.setMarkup(Utilities.tokenToDouble(value));
 			dataService.addUpdate(merchandise);
 		}
