@@ -818,6 +818,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				baseRate_edit.visible = false;
 				var price2SideArray:Array = Price2Side.toArray().filter(filterFlatRatePrice2Side);
 				price_2_side.dataProvider = price2SideArray;
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 				
 			case CopierPricingMethod.CopiesAndOriginals:

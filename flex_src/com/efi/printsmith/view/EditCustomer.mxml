@@ -238,7 +238,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.setAccount(ev.result as Account);
 		contactdataService.getContactsByAccountId("Contact", account.id);
 		setMarketing();
-		title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')+"  " + account.title;
+		if ( account.prospect)
+			title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Prospect')+"  " + account.title;
+		else
+			title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')+"  " + account.title;
 		this.JobCharges = ev.result.jobCharges;
 		this.EstInvCharges = ev.result.invoiceEstimateCharges;
 	     
