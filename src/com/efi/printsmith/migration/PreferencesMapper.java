@@ -612,7 +612,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setSlogan(value);
 		else if (name.equals("PEK 4"))
 			preferencesSystem.setSettings(value);
-		else if (name.equals("app_AutoQuitText"))
+		else if (name.equals("app_autoQuitText"))
 			preferencesSystem.setShutdownMessage(value);
 		else if (name.equals("companyIDLabel"))
 			preferencesSystem.setCompanyIdLabel(value);
