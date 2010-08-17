@@ -96,8 +96,12 @@ public class Utilities {
 		try {
 			date = fmt.parse(token);
 		} catch (Exception e) {
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-			date = formatter.parse(token);
+			try {
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+				date = formatter.parse(token);
+			} catch (Exception e2) {
+				date = null;
+			}
 		}
 
 		return date;
