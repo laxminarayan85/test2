@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.lang.String;
+import java.lang.reflect.Field;
 
 import java.io.File;
 
@@ -533,6 +534,16 @@ public class DataService extends HibernateService {
 		try {
 			Query findQuery = em.createQuery("from " + className);
 			ModelBase result = (ModelBase) findQuery.getSingleResult();
+			for (Field field : result.getClass().getDeclaredFields()) {
+				if(field.getType().getName().equals("java.util.List") || field.getType().getName().equals("java.util.ArrayList")) {
+					String propertyName = field.getName().substring(0,1).toUpperCase()+field.getName().substring(1,field.getName().length());
+					try {
+						Hibernate.initialize(result.getProperty(propertyName));
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
 			return result;
 		} catch (Exception e) {
 			log.error(e);
@@ -2095,6 +2106,16 @@ public class DataService extends HibernateService {
 			Query query = em.createNamedQuery(className + ".byId");
 			query.setParameter("id", id);
 			ModelBase object = (ModelBase) query.getSingleResult();
+			for (Field field : object.getClass().getDeclaredFields()) {
+				if(field.getType().getName().equals("java.util.List") || field.getType().getName().equals("java.util.ArrayList")) {
+					String propertyName = field.getName().substring(0,1).toUpperCase()+field.getName().substring(1,field.getName().length());
+					try {
+						Hibernate.initialize(object.getProperty(propertyName));
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
 			return object;
 		} catch (Exception e) {
 			log.error(e);
