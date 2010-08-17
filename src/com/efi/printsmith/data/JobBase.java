@@ -3177,6 +3177,25 @@ public class JobBase extends ModelBase {
   public void setRollWidth(Double newVal) {
     this.rollWidth = newVal;
   }
+  
+  	@Basic
+	private Boolean releasedToProduction;
+  	
+  	
+	/**
+	 * @return the releasedToProduction
+	 */
+	public Boolean getReleasedToProduction() {
+		return releasedToProduction;
+	}
+
+
+	/**
+	 * @param releasedToProduction the releasedToProduction to set
+	 */
+	public void setReleasedToProduction(Boolean releasedToProduction) {
+		this.releasedToProduction = releasedToProduction;
+	}
 
 
 	/**

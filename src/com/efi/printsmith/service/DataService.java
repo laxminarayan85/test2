@@ -2758,6 +2758,258 @@ public class DataService extends HibernateService {
 		}
 		return activeEmployees;
 	}
+	
+	/**
+	 * This method retrieves list of active employees who are clocked in
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Employee> getClockedInEmployee() throws Exception {
+		log.debug("** getClockedInEmployee called.");
+		List<Employee> clockedInEmployees = new ArrayList<Employee>();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from Employee where active=true and clockin=true";
+			Query query = em.createQuery(queryString);
+			clockedInEmployees = query.getResultList();
+			if (clockedInEmployees != null)
+				log.debug("** Found " + clockedInEmployees.size() + "records:");
+
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return clockedInEmployees;
+	}
+
+	/**
+	 * This method retrieves jobs & charges list based on the employee filtering
+	 * @param employeeId
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ModelBase> getJobsChargesForTrackerByEmployee(long employeeId) throws Exception {
+		log.debug("** getJobsChargesForTrackerByEmployee called.");
+		List<ModelBase> jobChargesList = new ArrayList<ModelBase>();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query employeeQuery = em.createNamedQuery("Employee.byId");
+			employeeQuery.setParameter("id", employeeId);
+			Employee employee = (Employee) employeeQuery.getSingleResult();
+			if(employee!=null) {
+				if(employee.getIncludeInvoice()) {
+					if(employee.getIncludeJobs()) {
+						List<String> chargeDefinitionsList = new ArrayList<String>();
+						String queryString = "select job from Invoice as invoice left join invoice.jobs as job where";
+						if(!employee.getAllPricingMethods()) {
+							queryString = queryString + " job.pricingMethod in (:pricingMethods) and";
+						}
+						if(!employee.getAllCopiers()) {
+							queryString = queryString + " job.costingCopier.machineName in (:copiers) and";
+						}
+						if(!employee.getAllChargeTypes()) {
+							//queryString = queryString + " job.costingCopier in (:copiers) and";
+						}
+						if(!employee.getAllPresses()) {
+							queryString = queryString + " job.costingPress.machineName in (:presses) and";
+						}
+						queryString = queryString + " job.releasedToProduction=true";
+						Query query = em.createQuery(queryString);
+						if(!employee.getAllPricingMethods()) {
+							query.setParameter("pricingMethods", employee.getEmployeePricings());
+						}
+						if(!employee.getAllCopiers()) {
+							List<String> copiersList = new ArrayList<String>();
+							for (ProductionCopiers productionCopiers : employee.getEmployeeCopiers()) {
+								copiersList.add(productionCopiers.getName());
+							}
+							query.setParameter("copiers", copiersList);
+						}
+						if(!employee.getAllChargeTypes()) {
+							chargeDefinitionsList = new ArrayList<String>();
+							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand.getName());
+							}
+						}
+						if(!employee.getAllPresses()) {
+							List<String> pressesList = new ArrayList<String>();
+							for (ProductionPress productionPress : employee.getEmployeePresses()) {
+								pressesList.add(productionPress.getName());
+							}
+							query.setParameter("presses", pressesList);
+						}
+						List<Job> jobList = query.getResultList();
+						for (Job job : jobList) {
+							if(job!=null) {
+								if(employee.getIncludeJobCharges()) {
+									if(job.getCharges()!=null && job.getCharges().size()>0) {
+										for (Charge charge : job.getCharges()) {
+											if(charge!=null) {
+												if(!employee.getAllChargeTypes()) {
+													if(charge.getChargeDefinition()!=null) {
+														if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
+															Hibernate.initialize(charge.getParentJob());
+															jobChargesList.add(charge);
+														}
+													}
+												} else {
+													Hibernate.initialize(charge.getParentJob());
+													jobChargesList.add(charge);
+												}
+											}
+										}
+									}
+								}
+								Hibernate.initialize(job.getParentInvoice());
+								jobChargesList.add(job);
+							}
+						}
+					}
+					if(employee.getIncludeInvoiceCharges()){
+						List<String> chargeDefinitionsList = new ArrayList<String>();
+						String queryString = "select charge from Invoice as invoice left join invoice.charges as charge";
+						if(!employee.getAllChargeTypes()) {
+							queryString = queryString + "  where charge.chargeDefinition.name in (:charges)";
+						}
+						Query query = em.createQuery(queryString);
+						if(!employee.getAllChargeTypes()) {
+							chargeDefinitionsList = new ArrayList<String>();
+							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand.getName());
+							}
+							query.setParameter("charges", chargeDefinitionsList);
+						}
+						List<Charge> chargesList = query.getResultList();
+						for (Charge charge : chargesList) {
+							if(charge!=null) {
+								if(!employee.getAllChargeTypes()) {
+									if(charge.getChargeDefinition()!=null) {
+										if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
+											Hibernate.initialize(charge.getParentInvoice());
+											jobChargesList.add(charge);
+										}
+									}
+								} else {
+									Hibernate.initialize(charge.getParentInvoice());
+									jobChargesList.add(charge);
+								}
+							}
+						}
+					}
+				}
+				if(employee.getIncludeEstimate()) {
+					if(employee.getIncludeJobs()) {
+						List<String> chargeDefinitionsList = new ArrayList<String>();
+						String queryString = "select job from Estimate as estimate left join estimate.jobs as job where";
+						if(!employee.getAllPricingMethods()) {
+							queryString = queryString + " job.pricingMethod in (:pricingMethods) and";
+						}
+						if(!employee.getAllCopiers()) {
+							queryString = queryString + " job.costingCopier.machineName in (:copiers) and";
+						}
+						if(!employee.getAllChargeTypes()) {
+							//queryString = queryString + " job.costingCopier in (:copiers) and";
+						}
+						if(!employee.getAllPresses()) {
+							queryString = queryString + " job.costingPress.machineName in (:presses) and";
+						}
+						queryString = queryString + " job.releasedToProduction=true";
+						Query query = em.createQuery(queryString);
+						if(!employee.getAllPricingMethods()) {
+							query.setParameter("pricingMethods", employee.getEmployeePricings());
+						}
+						if(!employee.getAllCopiers()) {
+							List<String> copiersList = new ArrayList<String>();
+							for (ProductionCopiers productionCopiers : employee.getEmployeeCopiers()) {
+								copiersList.add(productionCopiers.getName());
+							}
+							query.setParameter("copiers", copiersList);
+						}
+						if(!employee.getAllChargeTypes()) {
+							chargeDefinitionsList = new ArrayList<String>();
+							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand.getName());
+							}
+						}
+						if(!employee.getAllPresses()) {
+							List<String> pressesList = new ArrayList<String>();
+							for (ProductionPress productionPress : employee.getEmployeePresses()) {
+								pressesList.add(productionPress.getName());
+							}
+							query.setParameter("presses", pressesList);
+						}
+						List<Job> jobList = query.getResultList();
+						for (Job job : jobList) {
+							if(job!=null) {
+								if(employee.getIncludeJobCharges()) {
+									if(job.getCharges()!=null && job.getCharges().size()>0) {
+										for (Charge charge : job.getCharges()) {
+											if(charge!=null) {
+												if(!employee.getAllChargeTypes()) {
+													if(charge.getChargeDefinition()!=null) {
+														if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
+															Hibernate.initialize(charge.getParentJob());
+															jobChargesList.add(charge);
+														}
+													}
+												} else {
+													Hibernate.initialize(charge.getParentJob());
+													jobChargesList.add(charge);
+												}
+											}
+										}
+									}
+								}
+								Hibernate.initialize(job.getParentInvoice());
+								jobChargesList.add(job);
+							}
+						}
+					}
+					if(employee.getIncludeInvoiceCharges()){
+						List<String> chargeDefinitionsList = new ArrayList<String>();
+						String queryString = "select charge from Estimate as estimate left join estimate.charges as charge";
+						if(!employee.getAllChargeTypes()) {
+							queryString = queryString + "  where charge.chargeDefinition.name in (:charges)";
+						}
+						Query query = em.createQuery(queryString);
+						if(!employee.getAllChargeTypes()) {
+							chargeDefinitionsList = new ArrayList<String>();
+							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand.getName());
+							}
+							query.setParameter("charges", chargeDefinitionsList);
+						}
+						List<Charge> chargesList = query.getResultList();
+						for (Charge charge : chargesList) {
+							if(charge!=null) {
+								if(!employee.getAllChargeTypes()) {
+									if(charge.getChargeDefinition()!=null) {
+										if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
+											Hibernate.initialize(charge.getParentInvoice());
+											jobChargesList.add(charge);
+										}
+									}
+								} else {
+									Hibernate.initialize(charge.getParentInvoice());
+									jobChargesList.add(charge);
+								}
+							}
+						}
+					}
+				}
+			}
+			if (jobChargesList != null)
+				log.debug("** Found " + jobChargesList.size() + "records:");
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return jobChargesList; 
+	}
 
 	@SuppressWarnings("unchecked")
 	public void deleteItem(String className, Long id) {
