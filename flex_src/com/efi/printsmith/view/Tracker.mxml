@@ -9,6 +9,7 @@
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getClockedInEmployee" fault="handleFault(event)" result="handleLoadEmployeeResult(event)"/>
 		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadTrackerConsoleResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTrackerConsoleResult(event)"/>
 		<mx:method name="getJobsChargesForTrackerByEmployee" fault="handleFault(event)" result="handleLoadJobChargesResult(event)"/>
 	</mx:RemoteObject>
 	
@@ -65,11 +66,12 @@
 		[Bindable] private var facilitiesArray:ArrayCollection = new ArrayCollection();
 		[Bindable] private var stationsArray:ArrayCollection = new ArrayCollection();
 		[Bindable] private var productionStations:ArrayCollection = new ArrayCollection();
+		
+		[Bindable] private var onLoad:Boolean = true;
 		 
 		 
 		public function init():void {
 			dataService.getSingle("TrackerConsole");
-			//dataServicePending.getTracker("InvoiceBase"); 
 		}    
 		 
 		private function handleFault(ev:FaultEvent):void {  
@@ -90,10 +92,13 @@
 			if(trackerConsole==null){
 				trackerConsole = new TrackerConsole();
 			}
-			dataService.getClockedInEmployee();	
-			dataServiceFacilty.getAll("ProductionFacilities");
-			dataServiceStation.getAll("ProductionStations");		
-			dataServiceProductionLocation.getAll("ProductionLocations");
+			if(onLoad){
+				onLoad = false;
+				dataService.getClockedInEmployee();	
+				dataServiceFacilty.getAll("ProductionFacilities");
+				dataServiceStation.getAll("ProductionStations");		
+				dataServiceProductionLocation.getAll("ProductionLocations");
+			}
 		}
 		
 		private function handleLoadEmployeeResult(event:ResultEvent):void {
@@ -163,6 +168,16 @@
 			station.name = "";
 			list.addItemAt(station,0);
 			stationsArray = list;
+			if(trackerConsole.selectedStations!=null && trackerConsole.selectedStations.length>0) {
+				for each(var selectedStation:ProductionStations in trackerConsole.selectedStations){
+					for each(var station:ProductionStations in stationsArray){
+						if(selectedStation.id == station.id){
+							station.isSelected = true;
+							break;
+						}
+					}
+				}
+			}
 		}
 		
 		private function doName(item:Object):String{
@@ -279,6 +294,33 @@
 			return "";
 		}
 		
+		public function updateTrackerConsole():void {
+			if(trackerConsole.productionFacilities!=null){
+				if(trackerConsole.productionFacilities.id==0){
+					trackerConsole.productionFacilities = null;
+				}
+			}
+			if(trackerConsole.productionStations!=null){
+				if(trackerConsole.productionStations.id==0){
+					trackerConsole.productionStations = null;
+				}
+			}
+			trackerConsole.selectedStations = new ArrayCollection();
+			for each(var productionStation:ProductionStations in productionStations) {
+				if(productionStation.isSelected) {
+					trackerConsole.selectedStations.addItem(productionStation);
+				}
+			}
+			
+			dataService.addUpdate(trackerConsole);
+		}
+		
+		private function handleSaveTrackerConsoleResult(event:ResultEvent):void {
+			if(isNaN(trackerConsole.id) || trackerConsole.id==0){
+				dataService.getSingle("TrackerConsole");
+			}
+		}
+		
 	]]>
 	                        
 	</mx:Script>	
@@ -362,7 +404,8 @@
 							<mx:Label width="15%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location')}" textAlign="right"/>
 							<components:CustomComboBoxComponent width="40%"
 								masterList="{productionLocationArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-								dataHolder="{trackerConsole}" variableName="productionLocation" customText="{getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation)}"/>
+								dataHolder="{trackerConsole}" variableName="productionLocation" customText="{getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation)}"
+								change="{updateTrackerConsole()}"/>
 						</mx:HBox>	
 						
 					</mx:Panel>
@@ -488,24 +531,26 @@
 									textAlign="right"/>
 								<components:CustomComboBoxComponent width="55%"
 									masterList="{facilitiesArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-									dataHolder="{trackerConsole}" variableName="productionFacilities" customText="{getCustomTextData(facilitiesArray,trackerConsole,trackerConsole.productionFacilities)}"/>
+									dataHolder="{trackerConsole}" variableName="productionFacilities" customText="{getCustomTextData(facilitiesArray,trackerConsole,trackerConsole.productionFacilities)}"
+									change="{updateTrackerConsole()}"/>
 							</mx:HBox>
 							<mx:HBox width="100%">
 								<mx:Label width="40%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.StationName')}"
 									textAlign="right"/>
 								<components:CustomComboBoxComponent width="55%"
 									masterList="{stationsArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-									dataHolder="{trackerConsole}" variableName="productionStations" customText="{getCustomTextData(stationsArray,trackerConsole,trackerConsole.productionStations)}"/>
+									dataHolder="{trackerConsole}" variableName="productionStations" customText="{getCustomTextData(stationsArray,trackerConsole,trackerConsole.productionStations)}"
+									change="{updateTrackerConsole()}"/>
 							</mx:HBox>
 						</mx:Panel>
 						<mx:Panel width="100%" height="50%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowThesePendingItem')}"
 							paddingLeft="20" paddingTop="20">
 							<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.HideItemsNotReleased')}"
 								dataHolder="{trackerConsole}" customText="{trackerConsole.hideItemsNotReleasedToProd}" variableName="hideItemsNotReleasedToProd"
-								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsole()}"/>
 							<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.OnlyShowEmployeesPro')}"
 								dataHolder="{trackerConsole}" customText="{trackerConsole.showEmployeeProdParents}" variableName="showEmployeeProdParents"
-								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsole()}"/>
 						</mx:Panel>
 					
 				</mx:VBox>
@@ -514,13 +559,13 @@
 						paddingLeft="20" paddingTop="20">
 						<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Selectedemployeeonly')}"
 								dataHolder="{trackerConsole}" customText="{trackerConsole.showSelectedEmployee}" variableName="showSelectedEmployee"
-								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsole()}"/>
 						<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllFacilities')}"
 								dataHolder="{trackerConsole}" customText="{trackerConsole.showAllFacilities}" variableName="showAllFacilities"
-								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsole()}"/>
 						<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllStations')}"
 								dataHolder="{trackerConsole}" customText="{trackerConsole.showAllStations}" variableName="showAllStations"
-								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsole()}"/>
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowDetailsCmd.Station')}"/>
 						<mx:DataGrid width="90%" id="stations" dataProvider="{productionStations}">
 							<mx:columns>
@@ -528,12 +573,12 @@
 									sortable="false" dataField="isSelected" width="200">
 									<mx:headerRenderer>
 										<mx:Component>
-											<components:CheckBoxHeaderRenderer/>
+											<components:CheckBoxHeaderRenderer click="{outerDocument.updateTrackerConsole()}" />
 										</mx:Component>
 									</mx:headerRenderer>
 									<mx:itemRenderer>
 										<mx:Component>
-											<components:CustomCheckBoxComponent 
+											<components:CustomCheckBoxComponent click="{outerDocument.updateTrackerConsole()}" 
 												datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
 												selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 										</mx:Component>

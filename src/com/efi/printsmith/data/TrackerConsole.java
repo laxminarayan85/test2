@@ -14,6 +14,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.efi.printsmith.exceptions.UnknownPropertyException;
 
 /**
  * @author madhubha
@@ -36,6 +39,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "trackerconsole")
 public class TrackerConsole extends ModelBase{
+	
+	public static final String ProductionFacilities = "ProductionFacilities";
+	
+	public static final String ProductionStations = "ProductionStations";
+	
+	public static final String HideItemsNotReleasedToProd = "HideItemsNotReleasedToProd";
+	
+	public static final String ShowEmployeeProdParents = "ShowEmployeeProdParents";
+	
+	public static final String ShowSelectedEmployee = "ShowSelectedEmployee";
+	
+	public static final String ShowAllFacilities = "ShowAllFacilities";
+	
+	public static final String ShowAllStations = "ShowAllStations";
+	
+	public static final String SelectedStations = "SelectedStations";
+	
+	public static final String PendingListSize = "PendingListSize";
+	
+	public static final String ActiveListSize = "ActiveListSize";
 	
 	@ManyToOne( cascade = {CascadeType.ALL}, optional=true)
 	private ProductionFacilities productionFacilities;
@@ -207,6 +230,23 @@ public class TrackerConsole extends ModelBase{
 	public void setActiveListSize(String activeListSize) {
 		this.activeListSize = activeListSize;
 	}
+	
+	
+	@Transient
+	@Override
+	public Object getProperty(String propertyName) throws UnknownPropertyException {
+	    if (ProductionFacilities.equals(propertyName)) return getProductionFacilities();
+	    if (ProductionStations.equals(propertyName)) return getProductionStations();
+	    if (HideItemsNotReleasedToProd.equals(propertyName)) return getHideItemsNotReleasedToProd();
+	    if (ShowEmployeeProdParents.equals(propertyName)) return getShowEmployeeProdParents();
+	    if (ShowSelectedEmployee.equals(propertyName)) return getShowSelectedEmployee();
+	    if (ShowAllFacilities.equals(propertyName)) return getShowAllFacilities();
+	    if (ShowAllStations.equals(propertyName)) return getShowAllStations();
+	    if (SelectedStations.equals(propertyName)) return getSelectedStations();
+	    if (PendingListSize.equals(propertyName)) return getPendingListSize();
+	    if (ActiveListSize.equals(propertyName)) return getActiveListSize();
+	    return super.getProperty(propertyName);
+   }
 	
 	
 
