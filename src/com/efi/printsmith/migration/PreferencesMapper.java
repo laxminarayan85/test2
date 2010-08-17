@@ -345,10 +345,13 @@ public class PreferencesMapper extends ImportMapper {
 	}
 	private void importSalesCategoryListRecord(String key, String name) throws Exception {
 		DataService dataService = new DataService();
-		SalesCategory salesCategory = new SalesCategory();
-		salesCategory.setPrevId(key);
-		salesCategory.setName(name);
-		dataService.addUpdate(salesCategory);
+		SalesCategory salesCategory = (SalesCategory)dataService.getByName("SalesCategory", name);
+		if (salesCategory == null) {
+			salesCategory = new SalesCategory();
+			salesCategory.setPrevId(key);
+			salesCategory.setName(name);
+			dataService.addUpdate(salesCategory);
+		}
 	}
 	private void importPreferencesAccountingField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
