@@ -1479,6 +1479,7 @@
 						job_bind.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.bindPrice.toString());
 						job_other.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.otherChargePrice.toString());
 						job_total.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice).toString());
+						job_price.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice));
 					}
 				}
 			}
