@@ -34,10 +34,7 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 
 		calculateUnitPrice(job);
 		double wastePrice = ((job.getBinderyWaste().doubleValue() + job.getEstWaste().doubleValue()) * pricingRecord.getUnitPrice().doubleValue()) * job.getSheets();
-		price = (pricingRecord.getUnitPrice().doubleValue() * (job.getQtyOrdered() * job.getSheets() * job.getInSetsOf())) + wastePrice;
-		if (job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
-			price *= 2;
-		}
+		price = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies()) + wastePrice;
 		
 		pricingRecord.setTotalPrice(price);
 		priceLogEntry.setValue(price);
@@ -61,6 +58,9 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 				price = ratePerCopy;
 				if (job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 					price = (price * job.getPricingCopier().getSideTwoFactor()) / 2;
+				}
+				if (job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
+					price = price / 2;
 				}
 				PriceLogUtilities.createPriceLogEntry(parentLogEntry, "FlatRatePricingMethod", "Side One Unit Price (Rate*Qty Ordered): " + ratePerCopy + "*" + job.getSheets(), price);
 
