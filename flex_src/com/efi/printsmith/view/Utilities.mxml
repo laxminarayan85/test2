@@ -182,6 +182,12 @@
 		uploadFile("TableEditor");
 	}
 	
+	private function handleSelectAddressFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("Address");
+	}
+	
 	private function handleLoadFileComplete(event:Event):void {
 		progress_bar.visible = false;
 		if (fileTypeArrayIndex > -1 && fileTypeArrayIndex < fileTypeArray.length - 1) {
@@ -272,6 +278,15 @@
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
 					handleSelectTableEditorFile(evt);
+				}
+			}
+		}
+		if (fileName == "DL Address Data") {
+			index = fileNameArray.getItemIndex("DL Address Data");
+			if (index.valueOf() > -1) {
+				fileReference = fileArray.getItemAt(index) as FileReference;
+				if (fileReference != null) {
+					handleSelectAddressFile(evt);
 				}
 			}
 		}
