@@ -4,126 +4,338 @@
 	xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:ns1="com.hillelcoren.components.*"
 	creationComplete="init()" 
 	label="Tracker Console" 
-	name="Tracker Console">
-	<mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
-	<!--<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
---></mx:RemoteObject>
-<mx:RemoteObject id="dataServiceProductionLocation" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionLocationResult(event)"/>
-</mx:RemoteObject>
-<mx:RemoteObject id="dataServiceFacilty" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadFaciltyResult(event)"/>
-</mx:RemoteObject>
-<mx:RemoteObject id="dataServicePending" destination="dataService">
-	<mx:method name="getTracker" fault="handleFault(event)" result="handleLoadPendingResult(event)"/>
-</mx:RemoteObject>
-<mx:Script> 
-                                  
-<![CDATA[
-	import mx.controls.dataGridClasses.DataGridColumn;
-	import com.efi.printsmith.data.Job;
-	import com.efi.printsmith.data.Invoice;
-	import com.efi.printsmith.data.Employee;  
-	import com.efi.printsmith.data.InvoiceBase;                        
-	import mx.controls.Alert;                                         
-	import mx.managers.PopUpManager;                                         
-	import mx.containers.TitleWindow;                                         
-	import mx.collections.ArrayCollection;                                         
-	import mx.rpc.events.ResultEvent;                                         
-	import mx.rpc.events.FaultEvent;             
+	name="Tracker Console" xmlns:components="com.efi.printsmith.common.components.*">
 	
-	[Bindable]                                         
-	private var employee:Employee;
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getClockedInEmployee" fault="handleFault(event)" result="handleLoadEmployeeResult(event)"/>
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadTrackerConsoleResult(event)"/>
+		<mx:method name="getJobsChargesForTrackerByEmployee" fault="handleFault(event)" result="handleLoadJobChargesResult(event)"/>
+	</mx:RemoteObject>
 	
-	[Bindable] 
-	private var employeesArray:ArrayCollection = new ArrayCollection();
-	[Bindable] 
-	private var trackerList:ArrayCollection = new ArrayCollection();
-	[Bindable] 
-	private var productionLocationArray:ArrayCollection = new ArrayCollection();
-	 
-	[Bindable] 
-	private var faciltyArray:ArrayCollection = new ArrayCollection();
-	 
-	 
-	public function init():void {
-	dataService.getAll("Employee");	
-	dataServiceProductionLocation.getAll("ProductionLocations");
-	dataServiceFacilty.getAll("ProductionFacilities");	
-	dataServicePending.getTracker("InvoiceBase"); 
-	}    
-	 
-	private function handleFault(ev:FaultEvent):void {  
-		var message:String;
-		              
-		message = "Error: "                          
-		+ ev.fault.faultCode + " - "                                  
-		+ ev.fault.faultDetail + " - "                                  
-		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null, 4);                                 
-	}
-
-
-// Data Load Handlers
-	private function handleLoadResult(ev:ResultEvent):void {
-		employeesArray = ev.result as ArrayCollection;
-	}
-	private function handleLoadProductionLocationResult(ev:ResultEvent):void {
-	     productionLocationArray = ev.result as ArrayCollection;
-	}
-	private function handleLoadPendingResult(ev:ResultEvent):void{
-		trackerList = ev.result as ArrayCollection;
-	}
-	private function handleLoadFaciltyResult(ev:ResultEvent):void {
-	     faciltyArray = ev.result as ArrayCollection;
-	}
-	private function doName(item:Object):String{
-		var temp:Employee =  item as Employee;
-		var tempString:String;
-		 tempString = temp.firstName as String;
-		 tempString += " ";
-		 tempString += temp.lastName as String;
-		return tempString;
-	}
-	private function doAccount(item:Object,column:DataGridColumn):String{
-		var temp:Invoice = item as Invoice;
-		return temp.account.accountId;
-	}
-	/* private function doMachine(item:Object):String{
-		
-		
-	} */
-	private function getEmployee():void {
-		employee = employee_edit.selectedItem as Employee;
-		
-	}
+	<mx:RemoteObject id="dataServiceProductionLocation" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionLocationResult(event)"/>
+	</mx:RemoteObject>
 	
-]]>
-                        
-</mx:Script>	
+	<mx:RemoteObject id="dataServiceFacilty" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadFaciltyResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceStation" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStationResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServicePending" destination="dataService" showBusyCursor="true">
+		<mx:method name="getTracker" fault="handleFault(event)" result="handleLoadPendingResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
+	
+	<mx:Script> 
+	                                  
+	<![CDATA[
+		import com.efi.printsmith.data.Charge;
+		import mx.events.CloseEvent;
+		import flash.net.registerClassAlias;
+		import mx.utils.ObjectUtil;
+		import com.efi.printsmith.data.ProductionLocations;
+		import com.efi.printsmith.data.ProductionStations;
+		import com.efi.printsmith.data.ProductionFacilities;
+		import com.efi.printsmith.data.TrackerConsole;
+		import mx.controls.dataGridClasses.DataGridColumn;
+		import com.efi.printsmith.data.Job;
+		import com.efi.printsmith.data.JobBase;
+		import com.efi.printsmith.data.Invoice;
+		import com.efi.printsmith.data.Employee;  
+		import com.efi.printsmith.data.InvoiceBase;                        
+		import mx.controls.Alert;                                         
+		import mx.managers.PopUpManager;                                         
+		import mx.containers.TitleWindow;                                         
+		import mx.collections.ArrayCollection;                                         
+		import mx.rpc.events.ResultEvent;                                         
+		import mx.rpc.events.FaultEvent;         
+		
+		[Bindable] private var trackerConsole:TrackerConsole;    
+		
+		[Bindable] private var employee:Employee;
+		
+		[Bindable] private var employeesArray:ArrayCollection = new ArrayCollection();
+		[Bindable] private var trackerList:ArrayCollection = new ArrayCollection();
+		[Bindable] private var productionLocationArray:ArrayCollection = new ArrayCollection();
+		 
+		[Bindable] private var facilitiesArray:ArrayCollection = new ArrayCollection();
+		[Bindable] private var stationsArray:ArrayCollection = new ArrayCollection();
+		[Bindable] private var productionStations:ArrayCollection = new ArrayCollection();
+		 
+		 
+		public function init():void {
+			dataService.getSingle("TrackerConsole");
+			//dataServicePending.getTracker("InvoiceBase"); 
+		}    
+		 
+		private function handleFault(ev:FaultEvent):void {  
+			var message:String;
+			              
+			message = "Error: "                          
+			+ ev.fault.faultCode + " - "                                  
+			+ ev.fault.faultDetail + " - "                                  
+			+ ev.fault.faultString;
+			Alert.show(message, "Error", 0, null, null, null, 4);                                 
+		}
+	
+	
+	// Data Load Handlers
+	
+		private function handleLoadTrackerConsoleResult(event:ResultEvent):void {
+			trackerConsole = event.result as TrackerConsole;
+			if(trackerConsole==null){
+				trackerConsole = new TrackerConsole();
+			}
+			dataService.getClockedInEmployee();	
+			dataServiceFacilty.getAll("ProductionFacilities");
+			dataServiceStation.getAll("ProductionStations");		
+			dataServiceProductionLocation.getAll("ProductionLocations");
+		}
+		
+		private function handleLoadEmployeeResult(event:ResultEvent):void {
+			var list:ArrayCollection = event.result as ArrayCollection;
+			for each(var employeeObject:Employee in list){
+				employeeObject.employeeName = employeeObject.lastName+", "+employeeObject.firstName;
+			}
+			var employeeObj:Employee = new Employee();
+			employeeObj.employeeId = null;
+			employeeObj.employeeName = "";
+			list.addItemAt(employeeObj,0);
+			employeesArray = list;
+			if(trackerConsole.selectedEmployee!=null){
+				var checkFlag:Boolean = false;
+				for each(var employeeObject:Employee in employeesArray) {
+					if(trackerConsole.selectedEmployee.employeeId==employeeObject.employeeId){
+						checkFlag = true;
+						trackerConsole.selectedEmployee = employeeObject;
+						employee = trackerConsole.selectedEmployee;
+						break;
+					}
+				}
+				if(!checkFlag){
+					trackerConsole.selectedEmployee = null;
+					employee = null;
+				}
+			}
+		}
+		private function handleLoadProductionLocationResult(event:ResultEvent):void {
+			var list:ArrayCollection = event.result as ArrayCollection;
+			var location:ProductionLocations = new ProductionLocations();
+			location.id = 0;
+			location.name = "";
+			list.addItemAt(location,0);
+			productionLocationArray = list;
+		}
+		
+		private function handleLoadPendingResult(event:ResultEvent):void{
+			trackerList = event.result as ArrayCollection;
+		}
+		
+		private function handleLoadFaciltyResult(event:ResultEvent):void {
+		    var list:ArrayCollection = event.result as ArrayCollection;
+			var facility:ProductionFacilities = new ProductionFacilities();
+			facility.id = 0;
+			facility.name = "";
+			list.addItemAt(facility,0);
+			facilitiesArray = list;
+		}
+		
+		private function handleLoadStationResult(event:ResultEvent):void {
+			var list:ArrayCollection = event.result as ArrayCollection;
+			for each(var stationObj:ProductionStations in list){
+				productionStations.addItem(stationObj);
+			}
+			if(trackerConsole.selectedStations!=null && trackerConsole.selectedStations.length>0){
+				for each(var stationObj:ProductionStations in productionStations){
+					for each(var stationObject:ProductionStations in trackerConsole.selectedStations) {
+						if(stationObject.id==stationObj.id){
+							stationObj.isSelected = true;
+						}
+					}
+				}
+			}
+			var station:ProductionStations = new ProductionStations();
+			station.id = 0;
+			station.name = "";
+			list.addItemAt(station,0);
+			stationsArray = list;
+		}
+		
+		private function doName(item:Object):String{
+			var temp:Employee =  item as Employee;
+			var tempString:String;
+			 tempString = temp.firstName as String;
+			 tempString += " ";
+			 tempString += temp.lastName as String;
+			return tempString;
+		}
+		
+		private function getEmployee(event:Event=null):void {
+			if(trackerConsole.selectedEmployee!=null){
+				if(trackerConsole.selectedEmployee.employeeId==null){
+					employee = null;
+				} else {
+					employee = trackerConsole.selectedEmployee;
+				}
+				if(employee!=null){
+					dataService.getJobsChargesForTrackerByEmployee(employee.id);
+				}
+			} else {
+				employee = null;
+			}
+		}
+		
+		private function openClockInOut():void {
+			var clockInOut:ClockInOut = PopUpManager.createPopUp(this,ClockInOut,true) as ClockInOut;
+			clockInOut.addEventListener(CloseEvent.CLOSE,function(event:Event):void{
+				dataService.getClockedInEmployee();
+				trackerList = new ArrayCollection();
+				getEmployee();
+			},false,0,true);
+		}
+		
+		private function openEditEmployee():void {
+			var editEmployee:EditEmployee = PopUpManager.createPopUp(this,EditEmployee,true) as EditEmployee;
+			editEmployee.addEventListener(CloseEvent.CLOSE,function(event:Event):void{
+				dataService.getClockedInEmployee();	
+				trackerList = new ArrayCollection();
+				getEmployee();
+			},false,0,true);
+			if(employee!=null){
+				registerClassAlias("com.efi.printsmith.data.Employee",Employee);
+				editEmployee.employee = ObjectUtil.copy(employee) as Employee;
+			}
+		}
+		
+		private function handleLoadJobChargesResult(event:ResultEvent):void {
+			trackerList = event.result as ArrayCollection;
+		}
+		
+		public function getInvoiceNumber(object:Object):String {
+			if(object is Job){
+				var job:Job = object as Job;
+				return String(job.parentInvoice.invoiceNumber);	
+			}
+			if(object is Charge){
+				var charge:Charge = object as Charge;
+				if(charge.parentInvoice!=null){
+					return String(charge.parentInvoice.invoiceNumber);
+				}
+				if(charge.parentJob!=null){
+					return String(charge.parentJob.jobNumber);
+				}
+			}
+			return "";
+		}
+		
+		public function getDeliveryDate(object:Object):String {
+			if(object is Job){
+				var job:Job = object as Job;
+				return dateFormatter.format(job.parentInvoice.deliveryIntentDate);	
+			}
+			if(object is Charge){
+				var charge:Charge = object as Charge;
+				if(charge.parentInvoice!=null){
+					return dateFormatter.format(charge.parentInvoice.deliveryIntentDate);
+				}
+				if(charge.parentJob!=null){
+					return "";
+				}
+			}
+			return "";
+		}
+		
+		public function getProductionLoc(object:Object):String {
+			if(object is Job){
+				var job:Job = object as Job;
+				return job.location.name;	
+			}
+			if(object is Charge){
+				var charge:Charge = object as Charge;
+				return charge.productionLocation.name;
+			}
+			return "";
+		}
+		
+		public function getAccount(object:Object):String{
+			if(object is Job){
+				var job:Job = object as Job;
+				return "#"+job.parentInvoice.account.id + " "+job.parentInvoice.account.title;	
+			}
+			if(object is Charge){
+				var charge:Charge = object as Charge;
+				if(charge.parentInvoice!=null){
+					return "#"+job.parentInvoice.account.id + " "+job.parentInvoice.account.title;
+				}
+				if(charge.parentJob!=null){
+					var jobBase:JobBase = charge.parentJob as JobBase;
+					return "#"+jobBase.parentInvoice.account.id + " "+jobBase.parentInvoice.account.title;
+				}
+			}
+			return "";
+		}
+		
+	]]>
+	                        
+	</mx:Script>	
+	
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
+	
 	<mx:TabNavigator width="100%" height="100%">
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ActiveItems')}" 
 			paddingLeft="20" paddingTop="20" width="100%" height="100%">
 			
 			<mx:HBox width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Employee')}"/>
-				<mx:ComboBox id="employee_edit" dataProvider="{employeesArray}" labelFunction="doName" change="getEmployee"/>		
+				<components:CustomComboBoxComponent width="20%" change="{getEmployee(event)}"
+					masterList="{employeesArray}" updateObject="true" objectLabelFieldId="employeeId" labelFieldId="employeeId" labelFieldName="employeeName"
+					dataHolder="{trackerConsole}" variableName="selectedEmployee" customText="{getCustomTextData(employeesArray,trackerConsole,trackerConsole.selectedEmployee)}"/>
+				<mx:Image source="@Embed(source='../../../../assets/punchclock.png')" 
+					click="{openClockInOut()}" buttonMode="true" useHandCursor="true"/>		
+				<mx:Image source="@Embed(source='../../../../assets/EmployeeEdit.png')" 
+					click="{openEditEmployee()}" buttonMode="true" useHandCursor="true"/>
 			</mx:HBox>
 			
 			<mx:DataGrid width="90%" height="30%" id="invoiceGrid" dataProvider="{trackerList}">
 				<mx:columns>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}" dataField="invoiceNumber"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}" dataField="name"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DeliveryDate')}" dataField="wantedDate"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionLocation')}" dataField="col4"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getInvoiceNumber(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}" dataField="description"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DeliveryDate')}">
+					<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getDeliveryDate(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionLocation')}">
+					<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getProductionLoc(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.RunDate')}" dataField="col2"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ActiveLocation')}" dataField="col3"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimated')}" dataField="col1"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Priority')}" dataField="col2"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Machine')}" dataField="col2"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Account')}" labelFunction="doAccount"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Account')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getAccount(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 				</mx:columns>
 			</mx:DataGrid>
 			
@@ -134,17 +346,23 @@
 					
 						<mx:HBox width="100%">
 							<mx:Label width="15%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Facility')}" textAlign="right"/>
-							<mx:ComboBox width="40%" id="facility_edit" dataProvider="{faciltyArray}" labelField="name"/>	
+							<components:CustomComboBoxComponent width="40%" enabled="false"
+								masterList="{facilitiesArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+								dataHolder="{trackerConsole}" variableName="productionFacilities" customText="{getCustomTextData(facilitiesArray,trackerConsole,trackerConsole.productionFacilities)}"/>
 						</mx:HBox>
 						
 						<mx:HBox width="100%">
 							<mx:Label width="15%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.StationName')}" textAlign="right"/>
-							<mx:ComboBox width="40%" id="station_edit"/>
+							<components:CustomComboBoxComponent width="40%" enabled="false"
+								masterList="{stationsArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+								dataHolder="{trackerConsole}" variableName="productionStations" customText="{getCustomTextData(stationsArray,trackerConsole,trackerConsole.productionStations)}"/>
 						</mx:HBox>
 						
 						<mx:HBox width="100%">
 							<mx:Label width="15%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location')}" textAlign="right"/>
-							<mx:ComboBox id="location_edit" width="40%" dataProvider="{productionLocationArray}" labelField="name"/>
+							<components:CustomComboBoxComponent width="40%"
+								masterList="{productionLocationArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+								dataHolder="{trackerConsole}" variableName="productionLocation" customText="{getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation)}"/>
 						</mx:HBox>	
 						
 					</mx:Panel>
@@ -268,29 +486,62 @@
 							<mx:HBox width="100%">
 								<mx:Label width="40%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Facility')}"
 									textAlign="right"/>
-								<mx:TextInput width="55%" id="preference_facility"/>
+								<components:CustomComboBoxComponent width="55%"
+									masterList="{facilitiesArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+									dataHolder="{trackerConsole}" variableName="productionFacilities" customText="{getCustomTextData(facilitiesArray,trackerConsole,trackerConsole.productionFacilities)}"/>
 							</mx:HBox>
 							<mx:HBox width="100%">
 								<mx:Label width="40%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.StationName')}"
 									textAlign="right"/>
-								<mx:TextInput width="55%" id="preference_stationname"/>
+								<components:CustomComboBoxComponent width="55%"
+									masterList="{stationsArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+									dataHolder="{trackerConsole}" variableName="productionStations" customText="{getCustomTextData(stationsArray,trackerConsole,trackerConsole.productionStations)}"/>
 							</mx:HBox>
 						</mx:Panel>
 						<mx:Panel width="100%" height="50%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowThesePendingItem')}"
 							paddingLeft="20" paddingTop="20">
-							<mx:CheckBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.HideItemsNotReleased')}"/>
-							<mx:CheckBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.OnlyShowEmployeesPro')}"/>
+							<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.HideItemsNotReleased')}"
+								dataHolder="{trackerConsole}" customText="{trackerConsole.hideItemsNotReleasedToProd}" variableName="hideItemsNotReleasedToProd"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+							<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.OnlyShowEmployeesPro')}"
+								dataHolder="{trackerConsole}" customText="{trackerConsole.showEmployeeProdParents}" variableName="showEmployeeProdParents"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 						</mx:Panel>
 					
 				</mx:VBox>
 				<mx:VBox width="50%" height="100%">
 					<mx:Panel width="100%" height="100%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Showtheseactiveitems')}"
 						paddingLeft="20" paddingTop="20">
-						<mx:CheckBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Selectedemployeeonly')}"/>
-						<mx:CheckBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllFacilities')}"/>
-						<mx:CheckBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllStations')}"/>
+						<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Selectedemployeeonly')}"
+								dataHolder="{trackerConsole}" customText="{trackerConsole.showSelectedEmployee}" variableName="showSelectedEmployee"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+						<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllFacilities')}"
+								dataHolder="{trackerConsole}" customText="{trackerConsole.showAllFacilities}" variableName="showAllFacilities"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+						<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllStations')}"
+								dataHolder="{trackerConsole}" customText="{trackerConsole.showAllStations}" variableName="showAllStations"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowDetailsCmd.Station')}"/>
-						<mx:List width="90%" id="stations" dataProvider="{stations}"/>
+						<mx:DataGrid width="90%" id="stations" dataProvider="{productionStations}">
+							<mx:columns>
+								<mx:DataGridColumn id="checkAllCol" headerText=" "
+									sortable="false" dataField="isSelected" width="200">
+									<mx:headerRenderer>
+										<mx:Component>
+											<components:CheckBoxHeaderRenderer/>
+										</mx:Component>
+									</mx:headerRenderer>
+									<mx:itemRenderer>
+										<mx:Component>
+											<components:CustomCheckBoxComponent 
+												datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+												selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+										</mx:Component>
+									</mx:itemRenderer>
+								</mx:DataGridColumn>
+								<mx:DataGridColumn dataField="name" headerText="Station Name" width="800"/>
+							</mx:columns>
+						</mx:DataGrid>
 					</mx:Panel>
 				</mx:VBox>
 				

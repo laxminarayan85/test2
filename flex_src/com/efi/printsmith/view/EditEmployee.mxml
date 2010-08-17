@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
-width="949" height="701" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" showCloseButton="true" close="PopUpManager.removePopUp(this);" 
+width="949" height="701" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" showCloseButton="true" close="{closeWindow()}" 
 creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" name="Employee Editor" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*" xmlns:components="com.efi.printsmith.common.components.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -78,7 +78,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
     private var employees:ArrayCollection = new ArrayCollection();
  
     [Bindable]                                         
-	private var employee:Employee;
+	public var employee:Employee;
 	
 	[Bindable] 
 	private var presses:ArrayCollection = new ArrayCollection(); 
@@ -104,17 +104,28 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	
     private var focussedFormControl:DisplayObject;
     
+    [Bindable] public var loadEmployee:Boolean = false;
+    
+    [Bindable] public var checkDataCount:int;
+    
+    [Bindable] public var dataCount:int;
+    
 	public function init():void {
 		//consumer.subscribe();
 	//	notification_consumer.subscribe();  
 		PopUpManager.centerPopUp(this);
-		var titleWindow:EmployeePicker = EmployeePicker(PopUpManager.createPopUp(this, EmployeePicker, true));
-		titleWindow.parentContainer = this;
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.formIsEmpty = true;
-		dataService.getAll("Employee");   
-		employee = new Employee();
-		employee.comLinks = new ArrayCollection();
+		if(employee==null){
+			var titleWindow:EmployeePicker = EmployeePicker(PopUpManager.createPopUp(this, EmployeePicker, true));
+			titleWindow.parentContainer = this;
+		    titleWindow.setStyle("borderAlpha", 0.9);
+		    titleWindow.formIsEmpty = true;
+			dataService.getAll("Employee");   
+			employee = new Employee();
+			employee.comLinks = new ArrayCollection();
+		} else {
+			loadEmployee = true;
+			dataCount = 5;
+		}
 		pressService.getAll("ProductionPress");
 		copierService.getAll("ProductionCopiers");
 		priceListService.getAll("PreferencesPricingMethod");
@@ -131,6 +142,11 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		eventSettings.dispatch();
 		
 	}
+	
+	private function closeWindow():void {
+		PopUpManager.removePopUp(this);
+	}
+	 
 	public function handleUIPanelEvent(evt:ResultEvent):void {
 		evt.result.panel.enabled = evt.result.enabled;
 	}		
@@ -156,8 +172,8 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 			this.employee.employeePresses = new ArrayCollection();
 		if( this.employee.employeeCopiers == null)
 			this.employee.employeeCopiers = new ArrayCollection();
-		if( this.employee.employeePricing == null)
-			this.employee.employeePricing = new ArrayCollection();
+		if( this.employee.employeePricings == null)
+			this.employee.employeePricings = new ArrayCollection();
 		if( this.employee.productionParents == null)
 			this.employee.productionParents = new ArrayCollection();
 		if( this.employee.comLinks == null)
@@ -180,10 +196,40 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 			employeeStatus= "InActive"
 		for(i=0; i < employee.employeeCharges.length; i++)
 		{	tCharge = employee.employeeCharges[i];
-		 	index = findItem(tCharge.name, charges);
+		 	index = findItem(tCharge.id, charges);
 		 	tempArray.push(index);
 		}
-		charge_types.selectedIndices = tempArray
+		charge_types.selectedIndices = tempArray;
+	
+		if(employee.employeeCopiers!=null && employee.employeeCopiers.length>0){
+			tempArray = new Array();
+			for(var i:int=0; i < employee.employeeCopiers.length; i++) {
+				var productionCopiers:ProductionCopiers = employee.employeeCopiers.getItemAt(i) as ProductionCopiers;
+			 	index = findItem(productionCopiers.id, copiers);
+			 	tempArray.push(index);
+			}
+			copier_list.selectedIndices = tempArray;
+		}
+		
+		if(employee.employeePricings!=null && employee.employeePricings.length>0){
+			tempArray = new Array();
+			for(var i:int=0; i < employee.employeePricings.length; i++) {
+				var preferencesPricingMethod:PreferencesPricingMethod = employee.employeePricings.getItemAt(i) as PreferencesPricingMethod;
+			 	index = findItem(preferencesPricingMethod.id, pricemethods);
+			 	tempArray.push(index);
+			}
+			pricing_methods.selectedIndices = tempArray;
+		}
+		
+		if(employee.employeePresses!=null && employee.employeePresses.length>0){
+			tempArray = new Array();
+			for(var i:int=0; i < employee.employeePresses.length; i++) {
+				var productionPress:ProductionPress = employee.employeePresses.getItemAt(i) as ProductionPress;
+			 	index = findItem(productionPress.id, presses);
+			 	tempArray.push(index);
+			}
+			press_list.selectedIndices = tempArray;
+		}
 		
 		if (employee.comLinks != null){
 			phone_edit.text = "";
@@ -331,6 +377,10 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	private function doSave():void {
 		mapToEmployeeData();
 		if(validateEmployee()){
+			doCharge();
+			doCopier();
+			doPress();
+			doPricingMethod();
 			dataService.addUpdate(employee);
 		}                            		
 	}
@@ -412,9 +462,9 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		//producer.send(message);
 	}      
 	
-	private function findItem(name:String, array:ArrayCollection):int {
+	private function findItem(id:Number, array:ArrayCollection):int {
 		for each(var element:Object in array) {
-			if (name == element.name) {
+			if (id == element.id) {
 				return array.getItemIndex(element);
 			}
 		}
@@ -439,26 +489,62 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	private function handleLoadPress(ev:ResultEvent):void {
 	 	
 	 	presses = ev.result as ArrayCollection;
+	 	if(loadEmployee){
+	 		checkDataCount++;
+	 		if(checkDataCount==dataCount){
+	 			loadEmployee = false;
+	 			dataService.getEmployee(employee.id);   
+	 		}
+	 	}
 		
 	}   
 	private function handleLoadCopier(ev:ResultEvent):void {
 	 	
 	 	copiers = ev.result as ArrayCollection;
+	 	if(loadEmployee){
+	 		checkDataCount++;
+	 		if(checkDataCount==dataCount){
+	 			loadEmployee = false;
+	 			dataService.getEmployee(employee.id);   
+	 		}
+	 	}
 		
 	} 
 	private function handleLoadCharge(ev:ResultEvent):void {
 	 	
 	 	charges = ev.result as ArrayCollection;
+	 	if(loadEmployee){
+	 		checkDataCount++;
+	 		if(checkDataCount==dataCount){
+	 			loadEmployee = false;
+	 			dataService.getEmployee(employee.id);   
+	 		}
+	 	}
 		
 	} 
 	private function handleLoadLocation(ev:ResultEvent):void {
 	 	
 	 	productionLocation = ev.result as ArrayCollection;
+	 	if(loadEmployee){
+	 		checkDataCount++;
+	 		if(checkDataCount==dataCount){
+	 			loadEmployee = false;
+	 			dataService.getEmployee(employee.id);   
+	 		}
+	 	}
+	 	
 		
 	}         
 	private function handleLoadPriceList(ev:ResultEvent):void {
 	 	
 	 	pricemethods = ev.result as ArrayCollection;
+	 	if(loadEmployee){
+	 		checkDataCount++;
+	 		if(checkDataCount==dataCount){
+	 			loadEmployee = false;
+	 			dataService.getEmployee(employee.id);   
+	 		}
+	 	}
 		
 	}   
 	
@@ -526,11 +612,12 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		var tempPriceArray:Array = new Array();
 		var i:int;
 		var tPrice:PreferencesPricingMethod;
+		employee.employeePricings = new ArrayCollection();
 		tempPriceArray = pricing_methods.selectedItems as Array;
 		for(i=0; i < tempPriceArray.length; i++)
 		{
 		 tPrice = tempPriceArray[i];
-		 employee.employeePricing.addItem(tPrice);
+		 employee.employeePricings.addItem(tPrice);
 		}
 		 
 	}
@@ -538,6 +625,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		var tempcopyArray :Array= new Array();
 		var tCopier:ProductionCopiers;
 		var i:int;
+		employee.employeeCopiers = new ArrayCollection();
 		tempcopyArray = copier_list.selectedItems as Array;
 		for(i=0; i < tempcopyArray.length; i++)
 		{
@@ -550,6 +638,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		var temppressArray :Array= new Array();
 		var i:int;
 		var tPress:ProductionPress;
+		employee.employeePresses = new ArrayCollection();
 		temppressArray = press_list.selectedItems as Array;
 		for(i=0; i < temppressArray.length; i++)
 		{
@@ -562,6 +651,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		var tempchargeArray :Array= new Array();
 		var i:int;
 		var tCharge:ChargeCommand;
+		employee.employeeCharges = new ArrayCollection();
 		tempchargeArray = charge_types.selectedItems as Array;
 		for(i=0; i < tempchargeArray.length; i++)
 		{
@@ -710,8 +800,8 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 					<mx:List x="10" y="40" width="283" height="110" id="press_list" dataProvider="{presses}" labelField="name" allowMultipleSelection="true" focusOut="doPress();"> </mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="553" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Copier')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallCopiers')}" id="all_copiers" focusOut="doCopier();" selected="{employee.allCopiers}"/>
-					<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name" allowMultipleSelection="true"></mx:List>
+					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallCopiers')}" id="all_copiers" selected="{employee.allCopiers}"/>
+					<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name" focusOut="doCopier();" allowMultipleSelection="true"></mx:List>
 				</mx:Panel>
 			</mx:Canvas>	
 		</mx:TabNavigator>

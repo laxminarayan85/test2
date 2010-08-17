@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockInOut')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockInOut')}" 
-	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) ">
+	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="{closeWindow()}">
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getActiveEmployees" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -80,6 +80,10 @@
 		dataServicePeriod.getByPeriodOpen("Period");
 		autoClockOutDetectortList = parentDocument.autoClockOutDetectortList;
 		//user = application.currentUser;
+	} 
+	
+	private function closeWindow():void {
+		PopUpManager.removePopUp(this);
 	} 
 	
 	private function messageHandler(message:IMessage):void

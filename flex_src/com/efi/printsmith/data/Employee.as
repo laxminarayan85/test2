@@ -41,7 +41,7 @@ package com.efi.printsmith.data
 		public var allCopiers:Boolean = false;
 		public var allChargeTypes:Boolean = false;
 		public var onlyShowProductionParents:Boolean = false;
-		public var employeePricing:ArrayCollection;
+		public var employeePricings:ArrayCollection;
 		public var employeeCharges:ArrayCollection;
 		public var employeePresses:ArrayCollection;
 		public var employeeCopiers:ArrayCollection;
