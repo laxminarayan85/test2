@@ -186,7 +186,7 @@ width="100%" height="100%"  creationComplete="init()"
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Canceledbyuser');
 				break;
 		}
-		return "Bad type";
+		return "Bad status";
 	}
 
 ]]>

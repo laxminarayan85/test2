@@ -19,11 +19,14 @@ width="100%" height="100%"  creationComplete="init()"
 	import mx.controls.Alert;
 	import mx.managers.PopUpManager;
 	import mx.rpc.IResponder;
+	import com.efi.printsmith.data.JobBase;
+	import com.efi.printsmith.data.Dimension;
+	import com.efi.printsmith.data.Job;
 		
 	[Bindable]
 	private var templates:ArrayCollection=new ArrayCollection();
-		
-	public function init():void{		
+		   
+   public function init():void{		
 		// dataService.getAll("Templates");
 	}
 	private function doDoubleClick():void{
@@ -64,7 +67,7 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:columns>
 			<mx:DataGridColumn headerText=""/>
 			<mx:DataGridColumn headerText=""/>
-			<mx:DataGridColumn headerText="" />
+			<mx:DataGridColumn headerText=""/>
 		</mx:columns>
 	</mx:DataGrid>
 	
