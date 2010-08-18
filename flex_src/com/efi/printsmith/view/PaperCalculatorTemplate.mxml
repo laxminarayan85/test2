@@ -2,7 +2,7 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Paper Calculator Template" name="Paper Calculator Template"
 width="100%" height="100%"  creationComplete="init()" 
 	 showCloseButton="true" 
-     title="Paper Calculator Template" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*">
+     title="Paper Calculator Template" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*" close="doClose()">
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -41,6 +41,9 @@ width="100%" height="100%"  creationComplete="init()"
 	}
 	private function handleLoadResult(ev:ResultEvent):void{
 		templates = ev.result as ArrayCollection;
+	}
+	private function doClose():void{
+		PopUpManager.removePopUp(this);
 	}
 ]]>
                              
