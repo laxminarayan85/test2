@@ -128,6 +128,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		    titleWindow.formIsEmpty = true;
 			dataService.getAll("Employee");   
 			employee = new Employee();
+			employee.active = true;
 			employee.comLinks = new ArrayCollection();
 		} else {
 			loadEmployee = true;
@@ -171,8 +172,10 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	private function handleLoadEmployee(evt:ResultEvent):void
 	{
 		this.employee = evt.result as Employee;
-	 	if(this.employee == null)
+	 	if(this.employee == null) {
 	 		this.employee = new  Employee();
+	 		this.employee.active = true;
+	 	}
 		if( this.employee.employeeCharges == null)
 			this.employee.employeeCharges = new ArrayCollection();
 		if( this.employee.employeePresses == null)
@@ -430,6 +433,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		
     private function doNew():void {
 	    employee = new Employee();
+	    employee.active = true;
 	    employee.comLinks = new ArrayCollection();
 	    setEmployee(employee);
 	 	
@@ -901,19 +905,19 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 				</mx:Panel>
 				<mx:Panel x="10" y="321" width="323" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.PricingMethods')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPricingMethods')}" id="all_pricing" click="{clearSelectedPricings(event)}" selected="{employee.allPricingMethods}"/>
-					<mx:List x="10" y="40" focusOut="doPricingMethod()" width="283"  height="110" id="pricing_methods" dataProvider="{pricemethods}" labelField="title" allowMultipleSelection="true"></mx:List>
+					<mx:List x="10" y="40" focusOut="doPricingMethod()" width="283"  height="110" id="pricing_methods" dataProvider="{pricemethods}" labelField="title" allowMultipleSelection="true" itemClick="{employee.allPricingMethods=false}"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="321" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ChargeType')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallChargeTypes')}" id="all_charge_types" click="{clearSelectedCharges(event)}" selected="{employee.allChargeTypes}"/>
-					<mx:List x="10" y="40" width="318" height="110" id="charge_types" dataProvider="{charges}" labelField="name" allowMultipleSelection="true" focusOut="doCharge();"></mx:List>
+					<mx:List x="10" y="40" width="318" height="110" id="charge_types" dataProvider="{charges}" labelField="name" allowMultipleSelection="true" focusOut="doCharge();" itemClick="{employee.allChargeTypes=false}"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="10" y="553" width="323" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Press')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPresses')}" id="all_presses" click="{clearSelectedPresses(event)}" selected="{employee.allPresses}"/>
-					<mx:List x="10" y="40" width="283" height="110" id="press_list" dataProvider="{presses}" labelField="name" allowMultipleSelection="true" focusOut="doPress();"> </mx:List>
+					<mx:List x="10" y="40" width="283" height="110" id="press_list" dataProvider="{presses}" labelField="name" allowMultipleSelection="true" focusOut="doPress();" itemClick="{employee.allPresses=false}"> </mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="553" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Copier')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallCopiers')}" id="all_copiers" click="{clearSelectedCopiers(event)}" selected="{employee.allCopiers}"/>
-					<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name" focusOut="doCopier();" allowMultipleSelection="true"></mx:List>
+					<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name" focusOut="doCopier();" allowMultipleSelection="true" itemClick="{employee.allCopiers=false}"></mx:List>
 				</mx:Panel>
 			</mx:Canvas>	
 		</mx:TabNavigator>
