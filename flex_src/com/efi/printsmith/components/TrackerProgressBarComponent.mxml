@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.TrackerConsoleJobs;
+		
+			private var _trackerConsoleJobs:TrackerConsoleJobs;
+			
+			[Bindable] public var timer:Timer = new Timer(1000);
+			
+			public function get trackerConsoleJobs():TrackerConsoleJobs {
+				return _trackerConsoleJobs;
+			}
+			
+			public function set trackerConsoleJobs(displayValue:TrackerConsoleJobs):void {
+				if(timer!=null){
+					if(timer.running) {
+						timer.reset();
+						timer.stop();
+						if(displayValue!=null){
+							pgBar.setProgress(0,(displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime));
+						}
+					}
+				}
+				if(displayValue!=null){
+					var initialValue:Number = 0;
+					if(displayValue.firstTrackerDate==null){
+						initialValue = 0;
+					} else {
+						initialValue = displayValue.firstTrackerDate.time;
+						if(!(isNaN(displayValue.firstTrackerTime)) && displayValue.firstTrackerTime!=0){
+							initialValue = initialValue - displayValue.firstTrackerTime;
+						}
+						if(!(isNaN(displayValue.firstSetUpTime)) && displayValue.firstSetUpTime!=0){
+							initialValue = initialValue - displayValue.firstSetUpTime; 
+						}
+						if(!(isNaN(displayValue.firstRunTime)) && displayValue.firstRunTime!=0){
+							initialValue = initialValue - displayValue.firstRunTime; 
+						}
+						initialValue = new Date().time - initialValue;
+					}
+					timer.addEventListener(TimerEvent.TIMER,function(event:TimerEvent):void {
+						pgBar.setProgress(initialValue+(timer.currentCount*1000),(displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime));
+					},false,0,true);
+					if(displayValue.paused){
+						pgBar.setProgress(initialValue,(displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime));
+					} else {
+						timer.start();
+					}
+				}
+				_trackerConsoleJobs = displayValue;
+			}
+			
+			private function stopJob():void {
+				if(timer!=null){
+					if(timer.running) {
+						timer.reset();
+						timer.stop();
+						pgBar.setProgress(0,100);
+					}
+				}
+			}
+		
+			private function setPGLabel(currentTime:String):String{
+				return " ( "+currentTime+" )";
+			}
+			
+		]]>
+	</mx:Script>
+
+	<mx:ProgressBar id="pgBar" width="100%" trackHeight="35" barSkin="mx.skins.halo.ProgressIndeterminateSkin" 
+			labelPlacement="right" mode="manual"/>
+	
+</mx:Canvas>

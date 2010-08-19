@@ -3031,6 +3031,31 @@ public class DataService extends HibernateService {
 		}
 		return jobChargesList; 
 	}
+	
+	/**
+	 * This method retrieves incomplete/in-progress Tracker console jobs based on employee
+	 * @param employee
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TrackerConsoleJobs> getActiveTrackerConsoleJobsBasedOnEmployee(Employee employee) throws Exception {
+		log.debug("** getActiveTrackerConsoleJobsBasedOnEmployee called.");
+		List<TrackerConsoleJobs> trackerConsoleJobList = new ArrayList<TrackerConsoleJobs>();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createQuery("from TrackerConsoleJobs where completed=false and employee = :employee");
+			query.setParameter("employee", employee);
+			trackerConsoleJobList = query.getResultList();
+			if (trackerConsoleJobList != null)
+				log.debug("** Found " + trackerConsoleJobList.size() + "records:");
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return trackerConsoleJobList;
+	}
 
 	@SuppressWarnings("unchecked")
 	public void deleteItem(String className, Long id) {

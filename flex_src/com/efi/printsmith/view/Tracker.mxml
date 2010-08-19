@@ -4,13 +4,22 @@
 	xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:ns1="com.hillelcoren.components.*"
 	creationComplete="init()" 
 	label="Tracker Console" 
-	name="Tracker Console" xmlns:components="com.efi.printsmith.common.components.*">
+	name="Tracker Console" xmlns:components="com.efi.printsmith.common.components.*" xmlns:trackercomponent="com.efi.printsmith.components.*">
 	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getClockedInEmployee" fault="handleFault(event)" result="handleLoadEmployeeResult(event)"/>
 		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadTrackerConsoleResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTrackerConsoleResult(event)"/>
 		<mx:method name="getJobsChargesForTrackerByEmployee" fault="handleFault(event)" result="handleLoadJobChargesResult(event)"/>
+		<mx:method name="getActiveTrackerConsoleJobsBasedOnEmployee" fault="handleFault(event)" result="handleLoadTCJobsResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="saveDataServiceJob" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveJobResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="updateDataServiceJob" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleUpdateJobResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceProductionLocation" destination="dataService" showBusyCursor="true">
@@ -34,6 +43,7 @@
 	<mx:Script> 
 	                                  
 	<![CDATA[
+		import com.efi.printsmith.data.TrackerConsoleJobs;
 		import com.efi.printsmith.data.Charge;
 		import mx.events.CloseEvent;
 		import flash.net.registerClassAlias;
@@ -68,6 +78,14 @@
 		[Bindable] private var productionStations:ArrayCollection = new ArrayCollection();
 		
 		[Bindable] private var onLoad:Boolean = true;
+		
+		[Bindable] private var selectedJob:Job;
+		
+		[Bindable] private var selectedCharge:Charge;
+		
+		[Bindable] private var trackerConsoleJobsList:ArrayCollection = new ArrayCollection();
+		
+		[Bindable] private var selectedTrackerConsoleJob:TrackerConsoleJobs;
 		 
 		 
 		public function init():void {
@@ -198,9 +216,41 @@
 				}
 				if(employee!=null){
 					dataService.getJobsChargesForTrackerByEmployee(employee.id);
+					dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
 				}
 			} else {
 				employee = null;
+			}
+		}
+		
+		private function doConsoleJobSelection(event:Event):void {
+			if(event.currentTarget.selectedIndex>-1){
+				var trackerConsoleJobObject:TrackerConsoleJobs = event.currentTarget.selectedItem as TrackerConsoleJobs;
+				selectedTrackerConsoleJob = trackerConsoleJobObject;
+				if(trackerConsoleJobObject.firstSetUpCompleted) {
+					resetButtons();
+					washUpBtn.enabled = true;
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					pauseBtn.enabled = true;
+					defaultEnableButtons();
+				}
+				if(trackerConsoleJobObject.firstWashCompleted) {
+					resetButtons();
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					pauseBtn.enabled = true;
+					defaultEnableButtons();
+				}
+				if(trackerConsoleJobObject.paused){
+					resetButtons();
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					continueBtn.enabled = true;
+					defaultEnableButtons();
+				}
+				registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+				progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobObject) as TrackerConsoleJobs;
 			}
 		}
 		
@@ -228,6 +278,10 @@
 		
 		private function handleLoadJobChargesResult(event:ResultEvent):void {
 			trackerList = event.result as ArrayCollection;
+		}
+		
+		private function handleLoadTCJobsResult(event:ResultEvent):void {
+			trackerConsoleJobsList = event.result as ArrayCollection;
 		}
 		
 		public function getInvoiceNumber(object:Object):String {
@@ -294,6 +348,10 @@
 			return "";
 		}
 		
+		public function getJobDescription(object:Object):String {
+			return object.description;
+		}
+		
 		public function updateTrackerConsole():void {
 			if(trackerConsole.productionFacilities!=null){
 				if(trackerConsole.productionFacilities.id==0){
@@ -321,6 +379,192 @@
 			}
 		}
 		
+		private function doSelectJob(event:Event):void {
+			selectedCharge = null;
+			selectedJob = null;
+			if(event.currentTarget.selectedItem is Job){
+				selectedJob = event.currentTarget.selectedItem as Job;
+			}
+			if(event.currentTarget.selectedItem is Charge){
+				selectedCharge = event.currentTarget.selectedItem as Charge;
+			}
+			resetButtons();
+			startBtn.enabled = true;
+			defaultEnableButtons();
+		}
+		
+		private function resetButtons():void {
+			startBtn.enabled = false;
+			setUpBtn.enabled = false;
+			washUpBtn.enabled = false;
+			stopBtn.enabled = false;
+			cancelBtn.enabled = false;
+			pauseBtn.enabled = false;
+			continueBtn.enabled = false;
+			defaultEnableButtons();
+		}
+		
+		private function defaultEnableButtons():void {
+			openBtn.enabled = true;
+			jobTicketBtn.enabled = true;
+			layoutBtn.enabled = true;
+		}
+		
+		private function startJob():void {
+			if((selectedJob!=null || selectedCharge!=null) && trackerConsole.productionFacilities!=null && trackerConsole.productionStations!=null){
+				resetButtons();
+				setUpBtn.enabled = true;
+				stopBtn.enabled = true;
+				cancelBtn.enabled = true;
+				pauseBtn.enabled = true;
+				defaultEnableButtons();
+				var trackerConsoleJobs:TrackerConsoleJobs = new TrackerConsoleJobs();
+				trackerConsoleJobs.productionFacilities = trackerConsole.productionFacilities;
+				trackerConsoleJobs.productionStations = trackerConsole.productionStations;
+				trackerConsoleJobs.productionLocations = trackerConsole.productionLocation;
+				trackerConsoleJobs.employee = employee;
+				if(selectedJob!=null){
+					trackerConsoleJobs.job = selectedJob;
+				} else if(selectedCharge!=null){
+					trackerConsoleJobs.charge = selectedCharge;
+				}
+				trackerConsoleJobs.actualSetUpTime = 10*60*1000;
+				trackerConsoleJobs.actualRunTime = 10*60*1000;
+				trackerConsoleJobs.actualWashTime = 10*60*1000;
+				trackerConsoleJobs.firstTrackerDate = new Date();
+				trackerConsoleJobs.duration = 0;
+				trackerConsoleJobs.noOfPasses = 1;
+				trackerConsoleJobs.currentPass = 1;
+				saveDataServiceJob.addUpdate(trackerConsoleJobs);
+			}
+		}
+		
+		private function handleSaveJobResult(event:ResultEvent):void {
+			var trackerConsoleJobs:TrackerConsoleJobs = event.result as TrackerConsoleJobs;
+			trackerConsoleJobsList.addItem(trackerConsoleJobs);
+			registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+			progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobs) as TrackerConsoleJobs;
+			selectedTrackerConsoleJob = trackerConsoleJobs;
+			employee_jobs_grid.selectedIndex = (trackerConsoleJobsList.length-1);
+		}
+		
+		private function setUpJob():void {
+			if(selectedTrackerConsoleJob!=null){
+				var nowDate:Date = new Date();
+				var totalSetUpTime:Number
+				if(selectedTrackerConsoleJob.currentPass==1){
+					selectedTrackerConsoleJob.firstSetUpCompleted = true;
+					totalSetUpTime = (nowDate.time-selectedTrackerConsoleJob.firstTrackerDate.time);
+					if(!(isNaN(selectedTrackerConsoleJob.firstTrackerTime)) && selectedTrackerConsoleJob.firstTrackerTime!=0){
+						totalSetUpTime = totalSetUpTime + selectedTrackerConsoleJob.firstTrackerTime;
+					}
+					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
+					selectedTrackerConsoleJob.firstTrackerTime = 0;
+					selectedTrackerConsoleJob.firstSetUpDate = nowDate;
+					selectedTrackerConsoleJob.firstSetUpTime = totalSetUpTime;
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+				if(selectedTrackerConsoleJob.currentPass==2){
+					selectedTrackerConsoleJob.secondSetUpCompleted = true;
+					totalSetUpTime = (nowDate.time-selectedTrackerConsoleJob.secondTrackerDate.time);
+					if(!(isNaN(selectedTrackerConsoleJob.secondTrackerTime)) && selectedTrackerConsoleJob.secondTrackerTime!=0){
+						totalSetUpTime = totalSetUpTime + selectedTrackerConsoleJob.secondTrackerTime;
+					}
+					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
+					selectedTrackerConsoleJob.secondTrackerTime = 0;
+					selectedTrackerConsoleJob.secondSetUpDate = nowDate;
+					selectedTrackerConsoleJob.secondSetUpTime = totalSetUpTime;
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+			}
+		}
+		
+		private function washUpJob():void {
+			if(selectedTrackerConsoleJob!=null){
+				var nowDate:Date = new Date();
+				var totalRunTime:Number
+				if(selectedTrackerConsoleJob.currentPass==1){
+					selectedTrackerConsoleJob.firstWashCompleted = true;
+					totalRunTime = (nowDate.time-selectedTrackerConsoleJob.firstTrackerDate.time);
+					if(!(isNaN(selectedTrackerConsoleJob.firstRunTime)) && selectedTrackerConsoleJob.firstRunTime!=0){
+						totalRunTime = totalRunTime + selectedTrackerConsoleJob.firstRunTime;
+					}
+					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
+					selectedTrackerConsoleJob.firstTrackerTime = 0;
+					selectedTrackerConsoleJob.firstRunDate = nowDate;
+					selectedTrackerConsoleJob.firstRunTime = totalRunTime;
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+				if(selectedTrackerConsoleJob.currentPass==2){
+					selectedTrackerConsoleJob.secondWashCompleted = true;
+					totalRunTime = (nowDate.time-selectedTrackerConsoleJob.secondTrackerDate.time);
+					if(!(isNaN(selectedTrackerConsoleJob.secondRunTime)) && selectedTrackerConsoleJob.secondRunTime!=0){
+						totalRunTime = totalRunTime + selectedTrackerConsoleJob.secondRunTime;
+					}
+					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
+					selectedTrackerConsoleJob.secondTrackerTime = 0;
+					selectedTrackerConsoleJob.secondRunDate = nowDate;
+					selectedTrackerConsoleJob.secondRunTime = totalRunTime;
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+			}
+		}
+		
+		private function stopJob():void {
+			if(selectedTrackerConsoleJob!=null){
+				var nowDate:Date = new Date();
+				var totalWashTime:Number
+				if(selectedTrackerConsoleJob.currentPass==1){
+					selectedTrackerConsoleJob.completed = true;
+					totalWashTime = (nowDate.time-selectedTrackerConsoleJob.firstTrackerDate.time);
+					if(!(isNaN(selectedTrackerConsoleJob.firstRunTime)) && selectedTrackerConsoleJob.firstRunTime!=0){
+						totalWashTime = totalWashTime + selectedTrackerConsoleJob.firstRunTime;
+					}
+					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
+					selectedTrackerConsoleJob.firstTrackerTime = 0;
+					if(!selectedTrackerConsoleJob.firstSetUpCompleted || !selectedTrackerConsoleJob.firstWashCompleted){
+						selectedTrackerConsoleJob.firstRunDate = nowDate;
+						selectedTrackerConsoleJob.firstRunTime = totalWashTime;
+					} else {
+						selectedTrackerConsoleJob.firstWashDate = nowDate;
+						selectedTrackerConsoleJob.firstWashTime = totalWashTime;
+					}
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+				if(selectedTrackerConsoleJob.currentPass==2){
+					selectedTrackerConsoleJob.secondWashCompleted = true;
+					totalWashTime = (nowDate.time-selectedTrackerConsoleJob.secondTrackerDate.time);
+					if(!(isNaN(selectedTrackerConsoleJob.secondRunTime)) && selectedTrackerConsoleJob.secondRunTime!=0){
+						totalWashTime = totalWashTime + selectedTrackerConsoleJob.secondRunTime;
+					}
+					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
+					selectedTrackerConsoleJob.secondTrackerTime = 0;
+					if(!selectedTrackerConsoleJob.secondSetUpCompleted || !selectedTrackerConsoleJob.secondWashCompleted){
+						selectedTrackerConsoleJob.secondRunDate = nowDate;
+						selectedTrackerConsoleJob.secondRunTime = totalWashTime;
+					} else {
+						selectedTrackerConsoleJob.secondWashDate = nowDate;
+						selectedTrackerConsoleJob.secondWashTime = totalWashTime;
+					}
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+			}
+		}
+		
+		private function handleUpdateJobResult(event:ResultEvent):void {
+			resetButtons();
+			washUpBtn.enabled = true;
+			stopBtn.enabled = true;
+			cancelBtn.enabled = true;
+			pauseBtn.enabled = true;
+			openBtn.enabled = true;
+			jobTicketBtn.enabled = true;
+			layoutBtn.enabled = true;
+			/* var trackerConsoleJobs:TrackerConsoleJobs = event.result as TrackerConsoleJobs;
+			trackerConsoleJobsList.addItem(trackerConsoleJobs);
+			progressBarComponent.trackerConsoleJobs = trackerConsoleJobs; */
+		}
+		
 	]]>
 	                        
 	</mx:Script>	
@@ -342,7 +586,7 @@
 					click="{openEditEmployee()}" buttonMode="true" useHandCursor="true"/>
 			</mx:HBox>
 			
-			<mx:DataGrid width="90%" height="30%" id="invoiceGrid" dataProvider="{trackerList}">
+			<mx:DataGrid width="90%" height="30%" id="invoiceGrid" dataProvider="{trackerList}" itemClick="{doSelectJob(event)}">
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 						<mx:itemRenderer>
@@ -381,7 +625,7 @@
 				</mx:columns>
 			</mx:DataGrid>
 			
-			<mx:HBox width="100%" height="60%">
+			<mx:HBox width="100%" height="50%">
 				<mx:VBox width="50%" height="100%">
 					<mx:Panel width="100%" height="50%" paddingTop="10" paddingLeft="5" 
 						layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.CurrentStation')}">
@@ -452,46 +696,46 @@
 				<mx:VBox width="40%" height="100%" verticalAlign="middle">
 					<mx:HBox width="100%">
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Start')}" 
-							labelPlacement="bottom" width="20%">
+							labelPlacement="bottom" width="20%" click="{startJob()}" id="startBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingStart.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Setup')}" 
-							labelPlacement="bottom" width="20%">
+							labelPlacement="bottom" width="20%" click="{setUpJob()}" id="setUpBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingSetupDone.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Washup')}" 
-							labelPlacement="bottom" width="20%">
+							labelPlacement="bottom" width="20%" id="washUpBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingWashupStart.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Stop')}" 
-							labelPlacement="bottom" width="20%">
+							labelPlacement="bottom" width="20%" id="stopBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingStop.png')</mx:icon>
 						</mx:Button> 
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Cancel')}" 
-							labelPlacement="bottom" width="20%">
+							labelPlacement="bottom" width="20%" id="cancelBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingCancel.png')</mx:icon>
 						</mx:Button>
 					</mx:HBox>
 					<mx:HBox width="100%">
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Pause')}" 
-							labelPlacement="bottom" width="20%">
+							labelPlacement="bottom" width="20%" id="pauseBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingPause.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Continue')}" 
-							labelPlacement="bottom" width="20%">
+							labelPlacement="bottom" width="20%" id="continueBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingContinue.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Open')}" 
-							labelPlacement="bottom" width="20%">
+							labelPlacement="bottom" width="20%" id="openBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingInvOpen.png')</mx:icon>
 						</mx:Button>
 						
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.JobTicket')}" 
-							labelPlacement="bottom" width="20%">
+							labelPlacement="bottom" width="20%" id="jobTicketBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingTickets.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Layout')}" 
-							labelPlacement="bottom" width="20%">
+							labelPlacement="bottom" width="20%" id="layoutBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingCutouts.png')</mx:icon>
 						</mx:Button>
 					</mx:HBox>
@@ -501,22 +745,79 @@
 			
 			
 			
-			<mx:DataGrid width="90%" height="30%" id="employee_jobs_grid">
+			<mx:DataGrid width="90%" height="20%" id="employee_jobs_grid" dataProvider="{trackerConsoleJobsList}" itemClick="{doConsoleJobSelection(event)}">
 				<mx:columns>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}" dataField="col1"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}" dataField="col2"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.TimeQty')}" dataField="col3"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Duration')}" dataField="col1"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Who')}" dataField="col2"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Facility')}" dataField="col3"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Station')}" dataField="col1"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location')}" dataField="col2"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Machine')}" dataField="col3"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Account')}" dataField="col1"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getInvoiceNumber((data.job==null?data.charge:data.job))}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getJobDescription((data.job==null?data.charge:data.job))}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.TimeQty')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text=""/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Duration')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text=""/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Who')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{data.employee.lastName}, {data.employee.firstName}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Facility')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{data.productionFacilities.name}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Station')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{data.productionStations.name}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{data.productionLocations.name}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Machine')}">
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Account')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getAccount((data.job==null?data.charge:data.job))}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 				</mx:columns>
 			</mx:DataGrid>
 			
-			<mx:ProgressBar width="90%"/>
+			<mx:Spacer height="5%"/>
+			
+			<trackercomponent:TrackerProgressBarComponent id="progressBarComponent" width="90%" height="15%"/>
 			
 		</mx:VBox>
 		
