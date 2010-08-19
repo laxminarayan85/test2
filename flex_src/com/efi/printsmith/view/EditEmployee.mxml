@@ -3,27 +3,32 @@
 width="949" height="701" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" showCloseButton="true" close="{closeWindow()}" 
 creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" name="Employee Editor" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*" xmlns:components="com.efi.printsmith.common.components.*">
 
-<mx:RemoteObject id="dataService" destination="dataService">
+<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="getEmployee" fault="handleFault(event)" result="handleLoadEmployee(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 
-<mx:RemoteObject id="pressService" destination="dataService">
+<mx:RemoteObject id="pressService" destination="dataService" showBusyCursor="true">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPress(event)"/>
 </mx:RemoteObject>
-<mx:RemoteObject id="copierService" destination="dataService">
+<mx:RemoteObject id="copierService" destination="dataService" showBusyCursor="true">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCopier(event)"/>
 </mx:RemoteObject>
-<mx:RemoteObject id="priceListService" destination="dataService">
+<mx:RemoteObject id="priceListService" destination="dataService" showBusyCursor="true">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPriceList(event)"/>
 </mx:RemoteObject>
-<mx:RemoteObject id="chargeService" destination="dataService">
+<mx:RemoteObject id="chargeService" destination="dataService" showBusyCursor="true">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCharge(event)"/>
 </mx:RemoteObject>
-<mx:RemoteObject id="locationService" destination="dataService">
+<mx:RemoteObject id="locationService" destination="dataService" showBusyCursor="true">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadLocation(event)"/>
 </mx:RemoteObject>
+
+<mx:RemoteObject id="dataServiceTimeCard" destination="dataService" showBusyCursor="true">
+		<mx:method name="getByClockInOut" fault="handleFault(event)" result="handleLoadTimeCardResult(event)"/>
+	</mx:RemoteObject>
 
 
 <mx:Producer id="producer" destination="employees"/>
@@ -42,6 +47,8 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 <mx:Script> 
                                   
 <![CDATA[
+	import com.efi.printsmith.data.TimeCard;
+	import com.efi.printsmith.model.AutoClockOutDetector;
 	import mx.utils.StringUtil;
 	import com.efi.printsmith.data.ComLink;
 	import com.efi.printsmith.data.ProductionLocations;
@@ -200,36 +207,46 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		 	tempArray.push(index);
 		}
 		charge_types.selectedIndices = tempArray;
-	
+		
+		tempArray = new Array();
+		if(employee.productionParents!=null && employee.productionParents.length>0){
+			for(var i:int=0; i < employee.productionParents.length; i++) {
+				var productionLocations:ProductionLocations = employee.productionParents.getItemAt(i) as ProductionLocations;
+			 	index = findItem(productionLocations.id, productionLocation);
+			 	tempArray.push(index);
+			}
+		}
+		production_parents.selectedIndices = tempArray;
+		
+		tempArray = new Array();
 		if(employee.employeeCopiers!=null && employee.employeeCopiers.length>0){
-			tempArray = new Array();
 			for(var i:int=0; i < employee.employeeCopiers.length; i++) {
 				var productionCopiers:ProductionCopiers = employee.employeeCopiers.getItemAt(i) as ProductionCopiers;
 			 	index = findItem(productionCopiers.id, copiers);
 			 	tempArray.push(index);
 			}
-			copier_list.selectedIndices = tempArray;
 		}
+		copier_list.selectedIndices = tempArray;
 		
+		tempArray = new Array();
 		if(employee.employeePricings!=null && employee.employeePricings.length>0){
-			tempArray = new Array();
 			for(var i:int=0; i < employee.employeePricings.length; i++) {
 				var preferencesPricingMethod:PreferencesPricingMethod = employee.employeePricings.getItemAt(i) as PreferencesPricingMethod;
 			 	index = findItem(preferencesPricingMethod.id, pricemethods);
 			 	tempArray.push(index);
 			}
-			pricing_methods.selectedIndices = tempArray;
 		}
+		pricing_methods.selectedIndices = tempArray;
 		
+		tempArray = new Array();
 		if(employee.employeePresses!=null && employee.employeePresses.length>0){
-			tempArray = new Array();
 			for(var i:int=0; i < employee.employeePresses.length; i++) {
 				var productionPress:ProductionPress = employee.employeePresses.getItemAt(i) as ProductionPress;
 			 	index = findItem(productionPress.id, presses);
 			 	tempArray.push(index);
 			}
-			press_list.selectedIndices = tempArray;
 		}
+		press_list.selectedIndices = tempArray;
 		
 		if (employee.comLinks != null){
 			phone_edit.text = "";
@@ -282,7 +299,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 			employee.active = false;
 			
 		
-		employee.rate= parseFloat(rate_edit.text); 
+		//employee.rate= parseFloat(rate_edit.text); 
 		employee.allowOverrideCost = override_cost_check.selected;
 		employee.costingAmounts = hide_cost_amount_check.selected;
 		employee.hideNonReleaseProduction = hide_non_production_items.selected;
@@ -294,11 +311,11 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		/* employee.pinRequired = requirePin.selected;
 		employee.pin = pin_edit.text; */
 		employee.magCardReader = allow_mag_reader.selected
-		employee.includeInvoice = invoice_check.selected;
+		/* employee.includeInvoice = invoice_check.selected;
 		employee.includeEstimate = estimate_check.selected;
 		employee.includeJobs = jobs_check.selected;
 		employee.includeJobCharges = job_charges.selected;
-		employee.includeInvoiceCharges = invoice_level_charges.selected;
+		employee.includeInvoiceCharges = invoice_level_charges.selected; */
 
 		employee.onlyShowProductionParents = show_check_production.selected;
 		employee.allPricingMethods = all_pricing.selected;
@@ -377,6 +394,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	private function doSave():void {
 		mapToEmployeeData();
 		if(validateEmployee()){
+			doParent();
 			doCharge();
 			doCopier();
 			doPress();
@@ -415,10 +433,33 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	    employee.comLinks = new ArrayCollection();
 	    setEmployee(employee);
 	 	
+	}
+	
+	private function checkDeleteBtnEnability(employeeId:Number):Boolean {
+		if(employee!=null){
+			if(isNaN(employeeId) || employeeId==0){
+				return false;
+			} else {
+				return true;
+			}
+		}
+		
+		return false;
+		
 	}  
+	
 	private function doDelete():void {
-	    dataService.deleteItem("Employee",employee.id);
-	 	
+		if(employee.clockIn || employee.clockBreak){
+			Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardsCmd.Theemployeetimecards'));
+			return;
+		} else {
+	    	dataService.deleteItem("Employee",employee.id);
+	 	}
+	}
+	
+	private function handleDeleteResult(event:ResultEvent):void {
+		doNew();
+		dataService.getAll("Employee");
 	}  
 	private function doGet():void{
 		var titleWindow:EmployeePicker = EmployeePicker(PopUpManager.createPopUp(this, EmployeePicker, true));
@@ -477,8 +518,44 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	private function handleSaveResult(ev:ResultEvent):void {
 		
 		this.employee = ev.result as Employee;
-		dataService.getAll("Employee")
+		dataService.getAll("Employee");
+		var autoClockOutDetectortList:ArrayCollection = parentDocument.autoClockOutDetectortList as ArrayCollection;
+		var count:int=-1;
+		var checkFlag:Boolean = false;
+		for each(var autoClockOutDetectorObj:AutoClockOutDetector in autoClockOutDetectortList){
+			count++;
+			if(autoClockOutDetectorObj.employee.id==this.employee.id){
+				checkFlag = true;
+				break;
+			}
+		}
+		if(count!=-1 && checkFlag){
+			var autoClockOutDetectorObject:AutoClockOutDetector = autoClockOutDetectortList.getItemAt(count) as AutoClockOutDetector;
+			if(this.employee.autoHour==0 && this.employee.autoMin==0){
+				autoClockOutDetectorObject.stop();
+				autoClockOutDetectortList.removeItemAt(count);
+			} else {
+				if(autoClockOutDetectorObject.employee.autoHour!=this.employee.autoHour || autoClockOutDetectorObject.employee.autoMin!=this.employee.autoMin){
+					autoClockOutDetectorObject.employee = this.employee;
+				}
+			}
+		} else {
+			if(employee.clockIn || employee.clockBreak){
+				if(employee.autoHour!=0 || employee.autoMin!=0){
+					dataServiceTimeCard.getByClockInOut("TimeCard",employee);
+				}
+			}
+		}
 		
+	}
+	
+	private function handleLoadTimeCardResult(ev:ResultEvent):void {
+		var timecardArray:ArrayCollection = ev.result as ArrayCollection;
+		var autoClockOutDetector:AutoClockOutDetector = new AutoClockOutDetector();
+		autoClockOutDetector.employee = employee;
+		autoClockOutDetector.timeCard =	timecardArray.getItemAt(0,0) as TimeCard; 
+		autoClockOutDetector.start();
+		parentDocument.autoClockOutDetectortList.addItem(autoClockOutDetector);
 	}
 	
      
@@ -546,11 +623,6 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	 		}
 	 	}
 		
-	}   
-	
-	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getAll("Employee")
-		doNew();
 	}
 	
 	
@@ -664,6 +736,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		var tempparentArray :Array= new Array();
 		var i:int;
 		var tProduction:ProductionLocations
+		employee.productionParents = new ArrayCollection();
 		tempparentArray = production_parents.selectedItems as Array;
 		for(i=0; i < tempparentArray.length; i++)
 		{
@@ -671,6 +744,30 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		 employee.productionParents.addItem(tProduction);
 		}
 		 
+	}
+	
+	private function clearSelectedPricings(event:Event):void {
+		if(event.currentTarget.selected){
+			pricing_methods.selectedItems = new Array();
+		}
+	}
+	
+	private function clearSelectedCharges(event:Event):void {
+		if(event.currentTarget.selected){
+			charge_types.selectedItems = new Array();
+		}
+	}
+	
+	private function clearSelectedCopiers(event:Event):void {
+		if(event.currentTarget.selected){
+			copier_list.selectedItems = new Array();
+		}
+	}
+	
+	private function clearSelectedPresses(event:Event):void {
+		if(event.currentTarget.selected){
+			press_list.selectedItems = new Array();
+		}
 	}
 ]]>
 
@@ -695,9 +792,11 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
 			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="370" y="10" width="38" height="38" click="doDelete();">
+		<components:CustomDeleteButtonComponent x="370" y="10" width="38" height="38" enabled="{checkDeleteBtnEnability(employee.id)}"
+			clickFuncName="doDelete" deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Employee')}"/>
+		<!--<mx:Button x="370" y="10" width="38" height="38" click="doDelete();" enabled="{checkDeleteBtnEnability(employee)}">
 			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
-		</mx:Button>
+		</mx:Button>-->
 	    <mx:Label x="360" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
 		<mx:Button x="493" y="10" width="38" height="38" click="doRevert()">
 			<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
@@ -739,7 +838,10 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 					<components:CustomStringTextInputComponent x="47" y="38" restrict="0-9" displayAsPassword="true" maxChars="9"
 						dataHolder="{employee}" variableName="pin" customText="{employee.pin}" enabled="{employee.pinRequired}"/>
 				</mx:Panel>
-				<mx:TextInput  restrict="0-9\." x="54" y="40" id="rate_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(employee.rate)}"/>
+				<components:CustomNumericTextInputComponent x="54" y="40"
+					dataHolder="{employee}" variableName="rate" customText="{employee.rate}"
+					precision="2" rounding="nearest"/>
+				<!--<mx:TextInput  restrict="0-9\." x="54" y="40" id="rate_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(employee.rate)}"/>-->
 				<mx:Panel x="10" y="224" width="295" height="290" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EditableProductionOp')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Allowedtooverridecos')}" id="override_cost_check" selected="{employee.allowOverrideCost}"/>
 					<mx:CheckBox x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Hidecostingamounts')}" id="hide_cost_amount_check" selected="{employee.costingAmounts}"/>
@@ -768,11 +870,21 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 			</mx:Canvas>
 			<mx:Canvas id="canvasProduction" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.ProductionFilter')}" width="100%" height="100%">	
 				<mx:Panel x="10" y="30" width="280" height="233"  layout="absolute" title="Include">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Invoices')}" id="invoice_check" selected="{employee.includeInvoice}" width="196"/>
-					<mx:CheckBox x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimates')}" id="estimate_check" selected="{employee.includeEstimate}" width="212"/>
-					<mx:CheckBox x="31" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Jobs')}" id="jobs_check" selected="{employee.includeJobs}"/>
-					<mx:CheckBox x="66" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Charges')}" id="job_charges" selected="{employee.includeJobCharges}"/>
-					<mx:CheckBox x="10" y="143" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.InvoiceLevelCharges')}" id="invoice_level_charges" selected="{employee.includeInvoiceCharges}"/>
+					<components:CustomCheckBoxComponent x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Invoices')}" 
+						dataHolder="{employee}" variableName="includeInvoice" customText="{employee.includeInvoice}" 
+						selectedValue="true" deSelectedValue="false" defaultValue="false" width="196"/>
+					<components:CustomCheckBoxComponent x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimates')}" 
+						dataHolder="{employee}" variableName="includeEstimate" customText="{employee.includeEstimate}" 
+						selectedValue="true" deSelectedValue="false" defaultValue="false" width="212"/>
+					<components:CustomCheckBoxComponent x="31" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Jobs')}" 
+						dataHolder="{employee}" variableName="includeJobs" customText="{employee.includeJobs}" 
+						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee.includeInvoice || employee.includeEstimate}"/>
+					<components:CustomCheckBoxComponent x="66" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Charges')}" 
+						dataHolder="{employee}" variableName="includeJobCharges" customText="{employee.includeJobCharges}" 
+						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{(employee.includeInvoice || employee.includeEstimate) &amp;&amp; employee.includeJobs}"/>
+					<components:CustomCheckBoxComponent x="10" y="143" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.InvoiceLevelCharges')}" 
+						dataHolder="{employee}" variableName="includeInvoiceCharges" customText="{employee.includeInvoiceCharges}" 
+						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee.includeInvoice || employee.includeEstimate}"/>
 				</mx:Panel>
 				<mx:Panel x="309" y="30" width="227" height="255" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.CustomerWantedBy')}">
 					<mx:RadioButtonGroup id="Due" selectedValue="{customerWantType}"/>
@@ -784,23 +896,23 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 					<mx:CheckBox x="10" y="154" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.AnyPastDue')}" id="any_past_due" selected="{employee.anyPastDue}"/>
 				</mx:Panel>
 				<mx:Panel x="556" y="30" width="316" height="255" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionParents')}">
-					<mx:List x="10" y="35" id="production_parents" width="100%" dataProvider="{productionLocation}" focusOut="doParent();" labelField="name"></mx:List>
+					<mx:List x="10" y="35" id="production_parents" width="100%" dataProvider="{productionLocation}" focusOut="doParent();" labelField="name" allowMultipleSelection="true"></mx:List>
 					<mx:CheckBox x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.OnlyshowcheckedProdu')}" id="show_check_production" selected="{employee.onlyShowProductionParents}"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="321" width="323" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.PricingMethods')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPricingMethods')}" id="all_pricing" selected="{employee.allPricingMethods}"/>
+					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPricingMethods')}" id="all_pricing" click="{clearSelectedPricings(event)}" selected="{employee.allPricingMethods}"/>
 					<mx:List x="10" y="40" focusOut="doPricingMethod()" width="283"  height="110" id="pricing_methods" dataProvider="{pricemethods}" labelField="title" allowMultipleSelection="true"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="321" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ChargeType')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallChargeTypes')}" id="all_charge_types" selected="{employee.allChargeTypes}"/>
+					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallChargeTypes')}" id="all_charge_types" click="{clearSelectedCharges(event)}" selected="{employee.allChargeTypes}"/>
 					<mx:List x="10" y="40" width="318" height="110" id="charge_types" dataProvider="{charges}" labelField="name" allowMultipleSelection="true" focusOut="doCharge();"></mx:List>
 				</mx:Panel>
 				<mx:Panel x="10" y="553" width="323" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Press')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPresses')}" id="all_presses" selected="{employee.allPresses}"/>
+					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPresses')}" id="all_presses" click="{clearSelectedPresses(event)}" selected="{employee.allPresses}"/>
 					<mx:List x="10" y="40" width="283" height="110" id="press_list" dataProvider="{presses}" labelField="name" allowMultipleSelection="true" focusOut="doPress();"> </mx:List>
 				</mx:Panel>
 				<mx:Panel x="365" y="553" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Copier')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallCopiers')}" id="all_copiers" selected="{employee.allCopiers}"/>
+					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallCopiers')}" id="all_copiers" click="{clearSelectedCopiers(event)}" selected="{employee.allCopiers}"/>
 					<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name" focusOut="doCopier();" allowMultipleSelection="true"></mx:List>
 				</mx:Panel>
 			</mx:Canvas>	
