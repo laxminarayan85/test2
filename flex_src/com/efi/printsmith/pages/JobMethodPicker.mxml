@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
 				xmlns:vo="com.efi.vo.*"
-				width="334"
-				height="128"
+				width="432"
+				height="138"
 				defaultButton="{ok_btn}"
 				showCloseButton="true"
 				creationComplete="init()"
-				close="PopUpManager.removePopUp(this);"
+				close="doCancel();"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobMethod')}"
 				xmlns:text="flash.text.*"
 				borderThickness="3"
@@ -94,7 +94,7 @@
 
 
 
-	<mx:Canvas width="360"
+	<mx:Canvas width="376"
 			   height="82"
 			   horizontalScrollPolicy="off"
 			   verticalScrollPolicy="off">
