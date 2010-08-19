@@ -168,7 +168,10 @@
 		var tempContact:Contact;
 		tempContact = temp as  Contact;
 		if ( tempContact != null)
-			return tempContact.parentAccount.title;
+			if ( tempContact.parentAccount != null)
+				return tempContact.parentAccount.title;
+			else
+				return"";
 		else
 			return "";
 	}

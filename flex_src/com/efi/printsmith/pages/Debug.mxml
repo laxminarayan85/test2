@@ -360,7 +360,7 @@
 		<mx:Button x="10"
 				   y="10"
 				   label="Populate Sales Categories"
-				   click="doPopulateSalesCategories();" width="188"/>
+				   click="doPopulateSalesCategories();" width="188" enabled="false"/>
 		<mx:Button x="206"
 				   y="10"
 				   label="xpedx Stock Check"
