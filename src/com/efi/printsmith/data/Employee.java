@@ -2,24 +2,22 @@
 package com.efi.printsmith.data;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-import com.efi.printsmith.data.*;
-import com.efi.printsmith.data.enums.*;
-import com.efi.printsmith.exceptions.*;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import javax.persistence.*;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CollectionOfElements;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.IndexColumn;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Type;
+import com.efi.printsmith.exceptions.PropertyException;
+import com.efi.printsmith.exceptions.UnknownPropertyException;
 
 /**
  * @generated
@@ -885,7 +883,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany(cascade={CascadeType.MERGE})
     @JoinTable( name = "employee_employeepricings")
 	private java.util.List<PreferencesPricingMethod> employeePricings;
 	
@@ -918,7 +916,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.MERGE})
     @JoinTable( name = "employee_employeecharges")
 	private java.util.List<ChargeCommand> employeeCharges;
 	
@@ -951,7 +949,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany(cascade = {CascadeType.MERGE})
     @JoinTable( name = "employee_employeepresses")
 	private java.util.List<ProductionPress> employeePresses;
 	
@@ -984,7 +982,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany(cascade = {CascadeType.MERGE})
     @JoinTable( name = "employee_employeecopiers")
 	private java.util.List<ProductionCopiers> employeeCopiers;
 	
@@ -1063,7 +1061,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany(cascade = {CascadeType.MERGE})
     @JoinTable( name = "employee_productionparents")
 	private java.util.List<ProductionLocations> productionParents;
 	
@@ -1294,6 +1292,30 @@ public class Employee extends Party {
   public void setAutoOutTime(String newVal) {
     this.autoOutTime = newVal;
   }
+  
+  
+  	@OneToMany(mappedBy="employee")
+  	@org.hibernate.annotations.Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+  	@JoinTable( name = "timecard")
+  	private List<TimeCard> timeCardList;
+  
+  
+
+
+	/**
+	 * @return the timeCardList
+	 */
+	public List<TimeCard> getTimeCardList() {
+		return timeCardList;
+	}
+	
+	
+	/**
+	 * @param timeCardList the timeCardList to set
+	 */
+	public void setTimeCardList(List<TimeCard> timeCardList) {
+		this.timeCardList = timeCardList;
+	}
 
 
 	/**

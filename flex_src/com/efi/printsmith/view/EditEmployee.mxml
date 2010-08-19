@@ -200,10 +200,12 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		address_editor.setAddress(employee.address);
 		title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees') + "  " + employee.firstName + " "+ employee.lastName;
 		customerWantType = employee.customerWant;
+		Due.selectedValue = customerWantType;
 		if (employee.active) 
-			employeeStatus= "Active"
+			employeeStatus= "Active";
 		else
-			employeeStatus= "InActive"
+			employeeStatus= "InActive";
+		employee_status.selectedValue = employeeStatus;
 		for(i=0; i < employee.employeeCharges.length; i++)
 		{	tCharge = employee.employeeCharges[i];
 		 	index = findItem(tCharge.id, charges);
