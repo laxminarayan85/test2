@@ -1324,9 +1324,24 @@
 	 stockDefinitions.blankSheetPrice5 = parseFloat(BlankSheetPrice5.text);
 	 stockDefinitions.blankSheetPrice6 = parseFloat(BlankSheetPrice6.text);
 	 
-	 stockDefinitions.copier1PricePerSheet = parseFloat(DefaultBW.text);
-	 stockDefinitions.copier2PricePerSheet = parseFloat(DefaultColor.text);
-	 stockDefinitions.copier3PricePerSheet = parseFloat(DefaultLargeFormat.text);
+	 var defaultBW:String = "";
+	 var defaultColor:String = "";
+	 var defaultLargeFormat:String = "";
+	 if (DefaultBW.text.indexOf("$") > -1)
+	 	defaultBW = DefaultBW.text.substr(1);
+	 else
+	 	defaultBW = DefaultBW.text;
+	 if (DefaultColor.text.indexOf("$") > -1)
+	 	defaultColor = DefaultColor.text.substr(1);
+	 else
+	 	defaultColor = DefaultColor.text;
+	 if (DefaultLargeFormat.text.indexOf("$") > -1)
+	 	defaultLargeFormat = DefaultLargeFormat.text.substr(1);
+	 else
+	 	defaultLargeFormat = DefaultLargeFormat.text;
+	 stockDefinitions.copier1PricePerSheet = parseFloat(defaultBW);
+	 stockDefinitions.copier2PricePerSheet = parseFloat(defaultColor);
+	 stockDefinitions.copier3PricePerSheet = parseFloat(defaultLargeFormat);
 	 stockDefinitions.onHand = parseInt(OnHand.text);
 	 stockDefinitions.committed = parseInt(Committed.text);
 	 stockDefinitions.available = parseInt(Available.text);
