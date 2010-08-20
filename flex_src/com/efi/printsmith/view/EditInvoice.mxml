@@ -258,6 +258,8 @@
 
 			private function handleLoadInvoice(event:ResultEvent):void {
 				this.invoice = event.result as InvoiceBase;
+				if ( invoice.account != null)
+					UpdateCustomerStatus();
 			}
 			
 			private function handleLoadResult(event:Event):void
@@ -384,7 +386,50 @@
 				invoice.amountDue = invoice.grandTotal;
 				this.showJobs();
 			}
+		private function UpdateCustomerStatus():void{
 			
+			switch (invoice.account.status){
+				
+					case "CustomerStatusNew":
+							cust_discount_text4.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.New');
+						break;
+					case "CustomerStatusCurrent":
+							cust_discount_text4.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Current');
+						break;
+					case "CustomerStatusInactive":
+							cust_discount_text4.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Inactive');
+						break;
+					case "CustomerStatusPastDue":
+							cust_discount_text4.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.PastDue');
+						break;
+					case "CustomerStatusDelinquent":
+							cust_discount_text4.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Delinquent');
+						break;
+					case "CustomerStatusFrozen":
+							cust_discount_text4.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Frozen');
+						break;
+
+			}
+			switch (invoice.account.type){
+				
+					case "CustomerTypeDeposit":
+							cust_discount_text5.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.FullDeposit');
+						break;
+					case "CustomerTypeCash":
+							cust_discount_text5.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CashOnly');
+						break;
+					case "CustomerTypeCheck":
+							cust_discount_text5.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CashCheckCreditCard');
+						break;
+					case "CustomerTypeCharge":
+							cust_discount_text5.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.ChargeAccount');
+						break;
+					case "CustomerTypeCreditCardOnFile":
+							cust_discount_text5.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CreditCardonFile');
+						break;
+
+			}
+		}
 			private function saveJob(event:Event):void
 			{
 				var target:EditJob=event.target as EditJob;
@@ -444,6 +489,7 @@
 				accountDataService.getContactsByAccountId("Contact", invoice.account.id);
 				contact_list.selectedItem=invoice.account.contact as Contact;
 				bill_to_address_editor.setAddress(invoice.billToAddress);
+				UpdateCustomerStatus();
 			}
 
 			private function doNotepad():void
@@ -914,13 +960,13 @@
 								 width="146"
 								 textAlign="right"
 								 id="cust_discount_text4"
-								 text="{invoice.account.status}"/>
+/>
 						<mx:Text x="489"
 								 y="273"
 								 width="146"
 								 textAlign="right"
 								 id="cust_discount_text5"
-								 text="{invoice.account.type}"/>
+/>
 						<mx:Label x="16"
 								  y="227"
 								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}" width="100" textAlign="right"/>

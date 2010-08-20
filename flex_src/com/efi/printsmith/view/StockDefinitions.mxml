@@ -1583,7 +1583,7 @@ private function doRound(evt:FocusEvent):void{
 				<mx:CheckBox x="301" y="144" id="chkcharge4entiteorder" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ChargeCustomerforEnt')}" width="214"/>
 
 				<mx:ComboBox x="106.5" y="5" width="150.5" id="cboVendor" dataProvider="{stockVendor}" labelField="name" focusOut="doStockVendor()"/>
-				<mx:ComboBox x="106.5" y="33" id="stkType" width="128" dataProvider="{stockType}" labelField="name" focusOut="doStockType()" />
+				<mx:ComboBox x="106.5" y="33" id="stkType" width="150.5" dataProvider="{stockType}" labelField="name" focusOut="doStockType()" />
 				<mx:TextInput x="356.5" y="5" width="93" id="stockNumber" text="{stockDefinitions.stocknumber}" height="22"/>
 				<fc:AutoComplete x="106.5" y="60" width="132" 
 					  id="parentSize"
