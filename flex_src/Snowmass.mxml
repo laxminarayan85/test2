@@ -29,9 +29,9 @@
  	<mx:TraceTarget fieldSeparator="->" level="6"  includeCategory="true" includeLevel="true" includeTime="true" />
  	
     
-	<mx:MenuBar id="menubar" width="100%" height="5%" dataProvider="{_menuItems}" itemClick="onMenuClick(event);"/>
+	<mx:MenuBar id="menubar" width="100%" height="39" dataProvider="{_menuItems}" itemClick="onMenuClick(event);"/>
    
-	<mx:HBox x="0" y="32" width="100%" height="100%">
+	<mx:HBox x="0" y="47" width="100%" height="100%">
     <mx:Canvas width="2" height="100%">
     </mx:Canvas>
 
