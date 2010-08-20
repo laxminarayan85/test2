@@ -1,12 +1,14 @@
 package com.efi.printsmith.security
 {
 	import com.adobe.cairngorm.business.ServiceLocator;
+	import com.efi.printsmith.data.PSMenuItem;
 	import com.efi.printsmith.data.SecuritySetup;
 	import com.efi.printsmith.data.Users;
 	
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.Application;
 	import mx.rpc.Responder;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
@@ -15,6 +17,9 @@ package com.efi.printsmith.security
 	{
 		private var setupComplete:Boolean = false;
 		private var securityDictionary:Dictionary;
+		
+		private var menuItems:ArrayCollection = new ArrayCollection();
+		
 		
 		public function PSSecurity(user:Users)
 		{
@@ -33,13 +38,50 @@ package com.efi.printsmith.security
 			
 			for (i = 0; i<securitySetupList.length; i++) {
 				var securitySetup:SecuritySetup = securitySetupList.getItemAt(i) as SecuritySetup;
-				
+					
 				securityDictionary[securitySetup.commandId] = securitySetup.enable;
+				
+				addToMenuItems(securitySetup);
 			}
 			
+			Application.application.menuItems = menuItems;
 			setupComplete = true;
 		}
-
+		
+		//MS: checks only first level, i.e. only 2 level menu supported
+		private function findParentInMenuList(ss:SecuritySetup):PSMenuItem	{
+			for (var i:int=0; i < menuItems.length; i++)	{
+				var p:PSMenuItem = menuItems.getItemAt(i) as PSMenuItem;
+				if (p.label == ss.menu)	{
+					return p;
+				}
+			}
+			return null;
+		}
+		private function addToMenuItems(ss:SecuritySetup):void	{
+			
+			var menuItem:PSMenuItem = findParentInMenuList(ss);
+			var child:PSMenuItem = new PSMenuItem(ss.commandName, null);
+			child.enabled = ss.enable;
+			if (ss.commandName.indexOf("rStandardMenuText.1") > -1)	
+				child.type = "separator";
+			child.ss = ss;
+				
+			if (menuItem == null)	{
+				var ac:ArrayCollection = new ArrayCollection();
+				ac.addItem(child);
+				menuItem = new PSMenuItem(ss.menu, ac);
+				menuItem.enabled = true;
+				menuItem.ss = null;
+				menuItems.addItem(menuItem);
+			}
+			else	{
+				menuItem.children.addItem(child);					
+			}
+			
+			
+		}
+		
 		public function handleFault(evt:FaultEvent):void {
 			/* TODO - report error back to user */
 		}
@@ -51,6 +93,8 @@ package com.efi.printsmith.security
 				return false;
 			}
 		}
+		
+		
 		
 	}
 }

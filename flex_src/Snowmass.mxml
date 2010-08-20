@@ -26,12 +26,17 @@
 	<!--<mx:Style source="styles/darkroom.css"/>-->
 	
     <!--mx:TraceTarget/-->
- 	<mx:TraceTarget fieldSeparator="->" level="6" includeCategory="true" includeLevel="true" includeTime="true" />
-    <mx:HBox x="0" y="32" width="100%" height="100%">
+ 	<mx:TraceTarget fieldSeparator="->" level="6"  includeCategory="true" includeLevel="true" includeTime="true" />
+ 	
+    
+	<mx:MenuBar id="menubar" width="100%" height="5%" dataProvider="{_menuItems}" itemClick="onMenuClick(event);"/>
+   
+	<mx:HBox x="0" y="32" width="100%" height="100%">
     <mx:Canvas width="2" height="100%">
     </mx:Canvas>
 
     <mx:VBox x="0" y="0" width="100%" height="100%" verticalGap="0" id="mainContainer" visible="true">
+    	
 		<mx:Canvas height="2" width="100%">
 		</mx:Canvas>	
 		<flexlib:SuperTabNavigator id="mainNavigator" width="100%" height="100%" stopScrollingEvent="{MouseEvent.MOUSE_UP}" startScrollingEvent="{MouseEvent.MOUSE_DOWN}" closePolicy="{SuperTab.CLOSE_ROLLOVER}"   >
@@ -84,6 +89,9 @@
 
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.data.SecuritySetup;
+		import mx.events.MenuEvent;
+		import com.efi.printsmith.data.PSMenuItem;
 		import mx.collections.ArrayCollection;
 		import mx.managers.IFocusManagerComponent;
 		import mx.managers.FocusManager;
@@ -133,8 +141,6 @@
 		import flexlib.events.TabReorderEvent;
 		import flexlib.controls.tabBarClasses.SuperTab;
 		import com.efi.printsmith.components.MultiLineLabelButton;
-		import mx.logging.ILogger;
-		import mx.logging.Log;
 		
 		public var timer : Timer;
 		public var nf:NumberFormatter;
@@ -154,6 +160,8 @@
 		private var gCaptureCardData:Boolean = false;
 		private var gComponent:IFocusManagerComponent = null;
 		private var gTimer:Timer = null;
+
+		[Bindable] private var _menuItems:ArrayCollection;
 		
 		public var security:com.efi.printsmith.security.PSSecurity;
 		
@@ -163,7 +171,8 @@
         		
 		[Bindable]
 		public var currentUser:Users;
-
+		
+		
         private static var thisInstance:Snowmass = null;  
 		
 		[Bindable]
@@ -194,12 +203,119 @@
 		private function onLogout():void {
 			
 		}
-
+		
+		private function onMenuClick(event:MenuEvent):void	{
+			var item:PSMenuItem = event.item as PSMenuItem;
+			var ss:SecuritySetup = item.ss;
+			
+			if ((ss.menu == "rStandardMenuText.Invoice")
+				&& (ss.commandName.indexOf("rStandardMenuText.CreateInvoice") > -1 ))	{
+					doCreateInvoice();					
+	 			}
+			if ((ss.menu == "rStandardMenuText.Invoice")
+				&& (ss.commandName.indexOf("rStandardMenuText.CreateEstimate") > -1 ))	{
+					doCreateEstimate();					
+				}		
+			if ((ss.menu == "rStandardMenuText.Reports")
+				&& (ss.commandName.indexOf("rStandardMenuText.AccountHistory") > -1 ))	{
+					doAccountHistory();					
+				}	
+			if ((ss.menu == "rStandardMenuText.AR")
+				&& (ss.commandName.indexOf("rStandardMenuText.Accounts") > -1 ))	{
+					doAccounts();					
+				}				
+			if ((ss.menu == "rStandardMenuText.POS")
+				&& (ss.commandName.indexOf("rStandardMenuText.OpenCashRegister") > -1 ))	{
+					doCashRegister();					
+				}				
+			if ((ss.menu == "rStandardMenuText.Pricing")
+				&& (ss.commandName.indexOf("rStandardMenuText.ChargeDefinitions") > -1 ))	{
+					doChargeDefinitions();					
+				}
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.ClockInOut") > -1 ))	{
+					doClockInOut()					
+				}	
+			if ((ss.menu == "rStandardMenuText.AR")
+				&& (ss.commandName.indexOf("rStandardMenuText.Contacts") > -1 ))	{
+					doContacts();		
+				}
+			if ((ss.menu == "rStandardMenuText.Pricing")
+				&& (ss.commandName.indexOf("rStandardMenuText.CopierDigitalDefinit") > -1 ))	{
+					doCopyDefinitions();					
+				}		
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.CreditCardManager") > -1 ))	{
+					doCreditCardManager();					
+				}	
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.DeliveryTicketManage") > -1 ))	{
+					doDeliveryTicket();
+				}
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.EmployeeManager") > -1 ))	{
+					doEmployee();					
+				}	
+			if ((ss.menu == "rStandardMenuText.Reports")
+				&& (ss.commandName.indexOf("rStandardMenuText.EstimateHistory") > -1 ))	{
+					doEstimateHistory();					
+				}	
+			if ((ss.menu == "rStandardMenuText.AR")
+				&& (ss.commandName.indexOf("rStandardMenuText.PostPayments") > -1 ))	{
+					doPayments();					
+				}	
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("genericPrefCmd.PendingList") > -1 ))	{
+					doPendingList();					
+				}	
+			if ((ss.menu == "rStandardMenuText.Pricing")
+				&& (ss.commandName.indexOf("rStandardMenuText.PressDefinitions") > -1 ))	{
+					doPressDefinitions();					
+				}	
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("genericPrefCmd.PricingMethod") > -1 ))	{
+					doPricing();					
+				}	
+			if ((ss.menu == "rStandardMenuText.POS")
+				&& (ss.commandName.indexOf("posPendCmd.Schedule") > -1 ))	{
+					doSchedule();					
+				}	
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.SecuritySetup") > -1 ))	{
+					doSecurity();					
+				}	
+			if ((ss.menu == "rStandardMenuText.Pricing")
+				&& (ss.commandName.indexOf("rStandardMenuText.StockDefinitions") > -1 ))	{
+					doStockDefinitions();					
+				}	
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.Preferences") > -1 ))	{
+					doSystemPreferences();					
+				}	
+			if ((ss.menu == "rStandardMenuText.Invoice")
+				&& (ss.commandName.indexOf("rStandardMenuText.TrackerStatus") > -1 ))	{
+					doTracker();					
+				}
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.UserDefinitions") > -1 ))	{
+					doUsers();					
+				}	
+			
+		}
 		public function handleUIEvent(evt:ResultEvent):void {
 			var child:Panel = evt.result as Panel;
 			addUniqueTab(child);
 		}		
-
+		
+		private function getLocalizedMenuLabel(val:String):String	{
+			var retVal:String = "";
+			if (val.indexOf('\t') > -1)	{
+				var i:int = val.indexOf('\t');
+				val = val.substr(i+1);
+				retVal = '\t';
+			}
+			return retVal + resourceManager.getString(RESOURCE_BUNDLE, val);
+		}
 		
 		private function doAccounts():void {
 			var event:EditCustomerEvent = new EditCustomerEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
@@ -367,12 +483,27 @@
 			moveLogo.play();
 			
 			this.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
-
+			
             bm = BrowserManager.getInstance();
             bm.init("", "Welcome to Snowmass");
+            
+            
 
 		}
-	
+		
+		public function set menuItems(val:ArrayCollection):void	{ 
+			
+			for (var i:int=0; i < val.length; i++)	{
+				var parent:PSMenuItem = val.getItemAt(i) as PSMenuItem;
+				parent.label = getLocalizedMenuLabel(parent.label);
+				for (var j:int=0; j < parent.children.length; j++)	{
+					var child:PSMenuItem = parent.children.getItemAt(j) as PSMenuItem;
+					child.label = getLocalizedMenuLabel(child.label);						
+				}				
+			}	
+			_menuItems = val;
+		}
+		
 		private function keyHandler(event:KeyboardEvent):void {
 
 		var bAltPressed:Boolean = event.altKey;
@@ -594,6 +725,9 @@
 			if (res != null) {
 				currentUser = res;
 				security = new PSSecurity(currentUser);
+				
+				
+				
  			} else {
 				Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
 				showLogin();
@@ -779,7 +913,7 @@
         public function getApplicationRootURL():String {
         	return this.url.substr(0, this.url.lastIndexOf("/"));
         }
-        
+         
         public function getLocalizedEnum(enumerationName:String, enumerationValue:String):String {
         	return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, enumerationName + '_' + enumerationValue);
         }
@@ -789,7 +923,7 @@
 	<control:MainController id="controller" />
 	<mx:LinkButton label="Logout" id="logout_button" enabled="{(currentUser==null)?false:true}" click="{doLogout()}" right="10" top="5"/>
 	<mx:LinkButton label="Debug" id="debug_button" show="{showDebugButton()}" click="{doDebug()}" right="77" top="5"/>
-	<mx:ComboBox x="475" y="4" id="languageComboBox" dataProvider="{locales}"				 
+	<mx:ComboBox top="4" right="150" id="languageComboBox" dataProvider="{locales}"				 
 					labelFunction="languageComboBoxLabelFunction"
 					change="languageComboBox_changeHandler(event)"/>
 </mx:Application>
