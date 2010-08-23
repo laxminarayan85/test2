@@ -1260,8 +1260,8 @@
 	 stockDefinitions.thickness = parseFloat(thickNess.text);
 	 stockDefinitions.mweight = parseInt(mWeight.text);
 	 stockDefinitions.rollWeight = parseInt(rollweight.text);
-	 stockDefinitions.sheetspercarton = parseInt(sheetsPerCarton.text);
-	 stockDefinitions.lotcount = parseInt(minOrder.text);
+	 stockDefinitions.sheetspercarton = parseInt(sheetsPerCarton.text.replace(",",""));
+	 stockDefinitions.lotcount = parseInt(minOrder.text.replace(",",""));
 	 stockDefinitions.comments = Comments.text;
 
 	 stockDefinitions.costunits = parseInt(Costunits.text);
@@ -1348,7 +1348,7 @@
 	 stockDefinitions.onOrder = parseInt(OnOrder.text);
 	 stockDefinitions.targetLevel = parseInt(TargetLevel.text);
 	 stockDefinitions.reOrderPoint = parseInt(ReOrderPoint.text);
-	 stockDefinitions.minOrderQty = parseInt(MinOrderQty.text);
+	 stockDefinitions.minOrderQty = parseInt(MinOrderQty.text.replace(",",""));
 	 stockDefinitions.expires = Expires.selectedDate;
 	 stockDefinitions.binLocation = BinLocation.text;
 	 if (stockDefinitions.account != null)

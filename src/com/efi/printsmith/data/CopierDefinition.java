@@ -265,6 +265,10 @@ public class CopierDefinition extends ModelBase {
 		this.color= color;
 		this.largeFormat = largeformat;
 	} 	
+	public CopierDefinition(long id, String Name) {
+		this.id = id;
+		this.name = Name;
+	}
 	
 	/**
 	 * @generated

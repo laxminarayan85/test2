@@ -218,6 +218,10 @@ public class PressDefinition extends ModelBase {
 		this.machineName = machineName;
 		
 	}
+	public PressDefinition(long id, String Name) {
+		this.id = id;
+		this.name = Name;
+	}
 	
 	/**
 	 * @generated
