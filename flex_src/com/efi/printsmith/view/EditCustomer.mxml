@@ -138,13 +138,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private var EstInvCharges:ArrayCollection=new ArrayCollection();
 	[Bindable]
 	private var JobCharges:ArrayCollection=new ArrayCollection();
-
+	[Bindable]
+	private var first:Boolean = false;
     private var focussedFormControl:DisplayObject;
     
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
-		this.doGet();
+		first = true;
 		setSettings();
 		dataService.getAccountPicker("Account");
 
@@ -263,10 +264,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	
 	private function doGet():void{
-	    var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    var   accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);
 	    accountPickerWindow.formIsEmpty = true;
 	    accountPickerWindow.prospect_boolean = true;
+	    accountPickerWindow.setAccounts(accounts);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);	   	    
@@ -275,6 +277,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		 var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);
 	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.setAccounts(accounts);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerMasterCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerMasterSelect);
 	    	   	    
@@ -601,6 +604,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 //// load
 	private function handleLoadResult(ev:ResultEvent):void {
 		accounts = ev.result as ArrayCollection;
+		if (first)
+			this.doGet();
+			first = false;
 	}
 
 	private function handleLoadSalesReps(ev:ResultEvent):void {

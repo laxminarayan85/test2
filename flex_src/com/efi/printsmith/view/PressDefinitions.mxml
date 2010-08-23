@@ -154,7 +154,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
 		preferencesStockDefinitions = event.result as ArrayCollection;
-		loadStockDefinitions();
+		
 	}
 	
 	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
@@ -212,16 +212,18 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	
 	private function handleLoadStockResult(ev:ResultEvent):void {
 	     StockDefinitionArray = ev.result as ArrayCollection;
-	}
-	
-	private function doStockPriceList():void {
-		var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
+	     var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 		stockPickerWindow.setStyle("borderAlpha", 0.9);
 	    stockPickerWindow.formIsEmpty = true;
 	   	stockPickerWindow.setStockArray(StockDefinitionArray);
 	   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+	
+	}
+	
+	private function doStockPriceList():void {
+		loadStockDefinitions();
 	}
 	
 	private function handleStockPickerSelect(ev:StockPickerSelectEvent):void {

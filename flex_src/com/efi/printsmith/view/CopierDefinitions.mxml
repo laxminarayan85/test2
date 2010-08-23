@@ -150,6 +150,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		dataServiceProductionLocation.getAll("ProductionLocations");
 		dataServiceProductionCopiers.getAll("ProductionCopiers");
 		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+	 	throbber.play();
 		doNew();
 		stockDefinitions = new StockDefinition;
 		
@@ -160,7 +161,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
 		preferencesStockDefinitions = event.result as ArrayCollection;
-		loadStockDefinitions();
+		throbber.stop();
+		throbber.visible = false;
+		
 	}
 	
 	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
@@ -594,16 +597,18 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	
 	private function handleLoadStockResult(ev:ResultEvent):void {
 	     StockDefinitionArray = ev.result as ArrayCollection;
-	}
-	
-	private function doStockPriceList():void {
-		var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
+	     var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 		stockPickerWindow.setStyle("borderAlpha", 0.9);
 	    stockPickerWindow.formIsEmpty = true;
 	   	stockPickerWindow.setStockArray(StockDefinitionArray);
 	   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+	}
+	
+	private function doStockPriceList():void {
+		loadStockDefinitions();
+	
 	}
 	
 	private function handleStockPickerSelect(ev:StockPickerSelectEvent):void {
@@ -1023,6 +1028,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 </mx:Script>	
 	<mx:RadioButtonGroup id="PaperStyle"/>
 	<mx:Canvas x="0" y="0" width="824" height="100%" horizontalScrollPolicy="off">
+	<components:SmallThrobber id="throbber" height="20" width="20" x="103.5" y="95"/>
 		<mx:Label x="73" y="127" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Name')}" width="45" textAlign="right"/>
 		<mx:Label x="10" y="149.5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MachineName')}" textAlign="right" width="108"/>
 	 	<mx:DataGrid y="0" id="dataGrid" verticalScrollPolicy="on"  horizontalScrollPolicy="on" dataProvider="{copierDefinitionArray}" height="119" itemClick="doCopierGridClick()" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" verticalGridLines="false" left="0" right="21">

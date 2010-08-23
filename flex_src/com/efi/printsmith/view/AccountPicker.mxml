@@ -60,7 +60,12 @@
 	// Holds a reference to the currently focussed control on the form.
  	private var focusedFormControl:DisplayObject;                           
            
-	                    
+	public function setAccounts( tempAccount:ArrayCollection):void{
+	//	accountTypeRadio.selectedValue = "Customer"; 
+		accounts = tempAccount;
+	//    accounts.filterFunction = accountFilter;
+		
+	}                    
 	private function handleLoadResult(event:ResultEvent):void {
 		accounts = event.result as ArrayCollection;
 		accounts.filterFunction = accountFilter;
@@ -95,12 +100,13 @@
 		accounts.filterFunction = accountFilter;
 	    PopUpManager.centerPopUp(this);
 //	    resetFocus();                                     
-		dataService.getAccountPicker("Account");
+//		dataService.getAccountPicker("Account");
 		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
 		if (editPage.className != "EditCustomer") {
 			new_button.visible = false;
 			
 		}
+		refreshData();
 	}
 	
 	private function accountFilter(item:Object):Boolean {
