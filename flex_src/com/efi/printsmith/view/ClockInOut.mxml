@@ -6,6 +6,10 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceTrackerConsole" destination="dataService" showBusyCursor="true">
+		<mx:method name="getActiveTrackerConsoleJobsBasedOnEmployee" fault="handleFault(event)" result="handleLoadTCJobsResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService" showBusyCursor="true">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTimeCardResult(event)"/>
@@ -24,6 +28,7 @@
 	
 <mx:Script>  	
 <![CDATA[
+	import com.efi.printsmith.data.TrackerConsoleJobs;
 	import com.efi.printsmith.model.AutoClockOutDetector;
 	import mx.utils.StringUtil;
 	import com.efi.printsmith.data.Period;
@@ -67,6 +72,8 @@
 	private var OnOffBreak:String="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.OnBreak')}";
 	
 	[Bindable] public var timeCardStatus:String = "";
+	
+	[Bindable] private var updatedEmployee:Employee;
 		
 	public function init():void {
 		consumer.subscribe();
@@ -110,9 +117,52 @@
 	private function handleLoadResult(ev:ResultEvent):void {
 		employeesArray = ev.result as ArrayCollection;
 	}
+	
 	private function handleSaveResult(ev:ResultEvent):void {
+		updatedEmployee = ev.result as Employee;
+		if(updatedEmployee!=null){
+			dataServiceTrackerConsole.getActiveTrackerConsoleJobsBasedOnEmployee(updatedEmployee);
+		}
 		dataService.getActiveEmployees();
 	}
+	
+	private function handleLoadTCJobsResult(event:ResultEvent):void {
+		var trackerConsoleJobsList:ArrayCollection = event.result as ArrayCollection;
+		var updatedTrackerConsoleJobsList:ArrayCollection = new ArrayCollection();
+		if(updatedEmployee!=null){
+			var nowDate:Date = new Date();
+			for each(var trackerConsoleJobs:TrackerConsoleJobs in trackerConsoleJobsList) {
+				if(updatedEmployee.clockIn) {
+					if(!trackerConsoleJobs.paused){
+						if(trackerConsoleJobs.currentPass==1){
+							trackerConsoleJobs.firstTrackerDate = nowDate;
+							trackerConsoleJobs.paused = false;
+						} else if(trackerConsoleJobs.currentPass==2){
+							trackerConsoleJobs.secondTrackerDate = nowDate;
+							trackerConsoleJobs.paused = false;
+						}
+						updatedTrackerConsoleJobsList.addItem(trackerConsoleJobs);
+					}
+				} else if(updatedEmployee.clockBreak || updatedEmployee.clockOut) {
+					if(!trackerConsoleJobs.paused){
+						if(trackerConsoleJobs.currentPass==1){
+							trackerConsoleJobs.firstTrackerTime = nowDate.time - trackerConsoleJobs.firstTrackerDate.time+(isNaN(trackerConsoleJobs.firstTrackerTime)?0:trackerConsoleJobs.firstTrackerTime);
+							trackerConsoleJobs.firstTrackerDate = nowDate;
+						}
+						if(trackerConsoleJobs.currentPass==2){
+							trackerConsoleJobs.secondTrackerTime = nowDate.time - trackerConsoleJobs.secondTrackerDate.time+(isNaN(trackerConsoleJobs.secondTrackerTime)?0:trackerConsoleJobs.secondTrackerTime);
+							trackerConsoleJobs.secondTrackerDate = nowDate;
+						}
+						updatedTrackerConsoleJobsList.addItem(trackerConsoleJobs);
+					}
+				}
+			}
+			if(updatedTrackerConsoleJobsList.length>0){
+				dataServiceTrackerConsole.addUpdateDeleteList(updatedTrackerConsoleJobsList,null);
+			}
+		}
+	} 
+	
 	private function handleDeleteResult(ev:ResultEvent):void {
 		dataService.getActiveEmployees();
 	}  

@@ -74,13 +74,19 @@ package com.efi.printsmith.data
 		
 		public var firstSetUpCompleted:Boolean = false;
 		
+		public var firstRunCompleted:Boolean = false;
+		
 		public var firstWashCompleted:Boolean = false;
 		
 		public var secondSetUpCompleted:Boolean = false;
 		
+		public var secondRunCompleted:Boolean = false;
+		
 		public var secondWashCompleted:Boolean = false;
 		
 		public var completed:Boolean = false;
+		
+		public var completedDate:Date;
 
 	}
 }

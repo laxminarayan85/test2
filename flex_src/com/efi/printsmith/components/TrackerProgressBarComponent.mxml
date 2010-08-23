@@ -1,75 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
 
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.Image;
+			import mx.skins.halo.ProgressBarSkin;
+			import mx.skins.halo.ProgressTrackSkin;
+			import mx.controls.Alert;
+			import mx.core.UIComponent;
 			import com.efi.printsmith.data.TrackerConsoleJobs;
 		
 			private var _trackerConsoleJobs:TrackerConsoleJobs;
 			
 			[Bindable] public var timer:Timer = new Timer(1000);
 			
+			[Bindable] public var estimatedTime:String = "00:00";
+			
+			[Bindable] public var actualTime:String = "00:00";
+			
+			[Bindable] public var noOfPasses:int = 0;
+			
+			[Bindable] public var currentPass:int = 0;
+			
+			[Embed(source="../../../../assets/arrow-down.png")]
+			[Bindable] public var arrowDownImg:Class;
+			
+			[Embed(source="../../../../assets/arrow-up.png")]
+			[Bindable] public var arrowUpImg:Class;
+			
+			private var estimateSetUpImage:Image;
+			
+			private var estimateRunImage:Image;
+			
+			private var actualSetUpImage:Image;
+			
+			private var actualRunImage:Image;
+
+			
 			public function get trackerConsoleJobs():TrackerConsoleJobs {
 				return _trackerConsoleJobs;
 			}
 			
 			public function set trackerConsoleJobs(displayValue:TrackerConsoleJobs):void {
+				var pgBarLabelWidth:Number = pgBar.getStyle("labelWidth") as Number;
+				var contentComponent:UIComponent = pgBar.getChildAt(0) as UIComponent;
+				var barComponent:UIComponent = contentComponent.getChildAt(1) as UIComponent;
 				if(timer!=null){
 					if(timer.running) {
 						timer.reset();
 						timer.stop();
-						if(displayValue!=null){
+						/* if(displayValue!=null){
 							pgBar.setProgress(0,(displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime));
-						}
+						} */
 					}
+				}
+				if(barComponent!=null){
+					if(estimateSetUpImage!=null){
+						barComponent.removeChild(estimateSetUpImage);
+						estimateSetUpImage = null;
+					}
+					if(estimateRunImage!=null){
+						barComponent.removeChild(estimateRunImage);
+						estimateRunImage = null;
+					}
+					if(actualSetUpImage!=null){
+						barComponent.removeChild(actualSetUpImage);
+						actualSetUpImage = null;
+					}
+					if(actualRunImage!=null){
+						barComponent.removeChild(actualRunImage);
+						actualRunImage = null;
+					}
+				}
+				if(displayValue==null){
+					pgBar.setProgress(0,100);
+					noOfPasses = 0;
+					currentPass = 0;
+					estimatedTime = "00:00";
+					actualTime = "00:00";
 				}
 				if(displayValue!=null){
 					var initialValue:Number = 0;
-					if(displayValue.firstTrackerDate==null){
-						initialValue = 0;
+					var totalValue:Number = 0;
+					if(displayValue.noOfPasses==2 && displayValue.currentPass==2){
+						if(displayValue.secondTrackerDate==null){
+							initialValue = 0;
+						} else {
+							if(!displayValue.paused) {
+								initialValue = displayValue.secondTrackerDate.time;
+								if(!(isNaN(displayValue.secondTrackerTime)) && displayValue.secondTrackerTime!=0){
+									initialValue = initialValue - displayValue.secondTrackerTime;
+								}
+								if(!(isNaN(displayValue.secondSetUpTime)) && displayValue.secondSetUpTime!=0){
+									initialValue = initialValue - displayValue.secondSetUpTime; 
+								}
+								if(!(isNaN(displayValue.secondRunTime)) && displayValue.secondRunTime!=0){
+									initialValue = initialValue - displayValue.secondRunTime; 
+								}
+								initialValue = new Date().time - initialValue;
+							} else {
+								if(!(isNaN(displayValue.secondTrackerTime)) && displayValue.secondTrackerTime!=0){
+									initialValue = initialValue + displayValue.secondTrackerTime;
+								}
+								if(!(isNaN(displayValue.secondSetUpTime)) && displayValue.secondSetUpTime!=0){
+									initialValue = initialValue + displayValue.secondSetUpTime; 
+								}
+								if(!(isNaN(displayValue.secondRunTime)) && displayValue.secondRunTime!=0){
+									initialValue = initialValue + displayValue.secondRunTime; 
+								}
+							}
+						}
 					} else {
-						initialValue = displayValue.firstTrackerDate.time;
-						if(!(isNaN(displayValue.firstTrackerTime)) && displayValue.firstTrackerTime!=0){
-							initialValue = initialValue - displayValue.firstTrackerTime;
+						if(displayValue.firstTrackerDate==null){
+							initialValue = 0;
+						} else {
+							if(!displayValue.paused) {
+								initialValue = displayValue.firstTrackerDate.time;
+								if(!(isNaN(displayValue.firstTrackerTime)) && displayValue.firstTrackerTime!=0){
+									initialValue = initialValue - displayValue.firstTrackerTime;
+								}
+								if(!(isNaN(displayValue.firstSetUpTime)) && displayValue.firstSetUpTime!=0){
+									initialValue = initialValue - displayValue.firstSetUpTime; 
+								}
+								if(!(isNaN(displayValue.firstRunTime)) && displayValue.firstRunTime!=0){
+									initialValue = initialValue - displayValue.firstRunTime; 
+								}
+								initialValue = new Date().time - initialValue;
+							} else {
+								if(!(isNaN(displayValue.firstTrackerTime)) && displayValue.firstTrackerTime!=0){
+									initialValue = initialValue + displayValue.firstTrackerTime;
+								}
+								if(!(isNaN(displayValue.firstSetUpTime)) && displayValue.firstSetUpTime!=0){
+									initialValue = initialValue + displayValue.firstSetUpTime; 
+								}
+								if(!(isNaN(displayValue.firstRunTime)) && displayValue.firstRunTime!=0){
+									initialValue = initialValue + displayValue.firstRunTime; 
+								}
+							}
 						}
-						if(!(isNaN(displayValue.firstSetUpTime)) && displayValue.firstSetUpTime!=0){
-							initialValue = initialValue - displayValue.firstSetUpTime; 
-						}
-						if(!(isNaN(displayValue.firstRunTime)) && displayValue.firstRunTime!=0){
-							initialValue = initialValue - displayValue.firstRunTime; 
-						}
-						initialValue = new Date().time - initialValue;
+					}
+					if(displayValue.noOfPasses==2){
+						totalValue = (displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime)/2;
+					} else {
+						totalValue = (displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime);
 					}
 					timer.addEventListener(TimerEvent.TIMER,function(event:TimerEvent):void {
-						pgBar.setProgress(initialValue+(timer.currentCount*1000),(displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime));
+						actualTime = convertMilliSecondsToString(initialValue+(timer.currentCount*1000),true);
+						pgBar.setProgress(initialValue+(timer.currentCount*1000),totalValue);
 					},false,0,true);
 					if(displayValue.paused){
-						pgBar.setProgress(initialValue,(displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime));
+						actualTime = convertMilliSecondsToString(initialValue,true);
+						pgBar.setProgress(initialValue,totalValue);
 					} else {
 						timer.start();
 					}
+					var pgBarLabelWidth:Number = pgBar.getStyle("labelWidth") as Number;
+					var pgBarTrackHeight:Number = pgBar.getStyle("trackHeight") as Number;
+					if(displayValue.actualSetUpTime>0){
+						if(barComponent!=null){
+							estimateSetUpImage = new Image();
+							estimateSetUpImage.source = arrowDownImg;
+							estimateSetUpImage.width = 30;
+							estimateSetUpImage.height = 30;
+							if(displayValue.noOfPasses==2){
+								estimateSetUpImage.x = (((displayValue.actualSetUpTime/2)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
+							} else {
+								estimateSetUpImage.x = ((displayValue.actualSetUpTime/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
+							}
+							estimateSetUpImage.y = -6;
+							barComponent.addChild(estimateSetUpImage);
+						}
+					}
+					if(displayValue.actualRunTime>0){
+						if(barComponent!=null){
+							estimateRunImage = new Image();
+							estimateRunImage.source = arrowDownImg;
+							estimateRunImage.width = 30;
+							estimateRunImage.height = 30;
+							if(displayValue.noOfPasses==2){
+								estimateRunImage.x = ((((displayValue.actualSetUpTime+displayValue.actualRunTime)/2)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
+							} else {
+								estimateRunImage.x = (((displayValue.actualSetUpTime+displayValue.actualRunTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
+							}
+							estimateRunImage.y = -6;
+							barComponent.addChild(estimateRunImage);
+						}
+					}
+					if(displayValue.currentPass==1){
+						if(displayValue.firstSetUpCompleted){
+							if(barComponent!=null){
+								actualSetUpImage = new Image();
+								actualSetUpImage.source = arrowUpImg;
+								actualSetUpImage.width = 30;
+								actualSetUpImage.height = 30;
+								actualSetUpImage.x = ((displayValue.firstSetUpTime/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualSetUpImage.width/2);
+								actualSetUpImage.y = pgBarTrackHeight/2;
+								barComponent.addChild(actualSetUpImage);
+							}
+						}
+						if(displayValue.firstRunCompleted){
+							if(barComponent!=null){
+								actualRunImage = new Image();
+								actualRunImage.source = arrowUpImg;
+								actualRunImage.width = 30;
+								actualRunImage.height = 30;
+								actualRunImage.x = (((displayValue.firstRunTime+displayValue.firstSetUpTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualSetUpImage.width/2);
+								actualRunImage.y = pgBarTrackHeight/2;
+								barComponent.addChild(actualRunImage);
+							}
+						}
+					} else if(displayValue.currentPass==2){
+						if(displayValue.secondSetUpCompleted){
+							if(barComponent!=null){
+								actualSetUpImage = new Image();
+								actualSetUpImage.source = arrowUpImg;
+								actualSetUpImage.width = 30;
+								actualSetUpImage.height = 30;
+								actualSetUpImage.x = ((displayValue.secondSetUpTime/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
+								actualSetUpImage.y = pgBarTrackHeight/2;
+								barComponent.addChild(actualSetUpImage);
+							}
+						}
+						if(displayValue.secondRunCompleted){
+							if(barComponent!=null){
+								actualRunImage = new Image();
+								actualRunImage.source = arrowUpImg;
+								actualRunImage.width = 30;
+								actualRunImage.height = 30;
+								actualRunImage.x = (((displayValue.secondSetUpTime+displayValue.secondRunTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
+								actualRunImage.y = pgBarTrackHeight/2;
+								barComponent.addChild(actualRunImage);
+							}
+						}
+					}
+					noOfPasses = displayValue.noOfPasses;
+					currentPass = displayValue.currentPass;
+					estimatedTime = convertMilliSecondsToString(totalValue,true);
+					actualTime = convertMilliSecondsToString(initialValue,true);
+					
 				}
-				_trackerConsoleJobs = displayValue;
+				_trackerConsoleJobs = displayValue;				
 			}
 			
-			private function stopJob():void {
+			private function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
+				var txtString:String = "";
+				if(showSeconds){
+					if(milliSeconds<60000){
+						txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+					}
+				}
+				if(milliSeconds>=60000 && milliSeconds<60000*60){
+			    	txtString = "00:";
+			    	txtString = txtString + numFormatter.format(milliSeconds/60000);
+			    	if(showSeconds){
+			    		txtString = txtString + " " + numFormatter.format((milliSeconds%60000)/(1000))+"S";
+			    	}
+			    }
+			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
+			    	txtString = numFormatter.format(milliSeconds/(60000*60))+":";
+			    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString + " " + numFormatter.format(milliSeconds%60000/1000)+"S";
+			    	}
+			    }
+			    if(milliSeconds>=60000*60*24){
+			    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+":";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString+" "+numFormatter.format(milliSeconds%60000/1000)+"S";
+			    	}
+			    }
+			    return txtString;
+			}
+			
+			public function stopJob():void {
 				if(timer!=null){
 					if(timer.running) {
 						timer.reset();
 						timer.stop();
-						pgBar.setProgress(0,100);
 					}
 				}
 			}
 		
-			private function setPGLabel(currentTime:String):String{
-				return " ( "+currentTime+" )";
+			private function setPGLabel(estimatedTime:String,actualTime:String,noOfPasses:int,currentPass:int):String{
+				if(noOfPasses==2){
+					return "Pass ("+currentPass+" of "+noOfPasses+") "+estimatedTime+" / "+actualTime;
+				}
+				return estimatedTime+" / "+actualTime;
 			}
 			
 		]]>
 	</mx:Script>
-
-	<mx:ProgressBar id="pgBar" width="100%" trackHeight="35" barSkin="mx.skins.halo.ProgressIndeterminateSkin" 
-			labelPlacement="right" mode="manual"/>
 	
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
+
+	<mx:ProgressBar id="pgBar" width="100%" labelWidth="250" trackHeight="50" barSkin="mx.skins.halo.ProgressIndeterminateSkin" 
+			labelPlacement="right" label="{setPGLabel(estimatedTime, actualTime, noOfPasses, currentPass)}" mode="manual"/>
 </mx:Canvas>

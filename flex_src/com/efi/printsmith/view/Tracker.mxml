@@ -86,6 +86,14 @@
 		[Bindable] private var trackerConsoleJobsList:ArrayCollection = new ArrayCollection();
 		
 		[Bindable] private var selectedTrackerConsoleJob:TrackerConsoleJobs;
+		
+		[Bindable] private var trackerStatus:String="";
+		
+		[Bindable] private var refreshList:Boolean = false;
+		
+		[Bindable] private var selectedDGIndex:int = -1; 
+		
+		[Bindable] private var closeEventTriggered:Boolean = false;
 		 
 		 
 		public function init():void {
@@ -144,6 +152,10 @@
 					employee = null;
 				}
 			}
+			
+			trackerList = new ArrayCollection();
+			trackerConsoleJobsList = new ArrayCollection();
+			getEmployee();
 		}
 		private function handleLoadProductionLocationResult(event:ResultEvent):void {
 			var list:ArrayCollection = event.result as ArrayCollection;
@@ -219,7 +231,14 @@
 					dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
 				}
 			} else {
+				resetButtons();
 				employee = null;
+				selectedJob = null;
+				selectedCharge = null;
+				selectedDGIndex = -1;
+				selectedTrackerConsoleJob = null;
+				progressBarComponent.trackerConsoleJobs = null;
+				closeEventTriggered = false;
 			}
 		}
 		
@@ -227,28 +246,7 @@
 			if(event.currentTarget.selectedIndex>-1){
 				var trackerConsoleJobObject:TrackerConsoleJobs = event.currentTarget.selectedItem as TrackerConsoleJobs;
 				selectedTrackerConsoleJob = trackerConsoleJobObject;
-				if(trackerConsoleJobObject.firstSetUpCompleted) {
-					resetButtons();
-					washUpBtn.enabled = true;
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					pauseBtn.enabled = true;
-					defaultEnableButtons();
-				}
-				if(trackerConsoleJobObject.firstWashCompleted) {
-					resetButtons();
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					pauseBtn.enabled = true;
-					defaultEnableButtons();
-				}
-				if(trackerConsoleJobObject.paused){
-					resetButtons();
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					continueBtn.enabled = true;
-					defaultEnableButtons();
-				}
+				enableRequiredBtns();
 				registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 				progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobObject) as TrackerConsoleJobs;
 			}
@@ -257,18 +255,16 @@
 		private function openClockInOut():void {
 			var clockInOut:ClockInOut = PopUpManager.createPopUp(this,ClockInOut,true) as ClockInOut;
 			clockInOut.addEventListener(CloseEvent.CLOSE,function(event:Event):void{
+				closeEventTriggered = true;
 				dataService.getClockedInEmployee();
-				trackerList = new ArrayCollection();
-				getEmployee();
 			},false,0,true);
 		}
 		
 		private function openEditEmployee():void {
 			var editEmployee:EditEmployee = PopUpManager.createPopUp(this,EditEmployee,true) as EditEmployee;
 			editEmployee.addEventListener(CloseEvent.CLOSE,function(event:Event):void{
-				dataService.getClockedInEmployee();	
-				trackerList = new ArrayCollection();
-				getEmployee();
+				closeEventTriggered = true;
+				dataService.getClockedInEmployee();
 			},false,0,true);
 			if(employee!=null){
 				registerClassAlias("com.efi.printsmith.data.Employee",Employee);
@@ -282,6 +278,52 @@
 		
 		private function handleLoadTCJobsResult(event:ResultEvent):void {
 			trackerConsoleJobsList = event.result as ArrayCollection;
+			if(refreshList){
+				refreshList = false;
+				if(selectedDGIndex>-1){
+					if(trackerConsoleJobsList!=null && trackerConsoleJobsList.length>0){
+						if(trackerConsoleJobsList.length-1>=selectedDGIndex) {
+							employee_jobs_grid.selectedIndex = selectedDGIndex;
+							selectedTrackerConsoleJob = employee_jobs_grid.selectedItem as TrackerConsoleJobs;
+							registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+							progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+							enableRequiredBtns();
+						} else {
+							employee_jobs_grid.selectedIndex = trackerConsoleJobsList.length-1;
+							selectedTrackerConsoleJob = employee_jobs_grid.selectedItem as TrackerConsoleJobs;
+							registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+							progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+							enableRequiredBtns();
+						}
+					} else {
+						selectedTrackerConsoleJob = null;
+						progressBarComponent.trackerConsoleJobs = null;
+						enableRequiredBtns();
+					}
+				}
+			}
+			if(closeEventTriggered){
+				closeEventTriggered = false;
+				if(selectedTrackerConsoleJob!=null){
+					var counter:int=0;
+					var checkFlag:Boolean = false;
+					for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+						counter++;
+						if(trackerConsoleJobsObj.id == selectedTrackerConsoleJob.id){
+							employee_jobs_grid.selectedIndex = counter;
+							selectedTrackerConsoleJob = trackerConsoleJobsObj;
+							registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+							progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+							checkFlag = true;
+							break;
+						}
+					}
+					if(!checkFlag){
+						selectedTrackerConsoleJob = null;
+						progressBarComponent.trackerConsoleJobs = null;
+					}
+				}
+			}
 		}
 		
 		public function getInvoiceNumber(object:Object):String {
@@ -412,6 +454,78 @@
 		
 		private function startJob():void {
 			if((selectedJob!=null || selectedCharge!=null) && trackerConsole.productionFacilities!=null && trackerConsole.productionStations!=null){
+				for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList) {
+					if(trackerConsoleJobsObj.job!=null && selectedJob!=null){
+						if(trackerConsoleJobsObj.job.id == selectedJob.id){
+							Alert.show("This item has a activity started, would you like to reset the beginning timers?", "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+								if (event.detail==Alert.YES) {
+									trackerStatus = "start";
+									trackerConsoleJobsObj.firstTrackerDate = new Date();
+									trackerConsoleJobsObj.firstTrackerTime = 0;
+									trackerConsoleJobsObj.firstSetUpDate = null;
+									trackerConsoleJobsObj.firstSetUpTime = 0;
+									trackerConsoleJobsObj.firstRunDate = null;
+									trackerConsoleJobsObj.firstRunTime = 0;
+									trackerConsoleJobsObj.firstWashDate = null;
+									trackerConsoleJobsObj.firstWashTime = 0;
+									trackerConsoleJobsObj.firstSetUpCompleted = false;
+									trackerConsoleJobsObj.firstRunCompleted = false;
+									trackerConsoleJobsObj.firstWashCompleted = false;
+									trackerConsoleJobsObj.secondTrackerDate = null;
+									trackerConsoleJobsObj.secondTrackerTime = 0;
+									trackerConsoleJobsObj.secondSetUpDate = null;
+									trackerConsoleJobsObj.secondSetUpTime = 0;
+									trackerConsoleJobsObj.secondRunDate = null;
+									trackerConsoleJobsObj.secondRunTime = 0;
+									trackerConsoleJobsObj.secondWashDate = null;
+									trackerConsoleJobsObj.secondWashTime = 0;
+									trackerConsoleJobsObj.secondSetUpCompleted = false;
+									trackerConsoleJobsObj.secondRunCompleted = false;
+									trackerConsoleJobsObj.secondWashCompleted = false;
+									trackerConsoleJobsObj.currentPass = 1;
+									trackerConsoleJobsObj.paused = false;
+									updateDataServiceJob.addUpdate(trackerConsoleJobsObj);
+								}
+							});
+							return;
+						}
+					} else if(trackerConsoleJobsObj.charge!=null && selectedCharge!=null){
+						if(trackerConsoleJobsObj.charge.id == selectedCharge.id){
+							Alert.show("This item has a activity started, would you like to reset the beginning timers?", "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+								if (event.detail==Alert.YES) {
+									trackerStatus = "start";
+									trackerConsoleJobsObj.firstTrackerDate = new Date();
+									trackerConsoleJobsObj.firstTrackerTime = 0;
+									trackerConsoleJobsObj.firstSetUpDate = null;
+									trackerConsoleJobsObj.firstSetUpTime = 0;
+									trackerConsoleJobsObj.firstRunDate = null;
+									trackerConsoleJobsObj.firstRunTime = 0;
+									trackerConsoleJobsObj.firstWashDate = null;
+									trackerConsoleJobsObj.firstWashTime = 0;
+									trackerConsoleJobsObj.firstSetUpCompleted = false;
+									trackerConsoleJobsObj.firstRunCompleted = false;
+									trackerConsoleJobsObj.firstWashCompleted = false;
+									trackerConsoleJobsObj.secondTrackerDate = null;
+									trackerConsoleJobsObj.secondTrackerTime = 0;
+									trackerConsoleJobsObj.secondSetUpDate = null;
+									trackerConsoleJobsObj.secondSetUpTime = 0;
+									trackerConsoleJobsObj.secondRunDate = null;
+									trackerConsoleJobsObj.secondRunTime = 0;
+									trackerConsoleJobsObj.secondWashDate = null;
+									trackerConsoleJobsObj.secondWashTime = 0;
+									trackerConsoleJobsObj.secondSetUpCompleted = false;
+									trackerConsoleJobsObj.secondRunCompleted = false;
+									trackerConsoleJobsObj.secondWashCompleted = false;
+									trackerConsoleJobsObj.currentPass = 1;
+									trackerConsoleJobsObj.paused = false;
+									updateDataServiceJob.addUpdate(trackerConsoleJobsObj);
+								}
+							});
+							return;
+						}
+					}
+				}
+				trackerStatus = "start";
 				resetButtons();
 				setUpBtn.enabled = true;
 				stopBtn.enabled = true;
@@ -428,12 +542,12 @@
 				} else if(selectedCharge!=null){
 					trackerConsoleJobs.charge = selectedCharge;
 				}
-				trackerConsoleJobs.actualSetUpTime = 10*60*1000;
+				trackerConsoleJobs.actualSetUpTime = 25*60*1000;
 				trackerConsoleJobs.actualRunTime = 10*60*1000;
-				trackerConsoleJobs.actualWashTime = 10*60*1000;
+				trackerConsoleJobs.actualWashTime = 30*60*1000;
 				trackerConsoleJobs.firstTrackerDate = new Date();
 				trackerConsoleJobs.duration = 0;
-				trackerConsoleJobs.noOfPasses = 1;
+				trackerConsoleJobs.noOfPasses = 2;
 				trackerConsoleJobs.currentPass = 1;
 				saveDataServiceJob.addUpdate(trackerConsoleJobs);
 			}
@@ -446,12 +560,14 @@
 			progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobs) as TrackerConsoleJobs;
 			selectedTrackerConsoleJob = trackerConsoleJobs;
 			employee_jobs_grid.selectedIndex = (trackerConsoleJobsList.length-1);
+			enableRequiredBtns();
 		}
 		
 		private function setUpJob():void {
 			if(selectedTrackerConsoleJob!=null){
 				var nowDate:Date = new Date();
-				var totalSetUpTime:Number
+				var totalSetUpTime:Number = 0;
+				trackerStatus = "setup";
 				if(selectedTrackerConsoleJob.currentPass==1){
 					selectedTrackerConsoleJob.firstSetUpCompleted = true;
 					totalSetUpTime = (nowDate.time-selectedTrackerConsoleJob.firstTrackerDate.time);
@@ -482,12 +598,13 @@
 		private function washUpJob():void {
 			if(selectedTrackerConsoleJob!=null){
 				var nowDate:Date = new Date();
-				var totalRunTime:Number
+				var totalRunTime:Number = 0;
+				trackerStatus = "washup";
 				if(selectedTrackerConsoleJob.currentPass==1){
-					selectedTrackerConsoleJob.firstWashCompleted = true;
+					selectedTrackerConsoleJob.firstRunCompleted = true;
 					totalRunTime = (nowDate.time-selectedTrackerConsoleJob.firstTrackerDate.time);
-					if(!(isNaN(selectedTrackerConsoleJob.firstRunTime)) && selectedTrackerConsoleJob.firstRunTime!=0){
-						totalRunTime = totalRunTime + selectedTrackerConsoleJob.firstRunTime;
+					if(!(isNaN(selectedTrackerConsoleJob.firstTrackerTime)) && selectedTrackerConsoleJob.firstTrackerTime!=0){
+						totalRunTime = totalRunTime + selectedTrackerConsoleJob.firstTrackerTime;
 					}
 					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
 					selectedTrackerConsoleJob.firstTrackerTime = 0;
@@ -496,10 +613,10 @@
 					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 				}
 				if(selectedTrackerConsoleJob.currentPass==2){
-					selectedTrackerConsoleJob.secondWashCompleted = true;
+					selectedTrackerConsoleJob.secondRunCompleted = true;
 					totalRunTime = (nowDate.time-selectedTrackerConsoleJob.secondTrackerDate.time);
-					if(!(isNaN(selectedTrackerConsoleJob.secondRunTime)) && selectedTrackerConsoleJob.secondRunTime!=0){
-						totalRunTime = totalRunTime + selectedTrackerConsoleJob.secondRunTime;
+					if(!(isNaN(selectedTrackerConsoleJob.secondTrackerTime)) && selectedTrackerConsoleJob.secondTrackerTime!=0){
+						totalRunTime = totalRunTime + selectedTrackerConsoleJob.secondTrackerTime;
 					}
 					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
 					selectedTrackerConsoleJob.secondTrackerTime = 0;
@@ -510,42 +627,93 @@
 			}
 		}
 		
-		private function stopJob():void {
+		private function stopOrNextPassJob():void {
 			if(selectedTrackerConsoleJob!=null){
 				var nowDate:Date = new Date();
-				var totalWashTime:Number
+				var totalWashTime:Number = 0;
+				trackerStatus = "stop";
 				if(selectedTrackerConsoleJob.currentPass==1){
-					selectedTrackerConsoleJob.completed = true;
-					totalWashTime = (nowDate.time-selectedTrackerConsoleJob.firstTrackerDate.time);
-					if(!(isNaN(selectedTrackerConsoleJob.firstRunTime)) && selectedTrackerConsoleJob.firstRunTime!=0){
-						totalWashTime = totalWashTime + selectedTrackerConsoleJob.firstRunTime;
+					if(!selectedTrackerConsoleJob.paused) {
+						totalWashTime = (nowDate.time-selectedTrackerConsoleJob.firstTrackerDate.time);
+					}
+					if(!(isNaN(selectedTrackerConsoleJob.firstTrackerTime)) && selectedTrackerConsoleJob.firstTrackerTime!=0){
+						totalWashTime = totalWashTime + selectedTrackerConsoleJob.firstTrackerTime;
 					}
 					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
 					selectedTrackerConsoleJob.firstTrackerTime = 0;
-					if(!selectedTrackerConsoleJob.firstSetUpCompleted || !selectedTrackerConsoleJob.firstWashCompleted){
+					if(!selectedTrackerConsoleJob.firstSetUpCompleted || !selectedTrackerConsoleJob.firstRunCompleted){
 						selectedTrackerConsoleJob.firstRunDate = nowDate;
 						selectedTrackerConsoleJob.firstRunTime = totalWashTime;
 					} else {
 						selectedTrackerConsoleJob.firstWashDate = nowDate;
 						selectedTrackerConsoleJob.firstWashTime = totalWashTime;
+						selectedTrackerConsoleJob.firstWashCompleted = true;
+					}
+					if(selectedTrackerConsoleJob.noOfPasses==2){
+						trackerStatus = "nextpass";
+						selectedTrackerConsoleJob.currentPass = 2;
+						selectedTrackerConsoleJob.paused = false;
+						selectedTrackerConsoleJob.secondTrackerDate = new Date();
+					} else {
+						selectedTrackerConsoleJob.completed = true;
+						selectedTrackerConsoleJob.completedDate = nowDate;
 					}
 					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
-				}
-				if(selectedTrackerConsoleJob.currentPass==2){
-					selectedTrackerConsoleJob.secondWashCompleted = true;
-					totalWashTime = (nowDate.time-selectedTrackerConsoleJob.secondTrackerDate.time);
-					if(!(isNaN(selectedTrackerConsoleJob.secondRunTime)) && selectedTrackerConsoleJob.secondRunTime!=0){
-						totalWashTime = totalWashTime + selectedTrackerConsoleJob.secondRunTime;
+				} else if(selectedTrackerConsoleJob.currentPass==2){
+					selectedTrackerConsoleJob.completed = true;
+					selectedTrackerConsoleJob.completedDate = nowDate;
+					if(!selectedTrackerConsoleJob.paused) {
+						totalWashTime = (nowDate.time-selectedTrackerConsoleJob.secondTrackerDate.time);
+					}
+					if(!(isNaN(selectedTrackerConsoleJob.secondTrackerTime)) && selectedTrackerConsoleJob.secondTrackerTime!=0){
+						totalWashTime = totalWashTime + selectedTrackerConsoleJob.secondTrackerTime;
 					}
 					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
 					selectedTrackerConsoleJob.secondTrackerTime = 0;
-					if(!selectedTrackerConsoleJob.secondSetUpCompleted || !selectedTrackerConsoleJob.secondWashCompleted){
+					if(!selectedTrackerConsoleJob.secondSetUpCompleted || !selectedTrackerConsoleJob.secondRunCompleted){
 						selectedTrackerConsoleJob.secondRunDate = nowDate;
 						selectedTrackerConsoleJob.secondRunTime = totalWashTime;
 					} else {
 						selectedTrackerConsoleJob.secondWashDate = nowDate;
 						selectedTrackerConsoleJob.secondWashTime = totalWashTime;
+						selectedTrackerConsoleJob.secondWashCompleted = true;
 					}
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+			}
+		}
+		
+		private function pauseJob():void {
+			if(selectedTrackerConsoleJob!=null){
+				trackerStatus = "pause";
+				var nowDate:Date = new Date();
+				if(selectedTrackerConsoleJob.currentPass==1){
+					selectedTrackerConsoleJob.firstTrackerTime = nowDate.time - selectedTrackerConsoleJob.firstTrackerDate.time+(isNaN(selectedTrackerConsoleJob.firstTrackerTime)?0:selectedTrackerConsoleJob.firstTrackerTime);
+					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
+					selectedTrackerConsoleJob.paused = true;
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+				if(selectedTrackerConsoleJob.currentPass==2){
+					selectedTrackerConsoleJob.secondTrackerTime = nowDate.time - selectedTrackerConsoleJob.secondTrackerDate.time+(isNaN(selectedTrackerConsoleJob.secondTrackerTime)?0:selectedTrackerConsoleJob.secondTrackerTime);
+					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
+					selectedTrackerConsoleJob.paused = true;
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+			}
+		}
+		
+		private function continueJob():void {
+			if(selectedTrackerConsoleJob!=null){
+				trackerStatus = "continue";
+				var nowDate:Date = new Date();
+				if(selectedTrackerConsoleJob.currentPass==1){
+					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
+					selectedTrackerConsoleJob.paused = false;
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+				if(selectedTrackerConsoleJob.currentPass==2){
+					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
+					selectedTrackerConsoleJob.paused = false;
 					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 				}
 			}
@@ -553,18 +721,213 @@
 		
 		private function handleUpdateJobResult(event:ResultEvent):void {
 			resetButtons();
-			washUpBtn.enabled = true;
-			stopBtn.enabled = true;
-			cancelBtn.enabled = true;
-			pauseBtn.enabled = true;
-			openBtn.enabled = true;
-			jobTicketBtn.enabled = true;
-			layoutBtn.enabled = true;
+			if(trackerStatus=="start"){
+				var trackerConsoleJobsObject:TrackerConsoleJobs = event.result as TrackerConsoleJobs;
+				if(trackerConsoleJobsObject!=null){
+					setUpBtn.enabled = true;
+					washUpBtn.enabled = true;
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					pauseBtn.enabled = true;
+					defaultEnableButtons();
+					var counter:int = 0;
+					for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+						counter++;
+						if(trackerConsoleJobsObject.job!=null && trackerConsoleJobsObj.job!=null){
+							if(trackerConsoleJobsObject.job.id==trackerConsoleJobsObj.job.id){
+								selectedTrackerConsoleJob = trackerConsoleJobsObj;
+								employee_jobs_grid.selectedIndex = counter;
+								registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+								progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+								enableRequiredBtns();
+								break;
+							}
+							
+						} else if(trackerConsoleJobsObject.charge!=null && trackerConsoleJobsObj.charge!=null) {
+							if(trackerConsoleJobsObject.charge.id==trackerConsoleJobsObj.charge.id){
+								selectedTrackerConsoleJob = trackerConsoleJobsObj;
+								employee_jobs_grid.selectedIndex = counter;
+								registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+								progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+								enableRequiredBtns();
+								break;
+							}
+						}
+					}
+				}
+			} else if(trackerStatus=="setup"){
+				if(selectedTrackerConsoleJob!=null){
+					washUpBtn.enabled = true;
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					pauseBtn.enabled = true;
+					defaultEnableButtons();
+					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+					progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+				}
+			} else if(trackerStatus=="washup"){
+				if(selectedTrackerConsoleJob!=null){
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					pauseBtn.enabled = true;
+					defaultEnableButtons();
+					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+					progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+				}
+			} else if(trackerStatus=="pause"){
+				if(selectedTrackerConsoleJob!=null){
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					continueBtn.enabled = true;
+					defaultEnableButtons();
+					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+					progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+				}
+			} else if(trackerStatus=="continue"){
+				if(selectedTrackerConsoleJob!=null){
+					if(selectedTrackerConsoleJob.currentPass==1){
+						if(selectedTrackerConsoleJob.firstSetUpCompleted){
+							washUpBtn.enabled = true;
+						} else {
+							setUpBtn.enabled = true;
+							washUpBtn.enabled = true;
+						}
+					}
+					if(selectedTrackerConsoleJob.currentPass==2){
+						if(selectedTrackerConsoleJob.secondSetUpCompleted){
+							washUpBtn.enabled = true;
+						} else {
+							setUpBtn.enabled = true;
+							washUpBtn.enabled = true;
+						}
+					}
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					pauseBtn.enabled = true;
+					defaultEnableButtons();
+					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+					progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+				}
+			} else if(trackerStatus=="stop"){
+				if(selectedTrackerConsoleJob!=null){
+					selectedDGIndex = employee_jobs_grid.selectedIndex;
+					if(selectedDGIndex>-1){
+						if(employee!=null){
+							refreshList = true;
+							dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
+						}
+					}
+					progressBarComponent.stopJob();
+				}
+			} else if(trackerStatus=="nextpass"){
+				if(selectedTrackerConsoleJob!=null){
+					resetButtons();
+					setUpBtn.enabled = true;
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					pauseBtn.enabled = true;
+					defaultEnableButtons();
+					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+					progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+				}
+			}
 			/* var trackerConsoleJobs:TrackerConsoleJobs = event.result as TrackerConsoleJobs;
 			trackerConsoleJobsList.addItem(trackerConsoleJobs);
 			progressBarComponent.trackerConsoleJobs = trackerConsoleJobs; */
 		}
 		
+		private function enableRequiredBtns():void {
+			if(selectedTrackerConsoleJob!=null){
+				if(selectedTrackerConsoleJob.firstSetUpCompleted && selectedTrackerConsoleJob.firstRunCompleted
+					&& selectedTrackerConsoleJob.currentPass==1){
+					resetButtons();
+					if(!selectedTrackerConsoleJob.paused){
+						pauseBtn.enabled = true;
+					} else {
+						continueBtn.enabled = true;
+					}
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					defaultEnableButtons();
+				} else if(selectedTrackerConsoleJob.firstSetUpCompleted && selectedTrackerConsoleJob.currentPass==1){
+					resetButtons();
+					if(!selectedTrackerConsoleJob.paused){
+						washUpBtn.enabled = true;
+						pauseBtn.enabled = true;
+					} else {
+						continueBtn.enabled = true;
+					}
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					defaultEnableButtons();
+				} else if(selectedTrackerConsoleJob.firstRunCompleted && selectedTrackerConsoleJob.currentPass==1){
+					resetButtons();
+					if(!selectedTrackerConsoleJob.paused){
+						pauseBtn.enabled = true;
+					} else {
+						continueBtn.enabled = true;
+					}
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					defaultEnableButtons();
+				} else if(selectedTrackerConsoleJob.secondSetUpCompleted && selectedTrackerConsoleJob.secondRunCompleted
+					&& selectedTrackerConsoleJob.currentPass==2){
+					resetButtons();
+					if(!selectedTrackerConsoleJob.paused){
+						pauseBtn.enabled = true;
+					} else {
+						continueBtn.enabled = true;
+					}
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					defaultEnableButtons();
+				} else if(selectedTrackerConsoleJob.secondSetUpCompleted && selectedTrackerConsoleJob.currentPass==2){
+					resetButtons();
+					if(!selectedTrackerConsoleJob.paused){
+						washUpBtn.enabled = true;
+						pauseBtn.enabled = true;
+					} else {
+						continueBtn.enabled = true;
+					}
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					defaultEnableButtons();
+				} else if(selectedTrackerConsoleJob.secondRunCompleted && selectedTrackerConsoleJob.currentPass==2){
+					resetButtons();
+					if(!selectedTrackerConsoleJob.paused){
+						pauseBtn.enabled = true;
+					} else {
+						continueBtn.enabled = true;
+					}
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					defaultEnableButtons();
+				} else {
+					resetButtons();
+					stopBtn.enabled = true;
+					cancelBtn.enabled = true;
+					if(!selectedTrackerConsoleJob.paused){
+						setUpBtn.enabled = true;
+						pauseBtn.enabled = true;
+					} else {
+						continueBtn.enabled = true;
+					}
+					defaultEnableButtons();
+				}
+			} else {
+				resetButtons();
+			}
+		}
+		
+		private function getStopNextPassLabel(tcJob:TrackerConsoleJobs):String {
+			if(tcJob!=null){
+				if(tcJob.noOfPasses==2 && tcJob.currentPass==1){
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.NextPass');
+				}
+			}
+			return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Stop');
+		} 
+				
 	]]>
 	                        
 	</mx:Script>	
@@ -704,11 +1067,11 @@
 							<mx:icon>@Embed(source='../../../../assets/TrackingSetupDone.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Washup')}" 
-							labelPlacement="bottom" width="20%" id="washUpBtn" enabled="false">
+							labelPlacement="bottom" width="20%" click="{washUpJob()}" id="washUpBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingWashupStart.png')</mx:icon>
 						</mx:Button>
-						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Stop')}" 
-							labelPlacement="bottom" width="20%" id="stopBtn" enabled="false">
+						<mx:Button label="{getStopNextPassLabel(selectedTrackerConsoleJob)}" 
+							labelPlacement="bottom" width="20%" click="{stopOrNextPassJob()}" id="stopBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingStop.png')</mx:icon>
 						</mx:Button> 
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Cancel')}" 
@@ -718,11 +1081,11 @@
 					</mx:HBox>
 					<mx:HBox width="100%">
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Pause')}" 
-							labelPlacement="bottom" width="20%" id="pauseBtn" enabled="false">
+							labelPlacement="bottom" width="20%" click="{pauseJob()}" id="pauseBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingPause.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Continue')}" 
-							labelPlacement="bottom" width="20%" id="continueBtn" enabled="false">
+							labelPlacement="bottom" width="20%" click="{continueJob()}" id="continueBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingContinue.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Open')}" 
@@ -817,7 +1180,7 @@
 			
 			<mx:Spacer height="5%"/>
 			
-			<trackercomponent:TrackerProgressBarComponent id="progressBarComponent" width="90%" height="15%"/>
+			<trackercomponent:TrackerProgressBarComponent id="progressBarComponent" width="98%" height="15%"/>
 			
 		</mx:VBox>
 		

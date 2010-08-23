@@ -105,6 +105,8 @@ public class TrackerConsoleJobs extends ModelBase{
 	private Boolean secondWashCompleted;
 	
 	private Boolean completed;
+	
+	private Date completedDate;
 
 	/**
 	 * @return the productionFacilities
@@ -622,6 +624,20 @@ public class TrackerConsoleJobs extends ModelBase{
 	 */
 	public void setSecondRunCompleted(Boolean secondRunCompleted) {
 		this.secondRunCompleted = secondRunCompleted;
+	}
+
+	/**
+	 * @return the completedDate
+	 */
+	public Date getCompletedDate() {
+		return completedDate;
+	}
+
+	/**
+	 * @param completedDate the completedDate to set
+	 */
+	public void setCompletedDate(Date completedDate) {
+		this.completedDate = completedDate;
 	}
 
 }
