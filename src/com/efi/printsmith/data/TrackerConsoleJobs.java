@@ -94,9 +94,13 @@ public class TrackerConsoleJobs extends ModelBase{
 	
 	private Boolean firstSetUpCompleted;
 	
+	private Boolean firstRunCompleted;
+	
 	private Boolean firstWashCompleted;
 	
 	private Boolean secondSetUpCompleted;
+	
+	private Boolean secondRunCompleted;
 	
 	private Boolean secondWashCompleted;
 	
@@ -592,7 +596,32 @@ public class TrackerConsoleJobs extends ModelBase{
 		this.secondTrackerTime = secondTrackerTime;
 	}
 
-	
-	
+	/**
+	 * @return the firstRunCompleted
+	 */
+	public Boolean getFirstRunCompleted() {
+		return firstRunCompleted;
+	}
+
+	/**
+	 * @param firstRunCompleted the firstRunCompleted to set
+	 */
+	public void setFirstRunCompleted(Boolean firstRunCompleted) {
+		this.firstRunCompleted = firstRunCompleted;
+	}
+
+	/**
+	 * @return the secondRunCompleted
+	 */
+	public Boolean getSecondRunCompleted() {
+		return secondRunCompleted;
+	}
+
+	/**
+	 * @param secondRunCompleted the secondRunCompleted to set
+	 */
+	public void setSecondRunCompleted(Boolean secondRunCompleted) {
+		this.secondRunCompleted = secondRunCompleted;
+	}
 
 }
