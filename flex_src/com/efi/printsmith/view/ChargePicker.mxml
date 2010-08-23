@@ -5,8 +5,8 @@
 				xmlns:fc="http://www.adobe.com/2006/fc"
 				xmlns:hc="com.hillelcoren.components.*"
 				xmlns:ns2="com.efi.printsmith.components.*"
-				width="886"
-				height="693"
+				width="900"
+				height="700"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
 				creationComplete="init()"
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
@@ -63,1069 +63,13 @@
 	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 	</mx:RemoteObject>
-
-	<mx:states>
-		<mx:State name="AlwaysAsk1" basedOn="">
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			
-			
-			<mx:SetProperty target="{number_of_colors_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="y" value="294"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			
-			<mx:SetProperty target="{rate_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-
-			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="324"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-
-			<mx:SetProperty target="{number_of_colors_label}" name="x" value="332"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="y" value="296"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="visible" value="true"/>
-			
-			<mx:SetProperty target="{material_in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="y" value="345"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="visible" value="true"/>
-			
-			<mx:SetProperty target="{in_sets_of_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="y" value="279"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="y" value="324"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="visible" value="true"/>
-			
-			<mx:SetProperty target="{material_quantity_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{material_quantity_label}" name="y" value="345"/>
-
-			<mx:SetProperty target="{material_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="true"/>
-			
-			<mx:SetProperty target="{material_label}" name="y" value="366"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="true"/>
-
-			<mx:SetProperty target="{minimum_edit}" name="x" value="134"/>
-			<mx:SetProperty target="{minimum_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{minimum_edit}" name="visible" value="true"/>
-			
-			<mx:SetProperty target="{minimum_label}" name="y" value="303"/>
-			<mx:SetProperty target="{minimum_label}" name="visible" value="true"/>
-
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{minimum_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 3).format(charge.minimumCharge)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{rate_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 3).format(charge.rate)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="AlwaysAsk2" basedOn="">
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="x" value="10"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="y" value="304"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="x" value="134"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="y" value="345"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{material_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{material_label}" name="y" value="366"/>
-			<mx:SetProperty target="{material_quantity_label}" name="y" value="345"/>
-			<mx:SetProperty target="{minimum_label}" name="y" value="282"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{rate_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="324"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_edit}" name="y" value="280"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="y" value="303"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{rate_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{material_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="AlwaysAsk3" basedOn="">
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="y" value="345"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_label}" name="y" value="345"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{material_label}" name="y" value="366"/>
-			<mx:SetProperty target="{material_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{minimum_label}" name="y" value="282"/>
-			<mx:SetProperty target="{minimum_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="324"/>
-			<mx:SetProperty target="{rate_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{time_start_label}" name="y" value="250"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{time_start_edit}" name="y" value="246"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{time_stop_label}" name="y" value="250"/>
-			<mx:SetProperty target="{time_stop_edit}" name="x" value="464"/>
-			<mx:SetProperty target="{time_stop_label}" name="x" value="340"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="y" value="324"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{minimum_edit}" name="y" value="280"/>
-			<mx:SetProperty target="{minimum_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="true"/>
-			<mx:RemoveChild target="{time_start_edit}"/>
-			<mx:AddChild relativeTo="{canvas2}" position="lastChild" target="{time_start_edit}"/>
-			<mx:SetProperty target="{time_stop_edit}" name="y" value="246"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="text" value="{charge.sets}"/>
-			<mx:SetProperty target="{time_start_edit}" name="x" value="134"/>
-			<mx:SetProperty target="{minimum_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.minimumCharge)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{rate_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{material_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="AlwaysAsk4" basedOn="">
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="x" value="243"/>
-			<mx:SetProperty target="{area_label}" name="y" value="338"/>
-			<mx:SetProperty target="{area_edit}" name="x" value="367"/>
-			<mx:SetProperty target="{area_edit}" name="y" value="336"/>
-			<mx:SetProperty target="{total_weight_label}" name="x" value="243"/>
-			<mx:SetProperty target="{total_weight_label}" name="y" value="317"/>
-			<mx:SetProperty target="{total_weight_edit}" name="x" value="367"/>
-			<mx:SetProperty target="{total_weight_edit}" name="y" value="315"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="x" value="243"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="y" value="296"/>
-			<mx:SetProperty target="{up_label}" name="x" value="243"/>
-			<mx:SetProperty target="{up_label}" name="y" value="275"/>
-			<mx:SetProperty target="{up_edit}" name="x" value="367"/>
-			<mx:SetProperty target="{up_edit}" name="y" value="273"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="x" value="367"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="y" value="294"/>
-			<mx:SetProperty target="{time_stop_label}" name="x" value="243"/>
-			<mx:SetProperty target="{time_stop_label}" name="y" value="254"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_label}" name="y" value="282"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{rate_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="324"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="y" value="345"/>
-			<mx:SetProperty target="{quantity_label}" name="y" value="304"/>
-			<mx:SetProperty target="{quantity_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{material_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{material_label}" name="y" value="366"/>
-			<mx:SetProperty target="{material_quantity_label}" name="y" value="345"/>
-			<mx:SetProperty target="{text1}" name="y" value="368"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="y" value="303"/>
-			<mx:SetProperty target="{minimum_edit}" name="y" value="280"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
-			<mx:SetProperty target="{material_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{rate_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-			
-		</mx:State>
-		<mx:State name="JobAware" basedOn="">
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="345"/>
-			<mx:SetProperty target="{rate_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{up_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{up_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{up_label}" name="x" value="332"/>
-			<mx:SetProperty target="{up_label}" name="y" value="324"/>
-			<mx:SetProperty target="{quantity_label}" name="y" value="324"/>
-			<mx:SetProperty target="{quantity_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{material_quantity_label}" name="y" value="366"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
-			<mx:SetProperty target="{up_edit}" name="text" value="{charge.up}"/>
-			<mx:SetProperty target="{rate_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-			
-		</mx:State>
-		<mx:State name="Markup" basedOn="">
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{rate_label}" name="x" value="10"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="366"/>
-			<mx:SetProperty target="{rate_edit}" name="x" value="134"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="FlatRate" basedOn="">
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{rate_edit}" name="x" value="134"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{rate_label}" name="x" value="10"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="366"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_label}" name="y" value="345"/>
-			<mx:SetProperty target="{minimum_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="text" value="{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}"/>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>){Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="PriceList" basedOn="">
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_label}" name="y" value="366"/>
-			<mx:SetProperty target="{quantity_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{minimum_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="RateList" basedOn="PriceList">
-		</mx:State>
-		<mx:State name="CuttingCharge" basedOn="">
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_label}" name="y" value="345"/>
-			<mx:SetProperty target="{material_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{cuts_label}" name="y" value="303"/>
-			<mx:SetProperty target="{cuts_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_label}" name="x" value="332"/>
-			<mx:SetProperty target="{material_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="324"/>
-			<mx:SetProperty target="{rate_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{up_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{up_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{up_label}" name="x" value="332"/>
-			<mx:SetProperty target="{up_label}" name="y" value="303"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_edit}" name="y" value="280"/>
-			<mx:SetProperty target="{minimum_label}" name="y" value="282"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{up_edit}" name="text" value="{charge.up}"/>
-			<mx:SetProperty target="{cuts_edit}" name="text" value="{(charge as CuttingCharge).cuts}"/>
-			<mx:SetProperty target="{rate_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{material_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="InkCharge" basedOn="">
-			<mx:SetProperty target="{number_of_colors_label}" name="x" value="10"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="y" value="303"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="x" value="134"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="y" value="324"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="x" value="134"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="x" value="10"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="y" value="366"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="true"/>
-			
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{price_lb_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{price_lb_label}" name="x" value="332"/>
-			<mx:SetProperty target="{price_lb_label}" name="y" value="345"/>
-			<mx:SetProperty target="{cover_lb_label}" name="x" value="332"/>
-			<mx:SetProperty target="{cover_lb_label}" name="y" value="324"/>
-			<mx:SetProperty target="{minimum_label}" name="y" value="282"/>
-			<mx:SetProperty target="{minimum_edit}" name="y" value="280"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="text" value="{(charge as InkCharge).coverage}"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="text" value="{(charge as InkCharge).poundsOfInk}"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="text" value="{(charge as InkCharge).coverPerPound}"/>
-			<mx:SetProperty target="{price_lb_edit}" name="text" value="{Snowmass.getCurrencyFormatter(true, 2).format((charge as InkCharge).pricePerPound)}"/>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="Linear" basedOn="">
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{rate_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="324"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_label}" name="y" value="366"/>
-			<mx:SetProperty target="{material_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{material_quantity_label}" name="y" value="345"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="y" value="345"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{minimum_label}" name="y" value="256"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="x" value="356"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="y" value="174"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="x" value="332"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="y" value="205"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="x" value="381"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="y" value="205"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="x" value="356"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="y" value="235"/>
-			<mx:SetProperty target="{panel1}" name="x" value="354"/>
-			<mx:SetProperty target="{panel1}" name="y" value="200"/>
-			<mx:SetProperty target="{up_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{up_edit}" name="y" value="280"/>
-			<mx:SetProperty target="{up_label}" name="x" value="332"/>
-			<mx:SetProperty target="{up_label}" name="y" value="282"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_edit}" name="y" value="254"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="y" value="303"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="true"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="true"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="true"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="true"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="true"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
-			<mx:SetProperty target="{up_edit}" name="text" value="{charge.up}"/>
-			<mx:SetProperty target="{material_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{rate_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="ShippingCharge" basedOn="">
-			<mx:SetProperty target="{minimum_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="x" value="332"/>
-			<mx:SetProperty target="{total_weight_label}" name="y" value="341"/>
-			<mx:SetProperty target="{total_weight_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{total_weight_edit}" name="y" value="339"/>
-			<mx:SetProperty target="{area_edit}" name="x" value="348"/>
-			<mx:SetProperty target="{area_edit}" name="y" value="226"/>
-			<mx:SetProperty target="{area_label}" name="x" value="224"/>
-			<mx:SetProperty target="{area_label}" name="y" value="228"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="y" value="193"/>
-			<mx:SetProperty target="{ship_via_combo}" name="y" value="191"/>
-			<mx:SetProperty target="{quantity_label}" name="y" value="341"/>
-			<mx:SetProperty target="{quantity_edit}" name="y" value="339"/>
-			<mx:SetProperty target="{ship_via_combo}" name="width" value="216"/>
-			<mx:SetProperty target="{minimum_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="Fold" basedOn="">
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="y" value="345"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{material_quantity_label}" name="y" value="345"/>
-			<mx:SetProperty target="{material_label}" name="y" value="366"/>
-			<mx:SetProperty target="{material_edit}" name="y" value="364"/>
-			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="324"/>
-			<mx:SetProperty target="{rate_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="y" value="303"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_label}" name="x" value="332"/>
-			<mx:SetProperty target="{up_label}" name="y" value="282"/>
-			<mx:SetProperty target="{up_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{up_edit}" name="y" value="280"/>
-			<mx:SetProperty target="{minimum_label}" name="y" value="256"/>
-			<mx:SetProperty target="{minimum_edit}" name="y" value="254"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
-			<mx:SetProperty target="{up_edit}" name="text" value="{charge.up}"/>
-			<mx:SetProperty name="height" value="689"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="x" value="560"/>
-			<mx:SetProperty target="{done_button}" name="x" value="516"/>
-			<mx:SetProperty target="{add_button}" name="x" value="439"/>
-			<mx:SetProperty target="{rate_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{material_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.chargeDefinition.minimum)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-		<mx:State name="SquareArea" basedOn="">
-			<mx:SetProperty target="{rate_label}" name="x" value="332"/>
-			<mx:SetProperty target="{rate_label}" name="y" value="345"/>
-			<mx:SetProperty target="{rate_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{rate_edit}" name="y" value="343"/>
-			<mx:SetProperty target="{linear_charge_location_top_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_right_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_left_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{panel1}" name="visible" value="false"/>
-			<mx:SetProperty target="{linear_charge_location_bottom_check0}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_combo}" name="visible" value="false"/>
-			<mx:SetProperty target="{cover_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{price_lb_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{ship_via_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{percent_coverage_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{cuts_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{area_label}" name="x" value="10"/>
-			<mx:SetProperty target="{area_label}" name="y" value="344"/>
-			<mx:SetProperty target="{area_edit}" name="x" value="134"/>
-			<mx:SetProperty target="{area_edit}" name="y" value="342"/>
-			<mx:SetProperty target="{total_weight_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{total_weight_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{lbs_of_ink_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{number_of_colors_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="x" value="332"/>
-			<mx:SetProperty target="{in_sets_of_label}" name="y" value="324"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{in_sets_of_edit}" name="y" value="322"/>
-			<mx:SetProperty target="{up_label}" name="x" value="332"/>
-			<mx:SetProperty target="{up_label}" name="y" value="303"/>
-			<mx:SetProperty target="{up_edit}" name="x" value="456"/>
-			<mx:SetProperty target="{up_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{time_start_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_start_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{time_stop_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_per_set_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{quantity_label}" name="y" value="303"/>
-			<mx:SetProperty target="{quantity_edit}" name="y" value="301"/>
-			<mx:SetProperty target="{minimum_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{minimum_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_quantity_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_in_sets_of_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_label}" name="visible" value="false"/>
-			<mx:SetProperty target="{material_edit}" name="visible" value="false"/>
-			<mx:SetProperty target="{up_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{up_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{rate_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_label}" name="visible" value="true"/>
-			<mx:SetProperty target="{price_edit}" name="visible" value="true"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="visible" value="true"/>
-			<mx:SetProperty target="{text1}" name="visible" value="true"/>
-			<mx:SetProperty target="{quantity_edit}" name="text" value="{charge.quantity}"/>
-			<mx:SetProperty target="{up_edit}" name="text" value="{charge.up}"/>
-			<mx:SetProperty target="{rate_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.rate)}</mx:value>
-			</mx:SetProperty>
-			<mx:SetProperty target="{price_edit}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true, 2).format(charge.price)}</mx:value>
-			</mx:SetProperty>
-		</mx:State>
-<!--		<mx:State name="Edit Charge" basedOn="">
-			<mx:SetProperty target="{add_button}" name="label" value="Save"/>
-		</mx:State>
--->	</mx:states>
+	
+	<mx:Script source="../common/scripts/StringUtils.as"/>
+	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.common.components.filter.FilterSearchBy;
+			import com.efi.printsmith.common.components.filter.FilterProperty;
 			import com.efi.printsmith.data.ShippingCharge;
 			import com.efi.printsmith.data.InkCharge;
 			import com.efi.printsmith.data.CuttingCharge;
@@ -1190,7 +134,7 @@
 			public var refreshSO:Boolean=false;
 
 			[Bindable]
-			private var chargeDefinition:ChargeDefinition = new ChargeDefinition;
+			private var chargeDefinition:ChargeDefinition = null;
 			
 			private var addCharge:Boolean = false;
 			
@@ -1221,7 +165,7 @@
 //				chargeDataService.getAll("Charge");
 //				chargeCommandDataService.getAll("ChargeCommand");
 				dataServiceSystemPreferences.getAll("PreferencesSystem");
-			
+				updateFieldVisibility();			
 			}
 
 			private function findItem(name:String, array:ArrayCollection):int
@@ -1393,41 +337,41 @@
 			}
 
 			private function updateCurrentState():void {
-				if (chargeDefinition.method == ChargeMethod.SquareArea) {
-					this.currentState = "SquareArea";
-				} else if (chargeDefinition.method == ChargeMethod.Cut) {
-					this.currentState = "CuttingCharge";
-				} else if (chargeDefinition.method == ChargeMethod.Ink) {
-					this.currentState = "InkCharge";
-				} else if (chargeDefinition.method == ChargeMethod.Shipping) {
-					this.currentState = "ShippingCharge";
-				} else if (chargeDefinition.method == ChargeMethod.Ask) {
-					if (chargeDefinition.quantityType == ChargeQtyType.None) {
-						this.currentState = "AlwaysAsk1";
-					} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
-						this.currentState = "AlwaysAsk2";
-					} else if (chargeDefinition.quantityType == ChargeQtyType.Sets) {
-						this.currentState = "AlwaysAsk4";
-					} else if (chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
-						this.currentState = "AlwaysAsk4";
-					} else if (chargeDefinition.quantityType == ChargeQtyType.Time) {
-						this.currentState = "AlwaysAsk3";
-					}
-				} else if (chargeDefinition.method == ChargeMethod.FlatRate) {
-					this.currentState = "FlatRate";
-				} else if (chargeDefinition.method == ChargeMethod.Fold) {
-					this.currentState = "Fold";
-				} else if (chargeDefinition.method == ChargeMethod.JobAware) {
-					this.currentState = "JobAware";
-				} else if (chargeDefinition.method == ChargeMethod.Linear) {
-					this.currentState = "Linear";
-				} else if (chargeDefinition.method == ChargeMethod.Markup) {
-					this.currentState = "Markup";
-				} else if (chargeDefinition.method == ChargeMethod.PriceList) {
-					this.currentState = "PriceList";
-				} else if (chargeDefinition.method == ChargeMethod.RateList) {
-					this.currentState = "RateList";
-				}			
+//				if (chargeDefinition.method == ChargeMethod.SquareArea) {
+//					this.currentState = "SquareArea";
+//				} else if (chargeDefinition.method == ChargeMethod.Cut) {
+//					this.currentState = "CuttingCharge";
+//				} else if (chargeDefinition.method == ChargeMethod.Ink) {
+//					this.currentState = "InkCharge";
+//				} else if (chargeDefinition.method == ChargeMethod.Shipping) {
+//					this.currentState = "ShippingCharge";
+//				} else if (chargeDefinition.method == ChargeMethod.Ask) {
+//					if (chargeDefinition.quantityType == ChargeQtyType.None) {
+//						this.currentState = "AlwaysAsk1";
+//					} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+//						this.currentState = "AlwaysAsk2";
+//					} else if (chargeDefinition.quantityType == ChargeQtyType.Sets) {
+//						this.currentState = "AlwaysAsk4";
+//					} else if (chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
+//						this.currentState = "AlwaysAsk4";
+//					} else if (chargeDefinition.quantityType == ChargeQtyType.Time) {
+//						this.currentState = "AlwaysAsk3";
+//					}
+//				} else if (chargeDefinition.method == ChargeMethod.FlatRate) {
+//					this.currentState = "FlatRate";
+//				} else if (chargeDefinition.method == ChargeMethod.Fold) {
+//					this.currentState = "Fold";
+//				} else if (chargeDefinition.method == ChargeMethod.JobAware) {
+//					this.currentState = "JobAware";
+//				} else if (chargeDefinition.method == ChargeMethod.Linear) {
+//					this.currentState = "Linear";
+//				} else if (chargeDefinition.method == ChargeMethod.Markup) {
+//					this.currentState = "Markup";
+//				} else if (chargeDefinition.method == ChargeMethod.PriceList) {
+//					this.currentState = "PriceList";
+//				} else if (chargeDefinition.method == ChargeMethod.RateList) {
+//					this.currentState = "RateList";
+//				}			
 			}
 			private function handleNewChargeResult(event:ResultEvent):void
 			{
@@ -1462,6 +406,7 @@
 				{
 					charge=null;
 				}
+				updateFieldVisibility();			
 			}
 
 			private function gridSelectionChanged():void
@@ -1525,28 +470,28 @@
 				this.charge.description=charge_description_edit.text;
 				this.charge.notes=charge_notes_edit.text;
 				this.charge.showNotes=showNotes_check.selected;
-				this.charge.rate=parseFloat(rate_edit.text);
-				this.charge.price=parseFloat(price_edit.text);
-				this.charge.quantity=parseFloat(quantity_edit.text);
-				this.charge.materialQty=parseFloat(material_quantity_edit.text);
-				if (this.chargeDefinition.quantityType == ChargeQtyType.Time) {
-					var startDate:Date = new Date();
-					var endDate:Date = new Date();
-					
-					startDate.hours = time_start_edit.hour;
-					startDate.minutes = time_start_edit.minute;
-					this.charge.startTime = startDate;
-					 
-					endDate.hours = time_stop_edit.hour;
-					endDate.minutes = time_stop_edit.minute;
-					this.charge.endTime = endDate;
-					
-				}
+				this.charge.rate=parseCurrencyFloat(rate_edit.text);
+				this.charge.price=parseCurrencyFloat(price_edit.text);
+				this.charge.quantity=parseCurrencyFloat(quantity_edit.text);
+				this.charge.materialQty=parseCurrencyFloat(material_quantity_edit.text);
+//				if (this.chargeDefinition.quantityType == ChargeQtyType.Time) {
+//					var startDate:Date = new Date();
+//					var endDate:Date = new Date();
+//					
+//					startDate.hours = time_start_edit.hour;
+//					startDate.minutes = time_start_edit.minute;
+//					this.charge.startTime = startDate;
+//					 
+//					endDate.hours = time_stop_edit.hour;
+//					endDate.minutes = time_stop_edit.minute;
+//					this.charge.endTime = endDate;
+//					
+//				}
 				if (this.currentState == "InkCharge") {
-					(charge as InkCharge).coverage=parseFloat(percent_coverage_edit.text);
-					(charge as InkCharge).poundsOfInk=parseFloat(lbs_of_ink_edit.text);
-					(charge as InkCharge).coverPerPound=parseFloat(cover_lb_edit.text);
-					(charge as InkCharge).pricePerPound=parseFloat(price_lb_edit.text);
+					(charge as InkCharge).coverage=parseCurrencyFloat(percent_coverage_edit.text);
+					(charge as InkCharge).poundsOfInk=parseCurrencyFloat(lbs_of_ink_edit.text);
+					(charge as InkCharge).coverPerPound=parseCurrencyFloat(cover_lb_edit.text);
+					(charge as InkCharge).pricePerPound=parseCurrencyFloat(price_lb_edit.text);
 				}
 			}
 			
@@ -1617,7 +562,7 @@
 	    			this.charge.quantity = 0;
 	    		} else {
 	    			this.charge.overrideQuantity = true;
-	    			this.charge.quantity = parseFloat(quantity_edit.text); 
+	    			this.charge.quantity = parseCurrencyFloat(quantity_edit.text); 
 	    		}
 	    		updatePrice();
 	  		}	
@@ -1628,7 +573,7 @@
 	    			this.charge.materialQty = 0;
 	    		} else {
 	    			this.charge.overrideMaterialQuantity = true;
-	    			this.charge.materialQty = parseFloat(material_quantity_edit.text); 
+	    			this.charge.materialQty = parseCurrencyFloat(material_quantity_edit.text); 
 	    		}
 	    		updatePrice();
 	  		}	
@@ -1639,7 +584,7 @@
 	    			this.charge.rate = 0;
 	    		} else {
 	    			this.charge.overrideRate = true;
-	    			this.charge.rate = parseFloat(rate_edit.text); 
+	    			this.charge.rate = parseCurrencyFloat(rate_edit.text); 
 	    		}
 	    		updatePrice();
 	  		}	
@@ -1650,12 +595,428 @@
 	    			this.charge.rate = 0;
 	    		} else {
 	    			this.charge.overridePrice = true;
-	    			this.charge.price = parseFloat(price_edit.text); 
+	    			this.charge.price = parseCurrencyFloat(price_edit.text); 
 	    		}
 	    		updatePrice();				
 			}
-
-		]]>
+			
+			public function updateFieldVisibility():void {
+				description_box.visible = true;
+				notes_box.visible = true;
+				production_location_box.visible = true;
+				check_boxes_box.visible = true;
+				showNotes_check.visible = true;
+				if (this.chargeDefinition == null) {
+					description_box.visible = false;
+					notes_box.visible = false;
+					production_location_box.visible = false;
+					check_boxes_box.visible = false;
+					showNotes_check.visible = false;
+					quantity_box.includeInLayout = quantity_box.visible = false;
+					material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+					material_rate_box.includeInLayout = material_rate_box.visible = false;
+					in_sets_of_box.includeInLayout = in_sets_of_box.visible = false;
+					rate_box.includeInLayout = rate_box.visible = false;
+					material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+					price_box.includeInLayout = price_box.visible = false;
+					price_edit.editable = false;
+					setup_box.includeInLayout = setup_box.visible = false;
+					number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+					pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+					coverage_box.includeInLayout = coverage_box.visible = false;
+					price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+					cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+					weight_box.includeInLayout = weight_box.visible = false;
+					area_box.includeInLayout = area_box.visible = false;
+					up_box.includeInLayout = up_box.visible = false;
+					cuts_box.includeInLayout = cuts_box.visible = false;
+					sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;					
+				} else if (this.chargeDefinition.method == ChargeMethod.Ask) {
+					this.rate_box.visible = false;
+					if (chargeDefinition.quantityType == ChargeQtyType.Sets ||
+						chargeDefinition.quantityType == ChargeQtyType.Quantity ||
+						chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
+						quantity_box.includeInLayout = quantity_box.visible = true;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
+						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = false;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+					} else if (chargeDefinition.quantityType == ChargeQtyType.Time) {
+						
+					} else if (chargeDefinition.quantityType == ChargeQtyType.None) {
+						quantity_box.includeInLayout = quantity_box.visible = false;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
+						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets && chargeDefinition.adjustableMaterial;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = false;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+					}
+				} else if (this.chargeDefinition.method == ChargeMethod.Cut) {
+					quantity_box.includeInLayout = quantity_box.visible = true;
+					material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
+					material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+					in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+					rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+					material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+					price_box.includeInLayout = price_box.visible = true;
+					price_edit.editable = !chargeDefinition.noOverrides;
+					setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+					number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+					pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+					coverage_box.includeInLayout = coverage_box.visible = false;
+					price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+					cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+					weight_box.includeInLayout = weight_box.visible = false;
+					area_box.includeInLayout = area_box.visible = false;
+					up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+					cuts_box.includeInLayout = cuts_box.visible = true;
+					sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = chargeDefinition.sheet_lift_check && chargeDefinition.adjustableSets;
+				} else if (this.chargeDefinition.method == ChargeMethod.FlatRate) {
+					quantity_box.includeInLayout = quantity_box.visible = false;
+					material_quantity_box.includeInLayout = material_quantity_box.visible = false
+					material_rate_box.includeInLayout = material_rate_box.visible = false;
+					in_sets_of_box.includeInLayout = in_sets_of_box.visible = false;
+					rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+					material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+					price_box.includeInLayout = price_box.visible = true;
+					price_edit.editable = !chargeDefinition.noOverrides;
+					setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+					number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+					pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+					coverage_box.includeInLayout = coverage_box.visible = false;
+					price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+					cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+					weight_box.includeInLayout = weight_box.visible = false;
+					area_box.includeInLayout = area_box.visible = false;
+					up_box.includeInLayout = up_box.visible = false;
+					cuts_box.includeInLayout = cuts_box.visible = false;
+					sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;			
+				} else if (this.chargeDefinition.method == ChargeMethod.Fold) {			
+					if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+						quantity_box.includeInLayout = quantity_box.visible = true;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
+						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+						cuts_box.includeInLayout = cuts_box.visible = true;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = chargeDefinition.sheet_lift_check && chargeDefinition.adjustableSets;				
+					} else if (chargeDefinition.quantityType == ChargeQtyType.Sets ||
+							   chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
+						quantity_box.includeInLayout = quantity_box.visible = false;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
+						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+						cuts_box.includeInLayout = cuts_box.visible = true;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = chargeDefinition.sheet_lift_check && chargeDefinition.adjustableSets;				
+					}			
+				} else if (this.chargeDefinition.method == ChargeMethod.Ink) {
+					if (chargeDefinition.quantityType == ChargeQtyType.Sets) {
+						quantity_box.includeInLayout = quantity_box.visible = false;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+						material_rate_box.includeInLayout = material_rate_box.visible = false;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = false;
+						rate_box.includeInLayout = rate_box.visible = false
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = true;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = true;
+						coverage_box.includeInLayout = coverage_box.visible = true;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = chargeDefinition.adjustableRate;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = chargeDefinition.coverlb_check && chargeDefinition.adjustableSets;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
+					} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+						quantity_box.includeInLayout = quantity_box.visible = false;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+						material_rate_box.includeInLayout = material_rate_box.visible = false;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = false;
+						rate_box.includeInLayout = rate_box.visible = false
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = true;
+						coverage_box.includeInLayout = coverage_box.visible = true;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = chargeDefinition.adjustableRate;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = chargeDefinition.coverlb_check && chargeDefinition.adjustableSets;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
+					}			
+				} else if (this.chargeDefinition.method == ChargeMethod.JobAware) {
+					if (chargeDefinition.quantityType == ChargeQtyType.Sets ||
+						chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
+						quantity_box.includeInLayout = quantity_box.visible = false;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
+						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;				
+					} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+						quantity_box.includeInLayout = quantity_box.visible = true;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
+						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
+					}
+				} else if (this.chargeDefinition.method == ChargeMethod.Linear) {
+					if (chargeDefinition.quantityType == ChargeQtyType.Sets ||
+						chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
+						quantity_box.includeInLayout = quantity_box.visible = false;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
+						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;				
+					} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+						quantity_box.includeInLayout = quantity_box.visible = true;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
+						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = (chargeDefinition.useDivideByUpCount || chargeDefinition.useMultiplyUpCount) && chargeDefinition.adjustUps;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
+					}
+				} else if (this.chargeDefinition.method == ChargeMethod.Markup) {
+						quantity_box.includeInLayout = quantity_box.visible = true;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+						material_rate_box.includeInLayout = material_rate_box.visible = false;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = false;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;				
+				} else if (this.chargeDefinition.method == ChargeMethod.PriceList ||
+						   this.chargeDefinition.method == ChargeMethod.RateList) {
+						quantity_box.includeInLayout = quantity_box.visible = true;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+						material_rate_box.includeInLayout = material_rate_box.visible = false;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = false;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;						
+				} else if (this.chargeDefinition.method == ChargeMethod.Shipping) {
+					if (chargeDefinition.quantityType == ChargeQtyType.TotalWeight) {
+						quantity_box.includeInLayout = quantity_box.visible = false;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+						material_rate_box.includeInLayout = material_rate_box.visible = false;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = true;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = false;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+					} else if (chargeDefinition.quantityType == ChargeQtyType.ShippingQty) {
+						quantity_box.includeInLayout = quantity_box.visible = true;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+						material_rate_box.includeInLayout = material_rate_box.visible = false;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = true;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = false;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+					}
+				} else if (this.chargeDefinition.method == ChargeMethod.SquareArea) {
+					if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+						quantity_box.includeInLayout = quantity_box.visible = true;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+						material_rate_box.includeInLayout = material_rate_box.visible = false;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = true;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = false;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+					} else if (chargeDefinition.quantityType == ChargeQtyType.Sets) {
+						quantity_box.includeInLayout = quantity_box.visible = false;
+						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
+						material_rate_box.includeInLayout = material_rate_box.visible = false;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
+						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
+						price_box.includeInLayout = price_box.visible = true;
+						price_edit.editable = !chargeDefinition.noOverrides;
+						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
+						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
+						coverage_box.includeInLayout = coverage_box.visible = false;
+						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
+						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = true;
+						area_box.includeInLayout = area_box.visible = false;
+						up_box.includeInLayout = up_box.visible = false;
+						cuts_box.includeInLayout = cuts_box.visible = false;
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
+					}
+				}
+			}
+	]]>
 
 	</mx:Script>
 
@@ -1705,17 +1066,19 @@
 							 fontWeight="bold"/>
 				</mx:Canvas>
 				<mx:Canvas width="100%"
-						   height="100%" horizontalScrollPolicy="off">
+						   height="643" horizontalScrollPolicy="off">
 					<mx:VDividedBox width="100%"
+									left="0"
 									right="6"
 									bottom="0"
 									top="0">
 						<mx:Canvas width="100%"
-								   height="198"
+								   height="142"
 								   verticalScrollPolicy="off"
 								   horizontalScrollPolicy="off">
-							<mx:DataGrid height="198"
-										 width="574"
+							<mx:DataGrid top="5"
+										 bottom="0"
+										 width="100%"
 										 id="invoice_charge_datagrid"
 										 dataProvider="{charges}"
 										 left="10"
@@ -1730,337 +1093,185 @@
 								</mx:columns>
 							</mx:DataGrid>
 						</mx:Canvas>
-						<mx:Canvas width="100%"
-								   height="410"
-								   verticalScrollPolicy="off"
-								   horizontalScrollPolicy="off" id="canvas2">
-							<mx:CheckBox x="20"
-										 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
-										 id="finished_check"
-										 fontSize="9"
-										 y="4"
-										 focusOut="this.updatePrice()"
-										 selected="{charge.finished}" width="75"/>
-							<mx:CheckBox x="103"
-										 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
-										 id="taxable_check"
-										 fontSize="9"
-										 y="4"
-										 focusOut="this.updatePrice()"
-										 selected="{charge.taxable}" width="65"/>
-							<mx:CheckBox x="176"
-										 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Brokered')}"
-										 id="brokered_check"
-										 fontSize="9"
-										 y="4"
-										 focusOut="this.updatePrice()"
-										 selected="{charge.brokered}" width="70"/>
-							<mx:CheckBox x="254"
-										 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.DisplayQuantity')}"
-										 id="displayQty_check"
-										 fontSize="9"
-										 y="4"
-										 selected="{charge.displayQty}"/>
-							<mx:CheckBox x="381"
-										 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Hidden')}"
-										 id="hidden_check"
-										 fontSize="9"
-										 y="4"
-										 selected="{charge.hidden}" width="64"/>
-							<mx:CheckBox x="453"
-										 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.HidePrice')}"
-										 id="hidePrice_check"
-										 fontSize="9"
-										 labelPlacement="right"
-										 y="4"
-										 selected="{charge.hidePrice}"/>
-							<mx:Text x="137.5"
-									 y="40"
-									 text="{charge.chargeDefinition.name}"
-									 fontSize="9"
-									 fontWeight="bold"
-									 id="charge_name_text" width="436.5"/>
-							<mx:Text x="10"
-									 y="40"
-									 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Name')}"
-									 fontSize="9"
-									 fontWeight="bold" width="119.5" height="17" textAlign="right"/>
-							<mx:Text x="10"
-									 y="59"
-									 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Description')}"
-									 fontSize="9"
-									 width="120" height="18" textAlign="right"/>
-							<mx:Text x="10"
-									 y="99"
-									 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Notes')}"
-									 fontSize="9" width="119" textAlign="right" height="17"/>
-							<mx:TextInput x="137"
-										  y="57"
-										  width="435"
-										  height="38"
-										  fontSize="9"
-										  id="charge_description_edit"
-										  text="{charge.description}"/>
-							<mx:TextInput x="137"
-										  y="97"
-										  width="435"
-										  height="38"
-										  fontSize="9"
-										  id="charge_notes_edit"
-										  text="{charge.notes}"/>
-							<mx:TextInput x="137"
-										  y="137"
-										  width="435"
-										  height="20"
-										  fontSize="9"/>
-							<mx:HRule height="21"
-									  right="5"
-									  left="5"
-									  y="30"/>
-							<mx:Text x="10"
-									 y="139"
-									 text="Production Location:"
-									 fontSize="9" width="120" textAlign="right"/>
-							<mx:CheckBox x="137"
-										 y="162"
-										 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.ShowNotes')}"
-										 selected="{charge.showNotes}"
-										 id="showNotes_check"/>
-							<mx:TextInput x="456"
-										  y="364"
-										  width="100"
-										  height="20"
-										  text="{Snowmass.getCurrencyFormatter(true, 4).format(charge.price)}"
-										  id="price_edit" visible="false"
-										  focusOut="this.updatePriceEdit()"/>
-							<mx:Text x="339"
-									 y="367"
-									 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Price')}" width="109" height="17" textAlign="right" id="text1" visible="false"/>
-							<ns2:SmallThrobber visible="false" id="pricing_throbber" x="564" y="364" height="20" width="20"/>
-							<mx:LinkButton x="564" y="364" width="20" id="refresh_price_btn" height="20" click="updatePrice()" visible="false">
-								<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
-							</mx:LinkButton>
-							<mx:Button x="509"
-									   y="396"
-									   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Done')}"
+
+						<mx:VBox width="100%" height="491">
+							<mx:HBox width="100%" id="check_boxes_box">
+								<mx:Spacer width="8"/>
+								<mx:CheckBox
+											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
+											 id="finished_check"
+											 fontSize="9"
+											 selected="{charge.finished}" width="75"/>
+								<mx:CheckBox
+											    label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
+											 id="taxable_check"
+											 fontSize="9"
+											 selected="{charge.taxable}" width="65"/>
+								<mx:CheckBox
+											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Brokered')}"
+											 id="brokered_check"
+											 fontSize="9"
+											 selected="{charge.brokered}" width="70"/>
+								<mx:CheckBox
+											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.DisplayQuantity')}"
+											 id="displayQty_check"
+											 fontSize="9"
+											 selected="{charge.displayQty}"/>
+								<mx:CheckBox
+											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Hidden')}"
+											 id="hidden_check"
+											 fontSize="9"
+											 selected="{charge.hidden}" width="64"/>
+								<mx:CheckBox
+											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Hidden')}"
+											 id="hidePrice_check"
+											 fontSize="9"
+											 selected="{charge.hidePrice}" width="64"/>
+							</mx:HBox>
+							<mx:HBox width="100%" id="description_box">
+								<mx:Spacer width="8"/>
+								<mx:Text text="{chargeDefinition.presetDescriptionLabel}" width="25%" id="charge_description_label_text" textAlign="right"/>
+								<mx:TextInput text="{charge.description}" width="100%" id="charge_description_edit"/>
+							</mx:HBox>
+							<mx:HBox width="100%" id="notes_box">
+								<mx:Spacer width="8"/>
+								<mx:Text text="{chargeDefinition.presetNotesLabel}" width="25%" id="charge_notes_label_text" textAlign="right"/>
+								<mx:TextInput text="{charge.notes}" width="100%" id="charge_notes_edit"/>
+							</mx:HBox>
+							<mx:HBox width="100%" id="production_location_box">
+								<mx:Spacer width="8"/>
+								<mx:Text text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionLocation')}" width="25%" id="production_location_label" textAlign="right"/>
+								<mx:TextInput text="{chargeDefinition.location.name}" width="100%" id="location_text" enabled="false"/>
+							</mx:HBox>
+							<mx:HBox width="100%">
+								<mx:Spacer width="30%" height="5"/>
+								<mx:CheckBox
+											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.ShowNotes')}"
+											 id="showNotes_check"
+											 fontSize="9"
+											 selected="{chargeDefinition.presetShowNotes}" width="100%"/>
+							</mx:HBox>
+							<mx:HBox width="100%" height="150">
+							</mx:HBox>
+							<mx:HBox width="100%" height="111" verticalScrollPolicy="off">
+								<mx:VBox width="50%" height="110" verticalScrollPolicy="off" verticalAlign="bottom">
+									<mx:HBox width="100%" id="setup_box">
+										<mx:Spacer width="8"/>
+										<mx:Text text="{chargeDefinition.presetSetupLabel}" width="50%" id="setup_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.setupPrice}" width="50%" id="setup_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="40"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="cuts_box">
+										<mx:Spacer width="8"/>
+										<mx:Text text="{chargeDefinition.presetCutsLabel}" width="50%" id="cuts_label_text" textAlign="right"/>
+										<mx:TextInput text="{(charge as CuttingCharge).cuts}" width="50%" id="cuts_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="40"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="number_of_colors_box">
+										<mx:Spacer width="8"/>
+										<mx:Text text="{chargeDefinition.presetNumberOfColorsLabel}" width="50%" id="number_of_colors_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.presetNumberOfColors}" width="50%" id="number_of_colors_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="40"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="pounds_of_ink_box">
+										<mx:Spacer width="8"/>
+										<mx:Text text="{chargeDefinition.presetPoundsofInkLabel}" width="50%" id="lbs_of_ink_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.presetPoundsofInk}" width="50%" id="lbs_of_ink_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="40"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="coverage_box">
+										<mx:Spacer width="8"/>
+										<mx:Text text="{chargeDefinition.presetCoverageLabel}" width="50%" id="percent_coverage_label_text" textAlign="right"/>
+										<mx:TextInput text="{(charge as InkCharge).coverage}" width="50%" id="percent_coverage_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="40"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="quantity_box">
+										<mx:Spacer width="8"/>
+										<mx:Text text="{chargeDefinition.presetQuantityLabel}" width="50%" id="quantity_label_text" textAlign="right"/>
+										<mx:TextInput text="{charge.quantity}" width="50%" id="quantity_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="40"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="material_quantity_box">
+										<mx:Spacer width="8"/>
+										<mx:Text text="{chargeDefinition.presetMaterialQuantityLabel}" width="50%" id="material_quantity_label_text" textAlign="right"/>
+										<mx:TextInput text="{charge.materialQty}" width="50%" id="material_quantity_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="40"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="material_rate_box">
+										<mx:Spacer width="8"/>
+										<mx:Text text="{chargeDefinition.presetMaterialRateLabel}" width="50%" id="material_rate_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.material}" width="50%" id="material_rate" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="40"/>
+									</mx:HBox>					
+								</mx:VBox>
+								<mx:VBox width="50%" height="110" verticalScrollPolicy="off" verticalAlign="bottom">					
+									<mx:HBox width="100%" id="price_per_pound_box">
+										<mx:Text text="{chargeDefinition.presetPricePerPoundLabel}" width="50%" id="price_lb_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.presetPricePerPound}" width="50%" id="price_lb_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="49"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="cover_per_pound_box">
+										<mx:Text text="{chargeDefinition.presetCoverPerPoundLabel}" width="50%" id="cover_lb_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.presetCoverPerPound}" width="50%" id="cover_lb_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="49"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="weight_box">
+										<mx:Text text="{chargeDefinition.presetTotalWeightLabel}" width="50%" id="total_weight_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.presetTotalWeight}" width="50%" id="total_weight_text" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="49"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="in_sets_of_box">
+										<mx:Text text="{chargeDefinition.presetInSetsOfLabel}" width="50%" id="in_sets_of_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.rateSetCount}" width="50%" id="in_sets_of_text" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="49"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="rate_box">
+										<mx:Text text="{chargeDefinition.presetRateLabel}" width="50%" id="rate_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.rate}" width="50%" id="rate_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="49"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="sheets_per_lift_box">
+										<mx:Text text="{chargeDefinition.presetSheetsPerLiftLabel}" width="50%" id="sheets_per_lift_label_text" textAlign="right"/> 
+										<mx:TextInput text="{chargeDefinition.presetSheetsPerLift}" width="50%" id="sheets_per_lift_text" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="49"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="material_sets_of_box">
+										<mx:Text text="{chargeDefinition.presetMaterialSetsOfLabel}" width="50%" id="material_sets_of_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.materialSetCount}" width="50%" id="material_sets_of_text" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="49"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="area_box">
+										<mx:Text text="{chargeDefinition.presetAreaLabel}" width="50%" id="area_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.presetArea}" width="50%" id="area_text" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="49"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="up_box">
+										<mx:Text text="{chargeDefinition.presetUpLabel}" width="50%" id="up_label_text" textAlign="right"/>
+										<mx:TextInput text="{charge.up}" width="50%" id="up_text" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="49"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="price_box">
+										<mx:Text text="{chargeDefinition.presetPriceLabel}" width="50%" id="price_label_text" textAlign="right"/>
+										<mx:TextInput text="{charge.price}" width="50%" id="price_edit" textAlign="right"/>
+										<ns2:SmallThrobber visible="false" id="pricing_throbber" height="20" width="20"/>
+										<mx:LinkButton width="20" id="refresh_price_btn" height="20" click="updatePrice()" visible="false">
+											<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
+										</mx:LinkButton>
+									</mx:HBox>
+								</mx:VBox>
+							</mx:HBox>
+							<mx:HBox width="100%" horizontalAlign="right">
+							<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Done')}"
 									   click="doDone()"
 									   width="65"
 									   id="done_button"/>
-							<mx:Button x="432"
-									   y="396"
-									   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Add')}"
+							<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Add')}"
 									   click="doAdd()"
 									   width="65"
 									   id="add_button"
 									   enabled="{charge != null}"/>
-							<mx:TextInput x="134"
-										  y="191"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="in_sets_of_edit" visible="false"/>
-							<mx:TextInput x="134"
-										  y="163"
-										  width="100"
-										  height="20"
-										  id="minimum_edit" visible="false"
- 										  focusOut="this.updatePrice()"
-										  text="{charge.minimumCharge}"/>
-							<mx:Text x="10"
-									 y="193"
-									 text="In sets of:&#xd;" width="116" textAlign="right" height="18" id="in_sets_of_label" visible="false"/>
-							<mx:TextInput x="134"
-										  y="212"
-										  width="100"
-										  height="20"
-										  id="material_quantity_edit" visible="false"
- 										  focusOut="this.updateMaterialQty()"
-										  text="{charge.materialQty}"/>
-							<mx:TextInput x="134"
-										  y="233"
-										  width="100"
-										  height="20"
-										  id="material_edit" visible="false"
- 										  focusOut="this.updatePrice()"
-										  text="{charge.chargeDefinition.minimum}"/>
-<!--							<mx:TextInput x="134"
-										  y="254"
-										  width="100"
-										  height="20"
-										  id="time_start_edit" visible="false"/>
--->							
-			                <ns2:TimeEntry id="time_start_edit" showSeconds="false" is24Hour="true" x="81" y="283"
-			                          backgroundColor="#000000" backgroundAlpha="0.05"
-			                          borderColor="#999999" borderThickness="1" borderStyle="solid" cornerRadius="5"  visible="false" dataChange="updatePrice()"/> 
-			                          
-							<mx:TextInput x="134"
-										  y="275"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updateQty()"
-										  id="quantity_edit" visible="false"/>
-							<mx:TextInput x="366"
-										  y="270"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="up_edit" visible="false"/>
-							<mx:Text x="10"
-									 y="256"
-									 text="Time start:&#xd;" width="116" textAlign="right" height="18" id="time_start_label" visible="false"/>
-							<mx:Text x="10"
-									 y="277"
-									 text="Quantity:&#xd;" width="116" textAlign="right" height="18" id="quantity_label" visible="false"/>
-<!--							<mx:TextInput x="366"
-										  y="249"
-										  width="100"
-										  height="20"
-										  id="time_stop_edit" visible="false"/>
--->							
-			                <ns2:TimeEntry id="time_stop_edit" showSeconds="false" is24Hour="true" x="366" y="249"
-			                          backgroundColor="#000000" backgroundAlpha="0.05"
-			                          borderColor="#999999" borderThickness="1" borderStyle="solid" cornerRadius="5"  visible="false" dataChange="updatePrice()"/> 
-
-							<mx:Text x="242"
-									 y="251"
-									 text="Time stop:&#xd;&#xd;" width="116" textAlign="right" height="18" id="time_stop_label" visible="false"/>
-							<mx:Text x="242"
-									 y="272"
-									 text="Up:&#xd;" width="116" textAlign="right" height="18" id="up_label" visible="false"/>
-							<mx:Text x="10"
-									 y="235"
-									 text="Material:&#xd;" width="116" textAlign="right" height="18" id="material_label" visible="false"/>
-							<mx:TextInput x="366"
-										  y="186"
-										  width="100"
-										  height="20"
-										  text="{Snowmass.getCurrencyFormatter(true, 4).format(charge.rate)}"
- 										  focusOut="this.updateRate()"
-										  id="rate_edit" visible="false"/>
-							<mx:Text x="242"
-									 y="188"
-									 text="Rate:&#xd;" width="116" textAlign="right" height="18" id="rate_label" visible="false"/>
-							<mx:TextInput x="366"
-										  y="207"
-										  width="100"
-										  height="20"
-										  id="material_in_sets_of_edit" visible="false"
- 										  focusOut="this.updatePrice()"
-										  text="{charge.materialSets}"/>
-							<mx:TextInput x="366"
-										  y="228"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="quantity_per_set_edit" visible="false"/>
-							<mx:Text x="242"
-									 y="231"
-									 text="Qty/set:&#xd;" width="116" textAlign="right" height="18" id="quantity_per_set_label" visible="false"/>
-							<mx:Text x="242"
-									 y="209"
-									 text="In sets of:" width="116" textAlign="right" height="18" id="material_in_sets_of_label" visible="false"/>
-							<mx:Text x="10"
-									 y="214"
-									 text="Mtrl Qty:&#xd;" width="116" textAlign="right" height="18" id="material_quantity_label" visible="false"/>
-							<mx:Text x="10"
-									 y="165"
-									 text="Minimum:" width="116" textAlign="right" height="18" id="minimum_label" visible="false"/>
-							<mx:TextInput x="134"
-										  y="296"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="cuts_edit" visible="false"/>
-							<mx:Text x="10"
-									 y="298"
-									 text="Cuts:&#xd;" width="116" textAlign="right" height="18" id="cuts_label" visible="false"/>
-							<mx:TextInput x="134"
-										  y="317"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="percent_coverage_edit" visible="false"/>
-							<mx:Text x="10"
-									 y="319"
-									 text="Pct. Coverage:&#xd;" width="116" textAlign="right" height="18" id="percent_coverage_label" visible="false"/>
-							<mx:TextInput x="366"
-										  y="312"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="total_weight_edit" visible="false"/>
-							<mx:TextInput x="134"
-										  y="391"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="cover_lb_edit" visible="false"/>
-							<mx:Text x="10"
-									 y="393"
-									 text="Cover/Lb:&#xd;" width="116" textAlign="right" height="18" id="cover_lb_label" visible="false"/>
-							<mx:TextInput x="134"
-										  y="384"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="price_lb_edit" visible="false"/>
-							<mx:Text x="10"
-									 y="386"
-									 text="Price/Lb:&#xd;" width="116" textAlign="right" height="18" id="price_lb_label" visible="false"/>
-							<mx:Text x="242"
-									 y="314"
-									 text="Total Weight&#xd;" width="116" textAlign="right" height="18" id="total_weight_label" visible="false"/>
-							<mx:Text x="10"
-									 y="341"
-									 text="Ship Via:&#xd;" width="116" textAlign="right" height="18" id="ship_via_label" visible="false"/>
-							<mx:TextInput x="366"
-										  y="291"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="lbs_of_ink_edit" visible="false"/>
-							<mx:Text x="242"
-									 y="293"
-									 text="Lbs of Ink:&#xd;" width="116" textAlign="right" height="18" id="lbs_of_ink_label" visible="false"/>
-							<mx:TextInput x="366"
-										  y="165"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="number_of_colors_edit" visible="false"/>
-							<mx:TextInput x="366"
-										  y="333"
-										  width="100"
-										  height="20"
- 										  focusOut="this.updatePrice()"
-										  id="area_edit" visible="false"/>
-							<mx:Text x="242"
-									 y="167"
-									 text="# of Colors:&#xd;" width="116" textAlign="right" height="18" id="number_of_colors_label" visible="false"/>
-							<mx:Text x="242"
-									 y="335"
-									 text="Area:&#xd;" width="116" textAlign="right" height="18" id="area_label" visible="false"/>
-							<mx:CheckBox x="517"
-										 y="212"
- 										  focusOut="this.updatePrice()"
-										 id="linear_charge_location_top_check0" visible="false"/>
-							<mx:CheckBox x="542"
-										 y="243"
- 										  focusOut="this.updatePrice()"
-										 id="linear_charge_location_right_check0" visible="false"/>
-							<mx:CheckBox x="493"
-										 y="243"
- 										  focusOut="this.updatePrice()"
-										 id="linear_charge_location_left_check0" visible="false"/>
-							<mx:CheckBox x="517"
-										 y="273"
- 										  focusOut="this.updatePrice()" 
-										 id="linear_charge_location_bottom_check0" visible="false"/>
-							<mx:Panel x="515" y="238" width="19" height="27" layout="absolute" borderThicknessBottom="2" borderThicknessLeft="2" borderThicknessRight="2" borderThicknessTop="2" headerHeight="0" dropShadowEnabled="false" borderColor="#000000" id="panel1" visible="false">
-							</mx:Panel>
-							<mx:ComboBox x="134" y="339" id="ship_via_combo" width="100" visible="false"></mx:ComboBox>
-
-						</mx:Canvas>
+							</mx:HBox>
+						</mx:VBox>
 					</mx:VDividedBox>
 				</mx:Canvas>
 			</mx:HDividedBox>

@@ -1,5 +1,6 @@
 package com.efi.printsmith.pricing.charge;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 
 import org.apache.log4j.Logger;
@@ -30,9 +31,9 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 		long qty = 0;
 		double inches = 0.0;
 		double pounds = 0.0;
-		double price = 0.0;
-		double costingSetup = 0.0;
-		double costingMaterialPrice = 0.0;
+		BigDecimal price = new BigDecimal(0.0);
+		BigDecimal costingSetup = new BigDecimal(0.0);
+		BigDecimal costingMaterialPrice = new BigDecimal(0.0);
 		
 		if (chargeDefinition == null) return localCharge;
 		// TODO: Include NewInkCharge call from PrintSmith
@@ -47,14 +48,14 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 				if (!localCharge.getOverrideRate()) {
 					localCharge.setRate(prices.unitPrice);
 				}
-				costingSetup = prices.setupPrice + prices.materialSetupPrice;
+				costingSetup.add(prices.setupPrice).add(prices.materialSetupPrice);
 				costingMaterialPrice = prices.materialUnitPrice;
 			} catch (Exception e) {
 				log.error(e);
 			}			
 		}
 		if (chargeDefinition.getRateSetCount() == 0) {
-			price = 0.0;
+			price = new BigDecimal(0.0);
 		} else {
 			if (chargeDefinition.getUseColors()) {
 				if (job.getFrontColors() > job.getBackColors()) {
@@ -129,18 +130,18 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 			
 			pounds *= colors;
 			
-			price = pounds * localCharge.getRate().doubleValue();
+			price = new BigDecimal(pounds * localCharge.getRate().doubleValue());
 			localCharge.setPoundsOfInk(pounds);
 			chargeDefinition.setMaterialSetCount(pounds);
 		}
 		if (chargeDefinition.getPriceMethod().equals(ChargePriceMethod.CostPlus.name())) {
-			price += costingSetup;
-			price += costingMaterialPrice * charge.getMaterialQty();
+			price = price.add(costingSetup);
+			price = price.add(costingMaterialPrice.multiply(new BigDecimal(charge.getMaterialQty()))); 
 		} else {
 			if (chargeDefinition.getUseSetup()) {
-				price += chargeDefinition.getSetupPrice().doubleValue();
+				price = price.add(chargeDefinition.getSetupPrice());
 			}
-			price += PriceListUtilities.calculatePriceListPrice((long)pounds, chargeDefinition.getPriceList(), price, (Job)job);
+			price = price.add(new BigDecimal(PriceListUtilities.calculatePriceListPrice((long)pounds, chargeDefinition.getPriceList(), price.doubleValue(), (Job)job)));
 		}
 		
 		localCharge.setPrice(price);

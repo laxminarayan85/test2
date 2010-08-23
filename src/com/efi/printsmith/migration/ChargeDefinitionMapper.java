@@ -63,6 +63,32 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else {
 				Charge charge = new Charge();
 				ChargeDefinition chargeDefinition = new ChargeDefinition();
+
+				/* TODO: These strings need to come in from PrintSmith, until then use english defaults */
+				chargeDefinition.setPresetDescriptionLabel("Description");
+				chargeDefinition.setPresetInSetsOfLabel("In sets of:");
+				chargeDefinition.setPresetMaterialRateLabel("Material:");
+				chargeDefinition.setPresetMaterialQuantityLabel("Material Quantity:");
+				chargeDefinition.setPresetMaterialSetsOfLabel("In sets of:");
+				chargeDefinition.setPresetNotesLabel("Notes:");
+				chargeDefinition.setPresetPriceLabel("Price:");
+				chargeDefinition.setPresetQuantityLabel("Quantity:");
+				chargeDefinition.setPresetQuantityPerSetLabel("Qty/Set:");
+				chargeDefinition.setPresetRateLabel("Rate:");
+				chargeDefinition.setPresetSetupLabel("Setup:");
+				chargeDefinition.setPresetUpLabel("Up:");
+				chargeDefinition.setPresetTimeStartLabel("Time Start:");
+				chargeDefinition.setPresetTimeStopLabel("Time Stop:");
+				chargeDefinition.setPresetNumberOfColorsLabel("Colors");
+				chargeDefinition.setPresetCoverageLabel("Pct. Coverage:");
+				chargeDefinition.setPresetPricePerPoundLabel("Price/Lb:");
+				chargeDefinition.setPresetPoundsOfInkLabel("Pounds of Ink");
+				chargeDefinition.setPresetTotalWeightLabel("Total Weight");
+				chargeDefinition.setPresetAreaLabel("Area:");
+				chargeDefinition.setPresetCutsLabel("Cuts:");		
+				chargeDefinition.setPresetSheetsPerLiftLabel("Sheets/Lift");			
+				chargeDefinition.setPresetCoverPerPoundLabel("Coverage/lb");
+				
 				SalesCategory salesCategory = null;
 				newCommand = false;
 				newCategory = false;

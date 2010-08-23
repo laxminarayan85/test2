@@ -1,5 +1,7 @@
 package com.efi.printsmith.service;
 
+import java.math.BigDecimal;
+
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.Charge;
@@ -23,15 +25,15 @@ public class ChargeService extends SnowmassHibernateService{
 	
 	public ChargeCostingPrices calculateChargeCostingRate(ChargeDefinition chargeDefinition, Charge charge) throws Exception {
 		ChargeCostingPrices prices = new ChargeCostingPrices();
-		prices.setupPrice = 0.0;
-		prices.unitPrice = 0.0;
+		prices.setupPrice = new BigDecimal(0.0);
+		prices.unitPrice = new BigDecimal(0.0);
 		
 		if (chargeDefinition == null) {
 			throw new Exception("null chargeDefinition passed to calculateChargeCostingRate");
 		}
 		ChargeCost chargeCost = chargeDefinition.getChargeCost();
 		
-		if (chargeCost != null) {
+		if (chargeCost != null && chargeCost.getCostingMethod() != null) {
 			if (chargeCost.getCostingMethod().equals(ChargeCostMethod.HundredPercent.name())) {
 				prices.setSetupPrice(0.0);
 				prices.setUnitPrice(0.0);			

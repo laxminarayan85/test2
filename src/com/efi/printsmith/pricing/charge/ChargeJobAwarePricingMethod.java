@@ -1,5 +1,7 @@
 package com.efi.printsmith.pricing.charge;
 
+import java.math.BigDecimal;
+
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.Job;
@@ -11,18 +13,18 @@ import com.efi.printsmith.service.ChargeService;
 public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 	public Charge priceCharge(Charge charge) {
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
-		double rate = 0;
+		BigDecimal rate = new BigDecimal(0);
 		double lookupQty = 0;
-		double price = 0;
-		double materialPrice = 0;
-		double setupPrice = 0;
+		BigDecimal price = new BigDecimal(0);
+		BigDecimal materialPrice = new BigDecimal(0);
+		BigDecimal setupPrice = new BigDecimal(0);
 		long runs = 0;
 		long originals = 0;
 		long ups = 0;
 		double setCount = 0;
 		double materialQty = 0.0;
 		double rateQty = 0.0;
-		double ratePrice = 0.0;
+		BigDecimal ratePrice = new BigDecimal(0);
 		
 		JobBase job = charge.getParentJob();
 		
@@ -110,14 +112,14 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 					charge.setRate(prices.unitPrice);
 				}
 				
-				price = prices.setupPrice + (charge.getQuantity()*charge.getRate().doubleValue());
+				price = prices.setupPrice.add((charge.getRate().multiply(new BigDecimal(charge.getQuantity()))));
 			} catch (Exception e) {
 				log.error(e);
 			}
 		} else {
 			
 			if (chargeDefinition.getUseSetup()) {
-				setupPrice = chargeDefinition.getSetupPrice().doubleValue();
+				setupPrice = chargeDefinition.getSetupPrice();
 				
 				if (chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets)) {
 					// TODO account for booklets here
@@ -136,7 +138,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 				}
 				lookupQty = materialQty;
 				charge.setMaterialQty(materialQty);
-				materialPrice = materialQty * chargeDefinition.getMaterial().doubleValue();
+				materialPrice = chargeDefinition.getMaterial().multiply(new BigDecimal(materialQty));
 			}
 			
 			if (chargeDefinition.getUseRate()) {
@@ -152,7 +154,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 				}
 				lookupQty = rateQty;
 				charge.setQuantity(rateQty);
-				ratePrice = rateQty * charge.getRate().doubleValue();
+				ratePrice = charge.getRate().multiply(new BigDecimal(rateQty));
 //				TODO: additional booklet stuff here
 //				if (chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets) ||
 //						chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets)) {
@@ -161,11 +163,11 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 			} else if (!chargeDefinition.getUseMaterial() && chargeDefinition.getPriceList() != null) {
 				// TODO: Additional booklet code here
 				lookupQty = charge.getQuantity();
-				ratePrice = PriceListUtilities.lookupPrice(chargeDefinition.getPriceList(), (long)lookupQty);
+				ratePrice = new BigDecimal(PriceListUtilities.lookupPrice(chargeDefinition.getPriceList(), (long)lookupQty));
 			}
-			price = setupPrice + materialPrice + ratePrice;
+			price = setupPrice.add(materialPrice).add(ratePrice);
 
-			price += PriceListUtilities.calculatePriceListPrice((long)lookupQty, chargeDefinition.getPriceList(), price, (Job)job);
+			price = price.add(new BigDecimal(PriceListUtilities.calculatePriceListPrice((long)lookupQty, chargeDefinition.getPriceList(), price.doubleValue(), (Job)job)));
 		}
 		charge.setPrice(price);
 		return charge;

@@ -1,5 +1,6 @@
 package com.efi.printsmith.pricing.charge;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -21,7 +22,7 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 
 	public Charge priceCharge(Charge charge) {
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
-		double price = 0.0;
+		BigDecimal price = new BigDecimal(0.0);
 		
 		if (chargeDefinition == null) {
 			log.error("Null ChargeDefinition in Charge.");
@@ -45,19 +46,19 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 			rateQuantity = this.calculateChargeTimeQuantity(charge)/60;
 			materialQuantity = rateQuantity;
 		} else if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Quantity.name())) {
-			materialQuantity = charge.getQuantity();
+			rateQuantity = charge.getQuantity();
 		} else {
 			log.error("Invalid ChargeQtyType in Charge: " + chargeDefinition.getQuantityType());
 		}
 				
 		if (chargeDefinition.getPriceMethod().equals(ChargePriceMethod.PiecePrice.name())) {
-			double setupPrice = this.calculateSetupPrice(charge);
+			BigDecimal setupPrice = this.calculateSetupPrice(charge);
 			
-			double materialPrice = this.calculateMaterialPrice(charge);
+			BigDecimal materialPrice = this.calculateMaterialPrice(charge);
 
-			double ratePrice = this.calculateRatePrice(charge);
+			BigDecimal ratePrice = this.calculateRatePrice(charge);
 			
-			price = setupPrice + materialPrice + ratePrice;			
+			price = setupPrice.add(materialPrice).add(ratePrice);			
 		} else if (chargeDefinition.getPriceMethod().equals(ChargePriceMethod.CostPlus.name())) {
 			ChargeService chargeService = new ChargeService(); //TODO: This needs to be outside of the service.
 			
@@ -67,11 +68,12 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 				if (!charge.getOverrideRate()) {
 					charge.setRate(prices.unitPrice);
 				}
-				price = prices.setupPrice + prices.materialSetupPrice;
+				price = prices.setupPrice.add(prices.materialSetupPrice);
 				
-				price += rateQuantity*charge.getRate().doubleValue();
+				price = price.add(charge.getRate().multiply(new BigDecimal(rateQuantity)));
+
 				if (!chargeDefinition.getQuantityType().equals(ChargeQtyType.Time.name())) {
-					price += materialQuantity*prices.materialUnitPrice;
+					price.add(prices.materialUnitPrice.multiply(new BigDecimal(materialQuantity)));
 				}
 			} catch (Exception e) {
 				log.error(e);
@@ -80,39 +82,43 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 			log.error("Invalid ChargePriceMethod in Charge: " + chargeDefinition.getPriceMethod());
 		}
 		
+		if (chargeDefinition.getMinimum().doubleValue() > price.doubleValue()) {
+			price = chargeDefinition.getMinimum();
+		}
 		charge.setPrice(price);
 		return charge;
 	}
 
-	private double calculateSetupPrice(Charge charge) {
-		double retVal = 0.0;
+	private BigDecimal calculateSetupPrice(Charge charge) {
+		BigDecimal retVal = new BigDecimal(0.0);
 		
 		if (charge.getChargeDefinition().getUseSetup()) {
-			retVal = charge.getChargeDefinition().getSetupPrice().doubleValue();
+			retVal = charge.getChargeDefinition().getSetupPrice();
 		}
 		
 		if (charge.getChargeDefinition().getQuantityType().equals(ChargeQtyType.SetupSets.name())) {
-			retVal *= charge.getSets();
+			retVal = new BigDecimal(retVal.doubleValue() * charge.getSets());
 		}
 		
 		return retVal;
 	}
 	
-	private double calculateMaterialPrice(Charge charge) {
-		double retVal = 0.0;
+	private BigDecimal calculateMaterialPrice(Charge charge) {
+		BigDecimal retVal = new BigDecimal(0.0);
 		
 		if (charge.getChargeDefinition().getUseMaterial()) {
 			if (charge.getChargeDefinition().getUseMaterialSets()) {
 				materialQuantity = this.calculateChargeSets(materialQuantity, 1, 1, charge.getChargeDefinition().getMaterialSetCount());
 			}
-			retVal = materialQuantity * charge.getChargeDefinition().getMaterial().doubleValue();
+			retVal = new BigDecimal(materialQuantity * charge.getChargeDefinition().getMaterial().doubleValue());
 		}
-		priceListLookupQuantity = retVal; // Use material quantity if nothing later in the pricing process is found
+		priceListLookupQuantity = materialQuantity; // Use material quantity if nothing later in the pricing process is found
+		
 		return retVal;
 	}
 	
-	private double calculateRatePrice(Charge charge) {
-		double retVal = 0.0;
+	private BigDecimal calculateRatePrice(Charge charge) {
+		BigDecimal retVal = new BigDecimal(0.0);
 		double tmpQty = 0.0;
 		
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
@@ -123,11 +129,11 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		}
 		
 		priceListLookupQuantity = tmpQty; // Use this quantity to lookup price list price if needed
-		retVal = tmpQty * charge.getRate().doubleValue();
+		retVal = new BigDecimal(tmpQty * charge.getRate().doubleValue());
 
 		if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets) ||
 				chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets)) {
-			retVal *= charge.getSets();
+			retVal = new BigDecimal(retVal.doubleValue() * charge.getSets());
 		}
 		return retVal;
 	}

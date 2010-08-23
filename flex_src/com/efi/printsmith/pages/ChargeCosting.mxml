@@ -75,7 +75,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 //		dataService.addUpdate(chargeCost);        
 	}
     private function MaptoChargeCost():void{
-    	chargeCost.costingMethod = costing_method_combo.selectedItem as String
+    	chargeCost.costingMethod = costing_method_combo.selectedItem.data
     	chargeCost.fixedMaterials = parseFloat(fixed_materials_edit.text);
     	chargeCost.laborRate = parseFloat(labor_rate_edit.text);
     	chargeCost.piecesPerHour = parseFloat(pieces_per_hour_edit.text);
@@ -97,16 +97,26 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     	else
     		total_cost_text.text = Snowmass.getCurrencyFormatter(false,2).format(totalCost);
     		
-    	if(ChargeCostMethod.UnitCost != costing_method_combo.selectedItem as String)
-    		setup_cost_edit.text ="";
+//    	if(ChargeCostMethod.UnitCost != costing_method_combo.selectedItem as String)
+//    		setup_cost_edit.text ="";
     	
     	
     }
 	private function creationCompleteHandler():void { 
-		costing_method_combo.selectedItem = chargeCost.costingMethod as String;
+		costing_method_combo.selectedIndex = findItem(chargeCost.costingMethod,ChargeCostMethod.toArray());
+//		costing_method_combo.selectedItem = chargeCost.costingMethod;
 		updateControlState();
 		updateDates();
 		calculateTotalUnit(null);
+	}
+
+	private function findItem(name:String, array:Array):int {
+		for each(var element:Object in array) {
+			if (name == element.data) {
+				return array.indexOf(element);
+			}
+		}
+		return -1;
 	}
 	                                
 	private function resetFocus():void {                           
@@ -166,8 +176,10 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	}
 	
 	private function updateControlState():void{
-		var temp:String	
-		temp = costing_method_combo.selectedItem as String;
+		var temp:String = "";
+		if (costing_method_combo.selectedItem != null) {
+			temp = costing_method_combo.selectedItem.data;
+		}
 		switch (temp) {
 			
 			case ChargeCostMethod.HundredPercent:

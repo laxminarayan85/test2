@@ -950,7 +950,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function updateControlState():void {
 		var newCanvas:Canvas=blank_canvas;
 		if (charge_method_combo.selectedItem != null)
-			updateQtyComboBox(charge_method_combo.selectedItem.toString());
+			updateQtyComboBox(charge_method_combo.selectedItem.data);
 		if (charge_method_combo.selectedItem.data == ChargeMethod.Ask) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1740,7 +1740,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	 		in_sets_edit.text = "";
 	}
 	private function UpdatePriceMethod(): void{
-		if (pricing_method.selectedValue == "CostPlus") {
+		if (charge != null && pricing_method.selectedValue == "CostPlus") {
 			markup_edit.text = charge.markup.toString();
 			sale_price_per_unit_edit.text = costPricingString;
 			rate_edit.text = "";
@@ -1841,71 +1841,70 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 ]]>
                              
 </mx:Script>
-<mx:CurrencyValidator id="currency_check"
-	source="{rate_edit}"
-	property="text" currencySymbol="$" trigger="{save_button}" triggerEvent="click"/>
     <mx:Dissolve id="dissolveOut" duration="400" alphaFrom="1.0" alphaTo="0.0"/>
     <mx:Dissolve id="dissolveIn" duration="400" alphaFrom="0.0" alphaTo="1.0"/>
 
 <mx:VBox width="100%" height="100%">
     	<mx:Canvas width="100%" height="100%">
-		<mx:Button x="353" y="9" width="38" height="38" click="doSave();" enabled="{enableSave}" id="save_button">
-			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
-		</mx:Button>
-		<mx:Label x="353" y="45" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
-		<mx:Button x="406" y="9" width="38" height="38" id="duplicate_button" click="doDuplicateCharge()" enabled="{enableDuplicate}">
-			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
-		</mx:Button>
-		<mx:Label x="392" y="45" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="66" textAlign="center"/>
-		<mx:Button x="130.5" y="10" width="38" height="38" id="new_category_button" click="doNewCategory()" enabled="{enableNewCategory}">
-			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
-		</mx:Button>
-		<mx:Button x="216.5" y="10" width="38" height="38" click="doNewCharge()" id="new_charge_button" enabled="{enableNewCharge}">
-			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
-		</mx:Button>
-
-		<mx:Button x="297" y="9" width="38" height="38" id="btnExport" enabled="false">
-			<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
-		</mx:Button>
-		<mx:Label x="287" y="45" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="58" textAlign="center"/>
-		
-		<mx:Button x="462" y="9" width="38" height="38" click="doDelete()" id="delete_button">
-			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
-		</mx:Button>
-		<mx:Label x="452" y="45" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
-		<mx:Button x="545" y="9" width="38" height="38" id="revert_button" click="doRevert()">
-			<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
-		</mx:Button>
-		<mx:Label x="535" y="45" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
-		<mx:Button x="643" y="10" width="38" height="38" id="preset_info_button" click="doPresetInfo()">
-			<mx:icon>@Embed(source='../../../../assets/presets.png')</mx:icon>
-		</mx:Button>
-		<mx:Label x="625" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PresetInfo')}" width="68" textAlign="center"/>
-		<mx:Button x="701" y="10" width="38" height="38" click="doCosting()" id="costing_button">
-			<mx:icon>@Embed(source='../../../../assets/costing.png')</mx:icon>
-		</mx:Button>
-		<mx:Label x="689" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Costing')}" width="63" textAlign="center"/>
-		<mx:Label x="109" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefFindCmd.Category')}" width="81" textAlign="center"/>
-		<mx:Button x="42" y="10" width="38" height="38" id="new_command_button" click="doNewCommand()" enabled="{enableNewCommand}">
-			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
-		</mx:Button>
-		<mx:Label x="16" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefFindCmd.Command')}" width="90" textAlign="center"/>
-		<mx:Label x="198" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Charges')}" width="81" textAlign="center"/>
 		<mx:RadioButtonGroup id="area_group" selectedValue="{selected_area_group}" change="area_group_change(event)"/>
 		<mx:RadioButtonGroup id="pricing_method" selectedValue="{pricingMethodRadioValue}" change="UpdatePriceMethod();"/>
 
-		<mx:HDividedBox x="0" y="71" width="100%" height="100%" liveDragging="true">
+		<mx:HDividedBox x="0" y="0" width="100%" height="740" liveDragging="true">
 			<mx:Canvas height="100%" width="227">
 				<mx:Tree width="100%" render="renderFunction()" folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" id="chargeTree" dataProvider="{chargeCommands}" 
-						labelFunction="treeLabel" visible="true" enabled="true" click = "tree_itemClick(event);" dataChange="treeSelectionChanged(event)" change="treeSelectionChanged(event);" bottom="36" top="0"></mx:Tree>
+						labelFunction="treeLabel" visible="true" enabled="true" click = "tree_itemClick(event);" dataChange="treeSelectionChanged(event)" change="treeSelectionChanged(event);" bottom="100" top="0"></mx:Tree>
 				<!--<mx:FormItem width="217" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kPSSharedFolderCmd.Filter')}" height="28" bottom="0">
 					<mx:TextInput width="100%" id="tree_filter" change="refreshData()"/>
 				</mx:FormItem>-->
 				<comp:SmallThrobber id="throbber" height="20" width="20" x="103.5" y="95"/>
-				<common:TreePickerFilter searchClassName="com.efi.printsmith.data::ChargeDefinition" height="22" bottom="5"   searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}"  right="0" width="100%"/>
+				<mx:Button x="10" y="572" width="20" height="20" id="new_command_button" click="doNewCommand()" enabled="{enableNewCommand}" bottom="78">
+					<mx:icon>@Embed(source='../../../../assets/new_small.png')</mx:icon>
+				</mx:Button>
+				<mx:Label x="38" y="574" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefFindCmd.Command')}" width="179" textAlign="left" bottom="80"/>
+				<mx:Button x="10" width="20" height="20" id="new_category_button" click="doNewCategory()" enabled="{enableNewCategory}" bottom="54">
+					<mx:icon>@Embed(source='../../../../assets/new_small.png')</mx:icon>
+				</mx:Button>
+				<mx:Label x="38" y="597" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefFindCmd.Category')}" width="179" textAlign="left" bottom="56"/>
+				<mx:Button x="10" y="618" width="20" height="20" click="doNewCharge()" id="new_charge_button" enabled="{enableNewCharge}" bottom="30">
+					<mx:icon>@Embed(source='../../../../assets/new_small.png')</mx:icon>
+				</mx:Button>
+				<mx:Label x="38" y="620" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Charges')}" width="179" textAlign="left" bottom="32"/>
+				<common:TreePickerFilter searchClassName="com.efi.printsmith.data::ChargeDefinition" height="22" bottom="5"   searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}"  right="0" width="100%">
+				</common:TreePickerFilter>
 			</mx:Canvas>
-				
-		<mx:ViewStack id="charge_stack" width="70%" height="100%" minWidth="575" creationPolicy="all">
+		<mx:VBox height="739" verticalScrollPolicy="off">
+
+		<mx:Canvas x="80" y="10" width="491" height="58" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+			<mx:Button x="76" y="2" width="38" height="38" click="doSave();" enabled="{enableSave}" id="save_button">
+				<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+			</mx:Button>
+			<mx:Label x="76" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
+			<mx:Button x="129" y="2" width="38" height="38" id="duplicate_button" click="doDuplicateCharge()" enabled="{enableDuplicate}">
+				<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+			</mx:Button>
+			<mx:Label x="115" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="66" textAlign="center"/>
+			<mx:Button x="20" y="2" width="38" height="38" id="btnExport" enabled="false">
+				<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
+			</mx:Button>
+			<mx:Label x="10" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="58" textAlign="center"/>
+			<mx:Button x="185" y="2" width="38" height="38" click="doDelete()" id="delete_button">
+				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+			</mx:Button>
+			<mx:Label x="175" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
+			<mx:Button x="268" y="2" width="38" height="38" id="revert_button" click="doRevert()">
+				<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
+			</mx:Button>
+			<mx:Label x="258" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
+			<mx:Button x="366" y="3" width="38" height="38" id="preset_info_button" click="doPresetInfo()">
+				<mx:icon>@Embed(source='../../../../assets/presets.png')</mx:icon>
+			</mx:Button>
+			<mx:Label x="348" y="39" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PresetInfo')}" width="68" textAlign="center"/>
+			<mx:Button x="424" y="3" width="38" height="38" click="doCosting()" id="costing_button">
+				<mx:icon>@Embed(source='../../../../assets/costing.png')</mx:icon>
+			</mx:Button>
+			<mx:Label x="412" y="39" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Costing')}" width="63" textAlign="center"/>
+		</mx:Canvas>
+			<mx:ViewStack id="charge_stack" width="100%" height="100%" minWidth="575" creationPolicy="all">
 			<mx:Canvas label="charge_blank_canvas" width="100%" height="100%" id="charge_blank_canvas">
 			</mx:Canvas> 
 			<mx:Canvas label="charge_canvas" width="100%" height="100%" id="charge_canvas" verticalScrollPolicy="auto" horizontalScrollPolicy="off">
@@ -1936,15 +1935,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:CheckBox x="231" y="115" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.TrackerPreProduction')}" id="tracker_pre_production_check" selected="{charge.preproduction}"/>
 					<mx:CheckBox x="375" y="115" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignoreglobalpricecha')}" id="ignore_global_price_changes_check" selected="{charge.ignoreGlobalPriceChanges}"/>
 					<mx:CheckBox  visible="false" x="231" y="145" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.IntegratedCTPDevice')}" id="integrated_ctp_device_check" selected="{charge.integratedCTP}" enabled="false"/>
-					<mx:TextInput x="100" y="210" width="90" id="fixed_spoilage_edit" text="{charge.fixedWaste}"/>
-					<mx:TextInput x="134" y="235" width="56" id="base_linear_quantity_edit" text="{charge.baseLinearNumber}"/>
+					<mx:TextInput x="100" y="210" width="90" id="fixed_spoilage_edit" text="{charge.fixedWaste}" textAlign="right"/>
+					<mx:TextInput x="134" y="235" width="56" id="base_linear_quantity_edit" text="{charge.baseLinearNumber}" textAlign="right"/>
 					<mx:HRule x="3" y="194" width="710" height="8" id="hrule1"/>
 					<mx:HRule x="3" y="264" width="710" height="8" id="hrule2"/>
-					<mx:HRule x="3" y="388" width="710" height="8" id="hrule3"/>
+					<mx:HRule x="3" y="384" width="710" height="8" id="hrule3"/>
 					<mx:CheckBox x="209" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumCharge')}" id="minimum_charge_check" selected="{charge.useMinimumCharge}"/>
-					<mx:TextInput x="342" y="210" width="96" id="minimum_charge_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(charge.minimum)}" enabled="{minimum_charge_check.selected}"/>
+					<mx:TextInput x="342" y="210" width="96" id="minimum_charge_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(charge.minimum)}" enabled="{minimum_charge_check.selected}" textAlign="right"/>
 					<mx:CheckBox x="209" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumTime')}" id="minimum_time_check" selected="{charge.useMinimumTime}"/>
-					<mx:TextInput x="342" y="235" width="96" id="minimum_time_edit" text="{charge.minimumTime}" enabled="{minimum_time_check.selected}"/>
+					<mx:TextInput x="342" y="235" width="96" id="minimum_time_edit" text="{charge.minimumTime}" enabled="{minimum_time_check.selected}" textAlign="right"/>
 					
 					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.RunArea')}" groupName="area_group" id="run_area_radio" width="112" value="RunArea"/>
 					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CutsarePrePress')}" id="cut_prepress_radio" width="112"/>
@@ -1953,52 +1952,52 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignorecuts')}" id="Ignorecuts_radio" width="112"/>
 					
 					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio" width="93" value="CostPlus" />
-					<mx:RadioButton x="4" y="304" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio" width="93" value="PiecePrice" />
-					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}" enabled="{cost_plus_radio.selected}" focusOut="UpdateChargeCosting();"/>
-					<mx:Text x="422" y="282" width="291" id="sale_price_per_unit_edit" text="{costPricingString}" height="17"/>
-					<mx:CheckBox x="105" y="306" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check" selected="{charge.useSetup}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice();" />
-					<mx:TextInput x="182" y="306" width="124" id="setup_edit" enabled="{setup_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.setupPrice)}"/>
-					<mx:CheckBox x="105" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate')}" id="rate_check" selected="{charge.useRate}" width="69" enabled="{piece_pricing_radio.selected}" change="UpdateAdj();"/>
-					<mx:TextInput x="182" y="329" width="124" id="rate_edit" enabled="{rate_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.rate)}"/>
-					<mx:CheckBox x="105" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Material')}" id="material_check" selected="{charge.useMaterial}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice2();"/>
-					<mx:TextInput x="182" y="352" width="124" id="material_edit" enabled="{material_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.material)}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Area')}" id="area_check" selected="{charge.useArea}" width="118" enabled="{rate_check.selected}" change="UpdateAdjset()"/>
-					<mx:TextInput x="446" y="329" width="124" id="area_edit" enabled="{area_check.selected}" text="{charge.area}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}" id="in_sets_check" selected="{charge.useRateSets}" width="118" enabled="{rate_check.selected}" change="UpdateAdjset()"/>
-					<mx:TextInput x="446" y="329" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}" text="{charge.rateSetCount}"/>
-					<mx:Label x="314" y="282" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.SalePriceperUnit')}" id="label1"/>
+					<mx:RadioButton x="4" y="301" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio" width="93" value="PiecePrice" />
+					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}" enabled="{cost_plus_radio.selected}" focusOut="UpdateChargeCosting();" textAlign="right"/>
+					<mx:Text x="422" y="282" width="90" id="sale_price_per_unit_edit" text="{costPricingString}" height="17" textAlign="right"/>
+					<mx:CheckBox x="105" y="303" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check" selected="{charge.useSetup}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice();" />
+					<mx:TextInput x="182" y="303" width="124" id="setup_edit" enabled="{setup_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.setupPrice)}" textAlign="right"/>
+					<mx:CheckBox x="105" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate')}" id="rate_check" selected="{charge.useRate}" width="69" enabled="{piece_pricing_radio.selected}" change="UpdateAdj();"/>
+					<mx:TextInput x="182" y="326" width="124" id="rate_edit" enabled="{rate_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.rate)}" textAlign="right"/>
+					<mx:CheckBox x="105" y="349" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Material')}" id="material_check" selected="{charge.useMaterial}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice2();"/>
+					<mx:TextInput x="182" y="349" width="124" id="material_edit" enabled="{material_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.material)}" textAlign="right"/>
+					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Area')}" id="area_check" selected="{charge.useArea}" width="118" enabled="{rate_check.selected}" change="UpdateAdjset()"/>
+					<mx:TextInput x="446" y="326" width="124" id="area_edit" enabled="{area_check.selected}" text="{charge.area}" textAlign="right"/>
+					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}" id="in_sets_check" selected="{charge.useRateSets}" width="118" enabled="{rate_check.selected}" change="UpdateAdjset()"/>
+					<mx:TextInput x="446" y="326" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}" text="{charge.rateSetCount}" textAlign="right"/>
+					<mx:Label x="314" y="282" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.SalePriceperUnit')}" id="label1" textAlign="right"/>
 					<mx:Label x="105" y="282" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Markup')}" id="label2" width="69" textAlign="right"/>
 					<mx:ViewStack x="0" y="393" id="price_calc_stack" width="713" height="132" creationPolicy="all">
 						<mx:Canvas width="100%" height="100%" id="job_aware_canvas" label="job_aware" showEffect="dissolveIn" hideEffect="dissolveOut">
-							<mx:Text x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Selectvaluesinjobtob')}" width="291" height="17" fontWeight="bold" id="text2"/>
+							<mx:Text x="10" y="6" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Selectvaluesinjobtob')}" width="291" height="17" fontWeight="bold" id="text2"/>
 							<mx:RadioButtonGroup id="charge_group_1"  change="charge_group_1_change(event)"/>
 							<mx:RadioButtonGroup id="charge_group_2"  change="charge_group_2_change(event)"/>
 							<mx:RadioButtonGroup id="charge_group_3"  change="charge_group_3_change(event)"/>
 							<mx:RadioButtonGroup id="charge_group_4"  change="charge_group_4_change(event)"/>
-							<mx:Text x="123" y="70" text="x" id="multiplier_1_txt"/>
-							<mx:Text x="389" y="70" text="x" id="multiplier_2_txt"/>
-							<mx:Text x="256" y="70" text="x" id="multiplier_3_txt"/>
+							<mx:Text x="123" y="66" text="x" id="multiplier_1_txt"/>
+							<mx:Text x="389" y="66" text="x" id="multiplier_2_txt"/>
+							<mx:Text x="256" y="66" text="x" id="multiplier_3_txt"/>
 							<mx:Canvas x="10" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
-								<mx:RadioButton x="8" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_1" id="na1_radio" width="85" value="None"/>
-								<mx:RadioButton x="8" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ordered')}" groupName="charge_group_1" id="ordered_radio" width="85" value="Ordered"/>
-								<mx:RadioButton x="8" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Press')}" groupName="charge_group_1" id="press_radio" width="85" value="Press"/>
+								<mx:RadioButton x="8" y="1" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_1" id="na1_radio" width="85" value="None"/>
+								<mx:RadioButton x="8" y="27" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ordered')}" groupName="charge_group_1" id="ordered_radio" width="85" value="Ordered"/>
+								<mx:RadioButton x="8" y="53" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Press')}" groupName="charge_group_1" id="press_radio" width="85" value="Press"/>
 							</mx:Canvas>
-							<mx:Canvas x="143" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas3">
+							<mx:Canvas x="143" y="31" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas3">
 								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_2" id="na2_radio" width="83" value="NA"/>
 								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Colors')}" groupName="charge_group_2" id="colors_radio" width="83" value="Colors"/>
 								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides')}" groupName="charge_group_2" id="sides_radio" width="83" value = "Sides"/>
 							</mx:Canvas>
-							<mx:Canvas x="276" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas2">
+							<mx:Canvas x="276" y="31" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas2">
 								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_3" id="na3_radio" width="83" value="NA"/>
 								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sheets')}" groupName="charge_group_3" id="sheets_radio" width="83" value="Sheets"/>
 								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Signatures')}" groupName="charge_group_3" id="signatures_radio" width="83" value="Signatures"/>
 							</mx:Canvas>
-							<mx:Canvas x="409" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas1">
+							<mx:Canvas x="409" y="31" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas1">
 								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_4" id="na4_radio" width="83" value="NA"/>
 								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.xUp')}" groupName="charge_group_4" id="x_up_radio" width="83" value="xUp"/>
 								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Up')}" groupName="charge_group_4" id="slash_up_radio" width="83" value="/Up"/>
 							</mx:Canvas>
-							<mx:CheckBox x="547" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.AdjustableUp')}" id="adjustable_up_check" selected="{charge.adjustUps}"  enabled="{slash_up_radio.selected ||x_up_radio.selected} "/>
+							<mx:CheckBox x="547" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.AdjustableUp')}" id="adjustable_up_check" selected="{charge.adjustUps}"  enabled="{slash_up_radio.selected ||x_up_radio.selected} "/>
 						</mx:Canvas>
 						<mx:Canvas label="blank_canvas" width="100%" height="100%" id="blank_canvas" showEffect="dissolveIn" hideEffect="dissolveOut">
 						</mx:Canvas>
@@ -2011,22 +2010,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 							<mx:Text x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Selectthetypeofmarku')}" width="291" height="17" fontWeight="bold"/>
 						</mx:Canvas>
 					</mx:ViewStack>
-					<mx:Button x="10" y="533" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PriceList')}" width="109" id="price_list_button" click="doPriceList()"/>
-					<mx:Button x="10" y="563" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.WasteChart')}" id="waste_chart_button" click="doWasteChart()" width="109"/>
-					<mx:LinkButton x="132" y="533" width="291" id="price_list_link" label="{priceListLabel()}" enabled="{charge.priceList != null}" click="doEditPriceList()"/>
-					<mx:LinkButton x="132" y="564" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}" click="doEditWasteChart()"/>
-					<mx:HRule x="-7" y="523" width="710" height="8" id="hrule4"/>
-					<mx:CheckBox x="320" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMaterialSets}" id="in_set_mat_check" enabled="{material_check.selected}" width="118" change="UpdateAdjset();"/>
-					<mx:TextInput x="446" y="352" width="124" enabled="{in_set_mat_check.selected}"  text="{charge.materialSetCount}" id="in_sets_mat_edit"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
-					<mx:TextInput x="446" y="329" id="sheet_lift_edit" text="{charge.sheetliftCut}" width="124"  enabled="{sheet_lift_check.selected}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0')}" id="cover_ink_check" selected="{charge.coverlb_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
-					<mx:TextInput x="446" y="329"  restrict="0-9\." id="cover_ink_edit"  text="{Snowmass.getCurrencyFormatter(false,4).format(charge.coverlbInk)}" width="124" enabled="{cover_ink_check.selected}"/>
-					<mx:CheckBox x="320" y="329" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" id="ship_markup_check" selected="{charge.ship_markup_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
-					<mx:TextInput x="446" y="329" id="ship_markup_edit" text="{charge.shipMarkup}" width="124" enabled="{ship_markup_check.selected}"/>
-					<mx:CheckBox x="592" y="316" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablesets')}" id="adjustable_sets_check" selected="{charge.adjustableSets}" />
-					<mx:CheckBox x="592" y="334" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablerate')}" id="adjustable_rate_check" selected="{charge.adjustableRate}"/>
-					<mx:CheckBox x="592" y="352" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablematerial')}" id="adjustable_material_check" selected="{charge.adjustableMaterial}" enabled="{material_check.selected}"/>
+					<mx:Button x="10" y="529" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PriceList')}" width="109" id="price_list_button" click="doPriceList()"/>
+					<mx:Button x="10" y="559" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.WasteChart')}" id="waste_chart_button" click="doWasteChart()" width="109"/>
+					<mx:LinkButton x="132" y="529" width="291" id="price_list_link" label="{priceListLabel()}" enabled="{charge.priceList != null}" click="doEditPriceList()"/>
+					<mx:LinkButton x="132" y="560" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}" click="doEditWasteChart()"/>
+					<mx:HRule x="-7" y="519" width="710" height="8" id="hrule4"/>
+					<mx:CheckBox x="320" y="349" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMaterialSets}" id="in_set_mat_check" enabled="{material_check.selected}" width="118" change="UpdateAdjset();"/>
+					<mx:TextInput x="446" y="349" width="124" enabled="{in_set_mat_check.selected}"  text="{charge.materialSetCount}" id="in_sets_mat_edit" textAlign="right"/>
+					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
+					<mx:TextInput x="446" y="326" id="sheet_lift_edit" text="{charge.sheetliftCut}" width="124"  enabled="{sheet_lift_check.selected}" textAlign="right"/>
+					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0')}" id="cover_ink_check" selected="{charge.coverlb_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
+					<mx:TextInput x="520" y="280"  restrict="0-9\." id="cover_ink_edit"  text="{Snowmass.getCurrencyFormatter(false,4).format(charge.coverlbInk)}" width="124" enabled="{cover_ink_check.selected}" textAlign="right"/>
+					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" id="ship_markup_check" selected="{charge.ship_markup_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
+					<mx:TextInput x="446" y="326" id="ship_markup_edit" text="{charge.shipMarkup}" width="124" enabled="{ship_markup_check.selected}" textAlign="right"/>
+					<mx:CheckBox x="592" y="313" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablesets')}" id="adjustable_sets_check" selected="{charge.adjustableSets}" />
+					<mx:CheckBox x="592" y="331" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablerate')}" id="adjustable_rate_check" selected="{charge.adjustableRate}"/>
+					<mx:CheckBox x="592" y="349" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablematerial')}" id="adjustable_material_check" selected="{charge.adjustableMaterial}" enabled="{material_check.selected}"/>
 				</mx:Canvas>
 			</mx:Canvas>
 			<mx:Canvas label="charge_category_canvas" width="100%" height="100%" id="charge_category_canvas">
@@ -2038,6 +2037,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Label x="13" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Command')}" textAlign="right" width="104"/>
 			</mx:Canvas>
 		</mx:ViewStack>
+		</mx:VBox>
 	</mx:HDividedBox>
 <!--
 		<mx:DataGrid x="17" y="72" width="259" height="622" id="charge_datagrid" dataProvider="{charges}" click="{selectCharge()}">

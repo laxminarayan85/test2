@@ -23,17 +23,17 @@ public class ChargeFlatRatePricingMethod extends ChargePricingMethod {
 			ChargeService chargeService = new ChargeService();
 			try {
 				ChargeCostingPrices prices = chargeService.calculateChargeCostingRate(chargeDefinition, charge);
-				charge.setPrice(prices.materialSetupPrice + prices.materialUnitPrice + prices.unitPrice + prices.setupPrice);
+				charge.setPrice(prices.materialSetupPrice.add(prices.materialUnitPrice).add(prices.unitPrice).add(prices.setupPrice));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
-			if (!chargeDefinition.getNoOverrides() && chargeDefinition.getAdjustableRate()
-					&& charge.getOverridePrice())
-				return charge;
-		
-			charge.setPrice(charge.getRate());
+			if (charge.getOverridePrice()) return charge;
+			if (chargeDefinition.getNoOverrides()) return charge;
+			if (chargeDefinition.getAdjustableRate()) {
+				charge.setPrice(charge.getRate());
+			}
 		}
 		return charge;
 	}
