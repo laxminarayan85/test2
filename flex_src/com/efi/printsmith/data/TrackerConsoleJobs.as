@@ -32,38 +32,6 @@ package com.efi.printsmith.data
 		
 		public var duration:Number;
 		
-		public var firstTrackerDate:Date;
-		
-		public var firstTrackerTime:Number;
-	
-		public var firstSetUpTime:Number; 
-		
-		public var firstRunTime:Number;
-		
-		public var firstWashTime:Number;
-		
-		public var firstSetUpDate:Date; 
-		
-		public var firstRunDate:Date;
-		
-		public var firstWashDate:Date;
-		
-		public var secondTrackerDate:Date;
-		
-		public var secondTrackerTime:Number;
-	
-		public var secondSetUpTime:Number; 
-		
-		public var secondRunTime:Number;
-		
-		public var secondWashTime:Number;
-		
-		public var secondSetUpDate:Date; 
-		
-		public var secondRunDate:Date;
-		
-		public var secondWashDate:Date;
-		
 		public var totalTime:Number;
 		
 		public var noOfPasses:int;
@@ -72,17 +40,7 @@ package com.efi.printsmith.data
 		
 		public var currentPass:int;
 		
-		public var firstSetUpCompleted:Boolean = false;
-		
-		public var firstRunCompleted:Boolean = false;
-		
-		public var firstWashCompleted:Boolean = false;
-		
-		public var secondSetUpCompleted:Boolean = false;
-		
-		public var secondRunCompleted:Boolean = false;
-		
-		public var secondWashCompleted:Boolean = false;
+		public var passesList:ArrayCollection;
 		
 		public var completed:Boolean = false;
 		

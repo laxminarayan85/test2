@@ -43,6 +43,8 @@
 	<mx:Script> 
 	                                  
 	<![CDATA[
+		import com.efi.printsmith.data.TrackerConsolePasses;
+		import com.efi.printsmith.pages.TrackerConsoleDetails;
 		import com.efi.printsmith.data.TrackerConsoleJobs;
 		import com.efi.printsmith.data.Charge;
 		import mx.events.CloseEvent;
@@ -95,7 +97,11 @@
 		
 		[Bindable] private var closeEventTriggered:Boolean = false;
 		
-		[Bindable] private var trackerConsoleJobsAddUpdate:Boolean = false;
+		[Bindable] private var trackerConsoleJobsAdd:Boolean = false;
+		
+		[Bindable] private var trackerConsoleJobsUpdate:Boolean = false;
+		
+		[Bindable] private var updatedTCJobId:Number=0;
 		 
 		 
 		public function init():void {
@@ -285,9 +291,9 @@
 		
 		private function handleLoadTCJobsResult(event:ResultEvent):void {
 			trackerConsoleJobsList = event.result as ArrayCollection;
-			if(trackerConsoleJobsAddUpdate){
+			if(trackerConsoleJobsAdd){
 				var counter:int = 0;
-				trackerConsoleJobsAddUpdate = false;
+				trackerConsoleJobsAdd = false;
 				registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 				progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
 				for each(var trackerConsoleJobsObject:TrackerConsoleJobs in trackerConsoleJobsList){
@@ -298,6 +304,127 @@
 					}
 				}
 				enableRequiredBtns();
+			}
+			if(trackerConsoleJobsUpdate){
+				trackerConsoleJobsUpdate = false;
+				resetButtons();
+				var trackerConsoleJobsObject:TrackerConsoleJobs = null;
+				for each(var trackerConsoleJobs:TrackerConsoleJobs in trackerConsoleJobsList){
+					if(trackerConsoleJobs.id==updatedTCJobId){
+						trackerConsoleJobsObject = trackerConsoleJobs;
+						break;
+					}
+				}
+				if(trackerStatus=="start"){
+					if(trackerConsoleJobsObject!=null){
+						setUpBtn.enabled = true;
+						washUpBtn.enabled = true;
+						stopBtn.enabled = true;
+						cancelBtn.enabled = true;
+						pauseBtn.enabled = true;
+						defaultEnableButtons();
+						var counter:int = 0;
+						for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+							counter++;
+							if(trackerConsoleJobsObject.job!=null && trackerConsoleJobsObj.job!=null){
+								if(trackerConsoleJobsObject.job.id==trackerConsoleJobsObj.job.id){
+									employee_jobs_grid.selectedIndex = counter;
+									registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+									progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+									enableRequiredBtns();
+									break;
+								}
+							} else if(trackerConsoleJobsObject.charge!=null && trackerConsoleJobsObj.charge!=null) {
+								if(trackerConsoleJobsObject.charge.id==trackerConsoleJobsObj.charge.id){
+									employee_jobs_grid.selectedIndex = counter;
+									registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+									progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+									enableRequiredBtns();
+									break;
+								}
+							}
+						}
+						selectedTrackerConsoleJob = trackerConsoleJobsObject;
+					}
+				} else if(trackerStatus=="setup"){
+					if(selectedTrackerConsoleJob!=null){
+						selectedTrackerConsoleJob = trackerConsoleJobsObject;
+						trackerConsoleJobsList.refresh();
+						washUpBtn.enabled = true;
+						stopBtn.enabled = true;
+						cancelBtn.enabled = true;
+						pauseBtn.enabled = true;
+						defaultEnableButtons();
+						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+						progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+					}
+				} else if(trackerStatus=="washup"){
+					if(selectedTrackerConsoleJob!=null){
+						selectedTrackerConsoleJob = trackerConsoleJobsObject;
+						trackerConsoleJobsList.refresh();
+						stopBtn.enabled = true;
+						cancelBtn.enabled = true;
+						pauseBtn.enabled = true;
+						defaultEnableButtons();
+						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+						progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+					}
+				} else if(trackerStatus=="pause"){
+					if(selectedTrackerConsoleJob!=null){
+						selectedTrackerConsoleJob = trackerConsoleJobsObject;
+						stopBtn.enabled = true;
+						cancelBtn.enabled = true;
+						continueBtn.enabled = true;
+						defaultEnableButtons();
+						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+						progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+					}
+				} else if(trackerStatus=="continue"){
+					if(selectedTrackerConsoleJob!=null){
+						selectedTrackerConsoleJob = trackerConsoleJobsObject;
+						for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
+							if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
+								if(trackerConsolePasses.setUpCompleted){
+									washUpBtn.enabled = true;
+								} else {
+									setUpBtn.enabled = true;
+									washUpBtn.enabled = true;
+								}
+								break;
+							}
+						}
+						stopBtn.enabled = true;
+						cancelBtn.enabled = true;
+						pauseBtn.enabled = true;
+						defaultEnableButtons();
+						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+						progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+					}
+				} else if(trackerStatus=="stop"){
+					if(selectedTrackerConsoleJob!=null){
+						selectedDGIndex = employee_jobs_grid.selectedIndex;
+						if(selectedDGIndex>-1){
+							if(employee!=null){
+								refreshList = true;
+								dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
+							}
+						}
+						progressBarComponent.stopJob();
+					}
+				} else if(trackerStatus=="nextpass"){
+					if(selectedTrackerConsoleJob!=null){
+						selectedTrackerConsoleJob = trackerConsoleJobsObject;
+						trackerConsoleJobsList.refresh();
+						resetButtons();
+						setUpBtn.enabled = true;
+						stopBtn.enabled = true;
+						cancelBtn.enabled = true;
+						pauseBtn.enabled = true;
+						defaultEnableButtons();
+						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+						progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+					}
+				}	
 			}
 			if(refreshList){
 				refreshList = false;
@@ -408,7 +535,7 @@
 			if(object is Charge){
 				var charge:Charge = object as Charge;
 				if(charge.parentInvoice!=null){
-					return "#"+job.parentInvoice.account.id + " "+job.parentInvoice.account.title;
+					return "#"+charge.parentInvoice.account.id + " "+charge.parentInvoice.account.title;
 				}
 				if(charge.parentJob!=null){
 					var jobBase:JobBase = charge.parentJob as JobBase;
@@ -481,6 +608,7 @@
 		}
 		
 		private function startJob():void {
+			var passesList:ArrayCollection = new ArrayCollection();
 			if((selectedJob!=null || selectedCharge!=null) && trackerConsole.productionFacilities!=null && trackerConsole.productionStations!=null){
 				for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList) {
 					if(trackerConsoleJobsObj.job!=null && selectedJob!=null){
@@ -488,30 +616,14 @@
 							Alert.show("This item has a activity started, would you like to reset the beginning timers?", "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 								if (event.detail==Alert.YES) {
 									trackerStatus = "start";
-									trackerConsoleJobsObj.firstTrackerDate = new Date();
-									trackerConsoleJobsObj.firstTrackerTime = 0;
-									trackerConsoleJobsObj.firstSetUpDate = null;
-									trackerConsoleJobsObj.firstSetUpTime = 0;
-									trackerConsoleJobsObj.firstRunDate = null;
-									trackerConsoleJobsObj.firstRunTime = 0;
-									trackerConsoleJobsObj.firstWashDate = null;
-									trackerConsoleJobsObj.firstWashTime = 0;
-									trackerConsoleJobsObj.firstSetUpCompleted = false;
-									trackerConsoleJobsObj.firstRunCompleted = false;
-									trackerConsoleJobsObj.firstWashCompleted = false;
-									trackerConsoleJobsObj.secondTrackerDate = null;
-									trackerConsoleJobsObj.secondTrackerTime = 0;
-									trackerConsoleJobsObj.secondSetUpDate = null;
-									trackerConsoleJobsObj.secondSetUpTime = 0;
-									trackerConsoleJobsObj.secondRunDate = null;
-									trackerConsoleJobsObj.secondRunTime = 0;
-									trackerConsoleJobsObj.secondWashDate = null;
-									trackerConsoleJobsObj.secondWashTime = 0;
-									trackerConsoleJobsObj.secondSetUpCompleted = false;
-									trackerConsoleJobsObj.secondRunCompleted = false;
-									trackerConsoleJobsObj.secondWashCompleted = false;
 									trackerConsoleJobsObj.currentPass = 1;
 									trackerConsoleJobsObj.paused = false;
+									var trackerConsolePasses:TrackerConsolePasses = new TrackerConsolePasses();
+									trackerConsolePasses.passNo = 1;
+									trackerConsolePasses.trackDate = new Date();
+									trackerConsolePasses.trackerConsoleJobs = trackerConsoleJobsObj;
+									passesList.addItem(trackerConsolePasses);
+									trackerConsoleJobsObj.passesList = passesList;
 									updateDataServiceJob.addUpdate(trackerConsoleJobsObj);
 								}
 							});
@@ -522,30 +634,14 @@
 							Alert.show("This item has a activity started, would you like to reset the beginning timers?", "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 								if (event.detail==Alert.YES) {
 									trackerStatus = "start";
-									trackerConsoleJobsObj.firstTrackerDate = new Date();
-									trackerConsoleJobsObj.firstTrackerTime = 0;
-									trackerConsoleJobsObj.firstSetUpDate = null;
-									trackerConsoleJobsObj.firstSetUpTime = 0;
-									trackerConsoleJobsObj.firstRunDate = null;
-									trackerConsoleJobsObj.firstRunTime = 0;
-									trackerConsoleJobsObj.firstWashDate = null;
-									trackerConsoleJobsObj.firstWashTime = 0;
-									trackerConsoleJobsObj.firstSetUpCompleted = false;
-									trackerConsoleJobsObj.firstRunCompleted = false;
-									trackerConsoleJobsObj.firstWashCompleted = false;
-									trackerConsoleJobsObj.secondTrackerDate = null;
-									trackerConsoleJobsObj.secondTrackerTime = 0;
-									trackerConsoleJobsObj.secondSetUpDate = null;
-									trackerConsoleJobsObj.secondSetUpTime = 0;
-									trackerConsoleJobsObj.secondRunDate = null;
-									trackerConsoleJobsObj.secondRunTime = 0;
-									trackerConsoleJobsObj.secondWashDate = null;
-									trackerConsoleJobsObj.secondWashTime = 0;
-									trackerConsoleJobsObj.secondSetUpCompleted = false;
-									trackerConsoleJobsObj.secondRunCompleted = false;
-									trackerConsoleJobsObj.secondWashCompleted = false;
 									trackerConsoleJobsObj.currentPass = 1;
 									trackerConsoleJobsObj.paused = false;
+									var trackerConsolePasses:TrackerConsolePasses = new TrackerConsolePasses();
+									trackerConsolePasses.passNo = 1;
+									trackerConsolePasses.trackDate = new Date();
+									trackerConsolePasses.trackerConsoleJobs = trackerConsoleJobsObj;
+									passesList.addItem(trackerConsolePasses);
+									trackerConsoleJobsObj.passesList = passesList;
 									updateDataServiceJob.addUpdate(trackerConsoleJobsObj);
 								}
 							});
@@ -587,11 +683,16 @@
 				trackerConsoleJobs.actualSetUpTime = 25*60*1000;
 				trackerConsoleJobs.actualRunTime = 10*60*1000;
 				trackerConsoleJobs.actualWashTime = 30*60*1000;
-				trackerConsoleJobs.firstTrackerDate = new Date();
 				trackerConsoleJobs.duration = 0;
 				trackerConsoleJobs.noOfPasses = 2;
-				trackerConsoleJobs.currentPass = 1;
-				trackerConsoleJobsAddUpdate = true;
+				trackerConsoleJobs.currentPass = 1;				
+				var trackerConsolePasses:TrackerConsolePasses = new TrackerConsolePasses();
+				trackerConsolePasses.passNo = 1;
+				trackerConsolePasses.trackDate = new Date();
+				trackerConsolePasses.trackerConsoleJobs = trackerConsoleJobs;
+				passesList.addItem(trackerConsolePasses);
+				trackerConsoleJobs.passesList = passesList;
+				trackerConsoleJobsAdd = true;
 				saveDataServiceJob.addUpdate(trackerConsoleJobs);
 			}
 		}
@@ -607,30 +708,21 @@
 				var nowDate:Date = new Date();
 				var totalSetUpTime:Number = 0;
 				trackerStatus = "setup";
-				if(selectedTrackerConsoleJob.currentPass==1){
-					selectedTrackerConsoleJob.firstSetUpCompleted = true;
-					totalSetUpTime = (nowDate.time-selectedTrackerConsoleJob.firstTrackerDate.time);
-					if(!(isNaN(selectedTrackerConsoleJob.firstTrackerTime)) && selectedTrackerConsoleJob.firstTrackerTime!=0){
-						totalSetUpTime = totalSetUpTime + selectedTrackerConsoleJob.firstTrackerTime;
+				for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
+					if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
+						trackerConsolePasses.setUpCompleted = true;
+						totalSetUpTime = (nowDate.time-trackerConsolePasses.trackDate.time);
+						if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+							totalSetUpTime = totalSetUpTime + trackerConsolePasses.trackTime;
+						}
+						trackerConsolePasses.trackDate = nowDate;
+						trackerConsolePasses.trackTime = 0;
+						trackerConsolePasses.setUpDate = nowDate;
+						trackerConsolePasses.setUpTime = totalSetUpTime;
+						break;
 					}
-					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
-					selectedTrackerConsoleJob.firstTrackerTime = 0;
-					selectedTrackerConsoleJob.firstSetUpDate = nowDate;
-					selectedTrackerConsoleJob.firstSetUpTime = totalSetUpTime;
-					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 				}
-				if(selectedTrackerConsoleJob.currentPass==2){
-					selectedTrackerConsoleJob.secondSetUpCompleted = true;
-					totalSetUpTime = (nowDate.time-selectedTrackerConsoleJob.secondTrackerDate.time);
-					if(!(isNaN(selectedTrackerConsoleJob.secondTrackerTime)) && selectedTrackerConsoleJob.secondTrackerTime!=0){
-						totalSetUpTime = totalSetUpTime + selectedTrackerConsoleJob.secondTrackerTime;
-					}
-					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
-					selectedTrackerConsoleJob.secondTrackerTime = 0;
-					selectedTrackerConsoleJob.secondSetUpDate = nowDate;
-					selectedTrackerConsoleJob.secondSetUpTime = totalSetUpTime;
-					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
-				}
+				updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 			}
 		}
 		
@@ -639,30 +731,21 @@
 				var nowDate:Date = new Date();
 				var totalRunTime:Number = 0;
 				trackerStatus = "washup";
-				if(selectedTrackerConsoleJob.currentPass==1){
-					selectedTrackerConsoleJob.firstRunCompleted = true;
-					totalRunTime = (nowDate.time-selectedTrackerConsoleJob.firstTrackerDate.time);
-					if(!(isNaN(selectedTrackerConsoleJob.firstTrackerTime)) && selectedTrackerConsoleJob.firstTrackerTime!=0){
-						totalRunTime = totalRunTime + selectedTrackerConsoleJob.firstTrackerTime;
+				for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
+					if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
+						trackerConsolePasses.runCompleted = true;
+						totalRunTime = (nowDate.time-trackerConsolePasses.trackDate.time);
+						if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+							totalRunTime = totalRunTime + trackerConsolePasses.trackTime;
+						}
+						trackerConsolePasses.trackDate = nowDate;
+						trackerConsolePasses.trackTime = 0;
+						trackerConsolePasses.runDate = nowDate;
+						trackerConsolePasses.runTime = totalRunTime;
+						break;
 					}
-					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
-					selectedTrackerConsoleJob.firstTrackerTime = 0;
-					selectedTrackerConsoleJob.firstRunDate = nowDate;
-					selectedTrackerConsoleJob.firstRunTime = totalRunTime;
-					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 				}
-				if(selectedTrackerConsoleJob.currentPass==2){
-					selectedTrackerConsoleJob.secondRunCompleted = true;
-					totalRunTime = (nowDate.time-selectedTrackerConsoleJob.secondTrackerDate.time);
-					if(!(isNaN(selectedTrackerConsoleJob.secondTrackerTime)) && selectedTrackerConsoleJob.secondTrackerTime!=0){
-						totalRunTime = totalRunTime + selectedTrackerConsoleJob.secondTrackerTime;
-					}
-					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
-					selectedTrackerConsoleJob.secondTrackerTime = 0;
-					selectedTrackerConsoleJob.secondRunDate = nowDate;
-					selectedTrackerConsoleJob.secondRunTime = totalRunTime;
-					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
-				}
+				updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 			}
 		}
 		
@@ -671,54 +754,44 @@
 				var nowDate:Date = new Date();
 				var totalWashTime:Number = 0;
 				trackerStatus = "stop";
-				if(selectedTrackerConsoleJob.currentPass==1){
-					if(!selectedTrackerConsoleJob.paused) {
-						totalWashTime = (nowDate.time-selectedTrackerConsoleJob.firstTrackerDate.time);
+				for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
+					if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
+						if(!selectedTrackerConsoleJob.paused) {
+							totalWashTime = (nowDate.time-trackerConsolePasses.trackDate.time);
+						}
+						if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+							totalWashTime = totalWashTime + trackerConsolePasses.trackTime;
+						}
+						trackerConsolePasses.trackDate = nowDate;
+						trackerConsolePasses.trackTime = 0;
+						if(!trackerConsolePasses.setUpCompleted || !trackerConsolePasses.runCompleted){
+							trackerConsolePasses.runDate = nowDate;
+							trackerConsolePasses.runTime = totalWashTime;
+						} else {
+							trackerConsolePasses.washUpDate = nowDate;
+							trackerConsolePasses.washUpTime = totalWashTime;
+							trackerConsolePasses.washUpCompleted = true;
+						}
+						break;
 					}
-					if(!(isNaN(selectedTrackerConsoleJob.firstTrackerTime)) && selectedTrackerConsoleJob.firstTrackerTime!=0){
-						totalWashTime = totalWashTime + selectedTrackerConsoleJob.firstTrackerTime;
-					}
-					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
-					selectedTrackerConsoleJob.firstTrackerTime = 0;
-					if(!selectedTrackerConsoleJob.firstSetUpCompleted || !selectedTrackerConsoleJob.firstRunCompleted){
-						selectedTrackerConsoleJob.firstRunDate = nowDate;
-						selectedTrackerConsoleJob.firstRunTime = totalWashTime;
-					} else {
-						selectedTrackerConsoleJob.firstWashDate = nowDate;
-						selectedTrackerConsoleJob.firstWashTime = totalWashTime;
-						selectedTrackerConsoleJob.firstWashCompleted = true;
-					}
-					if(selectedTrackerConsoleJob.noOfPasses==2){
-						trackerStatus = "nextpass";
-						selectedTrackerConsoleJob.currentPass = 2;
-						selectedTrackerConsoleJob.paused = false;
-						selectedTrackerConsoleJob.secondTrackerDate = new Date();
-					} else {
-						selectedTrackerConsoleJob.completed = true;
-						selectedTrackerConsoleJob.completedDate = nowDate;
-					}
-					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
-				} else if(selectedTrackerConsoleJob.currentPass==2){
+				}
+				if(selectedTrackerConsoleJob.currentPass==selectedTrackerConsoleJob.noOfPasses){
 					selectedTrackerConsoleJob.completed = true;
 					selectedTrackerConsoleJob.completedDate = nowDate;
-					if(!selectedTrackerConsoleJob.paused) {
-						totalWashTime = (nowDate.time-selectedTrackerConsoleJob.secondTrackerDate.time);
+				} else {
+					trackerStatus = "nextpass";
+					selectedTrackerConsoleJob.currentPass = selectedTrackerConsoleJob.currentPass+1;
+					if(selectedTrackerConsoleJob.noOfPasses==selectedTrackerConsoleJob.currentPass){
+						stopBtn.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Stop');
 					}
-					if(!(isNaN(selectedTrackerConsoleJob.secondTrackerTime)) && selectedTrackerConsoleJob.secondTrackerTime!=0){
-						totalWashTime = totalWashTime + selectedTrackerConsoleJob.secondTrackerTime;
-					}
-					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
-					selectedTrackerConsoleJob.secondTrackerTime = 0;
-					if(!selectedTrackerConsoleJob.secondSetUpCompleted || !selectedTrackerConsoleJob.secondRunCompleted){
-						selectedTrackerConsoleJob.secondRunDate = nowDate;
-						selectedTrackerConsoleJob.secondRunTime = totalWashTime;
-					} else {
-						selectedTrackerConsoleJob.secondWashDate = nowDate;
-						selectedTrackerConsoleJob.secondWashTime = totalWashTime;
-						selectedTrackerConsoleJob.secondWashCompleted = true;
-					}
-					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+					selectedTrackerConsoleJob.paused = false;
+					var trackerConsolePassesObj:TrackerConsolePasses = new TrackerConsolePasses();
+					trackerConsolePassesObj.trackDate = new Date();
+					trackerConsolePassesObj.passNo = selectedTrackerConsoleJob.currentPass;
+					trackerConsolePassesObj.trackerConsoleJobs = selectedTrackerConsoleJob;
+					selectedTrackerConsoleJob.passesList.addItem(trackerConsolePassesObj);
 				}
+				updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 			}
 		}
 		
@@ -726,18 +799,14 @@
 			if(selectedTrackerConsoleJob!=null){
 				trackerStatus = "pause";
 				var nowDate:Date = new Date();
-				if(selectedTrackerConsoleJob.currentPass==1){
-					selectedTrackerConsoleJob.firstTrackerTime = nowDate.time - selectedTrackerConsoleJob.firstTrackerDate.time+(isNaN(selectedTrackerConsoleJob.firstTrackerTime)?0:selectedTrackerConsoleJob.firstTrackerTime);
-					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
-					selectedTrackerConsoleJob.paused = true;
-					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
+					if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
+						trackerConsolePasses.trackTime = nowDate.time - trackerConsolePasses.trackDate.time+(isNaN(trackerConsolePasses.trackTime)?0:trackerConsolePasses.trackTime);
+						trackerConsolePasses.trackDate = nowDate;
+					}
 				}
-				if(selectedTrackerConsoleJob.currentPass==2){
-					selectedTrackerConsoleJob.secondTrackerTime = nowDate.time - selectedTrackerConsoleJob.secondTrackerDate.time+(isNaN(selectedTrackerConsoleJob.secondTrackerTime)?0:selectedTrackerConsoleJob.secondTrackerTime);
-					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
-					selectedTrackerConsoleJob.paused = true;
-					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
-				}
+				selectedTrackerConsoleJob.paused = true;
+				updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 			}
 		}
 		
@@ -745,213 +814,104 @@
 			if(selectedTrackerConsoleJob!=null){
 				trackerStatus = "continue";
 				var nowDate:Date = new Date();
-				if(selectedTrackerConsoleJob.currentPass==1){
-					selectedTrackerConsoleJob.firstTrackerDate = nowDate;
-					selectedTrackerConsoleJob.paused = false;
-					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
+					if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
+						trackerConsolePasses.trackDate = nowDate;
+					}
 				}
-				if(selectedTrackerConsoleJob.currentPass==2){
-					selectedTrackerConsoleJob.secondTrackerDate = nowDate;
-					selectedTrackerConsoleJob.paused = false;
-					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
-				}
+				selectedTrackerConsoleJob.paused = false;
+				updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 			}
 		}
 		
 		private function handleUpdateJobResult(event:ResultEvent):void {
-			resetButtons();
-			if(trackerStatus=="start"){
-				var trackerConsoleJobsObject:TrackerConsoleJobs = event.result as TrackerConsoleJobs;
-				if(trackerConsoleJobsObject!=null){
-					setUpBtn.enabled = true;
-					washUpBtn.enabled = true;
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					pauseBtn.enabled = true;
-					defaultEnableButtons();
-					var counter:int = 0;
-					for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
-						counter++;
-						if(trackerConsoleJobsObject.job!=null && trackerConsoleJobsObj.job!=null){
-							if(trackerConsoleJobsObject.job.id==trackerConsoleJobsObj.job.id){
-								selectedTrackerConsoleJob = trackerConsoleJobsObj;
-								employee_jobs_grid.selectedIndex = counter;
-								registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
-								progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
-								enableRequiredBtns();
-								break;
-							}
-							
-						} else if(trackerConsoleJobsObject.charge!=null && trackerConsoleJobsObj.charge!=null) {
-							if(trackerConsoleJobsObject.charge.id==trackerConsoleJobsObj.charge.id){
-								selectedTrackerConsoleJob = trackerConsoleJobsObj;
-								employee_jobs_grid.selectedIndex = counter;
-								registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
-								progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
-								enableRequiredBtns();
-								break;
-							}
-						}
-					}
-				}
-			} else if(trackerStatus=="setup"){
-				if(selectedTrackerConsoleJob!=null){
-					washUpBtn.enabled = true;
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					pauseBtn.enabled = true;
-					defaultEnableButtons();
-					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
-					progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
-				}
-			} else if(trackerStatus=="washup"){
-				if(selectedTrackerConsoleJob!=null){
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					pauseBtn.enabled = true;
-					defaultEnableButtons();
-					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
-					progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
-				}
-			} else if(trackerStatus=="pause"){
-				if(selectedTrackerConsoleJob!=null){
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					continueBtn.enabled = true;
-					defaultEnableButtons();
-					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
-					progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
-				}
-			} else if(trackerStatus=="continue"){
-				if(selectedTrackerConsoleJob!=null){
-					if(selectedTrackerConsoleJob.currentPass==1){
-						if(selectedTrackerConsoleJob.firstSetUpCompleted){
-							washUpBtn.enabled = true;
-						} else {
-							setUpBtn.enabled = true;
-							washUpBtn.enabled = true;
-						}
-					}
-					if(selectedTrackerConsoleJob.currentPass==2){
-						if(selectedTrackerConsoleJob.secondSetUpCompleted){
-							washUpBtn.enabled = true;
-						} else {
-							setUpBtn.enabled = true;
-							washUpBtn.enabled = true;
-						}
-					}
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					pauseBtn.enabled = true;
-					defaultEnableButtons();
-					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
-					progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
-				}
-			} else if(trackerStatus=="stop"){
-				if(selectedTrackerConsoleJob!=null){
-					selectedDGIndex = employee_jobs_grid.selectedIndex;
-					if(selectedDGIndex>-1){
-						if(employee!=null){
-							refreshList = true;
-							dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
-						}
-					}
-					progressBarComponent.stopJob();
-				}
-			} else if(trackerStatus=="nextpass"){
-				if(selectedTrackerConsoleJob!=null){
-					resetButtons();
-					setUpBtn.enabled = true;
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					pauseBtn.enabled = true;
-					defaultEnableButtons();
-					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
-					progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
-				}
-			}
-			/* var trackerConsoleJobs:TrackerConsoleJobs = event.result as TrackerConsoleJobs;
-			trackerConsoleJobsList.addItem(trackerConsoleJobs);
-			progressBarComponent.trackerConsoleJobs = trackerConsoleJobs; */
+			var trackerConsoleJobsObject:TrackerConsoleJobs = event.result as TrackerConsoleJobs;
+			updatedTCJobId = trackerConsoleJobsObject.id;
+			trackerConsoleJobsUpdate = true;
+			dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
 		}
 		
 		private function enableRequiredBtns():void {
 			if(selectedTrackerConsoleJob!=null){
-				if(selectedTrackerConsoleJob.firstSetUpCompleted && selectedTrackerConsoleJob.firstRunCompleted
-					&& selectedTrackerConsoleJob.currentPass==1){
-					resetButtons();
-					if(!selectedTrackerConsoleJob.paused){
-						pauseBtn.enabled = true;
-					} else {
-						continueBtn.enabled = true;
+				for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
+					if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
+						if(trackerConsolePasses.setUpCompleted && trackerConsolePasses.runCompleted
+							&& selectedTrackerConsoleJob.currentPass!=selectedTrackerConsoleJob.noOfPasses){
+							resetButtons();
+							if(!selectedTrackerConsoleJob.paused){
+								pauseBtn.enabled = true;
+							} else {
+								continueBtn.enabled = true;
+							}
+							stopBtn.enabled = true;
+							cancelBtn.enabled = true;
+							defaultEnableButtons();
+						} else if(trackerConsolePasses.setUpCompleted && selectedTrackerConsoleJob.currentPass!=selectedTrackerConsoleJob.noOfPasses){
+							resetButtons();
+							if(!selectedTrackerConsoleJob.paused){
+								washUpBtn.enabled = true;
+								pauseBtn.enabled = true;
+							} else {
+								continueBtn.enabled = true;
+							}
+							stopBtn.enabled = true;
+							cancelBtn.enabled = true;
+							defaultEnableButtons();
+						} else if(trackerConsolePasses.runCompleted && selectedTrackerConsoleJob.currentPass!=selectedTrackerConsoleJob.noOfPasses){
+							resetButtons();
+							if(!selectedTrackerConsoleJob.paused){
+								pauseBtn.enabled = true;
+							} else {
+								continueBtn.enabled = true;
+							}
+							stopBtn.enabled = true;
+							cancelBtn.enabled = true;
+							defaultEnableButtons();
+						} else if(trackerConsolePasses.setUpCompleted && trackerConsolePasses.runCompleted
+							&& selectedTrackerConsoleJob.currentPass==selectedTrackerConsoleJob.noOfPasses){
+							resetButtons();
+							if(!selectedTrackerConsoleJob.paused){
+								pauseBtn.enabled = true;
+							} else {
+								continueBtn.enabled = true;
+							}
+							stopBtn.enabled = true;
+							cancelBtn.enabled = true;
+							defaultEnableButtons();
+						} else if(trackerConsolePasses.setUpCompleted && selectedTrackerConsoleJob.currentPass==selectedTrackerConsoleJob.noOfPasses){
+							resetButtons();
+							if(!selectedTrackerConsoleJob.paused){
+								washUpBtn.enabled = true;
+								pauseBtn.enabled = true;
+							} else {
+								continueBtn.enabled = true;
+							}
+							stopBtn.enabled = true;
+							cancelBtn.enabled = true;
+							defaultEnableButtons();
+						} else if(trackerConsolePasses.runCompleted && selectedTrackerConsoleJob.currentPass==selectedTrackerConsoleJob.noOfPasses){
+							resetButtons();
+							if(!selectedTrackerConsoleJob.paused){
+								pauseBtn.enabled = true;
+							} else {
+								continueBtn.enabled = true;
+							}
+							stopBtn.enabled = true;
+							cancelBtn.enabled = true;
+							defaultEnableButtons();
+						} else {
+							resetButtons();
+							stopBtn.enabled = true;
+							cancelBtn.enabled = true;
+							if(!selectedTrackerConsoleJob.paused){
+								setUpBtn.enabled = true;
+								pauseBtn.enabled = true;
+							} else {
+								continueBtn.enabled = true;
+							}
+							defaultEnableButtons();
+						}
 					}
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					defaultEnableButtons();
-				} else if(selectedTrackerConsoleJob.firstSetUpCompleted && selectedTrackerConsoleJob.currentPass==1){
-					resetButtons();
-					if(!selectedTrackerConsoleJob.paused){
-						washUpBtn.enabled = true;
-						pauseBtn.enabled = true;
-					} else {
-						continueBtn.enabled = true;
-					}
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					defaultEnableButtons();
-				} else if(selectedTrackerConsoleJob.firstRunCompleted && selectedTrackerConsoleJob.currentPass==1){
-					resetButtons();
-					if(!selectedTrackerConsoleJob.paused){
-						pauseBtn.enabled = true;
-					} else {
-						continueBtn.enabled = true;
-					}
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					defaultEnableButtons();
-				} else if(selectedTrackerConsoleJob.secondSetUpCompleted && selectedTrackerConsoleJob.secondRunCompleted
-					&& selectedTrackerConsoleJob.currentPass==2){
-					resetButtons();
-					if(!selectedTrackerConsoleJob.paused){
-						pauseBtn.enabled = true;
-					} else {
-						continueBtn.enabled = true;
-					}
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					defaultEnableButtons();
-				} else if(selectedTrackerConsoleJob.secondSetUpCompleted && selectedTrackerConsoleJob.currentPass==2){
-					resetButtons();
-					if(!selectedTrackerConsoleJob.paused){
-						washUpBtn.enabled = true;
-						pauseBtn.enabled = true;
-					} else {
-						continueBtn.enabled = true;
-					}
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					defaultEnableButtons();
-				} else if(selectedTrackerConsoleJob.secondRunCompleted && selectedTrackerConsoleJob.currentPass==2){
-					resetButtons();
-					if(!selectedTrackerConsoleJob.paused){
-						pauseBtn.enabled = true;
-					} else {
-						continueBtn.enabled = true;
-					}
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					defaultEnableButtons();
-				} else {
-					resetButtons();
-					stopBtn.enabled = true;
-					cancelBtn.enabled = true;
-					if(!selectedTrackerConsoleJob.paused){
-						setUpBtn.enabled = true;
-						pauseBtn.enabled = true;
-					} else {
-						continueBtn.enabled = true;
-					}
-					defaultEnableButtons();
 				}
 			} else {
 				resetButtons();
@@ -966,6 +926,11 @@
 			}
 			return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Stop');
 		} 
+		
+		private function openJobDetails():void {
+			var trackerConsoleDetails:TrackerConsoleDetails = PopUpManager.createPopUp(this,TrackerConsoleDetails,true) as TrackerConsoleDetails;
+			trackerConsoleDetails.trackerConsoleJobs = selectedTrackerConsoleJob;
+		}
 				
 	]]>
 	                        
@@ -1147,7 +1112,8 @@
 			
 			
 			
-			<mx:DataGrid width="90%" height="20%" id="employee_jobs_grid" dataProvider="{trackerConsoleJobsList}" itemClick="{doConsoleJobSelection(event)}">
+			<mx:DataGrid width="90%" height="20%" id="employee_jobs_grid" dataProvider="{trackerConsoleJobsList}" itemClick="{doConsoleJobSelection(event)}"
+				doubleClickEnabled="true" doubleClick="{openJobDetails()}">
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 						<mx:itemRenderer>

@@ -3,6 +3,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.TrackerConsolePasses;
 			import mx.controls.Image;
 			import mx.skins.halo.ProgressBarSkin;
 			import mx.skins.halo.ProgressTrackSkin;
@@ -82,68 +83,39 @@
 				if(displayValue!=null){
 					var initialValue:Number = 0;
 					var totalValue:Number = 0;
-					if(displayValue.noOfPasses==2 && displayValue.currentPass==2){
-						if(displayValue.secondTrackerDate==null){
-							initialValue = 0;
-						} else {
-							if(!displayValue.paused) {
-								initialValue = displayValue.secondTrackerDate.time;
-								if(!(isNaN(displayValue.secondTrackerTime)) && displayValue.secondTrackerTime!=0){
-									initialValue = initialValue - displayValue.secondTrackerTime;
-								}
-								if(!(isNaN(displayValue.secondSetUpTime)) && displayValue.secondSetUpTime!=0){
-									initialValue = initialValue - displayValue.secondSetUpTime; 
-								}
-								if(!(isNaN(displayValue.secondRunTime)) && displayValue.secondRunTime!=0){
-									initialValue = initialValue - displayValue.secondRunTime; 
-								}
-								initialValue = new Date().time - initialValue;
+					for each(var trackerConsolePasses:TrackerConsolePasses in displayValue.passesList){
+						if(trackerConsolePasses.passNo==displayValue.currentPass) {
+							if(trackerConsolePasses.trackDate==null){
+								initialValue = 0;
 							} else {
-								if(!(isNaN(displayValue.secondTrackerTime)) && displayValue.secondTrackerTime!=0){
-									initialValue = initialValue + displayValue.secondTrackerTime;
-								}
-								if(!(isNaN(displayValue.secondSetUpTime)) && displayValue.secondSetUpTime!=0){
-									initialValue = initialValue + displayValue.secondSetUpTime; 
-								}
-								if(!(isNaN(displayValue.secondRunTime)) && displayValue.secondRunTime!=0){
-									initialValue = initialValue + displayValue.secondRunTime; 
+								if(!displayValue.paused) {
+									initialValue = trackerConsolePasses.trackDate.time;
+									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+										initialValue = initialValue - trackerConsolePasses.trackTime;
+									}
+									if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+										initialValue = initialValue - trackerConsolePasses.setUpTime; 
+									}
+									if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+										initialValue = initialValue - trackerConsolePasses.runTime; 
+									}
+									initialValue = new Date().time - initialValue;
+								} else {
+									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+										initialValue = initialValue + trackerConsolePasses.trackTime;
+									}
+									if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+										initialValue = initialValue + trackerConsolePasses.setUpTime; 
+									}
+									if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+										initialValue = initialValue + trackerConsolePasses.runTime; 
+									}
 								}
 							}
-						}
-					} else {
-						if(displayValue.firstTrackerDate==null){
-							initialValue = 0;
-						} else {
-							if(!displayValue.paused) {
-								initialValue = displayValue.firstTrackerDate.time;
-								if(!(isNaN(displayValue.firstTrackerTime)) && displayValue.firstTrackerTime!=0){
-									initialValue = initialValue - displayValue.firstTrackerTime;
-								}
-								if(!(isNaN(displayValue.firstSetUpTime)) && displayValue.firstSetUpTime!=0){
-									initialValue = initialValue - displayValue.firstSetUpTime; 
-								}
-								if(!(isNaN(displayValue.firstRunTime)) && displayValue.firstRunTime!=0){
-									initialValue = initialValue - displayValue.firstRunTime; 
-								}
-								initialValue = new Date().time - initialValue;
-							} else {
-								if(!(isNaN(displayValue.firstTrackerTime)) && displayValue.firstTrackerTime!=0){
-									initialValue = initialValue + displayValue.firstTrackerTime;
-								}
-								if(!(isNaN(displayValue.firstSetUpTime)) && displayValue.firstSetUpTime!=0){
-									initialValue = initialValue + displayValue.firstSetUpTime; 
-								}
-								if(!(isNaN(displayValue.firstRunTime)) && displayValue.firstRunTime!=0){
-									initialValue = initialValue + displayValue.firstRunTime; 
-								}
-							}
+							break;
 						}
 					}
-					if(displayValue.noOfPasses==2){
-						totalValue = (displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime)/2;
-					} else {
-						totalValue = (displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime);
-					}
+					totalValue = (displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime)/displayValue.noOfPasses;
 					timer.addEventListener(TimerEvent.TIMER,function(event:TimerEvent):void {
 						actualTime = convertMilliSecondsToString(initialValue+(timer.currentCount*1000),true);
 						pgBar.setProgress(initialValue+(timer.currentCount*1000),totalValue);
@@ -162,11 +134,7 @@
 							estimateSetUpImage.source = arrowDownImg;
 							estimateSetUpImage.width = 30;
 							estimateSetUpImage.height = 30;
-							if(displayValue.noOfPasses==2){
-								estimateSetUpImage.x = (((displayValue.actualSetUpTime/2)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
-							} else {
-								estimateSetUpImage.x = ((displayValue.actualSetUpTime/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
-							}
+							estimateSetUpImage.x = (((displayValue.actualSetUpTime/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
 							estimateSetUpImage.y = -6;
 							barComponent.addChild(estimateSetUpImage);
 						}
@@ -177,60 +145,36 @@
 							estimateRunImage.source = arrowDownImg;
 							estimateRunImage.width = 30;
 							estimateRunImage.height = 30;
-							if(displayValue.noOfPasses==2){
-								estimateRunImage.x = ((((displayValue.actualSetUpTime+displayValue.actualRunTime)/2)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
-							} else {
-								estimateRunImage.x = (((displayValue.actualSetUpTime+displayValue.actualRunTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
-							}
+							estimateRunImage.x = ((((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
 							estimateRunImage.y = -6;
 							barComponent.addChild(estimateRunImage);
 						}
 					}
-					if(displayValue.currentPass==1){
-						if(displayValue.firstSetUpCompleted){
-							if(barComponent!=null){
-								actualSetUpImage = new Image();
-								actualSetUpImage.source = arrowUpImg;
-								actualSetUpImage.width = 30;
-								actualSetUpImage.height = 30;
-								actualSetUpImage.x = ((displayValue.firstSetUpTime/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualSetUpImage.width/2);
-								actualSetUpImage.y = pgBarTrackHeight/2;
-								barComponent.addChild(actualSetUpImage);
+					for each(var trackerConsolePasses:TrackerConsolePasses in displayValue.passesList){
+						if(trackerConsolePasses.passNo==displayValue.currentPass) {
+							if(trackerConsolePasses.setUpCompleted){
+								if(barComponent!=null){
+									actualSetUpImage = new Image();
+									actualSetUpImage.source = arrowUpImg;
+									actualSetUpImage.width = 30;
+									actualSetUpImage.height = 30;
+									actualSetUpImage.x = ((trackerConsolePasses.setUpTime/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualSetUpImage.width/2);
+									actualSetUpImage.y = pgBarTrackHeight/2;
+									barComponent.addChild(actualSetUpImage);
+								}
 							}
-						}
-						if(displayValue.firstRunCompleted){
-							if(barComponent!=null){
-								actualRunImage = new Image();
-								actualRunImage.source = arrowUpImg;
-								actualRunImage.width = 30;
-								actualRunImage.height = 30;
-								actualRunImage.x = (((displayValue.firstRunTime+displayValue.firstSetUpTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualSetUpImage.width/2);
-								actualRunImage.y = pgBarTrackHeight/2;
-								barComponent.addChild(actualRunImage);
+							if(trackerConsolePasses.runCompleted){
+								if(barComponent!=null){
+									actualRunImage = new Image();
+									actualRunImage.source = arrowUpImg;
+									actualRunImage.width = 30;
+									actualRunImage.height = 30;
+									actualRunImage.x = (((trackerConsolePasses.runTime+trackerConsolePasses.setUpTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualSetUpImage.width/2);
+									actualRunImage.y = pgBarTrackHeight/2;
+									barComponent.addChild(actualRunImage);
+								}
 							}
-						}
-					} else if(displayValue.currentPass==2){
-						if(displayValue.secondSetUpCompleted){
-							if(barComponent!=null){
-								actualSetUpImage = new Image();
-								actualSetUpImage.source = arrowUpImg;
-								actualSetUpImage.width = 30;
-								actualSetUpImage.height = 30;
-								actualSetUpImage.x = ((displayValue.secondSetUpTime/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
-								actualSetUpImage.y = pgBarTrackHeight/2;
-								barComponent.addChild(actualSetUpImage);
-							}
-						}
-						if(displayValue.secondRunCompleted){
-							if(barComponent!=null){
-								actualRunImage = new Image();
-								actualRunImage.source = arrowUpImg;
-								actualRunImage.width = 30;
-								actualRunImage.height = 30;
-								actualRunImage.x = (((displayValue.secondSetUpTime+displayValue.secondRunTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
-								actualRunImage.y = pgBarTrackHeight/2;
-								barComponent.addChild(actualRunImage);
-							}
+							break;
 						}
 					}
 					noOfPasses = displayValue.noOfPasses;
@@ -250,25 +194,25 @@
 					}
 				}
 				if(milliSeconds>=60000 && milliSeconds<60000*60){
-			    	txtString = "00:";
+			    	txtString = "0 Hrs ";
 			    	txtString = txtString + numFormatter.format(milliSeconds/60000);
 			    	if(showSeconds){
-			    		txtString = txtString + " " + numFormatter.format((milliSeconds%60000)/(1000))+"S";
+			    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
 			    	}
 			    }
 			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
-			    	txtString = numFormatter.format(milliSeconds/(60000*60))+":";
+			    	txtString = numFormatter.format(milliSeconds/(60000*60))+" Hrs ";
 			    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
 			    	if(showSeconds){
-			    		txtString = txtString + " " + numFormatter.format(milliSeconds%60000/1000)+"S";
+			    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
 			    	}
 			    }
 			    if(milliSeconds>=60000*60*24){
 			    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
-			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+":";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+" Hrs ";
 			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
 			    	if(showSeconds){
-			    		txtString = txtString+" "+numFormatter.format(milliSeconds%60000/1000)+"S";
+			    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
 			    	}
 			    }
 			    return txtString;

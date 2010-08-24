@@ -1,12 +1,15 @@
 package com.efi.printsmith.data;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -52,38 +55,6 @@ public class TrackerConsoleJobs extends ModelBase{
 	
 	private long duration;
 	
-	private Date firstTrackerDate;
-	
-	private long firstTrackerTime;
-	
-	private Date firstSetUpDate;
-	
-	private long firstSetUpTime;
-	
-	private Date firstRunDate;
-	
-	private long firstRunTime;
-	
-	private Date firstWashDate;
-	
-	private long firstWashTime;
-	
-	private Date secondTrackerDate;
-	
-	private long secondTrackerTime;
-	
-	private Date secondSetUpDate; 
-	
-	private long secondSetUpTime;
-	
-	private Date secondRunDate;
-	
-	private long secondRunTime;
-	
-	private Date secondWashDate;
-	
-	private long secondWashTime;
-	
 	private long totalTime;
 	
 	private int noOfPasses;
@@ -92,17 +63,9 @@ public class TrackerConsoleJobs extends ModelBase{
 	
 	private int currentPass;
 	
-	private Boolean firstSetUpCompleted;
-	
-	private Boolean firstRunCompleted;
-	
-	private Boolean firstWashCompleted;
-	
-	private Boolean secondSetUpCompleted;
-	
-	private Boolean secondRunCompleted;
-	
-	private Boolean secondWashCompleted;
+	@OneToMany(mappedBy="trackerConsoleJobs", cascade = {CascadeType.ALL})
+    @JoinTable( name = "trackerconsolepasses")
+  	private List<TrackerConsolePasses> passesList;
 	
 	private Boolean completed;
 	
@@ -249,202 +212,6 @@ public class TrackerConsoleJobs extends ModelBase{
 	}
 
 	/**
-	 * @return the firstTrackerDate
-	 */
-	public Date getFirstTrackerDate() {
-		return firstTrackerDate;
-	}
-
-	/**
-	 * @param firstTrackerDate the firstTrackerDate to set
-	 */
-	public void setFirstTrackerDate(Date firstTrackerDate) {
-		this.firstTrackerDate = firstTrackerDate;
-	}
-
-	/**
-	 * @return the firstSetUpDate
-	 */
-	public Date getFirstSetUpDate() {
-		return firstSetUpDate;
-	}
-
-	/**
-	 * @param firstSetUpDate the firstSetUpDate to set
-	 */
-	public void setFirstSetUpDate(Date firstSetUpDate) {
-		this.firstSetUpDate = firstSetUpDate;
-	}
-
-	/**
-	 * @return the firstSetUpTime
-	 */
-	public long getFirstSetUpTime() {
-		return firstSetUpTime;
-	}
-
-	/**
-	 * @param firstSetUpTime the firstSetUpTime to set
-	 */
-	public void setFirstSetUpTime(long firstSetUpTime) {
-		this.firstSetUpTime = firstSetUpTime;
-	}
-
-	/**
-	 * @return the firstRunDate
-	 */
-	public Date getFirstRunDate() {
-		return firstRunDate;
-	}
-
-	/**
-	 * @param firstRunDate the firstRunDate to set
-	 */
-	public void setFirstRunDate(Date firstRunDate) {
-		this.firstRunDate = firstRunDate;
-	}
-
-	/**
-	 * @return the firstRunTime
-	 */
-	public long getFirstRunTime() {
-		return firstRunTime;
-	}
-
-	/**
-	 * @param firstRunTime the firstRunTime to set
-	 */
-	public void setFirstRunTime(long firstRunTime) {
-		this.firstRunTime = firstRunTime;
-	}
-
-	/**
-	 * @return the firstWashDate
-	 */
-	public Date getFirstWashDate() {
-		return firstWashDate;
-	}
-
-	/**
-	 * @param firstWashDate the firstWashDate to set
-	 */
-	public void setFirstWashDate(Date firstWashDate) {
-		this.firstWashDate = firstWashDate;
-	}
-
-	/**
-	 * @return the firstWashTime
-	 */
-	public long getFirstWashTime() {
-		return firstWashTime;
-	}
-
-	/**
-	 * @param firstWashTime the firstWashTime to set
-	 */
-	public void setFirstWashTime(long firstWashTime) {
-		this.firstWashTime = firstWashTime;
-	}
-
-	/**
-	 * @return the secondTrackerDate
-	 */
-	public Date getSecondTrackerDate() {
-		return secondTrackerDate;
-	}
-
-	/**
-	 * @param secondTrackerDate the secondTrackerDate to set
-	 */
-	public void setSecondTrackerDate(Date secondTrackerDate) {
-		this.secondTrackerDate = secondTrackerDate;
-	}
-
-	/**
-	 * @return the secondSetUpDate
-	 */
-	public Date getSecondSetUpDate() {
-		return secondSetUpDate;
-	}
-
-	/**
-	 * @param secondSetUpDate the secondSetUpDate to set
-	 */
-	public void setSecondSetUpDate(Date secondSetUpDate) {
-		this.secondSetUpDate = secondSetUpDate;
-	}
-
-	/**
-	 * @return the secondSetUpTime
-	 */
-	public long getSecondSetUpTime() {
-		return secondSetUpTime;
-	}
-
-	/**
-	 * @param secondSetUpTime the secondSetUpTime to set
-	 */
-	public void setSecondSetUpTime(long secondSetUpTime) {
-		this.secondSetUpTime = secondSetUpTime;
-	}
-
-	/**
-	 * @return the secondRunDate
-	 */
-	public Date getSecondRunDate() {
-		return secondRunDate;
-	}
-
-	/**
-	 * @param secondRunDate the secondRunDate to set
-	 */
-	public void setSecondRunDate(Date secondRunDate) {
-		this.secondRunDate = secondRunDate;
-	}
-
-	/**
-	 * @return the secondRunTime
-	 */
-	public long getSecondRunTime() {
-		return secondRunTime;
-	}
-
-	/**
-	 * @param secondRunTime the secondRunTime to set
-	 */
-	public void setSecondRunTime(long secondRunTime) {
-		this.secondRunTime = secondRunTime;
-	}
-
-	/**
-	 * @return the secondWashDate
-	 */
-	public Date getSecondWashDate() {
-		return secondWashDate;
-	}
-
-	/**
-	 * @param secondWashDate the secondWashDate to set
-	 */
-	public void setSecondWashDate(Date secondWashDate) {
-		this.secondWashDate = secondWashDate;
-	}
-
-	/**
-	 * @return the secondWashTime
-	 */
-	public long getSecondWashTime() {
-		return secondWashTime;
-	}
-
-	/**
-	 * @param secondWashTime the secondWashTime to set
-	 */
-	public void setSecondWashTime(long secondWashTime) {
-		this.secondWashTime = secondWashTime;
-	}
-
-	/**
 	 * @return the totalTime
 	 */
 	public long getTotalTime() {
@@ -501,59 +268,17 @@ public class TrackerConsoleJobs extends ModelBase{
 	}
 
 	/**
-	 * @return the firstSetUpCompleted
+	 * @return the passesList
 	 */
-	public Boolean getFirstSetUpCompleted() {
-		return firstSetUpCompleted;
+	public List<TrackerConsolePasses> getPassesList() {
+		return passesList;
 	}
 
 	/**
-	 * @param firstSetUpCompleted the firstSetUpCompleted to set
+	 * @param passesList the passesList to set
 	 */
-	public void setFirstSetUpCompleted(Boolean firstSetUpCompleted) {
-		this.firstSetUpCompleted = firstSetUpCompleted;
-	}
-
-	/**
-	 * @return the firstWashCompleted
-	 */
-	public Boolean getFirstWashCompleted() {
-		return firstWashCompleted;
-	}
-
-	/**
-	 * @param firstWashCompleted the firstWashCompleted to set
-	 */
-	public void setFirstWashCompleted(Boolean firstWashCompleted) {
-		this.firstWashCompleted = firstWashCompleted;
-	}
-
-	/**
-	 * @return the secondSetUpCompleted
-	 */
-	public Boolean getSecondSetUpCompleted() {
-		return secondSetUpCompleted;
-	}
-
-	/**
-	 * @param secondSetUpCompleted the secondSetUpCompleted to set
-	 */
-	public void setSecondSetUpCompleted(Boolean secondSetUpCompleted) {
-		this.secondSetUpCompleted = secondSetUpCompleted;
-	}
-
-	/**
-	 * @return the secondWashCompleted
-	 */
-	public Boolean getSecondWashCompleted() {
-		return secondWashCompleted;
-	}
-
-	/**
-	 * @param secondWashCompleted the secondWashCompleted to set
-	 */
-	public void setSecondWashCompleted(Boolean secondWashCompleted) {
-		this.secondWashCompleted = secondWashCompleted;
+	public void setPassesList(List<TrackerConsolePasses> passesList) {
+		this.passesList = passesList;
 	}
 
 	/**
@@ -571,62 +296,6 @@ public class TrackerConsoleJobs extends ModelBase{
 	}
 
 	/**
-	 * @return the firstTrackerTime
-	 */
-	public long getFirstTrackerTime() {
-		return firstTrackerTime;
-	}
-
-	/**
-	 * @param firstTrackerTime the firstTrackerTime to set
-	 */
-	public void setFirstTrackerTime(long firstTrackerTime) {
-		this.firstTrackerTime = firstTrackerTime;
-	}
-
-	/**
-	 * @return the secondTrackerTime
-	 */
-	public long getSecondTrackerTime() {
-		return secondTrackerTime;
-	}
-
-	/**
-	 * @param secondTrackerTime the secondTrackerTime to set
-	 */
-	public void setSecondTrackerTime(long secondTrackerTime) {
-		this.secondTrackerTime = secondTrackerTime;
-	}
-
-	/**
-	 * @return the firstRunCompleted
-	 */
-	public Boolean getFirstRunCompleted() {
-		return firstRunCompleted;
-	}
-
-	/**
-	 * @param firstRunCompleted the firstRunCompleted to set
-	 */
-	public void setFirstRunCompleted(Boolean firstRunCompleted) {
-		this.firstRunCompleted = firstRunCompleted;
-	}
-
-	/**
-	 * @return the secondRunCompleted
-	 */
-	public Boolean getSecondRunCompleted() {
-		return secondRunCompleted;
-	}
-
-	/**
-	 * @param secondRunCompleted the secondRunCompleted to set
-	 */
-	public void setSecondRunCompleted(Boolean secondRunCompleted) {
-		this.secondRunCompleted = secondRunCompleted;
-	}
-
-	/**
 	 * @return the completedDate
 	 */
 	public Date getCompletedDate() {
@@ -640,4 +309,5 @@ public class TrackerConsoleJobs extends ModelBase{
 		this.completedDate = completedDate;
 	}
 
+	
 }

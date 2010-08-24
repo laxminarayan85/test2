@@ -28,6 +28,7 @@
 	
 <mx:Script>  	
 <![CDATA[
+	import com.efi.printsmith.data.TrackerConsolePasses;
 	import com.efi.printsmith.data.TrackerConsoleJobs;
 	import com.efi.printsmith.model.AutoClockOutDetector;
 	import mx.utils.StringUtil;
@@ -134,24 +135,22 @@
 			for each(var trackerConsoleJobs:TrackerConsoleJobs in trackerConsoleJobsList) {
 				if(updatedEmployee.clockIn) {
 					if(!trackerConsoleJobs.paused){
-						if(trackerConsoleJobs.currentPass==1){
-							trackerConsoleJobs.firstTrackerDate = nowDate;
-							trackerConsoleJobs.paused = false;
-						} else if(trackerConsoleJobs.currentPass==2){
-							trackerConsoleJobs.secondTrackerDate = nowDate;
-							trackerConsoleJobs.paused = false;
+						for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobs.passesList){
+							if(trackerConsolePasses.passNo==trackerConsoleJobs.currentPass){
+								trackerConsolePasses.trackDate = nowDate;
+								break;
+							}
 						}
+						trackerConsoleJobs.paused = false;
 						updatedTrackerConsoleJobsList.addItem(trackerConsoleJobs);
 					}
 				} else if(updatedEmployee.clockBreak || updatedEmployee.clockOut) {
 					if(!trackerConsoleJobs.paused){
-						if(trackerConsoleJobs.currentPass==1){
-							trackerConsoleJobs.firstTrackerTime = nowDate.time - trackerConsoleJobs.firstTrackerDate.time+(isNaN(trackerConsoleJobs.firstTrackerTime)?0:trackerConsoleJobs.firstTrackerTime);
-							trackerConsoleJobs.firstTrackerDate = nowDate;
-						}
-						if(trackerConsoleJobs.currentPass==2){
-							trackerConsoleJobs.secondTrackerTime = nowDate.time - trackerConsoleJobs.secondTrackerDate.time+(isNaN(trackerConsoleJobs.secondTrackerTime)?0:trackerConsoleJobs.secondTrackerTime);
-							trackerConsoleJobs.secondTrackerDate = nowDate;
+						for each(var trackerConsolePassesObj:TrackerConsolePasses in trackerConsoleJobs.passesList){
+							if(trackerConsolePassesObj.passNo==trackerConsoleJobs.currentPass){
+								trackerConsolePassesObj.trackTime = nowDate.time - trackerConsolePassesObj.trackDate.time+(isNaN(trackerConsolePassesObj.trackTime)?0:trackerConsolePassesObj.trackTime);
+								trackerConsolePassesObj.trackDate = nowDate;
+							}
 						}
 						updatedTrackerConsoleJobsList.addItem(trackerConsoleJobs);
 					}

@@ -3,6 +3,7 @@ package com.efi.printsmith.model
 	import com.efi.printsmith.data.Employee;
 	import com.efi.printsmith.data.TimeCard;
 	import com.efi.printsmith.data.TrackerConsoleJobs;
+	import com.efi.printsmith.data.TrackerConsolePasses;
 	
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
@@ -197,13 +198,12 @@ package com.efi.printsmith.model
 				for each(var trackerConsoleJobs:TrackerConsoleJobs in trackerConsoleJobsList) {
 					if(updatedEmployee.clockBreak || updatedEmployee.clockOut) {
 						if(!trackerConsoleJobs.paused){
-							if(trackerConsoleJobs.currentPass==1){
-								trackerConsoleJobs.firstTrackerTime = nowDate.time - trackerConsoleJobs.firstTrackerDate.time+(isNaN(trackerConsoleJobs.firstTrackerTime)?0:trackerConsoleJobs.firstTrackerTime);
-								trackerConsoleJobs.firstTrackerDate = nowDate;
-							}
-							if(trackerConsoleJobs.currentPass==2){
-								trackerConsoleJobs.secondTrackerTime = nowDate.time - trackerConsoleJobs.secondTrackerDate.time+(isNaN(trackerConsoleJobs.secondTrackerTime)?0:trackerConsoleJobs.secondTrackerTime);
-								trackerConsoleJobs.secondTrackerDate = nowDate;
+							for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobs.passesList){
+								if(trackerConsolePasses.passNo==trackerConsoleJobs.currentPass){
+									trackerConsolePasses.trackTime = nowDate.time - trackerConsolePasses.trackDate.time+(isNaN(trackerConsolePasses.trackTime)?0:trackerConsolePasses.trackTime);
+									trackerConsolePasses.trackDate = nowDate;
+									break;
+								}
 							}
 							updatedTrackerConsoleJobsList.addItem(trackerConsoleJobs);
 						}

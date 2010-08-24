@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="625" height="575"
+	creationComplete="{initDetailsWindow()}" showCloseButton="true" close="{closeWindow()}">
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.TrackerConsolePasses;
+			import mx.managers.PopUpManager;
+			import com.efi.printsmith.data.JobBase;
+			import com.efi.printsmith.data.Charge;
+			import com.efi.printsmith.data.Job;
+			import com.efi.printsmith.data.TrackerConsoleJobs;
+			
+			[Bindable] public var trackerConsoleJobs:TrackerConsoleJobs;
+			
+			[Bindable] public var nowDate:Date = new Date();
+			
+			private function initDetailsWindow():void {
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function getInvoiceNumber(object:Object):String {
+				if(object is TrackerConsoleJobs){
+					if(object.job!=null){
+						object = object.job;
+					} else {
+						object = object.charge;
+					}
+				} 
+				if(object is Job){
+					var job:Job = object as Job;
+					return String(job.parentInvoice.invoiceNumber);	
+				}
+				if(object is Charge){
+					var charge:Charge = object as Charge;
+					if(charge.parentInvoice!=null){
+						return String(charge.parentInvoice.invoiceNumber);
+					}
+					if(charge.parentJob!=null){
+						return String(charge.parentJob.jobNumber);
+					}
+				}
+				return "";
+			}
+			
+			private function getAccount(object:Object):String{
+				if(object is TrackerConsoleJobs){
+					if(object.job!=null){
+						object = object.job;
+					} else {
+						object = object.charge;
+					}
+				} 
+				if(object is Job){
+					var job:Job = object as Job;
+					return "#"+job.parentInvoice.account.id + " "+job.parentInvoice.account.title;	
+				}
+				if(object is Charge){
+					var charge:Charge = object as Charge;
+					if(charge.parentInvoice!=null){
+						return "#"+charge.parentInvoice.account.id + " "+charge.parentInvoice.account.title;
+					}
+					if(charge.parentJob!=null){
+						var jobBase:JobBase = charge.parentJob as JobBase;
+						return "#"+jobBase.parentInvoice.account.id + " "+jobBase.parentInvoice.account.title;
+					}
+				}
+				return "";
+			}
+			
+			private function getDescription(object:Object):String{
+				if(object is TrackerConsoleJobs){
+					if(object.job!=null){
+						object = object.job;
+					} else {
+						object = object.charge;
+					}
+				} 
+				if(object is Job){
+					var job:Job = object as Job;
+					return job.description;	
+				}
+				if(object is Charge){
+					var charge:Charge = object as Charge;
+					return charge.description;
+				}
+				return "";
+			}
+			
+			private function getStatus(object:TrackerConsoleJobs):String{
+				if(object!=null){
+					if(object.paused){
+						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Paused');	
+					} 
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Active');
+				}
+				return "";
+			}
+			
+			private function getFirstTotalTime(object:TrackerConsoleJobs):String{
+				var totalValue:Number = 0;
+				if(object.currentPass==1){
+					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+						if(trackerConsolePasses.passNo == object.currentPass){
+							if(trackerConsolePasses.setUpCompleted && trackerConsolePasses.runCompleted && trackerConsolePasses.washUpCompleted){
+								totalValue = trackerConsolePasses.setUpTime + trackerConsolePasses.runTime + trackerConsolePasses.washUpTime;
+								return convertMilliSecondsToString(totalValue,true);
+							} else {
+								if(trackerConsolePasses.trackDate==null){
+									totalValue = 0;
+								} else {
+									if(!object.paused) {
+										totalValue = trackerConsolePasses.trackDate.time;
+										if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+											totalValue = totalValue - trackerConsolePasses.trackTime;
+										}
+										if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+											totalValue = totalValue - trackerConsolePasses.setUpTime; 
+										}
+										if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+											totalValue = totalValue - trackerConsolePasses.runTime; 
+										}
+										totalValue = nowDate.time - totalValue;
+									} else {
+										if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+											totalValue = totalValue + trackerConsolePasses.trackTime;
+										}
+										if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+											totalValue = totalValue + trackerConsolePasses.setUpTime; 
+										}
+										if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+											totalValue = totalValue + trackerConsolePasses.runTime; 
+										}
+									}
+								}
+							}
+							break;
+						}
+					}
+				} else {
+					for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
+						if(trackerConsolePassesObj.passNo < object.currentPass){
+							if(!(isNaN(trackerConsolePassesObj.setUpTime)) && trackerConsolePassesObj.setUpTime!=0){
+								totalValue = totalValue + trackerConsolePassesObj.setUpTime; 
+							}
+							if(!(isNaN(trackerConsolePassesObj.runTime)) && trackerConsolePassesObj.runTime!=0){
+								totalValue = totalValue + trackerConsolePassesObj.runTime; 
+							}
+							if(!(isNaN(trackerConsolePassesObj.washUpTime)) && trackerConsolePassesObj.washUpTime!=0){
+								totalValue = totalValue + trackerConsolePassesObj.washUpTime; 
+							}
+						}
+					}
+				}
+				return convertMilliSecondsToString(totalValue,true);
+			}
+			
+			private function getFirstSetUpTime(object:TrackerConsoleJobs):String {
+				var totalSetUpValue:Number = 0;
+				if(object.currentPass==1){
+					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+						if(trackerConsolePasses.passNo == object.currentPass){
+							if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+								totalSetUpValue = totalSetUpValue + trackerConsolePasses.setUpTime;
+							}
+							break;
+						}
+					}
+				} else {
+					for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
+						if(trackerConsolePassesObj.passNo < object.currentPass){
+							if(!(isNaN(trackerConsolePassesObj.setUpTime)) && trackerConsolePassesObj.setUpTime!=0){
+								totalSetUpValue = totalSetUpValue + trackerConsolePassesObj.setUpTime;
+							}
+						}
+					}
+				}
+				return convertMilliSecondsToString(totalSetUpValue,true);
+			}
+			
+			private function getFirstRunTime(object:TrackerConsoleJobs):String {
+				var totalRunValue:Number = 0;
+				if(object.currentPass==1){
+					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+						if(trackerConsolePasses.passNo == object.currentPass){
+							if(trackerConsolePasses.runCompleted){
+								return convertMilliSecondsToString(trackerConsolePasses.runTime,true);
+							} else {
+								if(!object.paused){
+									totalRunValue = trackerConsolePasses.trackDate.time;
+									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+										totalRunValue = totalRunValue - trackerConsolePasses.trackTime;
+									}
+									totalRunValue = nowDate.time - totalRunValue;
+								} else {
+									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+										totalRunValue = totalRunValue + trackerConsolePasses.trackTime;
+									}
+								}
+								return convertMilliSecondsToString(totalRunValue,true);
+							}
+							break;
+						}
+					}
+				} else {
+					for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
+						if(trackerConsolePassesObj.passNo < object.currentPass){
+							if(!(isNaN(trackerConsolePassesObj.runTime)) && trackerConsolePassesObj.runTime!=0){
+								totalRunValue = totalRunValue + trackerConsolePassesObj.runTime;
+							}
+						}
+					}
+					return convertMilliSecondsToString(totalRunValue,true);
+				}
+				return "0:00";
+			}
+			
+			private function getFirstWashTime(object:TrackerConsoleJobs):String {
+				var totalWashValue:Number = 0;
+				if(object.currentPass==1){
+					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+						if(trackerConsolePasses.passNo == object.currentPass){
+							if(trackerConsolePasses.runCompleted && !trackerConsolePasses.washUpCompleted){
+								if(!object.paused){
+									totalWashValue = trackerConsolePasses.trackDate.time;
+									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+										totalWashValue = totalWashValue - trackerConsolePasses.trackTime;
+									}
+									totalWashValue = nowDate.time - totalWashValue;
+								} else {
+									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+										totalWashValue = totalWashValue + trackerConsolePasses.trackTime;
+									}
+								}
+								return convertMilliSecondsToString(totalWashValue,true);
+							} else {
+								return convertMilliSecondsToString(trackerConsolePasses.washUpTime,true);
+							}
+							break;
+						}
+					}
+				} else {
+					for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
+						if(trackerConsolePassesObj.passNo < object.currentPass){
+							if(!(isNaN(trackerConsolePassesObj.washUpTime)) && trackerConsolePassesObj.washUpTime!=0){
+								totalWashValue = totalWashValue + trackerConsolePassesObj.washUpTime;
+							}
+						}
+					}
+					return convertMilliSecondsToString(totalWashValue,true);
+				}
+				return "0:00";
+			}
+			
+			private function getSecondTotalTime(object:TrackerConsoleJobs):String{
+				var totalValue:Number = 0;
+				for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+					if(trackerConsolePasses.passNo == object.currentPass){
+						if(trackerConsolePasses.setUpCompleted && trackerConsolePasses.runCompleted && trackerConsolePasses.washUpCompleted){
+							totalValue = trackerConsolePasses.setUpTime + trackerConsolePasses.runTime + trackerConsolePasses.washUpTime;
+							return convertMilliSecondsToString(totalValue,true);
+						} else {
+							if(trackerConsolePasses.trackDate==null){
+								totalValue = 0;
+							} else {
+								if(!object.paused) {
+									totalValue = trackerConsolePasses.trackDate.time;
+									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+										totalValue = totalValue - trackerConsolePasses.trackTime;
+									}
+									if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+										totalValue = totalValue - trackerConsolePasses.setUpTime; 
+									}
+									if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+										totalValue = totalValue - trackerConsolePasses.runTime; 
+									}
+									totalValue = nowDate.time - totalValue;
+								} else {
+									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+										totalValue = totalValue + trackerConsolePasses.trackTime;
+									}
+									if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+										totalValue = totalValue + trackerConsolePasses.setUpTime; 
+									}
+									if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+										totalValue = totalValue + trackerConsolePasses.runTime; 
+									}
+								}
+							}
+						}
+						break;
+					}
+				}
+				return convertMilliSecondsToString(totalValue,true);
+			}
+			
+			private function getSecondSetUpTime(object:TrackerConsoleJobs):String {
+				var totalSetUpValue:Number = 0;
+				for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+					if(trackerConsolePasses.passNo == object.currentPass){
+						if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+							totalSetUpValue = totalSetUpValue + trackerConsolePasses.setUpTime;
+						}
+						break;
+					}
+				}
+				return convertMilliSecondsToString(totalSetUpValue,true);
+			}
+			
+			private function getSecondRunTime(object:TrackerConsoleJobs):String {
+				var totalRunValue:Number = 0;
+				for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+					if(trackerConsolePasses.passNo == object.currentPass){
+						if(trackerConsolePasses.runCompleted){
+							return convertMilliSecondsToString(trackerConsolePasses.runTime,true);
+						} else {
+							if(!object.paused){
+								totalRunValue = trackerConsolePasses.trackDate.time;
+								if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+									totalRunValue = totalRunValue - trackerConsolePasses.trackTime;
+								}
+								totalRunValue = nowDate.time - totalRunValue;
+							} else {
+								if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+									totalRunValue = totalRunValue + trackerConsolePasses.trackTime;
+								}
+							}
+							return convertMilliSecondsToString(totalRunValue,true);
+						}
+						break;
+					}
+				}
+				return "0:00";
+			}
+			
+			private function getSecondWashTime(object:TrackerConsoleJobs):String {
+				var totalWashValue:Number = 0;
+				for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+					if(trackerConsolePasses.passNo == object.currentPass){
+						if(trackerConsolePasses.runCompleted && !trackerConsolePasses.washUpCompleted){
+							if(!object.paused){
+								totalWashValue = trackerConsolePasses.trackDate.time;
+								if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+									totalWashValue = totalWashValue - trackerConsolePasses.trackTime;
+								}
+								totalWashValue = nowDate.time - totalWashValue;
+							} else {
+								if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+									totalWashValue = totalWashValue + trackerConsolePasses.trackTime;
+								}
+							}
+							return convertMilliSecondsToString(totalWashValue,true);
+						} else {
+							return convertMilliSecondsToString(trackerConsolePasses.washUpTime,true);
+						}
+						break;
+					}
+				}
+				return "0:00";
+			}
+			
+			private function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
+				var txtString:String = "";
+				if(showSeconds){
+					if(milliSeconds<60000){
+						txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+					}
+				}
+				if(milliSeconds>=60000 && milliSeconds<60000*60){
+			    	txtString = "0 Hrs ";
+			    	txtString = txtString + numFormatter.format(milliSeconds/60000);
+			    	if(showSeconds){
+			    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
+			    	}
+			    }
+			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
+			    	txtString = numFormatter.format(milliSeconds/(60000*60))+" Hrs ";
+			    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
+			    	}
+			    }
+			    if(milliSeconds>=60000*60*24){
+			    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+" Hrs ";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
+			    	}
+			    }
+			    if(txtString==""){
+			    	txtString = "0:00";
+			    }
+			    return txtString;
+			}
+			
+			private function getCurrentPassString(object:TrackerConsoleJobs):String {
+				if(object!=null){
+					if(object.noOfPasses==2){
+						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.CurrentPass');
+					}
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Actuals');
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
+	
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Item')}"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{getInvoiceNumber(trackerConsoleJobs)}" width="72%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Account')}"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{getAccount(trackerConsoleJobs)}" width="72%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Description')}"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{getDescription(trackerConsoleJobs)}" width="72%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Status')}"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{getStatus(trackerConsoleJobs)}" width="72%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Facility')}"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{trackerConsoleJobs.productionFacilities.name}" width="72%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Station')}"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{trackerConsoleJobs.productionStations.name}" width="72%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Location')}"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{trackerConsoleJobs.productionLocations.name}" width="72%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Employee')}"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{trackerConsoleJobs.employee.lastName}, {trackerConsoleJobs.employee.firstName}" width="72%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Exceptioncode')}"
+			width="25%" textAlign="right"/>
+		<mx:TextInput width="72%"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Spacer width="25%"/>
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Estimated')}" 
+			fontWeight="bold" width="25%" textAlign="center"/>
+		<mx:Label text="{getCurrentPassString(trackerConsoleJobs)}" fontWeight="bold" width="25%" textAlign="center"/>
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.PreviousPasses')}" 
+			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" fontWeight="bold" width="25%" textAlign="center"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Totaltime')}:"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{convertMilliSecondsToString((trackerConsoleJobs.actualSetUpTime+trackerConsoleJobs.actualRunTime+trackerConsoleJobs.actualWashTime),true)}" 
+			width="25%" enabled="false"/>
+		<mx:TextInput text="{getSecondTotalTime(trackerConsoleJobs)}" 
+			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" width="25%" enabled="false"/>
+		<mx:TextInput text="{getFirstTotalTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Setup')}:"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualSetUpTime,true)}" 
+			width="25%" enabled="false"/>
+		<mx:TextInput text="{getSecondSetUpTime(trackerConsoleJobs)}" 
+			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" width="25%" enabled="false"/>
+		<mx:TextInput text="{getFirstSetUpTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Runtime')}:"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualRunTime,true)}" 
+			width="25%" enabled="false"/>
+		<mx:TextInput text="{getSecondRunTime(trackerConsoleJobs)}" 
+			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" width="25%" enabled="false"/>
+		<mx:TextInput text="{getFirstRunTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Washup')}:"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualWashTime,true)}" 
+			width="25%" enabled="false"/>
+		<mx:TextInput text="{getSecondWashTime(trackerConsoleJobs)}" 
+			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" width="25%" enabled="false"/>
+		<mx:TextInput text="{getFirstWashTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
+	</mx:HBox>
+</mx:TitleWindow>
