@@ -104,6 +104,7 @@
 		import com.efi.printsmith.view.*;
 
 		import com.efi.printsmith.data.Users;
+		import com.efi.printsmith.data.CreditCardTrackRead;
 		import mx.effects.easing.Quadratic;
 		import com.efi.printsmith.pages.Debug;
 		import com.efi.printsmith.data.InvoiceBase;
@@ -141,6 +142,7 @@
 		import flexlib.events.TabReorderEvent;
 		import flexlib.controls.tabBarClasses.SuperTab;
 		import com.efi.printsmith.components.MultiLineLabelButton;
+		import com.efi.printsmith.events.CreditCardTrackReadEvent;
 		
 		public var timer : Timer;
 		public var nf:NumberFormatter;
@@ -557,7 +559,10 @@
             	// give up on more data coming in from card reader
 				gCaptureCardData = false;
 				// restore the focus
-				focusManager.setFocus(gComponent);
+				if (gComponent != null) {
+					focusManager.setFocus(gComponent);
+					gComponent = null;
+				}
 				tmr.stop();
             }
         }
@@ -585,7 +590,6 @@
 		private function myKeyUpHandler(event:KeyboardEvent):void {
 		
 			var curKeyCode:int;
-			var localString:String;
 			
 			// ONLY WHEN NO ALT OR CONTROL KEYS ARE DOWN
 			//
@@ -611,8 +615,7 @@
 				//
 				else if (gCaptureCardData) {
 					
-					localString = String.fromCharCode(event.charCode);
-					gCardDataBuffer = gCardDataBuffer.concat(localString);
+					gCardDataBuffer = gCardDataBuffer.concat(String.fromCharCode(event.charCode));
 					
 					++gCardDataCharCount;
 					
@@ -628,81 +631,86 @@
 						// no more data will be captured into the card buffer
 						gCaptureCardData = false;
 						// restore the focus
-						focusManager.setFocus(gComponent);
+						if (gComponent != null) {
+							focusManager.setFocus(gComponent);
+							gComponent = null;
+						}
 						
-						parseCreditCardRawTrackData(gCardDataBuffer);
+						parseCreditCardRawTrackData();
 					}
 				}
 			}
 		}
 		
-		private function parseCreditCardRawTrackData(inputTxt:String):void {
+		private function parseCreditCardRawTrackData():void {
+			var localCard:CreditCardTrackRead = new CreditCardTrackRead;
 			var startSentinal:String;
-			var cardNumber:String;
-			var cardHolderName:String;
 			var formatCode:String;
 			var expirationYY:String;
 			var expirationMM:String;
 			var cr:String = String.fromCharCode(13);
-			var trackOne:String;
-			var trackTwo:String;
 			var k:int;
 			var len:int;
 			var i:int;
 			var cardType:Number;
 			var myRegExp:RegExp;
 			
-			startSentinal = inputTxt.charAt(0);
-			formatCode = inputTxt.charAt(1);
+			startSentinal = gCardDataBuffer.charAt(0);
+			formatCode = gCardDataBuffer.charAt(1);
 			
 			// good starting code and track data markers
 			if (startSentinal == "%" && formatCode == "B") {
-				len = inputTxt.length;
+				len = gCardDataBuffer.length;
 				k = 0;
-				while (inputTxt.charAt(k) != "^" && k < len)
+				while (gCardDataBuffer.charAt(k) != "^" && k < len)
 				{
 					++k;
 				}
 				--k;  // don't include the "^" symbol
-				cardNumber = inputTxt.substring(2,k);
+				localCard.parsedCard.cardNumber = gCardDataBuffer.substring(2,k);
 				
 				myRegExp = new RegExp(" ","g");		// find a SPACE character, all of them
-				cardNumber.replace(myRegExp,"");	// replace the SPACE with <empty>
+				localCard.parsedCard.cardNumber.replace(myRegExp,"");	// replace the SPACE with <empty>
 				
 				k += 2;  // skip the "^" symbol
 						
-				len = inputTxt.length;
+				len = gCardDataBuffer.length;
 				i = k;	// the starting point, first letter in name section
-				while (inputTxt.charAt(k) != "^" && k < len)
+				while (gCardDataBuffer.charAt(k) != "^" && k < len)
 				{
 					++k;
 				}
 				--k;  // don't include the "^" symbol
-				cardHolderName = inputTxt.substring(i,k);
-				cardHolderName = StringUtil.trim(cardHolderName);
+				localCard.parsedCard.cardHolderName = gCardDataBuffer.substring(i,k);
+				localCard.parsedCard.cardHolderName = StringUtil.trim(localCard.parsedCard.cardHolderName);
 				
 				// read the YYMM expiration date
 				k += 2;
 				i=k;
-				expirationYY = inputTxt.substring(i,i+1);
+				expirationYY = gCardDataBuffer.substring(i,i+1);
 				i += 2;
-				expirationMM = inputTxt.substring(i,i+1);
+				expirationMM = gCardDataBuffer.substring(i,i+1);
 				
 				// find the track one and track two seperator
 				k = i+1;
-				while (inputTxt.charAt(k) != cr && k < len)
+				while (gCardDataBuffer.charAt(k) != cr && k < len)
 				{
 					++k;
 				}
 				
 				// capture the raw track data and compute the credit card type number from first digit
-				cardType = (cardNumber.charCodeAt(0) - 48);
-				trackOne = inputTxt.substring(0,k);
-				trackTwo = inputTxt.substring(k+1,len);
+				cardType = (localCard.parsedCard.cardNumber.charCodeAt(0) - 48);
+				
+				localCard.trackOne = gCardDataBuffer.substring(0,k);
+				localCard.trackTwo = gCardDataBuffer.substring(k+1,len);
 				
 				// remove white space at the end, ie.. CR, LF, SPACE
-				trackOne = StringUtil.trim(trackOne);
-				trackTwo = StringUtil.trim(trackTwo);
+				localCard.trackOne = StringUtil.trim(localCard.trackOne);
+				localCard.trackTwo = StringUtil.trim(localCard.trackTwo);
+				
+				
+				var selectEvent:CreditCardTrackReadEvent = new CreditCardTrackReadEvent(CreditCardTrackReadEvent.BRICKREAD, localCard);
+				dispatchEvent(selectEvent);
 			}
 		}
 		

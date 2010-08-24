@@ -15,10 +15,15 @@ import com.efi.printsmith.data.enums.ChargeMethod;
 import com.efi.printsmith.data.enums.PreferenceProgramType;
 import com.efi.printsmith.pricing.charge.ChargeCostingPrices;
 import com.efi.printsmith.pricing.charge.ChargeUtilities;
+import com.mchange.lang.ByteUtils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.Key;
 import java.security.Security;
+
+import javassist.bytecode.ByteArray;
+import java.util.Arrays;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -285,13 +290,30 @@ public class EncryptionService extends SnowmassHibernateService{
 	//
 	//
 	private static String Aes256BitEncryptData(SecretKeySpec spec, String value) throws Exception {
+		int newlength = value.length();
+		int originallength = newlength;
+		byte [] inputBytes;
 		//
 		// the style of AES used here is very specific, otherwise the classic data will not decrypt properly
 		//
-		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
+		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");		//AES/ECB/NoPadding
 		cipher.init(Cipher.ENCRYPT_MODE, spec);
 		
-		byte [] inputBytes = value.getBytes();					// convert string into a byte array
+		if ((newlength % 16) != 0) {
+			newlength = (newlength / 16) + 16;		// even increments 
+		}
+		
+		if (newlength != originallength) {
+			inputBytes = new byte[newlength];
+			byte[] stringInBytes = value.getBytes();
+			int	i;
+			for (i = 0; i < originallength; ++i) {
+				inputBytes[i] = stringInBytes[i];
+			}
+		} else {
+			inputBytes = value.getBytes();
+		}
+		
 		byte [] rawEncryptedData = cipher.doFinal(inputBytes);// do all the work here
 		String hexString = asHex (rawEncryptedData);			// convert raw bytes into HEX string
 		return hexString;
@@ -307,7 +329,7 @@ public class EncryptionService extends SnowmassHibernateService{
 		//
 		// the style of AES used here is very specific, otherwise the classic data will not decrypt properly
 		//
-		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
+		Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");		//AES/ECB/NoPadding
         cipher.init(Cipher.DECRYPT_MODE, spec);
         
         byte [] rawEncryptedData = hexToBytes(value.getBytes());	// convert HEX to byte array
