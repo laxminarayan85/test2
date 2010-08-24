@@ -3055,6 +3055,11 @@ public class DataService extends HibernateService {
 					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob());
 				} 
 			}
+			for (TrackerConsoleJobs trackerConsoleJobs : trackerConsoleJobList) {
+				query = em.createQuery("from TrackerConsolePasses where trackerConsoleJobs=:trackerConsoleJobs");
+				query.setParameter("trackerConsoleJobs", trackerConsoleJobs);
+				trackerConsoleJobs.setPassesList(query.getResultList());
+			}
 			if (trackerConsoleJobList != null)
 				log.debug("** Found " + trackerConsoleJobList.size() + "records:");
 		} catch (Exception e) {
@@ -3063,6 +3068,40 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 		return trackerConsoleJobList;
+	}
+	
+	/**
+	 * This method retrieves TrackerConsoleJobs Object based on Id
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public TrackerConsoleJobs getTrackerConsoleJobsById(Long id) throws Exception {
+		log.debug("** getTrackerConsoleJobsById called.");
+		TrackerConsoleJobs trackerConsoleJobs = new TrackerConsoleJobs();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("TrackerConsoleJobs" + ".byId");
+			query.setParameter("id", id);
+			trackerConsoleJobs = (TrackerConsoleJobs) query.getSingleResult();
+			if(trackerConsoleJobs.getJob()!=null) {
+				Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
+			} else if(trackerConsoleJobs.getCharge()!=null) {
+				Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
+				Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob());
+			} 
+			query = em.createQuery("from TrackerConsolePasses where trackerConsoleJobs=:trackerConsoleJobs");
+			query.setParameter("trackerConsoleJobs", trackerConsoleJobs);
+			trackerConsoleJobs.setPassesList(query.getResultList());
+			if(trackerConsoleJobs!=null)
+				log.debug("** Found TrackerConsoleJJob for Id :"+trackerConsoleJobs.getId()); 
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return trackerConsoleJobs;
 	}
 
 	@SuppressWarnings("unchecked")
