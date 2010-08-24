@@ -3052,6 +3052,7 @@ public class DataService extends HibernateService {
 					Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
 				} else if(trackerConsoleJobs.getCharge()!=null) {
 					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
+					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob());
 				} 
 			}
 			if (trackerConsoleJobList != null)
