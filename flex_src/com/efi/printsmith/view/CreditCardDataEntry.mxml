@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Credit Card Approval" name="Credit Card Approval"
+width="100%" height="100%"  creationComplete="init()" 
+	 showCloseButton="true" 
+     title="Credit Card Approval" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*" close="doClose()">
+	<mx:RemoteObject id="dataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+<mx:Script>                                   
+<![CDATA[
+	import com.efi.printsmith.events.CreditCardTrackReadEvent;
+	import com.efi.printsmith.data.CreditCard;
+	import com.efi.printsmith.data.CreditCardTransactions;
+	import com.efi.printsmith.events.EncryptDataEvent;
+	import com.efi.printsmith.events.CreditCardTrackReadEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.collections.ArrayCollection;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.events.FaultEvent;
+	import mx.controls.Alert;
+	import mx.managers.PopUpManager;
+	import mx.rpc.IResponder;
+	import mx.utils.StringUtil;
+		
+	[Bindable]	
+		private var application:Snowmass;
+	[Bindable]
+		private var localTransation:CreditCardTransactions;
+			   
+    public function init():void{		
+   		application= Snowmass.getInstance();
+   		localTransation = new CreditCardTransactions;
+   		localTransation.creditCard = new CreditCard;
+   		
+   		this.addEventListener(CreditCardTrackReadEvent.BRICKREAD, handleBrickRead);
+   		
+   		
+		// dataService.getAll("Templates");
+		
+	//	if (application.currentUser.robustPassword == false) {
+	//		cardnumber.editable = false;
+	//		cardnumber.alpha = .5;
+	//		cardholder.editable = false;
+	//		cardholder.alpha = .5;
+	//	}
+	}
+
+
+	private function handleBrickRead(ev:CreditCardTrackReadEvent):void 
+	{
+		localTransation.creditCard.cardNumber = ev.brickData.parsedCard.cardNumber;
+		doReadCardNumber();
+	}
+
+	private function handleFault(ev:FaultEvent):void
+	{
+		var message:String;
+
+		message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+		Alert.show(message, "Error", 0, null);
+	}
+	private function handleLoadResult(ev:ResultEvent):void{
+
+	}
+	private function doClose():void{
+		PopUpManager.removePopUp(this);
+	}
+	
+	private function handleEncryptionResult(event:ResultEvent):void {
+		if (event.result != null && localTransation.creditCard != null) {
+			localTransation.creditCard.cardNumber = event.result as String;
+		}
+	}
+		
+	private function doReadCardNumber():void{
+		var xPattern:Number;
+		
+		if (cardnumber.text != "") {
+			xPattern = cardnumber.text.indexOf("X");
+			
+			if (xPattern < 0) {
+				var callbacks:IResponder = new mx.rpc.Responder(handleEncryptionResult, handleFault);	
+				var encryptCCEvent:EncryptDataEvent = new EncryptDataEvent(EncryptDataEvent.ENCRYPTDATA, cardnumber.text, "AES256WITHSERIALNUMBER", callbacks);
+				var i:Number;
+				var localString:String = new String;
+				
+				encryptCCEvent.dispatch();
+				
+				for (i = 0; i < cardnumber.text.length; ++i) {
+					if (i > 0 && i < (cardnumber.text.length-4)) {
+						localString = localString.concat("X");
+					}
+					else {
+						localString = localString.concat(cardnumber.text.charAt(i).toString());
+					}
+				}
+				
+				cardnumber.text = localString;
+			}
+		}
+	}
+	
+]]>
+                             
+</mx:Script>
+	<mx:Canvas width="100%" height="100%">
+		<mx:TextInput x="197" y="69" width="228" id="cardnumber"  text="{localTransation.creditCard.cardDisplayNumber}"  focusOut="doReadCardNumber()"/>
+		<mx:Label x="10"
+				  y="72"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.CardNumber')}"
+				  fontSize="9" textAlign="right" width="179" id="label2"/>
+		<mx:TextInput x="197" y="97" width="228" id="cardstatus" alpha=".5" enabled="false"/>
+		<mx:Label x="10"
+				  y="100"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.CardStatus')}"
+				  fontSize="9" textAlign="right" width="179" id="label1"/>
+		<mx:TextInput x="197" y="125" width="228" id="cardholder" text="{localTransation.creditCard.cardHolderName}"/>
+		<mx:Label x="10"
+				  y="128"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.CardHolder')}"
+				  fontSize="9" textAlign="right" width="179" id="label0"/>
+		<mx:TextInput x="197" y="153" width="170" id="expires" text="{localTransation.creditCard.expiresDate}"/>
+		<mx:Label x="10"
+				  y="156"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Expires')}"
+				  fontSize="9" textAlign="right" width="179" id="label20"/>
+		<mx:TextInput x="197" y="181" width="170" id="amount" text="{localTransation.amount}"/>
+		<mx:Label x="10"
+				  y="184"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Amount')}"
+				  fontSize="9" textAlign="right" width="179" id="label3"/>
+		<mx:TextInput x="197" y="209" width="170" id="tax" text="{localTransation.tax}"/>
+		<mx:Label x="10"
+				  y="212"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Tax')}"
+				  fontSize="9" textAlign="right" width="179" id="label4"/>
+		<mx:TextInput x="197" y="237" width="170" id="ordernumber" text="{localTransation.invoice.invoiceNumber}"/>
+		<mx:Label x="10"
+				  y="240"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.OrderNumber')}"
+				  fontSize="9" textAlign="right" width="179" id="label5"/>
+		<mx:TextInput x="197" y="265" width="170" id="ponumber" text="{localTransation.poNumber}"/>
+		<mx:Label x="10"
+				  y="268"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.PONumber')}"
+				  fontSize="9" textAlign="right" width="179" id="label6"/>
+		
+		<mx:TextInput x="197" y="293" width="170" id="cardverification" text="{localTransation.tempCVV2}"/>
+		<mx:Label x="10"
+				  y="296"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.CardVerification')}"
+				  fontSize="9" textAlign="right" width="179" id="label7"/>
+		<mx:Label x="375" y="295" text="CVV2/CID" width="69"/>
+		
+		<mx:TextInput x="197" y="323" width="228" id="street" text=""/>
+		<mx:Label x="10"
+				  y="326"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Street')}"
+				  fontSize="9" textAlign="right" width="179" id="label9"/>
+		<mx:TextInput x="197" y="351" width="228" id="zip"/>		
+		<mx:Label x="10"
+				  y="354"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Zip')}"
+				  fontSize="9" textAlign="right" width="179" id="label12"/>
+		<mx:TextInput x="197" y="405" width="170" id="verbAuthNumber" />
+		<mx:Label x="10"
+				  y="408"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.VerbalAuthNumber')}"
+				  fontSize="9" textAlign="right" width="179" id="label10"/>	
+		<mx:TextInput x="197" y="435" width="170" id="VerbAuthDate"/>
+		<mx:Label x="10"
+				  y="438"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.VerbalAuthDate')}"
+				  fontSize="9" textAlign="right" width="179" id="label11"/>
+		<mx:TextInput x="197" y="465" width="170" id="VerbAuthTime"/>
+		<mx:Label x="10"
+				  y="468"
+				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.VerbalAuthTime')}"
+				  fontSize="9" textAlign="right" width="179" id="label8"/>
+		
+		
+		<mx:Button x="10" y="527" label="OK" width="70"/>
+		<mx:Button x="158" y="527" label="Manager SignOn" width="150"/>
+		<mx:Button x="364" y="527" label="Cancel" width="70" click="doClose()"/>
+		
+		<mx:Canvas x="10" y="10" width="514" height="42" id="ChargeRefundArea" borderStyle="solid" borderColor="#518AA2" cornerRadius="6" borderThickness="2">
+			<mx:RadioButtonGroup id="ChargeRefund"/>
+			<mx:RadioButton x="29" y="10" label="Charge" groupName="ChargeRefund" width="181" selected="true"/>
+			<mx:RadioButton x="336" y="10" label="Refund" groupName="ChargeRefund" width="143"/>
+		</mx:Canvas>
+		
+	</mx:Canvas>	
+</mx:TitleWindow>
