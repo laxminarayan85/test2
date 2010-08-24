@@ -94,6 +94,8 @@
 		[Bindable] private var selectedDGIndex:int = -1; 
 		
 		[Bindable] private var closeEventTriggered:Boolean = false;
+		
+		[Bindable] private var trackerConsoleJobsAddUpdate:Boolean = false;
 		 
 		 
 		public function init():void {
@@ -246,6 +248,11 @@
 			if(event.currentTarget.selectedIndex>-1){
 				var trackerConsoleJobObject:TrackerConsoleJobs = event.currentTarget.selectedItem as TrackerConsoleJobs;
 				selectedTrackerConsoleJob = trackerConsoleJobObject;
+				trackerConsole.productionLocation = selectedTrackerConsoleJob.productionLocations;
+				if(trackerConsole.productionLocation==null){
+					trackerConsole.productionLocation = new ProductionLocations();
+				}
+				trackerconsole_location.customText = getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation);
 				enableRequiredBtns();
 				registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 				progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobObject) as TrackerConsoleJobs;
@@ -278,6 +285,20 @@
 		
 		private function handleLoadTCJobsResult(event:ResultEvent):void {
 			trackerConsoleJobsList = event.result as ArrayCollection;
+			if(trackerConsoleJobsAddUpdate){
+				var counter:int = 0;
+				trackerConsoleJobsAddUpdate = false;
+				registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+				progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+				for each(var trackerConsoleJobsObject:TrackerConsoleJobs in trackerConsoleJobsList){
+					counter++;
+					if(trackerConsoleJobsObject.id == selectedTrackerConsoleJob.id){
+						employee_jobs_grid.selectedIndex = counter;
+						break;
+					}
+				}
+				enableRequiredBtns();
+			}
 			if(refreshList){
 				refreshList = false;
 				if(selectedDGIndex>-1){
@@ -327,6 +348,13 @@
 		}
 		
 		public function getInvoiceNumber(object:Object):String {
+			if(object is TrackerConsoleJobs){
+				if(object.job!=null){
+					object = object.job;
+				} else {
+					object = object.charge;
+				}
+			} 
 			if(object is Job){
 				var job:Job = object as Job;
 				return String(job.parentInvoice.invoiceNumber);	
@@ -535,7 +563,21 @@
 				var trackerConsoleJobs:TrackerConsoleJobs = new TrackerConsoleJobs();
 				trackerConsoleJobs.productionFacilities = trackerConsole.productionFacilities;
 				trackerConsoleJobs.productionStations = trackerConsole.productionStations;
-				trackerConsoleJobs.productionLocations = trackerConsole.productionLocation;
+				if(selectedJob!=null){
+					trackerConsoleJobs.productionLocations = selectedJob.location;
+					trackerConsole.productionLocation = selectedJob.location;
+					if(trackerConsole.productionLocation==null){
+						trackerConsole.productionLocation = new ProductionLocations();
+					}
+					trackerconsole_location.customText = getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation);
+				} else if(selectedCharge!=null){
+					trackerConsoleJobs.productionLocations = selectedCharge.productionLocation;
+					trackerConsole.productionLocation = selectedCharge.productionLocation;
+					if(trackerConsole.productionLocation==null){
+						trackerConsole.productionLocation = new ProductionLocations();
+					}
+					trackerconsole_location.customText = getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation);
+				}
 				trackerConsoleJobs.employee = employee;
 				if(selectedJob!=null){
 					trackerConsoleJobs.job = selectedJob;
@@ -549,18 +591,15 @@
 				trackerConsoleJobs.duration = 0;
 				trackerConsoleJobs.noOfPasses = 2;
 				trackerConsoleJobs.currentPass = 1;
+				trackerConsoleJobsAddUpdate = true;
 				saveDataServiceJob.addUpdate(trackerConsoleJobs);
 			}
 		}
 		
 		private function handleSaveJobResult(event:ResultEvent):void {
 			var trackerConsoleJobs:TrackerConsoleJobs = event.result as TrackerConsoleJobs;
-			trackerConsoleJobsList.addItem(trackerConsoleJobs);
-			registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
-			progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobs) as TrackerConsoleJobs;
 			selectedTrackerConsoleJob = trackerConsoleJobs;
-			employee_jobs_grid.selectedIndex = (trackerConsoleJobsList.length-1);
-			enableRequiredBtns();
+			dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
 		}
 		
 		private function setUpJob():void {
@@ -1009,7 +1048,7 @@
 						
 						<mx:HBox width="100%">
 							<mx:Label width="15%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location')}" textAlign="right"/>
-							<components:CustomComboBoxComponent width="40%"
+							<components:CustomComboBoxComponent id="trackerconsole_location" width="40%"
 								masterList="{productionLocationArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 								dataHolder="{trackerConsole}" variableName="productionLocation" customText="{getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation)}"
 								change="{updateTrackerConsole()}"/>
@@ -1113,7 +1152,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{outerDocument.getInvoiceNumber((data.job==null?data.charge:data.job))}"/>
+								<mx:Label text="{outerDocument.getInvoiceNumber(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>

@@ -2,6 +2,7 @@ package com.efi.printsmith.model
 {
 	import com.efi.printsmith.data.Employee;
 	import com.efi.printsmith.data.TimeCard;
+	import com.efi.printsmith.data.TrackerConsoleJobs;
 	
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
@@ -29,7 +30,13 @@ package com.efi.printsmith.model
 		
 		public var dataServiceEmployee:RemoteObject;
 		
+		public var dataServiceTrackerConsole:RemoteObject;
+		
+		public var dataServiceTrackerConsoleJob:RemoteObject;
+		
 		public var numFormatter:NumberFormatter;
+		
+		public var updatedEmployee:Employee;
 		
 		public function AutoClockOutDetector() {
 			numFormatter = new NumberFormatter();
@@ -40,11 +47,19 @@ package com.efi.printsmith.model
 			dataServiceTimeCard.addEventListener(FaultEvent.FAULT,faultHandler,false,0,true);
 			dataServiceEmployee = new RemoteObject();
 			dataServiceEmployee.destination = "dataService";
+			dataServiceEmployee.addEventListener(ResultEvent.RESULT,employeeSaveHandler,false,0,true);
 			dataServiceEmployee.addEventListener(FaultEvent.FAULT,faultHandler,false,0,true);
 			dataServiceTimeCardRetrieval = new RemoteObject();
 			dataServiceTimeCardRetrieval.destination = "dataService";
 			dataServiceTimeCardRetrieval.addEventListener(ResultEvent.RESULT,resultHandler,false,0,true);
 			dataServiceTimeCardRetrieval.addEventListener(FaultEvent.FAULT,faultHandler,false,0,true);
+			dataServiceTrackerConsole = new RemoteObject();
+			dataServiceTrackerConsole.destination = "dataService";
+			dataServiceTrackerConsole.addEventListener(ResultEvent.RESULT,trackerConsoleResultHandler,false,0,true);
+			dataServiceTrackerConsole.addEventListener(FaultEvent.FAULT,faultHandler,false,0,true);
+			dataServiceTrackerConsoleJob = new RemoteObject();
+			dataServiceTrackerConsoleJob.destination = "dataService";
+			dataServiceTrackerConsoleJob.addEventListener(FaultEvent.FAULT,faultHandler,false,0,true);
 		}
 		
 		public function start():void {
@@ -164,6 +179,40 @@ package com.efi.printsmith.model
 		private function setEmployee():void
 		{	
 			dataServiceEmployee.addUpdate(employee);
+		}
+		
+		
+		private function employeeSaveHandler(event:ResultEvent):void {
+			updatedEmployee = event.result as Employee;
+			if(updatedEmployee!=null){
+				dataServiceTrackerConsole.getActiveTrackerConsoleJobsBasedOnEmployee(updatedEmployee);
+			}			
+		}
+		
+		private function trackerConsoleResultHandler(event:ResultEvent):void {
+			var trackerConsoleJobsList:ArrayCollection = event.result as ArrayCollection;
+			var updatedTrackerConsoleJobsList:ArrayCollection = new ArrayCollection();
+			if(updatedEmployee!=null){
+				var nowDate:Date = new Date();
+				for each(var trackerConsoleJobs:TrackerConsoleJobs in trackerConsoleJobsList) {
+					if(updatedEmployee.clockBreak || updatedEmployee.clockOut) {
+						if(!trackerConsoleJobs.paused){
+							if(trackerConsoleJobs.currentPass==1){
+								trackerConsoleJobs.firstTrackerTime = nowDate.time - trackerConsoleJobs.firstTrackerDate.time+(isNaN(trackerConsoleJobs.firstTrackerTime)?0:trackerConsoleJobs.firstTrackerTime);
+								trackerConsoleJobs.firstTrackerDate = nowDate;
+							}
+							if(trackerConsoleJobs.currentPass==2){
+								trackerConsoleJobs.secondTrackerTime = nowDate.time - trackerConsoleJobs.secondTrackerDate.time+(isNaN(trackerConsoleJobs.secondTrackerTime)?0:trackerConsoleJobs.secondTrackerTime);
+								trackerConsoleJobs.secondTrackerDate = nowDate;
+							}
+							updatedTrackerConsoleJobsList.addItem(trackerConsoleJobs);
+						}
+					}
+				}
+				if(updatedTrackerConsoleJobsList.length>0){
+					dataServiceTrackerConsoleJob.addUpdateDeleteList(updatedTrackerConsoleJobsList,null);
+				}
+			}
 		}
 
 	}
