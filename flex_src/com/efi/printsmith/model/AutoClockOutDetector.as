@@ -197,7 +197,8 @@ package com.efi.printsmith.model
 				var nowDate:Date = new Date();
 				for each(var trackerConsoleJobs:TrackerConsoleJobs in trackerConsoleJobsList) {
 					if(updatedEmployee.clockBreak || updatedEmployee.clockOut) {
-						if(!trackerConsoleJobs.paused){
+						if(!trackerConsoleJobs.paused && !trackerConsoleJobs.clockBreak){
+							trackerConsoleJobs.clockBreak = updatedEmployee.clockBreak;
 							for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobs.passesList){
 								if(trackerConsolePasses.passNo==trackerConsoleJobs.currentPass){
 									trackerConsolePasses.trackTime = nowDate.time - trackerConsolePasses.trackDate.time+(isNaN(trackerConsolePasses.trackTime)?0:trackerConsolePasses.trackTime);

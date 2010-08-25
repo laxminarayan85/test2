@@ -52,15 +52,6 @@ public class TrackerConsolePasses extends ModelBase{
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private TrackerConsoleJobs trackerConsoleJobs;
-	
-	
-	public TrackerConsolePasses() {
-		
-	}
-	
-	public TrackerConsolePasses(long id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the setUpTime

@@ -61,6 +61,8 @@ public class TrackerConsoleJobs extends ModelBase{
 	
 	private Boolean paused;
 	
+	private Boolean clockBreak;
+	
 	private int currentPass;
 	
 	@OneToMany(mappedBy="trackerConsoleJobs", cascade = {CascadeType.ALL})
@@ -309,5 +311,17 @@ public class TrackerConsoleJobs extends ModelBase{
 		this.completedDate = completedDate;
 	}
 
-	
+	/**
+	 * @return the clockBreak
+	 */
+	public Boolean getClockBreak() {
+		return clockBreak;
+	}
+
+	/**
+	 * @param clockBreak the clockBreak to set
+	 */
+	public void setClockBreak(Boolean clockBreak) {
+		this.clockBreak = clockBreak;
+	}
 }

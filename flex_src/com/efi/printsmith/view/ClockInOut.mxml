@@ -135,6 +135,7 @@
 			for each(var trackerConsoleJobs:TrackerConsoleJobs in trackerConsoleJobsList) {
 				if(updatedEmployee.clockIn) {
 					if(!trackerConsoleJobs.paused){
+						trackerConsoleJobs.clockBreak = false;
 						for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobs.passesList){
 							if(trackerConsolePasses.passNo==trackerConsoleJobs.currentPass){
 								trackerConsolePasses.trackDate = nowDate;
@@ -145,7 +146,8 @@
 						updatedTrackerConsoleJobsList.addItem(trackerConsoleJobs);
 					}
 				} else if(updatedEmployee.clockBreak || updatedEmployee.clockOut) {
-					if(!trackerConsoleJobs.paused){
+					if(!trackerConsoleJobs.paused && !trackerConsoleJobs.clockBreak){
+						trackerConsoleJobs.clockBreak = updatedEmployee.clockBreak;
 						for each(var trackerConsolePassesObj:TrackerConsolePasses in trackerConsoleJobs.passesList){
 							if(trackerConsolePassesObj.passNo==trackerConsoleJobs.currentPass){
 								trackerConsolePassesObj.trackTime = nowDate.time - trackerConsolePassesObj.trackDate.time+(isNaN(trackerConsolePassesObj.trackTime)?0:trackerConsolePassesObj.trackTime);

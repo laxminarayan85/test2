@@ -38,6 +38,8 @@ package com.efi.printsmith.data
 		
 		public var paused:Boolean = false;
 		
+		public var clockBreak:Boolean = false;
+		
 		public var currentPass:int;
 		
 		public var passesList:ArrayCollection;
