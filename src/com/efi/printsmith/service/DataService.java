@@ -862,7 +862,23 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-
+	public StockForest getByStockForestName(String name) throws Exception {
+		log.debug("** getByStockForestName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from StockForest where name = '" + name + "'";
+			Query query = em.createQuery(queryString);
+			StockForest object = (StockForest) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
+	
 	public GenericColors getByGenericColorsName(String name) throws Exception {
 		log.debug("** getByGenericColorsName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();

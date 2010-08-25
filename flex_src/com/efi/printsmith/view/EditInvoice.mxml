@@ -61,11 +61,16 @@
 				   fault="handleFault(event)"
 				   result="handleLoadShippingMethods(event)"/>
 	</mx:RemoteObject>
+	
+	
 	<mx:RemoteObject id="accountDataService"
 					 destination="dataService">
 		<mx:method name="getContactsByAccountId"
 				   fault="handleFault(event)"
 				   result="handleLoadContacts(event)"/>
+		<mx:method name="getAccountPicker"
+				   fault="handleFault(event)"
+				   result="handleLoadAccountsResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="invoiceRepositoryService" destination="invoiceRepositoryService">
 		<mx:method name="getItemList"
@@ -187,7 +192,8 @@
 					if (invoice.id > 0) {
 						dataService.getInvoice(invoice.id);
 					} else {
-						doAccountPicker();
+						accountDataService.getAccountPicker("Account");
+						//doAccountPicker();
 					
 					}
 				}
@@ -210,7 +216,10 @@
 				eventCharges.dispatch();
 				
 			}
-
+			private function handleLoadAccountsResult(ev:ResultEvent):void {
+				accounts = ev.result as ArrayCollection;
+				doAccountPicker();
+			}
 			public function handleLoadInvoiceTemplates(evt:ResultEvent):void {
 				if (evt.result != null) {
 					invoiceTemplates = evt.result as ArrayCollection;
@@ -614,6 +623,7 @@
 			{
 				var accountPickerWindow:AccountPicker=AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 				accountPickerWindow.setStyle("borderAlpha", 0.9);
+				accountPickerWindow.setAccounts(accounts)
 				accountPickerWindow.formIsEmpty=true;
 				accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 				accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);

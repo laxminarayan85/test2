@@ -302,6 +302,10 @@
 				&& (ss.commandName.indexOf("rStandardMenuText.UserDefinitions") > -1 ))	{
 					doUsers();					
 				}	
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.ChangePassword") > -1 ))	{
+					doChangePassword();					
+				}	
 			
 		}
 		public function handleUIEvent(evt:ResultEvent):void {
@@ -326,6 +330,10 @@
 
 		private function doUsers():void {
 			var event:EditUserEvent = new EditUserEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		private function doChangePassword():void {
+			var event:ChangePasswordEvent = new ChangePasswordEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 		private function doContacts():void {

@@ -19,6 +19,7 @@ import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.PaperPrice;
+import com.efi.printsmith.data.StockForest;
 import java.io.File;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 
@@ -508,6 +509,13 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("pcw recycle percent".equals(currentFieldToken)) {
 				stockDefinition.setPcwRecycledPercent(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("forest managment".equals(currentFieldToken)) {
+				StockForest stockForest = dataService.getByStockForestName(currentImportToken);
+				if (stockForest == null)
+				{
+					stockForest = new StockForest();
+					stockForest.setName(currentImportToken);
+					stockForest = (StockForest)dataService.addUpdate(stockForest);
+				}
 				stockDefinition.setForestManagement(currentImportToken);
 			}  else if ("coc expand 1".equals(currentFieldToken)) {
 				/* TODO */

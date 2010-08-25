@@ -155,7 +155,7 @@ rStandardMenuText.DownLoader,rStandardMenuText.Downloader,CMD_
 rStandardMenuText.Reports,rStandardMenuText.1,CMD_
 rStandardMenuText.Reports,rStandardMenuText.1,CMD_
 rStandardMenuText.Reports,rStandardMenuText.Browse,CMD_
-rStandardMenuText.Admin,rStandardMenuText.ChangePassword,CMD_
+rStandardMenuText.Admin,rStandardMenuText.ChangePassword,CMD_ChangePassword
 rStandardMenuText.Admin,rStandardMenuText.ConfigureQuickAccess,CMD_
 rStandardMenuText.Admin,rStandardMenuText.UserLogIn,CMD_
 rStandardMenuText.Admin,	rAltMenuText.AutoLogIn,CMD_

@@ -845,7 +845,7 @@
 			<mx:TextInput  id="change_edit" x="110" y="114" width="86" text="{Snowmass.getCurrencyFormatter(false,2).format(batch.change)}"/>
 
 		</mx:Canvas>
-		<mx:DataGrid x="2" y="408" width="666" id="cashReg_grid" dataProvider="{batch.transactions}">
+		<mx:DataGrid x="0" y="420" width="666" id="cashReg_grid" dataProvider="{batch.transactions}" height="119">
 			<mx:columns>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Description')}" labelFunction="doDescript"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Subtotal')}" labelFunction="doSubtotalPrice"/>
