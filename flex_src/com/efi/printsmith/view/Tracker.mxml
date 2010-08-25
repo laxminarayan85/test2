@@ -2,7 +2,7 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" 
 	title="Tracker Console" 
 	xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:ns1="com.hillelcoren.components.*"
-	creationComplete="init()" 
+	creationComplete="{initTrackerConsole()}" 
 	label="Tracker Console" 
 	name="Tracker Console" xmlns:components="com.efi.printsmith.common.components.*" xmlns:trackercomponent="com.efi.printsmith.components.*">
 	
@@ -46,6 +46,7 @@
 	<mx:Script> 
 	                                  
 	<![CDATA[
+		import mx.events.IndexChangedEvent;
 		import com.efi.printsmith.data.TrackerConsolePasses;
 		import com.efi.printsmith.pages.TrackerConsoleDetails;
 		import com.efi.printsmith.data.TrackerConsoleJobs;
@@ -107,9 +108,11 @@
 		[Bindable] private var resetTrackerConsoleJobs:TrackerConsoleJobs;
 		
 		[Bindable] private var completedTracketConsoleJobsList:ArrayCollection = new ArrayCollection();
+		
+		[Bindable] private var updatedTrackerConsole:Boolean = false;
 		 
 		 
-		public function init():void {
+		public function initTrackerConsole():void {
 			dataService.getSingle("TrackerConsole");
 		}    
 		
@@ -162,6 +165,7 @@
 			trackerConsole = event.result as TrackerConsole;
 			if(trackerConsole==null){
 				trackerConsole = new TrackerConsole();
+				dataService.addUpdate(trackerConsole);
 			}
 			if(onLoad){
 				onLoad = false;
@@ -300,6 +304,8 @@
 			var clockInOut:ClockInOut = PopUpManager.createPopUp(this,ClockInOut,true) as ClockInOut;
 			clockInOut.addEventListener(CloseEvent.CLOSE,function(event:Event):void{
 				closeEventTriggered = true;
+				selectedCharge = null;
+				selectedJob = null;
 				dataService.getClockedInEmployee();
 			},false,0,true);
 		}
@@ -308,6 +314,8 @@
 			var editEmployee:EditEmployee = PopUpManager.createPopUp(this,EditEmployee,true) as EditEmployee;
 			editEmployee.addEventListener(CloseEvent.CLOSE,function(event:Event):void{
 				closeEventTriggered = true;
+				selectedCharge = null;
+				selectedJob = null;
 				dataService.getClockedInEmployee();
 			},false,0,true);
 			if(employee!=null){
@@ -469,6 +477,7 @@
 		}
 		
 		public function updateTrackerConsole():void {
+			updatedTrackerConsole = true;
 			if(trackerConsole.productionFacilities!=null){
 				if(trackerConsole.productionFacilities.id==0){
 					trackerConsole.productionFacilities = null;
@@ -485,7 +494,6 @@
 					trackerConsole.selectedStations.addItem(productionStation);
 				}
 			}
-			
 			dataService.addUpdate(trackerConsole);
 		}
 		
@@ -517,7 +525,9 @@
 			cancelBtn.enabled = false;
 			pauseBtn.enabled = false;
 			continueBtn.enabled = false;
-			defaultEnableButtons();
+			openBtn.enabled = false;
+			jobTicketBtn.enabled = false;
+			layoutBtn.enabled = false;
 		}
 		
 		private function defaultEnableButtons():void {
@@ -553,12 +563,6 @@
 					}
 				}
 				trackerStatus = "start";
-				resetButtons();
-				setUpBtn.enabled = true;
-				stopBtn.enabled = true;
-				cancelBtn.enabled = true;
-				pauseBtn.enabled = true;
-				defaultEnableButtons();
 				var trackerConsoleJobs:TrackerConsoleJobs = new TrackerConsoleJobs();
 				trackerConsoleJobs.productionFacilities = trackerConsole.productionFacilities;
 				trackerConsoleJobs.productionStations = trackerConsole.productionStations;
@@ -1026,6 +1030,29 @@
 				trackerConsoleDetails.trackerConsoleJobs = selectedTrackerConsoleJob;
 			}
 		}
+		
+		private function refreshJobList(event:Event):void {
+			if(event.currentTarget.selectedIndex==0){
+				if(updatedTrackerConsole) {
+					updatedTrackerConsole = false;
+					if(employee!=null){
+						selectedJob = null;
+						selectedCharge = null;
+						dataService.getJobsChargesForTrackerByEmployee(employee.id);
+					}
+				}
+			}
+		}
+		
+		public function getStrikeThroughValue(object:Object):Boolean {
+			if(object is Job){
+				var job:Job = object as Job;
+				if(!job.releasedToProduction)
+					return true;
+				return false;
+			}
+			return false;
+		}
 				
 	]]>
 	                        
@@ -1035,7 +1062,7 @@
 	
 	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 	
-	<mx:TabNavigator width="100%" height="100%">
+	<mx:TabNavigator width="100%" height="100%" change="{refreshJobList(event)}">
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ActiveItems')}" 
 			paddingLeft="20" paddingTop="20" width="100%" height="100%">
 			
@@ -1055,7 +1082,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{outerDocument.getInvoiceNumber(data)}"/>
+								<trackercomponent:TrackerConsoleLabelComponent strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getInvoiceNumber(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
@@ -1063,14 +1090,14 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DeliveryDate')}">
 					<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{outerDocument.getDeliveryDate(data)}"/>
+								<trackercomponent:TrackerConsoleLabelComponent strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getDeliveryDate(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionLocation')}">
 					<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{outerDocument.getProductionLoc(data)}"/>
+								<trackercomponent:TrackerConsoleLabelComponent strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getProductionLoc(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
@@ -1082,7 +1109,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Account')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{outerDocument.getAccount(data)}"/>
+								<trackercomponent:TrackerConsoleLabelComponent strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getAccount(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
@@ -1124,34 +1151,34 @@
 								<mx:HBox width="100%">
 									<mx:Label width="40%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Doc')}" 
 										textAlign="right"/>
-									<mx:TextInput width="40%" id="doc_edit"/>	
+									<mx:TextInput width="40%" id="doc_edit" enabled="false"/>	
 								</mx:HBox>
 								<mx:HBox width="100%">
 									<mx:Label width="40%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Job')}"
 										textAlign="right"/>
-									<mx:TextInput width="40%" id="job_edit"/>
+									<mx:TextInput width="40%" id="job_edit" enabled="false"/>
 								</mx:HBox>
 								<mx:HBox width="100%">
 									<mx:Label width="40%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Charge')}"
 										textAlign="right"/>
-									<mx:TextInput width="40%" id="charge_edit"/>
+									<mx:TextInput width="40%" id="charge_edit" enabled="false"/>
 								</mx:HBox>
 							</mx:VBox>
 							<mx:VBox width="60%" height="100%">
 								<mx:HBox width="100%">
 									<mx:Label width="35%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Facility')}"
 										textAlign="right"/>
-									<mx:TextInput width="55%" id="barcode_facility_edit"/>
+									<mx:TextInput width="55%" id="barcode_facility_edit" enabled="false"/>
 								</mx:HBox>
 								<mx:HBox width="100%">
 									<mx:Label width="35%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Location')}"
 										textAlign="right"/>
-									<mx:TextInput width="55%" id="barcode_location_edit"/>
+									<mx:TextInput width="55%" id="barcode_location_edit" enabled="false"/>
 								</mx:HBox>
 								<mx:HBox width="100%">
 									<mx:Label width="35%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Employee')}"
 										textAlign="right"/>
-									<mx:TextInput width="55%" id="barcode_employee_edit"/>
+									<mx:TextInput width="55%" id="barcode_employee_edit" enabled="false"/>
 								</mx:HBox>
 							</mx:VBox>
 						</mx:HBox>

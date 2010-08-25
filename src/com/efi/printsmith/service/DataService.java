@@ -2817,6 +2817,9 @@ public class DataService extends HibernateService {
 		List<ModelBase> jobChargesList = new ArrayList<ModelBase>();
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
+			Query findQuery = em.createQuery("from TrackerConsole");
+			TrackerConsole trackerConsole =  (TrackerConsole) findQuery.getSingleResult();
+			Hibernate.initialize(trackerConsole.getSelectedStations());
 			Query employeeQuery = em.createNamedQuery("Employee.byId");
 			employeeQuery.setParameter("id", employeeId);
 			Employee employee = (Employee) employeeQuery.getSingleResult();
@@ -2824,7 +2827,7 @@ public class DataService extends HibernateService {
 				if(employee.getIncludeInvoice()) {
 					if(employee.getIncludeJobs()) {
 						List<String> chargeDefinitionsList = new ArrayList<String>();
-						String queryString = "select job from Invoice as invoice left join invoice.jobs as job where";
+						String queryString = "select job from Invoice as invoice inner join invoice.jobs as job where";
 						if(!employee.getAllPricingMethods()) {
 							queryString = queryString + " job.pricingMethod in (:pricingMethods) and";
 						}
@@ -2837,7 +2840,15 @@ public class DataService extends HibernateService {
 						if(!employee.getAllPresses()) {
 							queryString = queryString + " job.costingPress.machineName in (:presses) and";
 						}
-						queryString = queryString + " job.releasedToProduction=true";
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							queryString = queryString + " job.location in (:locations) and";
+						}
+						if(employee.getHideNonReleaseProduction() || trackerConsole.getHideItemsNotReleasedToProd()) {
+							queryString = queryString + " job.releasedToProduction=true";
+						} else {
+							queryString = queryString + " (job.releasedToProduction=true or job.releasedToProduction=false)";
+						}
+						
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllPricingMethods()) {
 							query.setParameter("pricingMethods", employee.getEmployeePricings());
@@ -2862,10 +2873,13 @@ public class DataService extends HibernateService {
 							}
 							query.setParameter("presses", pressesList);
 						}
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations",employee.getProductionParents());
+						}
 						List<Job> jobList = query.getResultList();
 						for (Job job : jobList) {
 							if(job!=null) {
-								if(employee.getIncludeJobCharges()) {
+								/*if(employee.getIncludeJobCharges()) {
 									if(job.getCharges()!=null && job.getCharges().size()>0) {
 										for (Charge charge : job.getCharges()) {
 											if(charge!=null) {
@@ -2883,17 +2897,26 @@ public class DataService extends HibernateService {
 											}
 										}
 									}
-								}
+								}*/
 								Hibernate.initialize(job.getParentInvoice());
 								jobChargesList.add(job);
 							}
 						}
 					}
-					if(employee.getIncludeInvoiceCharges()){
+					if(employee.getIncludeJobCharges()) {
+						boolean checkFlag = false;
 						List<String> chargeDefinitionsList = new ArrayList<String>();
-						String queryString = "select charge from Invoice as invoice left join invoice.charges as charge";
+						String queryString = "select charge from Invoice as invoice inner join invoice.jobs as job inner join job.charges as charge";
 						if(!employee.getAllChargeTypes()) {
+							checkFlag = true;
 							queryString = queryString + "  where charge.chargeDefinition.name in (:charges)";
+						}
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							if(checkFlag) {
+								queryString = queryString + " and charge.productionLocation in (:locations)";
+							} else {
+								queryString = queryString + " where charge.productionLocation in (:locations)";
+							}
 						}
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllChargeTypes()) {
@@ -2903,20 +2926,57 @@ public class DataService extends HibernateService {
 							}
 							query.setParameter("charges", chargeDefinitionsList);
 						}
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations",employee.getProductionParents());
+						}
 						List<Charge> chargesList = query.getResultList();
 						for (Charge charge : chargesList) {
 							if(charge!=null) {
-								if(!employee.getAllChargeTypes()) {
+								Hibernate.initialize(charge.getParentJob());
+								jobChargesList.add(charge);
+							}
+						}
+					}
+					if(employee.getIncludeInvoiceCharges()){
+						boolean checkFlag = false;
+						List<String> chargeDefinitionsList = new ArrayList<String>();
+						String queryString = "select charge from Invoice as invoice inner join invoice.charges as charge";
+						if(!employee.getAllChargeTypes()) {
+							checkFlag = true;
+							queryString = queryString + "  where charge.chargeDefinition.name in (:charges)";
+						}
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							if(checkFlag) {
+								queryString = queryString + " and charge.productionLocation in (:locations)";
+							} else {
+								queryString = queryString + " where charge.productionLocation in (:locations)";
+							}
+						}
+						Query query = em.createQuery(queryString);
+						if(!employee.getAllChargeTypes()) {
+							chargeDefinitionsList = new ArrayList<String>();
+							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand.getName());
+							}
+							query.setParameter("charges", chargeDefinitionsList);
+						}
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations",employee.getProductionParents());
+						}
+						List<Charge> chargesList = query.getResultList();
+						for (Charge charge : chargesList) {
+							if(charge!=null) {
+								/*if(!employee.getAllChargeTypes()) {
 									if(charge.getChargeDefinition()!=null) {
 										if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
 											Hibernate.initialize(charge.getParentInvoice());
 											jobChargesList.add(charge);
 										}
 									}
-								} else {
-									Hibernate.initialize(charge.getParentInvoice());
-									jobChargesList.add(charge);
-								}
+								} else {*/
+								Hibernate.initialize(charge.getParentInvoice());
+								jobChargesList.add(charge);
+								//}
 							}
 						}
 					}
@@ -2924,7 +2984,7 @@ public class DataService extends HibernateService {
 				if(employee.getIncludeEstimate()) {
 					if(employee.getIncludeJobs()) {
 						List<String> chargeDefinitionsList = new ArrayList<String>();
-						String queryString = "select job from Estimate as estimate left join estimate.jobs as job where";
+						String queryString = "select job from Estimate as estimate inner join estimate.jobs as job where";
 						if(!employee.getAllPricingMethods()) {
 							queryString = queryString + " job.pricingMethod in (:pricingMethods) and";
 						}
@@ -2937,7 +2997,14 @@ public class DataService extends HibernateService {
 						if(!employee.getAllPresses()) {
 							queryString = queryString + " job.costingPress.machineName in (:presses) and";
 						}
-						queryString = queryString + " job.releasedToProduction=true";
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							queryString = queryString + " job.location in (:locations) and";
+						}
+						if(employee.getHideNonReleaseProduction() || trackerConsole.getHideItemsNotReleasedToProd()) {
+							queryString = queryString + " job.releasedToProduction=true";
+						} else {
+							queryString = queryString + " (job.releasedToProduction=true or job.releasedToProduction=false)";
+						}
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllPricingMethods()) {
 							query.setParameter("pricingMethods", employee.getEmployeePricings());
@@ -2962,10 +3029,13 @@ public class DataService extends HibernateService {
 							}
 							query.setParameter("presses", pressesList);
 						}
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations",employee.getProductionParents());
+						}
 						List<Job> jobList = query.getResultList();
 						for (Job job : jobList) {
 							if(job!=null) {
-								if(employee.getIncludeJobCharges()) {
+								/*if(employee.getIncludeJobCharges()) {
 									if(job.getCharges()!=null && job.getCharges().size()>0) {
 										for (Charge charge : job.getCharges()) {
 											if(charge!=null) {
@@ -2983,17 +3053,26 @@ public class DataService extends HibernateService {
 											}
 										}
 									}
-								}
+								}*/
 								Hibernate.initialize(job.getParentInvoice());
 								jobChargesList.add(job);
 							}
 						}
 					}
-					if(employee.getIncludeInvoiceCharges()){
+					if(employee.getIncludeJobCharges()) {
+						boolean checkFlag = false;
 						List<String> chargeDefinitionsList = new ArrayList<String>();
-						String queryString = "select charge from Estimate as estimate left join estimate.charges as charge";
+						String queryString = "select charge from Estimate as estimate inner join estimate.jobs as job inner join job.charges as charge";
 						if(!employee.getAllChargeTypes()) {
+							checkFlag = true;
 							queryString = queryString + "  where charge.chargeDefinition.name in (:charges)";
+						}
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							if(checkFlag) {
+								queryString = queryString + " and charge.productionLocation in (:locations)";
+							} else {
+								queryString = queryString + " where charge.productionLocation in (:locations)";
+							}
 						}
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllChargeTypes()) {
@@ -3003,20 +3082,57 @@ public class DataService extends HibernateService {
 							}
 							query.setParameter("charges", chargeDefinitionsList);
 						}
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations",employee.getProductionParents());
+						}
 						List<Charge> chargesList = query.getResultList();
 						for (Charge charge : chargesList) {
 							if(charge!=null) {
-								if(!employee.getAllChargeTypes()) {
+								Hibernate.initialize(charge.getParentJob());
+								jobChargesList.add(charge);
+							}
+						}
+					}
+					if(employee.getIncludeInvoiceCharges()){
+						boolean checkFlag = false;
+						List<String> chargeDefinitionsList = new ArrayList<String>();
+						String queryString = "select charge from Estimate as estimate inner join estimate.charges as charge";
+						if(!employee.getAllChargeTypes()) {
+							checkFlag = true;
+							queryString = queryString + "  where charge.chargeDefinition.name in (:charges)";
+						}
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							if(checkFlag) {
+								queryString = queryString + " and charge.productionLocation in (:locations)";
+							} else {
+								queryString = queryString + " where charge.productionLocation in (:locations)";
+							}
+						}
+						Query query = em.createQuery(queryString);
+						if(!employee.getAllChargeTypes()) {
+							chargeDefinitionsList = new ArrayList<String>();
+							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand.getName());
+							}
+							query.setParameter("charges", chargeDefinitionsList);
+						}
+						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations",employee.getProductionParents());
+						}
+						List<Charge> chargesList = query.getResultList();
+						for (Charge charge : chargesList) {
+							if(charge!=null) {
+								/*if(!employee.getAllChargeTypes()) {
 									if(charge.getChargeDefinition()!=null) {
 										if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
 											Hibernate.initialize(charge.getParentInvoice());
 											jobChargesList.add(charge);
 										}
 									}
-								} else {
-									Hibernate.initialize(charge.getParentInvoice());
-									jobChargesList.add(charge);
-								}
+								} else {*/
+								Hibernate.initialize(charge.getParentInvoice());
+								jobChargesList.add(charge);
+								//}
 							}
 						}
 					}
