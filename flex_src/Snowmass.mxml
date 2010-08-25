@@ -314,7 +314,7 @@
 			if (val.indexOf('\t') > -1)	{
 				var i:int = val.indexOf('\t');
 				val = val.substr(i+1);
-				retVal = '\t';
+//				retVal = '\t';
 			}
 			return retVal + resourceManager.getString(RESOURCE_BUNDLE, val);
 		}
@@ -500,7 +500,13 @@
 				parent.label = getLocalizedMenuLabel(parent.label);
 				for (var j:int=0; j < parent.children.length; j++)	{
 					var child:PSMenuItem = parent.children.getItemAt(j) as PSMenuItem;
-					child.label = getLocalizedMenuLabel(child.label);						
+					child.label = getLocalizedMenuLabel(child.label);					
+					if (child.children != null)	{
+						for (var k:int=0; k < child.children.length; k++)	{
+							var child2:PSMenuItem = child.children.getItemAt(k) as PSMenuItem;
+							child2.label = getLocalizedMenuLabel(child2.label);
+						}
+					}
 				}				
 			}	
 			_menuItems = val;

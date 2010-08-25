@@ -19,7 +19,7 @@ package com.efi.printsmith.security
 		private var securityDictionary:Dictionary;
 		
 		private var menuItems:ArrayCollection = new ArrayCollection();
-		
+		private var lastLevel2Child:PSMenuItem;
 		
 		public function PSSecurity(user:Users)
 		{
@@ -48,7 +48,6 @@ package com.efi.printsmith.security
 			setupComplete = true;
 		}
 		
-		//MS: checks only first level, i.e. only 2 level menu supported
 		private function findParentInMenuList(ss:SecuritySetup):PSMenuItem	{
 			for (var i:int=0; i < menuItems.length; i++)	{
 				var p:PSMenuItem = menuItems.getItemAt(i) as PSMenuItem;
@@ -74,9 +73,29 @@ package com.efi.printsmith.security
 				menuItem.enabled = true;
 				menuItem.ss = null;
 				menuItems.addItem(menuItem);
+				if (ss.commandName.indexOf('\t') > -1)
+					lastLevel2Child = menuItem;
+				else	
+					lastLevel2Child = child;
 			}
 			else	{
-				menuItem.children.addItem(child);					
+				if (ss.commandName.indexOf('\t') > -1)	{
+					// level 3 child, add to previous level 2 child
+					if (lastLevel2Child != null)	{
+						var ac2:ArrayCollection;
+						if (lastLevel2Child.children == null)	{
+							ac2 = new ArrayCollection();
+							lastLevel2Child.children = ac2;
+						}
+						lastLevel2Child.children.addItem(child);							
+					}
+					else
+						menuItem.children.addItem(child);
+				}
+				else	{
+					menuItem.children.addItem(child);
+					lastLevel2Child = child;
+				}					
 			}
 			
 			
