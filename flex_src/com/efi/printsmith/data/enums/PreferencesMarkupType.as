@@ -10,23 +10,21 @@ package com.efi.printsmith.data.enums
 	
 		public function PreferencesMarkupType() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("PreferencesMarkupType", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(PreferencesMarkupType);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(OutsideServices);
+			object.data = OutsideServices;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Merchandise);
+			object.data = Merchandise;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

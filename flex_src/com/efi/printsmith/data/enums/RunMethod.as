@@ -11,23 +11,25 @@ package com.efi.printsmith.data.enums
 	
 		public function RunMethod() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("RunMethod", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(RunMethod);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(Sheetwise);
+			object.data = Sheetwise;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(WorkAndTurn);
+			object.data = WorkAndTurn;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(WorkAndTumble);
+			object.data = WorkAndTumble;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

@@ -20,23 +20,61 @@ package com.efi.printsmith.data.enums
 	
 		public function ChargeMethod() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("ChargeMethod", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(ChargeMethod);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(JobAware);
+			object.data = JobAware;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Markup);
+			object.data = Markup;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(FlatRate);
+			object.data = FlatRate;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Ask);
+			object.data = Ask;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(PriceList);
+			object.data = PriceList;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(RateList);
+			object.data = RateList;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Cut);
+			object.data = Cut;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Ink);
+			object.data = Ink;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Shipping);
+			object.data = Shipping;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Fold);
+			object.data = Fold;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Linear);
+			object.data = Linear;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(SquareArea);
+			object.data = SquareArea;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

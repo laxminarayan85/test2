@@ -12,23 +12,29 @@ package com.efi.printsmith.data.enums
 	
 		public function ChargeMarkupType() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("ChargeMarkupType", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(ChargeMarkupType);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(OnlyJob);
+			object.data = OnlyJob;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Charges);
+			object.data = Charges;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(EntireJob);
+			object.data = EntireJob;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Invoice);
+			object.data = Invoice;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

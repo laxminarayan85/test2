@@ -12,23 +12,29 @@ package com.efi.printsmith.data.enums
 	
 		public function ChargeJobQuantity() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("ChargeJobQuantity", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(ChargeJobQuantity);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(None);
+			object.data = None;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Press);
+			object.data = Press;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Finish);
+			object.data = Finish;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Parent);
+			object.data = Parent;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

@@ -17,23 +17,49 @@ package com.efi.printsmith.data.enums
 	
 		public function CopierPricingMethod() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("CopierPricingMethod", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(CopierPricingMethod);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(CostPlus);
+			object.data = CostPlus;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(FlatRate);
+			object.data = FlatRate;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(CopiesAndOriginals);
+			object.data = CopiesAndOriginals;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(CopiesPerOriginals);
+			object.data = CopiesPerOriginals;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(TotalOfAllCopies);
+			object.data = TotalOfAllCopies;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(SquareAreaOfOriginals);
+			object.data = SquareAreaOfOriginals;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(TotalSquareArea);
+			object.data = TotalSquareArea;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(SquareAreaAndCopies);
+			object.data = SquareAreaAndCopies;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(SquareAreaPerCopy);
+			object.data = SquareAreaPerCopy;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

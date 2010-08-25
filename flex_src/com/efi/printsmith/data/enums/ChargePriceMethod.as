@@ -10,23 +10,21 @@ package com.efi.printsmith.data.enums
 	
 		public function ChargePriceMethod() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("ChargePriceMethod", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(ChargePriceMethod);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(PiecePrice);
+			object.data = PiecePrice;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(CostPlus);
+			object.data = CostPlus;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

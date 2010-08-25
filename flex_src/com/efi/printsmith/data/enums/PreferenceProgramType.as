@@ -11,23 +11,25 @@ package com.efi.printsmith.data.enums
 	
 		public function PreferenceProgramType() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("PreferenceProgramType", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(PreferenceProgramType);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(FullSystem);
+			object.data = FullSystem;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(EstimatorOnly);
+			object.data = EstimatorOnly;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(CopyShop);
+			object.data = CopyShop;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

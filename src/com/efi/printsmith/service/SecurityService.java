@@ -6,7 +6,6 @@ import javax.persistence.Persistence;
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.security.SecurityElement;
-import com.efi.printsmith.security.ApplicationCommandId;
 
 public class SecurityService {
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";

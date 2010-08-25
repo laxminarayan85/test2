@@ -988,8 +988,8 @@
 						coverage_box.includeInLayout = coverage_box.visible = false;
 						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
 						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
-						weight_box.includeInLayout = weight_box.visible = true;
-						area_box.includeInLayout = area_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = true;
 						up_box.includeInLayout = up_box.visible = false;
 						cuts_box.includeInLayout = cuts_box.visible = false;
 						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
@@ -1008,8 +1008,8 @@
 						coverage_box.includeInLayout = coverage_box.visible = false;
 						price_per_pound_box.includeInLayout = price_per_pound_box.visible = false;
 						cover_per_pound_box.includeInLayout = cover_per_pound_box.visible = false;
-						weight_box.includeInLayout = weight_box.visible = true;
-						area_box.includeInLayout = area_box.visible = false;
+						weight_box.includeInLayout = weight_box.visible = false;
+						area_box.includeInLayout = area_box.visible = true;
 						up_box.includeInLayout = up_box.visible = false;
 						cuts_box.includeInLayout = cuts_box.visible = false;
 						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;

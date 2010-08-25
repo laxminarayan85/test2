@@ -12,23 +12,29 @@ package com.efi.printsmith.data.enums
 	
 		public function LargeFormatPriceMethod() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("LargeFormatPriceMethod", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(LargeFormatPriceMethod);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(SquareAreaAndCopies);
+			object.data = SquareAreaAndCopies;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(SquareAreaAndOriginals);
+			object.data = SquareAreaAndOriginals;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(SquareAreaPerCopy);
+			object.data = SquareAreaPerCopy;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(TotalSquareArea);
+			object.data = TotalSquareArea;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

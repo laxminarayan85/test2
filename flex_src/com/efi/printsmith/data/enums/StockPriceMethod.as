@@ -13,23 +13,33 @@ package com.efi.printsmith.data.enums
 	
 		public function StockPriceMethod() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("StockPriceMethod", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(StockPriceMethod);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(IncludeInRate);
+			object.data = IncludeInRate;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(MarkedUpStockCost);
+			object.data = MarkedUpStockCost;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(FromCopier1InStockDefinition);
+			object.data = FromCopier1InStockDefinition;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(FromCopier2InStockDefinition);
+			object.data = FromCopier2InStockDefinition;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(FromCopier3InStockDefinition);
+			object.data = FromCopier3InStockDefinition;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

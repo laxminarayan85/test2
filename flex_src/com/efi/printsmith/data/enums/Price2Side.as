@@ -13,23 +13,33 @@ package com.efi.printsmith.data.enums
 	
 		public function Price2Side() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("Price2Side", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(Price2Side);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(NotChangingPrice);
+			object.data = NotChangingPrice;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(UsingFirstSideRate);
+			object.data = UsingFirstSideRate;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(UsingSecondSideRate);
+			object.data = UsingSecondSideRate;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(CountingAsMoreOriginals);
+			object.data = CountingAsMoreOriginals;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(UsingSideFactor);
+			object.data = UsingSideFactor;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}

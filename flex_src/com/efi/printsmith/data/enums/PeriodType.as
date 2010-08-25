@@ -13,23 +13,33 @@ package com.efi.printsmith.data.enums
 	
 		public function PeriodType() {}
 	 
-	 	public static function getString(value:String):String
-	 	{
+	 	public static function getString(value:String):String {
 	 		return Snowmass.getInstance().getLocalizedEnum("PeriodType", value);
 	 	}
 	 	
-		public static function toArray():Array
-		{
-			var returnArray:Array = new Array();
-			var classInfo:XML = describeType(PeriodType);
-			for each (var v:XML in classInfo..constant)
-			{
-				var object:Object = new Object();
-				object.label = getString(v.@name);
-				object.data = String(v.@name);
-			    returnArray.push(object);
-			}
-			returnArray.sort();
+	 	public static function toArray():Array {
+	 		var returnArray:Array = new Array();
+			var object:Object;
+			object = new Object();
+			object.label = getString(Weekly);
+			object.data = Weekly;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(BiWeekly);
+			object.data = BiWeekly;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(SemiMonthly);
+			object.data = SemiMonthly;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Monthly);
+			object.data = Monthly;
+			returnArray.push(object);
+			object = new Object();
+			object.label = getString(Custom);
+			object.data = Custom;
+			returnArray.push(object);
 			return returnArray;
 		}
 	}
