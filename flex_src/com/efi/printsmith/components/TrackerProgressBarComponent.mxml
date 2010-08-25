@@ -136,6 +136,7 @@
 							estimateSetUpImage.height = 30;
 							estimateSetUpImage.x = (((displayValue.actualSetUpTime/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
 							estimateSetUpImage.y = -6;
+							estimateSetUpImage.toolTip = "Estimated SetUpTime:\n"+convertMilliSecondsToString((displayValue.actualSetUpTime/displayValue.noOfPasses),true);
 							barComponent.addChild(estimateSetUpImage);
 						}
 					}
@@ -147,6 +148,7 @@
 							estimateRunImage.height = 30;
 							estimateRunImage.x = ((((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
 							estimateRunImage.y = -6;
+							estimateRunImage.toolTip = "Estimated RunTime:\n"+convertMilliSecondsToString(((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses),true);
 							barComponent.addChild(estimateRunImage);
 						}
 					}
@@ -160,7 +162,12 @@
 									actualSetUpImage.height = 30;
 									actualSetUpImage.x = ((trackerConsolePasses.setUpTime/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualSetUpImage.width/2);
 									actualSetUpImage.y = pgBarTrackHeight/2;
-									barComponent.addChild(actualSetUpImage);
+									if(trackerConsolePasses.setUpTime>totalValue){
+										actualSetUpImage = null;
+									} else {
+										actualSetUpImage.toolTip = "Actual SetUpTime:\n"+convertMilliSecondsToString(trackerConsolePasses.setUpTime,true);
+										barComponent.addChild(actualSetUpImage);
+									}
 								}
 							}
 							if(trackerConsolePasses.runCompleted){
@@ -171,7 +178,12 @@
 									actualRunImage.height = 30;
 									actualRunImage.x = (((trackerConsolePasses.runTime+trackerConsolePasses.setUpTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualSetUpImage.width/2);
 									actualRunImage.y = pgBarTrackHeight/2;
-									barComponent.addChild(actualRunImage);
+									if((trackerConsolePasses.runTime+trackerConsolePasses.setUpTime)>totalValue){
+										actualRunImage = null;
+									} else {
+										actualRunImage.toolTip = "Actual RunTime:\n"+convertMilliSecondsToString((trackerConsolePasses.runTime+trackerConsolePasses.setUpTime),true);
+										barComponent.addChild(actualRunImage);
+									}
 								}
 							}
 							break;
