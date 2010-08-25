@@ -228,7 +228,7 @@
 			}
 		
 			private function setPGLabel(estimatedTime:String,actualTime:String,noOfPasses:int,currentPass:int):String{
-				if(noOfPasses==2){
+				if(noOfPasses>1){
 					return "Pass ("+currentPass+" of "+noOfPasses+") "+estimatedTime+" / "+actualTime;
 				}
 				return estimatedTime+" / "+actualTime;

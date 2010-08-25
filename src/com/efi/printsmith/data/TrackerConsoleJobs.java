@@ -29,13 +29,13 @@ import javax.persistence.Table;
 @Table(name = "trackerconsolejobs")
 public class TrackerConsoleJobs extends ModelBase{
 	
-	@ManyToOne( cascade = {CascadeType.ALL}, optional=true)
+	@ManyToOne( cascade = {CascadeType.MERGE}, optional=true)
 	private ProductionFacilities productionFacilities;
 	
-	@ManyToOne( cascade = {CascadeType.ALL}, optional=true)
+	@ManyToOne( cascade = {CascadeType.MERGE}, optional=true)
 	private ProductionStations productionStations;
 	
-	@ManyToOne( cascade = {CascadeType.ALL}, optional=true)
+	@ManyToOne( cascade = {CascadeType.MERGE}, optional=true)
 	private ProductionLocations productionLocations;
 	
 	@ManyToOne()

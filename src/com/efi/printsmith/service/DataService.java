@@ -3048,6 +3048,7 @@ public class DataService extends HibernateService {
 			query.setParameter("employee", employee);
 			trackerConsoleJobList = query.getResultList();
 			for (TrackerConsoleJobs trackerConsoleJobs : trackerConsoleJobList) {
+				Hibernate.initialize(trackerConsoleJobs.getPassesList());
 				if(trackerConsoleJobs.getJob()!=null) {
 					Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
 				} else if(trackerConsoleJobs.getCharge()!=null) {
@@ -3055,11 +3056,11 @@ public class DataService extends HibernateService {
 					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob());
 				} 
 			}
-			for (TrackerConsoleJobs trackerConsoleJobs : trackerConsoleJobList) {
+			/*for (TrackerConsoleJobs trackerConsoleJobs : trackerConsoleJobList) {
 				query = em.createQuery("from TrackerConsolePasses where trackerConsoleJobs=:trackerConsoleJobs");
 				query.setParameter("trackerConsoleJobs", trackerConsoleJobs);
 				trackerConsoleJobs.setPassesList(query.getResultList());
-			}
+			}*/
 			if (trackerConsoleJobList != null)
 				log.debug("** Found " + trackerConsoleJobList.size() + "records:");
 		} catch (Exception e) {

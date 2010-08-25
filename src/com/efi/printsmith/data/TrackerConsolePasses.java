@@ -3,6 +3,7 @@ package com.efi.printsmith.data;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -49,8 +50,17 @@ public class TrackerConsolePasses extends ModelBase{
 	
 	private int passNo;
 	
-	@ManyToOne()
+	@ManyToOne(fetch=FetchType.LAZY)
 	private TrackerConsoleJobs trackerConsoleJobs;
+	
+	
+	public TrackerConsolePasses() {
+		
+	}
+	
+	public TrackerConsolePasses(long id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the setUpTime
