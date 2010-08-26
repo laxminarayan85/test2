@@ -185,7 +185,7 @@ package com.efi.printsmith.model
 		
 		private function employeeSaveHandler(event:ResultEvent):void {
 			updatedEmployee = event.result as Employee;
-			if(updatedEmployee!=null){
+			if(updatedEmployee!=null && (updatedEmployee.clockBreak || updatedEmployee.clockOut)){
 				dataServiceTrackerConsole.getActiveTrackerConsoleJobsBasedOnEmployee(updatedEmployee);
 			}			
 		}
@@ -197,6 +197,19 @@ package com.efi.printsmith.model
 				var nowDate:Date = new Date();
 				for each(var trackerConsoleJobs:TrackerConsoleJobs in trackerConsoleJobsList) {
 					if(updatedEmployee.clockBreak || updatedEmployee.clockOut) {
+						if(!trackerConsoleJobs.paused){
+							trackerConsoleJobs.paused = true;
+							trackerConsoleJobs.clockBreak = updatedEmployee.clockBreak;
+							for each(var trackerConsolePassesObj:TrackerConsolePasses in trackerConsoleJobs.passesList){
+								if(trackerConsolePassesObj.passNo==trackerConsoleJobs.currentPass){
+									trackerConsolePassesObj.trackTime = nowDate.time - trackerConsolePassesObj.trackDate.time+(isNaN(trackerConsolePassesObj.trackTime)?0:trackerConsolePassesObj.trackTime);
+									trackerConsolePassesObj.trackDate = nowDate;
+								}
+							}
+							updatedTrackerConsoleJobsList.addItem(trackerConsoleJobs);
+						}
+					}
+					/* if(updatedEmployee.clockBreak || updatedEmployee.clockOut) {
 						if(!trackerConsoleJobs.paused && !trackerConsoleJobs.clockBreak){
 							trackerConsoleJobs.clockBreak = updatedEmployee.clockBreak;
 							for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobs.passesList){
@@ -208,7 +221,7 @@ package com.efi.printsmith.model
 							}
 							updatedTrackerConsoleJobsList.addItem(trackerConsoleJobs);
 						}
-					}
+					} */
 				}
 				if(updatedTrackerConsoleJobsList.length>0){
 					dataServiceTrackerConsoleJob.addUpdateDeleteList(updatedTrackerConsoleJobsList,null);

@@ -11,7 +11,7 @@
 		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadTrackerConsoleResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTrackerConsoleResult(event)"/>
 		<mx:method name="getJobsChargesForTrackerByEmployee" fault="handleFault(event)" result="handleLoadJobChargesResult(event)"/>
-		<mx:method name="getActiveTrackerConsoleJobsBasedOnEmployee" fault="handleFault(event)" result="handleLoadTCJobsResult(event)"/>
+		<mx:method name="getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole" fault="handleFault(event)" result="handleLoadTCJobsResult(event)"/>
 		<mx:method name="getTrackerConsoleJobsById" fault="handleFault(event)" result="handleLoadTCJobByIdResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleDeleteListResult(event)"/>
@@ -194,7 +194,6 @@
 				dataService.addUpdate(trackerConsole);
 			}
 			if(onLoad){
-				onLoad = false;
 				dataService.getClockedInEmployee();	
 				dataServiceFacilty.getAll("ProductionFacilities");
 				dataServiceStation.getAll("ProductionStations");		
@@ -230,6 +229,10 @@
 			
 			trackerList = new ArrayCollection();
 			trackerConsoleJobsList = new ArrayCollection();
+			if(onLoad){
+				onLoad = false;
+				dataService.getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(null);
+			}
 			getEmployee();
 		}
 		private function handleLoadProductionLocationResult(event:ResultEvent):void {
@@ -305,21 +308,23 @@
 					trackerList = new ArrayCollection();
 					selectedJob = null;
 					selectedCharge = null;
-					progressBarComponent.trackerConsoleJobs = null;
-					resetButtons();
-					trackerConsoleJobsList = new ArrayCollection();
 					dataService.getJobsChargesForTrackerByEmployee(employee.id);
-					dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
 				}
+				progressBarComponent.trackerConsoleJobs = null;
+				closeEventTriggered = true;
+				resetButtons();
+				trackerConsoleJobsList = new ArrayCollection();
+				dataService.getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(employee);
 			} else {
 				resetButtons();
 				employee = null;
 				selectedJob = null;
 				selectedCharge = null;
-				selectedDGIndex = -1;
-				selectedTrackerConsoleJob = null;
 				progressBarComponent.trackerConsoleJobs = null;
-				closeEventTriggered = false;
+				closeEventTriggered = true;
+				resetButtons();
+				trackerConsoleJobsList = new ArrayCollection();
+				dataService.getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(employee);
 			}
 		}
 		
@@ -398,6 +403,7 @@
 						selectedTrackerConsoleJob = null;
 						progressBarComponent.trackerConsoleJobs = null;
 					}
+					selectedDGIndex = -1;
 				} else {
 					resetButtons();
 					selectedTrackerConsoleJob = null;
@@ -606,7 +612,7 @@
 		private function handleSaveTrackerConsoleResult(event:ResultEvent):void {
 			if(isNaN(trackerConsole.id) || trackerConsole.id==0){
 				dataService.getSingle("TrackerConsole");
-			}
+			}	
 		}
 		
 		private function doSelectJob(event:Event):void {
@@ -644,7 +650,7 @@
 		
 		private function startJob():void {
 			var passesList:ArrayCollection = new ArrayCollection();
-			if((selectedJob!=null || selectedCharge!=null) && trackerConsole.productionFacilities!=null && trackerConsole.productionStations!=null){
+			if((selectedJob!=null || selectedCharge!=null) && trackerConsole.productionFacilities!=null && trackerConsole.productionStations!=null && employee!=null){
 				if(selectedJob!=null){
 					if(!selectedJob.releasedToProduction){
 						return;
@@ -652,7 +658,8 @@
 				}
 				for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList) {
 					if(trackerConsoleJobsObj.job!=null && selectedJob!=null){
-						if(trackerConsoleJobsObj.job.id == selectedJob.id){
+						if(trackerConsoleJobsObj.job.id == selectedJob.id && trackerConsoleJobsObj.productionFacilities.id==trackerConsole.productionFacilities.id
+							&& trackerConsoleJobsObj.productionStations.id==trackerConsole.productionStations.id && trackerConsoleJobsObj.employee.id==employee.id){
 							Alert.show("This item has a activity started, would you like to reset the beginning timers?", "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 								if (event.detail==Alert.YES) {
 									resetTrackerConsoleJobs = trackerConsoleJobsObj;
@@ -662,7 +669,8 @@
 							return;
 						}
 					} else if(trackerConsoleJobsObj.charge!=null && selectedCharge!=null){
-						if(trackerConsoleJobsObj.charge.id == selectedCharge.id){
+						if(trackerConsoleJobsObj.charge.id == selectedCharge.id && trackerConsoleJobsObj.productionFacilities.id==trackerConsole.productionFacilities.id
+							&& trackerConsoleJobsObj.productionStations.id==trackerConsole.productionStations.id && trackerConsoleJobsObj.employee.id==employee.id){
 							Alert.show("This item has a activity started, would you like to reset the beginning timers?", "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 								if (event.detail==Alert.YES) {
 									resetTrackerConsoleJobs = trackerConsoleJobsObj;
@@ -733,17 +741,11 @@
 		
 		private function handleDeleteResult(event:ResultEvent):void {
 			if(selectedDGIndex>-1){
-				if(employee!=null){
-					refreshList = true;
-					progressBarComponent.trackerConsoleJobs = null;
-					resetButtons();
-					trackerConsoleJobsList = new ArrayCollection();
-					dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
-				} else {
-					resetButtons();
-					selectedTrackerConsoleJob = null;
-					progressBarComponent.trackerConsoleJobs = null;
-				}
+				refreshList = true;
+				progressBarComponent.trackerConsoleJobs = null;
+				resetButtons();
+				trackerConsoleJobsList = new ArrayCollection();
+				dataService.getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(employee);
 			} else {
 				resetButtons();
 				selectedTrackerConsoleJob = null;
@@ -758,7 +760,7 @@
 			progressBarComponent.trackerConsoleJobs = null;
 			resetButtons();
 			trackerConsoleJobsList = new ArrayCollection();
-			dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
+			dataService.getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(employee);
 		}
 		
 		private function setUpJob():void {
@@ -1017,17 +1019,11 @@
 					if(selectedTrackerConsoleJob!=null){
 						completedTracketConsoleJobsList.addItem(selectedTrackerConsoleJob);
 						if(selectedDGIndex>-1){
-							if(employee!=null){
-								refreshList = true;
-								progressBarComponent.trackerConsoleJobs = null;
-								resetButtons();
-								trackerConsoleJobsList = new ArrayCollection();
-								dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
-							} else {
-								resetButtons();
-								selectedTrackerConsoleJob = null;
-								progressBarComponent.trackerConsoleJobs = null;
-							}
+							refreshList = true;
+							progressBarComponent.trackerConsoleJobs = null;
+							resetButtons();
+							trackerConsoleJobsList = new ArrayCollection();
+							dataService.getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(employee);
 						} else {
 							resetButtons();
 							selectedTrackerConsoleJob = null;
@@ -1062,7 +1058,10 @@
 			if(selectedTrackerConsoleJob!=null){
 				for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
 					if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
-						if(trackerConsolePasses.setUpCompleted && trackerConsolePasses.runCompleted
+						if(selectedTrackerConsoleJob.employee.clockBreak || selectedTrackerConsoleJob.employee.clockOut){
+							resetButtons();
+							defaultEnableButtons();
+						} else if(trackerConsolePasses.setUpCompleted && trackerConsolePasses.runCompleted
 							&& selectedTrackerConsoleJob.currentPass!=selectedTrackerConsoleJob.noOfPasses){
 							resetButtons();
 							if(!selectedTrackerConsoleJob.paused){
@@ -1170,14 +1169,14 @@
 						selectedCharge = null;
 						trackerList = new ArrayCollection();
 						dataService.getJobsChargesForTrackerByEmployee(employee.id);
-						if(refreshActiveList){
-							refreshActiveList = false;
-							closeEventTriggered = true;
-							progressBarComponent.trackerConsoleJobs = null;
-							resetButtons();
-							trackerConsoleJobsList = new ArrayCollection();
-							dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
-						}
+					}
+					if(refreshActiveList){
+						refreshActiveList = false;
+						closeEventTriggered = true;
+						progressBarComponent.trackerConsoleJobs = null;
+						resetButtons();
+						trackerConsoleJobsList = new ArrayCollection();
+						dataService.getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(employee);
 					}
 				}
 			}
@@ -1514,7 +1513,7 @@
 								<components:CustomComboBoxComponent width="75%"
 									masterList="{facilitiesArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 									dataHolder="{trackerConsole}" variableName="productionFacilities" customText="{getCustomTextData(facilitiesArray,trackerConsole,trackerConsole.productionFacilities)}"
-									change="{updateTrackerConsole()}"/>
+									change="{updateTrackerConsoleWithRefresh()}"/>
 							</mx:HBox>
 							<mx:HBox width="100%">
 								<mx:Label width="25%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.StationName')}"
@@ -1522,7 +1521,7 @@
 								<components:CustomComboBoxComponent width="75%"
 									masterList="{stationsArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 									dataHolder="{trackerConsole}" variableName="productionStations" customText="{getCustomTextData(stationsArray,trackerConsole,trackerConsole.productionStations)}"
-									change="{updateTrackerConsole()}"/>
+									change="{updateTrackerConsoleWithRefresh()}"/>
 							</mx:HBox>
 						</mx:Panel>
 						<mx:Panel width="100%" height="20%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowThesePendingItem')}"

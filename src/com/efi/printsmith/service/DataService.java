@@ -3165,6 +3165,74 @@ public class DataService extends HibernateService {
 	}
 	
 	/**
+	 * This method retrieves incomplete/in-progress Tracker console jobs based on employee and Tracker Console Configuration
+	 * @param employee
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TrackerConsoleJobs> getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(Employee employee) throws Exception {
+		log.debug("** getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole called.");
+		List<TrackerConsoleJobs> trackerConsoleJobList = new ArrayList<TrackerConsoleJobs>();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query findQuery = em.createQuery("from TrackerConsole");
+			TrackerConsole trackerConsole =  (TrackerConsole) findQuery.getSingleResult();
+			if(trackerConsole!=null && trackerConsole.getProductionFacilities()!=null && trackerConsole.getProductionStations()!=null) {
+				Hibernate.initialize(trackerConsole.getSelectedStations());
+				boolean checkFlag = true;
+				if(trackerConsole.getShowSelectedEmployee() && employee==null) {
+					checkFlag = false;
+				}
+				if(checkFlag){
+					String queryString = "from TrackerConsoleJobs where completed=false";
+					if(trackerConsole.getShowSelectedEmployee()) {
+						queryString = queryString + " and employee = :employee";
+					}
+					if(!trackerConsole.getShowAllFacilities()){
+						queryString = queryString + " and productionFacilities = :productionFacilities";
+					}
+					if(!trackerConsole.getShowAllStations()) {
+						queryString = queryString + " and productionStations in (:selectedStations)";
+					}
+					Query query = em.createQuery(queryString);
+					if(trackerConsole.getShowSelectedEmployee()) {
+						query.setParameter("employee", employee);
+					}
+					if(!trackerConsole.getShowAllFacilities()){
+						query.setParameter("productionFacilities", trackerConsole.getProductionFacilities());
+					}
+					if(!trackerConsole.getShowAllStations()) {
+						List<ProductionStations> selectedStations = new ArrayList<ProductionStations>();
+						if(trackerConsole.getSelectedStations()!=null){
+							selectedStations = trackerConsole.getSelectedStations();
+						}
+						selectedStations.add(trackerConsole.getProductionStations());
+						query.setParameter("selectedStations", selectedStations);
+					}
+					trackerConsoleJobList = query.getResultList();
+					for (TrackerConsoleJobs trackerConsoleJobs : trackerConsoleJobList) {
+						Hibernate.initialize(trackerConsoleJobs.getPassesList());
+						if(trackerConsoleJobs.getJob()!=null) {
+							Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
+						} else if(trackerConsoleJobs.getCharge()!=null) {
+							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
+							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob());
+						} 
+					}
+					if (trackerConsoleJobList != null)
+						log.debug("** Found " + trackerConsoleJobList.size() + "records:");
+				}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return trackerConsoleJobList;
+	}
+	
+	/**
 	 * This method retrieves incomplete/in-progress Tracker console jobs based on employee
 	 * @param employee
 	 * @return
@@ -3176,7 +3244,7 @@ public class DataService extends HibernateService {
 		List<TrackerConsoleJobs> trackerConsoleJobList = new ArrayList<TrackerConsoleJobs>();
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createQuery("from TrackerConsoleJobs where completed=false and employee = :employee");
+			Query query = em.createQuery("from TrackerConsoleJobs where completed=false and employee=:employee");
 			query.setParameter("employee", employee);
 			trackerConsoleJobList = query.getResultList();
 			for (TrackerConsoleJobs trackerConsoleJobs : trackerConsoleJobList) {
@@ -3188,11 +3256,6 @@ public class DataService extends HibernateService {
 					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob());
 				} 
 			}
-			/*for (TrackerConsoleJobs trackerConsoleJobs : trackerConsoleJobList) {
-				query = em.createQuery("from TrackerConsolePasses where trackerConsoleJobs=:trackerConsoleJobs");
-				query.setParameter("trackerConsoleJobs", trackerConsoleJobs);
-				trackerConsoleJobs.setPassesList(query.getResultList());
-			}*/
 			if (trackerConsoleJobList != null)
 				log.debug("** Found " + trackerConsoleJobList.size() + "records:");
 		} catch (Exception e) {
