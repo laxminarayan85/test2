@@ -817,7 +817,6 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 				<mx:Label x="47" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Last')}" textAlign="right"/>
 				<mx:TextInput x="124" y="78" id="firstName_edit" text="{employee.firstName}" width="205"/>
 				<mx:TextInput x="124" y="104" id="lastName_edit" text="{employee.lastName}" width="205"/>
-				<ns1:AddressEditor x="381" y="78" openedFromEmployee="true" id="address_editor" height="157" width="325"/>
 				<mx:Label x="73" y="136" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Phone')}" textAlign="right"/>
 				<mx:Label x="73" y="164" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Mobile')}" textAlign="right"/>
 				<mx:Label x="79" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EMail')}" textAlign="right"/>
@@ -828,6 +827,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 				<mx:TextInput x="127" y="188" id="email_edit"/>
 				<mx:TextInput x="127" y="214" id="ssn_edit" text="{employee.socialSecurity}"/>
 				<mx:TextInput x="127" y="244" id="export_code_edit" text="{employee.exportCode}" />
+				<ns1:AddressEditor x="381" y="78" openedFromEmployee="true" id="address_editor" height="157" width="325"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasPersonal" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Personal')}" width="100%" height="100%">	
 				<mx:Label x="10" y="42" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Rate')}"/>
