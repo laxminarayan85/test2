@@ -812,7 +812,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		<mx:TabNavigator x="0" y="80" width="100%" height="100%" creationPolicy="all">
 			<mx:Canvas id="canvasSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Settings')}" width="100%" height="100%">	
 				<mx:Label x="51" y="19" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.IDNumber')}" width="71" textAlign="right"/>
-				<mx:Text x="143" y="17" id="employeeID" text="{employee.employeeId}" width="106" />
+				<mx:Text x="143" y="19" id="employeeID" text="{employee.employeeId}" width="106" />
 				<mx:Label x="47" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.First')}" textAlign="right"/>
 				<mx:Label x="47" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Last')}" textAlign="right"/>
 				<mx:TextInput x="124" y="78" id="firstName_edit" text="{employee.firstName}" width="205"/>
