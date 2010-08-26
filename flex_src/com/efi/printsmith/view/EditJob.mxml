@@ -1676,6 +1676,36 @@
 					break;
 				case this.job_number_of_lines:
 					break;
+				case this.job_parent:
+					var text:String = Snowmass.formatSizeString(this.job_parent.text);
+					this.job_parent.selectedItem = findItem(text, dimensionsArray);
+					if (this.job_parent.selectedIndex = -1)
+						this.job_parent.text = text
+					else
+						refreshImageAndWeight();
+					break;
+				case this.job_finish_size:
+					var text:String = Snowmass.formatSizeString(this.job_finish_size.text);
+					this.job_finish_size.selectedItem = findItem(text, dimensionsArray);
+					if (this.job_finish_size.selectedIndex = -1)
+						this.job_finish_size.text = text;
+					else
+						refreshImageAndWeight();
+					break;
+				case this.job_fold_size:
+					var text:String = Snowmass.formatSizeString(this.job_fold_size.text);
+					this.job_fold_size.selectedItem = findItem(text, dimensionsArray);
+					if (this.job_fold_size.selectedIndex = -1)
+						this.job_fold_size.text = text;
+					break;
+				case this.job_size:
+					var text:String = Snowmass.formatSizeString(this.job_size.text);
+					this.job_size.selectedItem = findItem(text, dimensionsArray);
+					if (this.job_size.selectedIndex = -1)
+						this.job_size.text = text;
+					else
+						refreshCalcAndImage();
+					break;
 				}
 				if (doUpdatePrice) updatePrice();
 				
@@ -2444,10 +2474,10 @@
 											   height="18"
 											   id="chage_stock_button"
 											   click="changeStockDefinition()" width="62"/>
-									<mx:ComboBox x="108" y="79" width="99" id="job_parent" labelField = "name" dataProvider="{dimensionsArray}" editable="true" change="refreshImageAndWeight()"></mx:ComboBox>
-									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" dataProvider="{dimensionsArray}" editable="true" change="refreshCalcAndImage()"></mx:ComboBox>
-									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" dataProvider="{dimensionsArray}"  change="refreshImageAndWeight()" editable="true"></mx:ComboBox>
-									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" dataProvider="{dimensionsArray}" editable="true"></mx:ComboBox>
+									<mx:ComboBox x="108" y="79" width="99" id="job_parent" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
 								</mx:Canvas>
 								<mx:Canvas label="merchandise_canvas"
 										   width="100%"

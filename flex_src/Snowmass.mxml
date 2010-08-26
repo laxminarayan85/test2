@@ -926,6 +926,34 @@
         	return formatter;
         }
         
+        public static function formatSizeString(sizeString:String):String {
+        	if (sizeString != null && sizeString.length > 0) {
+        		var firstNumber:String = "";
+    			var secondNumber:String = "";
+    			var onFirstNumber:Boolean = true;
+    			var lastCharNumber = false;
+        		for (var i:int = 0;i < sizeString.length;i++) {
+        			var char:String = sizeString.charAt(i);
+        			if (char == "0" || char == "1" || char == "2" || char == "3" || char == "4" || char == "5" || char == "6" || char == "7" || char == "8" || char == "9" || char == ".") {
+        				if ((char == "." && lastCharNumber == true) || char != ".") {
+	        				if (onFirstNumber == true)
+	        					firstNumber = firstNumber + char;
+	        				else
+	        					secondNumber = secondNumber + char;
+	        			}
+        				lastCharNumber = true;
+        			} else {
+        				if (firstNumber == "")
+        					onFirstNumber = true;
+        				else
+        					onFirstNumber = false;
+        				lastCharNumber = false;
+        			}
+        		}
+        	}
+        	return firstNumber + " x " + secondNumber;
+        }
+        
         public static function getDateFormatter():DateFormatter {
         	var formatter:DateFormatter = new DateFormatter;
         	formatter.formatString = "MMMM DD, YYYY   L:NN:SS A";
