@@ -505,7 +505,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 						continue;	
 			}
 			if (txtProductId.text != "")	{
-				if (match(stock.id as String , txtProductId.text) == false)	
+				if (match(stock.id + "" , txtProductId.text) == false)	
 						continue;	
 			}
 			if (txtCoatedSides.text != "")	{
