@@ -4,7 +4,7 @@ package com.efi.printsmith.data
 	
 	[RemoteClass(alias="com.efi.printsmith.data.TrackerConsoleJobs")]
 	[Managed]
-	public class TrackerConsoleJobs extends ModelBase
+	public dynamic class TrackerConsoleJobs extends ModelBase
 	{
 		public function TrackerConsoleJobs()
 		{

@@ -1,4 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <StrikeThroughLabelComponent xmlns="com.efi.printsmith.common.components.*" xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.TrackerConsole;
+			import mx.controls.dataGridClasses.DataGridListData;
+			import com.efi.printsmith.view.Tracker;
+			import com.efi.printsmith.data.Charge;
+			import com.efi.printsmith.data.Job;
+			
+			[Bindable] public var pendingList:Boolean = false;
+		
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				var tracker:Tracker  = DataGridListData(listData).owner.document as Tracker;
+				var trackerConsole:TrackerConsole = tracker.trackerConsole;
+				var deliveryDate:Date = null;
+				if(pendingList){
+					if(data is Job){
+						var job:Job = data as Job;
+						deliveryDate = job.parentInvoice.deliveryIntentDate;
+						if(deliveryDate!=null && deliveryDate<new Date()){
+							this.setStyle("color","0xFF0000");
+						} else {
+							this.setStyle("color","0x000000");
+						}
+						this.setStyle("fontWeight","bold");
+					} else if(data is Charge){
+						var charge:Charge = data as Charge;
+						if(charge.parentInvoice!=null){
+							deliveryDate = charge.parentInvoice.deliveryIntentDate;
+						}
+						if(charge.parentJob!=null){
+							deliveryDate = charge.parentJob.parentInvoice.deliveryIntentDate;
+						}
+						if(deliveryDate!=null && deliveryDate<new Date()){
+							this.setStyle("color","0xFF0000");
+						} else {
+							this.setStyle("color","0x000000");
+						}
+						this.setStyle("fontWeight","normal");
+					}
+				}
+				if(pendingList) {
+					if(trackerConsole.pendingListSize!=null && trackerConsole.pendingListSize!=""){
+						if(trackerConsole.pendingListSize=="Small"){
+							this.setStyle("fontSize",9);
+						} else if(trackerConsole.pendingListSize=="Medium"){
+							this.setStyle("fontSize",10);
+						} else if(trackerConsole.pendingListSize=="Large"){
+							this.setStyle("fontSize",12);
+						}
+					}
+				} else {
+					if(trackerConsole.activeListSize!=null && trackerConsole.activeListSize!=""){
+						if(trackerConsole.activeListSize=="Small"){
+							this.setStyle("fontSize",9);
+						} else if(trackerConsole.activeListSize=="Medium"){
+							this.setStyle("fontSize",10);
+						} else if(trackerConsole.activeListSize=="Large"){
+							this.setStyle("fontSize",12);
+						}
+					}
+				}
+			}
+			
+		]]>
+	</mx:Script>
 	
 </StrikeThroughLabelComponent>

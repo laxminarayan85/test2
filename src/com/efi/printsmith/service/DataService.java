@@ -3218,15 +3218,13 @@ public class DataService extends HibernateService {
 			Query query = em.createNamedQuery("TrackerConsoleJobs" + ".byId");
 			query.setParameter("id", id);
 			trackerConsoleJobs = (TrackerConsoleJobs) query.getSingleResult();
+			Hibernate.initialize(trackerConsoleJobs.getPassesList());
 			if(trackerConsoleJobs.getJob()!=null) {
 				Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
 			} else if(trackerConsoleJobs.getCharge()!=null) {
 				Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
 				Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob());
 			} 
-			query = em.createQuery("from TrackerConsolePasses where trackerConsoleJobs=:trackerConsoleJobs");
-			query.setParameter("trackerConsoleJobs", trackerConsoleJobs);
-			trackerConsoleJobs.setPassesList(query.getResultList());
 			if(trackerConsoleJobs!=null)
 				log.debug("** Found TrackerConsoleJJob for Id :"+trackerConsoleJobs.getId()); 
 		} catch (Exception e) {

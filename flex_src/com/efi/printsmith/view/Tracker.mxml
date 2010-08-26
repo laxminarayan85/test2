@@ -71,7 +71,7 @@
 		import mx.rpc.events.ResultEvent;                                         
 		import mx.rpc.events.FaultEvent;         
 		
-		[Bindable] private var trackerConsole:TrackerConsole;    
+		[Bindable] public var trackerConsole:TrackerConsole;    
 		
 		[Bindable] private var employee:Employee;
 		
@@ -110,9 +110,25 @@
 		[Bindable] private var completedTracketConsoleJobsList:ArrayCollection = new ArrayCollection();
 		
 		[Bindable] private var updatedTrackerConsole:Boolean = false;
+		
+		[Bindable] private var fontSizeList:ArrayCollection = new ArrayCollection();
+		
+		[Bindable] private var refreshActiveList:Boolean = false;
 		 
 		 
 		public function initTrackerConsole():void {
+			var fontObj:Object = new Object();
+			fontObj.key = "Small";
+			fontObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"menu_321.Small");
+			fontSizeList.addItem(fontObj);
+			fontObj = new Object();
+			fontObj.key = "Medium";
+			fontObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"menu_321.Medium");
+			fontSizeList.addItem(fontObj);
+			fontObj = new Object();
+			fontObj.key = "Large";
+			fontObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"menu_321.Large");
+			fontSizeList.addItem(fontObj);
 			dataService.getSingle("TrackerConsole");
 		}    
 		
@@ -165,6 +181,16 @@
 			trackerConsole = event.result as TrackerConsole;
 			if(trackerConsole==null){
 				trackerConsole = new TrackerConsole();
+				trackerConsole.pendingListSize = "Medium";
+				trackerConsole.activeListSize = "Medium";
+				dataService.addUpdate(trackerConsole);
+			} else if(trackerConsole!=null){
+				if(trackerConsole.pendingListSize==null || trackerConsole.pendingListSize=="") {
+					trackerConsole.pendingListSize = "Medium";
+				}
+				if(trackerConsole.activeListSize==null || trackerConsole.activeListSize=="") {
+					trackerConsole.activeListSize = "Medium";
+				}
 				dataService.addUpdate(trackerConsole);
 			}
 			if(onLoad){
@@ -276,6 +302,12 @@
 					employee = trackerConsole.selectedEmployee;
 				}
 				if(employee!=null){
+					trackerList = new ArrayCollection();
+					selectedJob = null;
+					selectedCharge = null;
+					progressBarComponent.trackerConsoleJobs = null;
+					resetButtons();
+					trackerConsoleJobsList = new ArrayCollection();
 					dataService.getJobsChargesForTrackerByEmployee(employee.id);
 					dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
 				}
@@ -383,6 +415,7 @@
 							selectedTrackerConsoleJob = trackerConsoleJobsObj;
 							registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 							progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+							enableRequiredBtns();
 							checkFlag = true;
 							break;
 						}
@@ -436,7 +469,7 @@
 					return dateFormatter.format(charge.parentInvoice.deliveryIntentDate);
 				}
 				if(charge.parentJob!=null){
-					return "";
+					return dateFormatter.format(charge.parentJob.parentInvoice.deliveryIntentDate);
 				}
 			}
 			return "";
@@ -476,8 +509,81 @@
 			return object.description;
 		}
 		
+		public function getTotalJobTime(object:Object):String {
+			return convertMilliSecondsToString((object.actualSetUpTime+object.actualRunTime+object.actualWashTime),true);
+		}
+		
+		public function getActualJobTime(object:Object,updateTimer:Boolean):String {
+			var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
+			var totalValue:Number = 0;
+			var initialValue:Number = 0;
+			for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
+				if(passes.passNo<trackerConsoleJobsObj.currentPass) {
+					if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0) {
+						totalValue = totalValue + passes.setUpTime;
+					}
+					if(!(isNaN(passes.runTime)) && passes.runTime!=0) {
+						totalValue = totalValue + passes.runTime;
+					}
+					if(!(isNaN(passes.washUpTime)) && passes.washUpTime!=0) {
+						totalValue = totalValue + passes.washUpTime;
+					}
+				}
+			}
+			for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
+				if(passes.passNo==trackerConsoleJobsObj.currentPass) {
+					if(!trackerConsoleJobsObj.paused) {
+						initialValue = passes.trackDate.time;
+						if(!(isNaN(passes.trackTime)) && passes.trackTime!=0){
+							initialValue = initialValue - passes.trackTime;
+						}
+						if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0){
+							initialValue = initialValue - passes.setUpTime; 
+						}
+						if(!(isNaN(passes.runTime)) && passes.runTime!=0){
+							initialValue = initialValue - passes.runTime; 
+						}
+						initialValue = new Date().time - initialValue;
+					} else {
+						if(!(isNaN(passes.trackTime)) && passes.trackTime!=0){
+							initialValue = initialValue + passes.trackTime;
+						}
+						if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0){
+							initialValue = initialValue + passes.setUpTime; 
+						}
+						if(!(isNaN(passes.runTime)) && passes.runTime!=0){
+							initialValue = initialValue + passes.runTime; 
+						}
+					}
+				}
+			}
+			return convertMilliSecondsToString((totalValue+initialValue),true);
+		}
+		
 		public function updateTrackerConsole():void {
 			updatedTrackerConsole = true;
+			if(trackerConsole.productionFacilities!=null){
+				if(trackerConsole.productionFacilities.id==0){
+					trackerConsole.productionFacilities = null;
+				}
+			}
+			if(trackerConsole.productionStations!=null){
+				if(trackerConsole.productionStations.id==0){
+					trackerConsole.productionStations = null;
+				}
+			}
+			trackerConsole.selectedStations = new ArrayCollection();
+			for each(var productionStation:ProductionStations in productionStations) {
+				if(productionStation.isSelected) {
+					trackerConsole.selectedStations.addItem(productionStation);
+				}
+			}
+			dataService.addUpdate(trackerConsole);
+		}
+		
+		public function updateTrackerConsoleWithRefresh():void {
+			updatedTrackerConsole = true;
+			refreshActiveList = true;
 			if(trackerConsole.productionFacilities!=null){
 				if(trackerConsole.productionFacilities.id==0){
 					trackerConsole.productionFacilities = null;
@@ -539,6 +645,11 @@
 		private function startJob():void {
 			var passesList:ArrayCollection = new ArrayCollection();
 			if((selectedJob!=null || selectedCharge!=null) && trackerConsole.productionFacilities!=null && trackerConsole.productionStations!=null){
+				if(selectedJob!=null){
+					if(!selectedJob.releasedToProduction){
+						return;
+					}
+				}
 				for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList) {
 					if(trackerConsoleJobsObj.job!=null && selectedJob!=null){
 						if(trackerConsoleJobsObj.job.id == selectedJob.id){
@@ -591,7 +702,7 @@
 				trackerConsoleJobs.actualRunTime = 10*60*1000;
 				trackerConsoleJobs.actualWashTime = 30*60*1000;
 				trackerConsoleJobs.duration = 0;
-				trackerConsoleJobs.noOfPasses = 1;
+				trackerConsoleJobs.noOfPasses = 3;
 				trackerConsoleJobs.currentPass = 1;				
 				var trackerConsolePasses:TrackerConsolePasses = new TrackerConsolePasses();
 				trackerConsolePasses.passNo = 1;
@@ -624,6 +735,9 @@
 			if(selectedDGIndex>-1){
 				if(employee!=null){
 					refreshList = true;
+					progressBarComponent.trackerConsoleJobs = null;
+					resetButtons();
+					trackerConsoleJobsList = new ArrayCollection();
 					dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
 				} else {
 					resetButtons();
@@ -641,6 +755,9 @@
 			var trackerConsoleJobs:TrackerConsoleJobs = event.result as TrackerConsoleJobs;
 			selectedTrackerConsoleJob = trackerConsoleJobs;
 			closeEventTriggered = true;
+			progressBarComponent.trackerConsoleJobs = null;
+			resetButtons();
+			trackerConsoleJobsList = new ArrayCollection();
 			dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
 		}
 		
@@ -789,12 +906,15 @@
 				var counter:int = 0;
 				for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
 					if(trackerConsoleJobsObj.id == trackerConsoleJobsObject.id){
-						trackerConsoleJobsObj = trackerConsoleJobsObject;
+						trackerConsoleJobsObj.updateTimer = false;
+						copyTrackerConsoleJobObject(trackerConsoleJobsObject,trackerConsoleJobsObj);
+						trackerConsoleJobsObj.updateTimer = true;
 						employee_jobs_grid.selectedIndex = counter;
 						break;
 					}
 					counter++;
 				}
+				trackerConsoleJobsList.refresh();
 				selectedTrackerConsoleJob = trackerConsoleJobsObject;
 				trackerConsole.productionLocation = selectedTrackerConsoleJob.productionLocations;
 				if(trackerConsole.productionLocation==null){
@@ -899,6 +1019,9 @@
 						if(selectedDGIndex>-1){
 							if(employee!=null){
 								refreshList = true;
+								progressBarComponent.trackerConsoleJobs = null;
+								resetButtons();
+								trackerConsoleJobsList = new ArrayCollection();
 								dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
 							} else {
 								resetButtons();
@@ -926,6 +1049,13 @@
 					}
 				}
 			}	
+		}
+		
+		private function copyTrackerConsoleJobObject(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {
+			destination.paused = source.paused;
+			destination.passesList = source.passesList;
+			destination.clockBreak = source.clockBreak;
+			destination.currentPass = source.currentPass;
 		}
 		
 		private function enableRequiredBtns():void {
@@ -1038,7 +1168,16 @@
 					if(employee!=null){
 						selectedJob = null;
 						selectedCharge = null;
+						trackerList = new ArrayCollection();
 						dataService.getJobsChargesForTrackerByEmployee(employee.id);
+						if(refreshActiveList){
+							refreshActiveList = false;
+							closeEventTriggered = true;
+							progressBarComponent.trackerConsoleJobs = null;
+							resetButtons();
+							trackerConsoleJobsList = new ArrayCollection();
+							dataService.getActiveTrackerConsoleJobsBasedOnEmployee(employee);
+						}
 					}
 				}
 			}
@@ -1082,34 +1221,80 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<trackercomponent:TrackerConsoleLabelComponent strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getInvoiceNumber(data)}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getInvoiceNumber(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}" dataField="description"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}" dataField="description">
+						<mx:itemRenderer>
+							<mx:Component>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{data.description}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DeliveryDate')}">
 					<mx:itemRenderer>
 							<mx:Component>
-								<trackercomponent:TrackerConsoleLabelComponent strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getDeliveryDate(data)}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getDeliveryDate(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionLocation')}">
 					<mx:itemRenderer>
 							<mx:Component>
-								<trackercomponent:TrackerConsoleLabelComponent strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getProductionLoc(data)}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getProductionLoc(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.RunDate')}" dataField="col2"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ActiveLocation')}" dataField="col3"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimated')}" dataField="col1"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Priority')}" dataField="col2"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Machine')}" dataField="col2"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.RunDate')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ActiveLocation')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getProductionLoc(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimated')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Priority')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Machine')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Account')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<trackercomponent:TrackerConsoleLabelComponent strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getAccount(data)}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getAccount(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
@@ -1139,8 +1324,7 @@
 							<mx:Label width="15%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location')}" textAlign="right"/>
 							<components:CustomComboBoxComponent id="trackerconsole_location" width="40%"
 								masterList="{productionLocationArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-								dataHolder="{trackerConsole}" variableName="productionLocation" customText="{getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation)}"
-								change="{updateTrackerConsole()}"/>
+								dataHolder="{trackerConsole}" variableName="productionLocation" customText="{getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation)}"/>
 						</mx:HBox>	
 						
 					</mx:Panel>
@@ -1241,65 +1425,70 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{outerDocument.getInvoiceNumber(data)}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{outerDocument.getInvoiceNumber(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{outerDocument.getJobDescription((data.job==null?data.charge:data.job))}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{outerDocument.getJobDescription((data.job==null?data.charge:data.job))}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.TimeQty')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text=""/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{outerDocument.getTotalJobTime(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Duration')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text=""/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{outerDocument.getActualJobTime(data,data.updateTimer)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Who')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{data.employee.lastName}, {data.employee.firstName}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{data.employee.lastName}, {data.employee.firstName}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Facility')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{data.productionFacilities.name}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{data.productionFacilities.name}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Station')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{data.productionStations.name}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{data.productionStations.name}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{data.productionLocations.name}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{data.productionLocations.name}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Machine')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text=""/>
+							</mx:Component>
+						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Account')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{outerDocument.getAccount((data.job==null?data.charge:data.job))}"/>
+								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{outerDocument.getAccount((data.job==null?data.charge:data.job))}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
@@ -1315,28 +1504,28 @@
 		
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Preference')}"
 			paddingLeft="20" paddingTop="20" width="100%" height="100%">
-			<mx:HBox width="60%" height="60%">
+			<mx:HBox width="80%" height="100%">
 				<mx:VBox width="50%" height="100%">
-						<mx:Panel width="100%" height="50%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Startnewitemshere')}"
+						<mx:Panel width="100%" height="20%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Startnewitemshere')}"
 							paddingLeft="20" paddingTop="20">
 							<mx:HBox width="100%">
-								<mx:Label width="40%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Facility')}"
+								<mx:Label width="25%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Facility')}"
 									textAlign="right"/>
-								<components:CustomComboBoxComponent width="55%"
+								<components:CustomComboBoxComponent width="75%"
 									masterList="{facilitiesArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 									dataHolder="{trackerConsole}" variableName="productionFacilities" customText="{getCustomTextData(facilitiesArray,trackerConsole,trackerConsole.productionFacilities)}"
 									change="{updateTrackerConsole()}"/>
 							</mx:HBox>
 							<mx:HBox width="100%">
-								<mx:Label width="40%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.StationName')}"
+								<mx:Label width="25%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.StationName')}"
 									textAlign="right"/>
-								<components:CustomComboBoxComponent width="55%"
+								<components:CustomComboBoxComponent width="75%"
 									masterList="{stationsArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 									dataHolder="{trackerConsole}" variableName="productionStations" customText="{getCustomTextData(stationsArray,trackerConsole,trackerConsole.productionStations)}"
 									change="{updateTrackerConsole()}"/>
 							</mx:HBox>
 						</mx:Panel>
-						<mx:Panel width="100%" height="50%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowThesePendingItem')}"
+						<mx:Panel width="100%" height="20%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowThesePendingItem')}"
 							paddingLeft="20" paddingTop="20">
 							<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.HideItemsNotReleased')}"
 								dataHolder="{trackerConsole}" customText="{trackerConsole.hideItemsNotReleasedToProd}" variableName="hideItemsNotReleasedToProd"
@@ -1345,41 +1534,61 @@
 								dataHolder="{trackerConsole}" customText="{trackerConsole.showEmployeeProdParents}" variableName="showEmployeeProdParents"
 								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsole()}"/>
 						</mx:Panel>
-					
+						<mx:Panel width="100%" height="80%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Showtheseactiveitems')}"
+							paddingLeft="20" paddingTop="20">
+							<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Selectedemployeeonly')}"
+									dataHolder="{trackerConsole}" customText="{trackerConsole.showSelectedEmployee}" variableName="showSelectedEmployee"
+									selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsoleWithRefresh()}"/>
+							<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllFacilities')}"
+									dataHolder="{trackerConsole}" customText="{trackerConsole.showAllFacilities}" variableName="showAllFacilities"
+									selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsoleWithRefresh()}"/>
+							<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllStations')}"
+									dataHolder="{trackerConsole}" customText="{trackerConsole.showAllStations}" variableName="showAllStations"
+									selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsoleWithRefresh()}"/>
+							<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowDetailsCmd.Station')}"/>
+							<mx:DataGrid width="90%" id="stations" dataProvider="{productionStations}">
+								<mx:columns>
+									<mx:DataGridColumn id="checkAllCol" headerText=" "
+										sortable="false" dataField="isSelected" width="200">
+										<mx:headerRenderer>
+											<mx:Component>
+												<components:CheckBoxHeaderRenderer click="{outerDocument.updateTrackerConsoleWithRefresh()}" />
+											</mx:Component>
+										</mx:headerRenderer>
+										<mx:itemRenderer>
+											<mx:Component>
+												<components:CustomCheckBoxComponent click="{outerDocument.updateTrackerConsoleWithRefresh()}" 
+													datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+													selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+											</mx:Component>
+										</mx:itemRenderer>
+									</mx:DataGridColumn>
+									<mx:DataGridColumn dataField="name" headerText="Station Name" width="800"/>
+								</mx:columns>
+							</mx:DataGrid>
+						</mx:Panel>
 				</mx:VBox>
 				<mx:VBox width="50%" height="100%">
-					<mx:Panel width="100%" height="100%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Showtheseactiveitems')}"
-						paddingLeft="20" paddingTop="20">
-						<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Selectedemployeeonly')}"
-								dataHolder="{trackerConsole}" customText="{trackerConsole.showSelectedEmployee}" variableName="showSelectedEmployee"
-								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsole()}"/>
-						<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllFacilities')}"
-								dataHolder="{trackerConsole}" customText="{trackerConsole.showAllFacilities}" variableName="showAllFacilities"
-								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsole()}"/>
-						<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllStations')}"
-								dataHolder="{trackerConsole}" customText="{trackerConsole.showAllStations}" variableName="showAllStations"
-								selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerConsole()}"/>
-						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowDetailsCmd.Station')}"/>
-						<mx:DataGrid width="90%" id="stations" dataProvider="{productionStations}">
-							<mx:columns>
-								<mx:DataGridColumn id="checkAllCol" headerText=" "
-									sortable="false" dataField="isSelected" width="200">
-									<mx:headerRenderer>
-										<mx:Component>
-											<components:CheckBoxHeaderRenderer click="{outerDocument.updateTrackerConsole()}" />
-										</mx:Component>
-									</mx:headerRenderer>
-									<mx:itemRenderer>
-										<mx:Component>
-											<components:CustomCheckBoxComponent click="{outerDocument.updateTrackerConsole()}" 
-												datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
-												selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-										</mx:Component>
-									</mx:itemRenderer>
-								</mx:DataGridColumn>
-								<mx:DataGridColumn dataField="name" headerText="Station Name" width="800"/>
-							</mx:columns>
-						</mx:DataGrid>
+					<mx:Panel width="100%" height="30%" layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.FontSettings')}"
+							paddingLeft="20" paddingTop="20">
+							
+							<mx:HBox width="100%">
+								<mx:Label width="20%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.PendingList')}" 
+									textAlign="right"/>
+								<components:CustomComboBoxComponent width="80%"
+									masterList="{fontSizeList}" labelFieldId="key" labelFieldName="value"
+									dataHolder="{trackerConsole}" variableName="pendingListSize" customText="{getCustomTextData(fontSizeList,trackerConsole,trackerConsole.pendingListSize)}"
+									change="{updateTrackerConsole()}"/>
+							</mx:HBox>
+							<mx:HBox width="100%">
+								<mx:Label width="20%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ActiveList')}" 
+									textAlign="right"/>	
+								<components:CustomComboBoxComponent width="80%"
+									masterList="{fontSizeList}" labelFieldId="key" labelFieldName="value"
+									dataHolder="{trackerConsole}" variableName="activeListSize" customText="{getCustomTextData(fontSizeList,trackerConsole,trackerConsole.activeListSize)}"
+									change="{updateTrackerConsole()}"/>
+							</mx:HBox>
+							
 					</mx:Panel>
 				</mx:VBox>
 			</mx:HBox>

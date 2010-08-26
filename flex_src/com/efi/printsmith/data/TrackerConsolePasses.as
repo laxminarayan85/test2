@@ -2,7 +2,7 @@ package com.efi.printsmith.data
 {
 	[RemoteClass(alias="com.efi.printsmith.data.TrackerConsolePasses")]
 	[Managed]
-	public class TrackerConsolePasses extends ModelBase
+	public dynamic class TrackerConsolePasses extends ModelBase
 	{
 		public function TrackerConsolePasses()
 		{
