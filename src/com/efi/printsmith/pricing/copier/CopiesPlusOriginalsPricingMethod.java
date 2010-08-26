@@ -182,7 +182,8 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 						if (job.getDoubleSided()) {
 							if (pricingCopier.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
-								//pricingRecord.setTotalPrice((pricePerCopy * calcQty) + stockPrice*job.getTotalCopies() + wastePrice);
+								pricePerSecondSide = (pricePerCopy + stockPrice) / 2;
+								pricingRecord.setUnitPrice(pricePerSecondSide);
 							} else if (pricingCopier.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
 								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies() + wastePrice);					
 							} else if (pricingCopier.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
@@ -210,7 +211,8 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 						if (job.getDoubleSided()) {
 							if (pricingCopier.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
-								//pricingRecord.setTotalPrice((pricePerCopy * calcQty) + stockPrice*job.getTotalCopies());
+								pricePerSecondSide = (pricePerCopy + stockPrice) / 2;
+								pricingRecord.setUnitPrice(pricePerSecondSide);
 							} else if (pricingCopier.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
 								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());					
 							} else if (pricingCopier.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
@@ -232,6 +234,8 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						pricingRecord.setUnitPrice(unitPrice + stockPrice);
 						if (job.getDoubleSided()) {
 							if (pricingCopier.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
+								pricePerSecondSide = (pricePerCopy + stockPrice) / 2;
+								pricingRecord.setUnitPrice(pricePerSecondSide);
 								pricingRecord.setTotalPrice((pricePerCopy * calcQty) + stockPrice*job.getTotalCopies());
 							} else if (pricingCopier.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
 								pricingRecord.setTotalPrice((pricePerCopy * calcQty) + stockPrice*job.getTotalCopies());					
@@ -258,6 +262,8 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 						if (job.getDoubleSided()) {
 							if (pricingCopier.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
+								pricePerSecondSide = (pricePerCopy + stockPrice) / 2;
+								pricingRecord.setUnitPrice(pricePerSecondSide);
 								pricingRecord.setTotalPrice((pricePerCopy * calcQty) + stockPrice*job.getTotalCopies());
 							} else if (pricingCopier.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
 								pricingRecord.setTotalPrice((pricePerCopy * calcQty) + stockPrice*job.getTotalCopies());					
