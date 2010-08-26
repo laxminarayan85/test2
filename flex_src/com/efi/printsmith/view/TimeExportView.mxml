@@ -299,7 +299,20 @@
 				urlVariables.data = exportString;
 				urlVariables.fileName = "Timecard Export "+(todayDate.month+1)+"_"+todayDate.date+"_"+todayDate.fullYear;
 				urlRequest.data = urlVariables;
-				urlRequest.url = contextRoot.rootURL+"/flexExport.jsp";
+				if(contextRoot.rootURL!=null && contextRoot.rootURL!=""){
+					if(contextRoot.rootURL.substring(0,1)=="/"){
+						if(contextRoot.rootURL=="/"){
+							urlRequest.url = "/flexExport.jsp";
+						} else {
+							urlRequest.url = contextRoot.rootURL+"/flexExport.jsp";
+						}
+					} else {
+						urlRequest.url = "/"+contextRoot.rootURL+"/flexExport.jsp";
+					}
+				} else {
+					urlRequest.url = "/flexExport.jsp";
+				}
+				//urlRequest.url = contextRoot.rootURL+"/flexExport.jsp";
 				urlRequest.method = URLRequestMethod.POST;
 				navigateToURL(urlRequest,"_self");
 			}
