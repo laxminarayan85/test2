@@ -1491,7 +1491,8 @@ public class DataService extends HibernateService {
 		try {
 			if (object.getId() == null || object.getId() == 0) {
 				object.setId(null);
-				object.setCreated(new Timestamp(new Date().getTime()));
+				if (object.getCreated() == null)
+					object.setCreated(new Timestamp(new Date().getTime()));
 				object.setModified(new Timestamp(new Date().getTime()));
 			} else {
 				// Existing object is updated - do nothing.
