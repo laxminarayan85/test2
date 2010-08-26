@@ -20,6 +20,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.hillelcoren.utils.StringUtils;
 	import com.efi.printsmith.data.StockType;
 
 	import mx.collections.SortField;
@@ -168,6 +169,40 @@
 	}
 	
 	private function clearSearch():void{
+		txtGroup.selectedIndex = 0;
+		txtName.text = "";
+		txtColor.selectedIndex = 0;
+		txtGenericColors.selectedIndex = 0;
+		txtFinish.selectedIndex = 0;
+		txtGrade.selectedIndex = 0;
+		txtMinOrder.text = "";
+		txtVendor.selectedIndex = 0;
+		txtStockType.selectedIndex = 0;
+		txtProductId.text = "";
+		txtCoatedSides.text = "";
+		txtThickness.text = "";
+		txtThicknessUOM.selectedIndex = 0;
+		txtSheetsPerSet.text = "";
+		txtStockNumber.text = "";
+		txtSizeMin.text = "";
+		txtSizeMax.text = "";
+		txtWeightMin.text = "";
+		txtWeightMax.text = "";
+		txtCwtMin.text = "";
+		txtCwtMin.text = "";
+		txtQtyOnHandMin.text = "";
+		txtQtyOnHandMax.text = "";
+		txtRollWidthMin.text = "";
+		txtRollWidthMax.text = "";
+		chkShowRollStock.selected = false;
+		chkShowLargeFormatStock.selected = false;
+		chkShowRigidSubstrate.selected = false;
+		chkShowRollStock.selected = false;
+		chkShowShells.selected = false;
+				
+		search();
+		
+		clear_button.enabled = false;
 		
 	}
 	private function UpdateSize():void{
@@ -176,7 +211,7 @@
 			txtSizeMax.enabled = false;
 			txtRollWidthMin.enabled = true;
 			txtRollWidthMax.enabled =true;
-		}else{
+		} else {
 			txtSizeMin.enabled = true;
 			txtSizeMax.enabled = true;
 			txtRollWidthMin.enabled = false;
@@ -216,25 +251,66 @@
 	 public function setStockArray(data:ArrayCollection)	{
 	 	this.stockDefinitions = data;
 	 }
+	 
+	 private function containsBlank(ac:ArrayCollection, field:String)	{
+	 	for (var i:int = 0; i<ac.length; i++)	{
+	 		if (StringUtil.trim(ac.getItemAt(i)[field] as String) == "")	{
+	 			return true;
+	 		}
+	 	}
+	 	return false;
+	 }
 	public function setStocksData(stockDefs:ArrayCollection, groups:ArrayCollection, types:ArrayCollection,
 					finishes:ArrayCollection, colors:ArrayCollection, genericColors:ArrayCollection, 
 					grades:ArrayCollection, vendors:ArrayCollection, uoms:ArrayCollection):void{
 		this.stockDefinitions = stockDefs;
-		groups.addItemAt("", 0);
+		if (!containsBlank(groups,"name"))	{
+			var group:StockGroup = new StockGroup();
+			group.name = "";
+			groups.addItemAt(group, 0);
+		}
 		this.stockGroups = groups;
-		types.addItemAt("",0);
+		if (!containsBlank(types,"name"))	{
+			var st:StockType = new StockType();
+			st.name = "";
+			types.addItemAt(st, 0);
+		}
 		this.stockTypes = types;
-		finishes.addItemAt("", 0);
+		if (!containsBlank(finishes,"name"))	{
+			var fin:StockFinish = new StockFinish();
+			fin.name = "";
+			finishes.addItemAt(fin, 0);
+		}
 		this.finishes = finishes;
-		colors.addItemAt("", 0);
+		if (!containsBlank(colors,"name"))	{
+			var col:StockColors = new StockColors();
+			col.name = "";
+			colors.addItemAt(col, 0);
+		}
 		this.colors = colors;
-		genericColors.addItemAt("", 0);
+		if (!containsBlank(genericColors,"name"))	{
+			var gcol:GenericColors = new GenericColors();
+			gcol.name = "";
+			genericColors.addItemAt(gcol, 0);
+		}
 		this.genericColors = genericColors;
-		grades.addItemAt("", 0);
+		if (!containsBlank(grades,"name"))	{
+			var gr:StockGrade = new StockGrade();
+			gr.name = "";
+			grades.addItemAt(gr, 0);
+		}
 		this.grades = grades;
-		vendors.addItemAt("", 0);
+		if (!containsBlank(vendors,"name"))	{
+			var ven:Vendor= new Vendor();
+			ven.name = "";
+			vendors.addItemAt(ven, 0);
+		}
 		this.vendors = vendors;
-		uoms.addItemAt("", 0);
+		if (!containsBlank(uoms,"name"))	{
+			var u:Object= new Object();
+			u.name = "";
+			uoms.addItemAt(u, 0);
+		}
 		this.uoms = uoms;
 		
 	}
@@ -366,6 +442,8 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 	}   
 	
 	private function search():void	{
+		clear_button.enabled = true;
+		
 		var ac:ArrayCollection = stockDefinitions;
 		var acFiltered:ArrayCollection = new ArrayCollection();
 		
