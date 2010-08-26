@@ -45,6 +45,8 @@
 			private var focussedFormControl:DisplayObject;
 			private var originalAddress:Address;
 			private var titleWindow:AddressEditorPopup=null;
+			
+			[Bindable] public var openedFromEmployee:Boolean = false;
 
 			public function init():void
 			{ 
@@ -134,6 +136,7 @@
 					address.zip = new Zip();
 				} */
 				titleWindow=AddressEditorPopup(PopUpManager.createPopUp(this, AddressEditorPopup, true));
+				titleWindow.openedFromEmployee = openedFromEmployee;
 				titleWindow.setAddress(address);
 				titleWindow.cityDataProvider=cityDataProvider;
 				titleWindow.stateDataProvider=stateDataProvider;
