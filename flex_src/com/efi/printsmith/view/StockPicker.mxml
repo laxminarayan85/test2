@@ -189,7 +189,7 @@
 		txtWeightMin.text = "";
 		txtWeightMax.text = "";
 		txtCwtMin.text = "";
-		txtCwtMin.text = "";
+		txtCwtMax.text = "";
 		txtQtyOnHandMin.text = "";
 		txtQtyOnHandMax.text = "";
 		txtRollWidthMin.text = "";
@@ -199,7 +199,17 @@
 		chkShowRigidSubstrate.selected = false;
 		chkShowRollStock.selected = false;
 		chkShowShells.selected = false;
-				
+		chkShowRollStock.enabled = true;
+		chkShowLargeFormatStock.enabled = true;
+		chkShowRigidSubstrate.enabled = true;
+		chkShowRollStock.enabled = true;
+		chkShowShells.enabled = true;
+		
+		txtRollWidthMax.enabled = false;
+		txtRollWidthMin.enabled = false;		
+		txtSizeMax.enabled = true;
+		txtSizeMin.enabled = true;
+		
 		search();
 		
 		clear_button.enabled = false;
