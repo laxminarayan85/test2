@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fc="http://www.adobe.com/2006/fc"
-        height="214"
+        height="262"
         width="438"
         showCloseButton="true"
         verticalScrollPolicy="off"
@@ -33,24 +33,24 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveZipResult(event)"/>
 	</mx:RemoteObject>
 		
-    <mx:Canvas width="409" height="167">
+    <mx:Canvas width="409" height="215">
     <mx:Label x="10" y="33" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Street')}" width="67" textAlign="right"/>
     <mx:Label x="10" y="82" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.City')}" width="67" textAlign="right"/>
-    <mx:Label x="296" y="82" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.State')}" width="39" textAlign="right"/>
-    <mx:Label x="10" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Zip')}" width="67" textAlign="right"/>
-    <mx:Label x="164" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Country')}" width="57" textAlign="right"/>
+    <mx:Label x="25" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.State')}" width="39" textAlign="right"/>
+    <mx:Label x="10" y="130" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Zip')}" width="67" textAlign="right"/>
+    <mx:Label x="15" y="154" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Country')}" width="57" textAlign="right"/>
             
-    <mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Company')}" width="67" textAlign="right"/>
-    <mx:TextInput x="85" y="10" width="314" id="company_edit" text="{address.name}"/>
+    <mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Company')}" width="67" textAlign="right" visible="{!openedFromEmployee}"/>
+    <mx:TextInput x="85" y="10" width="314" id="company_edit" text="{address.name}" visible="{!openedFromEmployee}"/>
     <mx:TextInput x="85" y="33" width="314" id="street1_edit" text="{address.street1}"/>
     <mx:TextInput x="85" y="56" width="314" id="street2_edit" text="{address.street2}"/>
-    <mx:ComboBox id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()"  editable="true" width="164"/>
-    <mx:ComboBox id="statecombo" restrict="A-Z" x="343" y="80" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" editable="true" width="56"/>
-    <mx:ComboBox id="zipcombo"  x="85" y="104" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="76" editable="true"/>
-    <fc:AutoComplete id="countrycombo" x="224" y="104" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" lookAhead="true" width="175"/>
+    <mx:ComboBox id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()"  editable="true" width="170"/>
+    <mx:ComboBox id="statecombo" restrict="A-Z" x="85" y="104" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" editable="true" width="170"/>
+    <mx:ComboBox id="zipcombo"  x="85" y="128" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="170" editable="true"/>
+    <mx:ComboBox id="countrycombo" x="85" y="152" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" text="{address.country}" editable="true" width="170"/>
     	
-    <mx:Button x="241" y="135" id="ok_button" label="OK" width="75" click="doOK()"/>
-    <mx:Button x="324" y="135" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
+    <mx:Button x="241" y="183" id="ok_button" label="OK" width="75" click="doOK()"/>
+    <mx:Button x="324" y="183" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
     </mx:Canvas>
     <mx:ZipCodeValidator  id="ZipCodeValidator"  domain="US or Canada" required="false"  source="{zipcombo}" property="text"/>
 
@@ -93,6 +93,8 @@
     private var originalAddress:Address = null;
 	 
 	 private var focussedFormControl:DisplayObject;
+	 
+	[Bindable] public var openedFromEmployee:Boolean = false;
 	 
 	private function init():void {
 		cityDataService.getAll("City");
@@ -307,8 +309,8 @@
 		var country:Country;
 		var result:Boolean;
 		
-		if (countrycombo.typedText != null && countrycombo.typedText != "" && countrycombo.selectedIndex == -1) {
-			var item:int = findItem(countrycombo.typedText, countryDataProvider);
+		if (countrycombo.text != null && countrycombo.text != "" && countrycombo.selectedIndex == -1) {
+			var item:int = findItem(countrycombo.text, countryDataProvider);
 			if (item == -1) {
 				country = new Country();
 				country.name = countrycombo.text;
