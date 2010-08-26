@@ -437,6 +437,12 @@
 		priceList.isRate = chkUseAsRateList.selected;
 		priceList.isDiscount = chkProductionDiscount.selected;
 		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
+		if (itemType == "WasteChart") {
+			for (var i:int = 0;i < priceList.elements.length;i++) {
+				var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+				element.amount = element.amount * 100;
+			}
+		}
 	}
 	
 	
@@ -478,6 +484,10 @@
 			}
 			else
 				priceList = ev.result as WasteChart;
+			for (var i:int = 0;i < priceList.elements.length;i++) {
+				var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+				element.amount = element.amount / 100;
+			}
 		} else if (itemType == "SpeedTable") {
 			if (ev.result == null)
 				priceList = new SpeedTable();
@@ -594,7 +604,11 @@
             	}
             }
         }
-    }           
+    }  
+    
+    public function formatAmount(item:Object, column:DataGridColumn):String {
+    	return Number(item.amount).toFixed(1) + "%";
+    }         
 		
 ]]>        
 </mx:Script>            
@@ -608,7 +622,7 @@
 			initialize="gridInit(event);">
 		<mx:columns>
 		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" sortable="false" width="60" labelFunction="formatAmount"/>
 			 <mx:DataGridColumn id="colSide" headerText="{side_header}" dataField="side" labelFunction="showSide"/>
 		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" labelFunction="showColor" sortable="false" width="65"/>
 		</mx:columns>
