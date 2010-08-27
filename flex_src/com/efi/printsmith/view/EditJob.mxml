@@ -1678,31 +1678,47 @@
 					break;
 				case this.job_parent:
 					var text:String = Snowmass.formatSizeString(this.job_parent.text);
-					this.job_parent.selectedItem = findItem(text, dimensionsArray);
-					if (this.job_parent.selectedIndex = -1)
-						this.job_parent.text = text
+					this.job_parent.selectedIndex = findItem(text, dimensionsArray);
+					if (this.job_parent.selectedIndex == -1) {
+						this.job_parent.text = text;
+						if (job.parentSize == null)
+							job.parentSize = new Dimension()
+						job.parentSize.name = text;
+					}
 					else
 						refreshImageAndWeight();
 					break;
 				case this.job_finish_size:
 					var text:String = Snowmass.formatSizeString(this.job_finish_size.text);
-					this.job_finish_size.selectedItem = findItem(text, dimensionsArray);
-					if (this.job_finish_size.selectedIndex = -1)
+					this.job_finish_size.selectedIndex = findItem(text, dimensionsArray);
+					if (this.job_finish_size.selectedIndex == -1) {
 						this.job_finish_size.text = text;
+						if (job.finishSize == null)
+							job.finishSize = new Dimension();
+						job.finishSize.name = text;
+					}
 					else
 						refreshImageAndWeight();
 					break;
 				case this.job_fold_size:
 					var text:String = Snowmass.formatSizeString(this.job_fold_size.text);
-					this.job_fold_size.selectedItem = findItem(text, dimensionsArray);
-					if (this.job_fold_size.selectedIndex = -1)
+					this.job_fold_size.selectedIndex = findItem(text, dimensionsArray);
+					if (this.job_fold_size.selectedIndex == -1) {
 						this.job_fold_size.text = text;
+						if (job.foldedSize == null)
+							job.foldedSize = new Dimension();
+						job.foldedSize.name = text;
+					}
 					break;
 				case this.job_size:
 					var text:String = Snowmass.formatSizeString(this.job_size.text);
-					this.job_size.selectedItem = findItem(text, dimensionsArray);
-					if (this.job_size.selectedIndex = -1)
+					this.job_size.selectedIndex = findItem(text, dimensionsArray);
+					if (this.job_size.selectedIndex == -1) {
 						this.job_size.text = text;
+						if (job.runSize == null)
+							job.runSize = new Dimension();
+						job.runSize.name = text;
+					}
 					else
 						refreshCalcAndImage();
 					break;
@@ -1782,7 +1798,6 @@
 				} else if (pricingMethod.title == "Blank") {
 					this.currentState = "Blank";
 				}
-
 			}
 			private function updateWeight():void{
 				var tempweight:Number;
