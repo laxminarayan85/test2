@@ -62,6 +62,7 @@
 	                    
 	private function handleLoadResult(event:ResultEvent):void {
 		list = event.result as ArrayCollection;
+		dataGrid.selectedIndex = findItem(this.priceList.name,list);
 	}
 	
 	private function handleFault(ev:FaultEvent):void {                               
@@ -86,6 +87,21 @@
 				dataService.getAll(payloadType)
 			}
 		}
+	}
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+	public function setPriceList(priceList:PriceListBase) {
+		this.priceList = priceList;
+		if (list.length == 0)
+			dataService.getAll(this.itemType);
+		else
+			dataGrid.selectedIndex = findItem(this.priceList.name,list);
 	}
 	                                                       
 	private function init():void {   
