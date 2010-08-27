@@ -373,7 +373,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function doNew():void {
 	    pressDefinition = new PressDefinition();
 	    AvgImpressPerhour.enabled = true; 
-	 	
+	 	pressDefinition.sheetFed = true;
+	 	this.sheetFedRadio.selected = true;
 	}
 	
 	private function updateMachineId():void {
