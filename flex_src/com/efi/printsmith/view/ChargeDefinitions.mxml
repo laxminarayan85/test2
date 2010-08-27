@@ -377,8 +377,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	var roudV:Number;
 		var prices:ChargeCostingPrices = ev.result as ChargeCostingPrices;
 		
-		costPricingString = numberFormatter.format(prices.unitPrice + prices.materialUnitPrice) + " + " +
-							numberFormatter.format(prices.setupPrice + prices.materialSetupPrice);
+		costPricingString = Number(numberFormatter.format(prices.unitPrice + prices.materialUnitPrice)).toFixed(2) + " + " +
+							Number(numberFormatter.format(prices.setupPrice + prices.materialSetupPrice)).toFixed(2);
 		
 	}
 	
