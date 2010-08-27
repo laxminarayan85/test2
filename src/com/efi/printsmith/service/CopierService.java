@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.data.enums.CopierPricingMethod;
+import com.efi.printsmith.data.enums.Price2Side;
 
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
@@ -85,6 +86,7 @@ public class CopierService extends SnowmassHibernateService {
 		CopierDefinition copierDefinition = new CopierDefinition();
 		
 		copierDefinition.setMethod(CopierPricingMethod.CostPlus.toString());
+		copierDefinition.setPriceTwoSide(Price2Side.UsingFirstSideRate.toString());
 		copierDefinition.setLargeFormat(false);
 		copierDefinition.setCopierMatrix(newCopierMatrix());
 		return copierDefinition;
