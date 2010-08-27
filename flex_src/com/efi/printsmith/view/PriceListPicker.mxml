@@ -62,7 +62,8 @@
 	                    
 	private function handleLoadResult(event:ResultEvent):void {
 		list = event.result as ArrayCollection;
-		dataGrid.selectedIndex = findItem(this.priceList.name,list);
+		if (this.priceList != null)
+			dataGrid.selectedIndex = findItem(this.priceList.name,list);
 	}
 	
 	private function handleFault(ev:FaultEvent):void {                               
