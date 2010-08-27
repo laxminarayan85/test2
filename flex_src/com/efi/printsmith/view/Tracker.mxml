@@ -308,7 +308,7 @@
 					trackerList = new ArrayCollection();
 					selectedJob = null;
 					selectedCharge = null;
-					dataService.getJobsChargesForTrackerByEmployee(employee.id);
+					dataService.getJobsChargesForTrackerByEmployee(employee.id, new Date());
 				}
 				progressBarComponent.trackerConsoleJobs = null;
 				closeEventTriggered = true;
@@ -1058,7 +1058,7 @@
 			if(selectedTrackerConsoleJob!=null){
 				for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
 					if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
-						if(selectedTrackerConsoleJob.employee.clockBreak || selectedTrackerConsoleJob.employee.clockOut){
+						if(selectedTrackerConsoleJob.employee.clockBreak || selectedTrackerConsoleJob.employee.clockOut || !selectedTrackerConsoleJob.employee.active){
 							resetButtons();
 							defaultEnableButtons();
 						} else if(trackerConsolePasses.setUpCompleted && trackerConsolePasses.runCompleted
@@ -1168,7 +1168,7 @@
 						selectedJob = null;
 						selectedCharge = null;
 						trackerList = new ArrayCollection();
-						dataService.getJobsChargesForTrackerByEmployee(employee.id);
+						dataService.getJobsChargesForTrackerByEmployee(employee.id, new Date());
 					}
 					if(refreshActiveList){
 						refreshActiveList = false;
