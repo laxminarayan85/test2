@@ -35,7 +35,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 			if (pricingMatrix != null) {
 				int i;
 				for (i = 0; i < pricingMatrix.getElements().size(); i++) {
-					if (pricingMatrix.getElements().get(i).getQty() > job.getTotalCopies()) break;
+					if (pricingMatrix.getElements().get(i).getQty() >= job.getNumCopies()) break;
 				}
 				//if (i > 0) i--; /* Use the price in the matrix prior to qty > qtyordered */
 				if (i >= pricingMatrix.getElements().size())
