@@ -229,7 +229,7 @@
 		}
 	}
 	private function doLargeFormatChange():void{
-		
+		search();
 		if (chkShowLargeFormatStock.selected)	{
 			chkShowRollStock.enabled = false;
 		}
@@ -239,6 +239,7 @@
 		UpdateSize();
 	}
 	private function doRollStockChanged():void{
+		search();
 		if (chkShowRollStock.selected)	{
 			chkShowLargeFormatStock.enabled = false;
 			chkShowShells.enabled = false;
@@ -589,6 +590,18 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 				if (matchMin(stock.cwt1, txtCwtMin.text) == false)	
 						continue;
 			}
+			if (chkShowRigidSubstrate.selected)	{
+				if (stock.stockunit != 4)
+					continue;
+			}
+			if (chkShowLargeFormatStock.selected)	{
+				if (stock.stockunit != 3)
+					continue;
+			}
+			if (chkShowRollStock.selected)	{
+				if (stock.stockunit != 2)
+					continue;
+			}
 			if (chkShowShells.selected)	{
 				if (stock.shellItem != null)	{
 					var strShellItem:String = "t";
@@ -714,7 +727,7 @@ public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		<mx:Label x="411" y="168" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RollWidth')}"/>
 		<mx:CheckBox x="418" y="192" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRollStock')}" id="chkShowRollStock" change="doRollStockChanged();"/>
 		<mx:CheckBox x="418" y="207" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock" change="doLargeFormatChange();"/>
-		<mx:CheckBox x="418" y="222" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate"/>
+		<mx:CheckBox x="418" y="222" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate" change="search();"/>
 		<mx:CheckBox x="418" y="237" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock" change="search();"/>
 		<mx:CheckBox x="418" y="252" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="search();"/>
 		
