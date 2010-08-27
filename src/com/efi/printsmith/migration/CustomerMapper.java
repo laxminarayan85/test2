@@ -20,6 +20,7 @@ import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.State;
 import com.efi.printsmith.data.Zip;
 import com.efi.printsmith.data.City;
+import com.efi.printsmith.data.ShippingMethod;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 public class CustomerMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(CopierDefinitionMapper.class);
@@ -208,8 +209,9 @@ public class CustomerMapper extends ImportMapper {
 					customer.setSalesRank(Utilities
 							.tokenToLong(currentImportToken));
 				} else if ("do statement".equals(currentFieldToken)) {
-					customer.setGenerateStatements(Utilities
-							.tokenToBooleanValue(currentImportToken));
+					Boolean TempB;
+					TempB = Utilities.tokenToBooleanValue(currentImportToken);
+					customer.setGenerateStatements(!TempB);
 				} else if ("do finance charges".equals(currentFieldToken)) {
 					customer.setApplyFinanceCharges(Utilities
 							.tokenToBooleanValue(currentImportToken));
@@ -411,7 +413,16 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("default est".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("shipping mode".equals(currentFieldToken)) {
-					/* TODO */
+					if (currentImportToken.equals("") == false) {
+						ShippingMethod method = (ShippingMethod)dataService.getByName("ShippingMethod", currentImportToken);
+						if (method == null) {
+							method = new ShippingMethod();
+							method.setName(currentImportToken);
+							method = (ShippingMethod)dataService.addUpdate(method);
+						}
+						customer.setShippingMode(method);
+					}
+					
 				} else if ("aging[1]".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("aging[2]".equals(currentFieldToken)) {

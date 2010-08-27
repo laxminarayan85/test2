@@ -77,7 +77,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 
 	import com.efi.printsmith.events.commandEvents.Accounts.*;
-	
+	import mx.utils.StringUtil;  
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -244,8 +244,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		else
 			title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')+"  " + account.title;
 		this.JobCharges = ev.result.jobCharges;
+		if ( this.JobCharges.length >0){
+			job_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
+			job_charges_edit.label = StringUtil.substitute(job_charges_edit.label,this.JobCharges.length );
+		}
 		this.EstInvCharges = ev.result.invoiceEstimateCharges;
-	     
+		if  ( this.EstInvCharges.length > 0){
+	     	inv_estimate_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
+	     	inv_estimate_charges_edit.label = StringUtil.substitute(inv_estimate_charges_edit.label,this.EstInvCharges.length);
+	 }
 	}
 	private function handleGetMasterResult(ev:ResultEvent):void {
 		var tempmaster:Account = new Account();
@@ -410,7 +417,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (ship_via_combo != null && ship_via_combo.selectedItem != null) 
 			account.shippingMode = ship_via_combo.selectedItem as ShippingMethod;
 			
-		account.financeRate = parseFloat(monthly_finance_charge_edit.text);
+		account.financeRate = parseFloat(monthly_finance_charge_edit.text)* .01;
 		account.creditLimit = parseInt(credit_limit_edit.text);
 		account.termsNet = parseInt(due_days_edit.text);
 		account.applyFinanceCharges = never_calculate_finance_check.selected;
@@ -428,13 +435,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		account.jobNote = job_note_edit.text;
 		
 		
-		auto_discount_percent_radio
+
 		if (auto_discount.selectedValue == "discount_dollar") {
 			account.dollarDiscount = true;
 			account.discountDollarAmt = parseFloat(auto_discount_dollar_text.text);
 		} else {
 			account.dollarDiscount = false; 
-			account.discount = parseFloat(auto_discount_percent_edit.text);
+			account.discount = parseFloat(auto_discount_percent_edit.text) * .01;
 						
 		}
 		
@@ -443,7 +450,23 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (acct_status.selectedValue != null)
 			account.status = acct_status.selectedValue.toString();
 	}
+	private function addSymbolFinance():void{
+		var index:int;
 	
+		index = monthly_finance_charge_edit.text.indexOf('%',0);
+		if ( index == -1){
+			monthly_finance_charge_edit.text = monthly_finance_charge_edit.text + '%';
+		}
+		ClearLabel()
+	} 
+	private function addSymbolDiscount():void{
+		var index:int;
+	
+		index = auto_discount_percent_edit.text.indexOf('%',0);
+		if ( index == -1){
+			auto_discount_percent_edit.text = auto_discount_percent_edit.text + '%';
+		}
+	} 
 	private function mapFromAccountData():void{
 		balances = new ArrayCollection([
 			{Aged:"Current", Value:account.balanceCurrent},
@@ -457,6 +480,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			autoDiscountRadioValue = "discount_percent";
 						
 		}
+		setEditBox();
 		acctStatusRadioValue = account.status;
 		acctTypeRadioValue = account.type;
 		logDataService.getAll("CustomerLog");
@@ -839,7 +863,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     	else
     		limit.visible = false;
     		
-    	if (monthly_finance_charge_edit.text == "" || monthly_finance_charge_edit.text == "0")
+    	if (monthly_finance_charge_edit.text == "" || monthly_finance_charge_edit.text == "0%")
     		standardratelabel.visible = true;
     	else
     		standardratelabel.visible = false;
@@ -863,10 +887,20 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleChargeDefinitionEstInvComplete(evt:ChargeDefinitionSelectEvent):void
 	{
 		this.account.invoiceEstimateCharges = evt.chargeArray;
+		
+		
+		if  ( this.account.invoiceEstimateCharges.length > 0){
+	     	inv_estimate_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
+	     	inv_estimate_charges_edit.label = StringUtil.substitute(inv_estimate_charges_edit.label,this.account.invoiceEstimateCharges.length);
+	 }
 	}
 	private function handleChargeDefinitionJobComplete(evt:ChargeDefinitionSelectEvent):void
 	{
 		this.account.jobCharges=evt.chargeArray;
+		if ( this.account.jobCharges.length >0){
+			job_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
+			job_charges_edit.label = StringUtil.substitute(job_charges_edit.label,this.JobCharges.length );
+		}
 	}
 	private function handleChargeDefinitionCancel(evt:ChargeDefinitionSelectEvent):void
 	{
@@ -898,8 +932,30 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			return "None";
 		}
 	}    
-
+ public function doBusinessName(item:Object):String{
+		var tmpItem:BusinessType ;
+		tmpItem = item as BusinessType;
+		var tmpString:String;
+		
+		if (tmpItem != null && tmpItem.name != null ) {
+			tmpString = tmpItem.name
+			return(tmpString);
+		} else {
+			return "";
+		}
+	}    
+	private function setEditBox():void{
+		if (auto_discount.selectedValue == "discount_percent"){
+			auto_discount_percent_edit.enabled = true;
+			auto_discount_dollar_text.enabled = false;
+		
+		}else{
+			auto_discount_percent_edit.enabled = false;
+			auto_discount_dollar_text.enabled = true;
+		
+		}
 	
+	}
 		
     
 ]]>
@@ -928,14 +984,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:ComboBox x="461" y="421" height="21" id="statementcontactlist" dataProvider="{contacts}" labelFunction="doName" change="updateStatementContact();" width="160"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasCreditControl" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
-				<mx:TextInput x="181" y="10" id="credit_limit_edit" width="160" text="{account.creditLimit}"  focusOut="ClearLabel();"/>
+				<mx:TextInput restrict="0-9\." x="181" y="10" id="credit_limit_edit" width="160" text="{Snowmass.getCurrencyFormatter(false,2).format(account.creditLimit)}"  focusOut="ClearLabel();"/>
 				<mx:Label x="99" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.CreditLimit')}" textAlign="right"/>
 				<mx:TextInput x="181" y="38" id="due_days_edit" text="{account.termsNet}"/>
-				<mx:TextInput x="181" y="66" id="monthly_finance_charge_edit" text="{account.financeRate}"  focusOut="ClearLabel();"/>
+				<mx:TextInput x="181" y="66" id="monthly_finance_charge_edit" text="{account.financeRate * 100}%"  focusOut="addSymbolFinance();"/>
 				<mx:Label x="10" y="68" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.MonthlyFinanceCharge')}" textAlign="right"/>
 				<mx:Label x="45" y="94" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.FinanceChargesYTD')}" textAlign="right"/>
 				<mx:Label x="45" y="120" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CurrentBalance')}" textAlign="right" width="128"/>
-				<mx:Label x="181" y="120" text="0.00" textAlign="right" width="160" id="current_balance_edit"/>
+				<mx:Label x="181" y="120" text="{account.balance}" textAlign="right" width="160" id="current_balance_edit" />
 				<mx:Label x="181" y="94" text="0.00" textAlign="right" width="160" id="finance_charges_ytd_edit"/>
 				<mx:Label x="36" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Duedaysfromposting')}" textAlign="right"/>
 				<mx:Text x="349" y="12" text="(Using system limit of 2,500.00)&#xd;" width="348" fontWeight="bold" id="limit"/>
@@ -943,12 +999,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Text x="349" y="68" text="(Using standard rate of 1.5%)" width="348" fontWeight="bold" id="standardratelabel"/>
 				<mx:CheckBox x="384" y="92" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Nevercalculatefinanc')}" id="never_calculate_finance_check"  selected="{account.applyFinanceCharges}"/>
 				<mx:Panel x="10" y="146" width="402" height="118" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AutomaticDiscount')}" dropShadowEnabled="false">
-					<mx:TextInput x="85" y="10" width="132" id="auto_discount_percent_edit" text="{account.discount}"/>
+					<mx:TextInput x="85" y="10" width="132" id="auto_discount_percent_edit" text="{account.discount * 100}%" focusOut="addSymbolDiscount()"/>
 					<mx:TextInput x="85" y="40" width="132" id="auto_discount_dollar_text" text="{Snowmass.getCurrencyFormatter(false,2).format(account.discountDollarAmt)}"/>
 					
-					<mx:RadioButtonGroup id="auto_discount" selectedValue="{autoDiscountRadioValue}"/>
-					<mx:RadioButton x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Percent')}" id="auto_discount_percent_radio" value="discount_percent" groupName="auto_discount"/>
-					<mx:RadioButton x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Dollars')}" id="auto_discount_dollar_radio" value="discount_dollar" groupName="auto_discount"/>
+					<mx:RadioButtonGroup id="auto_discount" selectedValue="{autoDiscountRadioValue}" change="setEditBox();"/>
+					<mx:RadioButton  x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Percent')}" id="auto_discount_percent_radio" value="discount_percent" groupName="auto_discount"/>
+					<mx:RadioButton  x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Dollars')}" id="auto_discount_dollar_radio" value="discount_dollar" groupName="auto_discount"/>
 					<mx:CheckBox x="225" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Onetimediscount')}" id="one_time_discount_check" selected="{account.oneTimeDiscount}"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="272" width="402" height="115" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AccountStatus')}" dropShadowEnabled="false">
@@ -970,16 +1026,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				</mx:Panel>
 			</mx:Canvas>
 			<mx:Canvas id="canvasSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockCatCmd.Settings')}" width="100%" height="100%" >
-				<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.MasterAccount')}" textAlign="right"/>
+				
 				<mx:Label x="84" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'prospectCmd.SalesRep')}" textAlign="right" width="93"/>
 				<mx:Label x="25" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.BusinessTypeCode')}" textAlign="right" width="152"/>
 				<mx:Label x="84" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.PONumber')}" textAlign="right" width="93"/>
 				<mx:Label x="305" y="234" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Securitylevelofthisa')}" textAlign="right" width="93"/>
 				<mx:Text x="185" y="116" width="160" id="po_number_edit" text="{account.customerPO}"/>
-				<mx:Text x="233" y="10" width="287" id="master_acct_edit" text=""/>
-				<mx:Button x="528" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Select')}" click="doMaster();"/>
+				<mx:Text x="369" y="10" width="287" id="master_acct_edit" text=""/>
+				<mx:Button x="10" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.MasterAccount')}" click="doMaster();" width="236"/>
 				<fc:AutoComplete id="sales_rep_combo" x="185" y="34" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
-				<fc:AutoComplete id="business_type_combo" x="185" y="60" width="160" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType();" lookAhead="true" />
+				<fc:AutoComplete id="business_type_combo"  x="185" y="60" width="160" dataProvider="{businessTypes}" labelFunction="doBusinessName" focusOut="doBusinessType();" lookAhead="true" />
 					
 				<mx:Label x="57" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipVia')}" textAlign="right" width="120"/>
 				<fc:AutoComplete id="ship_via_combo" x="185" y="88" width="160" dataProvider="{shippingMethods}"  labelField="name" focusOut="doShipVia()" lookAhead="true" />
@@ -1012,7 +1068,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:Button x="216" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="job_charges_edit" click="doJobCharges();"/>
 				</mx:Panel>
 				<mx:TextInput x="406" y="232" id="security_level_edit"/>
-				<mx:Text x="134" y="10" width="91" id="masteracctId"/>
+				<mx:Text x="254" y="10" width="91" id="masteracctId"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasSales" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Sales')}" width="100%" height="100%">
 				<mx:Panel x="10" y="10" width="377" height="163" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Balance')}" dropShadowEnabled="false">
