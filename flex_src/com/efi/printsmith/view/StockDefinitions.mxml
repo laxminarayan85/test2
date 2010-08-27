@@ -504,31 +504,31 @@ private function loadCoatedArray():void{
 	private function loadUomArray():void {
 		
 		var Caliper:Object = new Object;
-		Caliper.name = "Caliper"
+		Caliper.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Caliper')
 		stockUom.addItem(Caliper);
 
 		var Microns:Object = new Object;
-		Microns.name = "Microns"
+		Microns.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns')
 		stockUom.addItem(Microns);
 
 		var Points:Object = new Object;
-		Points.name = "Points"
+		Points.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Points')
 		stockUom.addItem(Points);
 
 		var Mils:Object = new Object;
-		Mils.name = "Mils"
+		Mils.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Mils')
 		stockUom.addItem(Mils);
 
 		var Thous:Object = new Object;
-		Thous.name = "Thous"
+		Thous.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Thous')
 		stockUom.addItem(Thous);
 
 		var Plies:Object = new Object;
-		Plies.name = "Plies"
+		Plies.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Plies')
 		stockUom.addItem(Plies);
 
 		var Millimeters:Object = new Object;
-		Millimeters.name = "Millimeters"
+		Millimeters.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Millimeters')
 		stockUom.addItem(Millimeters);
 		
 	}
@@ -1551,12 +1551,15 @@ private function loadCoatedArray():void{
 		}
 		
 	}
+
+	
+	
 	private function doMetric():void{
 	
 		if ( chkIsMetric.selected){
 			Basicsize.text = ""
 			label5.visible = false;
-			cboUom.selectedIndex = findItem("Microns", stockUom);
+			cboUom.selectedIndex = findItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns'), stockUom);
 			cboUom.enabled = false;
 			if (this.currentState=="RollStock")
 				Costunits.enabled = true;
@@ -1733,27 +1736,27 @@ private function doRound(evt:FocusEvent):void{
 		var tempFloat:Number = 0.0;
 		tempFloat = parseFloat(thickNess.text)
 		switch (temp.name){
-			case "Points":
-			case "Mils":
-			case "Thous":{
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Points'):
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Mils'):
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Thous'):{
 				 stockDefinitions.thickness = tempFloat / 1000;
 				
 				break;
 			}
-			case  "Microns":{
+			case  resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns'):{
 				stockDefinitions.thickness = ((tempFloat / 1000.0) / 25.4)
 				break;
 				
 			}
-			case "Plies":{
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Plies'):{
 				stockDefinitions.thickness  = (((tempFloat /1000.0) + 6.0)* 3.0); 
 					break;
 			}
-			case "Millimeters":{
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Millimeters'):{
 				stockDefinitions.thickness  =(tempFloat / 25.4)
 				break;
 			}
-			case "Caliper":{
+			case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Caliper'):{
 				stockDefinitions.thickness =tempFloat;
 				break;
 		}
@@ -1777,37 +1780,37 @@ private function doRound(evt:FocusEvent):void{
 			else
 				tempFloat= stockDefinitions.thickness;
 			switch(temp.name){
-				case "Caliper":{
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Caliper'):{
 					thickNess.text = Snowmass.getCurrencyFormatter(false,4).format(stockDefinitions.thickness)
 					break;
 				}
-				case  "Microns":{
+				case  resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns'):{
 					
 					thickNess.text = Snowmass.getCurrencyFormatter(false,4).format(((tempFloat * 1000.0) * 25.4))
 					
 					break;
 					
 				}
-				case "Points":{
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Points'):{
 					thickNess.text = Snowmass.getCurrencyFormatter(false,4).format((tempFloat * 1000.0));
 					break;
 				}
-				case "Mils":{
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Mils'):{
 					thickNess.text = Snowmass.getCurrencyFormatter(false,4).format((tempFloat * 1000.0));
 					break;
 				}
-				case "Thous":{
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Thous'):{
 					thickNess.text = Snowmass.getCurrencyFormatter(false,4).format((tempFloat * 1000.0));
 					break;
 				}
-				case "Plies":{
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Plies'):{
 					if ( tempFloat < .009){
 						tempFloat = .009
 					}
 					thickNess.text  = Snowmass.getCurrencyFormatter(false,4).format((((tempFloat * 1000.0) - 6.0) / 3.0));  
 					break;
 				}
-				case "Millimeters":{
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Millimeters'):{
 					thickNess.text  = Snowmass.getCurrencyFormatter(false,4).format((tempFloat * 25.4))
 					break;
 				}
