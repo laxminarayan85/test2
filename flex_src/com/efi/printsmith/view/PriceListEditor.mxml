@@ -608,7 +608,13 @@
     }  
     
     public function formatAmount(item:Object, column:DataGridColumn):String {
-    	return Number(item.amount).toFixed(1) + "%";
+    	if (itemType == "WasteChart")
+    		return Number(item.amount).toFixed(1) + "%";
+    	else if (itemType == "PaperPrice")
+    		return Number(item.amount).toFixed(2);
+    	else if (itemType == "SpeedTable")
+    		return Number(item.amount).toFixed(0);
+    	return Number(item.amount).toFixed(2);
     }         
 		
 ]]>        
