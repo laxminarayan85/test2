@@ -1234,15 +1234,22 @@ private function loadCoatedArray():void{
 		
 		if (stockDefinitions.defaultPress != null)
 	 		cboDefaultPress.selectedIndex = findItem(stockDefinitions.defaultPress.name, pressDefinitions);
-		
+	 	else
+			cboDefaultPress.selectedIndex =-1 ;
 		if (stockDefinitions.defaultBWCopier != null)
 	 		defaultBWCopier.selectedIndex = findItem(stockDefinitions.defaultBWCopier.name, copierDefinitions);
+	 	else
+	 		defaultBWCopier.selectedIndex =-1;
 
 		if (stockDefinitions.defaultColorCopier != null)
 	 		defaultColorCopier.selectedIndex = findItem(stockDefinitions.defaultColorCopier.name, copierDefinitions);
+	 	else
+	 		defaultColorCopier.selectedIndex = -1;
 
 		if (stockDefinitions.defaultLargeCopier != null)
 	 		defaultLargeCopier.selectedIndex = findItem(stockDefinitions.defaultLargeCopier.name, copierDefinitions);
+	 	else
+	 		defaultLargeCopier.selectedIndex= -1;
 		if ( stockDefinitions.coated != null)
 			coated.selectedIndex = findItem(stockDefinitions.coated, stockCoated);
 		else
@@ -1808,6 +1815,11 @@ private function doRound(evt:FocusEvent):void{
 			}
 		}
 	}
+	private function doPriceListButton():void{
+		var titleWindow:ViewPriceList = ViewPriceList(PopUpManager.createPopUp(this, ViewPriceList, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPressStockDefinition(stockDefinitions,cboDefaultPress.selectedItem as PressDefinition);
+	}
 	
 	
 
@@ -2049,28 +2061,32 @@ private function doRound(evt:FocusEvent):void{
 	</mx:Button>
 	<mx:Label x="10" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="38" textAlign="center" id="label15"/>
 	<mx:Label x="56" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center" id="label14"/>
-	<mx:Button x="171" y="5" width="38" height="38" click="doSave();" enabled="{enableSave}">
+	<mx:Button x="229" y="0" width="38" height="38" click="doSave();" enabled="{enableSave}">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="171" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
-	<mx:Button x="217" y="5" width="38" height="38" click="doGet();">
+	<mx:Label x="229" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
+	<mx:Button x="275" y="0" width="38" height="38" click="doGet();">
 		<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="217" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" width="38" textAlign="center"/>
-	<mx:Button x="263" y="5" width="38" height="38" click="doNew();">
+	<mx:Label x="275" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" width="38" textAlign="center"/>
+	<mx:Button x="321" y="0" width="38" height="38" click="doNew();">
 		<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 	</mx:Button>
-	<mx:Button id="button_delete" x="370" y="5" width="38" height="38" click="doDelete();">
+	<mx:Button id="button_delete" x="469" y="0" width="38" height="38" click="doDelete();">
 		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="360" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
-	<mx:Button x="436" y="5" width="38" height="38" id="btnExport" enabled="false">
+	<mx:Label x="459" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
+	<mx:Button x="535" y="0" width="38" height="38" id="btnExport" enabled="false">
 		<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="426" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="58" textAlign="center"/>
-	<mx:Button x="493" y="5" width="38" height="38" click="doRevert();">
+	<mx:Label x="525" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="58" textAlign="center"/>
+	<mx:Button x="592" y="0" width="38" height="38" click="doRevert();">
 		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="483" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
-	<mx:Label x="263" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
+	<mx:Label x="582" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
+	<mx:Label x="321" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
+	<mx:Button x="170" y="0" width = "38" height="38"  click="doPriceListButton();">
+		<mx:icon>@Embed(source='../../../../assets/price_list.png')</mx:icon>
+	</mx:Button>
+	<mx:Label x="157" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefRpt.PriceList')}" width="64"/>
 </mx:Panel>
