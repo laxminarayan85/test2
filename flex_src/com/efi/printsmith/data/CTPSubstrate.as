@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function CTPSubstrate() {
 			remoteObjectName = "com.efi.printsmith.data.CTPSubstrate";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var key:String = "";

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function CashDrawer() {
 			remoteObjectName = "com.efi.printsmith.data.CashDrawer";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var amount:Number = 0;
 		public var transactionDate:Date = new Date();

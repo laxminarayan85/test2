@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function DepositTicket() {
 			remoteObjectName = "com.efi.printsmith.data.DepositTicket";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var type:String = "";
 		public var ref:String = "";

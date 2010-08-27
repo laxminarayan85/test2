@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function CashRegister() {
 			remoteObjectName = "com.efi.printsmith.data.CashRegister";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var customerAccount:Account;
 		public var taxTable:TaxTable;

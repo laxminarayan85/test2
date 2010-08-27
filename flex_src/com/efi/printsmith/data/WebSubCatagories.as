@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebSubCatagories() {
 			remoteObjectName = "com.efi.printsmith.data.WebSubCatagories";
 		}
+		public override var isDeleted:Boolean=false;
 				
 		public var products:ArrayCollection;
 	

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function ChargeCost() {
 			remoteObjectName = "com.efi.printsmith.data.ChargeCost";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var setupCost:Number = 0;
 		public var unitCost:Number = 0;

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function CommonInterest() {
 			remoteObjectName = "com.efi.printsmith.data.CommonInterest";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

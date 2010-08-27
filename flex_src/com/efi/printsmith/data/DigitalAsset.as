@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function DigitalAsset() {
 			remoteObjectName = "com.efi.printsmith.data.DigitalAsset";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var repositoryPath:String = "";
 		public var job:Job;

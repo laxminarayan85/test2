@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function CostingRecord() {
 			remoteObjectName = "com.efi.printsmith.data.CostingRecord";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var unitCost:Number = 0;
 		public var totalCost:Number = 0;

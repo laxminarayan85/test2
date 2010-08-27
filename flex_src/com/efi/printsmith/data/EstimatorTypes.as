@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function EstimatorTypes() {
 			remoteObjectName = "com.efi.printsmith.data.EstimatorTypes";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

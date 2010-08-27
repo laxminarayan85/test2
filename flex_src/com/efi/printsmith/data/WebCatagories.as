@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebCatagories() {
 			remoteObjectName = "com.efi.printsmith.data.WebCatagories";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var status:String = "";
 		public var image:WebGraphics;

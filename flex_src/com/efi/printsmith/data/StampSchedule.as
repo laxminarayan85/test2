@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function StampSchedule() {
 			remoteObjectName = "com.efi.printsmith.data.StampSchedule";
 		}
+		public override var isDeleted:Boolean=false;
 				
 	
 	}

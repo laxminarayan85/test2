@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesDefaultPresses() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesDefaultPresses";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var defaultBWCopier:CopierDefinition;
 		public var defaultColorCopier:CopierDefinition;

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function MailerType() {
 			remoteObjectName = "com.efi.printsmith.data.MailerType";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

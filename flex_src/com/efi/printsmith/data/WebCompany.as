@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebCompany() {
 			remoteObjectName = "com.efi.printsmith.data.WebCompany";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:int = 0;
 	

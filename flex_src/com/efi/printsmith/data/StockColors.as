@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function StockColors() {
 			remoteObjectName = "com.efi.printsmith.data.StockColors";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

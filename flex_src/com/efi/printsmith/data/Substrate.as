@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Substrate() {
 			remoteObjectName = "com.efi.printsmith.data.Substrate";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

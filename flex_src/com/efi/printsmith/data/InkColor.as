@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function InkColor() {
 			remoteObjectName = "com.efi.printsmith.data.InkColor";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

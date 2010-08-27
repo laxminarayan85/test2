@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesPOS() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesPOS";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var receiptHeader:String = "";
 		public var receiptFooter:String = "";

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebBase() {
 			remoteObjectName = "com.efi.printsmith.data.WebBase";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var contactName:String = "";
 		public var contactPhone:String = "";

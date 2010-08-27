@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Charge() {
 			remoteObjectName = "com.efi.printsmith.data.Charge";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var chargeDefinition:ChargeDefinition;
 		public var description:String = "";

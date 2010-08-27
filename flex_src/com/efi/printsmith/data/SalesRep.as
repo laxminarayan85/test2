@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function SalesRep() {
 			remoteObjectName = "com.efi.printsmith.data.SalesRep";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

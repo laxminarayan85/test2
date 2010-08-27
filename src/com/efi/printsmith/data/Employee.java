@@ -2,8 +2,23 @@
 package com.efi.printsmith.data;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
+import com.efi.printsmith.data.*;
+import com.efi.printsmith.data.enums.*;
+import com.efi.printsmith.exceptions.*;
+import javax.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CollectionOfElements;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.IndexColumn;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -39,6 +54,8 @@ import com.efi.printsmith.exceptions.UnknownPropertyException;
  */	
 @Entity
 @Table(name = "employee")
+@SQLDelete(sql="update modelbase set isdeleted='TRUE' from employee where modelbase.id=?")
+@Where(clause="isdeleted <> 'TRUE'")
 public class Employee extends Party {
 	/**
    * @generated
@@ -225,6 +242,7 @@ public class Employee extends Party {
 	public Employee() {
     this.created = new Date();
     this.modified = new Date();
+    this.isDeleted = false;
   }
 
  	
@@ -883,7 +901,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade={CascadeType.MERGE})
+	@OneToMany()
     @JoinTable( name = "employee_employeepricings")
 	private java.util.List<PreferencesPricingMethod> employeePricings;
 	
@@ -916,7 +934,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(cascade = {CascadeType.MERGE})
+    @OneToMany()
     @JoinTable( name = "employee_employeecharges")
 	private java.util.List<ChargeCommand> employeeCharges;
 	
@@ -949,7 +967,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade = {CascadeType.MERGE})
+	@OneToMany()
     @JoinTable( name = "employee_employeepresses")
 	private java.util.List<ProductionPress> employeePresses;
 	
@@ -982,7 +1000,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade = {CascadeType.MERGE})
+	@OneToMany()
     @JoinTable( name = "employee_employeecopiers")
 	private java.util.List<ProductionCopiers> employeeCopiers;
 	
@@ -1061,7 +1079,7 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade = {CascadeType.MERGE})
+	@OneToMany()
     @JoinTable( name = "employee_productionparents")
 	private java.util.List<ProductionLocations> productionParents;
 	

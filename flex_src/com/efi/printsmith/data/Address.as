@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Address() {
 			remoteObjectName = "com.efi.printsmith.data.Address";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var street1:String = "";

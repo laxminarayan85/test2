@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function SizeMetricCM() {
 			remoteObjectName = "com.efi.printsmith.data.SizeMetricCM";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var size:String = "";

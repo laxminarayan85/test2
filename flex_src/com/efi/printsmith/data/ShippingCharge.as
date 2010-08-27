@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function ShippingCharge() {
 			remoteObjectName = "com.efi.printsmith.data.ShippingCharge";
 		}
+		public override var isDeleted:Boolean=false;
 				
 		public var shipVia:String = "";
 		public var shipTo:Address;

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PriceLogEntry() {
 			remoteObjectName = "com.efi.printsmith.data.PriceLogEntry";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var version:int = 0;
 		public var description:String = "";

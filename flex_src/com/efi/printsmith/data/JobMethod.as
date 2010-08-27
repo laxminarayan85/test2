@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function JobMethod() {
 			remoteObjectName = "com.efi.printsmith.data.JobMethod";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function FoldTemplate() {
 			remoteObjectName = "com.efi.printsmith.data.FoldTemplate";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

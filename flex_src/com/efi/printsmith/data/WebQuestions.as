@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebQuestions() {
 			remoteObjectName = "com.efi.printsmith.data.WebQuestions";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var status:String = "";

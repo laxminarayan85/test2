@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesMarkups() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesMarkups";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var totalCost:Number = 0;
 		public var markup:Number = 0;

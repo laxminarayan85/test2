@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Merchandise() {
 			remoteObjectName = "com.efi.printsmith.data.Merchandise";
 		}
+		public override var isDeleted:Boolean=false;
 				
 	
 	}

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function SecurityCommands() {
 			remoteObjectName = "com.efi.printsmith.data.SecurityCommands";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var menu:String = "";
 		public var commandName:String = "";

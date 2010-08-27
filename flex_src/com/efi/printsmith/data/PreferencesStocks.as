@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesStocks() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesStocks";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var weight:String = "";
 		public var points:String = "";
@@ -47,13 +48,6 @@ package com.efi.printsmith.data
 		public var blankMarkup5:Number = 0;
 		public var blankMarkup6:Number = 0;
 		public var sizeTable:SizeTable;
-		
-		/*Properties for Chain of Custody section*/
-		public var open:String = "";
-		public var close:String = "";
-		public var includeCerifiedOption:Boolean = false;
-		public var includeManagementType:Boolean = false;
-		public var includeRecyclePercent:Boolean = false;
 	
 	}
 }

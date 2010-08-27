@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function SpecialInstructions() {
 			remoteObjectName = "com.efi.printsmith.data.SpecialInstructions";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var instructions:String = "";
 	

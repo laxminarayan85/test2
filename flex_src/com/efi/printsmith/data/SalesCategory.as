@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function SalesCategory() {
 			remoteObjectName = "com.efi.printsmith.data.SalesCategory";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var glAccount:String = "";

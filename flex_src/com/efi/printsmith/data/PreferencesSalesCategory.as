@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesSalesCategory() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesSalesCategory";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var category:SalesCategory;
 		public var accountNumber:String = "";

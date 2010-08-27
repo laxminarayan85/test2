@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesIntegration() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesIntegration";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var fieryConnectorURL:String = "";
 	

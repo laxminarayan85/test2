@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Marketing() {
 			remoteObjectName = "com.efi.printsmith.data.Marketing";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var marketID:int = 0;
 		public var followup:Date = new Date();

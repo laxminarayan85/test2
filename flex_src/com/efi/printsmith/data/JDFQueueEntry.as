@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function JDFQueueEntry() {
 			remoteObjectName = "com.efi.printsmith.data.JDFQueueEntry";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var message:String = "";
 		public var response:String = "";

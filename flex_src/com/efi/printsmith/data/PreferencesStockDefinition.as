@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesStockDefinition() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesStockDefinition";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var visible:Boolean = false;
 		public var columns:ColumnNames;

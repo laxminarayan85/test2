@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Tape() {
 			remoteObjectName = "com.efi.printsmith.data.Tape";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var transactionDate:Date = new Date();
 		public var status:String = "";

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function EstimateTemplate() {
 			remoteObjectName = "com.efi.printsmith.data.EstimateTemplate";
 		}
+		public override var isDeleted:Boolean=false;
 				
 		public var templateName:String = "";
 	

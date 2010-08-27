@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function TaxTable() {
 			remoteObjectName = "com.efi.printsmith.data.TaxTable";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var effectiveTaxRate:Number = 0;
 		public var taxElements:ArrayCollection;

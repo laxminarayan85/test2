@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Matrix() {
 			remoteObjectName = "com.efi.printsmith.data.Matrix";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var header1:Number = 0;
 		public var header2:Number = 0;

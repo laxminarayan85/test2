@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function JobTemplate() {
 			remoteObjectName = "com.efi.printsmith.data.JobTemplate";
 		}
+		public override var isDeleted:Boolean=false;
 				
 		public var templateName:int = 0;
 		public var user:Users;

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Grade() {
 			remoteObjectName = "com.efi.printsmith.data.Grade";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var campaigns:ArrayCollection;

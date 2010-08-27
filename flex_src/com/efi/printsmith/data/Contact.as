@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Contact() {
 			remoteObjectName = "com.efi.printsmith.data.Contact";
 		}
+		public override var isDeleted:Boolean=false;
 				
 		public var shipToAddress:ArrayCollection;
 		public var parentAccount:Account;

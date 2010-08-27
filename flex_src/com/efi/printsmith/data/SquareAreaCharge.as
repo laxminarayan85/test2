@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function SquareAreaCharge() {
 			remoteObjectName = "com.efi.printsmith.data.SquareAreaCharge";
 		}
+		public override var isDeleted:Boolean=false;
 				
 		public var overrideArea:Boolean = false;
 		public var area:Number = 0;

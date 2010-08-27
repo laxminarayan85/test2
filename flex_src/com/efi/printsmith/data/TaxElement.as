@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function TaxElement() {
 			remoteObjectName = "com.efi.printsmith.data.TaxElement";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var rate:Number = 0;
 		public var showTax:Boolean = false;

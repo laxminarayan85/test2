@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function FontDefinition() {
 			remoteObjectName = "com.efi.printsmith.data.FontDefinition";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var fontName:String = "";
 		public var size:int = 0;

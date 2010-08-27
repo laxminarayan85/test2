@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function AccessLevel() {
 			remoteObjectName = "com.efi.printsmith.data.AccessLevel";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

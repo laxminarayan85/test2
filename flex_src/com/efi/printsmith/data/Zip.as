@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Zip() {
 			remoteObjectName = "com.efi.printsmith.data.Zip";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

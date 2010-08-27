@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Broker() {
 			remoteObjectName = "com.efi.printsmith.data.Broker";
 		}
+		public override var isDeleted:Boolean=false;
 				
 		public var brokerId:String = "";
 	

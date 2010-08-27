@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Users() {
 			remoteObjectName = "com.efi.printsmith.data.Users";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var password:String = "";

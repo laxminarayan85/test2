@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PricingRecord() {
 			remoteObjectName = "com.efi.printsmith.data.PricingRecord";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var prepPrice:Number = 0;
 		public var oversTotalPrice:Number = 0;

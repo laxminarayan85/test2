@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesEstimating() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesEstimating";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var folioLocation:String = "";
 		public var gripLocation:String = "";

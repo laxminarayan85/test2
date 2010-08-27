@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function BasicSize() {
 			remoteObjectName = "com.efi.printsmith.data.BasicSize";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var size:String = "";

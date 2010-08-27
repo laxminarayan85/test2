@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesQuantityBreaks() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesQuantityBreaks";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var quantity:int = 0;
 		public var qtyBreak:Boolean = false;

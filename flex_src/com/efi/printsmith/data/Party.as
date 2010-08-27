@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Party() {
 			remoteObjectName = "com.efi.printsmith.data.Party";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var prefix:String = "";
 		public var suffix:String = "";

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Dimension() {
 			remoteObjectName = "com.efi.printsmith.data.Dimension";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var type:String = "";
 		public var name:String = "";

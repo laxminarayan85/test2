@@ -19,7 +19,9 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 
 /**
  * @generated
@@ -41,6 +43,8 @@ import org.hibernate.annotations.Type;
  */	
 @Entity
 @Table(name = "broker")
+@SQLDelete(sql="update modelbase set isdeleted='TRUE' from broker where modelbase.id=?")
+@Where(clause="isdeleted <> 'TRUE'")
 public class Broker extends Party {
 	/**
 	 * @generated
@@ -53,6 +57,7 @@ public class Broker extends Party {
 	public Broker() {
     this.created = new Date();
     this.modified = new Date();
+    this.isDeleted = false;
   }
 
  	

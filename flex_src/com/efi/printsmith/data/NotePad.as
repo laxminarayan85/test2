@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function NotePad() {
 			remoteObjectName = "com.efi.printsmith.data.NotePad";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var notesWho:String = "";
 		public var phoneNumber:String = "";

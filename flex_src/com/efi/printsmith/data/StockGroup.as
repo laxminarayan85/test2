@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function StockGroup() {
 			remoteObjectName = "com.efi.printsmith.data.StockGroup";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var key:String = "";

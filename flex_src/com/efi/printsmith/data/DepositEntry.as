@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function DepositEntry() {
 			remoteObjectName = "com.efi.printsmith.data.DepositEntry";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var referenceNumber:String = "";
 		public var date:Date = new Date();

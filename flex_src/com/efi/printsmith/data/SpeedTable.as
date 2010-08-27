@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function SpeedTable() {
 			remoteObjectName = "com.efi.printsmith.data.SpeedTable";
 		}
+		public override var isDeleted:Boolean=false;
 				
 	
 	}

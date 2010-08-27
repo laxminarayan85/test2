@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function InvoiceTemplate() {
 			remoteObjectName = "com.efi.printsmith.data.InvoiceTemplate";
 		}
+		public override var isDeleted:Boolean=false;
 				
 		public var templateName:String = "";
 	

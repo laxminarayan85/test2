@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebCheckoutTypes() {
 			remoteObjectName = "com.efi.printsmith.data.WebCheckoutTypes";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

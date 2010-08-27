@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Country() {
 			remoteObjectName = "com.efi.printsmith.data.Country";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

@@ -624,7 +624,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function doDelete():void {
-		fireDeleteEvent(charge, new mx.rpc.Responder(handleDeleteResult, handleFault));
+		if (this.charge != null) {	
+			fireDeleteEvent(this.charge, new mx.rpc.Responder(handleDeleteResult, handleFault));
+		} else if (this.chargeCategory != null) {
+			fireDeleteEvent(this.chargeCategory, new mx.rpc.Responder(handleDeleteResult, handleFault));
+		} else if (this.chargeCommand != null) {
+			fireDeleteEvent(this.chargeCommand, new mx.rpc.Responder(handleDeleteResult, handleFault));
+		}
 //		dataService.deleteItem("Charge", charge.id);
 	}
 

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesCreditCard() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesCreditCard";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var used:Boolean = false;
 		public var cardType:String = "";

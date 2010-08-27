@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function StockChanges() {
 			remoteObjectName = "com.efi.printsmith.data.StockChanges";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var stockChangeID:Number = 0;
 		public var pSUser:String = "";

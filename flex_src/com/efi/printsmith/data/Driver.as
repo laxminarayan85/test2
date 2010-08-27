@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Driver() {
 			remoteObjectName = "com.efi.printsmith.data.Driver";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var key:String = "";

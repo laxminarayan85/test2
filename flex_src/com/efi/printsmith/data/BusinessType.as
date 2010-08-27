@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function BusinessType() {
 			remoteObjectName = "com.efi.printsmith.data.BusinessType";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var key:String = "";

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function SizeTable() {
 			remoteObjectName = "com.efi.printsmith.data.SizeTable";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

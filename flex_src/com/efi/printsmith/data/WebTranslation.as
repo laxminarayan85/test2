@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebTranslation() {
 			remoteObjectName = "com.efi.printsmith.data.WebTranslation";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

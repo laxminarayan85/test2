@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function OutsideService() {
 			remoteObjectName = "com.efi.printsmith.data.OutsideService";
 		}
+		public override var isDeleted:Boolean=false;
 				
 	
 	}

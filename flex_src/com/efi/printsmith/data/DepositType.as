@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function DepositType() {
 			remoteObjectName = "com.efi.printsmith.data.DepositType";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

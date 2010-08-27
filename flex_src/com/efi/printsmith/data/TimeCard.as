@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function TimeCard() {
 			remoteObjectName = "com.efi.printsmith.data.TimeCard";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var period:int = 0;
 		public var startDateTime:Date = new Date();

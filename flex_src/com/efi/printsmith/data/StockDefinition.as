@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function StockDefinition() {
 			remoteObjectName = "com.efi.printsmith.data.StockDefinition";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var stockunit:int = 0;
 		public var name:String = "";

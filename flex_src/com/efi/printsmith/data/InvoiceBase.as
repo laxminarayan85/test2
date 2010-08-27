@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function InvoiceBase() {
 			remoteObjectName = "com.efi.printsmith.data.InvoiceBase";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var invoiceNumber:String = "";
 		public var version:Number = 0;

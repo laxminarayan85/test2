@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function MarketingDateLabels() {
 			remoteObjectName = "com.efi.printsmith.data.MarketingDateLabels";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

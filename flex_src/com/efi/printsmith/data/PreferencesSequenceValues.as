@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesSequenceValues() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesSequenceValues";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var invoice:Number = 0;
 		public var job:Number = 0;

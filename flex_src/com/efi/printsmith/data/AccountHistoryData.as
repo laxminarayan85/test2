@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function AccountHistoryData() {
 			remoteObjectName = "com.efi.printsmith.data.AccountHistoryData";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var account:Account;

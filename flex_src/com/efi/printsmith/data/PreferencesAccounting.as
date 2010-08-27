@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesAccounting() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesAccounting";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var creditLimit:Number = 0;
 		public var financeChange:Number = 0;

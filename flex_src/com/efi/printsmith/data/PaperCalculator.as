@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PaperCalculator() {
 			remoteObjectName = "com.efi.printsmith.data.PaperCalculator";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var gripEdgeGap:Number = 0;
 		public var name:String = "";

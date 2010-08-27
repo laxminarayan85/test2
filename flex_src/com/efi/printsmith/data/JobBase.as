@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function JobBase() {
 			remoteObjectName = "com.efi.printsmith.data.JobBase";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var jobNumber:String = "";
 		public var jobIndex:Number = 0;
@@ -130,6 +131,6 @@ package com.efi.printsmith.data
 		public var deliveredDate:Date = new Date();
 		public var usePaperCalcUp:Boolean = false;
 		public var rollWidth:Number = 0;
-		public var releasedToProduction:Boolean = false;
+	
 	}
 }

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function CreditCard() {
 			remoteObjectName = "com.efi.printsmith.data.CreditCard";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var cardHolderName:String = "";
 		public var cardNumber:String = "";

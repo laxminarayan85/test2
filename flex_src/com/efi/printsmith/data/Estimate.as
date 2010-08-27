@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Estimate() {
 			remoteObjectName = "com.efi.printsmith.data.Estimate";
 		}
+		public override var isDeleted:Boolean=false;
 				
 	
 	}

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Period() {
 			remoteObjectName = "com.efi.printsmith.data.Period";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var customtoDate:Date = new Date();
 		public var customfromDate:Date = new Date();

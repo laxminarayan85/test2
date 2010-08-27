@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebLocations() {
 			remoteObjectName = "com.efi.printsmith.data.WebLocations";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var productionLocations:ProductionLocations;
 		public var webTranslation:WebTranslation;

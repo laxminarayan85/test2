@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function MarketingMailers() {
 			remoteObjectName = "com.efi.printsmith.data.MarketingMailers";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function ProductionPriority() {
 			remoteObjectName = "com.efi.printsmith.data.ProductionPriority";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var key:String = "";

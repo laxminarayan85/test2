@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function QuantityDiscount() {
 			remoteObjectName = "com.efi.printsmith.data.QuantityDiscount";
 		}
+		public override var isDeleted:Boolean=false;
 				
 	
 	}

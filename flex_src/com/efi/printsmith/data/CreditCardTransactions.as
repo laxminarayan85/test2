@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function CreditCardTransactions() {
 			remoteObjectName = "com.efi.printsmith.data.CreditCardTransactions";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var transactionDate:Date = new Date();
 		public var transactionType:int = 0;

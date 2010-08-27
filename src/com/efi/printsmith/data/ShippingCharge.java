@@ -19,7 +19,9 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 
 /**
  * @generated
@@ -41,6 +43,8 @@ import org.hibernate.annotations.Type;
  */	
 @Entity
 @Table(name = "shippingcharge")
+@SQLDelete(sql="update modelbase set isdeleted='TRUE' from shippingcharge where modelbase.id=?")
+@Where(clause="isdeleted <> 'TRUE'")
 public class ShippingCharge extends Charge {
 	/**
 	 * @generated
@@ -61,6 +65,7 @@ public class ShippingCharge extends Charge {
 	public ShippingCharge() {
     this.created = new Date();
     this.modified = new Date();
+    this.isDeleted = false;
   }
 
  	

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesCashRegister() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesCashRegister";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var tax:Boolean = false;
 		public var title:String = "";

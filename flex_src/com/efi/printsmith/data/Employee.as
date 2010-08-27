@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Employee() {
 			remoteObjectName = "com.efi.printsmith.data.Employee";
 		}
+		public override var isDeleted:Boolean=false;
 				
 		public var socialSecurity:String = "";
 		public var exportCode:int = 0;
@@ -41,7 +42,7 @@ package com.efi.printsmith.data
 		public var allCopiers:Boolean = false;
 		public var allChargeTypes:Boolean = false;
 		public var onlyShowProductionParents:Boolean = false;
-		public var employeePricings:ArrayCollection;
+		public var employeePricing:ArrayCollection;
 		public var employeeCharges:ArrayCollection;
 		public var employeePresses:ArrayCollection;
 		public var employeeCopiers:ArrayCollection;
@@ -54,6 +55,9 @@ package com.efi.printsmith.data
 		public var showMessageClockout:Boolean = false;
 		public var showMessageClockin:Boolean = false;
 		public var employeeId:String = "";
+		public var isSelected:Boolean = false;
+		public var isDisabled:Boolean = false;
+		public var autoOutTime:String = "";
 	
 	}
 }

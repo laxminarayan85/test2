@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function CostCenter() {
 			remoteObjectName = "com.efi.printsmith.data.CostCenter";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

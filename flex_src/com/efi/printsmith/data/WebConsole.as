@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebConsole() {
 			remoteObjectName = "com.efi.printsmith.data.WebConsole";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var webStatus:WebStatus;
 		public var webaction:String = "";

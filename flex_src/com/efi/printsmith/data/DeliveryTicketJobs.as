@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function DeliveryTicketJobs() {
 			remoteObjectName = "com.efi.printsmith.data.DeliveryTicketJobs";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var account:Account;
 		public var orderNumber:int = 0;

@@ -17,7 +17,9 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -49,6 +51,8 @@ import com.efi.printsmith.exceptions.UnknownPropertyException;
  */	
 @Entity
 @Table(name = "addressformatting")
+@SQLDelete(sql="update modelbase set isdeleted='TRUE' from addressformatting where modelbase.id=?")
+@Where(clause="isdeleted <> 'TRUE'")
 public class AddressFormatting extends ModelBase {
 	/**
 	 * @generated
@@ -85,6 +89,7 @@ public class AddressFormatting extends ModelBase {
 	public AddressFormatting() {
     this.created = new Date();
     this.modified = new Date();
+    this.isDeleted = false;
   }
 
  	

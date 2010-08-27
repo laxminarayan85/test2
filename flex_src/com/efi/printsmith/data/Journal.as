@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Journal() {
 			remoteObjectName = "com.efi.printsmith.data.Journal";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var account:Account;
 		public var invoice:Invoice;

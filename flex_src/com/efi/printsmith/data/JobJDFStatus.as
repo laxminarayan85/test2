@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function JobJDFStatus() {
 			remoteObjectName = "com.efi.printsmith.data.JobJDFStatus";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var lastUpdated:Date = new Date();
 		public var status:String = "";

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Products() {
 			remoteObjectName = "com.efi.printsmith.data.Products";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var key:String = "";

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function DataManager() {
 			remoteObjectName = "com.efi.printsmith.data.DataManager";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var dataloaded:Boolean = false;
 	

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function UnpurchasedMerchandise() {
 			remoteObjectName = "com.efi.printsmith.data.UnpurchasedMerchandise";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var account:Account;
 		public var amount:Number = 0;

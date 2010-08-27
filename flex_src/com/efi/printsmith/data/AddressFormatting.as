@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function AddressFormatting() {
 			remoteObjectName = "com.efi.printsmith.data.AddressFormatting";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var country:Country;
 		public var street1Position:int = 0;

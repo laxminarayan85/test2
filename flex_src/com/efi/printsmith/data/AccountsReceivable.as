@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function AccountsReceivable() {
 			remoteObjectName = "com.efi.printsmith.data.AccountsReceivable";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var account:Account;
 		public var transactionDate:Date = new Date();

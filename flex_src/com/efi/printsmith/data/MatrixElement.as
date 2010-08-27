@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function MatrixElement() {
 			remoteObjectName = "com.efi.printsmith.data.MatrixElement";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var qty:int = 0;
 		public var price1:Number = 0;

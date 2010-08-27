@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WasteChart() {
 			remoteObjectName = "com.efi.printsmith.data.WasteChart";
 		}
+		public override var isDeleted:Boolean=false;
 				
 	
 	}

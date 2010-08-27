@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebGraphics() {
 			remoteObjectName = "com.efi.printsmith.data.WebGraphics";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var status:String = "";

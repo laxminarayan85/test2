@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function ShippingMethod() {
 			remoteObjectName = "com.efi.printsmith.data.ShippingMethod";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

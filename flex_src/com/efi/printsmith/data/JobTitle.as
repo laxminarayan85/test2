@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function JobTitle() {
 			remoteObjectName = "com.efi.printsmith.data.JobTitle";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

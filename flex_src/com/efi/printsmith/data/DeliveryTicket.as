@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function DeliveryTicket() {
 			remoteObjectName = "com.efi.printsmith.data.DeliveryTicket";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var ticketNumber:int = 0;

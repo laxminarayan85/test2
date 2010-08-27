@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function TypeofWork() {
 			remoteObjectName = "com.efi.printsmith.data.TypeofWork";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

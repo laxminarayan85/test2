@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function SecuritySetup() {
 			remoteObjectName = "com.efi.printsmith.data.SecuritySetup";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var enable:Boolean = false;
 		public var menu:String = "";

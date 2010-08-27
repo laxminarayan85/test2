@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function ComLinkType() {
 			remoteObjectName = "com.efi.printsmith.data.ComLinkType";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var type:String = "";
 	

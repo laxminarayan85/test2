@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function DailySales() {
 			remoteObjectName = "com.efi.printsmith.data.DailySales";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var salesCat:SalesCategory;
 		public var subTotal:Number = 0;

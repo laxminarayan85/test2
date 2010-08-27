@@ -19,7 +19,9 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 
 /**
  * @generated
@@ -41,6 +43,8 @@ import org.hibernate.annotations.Type;
  */	
 @Entity
 @Table(name = "mailertype")
+@SQLDelete(sql="update modelbase set isdeleted='TRUE' from mailertype where modelbase.id=?")
+@Where(clause="isdeleted <> 'TRUE'")
 public class MailerType extends ModelBase {
 	/**
 	 * @generated
@@ -53,6 +57,7 @@ public class MailerType extends ModelBase {
 	public MailerType() {
     this.created = new Date();
     this.modified = new Date();
+    this.isDeleted = false;
   }
 
  	

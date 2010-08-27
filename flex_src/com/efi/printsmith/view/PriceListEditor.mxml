@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="562" height="400" 
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="564" height="442" 
 	defaultButton="{select_button}" 
 	showCloseButton="false" 
 	creationComplete="init()"
     close="PopUpManager.removePopUp(this);" 
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList')}" 
-    xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" 
+    xmlns:text="flash.text.*" borderStyle="solid" 
     horizontalScrollPolicy="off" 
     label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList')}" 
     name="Price List"
-    verticalScrollPolicy="off" fontSize="9">
+    verticalScrollPolicy="off" fontSize="9" borderThickness="3" borderThicknessBottom="0" borderThicknessLeft="0" borderThicknessRight="0" borderThicknessTop="0">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -34,12 +34,12 @@
 		<mx:SetProperty name="title" value="Edit Price List {priceList.name}"/>
 		<mx:SetProperty target="{title_edit}" name="height" value="20"/>
 		<mx:SetProperty target="{label1}" name="x" value="229"/>
-		<mx:SetProperty target="{label1}" name="width" value="128.5"/>
+		<mx:SetProperty target="{label1}" name="width" value="72.5"/>
 		<mx:SetProperty target="{colSide}" name="visible" value="false"/>
 		<mx:SetProperty target="{colColor}" name="visible" value="false"/>
-		<mx:SetProperty target="{chkProductionDiscount}" name="x" value="356"/>
-		<mx:SetProperty target="{chkProductionDiscount}" name="y" value="174"/>
-		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="y" value="204"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="x" value="344"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="y" value="155"/>
+		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="y" value="184"/>
 	</mx:State>
 	<mx:State name="Speed Table" basedOn="Price List">
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="enabled" value="false"/>
@@ -51,6 +51,7 @@
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="visible" value="false"/>
 		<mx:SetProperty target="{chkProductionDiscount}" name="visible" value="false"/>
 		<mx:SetProperty target="{chkUseAsRateList}" name="visible" value="false"/>
+		<mx:SetProperty target="{radio_box}" name="visible" value="false"/>
 		<mx:SetProperty target="{radiobutton2}" name="visible" value="false"/>
 		<mx:SetProperty target="{radiobutton1}" name="visible" value="false"/>
 		<mx:SetProperty target="{chkInterpolate}" name="y" value="38"/>
@@ -100,15 +101,12 @@
 		<mx:SetProperty target="{chkProductionDiscount}" name="enabled" value="false"/>
 		<mx:SetProperty target="{chkUseAsRateList}" name="enabled" value="false"/>
 		<mx:SetProperty target="{chkInterpolate}" name="enabled" value="false"/>
-		<mx:SetProperty target="{radiobutton1}" name="enabled" value="false"/>
-		<mx:SetProperty target="{radiobutton2}" name="enabled" value="false"/>
 		<mx:SetProperty name="title" value="Edit Waste Chart {priceList.name}"/>
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="visible" value="true"/>
 		<mx:SetProperty target="{chkProductionDiscount}" name="visible" value="true"/>
 		<mx:SetProperty target="{chkUseAsRateList}" name="visible" value="true"/>
 		<mx:SetProperty target="{chkInterpolate}" name="visible" value="true"/>
-		<mx:SetProperty target="{radiobutton2}" name="visible" value="true"/>
-		<mx:SetProperty target="{radiobutton1}" name="visible" value="true"/>
+		<mx:SetProperty target="{radio_box}" name="visible" value="true"/>
 		<mx:SetProperty name="width" value="930"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 			<mx:LineChart x="36" y="13" id="linechart1" height="289" dataProvider="{priceList.elements}" showDataTips="true" width="333">
@@ -141,14 +139,12 @@
 		<mx:SetStyle target="{dataGrid}" name="bottom" value="22"/>
 		<mx:SetProperty target="{clear_button}" name="x" value="798"/>
 		<mx:SetProperty target="{select_button}" name="x" value="693"/>
-		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="x" value="758"/>
-		<mx:SetProperty target="{chkProductionDiscount}" name="x" value="758"/>
-		<mx:SetProperty target="{chkUseAsRateList}" name="x" value="758"/>
-		<mx:SetProperty target="{chkInterpolate}" name="x" value="758"/>
-		<mx:SetProperty target="{radiobutton1}" name="x" value="758"/>
-		<mx:SetProperty target="{radiobutton2}" name="x" value="758"/>
-		<mx:SetProperty target="{title_edit}" name="x" value="758"/>
-		<mx:SetProperty target="{label1}" name="x" value="631"/>
+		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="x" value="688"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="x" value="688"/>
+		<mx:SetProperty target="{chkUseAsRateList}" name="x" value="688"/>
+		<mx:SetProperty target="{chkInterpolate}" name="x" value="688"/>
+		<mx:SetProperty target="{title_edit}" name="x" value="688"/>
+		<mx:SetProperty target="{label1}" name="x" value="618.5"/>
 		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="542"/>
 		<mx:SetStyle target="{remove_pricelistelement_button}" name="bottom" value="0"/>
 		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="574"/>
@@ -156,20 +152,30 @@
 		<mx:SetProperty target="{label1}" name="y" value="13"/>
 		<mx:SetProperty target="{select_button}" name="y" value="255"/>
 		<mx:SetProperty target="{title_edit}" name="y" value="11"/>
-		<mx:SetProperty target="{radiobutton2}" name="y" value="41"/>
-		<mx:SetProperty target="{radiobutton1}" name="y" value="71"/>
-		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="y" value="205"/>
-		<mx:SetProperty target="{chkInterpolate}" name="y" value="115"/>
-		<mx:SetProperty target="{chkProductionDiscount}" name="y" value="175"/>
-		<mx:SetProperty target="{chkUseAsRateList}" name="y" value="145"/>
+		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="y" value="195"/>
+		<mx:SetProperty target="{chkInterpolate}" name="y" value="105"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="y" value="165"/>
+		<mx:SetProperty target="{chkUseAsRateList}" name="y" value="135"/>
 		<mx:SetProperty target="{clear_button}" name="y" value="255"/>
 		<mx:SetProperty target="{canvas1}" name="width" value="905"/>
+		<mx:SetProperty target="{radio_box}" name="x" value="688"/>
+		<mx:SetProperty target="{radio_box}" name="y" value="39"/>
+		<mx:SetProperty target="{label1}" name="width" value="61.5"/>
+		<mx:SetProperty target="{radio_box}" name="width" value="207"/>
+		<mx:SetProperty target="{radio_box}" name="height" value="56"/>
+		<mx:RemoveChild target="{radiobutton2}"/>
+		<mx:RemoveChild target="{radiobutton1}"/>
+		<mx:AddChild relativeTo="{radio_box}" position="lastChild">
+			<mx:RadioButton x="10" y="6" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisCurrency')}" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton0" enabled="false" visible="true"/>
+		</mx:AddChild>
+		<mx:AddChild relativeTo="{radio_box}" position="lastChild">
+			<mx:RadioButton x="10" y="29" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisPercent')}" groupName="amount_radio_group" value="amtispercent" id="radiobutton3" enabled="false" visible="true"/>
+		</mx:AddChild>
+		<mx:SetProperty target="{title_edit}" name="width" value="207"/>
 
 	</mx:State>
 	<mx:State name="Paper Price" basedOn="Price List">
 		<mx:SetProperty name="title" value="Edit Paper Price {priceList.name}"/>
-		<mx:RemoveChild target="{radiobutton2}"/>
-		<mx:RemoveChild target="{radiobutton1}"/>
 		<mx:RemoveChild target="{chkUseAsRateList}"/>
 		<mx:RemoveChild target="{chkInterpolate}"/>
 		<mx:RemoveChild target="{chkProductionDiscount}"/>
@@ -182,6 +188,7 @@
 		<mx:SetProperty target="{title_edit}" name="y" value="23"/>
 		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="220.5"/>
 		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="188.5"/>
+		<mx:SetProperty target="{radio_box}" name="visible" value="false"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 			<mx:ComboBox id="cboMethod" x="365.5" y="51" dataProvider="{PaperPriceMethodArray}" labelField="name" width="152.5"></mx:ComboBox>
 		</mx:AddChild>
@@ -198,8 +205,6 @@
 	<mx:State name="CopierMatrix" basedOn="Price List">
 		<mx:RemoveChild target="{label1}"/>
 		<mx:RemoveChild target="{title_edit}"/>
-		<mx:RemoveChild target="{radiobutton2}"/>
-		<mx:RemoveChild target="{radiobutton1}"/>
 		<mx:RemoveChild target="{chkInterpolate}"/>
 		<mx:RemoveChild target="{chkUseAsRateList}"/>
 		<mx:RemoveChild target="{chkProductionDiscount}"/>
@@ -219,6 +224,8 @@
 		<mx:SetProperty name="width" value="262"/>
 	</mx:State>
 </mx:states>
+<mx:Script source="../common/scripts/StringUtils.as"/>
+
 <mx:Script>
                                    
 <![CDATA[
@@ -600,8 +607,14 @@
 
         if(newData != "") {
             if (event.dataField == "quantity" || event.dataField == "amount") {
-            	if (parseInt(newData) < 0 || isNaN(parseInt(newData))) {
+            	var parsedValue = parseCurrencyFloat(newData);
+            	
+            	if (parsedValue < 0 || isNaN(parsedValue)) {
             		TextInput(dataGrid.itemEditorInstance).text="0";
+            	} else {
+            		if (event.dataField == "amount") {
+	            		TextInput(dataGrid.itemEditorInstance).text = Snowmass.getCurrencyFormatter(false, 3).format(parsedValue);
+	            	}
             	}
             }
         }
@@ -628,25 +641,23 @@
 			itemEditEnd="formatData(event);"
 			initialize="gridInit(event);">
 		<mx:columns>
-		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" sortable="false" width="60" labelFunction="formatAmount"/>
-			 <mx:DataGridColumn id="colSide" headerText="{side_header}" dataField="side" labelFunction="showSide"/>
-		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" labelFunction="showColor" sortable="false" width="65"/>
+		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" textAlign="right" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" textAlign="right" sortable="false" width="60"/>
+			 <mx:DataGridColumn id="colSide" headerText="{side_header}" textAlign="right" dataField="side" labelFunction="showSide"/>
+		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" textAlign="right" labelFunction="showColor" sortable="false" width="65"/>
 		</mx:columns>
 		</mx:DataGrid>
-		<mx:TextInput x="356" y="10" id="title_edit" change="updateTitle(title_edit.text);" width="124" text="{priceList.name}"/>
+		<mx:TextInput y="10" id="title_edit" change="updateTitle(title_edit.text);" text="{priceList.name}" width="210.5" x="309.5"/>
 
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" x="291" y="254"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" x="396" y="254"/>
-		<mx:Label x="240" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Title')}" id="label1" textAlign="right" width="117.5"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" bottom="10" right="120"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" bottom="10" right="10"/>
+		<mx:Label x="235.5" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Title')}" id="label1" textAlign="right" width="66"/>
 
 		<mx:RadioButtonGroup id="amount_radio_group" selectedValue="{amountRadioValue}"/>
-		<mx:RadioButton x="356" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisCurrency')}" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton2"/>
-		<mx:RadioButton x="356" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisPercent')}" groupName="amount_radio_group" value="amtispercent" id="radiobutton1"/>
-		<mx:CheckBox x="356" y="194" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignoreglobalpricecha')}" selected="{priceList.ignorePriceAdjustments}" id="chkIgnoreGlobalPriceChange"/>
-		<mx:CheckBox x="356" y="114" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Interpolate')}" selected="{priceList.interpolate}" id="chkInterpolate"/>
-		<mx:CheckBox x="379" y="164" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.ProductionDiscount')}" width="137" selected="{priceList.isDiscount}" id="chkProductionDiscount"/>
-		<mx:CheckBox x="356" y="144" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.UseasRateList')}" selected="{priceList.isRate}" id="chkUseAsRateList"/>
+		<mx:CheckBox x="309" y="176" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignoreglobalpricecha')}" selected="{priceList.ignorePriceAdjustments}" id="chkIgnoreGlobalPriceChange"/>
+		<mx:CheckBox x="309" y="96" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Interpolate')}" selected="{priceList.interpolate}" id="chkInterpolate"/>
+		<mx:CheckBox x="332" y="147" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.ProductionDiscount')}" selected="{priceList.isDiscount}" id="chkProductionDiscount"/>
+		<mx:CheckBox x="309" y="126" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.UseasRateList')}" selected="{priceList.isRate}" id="chkUseAsRateList"/>
 
 		<mx:LinkButton x="165"
 					   id="remove_pricelistelement_button"
@@ -660,6 +671,10 @@
 					   icon="@Embed(source='../../../../assets/add16.png')"
 					   width="24"
 					   bottom="3"/>
+		<mx:Panel id="radio_box" x="309.5" y="40" width="210.5" height="48" layout="absolute" borderStyle="solid" dropShadowEnabled="false" borderThickness="1" headerHeight="0" borderThicknessBottom="0" borderThicknessLeft="0" borderThicknessRight="0" borderThicknessTop="0">
+			<mx:RadioButton x="20" y="3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisCurrency')}" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton2"/>
+			<mx:RadioButton x="20" y="22" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisPercent')}" groupName="amount_radio_group" value="amtispercent" id="radiobutton1"/>
+		</mx:Panel>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 

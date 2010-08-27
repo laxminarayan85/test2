@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PaperPrice() {
 			remoteObjectName = "com.efi.printsmith.data.PaperPrice";
 		}
+		public override var isDeleted:Boolean=false;
 				
 	
 	}

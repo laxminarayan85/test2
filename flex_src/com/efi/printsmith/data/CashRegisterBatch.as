@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function CashRegisterBatch() {
 			remoteObjectName = "com.efi.printsmith.data.CashRegisterBatch";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var change:Number = 0;
 		public var tendered:Number = 0;

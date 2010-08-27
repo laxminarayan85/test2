@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function AccessGroup() {
 			remoteObjectName = "com.efi.printsmith.data.AccessGroup";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PriceListElement() {
 			remoteObjectName = "com.efi.printsmith.data.PriceListElement";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var quantity:Number = 0;
 		public var amount:Number = 0;

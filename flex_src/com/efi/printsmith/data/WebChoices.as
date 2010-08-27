@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function WebChoices() {
 			remoteObjectName = "com.efi.printsmith.data.WebChoices";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

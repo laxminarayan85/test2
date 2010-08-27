@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Account() {
 			remoteObjectName = "com.efi.printsmith.data.Account";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var status:String = "";
 		public var masterAcct:Number = 0;

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PriceListBase() {
 			remoteObjectName = "com.efi.printsmith.data.PriceListBase";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var ignorePriceAdjustments:Boolean = false;

@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function CopierDefinition() {
 			remoteObjectName = "com.efi.printsmith.data.CopierDefinition";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var machineName:String = "";

@@ -25,10 +25,14 @@ import javax.persistence.Transient;
 import net.digitalprimates.persistence.hibernate.proxy.HibernateProxy;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name="modelbase")
+@SQLDelete(sql="update modelbase set isdeleted='TRUE' where id=?")
+@Where(clause="isdeleted <> 'TRUE'")
 abstract public class ModelBase extends HibernateProxy {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,9 +51,9 @@ abstract public class ModelBase extends HibernateProxy {
 	@Column(name = "previd", nullable = true)
 	String prevId;
 	
-//	@Basic
-//	@Column(name="isdeleted", nullable = false)
-//	Boolean isDeleted = false;
+	@Basic
+	@Column(name="isdeleted", nullable = false)
+	Boolean isDeleted = false;
 	
 	public Long getId() {
 		return id;
@@ -75,12 +79,15 @@ abstract public class ModelBase extends HibernateProxy {
 	public void setPrevId(String prevId) {
 		this.prevId = prevId;
 	}
-//	public Boolean getIsDeleted() {
-//		return isDeleted;
-//	}
-//	public void setIsDeleted(Boolean isDeleted) {
-//		this.isDeleted = isDeleted;
-//	}
+	
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+	
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 //	public static final String GUID = "GUID";
 //	protected String guid;
 //	@Column(name = "guid", nullable = false, length = 36)

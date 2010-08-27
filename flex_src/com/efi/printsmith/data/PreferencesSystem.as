@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesSystem() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesSystem";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var eliminateWarningMessages:Boolean = false;
 		public var onlyPostMarkedReadyInvoices:Boolean = false;

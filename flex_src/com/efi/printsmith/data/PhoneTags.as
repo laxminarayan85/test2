@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PhoneTags() {
 			remoteObjectName = "com.efi.printsmith.data.PhoneTags";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 	

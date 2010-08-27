@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function Campaigns() {
 			remoteObjectName = "com.efi.printsmith.data.Campaigns";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
 		public var applied:Boolean = false;

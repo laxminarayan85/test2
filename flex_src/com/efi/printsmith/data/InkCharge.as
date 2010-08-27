@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function InkCharge() {
 			remoteObjectName = "com.efi.printsmith.data.InkCharge";
 		}
+		public override var isDeleted:Boolean=false;
 				
 		public var coverage:Number = 0;
 		public var inkWeight:Number = 0;

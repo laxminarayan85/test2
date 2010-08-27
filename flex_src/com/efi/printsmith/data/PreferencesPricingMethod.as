@@ -12,6 +12,7 @@ package com.efi.printsmith.data
 		public function PreferencesPricingMethod() {
 			remoteObjectName = "com.efi.printsmith.data.PreferencesPricingMethod";
 		}
+		public var isDeleted:Boolean=false;
 				
 		public var used:Boolean = false;
 		public var title:String = "";
