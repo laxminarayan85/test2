@@ -306,7 +306,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		 	pressDefinition.machineName = productionPress.selectedItem.name as String;
 		 pressDefinition.outputDescrip = OutPutDescription.text;
 		 if (ProductionLocation.selectedItem != null)
-			 pressDefinition.productionLocation = ProductionLocation.selectedItem as String;
+			 pressDefinition.productionLocation = ProductionLocation.text;
 		 pressDefinition.costCenter = CostCenter.selectedItem as String;
 		// pressDefinition.oemDeviceID = OEMDeviceID.text;
 		 pressDefinition.machineID = parseInt(MachineId.text) 
@@ -597,15 +597,16 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     	
     }
     private function doclickwaste(event: MouseEvent):void{
-    	if (event.altKey && event.shiftKey){
-    		
-    	}
+    		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPriceList(pressDefinition.wasteChart as PriceListBase);		
     	
     }
     private function doclickSpeedTable(event: MouseEvent):void{
-    	if (event.altKey && event.shiftKey){
-    		
-    	}
+    	var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPriceList(pressDefinition.speedTable as PriceListBase);				
+	
     	
     }
     private function doWashUpPerFountain():void{

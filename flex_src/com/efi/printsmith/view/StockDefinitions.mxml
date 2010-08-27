@@ -12,6 +12,9 @@
 			<mx:RemoveChild target="{NormalRunSize}"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
+			<mx:SetProperty target="{qtybreaklabel}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}"/>
+			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
+			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
 		</mx:State>
 		<mx:State name="RollStock">
 			<mx:SetProperty target="{label1}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWeight')}"/>
@@ -58,6 +61,29 @@
 			<mx:SetProperty target="{rollweight}" name="x" value="420.5"/>
 			<mx:SetProperty target="{sheetsPerCarton}" name="x" value="131.5"/>
 			<mx:SetProperty target="{label2}" name="x" value="25"/>
+			<mx:SetProperty target="{sheetsPerCarton}" name="enabled" value="false"/>
+			<mx:SetProperty target="{qtybreaklabel}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.WeightBreaks')}"/>
+			<mx:SetProperty target="{Cost1}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cost2}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cost3}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cost4}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cost5}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cost6}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM1}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM2}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM3}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM4}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM6}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM5}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Costunits}" name="enabled" value="false"/>
+			<mx:RemoveChild target="{chkCostIsInSets}"/>
+			<mx:RemoveChild target="{SheetsPerSet}"/>
+			<mx:RemoveChild target="{label13}"/>
+			<mx:AddChild relativeTo="{panel2}" position="lastChild">
+				<mx:Label x="256" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.weight')}"/>
+			</mx:AddChild>
+			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
+			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
 		</mx:State>
 		<mx:State name="SheetStock">
 			<mx:SetProperty target="{mWeight}" name="enabled" value="false"/>
@@ -71,7 +97,13 @@
 			<mx:SetProperty target="{label12}" name="width" value="134"/>
 			<mx:SetProperty target="{pcwRecycled}" name="width" value="32.5"/>
 			<mx:SetProperty target="{PriceExpires}" name="width" value="137"/>
-			<mx:SetProperty target="{tab_pages}" name="y" value="161"/>
+			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
+			<mx:SetProperty target="{qtybreaklabel}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}"/>
+			<mx:SetProperty target="{button2}" name="x" value="73"/>
+			<mx:SetProperty target="{label14}" name="x" value="73"/>
+			<mx:SetProperty target="{label14}" name="width" value="45"/>
+			<mx:SetProperty target="{label15}" name="width" value="55"/>
+			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
 		</mx:State>
 		<mx:State name="RigidSubstrate">
 			<mx:RemoveChild target="{Basicsize}"/>
@@ -88,11 +120,30 @@
 			<mx:SetProperty target="{label7}" name="width" value="122.5"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
-			<mx:SetProperty target="{chkIsMetric}" name="x" value="513"/>
-			<mx:SetProperty target="{chkIsMetric}" name="y" value="62"/>
 			<mx:SetProperty target="{minOrder}" name="x" value="131.5"/>
 			<mx:SetProperty target="{minOrder}" name="y" value="153"/>
 			<mx:SetProperty target="{label7}" name="y" value="157"/>
+			<mx:SetProperty target="{qtybreaklabel}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}"/>
+			<mx:RemoveChild target="{label13}"/>
+			<mx:RemoveChild target="{SheetsPerSet}"/>
+			<mx:RemoveChild target="{chkCostIsInSets}"/>
+			<mx:SetProperty target="{Cwt1}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cwt2}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cwt3}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cwt4}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cwt5}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM1}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM2}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM3}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM4}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM5}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cwt6}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM6}" name="enabled" value="false"/>
+			<mx:AddChild relativeTo="{panel2}" position="lastChild">
+				<mx:Label x="256" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.squarearea')}"/>
+			</mx:AddChild>
+			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
+			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
 		</mx:State>
 		<mx:State name="LargeFormat">
 			<mx:SetProperty target="{label3}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWidth')}"/>
@@ -134,12 +185,34 @@
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 			<mx:SetProperty target="{minOrder}" name="x" value="131.5"/>
+			<mx:SetProperty target="{qtybreaklabel}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AreaBreaks')}"/>
+			<mx:RemoveChild target="{label13}"/>
+			<mx:RemoveChild target="{SheetsPerSet}"/>
+			<mx:RemoveChild target="{chkCostIsInSets}"/>
+			<mx:SetProperty target="{Cwt1}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cwt2}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cwt3}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cwt4}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cwt5}" name="enabled" value="false"/>
+			<mx:SetProperty target="{Cwt6}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM1}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM2}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM3}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM4}" name="enabled" value="false"/>
+			<mx:SetProperty target="{ListPerM6}" name="enabled" value="false"/>
+			<mx:AddChild relativeTo="{panel2}" position="lastChild">
+				<mx:Label x="256" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.squarearea')}"/>
+			</mx:AddChild>
+			<mx:SetProperty target="{ListPerM5}" name="enabled" value="false"/>
+			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
+			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<!--<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		-->
 		<mx:method name="getStockPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="getStockDefinition" fault="handleFault(event)" result="handleGetResult(event)"/>
@@ -276,6 +349,8 @@
 	private var stockChange:StockChanges; */
 	[Bindable]                                         
 	private var account:Account;
+	[Bindable]                                         
+	private var accounts:ArrayCollection=new ArrayCollection();;
 	[Bindable]
 		private var charges:ArrayCollection=new ArrayCollection();
 
@@ -303,6 +378,9 @@
     private var stockVendor:ArrayCollection = new ArrayCollection();   
 	[Bindable]                                
 	private var stockGenericColor:ArrayCollection = new ArrayCollection();   
+	
+	[Bindable]                                
+	private var stockCoated:ArrayCollection = new ArrayCollection();   
 
 	[Bindable]                                
 	private var stockUom:ArrayCollection = new ArrayCollection();   
@@ -347,7 +425,7 @@
 	    loadPressDefinition();
 	    loadCopierDefinition();
 		loadDimensions();
-		
+		loadCoatedArray()
 
 		var event:DeleteStockDefinitionEvent = new DeleteStockDefinitionEvent(button_delete, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 		event.dispatch();
@@ -359,7 +437,15 @@
 	}		
 	private function handleUIButtonFault(ev:FaultEvent):void {  
 	}
-
+private function loadCoatedArray():void{
+	var one:Object = new Object;
+	 one.name = "1";
+	 stockCoated.addItem(one);
+	 var two:Object = new Object;
+	 two.name = "2";
+	 stockCoated.addItem(two);
+	 coated.selectedIndex = -1;
+}
 	private function loadUnitsArray():void {
 		
 		var Envelope:Object = new Object;
@@ -652,20 +738,18 @@
     	stockDefinitions.normalRunSize = new Dimension();
   	   
   	    standardItemCheckEvent();
-  	      setStockDefinition(stockDefinitions);
+  	 //     setStockDefinition(stockDefinitions);
   	    
 	}       
 
 	private function doDelete():void {
 		dataService.deleteItem("StockDefinition", stockDefinitions.id);
-		doPrev();
+		
 	}
 
 	private function doRevert():void {
-	    stockDefinitions = new StockDefinition();
-    	stockDefinitions.charges = new ArrayCollection;
-    	stockDefinitions.stockChanges = new ArrayCollection;
-	    setStockDefinition(stockDefinitions);                                           
+	    dataService.getStockDefinition(stockDefinitions.id );
+	                                              
 	}
 
 
@@ -689,6 +773,8 @@
 	private function doStockType() : void {
 		var type:StockType;
 		var result:Boolean;
+		var dimSize:Dimension
+	
 		
 		if (stkType.text != null && stkType.text != "" ) {
 			var item:int = findItem(stkType.text, stockType);
@@ -697,14 +783,17 @@
 				type.name = stkType.text;
 				stockTypeDataService.addUpdate(type);
 				stockDefinitions.stktype = type;
-				Basicsize.text = type.size;
+				dimSize = type.size;
+				Basicsize.text = dimSize.name
 			}
 			else {
 				stkType.selectedIndex = item;
 				type = stkType.selectedItem as StockType;
+				dimSize = type.size;
+				Basicsize.text = dimSize.name
 			
 			}
-			Basicsize.text = type.size;
+			Basicsize.text = dimSize.name;
 		}
 		
 	}
@@ -949,7 +1038,7 @@
 	     	doGet(); 
 	     	
 	     }
-	     this.enabled = true;
+	    
 	}
 	
 
@@ -978,12 +1067,14 @@
 	}	                                 
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
+		 doNew();
 	     loadStockDefinitions();
 	}
 	
 	private function handleLoadDimensionResult(ev:ResultEvent):void {
 		dimensions=ev.result as ArrayCollection;
 		parentSize.selectedIndex = -1;
+		NormalRunSize.selectedIndex = -1;
 		
 	}
 
@@ -1026,7 +1117,7 @@
 		var type:StockType = new StockType;
 		 stockType = ev.result as ArrayCollection;
 		 type = stockType.getItemAt(0) as StockType;
-		 Basicsize.text = type.size;
+		 Basicsize.text = type.size.name;
 		 
 	}
 	
@@ -1098,15 +1189,22 @@
 	}
 	
 	private function doAccount():void {
+		
+		dataService.getAccountPicker("Account");
+			
+	}
+	private function handleLoadAccountResult(event:ResultEvent):void {
+		accounts = event.result as ArrayCollection;
 		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);
 	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.setAccounts(accounts)
 	    accountPickerWindow.prospect_boolean = false;
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);	
+		
 	}
-
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 		this.setAccount(new Account());
 	}
@@ -1145,7 +1243,10 @@
 
 		if (stockDefinitions.defaultLargeCopier != null)
 	 		defaultLargeCopier.selectedIndex = findItem(stockDefinitions.defaultLargeCopier.name, copierDefinitions);
-
+		if ( stockDefinitions.coated != null)
+			coated.selectedIndex = findItem(stockDefinitions.coated, stockCoated);
+		else
+			coated.selectedIndex = -1;
 		
 		if (stockDefinitions.stkgroup != null)
 			cboStockGroup.selectedIndex = findItem(stockDefinitions.stkgroup.name, stockGroup);
@@ -1169,7 +1270,7 @@
 			forestMgmt.selectedIndex = findItem(stockDefinitions.forestManagement, stockForests);
 		if (stockDefinitions.finish != null)
 			cboFinish.selectedIndex = findItem(stockDefinitions.finish.name, stockFinish);
-
+		//thickNess.text= Snowmass.getCurrencyFormatter(false,4).format(stockDefinitions.thickness);
 		if (stockDefinitions.uom != null)
 			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
 			if (cboUom.selectedIndex == -1)
@@ -1205,6 +1306,7 @@
 			this.charges = stockDefinitions.charges;
 			standardItemCheckEvent();
 			stockChanges = stockDefinitions.stockChanges;
+			
 	}
 
 	private function mapStockDefinitionData():void {
@@ -1251,7 +1353,8 @@
 	 	
 	 if (defaultColorCopier != null && defaultColorCopier.selectedItem != null) 
 	 	stockDefinitions.defaultColorCopier = cboDefaultPress.selectedItem as CopierDefinition;
-	 	
+	 if (coated != null && coated.selectedItem != null)
+	 	stockDefinitions.coated = coated.text	
 	 if (defaultLargeCopier != null && defaultLargeCopier.selectedItem != null) 
 	 	stockDefinitions.defaultLargeCopier = cboDefaultPress.selectedItem as CopierDefinition;	
 	  if (forestMgmt != null && forestMgmt.selectedItem != null) 
@@ -1279,14 +1382,23 @@
 	 //text and textboxes
 	
 	 stockDefinitions.name = stockName.text;
-	 stockDefinitions.weight = parseInt(weight.text);
+	 if ( weight.text == "")
+	 	stockDefinitions.weight = 0;
+	 else
+	 	stockDefinitions.weight = parseFloat(weight.text.replace(",",""));
 	 stockDefinitions.coated = coated.text; 
 	 stockDefinitions.stocknumber = stockNumber.text;
 //	 stockDefinitions.basicsize = Basicsize.text;
 	 stockDefinitions.parentsize.name = parentSize.text;
-	 stockDefinitions.thickness = parseFloat(thickNess.text);
-	 stockDefinitions.mweight = parseInt(mWeight.text);
-	 stockDefinitions.rollWeight = parseInt(rollweight.text);
+	// stockDefinitions.thickness = parseFloat(thickNess.text);
+	 if ( mWeight.text == "")
+	 	stockDefinitions.mweight = 0;
+	 else
+	 	stockDefinitions.mweight = parseFloat(mWeight.text.replace(",",""));
+	 if ( rollweight.text == "")
+	 	stockDefinitions.rollWeight = 0;
+	 else
+		 stockDefinitions.rollWeight = parseFloat(rollweight.text.replace(",",""));
 	 stockDefinitions.sheetspercarton = parseInt(sheetsPerCarton.text.replace(",",""));
 	 stockDefinitions.lotcount = parseInt(minOrder.text.replace(",",""));
 	 stockDefinitions.comments = Comments.text;
@@ -1439,14 +1551,23 @@
 			label5.visible = false;
 			cboUom.selectedIndex = findItem("Microns", stockUom);
 			cboUom.enabled = false;
+			if (this.currentState=="RollStock")
+				Costunits.enabled = true;
+			else
+				Costunits.enabled = true;
+			
 			 
 		}
 		else{
 			label5.visible =true;
 			if ( stockDefinitions.stktype != null)
-				Basicsize.text = stockDefinitions.stktype.size
+				Basicsize.text = stockDefinitions.stktype.size.name
 			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
 			cboUom.enabled = true;
+			if (this.currentState=="RollStock")
+				Costunits.enabled = false;
+			else
+				Costunits.enabled = true;
 		}
 
 	}
@@ -1455,22 +1576,27 @@
 		
 		if (item == "0"){
 			this.currentState="Envelope"
+			Costunits.text = '1000';
 			
 		}
 		if (item == "1"){
 			this.currentState="SheetStock"
+			Costunits.text = '1000';
 			
 		}
 		if (item == "2"){
 			this.currentState="RollStock"
+			Costunits.text = '100';
 			
 		}
 		if (item == "3"){
 			this.currentState="LargeFormat"	
+			Costunits.text = '1';
 				
 		}
 		if (item == "4"){
 			this.currentState="RigidSubstrate"	
+			Costunits.text = '1';
 					
 		}
 		
@@ -1499,6 +1625,33 @@
 			pcwRecycled.text = pcwRecycled.text + '%';
 		}
 	} 
+	
+	private function calRollOrder(event:FocusEvent):void{
+		doRound(event);
+		var order:Number
+		var weight:Number =0.0
+		if (this.currentState=="RollStock"){
+			order = parseInt(minOrder.text.replace(",",""));
+			weight = parseFloat(rollweight.text.replace(",",""));
+			if ( weight > 0){
+				var temp:String;
+				
+				sheetsPerCarton.text = numberFormatter2.format(order /weight );
+				
+			}
+		}
+	}
+	
+	private function calstockMWeight(event:FocusEvent):void{
+		var parent: Number;
+		var basic:Number;
+		var weight: Number;
+		var pDim:Dimension;
+		pDim = parentSize.selectedItem as Dimension;
+		parent = pDim.width * pDim.height;
+		 
+	}
+	
 private function doRound(evt:FocusEvent):void{
 		var temp:String;
 		if (evt.currentTarget == sheetsPerCarton) {
@@ -1567,12 +1720,103 @@ private function doRound(evt:FocusEvent):void{
 		
 		
 	}
+	private function convertoCaliper():void{
+		var temp:Object;
+		temp = cboUom.selectedItem;
+		var tempFloat:Number = 0.0;
+		tempFloat = parseFloat(thickNess.text)
+		switch (temp.name){
+			case "Points":
+			case "Mils":
+			case "Thous":{
+				 stockDefinitions.thickness = tempFloat / 1000;
+				
+				break;
+			}
+			case  "Microns":{
+				stockDefinitions.thickness = ((tempFloat / 1000.0) / 25.4)
+				break;
+				
+			}
+			case "Plies":{
+				stockDefinitions.thickness  = (((tempFloat /1000.0) + 6.0)* 3.0); 
+					break;
+			}
+			case "Millimeters":{
+				stockDefinitions.thickness  =(tempFloat / 25.4)
+				break;
+			}
+			case "Caliper":{
+				stockDefinitions.thickness =tempFloat;
+				break;
+		}
+	}
+	}
+	
+	
+	
+	
+	private function ConvertThickness():void{
+		var temp:Object;
+		if (cboUom.selectedItem != ""){
+		
+		
+			temp = cboUom.selectedItem;
+			var tempFloat:Number = 0.0;
+			if ( stockDefinitions.thickness == 0){
+				tempFloat = parseFloat(thickNess.text)
+				
+			}	
+			else
+				tempFloat= stockDefinitions.thickness;
+			switch(temp.name){
+				case "Caliper":{
+					thickNess.text = Snowmass.getCurrencyFormatter(false,4).format(stockDefinitions.thickness)
+					break;
+				}
+				case  "Microns":{
+					
+					thickNess.text = Snowmass.getCurrencyFormatter(false,4).format(((tempFloat * 1000.0) * 25.4))
+					
+					break;
+					
+				}
+				case "Points":{
+					thickNess.text = Snowmass.getCurrencyFormatter(false,4).format((tempFloat * 1000.0));
+					break;
+				}
+				case "Mils":{
+					thickNess.text = Snowmass.getCurrencyFormatter(false,4).format((tempFloat * 1000.0));
+					break;
+				}
+				case "Thous":{
+					thickNess.text = Snowmass.getCurrencyFormatter(false,4).format((tempFloat * 1000.0));
+					break;
+				}
+				case "Plies":{
+					if ( tempFloat < .009){
+						tempFloat = .009
+					}
+					thickNess.text  = Snowmass.getCurrencyFormatter(false,4).format((((tempFloat * 1000.0) - 6.0) / 3.0));  
+					break;
+				}
+				case "Millimeters":{
+					thickNess.text  = Snowmass.getCurrencyFormatter(false,4).format((tempFloat * 25.4))
+					break;
+				}
+					
+			}
+		}
+	}
+	
+	
 
 ]]>
                              
 </mx:Script>	
 <vo:StockDefinition id="stock"/>                           
 <mx:NumberFormatter id="numberFormatter" rounding="nearest" precision="0" />
+<mx:NumberFormatter id="numberFormatter2" rounding="nearest" precision="1" />
 	<mx:RadioButtonGroup id="PaperStyle"/>
 	<mx:Label x="10" y="63" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Group')}" width="108" textAlign="right"/>
 	<mx:Label x="263" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Class')}" width="109" textAlign="right"/>
@@ -1594,10 +1838,10 @@ private function doRound(evt:FocusEvent):void{
 	<mx:ComboBox  x="126" y="133" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" labelField="name" focusOut="doStockGenericColor()"/>
 	<mx:ComboBox  x="380" y="112" width="105" id="cboStockGrade" dataProvider="{stockGrade}"  labelField="name" focusOut="doStockGrade()"/>
 	<mx:TextInput x="568.5" y="90" width="55" id="weight" text="{stockDefinitions.weight}"/>
-	<mx:TextInput x="568.5" y="114" width="55" id="coated" text="{stockDefinitions.coated}"/>
+	<mx:ComboBox x="568.5" y="114" width="55" id="coated" dataProvider="{stockCoated}" labelField="name"/>
 
 	<mx:RadioButtonGroup id="stockUnit" change="doStockUnitChangeEvent(event)"/>
-	<mx:RadioButton x="636" y="62" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}"/>
+	<mx:RadioButton x="636" y="67" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}"/>
 	<mx:RadioButton x="636" y="82" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}"/>
 	<mx:RadioButton x="636" y="103" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}" groupName="stockUnit"  value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}"/>
 	<mx:RadioButton x="636" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" groupName="stockUnit" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}"/>
@@ -1627,14 +1871,14 @@ private function doRound(evt:FocusEvent):void{
 					  labelFunction="getParentsizename"
 					   focusOut="handleFocusOutEvent(event)"
 				/>
-				<mx:TextInput  restrict="0-9\." x="337" y="60" width="122.5" id="thickNess" text="{stockDefinitions.thickness}"/>
+				<mx:TextInput  restrict="0-9\." x="337" y="60" width="122.5" id="thickNess" focusOut="convertoCaliper();"/>
 				<mx:TextInput  restrict="0-9\." x="106.5" y="116" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}" focusOut="doRound(event)"/>
 				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}"/>
-				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="rollweight" text="{stockDefinitions.rollWeight}"/>
-				<mx:TextInput restrict="0-9\." x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.lotcount}" focusOut="doRound(event);"/>
+				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="rollweight" focusOut="calRollOrder(event);" text="{stockDefinitions.rollWeight}"/>
+				<mx:TextInput restrict="0-9\." x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.lotcount}" focusOut="calRollOrder(event);"/>
 				<mx:TextInput x="375.5" y="116" width="64.5" id="textinput1" text="{stockDefinitions.cartonWeight}"/>
-				<mx:Text x="356.5" y="33" id="Basicsize" text="{stockDefinitions.stktype.size}" width="134" height="22"/>
-				<mx:ComboBox x="475" y="60" id="cboUom"  dataProvider="{stockUom}" width="125.5" labelField="name"/>
+				<mx:Text x="356.5" y="33" id="Basicsize" text="{stockDefinitions.stktype.size.name}" width="134" height="22"/>
+				<mx:ComboBox x="475" y="60" id="cboUom"  change="ConvertThickness()"  dataProvider="{stockUom}" width="125.5" labelField="name"/>
 				<mx:Panel x="667" y="-2" width="229.5" height="168" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ChainofCustody')}" dropShadowEnabled="false" id="panel1">
 					<mx:Label x="26.25" y="1" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ForestManagement')}"/>
 					<mx:Label x="10" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PCWRecycled')}" width="97.75" textAlign="right" id="label12"/>
@@ -1648,14 +1892,14 @@ private function doRound(evt:FocusEvent):void{
 				</mx:Panel>
 				<mx:CheckBox x="457.5" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Excludefromwebupdate')}" id="chkExcludeFromWebUpdate"/>
 			</mx:Panel>
-			<mx:Panel x="14.5" y="233" width="746.5" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyAdjustments')}" dropShadowEnabled="false">
-				<mx:Label x="105" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}" width="112" textAlign="right"/>
+			<mx:Panel x="14.5" y="233" width="746.5" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyAdjustments')}" dropShadowEnabled="false" id="panel2">
+				<mx:Label x="105" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}" width="112" textAlign="right" id="qtybreaklabel"/>
 				<mx:Label x="105" y="52" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Cost')}" width="112" textAlign="right"/>
 				<mx:Label x="105" y="72" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.CWT')}" width="112" textAlign="right"/>
 				<mx:Label x="105" y="93" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Markup')}" width="112" textAlign="right"/>
 				<mx:Label x="105" y="114" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ListM')}" width="112" textAlign="right"/>
 				<mx:Label x="54" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.CostingUnits')}" width="95" textAlign="right"/>
-				<mx:Label x="252" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetsSet')}" width="92" textAlign="right"/>
+				<mx:Label x="252" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetsSet')}" width="92" textAlign="right" id="label13"/>
 				<mx:Label x="19" y="137" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PriceExpires')}" width="127" textAlign="right"/>
 				<mx:CheckBox x="450" y="2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.CostisinSets')}" id="chkCostIsInSets" width="194" enabled="{parseInt(SheetsPerSet.text) > 1}"/>
 
@@ -1750,7 +1994,7 @@ private function doRound(evt:FocusEvent):void{
 				<mx:ComboBox x="223" y="28" width="201" id="defaultColorCopier" focusOut="doCopierDefinitionColor();" dataProvider="{copierDefinitions}" labelField="name"/>
 				<mx:ComboBox x="223" y="53" width="201" id="defaultLargeCopier" focusOut="doCopierDefinitionLarge();" dataProvider="{copierDefinitions}" labelField="name"/>
 			</mx:Panel>
-			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PresetuptoCharges')}" dropShadowEnabled="false" id="PanelCharges">
+			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'changePriceCmd.PresetCharges')}" dropShadowEnabled="false" id="PanelCharges">
 				<mx:Button x="10" y="4" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AddCharges')}" click="doAddCharges();" width="110"/>
 				<mx:List x="128" y="6" id="Additional1" dataProvider="{stockDefinitions.charges}"  labelField="name" width="238" height="98"/>
 			</mx:Panel>
@@ -1797,14 +2041,14 @@ private function doRound(evt:FocusEvent):void{
 			</mx:Panel>
 		</mx:Canvas>
 	</mx:TabNavigator>
-	<mx:Button x="10" y="5" width="38" height="38" click="doPrev();">
+	<mx:Button x="10" y="5" width="45" height="38" click="doPrev();">
 		<mx:icon>@Embed(source='../../../../assets/previous_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="56" y="5" width="38" height="38" click="doNext();">
+	<mx:Button x="56" y="5" width="45" height="38" click="doNext();" id="button2">
 		<mx:icon>@Embed(source='../../../../assets/next_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="10" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="38" textAlign="center"/>
-	<mx:Label x="56" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center"/>
+	<mx:Label x="10" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="38" textAlign="center" id="label15"/>
+	<mx:Label x="56" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center" id="label14"/>
 	<mx:Button x="171" y="5" width="38" height="38" click="doSave();" enabled="{enableSave}">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 	</mx:Button>

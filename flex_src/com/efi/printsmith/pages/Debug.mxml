@@ -23,6 +23,9 @@
 		<mx:method name="getById"
 					fault="handleFault(event)"
 					result="handleGetByIdResult(event)"/>
+		<mx:method name="getAll"
+					fault="handleFault(event)"
+					result="handleGetStockType(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="jdfIntegrationService"
 					destination="jdfIntegrationService">
@@ -99,18 +102,24 @@
 												"17.5 x 23","17 x 28","19 x 25","23 x 29","23 x 35","24 x 38","25 x 38","35 x 45","33.1 x 46.8","23.4 x 33.1","16.5 x 23.4","11.7 x 16.5",
 												"8.3 x 11.7","5.8 x 8.3","4.1 x 5.8","2.9 x 4.1","2 x 2.9","1.5 x 2","1 x 1.5","39.4 x 55.7","27.8 x 39.3","19.7 x 27.8","13.9 x 19.7",
 												"9.8 x 13.9","6.9 x 9.8","4.9 x 6.9","3.5 x 4.9","9 x 12.8","6.3 x 9","4.5 x 6.3","4.3 x 8.7","4.125 x 9.5","3.875 x 8.875","24 x 36",
-												"48 x 48"]; 	
+												"48 x 48", "20 x 26","25.5 x 30.5","24 x 36","22 x 38","22.5 x 28.5","19 x 24"]; 	
 			private var dimensionNames:Array = ["2 x 3.5","5.5 x 8.5","Monarch","8.5 x 11","8.5 x 14","11 x 17","11.5 x 17.5","12.5 x 19","Government Size","17 x 22","17.5 x 22.5",
 												"17.5 x 23","17 x 28","19 x 25","23 x 29","23 x 35","24 x 38","25 x 38","35 x 45","A0","A1","A2","A3","A4","A5","A6","A7","A8","A9","A10",
-												"BO","B1","B2","B3","B4","B5","B6","B7","C4","C5","C6","DL","#10 Envelope","#9 Envelope","Small Poster","Large Poster"];
+												"BO","B1","B2","B3","B4","B5","B6","B7","C4","C5","C6","DL","#10 Envelope","#9 Envelope","Small Poster","Large Poster","20 x 26","25.5 x 30.5",
+												"24 x 36","22 x 38","22.5 x 28.5","19 x 24"];
 
 
 			private var stocktypeNames:Array= ["Business Papers","Book Papers","Cover Papers","Index","Tagboard","Blanks","Vellum Bristol","Blotter","Label","Newsprint"];
 
-			private var stocktypesizes:Array= ["17 x 22","25 x 38","20 x 26","25.5 x 30.5","24 x3 6","22 x 38","2.5 x 28.5","19 x 24","25 x 38","24 x 36"];
+			private var stocktypesizes:Array= ["17 x 22","25 x 38","20 x 26","25.5 x 30.5","24 x 36","22 x 38","22.5 x 28.5","19 x 24","25 x 38","24 x 36"];
 	
 			[Bindable]
 			private var reportTemplates:ArrayCollection = new ArrayCollection();
+			[Bindable]
+			private	var stockType:StockType;
+			
+			[Bindable]
+			private	var dimensions:ArrayCollection = new ArrayCollection();
 			
 			private function init():void {
 				reportRepositoryService.getItemList();
@@ -192,20 +201,33 @@
 					dataService.addUpdate(salesCategory);
 				}				
 			}
-			private function doPopulateStockType():void {
-				var stockType:StockType;
+		private function findItem(name:String, array:ArrayCollection):int {
+			for each(var element:Object in array) {
+				if (name == element.name) {
+					return array.getItemIndex(element);
+				}
+			}
+			return -1;
+		}
+		private function doPopulateStockType():void {
+				
 				var i:int;
+				var index:int;
 				
 				for (i=0; i<stocktypeNames.length; i++) {
 					stockType = new StockType();
+					stockType.size = new Dimension();
 					stockType.name = stocktypeNames[i];
-					stockType.size = stocktypesizes[i]
+					index = findItem(stocktypesizes[i], dimensions);
+					stockType.size = dimensions.getItemAt(index) as Dimension;
 					stockType.id = 0;
 					stockType.viewableID = i+1;
 					dataService.addUpdate(stockType);
 				}				
 			}
-			
+			private function handleGetStockType(evt:ResultEvent):void{
+				dimensions = evt.result as ArrayCollection;
+			}
 			/* private function doPopulatePricingMethods():void {
 				var pricingMethod:chargePricingMethod;
 				var i:int;
@@ -242,7 +264,8 @@
 					dimension.height = parseFloat(dimensionString.substr(dimensionString.indexOf(" x ")+3, dimensionString.length+1));
 					dimension.id = 0;
 					dataService.addUpdate(dimension);
-				}				
+				}	
+				dataService.getAll("Dimension");;			
 			}
 			
 			private function doDBQuery():void {

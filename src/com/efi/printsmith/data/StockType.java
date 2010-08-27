@@ -68,26 +68,26 @@ public class StockType extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String size;
+ 	@ManyToOne()
+	@Basic
+	private Dimension size;
 	
 	/**
 	 * @generated
  	 */
-	public String getSize(){
+	public Dimension getSize(){
     return size; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSize(String newVal) {
+   * @generated
+   */	
+  public void setSize(Dimension newVal) {
     this.size = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -150,7 +150,7 @@ public class StockType extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (SIZE.equals(propertyName)) setSize((String)newValue); else
+    if (SIZE.equals(propertyName)) setSize((Dimension)newValue); else
     if (NAME.equals(propertyName)) setName((String)newValue); else
     if (VIEWABLEID.equals(propertyName)) setViewableID((Integer)newValue); else
     super.setProperty(propertyName, newValue);
@@ -163,7 +163,7 @@ public class StockType extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (SIZE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+      return new Class<?>[] {Dimension.class};		
     if (NAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (VIEWABLEID.equals(propertyName)) 

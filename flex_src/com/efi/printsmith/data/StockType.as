@@ -13,7 +13,7 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.StockType";
 		}
 				
-		public var size:String = "";
+		public var size:Dimension;
 		public var name:String = "";
 		public var viewableID:int = 0;
 	
