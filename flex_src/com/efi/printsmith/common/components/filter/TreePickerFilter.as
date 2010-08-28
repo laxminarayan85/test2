@@ -52,9 +52,49 @@ package com.efi.printsmith.common.components.filter
 					if (obj != null)
 						var indx:int = obj.toString().toLowerCase().indexOf(entered);
 					 
-					if ((selectedCriterion.property.getValueOf(baseObj) != null) 
-							&& (selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase().indexOf(StringUtil.trim(txtSearchString.text).toLowerCase()) > -1))	{
-						tmpArray.addItem(baseObj);
+//					if ((selectedCriterion.property.getValueOf(baseObj) != null) 
+//							&& (selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase().indexOf(StringUtil.trim(txtSearchString.text).toLowerCase()) > -1))	{
+//						tmpArray.addItem(baseObj);
+//					} 
+
+					if (_showExtendedSearch)	{
+						if (cboExtended.selectedItem == "contains")	{
+							if ((selectedCriterion.property.getValueOf(baseObj) != null) 
+									&& (selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase().indexOf(StringUtil.trim(txtSearchString.text).toLowerCase()) > -1))	{
+								tmpArray.addItem(baseObj);
+							}
+						}
+						if (cboExtended.selectedItem == "starts with")	{
+							if (selectedCriterion.property.getValueOf(baseObj) != null)	{
+								var prop:String = selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase();
+								var searchstr:String = StringUtil.trim(txtSearchString.text).toLowerCase();
+								
+								if (prop.substr(0,searchstr.length) == searchstr)
+									tmpArray.addItem(baseObj);	
+							} 										
+						}
+						if (cboExtended.selectedItem == "ends with")	{
+							if (selectedCriterion.property.getValueOf(baseObj) != null)	{
+								var prop:String = selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase();
+		 						var searchstr:String = StringUtil.trim(txtSearchString.text).toLowerCase();
+								
+								if (prop.substr(prop.length-searchstr.length) == searchstr)
+									tmpArray.addItem(baseObj);	
+							} 
+						}
+						if (cboExtended.selectedItem == "is")	{
+							if ((selectedCriterion.property.getValueOf(baseObj) != null) 
+									&& (selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase() == StringUtil.trim(txtSearchString.text).toLowerCase()))	{
+								tmpArray.addItem(baseObj);
+							}	
+						}
+						
+					}
+					else	{
+						if ((selectedCriterion.property.getValueOf(baseObj) != null) 
+									&& (selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase().indexOf(StringUtil.trim(txtSearchString.text).toLowerCase()) > -1))	{
+								tmpArray.addItem(baseObj);
+							}
 					}
 				}
 				

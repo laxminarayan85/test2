@@ -1875,7 +1875,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:icon>@Embed(source='../../../../assets/new_small.png')</mx:icon>
 				</mx:Button>
 				<mx:Label x="38" y="620" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Charges')}" width="179" textAlign="left" bottom="32"/>
-				<common:TreePickerFilter searchClassName="com.efi.printsmith.data::ChargeDefinition" height="22" bottom="5"   searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}"  right="0" width="100%">
+				<common:TreePickerFilter searchClassName="com.efi.printsmith.data::ChargeDefinition" height="22" bottom="5" showExtendedSearch="true"  searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}"  right="0" width="100%">
 				</common:TreePickerFilter>
 			</mx:Canvas>
 		<mx:VBox height="739" verticalScrollPolicy="off">

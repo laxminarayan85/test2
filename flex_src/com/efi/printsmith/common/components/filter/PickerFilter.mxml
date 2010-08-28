@@ -11,12 +11,30 @@
 			[Bindable] protected var _searchCriteria:ArrayCollection;
 			[Bindable] protected var _searchComponent:UIComponent;
 			[Bindable] protected var _listData:ArrayCollection;
-		
+			[Bindable] protected var _showExtendedSearch:Boolean;
+			
+			private var _extendedCrit:ArrayCollection;
 			
 			public function set searchComponent(val:UIComponent):void	{
 				_searchComponent = val;
 			}	
-								
+			public function set showExtendedSearch(val:Boolean):void	{
+				_showExtendedSearch = val;
+				if (val)	{
+					var ac:ArrayCollection = new ArrayCollection();
+					ac.addItem("contains");
+					ac.addItem("starts with");
+					ac.addItem("ends with");
+					ac.addItem("is");
+					_extendedCrit = ac;
+				}
+				else	{
+					filterCanvas.removeChild(cboExtended);
+				}
+			}					
+			public function get showExtendedSearch():Boolean	{
+				return _showExtendedSearch;
+			}					
 			
 			public function set listData(val:ArrayCollection):void	{
 				setCustomListData(val);	
@@ -51,11 +69,47 @@
 						var entered:String = StringUtil.trim(txtSearchString.text).toLowerCase();
 						if (obj != null)
 							var indx:int = obj.toString().toLowerCase().indexOf(entered);
-						 
-						if ((selectedCriterion.property.getValueOf(baseObj) != null) 
-								&& (selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase().indexOf(StringUtil.trim(txtSearchString.text).toLowerCase()) > -1))	{
-							tmpArray.addItem(baseObj);
+						
+						if (_showExtendedSearch)	{
+							if (cboExtended.selectedItem == "contains")	{
+								if ((selectedCriterion.property.getValueOf(baseObj) != null) 
+										&& (selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase().indexOf(StringUtil.trim(txtSearchString.text).toLowerCase()) > -1))	{
+									tmpArray.addItem(baseObj);
+								}
+							}
+							if (cboExtended.selectedItem == "starts with")	{
+								if (selectedCriterion.property.getValueOf(baseObj) != null)	{
+									var prop:String = selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase();
+									var searchstr:String = StringUtil.trim(txtSearchString.text).toLowerCase();
+									
+									if (prop.substr(0,searchstr.length) == searchstr)
+										tmpArray.addItem(baseObj);	
+								} 										
+							}
+							if (cboExtended.selectedItem == "ends with")	{
+								if (selectedCriterion.property.getValueOf(baseObj) != null)	{
+									var prop:String = selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase();
+			 						var searchstr:String = StringUtil.trim(txtSearchString.text).toLowerCase();
+									
+									if (prop.substr(prop.length-searchstr.length) == searchstr)
+										tmpArray.addItem(baseObj);	
+								} 
+							}
+							if (cboExtended.selectedItem == "is")	{
+								if ((selectedCriterion.property.getValueOf(baseObj) != null) 
+										&& (selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase() == StringUtil.trim(txtSearchString.text).toLowerCase()))	{
+									tmpArray.addItem(baseObj);
+								}	
+							}
+							
 						}
+						else	{
+							if ((selectedCriterion.property.getValueOf(baseObj) != null) 
+										&& (selectedCriterion.property.getValueOf(baseObj).toString().toLowerCase().indexOf(StringUtil.trim(txtSearchString.text).toLowerCase()) > -1))	{
+									tmpArray.addItem(baseObj);
+								}
+						}	
+						
 					}
 					
 					_searchComponent["dataProvider"] = tmpArray;					
@@ -65,9 +119,11 @@
 		]]>
 	</mx:Script>
 	<mx:HBox height="100%" width="100%" id="filterCanvas">
-		<mx:Label height="100%" width="20%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}:"  />
+		<mx:Label height="100%" width="10%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}:"  />
 		<mx:ComboBox height="100%" width="30%" id="cboSearchBy" dataProvider="{_searchCriteria}" labelField="displayLabel" />
-		<mx:TextInput height="100%" width="50%" id="txtSearchString"   change="search();" />		
+		<mx:ComboBox height="100%" width="30%" id="cboExtended" dataProvider="{_extendedCrit}" change="search();" />
+		<mx:TextInput height="100%" width="40%" id="txtSearchString"   change="search();" />		
 	</mx:HBox>
 	
 </mx:Canvas>
+ 

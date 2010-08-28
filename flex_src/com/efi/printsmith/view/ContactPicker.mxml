@@ -218,7 +218,7 @@
 		  <!--<mx:DataGridColumn  labelFunction="phoneFunction" headerText="Phone" />-->      
 		</mx:columns>
 		</mx:DataGrid>
-		<common:PickerFilter x="10" y="495" width="417" height="26" searchComponent="{dataGrid}" listData="{contacts}" searchCriteria="{getSearchBy()}" />
+		<common:PickerFilter x="10" y="495" width="417" height="26" showExtendedSearch="true"  searchComponent="{dataGrid}" listData="{contacts}" searchCriteria="{getSearchBy()}" />
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectContact();"  width="108" x="465" y="10"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.New')}" enabled="true" click="newContact();" id="new_button" width="108" x="465" y="40"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="cancelPicker();" id="cancel_button" width="108" x="465" y="93"/>

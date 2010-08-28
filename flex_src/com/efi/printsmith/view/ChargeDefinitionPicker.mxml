@@ -403,7 +403,7 @@
 							 bottom="35"
 							 top="19">
 					</mx:Tree>
-					<common:TreePickerFilter searchClassName="com.efi.printsmith.data::ChargeDefinition" x="0" y="370" width="200" height="22" searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}" />
+					<common:TreePickerFilter searchClassName="com.efi.printsmith.data::ChargeDefinition" showExtendedSearch="true"  x="0" y="370" width="200" height="22" searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}" />
 		
 					<!--<mx:TextInput width="172"
 								  id="tree_filter"

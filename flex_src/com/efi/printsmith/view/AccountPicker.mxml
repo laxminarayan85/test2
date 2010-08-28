@@ -308,7 +308,7 @@
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectAccount();"  width="108" x="471" y="65"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.New')}" enabled="true" click="newAccount();" id="new_button" width="108" x="471" y="95"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="cancelPicker();" id="cancel_button" width="108" x="471" y="150"/>
-		<common:PickerFilter id="pickerFilter" x="10" y="495" width="417" height="26" searchComponent="{dataGrid}" listData="{accounts}" searchCriteria="{getSearchByForAccount()}" />
+		<common:PickerFilter id="pickerFilter" x="10" y="495" width="417" showExtendedSearch="true" height="26" searchComponent="{dataGrid}" listData="{accounts}" searchCriteria="{getSearchByForAccount()}" />
 		<!--<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>
