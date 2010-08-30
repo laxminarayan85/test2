@@ -215,7 +215,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	public var costPricingString:String = new String("");
 	
 	[Bindable]
-    [Embed("assets/NoPricing.png")]
+    [Embed("/assets/NoPricing.png")]
     private var noCostingIcon:Class;
     
 	public function init():void {
