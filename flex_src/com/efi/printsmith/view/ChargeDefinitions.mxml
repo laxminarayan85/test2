@@ -229,9 +229,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 //	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
 //	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	    fireGetAllEvent("ProductionLocations", new mx.rpc.Responder(handleLoadProductionLocationsResult, handleFault));
-	    dataService.getChargeList();
+	    dataService.getChargeList(true);
 		charge_stack.selectedChild = charge_blank_canvas;
-	    throbber.play();
 		updateControlState();
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 
@@ -424,9 +423,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		} else {
 			charge = null;
 			chargeCategory = ev.result as ChargeCategory;
-			dataService.getChargeList();
+			getChargeList();
 			//fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 		}
+	}
+	
+	private function getChargeList(showThrobber:Boolean = false):void {
+		dataService.getChargeList();
+		charge_stack.selectedChild = charge_blank_canvas;
+		if (showThrobber) {
+			throbber.visible = true;
+	    	throbber.play();
+		}
+		updateControlState();
 	}
 	
 	private function handleAddChargeToCategory(ev:ResultEvent):void {
@@ -437,7 +446,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 			charge = localCharge;
 			costPricingString = "";
-			dataService.getChargeList();
+			getChargeList();
 			//fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 		}
 	}
@@ -591,6 +600,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function doNewCharge():void {
 		var category:ChargeCategory = getSelectedTreeCategory(true);
+		chargeTree.validateNow();
+		chargeTree.expandItem(category, true);
+//		if ((chargeTree.openItems as Array).indexOf(category) == -1) {
+//			(chargeTree.openItems as Array).push(category);
+//		}
+		chargeTree.validateNow();
 		var localCharge:ChargeDefinition = new ChargeDefinition();
 		
 		if (category != null) {
@@ -748,6 +763,27 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 		return -1;
 	}
+	private function findItemInChargeTree(id:Number):ModelBase {
+		for each(var commandItem:ChargeCommand in chargeTree.dataProvider) {
+			if (id == commandItem.id) {
+				return commandItem;
+			} else {
+				for each(var categoryItem:ChargeCategory in commandItem.children) {
+					if (id == categoryItem.id) {
+						return categoryItem;
+					} else {
+						for each(var chargeItem:ChargeDefinition in categoryItem.children) {
+							if (id == chargeItem.id) {
+								return chargeItem;
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
 	private function mapToCharge():void {
 		charge.title = charge_name_edit.text;
 		charge.name = charge_name_edit.text;
@@ -1401,6 +1437,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function updateDataProvider():void {
 		tempOpen = new ArrayCollection();
+		chargeTree.validateNow();
 		var openItems:Array = chargeTree.openItems as Array;
 		var i:int;
 		
@@ -1506,15 +1543,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
            	
 			chargeTree.openItems = openItems;
 			chargeTree.validateNow();
+			
+			var treeItem:ModelBase = null;
 			if (charge != null) {
-				chargeTree.selectedItem = charge;
+				treeItem = findItemInChargeTree(charge.id);				
 			} else if (chargeCategory != null) {
-				chargeTree.selectedItem = chargeCategory;
+				treeItem = findItemInChargeTree(chargeCategory.id);				
 			} else if (chargeCommand != null) {
-				chargeTree.selectedItem = chargeCommand;
+				treeItem = findItemInChargeTree(chargeCommand.id);				
 			}
-			if (chargeTree.selectedIndex != -1)
-				chargeTree.scrollToIndex(chargeTree.selectedIndex);
+			if (treeItem != null) {
+				chargeTree.selectedItem = treeItem;
+			}
+//			if (chargeTree.selectedIndex != -1)
+//				chargeTree.scrollToIndex(chargeTree.selectedIndex);
+//			if (treeItem != null)
+//				chargeTree.scrollToIndex(chargeTree.getItemIndex(treeItem));
 			updateTreeSelection();
 		}
 	}
