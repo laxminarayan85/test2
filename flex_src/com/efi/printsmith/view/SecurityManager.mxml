@@ -21,6 +21,12 @@
 			</mx:AddChild>
 			<mx:RemoveChild target="{button4}"/>
 			<mx:RemoveChild target="{label4}"/>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="502" y="24" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOKNewGroup();"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="626" y="24" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancelNewGroup();"/>
+			</mx:AddChild>
 		</mx:State>
 	</mx:states>
 	 
@@ -215,6 +221,21 @@
 		txtNewItem.text= "";
 		
 	} 
+	
+	public function doOKNewGroup():void {
+		if (this.rename == false)
+			this.access = new AccessGroup();
+		this.access.name = txtNewItem.text;
+		this.currentState = "";
+		this.mapToAccessGroup();
+		this.rename = false;
+	}
+	
+	public function doCancelNewGroup():void {
+		this.rename = false;
+		this.currentState = "";
+	}
+	
 	public function doRename():void{
 		//var access:AccessGroup = event.currentTarget.selectedItem as AccessGroup
 		this.currentState = "newItem";
