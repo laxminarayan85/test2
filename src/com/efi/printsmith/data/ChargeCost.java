@@ -92,6 +92,11 @@ public class ChargeCost extends ModelBase {
 	public static final String SPEEDTABLE = "SpeedTable";
 
 	/**
+   * @generated
+   */
+  public static final String INITIALIZED = "Initialized";
+
+	/**
 	 * @generated
 	 */
 	public ChargeCost() {
@@ -390,6 +395,28 @@ public class ChargeCost extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean initialized;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getInitialized(){
+    return initialized; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setInitialized(Boolean newVal) {
+    this.initialized = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -406,6 +433,7 @@ public class ChargeCost extends ModelBase {
     if (TOTALUNITCOST.equals(propertyName)) return getTotalUnitCost();
     if (COSTINGMETHOD.equals(propertyName)) return getCostingMethod();
     if (SPEEDTABLE.equals(propertyName)) return getSpeedTable();
+    if (INITIALIZED.equals(propertyName)) return getInitialized();
     return super.getProperty(propertyName);
   }
 	
@@ -426,6 +454,7 @@ public class ChargeCost extends ModelBase {
     if (TOTALUNITCOST.equals(propertyName)) setTotalUnitCost((BigDecimal)newValue); else
     if (COSTINGMETHOD.equals(propertyName)) setCostingMethod((String)newValue); else
     if (SPEEDTABLE.equals(propertyName)) setSpeedTable((SpeedTable)newValue); else
+    if (INITIALIZED.equals(propertyName)) setInitialized((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -457,6 +486,8 @@ public class ChargeCost extends ModelBase {
       return new Class<?>[] {String.class};		
     if (SPEEDTABLE.equals(propertyName)) 
       return new Class<?>[] {SpeedTable.class};		
+    if (INITIALIZED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -478,6 +509,7 @@ public class ChargeCost extends ModelBase {
     if (TOTALUNITCOST.equals(propertyName)) return ChargeCost.class;
     if (COSTINGMETHOD.equals(propertyName)) return ChargeCost.class;
     if (SPEEDTABLE.equals(propertyName)) return ChargeCost.class;
+    if (INITIALIZED.equals(propertyName)) return ChargeCost.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -510,6 +542,8 @@ public class ChargeCost extends ModelBase {
     if (! SmartEquals(getCostingMethod(), objT.getCostingMethod()))
       return false;
     if (! SmartEquals(getSpeedTable(), objT.getSpeedTable()))
+      return false;
+    if (! SmartEquals(getInitialized(), objT.getInitialized()))
       return false;
     return true;
   }			

@@ -5,6 +5,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:RemoteObject id="chargeService" destination="chargeService">
 	<mx:method name="createChargeFromChargeDefinition" fault="handleFault(event)" result="handleCreateCharge(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="pricingService" destination="pricingService">
+	<mx:method name="priceCharge" fault="handleFault(event)" result="handlePricingResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxTables(event)"/>
+</mx:RemoteObject>
+
 <mx:states>
 	<mx:State name="Job Aware">
 	</mx:State>
@@ -40,6 +47,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.data.Invoice;
 	import com.efi.printsmith.data.Job;
 	import com.efi.printsmith.data.NotePad;
+	import com.efi.printsmith.data.TaxTable;
+	
 	import com.efi.printsmith.events.ChargePresetInfoEvent;
 	
 	import mx.controls.Alert;                                         
@@ -64,9 +73,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	[Bindable]
 	private var chargeDefinition:ChargeDefinition = new ChargeDefinition;
 	
+	[Bindable]
+	private var taxTables:ArrayCollection = new ArrayCollection;
+	
 	public function init():void {
 	    PopUpManager.centerPopUp(this);
 	    this.updateFieldVisibility();
+	    dataService.getAll("TaxTable");
 	}      
 	
 	private function doOK():void {
@@ -78,7 +91,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		chargeDefinition.presetNotes = notes_default_text.text;
 		chargeDefinition.presetDescription = description_default_text.text;
 		chargeDefinition.presetDescriptionLabel = description_label_text.text;
-
+		chargeDefinition.presetQuantity = parseFloat(quantity_text.text);
+		chargeDefinition.presetQuantityLabel = quantity_label_text.text
 		chargeDefinition.presetHidden = hidden_check.selected;
 		chargeDefinition.presetDisplayQuantity = displayQty_check.selected;
 		chargeDefinition.presetBrokered = brokered_check.selected;
@@ -86,6 +100,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		chargeDefinition.presetShowNotes = show_notes_check.selected;
 		chargeDefinition.presetFinished = finished_check.selected;
 
+		if (tax_table_combo.selectedIndex == 0) {
+			chargeDefinition.presetTaxTable = null;
+		} else {
+			chargeDefinition.presetTaxTable = (tax_table_combo.selectedItem as TaxTable);
+		}
+			
 		var selectEvent:ChargePresetInfoEvent = new ChargePresetInfoEvent(ChargePresetInfoEvent.CHARGEPRESETOK, chargeDefinition);
 		dispatchEvent(selectEvent);
 		PopUpManager.removePopUp(this);
@@ -105,7 +125,17 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		chargeService.createChargeFromChargeDefinition(this.chargeDefinition);
 		this.updateFieldVisibility();
 	}
+	
+	private function handleLoadTaxTables(ev:ResultEvent):void {
+		taxTables = ev.result as ArrayCollection;
+		taxTables.addItemAt(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.UseParentTaxTable'), 0);
+	}
 
+	private function handlePricingResult(ev:ResultEvent):void {
+		pricingCharge = ev.result as Charge;
+		this.chargeDefinition.presetPrice  = pricingCharge.price;
+	}
+	
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
 		              
@@ -118,6 +148,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function handleCreateCharge(ev:ResultEvent):void {
 		this.pricingCharge = ev.result as Charge;
+		pricingService.priceCharge(pricingCharge);
 	}
 	
 	public function updateFieldVisibility():void {
@@ -380,7 +411,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
 			}
 		} else if (this.chargeDefinition.method == ChargeMethod.Markup) {
-				quantity_box.includeInLayout = quantity_box.visible = true;
+				quantity_box.includeInLayout = quantity_box.visible = false;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 				material_rate_box.includeInLayout = material_rate_box.visible = false;
 				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
@@ -644,8 +675,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		<mx:HBox width="100%" id="tax_table_box" bottom="34">
 			<mx:Spacer width="25%" height="5"/>
 			<mx:Spacer width="25%" height="5"/>				
-			<mx:Text text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" width="25%" id="tax_table_label_text"/>
-			<mx:Text text="{chargeDefinition.presetTaxTable.name}" width="25%" id="tax_table_text"/>				
+			<mx:Text text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" width="25%" id="tax_table_label_text" textAlign="right" height="18"/>
+			<mx:ComboBox id="tax_table_combo" dataProvider="{taxTables}" width="25%" labelField="name"/>
 		</mx:HBox>
 	</mx:Canvas>
 </mx:TitleWindow>

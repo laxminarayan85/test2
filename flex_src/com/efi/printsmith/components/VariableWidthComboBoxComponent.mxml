@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml" dataChange="dataChanged()" updateComplete="dataChanged()" open="dataChanged()" creationComplete="init()" change="onChange(event);">
+    <mx:Script>
+        <![CDATA[
+       
+            import mx.controls.ComboBase;
+            import mx.core.EdgeMetrics;
+       		import mx.collections.CursorBookmark;
+       
+            private function init():void {
+                this.dropdownWidth=calculatePreferredSizeFromData(this.dataProvider.length).width;            	
+            }
+            
+            protected function dataChanged():void {
+                this.dropdownWidth=calculatePreferredSizeFromData(this.dataProvider.length).width;            	
+            }
+            
+            private function onChange(e:Event):void{
+            	// Not ideal - currently hard-coded for specific font size
+				if (this.width/7 < this.text.length) {
+					this.text = this.text.slice(0, width/7 - 3) + "...";
+				}
+            }
+            
+		    override protected function calculatePreferredSizeFromData(count:int):Object {
+		        var maxW:Number = 0;
+		        var maxH:Number = 0;
+		
+		        var bookmark:CursorBookmark = iterator ? iterator.bookmark : null;
+		        
+		        iterator.seek(CursorBookmark.FIRST, 0);
+		        
+		        var more:Boolean = iterator != null;
+		        
+		        var lineMetrics:TextLineMetrics;
+		
+		        for (var i:int = 0; i < count; i++)
+		        {
+		            var data:Object;
+		            if (more)
+		                data = iterator ? iterator.current : null;
+		            else
+		                data = null;
+		
+		            var txt:String = itemToLabel(data);
+		
+		           // var txt:String = data as String;
+		            lineMetrics = measureText(txt);
+		
+		            maxW = Math.max(maxW, txt.length*7);
+		            maxH = Math.max(maxH, lineMetrics.height);
+		            
+		            if (iterator)
+		                iterator.moveNext();
+		        }
+		
+		        if (prompt)
+		        {
+		            lineMetrics = measureText(prompt);
+		
+		            maxW = Math.max(maxW, lineMetrics.width);
+		            maxH = Math.max(maxH, lineMetrics.height);
+		        }
+		
+		        maxW += getStyle("paddingLeft") + getStyle("paddingRight");
+		
+		        if (iterator)
+		            iterator.seek(bookmark, 0);
+		
+				maxW = Math.max(maxW, this.width);
+		      	return { width: maxW, height: maxH };
+		    }
+        ]]>
+    </mx:Script>
+</mx:ComboBox>

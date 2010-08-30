@@ -25,6 +25,7 @@ package com.efi.printsmith.data
 		public var totalUnitCost:Number = 0;
 		public var costingMethod:String = "";
 		public var speedTable:SpeedTable;
+		public var initialized:Boolean = false;
 	
 	}
 }

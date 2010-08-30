@@ -206,4 +206,9 @@
 			<source>com.efi.printsmith.service.CopierService</source>
 		</properties>
 	</destination>
+	<destination id="versionService">
+		<properties>
+			<source>com.efi.printsmith.service.VersionService</source>
+		</properties>
+	</destination>
 </service>

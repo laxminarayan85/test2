@@ -54,6 +54,7 @@ public class ChargeCostingMapper extends ImportMapper {
 						long id = modelBase.getId();
 						ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
 						chargeCost= chargeDefinition.getChargeCost();
+						chargeCost.setInitialized(true);
 					}
 							
 				} else if ("costing method".equals(currentFieldToken)) {

@@ -607,7 +607,7 @@
 
         if(newData != "") {
             if (event.dataField == "quantity" || event.dataField == "amount") {
-            	var parsedValue = parseCurrencyFloat(newData);
+            	var parsedValue:Number = parseCurrencyFloat(newData);
             	
             	if (parsedValue < 0 || isNaN(parsedValue)) {
             		TextInput(dataGrid.itemEditorInstance).text="0";

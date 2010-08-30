@@ -19,4 +19,7 @@ public class Constants {
 	public static final int PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH = 1;
 	public static final int PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN = 2;
 	public static final int PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH = 3;
+	
+	public static final String SERVER_VERSION_PROPERTY = "com.efi.printsmith.server.version";
+	public static final String SERVER_VERSION_DEFAULT_VALUE = "2010.0.0.0 - additional version info unavailable";
 }

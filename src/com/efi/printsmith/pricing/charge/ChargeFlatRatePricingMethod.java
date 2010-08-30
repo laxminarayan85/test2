@@ -31,9 +31,9 @@ public class ChargeFlatRatePricingMethod extends ChargePricingMethod {
 		} else {
 			if (charge.getOverridePrice()) return charge;
 			if (chargeDefinition.getNoOverrides()) return charge;
-			if (chargeDefinition.getAdjustableRate()) {
+		//	if (chargeDefinition.getAdjustableRate()) {
 				charge.setPrice(charge.getRate());
-			}
+		//	}
 		}
 		return charge;
 	}
