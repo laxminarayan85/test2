@@ -220,6 +220,12 @@
 	<mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServicePreferencesDefaultPress" destination="dataService">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPreferencesDefaultPressResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServicePressDefinition" destination="dataService">
+		<mx:method name="getByPressId" fault="handleFault(event)" result="handleLoadPressDefinitionResult(event)"/>
+	</mx:RemoteObject>
 	<!--<mx:RemoteObject id="stockChangesDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockChangesResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveStockChangesResult(event)"/>
@@ -289,6 +295,7 @@
 	import com.efi.printsmith.data.StockChanges;
 	import com.efi.printsmith.data.Account;
 	import com.efi.printsmith.data.PreferencesSystem;
+	import com.efi.printsmith.data.PreferencesDefaultPresses;
 
 	import com.efi.printsmith.data.StockGroup;
 	import com.efi.printsmith.data.StockGrade;
@@ -392,9 +399,12 @@
 	private var pressDefinitions:ArrayCollection = new ArrayCollection();   
 	[Bindable]
     private var preferencesStockDefinitions:ArrayCollection = new ArrayCollection();
-    
+    [Bindable]
+    private var preferencesDefaultPress:PreferencesDefaultPresses = new PreferencesDefaultPresses();
 	[Bindable]
-	private var copierDefinitions:ArrayCollection = new ArrayCollection();   
+	private var copierDefinitions:ArrayCollection = new ArrayCollection();  
+	[Bindable]
+	private var pressDefinition:PressDefinition = new PressDefinition(); 
 	private var first:Boolean
     private var formIsValid:Boolean = false;
     
@@ -406,6 +416,7 @@
 		notification_consumer.subscribe();
 		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
+		dataServicePreferencesDefaultPress.getSingle("PreferencesDefaultPresses");
 		stockDefinitions = new StockDefinition;
 		stockDefinitions.charges = new ArrayCollection;
 		stockDefinitions.stockChanges = new ArrayCollection;
@@ -1008,6 +1019,9 @@ private function loadCoatedArray():void{
 		stockDefinitions.grade = ev.result as StockGrade
     	loadStockGrade();
 	}
+	private function handleLoadPreferencesDefaultPressResult(ev:ResultEvent):void {
+		this.preferencesDefaultPress = ev.result as PreferencesDefaultPresses;
+	}
 	private function handleSaveStockTypeResult(ev:ResultEvent):void {
     	loadStockType();
 	}
@@ -1117,8 +1131,10 @@ private function loadCoatedArray():void{
 		var type:StockType = new StockType;
 		 stockType = ev.result as ArrayCollection;
 		 type = stockType.getItemAt(0) as StockType;
-		 Basicsize.text = type.size.name;
-		 
+		 if (type.size == null)
+		 	Basicsize.text = "";
+		 else
+		 	Basicsize.text = type.size.name;	 
 	}
 	
 	private function handleLoadStockColor(ev:ResultEvent):void {
@@ -1818,13 +1834,17 @@ private function doRound(evt:FocusEvent):void{
 			}
 		}
 	}
-	private function doPriceListButton():void{
-		var titleWindow:ViewPriceList = ViewPriceList(PopUpManager.createPopUp(this, ViewPriceList, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.setPressStockDefinition(stockDefinitions,cboDefaultPress.selectedItem as PressDefinition);
+	private function doPriceListButton():void {
+	    var pressDefinition:PressDefinition = cboDefaultPress.selectedItem as PressDefinition;
+	    if (pressDefinition == null)
+	    	pressDefinition = this.preferencesDefaultPress.defaultSheetFedPress;
+	    dataServicePressDefinition.getByPressId(pressDefinition.pressId);
 	}
-	
-	
+	private function handleLoadPressDefinitionResult(ev:ResultEvent):void {
+		this.pressDefinition = ev.result as PressDefinition;
+		var titleWindow:ViewPriceList = ViewPriceList(PopUpManager.createPopUp(this, ViewPriceList, true));
+	    titleWindow.setPressStockDefinition(this.stockDefinitions as StockDefinition,this.pressDefinition as PressDefinition);
+	}
 
 ]]>
                              
