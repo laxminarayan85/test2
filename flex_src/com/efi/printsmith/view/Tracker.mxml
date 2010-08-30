@@ -41,11 +41,16 @@
 		<mx:method name="getTracker" fault="handleFault(event)" result="handleLoadPendingResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="invoiceService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleGetInvoiceResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
 	
 	<mx:Script> 
 	                                  
 	<![CDATA[
+		import com.efi.printsmith.data.Estimate;
 		import mx.events.IndexChangedEvent;
 		import com.efi.printsmith.data.TrackerConsolePasses;
 		import com.efi.printsmith.pages.TrackerConsoleDetails;
@@ -1191,6 +1196,41 @@
 			}
 			return false;
 		}
+		
+		public function openInvoice():void {
+			if(selectedTrackerConsoleJob!=null) {
+				if (selectedTrackerConsoleJob.job!=null) {
+					invoiceService.getInvoice(selectedTrackerConsoleJob.job.parentInvoice.id);
+				} else if (selectedTrackerConsoleJob.charge!=null) {
+					if(selectedTrackerConsoleJob.charge.parentInvoice!=null) {
+						invoiceService.getInvoice(selectedTrackerConsoleJob.charge.parentInvoice.id);
+					} else if(selectedTrackerConsoleJob.charge.parentJob!=null) {
+						invoiceService.getInvoice(selectedTrackerConsoleJob.charge.parentJob.parentInvoice.id);
+					}
+				}
+			} else if(selectedJob!=null || selectedCharge!=null){
+				if (selectedJob!=null) {
+					invoiceService.getInvoice(selectedJob.parentInvoice.id);
+				} else if (selectedCharge!=null) {
+					if(selectedCharge.parentInvoice!=null) {
+						invoiceService.getInvoice(selectedCharge.parentInvoice.id);
+					} else if(selectedCharge.parentJob!=null) {
+						invoiceService.getInvoice(selectedCharge.parentJob.parentInvoice.id);
+					}
+				}
+			}
+		}
+		
+		private function handleGetInvoiceResult(event:ResultEvent):void {
+			var invoiceBase:InvoiceBase = event.result as InvoiceBase;
+			if (invoiceBase !=null) {
+				if (invoiceBase is Invoice) {
+					Snowmass.getInstance().doEditInvoice(invoiceBase);
+				} else if (invoiceBase is Estimate) {
+					Snowmass.getInstance().doEditEstimate(invoiceBase);
+				}
+			}
+		}
 				
 	]]>
 	                        
@@ -1400,7 +1440,7 @@
 							<mx:icon>@Embed(source='../../../../assets/TrackingContinue.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Open')}" 
-							labelPlacement="bottom" width="20%" id="openBtn" enabled="false">
+							labelPlacement="bottom" width="20%" click="{openInvoice()}" id="openBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingInvOpen.png')</mx:icon>
 						</mx:Button>
 						
