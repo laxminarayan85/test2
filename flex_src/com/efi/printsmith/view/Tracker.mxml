@@ -306,6 +306,9 @@
 			if(trackerConsole.selectedEmployee!=null){
 				if(trackerConsole.selectedEmployee.employeeId==null){
 					employee = null;
+					selectedJob = null;
+					selectedCharge = null;
+					trackerList = new ArrayCollection();
 				} else {
 					employee = trackerConsole.selectedEmployee;
 				}
@@ -328,6 +331,7 @@
 				progressBarComponent.trackerConsoleJobs = null;
 				closeEventTriggered = true;
 				resetButtons();
+				trackerList = new ArrayCollection();
 				trackerConsoleJobsList = new ArrayCollection();
 				dataService.getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(employee);
 			}
