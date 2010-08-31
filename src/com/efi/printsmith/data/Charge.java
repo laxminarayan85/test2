@@ -179,9 +179,64 @@ public class Charge extends ModelBase {
     this.modified = new Date();
     this.isDeleted = false;
   }
+	
+	private Long runTime;
+	
+	private Long setUpTime;
+	
+	private Long washUpTime;
+	
+	
 
  	
 	
+	/**
+	 * @return the runTime
+	 */
+	public Long getRunTime() {
+		return runTime;
+	}
+
+
+	/**
+	 * @param runTime the runTime to set
+	 */
+	public void setRunTime(Long runTime) {
+		this.runTime = runTime;
+	}
+
+
+	/**
+	 * @return the setUpTime
+	 */
+	public Long getSetUpTime() {
+		return setUpTime;
+	}
+
+
+	/**
+	 * @param setUpTime the setUpTime to set
+	 */
+	public void setSetUpTime(Long setUpTime) {
+		this.setUpTime = setUpTime;
+	}
+
+
+	/**
+	 * @return the washUpTime
+	 */
+	public Long getWashUpTime() {
+		return washUpTime;
+	}
+
+
+	/**
+	 * @param washUpTime the washUpTime to set
+	 */
+	public void setWashUpTime(Long washUpTime) {
+		this.washUpTime = washUpTime;
+	}
+
 	/**
 	 * @generated
 	 */	

@@ -3576,7 +3576,7 @@ public class DataService extends HibernateService {
 							Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
 						} else if(trackerConsoleJobs.getCharge()!=null) {
 							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
-							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob());
+							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
 						} 
 					}
 					if (trackerConsoleJobList != null)
@@ -3612,7 +3612,7 @@ public class DataService extends HibernateService {
 					Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
 				} else if(trackerConsoleJobs.getCharge()!=null) {
 					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
-					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob());
+					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
 				} 
 			}
 			if (trackerConsoleJobList != null)
@@ -3645,7 +3645,7 @@ public class DataService extends HibernateService {
 				Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
 			} else if(trackerConsoleJobs.getCharge()!=null) {
 				Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
-				Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob());
+				Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
 			} 
 			if(trackerConsoleJobs!=null)
 				log.debug("** Found TrackerConsoleJJob for Id :"+trackerConsoleJobs.getId()); 

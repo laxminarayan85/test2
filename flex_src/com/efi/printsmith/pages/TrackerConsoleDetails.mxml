@@ -399,7 +399,7 @@
 			
 			private function getCurrentPassString(object:TrackerConsoleJobs):String {
 				if(object!=null){
-					if(object.noOfPasses==2){
+					if(object.noOfPasses>1){
 						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.CurrentPass');
 					}
 				}

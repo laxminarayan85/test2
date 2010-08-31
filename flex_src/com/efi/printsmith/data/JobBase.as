@@ -1,7 +1,6 @@
 package com.efi.printsmith.data
 {
-	import mx.collections.ArrayCollection; 
-	import com.efi.printsmith.data.*;
+	import mx.collections.ArrayCollection;
 	
 	[RemoteClass(alias="com.efi.printsmith.data.JobBase")]
 	[Managed]
@@ -131,6 +130,10 @@ package com.efi.printsmith.data
 		public var deliveredDate:Date = new Date();
 		public var usePaperCalcUp:Boolean = false;
 		public var rollWidth:Number = 0;
+		
+		public var runTime:Number = 0;
+		public var setUpTime:Number = 0;
+		public var washUpTime:Number = 0;
 	
 	}
 }

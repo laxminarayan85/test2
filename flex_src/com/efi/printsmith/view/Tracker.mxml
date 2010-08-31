@@ -711,14 +711,17 @@
 				trackerConsoleJobs.employee = employee;
 				if(selectedJob!=null){
 					trackerConsoleJobs.job = selectedJob;
+					trackerConsoleJobs.actualSetUpTime = selectedJob.setUpTime;
+					trackerConsoleJobs.actualRunTime = selectedJob.runTime;
+					trackerConsoleJobs.actualWashTime = selectedJob.washUpTime;
+					trackerConsoleJobs.noOfPasses = selectedJob.frontPasses+selectedJob.backPasses;
 				} else if(selectedCharge!=null){
 					trackerConsoleJobs.charge = selectedCharge;
+					trackerConsoleJobs.actualSetUpTime = selectedCharge.setUpTime;
+					trackerConsoleJobs.actualRunTime = selectedCharge.runTime;
+					trackerConsoleJobs.actualWashTime = selectedCharge.washUpTime;
+					trackerConsoleJobs.noOfPasses = 1;
 				}
-				trackerConsoleJobs.actualSetUpTime = 25*60*1000;
-				trackerConsoleJobs.actualRunTime = 10*60*1000;
-				trackerConsoleJobs.actualWashTime = 30*60*1000;
-				trackerConsoleJobs.duration = 0;
-				trackerConsoleJobs.noOfPasses = 3;
 				trackerConsoleJobs.currentPass = 1;				
 				var trackerConsolePasses:TrackerConsolePasses = new TrackerConsolePasses();
 				trackerConsolePasses.passNo = 1;
@@ -1005,21 +1008,7 @@
 				} else if(trackerStatus=="continue"){
 					if(selectedTrackerConsoleJob!=null){
 						selectedTrackerConsoleJob = trackerConsoleJobsObject;
-						for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
-							if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
-								if(trackerConsolePasses.setUpCompleted){
-									washUpBtn.enabled = true;
-								} else {
-									setUpBtn.enabled = true;
-									washUpBtn.enabled = true;
-								}
-								break;
-							}
-						}
-						stopBtn.enabled = true;
-						cancelBtn.enabled = true;
-						pauseBtn.enabled = true;
-						defaultEnableButtons();
+						enableRequiredBtns();
 						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 						progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
 					}
@@ -1160,6 +1149,17 @@
 			}
 			return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Stop');
 		} 
+		
+		private function getWashUpLabel(tcJob:TrackerConsoleJobs):String {
+			if(tcJob!=null){
+				if(tcJob.charge!=null){
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.FinishUp');
+				} else if(tcJob.job!=null){
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Washup');
+				}
+			}
+			return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Washup');
+		}
 		
 		private function openJobDetails():void {
 			if(selectedTrackerConsoleJob!=null){
@@ -1420,7 +1420,7 @@
 							labelPlacement="bottom" width="20%" click="{setUpJob()}" id="setUpBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingSetupDone.png')</mx:icon>
 						</mx:Button>
-						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Washup')}" 
+						<mx:Button label="{getWashUpLabel(selectedTrackerConsoleJob)}" 
 							labelPlacement="bottom" width="20%" click="{washUpJob()}" id="washUpBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingWashupStart.png')</mx:icon>
 						</mx:Button>
