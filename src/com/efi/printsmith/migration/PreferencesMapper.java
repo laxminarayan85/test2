@@ -366,6 +366,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesAccounting.setFrozenNote(value);
 		} else if (name.equals("FinanceCharge"))
 			preferencesAccounting.setFinanceChange(Utilities.tokenToDouble(value));
+		else if (name.equals("CreditLimit"))
+			preferencesAccounting.setCreditLimit(Utilities.tokenToDouble(value) * 100);
 		else if (name.equals("daysinactive"))
 			preferencesAccounting.setInactivePeriod(Utilities.tokenToDouble(value));
 		else if (name.equals("pastDueDays"))

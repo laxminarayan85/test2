@@ -39,7 +39,7 @@
 						
 					<components:CustomNumericTextInputComponent width="100"
 						dataHolder="{preferencesAccounting}" variableName="creditLimit" customText="{preferencesAccounting.creditLimit}"
-						precision="2" rounding="nearest"/>
+						precision="2" rounding="nearest" allowSymbol="true" symbolString="%"/>
 					
 				</mx:HBox>
 				
