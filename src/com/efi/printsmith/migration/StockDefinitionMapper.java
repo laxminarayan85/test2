@@ -508,7 +508,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				/* TODO */
 			}  else if ("pcw recycle percent".equals(currentFieldToken)) {
 				stockDefinition.setPcwRecycledPercent(Utilities.tokenToDouble(currentImportToken));
-			}  else if ("forest managment".equals(currentFieldToken)) {
+			}  else if ("forest management".equals(currentFieldToken)) {
 				StockForest stockForest = dataService.getByStockForestName(currentImportToken);
 				if (stockForest == null)
 				{

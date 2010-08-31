@@ -104,6 +104,8 @@
 			<mx:SetProperty target="{label14}" name="width" value="45"/>
 			<mx:SetProperty target="{label15}" name="width" value="55"/>
 			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
+			<mx:SetProperty target="{radiobutton1}" name="y" value="85"/>
+			<mx:SetProperty target="{MinOrderQty}" name="x" value="425"/>
 		</mx:State>
 		<mx:State name="RigidSubstrate">
 			<mx:RemoveChild target="{Basicsize}"/>
@@ -806,6 +808,7 @@ private function loadCoatedArray():void{
 			}
 			Basicsize.text = dimSize.name;
 		}
+		calstockMWeight(null);
 		
 	}
 	private function doStockClass() : void {
@@ -1316,9 +1319,10 @@ private function loadCoatedArray():void{
 			//// check box values here
 			chkstandardItem.selected = stockDefinitions.standardItem;
 			chkIsMetric.selected = stockDefinitions.isMetric;
+			doMetric();
 			chkAutocalcblankstock.selected = stockDefinitions.autoCalculateBlank;
 			chkEvenIncrements.selected = stockDefinitions.evenIncrements;
-			chkcharge4entiteorder.selected = stockDefinitions.entireOrderCharge;
+			chkcharge4entiteorder.selected = stockDefinitions.noBrokenCarton;
 			chkCostIsInSets.selected = stockDefinitions.isCostInSets;
 			chkfscCertified.selected = stockDefinitions.fscCertified;
 			chksfiCertified.selected = stockDefinitions.sfiCertified
@@ -1375,11 +1379,11 @@ private function loadCoatedArray():void{
 	 	stockDefinitions.defaultBWCopier = defaultBWCopier.selectedItem as CopierDefinition;
 	 	
 	 if (defaultColorCopier != null && defaultColorCopier.selectedItem != null) 
-	 	stockDefinitions.defaultColorCopier = cboDefaultPress.selectedItem as CopierDefinition;
+	 	stockDefinitions.defaultColorCopier = defaultColorCopier.selectedItem as CopierDefinition;
 	 if (coated != null && coated.selectedItem != null)
 	 	stockDefinitions.coated = coated.text	
 	 if (defaultLargeCopier != null && defaultLargeCopier.selectedItem != null) 
-	 	stockDefinitions.defaultLargeCopier = cboDefaultPress.selectedItem as CopierDefinition;	
+	 	stockDefinitions.defaultLargeCopier = defaultLargeCopier.selectedItem as CopierDefinition;	
 	  if (forestMgmt != null && forestMgmt.selectedItem != null) 
 	 	stockDefinitions.forestManagement = forestMgmt.text;	
 	 
@@ -1394,7 +1398,7 @@ private function loadCoatedArray():void{
 	 stockDefinitions.isMetric = chkIsMetric.selected;
 	 stockDefinitions.autoCalculateBlank = chkAutocalcblankstock.selected;
 	 stockDefinitions.evenIncrements = chkEvenIncrements.selected;
-	 stockDefinitions.entireOrderCharge = chkcharge4entiteorder.selected;
+	 stockDefinitions.noBrokenCarton = chkcharge4entiteorder.selected;
 	 stockDefinitions.isCostInSets = chkCostIsInSets.selected;
 	 stockDefinitions.fscCertified = chkfscCertified.selected;
 	 stockDefinitions.sfiCertified = chksfiCertified.selected;
@@ -1405,10 +1409,10 @@ private function loadCoatedArray():void{
 	 //text and textboxes
 	
 	 stockDefinitions.name = stockName.text;
-	 if ( weight.text == "")
+	 if ( weight_edit.text == "")
 	 	stockDefinitions.weight = 0;
 	 else
-	 	stockDefinitions.weight = parseFloat(weight.text.replace(",",""));
+	 	stockDefinitions.weight = parseFloat(weight_edit.text.replace(",",""));
 	 stockDefinitions.coated = coated.text; 
 	 stockDefinitions.stocknumber = stockNumber.text;
 //	 stockDefinitions.basicsize = Basicsize.text;
@@ -1424,6 +1428,7 @@ private function loadCoatedArray():void{
 		 stockDefinitions.rollWeight = parseFloat(rollweight.text.replace(",",""));
 	 stockDefinitions.sheetspercarton = parseInt(sheetsPerCarton.text.replace(",",""));
 	 stockDefinitions.lotcount = parseInt(minOrder.text.replace(",",""));
+	 stockDefinitions.cartonWeight = parseFloat(textinput1.text.replace(",",""));
 	 stockDefinitions.comments = Comments.text;
 
 	 stockDefinitions.costunits = parseInt(Costunits.text);
@@ -1538,6 +1543,7 @@ private function loadCoatedArray():void{
 	{
 		if (evt.target == parentSize) {
 			stockDefinitions.parentsize.name = parentSize.text;
+			calstockMWeight(evt);
 		} else if (evt.target == NormalRunSize) {
 			stockDefinitions.normalRunSize.name = NormalRunSize.text;
 		}
@@ -1575,8 +1581,11 @@ private function loadCoatedArray():void{
 		if ( chkIsMetric.selected){
 			Basicsize.text = ""
 			label5.visible = false;
+			weight_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.GSM');
 			cboUom.selectedIndex = findItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns'), stockUom);
 			cboUom.enabled = false;
+			if (this.currentState =="SheetStock")
+				calstockMWeight(null);
 			if (this.currentState=="RollStock")
 				Costunits.enabled = true;
 			else
@@ -1586,6 +1595,7 @@ private function loadCoatedArray():void{
 		}
 		else{
 			label5.visible =true;
+			weight_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Weight');
 			if ( stockDefinitions.stktype != null)
 				Basicsize.text = stockDefinitions.stktype.size.name
 			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
@@ -1661,11 +1671,40 @@ private function loadCoatedArray():void{
 			weight = parseFloat(rollweight.text.replace(",",""));
 			if ( weight > 0){
 				var temp:String;
-				
 				sheetsPerCarton.text = numberFormatter2.format(order /weight );
 				
 			}
 		}
+	}
+	private function calCartonWeight(evnet:FocusEvent):void{
+		var sheetsPer:Number;
+		var carton_weight:Number;
+		sheetsPer = parseFloat(sheetsPerCarton.text.replace(',',''));
+		
+		carton_weight = (sheetsPer/1000)* parseFloat(mWeight.text.replace(',',''));
+		textinput1.text = Snowmass.getCurrencyFormatter(false,2).format(carton_weight);
+		
+	}
+	private function calBasic():Number{
+		var temp:Dimension;
+		var metDim:Dimension;
+		var stckType:StockType;
+		var index:int;
+		stckType = stkType.selectedItem  as StockType;
+		if ( chkIsMetric.selected){
+				temp = parentSize.selectedItem as Dimension;
+				index= findItem('A0',dimensions)
+			if( index != -1){
+				metDim = dimensions.getItemAt(index) as Dimension;
+				return (metDim.height * metDim.width);
+			}
+			else
+				return(1000000.0)
+		}else{
+		
+		 return (stckType.size.height * stckType.size.width);
+		}
+	
 	}
 	
 	private function calstockMWeight(event:FocusEvent):void{
@@ -1673,9 +1712,29 @@ private function loadCoatedArray():void{
 		var basic:Number;
 		var weight: Number;
 		var pDim:Dimension;
+		var tempFloat:Number;
+		var stckType:StockType;
 		pDim = parentSize.selectedItem as Dimension;
 		parent = pDim.width * pDim.height;
-		 
+		stckType = stkType.selectedItem  as StockType;
+		basic = calBasic();
+		if (parent == 0 || basic == 0 || weight_edit.text == '0')
+		{	// not enough data to calculate
+			mWeight.text = '0';
+		}
+		else{
+			if (chkIsMetric.selected){
+				tempFloat = parseFloat(weight_edit.text.replace(',',''))
+				weight = (( parent * tempFloat ) / basic);
+				mWeight.text = Snowmass.getCurrencyFormatter(false, 4).format(weight);
+			}else{
+		
+				weight = ((parent / basic)* parseFloat(weight_edit.text.replace(",",""))*2);
+				mWeight.text =  Snowmass.getCurrencyFormatter(false, 2).format(weight);
+			}
+			calCartonWeight(event);
+		}
+ 
 	}
 	
 private function doRound(evt:FocusEvent):void{
@@ -1683,6 +1742,7 @@ private function doRound(evt:FocusEvent):void{
 		if (evt.currentTarget == sheetsPerCarton) {
 			temp = numberFormatter.format(sheetsPerCarton.text)
 			sheetsPerCarton.text = temp;
+			calCartonWeight(evt);
 		} else if (evt.currentTarget == minOrder) {
 			temp = numberFormatter.format(minOrder.text)
 			minOrder.text = temp;
@@ -1867,22 +1927,22 @@ private function doRound(evt:FocusEvent):void{
 	<mx:Label x="310" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Finish')}" width="62" textAlign="right"/>
 	<mx:Label x="10" y="135" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.GenericColor')}" width="108" textAlign="right"/>
 	<mx:Label x="272" y="114" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Grade')}" width="100" textAlign="right"/>
-	<mx:Label x="493" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Weight')}" width="67.5" textAlign="right"/>
+	<mx:Label x="493" y="92" id="weight_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Weight')}" width="67.5" textAlign="right"/>
 	<mx:Label x="493" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Coated')}" width="67.5" textAlign="right"/>
 
 	<mx:ComboBox  x="126" y="133" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" labelField="name" focusOut="doStockGenericColor()"/>
 	<mx:ComboBox  x="380" y="112" width="105" id="cboStockGrade" dataProvider="{stockGrade}"  labelField="name" focusOut="doStockGrade()"/>
-	<mx:TextInput x="568.5" y="90" width="55" id="weight" text="{stockDefinitions.weight}"/>
+	<mx:TextInput x="568.5" y="90" width="55" id="weight_edit" text="{stockDefinitions.weight}" focusOut="calstockMWeight(event);"/>
 	<mx:ComboBox x="568.5" y="114" width="55" id="coated" dataProvider="{stockCoated}" labelField="name"/>
 
 	<mx:RadioButtonGroup id="stockUnit" change="doStockUnitChangeEvent(event)"/>
 	<mx:RadioButton x="636" y="67" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}"/>
-	<mx:RadioButton x="636" y="82" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}"/>
+	<mx:RadioButton x="636" y="82" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" id="radiobutton1"/>
 	<mx:RadioButton x="636" y="103" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}" groupName="stockUnit"  value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}"/>
-	<mx:RadioButton x="636" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" groupName="stockUnit" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}"/>
-	<mx:RadioButton x="636" y="145" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}"/>
+	<mx:RadioButton x="636" y="122" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" groupName="stockUnit" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" id="radiobutton2"/>
+	<mx:RadioButton x="636" y="140" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}"/>
 
-	<mx:TabNavigator x="10" y="166" width="953" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
+	<mx:TabNavigator x="0" y="175" width="953" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
 		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SpecificationandPric')}" id="page_specification_and_pricing" width="100%" height="100%">
 			<mx:Panel x="14.5" y="0" width="926.5" height="225" layout="absolute" dropShadowEnabled="false">
 				<mx:Label x="0" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Vendor')}" textAlign="right" width="98.5"/>
@@ -1909,8 +1969,8 @@ private function doRound(evt:FocusEvent):void{
 				<mx:TextInput  restrict="0-9\." x="337" y="60" width="122.5" id="thickNess" focusOut="convertoCaliper();"/>
 				<mx:TextInput  restrict="0-9\." x="106.5" y="116" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}" focusOut="doRound(event)"/>
 				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}"/>
-				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="rollweight" focusOut="calRollOrder(event);" text="{stockDefinitions.rollWeight}"/>
-				<mx:TextInput restrict="0-9\." x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.lotcount}" focusOut="calRollOrder(event);"/>
+				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="rollweight" focusOut="calRollOrder(event);" text="{stockDefinitions.rollWeight}" />
+				<mx:TextInput restrict="0-9\." x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.lotcount}" focusOut="calRollOrder(event);" />
 				<mx:TextInput x="375.5" y="116" width="64.5" id="textinput1" text="{stockDefinitions.cartonWeight}"/>
 				<mx:Text x="356.5" y="33" id="Basicsize" text="{stockDefinitions.stktype.size.name}" width="134" height="22"/>
 				<mx:ComboBox x="475" y="60" id="cboUom"  change="ConvertThickness()"  dataProvider="{stockUom}" width="125.5" labelField="name"/>
@@ -2057,7 +2117,7 @@ private function doRound(evt:FocusEvent):void{
 				<mx:TextInput restrict="0-9\." x="426" y="28" width="84" id="OnOrder" text="{stockDefinitions.onOrder}" enabled="false" focusOut="doRound(event)"/>
 				<mx:TextInput restrict="0-9\." x="426" y="56" width="84" id="TargetLevel" text="{stockDefinitions.targetLevel}" enabled="false" focusOut="doRound(event)"/>
 				<mx:TextInput restrict="0-9\." x="426" y="86" width="84" id="ReOrderPoint" text="{stockDefinitions.reOrderPoint}" enabled="false" focusOut="doRound(event)"/>
-				<mx:TextInput restrict="0-9\." x="426" y="116" width="84" id="MinOrderQty" text="{stockDefinitions.minOrderQty}" enabled="false" focusOut="doRound(event)"/>
+				<mx:TextInput restrict="0-9\." x="426" y="116" width="84" id="MinOrderQty" text="{stockDefinitions.minorder}" enabled="false" focusOut="doRound(event)"/>
 				<mx:TextInput x="122" y="176" id="BinLocation" text="{stockDefinitions.binLocation}" height="22" enabled="false"/>
 				<mx:Text x="430" y="176" width="291" id="account_name" text="{stockDefinitions.account.title}" />
 				<mx:DateField x="122" y="148" id="Expires" width="159" text="{stockDefinitions.priceExpires}"  editable="true"/>
