@@ -463,7 +463,7 @@
 					return String(charge.parentInvoice.invoiceNumber);
 				}
 				if(charge.parentJob!=null){
-					return String(charge.parentJob.jobNumber);
+					return String(charge.parentJob.jobNumber)+" / "+charge.parentJob.parentInvoice.invoiceNumber;
 				}
 			}
 			return "";
@@ -472,14 +472,17 @@
 		public function getDeliveryDate(object:Object):String {
 			if(object is Job){
 				var job:Job = object as Job;
+				if(job.parentInvoice.deliveryIntentDate!=null)
 				return dateFormatter.format(job.parentInvoice.deliveryIntentDate);	
 			}
 			if(object is Charge){
 				var charge:Charge = object as Charge;
 				if(charge.parentInvoice!=null){
+					if(charge.parentInvoice.deliveryIntentDate!=null)
 					return dateFormatter.format(charge.parentInvoice.deliveryIntentDate);
 				}
 				if(charge.parentJob!=null){
+					if(charge.parentJob.parentInvoice.deliveryIntentDate!=null)
 					return dateFormatter.format(charge.parentJob.parentInvoice.deliveryIntentDate);
 				}
 			}

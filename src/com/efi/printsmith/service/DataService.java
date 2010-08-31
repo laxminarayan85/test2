@@ -2911,9 +2911,9 @@ public class DataService extends HibernateService {
 							queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null) and";
 						}
 						if(employee.getHideNonReleaseProduction() || trackerConsole.getHideItemsNotReleasedToProd()) {
-							queryString = queryString + " job.releasedToProduction=true";
+							queryString = queryString + " (job.releasedToProduction=true and job.releasedToProduction is not null)";
 						} else {
-							queryString = queryString + " (job.releasedToProduction=true or job.releasedToProduction=false)";
+							queryString = queryString + " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null)";
 						}
 						
 						Query query = em.createQuery(queryString);
@@ -3078,7 +3078,7 @@ public class DataService extends HibernateService {
 						List<Charge> chargesList = query.getResultList();
 						for (Charge charge : chargesList) {
 							if(charge!=null) {
-								Hibernate.initialize(charge.getParentJob());
+								Hibernate.initialize(charge.getParentJob().getParentInvoice());
 								jobChargesList.add(charge);
 							}
 						}
@@ -3237,9 +3237,9 @@ public class DataService extends HibernateService {
 							queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null) and";
 						}
 						if(employee.getHideNonReleaseProduction() || trackerConsole.getHideItemsNotReleasedToProd()) {
-							queryString = queryString + " job.releasedToProduction=true";
+							queryString = queryString + " (job.releasedToProduction=true and job.releasedToProduction is not null)";
 						} else {
-							queryString = queryString + " (job.releasedToProduction=true or job.releasedToProduction=false)";
+							queryString = queryString + " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null)";
 						}
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllPricingMethods()) {
@@ -3404,7 +3404,7 @@ public class DataService extends HibernateService {
 						List<Charge> chargesList = query.getResultList();
 						for (Charge charge : chargesList) {
 							if(charge!=null) {
-								Hibernate.initialize(charge.getParentJob());
+								Hibernate.initialize(charge.getParentJob().getParentInvoice());
 								jobChargesList.add(charge);
 							}
 						}
