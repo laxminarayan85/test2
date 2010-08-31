@@ -60,14 +60,14 @@
 		<mx:SetProperty name="width" value="894"/>
 		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="506"/>
 		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="539"/>
-		<mx:SetProperty target="{dataGrid}" name="x" value="368"/>
+		<mx:SetProperty target="{dataGrid}" name="x" value="395"/>
 		<mx:SetProperty target="{select_button}" name="x" value="659"/>
 		<mx:SetProperty target="{clear_button}" name="x" value="764"/>
 		<mx:SetProperty target="{chkInterpolate}" name="x" value="657.5"/>
 		<mx:SetProperty target="{title_edit}" name="x" value="657.5"/>
 		<mx:SetProperty target="{label1}" name="x" value="567"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mx:LineChart x="36" y="13" id="linechart0" height="289" dataProvider="{priceList.elements}" showDataTips="true" width="315">
+			<mx:LineChart x="10" y="13" id="linechart0" height="289" dataProvider="{priceList.elements}" showDataTips="true" width="377">
 				 <mx:horizontalAxis>
 				    <mx:CategoryAxis 
 				         dataProvider="{priceList.elements}" 
@@ -95,7 +95,8 @@
 		<mx:SetProperty target="{canvas1}" name="width" value="864"/>
 		<mx:SetProperty target="{title_edit}" name="width" value="206.5"/>
 		<mx:SetProperty target="{label1}" name="width" value="82.5"/>
-		<mx:SetProperty target="{dataGrid}" name="width" value="195"/>
+		<mx:SetProperty target="{dataGrid}" name="width" value="168"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="391"/>
 		
 	</mx:State>
 	<mx:State name="Waste Chart" basedOn="Price List">
