@@ -979,8 +979,8 @@
 	}
 	private function mapFromPreferencesSystemData():void {
 		//check boxes
-		preferencesSystem.enablePricingSystem = true;
-		preferencesSystem.lineItemTaxes = true;
+		/* preferencesSystem.enablePricingSystem = true;
+		preferencesSystem.lineItemTaxes = true; */
 		company_canvas.address_editor.setAddress(preferencesSystem.companyAddress);
 		if(preferencesSystem.numbersIntegers !=null)
 			if (preferencesSystem.numbersIntegers.length == 0){
