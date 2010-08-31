@@ -40,7 +40,7 @@
 						return String(charge.parentInvoice.invoiceNumber);
 					}
 					if(charge.parentJob!=null){
-						return String(charge.parentJob.jobNumber);
+						return String(charge.parentJob.jobNumber)+" / "+charge.parentJob.parentInvoice.invoiceNumber;
 					}
 				}
 				return "";
