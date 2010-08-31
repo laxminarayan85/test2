@@ -644,7 +644,7 @@
 			initialize="gridInit(event);">
 		<mx:columns>
 		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" textAlign="right" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" textAlign="right" sortable="false" width="60"/>
+		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" textAlign="right" sortable="false" width="60" labelFunction="formatAmount"/>
 			 <mx:DataGridColumn id="colSide" headerText="{side_header}" textAlign="right" dataField="side" labelFunction="showSide"/>
 		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" textAlign="right" labelFunction="showColor" sortable="false" width="65"/>
 		</mx:columns>
