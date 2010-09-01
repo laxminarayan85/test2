@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
-	xmlns:vo="com.efi.printsmith.data.*" width="630" height="612" 
+	xmlns:vo="com.efi.printsmith.data.*" width="888" height="612" 
 	defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockPicker')}" 
-    xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
+    xmlns:text="flash.text.*" xmlns:comp="com.efi.printsmith.components.*" borderThickness="3" borderStyle="solid" fontSize="9">
           
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -815,64 +815,64 @@
 		     <mx:DataGridColumn dataField="greenSealCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GreenSeal')}"/>
 		</mx:columns>
 		</mx:DataGrid>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.SelectStock')}" id="select_button" enabled="{(dataGrid.selectedItem != null) &amp;&amp; dataGrid.selectedItems.length==1}" click="selectStockDefinition();"  width="89" x="10" y="10"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" id="select_button0" enabled="{(dataGrid.selectedItem != null)}" click="deleteStockDefinition();"  width="89" x="466" y="10"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" enabled="true" click="newStockDefinition();" id="new_button" width="81" x="195" y="10"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Cancel')}" click="cancelPicker();" id="cancel_button" width="81" x="377" y="10"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ClearSearch')}" click="clearSearch();" id="clear_button" width="80" x="107" y="10" enabled="false"/>
-		<mx:Label x="57" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}"/>
-		<mx:Label x="58" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}"/>
-		<mx:Label x="58" y="142" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Finish')}"/>
-		<mx:Label x="61" y="168" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}"/>
-		<mx:Label x="57" y="194" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Grade')}"/>
-		<mx:Label x="4" y="220" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}"/>
-		<mx:Label x="51" y="246" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Vendor')}"/>
-		<mx:Label x="258" y="64" text="Type:"/>
-		<mx:Label x="227" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ProductID')}"/>
-		<mx:Label x="211" y="142" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}"/>
-		<mx:Label x="211" y="168" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GenericColor')}"/>
-		<mx:Label x="230" y="194" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thickness')}"/>
-		<mx:Label x="212" y="220" text="# Sheets/Set:"/>
-		<mx:Label x="208" y="246" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockNumber')}"/>
-		<mx:Label x="445" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Size')}"/>
-		<mx:Label x="490" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Min')}"/>
-		<mx:Label x="545" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Max')}"/>
-		<mx:Label x="429" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}"/>
-		<mx:Label x="442" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CWT')}"/>
-		<mx:Label x="396" y="142" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.QtyOnHand')}"/>
-		<mx:Label x="411" y="168" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RollWidth')}"/>
-		<mx:CheckBox x="418" y="192" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRollStock')}" id="chkShowRollStock" change="doRollStockChanged();"/>
-		<mx:CheckBox x="418" y="207" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock" change="doLargeFormatChange();"/>
-		<mx:CheckBox x="418" y="222" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate" change="search();"/>
-		<mx:CheckBox x="418" y="237" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock" change="search();"/>
-		<mx:CheckBox x="418" y="252" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="search();"/>
-		
-		<mx:ComboBox x="99" y="62" width="98" id="txtGroup" dataProvider="{stockGroups}" labelField="name" change="search();"/>
-		<mx:TextInput x="99" y="114" width="98" id="txtName" change="search();"/>
-		<mx:ComboBox x="99" y="140" width="98" id="txtFinish" dataProvider="{finishes}" labelField="name"  change="search();"/>
-		<mx:ComboBox x="99" y="166" width="98" id="txtColor" dataProvider="{colors}" labelField="name" change="search();"/>
-		<mx:ComboBox x="99" y="192" width="98" id="txtGrade" dataProvider="{grades}" labelField="name" change="search();"/>
-		<mx:TextInput x="99" y="218" width="98" id="txtMinOrder" change="search();"/>
-		<mx:ComboBox x="99" y="244" width="98" id="txtVendor" dataProvider="{vendors}" labelField="name" change="search();"/>
-		<mx:ComboBox x="295" y="62" width="98" id="txtStockType" dataProvider="{stockTypes}" labelField="name" change="search();"/>
-		<mx:TextInput x="478" y="62" width="48" id="txtSizeMin" change="search();"/>
-		<mx:TextInput x="478" y="88" width="48" id="txtWeightMin" change="search();"/>
-		<mx:TextInput x="534" y="88" width="48" id="txtWeightMax" change="search();"/>
-		<mx:TextInput x="478" y="114" width="48" id="txtCwtMin" change="search();"/>
-		<mx:TextInput x="534" y="114" width="48" id="txtCwtMax" change="search();"/>
-		<mx:TextInput x="478" y="140" width="48" id="txtQtyOnHandMin" change="search();"/>
-		<mx:TextInput x="534" y="140" width="48" id="txtQtyOnHandMax" change="search();"/>
-		<mx:TextInput x="478" y="166" width="48" enabled="false" id="txtRollWidthMin" change="search();"/>
-		<mx:TextInput x="534" y="166" width="48" enabled="false" id="txtRollWidthMax" change="search();"/>
-		<mx:TextInput x="534" y="62" width="48" id="txtSizeMax" change="search();"/>
-		<mx:TextInput x="295" y="114" width="98" id="txtProductId" change="search();"/>
-		<mx:TextInput x="295" y="140" width="98" id="txtCoatedSides" change="search();"/>
-		<mx:ComboBox x="295" y="166" width="98" id="txtGenericColors" dataProvider="{genericColors}" labelField="name" change="search();"/>
-		<mx:TextInput x="295" y="192" width="40" id="txtThickness" change="search();"/>
-		<mx:ComboBox x="340" y="192" width="58" id="txtThicknessUOM" dataProvider="{uoms}" labelField="name" change="search();"/>
-		<mx:TextInput x="295" y="218" width="98" id="txtSheetsPerSet" change="search();"/>
-		<mx:TextInput x="295" y="244" width="98" id="txtStockNumber" change="search();"/>
-		<mx:Button x="284" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="85" id="status_button" click="doStatus()"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.SelectStock')}" id="select_button" enabled="{(dataGrid.selectedItem != null) &amp;&amp; dataGrid.selectedItems.length==1}" click="selectStockDefinition();"  width="100" x="10" y="10"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" id="select_button0" enabled="{(dataGrid.selectedItem != null)}" click="deleteStockDefinition();" x="586" y="10" width="100"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" enabled="true" click="newStockDefinition();" id="new_button" width="100" x="226" y="10"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Cancel')}" click="cancelPicker();" id="cancel_button" width="100" x="478" y="10"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ClearSearch')}" click="clearSearch();" id="clear_button" width="100" x="118" y="10" enabled="false"/>
+		<mx:Label x="10" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}" width="81" textAlign="right"/>
+		<mx:Label x="10" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" width="81" textAlign="right"/>
+		<mx:Label x="10" y="142" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Finish')}" width="81" textAlign="right"/>
+		<mx:Label x="10" y="168" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}" width="81" textAlign="right"/>
+		<mx:Label x="10" y="194" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Grade')}" width="81" textAlign="right"/>
+		<mx:Label x="11" y="220" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}" width="81" textAlign="right"/>
+		<mx:Label x="23" y="246" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Vendor')}" width="68" textAlign="right"/>
+		<mx:Label x="275" y="64" text="Type:" textAlign="right" width="99"/>
+		<mx:Label x="265" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ProductID')}" textAlign="right" width="109"/>
+		<mx:Label x="265" y="142" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}" textAlign="right" width="109"/>
+		<mx:Label x="265" y="168" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GenericColor')}" textAlign="right" width="109"/>
+		<mx:Label x="265" y="194" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thickness')}" textAlign="right" width="109"/>
+		<mx:Label x="265" y="220" text="# Sheets/Set:" textAlign="right" width="109"/>
+		<mx:Label x="265" y="246" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockNumber')}" textAlign="right" width="109"/>
+		<mx:Label x="548" y="63" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Size')}" textAlign="right" width="100"/>
+		<mx:Label x="627" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Min')}" textAlign="center"/>
+		<mx:Label x="678" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Max')}" textAlign="center"/>
+		<mx:Label x="548" y="89" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}" textAlign="right" width="100"/>
+		<mx:Label x="548" y="115" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CWT')}" textAlign="right" width="100"/>
+		<mx:Label x="548" y="141" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.QtyOnHand')}" textAlign="right" width="100"/>
+		<mx:Label x="548" y="167" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RollWidth')}" textAlign="right" width="100"/>
+		<mx:CheckBox x="595" y="192" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRollStock')}" id="chkShowRollStock" change="doRollStockChanged();"/>
+		<mx:CheckBox x="595" y="207" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock" change="doLargeFormatChange();"/>
+		<mx:CheckBox x="595" y="222" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate" change="search();"/>
+		<mx:CheckBox x="595" y="237" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock" change="search();"/>
+		<mx:CheckBox x="595" y="252" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="search();"/>
+				
+		<comp:VariableWidthComboBoxComponent x="99" y="62" width="158" id="txtGroup" dataProvider="{stockGroups}" labelField="name" change="search();"/>
+		<mx:TextInput x="99" y="114" width="158" id="txtName" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="99" y="140" width="158" id="txtFinish" dataProvider="{finishes}" labelField="name"  change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="99" y="166" width="158" id="txtColor" dataProvider="{colors}" labelField="name" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="99" y="192" width="158" id="txtGrade" dataProvider="{grades}" labelField="name" change="search();"/>
+		<mx:TextInput x="99" y="218" width="158" id="txtMinOrder" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="99" y="244" width="158" id="txtVendor" dataProvider="{vendors}" labelField="name" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="382" y="62" width="158" id="txtStockType" dataProvider="{stockTypes}" labelField="name" change="search();"/>
+		<mx:TextInput x="655" y="62" width="48" id="txtSizeMin" change="search();"/>
+		<mx:TextInput x="655" y="88" width="48" id="txtWeightMin" change="search();"/>
+		<mx:TextInput x="711" y="88" width="48" id="txtWeightMax" change="search();"/>
+		<mx:TextInput x="655" y="114" width="48" id="txtCwtMin" change="search();"/>
+		<mx:TextInput x="711" y="114" width="48" id="txtCwtMax" change="search();"/>
+		<mx:TextInput x="655" y="140" width="48" id="txtQtyOnHandMin" change="search();"/>
+		<mx:TextInput x="711" y="140" width="48" id="txtQtyOnHandMax" change="search();"/>
+		<mx:TextInput x="655" y="166" width="48" enabled="false" id="txtRollWidthMin" change="search();"/>
+		<mx:TextInput x="711" y="166" width="48" enabled="false" id="txtRollWidthMax" change="search();"/>
+		<mx:TextInput x="711" y="62" width="48" id="txtSizeMax" change="search();"/>
+		<mx:TextInput x="382" y="114" width="158" id="txtProductId" change="search();"/>
+		<mx:TextInput x="382" y="140" width="158" id="txtCoatedSides" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="382" y="166" width="158" id="txtGenericColors" dataProvider="{genericColors}" labelField="name" change="search();"/>
+		<mx:TextInput x="382" y="192" width="69" id="txtThickness" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="459" y="192" width="81" id="txtThicknessUOM" dataProvider="{uoms}" labelField="name" change="search();"/>
+		<mx:TextInput x="382" y="218" width="158" id="txtSheetsPerSet" change="search();"/>
+		<mx:TextInput x="382" y="244" width="158" id="txtStockNumber" change="search();"/>
+		<mx:Button x="334" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="100" id="status_button" click="doStatus()"/>
 		<mx:Image x="0" y="246" width="15" height="19" source="assets/Original PS Icons/WebStatus.png" id="web_status"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        

@@ -17,8 +17,8 @@
             
             private function onChange(e:Event):void{
             	// Not ideal - currently hard-coded for specific font size
-				if (this.width/7 < this.text.length) {
-					this.text = this.text.slice(0, width/7 - 3) + "...";
+				if (this.width/9 < this.text.length) {
+					this.text = this.text.slice(0, width/9 - 3) + "...";
 				}
             }
             
