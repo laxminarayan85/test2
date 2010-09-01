@@ -213,7 +213,6 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	
 	private function doDeleteCopier():void {         
-		dataService.deleteItem("CopierDefinition", copierDefinition.id);     
 	}
 	
 	private function doDuplicate():void { 
@@ -491,6 +490,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	
 	private function handleSaveResult(ev:ResultEvent):void {
 		selectedCopierId = (ev.result as CopierDefinition).id;
+		copierDefinition = ev.result as CopierDefinition;
 		
 		dataService.getCopierPicker("CopierDefinition");
 	}
@@ -796,7 +796,6 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				squarerunsize.visible= false;
 				squarefinishsize.visible= false;
 				interpolatematrix.visible= false;
-				copyMarkup2.visible = false;
 				copymarkuplabel.visible = false;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;

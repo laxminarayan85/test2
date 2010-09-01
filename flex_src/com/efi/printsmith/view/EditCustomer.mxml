@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
-width="100%" height="624" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}"
+width="100%" height="704" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}"
 creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}" name="Customer Editor" xmlns:ns1="com.efi.printsmith.components.*">
 <mx:Metadata>
     [Event(name="SaveAddressEvent", type="SaveAddressEvent")]
-</mx:Metadata>                            
+</mx:Metadata>
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -75,6 +75,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.events.UpdateDataProviderEvent;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
+	import com.efi.printsmith.events.commandEvents.EditForms.EditContactEvent;
 
 	import com.efi.printsmith.events.commandEvents.Accounts.*;
 	import mx.utils.StringUtil;  
@@ -956,6 +957,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 	
 	}
+	private function doContact():void{
+		//var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+	//	event.dispatch();
+	}
+	private function doRemoveContact():void{
+		
+	}
 		
     
 ]]>
@@ -982,6 +990,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Label x="344" y="424" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
 				<mx:ComboBox x="127" y="421" height="22" id="invoicecontactlist" labelFunction="doName" enabled="true" width="160" dataProvider="{contacts}" change="updateInvoiceContact();"/>
 				<mx:ComboBox x="461" y="421" height="21" id="statementcontactlist" dataProvider="{contacts}" labelFunction="doName" change="updateStatementContact();" width="160"/>
+				<mx:Label x="405" y="469"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.DeleteAdd')}"/>
+				<mx:LinkButton x="547"
+					   id="remove_contact_button"
+					   click="doRemoveContact()"
+					   icon="@Embed(source='../../../../assets/delete16.png')"
+					   width="24"
+					   bottom="66"/>
+		<mx:LinkButton x="579"
+					   id="add_contact_button"
+					   click="doContact()"
+					   icon="@Embed(source='../../../../assets/add16.png')"
+					   width="24"
+					   bottom="66"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasCreditControl" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
 				<mx:TextInput restrict="0-9\." x="181" y="10" id="credit_limit_edit" width="160" text="{Snowmass.getCurrencyFormatter(false,2).format(account.creditLimit)}"  focusOut="ClearLabel();"/>

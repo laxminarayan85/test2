@@ -5,7 +5,6 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<!--<mx:states>
 		<mx:State name="RollFedState">
 			<mx:SetProperty target="{label1}" name="text" value="Max Roll Width:"/>
-			<mx:SetProperty target="{label2}" name="text" value="Min Roll Width:"/>
 			<mx:RemoveChild target="{label3}"/>
 			<mx:RemoveChild target="{WorkTurn}"/>
 			<mx:RemoveChild target="{label4}"/>

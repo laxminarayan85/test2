@@ -183,6 +183,22 @@
 	    doSelect();
 		PopUpManager.removePopUp(this);
 	}
+	private function doCopy():void {
+		var newPriceList:PriceListBase = null;
+	       newPriceList = new PriceListBase; 	
+	      if (dataGrid.selectedItem == null){
+	    	Alert.show("No Item selected to Edit.", "Warning", 0, this, null);
+			return;	    	
+	    }
+		newPriceList = dataGrid.selectedItem as PriceListBase;
+		var editPage:Container = parentContainer;
+		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
+		titleWindow.setCopy(true);
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPriceList(newPriceList);
+	    doSelect();
+		PopUpManager.removePopUp(this);
+	}
 		
 	private function doClear():void {
 		var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CLEARPRICELIST, null);
@@ -216,11 +232,12 @@
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="doSelect();"  width="108" x="399" y="10"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Clear')}" enabled="true" click="doClear();" id="clear_button" width="108" x="400.5" y="40"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" click="doNew();" id="new_button" width="108" x="399" y="80"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" click="doEdit();" id="edit_button" width="108" x="399" y="106"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" click="doDelete();" id="delete_button" width="108" x="399" y="132"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" id="cancel_button" width="108" x="399" y="172"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" click="doEdit();" id="edit_button" width="108" x="399" y="113"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" click="doCopy();" id="copy_button" width="108" x="397.5" y="143"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" click="doDelete();" id="delete_button" width="108" x="399" y="173"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" id="cancel_button" width="108" x="397.5" y="213"/>
 		<mx:HRule x="399" y="70" width="109.5"/>
-		<mx:HRule x="397.5" y="162" width="109.5"/>
+		<mx:HRule x="397.5" y="203" width="109.5"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 

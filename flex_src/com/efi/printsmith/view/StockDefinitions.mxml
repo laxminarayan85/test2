@@ -451,6 +451,9 @@
 	private function handleUIButtonFault(ev:FaultEvent):void {  
 	}
 private function loadCoatedArray():void{
+	var none:Object = new Object;
+	none.name = " ";
+	stockCoated.addItem(none);
 	var one:Object = new Object;
 	 one.name = "1";
 	 stockCoated.addItem(one);
@@ -1586,6 +1589,8 @@ private function loadCoatedArray():void{
 			cboUom.enabled = false;
 			if (this.currentState =="SheetStock")
 				calstockMWeight(null);
+			if (this.currentState =="RigidSubstrate")
+				calstockMWeight(null);
 			if (this.currentState=="RollStock")
 				Costunits.enabled = true;
 			else
@@ -1937,7 +1942,7 @@ private function doRound(evt:FocusEvent):void{
 
 	<mx:RadioButtonGroup id="stockUnit" change="doStockUnitChangeEvent(event)"/>
 	<mx:RadioButton x="636" y="67" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}"/>
-	<mx:RadioButton x="636" y="82" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" id="radiobutton1"/>
+	<mx:RadioButton x="636" y="85" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" id="radiobutton1"/>
 	<mx:RadioButton x="636" y="103" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}" groupName="stockUnit"  value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}"/>
 	<mx:RadioButton x="636" y="122" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" groupName="stockUnit" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" id="radiobutton2"/>
 	<mx:RadioButton x="636" y="140" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}"/>
@@ -2136,14 +2141,14 @@ private function doRound(evt:FocusEvent):void{
 			</mx:Panel>
 		</mx:Canvas>
 	</mx:TabNavigator>
-	<mx:Button x="10" y="5" width="45" height="38" click="doPrev();">
+	<mx:Button x="20" y="5" width="45" height="38" click="doPrev();">
 		<mx:icon>@Embed(source='../../../../assets/previous_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="56" y="5" width="45" height="38" click="doNext();" id="button2">
+	<mx:Button x="73" y="5" width="45" height="38" click="doNext();" id="button2">
 		<mx:icon>@Embed(source='../../../../assets/next_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="10" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="38" textAlign="center" id="label15"/>
-	<mx:Label x="56" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center" id="label14"/>
+	<mx:Label x="10" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="55" textAlign="center" id="label15"/>
+	<mx:Label x="80" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center" id="label14"/>
 	<mx:Button x="229" y="0" width="38" height="38" click="doSave();" enabled="{enableSave}">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 	</mx:Button>

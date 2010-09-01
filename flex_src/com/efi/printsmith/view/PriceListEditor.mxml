@@ -259,6 +259,8 @@
 	
 	[Bindable]
 	private var priceListElement:PriceListElement;
+	[Bindable]
+	private var copyFLag:Boolean = false;
 		
 	public var parentContainer:Container;
 
@@ -332,7 +334,9 @@
 	private function handleLoadColor(ev:ResultEvent):void {
 		 ColorArray = ev.result as ArrayCollection;
 	}
-	            
+	public function setCopy(temp:Boolean):void{
+		copyFLag= temp;
+	}           
 	public function setPriceList(priceList:PriceListBase):void {
 		if (priceList == null) return;
 
@@ -402,29 +406,13 @@
 			
 //			for each(var item:PriceListElement in priceList.elements){
 //				dataServicePriceList.addUpdate(item);
-//			} 
+//			}
+ 
 			dataServicePriceList.addUpdate(priceList);
-			if (this.parentContainer.name == "Copier Definitions") {
-				var editCopierDefinitions:CopierDefinitions = this.parentContainer as CopierDefinitions;
-				if (itemType == "WasteChart") {
-					editCopierDefinitions.wasteName.text = priceList.name;
-				} else if (itemType == "SpeedTable") {
-					
-				}		
-			}
-			if (this.parentContainer.name == "Press Definitions") {
-				var editPressDefinitions:PressDefinitions = this.parentContainer as PressDefinitions;
-				if (itemType == "WasteChart") {
-					editPressDefinitions.selectedWasteChart.text = priceList.name;
-				} else if (itemType == "SpeedTable") {
-					editPressDefinitions.selectedSpeedTable.text = priceList.name;
-				}		
-			}
-				
-			PopUpManager.removePopUp(this);
 		}else {
 			showMessage("Cannot save "+currentState.toString()+" with an empty name.","Cannot Save");
 		}
+			
 	}     
 	
 	private function showMessage(message:String,title:String):void {  
@@ -448,6 +436,15 @@
 		priceList.isRate = chkUseAsRateList.selected;
 		priceList.isDiscount = chkProductionDiscount.selected;
 		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
+		if (copyFLag){
+			priceList.id = 0;
+			for (var t:int = 0;t < priceList.elements.length;t++) {
+				var element1:PriceListElement = priceList.elements.getItemAt(t) as PriceListElement;
+				element1.id = 0;
+			}
+			
+		}
+		
 		if (itemType == "WasteChart") {
 			for (var i:int = 0;i < priceList.elements.length;i++) {
 				var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
@@ -461,7 +458,27 @@
 	{
 	}
 
-	private function handleSaveItemsResult(ev:ResultEvent):void {	
+	private function handleSaveItemsResult(ev:ResultEvent):void {
+		if (this.parentContainer.name == "Copier Definitions") {
+				var editCopierDefinitions:CopierDefinitions = this.parentContainer as CopierDefinitions;
+				if (itemType == "WasteChart") {
+					editCopierDefinitions.wasteName.text = priceList.name;
+				} else if (itemType == "SpeedTable") {
+					
+				}		
+			}
+			if (this.parentContainer.name == "Press Definitions") {
+				var editPressDefinitions:PressDefinitions = this.parentContainer as PressDefinitions;
+				if (itemType == "WasteChart") {
+					editPressDefinitions.selectedWasteChart.text = priceList.name;
+				} else if (itemType == "SpeedTable") {
+					editPressDefinitions.selectedSpeedTable.text = priceList.name;
+				}		
+			}
+				
+			PopUpManager.removePopUp(this);
+		
+		
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
@@ -510,6 +527,8 @@
 			else
 				priceList = ev.result as PaperPrice;
 		}
+		if (copyFLag)
+			priceList.name = priceList.name+' '+ resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Copy')
 	}
 	
 	private function doNewPriceListElement():void {
