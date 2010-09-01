@@ -148,6 +148,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		notification_consumer.subscribe();     
 		first = true;
 		setSettings();
+		this.enabled = false;
 		dataService.getAccountPicker("Account");
 
 		var eventAddress:AccountsAddressPanelEvent = new AccountsAddressPanelEvent(canvasAddress, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
@@ -196,6 +197,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		account = new Account();
 		setMarketing();
 		this.setAccount(account);
+		this.enabled = true;
 
 	}
 	private function handleAccountPickerMasterCancel(evt:AccountPickerSelectEvent):void {
@@ -215,7 +217,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
-		
+		this.enabled = true;
 		dataService.getAccount(evt.account.id);
 		
 		/* if (evt.account != null) {
@@ -234,6 +236,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.account = new Account();
 		setMarketing();
 		this.setAccount(account);
+		this.enabled = true;
 
 	}
 	private function handleGetResult(ev:ResultEvent):void {
@@ -629,9 +632,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 //// load
 	private function handleLoadResult(ev:ResultEvent):void {
 		accounts = ev.result as ArrayCollection;
-		if (first)
+		if (first){
 			this.doGet();
 			first = false;
+		}
+		else
+			this.enabled = true;
 	}
 
 	private function handleLoadSalesReps(ev:ResultEvent):void {

@@ -337,6 +337,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 				productionCopiers.selectedIndex = findItem(copierDefinition.machineName, productionCopiersArray);
 			}
 			charge_sales_category_combo.selectedIndex = findItem(salesCatName, salesCategories);
+			
+			 if (copierDefinition.wasteChart != null)
+			 		wasteName.label = WasteListLabel();
 			this.charges = copierDefinition.charges;
 			updateControlState();
 		} else if (ev.token.operation == "getPricingMatrix") {
@@ -670,13 +673,13 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 
 	private function handleWastePickerClear(evt:PriceListPickerSelectEvent):void {
 		copierDefinition.wasteChart = null;
-		wasteName.text = "";
+		wasteName.label = WasteListLabel();
 	}
 	
 	private function handleWastePickerSelect(evt:PriceListPickerSelectEvent):void {
 		copierDefinition.wasteChart = evt.priceList as WasteChart;
 		if (copierDefinition.wasteChart != null)
-			wasteName.text = copierDefinition.wasteChart.name;
+			wasteName.label = WasteListLabel();
 	}
 	
 	private function handleWastePickerNew(evt:PriceListPickerSelectEvent):void {
@@ -1021,7 +1024,23 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 					stockMarkup.enabled = false;
 			}
 	}
-
+	 private function doclickwaste(event: MouseEvent):void{
+    		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPriceList(copierDefinition.wasteChart as PriceListBase);		
+    	
+    }
+	private function WasteListLabel():String {
+		if (copierDefinition.wasteChart != null) {
+			if (copierDefinition.wasteChart.name != null) {
+				return copierDefinition.wasteChart.name;
+			} else {
+				return "No Name";
+			}
+		} else {
+			return "None";
+		}
+	}
 ]]>
                              
 </mx:Script>	
@@ -1122,7 +1141,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Label x="26" y="607" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.BaseRate')}" id="baseratelabel" width="88" visible="false" textAlign="right"/>
 		<mx:Label x="26" y="607" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.RateCopy')}" id="ratecopylabel" visible="false" textAlign="right" enabled="false" width="88"/>
 		<mx:TextInput  restrict="0-9\." x="126" y="605" width="71" id="copyMarkup2" height="20" text="{Snowmass.getCurrencyFormatter(false, 2).format(copierDefinition.copyMarkup2)}" />
-		<mx:TextInput   restrict="0-9\." x="126" y="605" width="71" id="baseRate_edit" height="20" text="{Snowmass.getCurrencyFormatter(false, 2).format(copierDefinition.baseRate)}" />
+		<mx:TextInput   restrict="0-9\." x="126" y="605" width="71" id="baseRate_edit" height="20" text="{Snowmass.getCurrencyFormatter(false, 4).format(copierDefinition.baseRate)}" />
 		<mx:TextInput  restrict="0-9\." x="126" y="605" width="71" id="RateCopy" height="20" visible="false" enabled="false" text="{copierDefinition.flatRate}"/>
 		<mx:Label x="14" y="627" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.StockMarkup')}" width="104" textAlign="right"/>
 		<mx:Label x="14" y="649" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Side2Factor')}" width="104" textAlign="right"/>
@@ -1143,7 +1162,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:RadioButton x="344" y="524" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SquareAreaFromFinish')}" id="squarefinishsize" groupName="MatrixArea" value="AreaFinishSize"/>
 		<mx:CheckBox x="344" y="544" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.InterpolateMatrixVal')}" id="interpolatematrix" selected="{copierDefinition.interpolateMatrix}"/>
 		<mx:HRule y="595" height="2" left="5" right="5"/>
-		<mx:Text x="674" y="206.5" text="{copierDefinition.wasteChart.name}" width="97" id="wasteName" height="20"/>
+		<mx:LinkButton x="674" y="206.5" label="{WasteListLabel()}" width="97" id="wasteName" height="20" click="doclickwaste(event);"/>
 		<mx:List x="534" y="150" height="46.5" width="231" id="chargelist" dataProvider="{copierDefinition.charges}" labelField="name"></mx:List>
 		<mx:RadioButton x="134" y="565" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixisMarkuptable')}" id="matrixmarkup"  groupName="matrixSetup" value="MarkupTable"/>
 		<mx:Label x="56" y="731" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38"/>

@@ -5,6 +5,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:RemoteObject id="dataService2" destination="dataService">
 	<mx:method name="getContactPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="getContact" fault="handleFault(event)" result="handleGetResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -121,7 +122,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private var account:Account;
 	[Bindable]                                         
     private var creditCardPreferences:PreferencesCreditCard;
-	               
+	[Bindable]
+	private var accounts:ArrayCollection = new ArrayCollection();               
 	[Bindable]
     private var salesReps:ArrayCollection = new ArrayCollection(); 
     [Bindable]
@@ -188,12 +190,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	      
 	private function doAccountPicker():void {
-		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
-	    accountPickerWindow.setStyle("borderAlpha", 0.9);
-	    accountPickerWindow.formIsEmpty = true;
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
+		dataService2.getAccountPicker("Account");
+			
 	}           
 	                                  	
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
@@ -732,7 +730,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		dataService2.getContactPicker("Contact");
 	}
 
-	
+	private function handleLoadAccountResult(ev:ResultEvent):void{
+		accounts = ev.result as ArrayCollection;
+		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+	    accountPickerWindow.setStyle("borderAlpha", 0.9);
+	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.setAccounts(accounts);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);	
+	}
 	private function handleLoadResult(ev:ResultEvent):void {
 		contacts = ev.result as ArrayCollection;
 		if (first){

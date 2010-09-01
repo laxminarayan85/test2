@@ -456,11 +456,15 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		this.charges = pressDefinition.charges;
 		updateControlState();
 		if (pressDefinition.speedTable != null){
+			selectedSpeedTable.label = speedListLabel();
 			AvgImpressPerhour.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable')
 			AvgImpressPerhour.enabled = false;
 		}else{
 			AvgImpressPerhour.enabled = true;
 			AvgImpressPerhour.text = Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.avgImpressPerHour)
+		}
+		if (pressDefinition.wasteChart != null){
+			selectedWasteChart.label = WasteListLabel();
 		}
 	    doWashUpPerFountain(); 
 	}
@@ -532,11 +536,12 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private function handleClearWasteChart(evt:PriceListPickerSelectEvent):void {
 		pressDefinition.wasteChart = null;
 		waste = false;
+		selectedWasteChart.label = WasteListLabel();
 	}
     private function handleSelectWasteChart(evt:PriceListPickerSelectEvent):void {
 		if (evt.priceList != null) {
 			pressDefinition.wasteChart = evt.priceList as WasteChart;
-			selectedWasteChart.text = pressDefinition.wasteChart.name;
+			selectedWasteChart.label = WasteListLabel();
 		} else {
 			this.wasteChart = null;
 			Alert.show("Price List Picker returned a null price list", "Error");
@@ -555,13 +560,14 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     private function handleClearSpeedTable(evt:PriceListPickerSelectEvent):void {
 		pressDefinition.speedTable = null;
 		speed = false;
+		selectedSpeedTable.label = speedListLabel();
 		AvgImpressPerhour.enabled = true;
 		AvgImpressPerhour.text = Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.avgImpressPerHour);
     }
     private function handleSelectSpeedTable(evt:PriceListPickerSelectEvent):void {
 		if (evt.priceList != null) {
 			pressDefinition.speedTable = evt.priceList as SpeedTable;
-			selectedSpeedTable.text = pressDefinition.speedTable.name;
+			selectedSpeedTable.label = speedListLabel();
 			AvgImpressPerhour.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable')
 			AvgImpressPerhour.enabled = false;
 			
@@ -697,6 +703,28 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		
 		
 	}
+	private function speedListLabel():String {
+		if (pressDefinition.speedTable != null) {
+			if (pressDefinition.speedTable.name != null) {
+				return pressDefinition.speedTable.name;
+			} else {
+				return "No Name";
+			}
+		} else {
+			return "None";
+		}
+	}
+	private function WasteListLabel():String {
+		if (pressDefinition.wasteChart != null) {
+			if (pressDefinition.wasteChart.name != null) {
+				return pressDefinition.wasteChart.name;
+			} else {
+				return "No Name";
+			}
+		} else {
+			return "None";
+		}
+	}
 	
 ]]>
                              
@@ -776,8 +804,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:CheckBox x="371" y="491" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Perfector')}" id="Perfector" selected="{pressDefinition.perfector}"/>
 	<mx:Label x="537" y="493" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.GripEdgeGap')}" width="92"/>
 	<mx:TextInput x="637" y="491" id="GripEdge" text="{Snowmass.getCurrencyFormatter(false,4).format(pressDefinition.gripEdge)}" height="20" width="104"/>
-	<mx:Text x="132" y="520" id="selectedWasteChart" text ="{pressDefinition.wasteChart.name}" width="195" click="doclickwaste(event);"/>
-	<mx:Text x="132" y="493" id="selectedSpeedTable" text ="{pressDefinition.speedTable.name}" width="195" click="doclickSpeedTable(event);"/>
+	<mx:LinkButton x="132" y="520" id="selectedWasteChart"  label="{WasteListLabel()}" enabled="{pressDefinition.wasteChart != null}" width="195" click="doclickwaste(event);"/>
+	<mx:LinkButton x="132" y="493" id="selectedSpeedTable"  label="{speedListLabel()}" enabled="{pressDefinition.speedTable != null}" width="195" click="doclickSpeedTable(event);"/>
 	<mx:Text x="501" y="619" id="selectedStockPriceList" text = "{pressDefinition.stockPriceList.name}" width="166"/>
 	<mx:Text x="502" y="649" id="selectedPressPriceList" text="{pressDefinition.pressPriceList.name}" width="165"/>
 	<mx:Button x="380" y="545" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Default')}" click="doDefaultPresses()" width="107"/>

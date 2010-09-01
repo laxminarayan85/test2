@@ -462,18 +462,18 @@
 		if (this.parentContainer.name == "Copier Definitions") {
 				var editCopierDefinitions:CopierDefinitions = this.parentContainer as CopierDefinitions;
 				if (itemType == "WasteChart") {
-					editCopierDefinitions.wasteName.text = priceList.name;
+			//		editCopierDefinitions.wasteName.text = priceList.name;
 				} else if (itemType == "SpeedTable") {
 					
 				}		
 			}
 			if (this.parentContainer.name == "Press Definitions") {
 				var editPressDefinitions:PressDefinitions = this.parentContainer as PressDefinitions;
-				if (itemType == "WasteChart") {
+				/* if (itemType == "WasteChart") {
 					editPressDefinitions.selectedWasteChart.text = priceList.name;
 				} else if (itemType == "SpeedTable") {
-					editPressDefinitions.selectedSpeedTable.text = priceList.name;
-				}		
+		//			editPressDefinitions.selectedSpeedTable.text = priceList.name;
+				}		 */
 			}
 				
 			PopUpManager.removePopUp(this);
