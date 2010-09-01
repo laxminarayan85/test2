@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "fontdefinition")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from fontdefinition where modelbase.id=?")
+@SQLDelete(sql="update fontdefinition set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class FontDefinition extends ModelBase {
 	/**
@@ -94,6 +94,20 @@ public class FontDefinition extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	

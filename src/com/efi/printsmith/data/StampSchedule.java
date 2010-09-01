@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "stampschedule")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from stampschedule where modelbase.id=?")
+@SQLDelete(sql="update stampschedule set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class StampSchedule extends Matrix {
 
@@ -54,6 +54,17 @@ public class StampSchedule extends Matrix {
     this.created = new Date();
     this.modified = new Date();
     this.isDeleted = false;
+  }
+
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
   }
 
 }

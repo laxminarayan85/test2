@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "deliveryticket")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from deliveryticket where modelbase.id=?")
+@SQLDelete(sql="update deliveryticket set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class DeliveryTicket extends ModelBase {
 	/**
@@ -234,6 +234,20 @@ public class DeliveryTicket extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -284,6 +298,7 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Address toAddress;
 	
 	/**
@@ -307,6 +322,7 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Address fromAddress;
 	
 	/**
@@ -376,6 +392,7 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Contact deliveryContact;
 	
 	/**
@@ -560,6 +577,7 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ShippingMethod shipMode;
 	
 	/**
@@ -796,6 +814,7 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Driver driver;
 	
 	/**
@@ -1233,7 +1252,8 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany()
-    @JoinTable( name = "deliveryticket_deliveryjobs")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "deliveryticket_deliveryjobs")
 	private java.util.List<DeliveryTicketJobs> deliveryJobs;
 	
 	/**

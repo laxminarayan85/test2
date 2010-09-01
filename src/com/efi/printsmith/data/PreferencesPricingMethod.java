@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "preferencespricingmethod")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from preferencespricingmethod where modelbase.id=?")
+@SQLDelete(sql="update preferencespricingmethod set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class PreferencesPricingMethod extends ModelBase {
 	/**
@@ -98,6 +98,20 @@ public class PreferencesPricingMethod extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -263,6 +277,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private SalesCategory category;
 	
 	/**
@@ -286,6 +301,7 @@ public class PreferencesPricingMethod extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private EstimatorTypes estimator;
 	
 	/**

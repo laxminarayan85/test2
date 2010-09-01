@@ -105,7 +105,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		} else {
 			chargeDefinition.presetTaxTable = (tax_table_combo.selectedItem as TaxTable);
 		}
-			
+		
 		var selectEvent:ChargePresetInfoEvent = new ChargePresetInfoEvent(ChargePresetInfoEvent.CHARGEPRESETOK, chargeDefinition);
 		dispatchEvent(selectEvent);
 		PopUpManager.removePopUp(this);

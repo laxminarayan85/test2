@@ -51,7 +51,7 @@ import com.efi.printsmith.exceptions.UnknownPropertyException;
  */	
 @Entity
 @Table(name = "addressformatting")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from addressformatting where modelbase.id=?")
+@SQLDelete(sql="update addressformatting set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class AddressFormatting extends ModelBase {
 	/**
@@ -94,10 +94,25 @@ public class AddressFormatting extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Country country;
 	
 	/**

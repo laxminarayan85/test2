@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "stockorder")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from stockorder where modelbase.id=?")
+@SQLDelete(sql="update stockorder set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class StockOrder extends ModelBase {
 	/**
@@ -162,6 +162,20 @@ public class StockOrder extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -258,6 +272,7 @@ public class StockOrder extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Vendor vendor;
 	
 	/**
@@ -304,6 +319,7 @@ public class StockOrder extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private StockColors color;
 	
 	/**
@@ -327,6 +343,7 @@ public class StockOrder extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private StockFinish finish;
 	
 	/**

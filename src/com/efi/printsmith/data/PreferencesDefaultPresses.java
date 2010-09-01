@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "preferencesdefaultpresses")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from preferencesdefaultpresses where modelbase.id=?")
+@SQLDelete(sql="update preferencesdefaultpresses set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class PreferencesDefaultPresses extends ModelBase {
 	/**
@@ -78,10 +78,25 @@ public class PreferencesDefaultPresses extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CopierDefinition defaultBWCopier;
 	
 	/**
@@ -105,6 +120,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CopierDefinition defaultColorCopier;
 	
 	/**
@@ -128,6 +144,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CopierDefinition defaultLargeFormat;
 	
 	/**
@@ -151,6 +168,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PressDefinition defaultRollFedPress;
 	
 	/**
@@ -174,6 +192,7 @@ public class PreferencesDefaultPresses extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PressDefinition defaultSheetFedPress;
 	
 	/**

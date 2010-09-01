@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "jobbase")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from jobbase where modelbase.id=?")
+@SQLDelete(sql="update jobbase set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class JobBase extends ModelBase {
 	/**
@@ -530,6 +530,18 @@ public class JobBase extends ModelBase {
   }
 	
 	
+	@Basic
+  private Boolean isDeleted = false;
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
 	private Long runTime;
 	
 	private Long setUpTime;
@@ -636,6 +648,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private SalesCategory salesCategory;
 	
 	/**
@@ -658,6 +671,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ProductCode productCode;
 	
 	/**
@@ -680,7 +694,8 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @IndexColumn(name="childrenjobbase")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@IndexColumn(name="childrenjobbase")
 	@JoinTable( name = "jobbase_children")
 	private java.util.List<JobBase> children;
 	
@@ -713,7 +728,8 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @IndexColumn(name="chargesjobbase")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@IndexColumn(name="chargesjobbase")
 	@JoinTable( name = "jobbase_charges")
 	private java.util.List<Charge> charges;
 	
@@ -856,6 +872,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ProductionLocations location;
 	
 	/**
@@ -1076,6 +1093,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PressDefinition press;
 	
 	/**
@@ -1208,6 +1226,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne(fetch=FetchType.LAZY)
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PressDefinition pricingPress;
 	
 	/**
@@ -1230,6 +1249,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne(fetch=FetchType.LAZY)
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PressDefinition costingPress;
 	
 	/**
@@ -1274,6 +1294,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private StockDefinition stock;
 	
 	/**
@@ -1296,6 +1317,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
  	@ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	@Basic
 	private Dimension parentSize;
 	
@@ -1319,6 +1341,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
  	@ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	@Basic
 	private Dimension runSize;
 	
@@ -1342,6 +1365,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
  	@ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	@Basic
 	private Dimension finishSize;
 	
@@ -1365,6 +1389,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
  	@ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	@Basic
 	private Dimension foldedSize;
 	
@@ -1520,7 +1545,8 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany()
-    @IndexColumn(name="frontinksjobbase")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@IndexColumn(name="frontinksjobbase")
 	@JoinTable( name = "jobbase_frontinks")
 	private java.util.List<InkColor> frontInks;
 	
@@ -1553,7 +1579,8 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany()
-    @IndexColumn(name="backinksjobbase")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@IndexColumn(name="backinksjobbase")
 	@JoinTable( name = "jobbase_backinks")
 	private java.util.List<InkColor> backInks;
 	
@@ -1610,6 +1637,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PricingRecord pricingRecord;
 	
 	/**
@@ -1632,6 +1660,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne(fetch=FetchType.LAZY)
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CopierDefinition pricingCopier;
 	
 	/**
@@ -1654,6 +1683,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne(fetch=FetchType.LAZY)
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CopierDefinition costingCopier;
 	
 	/**
@@ -1676,6 +1706,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PreferencesPricingMethod pricingMethod;
 	
 	/**
@@ -1742,6 +1773,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CostingRecord costingRecord;
 	
 	/**
@@ -2068,6 +2100,7 @@ public class JobBase extends ModelBase {
    * @generated
    */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
   private Vendor vendor;
 
 	/**
@@ -2180,6 +2213,7 @@ public class JobBase extends ModelBase {
    * @generated
    */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
   private PaperPrice paperPrice;
 
 	/**
@@ -2203,6 +2237,7 @@ public class JobBase extends ModelBase {
    * @generated
    */	
   @ManyToOne( cascade = {CascadeType.ALL})
+@Where(clause="isdeleted <> 'TRUE'")
   private JobJDFStatus jdfStatus;
 
 	/**
@@ -2225,6 +2260,7 @@ public class JobBase extends ModelBase {
    * @generated
    */	
     @ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
   private PaperCalculator paperCal;
 
 	/**
@@ -2776,6 +2812,7 @@ public class JobBase extends ModelBase {
    * @generated
    */	
   @ManyToOne(fetch=FetchType.LAZY, optional=true)
+@Where(clause="isdeleted <> 'TRUE'")
   private InvoiceBase parentInvoice;
 	/**
    * @generated
@@ -2819,7 +2856,8 @@ public class JobBase extends ModelBase {
    * @generated
    */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "jobbase_digitalassets")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "jobbase_digitalassets")
   private java.util.List<DigitalAsset> digitalAssets;
 	/**
    * @generated

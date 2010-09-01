@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "preferencespos")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from preferencespos where modelbase.id=?")
+@SQLDelete(sql="update preferencespos set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class PreferencesPOS extends ModelBase {
 	/**
@@ -190,6 +190,20 @@ public class PreferencesPOS extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -838,6 +852,7 @@ public class PreferencesPOS extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition listFontBean;
 	
 	/**
@@ -861,6 +876,7 @@ public class PreferencesPOS extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition headerFontBean;
 	
 	/**

@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "party")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from party where modelbase.id=?")
+@SQLDelete(sql="update party set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class Party extends ModelBase {
 	/**
@@ -90,6 +90,20 @@ public class Party extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -163,6 +177,7 @@ public class Party extends ModelBase {
 	 * @generated
 	 */	
  	@ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	@Basic
 	private JobTitle jobTitle;
 	
@@ -186,6 +201,7 @@ public class Party extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Address address;
 	
 	/**
@@ -255,7 +271,8 @@ public class Party extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "party_comlinks")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "party_comlinks")
 	private java.util.List<ComLink> comLinks;
 	
 	/**

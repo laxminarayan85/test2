@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "stockdefinition")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from stockdefinition where modelbase.id=?")
+@SQLDelete(sql="update stockdefinition set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class StockDefinition extends ModelBase {
 	/**
@@ -576,6 +576,17 @@ public class StockDefinition extends ModelBase {
     this.isDeleted = false;
   }
 
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
 	public StockDefinition(Long id, String Name, Double weight,Dimension parentsize,StockColors color, GenericColors genericcolor,
 			StockFinish finish, Double thickness, StockGrade grade, Double cwt1, Vendor vendor, String stocknumber, Integer onhand,
 			Integer committed, Integer ordered, Boolean shellitem, Dimension normalrunsize, StockType stocktype,
@@ -663,6 +674,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private StockGroup stkgroup;
 	
 	/**
@@ -686,6 +698,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private StockClass stkclass;
 	
 	/**
@@ -709,6 +722,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private StockType stktype;
 	
 	/**
@@ -755,6 +769,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private StockFinish finish;
 	
 	/**
@@ -801,6 +816,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private StockColors color;
 	
 	/**
@@ -824,6 +840,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private StockGrade grade;
 	
 	/**
@@ -893,6 +910,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Vendor vendor;
 	
 	/**
@@ -939,6 +957,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Dimension parentsize;
 	
 	/**
@@ -1941,6 +1960,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Dimension normalRunSize;
 	
 	/**
@@ -2010,6 +2030,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PressDefinition defaultPress;
 	
 	/**
@@ -3022,6 +3043,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PaperPrice defaultPriceList;
 	
 	/**
@@ -3045,6 +3067,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private GenericColors genericColor;
 	
 	/**
@@ -3068,6 +3091,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Account account;
 	
 	/**
@@ -3114,6 +3138,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
 	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private java.util.List<ChargeDefinition> charges;
 	
 	/**
@@ -3233,7 +3258,8 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany()
-    @JoinTable( name = "stockdefinition_stockchanges")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "stockdefinition_stockchanges")
 	private java.util.List<StockChanges> stockChanges;
 	
 	/**
@@ -3542,6 +3568,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CopierDefinition defaultBWCopier;
 	
 	/**
@@ -3565,6 +3592,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CopierDefinition defaultColorCopier;
 	
 	/**
@@ -3588,6 +3616,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CopierDefinition defaultLargeCopier;
 	
 	/**

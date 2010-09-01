@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "charge")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from charge where modelbase.id=?")
+@SQLDelete(sql="update charge set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class Charge extends ModelBase {
 	/**
@@ -180,6 +180,18 @@ public class Charge extends ModelBase {
     this.isDeleted = false;
   }
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
 	private Long runTime;
 	
 	private Long setUpTime;
@@ -241,6 +253,7 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ChargeDefinition chargeDefinition;
 	
 	/**
@@ -310,6 +323,7 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ProductionLocations productionLocation;
 	
 	/**
@@ -736,6 +750,7 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne(fetch=FetchType.LAZY)
+	@Where(clause="isdeleted <> 'TRUE'")
 	private JobBase parentJob;
 	
 	/**
@@ -759,6 +774,7 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne(fetch=FetchType.LAZY, optional=true)
+	@Where(clause="isdeleted <> 'TRUE'")
 	private InvoiceBase parentInvoice;
 	
 	/**
@@ -926,6 +942,7 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ChargeCostingRecord chargeCostingRecord;
 	
 	/**

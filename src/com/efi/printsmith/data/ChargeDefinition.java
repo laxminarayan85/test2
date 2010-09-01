@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "chargedefinition")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from chargedefinition where modelbase.id=?")
+@SQLDelete(sql="update chargedefinition set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class ChargeDefinition extends ModelBase {
 	/**
@@ -706,6 +706,20 @@ public class ChargeDefinition extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -1313,6 +1327,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PriceList priceList;
 	
 	/**
@@ -1335,6 +1350,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private WasteChart wasteChart;
 	
 	/**
@@ -1423,6 +1439,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ProductionLocations location;
 	
 	/**
@@ -1445,6 +1462,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CostCenter costCenter;
 	
 	/**
@@ -1467,6 +1485,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Substrate substrate;
 	
 	/**
@@ -1577,6 +1596,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private FoldTemplate foldTemplate;
 	
 	/**
@@ -1907,6 +1927,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private SalesCategory salesCategory;
 	
 	/**
@@ -1929,6 +1950,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private TaxTable taxTable;
 	
 	/**
@@ -2355,6 +2377,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ShippingMethod shipMode;
 	
 	/**
@@ -2729,6 +2752,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ChargeCategory parent;
 	
 	/**
@@ -2795,6 +2819,7 @@ public class ChargeDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ChargeCost chargeCost;
 	
 	/** 
@@ -3098,6 +3123,7 @@ public class ChargeDefinition extends ModelBase {
    * @generated
    */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
   private ProductCode productCode;
 
 	/**
@@ -3280,6 +3306,7 @@ public class ChargeDefinition extends ModelBase {
    * @generated
    */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
   private ProductionLocations presetProductionLocation;
 
 	/**
@@ -3402,6 +3429,7 @@ public class ChargeDefinition extends ModelBase {
    * @generated
    */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
   private TaxTable presetTaxTable;
 
 	/**

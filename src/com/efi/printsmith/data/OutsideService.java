@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "outsideservice")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from outsideservice where modelbase.id=?")
+@SQLDelete(sql="update outsideservice set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class OutsideService extends PreferencesMarkups {
 
@@ -54,6 +54,17 @@ public class OutsideService extends PreferencesMarkups {
     this.created = new Date();
     this.modified = new Date();
     this.isDeleted = false;
+  }
+
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
   }
 
 }

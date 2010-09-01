@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "pressdefinition")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from pressdefinition where modelbase.id=?")
+@SQLDelete(sql="update pressdefinition set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class PressDefinition extends ModelBase {
 	/**
@@ -214,6 +214,17 @@ public class PressDefinition extends ModelBase {
     this.created = new Date();
     this.modified = new Date();
     this.isDeleted = false;
+  }
+
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
   }
 
 	public PressDefinition(long id, String name, long MachineID, String machineName) {
@@ -979,6 +990,7 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private WasteChart wasteChart;
 	
 	/**
@@ -1002,6 +1014,7 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PriceList pressPriceList;
 	
 	/**
@@ -1025,6 +1038,7 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PriceList stockPriceList;
 	
 	/**
@@ -1048,6 +1062,7 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private SpeedTable speedTable;
 	
 	/**
@@ -1117,6 +1132,7 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
 	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private java.util.List<ChargeDefinition> charges;
 	
 	/**
@@ -1195,6 +1211,7 @@ public class PressDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private SalesCategory salesCat;
 	
 	/**

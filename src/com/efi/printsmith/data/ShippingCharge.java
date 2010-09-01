@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "shippingcharge")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from shippingcharge where modelbase.id=?")
+@SQLDelete(sql="update shippingcharge set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class ShippingCharge extends Charge {
 	/**
@@ -70,6 +70,20 @@ public class ShippingCharge extends Charge {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -97,6 +111,7 @@ public class ShippingCharge extends Charge {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Address shipTo;
 	
 	/**

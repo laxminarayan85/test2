@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "invoicebase")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from invoicebase where modelbase.id=?")
+@SQLDelete(sql="update invoicebase set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class InvoiceBase extends ModelBase {
 	/**
@@ -298,6 +298,20 @@ public class InvoiceBase extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -371,6 +385,7 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private SalesRep salesRep;
 	
 	/**
@@ -440,6 +455,7 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Address billToAddress;
 	
 	/**
@@ -463,6 +479,7 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Address shipToAddress;
 	
 	/**
@@ -486,6 +503,7 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Contact contact;
 	
 	/**
@@ -555,6 +573,7 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ShippingMethod shippingMethod;
 	
 	/**
@@ -601,6 +620,7 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Account account;
 	
 	/**
@@ -624,7 +644,8 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL}, mappedBy="parentInvoice")
-    @JoinTable( name = "invoicebase_jobs")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "invoicebase_jobs")
 	private java.util.List<JobBase> jobs;
 	
 	/**
@@ -657,7 +678,8 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "invoicebase_charges")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "invoicebase_charges")
 	private java.util.List<Charge> charges;
 	
 	/**
@@ -690,7 +712,8 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "invoicebase_markupcharges")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "invoicebase_markupcharges")
 	private java.util.List<ChargeDefinition> markupCharges;
 	
 	/**
@@ -723,6 +746,7 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private SpecialInstructions specialInstructions;
 	
 	/**
@@ -746,6 +770,7 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private NotePad notes;
 	
 	/**
@@ -769,6 +794,7 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private HoldState holdState;
 	
 	/**
@@ -1126,6 +1152,7 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private TaxTable taxTable;
 	
 	/**

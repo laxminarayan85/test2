@@ -87,7 +87,13 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     	chargeCost.totalUnitCost= totalCost;
     	chargeCost.unitCost = parseFloat(unit_cost_edit.text);
     	chargeCost.unitMaterials = parseFloat(unit_materials_edit.text);
-    }                              
+    	if (chargeCost.created == null) {
+    		chargeCost.created = new Date();
+    	}
+    	chargeCost.modified = new Date();
+    }                               
+    
+    
     private function  calculateTotalUnit(event:Event):void{
     	textFocusOut(event)
     	totalCost = parseFloat(labor_rate_edit.text)/parseFloat(pieces_per_hour_edit.text);

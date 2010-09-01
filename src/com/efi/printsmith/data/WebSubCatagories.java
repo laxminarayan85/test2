@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "websubcatagories")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from websubcatagories where modelbase.id=?")
+@SQLDelete(sql="update websubcatagories set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class WebSubCatagories extends WebCatagories {
 	/**
@@ -62,11 +62,25 @@ public class WebSubCatagories extends WebCatagories {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
     @OneToMany()
-    @JoinTable( name = "websubcatagories_products")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "websubcatagories_products")
 	private java.util.List<WebProducts> products;
 	
 	/**

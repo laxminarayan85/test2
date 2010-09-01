@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "cashregister")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from cashregister where modelbase.id=?")
+@SQLDelete(sql="update cashregister set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class CashRegister extends ModelBase {
 	/**
@@ -126,10 +126,25 @@ public class CashRegister extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Account customerAccount;
 	
 	/**
@@ -153,6 +168,7 @@ public class CashRegister extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private TaxTable taxTable;
 	
 	/**
@@ -176,6 +192,7 @@ public class CashRegister extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private TaxCodes taxCode;
 	
 	/**
@@ -407,6 +424,7 @@ public class CashRegister extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PreferencesCreditCard creditCard;
 	
 	/**
@@ -505,6 +523,7 @@ public class CashRegister extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PreferencesCashRegister cashRegisterDept;
 	
 	/**

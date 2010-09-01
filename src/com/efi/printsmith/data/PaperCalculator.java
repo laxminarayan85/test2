@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "papercalculator")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from papercalculator where modelbase.id=?")
+@SQLDelete(sql="update papercalculator set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class PaperCalculator extends ModelBase {
 	/**
@@ -270,6 +270,20 @@ public class PaperCalculator extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -973,6 +987,7 @@ public class PaperCalculator extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Dimension parentSize;
 	
 	/**
@@ -996,6 +1011,7 @@ public class PaperCalculator extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Dimension finishSize;
 	
 	/**
@@ -1042,6 +1058,7 @@ public class PaperCalculator extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Dimension runSize;
 	
 	/**

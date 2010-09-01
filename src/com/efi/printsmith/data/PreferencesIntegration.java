@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "preferencesintegration")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from preferencesintegration where modelbase.id=?")
+@SQLDelete(sql="update preferencesintegration set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class PreferencesIntegration extends ModelBase {
 	/**
@@ -62,6 +62,20 @@ public class PreferencesIntegration extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	

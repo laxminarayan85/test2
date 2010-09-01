@@ -54,7 +54,7 @@ import com.efi.printsmith.exceptions.UnknownPropertyException;
  */	
 @Entity
 @Table(name = "employee")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from employee where modelbase.id=?")
+@SQLDelete(sql="update employee set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class Employee extends Party {
 	/**
@@ -247,6 +247,20 @@ public class Employee extends Party {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
    * @generated
    */	
@@ -901,8 +915,9 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade={CascadeType.MERGE})
-    @JoinTable( name = "employee_employeepricings")
+	@OneToMany()
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "employee_employeepricings")
 	private java.util.List<PreferencesPricingMethod> employeePricings;
 	
 	/**
@@ -934,8 +949,9 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(cascade={CascadeType.MERGE})
-    @JoinTable( name = "employee_employeecharges")
+    @OneToMany()
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "employee_employeecharges")
 	private java.util.List<ChargeCommand> employeeCharges;
 	
 	/**
@@ -967,8 +983,9 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade={CascadeType.MERGE})
-    @JoinTable( name = "employee_employeepresses")
+	@OneToMany()
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "employee_employeepresses")
 	private java.util.List<ProductionPress> employeePresses;
 	
 	/**
@@ -1000,8 +1017,9 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade={CascadeType.MERGE})
-    @JoinTable( name = "employee_employeecopiers")
+	@OneToMany()
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "employee_employeecopiers")
 	private java.util.List<ProductionCopiers> employeeCopiers;
 	
 	/**
@@ -1079,8 +1097,9 @@ public class Employee extends Party {
 	/**
 	 * @generated
 	 */	
-	@OneToMany(cascade={CascadeType.MERGE})
-    @JoinTable( name = "employee_productionparents")
+	@OneToMany()
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "employee_productionparents")
 	private java.util.List<ProductionLocations> productionParents;
 	
 	/**

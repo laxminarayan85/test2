@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "creditcardtransactions")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from creditcardtransactions where modelbase.id=?")
+@SQLDelete(sql="update creditcardtransactions set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class CreditCardTransactions extends ModelBase {
 	/**
@@ -176,6 +176,20 @@ public class CreditCardTransactions extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -315,6 +329,7 @@ public class CreditCardTransactions extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Invoice invoice;
 	
 	/**
@@ -614,6 +629,7 @@ public class CreditCardTransactions extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private TaxCodes taxCode;
 	
 	/**
@@ -637,6 +653,7 @@ public class CreditCardTransactions extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private TaxTable taxTable;
 	
 	/**
@@ -750,6 +767,7 @@ public class CreditCardTransactions extends ModelBase {
    * @generated
    */	
     @ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
   private CreditCard creditCard;
 
 	/**
@@ -772,6 +790,7 @@ public class CreditCardTransactions extends ModelBase {
    * @generated
    */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
   private Account account;
 
 	/**
@@ -795,6 +814,7 @@ public class CreditCardTransactions extends ModelBase {
    * @generated
    */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
   private Contact contact;
 
 	/**

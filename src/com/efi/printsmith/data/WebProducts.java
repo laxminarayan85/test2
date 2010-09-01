@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "webproducts")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from webproducts where modelbase.id=?")
+@SQLDelete(sql="update webproducts set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class WebProducts extends ModelBase {
 	/**
@@ -102,6 +102,20 @@ public class WebProducts extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -152,6 +166,7 @@ public class WebProducts extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private JobBase sku;
 	
 	/**
@@ -175,6 +190,7 @@ public class WebProducts extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private WebGraphics thumbnail;
 	
 	/**
@@ -198,6 +214,7 @@ public class WebProducts extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private WebGraphics details;
 	
 	/**
@@ -244,6 +261,7 @@ public class WebProducts extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private WebCheckoutTypes checkoutType;
 	
 	/**
@@ -313,6 +331,7 @@ public class WebProducts extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PreferencesPricingMethod calculatePrices;
 	
 	/**
@@ -336,7 +355,8 @@ public class WebProducts extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany()
-    @JoinTable( name = "webproducts_questions")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "webproducts_questions")
 	private java.util.List<WebQuestions> questions;
 	
 	/**

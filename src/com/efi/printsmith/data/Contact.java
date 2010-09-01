@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "contact")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from contact where modelbase.id=?")
+@SQLDelete(sql="update contact set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class Contact extends Party {
 	/**
@@ -136,6 +136,17 @@ public class Contact extends Party {
     this.isDeleted = false;
   }
 
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
 	public Contact(long id, String firstName, String lastName, String accountID, Account parentAcct) {
 		this.id = id;
 		this.setFirstName(firstName);
@@ -149,7 +160,8 @@ public class Contact extends Party {
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "contact_shiptoaddress")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "contact_shiptoaddress")
 	private java.util.List<Address> shipToAddress;
 	
 	/**
@@ -182,6 +194,7 @@ public class Contact extends Party {
 	 * @generated
 	 */	
     @ManyToOne(optional=true)
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Account parentAccount;
 	
 	/**
@@ -343,6 +356,7 @@ public class Contact extends Party {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private SalesRep defaultSalesRep;
 	
 	/**
@@ -389,6 +403,7 @@ public class Contact extends Party {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
+	@Where(clause="isdeleted <> 'TRUE'")
 	private CreditCard creditCard;
 	
 	/**
@@ -412,6 +427,7 @@ public class Contact extends Party {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Marketing marketing;
 	
 	/**
@@ -435,7 +451,8 @@ public class Contact extends Party {
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "contact_campaigns")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "contact_campaigns")
 	private java.util.List<Campaigns> campaigns;
 	
 	/**
@@ -560,6 +577,7 @@ public class Contact extends Party {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private WebCatalogs webCatalog;
 	
 	/**
@@ -583,6 +601,7 @@ public class Contact extends Party {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private WebStatus webStatus;
 	
 	/**

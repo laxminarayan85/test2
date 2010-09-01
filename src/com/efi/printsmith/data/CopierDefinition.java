@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "copierdefinition")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from copierdefinition where modelbase.id=?")
+@SQLDelete(sql="update copierdefinition set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class CopierDefinition extends ModelBase {
 	/**
@@ -258,6 +258,17 @@ public class CopierDefinition extends ModelBase {
     this.created = new Date();
     this.modified = new Date();
     this.isDeleted = false;
+  }
+
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
   }
 
 	public CopierDefinition(long id, String name, int copyID, String machineName, boolean blackwhite,
@@ -1027,6 +1038,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private SalesCategory salesCat;
 	
 	/**
@@ -1128,6 +1140,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
 	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private java.util.List<ChargeDefinition> charges;
 	
 	/**
@@ -1264,6 +1277,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private WasteChart wasteChart;
 	
 	/**
@@ -1287,6 +1301,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PriceList stockPriceList;
 	
 	/**
@@ -1310,6 +1325,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private PriceList copierPriceList;
 	
 	/**
@@ -1402,6 +1418,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Matrix copierMatrix;
 	
 	/**

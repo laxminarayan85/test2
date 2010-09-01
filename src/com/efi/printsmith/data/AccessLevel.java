@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "accesslevel")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from accesslevel where modelbase.id=?")
+@SQLDelete(sql="update accesslevel set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class AccessLevel extends ModelBase {
 	/**
@@ -62,6 +62,20 @@ public class AccessLevel extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	

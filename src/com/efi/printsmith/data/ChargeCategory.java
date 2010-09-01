@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "chargecategory")
-@SQLDelete(sql="update modelbase set isdeleted='TRUE' from chargecategory where modelbase.id=?")
+@SQLDelete(sql="update chargecategory set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
 public class ChargeCategory extends ModelBase {
 	/**
@@ -70,11 +70,25 @@ public class ChargeCategory extends ModelBase {
 
  	
 	
+	@Basic
+  private Boolean isDeleted = false;
+
+	public Boolean getIsDeleted() {
+    return isDeleted;
+  }
+
+	public void setIsDeleted(Boolean isDeleted) {
+    this.isDeleted = isDeleted;
+  }
+
+
+
 	/**
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @JoinTable( name = "chargecategory_children")
+    @Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "chargecategory_children")
 	private java.util.List<ChargeDefinition> children;
 	
 	/**
@@ -131,6 +145,7 @@ public class ChargeCategory extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ChargeCommand parent;
 	
 	/**
