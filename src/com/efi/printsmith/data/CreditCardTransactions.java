@@ -166,6 +166,11 @@ public class CreditCardTransactions extends ModelBase {
   public static final String WSID = "WsId";
 
 	/**
+   * @generated
+   */
+  public static final String ISCURRENTTRANSACTION = "IsCurrentTransaction";
+
+	/**
 	 * @generated
 	 */
 	public CreditCardTransactions() {
@@ -857,6 +862,28 @@ public class CreditCardTransactions extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer isCurrentTransaction;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getIsCurrentTransaction(){
+    return isCurrentTransaction; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setIsCurrentTransaction(Integer newVal) {
+    this.isCurrentTransaction = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -891,6 +918,7 @@ public class CreditCardTransactions extends ModelBase {
     if (ACCOUNT.equals(propertyName)) return getAccount();
     if (CONTACT.equals(propertyName)) return getContact();
     if (WSID.equals(propertyName)) return getWsId();
+    if (ISCURRENTTRANSACTION.equals(propertyName)) return getIsCurrentTransaction();
     return super.getProperty(propertyName);
   }
 	
@@ -929,6 +957,7 @@ public class CreditCardTransactions extends ModelBase {
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     if (WSID.equals(propertyName)) setWsId((Integer)newValue); else
+    if (ISCURRENTTRANSACTION.equals(propertyName)) setIsCurrentTransaction((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -996,6 +1025,8 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {Contact.class};		
     if (WSID.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
+    if (ISCURRENTTRANSACTION.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1035,6 +1066,7 @@ public class CreditCardTransactions extends ModelBase {
     if (ACCOUNT.equals(propertyName)) return CreditCardTransactions.class;
     if (CONTACT.equals(propertyName)) return CreditCardTransactions.class;
     if (WSID.equals(propertyName)) return CreditCardTransactions.class;
+    if (ISCURRENTTRANSACTION.equals(propertyName)) return CreditCardTransactions.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1103,6 +1135,8 @@ public class CreditCardTransactions extends ModelBase {
     if (! SmartEquals(getContact(), objT.getContact()))
       return false;
     if (! SmartEquals(getWsId(), objT.getWsId()))
+      return false;
+    if (! SmartEquals(getIsCurrentTransaction(), objT.getIsCurrentTransaction()))
       return false;
     return true;
   }			

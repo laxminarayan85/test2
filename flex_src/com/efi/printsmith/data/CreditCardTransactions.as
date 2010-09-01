@@ -43,6 +43,7 @@ package com.efi.printsmith.data
 		public var account:Account;
 		public var contact:Contact;
 		public var wsId:int = 0;
+		public var isCurrentTransaction:int = 0;
 	
 	}
 }
