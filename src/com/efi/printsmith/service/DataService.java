@@ -186,7 +186,7 @@ public class DataService extends HibernateService {
 		}
 		return resultList;
 	}
-	public List<?> getAllOrdeBy(String className, String orderBy) {
+	public List<?> getAllOrderBy(String className, String orderBy) {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
@@ -204,7 +204,7 @@ public class DataService extends HibernateService {
 		return resultList;
 	}
 	
-	public List<?> getAllOrderByDecsending(String className, String orderBy) {
+	public List<?> getAllOrderByDescending(String className, String orderBy) {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();

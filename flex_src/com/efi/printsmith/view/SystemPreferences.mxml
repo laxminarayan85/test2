@@ -53,7 +53,7 @@
 		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveMarkupsMerchandiseResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServicePendingList" destination="dataService">
-		<mx:method name="getAllOrdeBy" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
+		<mx:method name="getAllOrderBy" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
 		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSavePendingListResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServicePricingMethod" destination="dataService">
@@ -69,7 +69,7 @@
 		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveSalesCategoryResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceStockDefinition" destination="dataService">
-		<mx:method name="getAllOrdeBy" fault="handleFault(event)" result="handleLoadStockDefinitionResult(event)"/>
+		<mx:method name="getAllOrderBy" fault="handleFault(event)" result="handleLoadStockDefinitionResult(event)"/>
 		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveStockDefinitionResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServiceStocks" destination="dataService">
@@ -850,11 +850,11 @@
 		dataServiceCreditCard.getAll("PreferencesCreditCard");
 		dataServiceMarkups.getAll("OutsideService");
 		dataServiceMarkupsMerchandise.getAll("Merchandise")
-		dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
+		dataServicePendingList.getAllOrderBy("PreferencesPendingList","columnOrder");
 		dataServicePricingMethod.getAll("PreferencesPricingMethod");
 		dataServiceQuantityBreaks.getAll("PreferencesQuantityBreaks");
 		dataServiceSalesCategory.getAll("SalesCategory");
-		dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
+		dataServiceStockDefinition.getAllOrderBy("PreferencesStockDefinition","columnOrder");
 		dataServiceStocks.getAll("PreferencesStocks");
 		dataServiceIntegration.getAll("PreferencesIntegration");
 		dataServiceEstimatorTypes.getAll("EstimatorTypes");
@@ -1095,7 +1095,7 @@
 				dataServiceMarkupsMerchandise.getAll("Merchandise")
 			}
 			if (payloadType == "PreferencesPendingList") {
-				dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
+				dataServicePendingList.getAllOrderBy("PreferencesPendingList","columnOrder");
 			}
 			if (payloadType == "PreferencesPricingMethod") {
 				dataServicePricingMethod.getAll("PreferencesPricingMethod");
@@ -1107,7 +1107,7 @@
 				dataServiceSalesCategory.getAll("SalesCategory");
 			}
 			if (payloadType == "PreferencesStockDefinition") {
-				dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
+				dataServiceStockDefinition.getAllOrderBy("PreferencesStockDefinition","columnOrder");
 			}
 			if (payloadType == "PreferencesStocks") {
 				dataServiceStocks.getAll("PreferencesStocks");
@@ -1810,7 +1810,7 @@
     	dataServiceMarkupsMerchandise.getAll("Merchandise");
 	}
 	private function handleSavePendingListResult(ev:ResultEvent):void {
-    	dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
+    	dataServicePendingList.getAllOrderBy("PreferencesPendingList","columnOrder");
 	}
 	private function handleSavePricingMethodResult(ev:ResultEvent):void {
     	dataServicePricingMethod.getAll("PreferencesPricingMethod");
@@ -1822,7 +1822,7 @@
     	dataServiceSalesCategory.getAll("SalesCategory");
 	}
 	private function handleSaveStockDefinitionResult(ev:ResultEvent):void {
-    	dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
+    	dataServiceStockDefinition.getAllOrderBy("PreferencesStockDefinition","columnOrder");
 	}
 	private function handleSaveStocksResult(ev:ResultEvent):void {
     	dataServiceStocks.getAll("PreferencesStocks");
@@ -2194,7 +2194,7 @@
 		if(selectedSection == "genericPrefCmd.PendingList"){
 			checkCount = 2;
 			dataServicePOS.getAll("PreferencesPOS");
-			dataServicePendingList.getAllOrdeBy("PreferencesPendingList","columnOrder");
+			dataServicePendingList.getAllOrderBy("PreferencesPendingList","columnOrder");
 		}
 		
 		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
@@ -2221,7 +2221,7 @@
 		
 		if(selectedSection == "genericPrefCmd.StockDefinitions"){
 			checkCount = 1;
-			dataServiceStockDefinition.getAllOrdeBy("PreferencesStockDefinition","columnOrder");
+			dataServiceStockDefinition.getAllOrderBy("PreferencesStockDefinition","columnOrder");
 		}
 		
 		if(selectedSection == "genericPrefCmd.PricingMethod"){

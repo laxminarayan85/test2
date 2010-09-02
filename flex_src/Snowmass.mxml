@@ -964,13 +964,18 @@
         	}
         	return firstNumber + " x " + secondNumber;
         }
-        
+         
         public static function getDateFormatter():DateFormatter {
         	var formatter:DateFormatter = new DateFormatter;
         	formatter.formatString = "MMMM DD, YYYY   L:NN:SS A";
         	return formatter;
         }
-        
+        public static function getShortDateTimeFormatter():DateFormatter {
+        	var formatter:DateFormatter = new DateFormatter;
+        	formatter.formatString = "MM/DD/YYYY L:NN A";
+        	return formatter;
+        }
+
         public function getApplicationRootURL():String {
         	return this.url.substr(0, this.url.lastIndexOf("/"));
         }

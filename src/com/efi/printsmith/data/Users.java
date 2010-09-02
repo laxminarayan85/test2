@@ -120,6 +120,19 @@ public class Users extends ModelBase {
 	public static final String PREVPASSWORD4 = "PrevPassword4";
 
 	/**
+   * @generated
+   */
+  public static final String LOGINATTEMPTS = "LoginAttempts";
+	/**
+   * @generated
+   */
+  public static final String LASTLOGIN = "LastLogin";
+	/**
+   * @generated
+   */
+  public static final String USERACCESSLEVEL = "UserAccessLevel";
+
+	/**
 	 * @generated
 	 */
 	public Users() {
@@ -559,6 +572,74 @@ public class Users extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer loginAttempts;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getLoginAttempts(){
+    return loginAttempts; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLoginAttempts(Integer newVal) {
+    this.loginAttempts = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date lastLogin;
+
+	/**
+   * @generated
+ 	 */
+  public Date getLastLogin(){
+    return lastLogin; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLastLogin(Date newVal) {
+    this.lastLogin = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer userAccessLevel;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getUserAccessLevel(){
+    return userAccessLevel; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUserAccessLevel(Integer newVal) {
+    this.userAccessLevel = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -582,6 +663,9 @@ public class Users extends ModelBase {
     if (PREVPASSWORD2.equals(propertyName)) return getPrevPassword2();
     if (PREVPASSWORD3.equals(propertyName)) return getPrevPassword3();
     if (PREVPASSWORD4.equals(propertyName)) return getPrevPassword4();
+    if (LOGINATTEMPTS.equals(propertyName)) return getLoginAttempts();
+    if (LASTLOGIN.equals(propertyName)) return getLastLogin();
+    if (USERACCESSLEVEL.equals(propertyName)) return getUserAccessLevel();
     return super.getProperty(propertyName);
   }
 	
@@ -609,6 +693,9 @@ public class Users extends ModelBase {
     if (PREVPASSWORD2.equals(propertyName)) setPrevPassword2((String)newValue); else
     if (PREVPASSWORD3.equals(propertyName)) setPrevPassword3((String)newValue); else
     if (PREVPASSWORD4.equals(propertyName)) setPrevPassword4((String)newValue); else
+    if (LOGINATTEMPTS.equals(propertyName)) setLoginAttempts((Integer)newValue); else
+    if (LASTLOGIN.equals(propertyName)) setLastLogin((Date)newValue); else
+    if (USERACCESSLEVEL.equals(propertyName)) setUserAccessLevel((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -654,6 +741,12 @@ public class Users extends ModelBase {
       return new Class<?>[] {String.class};		
     if (PREVPASSWORD4.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (LOGINATTEMPTS.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (LASTLOGIN.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (USERACCESSLEVEL.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -682,6 +775,9 @@ public class Users extends ModelBase {
     if (PREVPASSWORD2.equals(propertyName)) return Users.class;
     if (PREVPASSWORD3.equals(propertyName)) return Users.class;
     if (PREVPASSWORD4.equals(propertyName)) return Users.class;
+    if (LOGINATTEMPTS.equals(propertyName)) return Users.class;
+    if (LASTLOGIN.equals(propertyName)) return Users.class;
+    if (USERACCESSLEVEL.equals(propertyName)) return Users.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -728,6 +824,12 @@ public class Users extends ModelBase {
     if (! SmartEquals(getPrevPassword3(), objT.getPrevPassword3()))
       return false;
     if (! SmartEquals(getPrevPassword4(), objT.getPrevPassword4()))
+      return false;
+    if (! SmartEquals(getLoginAttempts(), objT.getLoginAttempts()))
+      return false;
+    if (! SmartEquals(getLastLogin(), objT.getLastLogin()))
+      return false;
+    if (! SmartEquals(getUserAccessLevel(), objT.getUserAccessLevel()))
       return false;
     return true;
   }			

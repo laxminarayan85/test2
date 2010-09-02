@@ -45,10 +45,6 @@ package com.efi.printsmith.data
 		public var endTime:Date = new Date();
 		public var chargeCostingRecord:ChargeCostingRecord;
 		public var nextRecord:String = "";
-		
-		public var runTime:Number = 0;
-		public var setUpTime:Number = 0;
-		public var washUpTime:Number = 0;
 	
 	}
 }

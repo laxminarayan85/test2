@@ -4,7 +4,7 @@ width="100%" height="100%"  creationComplete="init()"
      title="Credit Card Manager" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*">
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
-		<mx:method name="getAllOrderByDecsending"
+		<mx:method name="getAllOrderByDescending"
 				   fault="handleFault(event)"
 				   result="handleLoadResult(event)"/>
 		<mx:method name="getAll"

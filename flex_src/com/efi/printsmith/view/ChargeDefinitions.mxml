@@ -452,6 +452,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
+		updateDataProvider();
 	}
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
