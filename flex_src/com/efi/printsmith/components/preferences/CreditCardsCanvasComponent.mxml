@@ -16,32 +16,39 @@
 			
 			[Bindable] public var preferencesAccounting:PreferencesAccounting = new PreferencesAccounting();
 			
+			[Bindable] public var USE_SKIPJACK:String = "useskipjackprocessor";
+			
+			[Bindable] public var USE_EFS:String = "useefsprocessor";
+			
+			[Bindable] public var USE_OBSOLETE:String = "useobsoletedropfolder";
+			
+			
 			public function updateComp(preferencesAccounting:PreferencesAccounting):void{
 				if(preferencesAccounting && !updated){
 					if(preferencesAccounting.useSkipJackProcessor){
 						this.currentState="SkipJackSetup"; 
-						preferencesAccounting.creditCardProcessor = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useskipjackpro');
+						preferencesAccounting.creditCardProcessor = USE_SKIPJACK;
 					} else if(preferencesAccounting.useEfsProcessor){
 						this.currentState="EFSSetup";
-						preferencesAccounting.creditCardProcessor = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useefspro');
+						preferencesAccounting.creditCardProcessor = USE_EFS;
 					} else if(preferencesAccounting.useObsoleteDropFolder){
 						this.currentState="DropFolderSetup";
-						preferencesAccounting.creditCardProcessor = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde');
+						preferencesAccounting.creditCardProcessor = USE_OBSOLETE;
 					}
 					updated = true;
 				}
 			}
 			
 			private function setStatus():void {
-				if(preferencesAccounting.creditCardProcessor==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useskipjackpro')){
+				if(preferencesAccounting.creditCardProcessor==USE_SKIPJACK){
 					preferencesAccounting.useSkipJackProcessor = true;
 					preferencesAccounting.useEfsProcessor = false;
 					preferencesAccounting.useObsoleteDropFolder = false;
-				} else if(preferencesAccounting.creditCardProcessor==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useefspro')){
+				} else if(preferencesAccounting.creditCardProcessor==USE_EFS){
 					preferencesAccounting.useSkipJackProcessor = false;
 					preferencesAccounting.useEfsProcessor = true;
 					preferencesAccounting.useObsoleteDropFolder = false;
-				}  else if(preferencesAccounting.creditCardProcessor==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde')){
+				}  else if(preferencesAccounting.creditCardProcessor==USE_OBSOLETE){
 					preferencesAccounting.useSkipJackProcessor = false;
 					preferencesAccounting.useEfsProcessor = false;
 					preferencesAccounting.useObsoleteDropFolder = true;
@@ -61,11 +68,11 @@
 			}
 			
 			private function doProcessorSetup():void{
-				if(preferencesAccounting.creditCardProcessor==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useskipjackpro')){
+				if(preferencesAccounting.creditCardProcessor==USE_SKIPJACK){
 					this.currentState="SkipJackSetup"; 
-				}  else if(preferencesAccounting.creditCardProcessor==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useefspro')){
+				}  else if(preferencesAccounting.creditCardProcessor==USE_EFS){
 					this.currentState="EFSSetup";
-				}   else if(preferencesAccounting.creditCardProcessor==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde')){
+				}   else if(preferencesAccounting.creditCardProcessor==USE_OBSOLETE){
 					this.currentState="DropFolderSetup";
 				}
 			}
@@ -207,15 +214,15 @@
 						<mx:RadioButtonGroup id="CreditCardProcessor" enabled="{preferencesAccounting.activateCreditCardApproval}"/>
 						
 						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useskipjackpro')}"
-							groupName="CreditCardProcessor" value="useskipjackprocessor" click="{setStatus()}"
+							groupName="CreditCardProcessor" value="{USE_SKIPJACK}" click="{setStatus()}"
 							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
 							
 						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useefspro')}"
-							groupName="CreditCardProcessor" value="useefsprocessor" click="{setStatus()}"
+							groupName="CreditCardProcessor" value="{USE_EFS}" click="{setStatus()}"
 							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
 							
 						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde')}"
-							groupName="CreditCardProcessor" value="useobsoletedropfolder" click="{setStatus()}"
+							groupName="CreditCardProcessor" value="{USE_OBSOLETE}" click="{setStatus()}"
 							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
 							
 						<mx:Button 
