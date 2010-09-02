@@ -79,7 +79,7 @@
 						textAlign="right" width="240" />
 						
 					<components:CustomComboBoxComponent width="145"
-						labelFieldId="name" labelFieldName="name" updateFirstElement="true"
+						labelFieldId="name" labelFieldName="name"
 						masterList="{salesRepArray}" dataHolder="{preferencesAccounting}" variableName="defaultSalesRep" 
 						customText="{getCustomTextData(salesRepArray,preferencesAccounting,preferencesAccounting.defaultSalesRep)}"/>
 				
@@ -92,7 +92,7 @@
 						textAlign="right" width="240" />
 						
 					<components:CustomComboBoxComponent width="145"
-						labelFieldId="name" labelFieldName="name" updateFirstElement="true"
+						labelFieldId="name" labelFieldName="name"
 						masterList="{shippingMethodArray}" dataHolder="{preferencesAccounting}" variableName="defaultShipping" 
 						customText="{getCustomTextData(shippingMethodArray,preferencesAccounting,preferencesAccounting.defaultShipping)}"/>
 				
