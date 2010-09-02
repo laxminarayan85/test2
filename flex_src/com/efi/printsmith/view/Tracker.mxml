@@ -982,6 +982,12 @@
 					}
 				} else if(trackerStatus=="setup"){
 					if(selectedTrackerConsoleJob!=null){
+						for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+							if(trackerConsoleJobsObj.id == trackerConsoleJobsObject.id){
+								copyTrackerConsoleJobObject(trackerConsoleJobsObject,trackerConsoleJobsObj);
+								break;
+							}
+						}
 						selectedTrackerConsoleJob = trackerConsoleJobsObject;
 						trackerConsoleJobsList.refresh();
 						washUpBtn.enabled = true;
@@ -994,6 +1000,12 @@
 					}
 				} else if(trackerStatus=="washup"){
 					if(selectedTrackerConsoleJob!=null){
+						for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+							if(trackerConsoleJobsObj.id == trackerConsoleJobsObject.id){
+								copyTrackerConsoleJobObject(trackerConsoleJobsObject,trackerConsoleJobsObj);
+								break;
+							}
+						}
 						selectedTrackerConsoleJob = trackerConsoleJobsObject;
 						trackerConsoleJobsList.refresh();
 						stopBtn.enabled = true;
@@ -1005,6 +1017,12 @@
 					}
 				} else if(trackerStatus=="pause"){
 					if(selectedTrackerConsoleJob!=null){
+						for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+							if(trackerConsoleJobsObj.id == trackerConsoleJobsObject.id){
+								copyTrackerConsoleJobObject(trackerConsoleJobsObject,trackerConsoleJobsObj);
+								break;
+							}
+						}
 						selectedTrackerConsoleJob = trackerConsoleJobsObject;
 						stopBtn.enabled = true;
 						cancelBtn.enabled = true;
@@ -1015,6 +1033,12 @@
 					}
 				} else if(trackerStatus=="continue"){
 					if(selectedTrackerConsoleJob!=null){
+						for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+							if(trackerConsoleJobsObj.id == trackerConsoleJobsObject.id){
+								copyTrackerConsoleJobObject(trackerConsoleJobsObject,trackerConsoleJobsObj);
+								break;
+							}
+						}
 						selectedTrackerConsoleJob = trackerConsoleJobsObject;
 						enableRequiredBtns();
 						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
@@ -1037,6 +1061,12 @@
 					}
 				} else if(trackerStatus=="nextpass"){
 					if(selectedTrackerConsoleJob!=null){
+						for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+							if(trackerConsoleJobsObj.id == trackerConsoleJobsObject.id){
+								copyTrackerConsoleJobObject(trackerConsoleJobsObject,trackerConsoleJobsObj);
+								break;
+							}
+						}
 						selectedTrackerConsoleJob = trackerConsoleJobsObject;
 						trackerConsoleJobsList.refresh();
 						resetButtons();
