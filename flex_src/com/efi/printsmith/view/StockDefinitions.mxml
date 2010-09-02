@@ -993,6 +993,7 @@ private function loadCoatedArray():void{
 		var chargePicker:ChargeDefinitionPicker=ChargeDefinitionPicker(PopUpManager.createPopUp(this, ChargeDefinitionPicker, true));
 		chargePicker.charges = this.charges;
 		chargePicker.setStyle("borderAlpha", 0.9);
+		chargePicker.setTitle(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.ChargeSelector'));
 		chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete);
 		chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCANCEL, handleChargeDefinitionCancel);
 
