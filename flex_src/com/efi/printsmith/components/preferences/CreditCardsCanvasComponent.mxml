@@ -207,15 +207,15 @@
 						<mx:RadioButtonGroup id="CreditCardProcessor" enabled="{preferencesAccounting.activateCreditCardApproval}"/>
 						
 						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useskipjackpro')}"
-							groupName="CreditCardProcessor" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useskipjackpro')}" click="{setStatus()}"
+							groupName="CreditCardProcessor" value="useskipjackprocessor" click="{setStatus()}"
 							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
 							
 						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useefspro')}"
-							groupName="CreditCardProcessor" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useefspro')}" click="{setStatus()}"
+							groupName="CreditCardProcessor" value="useefsprocessor" click="{setStatus()}"
 							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
 							
 						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde')}"
-							groupName="CreditCardProcessor" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.Useobsoletedropfolde')}" click="{setStatus()}"
+							groupName="CreditCardProcessor" value="useobsoletedropfolder" click="{setStatus()}"
 							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
 							
 						<mx:Button 
