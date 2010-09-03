@@ -21,6 +21,11 @@ package com.efi.printsmith
 		static public const PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:Number = 2;
 		static public const PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:Number = 3;
 
+		static public const USER_EVENT_LOGIN:Number = 1;
+		static public const USER_EVENT_LOGOUT:Number = 2;
+		static public const USER_EVENT_FAILED_LOGIN:Number = 3;
+		static public const USER_EVENT_PASSWORD_CHANGE:Number = 4;
+
 		public function Constants()
 		{
 		}

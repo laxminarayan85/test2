@@ -91,8 +91,12 @@
 <mx:RemoteObject id="versionService" destination="versionService">
 	<mx:method name="getServerVersion" fault="handleFault(event)" result="handleVersionResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleLoadResult(event)"/>
+</mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.data.UserEvent;
 		import com.efi.printsmith.data.SecuritySetup;
 		import mx.events.MenuEvent;
 		import com.efi.printsmith.data.PSMenuItem;
@@ -147,15 +151,21 @@
 		import flexlib.controls.tabBarClasses.SuperTab;
 		import com.efi.printsmith.components.MultiLineLabelButton;
 		import com.efi.printsmith.events.CreditCardTrackReadEvent;
+		import com.efi.printsmith.Constants;
 		
 		public var timer : Timer;
 		public var nf:NumberFormatter;
+		private var gUILastInteractiveTimeStamp:Date = new Date();
+		private var idleTimer:Timer = null;
 		
 		private var keyListener:Object;
 
 		private var remoteObject:RemoteObject;
 		
 		public static const RESOURCE_BUNDLE:String = "psResources";
+		public static const millisecondsPerMinute:int = 1000 * 60;
+		public static const millisecondsPerHour:int = 1000 * 60 * 60;
+		public static const millisecondsPerDay:int = 1000 * 60 * 60 * 24;
 		
 		public var userName:String;
 		public var userPass:String;
@@ -484,10 +494,52 @@
 				mainNavigator.selectedIndex = mainNavigator.numChildren-1;
 			}
 		}
+
+		//
+		//
+ 		private function idleTimerCallBack(evt:TimerEvent):void {
+            var tmr:Timer = evt.currentTarget as Timer;
+           var localTime:Date = new Date();
+           var maxAllowIdleTime:int = (millisecondsPerMinute * 10);
+           
+           //
+           // Handle automatic login for robust password users
+           //
+           if (currentUser != null && currentUser.robustPassword == true) {
+				if ((localTime.getTime() - maxAllowIdleTime) > gUILastInteractiveTimeStamp.getTime()) {
+					showLogin();
+				}
+			}
+        }
+
+		private function startSlowIdleTimer():void {
+			if (idleTimer == null) {
+	             idleTimer = new Timer((1000 * 10),0);		// ten seconds, run for ever
+	             idleTimer.addEventListener(TimerEvent.TIMER, idleTimerCallBack);
+	             idleTimer.start();
+	 		 } else {
+	 		 	idleTimer.reset();
+	 		 	idleTimer.start();
+	 		 }
+        }
+
 		
 		private function initAppFunctions() : void {
 			stage.addEventListener(KeyboardEvent.KEY_UP, myKeyUpHandler);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE,globalMouseMove);
+			startSlowIdleTimer();
 		}
+
+		private function doKeepAliveCurrentUser():void 
+		{
+			gUILastInteractiveTimeStamp = new Date();
+		}
+
+		private function globalMouseMove(event:MouseEvent):void
+		{
+		    doKeepAliveCurrentUser();
+		}
+		
 		
 		private function init() : void {
 			thisInstance = this;
@@ -508,7 +560,7 @@
 			moveLogo.play();
 			
 			this.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
-			
+
 			versionService.getServerVersion();
             bm = BrowserManager.getInstance();
             bm.init("", "Welcome to Snowmass");
@@ -589,7 +641,7 @@
 		//
  		private function timerCallBack(evt:TimerEvent):void {
             var tmr:Timer = evt.currentTarget as Timer;
-            if (tmr.currentCount >= 3) {
+            if (tmr.currentCount >= 2) {
             	// give up on more data coming in from card reader
 				gCaptureCardData = false;
 				// restore the focus
@@ -598,12 +650,16 @@
 					gComponent = null;
 				}
 				tmr.stop();
+				
+				if (gCardDataBuffer.length > 15) {
+					parseCreditCardRawTrackData();
+				}
             }
         }
         
-		private function startWaitTimer():void {
+		private function startWaitTimer():void {idleTimer
 			if (gTimer == null) {
-	             gTimer = new Timer(1000,3);
+	             gTimer = new Timer(1000,2);
 	             gTimer.addEventListener(TimerEvent.TIMER, timerCallBack);
 	             gTimer.start();
 	 		 } else {
@@ -647,7 +703,7 @@
 				//
 				// if the card data is being captured, grab one character at a time into the buffer
 				//
-				else if (gCaptureCardData) {
+				else if (gCaptureCardData && event.charCode != 0) {
 					
 					gCardDataBuffer = gCardDataBuffer.concat(String.fromCharCode(event.charCode));
 					
@@ -657,6 +713,9 @@
 						gQuestionMarkCount += 1;
 					}
 					
+					//
+					// this is a known good format for credit card data, track one and two
+					//
 					if (gCardDataBuffer.length > 40 && gQuestionMarkCount > 1 && event.charCode == 13) {
 						// tell the timer we are complete, it can shut down now
 						if (gTimer != null) {
@@ -672,12 +731,15 @@
 						
 						parseCreditCardRawTrackData();
 					}
+				} else {
+					doKeepAliveCurrentUser();
 				}
 			}
 		}
 		
 		private function parseCreditCardRawTrackData():void {
 			var localCard:CreditCardTrackRead = new CreditCardTrackRead;
+			var selectEvent:CreditCardTrackReadEvent;
 			var startSentinal:String;
 			var formatCode:String;
 			var expirationYY:String;
@@ -692,7 +754,7 @@
 			startSentinal = gCardDataBuffer.charAt(0);
 			formatCode = gCardDataBuffer.charAt(1);
 			
-			// good starting code and track data markers
+			// good starting code and track data markers for a credit card
 			if (startSentinal == "%" && formatCode == "B") {
 				len = gCardDataBuffer.length;
 				k = 0;
@@ -700,13 +762,12 @@
 				{
 					++k;
 				}
-				--k;  // don't include the "^" symbol
 				localCard.parsedCard.cardNumber = gCardDataBuffer.substring(2,k);
 				
 				myRegExp = new RegExp(" ","g");		// find a SPACE character, all of them
 				localCard.parsedCard.cardNumber.replace(myRegExp,"");	// replace the SPACE with <empty>
 				
-				k += 2;  // skip the "^" symbol
+				k += 1;  // skip the "^" symbol
 						
 				len = gCardDataBuffer.length;
 				i = k;	// the starting point, first letter in name section
@@ -714,16 +775,16 @@
 				{
 					++k;
 				}
-				--k;  // don't include the "^" symbol
+
 				localCard.parsedCard.cardHolderName = gCardDataBuffer.substring(i,k);
 				localCard.parsedCard.cardHolderName = StringUtil.trim(localCard.parsedCard.cardHolderName);
 				
 				// read the YYMM expiration date
-				k += 2;
+				k += 1;
 				i=k;
-				expirationYY = gCardDataBuffer.substring(i,i+1);
+				expirationYY = gCardDataBuffer.substring(i,i+2);
 				i += 2;
-				expirationMM = gCardDataBuffer.substring(i,i+1);
+				expirationMM = gCardDataBuffer.substring(i,i+2);
 				
 				// find the track one and track two seperator
 				k = i+1;
@@ -743,7 +804,18 @@
 				localCard.trackTwo = StringUtil.trim(localCard.trackTwo);
 				
 				
-				var selectEvent:CreditCardTrackReadEvent = new CreditCardTrackReadEvent(CreditCardTrackReadEvent.BRICKREAD, localCard);
+				selectEvent = new CreditCardTrackReadEvent(CreditCardTrackReadEvent.BRICKREAD, localCard);
+				dispatchEvent(selectEvent);
+			} else {
+				//
+				// use the tack data as a raw input, like a badge read.
+				//
+				localCard.trackOne = gCardDataBuffer.substring(0,gCardDataBuffer.length);
+				
+				// remove white space at the end, ie.. CR, LF, SPACE
+				localCard.trackOne = StringUtil.trim(localCard.trackOne);				
+				
+				selectEvent = new CreditCardTrackReadEvent(CreditCardTrackReadEvent.BRICKREAD, localCard);
 				dispatchEvent(selectEvent);
 			}
 		}
@@ -765,14 +837,21 @@
 		private function handleLoginResult(event:ResultEvent):void	{
 			var res:Users = event.result as Users;
 			if (res != null) {
-				currentUser = res;
-				security = new PSSecurity(currentUser);
 				
-				
-				
+				if (res.disableUser) {
+					Alert.show("Disabled User Name", null, Alert.OK, null, null, null, Alert.OK);
+					showLogin();
+					logUserEvent(Constants.USER_EVENT_FAILED_LOGIN, null, res.name);
+				} else {
+					currentUser = res;
+					security = new PSSecurity(currentUser);
+					
+					logUserEvent(Constants.USER_EVENT_LOGIN, null, null);
+				}
  			} else {
 				Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
 				showLogin();
+				logUserEvent(Constants.USER_EVENT_FAILED_LOGIN, null, null);
 			}
 		}
 		
@@ -991,6 +1070,46 @@
          
         public function getLocalizedEnum(enumerationName:String, enumerationValue:String):String {
         	return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, enumerationName + '_' + enumerationValue);
+        }
+ 
+	 	private function handleLoadResult(ev:ResultEvent):void {
+			
+		}
+	
+       
+        public function logUserEvent(reasonCode:int, customLabel:String, badUserName:String):void	{ 
+        	var localEvent:UserEvent = new UserEvent;
+        	
+        	localEvent.reasonCode = reasonCode;
+        	
+        	if (badUserName != null) {
+        		localEvent.userName = badUserName;
+        	} else if (currentUser != null) {
+        		localEvent.userName = currentUser.name;
+        	}
+        	switch(reasonCode) {
+        		case Constants.USER_EVENT_LOGIN:
+        			localEvent.eventString = resourceManager.getString(RESOURCE_BUNDLE, 'kUserEventLogCmd.Userlogin');
+        			break;
+        		case Constants.USER_EVENT_LOGOUT:
+        			localEvent.eventString = resourceManager.getString(RESOURCE_BUNDLE, 'kUserEventLogCmd.Userlogin');
+        			break;
+        		case Constants.USER_EVENT_FAILED_LOGIN:
+        			localEvent.eventString = resourceManager.getString(RESOURCE_BUNDLE, 'kUserEventLogCmd.Userfailedloginattem');
+        			break;
+        		case Constants.USER_EVENT_PASSWORD_CHANGE:
+        			localEvent.eventString = resourceManager.getString(RESOURCE_BUNDLE, 'kUserEventLogCmd.Userpasswordchange');
+        			break;
+        	}
+        	
+        	if (localEvent.eventString != null) {
+          		localEvent.eventString = StringUtil.substitute(localEvent.eventString,localEvent.userName); 
+        	}
+        	
+        	if (customLabel != null) {
+        		localEvent.eventString = localEvent.eventString.concat(" ", customLabel);
+        	}
+        	dataService.addUpdate(localEvent);
         }
 ]]>		
 </mx:Script>

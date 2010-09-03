@@ -35,7 +35,7 @@
 			import mx.rpc.remoting.mxml.Operation;		
 			import com.efi.printsmith.pages.SetPassword;  
 			import com.efi.printsmith.events.PasswordEvent; 	
-	
+			import com.efi.printsmith.Constants;
 			import com.efi.printsmith.security.PSSecurity;
 	[Bindable]	
 		private var application:Snowmass;
@@ -79,20 +79,27 @@
 	private function handleLoginResult(event:ResultEvent):void	{
 	var res:Users = event.result as Users;
 		if (res) {
-			PopUpManager.removePopUp(this);
-			application.mainContainer.visible = true;
-			application.currentUser = res;
-			application.security = new PSSecurity(res);
-			if (application.currentUser.forcePasswordChange){
-				var setPassword:SetPassword =  SetPassword(PopUpManager.createPopUp(this, SetPassword, true));
-				setPassword.setStyle("borderAlpha", 0.9);
-				setPassword.setUser(application.currentUser);
-	 		    setPassword.addEventListener(PasswordEvent.Cancel, handlePasswordCancel);
-	 		    setPassword.addEventListener(PasswordEvent.OK, handlePasswordOK);
+			if (res.disableUser) {
+				Snowmass.getInstance().logUserEvent(Constants.USER_EVENT_FAILED_LOGIN, null, res.text);
+				Alert.show("Disabled User Name", null, Alert.OK, null, null, null, Alert.OK);
+			} else {
+				PopUpManager.removePopUp(this);
+				application.mainContainer.visible = true;
+				application.currentUser = res;
+				application.security = new PSSecurity(res);
+				if (application.currentUser.forcePasswordChange){
+					var setPassword:SetPassword =  SetPassword(PopUpManager.createPopUp(this, SetPassword, true));
+					setPassword.setStyle("borderAlpha", 0.9);
+					setPassword.setUser(application.currentUser);
+		 		    setPassword.addEventListener(PasswordEvent.Cancel, handlePasswordCancel);
+		 		    setPassword.addEventListener(PasswordEvent.OK, handlePasswordOK);
+				}
+				Snowmass.getInstance().logUserEvent(Constants.USER_EVENT_LOGIN, null, res.text);
 			}
 			application.updateTitle();
 		} else {
 			Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
+			Snowmass.getInstance().logUserEvent(Constants.USER_EVENT_FAILED_LOGIN, null, username.text);
 		}
 	}
 	private function handleFault(ev:FaultEvent):void {                

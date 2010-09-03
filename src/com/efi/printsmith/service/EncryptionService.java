@@ -37,7 +37,7 @@ public class EncryptionService extends SnowmassHibernateService{
 	 * The main public function to Encrypt data using a know style of key generation.	
 	 * 
 	 */
-	public String encryptData(String encryptionData, String encryptionStyle) throws Exception {
+	static public String encryptData(String encryptionData, String encryptionStyle) throws Exception {
 		DataService dataService = new DataService();
 	//	String		temp;
 		
@@ -64,7 +64,7 @@ public class EncryptionService extends SnowmassHibernateService{
 	 * The main public function to Decryption data using a know style of key generation.	
 	 * 
 	 */	
-	public String decryptData(String encryptionData, String encryptionStyle) throws Exception {
+	static public String decryptData(String encryptionData, String encryptionStyle) throws Exception {
 		DataService dataService = new DataService();
 		
 		PreferencesSystem preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
@@ -79,8 +79,7 @@ public class EncryptionService extends SnowmassHibernateService{
 				
 			encryptionData = Aes256BitDecryptData(getAes256KeySpec(encryptionStyle, dataService, preferences), encryptionData);
 		}
-		
-		return encryptionData;
+		return encryptionData.trim();		// remove empty bytes at the end
 	}
 	
 	// 
