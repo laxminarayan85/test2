@@ -18,6 +18,8 @@ public class PriceListUtilities {
 		double retVal = 0.0;
 		double rate = 0.0;
 
+		if (priceList == null) return retVal;
+		
 		rate = PriceListUtilities.lookupPrice(priceList, qty);
 
 		if (priceList.getIsRate() && priceList.getIsPercentage()) {
@@ -68,10 +70,10 @@ public class PriceListUtilities {
 		int base = 0;
 		int last = 0;
 
-		boolean doAdditional = priceList.getLastItemIsPriceAdditionalQty();
-
 		if (priceList == null)
 			return retVal;
+		
+		boolean doAdditional = priceList.getLastItemIsPriceAdditionalQty();
 
 		if (priceList.getIsRate()) {
 			doAdditional = false;

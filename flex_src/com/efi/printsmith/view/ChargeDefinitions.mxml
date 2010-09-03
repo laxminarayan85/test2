@@ -1912,7 +1912,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		return sc;
 	}
 	private function UpdateChargeCosting():void{
-		charge.markup = parseFloat(markup_edit.text)
+		charge.markup = parseFloat(markup_edit.text);
+		if (isNaN(charge.markup)) {
+			charge.markup = 0.0;
+		}
 		chargeService.calculateChargeCostingRate(charge, null);
 	}
     ]]>
