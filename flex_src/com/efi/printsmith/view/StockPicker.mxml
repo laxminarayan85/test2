@@ -607,7 +607,7 @@
 			if (!chkShowRollStock.selected && !chkShowLargeFormatStock.selected 
 				&& (txtSizeMin.text != ""))	{
 					if (stock.parentsize != null)	{
-						if (matchMin(stock.parentsize.width, txtSizeMin.text) == false)		
+						if (matchMin(stock.parentsize, txtSizeMin.text) == false)		
 							continue;
 						
 					}	
@@ -615,7 +615,7 @@
 			if (!chkShowRollStock.selected && !chkShowLargeFormatStock.selected 
 				&& (txtSizeMax.text != ""))	{
 					if (stock.parentsize != null)	{
-						if (matchMax(stock.parentsize.width, txtSizeMax.text) == false)		
+						if (matchMax(stock.parentsize, txtSizeMax.text) == false)		
 							continue;						
 					}	
 			}
@@ -712,15 +712,49 @@
 		return true;
 	}
 	
-	private function matchMax(data:Object, searchString:String):Boolean	{
-		if (Number(searchString) < Number(data))
-			return false;
+	private function matchMax(data:Object, searchString:String):Boolean	{ 
+		if (data is Number)	{
+			if (Number(searchString) < Number(data))
+				return false;
+		}
+		if (data is Dimension)	{
+			var dataDim:Dimension = data as Dimension;
+			var arr:Array = searchString.split("x");
+			var wid:Number = parseInt(StringUtil.trim(arr[0] as String));
+			var ht:Number = -1;
+			if (arr.length > 1)	{
+				ht =  parseInt(StringUtil.trim(arr[1] as String));
+				if ((dataDim.width > wid) || (dataDim.height > ht))
+					return false;
+			}
+			else	{
+				if (dataDim.width > wid)	
+					return false;
+			} 
+		}
 		return true;		
 	}
 	
 	private function matchMin(data:Object, searchString:String):Boolean	{
-		if (Number(searchString) > Number(data))
-			return false;
+		if (data is Number)	{
+			if (Number(searchString) > Number(data))
+				return false;
+		}
+		if (data is Dimension)	{
+			var dataDim:Dimension = data as Dimension;
+			var arr:Array = searchString.split("x");
+			var wid:Number = parseInt(StringUtil.trim(arr[0] as String));
+			var ht:Number = -1;
+			if (arr.length > 1)	{
+				ht =  parseInt(StringUtil.trim(arr[1] as String));
+				if ((dataDim.width < wid) || (dataDim.height < ht))
+					return false;
+			}
+			else	{
+				if (dataDim.width < wid)	
+					return false;
+			} 
+		}		
 		return true;		
 	}
 	
