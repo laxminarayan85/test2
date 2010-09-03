@@ -65,7 +65,6 @@ package com.efi.printsmith.data
 		public var fileOriginals:Boolean = false;
 		public var notTaxable:Boolean = false;
 		public var firmWantedByDate:Boolean = false;
-		public var releasedToProduction:Boolean = false;
 		public var priceTotal:Number = 0;
 		public var containsInventoriedStock:Boolean = false;
 		public var discountIsDollars:Boolean = false;

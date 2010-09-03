@@ -253,10 +253,6 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String RELEASEDTOPRODUCTION = "ReleasedToProduction";
-	/**
-	 * @generated
-	 */
 	public static final String PRICETOTAL = "PriceTotal";
 	/**
 	 * @generated
@@ -1568,29 +1564,6 @@ public class InvoiceBase extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Boolean releasedToProduction;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getReleasedToProduction(){
-    return releasedToProduction; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setReleasedToProduction(Boolean newVal) {
-    this.releasedToProduction = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
 	private BigDecimal priceTotal;
 	
 	/**
@@ -1850,7 +1823,6 @@ public class InvoiceBase extends ModelBase {
     if (FILEORIGINALS.equals(propertyName)) return getFileOriginals();
     if (NOTTAXABLE.equals(propertyName)) return getNotTaxable();
     if (FIRMWANTEDBYDATE.equals(propertyName)) return getFirmWantedByDate();
-    if (RELEASEDTOPRODUCTION.equals(propertyName)) return getReleasedToProduction();
     if (PRICETOTAL.equals(propertyName)) return getPriceTotal();
     if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) return getContainsInventoriedStock();
     if (DISCOUNTISDOLLARS.equals(propertyName)) return getDiscountIsDollars();
@@ -1919,7 +1891,6 @@ public class InvoiceBase extends ModelBase {
     if (FILEORIGINALS.equals(propertyName)) setFileOriginals((Boolean)newValue); else
     if (NOTTAXABLE.equals(propertyName)) setNotTaxable((Boolean)newValue); else
     if (FIRMWANTEDBYDATE.equals(propertyName)) setFirmWantedByDate((Boolean)newValue); else
-    if (RELEASEDTOPRODUCTION.equals(propertyName)) setReleasedToProduction((Boolean)newValue); else
     if (PRICETOTAL.equals(propertyName)) setPriceTotal((BigDecimal)newValue); else
     if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) setContainsInventoriedStock((Boolean)newValue); else
     if (DISCOUNTISDOLLARS.equals(propertyName)) setDiscountIsDollars((Boolean)newValue); else
@@ -2039,8 +2010,6 @@ public class InvoiceBase extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (FIRMWANTEDBYDATE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (RELEASEDTOPRODUCTION.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
     if (PRICETOTAL.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
     if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) 
@@ -2118,7 +2087,6 @@ public class InvoiceBase extends ModelBase {
     if (FILEORIGINALS.equals(propertyName)) return InvoiceBase.class;
     if (NOTTAXABLE.equals(propertyName)) return InvoiceBase.class;
     if (FIRMWANTEDBYDATE.equals(propertyName)) return InvoiceBase.class;
-    if (RELEASEDTOPRODUCTION.equals(propertyName)) return InvoiceBase.class;
     if (PRICETOTAL.equals(propertyName)) return InvoiceBase.class;
     if (CONTAINSINVENTORIEDSTOCK.equals(propertyName)) return InvoiceBase.class;
     if (DISCOUNTISDOLLARS.equals(propertyName)) return InvoiceBase.class;
@@ -2239,8 +2207,6 @@ public class InvoiceBase extends ModelBase {
     if (! SmartEquals(getNotTaxable(), objT.getNotTaxable()))
       return false;
     if (! SmartEquals(getFirmWantedByDate(), objT.getFirmWantedByDate()))
-      return false;
-    if (! SmartEquals(getReleasedToProduction(), objT.getReleasedToProduction()))
       return false;
     if (! SmartEquals(getPriceTotal(), objT.getPriceTotal()))
       return false;
