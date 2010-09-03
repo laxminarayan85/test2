@@ -54,7 +54,7 @@
 					advancedDataGrid.percentWidth = 100;
 					advancedDataGrid.percentHeight = 100;
 					var columns:Array = new Array();
-					getDataGridColumns(columns,false);
+					getDataGridColumns(columns,false,false);
 					var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
 					advancedDataGridColumn.dataField = "startDateTime";
 					advancedDataGridColumn.headerText = "Date";
@@ -85,7 +85,7 @@
 					advancedDataGrid.percentWidth = 100;
 					advancedDataGrid.percentHeight = 100;
 					var columns:Array = new Array();
-					getDataGridColumns(columns,true);
+					getDataGridColumns(columns,true,true);
 					var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
 					advancedDataGridColumn.dataField = "totalClock";
 					advancedDataGridColumn.headerText = "Total Clock";
@@ -234,7 +234,7 @@
 				return output; 
 	        }
 			
-			private function getDataGridColumns(columns:Array, showDataField:Boolean):void {
+			private function getDataGridColumns(columns:Array, showDataField:Boolean, showTotal:Boolean):void {
 				var advancedDataGridColumn:AdvancedDataGridColumn = new AdvancedDataGridColumn();
 				if(employeeTimeExportBean.formatName=="By Name"){
 					if(showDataField){
@@ -246,10 +246,12 @@
 					advancedDataGridColumn.dataField = "socialSecurity";
 					advancedDataGridColumn.headerText = "SSN";
 					columns.push(advancedDataGridColumn);
-					advancedDataGridColumn = new AdvancedDataGridColumn();
-					advancedDataGridColumn.dataField = "period";
-					advancedDataGridColumn.headerText = "Period";
-					columns.push(advancedDataGridColumn);
+					if(!showTotal){
+						advancedDataGridColumn = new AdvancedDataGridColumn();
+						advancedDataGridColumn.dataField = "period";
+						advancedDataGridColumn.headerText = "Period";
+						columns.push(advancedDataGridColumn);
+					}
 				} else if(employeeTimeExportBean.formatName=="By SSN"){
 					if(showDataField){
 						advancedDataGridColumn.dataField = "socialSecurity";
@@ -260,10 +262,12 @@
 					advancedDataGridColumn.dataField = "employeeName";
 					advancedDataGridColumn.headerText = "Name"; 
 					columns.push(advancedDataGridColumn);
-					advancedDataGridColumn = new AdvancedDataGridColumn();
-					advancedDataGridColumn.dataField = "period";
-					advancedDataGridColumn.headerText = "Period";
-					columns.push(advancedDataGridColumn);
+					if(!showTotal){
+						advancedDataGridColumn = new AdvancedDataGridColumn();
+						advancedDataGridColumn.dataField = "period";
+						advancedDataGridColumn.headerText = "Period";
+						columns.push(advancedDataGridColumn);
+					}
 				} else if(employeeTimeExportBean.formatName=="By Period"){
 					if(showDataField){
 						advancedDataGridColumn.dataField = "period";
