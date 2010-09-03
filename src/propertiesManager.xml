@@ -2,4 +2,5 @@
 <PropertiesManager saveFilename="printsmith.properties" flushToSystem="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:\printcafeSrc\eServer\coreJava\src\webapps\dtd\propertiesmanager.xsd">
 	<JavaPropertySet name="instance" resourceName="instance.properties" quiet="true"/>
 	<JavaPropertySet name="common" resourceName="common.properties"/>
+	<JavaPropertySet name="version" resourceName="version.properties"/>
 </PropertiesManager>

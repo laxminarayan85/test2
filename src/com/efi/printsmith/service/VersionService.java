@@ -35,6 +35,7 @@ import com.efi.printsmith.pricing.copier.CopiesPlusOriginalsPricingMethod;
 import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
 import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
 import com.efi.printsmith.pricing.job.PriceJobEngine;
+import com.efi.printsmith.properties.PropertiesHelper;
 
 public class VersionService {
 	protected static Logger log = Logger.getLogger(VersionService.class);
@@ -45,7 +46,8 @@ public class VersionService {
 	}
 	
 	public String getServerVersion() {
-		String versionString = System.getProperty(Constants.SERVER_VERSION_PROPERTY, Constants.SERVER_VERSION_DEFAULT_VALUE);
+		String versionString =  PropertiesHelper.getProperty(Constants.SERVER_VERSION_PROPERTY, Constants.SERVER_VERSION_DEFAULT_VALUE);
+	//	System.getProperty(Constants.SERVER_VERSION_PROPERTY, Constants.SERVER_VERSION_DEFAULT_VALUE);
 		return versionString;
 	}
 }
