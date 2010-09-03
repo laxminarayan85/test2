@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="100%" height="100%"
+	title = "{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.TrackerManager')}"
+	label = "{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.TrackerManager')}"
+	creationComplete="{initTrackerMgrWindow()}" xmlns:components="com.efi.printsmith.common.components.*">
+
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadTrackerMgrResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTrackerMgrResult(event)"/>
+		<mx:method name="getActiveJobsForTrackerMgr" fault="handleFault(event)" result="handleLoadJobsResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceFacilty" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadFaciltyResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceStation" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStationResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
+
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.JobBase;
+			import com.efi.printsmith.data.TrackerConsolePasses;
+			import com.efi.printsmith.data.Job;
+			import com.efi.printsmith.data.Charge;
+			import com.efi.printsmith.data.TrackerConsoleJobs;
+			import com.efi.printsmith.data.TrackerManager;
+			import com.efi.printsmith.data.ProductionStations;
+			import com.efi.printsmith.data.ProductionFacilities;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.controls.Alert;
+			
+			[Bindable] public var trackerManager:TrackerManager;
+			
+			[Bindable] public var trackerConsoleJobsList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var facilitiesArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var productionStations:ArrayCollection = new ArrayCollection();
+			
+			private var onLoad:Boolean = false;
+			
+			private var refreshActiveList:Boolean = false;
+			
+			private function initTrackerMgrWindow():void {
+				onLoad = true;
+				dataService.getSingle("TrackerManager");
+			}
+			
+			private function handleFault(ev:FaultEvent):void {  
+				var message:String;
+				              
+				message = "Error: "                          
+				+ ev.fault.faultCode + " - "                                  
+				+ ev.fault.faultDetail + " - "                                  
+				+ ev.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, 4);                                 
+			}
+			
+			private function handleLoadTrackerMgrResult(event:ResultEvent):void {
+				trackerManager = event.result as TrackerManager;
+				if(trackerManager==null){
+					trackerManager = new TrackerManager();
+					dataService.addUpdate(trackerManager);
+				} else {
+					dataService.getActiveJobsForTrackerMgr();
+				}
+				if(onLoad){
+					onLoad = false;
+					dataServiceFacilty.getAll("ProductionFacilities");
+					dataServiceStation.getAll("ProductionStations");
+				}
+			}
+			
+			private function handleLoadJobsResult(event:ResultEvent):void {
+				trackerConsoleJobsList = event.result as ArrayCollection;
+			}
+			
+			private function handleSaveTrackerMgrResult(event:ResultEvent):void {
+				dataService.getSingle("TrackerManager");
+			}
+			
+			private function handleLoadFaciltyResult(event:ResultEvent):void {
+			    var list:ArrayCollection = event.result as ArrayCollection;
+				var facility:ProductionFacilities = new ProductionFacilities();
+				facility.id = 0;
+				facility.name = "";
+				list.addItemAt(facility,0);
+				facilitiesArray = list;
+			}
+			
+			private function handleLoadStationResult(event:ResultEvent):void {
+				productionStations = event.result as ArrayCollection;
+				if(trackerManager.selectedStations!=null && trackerManager.selectedStations.length>0){
+					for each(var stationObj:ProductionStations in productionStations){
+						for each(var stationObject:ProductionStations in trackerManager.selectedStations) {
+							if(stationObject.id==stationObj.id){
+								stationObj.isSelected = true;
+							}
+						}
+					}
+				}
+			}
+			
+			public function updateTrackerMgrWithRefresh():void {
+				refreshActiveList = true;
+				if(trackerManager.productionFacilities!=null){
+					if(trackerManager.productionFacilities.id==0){
+						trackerManager.productionFacilities = null;
+					}
+				}
+				trackerManager.selectedStations = new ArrayCollection();
+				for each(var productionStation:ProductionStations in productionStations) {
+					if(productionStation.isSelected) {
+						trackerManager.selectedStations.addItem(productionStation);
+					}
+				}
+				dataService.addUpdate(trackerManager);
+			}
+			
+			private function refreshJobList(event:Event):void {
+				if(event.currentTarget.selectedIndex==0){
+					if(refreshActiveList){
+						refreshActiveList = false;
+						trackerConsoleJobsList = new ArrayCollection();
+						dataService.getActiveJobsForTrackerMgr();
+					}
+				}
+			}
+			
+			public function onJobSelect(event:Event):void {
+				for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+					if(!trackerConsoleJobsObj.updateTimer){
+						trackerConsoleJobsObj.updateTimer = true;
+					} else {
+						trackerConsoleJobsObj.updateTimer = false;
+					}
+				}
+				trackerConsoleJobsList.refresh();
+			}
+			
+			public function getInvoiceNumber(object:Object):String {
+				if(object is TrackerConsoleJobs){
+					if(object.job!=null){
+						object = object.job;
+					} else {
+						object = object.charge;
+					}
+				} 
+				if(object is Job){
+					var job:Job = object as Job;
+					return String(job.parentInvoice.invoiceNumber);	
+				}
+				if(object is Charge){
+					var charge:Charge = object as Charge;
+					if(charge.parentInvoice!=null){
+						return String(charge.parentInvoice.invoiceNumber);
+					}
+					if(charge.parentJob!=null){
+						return String(charge.parentJob.jobNumber)+" / "+charge.parentJob.parentInvoice.invoiceNumber;
+					}
+				}
+				return "";
+			}
+			
+			public function getAccount(object:Object):String{
+				if(object is Job){
+					var job:Job = object as Job;
+					return "#"+job.parentInvoice.account.id + " "+job.parentInvoice.account.title;	
+				}
+				if(object is Charge){
+					var charge:Charge = object as Charge;
+					if(charge.parentInvoice!=null){
+						return "#"+charge.parentInvoice.account.id + " "+charge.parentInvoice.account.title;
+					}
+					if(charge.parentJob!=null){
+						var jobBase:JobBase = charge.parentJob as JobBase;
+						return "#"+jobBase.parentInvoice.account.id + " "+jobBase.parentInvoice.account.title;
+					}
+				}
+				return "";
+			}
+			
+			public function getJobDescription(object:Object):String {
+				return object.description;
+			}
+			
+			public function getTotalJobTime(object:Object):String {
+				return convertMilliSecondsToString((object.actualSetUpTime+object.actualRunTime+object.actualWashTime),true);
+			}
+			
+			public function getActualJobTime(object:Object,updateTimer:Boolean):String {
+				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
+				var totalValue:Number = 0;
+				var initialValue:Number = 0;
+				for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
+					if(passes.passNo<trackerConsoleJobsObj.currentPass) {
+						if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0) {
+							totalValue = totalValue + passes.setUpTime;
+						}
+						if(!(isNaN(passes.runTime)) && passes.runTime!=0) {
+							totalValue = totalValue + passes.runTime;
+						}
+						if(!(isNaN(passes.washUpTime)) && passes.washUpTime!=0) {
+							totalValue = totalValue + passes.washUpTime;
+						}
+					}
+				}
+				for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
+					if(passes.passNo==trackerConsoleJobsObj.currentPass) {
+						if(!trackerConsoleJobsObj.paused) {
+							initialValue = passes.trackDate.time;
+							if(!(isNaN(passes.trackTime)) && passes.trackTime!=0){
+								initialValue = initialValue - passes.trackTime;
+							}
+							if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0){
+								initialValue = initialValue - passes.setUpTime; 
+							}
+							if(!(isNaN(passes.runTime)) && passes.runTime!=0){
+								initialValue = initialValue - passes.runTime; 
+							}
+							initialValue = new Date().time - initialValue;
+						} else {
+							if(!(isNaN(passes.trackTime)) && passes.trackTime!=0){
+								initialValue = initialValue + passes.trackTime;
+							}
+							if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0){
+								initialValue = initialValue + passes.setUpTime; 
+							}
+							if(!(isNaN(passes.runTime)) && passes.runTime!=0){
+								initialValue = initialValue + passes.runTime; 
+							}
+						}
+					}
+				}
+				return convertMilliSecondsToString((totalValue+initialValue),true);
+			}
+			
+			public function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
+				var txtString:String = "";
+				if(showSeconds){
+					if(milliSeconds<60000){
+						txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+					}
+				}
+				if(milliSeconds>=60000 && milliSeconds<60000*60){
+			    	txtString = "0 Hrs ";
+			    	txtString = txtString + numFormatter.format(milliSeconds/60000);
+			    	if(showSeconds){
+			    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
+			    	}
+			    }
+			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
+			    	txtString = numFormatter.format(milliSeconds/(60000*60))+" Hrs ";
+			    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
+			    	}
+			    }
+			    if(milliSeconds>=60000*60*24){
+			    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+" Hrs ";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
+			    	}
+			    }
+			    return txtString;
+			}
+		]]>
+	</mx:Script>
+
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
+	
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
+	
+	<mx:TabNavigator width="100%" height="100%" change="{refreshJobList(event)}">
+	
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ActiveItems')}" 
+				paddingLeft="20" paddingTop="20" width="100%" height="100%">
+			
+			<mx:DataGrid width="100%" height="100%" dataProvider="{trackerConsoleJobsList}" itemClick="{onJobSelect(event)}">
+				<mx:columns>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getInvoiceNumber(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getJobDescription((data.job==null?data.charge:data.job))}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.TimeQty')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getTotalJobTime(data)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Duration')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getActualJobTime(data,data.updateTimer)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Who')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{data.employee.lastName}, {data.employee.firstName}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Facility')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{data.productionFacilities.name}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Station')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{data.productionStations.name}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{data.productionLocations.name}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Machine')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text=""/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Account')}">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{outerDocument.getAccount((data.job==null?data.charge:data.job))}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+				</mx:columns>
+			</mx:DataGrid>
+			
+		</mx:VBox>
+			
+			
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Preference')}"
+				paddingLeft="20" paddingTop="20" width="100%" height="100%">
+				
+				<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Showtheseactiveitems')}" width="35%" height="50%"
+					paddingLeft="20" paddingTop="20" paddingBottom="20" paddingRight="20">
+					
+					<mx:HBox width="100%">
+						
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Facility')}"/>
+						<components:CustomComboBoxComponent change="{updateTrackerMgrWithRefresh()}"
+							masterList="{facilitiesArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+							dataHolder="{trackerManager}" variableName="productionFacilities" customText="{getCustomTextData(facilitiesArray,trackerManager,trackerManager.productionFacilities)}"/>
+						
+					</mx:HBox>
+					
+					<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllFacilities')}"
+						dataHolder="{trackerManager}" customText="{trackerManager.showAllFacilities}" variableName="showAllFacilities"
+						selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerMgrWithRefresh()}"/>
+									
+					<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ShowAllStations')}"
+						dataHolder="{trackerManager}" customText="{trackerManager.showAllStations}" variableName="showAllStations"
+						selectedValue="true" deSelectedValue="false" defaultValue="false" click="{updateTrackerMgrWithRefresh()}"/>
+					
+					<mx:DataGrid width="90%" id="stations" dataProvider="{productionStations}">
+						<mx:columns>
+							<mx:DataGridColumn id="checkAllCol" headerText=" "
+								sortable="false" dataField="isSelected" width="200">
+								<mx:headerRenderer>
+									<mx:Component>
+										<components:CheckBoxHeaderRenderer click="{outerDocument.updateTrackerMgrWithRefresh()}"/>
+									</mx:Component>
+								</mx:headerRenderer>
+								<mx:itemRenderer>
+									<mx:Component>
+										<components:CustomCheckBoxComponent click="{outerDocument.updateTrackerMgrWithRefresh()}"
+											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+											selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn dataField="name" headerText="Station Name" width="800"/>
+						</mx:columns>
+					</mx:DataGrid>
+					
+				</mx:Panel>
+				
+		</mx:VBox>
+	
+	</mx:TabNavigator>
+	
+	
+	
+</mx:Panel>

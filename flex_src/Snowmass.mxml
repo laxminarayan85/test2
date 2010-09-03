@@ -311,6 +311,10 @@
 			if ((ss.menu == "rStandardMenuText.Admin")
 				&& (ss.commandName.indexOf("rStandardMenuText.ChangePassword") > -1 ))	{
 					doChangePassword();					
+				}
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.TrackerRoutings") > -1 ))	{
+					doTrackerManager();					
 				}	
 			
 		}
@@ -327,6 +331,11 @@
 //				retVal = '\t';
 			}
 			return retVal + resourceManager.getString(RESOURCE_BUNDLE, val);
+		}
+		
+		private function doTrackerManager():void {
+			var child:Panel = new TrackerManagerView() as Panel;
+			addUniqueTab(child);
 		}
 		
 		private function doAccounts():void {

@@ -3656,6 +3656,61 @@ public class DataService extends HibernateService {
 		}
 		return trackerConsoleJobs;
 	}
+	
+	/**
+	 * This method retrieves List of active jobs and charges based on TrackerManager configuration 
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TrackerConsoleJobs> getActiveJobsForTrackerMgr() throws Exception {
+		log.debug("** getActiveJobsForTrackerMgr called.");
+		List<TrackerConsoleJobs> jobsList = new ArrayList<TrackerConsoleJobs>();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query findQuery = em.createQuery("from TrackerManager");
+			TrackerManager trackerManager =  (TrackerManager) findQuery.getSingleResult();
+			if(trackerManager!=null) {
+				String queryString = "from TrackerConsoleJobs where completed=false";
+				if(!trackerManager.getShowAllFacilities()) {
+					queryString = queryString + " and productionFacilities = :productionFacilities";
+				}
+				if(!trackerManager.getShowAllStations()) {
+					queryString = queryString + " and productionStations in (:selectedStations)";
+				}
+				Query query = em.createQuery(queryString);
+				if(!trackerManager.getShowAllFacilities()){
+					query.setParameter("productionFacilities", trackerManager.getProductionFacilities());
+				}
+				if(!trackerManager.getShowAllStations()) {
+					List<ProductionStations> selectedStations = new ArrayList<ProductionStations>();
+					if(trackerManager.getSelectedStations()!=null){
+						selectedStations = trackerManager.getSelectedStations();
+					}
+					query.setParameter("selectedStations", selectedStations);
+				}
+				jobsList = query.getResultList();
+				if(jobsList!=null) {
+					for (TrackerConsoleJobs trackerConsoleJobs : jobsList) {
+						Hibernate.initialize(trackerConsoleJobs.getPassesList());
+						if(trackerConsoleJobs.getJob()!=null) {
+							Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
+						} else if(trackerConsoleJobs.getCharge()!=null) {
+							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
+							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
+						}
+					}	
+				}
+			}
+			if(jobsList!=null)
+				log.debug("** Found " + jobsList.size() + "records:"); 
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return jobsList;
+	}
 
 	@SuppressWarnings("unchecked")
 	public void deleteItem(String className, Long id) {
