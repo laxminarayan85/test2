@@ -36,7 +36,7 @@ width="100%" height="100%"  creationComplete="init()"
    		localTransation = new CreditCardTransactions;
    		localTransation.creditCard = new CreditCard;
    		
-   		this.addEventListener(CreditCardTrackReadEvent.BRICKREAD, handleBrickRead);
+   		Snowmass.getInstance().addEventListener(CreditCardTrackReadEvent.BRICKREAD, handleBrickRead);
    		
    		
 		// dataService.getAll("Templates");
@@ -52,8 +52,9 @@ width="100%" height="100%"  creationComplete="init()"
 
 	private function handleBrickRead(ev:CreditCardTrackReadEvent):void 
 	{
-		localTransation.creditCard.cardNumber = ev.brickData.parsedCard.cardNumber;
-		doReadCardNumber();
+		localTransation.creditCard.cardDisplayNumber = formatCreditCardNumber(ev.brickData.parsedCard.cardNumber);
+		localTransation.creditCard.cardHolderName = ev.brickData.parsedCard.cardHolderName;
+		localTransation.creditCard.expiresDate = ev.brickData.parsedCard.expiresDate;
 	}
 
 	private function handleFault(ev:FaultEvent):void
@@ -76,32 +77,41 @@ width="100%" height="100%"  creationComplete="init()"
 		}
 	}
 		
-	private function doReadCardNumber():void{
-		var xPattern:Number;
+	private function formatCreditCardNumber(str:String):String {
+		var localString:String = new String;
+		var xPattern:int;
 		
-		if (cardnumber.text != "") {
-			xPattern = cardnumber.text.indexOf("X");
+		if (str != "") {
+			xPattern = str.indexOf("X");
 			
 			if (xPattern < 0) {
 				var callbacks:IResponder = new mx.rpc.Responder(handleEncryptionResult, handleFault);	
-				var encryptCCEvent:EncryptDataEvent = new EncryptDataEvent(EncryptDataEvent.ENCRYPTDATA, cardnumber.text, "AES256WITHSERIALNUMBER", callbacks);
+				var encryptCCEvent:EncryptDataEvent = new EncryptDataEvent(EncryptDataEvent.ENCRYPTDATA, str, "AES256WITHSERIALNUMBER", callbacks);
 				var i:Number;
-				var localString:String = new String;
+				
+				localTransation.creditCard.cardNumber = "";
 				
 				encryptCCEvent.dispatch();
 				
-				for (i = 0; i < cardnumber.text.length; ++i) {
-					if (i > 0 && i < (cardnumber.text.length-4)) {
+				for (i = 0; i < str.length; ++i) {
+					if (i > 0 && i < (str.length-4)) {
 						localString = localString.concat("X");
 					}
 					else {
-						localString = localString.concat(cardnumber.text.charAt(i).toString());
+						localString = localString.concat(str.charAt(i).toString());
 					}
 				}
 				
-				cardnumber.text = localString;
+				return(localString);
 			}
 		}
+		return(str);
+	}
+	
+	
+	private function doReadCardNumber():void{		
+		cardnumber.text = formatCreditCardNumber(cardnumber.text);
+		localTransation.creditCard.cardDisplayNumber = cardnumber.text;
 	}
 	
 ]]>
