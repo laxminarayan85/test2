@@ -74,7 +74,7 @@
 				<mx:Image x="91" y="574" id="efi_logo" source="assets/logo-efi-print-to-win.gif" visible="true" alpha="0.0" width="89" height="28"/>
 				<mx:Text x="10" y="587" text="Powered by:&#xd;" id="powered_by" alpha="0.0" textAlign="right"/>
 				<mx:Text x="10" y="613" text="Version:" id="version_txt_label" textAlign="right"/>
-				<mx:Text x="69" y="613" text="{this.serverVersion}" id="version_txt" textAlign="left" width="130"/>
+				<mx:Text x="69" y="613" text="{this.serverVersion}" id="version_txt" textAlign="left" width="265"/>
 				<components:MultiLineLabelButton x="176" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" width="158" height="90" icon="@Embed(source='assets/employeeManager.png')" labelPlacement="bottom" click="doEmployee();" fontSize="9"/>
 				<components:MultiLineLabelButton x="176" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup')}" width="158" height="90" id="admin_button" labelPlacement="bottom" click="doSecurity();" fontSize="9"/>
 				
