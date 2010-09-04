@@ -36,23 +36,6 @@
 	<property name="warfile" value="${snowmassRunTimedir}/webapps/Snowmass.war"/>
 	<property name="distpath" value="${checkoutpath}/dist/PrintSmith Server Runtime/"/>
 
-	<if name="time" exists="true">
-		<echo>Using parent build's timestamp</echo>
-		<else>
-			<tstamp>
-				<format property="time" pattern="yyyyMMddhhmmss" offset="-5" unit="hour"/>
-			</tstamp>
-			<echo> ${time} </echo>
-		</else>
-	</if>
-	<if name="versionString" exists="true">
-		<echo>Using parent build's versionString</echo>
-		<else>
-			<property name="versionString" value="xxxx.${time}"/>
-		</else>
-	</if>
-
-	<echo> Version: ${versionString} </echo>
 
 	<!-- Classpath for the project -->   
 	<path id="master-classpath"> 
@@ -71,8 +54,27 @@
 	</path> 
 
    	<target name="all" >
-		<echo message="init snowmass java compile"/>
-		<!-- . is used for pointing to the current directory -->
+<!--   		<if name="time" exists="true">
+   			<echo>Using parent build's timestamp</echo>
+   			<else>
+   				<tstamp>
+   					<format property="time" pattern="yyyyMMddhhmmss" offset="-5" unit="hour"/>
+   				</tstamp>
+   				<echo> ${time} </echo>
+   			</else>
+   		</if>
+   		<if name="versionString" exists="true">
+   			<echo>Using parent build's versionString</echo>
+   			<else>
+   				<property name="versionString" value="xxxx.${time}"/>
+   			</else>
+   		</if>
+-->
+   		<echo> Version: ${versionString} </echo>
+
+   		
+   		<echo message="init snowmass java compile"/>
+   		<replace file="${snowmassWebInfdir}/version.properties" token="**VERSION**" value="${versionString}" />
 
 		<mkdir dir="${snowmassBuilddir}/${pjxnamespace}/"/>
 
