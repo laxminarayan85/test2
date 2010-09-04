@@ -36,6 +36,31 @@
 	<property name="warfile" value="${snowmassRunTimedir}/webapps/Snowmass.war"/>
 	<property name="distpath" value="${checkoutpath}/dist/PrintSmith Server Runtime/"/>
 
+	<if>
+		<equals arg1="${time}" arg2="$${time}"/>
+	<then>
+		<echo>Using parent build's timestamp</echo>
+	</then>
+	<else>
+		<echo>No timestamp found</echo>
+		<tstamp>
+			<format property="time" pattern="yyyyMMddhhmmss" offset="-5" unit="hour"/>
+		</tstamp>
+		<echo> ${time} </echo>
+	</else>
+	</if>
+	<if>
+		<equals arg1="${versionString}" arg2="$${versionString}"/>
+	<then>
+		<echo>Using parent build's versionString</echo>
+	</then>
+	<else>
+		<echo>No versionString found</echo>
+		<property name="versionString" value="${build.number}.${time}"/>
+	</else>
+	</if>
+	<echo> Version: ${versionString} </echo>
+
 	<!-- Classpath for the project -->   
 	<path id="master-classpath"> 
 		<fileset dir="${snowmassBuildlibsdir}"> 
