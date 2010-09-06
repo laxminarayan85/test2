@@ -16,6 +16,7 @@
 <mx:Script>
                                    
 <![CDATA[
+//	import com.efi.mdi.view.window.MDIWindow;
 	import mx.collections.SortField;
 	import mx.collections.Sort;
 	import mx.events.DataGridEvent;
@@ -102,6 +103,9 @@
 	    PopUpManager.centerPopUp(this);
 //	    resetFocus();                                     
 //		dataService.getAccountPicker("Account");
+
+//		var mdi:MDIWindow = Snowmass.getInstance().containerManager.getActiveWindow();
+//MS:TODO
 		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
 		if (editPage.className != "EditCustomer") {
 			new_button.visible = false;
@@ -191,7 +195,7 @@
 	}
 	private function contactLabel(item:Object, column:DataGridColumn):String	{
 		var acct:Account = item as Account;
-		return acct.contact.lastName + ", " + acct.contact.firstName;
+		return acct.contact.lastName + ", " + acct.contact.firstName + " - " + acct.title;
 	}
 	
 	private function refreshData():void{
