@@ -22,6 +22,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.pages.ProductionTrackerReport;
+			import mx.managers.PopUpManager;
 			import com.efi.printsmith.data.JobBase;
 			import com.efi.printsmith.data.TrackerConsolePasses;
 			import com.efi.printsmith.data.Job;
@@ -272,6 +274,10 @@
 			    }
 			    return txtString;
 			}
+			
+			private function openProdReport():void {
+				PopUpManager.createPopUp(this,ProductionTrackerReport,false);
+			}
 		]]>
 	</mx:Script>
 
@@ -407,6 +413,26 @@
 					</mx:DataGrid>
 					
 				</mx:Panel>
+				
+		</mx:VBox>
+		
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowMgrCmd.Tools')}" 
+				paddingLeft="20" paddingTop="20" width="100%" height="100%">
+				
+			<mx:HBox width="100%">
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.ClearTrackerhistoryf')}:"/>
+				<mx:TextInput textAlign="center" text="180"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.daysold')}"/>
+			</mx:HBox>
+			
+			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.Reports')}" width="35%" height="20%"
+					paddingLeft="20" paddingTop="20" paddingBottom="20" paddingRight="20">
+					
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.ProductionReports')}"
+					click="{openProdReport()}" width="100%"/>
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.EmployeeReports')}" width="100%"/>
+				
+			</mx:Panel>
 				
 		</mx:VBox>
 	

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="1000" height="700"
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerProductionReportCmd.ProductionTrackerRep')}"
+	showCloseButton="true" close="{PopUpManager.removePopUp(this)}" creationComplete="{initProdRepWindow()}">
+	
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getProductionEmployeeTrackerJobs" fault="handleFault(event)" result="handleLoadJobsResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.common.scripts.DateUtil;
+			import mx.rpc.events.FaultEvent;
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			import com.efi.printsmith.data.TrackerConsolePasses;
+			import com.efi.printsmith.data.Job;
+			import com.efi.printsmith.data.Charge;
+			import com.efi.printsmith.data.TrackerConsoleJobs;
+			import mx.collections.ArrayCollection;
+			import mx.managers.PopUpManager;
+			
+			[Bindable] private var reportTypeList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] private var productionJobsList:ArrayCollection = new ArrayCollection();
+			
+			private function initProdRepWindow():void {
+				PopUpManager.centerPopUp(this);
+				reportTypeCombo.selectedItem = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.CompletedDate');
+				reportTypeList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.CompletedDate'));
+				reportTypeList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.EstimatedvsActual'));
+				reportTypeList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.MissedTarget'));
+				viewDate.selectedValue = "LastWeek";
+				getProductionJobList();
+			}
+			
+			private function getProductionJobList(fromDate:Date=null, toDate:Date=null):void {
+				if(fromDate==null || toDate==null){
+					toDate = new Date();
+					fromDate = DateUtil.addDays(toDate,-7);
+				} else {
+					toDate = DateUtil.addDays(toDate,1);
+				}
+				dataService.getProductionEmployeeTrackerJobs(fromDate,toDate);
+			}
+			
+			private function handleLoadJobsResult(event:ResultEvent):void {
+				productionJobsList = event.result as ArrayCollection;
+			}
+			
+			private function handleFault(ev:FaultEvent):void {  
+				var message:String;
+				              
+				message = "Error: "                          
+				+ ev.fault.faultCode + " - "                                  
+				+ ev.fault.faultDetail + " - "                                  
+				+ ev.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, 4);                                 
+			}
+			
+			public function getInvoiceNumber(object:Object):String {
+				if(object is TrackerConsoleJobs){
+					if(object.job!=null){
+						object = object.job;
+					} else {
+						object = object.charge;
+					}
+				} 
+				if(object is Job){
+					var job:Job = object as Job;
+					return String(job.parentInvoice.invoiceNumber);	
+				}
+				if(object is Charge){
+					var charge:Charge = object as Charge;
+					if(charge.parentInvoice!=null){
+						return String(charge.parentInvoice.invoiceNumber);
+					}
+					if(charge.parentJob!=null){
+						return String(charge.parentJob.jobNumber)+" / "+charge.parentJob.parentInvoice.invoiceNumber;
+					}
+				}
+				return "";
+			}
+			
+			public function getTotalJobTime(object:Object):String {
+				return convertMilliSecondsToString((object.actualSetUpTime+object.actualRunTime+object.actualWashTime),true);
+			}
+			
+			public function getActualJobTime(object:Object):String {
+				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
+				var totalValue:Number = 0;
+				for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
+					if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0) {
+						totalValue = totalValue + passes.setUpTime;
+					}
+					if(!(isNaN(passes.runTime)) && passes.runTime!=0) {
+						totalValue = totalValue + passes.runTime;
+					}
+					if(!(isNaN(passes.washUpTime)) && passes.washUpTime!=0) {
+						totalValue = totalValue + passes.washUpTime;
+					}
+				}
+				return convertMilliSecondsToString(totalValue,true);
+			}
+			
+			public function getTimeDifference(object:Object):String {
+				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
+				var totalValue:Number = 0;
+				var diffTime:Number = 0;
+				for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
+					if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0) {
+						totalValue = totalValue + passes.setUpTime;
+					}
+					if(!(isNaN(passes.runTime)) && passes.runTime!=0) {
+						totalValue = totalValue + passes.runTime;
+					}
+					if(!(isNaN(passes.washUpTime)) && passes.washUpTime!=0) {
+						totalValue = totalValue + passes.washUpTime;
+					}
+				}
+				diffTime = totalValue - (object.actualSetUpTime+object.actualRunTime+object.actualWashTime);
+				return convertMilliSecondsToString(diffTime,true);
+			}
+			
+			public function getEstimatedCost(object:Object):String {
+				if(object is TrackerConsoleJobs){
+					if(object.job!=null){
+						object = object.job;
+					} else {
+						object = object.charge;
+					}
+				} 
+				if(object is Job){
+					var job:Job = object as Job;
+					return costFormatter.format(job.totalCost);
+				}
+				return costFormatter.format(0); 
+			}
+			
+			public function getActualCost(object:Object):String {
+				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
+				var totalValue:Number = 0;
+				for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
+					if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0) {
+						totalValue = totalValue + passes.setUpTime;
+					}
+					if(!(isNaN(passes.runTime)) && passes.runTime!=0) {
+						totalValue = totalValue + passes.runTime;
+					}
+					if(!(isNaN(passes.washUpTime)) && passes.washUpTime!=0) {
+						totalValue = totalValue + passes.washUpTime;
+					}
+				}
+				if(trackerConsoleJobsObj.job!=null){
+					var job:Job = trackerConsoleJobsObj.job as Job;
+					if((trackerConsoleJobsObj.actualSetUpTime+trackerConsoleJobsObj.actualRunTime+trackerConsoleJobsObj.actualWashTime)==0){
+						return costFormatter.format(0);
+					}
+					return costFormatter.format((job.totalCost*totalValue)/(trackerConsoleJobsObj.actualSetUpTime+trackerConsoleJobsObj.actualRunTime+trackerConsoleJobsObj.actualWashTime));
+				}
+				return costFormatter.format(0); 
+			}
+			
+			public function getCostDifference(object:Object):String {
+				return costFormatter.format(0); 
+			}
+			
+			public function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
+				var isNegative:Boolean = false;
+				if(milliSeconds<0){
+					isNegative=true;
+					milliSeconds = -(milliSeconds);
+				}
+				var txtString:String = "";
+				if(showSeconds){
+					if(milliSeconds<60000){
+						txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+					}
+				}
+				if(milliSeconds>=60000 && milliSeconds<60000*60){
+			    	txtString = "0 Hrs ";
+			    	txtString = txtString + numFormatter.format(milliSeconds/60000);
+			    	if(showSeconds){
+			    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
+			    	}
+			    }
+			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
+			    	txtString = numFormatter.format(milliSeconds/(60000*60))+" Hrs ";
+			    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
+			    	}
+			    }
+			    if(milliSeconds>=60000*60*24){
+			    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+" Hrs ";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
+			    	}
+			    }
+			    if(isNegative){
+			    	txtString = "-"+txtString;
+			    }
+			    return txtString;
+			}
+			
+			private function setDates():void {
+				if(viewDate.selectedValue=='DateRange'){
+					dateTo.selectedDate = DateUtil.addDays(new Date(),-1);
+					dateFrom.selectedDate = DateUtil.addDays(dateTo.selectedDate,-6);
+				}
+			}
+			
+			private function viewJobs():void {
+				if(viewDate.selectedValue == "LastWeek"){
+					getProductionJobList();
+				} else if(viewDate.selectedValue == "DateRange") {
+					var fromDate:Date = dateFrom.selectedDate;
+					var toDate:Date = DateUtil.addDays(dateTo.selectedDate,1);
+					getProductionJobList(fromDate,toDate);
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
+	
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
+	
+	<mx:NumberFormatter id="costFormatter" useThousandsSeparator="true" precision="2" rounding="none"/>
+	
+	<mx:VBox height="15%" width="100%" verticalAlign="middle">
+		<mx:HBox height="100%" width="100%" verticalAlign="middle">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReport_ResID.ReportType')}:"/>
+		<mx:ComboBox id="reportTypeCombo" dataProvider="{reportTypeList}"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReport_ResID.View')}" 
+			click="{viewJobs()}" labelPlacement="bottom" width="10%" height="30%">
+			<mx:icon>@Embed(source='../../../../assets/View.png')</mx:icon>
+		</mx:Button>
+		<mx:Panel paddingBottom="20" paddingLeft="20" paddingRight="20" paddingTop="20"
+			layout="vertical" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReport_ResID.DateRangeToView')}">
+			
+			<mx:RadioButtonGroup id="viewDate" change="{setDates()}"/>
+
+			<mx:RadioButton value="LastWeek" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReport_ResID.LastWeek')}" groupName="viewDate"/>
+			
+			<mx:HBox>
+				<mx:RadioButton value="DateRange" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReport_ResID.DateRange')}:" groupName="viewDate"/>
+				<mx:DateField id="dateFrom" enabled="{viewDate.selectedValue=='DateRange'}"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReport_ResID.to')}:"/>
+				<mx:DateField id="dateTo" enabled="{viewDate.selectedValue=='DateRange'}"/>
+			</mx:HBox>
+		</mx:Panel>
+		
+		</mx:HBox>
+	</mx:VBox>
+	
+	<mx:DataGrid dataProvider="{productionJobsList}" width="100%" height="85%">
+		<mx:columns>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.Document')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getInvoiceNumber(data)}"/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.Employee')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{data.employee.lastName}, {data.employee.firstName}"/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.ProductionLocation')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{data.productionLocations.name}"/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.ScheduledDate')}"
+				visible="{reportTypeCombo.selectedItem==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.CompletedDate')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text=""/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.CompletedDate')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.dateFormatter.format(data.completedDate)}"/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.Difference')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text=""/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.EstimatedTime')}"
+				visible="{reportTypeCombo.selectedItem==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.CompletedDate')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getTotalJobTime(data)}"/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.ActualTime')}"
+				visible="{reportTypeCombo.selectedItem==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.CompletedDate')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getActualJobTime(data)}"/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.Difference')}"
+				visible="{reportTypeCombo.selectedItem==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.CompletedDate')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getTimeDifference(data)}"/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionEstimatedVsActual_ResID.EstimatedCost')}"
+				visible="{reportTypeCombo.selectedItem==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.EstimatedvsActual')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getEstimatedCost(data)}"/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionEstimatedVsActual_ResID.ActualCost')}"
+				visible="{reportTypeCombo.selectedItem==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.EstimatedvsActual')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getActualCost(data)}"/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionEstimatedVsActual_ResID.OverUnder')}"
+				visible="{reportTypeCombo.selectedItem==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.EstimatedvsActual')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getCostDifference(data)}"/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.ExceptionCode')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text=""/>
+					</mx:Component>
+				</mx:itemRenderer>	
+			</mx:DataGridColumn>
+		</mx:columns>
+	</mx:DataGrid>
+</mx:TitleWindow>
