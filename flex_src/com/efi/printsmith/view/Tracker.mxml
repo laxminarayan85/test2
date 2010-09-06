@@ -678,8 +678,24 @@
 							&& trackerConsoleJobsObj.productionStations.id==trackerConsole.productionStations.id && trackerConsoleJobsObj.employee.id==employee.id){
 							Alert.show("This item has a activity started, would you like to reset the beginning timers?", "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 								if (event.detail==Alert.YES) {
-									resetTrackerConsoleJobs = trackerConsoleJobsObj;
-									dataService.addUpdateDeleteList(null,trackerConsoleJobsObj.passesList);
+									trackerStatus = "start";
+									trackerConsoleJobsObj.paused = false;
+									for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsObj.passesList) {
+										if(trackerConsolePasses.passNo==trackerConsoleJobsObj.currentPass) {
+											trackerConsolePasses.trackDate = new Date();
+											trackerConsolePasses.trackTime = 0;
+											trackerConsolePasses.setUpDate = null;
+											trackerConsolePasses.setUpTime = 0;
+											trackerConsolePasses.setUpCompleted = false;
+											trackerConsolePasses.runDate = null;
+											trackerConsolePasses.runTime = 0;
+											trackerConsolePasses.runCompleted = false;
+											trackerConsolePasses.washUpDate = null;
+											trackerConsolePasses.washUpTime = 0;
+											trackerConsolePasses.washUpCompleted = false;
+										}
+									}
+									updateDataServiceJob.addUpdate(trackerConsoleJobsObj);
 								}
 							});
 							return;
@@ -689,8 +705,24 @@
 							&& trackerConsoleJobsObj.productionStations.id==trackerConsole.productionStations.id && trackerConsoleJobsObj.employee.id==employee.id){
 							Alert.show("This item has a activity started, would you like to reset the beginning timers?", "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 								if (event.detail==Alert.YES) {
-									resetTrackerConsoleJobs = trackerConsoleJobsObj;
-									dataService.addUpdateDeleteList(null,trackerConsoleJobsObj.passesList);
+									trackerStatus = "start";
+									trackerConsoleJobsObj.paused = false;
+									for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsObj.passesList) {
+										if(trackerConsolePasses.passNo==trackerConsoleJobsObj.currentPass) {
+											trackerConsolePasses.trackDate = new Date();
+											trackerConsolePasses.trackTime = 0;
+											trackerConsolePasses.setUpDate = null;
+											trackerConsolePasses.setUpTime = 0;
+											trackerConsolePasses.setUpCompleted = false;
+											trackerConsolePasses.runDate = null;
+											trackerConsolePasses.runTime = 0;
+											trackerConsolePasses.runCompleted = false;
+											trackerConsolePasses.washUpDate = null;
+											trackerConsolePasses.washUpTime = 0;
+											trackerConsolePasses.washUpCompleted = false;
+										}
+									}
+									updateDataServiceJob.addUpdate(trackerConsoleJobsObj);
 								}
 							});
 							return;
