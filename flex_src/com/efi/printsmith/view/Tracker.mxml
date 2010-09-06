@@ -37,6 +37,10 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStationResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServiceException" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadExceptionResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:RemoteObject id="dataServicePending" destination="dataService" showBusyCursor="true">
 		<mx:method name="getTracker" fault="handleFault(event)" result="handleLoadPendingResult(event)"/>
 	</mx:RemoteObject>
@@ -45,11 +49,19 @@
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleGetInvoiceResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="updateDataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
 	
 	<mx:Script> 
 	                                  
 	<![CDATA[
+		import mx.utils.StringUtil;
+		import com.efi.printsmith.data.ProductionExceptions;
+		import com.efi.printsmith.events.TrackerConsoleStopEvent;
+		import com.efi.printsmith.pages.TrackerConsoleStopWindow;
 		import com.efi.printsmith.data.Estimate;
 		import mx.events.IndexChangedEvent;
 		import com.efi.printsmith.data.TrackerConsolePasses;
@@ -88,6 +100,8 @@
 		[Bindable] private var stationsArray:ArrayCollection = new ArrayCollection();
 		[Bindable] private var productionStations:ArrayCollection = new ArrayCollection();
 		
+		[Bindable] private var exceptionsArray:ArrayCollection = new ArrayCollection();
+		
 		[Bindable] private var onLoad:Boolean = true;
 		
 		[Bindable] private var selectedJob:Job;
@@ -119,6 +133,8 @@
 		[Bindable] private var fontSizeList:ArrayCollection = new ArrayCollection();
 		
 		[Bindable] private var refreshActiveList:Boolean = false;
+		
+		[Bindable] private var closeJob:Boolean = false;
 		 
 		 
 		public function initTrackerConsole():void {
@@ -135,6 +151,7 @@
 			fontObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"menu_321.Large");
 			fontSizeList.addItem(fontObj);
 			dataService.getSingle("TrackerConsole");
+			dataServiceException.getAll("ProductionExceptions");
 		}    
 		
 		public function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
@@ -291,6 +308,15 @@
 					}
 				}
 			}
+		}
+		
+		private function handleLoadExceptionResult(event:ResultEvent):void {
+			var list:ArrayCollection = event.result as ArrayCollection;
+			var exception:ProductionExceptions = new ProductionExceptions();
+			exception.id = 0;
+			exception.name = "";
+			list.addItemAt(exception,0);
+			exceptionsArray = list;
 		}
 		
 		private function doName(item:Object):String{
@@ -860,37 +886,113 @@
 			}
 		}
 		
+		private function stopJob():void {
+			if(selectedTrackerConsoleJob!=null){
+				var nowDate:Date = new Date();
+				var totalWashTime:Number = 0;
+				if(selectedTrackerConsoleJob.currentPass==selectedTrackerConsoleJob.noOfPasses){
+					trackerStatus = "stop";
+					for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
+						if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
+							if(!selectedTrackerConsoleJob.paused) {
+								totalWashTime = (nowDate.time-trackerConsolePasses.trackDate.time);
+							}
+							if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+								totalWashTime = totalWashTime + trackerConsolePasses.trackTime;
+							}
+							trackerConsolePasses.trackDate = nowDate;
+							trackerConsolePasses.trackTime = 0;
+							if(!trackerConsolePasses.setUpCompleted || !trackerConsolePasses.runCompleted){
+								trackerConsolePasses.runDate = nowDate;
+								trackerConsolePasses.runTime = totalWashTime;
+							} else {
+								trackerConsolePasses.washUpDate = nowDate;
+								trackerConsolePasses.washUpTime = totalWashTime;
+								trackerConsolePasses.washUpCompleted = true;
+							}
+							break;
+						}
+					}
+					selectedTrackerConsoleJob.paused = false; 
+					selectedTrackerConsoleJob.completed = true;
+					selectedTrackerConsoleJob.completedDate = nowDate;
+					if(selectedTrackerConsoleJob.appendNotesToJobTicketNotes && selectedTrackerConsoleJob.notes!=null && StringUtil.trim(selectedTrackerConsoleJob.notes)!=""){
+						if(selectedTrackerConsoleJob.job!=null){
+							selectedTrackerConsoleJob.job.jobNotes = selectedTrackerConsoleJob.notes;
+						}
+					}
+					selectedDGIndex = employee_jobs_grid.selectedIndex;
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
+				}
+			}
+		} 
+		
 		private function stopOrNextPassJob():void {
 			if(selectedTrackerConsoleJob!=null){
 				var nowDate:Date = new Date();
 				var totalWashTime:Number = 0;
-				trackerStatus = "stop";
-				for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
-					if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
-						if(!selectedTrackerConsoleJob.paused) {
-							totalWashTime = (nowDate.time-trackerConsolePasses.trackDate.time);
-						}
-						if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
-							totalWashTime = totalWashTime + trackerConsolePasses.trackTime;
-						}
-						trackerConsolePasses.trackDate = nowDate;
-						trackerConsolePasses.trackTime = 0;
-						if(!trackerConsolePasses.setUpCompleted || !trackerConsolePasses.runCompleted){
-							trackerConsolePasses.runDate = nowDate;
-							trackerConsolePasses.runTime = totalWashTime;
-						} else {
-							trackerConsolePasses.washUpDate = nowDate;
-							trackerConsolePasses.washUpTime = totalWashTime;
-							trackerConsolePasses.washUpCompleted = true;
-						}
-						break;
-					}
-				}
 				if(selectedTrackerConsoleJob.currentPass==selectedTrackerConsoleJob.noOfPasses){
-					selectedTrackerConsoleJob.completed = true;
-					selectedTrackerConsoleJob.completedDate = nowDate;
+					if(!selectedTrackerConsoleJob.paused){
+						closeJob = true;
+						pauseJob();
+					} else {
+						var trackerConsoleStopWindow:TrackerConsoleStopWindow = PopUpManager.createPopUp(this,TrackerConsoleStopWindow,true) as TrackerConsoleStopWindow;
+						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+						var trackerConsoleJobsStopBean:TrackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+						for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsStopBean.passesList){
+							if(trackerConsolePasses.passNo==trackerConsoleJobsStopBean.currentPass){
+								if(!trackerConsoleJobsStopBean.paused) {
+									totalWashTime = (nowDate.time-trackerConsolePasses.trackDate.time);
+								}
+								if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+									totalWashTime = totalWashTime + trackerConsolePasses.trackTime;
+								}
+								trackerConsolePasses.trackDate = nowDate;
+								trackerConsolePasses.trackTime = 0;
+								if(!trackerConsolePasses.setUpCompleted || !trackerConsolePasses.runCompleted){
+									trackerConsolePasses.runDate = nowDate;
+									trackerConsolePasses.runTime = totalWashTime;
+								} else {
+									trackerConsolePasses.washUpDate = nowDate;
+									trackerConsolePasses.washUpTime = totalWashTime;
+									trackerConsolePasses.washUpCompleted = true;
+								}
+								break;
+							}
+						}
+						trackerConsoleJobsStopBean.markStepComplete = true;
+						trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
+						trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;
+						trackerConsoleStopWindow.addEventListener(TrackerConsoleStopEvent.STOP_JOB_EVENT,function(event:TrackerConsoleStopEvent):void {
+							if(event.isStop){
+								copyFromStopWindow(event.trackerConsoleJobs,selectedTrackerConsoleJob);
+								stopJob();
+							}
+						});
+					}
 				} else {
 					trackerStatus = "nextpass";
+					for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
+						if(trackerConsolePasses.passNo==selectedTrackerConsoleJob.currentPass){
+							if(!selectedTrackerConsoleJob.paused) {
+								totalWashTime = (nowDate.time-trackerConsolePasses.trackDate.time);
+							}
+							if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+								totalWashTime = totalWashTime + trackerConsolePasses.trackTime;
+							}
+							trackerConsolePasses.trackDate = nowDate;
+							trackerConsolePasses.trackTime = 0;
+							if(!trackerConsolePasses.setUpCompleted || !trackerConsolePasses.runCompleted){
+								trackerConsolePasses.runDate = nowDate;
+								trackerConsolePasses.runTime = totalWashTime;
+							} else {
+								trackerConsolePasses.washUpDate = nowDate;
+								trackerConsolePasses.washUpTime = totalWashTime;
+								trackerConsolePasses.washUpCompleted = true;
+							}
+							break;
+						}
+					}
 					selectedTrackerConsoleJob.currentPass = selectedTrackerConsoleJob.currentPass+1;
 					if(selectedTrackerConsoleJob.noOfPasses==selectedTrackerConsoleJob.currentPass){
 						stopBtn.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Stop');
@@ -901,9 +1003,9 @@
 					trackerConsolePassesObj.passNo = selectedTrackerConsoleJob.currentPass;
 					trackerConsolePassesObj.trackerConsoleJobs = selectedTrackerConsoleJob;
 					selectedTrackerConsoleJob.passesList.addItem(trackerConsolePassesObj);
+					selectedDGIndex = employee_jobs_grid.selectedIndex;
+					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 				}
-				selectedDGIndex = employee_jobs_grid.selectedIndex;
-				updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 			}
 		}
 		
@@ -1062,6 +1164,46 @@
 						defaultEnableButtons();
 						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 						progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+						if(closeJob){
+							var nowDate:Date = new Date();
+							var totalWashTime:Number = 0;
+							closeJob = false;
+							var trackerConsoleStopWindow:TrackerConsoleStopWindow = PopUpManager.createPopUp(this,TrackerConsoleStopWindow,true) as TrackerConsoleStopWindow;
+							registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+							var trackerConsoleJobsStopBean:TrackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+							for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsStopBean.passesList){
+								if(trackerConsolePasses.passNo==trackerConsoleJobsStopBean.currentPass){
+									if(!trackerConsoleJobsStopBean.paused) {
+										totalWashTime = (nowDate.time-trackerConsolePasses.trackDate.time);
+									}
+									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+										totalWashTime = totalWashTime + trackerConsolePasses.trackTime;
+									}
+									trackerConsolePasses.trackDate = nowDate;
+									trackerConsolePasses.trackTime = 0;
+									if(!trackerConsolePasses.setUpCompleted || !trackerConsolePasses.runCompleted){
+										trackerConsolePasses.runDate = nowDate;
+										trackerConsolePasses.runTime = totalWashTime;
+									} else {
+										trackerConsolePasses.washUpDate = nowDate;
+										trackerConsolePasses.washUpTime = totalWashTime;
+										trackerConsolePasses.washUpCompleted = true;
+									}
+									break;
+								}
+							}
+							trackerConsoleJobsStopBean.markStepComplete = true;
+							trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
+							trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;
+							trackerConsoleStopWindow.addEventListener(TrackerConsoleStopEvent.STOP_JOB_EVENT,function(event:TrackerConsoleStopEvent):void {
+								if(event.isStop){
+									copyFromStopWindow(event.trackerConsoleJobs,selectedTrackerConsoleJob);
+									stopJob();
+								} else {
+									continueJob();
+								}
+							});
+						}
 					}
 				} else if(trackerStatus=="continue"){
 					if(selectedTrackerConsoleJob!=null){
@@ -1112,6 +1254,19 @@
 					}
 				}
 			}	
+		}
+		
+		private function copyFromStopWindow(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {
+			destination.markStepComplete = source.markStepComplete;
+			destination.moveToNonProdStep = source.moveToNonProdStep;
+			if(source.productionExceptions!=null){
+				if(source.productionExceptions.id==0){
+					source.productionExceptions = null;
+				}
+			}
+			destination.productionExceptions = source.productionExceptions;
+			destination.notes = source.notes;
+			destination.appendNotesToJobTicketNotes = source.appendNotesToJobTicketNotes;
 		}
 		
 		private function copyTrackerConsoleJobObject(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {

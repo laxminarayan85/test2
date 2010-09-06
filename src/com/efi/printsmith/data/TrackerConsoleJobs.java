@@ -47,15 +47,15 @@ public class TrackerConsoleJobs extends ModelBase{
 	@ManyToOne()
 	private Charge charge;
 	
-	private long actualSetUpTime;
+	private Long actualSetUpTime;
 	
-	private long actualRunTime;
+	private Long actualRunTime;
 	
-	private long actualWashTime;
+	private Long actualWashTime;
 	
-	private long duration;
+	private Long duration;
 	
-	private long totalTime;
+	private Long totalTime;
 	
 	private int noOfPasses;
 	
@@ -72,6 +72,21 @@ public class TrackerConsoleJobs extends ModelBase{
 	private Boolean completed;
 	
 	private Date completedDate;
+	
+	@ManyToOne( cascade = {CascadeType.MERGE}, optional=true)
+	private ProductionExceptions productionExceptions;
+	
+	private String notes;
+	
+	private Boolean markStepComplete;
+	
+	private Boolean moveToNonProdStep;
+	
+	private Boolean treatAsNonProdStep;
+	
+	private Long actualTotalTime;
+	
+	private Boolean appendNotesToJobTicketNotes;
 
 	/**
 	 * @return the productionFacilities
@@ -160,70 +175,70 @@ public class TrackerConsoleJobs extends ModelBase{
 	/**
 	 * @return the actualSetUpTime
 	 */
-	public long getActualSetUpTime() {
+	public Long getActualSetUpTime() {
 		return actualSetUpTime;
 	}
 
 	/**
 	 * @param actualSetUpTime the actualSetUpTime to set
 	 */
-	public void setActualSetUpTime(long actualSetUpTime) {
+	public void setActualSetUpTime(Long actualSetUpTime) {
 		this.actualSetUpTime = actualSetUpTime;
 	}
 
 	/**
 	 * @return the actualRunTime
 	 */
-	public long getActualRunTime() {
+	public Long getActualRunTime() {
 		return actualRunTime;
 	}
 
 	/**
 	 * @param actualRunTime the actualRunTime to set
 	 */
-	public void setActualRunTime(long actualRunTime) {
+	public void setActualRunTime(Long actualRunTime) {
 		this.actualRunTime = actualRunTime;
 	}
 
 	/**
 	 * @return the actualWashTime
 	 */
-	public long getActualWashTime() {
+	public Long getActualWashTime() {
 		return actualWashTime;
 	}
 
 	/**
 	 * @param actualWashTime the actualWashTime to set
 	 */
-	public void setActualWashTime(long actualWashTime) {
+	public void setActualWashTime(Long actualWashTime) {
 		this.actualWashTime = actualWashTime;
 	}
 
 	/**
 	 * @return the duration
 	 */
-	public long getDuration() {
+	public Long getDuration() {
 		return duration;
 	}
 
 	/**
 	 * @param duration the duration to set
 	 */
-	public void setDuration(long duration) {
+	public void setDuration(Long duration) {
 		this.duration = duration;
 	}
 
 	/**
 	 * @return the totalTime
 	 */
-	public long getTotalTime() {
+	public Long getTotalTime() {
 		return totalTime;
 	}
 
 	/**
 	 * @param totalTime the totalTime to set
 	 */
-	public void setTotalTime(long totalTime) {
+	public void setTotalTime(Long totalTime) {
 		this.totalTime = totalTime;
 	}
 
@@ -253,6 +268,20 @@ public class TrackerConsoleJobs extends ModelBase{
 	 */
 	public void setPaused(Boolean paused) {
 		this.paused = paused;
+	}
+
+	/**
+	 * @return the clockBreak
+	 */
+	public Boolean getClockBreak() {
+		return clockBreak;
+	}
+
+	/**
+	 * @param clockBreak the clockBreak to set
+	 */
+	public void setClockBreak(Boolean clockBreak) {
+		this.clockBreak = clockBreak;
 	}
 
 	/**
@@ -312,16 +341,100 @@ public class TrackerConsoleJobs extends ModelBase{
 	}
 
 	/**
-	 * @return the clockBreak
+	 * @return the productionExceptions
 	 */
-	public Boolean getClockBreak() {
-		return clockBreak;
+	public ProductionExceptions getProductionExceptions() {
+		return productionExceptions;
 	}
 
 	/**
-	 * @param clockBreak the clockBreak to set
+	 * @param productionExceptions the productionExceptions to set
 	 */
-	public void setClockBreak(Boolean clockBreak) {
-		this.clockBreak = clockBreak;
+	public void setProductionExceptions(ProductionExceptions productionExceptions) {
+		this.productionExceptions = productionExceptions;
 	}
+
+	/**
+	 * @return the notes
+	 */
+	public String getNotes() {
+		return notes;
+	}
+
+	/**
+	 * @param notes the notes to set
+	 */
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	/**
+	 * @return the markStepComplete
+	 */
+	public Boolean getMarkStepComplete() {
+		return markStepComplete;
+	}
+
+	/**
+	 * @param markStepComplete the markStepComplete to set
+	 */
+	public void setMarkStepComplete(Boolean markStepComplete) {
+		this.markStepComplete = markStepComplete;
+	}
+
+	/**
+	 * @return the moveToNonProdStep
+	 */
+	public Boolean getMoveToNonProdStep() {
+		return moveToNonProdStep;
+	}
+
+	/**
+	 * @param moveToNonProdStep the moveToNonProdStep to set
+	 */
+	public void setMoveToNonProdStep(Boolean moveToNonProdStep) {
+		this.moveToNonProdStep = moveToNonProdStep;
+	}
+
+	/**
+	 * @return the treatAsNonProdStep
+	 */
+	public Boolean getTreatAsNonProdStep() {
+		return treatAsNonProdStep;
+	}
+
+	/**
+	 * @param treatAsNonProdStep the treatAsNonProdStep to set
+	 */
+	public void setTreatAsNonProdStep(Boolean treatAsNonProdStep) {
+		this.treatAsNonProdStep = treatAsNonProdStep;
+	}
+
+	/**
+	 * @return the actualTotalTime
+	 */
+	public Long getActualTotalTime() {
+		return actualTotalTime;
+	}
+
+	/**
+	 * @param actualTotalTime the actualTotalTime to set
+	 */
+	public void setActualTotalTime(Long actualTotalTime) {
+		this.actualTotalTime = actualTotalTime;
+	}
+
+	/**
+	 * @return the appendNotesToJobTicketNotes
+	 */
+	public Boolean getAppendNotesToJobTicketNotes() {
+		return appendNotesToJobTicketNotes;
+	}
+
+	/**
+	 * @param appendNotesToJobTicketNotes the appendNotesToJobTicketNotes to set
+	 */
+	public void setAppendNotesToJobTicketNotes(Boolean appendNotesToJobTicketNotes) {
+		this.appendNotesToJobTicketNotes = appendNotesToJobTicketNotes;
+	}	
 }

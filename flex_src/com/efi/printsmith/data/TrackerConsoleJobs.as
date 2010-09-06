@@ -47,6 +47,20 @@ package com.efi.printsmith.data
 		public var completed:Boolean = false;
 		
 		public var completedDate:Date;
+		
+		public var productionExceptions:ProductionExceptions;
+	
+		public var notes:String = "";
+		
+		public var markStepComplete:Boolean = false;
+		
+		public var moveToNonProdStep:Boolean = false;
+		
+		public var treatAsNonProdStep:Boolean = false;
+		
+		public var actualTotalTime:Number;
+		
+		public var appendNotesToJobTicketNotes:Boolean = false;
 
 	}
 }
