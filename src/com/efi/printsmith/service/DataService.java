@@ -3711,6 +3711,45 @@ public class DataService extends HibernateService {
 		}
 		return jobsList;
 	}
+	
+	/**
+	 * Retrieves List of completed Jobs/Charges for Production and Employee Tracker Report 
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TrackerConsoleJobs> getProductionEmployeeTrackerJobs(Date fromDate, Date toDate) throws Exception {
+		log.debug("** getActiveJobsForTrackerMgr called.");
+		List<TrackerConsoleJobs> jobsList = new ArrayList<TrackerConsoleJobs>();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from TrackerConsoleJobs where completed=true and completedDate between :fromDate and :toDate";
+			Query query = em.createQuery(queryString);
+			query.setParameter("fromDate", fromDate);
+			query.setParameter("toDate", toDate);
+			jobsList = query.getResultList();
+			if(jobsList!=null) {
+				for (TrackerConsoleJobs trackerConsoleJobs : jobsList) {
+					Hibernate.initialize(trackerConsoleJobs.getPassesList());
+					if(trackerConsoleJobs.getJob()!=null) {
+						Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
+					} else if(trackerConsoleJobs.getCharge()!=null) {
+						Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
+						Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
+					}
+				}	
+			}
+			if(jobsList!=null)
+				log.debug("** Found " + jobsList.size() + "records:"); 
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return jobsList;
+	}
 
 	@SuppressWarnings("unchecked")
 	public void deleteItem(String className, Long id) {
