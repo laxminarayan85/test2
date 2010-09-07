@@ -530,7 +530,8 @@
 		notification_consumer.subscribe();     
 	    PopUpManager.centerPopUp(this);
 
-		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
+
+		parentContainer = Snowmass.getInstance().containerManager.getActiveWindowContent(); //.mainNavigator.selectedChild;
 	}
 
 	public function setMatrix(matrix:com.efi.printsmith.data.Matrix):void {

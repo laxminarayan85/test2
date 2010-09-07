@@ -6,7 +6,9 @@
     verticalScrollPolicy="off" xmlns:ns1="com.efi.printsmith.components.*">
 <mx:Script>
                                    
-<![CDATA[ 
+<![CDATA[
+	import mx.core.UIComponent;
+	import com.efi.mdi.view.window.MDIWindow; 
 	import com.efi.printsmith.data.Contact;           
     import com.efi.printsmith.data.Account;    
     import com.efi.printsmith.view.EditContact;
@@ -154,21 +156,28 @@
 	}		
 
 	private function addUniqueTab(tab:DisplayObject):void {
-			var tabFound:Boolean = false;
-			
-			for (var i:int = 0; i < Snowmass.getInstance().mainNavigator.numChildren; i++)
-			{
-				if (Snowmass.getInstance().mainNavigator.getChildAt(i).name == tab.name)
-				{
-					Snowmass.getInstance().mainNavigator.selectedIndex = i;
-					tabFound = true;
-					break;
-				}
-			}
-			if (!tabFound) {
-				Snowmass.getInstance().mainNavigator.addChild(tab);
-				Snowmass.getInstance().mainNavigator.selectedIndex = Snowmass.getInstance().mainNavigator.numChildren-1;
-			}
+		
+		if (Snowmass.getInstance().containerManager.getWindowsWithChild(tab) == null)
+		{
+			Snowmass.getInstance().containerManager.openNewMDIWindow(tab.name, tab as UIComponent);
+		}
+		
+		
+//			var tabFound:Boolean = false;
+//			
+//			for (var i:int = 0; i < Snowmass.getInstance().mainNavigator.numChildren; i++)
+//			{
+//				if (Snowmass.getInstance().mainNavigator.getChildAt(i).name == tab.name)
+//				{
+//					Snowmass.getInstance().mainNavigator.selectedIndex = i;
+//					tabFound = true;
+//					break;
+//				}
+//			}
+//			if (!tabFound) {
+//				Snowmass.getInstance().mainNavigator.addChild(tab);
+//				Snowmass.getInstance().mainNavigator.selectedIndex = Snowmass.getInstance().mainNavigator.numChildren-1;
+//			}
 		}
 
 ]]>        

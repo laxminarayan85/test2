@@ -37,10 +37,10 @@
 			import com.efi.printsmith.events.PasswordEvent; 	
 			import com.efi.printsmith.Constants;
 			import com.efi.printsmith.security.PSSecurity;
-	[Bindable]	
-		private var application:Snowmass;
-	[Bindable]	
-		private var users:ArrayCollection;
+			[Bindable]	
+				private var application:Snowmass;
+			[Bindable]	
+				private var users:ArrayCollection;
 				
 	private function init():void	{
 				application= Snowmass.getInstance();
@@ -84,9 +84,11 @@
 				Alert.show("Disabled User Name", null, Alert.OK, null, null, null, Alert.OK);
 			} else {
 				PopUpManager.removePopUp(this);
-				application.mainContainer.visible = true;
+				application.showContainer();
 				application.currentUser = res;
 				application.security = new PSSecurity(res);
+				application.containerManager.openNewMDIWindow("Quick Access Panel", new QuickAccessPanel());
+				
 				if (application.currentUser.forcePasswordChange){
 					var setPassword:SetPassword =  SetPassword(PopUpManager.createPopUp(this, SetPassword, true));
 					setPassword.setStyle("borderAlpha", 0.9);

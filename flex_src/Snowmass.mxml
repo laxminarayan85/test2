@@ -3,91 +3,42 @@
 		width="100%" height="100%" pageTitle="Snowmass"
  		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.printsmith.view.*" 
  		applicationComplete="initAppFunctions()"
- 		xmlns:ns2="flexlib.controls.*"
+ 		xmlns:ns2="flexlib.controls.*" 
+ 		xmlns:mdi="com.efi.mdi.view.container.*" 
  		xmlns:flexlib="flexlib.containers.*"
  		xmlns:business="com.efi.printsmith.business.*"
  		xmlns:control="com.efi.printsmith.control.*" backgroundColor="#003893" xmlns:components="com.efi.printsmith.components.*">
  		<mx:Metadata>
  			[ResourceBundle("psResources")]
  		</mx:Metadata>
- 		
-	    <mx:Move 
+ 		 
+	 <!--   <mx:Move 
 	        id="moveLogo" target="{logo}" 
 	        easingFunction="mx.effects.easing.Quadratic.easeIn" effectEnd="endMoveLogo()" duration="2000" xTo="480"
 	    />
 	    <mx:Fade
-	    	id="efiLogoFade" target="{efi_logo}"
+	    	id="efiLogoFade" target="{efi_logo}" 
 	    	alphaFrom="0" alphaTo="1" duration="2000"
 	    />
 	    <mx:Fade
 	    	id="poweredByFade" target="{powered_by}"
 	    	alphaFrom="0" alphaTo="1" duration="2000"
-	    />
+	    /> -->
 	<!--<mx:Style source="styles/darkroom.css"/>-->
 	
     <!--mx:TraceTarget/-->
  	<mx:TraceTarget fieldSeparator="->" level="6"  includeCategory="true" includeLevel="true" includeTime="true" />
  	
     
-	<mx:MenuBar id="menubar" width="100%" height="39" dataProvider="{_menuItems}" itemClick="onMenuClick(event);"/>
+	<!--<mx:MenuBar id="menubar" width="100%" height="39" dataProvider="{_menuItems}" itemClick="onMenuClick(event);"/>-->
    
-	<mx:HBox x="0" y="47" width="100%" height="100%">
-    <mx:Canvas width="2" height="100%">
-    </mx:Canvas>
+	<mdi:MDIContainer id="container" headerColor="{0xb4b4ff}" menuColor="{0x8080ff}" menuData="{_menuItems}" canvasColor="{0x808080}" height="100%" width="100%" />
 
-    <mx:VBox x="0" y="0" width="100%" height="100%" verticalGap="0" id="mainContainer" visible="true">
-    	
-		<mx:Canvas height="2" width="100%">
-		</mx:Canvas>	
-		<flexlib:SuperTabNavigator id="mainNavigator" width="100%" height="100%" stopScrollingEvent="{MouseEvent.MOUSE_UP}" startScrollingEvent="{MouseEvent.MOUSE_DOWN}" closePolicy="{SuperTab.CLOSE_ROLLOVER}"   >
-			<mx:Canvas height="100%" width="100%" id="mainWindow" label="{resourceManager.getString(RESOURCE_BUNDLE, 'kQuickAccessPanelCmd.QuickAccessPanel')}" name="PrintSmith QuickAccess" backgroundColor="#FFFFFF">
-		  		<mx:Image x="-185" y="579" width="186" height="61" id="logo" source="assets/printsmith_logo.png"/>
-				
-				<components:MultiLineLabelButton x="10" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CreateEstimate')}" width="158" height="90" id="create_estimate" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateEstimate();" fontSize="9"/>
-				<components:MultiLineLabelButton x="674" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.TrackerConsole')}" width="158" height="90" id="tracker_console" labelPlacement="bottom" icon="@Embed(source='assets/trackerConsole.png')" click="doTracker();" fontSize="9"/>
-				<components:MultiLineLabelButton x="176" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Accounts')}" width="158" height="90" id="accounts" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doAccounts()" fontSize="9"/>
-				<components:MultiLineLabelButton x="176" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.UserDefinitions')}" width="158" height="90" id="users" labelPlacement="bottom" icon="@Embed(source='assets/accounts.png')" click="doUsers();" fontSize="9"/>
-				<components:MultiLineLabelButton x="176" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Contacts')}" width="158" height="90" id="contacts" labelPlacement="bottom" icon="@Embed(source='assets/contacts.png')" click="doContacts();" fontSize="9"/>
-				<components:MultiLineLabelButton x="674" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PostPayments')}" width="158" height="90" id="post_payment" labelPlacement="bottom" icon="@Embed(source='assets/postPayment.png')" click="doPayments();" fontSize="9"/>
-				<components:MultiLineLabelButton x="675" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Closeout')}" width="158" height="90" id="closeout" labelPlacement="bottom" icon="@Embed(source='assets/closeout.png')" fontSize="9"/>
-				<components:MultiLineLabelButton x="674" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.MonthlyCloseout')}" width="158" height="90" id="monthly_closeout" labelPlacement="bottom" icon="@Embed(source='assets/monthlyCloseout.png')" fontSize="9"/>
-				<components:MultiLineLabelButton x="508" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.DeliveryTicketManage')}" width="158" height="90" id="deliver_ticket" labelPlacement="bottom" icon="@Embed(source='assets/tickets.png')" click="doDeliveryTicket();" fontSize="9"/>
-				<components:MultiLineLabelButton x="508" y="480" label="Utilities" width="158" height="90" id="utilities" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')" click="doUtilities();"/>
-				<components:MultiLineLabelButton x="674" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ScheduleBoardManager')}" width="158" height="90" id="schedule_jobs" labelPlacement="bottom" icon="@Embed(source='assets/schedulejobs.png')" click="doSchedule();" fontSize="9"/>
-				<!--<components:MultiLineLabelButton x="176" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ClockInOut')}" width="158" height="90" id="punch_clock" labelPlacement="bottom" icon="@Embed(source='assets/punchclock.png')" click="doClockInOut();"/>-->
-				<components:MultiLineLabelButton x="10" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CreateInvoice')}" width="158" height="90" id="create_invoice" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" click="doCreateInvoice();" fontSize="9"/>
-				<components:MultiLineLabelButton width="158" height="90" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PendingDocumentWindo')}" id="pending_documents" icon="@Embed(source='assets/pendingList.png')"  click="doPendingList();" fontSize="9" textAlign="center" x="10" y="386" labelPlacement="bottom" fontWeight="bold"/>
-				<components:MultiLineLabelButton x="10" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Pricing')}" width="158" height="90" id="pricing" labelPlacement="bottom" click="doPricing();"/>
-				<components:MultiLineLabelButton x="10" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.AccountHistory')}" width="158" height="90" id="account_history" labelPlacement="bottom" icon="@Embed(source='assets/accountHistory.png')" click="doAccountHistory();" fontSize="9"/>
-				<components:MultiLineLabelButton x="10" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory')}" width="158" height="90" id="estimate_history" labelPlacement="bottom" icon="@Embed(source='assets/estimateHistory.png')" click="doEstimateHistory();" fontSize="9"/>
-				<components:MultiLineLabelButton x="674" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.OpenCashRegister')}" width="158" height="90" id="cash_register" labelPlacement="bottom" icon="@Embed(source='assets/cash_register.png')" click="doCashRegister();" fontSize="9"/>
-				<components:MultiLineLabelButton x="508" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.WorkinProgress')}" width="158" height="90" id="work_in_progress" labelPlacement="bottom" icon="@Embed(source='assets/workInProgress.png')" click="doWorkInProgress();" fontSize="9"/>
-				<components:MultiLineLabelButton x="342" y="10" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" width="158" height="90" id="stock_definitions" labelPlacement="bottom" icon="@Embed(source='assets/stockDefinitions.png')" click="doStockDefinitions()" fontSize="9"/>
-				<components:MultiLineLabelButton x="342" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.PressDefinitions')}" width="158" height="90" id="press_definitions" labelPlacement="bottom" icon="@Embed(source='assets/pressDefinitions.png')" click="doPressDefinitions()" fontSize="9"/>
-				<components:MultiLineLabelButton x="342" y="198"  label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CopierDigitalDefinit')}" width="158" height="90" id="copier_definitions" labelPlacement="bottom" icon="@Embed(source='assets/copierDefinitions.png')" click="doCopyDefinitions()" fontSize="9"/>
-				<components:MultiLineLabelButton x="342" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ChargeDefinitions')}" width="158" height="90" id="charge_definitions" labelPlacement="bottom" icon="@Embed(source='assets/chargeDefinitions.png')" click="doChargeDefinitions()" fontSize="9"/>
-				<components:MultiLineLabelButton x="342" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Preferences')}" width="158" height="90" id="preferences" labelPlacement="bottom" icon="@Embed(source='assets/preference.png')" click="doSystemPreferences()" fontSize="9"/>
-				<components:MultiLineLabelButton x="342" y="480" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.DocumentPreferences')}" width="158" height="90" id="document_preferences" labelPlacement="bottom" icon="@Embed(source='assets/createInvoice.png')" fontSize="9"/>
-				<components:MultiLineLabelButton x="508" y="104" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.MailingLabels')}" width="158" height="90" id="mailing_labels" labelPlacement="bottom" icon="@Embed(source='assets/mailingLabels.png')" fontSize="9"/>
-				<components:MultiLineLabelButton x="508" y="198" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.ReportManager')}" width="158" height="90" id="report_manager" labelPlacement="bottom" icon="@Embed(source='assets/reportManager.png')" fontSize="9"/>
-				<components:MultiLineLabelButton x="508" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.CreditCardManager')}" width="158" height="90" id="report_writer" labelPlacement="bottom" icon="@Embed(source='assets/reportWriter.png')" click="doCreditCardManager()" fontSize="9"/>
-				<mx:Image x="91" y="574" id="efi_logo" source="assets/logo-efi-print-to-win.gif" visible="true" alpha="0.0" width="89" height="28"/>
-				<mx:Text x="10" y="587" text="Powered by:&#xd;" id="powered_by" alpha="0.0" textAlign="right"/>
-				<mx:Text x="10" y="613" text="Version:" id="version_txt_label" textAlign="right"/>
-				<mx:Text x="69" y="613" text="{this.serverVersion}" id="version_txt" textAlign="left" width="265"/>
-				<components:MultiLineLabelButton x="176" y="386" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" width="158" height="90" icon="@Embed(source='assets/employeeManager.png')" labelPlacement="bottom" click="doEmployee();" fontSize="9"/>
-				<components:MultiLineLabelButton x="176" y="292" label="{resourceManager.getString(RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup')}" width="158" height="90" id="admin_button" labelPlacement="bottom" click="doSecurity();" fontSize="9"/>
-				
-			</mx:Canvas>
-		</flexlib:SuperTabNavigator>
-
-	</mx:VBox>
-    <mx:Canvas width="2" height="100%">
-    </mx:Canvas>
-</mx:HBox>
 <mx:RemoteObject id="loginService" destination="loginService"
 	result="handleLoginResult(event)"  fault="handleFault(event)"
 	showBusyCursor="true" />
+<mx:RemoteObject id="logoutService" destination="loginService"
+	showBusyCursor="false" />
 <mx:RemoteObject id="versionService" destination="versionService">
 	<mx:method name="getServerVersion" fault="handleFault(event)" result="handleVersionResult(event)"/>
 </mx:RemoteObject>
@@ -96,7 +47,13 @@
 </mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.mdi.view.window.MDIWindow;
+		import mx.core.Container;
 		import com.efi.printsmith.data.UserEvent;
+		import com.efi.printsmith.pages.QuickAccessPanel;
+		import com.efi.mdi.ContainerManager;
+		import com.efi.mdi.event.menu.AppMenuItemClickedEvent;
+		
 		import com.efi.printsmith.data.SecuritySetup;
 		import mx.events.MenuEvent;
 		import com.efi.printsmith.data.PSMenuItem;
@@ -190,7 +147,7 @@
 		
 		[Bindable]
 		public var serverVersion:String;
-		
+		public var containerManager:ContainerManager;
         private static var thisInstance:Snowmass = null;  
 		
 		[Bindable]
@@ -208,9 +165,21 @@
 			dispatchEvent(event);
 		}
 		
+		public function hideContainer():void	{
+			this.container.visible = false; 
+			this.logout_button.visible = false;//.mainContainer.visible=false;
+			this.languageComboBox.visible = false;
+			this.debug_button.visible = false;				
+		}
+		public function showContainer():void	{
+			this.container.visible = true; 
+			this.logout_button.visible = true;//.mainContainer.visible=false;
+			this.languageComboBox.visible = true;
+			this.debug_button.visible = true;				
+		}
 		private function showLogin():void	{
 			var loginPopup : Login = Login(PopUpManager.createPopUp(this, Login, true));
-		//	this.mainContainer.visible=false;
+			hideContainer();	
 			PopUpManager.centerPopUp(loginPopup);
 		}
 		
@@ -222,10 +191,14 @@
 			
 		}
 		
-		private function onMenuClick(event:MenuEvent):void	{
-			var item:PSMenuItem = event.item as PSMenuItem;
+		private function onMenuItemClicked(event:AppMenuItemClickedEvent):void	{
+			var item:PSMenuItem = event.menuItem as PSMenuItem;
 			var ss:SecuritySetup = item.ss;
 			
+			if ((ss.menu == "kVersionActivationCmd.PrintSmith")
+				&& (ss.commandName.indexOf("usecCmd.QuickAccessPanel") > -1 )) 	{
+					doQuickAccessPanel();	
+				}
 			if ((ss.menu == "rStandardMenuText.Invoice")
 				&& (ss.commandName.indexOf("rStandardMenuText.CreateInvoice") > -1 ))	{
 					doCreateInvoice();					
@@ -330,7 +303,14 @@
 		}
 		public function handleUIEvent(evt:ResultEvent):void {
 			var child:Panel = evt.result as Panel;
-			addUniqueTab(child);
+			//addUniqueTab(child);
+			var win:MDIWindow = containerManager.getWindowsWithChild(child);
+			if (win == null)	{
+				containerManager.openNewMDIWindow(child.className,child);
+			}
+			else	{
+				win.bringWindowToFront();	
+			}
 		}		
 		
 		private function getLocalizedMenuLabel(val:String):String	{
@@ -338,124 +318,131 @@
 			if (val.indexOf('\t') > -1)	{
 				var i:int = val.indexOf('\t');
 				val = val.substr(i+1);
-//				retVal = '\t';
+				retVal = '\t';
 			}
 			return retVal + resourceManager.getString(RESOURCE_BUNDLE, val);
 		}
 		
-		private function doTrackerManager():void {
+		public function doTrackerManager():void {
 			var child:Panel = new TrackerManagerView() as Panel;
-			addUniqueTab(child);
+			
+			containerManager.openNewMDIWindow(child.className,child);//addUniqueTab(child);
 		}
 		
-		private function doAccounts():void {
+		private function doQuickAccessPanel():void	{
+			var child:Container = new QuickAccessPanel();
+			
+			containerManager.openNewMDIWindow("Quick Access Panel",child);//addUniqueTab(child);
+		}
+		public function doAccounts():void {
 			var event:EditCustomerEvent = new EditCustomerEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 
-		private function doUsers():void {
+		public function doUsers():void {
 			var event:EditUserEvent = new EditUserEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doChangePassword():void {
+		public function doChangePassword():void {
 			var event:ChangePasswordEvent = new ChangePasswordEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doContacts():void {
+		public function doContacts():void {
 			var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doPayments():void {
+		public function doPayments():void {
 			var event:EditPaymentEvent = new EditPaymentEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doPressDefinitions():void {
+		public function doPressDefinitions():void {
 			var event:EditPressDefinitionEvent = new EditPressDefinitionEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doCopyDefinitions():void {
+		public function doCopyDefinitions():void {
 			var event:EditCopierDefinitionEvent = new EditCopierDefinitionEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doWorkInProgress():void{
+		public function doWorkInProgress():void{
 			var event:EditWorkInProgressEvent = new EditWorkInProgressEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 			
 		}
 		
-		private function doChargeDefinitions():void {
+		public function doChargeDefinitions():void {
 			var event:EditChargeDefinitionEvent = new EditChargeDefinitionEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 		
-		private function doCreditCardManager():void {
+		public function doCreditCardManager():void {
 			var event:ShowCreditCardMgrEvent = new ShowCreditCardMgrEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 
-		private function doAccountHistory():void {
+		public function doAccountHistory():void {
 			var event:EditAccountHistoryEvent = new EditAccountHistoryEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doEstimateHistory():void {
+		public function doEstimateHistory():void {
 			var event:EditEstimateHistoryEvent = new EditEstimateHistoryEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 		
-		private function doStockDefinitions():void {
+		public function doStockDefinitions():void {
 			var event:EditStockDefinitionEvent = new EditStockDefinitionEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 		
-		private function doSystemPreferences():void {
+		public function doSystemPreferences():void {
 			var event:EditSystemPreferencesEvent = new EditSystemPreferencesEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doCashRegister():void {
+		public function doCashRegister():void {
 			var event:EditCashRegisterEvent = new EditCashRegisterEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 
-		private function doPendingList():void {
+		public function doPendingList():void {
 			var event:EditPendingListEvent = new EditPendingListEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doEmployee():void {
+		public function doEmployee():void {
 			var event:EditEmployeeEvent = new EditEmployeeEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doSchedule():void {
+		public function doSchedule():void {
 			var event:EditScheduleEvent = new EditScheduleEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doSecurity():void {
+		public function doSecurity():void {
 			var event:EditSecurityEvent = new EditSecurityEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doTracker():void {
+		public function doTracker():void {
 			var event:EditTrackerEvent = new EditTrackerEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doPricing():void {
+		public function doPricing():void {
 			var event:EditPricingEvent = new EditPricingEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 
 
-		private function doUtilities():void {
+		public function doUtilities():void {
 			var child:Utilities = new Utilities();
-			addUniqueTab(child);
+//			addUniqueTab(child);
+			containerManager.openNewMDIWindow("Utilities", child);
 		}
 
-		private function doClockInOut():void {
+		public function doClockInOut():void {
 //			var event:EditClockInOutEvent = new EditClockInOutEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 //			event.dispatch();
 		}
-		private function doCreateEstimate():void {
+		public function doCreateEstimate():void {
 			var event:EditCreateEstimateEvent = new EditCreateEstimateEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-		private function doCreateInvoice():void {
+		public function doCreateInvoice():void {
 			var event:EditCreateInvoiceEvent = new EditCreateInvoiceEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
@@ -469,32 +456,36 @@
 		}
 		
 		public function doLogout():void {
-			for (var i:int = 1; i < mainNavigator.numChildren; i++) {
-				mainNavigator.removeChildAt(i);
-			}
+//			for (var i:int = 1; i < mainNavigator.numChildren; i++) {
+//				mainNavigator.removeChildAt(i);
+//			}
+			//Alert.show("This should first close all windows");
+			containerManager.cleanupWindows();
 			this.currentUser = null;
-			this.showLogin();
-			this.updateTitle();
+			logoutService.logoutUser();
+			navigateToURL(new URLRequest("Snowmass.html"), "_self");
+
+//			this.showLogin();
+//			this.updateTitle();
        	}
        	
-		private function addUniqueTab(tab:Panel):void {
-			var tabFound:Boolean = false;
-			
-			for (var i:int = 0; i < mainNavigator.numChildren; i++)
-			{
-				if (mainNavigator.getChildAt(i).name == tab.name)
-				{
-					mainNavigator.selectedIndex = i;
-					tabFound = true;
-					break;
-				}
-			}
-			if (!tabFound) {
-				var tmpPanel:Panel = mainNavigator.addChild(tab) as Panel;
-				mainNavigator.selectedIndex = mainNavigator.numChildren-1;
-			}
-		}
-
+//		private function addUniqueTab(tab:Panel):void {
+//			var tabFound:Boolean = false;
+//			
+//			for (var i:int = 0; i < mainNavigator.numChildren; i++)
+//			{
+//				if (mainNavigator.getChildAt(i).name == tab.name)
+//				{
+//					mainNavigator.selectedIndex = i;
+//					tabFound = true;
+//					break;
+//				}
+//			}
+//			if (!tabFound) {
+//				var tmpPanel:Panel = mainNavigator.addChild(tab) as Panel;
+//				mainNavigator.selectedIndex = mainNavigator.numChildren-1;
+//			}
+//		}
 		//
 		//
  		private function idleTimerCallBack(evt:TimerEvent):void {
@@ -523,7 +514,6 @@
 	 		 }
         }
 
-		
 		private function initAppFunctions() : void {
 			stage.addEventListener(KeyboardEvent.KEY_UP, myKeyUpHandler);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE,globalMouseMove);
@@ -543,7 +533,7 @@
 		
 		private function init() : void {
 			thisInstance = this;
-			mainNavigator.setClosePolicyForTab(0, SuperTab.CLOSE_NEVER);
+//			mainNavigator.setClosePolicyForTab(0, SuperTab.CLOSE_NEVER);
 			var eventDispatcher:IEventDispatcher = resourceManager.loadResourceModule("Resources_en_US.swf");
             eventDispatcher.addEventListener(ResourceEvent.COMPLETE, completeHandler);
             eventDispatcher.addEventListener(ResourceEvent.ERROR, resourceFaultHandler);
@@ -551,16 +541,18 @@
 			this.languageComboBox.selectedItem = "en_US";
 			userName = Application.application.parameters.userName;
 			userPass = Application.application.parameters.userPass;
-			
+			container.addEventListener(AppMenuItemClickedEvent.APP_MENU_ITEM_CLICKED, onMenuItemClicked);
+			containerManager = ContainerManager.getInstance(container);
+				
 			if (userName == null && userPass == null) { 
 				showLogin();
 			} else {
 				loginService.validateLogin(userName, userPass);
 			}
-			moveLogo.play();
+//			moveLogo.play();
 			
 			this.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
-
+			
 			versionService.getServerVersion();
             bm = BrowserManager.getInstance();
             bm.init("", "Welcome to Snowmass");
@@ -581,12 +573,12 @@
 				for (var j:int=0; j < parent.children.length; j++)	{
 					var child:PSMenuItem = parent.children.getItemAt(j) as PSMenuItem;
 					child.label = getLocalizedMenuLabel(child.label);					
-					if (child.children != null)	{
-						for (var k:int=0; k < child.children.length; k++)	{
-							var child2:PSMenuItem = child.children.getItemAt(k) as PSMenuItem;
-							child2.label = getLocalizedMenuLabel(child2.label);
-						}
-					}
+//					if (child.children != null)	{
+//						for (var k:int=0; k < child.children.length; k++)	{
+//							var child2:PSMenuItem = child.children.getItemAt(k) as PSMenuItem;
+//							child2.label = getLocalizedMenuLabel(child2.label);
+//						}
+//					}
 				}				
 			}	
 			_menuItems = val;
@@ -792,7 +784,7 @@
 				{
 					++k;
 				}
-				
+			
 				// capture the raw track data and compute the credit card type number from first digit
 				cardType = (localCard.parsedCard.cardNumber.charCodeAt(0) - 48);
 				
@@ -821,10 +813,10 @@
 		}
 		
 		
-		private function endMoveLogo() : void {
-			efiLogoFade.play();
-			poweredByFade.play();			
-		}
+//		private function endMoveLogo() : void {
+//			efiLogoFade.play();
+//			poweredByFade.play();			
+//		}
 		
 		public function updateTitle() : void {
 			if (currentUser != null) {
@@ -835,9 +827,9 @@
 		}
 		
 		private function handleLoginResult(event:ResultEvent):void	{
+					
 			var res:Users = event.result as Users;
 			if (res != null) {
-				
 				if (res.disableUser) {
 					Alert.show("Disabled User Name", null, Alert.OK, null, null, null, Alert.OK);
 					showLogin();
@@ -845,11 +837,13 @@
 				} else {
 					currentUser = res;
 					security = new PSSecurity(currentUser);
-					
+					showContainer();
+					containerManager.openNewMDIWindow("Quick Access Panel", new QuickAccessPanel());
+				
 					logUserEvent(Constants.USER_EVENT_LOGIN, null, null);
 				}
  			} else {
-				Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
+ 				Alert.show("Invalid login", null, Alert.OK, null, null, null, Alert.OK);
 				showLogin();
 				logUserEvent(Constants.USER_EVENT_FAILED_LOGIN, null, null);
 			}
@@ -890,9 +884,10 @@
 //		private function doDebug():void {
 //		}
 
-		private function doDeliveryTicket():void{
+		public function doDeliveryTicket():void{
 			var child:DeliveryTicketMgr = new DeliveryTicketMgr();
-			addUniqueTab(child);
+			//addUniqueTab(child);
+			containerManager.openNewMDIWindow("Delivery Ticket Manager", child);
 		}		
 		
 		/**
@@ -1052,7 +1047,7 @@
         	}
         	return firstNumber + " x " + secondNumber;
         }
-         
+        
         public static function getDateFormatter():DateFormatter {
         	var formatter:DateFormatter = new DateFormatter;
         	formatter.formatString = "MMMM DD, YYYY   L:NN:SS A";

@@ -88,7 +88,8 @@
 	    PopUpManager.centerPopUp(this);
 	    resetFocus();                                     
 	//	dataService.getContactPicker("Contact");
-		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
+	
+		var editPage:Container = Snowmass.getInstance().containerManager.getActiveWindowContent(); //.mainNavigator.selectedChild;
 		if (editPage.className != "EditContact") {
 			new_button.visible = false;
 		}

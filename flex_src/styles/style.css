@@ -1,0 +1,22 @@
+/* CSS file */
+.winCloseButton {
+    icon: Embed("assets/mdi/close.png");
+}
+.winDoMaxButton {
+    icon: Embed("assets/mdi/max.png");
+}
+.winDoRestoreButton {
+	icon: Embed("assets/mdi/restore.png");
+}
+.winMinButton	{
+	icon: Embed("assets/mdi/min.png");
+}
+.minimizedWinCloseButton	{
+	icon: Embed("assets/mdi/close.png");
+}
+.minimizedWinActive	{
+	background-color:#00ffff;	
+}
+.minimizedWinInactive	{
+	background-color:#c0c0c0;	
+}

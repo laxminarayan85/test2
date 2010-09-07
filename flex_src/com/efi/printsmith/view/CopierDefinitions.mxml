@@ -353,7 +353,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	
 	private function openEditMatrixWindow():void {
-		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
+		var editPage:Container = Snowmass.getInstance().containerManager.getActiveWindowContent(); //.mainNavigator.selectedChild;
 		var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, true));
 		var doubleSidedPricing:Boolean = this.price_2_side.selectedItem.data == Price2Side.UsingSecondSideRate.toString()?true:false;
 	    titleWindow.setStyle("borderAlpha", 0.9);

@@ -127,7 +127,8 @@
 			this.title = "Copier Price Matrix"
 			this.label = "Copier Price Matrix"
 		}
-		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
+	
+		parentContainer = Snowmass.getInstance().containerManager.getActiveWindowContent(); //.mainNavigator.selectedChild;
 
 	}
 

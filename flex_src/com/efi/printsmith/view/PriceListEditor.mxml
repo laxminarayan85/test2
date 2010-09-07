@@ -304,7 +304,7 @@
 		notification_consumer.subscribe();     
 	    PopUpManager.centerPopUp(this);
 
-		parentContainer = Snowmass.getInstance().mainNavigator.selectedChild;
+		parentContainer = Snowmass.getInstance().containerManager.getActiveWindowContent(); //.mainNavigator.selectedChild;
 		fillArray();
 		ColorDataService.getAll("StockColors")
 	}

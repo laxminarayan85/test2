@@ -17,7 +17,14 @@ public class LoginService extends DataService {
 	public LoginService() {
 		super();
 	}
-
+	
+	public void logoutUser()	{
+		try {
+			FlexContext.getFlexSession().invalidate();
+		} catch (Exception e) {
+			log.error(e);
+		}
+	}
 	public Users validateLogin(String userName, String password) {
 		
 		try {		

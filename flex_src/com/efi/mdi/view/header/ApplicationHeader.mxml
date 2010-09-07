@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	borderThickness="0"
+	borderStyle="none"
+	paddingBottom="0"
+	paddingTop="0"
+	paddingRight="0"
+	paddingLeft="0" backgroundColor="{_bgcolor}"
+	 width="100%" height="100%">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.UIComponent;
+			public static const LEFT:int =  -1;
+			public static const CENTER:int =  0;
+			public static const RIGHT:int =  1;
+			
+			[Bindable] private var _bgcolor:uint;
+			
+			public function addItem(direction:int, content:UIComponent):void	{
+				if (direction == LEFT)
+					leftPanel.addChild(content);
+				if (direction == CENTER)
+					centerPanel.addChild(content);
+				if (direction == RIGHT)
+					rightPanel.addChild(content);				
+			}
+			
+			public function set bgcolor(val:uint):void	{
+				_bgcolor = val;
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox id="leftPanel" borderThickness="0"
+	borderStyle="none"
+	paddingBottom="0"
+	paddingTop="0"  backgroundColor="{_bgcolor}"
+	paddingRight="0"
+	paddingLeft="0" width="100%" height="100%"
+		verticalAlign="middle" horizontalAlign="left"/>
+	<mx:HBox id="centerPanel" borderThickness="0"
+	borderStyle="none"
+	paddingBottom="0"  backgroundColor="{_bgcolor}"
+	paddingTop="0"
+	paddingRight="0"
+	paddingLeft="0" width="100%" height="100%" 
+		verticalAlign="middle" horizontalAlign="center"/>
+	<mx:HBox id="rightPanel" borderThickness="0"
+	borderStyle="none"
+	paddingBottom="0" backgroundColor="{_bgcolor}"
+	paddingTop="0"
+	paddingRight="0"
+	paddingLeft="0" width="100%" height="100%" 
+		verticalAlign="middle" horizontalAlign="right"/>
+	
+</mx:HBox>

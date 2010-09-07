@@ -16,7 +16,7 @@
 <mx:Script>
                                    
 <![CDATA[
-//	import com.efi.mdi.view.window.MDIWindow;
+	import com.efi.mdi.view.window.MDIWindow;
 	import mx.collections.SortField;
 	import mx.collections.Sort;
 	import mx.events.DataGridEvent;
@@ -108,9 +108,8 @@
 //	    resetFocus();                                     
 //		dataService.getAccountPicker("Account");
 
-//		var mdi:MDIWindow = Snowmass.getInstance().containerManager.getActiveWindow();
-//MS:TODO
-		var editPage:Container = Snowmass.getInstance().mainNavigator.selectedChild;
+
+		var editPage:Container = Snowmass.getInstance().containerManager.getActiveWindowContent();
 		if (editPage.className != "EditCustomer") {
 			new_button.visible = false;
 			

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" height="100%" width="100%" styleName="minimizedWinInactive"
+		borderColor="#e0e0e0" borderStyle="outset" borderThickness="3"
+		mouseOver="changeBGColor(true);"		
+		mouseOut="changeBGColor(false);"
+		>
+	<mx:Script></mx:Script>
+	<mx:Metadata>
+		[Event(name="windowRestore", type="com.efi.mdi.event.window.WindowRestoreEvent")]
+		[Event(name="windowClose", type="com.efi.mdi.event.window.WindowCloseEvent")]
+ 	</mx:Metadata>	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.mdi.event.window.WindowCloseEvent;
+			import com.efi.mdi.event.window.WindowRestoreEvent;
+			import com.efi.mdi.view.window.MDIWindow;
+			
+			[Bindable] private var _windowRef:MDIWindow;
+			
+//			[Bindable]
+//	        [Embed(source="assets/close.png")]
+//	        private var closeIcon:Class;
+			
+			private function changeBGColor(active:Boolean):void	{
+				if (active)	{
+					this.styleName = "minimizedWinActive"; //.setStyle("backgroundColor", "#00ffff");
+				}
+				else	{
+					this.styleName = "minimizedWinInactive"; //.setStyle("backgroundColor", "#c0c0c0");
+				}				
+			}
+			
+			private function restoreWindow():void	{
+				dispatchEvent(new WindowRestoreEvent(WindowRestoreEvent.WINDOW_RESTORE, this));
+			}
+			
+			public function set windowRef(val:MDIWindow):void	{
+				_windowRef = val;
+			}
+			public function get windowRef():MDIWindow	{
+				return _windowRef;
+			}
+			
+			private function onClose(event:MouseEvent):void	{
+				dispatchEvent(new WindowCloseEvent(WindowCloseEvent.WINDOW_CLOSE, this));
+			}
+		]]>
+	</mx:Script>
+	<mx:Label id="lblTitle" click="restoreWindow();" text="{_windowRef.title}" height="100%" width="95%"  />
+	<mx:Button id="btnClose" click="onClose(event);" toolTip="Close" styleName="minimizedWinCloseButton" width="20" height="20" />
+</mx:HBox>

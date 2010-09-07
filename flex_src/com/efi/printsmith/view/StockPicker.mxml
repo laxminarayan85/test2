@@ -16,7 +16,7 @@
 
 	<mx:Producer id="producer" destination="stockdefinitions"/>
 <!--
-	<mx:Consumer id="consumer" destination="stockdefinitions" message="messageHandler(event.message)"/>
+	<mx:Consumer id="co  mnsumer" destination="stockdefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 -->	
 <mx:Script>
@@ -904,14 +904,14 @@
 		<mx:CheckBox x="595" y="237" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock" change="search();"/>
 		<mx:CheckBox x="595" y="252" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="search();"/>
 				
-		<comp:VariableWidthComboBoxComponent x="99" y="62" width="158" id="txtGroup" dataProvider="{stockGroups}" labelField="name" change="search();"/>
-		<mx:TextInput x="99" y="114" width="158" id="txtName" change="search();"/>
-		<comp:VariableWidthComboBoxComponent x="99" y="140" width="158" id="txtFinish" dataProvider="{finishes}" labelField="name"  change="search();"/>
-		<comp:VariableWidthComboBoxComponent x="99" y="166" width="158" id="txtColor" dataProvider="{colors}" labelField="name" change="search();"/>
-		<comp:VariableWidthComboBoxComponent x="99" y="192" width="158" id="txtGrade" dataProvider="{grades}" labelField="name" change="search();"/>
-		<mx:TextInput x="99" y="218" width="158" id="txtMinOrder" change="search();"/>
-		<comp:VariableWidthComboBoxComponent x="99" y="244" width="158" id="txtVendor" dataProvider="{vendors}" labelField="name" change="search();"/>
-		<comp:VariableWidthComboBoxComponent x="382" y="62" width="158" id="txtStockType" dataProvider="{stockTypes}" labelField="name" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="99" y="62" width="194" id="txtGroup" dataProvider="{stockGroups}" labelField="name" change="search();"/>
+		<mx:TextInput x="99" y="114" width="194" id="txtName" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="99" y="140" width="194" id="txtFinish" dataProvider="{finishes}" labelField="name"  change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="99" y="166" width="194" id="txtColor" dataProvider="{colors}" labelField="name" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="99" y="192" width="194" id="txtGrade" dataProvider="{grades}" labelField="name" change="search();"/>
+		<mx:TextInput x="99" y="218" width="194" id="txtMinOrder" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="99" y="244" width="194" id="txtVendor" dataProvider="{vendors}" labelField="name" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="382" y="61" width="189" id="txtStockType" dataProvider="{stockTypes}" labelField="name" change="search();"/>
 		<mx:TextInput x="655" y="62" width="48" id="txtSizeMin" change="search();"/>
 		<mx:TextInput x="655" y="88" width="48" id="txtWeightMin" change="search();"/>
 		<mx:TextInput x="711" y="88" width="48" id="txtWeightMax" change="search();"/>
@@ -922,13 +922,13 @@
 		<mx:TextInput x="655" y="166" width="48" enabled="false" id="txtRollWidthMin" change="search();"/>
 		<mx:TextInput x="711" y="166" width="48" enabled="false" id="txtRollWidthMax" change="search();"/>
 		<mx:TextInput x="711" y="62" width="48" id="txtSizeMax" change="search();"/>
-		<mx:TextInput x="382" y="114" width="158" id="txtProductId" change="search();"/>
-		<mx:TextInput x="382" y="140" width="158" id="txtCoatedSides" change="search();"/>
-		<comp:VariableWidthComboBoxComponent x="382" y="166" width="158" id="txtGenericColors" dataProvider="{genericColors}" labelField="name" change="search();"/>
-		<mx:TextInput x="382" y="192" width="69" id="txtThickness" change="search();"/>
-		<comp:VariableWidthComboBoxComponent x="459" y="192" width="81" id="txtThicknessUOM" dataProvider="{uoms}" labelField="name" change="search();"/>
-		<mx:TextInput x="382" y="218" width="158" id="txtSheetsPerSet" change="search();"/>
-		<mx:TextInput x="382" y="244" width="158" id="txtStockNumber" change="search();"/>
+		<mx:TextInput x="382" y="113" width="189" id="txtProductId" change="search();"/>
+		<mx:TextInput x="382" y="139" width="189" id="txtCoatedSides" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="382" y="165" width="189" id="txtGenericColors" dataProvider="{genericColors}" labelField="name" change="search();"/>
+		<mx:TextInput x="382" y="191" width="69" id="txtThickness" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="459" y="191" width="112" id="txtThicknessUOM" dataProvider="{uoms}" labelField="name" change="search();"/>
+		<mx:TextInput x="382" y="217" width="189" id="txtSheetsPerSet" change="search();"/>
+		<mx:TextInput x="382" y="243" width="189" id="txtStockNumber" change="search();"/>
 		<mx:Button x="334" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="100" id="status_button" click="doStatus()"/>
 		<mx:Image x="0" y="246" width="15" height="19" source="assets/Original PS Icons/WebStatus.png" id="web_status"/>
 	</mx:Canvas>

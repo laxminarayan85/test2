@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mx:MenuBar xmlns:mx="http://www.adobe.com/2006/mxml" dataProvider="{_menuData}"  
+	change="onClick(event);"
+	itemClick="onMenuItemClick(event);" labelField="label">
+	<mx:Metadata>
+		[Event(name="appMenuItemClicked", type="com.efi.mdi.event.menu.AppMenuItemClickedEvent")]
+ 	</mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Menu;
+			import mx.controls.menuClasses.MenuBarItem;
+			import com.efi.mdi.event.menu.AppMenuItemClickedEvent;
+			import com.efi.mdi.vo.menu.ApplicationMenuItem;
+			import mx.events.MenuEvent;
+			import mx.collections.ArrayCollection;
+			
+			[Bindable] private var _menuData:ArrayCollection;
+			
+			public function set menuData(val:ArrayCollection):void	{
+				_menuData = val;
+				
+			}
+			
+			private function onClick(event:Event):void	{
+				var o:Object = event.currentTarget;
+			}
+			private function onMenuItemClick(event:MenuEvent):void{
+				var item:ApplicationMenuItem = event.item as ApplicationMenuItem;
+				var eve:AppMenuItemClickedEvent = new AppMenuItemClickedEvent(AppMenuItemClickedEvent.APP_MENU_ITEM_CLICKED, item);
+				this.dispatchEvent(eve);
+			}
+			
+		]]>
+	</mx:Script>
+</mx:MenuBar>

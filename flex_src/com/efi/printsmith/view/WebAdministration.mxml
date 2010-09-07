@@ -59,6 +59,7 @@
 <mx:Script> 
                                   
 <![CDATA[
+	import mx.core.UIComponent;
 	import mx.collections.ArrayCollection;
 
 	import com.efi.printsmith.data.WebBase;
@@ -853,19 +854,25 @@
 	private function addUniqueTab(tab:DisplayObject):void {
 		var tabFound:Boolean = false;
 		
-		for (var i:int = 0; i < Snowmass.getInstance().mainNavigator.numChildren; i++)
+		if (Snowmass.getInstance().containerManager.getWindowsWithChild(tab) == null)
 		{
-			if (Snowmass.getInstance().mainNavigator.getChildAt(i).name == tab.name)
-			{
-				Snowmass.getInstance().mainNavigator.selectedIndex = i;
-				tabFound = true;
-				break;
-			}
+			Snowmass.getInstance().containerManager.openNewMDIWindow(tab.name, tab as UIComponent);
 		}
-		if (!tabFound) {
-			Snowmass.getInstance().mainNavigator.addChild(tab);
-			Snowmass.getInstance().mainNavigator.selectedIndex = Snowmass.getInstance().mainNavigator.numChildren-1;
-		}
+		
+
+//		for (var i:int = 0; i < Snowmass.getInstance().mainNavigator.numChildren; i++)
+//		{
+//			if (Snowmass.getInstance().mainNavigator.getChildAt(i).name == tab.name)
+//			{
+//				Snowmass.getInstance().mainNavigator.selectedIndex = i;
+//				tabFound = true;
+//				break;
+//			}
+//		}
+//		if (!tabFound) {
+//			Snowmass.getInstance().mainNavigator.addChild(tab);
+//			Snowmass.getInstance().mainNavigator.selectedIndex = Snowmass.getInstance().mainNavigator.numChildren-1;
+//		}
 	}
 
 	private function handleUIFault(ev:FaultEvent):void{

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" headerHeight="0" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
 width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}"
  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}" name="Press Definitions" fontSize="9">
 	<!--<mx:states>

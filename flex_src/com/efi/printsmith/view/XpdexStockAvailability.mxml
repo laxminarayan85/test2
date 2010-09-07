@@ -109,7 +109,8 @@
 	</mx:RemoteObject>
 <mx:Script>
                                    
-<![CDATA[           
+<![CDATA[
+	import mx.core.UIComponent;           
     import com.efi.printsmith.integration.xpedx.XpedxStockCheckRequestParams;
 	import mx.managers.PopUpManager;     
 	import com.efi.printsmith.data.StockDefinition;                          
@@ -220,19 +221,24 @@
 	private function addUniqueTab(tab:DisplayObject):void {
 			var tabFound:Boolean = false;
 			
-			for (var i:int = 0; i < Snowmass.getInstance().mainNavigator.numChildren; i++)
-			{
-				if (Snowmass.getInstance().mainNavigator.getChildAt(i).name == tab.name)
-				{
-					Snowmass.getInstance().mainNavigator.selectedIndex = i;
-					tabFound = true;
-					break;
-				}
-			}
-			if (!tabFound) {
-				Snowmass.getInstance().mainNavigator.addChild(tab);
-				Snowmass.getInstance().mainNavigator.selectedIndex = Snowmass.getInstance().mainNavigator.numChildren-1;
-			}
+		if (Snowmass.getInstance().containerManager.getWindowsWithChild(tab) == null)
+		{
+			Snowmass.getInstance().containerManager.openNewMDIWindow(tab.name, tab as UIComponent);
+		}
+		 
+//			for (var i:int = 0; i < Snowmass.getInstance().mainNavigator.numChildren; i++)
+//			{
+//				if (Snowmass.getInstance().mainNavigator.getChildAt(i).name == tab.name)
+//				{
+//					Snowmass.getInstance().mainNavigator.selectedIndex = i;
+//					tabFound = true;
+//					break;
+//				}
+//			}
+//			if (!tabFound) {
+//				Snowmass.getInstance().mainNavigator.addChild(tab);
+//				Snowmass.getInstance().mainNavigator.selectedIndex = Snowmass.getInstance().mainNavigator.numChildren-1;
+//			}
 		}
 
 ]]>        

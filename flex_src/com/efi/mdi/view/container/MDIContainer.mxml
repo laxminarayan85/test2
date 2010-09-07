@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel 
+	xmlns:menu="com.efi.mdi.view.header.*" 
+	xmlns:window="com.efi.mdi.view.window.*"
+	xmlns:task="com.efi.mdi.view.taskbar.*"
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="vertical" 
+	width="100%" height="100%"
+	borderStyle="none"
+	paddingBottom="0"
+	paddingLeft="0"
+	paddingRight="0"
+	paddingTop="0"
+	borderThickness="0"
+	borderThicknessBottom="0"
+	borderThicknessLeft="0"
+	borderThicknessRight="0"
+	borderThicknessTop="0"
+	headerHeight="0"
+	creationComplete="mdiCreationComplete();"
+	>
+	<mx:Style source="./styles/style.css"/>
+	<mx:Script>
+		<![CDATA[
+			import com.efi.mdi.ContainerManager;
+			import mx.managers.CursorManager;
+			import com.efi.mdi.event.window.WindowResizeEvent;
+			import com.efi.mdi.event.window.WindowResizeStartEvent;
+			import com.efi.mdi.event.window.WindowRestoreEvent;
+			import com.efi.mdi.event.window.WindowCloseEvent;
+			import com.efi.mdi.view.taskbar.MinimizedWindow;
+			import com.efi.mdi.event.window.WindowMinimizeEvent;
+			import mx.core.UIComponent;
+			import com.efi.mdi.view.header.ApplicationMenuBar;
+			import mx.managers.PopUpManager;
+			import com.efi.mdi.view.window.MDIWindow;
+			import mx.controls.Alert;
+			import mx.events.MenuEvent;
+			import com.efi.mdi.event.menu.AppMenuItemClickedEvent;
+			import mx.collections.ArrayCollection;
+		
+			[Bindable] private var _menuData:ArrayCollection;
+			[Bindable] private var _headerColor:uint;
+			[Bindable] private var _canvasColor:uint;
+			[Bindable] private var _menuColor:uint;
+			
+			[Bindable]
+	        [Embed(source="assets/mdi/cursorresize.png")]
+	        private var resizeCursor:Class;
+			
+			private var _windowResizeInProgress:MDIWindow;
+			
+			
+			public function set menuData(val:ArrayCollection):void	{
+				_menuData = val;	
+			}
+			 
+			public function set headerColor(val:uint):void	{
+				_headerColor = val;
+				
+			}
+			public function set canvasColor(val:uint):void	{
+				_canvasColor = val;
+				
+			}
+			public function set menuColor(val:uint):void	{
+				_menuColor = val;
+				
+			}
+			private function onMenuItemClicked(event:AppMenuItemClickedEvent):void	{
+				dispatchEvent(event);
+			}
+			
+			public function addMDIWindow(mdiWin:MDIWindow):void	{
+				
+				mdiWin.addEventListener(WindowMinimizeEvent.WINDOW_MINIMIZE, onMinimize);
+				mdiWin.addEventListener(WindowCloseEvent.WINDOW_CLOSE, onClose);
+				mdiWin.addEventListener(WindowResizeStartEvent.WINDOW_RESIZE_START, onWindowResizeStart);
+				
+				appCanvas.addChild(mdiWin);		
+				mdiWin.bringWindowToFront();
+														
+			}
+			
+			public function addToHeader(position:int, content:UIComponent):void	{
+				header.addItem(position, content);
+			}
+			
+			private function mdiCreationComplete():void	{
+				menubar.addEventListener(AppMenuItemClickedEvent.APP_MENU_ITEM_CLICKED, onMenuItemClicked);
+				this.addEventListener(WindowResizeEvent.WINDOW_RESIZE, onWindowResizeStop);
+				this.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveAfterResize);	
+				this.addEventListener(MouseEvent.MOUSE_UP, onMouseUpAfterResize);
+			}
+			
+			private function onMinimize(event:WindowMinimizeEvent):void	{
+				var minWin:MinimizedWindow = new MinimizedWindow();
+				minWin.windowRef = event.mdiWindow;
+				minWin.addEventListener(WindowCloseEvent.WINDOW_CLOSE, onClose);
+				minWin.addEventListener(WindowRestoreEvent.WINDOW_RESTORE, onRestore);
+				event.mdiWindow.visible = false;
+				event.mdiWindow.state = MDIWindow.MINIMIZED;
+				taskbar.addChild(minWin);
+			}
+			
+			private function onClose(event:WindowCloseEvent):void	{
+				if (event.child is MDIWindow)	{
+					(event.child as MDIWindow).state = MDIWindow.CLOSED;
+					appCanvas.removeChild(event.child);
+				}
+				if (event.child is MinimizedWindow)	{
+					(event.child as MinimizedWindow).windowRef.state = MDIWindow.CLOSED;
+					appCanvas.removeChild((event.child as MinimizedWindow).windowRef);
+					taskbar.removeChild(event.child);
+				}	
+			}
+			
+			private function onWindowResizeStart(event:WindowResizeStartEvent):void	{
+				_windowResizeInProgress = event.mdiWindow;
+				cursorManager.setCursor(resizeCursor); 
+							
+			}
+			
+			private function onMouseMoveAfterResize(event:MouseEvent):void	{
+				if (_windowResizeInProgress != null)	{
+					cursorManager.setCursor(resizeCursor); 
+					dispatchEvent(new WindowResizeEvent(WindowResizeEvent.WINDOW_RESIZE, _windowResizeInProgress, event.stageX, event.stageY));
+				}
+			}
+			
+			private function onMouseUpAfterResize(event:MouseEvent):void	{
+				if (_windowResizeInProgress != null)	{
+					cursorManager.removeAllCursors(); //.removeBusyCursor();
+					_windowResizeInProgress = null;
+				}
+			}
+			
+			private function onWindowResizeStop(event:WindowResizeEvent):void	{
+				
+				var currX:int = event.mouseX;
+				var currY:int = event.mouseY;
+				
+				var r:Rectangle = ContainerManager.getExistingInstance().getCanvasRectangle();
+				if (event.mouseX > r.width) 
+					currX = r.width;
+				
+				if (event.mouseY > r.height)		
+					currY = r.height;
+				
+				
+				event.mdiWindow.width = currX - event.mdiWindow.x;
+				event.mdiWindow.height = currY - event.mdiWindow.y;	
+				if (event.mdiWindow.width < 200)
+					event.mdiWindow.width = 200;
+				if (event.mdiWindow.height < 200)
+					event.mdiWindow.height = 200;
+								
+			}
+			
+			private function onRestore(event:WindowRestoreEvent):void	{
+				event.minWindow.windowRef.visible = true;
+				event.minWindow.windowRef.state = MDIWindow.OPEN;
+				event.minWindow.windowRef.bringWindowToFront();
+				taskbar.removeChild(event.minWindow);
+				
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox height="5%" width="100%" borderThickness="0"
+		borderStyle="none" backgroundColor="{_headerColor}">
+		<menu:ApplicationMenuBar id="menubar" menuData="{_menuData}" backgroundColor="{_menuColor}" height="100%" width="80%" />
+		<menu:ApplicationHeader id="header" bgcolor="{_headerColor}" height="100%" width="20%" />
+	</mx:HBox>
+			
+	<mx:VDividedBox id="divbox" height="95%" width="100%">
+		<window:ApplicationCanvas id="appCanvas" backgroundColor="{_canvasColor}" height="95%" width="100%" />
+		<task:ApplicationTaskBar height="5%" width="100%" id="taskbar" />
+	</mx:VDividedBox> 
+</mx:Panel>
