@@ -251,6 +251,6 @@
 	
 	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 
-	<mx:ProgressBar id="pgBar" width="100%" labelWidth="250" trackHeight="50" barColor="haloBlue" 
+	<mx:ProgressBar id="pgBar" width="100%" labelWidth="300" trackHeight="50" barColor="haloBlue" 
 			labelPlacement="right" label="{setPGLabel(estimatedTime, actualTime, noOfPasses, currentPass)}" mode="manual"/>
 </mx:Canvas>
