@@ -127,14 +127,25 @@ package com.efi.printsmith.model
 		
 		private function setTimeCard(reason:String):void {
 			var clockInDate:Date = timeCard.startDateTime;
+			var todayDate:Date = new Date();
+			var timeCardStartDate:Date = new Date(timeCard.startDateTime.fullYear,timeCard.startDateTime.month,(timeCard.startDateTime.date+1),0,0,0);
 			if (reason == "out")
 			{		
-				timeCard.endDateTime = new Date(clockInDate.fullYear,clockInDate.month,clockInDate.date,employee.autoHour,employee.autoMin,0);
+				if(todayDate>=timeCardStartDate) {
+					timeCard.endDateTime = todayDate;
+				} else {
+					timeCard.endDateTime = new Date(clockInDate.fullYear,clockInDate.month,clockInDate.date,employee.autoHour,employee.autoMin,0);
+				}
 				timeCard.onClock = 0;
 			} else {
 				var totalBreakTime:Number = 0;
 				if(reason=="breakstopwithclockout"){
-					var stopTime:Date = new Date(clockInDate.fullYear,clockInDate.month,clockInDate.date,employee.autoHour,employee.autoMin,0);
+					var stopTime:Date;
+					if(todayDate>=timeCardStartDate) {
+						stopTime = todayDate;
+					} else {
+						stopTime = new Date(clockInDate.fullYear,clockInDate.month,clockInDate.date,employee.autoHour,employee.autoMin,0);
+					}
 					totalBreakTime = (stopTime.time-timeCard.breakTime.time)+convertStringToMilliseconds(timeCard.breakHour);
 					timeCard.breakHour = convertMillisecondsToString(totalBreakTime);
 					timeCard.endDateTime = stopTime;
