@@ -3,6 +3,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.skin.TrackerProgressBarSkin;
 			import com.efi.printsmith.data.TrackerConsolePasses;
 			import mx.controls.Image;
 			import mx.skins.halo.ProgressBarSkin;
@@ -36,6 +37,15 @@
 			private var actualSetUpImage:Image;
 			
 			private var actualRunImage:Image;
+			
+			[Bindable] public var estimatedSetUpTime:Number = 0;
+			
+			[Bindable] public var estimatedRunTime:Number = 0;
+			
+			[Bindable] public var estimatedWashUpTime:Number = 0;
+			
+			[Bindable] public var totalTime:Number = 0;
+			
 
 			
 			public function get trackerConsoleJobs():TrackerConsoleJobs {
@@ -46,6 +56,10 @@
 				var pgBarLabelWidth:Number = pgBar.getStyle("labelWidth") as Number;
 				var contentComponent:UIComponent = pgBar.getChildAt(0) as UIComponent;
 				var barComponent:UIComponent = contentComponent.getChildAt(1) as UIComponent;
+				totalTime = 0;
+				estimatedSetUpTime = 0;
+				estimatedRunTime = 0;
+				estimatedWashUpTime = 0;
 				if(timer!=null){
 					if(timer.running) {
 						timer.reset();
@@ -116,6 +130,7 @@
 						}
 					}
 					totalValue = (displayValue.actualRunTime+displayValue.actualSetUpTime+displayValue.actualWashTime)/displayValue.noOfPasses;
+					totalTime = totalValue;
 					timer.addEventListener(TimerEvent.TIMER,function(event:TimerEvent):void {
 						actualTime = convertMilliSecondsToString(initialValue+(timer.currentCount*1000),true);
 						pgBar.setProgress(initialValue+(timer.currentCount*1000),totalValue);
@@ -137,6 +152,7 @@
 							estimateSetUpImage.x = (((displayValue.actualSetUpTime/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
 							estimateSetUpImage.y = -6;
 							estimateSetUpImage.toolTip = "Estimated SetUpTime:\n"+convertMilliSecondsToString((displayValue.actualSetUpTime/displayValue.noOfPasses),true);
+							estimatedSetUpTime = (displayValue.actualSetUpTime/displayValue.noOfPasses);
 							barComponent.addChild(estimateSetUpImage);
 						}
 					}
@@ -149,6 +165,7 @@
 							estimateRunImage.x = ((((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
 							estimateRunImage.y = -6;
 							estimateRunImage.toolTip = "Estimated RunTime:\n"+convertMilliSecondsToString(((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses),true);
+							estimatedRunTime = ((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses);
 							barComponent.addChild(estimateRunImage);
 						}
 					}
@@ -193,7 +210,11 @@
 					currentPass = displayValue.currentPass;
 					estimatedTime = convertMilliSecondsToString(totalValue,true);
 					actualTime = convertMilliSecondsToString(initialValue,true);
-					
+					if(displayValue.paused){
+						pgBar.setStyle("barColor",0xffff00);
+					} else {
+						pgBar.setStyle("barColor",0x00ff00);
+					}
 				}
 				_trackerConsoleJobs = displayValue;				
 			}
@@ -251,6 +272,6 @@
 	
 	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 
-	<mx:ProgressBar id="pgBar" width="100%" labelWidth="300" trackHeight="50" barColor="haloBlue" 
+	<mx:ProgressBar id="pgBar" width="100%" labelWidth="300" trackHeight="50" barSkin="com.efi.printsmith.skin.TrackerProgressBarSkin" barColor="0x00ff00" 
 			labelPlacement="right" label="{setPGLabel(estimatedTime, actualTime, noOfPasses, currentPass)}" mode="manual"/>
 </mx:Canvas>
