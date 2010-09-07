@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="625" height="800"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="625" height="750"
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.StopTrackerStep')}"
 	creationComplete="{initDetailsWindow()}" showCloseButton="true" close="{cancel()}" xmlns:components="com.efi.printsmith.common.components.*">
 	
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
@@ -290,7 +291,7 @@
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Exceptioncode')}"
 			width="25%" textAlign="right"/>
-		<components:CustomComboBoxComponent
+		<components:CustomComboBoxComponent width="33%"
 			masterList="{exceptionsArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 			dataHolder="{trackerConsoleJobs}" variableName="productionExceptions" customText="{getCustomTextData(exceptionsArray,trackerConsoleJobs,trackerConsoleJobs.productionExceptions)}"/>
 	</mx:HBox>

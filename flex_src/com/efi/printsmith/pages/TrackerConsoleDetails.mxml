@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="625" height="575"
-	creationComplete="{initDetailsWindow()}" showCloseButton="true" close="{closeWindow()}">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="625" height="725"
+	creationComplete="{initDetailsWindow()}" showCloseButton="true" close="{cancel()}" xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
+	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.TrackerConsoleDetailsEvent;
 			import com.efi.printsmith.data.TrackerConsolePasses;
 			import mx.managers.PopUpManager;
 			import com.efi.printsmith.data.JobBase;
@@ -14,12 +18,30 @@
 			
 			[Bindable] public var nowDate:Date = new Date();
 			
+			[Bindable] public var exceptionsArray:ArrayCollection = new ArrayCollection();
+			
 			private function initDetailsWindow():void {
 				PopUpManager.centerPopUp(this);
 			}
 			
+			private function cancel():void {
+				cancelSaveJobDetails();
+			}
+			
 			private function closeWindow():void {
 				PopUpManager.removePopUp(this);
+			}
+			
+			private function saveJobDetails():void {
+				var trackerConsoleDetailsEvent:TrackerConsoleDetailsEvent = new TrackerConsoleDetailsEvent(TrackerConsoleDetailsEvent.SAVE_JOBDETAILS_EVENT,true,trackerConsoleJobs);
+				dispatchEvent(trackerConsoleDetailsEvent);
+				callLater(closeWindow);
+			}
+			
+			private function cancelSaveJobDetails():void {
+				var trackerConsoleDetailsEvent:TrackerConsoleDetailsEvent = new TrackerConsoleDetailsEvent(TrackerConsoleDetailsEvent.SAVE_JOBDETAILS_EVENT,false,trackerConsoleJobs);
+				dispatchEvent(trackerConsoleDetailsEvent);
+				callLater(closeWindow);
 			}
 			
 			private function getInvoiceNumber(object:Object):String {
@@ -453,7 +475,9 @@
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Exceptioncode')}"
 			width="25%" textAlign="right"/>
-		<mx:TextInput width="72%"/>
+		<components:CustomComboBoxComponent width="72%"
+			masterList="{exceptionsArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+			dataHolder="{trackerConsoleJobs}" variableName="productionExceptions" customText="{getCustomTextData(exceptionsArray,trackerConsoleJobs,trackerConsoleJobs.productionExceptions)}"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
 		<mx:Spacer width="25%"/>
@@ -498,5 +522,15 @@
 		<mx:TextInput text="{getSecondWashTime(trackerConsoleJobs)}" 
 			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstWashTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
+	</mx:HBox>
+	
+	<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.Notes')}"/>
+	
+	<components:CustomTextAreaComponent width="100%" height="25%"
+		dataHolder="{trackerConsoleJobs}" customText="{trackerConsoleJobs.notes}" variableName="notes"/>
+	
+	<mx:HBox width="100%" horizontalAlign="center">
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{saveJobDetails()}"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{cancelSaveJobDetails()}"/>
 	</mx:HBox>
 </mx:TitleWindow>

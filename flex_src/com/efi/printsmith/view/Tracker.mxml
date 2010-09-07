@@ -58,6 +58,7 @@
 	<mx:Script> 
 	                                  
 	<![CDATA[
+		import com.efi.printsmith.events.TrackerConsoleDetailsEvent;
 		import mx.utils.StringUtil;
 		import com.efi.printsmith.data.ProductionExceptions;
 		import com.efi.printsmith.events.TrackerConsoleStopEvent;
@@ -890,6 +891,7 @@
 			if(selectedTrackerConsoleJob!=null){
 				var nowDate:Date = new Date();
 				var totalWashTime:Number = 0;
+				var totalTime:Number = 0;
 				if(selectedTrackerConsoleJob.currentPass==selectedTrackerConsoleJob.noOfPasses){
 					trackerStatus = "stop";
 					for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
@@ -913,12 +915,28 @@
 							break;
 						}
 					}
+					for each(var trackerConsolePasses:TrackerConsolePasses in selectedTrackerConsoleJob.passesList){
+						if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+							totalTime = totalTime + trackerConsolePasses.setUpTime;
+						}
+						if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+							totalTime = totalTime + trackerConsolePasses.runTime;
+						}
+						if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+							totalTime = totalTime + trackerConsolePasses.washUpTime;
+						}
+					}
+					selectedTrackerConsoleJob.actualTotalTime = totalTime;
 					selectedTrackerConsoleJob.paused = false; 
 					selectedTrackerConsoleJob.completed = true;
 					selectedTrackerConsoleJob.completedDate = nowDate;
 					if(selectedTrackerConsoleJob.appendNotesToJobTicketNotes && selectedTrackerConsoleJob.notes!=null && StringUtil.trim(selectedTrackerConsoleJob.notes)!=""){
 						if(selectedTrackerConsoleJob.job!=null){
-							selectedTrackerConsoleJob.job.jobNotes = selectedTrackerConsoleJob.notes;
+							if(selectedTrackerConsoleJob.job.jobNotes==null){
+								selectedTrackerConsoleJob.job.jobNotes="";
+							}
+							selectedTrackerConsoleJob.job.jobNotes = selectedTrackerConsoleJob.job.jobNotes+" "+selectedTrackerConsoleJob.notes;
+							updateDataService.addUpdate(selectedTrackerConsoleJob.job);
 						}
 					}
 					selectedDGIndex = employee_jobs_grid.selectedIndex;
@@ -1256,6 +1274,16 @@
 			}	
 		}
 		
+		private function copyFromDetailsWindow(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {
+			if(source.productionExceptions!=null){
+				if(source.productionExceptions.id==0){
+					source.productionExceptions = null;
+				}
+			}
+			destination.productionExceptions = source.productionExceptions;
+			destination.notes = source.notes;
+		}
+		
 		private function copyFromStopWindow(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {
 			destination.markStepComplete = source.markStepComplete;
 			destination.moveToNonProdStep = source.moveToNonProdStep;
@@ -1388,8 +1416,18 @@
 		
 		private function openJobDetails():void {
 			if(selectedTrackerConsoleJob!=null){
-				var trackerConsoleDetails:TrackerConsoleDetails = PopUpManager.createPopUp(this,TrackerConsoleDetails,false) as TrackerConsoleDetails;
-				trackerConsoleDetails.trackerConsoleJobs = selectedTrackerConsoleJob;
+				var trackerConsoleDetails:TrackerConsoleDetails = PopUpManager.createPopUp(this,TrackerConsoleDetails,true) as TrackerConsoleDetails;
+				registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+				trackerConsoleDetails.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+				trackerConsoleDetails.exceptionsArray = exceptionsArray;
+				trackerConsoleDetails.addEventListener(TrackerConsoleDetailsEvent.SAVE_JOBDETAILS_EVENT,function(event:TrackerConsoleDetailsEvent):void {
+					if(event.isSave){
+						if(selectedTrackerConsoleJob!=null){
+							copyFromDetailsWindow(event.trackerConsoleJobs,selectedTrackerConsoleJob);
+							updateDataService.addUpdate(selectedTrackerConsoleJob);
+						}
+					}
+				});
 			}
 		}
 		
