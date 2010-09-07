@@ -137,9 +137,11 @@
 		
 		if (accountTypeRadio.selectedValue == "Contacts") {
 			buildContactList();	
+			new_button.enabled = false;
 		}
 		else	{
 			buildCustProspectList();
+			new_button.enabled = true;
 		}
 		refreshData();	
 	}
