@@ -237,7 +237,7 @@
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Item')}"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{getInvoiceNumber(trackerConsoleJobs)}" width="72%" enabled="false"/>
+		<mx:TextInput text="{getInvoiceNumber(trackerConsoleJobs)}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<!--<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Account')}"
@@ -247,17 +247,17 @@
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Description')}"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{getDescription(trackerConsoleJobs)}" width="72%" enabled="false"/>
+		<mx:TextInput text="{getDescription(trackerConsoleJobs)}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Facility')}"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{trackerConsoleJobs.productionFacilities.name}" width="72%" enabled="false"/>
+		<mx:TextInput text="{trackerConsoleJobs.productionFacilities.name}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Station')}"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{trackerConsoleJobs.productionStations.name}" width="72%" enabled="false"/>
+		<mx:TextInput text="{trackerConsoleJobs.productionStations.name}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<!--<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Status')}"
@@ -268,13 +268,14 @@
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Employee')}"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{trackerConsoleJobs.employee.lastName}, {trackerConsoleJobs.employee.firstName}" width="72%" enabled="false"/>
+		<mx:TextInput text="{trackerConsoleJobs.employee.lastName}, {trackerConsoleJobs.employee.firstName}" width="72%" enabled="false"
+			disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Location')}"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{trackerConsoleJobs.productionLocations.name}" width="33%" enabled="false"/>
-		<components:CustomCheckBoxComponent width="39%" 
+		<mx:TextInput text="{trackerConsoleJobs.productionLocations.name}" width="33%" enabled="false" disabledColor="#000000"/>
+		<components:CustomCheckBoxComponent width="39%" disabledColor="#000000"
 			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.Markstepcompleteinro')}"
 			dataHolder="{trackerConsoleJobs}" variableName="markStepComplete" customText="{trackerConsoleJobs.markStepComplete}"
 			selectedValue="true" deSelectedValue="false" defaultValue="false"/>
@@ -282,7 +283,7 @@
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.NextLocation')}"
 			width="25%" textAlign="right"/>
-		<mx:TextInput width="33%" enabled="false"/>
+		<mx:TextInput width="33%" enabled="false" disabledColor="#000000"/>
 		<components:CustomCheckBoxComponent width="39%" 
 			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.MovetothisNonProduct')}"
 			dataHolder="{trackerConsoleJobs}" variableName="moveToNonProdStep" customText="{trackerConsoleJobs.moveToNonProdStep}"
@@ -310,36 +311,36 @@
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Totaltime')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{convertMilliSecondsToString((trackerConsoleJobs.actualSetUpTime+trackerConsoleJobs.actualRunTime+trackerConsoleJobs.actualWashTime),true)}" 
-			width="25%" enabled="false"/>
-		<mx:TextInput text="{getTotalTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
+			width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:TextInput text="{getTotalTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Setup')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualSetUpTime,true)}" 
-			width="25%" enabled="false"/>
-		<mx:TextInput text="{getTotalSetUpTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
+			width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:TextInput text="{getTotalSetUpTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Runtime')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualRunTime,true)}" 
-			width="25%" enabled="false"/>
-		<mx:TextInput text="{getTotalRunTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
+			width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:TextInput text="{getTotalRunTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Washup')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualWashTime,true)}" 
-			width="25%" enabled="false"/>
-		<mx:TextInput text="{getTotalWashUpTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
+			width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:TextInput text="{getTotalWashUpTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.Ordered')}:"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{getOrderedQty(trackerConsoleJobs)}" width="25%" enabled="false"/>
-		<mx:TextInput text="{getOrderedQty(trackerConsoleJobs)}" width="25%" enabled="false"/>
+		<mx:TextInput text="{getOrderedQty(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:TextInput text="{getOrderedQty(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	
 	<mx:HRule width="100%"/>
