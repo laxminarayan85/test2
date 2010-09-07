@@ -153,6 +153,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		first = true;   
 		account= new Account();
 		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
+		this.enabled = false;
 		dataService2.getContactPicker("Contact");  
 		salesRepDataService.getAll("SalesRep");
 		//cityDataService.getAll("City");
@@ -197,6 +198,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 		account = new Account();
 		this.setAccount(account);
+		
 	}
 	private function handleGradePickerCancel(evt:GradeSelectEvent):void {
 		
@@ -339,22 +341,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				defaultContact = true;
 				use_contact_check.enabled = false;
 				AccountsPicker.enabled = false;
+				default_contact_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.defaultcontact');
 			}
 			else{
-				defaultContact = false;
-				use_contact_check.enabled = true;
-				AccountsPicker.enabled = true;
+				if (contact.parentAccount.billToContact == contact){
+					defaultContact = true;
+					default_contact_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.statementcontact');
+					use_contact_check.enabled = false;
+					AccountsPicker.enabled = false;
+				}
+				else{
+					defaultContact = false;
+					use_contact_check.enabled = true;
+					AccountsPicker.enabled = true;
+				}
 			}
-			if (contact.parentAccount.billToContact == contact){
-				defaultContact = true;
-				use_contact_check.enabled = false;
-				AccountsPicker.enabled = false;
-			}
-			else{
-				defaultContact = false;
-				use_contact_check.enabled = true;
-				AccountsPicker.enabled = true;
-			}
+			
 		}
 		
 	}	
@@ -585,8 +587,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	private function doNew():void {
 	    contact = new Contact();
+	    accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
 	    contact.creditCard = new CreditCard();
 	    contact.shipToAddress = new ArrayCollection();
+	    
 	    contact_editor.setContact(contact);
 	    
 	    setMarketing();
@@ -594,6 +598,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    setContact(contact);
 	   
 		setDefaultContact();
+		use_contact_check.enabled = true;
 	 	
 	}  
 	private function doDelete():void {
@@ -616,11 +621,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}    
 	private function handleContactPickerCancel(evt:ContactPickerSelectEvent):void {
 		
-		contact = new Contact();
+	/* 	contact = new Contact();
 		 contact.creditCard = new CreditCard();
 		setMarketing();
 		setCreditCard();
-		this.setContact(contact);
+		this.setContact(contact);   defect 875*/
+		this.enabled = true;
 
 	}
 	private function handleGetResult(ev:ResultEvent):void {
@@ -634,12 +640,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleContactPickerSelect(evt:ContactPickerSelectEvent):void {
 		var temp:Contact = new Contact();
 		temp= evt.contact as Contact;
+		this.enabled = true;
 		dataService2.getContact(temp.id );   
 		
 	}
 	
 	private function handleContactPickerNew(evt:ContactPickerSelectEvent):void {
+		this.enabled = true;
 		this.contact = new Contact();
+		accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
 		 contact_editor.setContact(contact);
 		contact.creditCard = new CreditCard();
 		contact.shipToAddress = new ArrayCollection();
@@ -735,6 +744,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);
 	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.prospect_boolean = true;
 	    accountPickerWindow.setAccounts(accounts);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
@@ -908,9 +918,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	<mx:Canvas width="100%" height="100%">
 		<mx:TabNavigator x="0" y="70" width="100%" height="100%" creationPolicy="all">
 			<mx:Canvas id="canvasAddress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Address')}" width="100%" height="100%">
-				<mx:Text x="80" y="90" width="121" id="accountName" text="{account.title}"/>
+				<mx:Text x="80" y="90" width="232" id="accountName" text="{account.title}"/>
 				<ns1:ContactInfoEditor x="343" y="10" height="157" width="325" id="contact_editor" contactLabel="Contact"/>
-				<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.ID')}" textAlign="right" width="62"/>
+				<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ID')}" textAlign="right" width="62"/>
 				<mx:Label x="22" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Acct')}" textAlign="right" width="50"/>
 				<mx:Label x="-21" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Account')}" textAlign="right" width="93"/>
 				<mx:Button x="10" y="168" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ChangeAccount')}" id="AccountsPicker" click="doAccountPicker()"/>
@@ -923,7 +933,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Text x="498" y="175" width="160" id="createdDate" text="{contact.created.toString()}" height="27"/>
 				<ns1:AddressListEditor x="363" y="269" id="ship_to_address_editor" height="215" width="357"/>
 				<mx:CheckBox x="10" y="216" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.UseContactAddress')}" id="use_contact_check" />
-				<mx:Text x="203" visible="{defaultContact}" y="201" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.defaultcontact')}" width="163" />
+				<mx:Text x="203" visible="{defaultContact}" y="201"  width="163"  id="default_contact_text"/>
 				
 			</mx:Canvas>
 			<mx:Canvas id="canvasMarketing" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Marketing')}" width="100%" height="100%">

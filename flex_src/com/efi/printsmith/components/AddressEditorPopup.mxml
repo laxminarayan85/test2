@@ -44,10 +44,10 @@
     <mx:TextInput x="85" y="10" width="314" id="company_edit" text="{address.name}" visible="{!openedFromEmployee}"/>
     <mx:TextInput x="85" y="33" width="314" id="street1_edit" text="{address.street1}"/>
     <mx:TextInput x="85" y="56" width="314" id="street2_edit" text="{address.street2}"/>
-    <mx:ComboBox id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()"  editable="true" width="170"/>
-    <mx:ComboBox id="statecombo" restrict="A-Z" x="85" y="104" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" editable="true" width="170"/>
-    <mx:ComboBox id="zipcombo"  x="85" y="128" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="170" editable="true"/>
-    <mx:ComboBox id="countrycombo" x="85" y="152" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" text="{address.country}" editable="true" width="170"/>
+    <mx:ComboBox id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()"  editable="true" width="170" enabled="true"/>
+    <mx:ComboBox id="statecombo" restrict="A-Z" x="85" y="104" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" editable="true" width="170" enabled="true"/>
+    <mx:ComboBox id="zipcombo"  x="85" y="128" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="170" editable="true" enabled="true"/>
+    <mx:ComboBox id="countrycombo" x="85" y="152" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" text="{address.country}" editable="true" width="170" enabled="true"/>
     	
     <mx:Button x="241" y="183" id="ok_button" label="OK" width="75" click="doOK()"/>
     <mx:Button x="324" y="183" id="cancel_button" label="Cancel" width="75" click="doCancel()"/>
@@ -64,6 +64,8 @@
 	import com.efi.printsmith.data.State;
 	import com.efi.printsmith.data.Zip;
 	import com.efi.printsmith.data.ModelBase;
+	import mx.collections.SortField;
+	import mx.collections.Sort;
 	
 	import mx.collections.ArrayCollection;
 	import mx.managers.PopUpManager;                                         
@@ -136,7 +138,12 @@
 
 	private function handleLoadCity(ev:ResultEvent):void {
 		var	selectedItem:String = citycombo.selectedItem as String;
+		var sort:Sort = new Sort();
+		
 	 	cityDataProvider = ev.result as ArrayCollection;
+	 	sort.fields = [new SortField("name",true)];
+	 	cityDataProvider.sort = sort;
+	 	cityDataProvider.refresh();
 		if (selectedItem != null){
 	 		citycombo.selectedIndex = findItem (selectedItem,cityDataProvider);
 	 	}
@@ -149,7 +156,11 @@
 	
 	private function handleLoadState(ev:ResultEvent):void {
 		var selectedItem:String = statecombo.selectedItem as String;
+		var sort:Sort = new Sort();
 		stateDataProvider = ev.result as ArrayCollection;
+		sort.fields = [new SortField("name",true)];
+		stateDataProvider.sort= sort;
+		stateDataProvider.refresh();
 	 	if (selectedItem != null){
 	 		statecombo.selectedIndex = findItem (selectedItem,stateDataProvider);
 	 	}
@@ -163,6 +174,10 @@
 	private function handleLoadCountry(ev:ResultEvent):void {
 		var selectedItem:String = countrycombo.selectedItem as String;
 		countryDataProvider = ev.result as ArrayCollection;
+		var sort:Sort = new Sort();
+		sort.fields = [new SortField("name",true)];
+		countryDataProvider.sort = sort;
+		countryDataProvider.refresh();
 	 	if (selectedItem != null){
 	 		countrycombo.selectedIndex = findItem (selectedItem,countryDataProvider);
 	 	}
@@ -177,7 +192,7 @@
 		var selectedItem:String = zipcombo.selectedItem as String;
 		zipDataProvider = ev.result as ArrayCollection;
 	 	if (selectedItem != null){
-	 		zipcombo.selectedIndex = findItem (selectedItem,zipDataProvider);
+	 		zipcombo.selectedIndex = findItem(selectedItem,zipDataProvider);
 	 	}
 	 	else
 	 		if( this.address != null)
@@ -213,14 +228,16 @@
 	}
 	
  	private function findItem(name:String, array:ArrayCollection):int {
-		for each(var element:Object in array) {
-			if (name == element.name) {
-				return array.getItemIndex(element);
+ 		if( name != null){
+			for each(var element:Object in array) {
+				if (name.toUpperCase() == element.name.toUpperCase()) {
+					return array.getItemIndex(element);
+				}
 			}
-		}
+ 		}
 		return -1;
 	}
-   
+  
 	public function setAddress(addr:Address):void {
 		this.address = addr;
 		originalAddress = addr;
@@ -254,7 +271,8 @@
 					cityDataService.addUpdate(city);
 					}
 				else {
-					citycombo.selectedItem = item;
+					citycombo.selectedIndex = item;
+					
 					
 				}
 			
@@ -276,7 +294,7 @@
 				stateDataService.addUpdate(state);
 			}
 			else {
-				statecombo.selectedItem = item;
+				statecombo.selectedIndex = item;
 				
 			}
 			
@@ -297,7 +315,7 @@
 				zipDataService.addUpdate(zip);
 			}
 			else {
-				zipcombo.selectedItem = item;
+				zipcombo.selectedIndex = item;
 				
 			}
 		}
@@ -318,7 +336,7 @@
 				countryDataService.addUpdate(country);
 			}
 			else {
-				countrycombo.selectedItem = item;
+				countrycombo.selectedIndex = item;
 				
 			}
 		}

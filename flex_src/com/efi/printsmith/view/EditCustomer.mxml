@@ -234,6 +234,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
 		this.account = new Account();
+		 contacts = new ArrayCollection();
 		setMarketing();
 		this.setAccount(account);
 		this.enabled = true;
@@ -265,6 +266,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	private function doNew():void {
 	    account = new Account();
+	    contacts = new ArrayCollection();
 	    setMarketing();
 	    setAccount(account);
 	    this.formIsValid = false;
@@ -1010,8 +1012,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<ns1:ContactInfoEditor x="344" y="259" height="157" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
 				<mx:Label x="10" y="424" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
 				<mx:Label x="344" y="424" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
-				<mx:ComboBox x="127" y="421" height="22" id="invoicecontactlist" labelFunction="doName" enabled="true" width="160" dataProvider="{contacts}" change="updateInvoiceContact();"/>
-				<mx:ComboBox x="461" y="421" height="21" id="statementcontactlist" dataProvider="{contacts}" labelFunction="doName" change="updateStatementContact();" width="160"/>
+				<mx:ComboBox x="127" y="421" height="22" id="invoicecontactlist" labelFunction="doName" enabled="{contacts.length >0}" width="160" dataProvider="{contacts}" change="updateInvoiceContact();"/>
+				<mx:ComboBox x="461" y="421" height="21" id="statementcontactlist" enabled="{contacts.length >0}" dataProvider="{contacts}" labelFunction="doName" change="updateStatementContact();" width="160"/>
 				<mx:Label x="405" y="469"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.DeleteAdd')}"/>
 				<mx:LinkButton x="547"
 					   id="remove_contact_button"

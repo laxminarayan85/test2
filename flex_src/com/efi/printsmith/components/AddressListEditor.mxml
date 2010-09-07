@@ -60,6 +60,8 @@
 					if ( addresses == null)
 						addresses = new ArrayCollection();
 					addresses.addItem(this.address);
+					edit_address_button.enabled = true;
+					delete_button.enabled = true;
 					newAddress = false;
 				}
 				//updateDisplayAddress();
@@ -67,7 +69,8 @@
 			private function doDelete():void{
 				var index:int;
 				index = address_list.selectedIndex;
-				addresses.removeItemAt(index)
+				if (index != -1)
+					addresses.removeItemAt(index)
 			}
 			public function getAddress():Address
 			{
@@ -80,10 +83,21 @@
 			public function setAddress(addr:Address):void
 			{
 				this.address=addr;
+				
+				
 				updateDisplayAddress(addr);
 			}
 			public function setAddresses(addrs:ArrayCollection):void{
+				
 				addresses= addrs;
+				if ( this.addresses.length == 0 ){
+					edit_address_button.enabled = false;
+					delete_button.enabled = false;
+				}
+				else{
+					edit_address_button.enabled = true;
+					delete_button.enabled = true;
+				}
 			}
 			public function setLabel(labeltemp:String):void
 			{
@@ -196,7 +210,7 @@
 					   id="edit_address_button"
 					   click="doEditAddress();"/>
 		<mx:List x="21" y="10" dataProvider="{addresses}" click="doselectedAddress();" id="address_list" labelFunction="updateDisplayAddress" width="291" height="131"></mx:List>
-		<mx:LinkButton x="102" y="149" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" click="doDelete();"/>
+		<mx:LinkButton x="102" y="149" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" click="doDelete();" id="delete_button"/>
 		<mx:LinkButton x="21" y="149" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" click="doNew();"/>
 	</mx:Panel>
 </mx:Canvas>
