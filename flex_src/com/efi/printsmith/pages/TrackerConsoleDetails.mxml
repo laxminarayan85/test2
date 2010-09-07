@@ -124,55 +124,69 @@
 			
 			private function getFirstTotalTime(object:TrackerConsoleJobs):String{
 				var totalValue:Number = 0;
-				if(object.currentPass==1){
+				if(object.completed){
 					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-						if(trackerConsolePasses.passNo == object.currentPass){
-							if(trackerConsolePasses.setUpCompleted && trackerConsolePasses.runCompleted && trackerConsolePasses.washUpCompleted){
-								totalValue = trackerConsolePasses.setUpTime + trackerConsolePasses.runTime + trackerConsolePasses.washUpTime;
-								return convertMilliSecondsToString(totalValue,true);
-							} else {
-								if(trackerConsolePasses.trackDate==null){
-									totalValue = 0;
-								} else {
-									if(!object.paused) {
-										totalValue = trackerConsolePasses.trackDate.time;
-										if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
-											totalValue = totalValue - trackerConsolePasses.trackTime;
-										}
-										if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
-											totalValue = totalValue - trackerConsolePasses.setUpTime; 
-										}
-										if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
-											totalValue = totalValue - trackerConsolePasses.runTime; 
-										}
-										totalValue = nowDate.time - totalValue;
-									} else {
-										if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
-											totalValue = totalValue + trackerConsolePasses.trackTime;
-										}
-										if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
-											totalValue = totalValue + trackerConsolePasses.setUpTime; 
-										}
-										if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
-											totalValue = totalValue + trackerConsolePasses.runTime; 
-										}
-									}
-								}
-							}
-							break;
+						if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+							totalValue = totalValue + trackerConsolePasses.setUpTime;
+						}
+						if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+							totalValue = totalValue + trackerConsolePasses.runTime;
+						}
+						if(!(isNaN(trackerConsolePasses.washUpTime)) && trackerConsolePasses.washUpTime!=0){
+							totalValue = totalValue + trackerConsolePasses.washUpTime;
 						}
 					}
 				} else {
-					for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
-						if(trackerConsolePassesObj.passNo < object.currentPass){
-							if(!(isNaN(trackerConsolePassesObj.setUpTime)) && trackerConsolePassesObj.setUpTime!=0){
-								totalValue = totalValue + trackerConsolePassesObj.setUpTime; 
+					if(object.currentPass==1){
+						for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+							if(trackerConsolePasses.passNo == object.currentPass){
+								if(trackerConsolePasses.setUpCompleted && trackerConsolePasses.runCompleted && trackerConsolePasses.washUpCompleted){
+									totalValue = trackerConsolePasses.setUpTime + trackerConsolePasses.runTime + trackerConsolePasses.washUpTime;
+									return convertMilliSecondsToString(totalValue,true);
+								} else {
+									if(trackerConsolePasses.trackDate==null){
+										totalValue = 0;
+									} else {
+										if(!object.paused) {
+											totalValue = trackerConsolePasses.trackDate.time;
+											if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+												totalValue = totalValue - trackerConsolePasses.trackTime;
+											}
+											if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+												totalValue = totalValue - trackerConsolePasses.setUpTime; 
+											}
+											if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+												totalValue = totalValue - trackerConsolePasses.runTime; 
+											}
+											totalValue = nowDate.time - totalValue;
+										} else {
+											if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+												totalValue = totalValue + trackerConsolePasses.trackTime;
+											}
+											if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+												totalValue = totalValue + trackerConsolePasses.setUpTime; 
+											}
+											if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+												totalValue = totalValue + trackerConsolePasses.runTime; 
+											}
+										}
+									}
+								}
+								break;
 							}
-							if(!(isNaN(trackerConsolePassesObj.runTime)) && trackerConsolePassesObj.runTime!=0){
-								totalValue = totalValue + trackerConsolePassesObj.runTime; 
-							}
-							if(!(isNaN(trackerConsolePassesObj.washUpTime)) && trackerConsolePassesObj.washUpTime!=0){
-								totalValue = totalValue + trackerConsolePassesObj.washUpTime; 
+						}
+					} else {
+						for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
+							if(trackerConsolePassesObj.passNo < object.currentPass){
+								if(!(isNaN(trackerConsolePassesObj.setUpTime)) && trackerConsolePassesObj.setUpTime!=0){
+									totalValue = totalValue + trackerConsolePassesObj.setUpTime; 
+								}
+								if(!(isNaN(trackerConsolePassesObj.runTime)) && trackerConsolePassesObj.runTime!=0){
+									totalValue = totalValue + trackerConsolePassesObj.runTime; 
+								}
+								if(!(isNaN(trackerConsolePassesObj.washUpTime)) && trackerConsolePassesObj.washUpTime!=0){
+									totalValue = totalValue + trackerConsolePassesObj.washUpTime; 
+								}
 							}
 						}
 					}
@@ -182,20 +196,28 @@
 			
 			private function getFirstSetUpTime(object:TrackerConsoleJobs):String {
 				var totalSetUpValue:Number = 0;
-				if(object.currentPass==1){
+				if(object.completed){
 					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-						if(trackerConsolePasses.passNo == object.currentPass){
-							if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
-								totalSetUpValue = totalSetUpValue + trackerConsolePasses.setUpTime;
-							}
-							break;
+						if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+							totalSetUpValue = totalSetUpValue + trackerConsolePasses.setUpTime;
 						}
 					}
 				} else {
-					for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
-						if(trackerConsolePassesObj.passNo < object.currentPass){
-							if(!(isNaN(trackerConsolePassesObj.setUpTime)) && trackerConsolePassesObj.setUpTime!=0){
-								totalSetUpValue = totalSetUpValue + trackerConsolePassesObj.setUpTime;
+					if(object.currentPass==1){
+						for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+							if(trackerConsolePasses.passNo == object.currentPass){
+								if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+									totalSetUpValue = totalSetUpValue + trackerConsolePasses.setUpTime;
+								}
+								break;
+							}
+						}
+					} else {
+						for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
+							if(trackerConsolePassesObj.passNo < object.currentPass){
+								if(!(isNaN(trackerConsolePassesObj.setUpTime)) && trackerConsolePassesObj.setUpTime!=0){
+									totalSetUpValue = totalSetUpValue + trackerConsolePassesObj.setUpTime;
+								}
 							}
 						}
 					}
@@ -205,74 +227,92 @@
 			
 			private function getFirstRunTime(object:TrackerConsoleJobs):String {
 				var totalRunValue:Number = 0;
-				if(object.currentPass==1){
+				if(object.completed){
 					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-						if(trackerConsolePasses.passNo == object.currentPass){
-							if(trackerConsolePasses.runCompleted){
-								return convertMilliSecondsToString(trackerConsolePasses.runTime,true);
-							} else {
-								if(!object.paused){
-									totalRunValue = trackerConsolePasses.trackDate.time;
-									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
-										totalRunValue = totalRunValue - trackerConsolePasses.trackTime;
-									}
-									totalRunValue = nowDate.time - totalRunValue;
-								} else {
-									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
-										totalRunValue = totalRunValue + trackerConsolePasses.trackTime;
-									}
-								}
-								return convertMilliSecondsToString(totalRunValue,true);
-							}
-							break;
-						}
-					}
-				} else {
-					for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
-						if(trackerConsolePassesObj.passNo < object.currentPass){
-							if(!(isNaN(trackerConsolePassesObj.runTime)) && trackerConsolePassesObj.runTime!=0){
-								totalRunValue = totalRunValue + trackerConsolePassesObj.runTime;
-							}
+						if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
+							totalRunValue = totalRunValue + trackerConsolePasses.runTime;
 						}
 					}
 					return convertMilliSecondsToString(totalRunValue,true);
+				} else {
+					if(object.currentPass==1){
+						for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+							if(trackerConsolePasses.passNo == object.currentPass){
+								if(trackerConsolePasses.runCompleted){
+									return convertMilliSecondsToString(trackerConsolePasses.runTime,true);
+								} else {
+									if(!object.paused){
+										totalRunValue = trackerConsolePasses.trackDate.time;
+										if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+											totalRunValue = totalRunValue - trackerConsolePasses.trackTime;
+										}
+										totalRunValue = nowDate.time - totalRunValue;
+									} else {
+										if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+											totalRunValue = totalRunValue + trackerConsolePasses.trackTime;
+										}
+									}
+									return convertMilliSecondsToString(totalRunValue,true);
+								}
+								break;
+							}
+						}
+					} else {
+						for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
+							if(trackerConsolePassesObj.passNo < object.currentPass){
+								if(!(isNaN(trackerConsolePassesObj.runTime)) && trackerConsolePassesObj.runTime!=0){
+									totalRunValue = totalRunValue + trackerConsolePassesObj.runTime;
+								}
+							}
+						}
+						return convertMilliSecondsToString(totalRunValue,true);
+					}
 				}
 				return "0:00";
 			}
 			
 			private function getFirstWashTime(object:TrackerConsoleJobs):String {
 				var totalWashValue:Number = 0;
-				if(object.currentPass==1){
+				if(object.completed){
 					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-						if(trackerConsolePasses.passNo == object.currentPass){
-							if(trackerConsolePasses.runCompleted && !trackerConsolePasses.washUpCompleted){
-								if(!object.paused){
-									totalWashValue = trackerConsolePasses.trackDate.time;
-									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
-										totalWashValue = totalWashValue - trackerConsolePasses.trackTime;
-									}
-									totalWashValue = nowDate.time - totalWashValue;
-								} else {
-									if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
-										totalWashValue = totalWashValue + trackerConsolePasses.trackTime;
-									}
-								}
-								return convertMilliSecondsToString(totalWashValue,true);
-							} else {
-								return convertMilliSecondsToString(trackerConsolePasses.washUpTime,true);
-							}
-							break;
-						}
-					}
-				} else {
-					for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
-						if(trackerConsolePassesObj.passNo < object.currentPass){
-							if(!(isNaN(trackerConsolePassesObj.washUpTime)) && trackerConsolePassesObj.washUpTime!=0){
-								totalWashValue = totalWashValue + trackerConsolePassesObj.washUpTime;
-							}
+						if(!(isNaN(trackerConsolePasses.washUpTime)) && trackerConsolePasses.washUpTime!=0){
+							totalWashValue = totalWashValue + trackerConsolePasses.washUpTime;
 						}
 					}
 					return convertMilliSecondsToString(totalWashValue,true);
+				} else {
+					if(object.currentPass==1){
+						for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
+							if(trackerConsolePasses.passNo == object.currentPass){
+								if(trackerConsolePasses.runCompleted && !trackerConsolePasses.washUpCompleted){
+									if(!object.paused){
+										totalWashValue = trackerConsolePasses.trackDate.time;
+										if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+											totalWashValue = totalWashValue - trackerConsolePasses.trackTime;
+										}
+										totalWashValue = nowDate.time - totalWashValue;
+									} else {
+										if(!(isNaN(trackerConsolePasses.trackTime)) && trackerConsolePasses.trackTime!=0){
+											totalWashValue = totalWashValue + trackerConsolePasses.trackTime;
+										}
+									}
+									return convertMilliSecondsToString(totalWashValue,true);
+								} else {
+									return convertMilliSecondsToString(trackerConsolePasses.washUpTime,true);
+								}
+								break;
+							}
+						}
+					} else {
+						for each(var trackerConsolePassesObj:TrackerConsolePasses in object.passesList){
+							if(trackerConsolePassesObj.passNo < object.currentPass){
+								if(!(isNaN(trackerConsolePassesObj.washUpTime)) && trackerConsolePassesObj.washUpTime!=0){
+									totalWashValue = totalWashValue + trackerConsolePassesObj.washUpTime;
+								}
+							}
+						}
+						return convertMilliSecondsToString(totalWashValue,true);
+					}
 				}
 				return "0:00";
 			}
@@ -421,8 +461,10 @@
 			
 			private function getCurrentPassString(object:TrackerConsoleJobs):String {
 				if(object!=null){
-					if(object.noOfPasses>1){
+					if(object.noOfPasses>1 && !object.completed){
 						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.CurrentPass');
+					} else {
+						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Actuals');
 					}
 				}
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Actuals');
@@ -475,7 +517,7 @@
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Exceptioncode')}"
 			width="25%" textAlign="right"/>
-		<components:CustomComboBoxComponent width="72%"
+		<components:CustomComboBoxComponent width="72%" enabled="{!trackerConsoleJobs.completed}"
 			masterList="{exceptionsArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 			dataHolder="{trackerConsoleJobs}" variableName="productionExceptions" customText="{getCustomTextData(exceptionsArray,trackerConsoleJobs,trackerConsoleJobs.productionExceptions)}"/>
 	</mx:HBox>
@@ -485,7 +527,7 @@
 			fontWeight="bold" width="25%" textAlign="center"/>
 		<mx:Label text="{getCurrentPassString(trackerConsoleJobs)}" fontWeight="bold" width="25%" textAlign="center"/>
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.PreviousPasses')}" 
-			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" fontWeight="bold" width="25%" textAlign="center"/>
+			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" fontWeight="bold" width="25%" textAlign="center"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Totaltime')}:"
@@ -493,7 +535,7 @@
 		<mx:TextInput text="{convertMilliSecondsToString((trackerConsoleJobs.actualSetUpTime+trackerConsoleJobs.actualRunTime+trackerConsoleJobs.actualWashTime),true)}" 
 			width="25%" enabled="false"/>
 		<mx:TextInput text="{getSecondTotalTime(trackerConsoleJobs)}" 
-			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" width="25%" enabled="false"/>
+			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstTotalTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
@@ -502,7 +544,7 @@
 		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualSetUpTime,true)}" 
 			width="25%" enabled="false"/>
 		<mx:TextInput text="{getSecondSetUpTime(trackerConsoleJobs)}" 
-			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" width="25%" enabled="false"/>
+			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstSetUpTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
@@ -511,7 +553,7 @@
 		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualRunTime,true)}" 
 			width="25%" enabled="false"/>
 		<mx:TextInput text="{getSecondRunTime(trackerConsoleJobs)}" 
-			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" width="25%" enabled="false"/>
+			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstRunTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
@@ -520,7 +562,7 @@
 		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualWashTime,true)}" 
 			width="25%" enabled="false"/>
 		<mx:TextInput text="{getSecondWashTime(trackerConsoleJobs)}" 
-			visible="{trackerConsoleJobs.currentPass>1}" includeInLayout="{trackerConsoleJobs.currentPass>1}" width="25%" enabled="false"/>
+			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstWashTime(trackerConsoleJobs)}" width="25%" enabled="false"/>
 	</mx:HBox>
 	

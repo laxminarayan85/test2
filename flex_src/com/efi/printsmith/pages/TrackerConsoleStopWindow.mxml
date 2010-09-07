@@ -121,7 +121,7 @@
 					if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
 						totalTime = totalTime + trackerConsolePasses.runTime;
 					}
-					if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
+					if(!(isNaN(trackerConsolePasses.washUpTime)) && trackerConsolePasses.washUpTime!=0){
 						totalTime = totalTime + trackerConsolePasses.washUpTime;
 					}
 				}
