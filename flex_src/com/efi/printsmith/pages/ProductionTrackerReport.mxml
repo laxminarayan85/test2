@@ -7,8 +7,14 @@
 		<mx:method name="getProductionEmployeeTrackerJobs" fault="handleFault(event)" result="handleLoadJobsResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="updateDataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.TrackerConsoleDetailsEvent;
+			import mx.utils.ObjectUtil;
 			import com.efi.printsmith.common.scripts.DateUtil;
 			import mx.rpc.events.FaultEvent;
 			import mx.controls.Alert;
@@ -24,6 +30,10 @@
 			
 			[Bindable] private var productionJobsList:ArrayCollection = new ArrayCollection();
 			
+			[Bindable] public var exceptionsArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] private var selectedTrackerConsoleJob:TrackerConsoleJobs;
+			
 			private function initProdRepWindow():void {
 				PopUpManager.centerPopUp(this);
 				reportTypeCombo.selectedItem = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportType_ResID.CompletedDate');
@@ -35,11 +45,13 @@
 			}
 			
 			private function getProductionJobList(fromDate:Date=null, toDate:Date=null):void {
+				var todayDate:Date = new Date();
 				if(fromDate==null || toDate==null){
-					toDate = new Date();
-					fromDate = DateUtil.addDays(toDate,-7);
+					toDate = new Date(todayDate.fullYear,todayDate.month,todayDate.date-1,23,59,59);
+					fromDate = new Date(toDate.fullYear,toDate.month,toDate.date-6,0,0,0);
 				} else {
-					toDate = DateUtil.addDays(toDate,1);
+					toDate = new Date(toDate.fullYear,toDate.month,toDate.date,23,59,59);
+					fromDate = new Date(fromDate.fullYear,fromDate.month,fromDate.date,0,0,0);
 				}
 				dataService.getProductionEmployeeTrackerJobs(fromDate,toDate);
 			}
@@ -56,6 +68,39 @@
 				+ ev.fault.faultDetail + " - "                                  
 				+ ev.fault.faultString;
 				Alert.show(message, "Error", 0, null, null, null, 4);                                 
+			}
+			
+			public function onJobSelect(event:Event):void {
+				if(event.currentTarget.selectedIndex>-1){
+					selectedTrackerConsoleJob = event.currentTarget.selectedItem as TrackerConsoleJobs;
+				}
+			}
+			
+			private function openJobDetails(trackerConsoleJobArg:TrackerConsoleJobs):void {
+				if(trackerConsoleJobArg!=null){
+					var trackerConsoleDetails:TrackerConsoleDetails = PopUpManager.createPopUp(this,TrackerConsoleDetails,true) as TrackerConsoleDetails;
+					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+					trackerConsoleDetails.trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobArg) as TrackerConsoleJobs;
+					trackerConsoleDetails.exceptionsArray = exceptionsArray;
+					trackerConsoleDetails.addEventListener(TrackerConsoleDetailsEvent.SAVE_JOBDETAILS_EVENT,function(event:TrackerConsoleDetailsEvent):void {
+						if(event.isSave){
+							if(trackerConsoleJobArg!=null){
+								copyFromDetailsWindow(event.trackerConsoleJobs,trackerConsoleJobArg);
+								updateDataService.addUpdate(trackerConsoleJobArg);
+							}
+						}
+					});
+				}
+			}
+			
+			private function copyFromDetailsWindow(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {
+				if(source.productionExceptions!=null){
+					if(source.productionExceptions.id==0){
+						source.productionExceptions = null;
+					}
+				}
+				destination.productionExceptions = source.productionExceptions;
+				destination.notes = source.notes;
 			}
 			
 			public function getInvoiceNumber(object:Object):String {
@@ -207,8 +252,11 @@
 			
 			private function setDates():void {
 				if(viewDate.selectedValue=='DateRange'){
-					dateTo.selectedDate = DateUtil.addDays(new Date(),-1);
-					dateFrom.selectedDate = DateUtil.addDays(dateTo.selectedDate,-6);
+					if(dateTo.selectedDate==null || dateFrom.selectedDate==null){
+						var todayDate:Date = new Date();
+						dateTo.selectedDate = new Date(todayDate.fullYear,todayDate.month,todayDate.date-1,23,59,59);
+						dateFrom.selectedDate = new Date(dateTo.selectedDate.fullYear,dateTo.selectedDate.month,dateTo.selectedDate.date-6,0,0,0);
+					}
 				}
 			}
 			
@@ -216,8 +264,8 @@
 				if(viewDate.selectedValue == "LastWeek"){
 					getProductionJobList();
 				} else if(viewDate.selectedValue == "DateRange") {
-					var fromDate:Date = dateFrom.selectedDate;
-					var toDate:Date = DateUtil.addDays(dateTo.selectedDate,1);
+					var toDate:Date = new Date(dateTo.selectedDate.fullYear,dateTo.selectedDate.month,dateTo.selectedDate.date,23,59,59);
+					var fromDate:Date = new Date(dateFrom.selectedDate.fullYear,dateFrom.selectedDate.month,dateFrom.selectedDate.date,0,0,0);
 					getProductionJobList(fromDate,toDate);
 				}
 			}
@@ -256,7 +304,8 @@
 		</mx:HBox>
 	</mx:VBox>
 	
-	<mx:DataGrid dataProvider="{productionJobsList}" width="100%" height="85%">
+	<mx:DataGrid dataProvider="{productionJobsList}" width="100%" height="85%"
+		itemClick="{onJobSelect(event)}" doubleClickEnabled="true" doubleClick="{openJobDetails(selectedTrackerConsoleJob)}">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTrackerReportProductionCompletedDate_ResID.Document')}">
 				<mx:itemRenderer>

@@ -1911,7 +1911,7 @@
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.CompletedItems')}"
 			paddingLeft="20" paddingTop="20" width="100%" height="85%">
 			<mx:DataGrid dataProvider="{completedTracketConsoleJobsList}" width="90%" height="100%" id="completed_grid"
-				click="{doSelectCompletedJob(event)}" doubleClickEnabled="true" doubleClick="{openJobDetails(completedTrackerConsoleJob)}">
+				itemClick="{doSelectCompletedJob(event)}" doubleClickEnabled="true" doubleClick="{openJobDetails(completedTrackerConsoleJob)}">
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DateCompleted')}" dataField="completedDate">
 						<mx:itemRenderer>
