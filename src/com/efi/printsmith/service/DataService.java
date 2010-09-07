@@ -3725,7 +3725,7 @@ public class DataService extends HibernateService {
 		List<TrackerConsoleJobs> jobsList = new ArrayList<TrackerConsoleJobs>();
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from TrackerConsoleJobs where completed=true and completedDate between :fromDate and :toDate";
+			String queryString = "from TrackerConsoleJobs where completed=true and completedDate between :fromDate and :toDate order by completedDate desc";
 			Query query = em.createQuery(queryString);
 			query.setParameter("fromDate", fromDate);
 			query.setParameter("toDate", toDate);
