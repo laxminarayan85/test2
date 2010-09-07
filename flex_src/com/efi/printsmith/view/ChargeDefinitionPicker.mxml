@@ -17,7 +17,8 @@
 				fontSize="9"
 				titleIcon="@Embed(source='../../../../assets/new_job.png')"
 				defaultButton="{done_button}"
-				showCloseButton="true">
+				showCloseButton="true"
+				 close="doCancel();">
 				
 
 	<mx:RemoteObject id="dataService"

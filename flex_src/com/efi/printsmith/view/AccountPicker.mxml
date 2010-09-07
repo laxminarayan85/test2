@@ -63,7 +63,11 @@
            
 	public function setAccounts( tempAccount:ArrayCollection):void{
 	//	accountTypeRadio.selectedValue = "Customer"; 
-		accounts = tempAccount;
+		var i:int;
+		accounts = new ArrayCollection();
+		for(i = 0; i < tempAccount.length; i++) {
+			accounts.addItem(tempAccount.getItemAt(i) as Account);
+		}
 	//    accounts.filterFunction = accountFilter;
 		
 	}                    

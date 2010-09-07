@@ -241,6 +241,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	private function handleGetResult(ev:ResultEvent):void {
 		this.setAccount(ev.result as Account);
+		this.formIsValid = true;
 		contactdataService.getContactsByAccountId("Contact", account.id);
 		setMarketing();
 		
@@ -254,6 +255,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	     	inv_estimate_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
 	     	inv_estimate_charges_edit.label = StringUtil.substitute(inv_estimate_charges_edit.label,this.EstInvCharges.length);
 	 }
+	 
 	}
 	private function handleGetMasterResult(ev:ResultEvent):void {
 		var tempmaster:Account = new Account();
@@ -265,6 +267,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    account = new Account();
 	    setMarketing();
 	    setAccount(account);
+	    this.formIsValid = false;
 	 	
 	    
 	 	
@@ -890,6 +893,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private function doEstInvCharge():void{
         var chargePicker:ChargeDefinitionPicker=ChargeDefinitionPicker(PopUpManager.createPopUp(this, ChargeDefinitionPicker, true));
 		chargePicker.charges = this.EstInvCharges;
+		chargePicker.setTitle(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.ChargeSelector'));
 		chargePicker.setStyle("borderAlpha", 0.9);
 		chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionEstInvComplete);
 		chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCANCEL, handleChargeDefinitionCancel);
@@ -898,6 +902,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
         var chargePicker1:ChargeDefinitionPicker=ChargeDefinitionPicker(PopUpManager.createPopUp(this, ChargeDefinitionPicker, true));
 		chargePicker1.charges = this.JobCharges;
 		chargePicker1.setStyle("borderAlpha", 0.9);
+		chargePicker1.setTitle(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.ChargeSelector'));
 		chargePicker1.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionJobComplete);
 		chargePicker1.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCANCEL, handleChargeDefinitionCancel);
     }
