@@ -76,7 +76,7 @@
 		
 		import com.efi.printsmith.security.PSSecurity;
 		
-		import mx.formatters.NumberFormatter;
+		import mx.formatters.NumberFormatter; 
 		import mx.controls.DateField;
 		import flash.utils.setTimeout;
 		import flash.net.navigateToURL;
@@ -332,7 +332,7 @@
 		private function doQuickAccessPanel():void	{
 			var child:Container = new QuickAccessPanel();
 			
-			containerManager.openNewMDIWindow("Quick Access Panel",child);//addUniqueTab(child);
+			containerManager.openNewMDIWindow("Quick Access Panel",child,40,20,530,880);//addUniqueTab(child);
 		}
 		public function doAccounts():void {
 			var event:EditCustomerEvent = new EditCustomerEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
@@ -838,7 +838,7 @@
 					currentUser = res;
 					security = new PSSecurity(currentUser);
 					showContainer();
-					containerManager.openNewMDIWindow("Quick Access Panel", new QuickAccessPanel());
+					containerManager.openNewMDIWindow("Quick Access Panel", new QuickAccessPanel(),40,20,530,880);
 				
 					logUserEvent(Constants.USER_EVENT_LOGIN, null, null);
 				}

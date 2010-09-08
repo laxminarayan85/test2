@@ -1,5 +1,6 @@
 package com.efi.mdi
 {
+	import com.efi.mdi.util.MDIConstants;
 	import com.efi.mdi.view.container.MDIContainer;
 	import com.efi.mdi.view.window.MDIWindow;
 	
@@ -60,7 +61,7 @@ package com.efi.mdi
 		public function getActiveWindowContent():Container	{
 			return getActiveWindow().content as Container;
 		}
-		public function openNewMDIWindow(title:String, content:UIComponent, parentWin:int = -1):int	{
+		public function openNewMDIWindow(title:String, content:UIComponent, x:Number = -1, y:Number = -1, height:Number = -1, width:Number = -1, parentWin:int = -1):int	{
 			
 			var windowId:int = _nextId;
 			_nextId++;
@@ -68,11 +69,17 @@ package com.efi.mdi
 			var mdiWindow:MDIWindow = new MDIWindow(title, content, windowId, parentWin);
 			
 			mdiWindow.id = "MDIWindow_" + windowId;
-			mdiWindow.x = 100;
-			mdiWindow.y = 100;
-			mdiWindow.width = 1000;
-			mdiWindow.height = 500; 
 			
+			if (x == -1)
+				mdiWindow.x = MDIConstants.DEFAULT_WINDOW_X;
+			else	
+				mdiWindow.x = x;
+			
+			if (y == -1)		
+				mdiWindow.y = MDIConstants.DEFAULT_WINDOW_Y;
+			else	
+				mdiWindow.y = y;
+				
 			if (parentWin != -1)	{
 				var parentWindow:MDIWindow = getWindow(parentWin);
 				parentWindow.addChildWindow(windowId);
@@ -90,6 +97,20 @@ package com.efi.mdi
 //			}
 				
 			_mdiContainerRef.addMDIWindow(mdiWindow);
+			if (height == -1)	
+				mdiWindow.height = _mdiContainerRef.appCanvas.height - MDIConstants.DEFAULT_WINDOW_HEIGHT_FACTOR;
+			else if (height > _mdiContainerRef.appCanvas.height)
+				mdiWindow.height = 	_mdiContainerRef.appCanvas.height;
+			else 
+				mdiWindow.height = 	height;
+			
+			if (width == -1)		
+				mdiWindow.width = _mdiContainerRef.appCanvas.width - MDIConstants.DEFAULT_WINDOW_WIDTH_FACTOR;
+			else if (width > _mdiContainerRef.appCanvas.width)
+				mdiWindow.width = _mdiContainerRef.appCanvas.width;
+			else
+				mdiWindow.width = width;  
+			
 			return windowId;
 		}
 		
