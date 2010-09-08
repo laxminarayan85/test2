@@ -1419,10 +1419,7 @@ private function loadCoatedArray():void{
 	 stockDefinitions.coated = coated.text; 
 	 stockDefinitions.stocknumber = stockNumber.text;
 //	 stockDefinitions.basicsize = Basicsize.text;
-	if (parentSize.text == "")
-		stockDefinitions.parentsize = null;
-	else
-	 	stockDefinitions.parentsize.name = parentSize.text;
+	stockDefinitions.parentsize = parentSize.selectedItem as Dimension;
 	// stockDefinitions.thickness = parseFloat(thickNess.text);
 	 if ( mWeight.text == "")
 	 	stockDefinitions.mweight = 0;
@@ -1473,10 +1470,7 @@ private function loadCoatedArray():void{
 	 
 	
 	 stockDefinitions.pcwRecycledPercent = parseFloat(percentvalue) * .01 ;
-	 if ( NormalRunSize.text == "")
-	 	stockDefinitions.normalRunSize = null;
-	 else 
-	 	stockDefinitions.normalRunSize.name = NormalRunSize.text;
+	 stockDefinitions.normalRunSize = NormalRunSize.selectedItem as Dimension;
 	 stockDefinitions.cutsPer100 = parseInt(CutsPer100.text);
 	 stockDefinitions.minCutCharge = parseInt(MinCutCharge.text);
 	// stockDefinitions.defaultPress = DefaultPress.text;

@@ -108,7 +108,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
    	import com.efi.printsmith.events.commandEvents.Contacts.*;
 
     [Bindable]
-    private var enableSave:Boolean = true;
+    private var enableSave:Boolean = false;
     
     private var contacts:ArrayCollection = new ArrayCollection();
                  

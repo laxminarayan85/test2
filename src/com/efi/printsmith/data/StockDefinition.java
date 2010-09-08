@@ -956,7 +956,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(optional=true)
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Dimension parentsize;
 	
@@ -1959,7 +1959,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(optional=true)
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Dimension normalRunSize;
 	
