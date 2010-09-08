@@ -30,6 +30,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.pages.EmployeeTrackerReport;
 			import mx.utils.ObjectUtil;
 			import com.efi.printsmith.data.ProductionExceptions;
 			import com.efi.printsmith.events.TrackerConsoleDetailsEvent;
@@ -335,6 +336,11 @@
 				var productionTrackerReport:ProductionTrackerReport = PopUpManager.createPopUp(this,ProductionTrackerReport,false) as ProductionTrackerReport;
 				productionTrackerReport.exceptionsArray = exceptionsArray;
 			}
+			
+			private function openEmpReport():void {
+				var employeeTrackerReport:EmployeeTrackerReport = PopUpManager.createPopUp(this,EmployeeTrackerReport,false) as EmployeeTrackerReport;
+				employeeTrackerReport.exceptionsArray = exceptionsArray;
+			}
 		]]>
 	</mx:Script>
 
@@ -488,7 +494,8 @@
 					
 				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.ProductionReports')}"
 					click="{openProdReport()}" width="100%"/>
-				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.EmployeeReports')}" width="100%"/>
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.EmployeeReports')}" 
+					click="{openEmpReport()}" width="100%"/>
 				
 			</mx:Panel>
 				
