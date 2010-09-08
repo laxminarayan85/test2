@@ -2916,6 +2916,8 @@ public class DataService extends HibernateService {
 							queryString = queryString + " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null)";
 						}
 						
+						queryString = queryString + " order by invoice.invoiceNumber,job.jobNumber asc"; 
+						
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllPricingMethods()) {
 							query.setParameter("pricingMethods", employee.getEmployeePricings());
@@ -3044,6 +3046,7 @@ public class DataService extends HibernateService {
 								queryString = queryString + " where charge.productionLocation in (:locations)";
 							}
 						}
+						queryString = queryString + " order by invoice.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
@@ -3137,6 +3140,7 @@ public class DataService extends HibernateService {
 								queryString = queryString + " where charge.productionLocation in (:locations)";
 							}
 						}
+						queryString = queryString + " order by invoice.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
@@ -3241,6 +3245,7 @@ public class DataService extends HibernateService {
 						} else {
 							queryString = queryString + " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null)";
 						}
+						queryString = queryString + " order by estimate.invoiceNumber,job.jobNumber asc";
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllPricingMethods()) {
 							query.setParameter("pricingMethods", employee.getEmployeePricings());
@@ -3370,6 +3375,7 @@ public class DataService extends HibernateService {
 								queryString = queryString + " where charge.productionLocation in (:locations)";
 							}
 						}
+						queryString = queryString + " order by estimate.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
@@ -3463,6 +3469,7 @@ public class DataService extends HibernateService {
 								queryString = queryString + " where charge.productionLocation in (:locations)";
 							}
 						}
+						queryString = queryString + " order by estimate.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
 						if(!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
@@ -3554,6 +3561,7 @@ public class DataService extends HibernateService {
 					if(!trackerConsole.getShowAllStations()) {
 						queryString = queryString + " and productionStations in (:selectedStations)";
 					}
+					queryString = queryString + " order by employee.lastName,employee.firstName,id asc";
 					Query query = em.createQuery(queryString);
 					if(trackerConsole.getShowSelectedEmployee()) {
 						query.setParameter("employee", employee);
