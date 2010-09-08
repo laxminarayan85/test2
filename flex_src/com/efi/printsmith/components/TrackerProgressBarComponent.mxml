@@ -193,7 +193,7 @@
 									actualRunImage.source = arrowUpImg;
 									actualRunImage.width = 30;
 									actualRunImage.height = 30;
-									actualRunImage.x = (((trackerConsolePasses.runTime+trackerConsolePasses.setUpTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualSetUpImage.width/2);
+									actualRunImage.x = (((trackerConsolePasses.runTime+trackerConsolePasses.setUpTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualRunImage.width/2);
 									actualRunImage.y = pgBarTrackHeight/2;
 									if((trackerConsolePasses.runTime+trackerConsolePasses.setUpTime)>totalValue){
 										actualRunImage = null;
