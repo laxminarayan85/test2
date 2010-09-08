@@ -613,7 +613,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setPriceList(pressDefinition.wasteChart as PriceListBase);		
-    	
+    	titleWindow.addEventListener(SavePriceListEvent.Save, handleSaveWasteTable);
     }
     private function doclickSpeedTable(event: MouseEvent):void{
     	var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
@@ -629,6 +629,12 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			AvgImpressPerhour.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable')
 			AvgImpressPerhour.enabled = false;
 	   
+	}
+	private function handleSaveWasteTable(ev:SavePriceListEvent):void
+	{ 
+			pressDefinition.wasteChart = ev.priceList as WasteChart;
+			selectedWasteChart.label = WasteListLabel();
+				   
 	}
     private function doWashUpPerFountain():void{
     	var tempInt: int;
