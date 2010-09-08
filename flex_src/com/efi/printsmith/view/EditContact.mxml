@@ -108,7 +108,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
    	import com.efi.printsmith.events.commandEvents.Contacts.*;
 
     [Bindable]
-    private var enableSave:Boolean = false;
+    private var enableSave:Boolean = true;
     
     private var contacts:ArrayCollection = new ArrayCollection();
                  
@@ -943,21 +943,21 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		<mx:TabNavigator x="0" y="70" width="100%" height="100%" creationPolicy="all">
 			<mx:Canvas id="canvasAddress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Address')}" width="100%" height="100%">
 				<mx:Text x="80" y="90" width="232" id="accountName" text="{account.title}"/>
-				<ns1:ContactInfoEditor x="343" y="10" height="157" width="325" id="contact_editor" contactLabel="Contact"/>
+				<ns1:ContactInfoEditor x="338" y="10" height="211" width="342" id="contact_editor" contactLabel="Contact"/>
 				<mx:Label x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ID')}" textAlign="right" width="62"/>
 				<mx:Label x="22" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Acct')}" textAlign="right" width="50"/>
 				<mx:Label x="-21" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Account')}" textAlign="right" width="93"/>
 				<mx:Button x="10" y="168" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ChangeAccount')}" id="AccountsPicker" click="doAccountPicker()"/>
-				<mx:ComboBox id="sales_rep_combo" x="498" y="216" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" />
+				<mx:ComboBox id="sales_rep_combo" x="498" y="241" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" />
 				<ns1:AddressEditor x="10" y="269" id="address_editor" height="157" width="325" enabled="{use_contact_check.selected}"/>
 				<mx:Text x="80" y="40" width="100" id="accountID" text="{contact.parentAccount.accountId}"/>
 				<mx:Text x="80" y="12" text="{contact.contactId}" id="contactID"/>
-				<mx:Label x="391" y="218" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRep')}" textAlign="right" width="83"/>
-				<mx:Label x="363" y="175" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Created')}" textAlign="right" width="93"/>
-				<mx:Text x="498" y="175" width="160" id="createdDate" text="{contact.created.toString()}" height="27"/>
+				<mx:Label x="391" y="243" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRep')}" textAlign="right" width="83"/>
+				<mx:Label x="397" y="218" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Created')}" textAlign="right" width="93"/>
+				<mx:Text x="498" y="218" width="160" id="createdDate" text="{contact.created.toString()}" height="20"/>
 				<ns1:AddressListEditor x="363" y="269" id="ship_to_address_editor" height="215" width="357"/>
 				<mx:CheckBox x="10" y="216" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.UseContactAddress')}" id="use_contact_check" />
-				<mx:Text x="203" visible="{defaultContact}" y="201"  width="163"  id="default_contact_text"/>
+				<mx:Text x="172" visible="{defaultContact}" y="201"  width="163"  id="default_contact_text"/>
 				
 			</mx:Canvas>
 			<mx:Canvas id="canvasMarketing" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Marketing')}" width="100%" height="100%">

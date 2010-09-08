@@ -179,12 +179,13 @@
 			  dropShadowEnabled="false">
 		<mx:Text x="10"
 				 y="10"
+				 
 				 width="281"
 				 id="company_text"
-				 text="{displayContact}&#xd;"
-				 height="75"/>
+				 text="{displayContact}"
+				 height="114"/>
 		<mx:LinkButton x="249"
-					   y="93"
+					   y="121"
 					   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
 					   id="edit_contact_button"
 					   click="doEditContact();"/>
