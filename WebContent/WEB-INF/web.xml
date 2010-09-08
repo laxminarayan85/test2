@@ -11,9 +11,29 @@
 	</context-param>
 	
 	<filter>
+		<filter-name>GZIPFilter</filter-name>
+		<filter-class>com.efi.printsmith.filter.GZIPFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name>ByteArrayTrafficFilter</filter-name>
+		<filter-class>com.efi.printsmith.filter.ByteArrayTrafficFilter</filter-class>
+	</filter>
+	
+	<filter>
 		<filter-name>hibernateSessionFilter</filter-name>
 		<filter-class>net.digitalprimates.persistence.hibernate.utils.filters.HibernateSessionServletFilter</filter-class>
 	</filter>
+	
+	<filter-mapping>
+		<filter-name>GZIPFilter</filter-name>
+		<url-pattern>/messagebroker/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>ByteArrayTrafficFilter</filter-name>
+		<url-pattern>/messagebroker/*</url-pattern>
+	</filter-mapping>
 
 	<filter-mapping>
 		<filter-name>hibernateSessionFilter</filter-name>
