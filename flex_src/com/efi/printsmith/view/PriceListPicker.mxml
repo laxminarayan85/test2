@@ -197,8 +197,8 @@
 		titleWindow.setCopy(true);
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setPriceList(newPriceList);
-	    doSelect();
-		PopUpManager.removePopUp(this);
+	    
+		
 	}
 		
 	private function doClear():void {

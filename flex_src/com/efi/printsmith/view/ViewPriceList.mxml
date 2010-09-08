@@ -107,7 +107,8 @@
 			this.header_text.text = this.pressDefinition.name;
 		if (this.stockDefinition != null) {
 			this.header_text.text = this.header_text.text + "\r" + this.stockDefinition.name;
-			this.stock_text.text = "Parent Size: " + stockDefinition.parentsize.name + " Run Size: " + stockDefinition.normalRunSize.name + " Finish Size: " + stockDefinition.parentsize.name;
+			if ( stockDefinition.parentsize != null && stockDefinition.normalRunSize != null && stockDefinition.finish != null)
+			this.stock_text.text = "Parent Size: " + stockDefinition.parentsize.name + " Run Size: " + stockDefinition.normalRunSize.name + " Finish Size: " + stockDefinition.finish.name;
 			if (this.copierDefinition != null)
 				this.stock_text.text = this.stock_text.text + "\rCopier: " + this.copierDefinition.name;
 			if (this.pressDefinition != null)

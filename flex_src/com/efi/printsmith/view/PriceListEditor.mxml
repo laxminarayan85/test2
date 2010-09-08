@@ -462,18 +462,19 @@
 		if (this.parentContainer.name == "Copier Definitions") {
 				var editCopierDefinitions:CopierDefinitions = this.parentContainer as CopierDefinitions;
 				if (itemType == "WasteChart") {
-			//		editCopierDefinitions.wasteName.text = priceList.name;
+					editCopierDefinitions.wasteName.label = priceList.name;
 				} else if (itemType == "SpeedTable") {
 					
 				}		
 			}
 			if (this.parentContainer.name == "Press Definitions") {
 				var editPressDefinitions:PressDefinitions = this.parentContainer as PressDefinitions;
-				/* if (itemType == "WasteChart") {
-					editPressDefinitions.selectedWasteChart.text = priceList.name;
+				if (itemType == "WasteChart") {
+					editPressDefinitions.selectedWasteChart.label= priceList.name;
+					
 				} else if (itemType == "SpeedTable") {
-		//			editPressDefinitions.selectedSpeedTable.text = priceList.name;
-				}		 */
+					editPressDefinitions.selectedSpeedTable.label = priceList.name;
+				}		 
 			}
 				
 			PopUpManager.removePopUp(this);
@@ -671,7 +672,7 @@
 		</mx:DataGrid>
 		<mx:TextInput y="10" id="title_edit" change="updateTitle(title_edit.text);" text="{priceList.name}" width="210.5" x="309.5"/>
 
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" bottom="10" right="120"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" bottom="10" right="121"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" bottom="10" right="10"/>
 		<mx:Label x="235.5" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Title')}" id="label1" textAlign="right" width="66"/>
 

@@ -100,8 +100,7 @@
 			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
 			<mx:SetProperty target="{qtybreaklabel}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}"/>
 			<mx:SetProperty target="{button2}" name="x" value="73"/>
-			<mx:SetProperty target="{label14}" name="x" value="73"/>
-			<mx:SetProperty target="{label14}" name="width" value="45"/>
+			<mx:SetProperty target="{label14}" name="width" value="30"/>
 			<mx:SetProperty target="{label15}" name="width" value="55"/>
 			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
 			<mx:SetProperty target="{radiobutton1}" name="y" value="85"/>
@@ -226,7 +225,7 @@
 		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPreferencesDefaultPressResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServicePressDefinition" destination="dataService">
-		<mx:method name="getByPressId" fault="handleFault(event)" result="handleLoadPressDefinitionResult(event)"/>
+		<mx:method name="getById" fault="handleFault(event)" result="handleLoadPressDefinitionResult(event)"/>
 	</mx:RemoteObject>
 	<!--<mx:RemoteObject id="stockChangesDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockChangesResult(event)"/>
@@ -1420,7 +1419,10 @@ private function loadCoatedArray():void{
 	 stockDefinitions.coated = coated.text; 
 	 stockDefinitions.stocknumber = stockNumber.text;
 //	 stockDefinitions.basicsize = Basicsize.text;
-	 stockDefinitions.parentsize.name = parentSize.text;
+	if (parentSize.text == "")
+		stockDefinitions.parentsize = null;
+	else
+	 	stockDefinitions.parentsize.name = parentSize.text;
 	// stockDefinitions.thickness = parseFloat(thickNess.text);
 	 if ( mWeight.text == "")
 	 	stockDefinitions.mweight = 0;
@@ -1471,8 +1473,10 @@ private function loadCoatedArray():void{
 	 
 	
 	 stockDefinitions.pcwRecycledPercent = parseFloat(percentvalue) * .01 ;
-	 
-	 stockDefinitions.normalRunSize.name = NormalRunSize.text;
+	 if ( NormalRunSize.text == "")
+	 	stockDefinitions.normalRunSize = null;
+	 else 
+	 	stockDefinitions.normalRunSize.name = NormalRunSize.text;
 	 stockDefinitions.cutsPer100 = parseInt(CutsPer100.text);
 	 stockDefinitions.minCutCharge = parseInt(MinCutCharge.text);
 	// stockDefinitions.defaultPress = DefaultPress.text;
@@ -1904,7 +1908,7 @@ private function doRound(evt:FocusEvent):void{
 	    var pressDefinition:PressDefinition = cboDefaultPress.selectedItem as PressDefinition;
 	    if (pressDefinition == null)
 	    	pressDefinition = this.preferencesDefaultPress.defaultSheetFedPress;
-	    dataServicePressDefinition.getByPressId(pressDefinition.pressId);
+	    dataServicePressDefinition.getById("PressDefinition", pressDefinition.id);
 	}
 	private function handleLoadPressDefinitionResult(ev:ResultEvent):void {
 		this.pressDefinition = ev.result as PressDefinition;

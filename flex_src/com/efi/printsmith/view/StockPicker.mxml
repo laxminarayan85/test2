@@ -2,7 +2,7 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:vo="com.efi.printsmith.data.*" width="888" height="612" 
 	defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
-    close="PopUpManager.removePopUp(this);"
+    close="cancelPicker();"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockPicker')}" 
     xmlns:text="flash.text.*" xmlns:comp="com.efi.printsmith.components.*" borderThickness="3" borderStyle="solid" fontSize="9">
           

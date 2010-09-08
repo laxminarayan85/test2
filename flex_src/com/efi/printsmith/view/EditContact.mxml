@@ -89,7 +89,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.data.PreferencesCreditCard;
 	import com.efi.printsmith.events.SaveAddressEvent;
 	import com.efi.printsmith.components.AddressEditorPopup;
-
+	import mx.utils.StringUtil;
 	import mx.rpc.Responder;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -360,6 +360,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 		
 	}	
+	
+	 	
+	 	
+	
 	private function mapToContactData():void {
 		var tempCredit:PreferencesCreditCard = new PreferencesCreditCard;
 		var tempCom: ComLink;
@@ -371,7 +375,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		contact.prefix = tmpContact.prefix;
 		contact.salutation= tmpContact.salutation;
 		contact.suffix = tmpContact.suffix;
-		contact.jobTitle= tmpContact.jobTitle;
+		
+		if (tmpContact.jobTitle == null ||tmpContact.jobTitle.name == "")
+			contact.jobTitle = null;
+		else
+			contact.jobTitle= tmpContact.jobTitle;
 		contact.comLinks = tmpContact.comLinks;
 		contact.useContactAddress = use_contact_check.selected;
 		contact.shipToAddress = ship_to_address_editor.getAddresses();
@@ -379,7 +387,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 			
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
-			contact.defaultSalesRep= sales_rep_combo.selectedItem as SalesRep;
+			if (sales_rep_combo.text == "")
+				contact.defaultSalesRep = null
+			else
+				contact.defaultSalesRep= sales_rep_combo.selectedItem as SalesRep;
 			
 			
 		contact.marketing.birthDate = birthDate.selectedDate;
@@ -761,9 +772,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleLoadCampaigns(ev:ResultEvent):void {
 		compaigns = ev.result as ArrayCollection;
 	}
+	private function containsBlank(ac:ArrayCollection, field:String):Boolean	{
+	 	for (var i:int = 0; i<ac.length; i++)	{
+	 		if (StringUtil.trim(ac.getItemAt(i)[field] as String) == "")	{
+	 			return true;
+	 		}
+	 	}
+	 	return false;
+	 } 	
 	private function handleLoadSalesReps(ev:ResultEvent):void {
 		var selectedItem:Object = sales_rep_combo.selectedItem;
 		salesReps = ev.result as ArrayCollection;
+		if (!containsBlank(salesReps,"name"))	{
+			var salesRep:SalesRep = new SalesRep();
+			salesRep.name = "";
+			salesReps.addItemAt(salesRep, 0);
+		}
 		sales_rep_combo.selectedItem = selectedItem;
 	}
 	private function handleLoadCity(ev:ResultEvent):void {

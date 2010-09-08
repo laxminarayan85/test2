@@ -57,6 +57,8 @@
 		import com.efi.printsmith.data.JobTitle;
 		import com.efi.printsmith.data.ComLink;
 		import com.efi.printsmith.data.ComLinkType;
+		
+	
 	import com.efi.printsmith.events.SaveContactEvent;
 	import com.efi.printsmith.events.UpdateDataProviderEvent;
 	import com.efi.printsmith.data.Contact;
@@ -82,7 +84,7 @@
     private var originalContact:Contact = null;
 	
 	private function init():void {
-		/* dataService.getAll("JobTitle");*/
+		
 		comLinkDataService.getAll("ComLinkType"); 
 		if (contact.comLinks == null)
 			contact.comLinks = new ArrayCollection();
@@ -106,11 +108,14 @@
 		if (selectedItem != null){
 	 		comlink_combo.selectedIndex = findItem (selectedItem,comLinkDataProvider);
 	 	}
-	}   
+	}  
+	 
 	private function handleLoad(ev:ResultEvent):void {
 		var	selectedItem:JobTitle = job_title_edit.selectedItem as JobTitle;
 		jobTitles = new ArrayCollection();
 	 	jobTitles = ev.result as ArrayCollection;
+	 	
+	 	
 		if (selectedItem != null){
 	 		job_title_edit.selectedIndex = findItem (selectedItem.name, jobTitles);
 	 	}
@@ -263,112 +268,102 @@
 		contact.suffix = suffix_edit.text;
 		contact.prefix = prefix_edit.text;
 		contact.salutation = salutation_edit.text;
-		/* var comLinks:ArrayCollection = contact.comLinks;
-		if (comLinks == null) {
-			comLinks = new ArrayCollection();
-			
-		}
-		if (comLink == null) {
-				comLink = new ComLink();
-			}
-		else{
-			if (comLinks.length >=0){
-				var comLink:ComLink = comLinks.getItemAt(0) as ComLink;
-				if (comLink == null) {
-					comLink = new ComLink();
-				}
-			}
-		}
-		if (comlink_combo.selectedItem != null){
-			var comLinkType:ComLinkType = comlink_combo.selectedItem as ComLinkType;
-			if (comLinkType.type != null)
-				comLink.type = comLinkType.type;
-			
-			comLink.value = comlink_edit.text;
-			if (contact.comLinks.length == 0)
-				contact.comLinks.addItem(comLink)
-			else
-				contact.comLinks.setItemAt(comLink, 0);
-		
-		}
-		 */
-	if (phone_edit.text.length >0){
-	 		index = findCom("Phone", contact.comLinks);
-	 		if (index != -1){
-	 			
-	 			tempCom = contact.comLinks.getItemAt(index) as ComLink;
-		 		tempCom.value = phone_edit.text;
-		 		contact.comLinks.setItemAt(tempCom, index);
-		 	}
-		 	else{
-		 		tempCom = new ComLink();
-	 		tempCom.value = phone_edit.text;
-	 		tempCom.type = "Phone"
-	 		contact.comLinks.addItem(tempCom);
-	 		}
-	 	
-	 }
-	 if (fax_edit.text.length >0){
-	 		index = findCom("Fax", contact.comLinks);
-	 		if (index != -1){
-	 			
-	 			tempCom = contact.comLinks.getItemAt(index) as ComLink;
-		 		tempCom.value = fax_edit.text;
-		 		contact.comLinks.setItemAt(tempCom, index);
-		 	}
-		 	else{
-		 		tempCom = new ComLink();
-	 		tempCom.value = fax_edit.text;
-	 		tempCom.type = "Fax"
-	 		contact.comLinks.addItem(tempCom);
-	 		}
-	 	
-	 }
-	 if (mobile_edit.text.length >0){
-	 	index = findCom("Cell", contact.comLinks);
-	 	if ( index != -1){
-	 	
-	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
-	 		tempCom.value = mobile_edit.text;
-	 		contact.comLinks.setItemAt(tempCom, index);
+	
+		index = findCom("Phone", contact.comLinks);
+		if (index != -1){
+			tempCom = contact.comLinks.getItemAt(index) as ComLink;
+ 			tempCom.value = phone_edit.text;
+ 			if (tempCom.value != "")
+	 			contact.comLinks.setItemAt(tempCom, index);
+	 		else
+	 			contact.comLinks.removeItemAt(index);
 	 	}
 	 	else{
-	 		tempCom = new ComLink();
+	 		if (phone_edit.text != ""){
+		 		tempCom = new ComLink();
+				tempCom.value = phone_edit.text;
+		 		tempCom.type = "Phone"
+		 		contact.comLinks.addItem(tempCom);
+		 	}
+		}
+	 	
+	 
+		index = findCom("Fax", contact.comLinks);
+		if (index != -1){
+	 			tempCom = contact.comLinks.getItemAt(index) as ComLink;
+		 		tempCom.value = fax_edit.text;
+		 		if (tempCom.value != "")
+	 				contact.comLinks.setItemAt(tempCom, index);
+	 			else
+	 				contact.comLinks.removeItemAt(index);
+		 	}
+		 	else{
+		 		if( fax_edit.text != ""){
+			 		tempCom = new ComLink();
+		 			tempCom.value = fax_edit.text;
+		 			tempCom.type = "Fax"
+		 			contact.comLinks.addItem(tempCom);
+		 		}
+		 	}
+	 	
+	 
+
+	 	index = findCom("Cell", contact.comLinks);
+	 	if ( index != -1){
+	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
 	 		tempCom.value = mobile_edit.text;
-	 		tempCom.type = "Cell"
-	 		contact.comLinks.addItem(tempCom);
+	 		if (tempCom.value != "")
+	 				contact.comLinks.setItemAt(tempCom, index);
+	 			else
+	 				contact.comLinks.removeItemAt(index);
+	 	}
+	 	else{
+	 		if (mobile_edit.text != ""){
+		 		tempCom = new ComLink();
+		 		tempCom.value = mobile_edit.text;
+		 		tempCom.type = "Cell"
+		 		contact.comLinks.addItem(tempCom);
+	 		}
 	 		
 	 	}
-	 }
-	 if (other_edit.text.length >0){
+	 
 	 	index = findCom("Other", contact.comLinks);
 	 	if ( index != -1){
 	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
 	 		tempCom.value = other_edit.text;
-	 		contact.comLinks.setItemAt(tempCom, index);
+	 		if (tempCom.value != "")
+	 				contact.comLinks.setItemAt(tempCom, index);
+	 			else
+	 				contact.comLinks.removeItemAt(index);
 	 	}
 	 	else{
-	 		tempCom = new ComLink();
-	 		tempCom.value = other_edit.text;
-	 		tempCom.type = "Other"
-	 		contact.comLinks.addItem(tempCom);
+	 		if (other_edit.text != null){
+		 		tempCom = new ComLink();
+		 		tempCom.value = other_edit.text;
+		 		tempCom.type = "Other"
+		 		contact.comLinks.addItem(tempCom);
+	 		}
 	 	}
-	 }
-	 if (email_edit.text.length >0){
-	 	index = findCom("E-Mail", contact.comLinks);
+	 
+ 	index = findCom("E-Mail", contact.comLinks);
 	 	if ( index != -1){
 	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
 	 		tempCom.value = email_edit.text;
-	 		contact.comLinks.setItemAt(tempCom, index);
+	 		if (tempCom.value != "")
+	 				contact.comLinks.setItemAt(tempCom, index);
+	 			else
+	 				contact.comLinks.removeItemAt(index);
 	 	}
 	 	else{
-	 		tempCom = new ComLink();
-	 		tempCom.value = email_edit.text;
-	 		tempCom.type = "E-Mail"
-	 		contact.comLinks.addItem(tempCom);
+	 		if (email_edit.text != null){
+		 		tempCom = new ComLink();
+		 		tempCom.value = email_edit.text;
+		 		tempCom.type = "E-Mail"
+		 		contact.comLinks.addItem(tempCom);
+	 		}
 	 		
 	 	}
-	 }
+	 
 		var eventObj:SaveContactEvent = new SaveContactEvent("SaveContactEvent", contact);
 		dispatchEvent(eventObj);
 		PopUpManager.removePopUp(this);
