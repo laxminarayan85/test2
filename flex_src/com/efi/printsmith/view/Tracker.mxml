@@ -713,55 +713,79 @@
 					if(trackerConsoleJobsObj.job!=null && selectedJob!=null){
 						if(trackerConsoleJobsObj.job.id == selectedJob.id && trackerConsoleJobsObj.productionFacilities.id==trackerConsole.productionFacilities.id
 							&& trackerConsoleJobsObj.productionStations.id==trackerConsole.productionStations.id && trackerConsoleJobsObj.employee.id==employee.id){
-							Alert.show("This item has a activity started, would you like to reset the beginning timers?", "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
-								if (event.detail==Alert.YES) {
-									trackerStatus = "start";
-									trackerConsoleJobsObj.paused = false;
-									for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsObj.passesList) {
-										if(trackerConsolePasses.passNo==trackerConsoleJobsObj.currentPass) {
-											trackerConsolePasses.trackDate = new Date();
-											trackerConsolePasses.trackTime = 0;
-											trackerConsolePasses.setUpDate = null;
-											trackerConsolePasses.setUpTime = 0;
-											trackerConsolePasses.setUpCompleted = false;
-											trackerConsolePasses.runDate = null;
-											trackerConsolePasses.runTime = 0;
-											trackerConsolePasses.runCompleted = false;
-											trackerConsolePasses.washUpDate = null;
-											trackerConsolePasses.washUpTime = 0;
-											trackerConsolePasses.washUpCompleted = false;
-										}
+							var checkFlag:Boolean = false;
+							for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsObj.passesList) {
+								if(trackerConsolePasses.passNo==trackerConsoleJobsObj.currentPass) {
+									if(trackerConsolePasses.setUpCompleted || trackerConsolePasses.runCompleted || trackerConsolePasses.washUpCompleted){
+										checkFlag = true;
+										Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_ThisitemalreadyhasaT'));
+										break;
 									}
-									updateDataServiceJob.addUpdate(trackerConsoleJobsObj);
 								}
-							});
+							}
+							if(!checkFlag){
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisitemalreadyhasaa'), "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+									if (event.detail==Alert.YES) {
+										trackerStatus = "start";
+										trackerConsoleJobsObj.paused = false;
+										for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsObj.passesList) {
+											if(trackerConsolePasses.passNo==trackerConsoleJobsObj.currentPass) {
+												trackerConsolePasses.trackDate = new Date();
+												trackerConsolePasses.trackTime = 0;
+												trackerConsolePasses.setUpDate = null;
+												trackerConsolePasses.setUpTime = 0;
+												trackerConsolePasses.setUpCompleted = false;
+												trackerConsolePasses.runDate = null;
+												trackerConsolePasses.runTime = 0;
+												trackerConsolePasses.runCompleted = false;
+												trackerConsolePasses.washUpDate = null;
+												trackerConsolePasses.washUpTime = 0;
+												trackerConsolePasses.washUpCompleted = false;
+											}
+										}
+										updateDataServiceJob.addUpdate(trackerConsoleJobsObj);
+									}
+								});
+							}
 							return;
 						}
 					} else if(trackerConsoleJobsObj.charge!=null && selectedCharge!=null){
 						if(trackerConsoleJobsObj.charge.id == selectedCharge.id && trackerConsoleJobsObj.productionFacilities.id==trackerConsole.productionFacilities.id
 							&& trackerConsoleJobsObj.productionStations.id==trackerConsole.productionStations.id && trackerConsoleJobsObj.employee.id==employee.id){
-							Alert.show("This item has a activity started, would you like to reset the beginning timers?", "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
-								if (event.detail==Alert.YES) {
-									trackerStatus = "start";
-									trackerConsoleJobsObj.paused = false;
-									for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsObj.passesList) {
-										if(trackerConsolePasses.passNo==trackerConsoleJobsObj.currentPass) {
-											trackerConsolePasses.trackDate = new Date();
-											trackerConsolePasses.trackTime = 0;
-											trackerConsolePasses.setUpDate = null;
-											trackerConsolePasses.setUpTime = 0;
-											trackerConsolePasses.setUpCompleted = false;
-											trackerConsolePasses.runDate = null;
-											trackerConsolePasses.runTime = 0;
-											trackerConsolePasses.runCompleted = false;
-											trackerConsolePasses.washUpDate = null;
-											trackerConsolePasses.washUpTime = 0;
-											trackerConsolePasses.washUpCompleted = false;
-										}
+							var checkFlag:Boolean = false;
+							for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsObj.passesList) {
+								if(trackerConsolePasses.passNo==trackerConsoleJobsObj.currentPass) {
+									if(trackerConsolePasses.setUpCompleted || trackerConsolePasses.runCompleted || trackerConsolePasses.washUpCompleted){
+										checkFlag = true;
+										Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_ThisitemalreadyhasaT'));
+										break;
 									}
-									updateDataServiceJob.addUpdate(trackerConsoleJobsObj);
 								}
-							});
+							}
+							if(!checkFlag){
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisitemalreadyhasaa'), "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+									if (event.detail==Alert.YES) {
+										trackerStatus = "start";
+										trackerConsoleJobsObj.paused = false;
+										for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsObj.passesList) {
+											if(trackerConsolePasses.passNo==trackerConsoleJobsObj.currentPass) {
+												trackerConsolePasses.trackDate = new Date();
+												trackerConsolePasses.trackTime = 0;
+												trackerConsolePasses.setUpDate = null;
+												trackerConsolePasses.setUpTime = 0;
+												trackerConsolePasses.setUpCompleted = false;
+												trackerConsolePasses.runDate = null;
+												trackerConsolePasses.runTime = 0;
+												trackerConsolePasses.runCompleted = false;
+												trackerConsolePasses.washUpDate = null;
+												trackerConsolePasses.washUpTime = 0;
+												trackerConsolePasses.washUpCompleted = false;
+											}
+										}
+										updateDataServiceJob.addUpdate(trackerConsoleJobsObj);
+									}
+								});
+							}
 							return;
 						}
 					}
@@ -1104,7 +1128,11 @@
 					trackerConsole.productionLocation = new ProductionLocations();
 				}
 				trackerconsole_location.customText = getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation);
-				enableRequiredBtns();
+				if(employee!=null){
+					enableRequiredBtns();
+				} else {
+					defaultEnableButtons();
+				}
 				registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 				progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobsObject) as TrackerConsoleJobs;
 			}
@@ -1507,6 +1535,37 @@
 				}
 			}
 		}
+		
+		private function employeeTaskCheck(functionName:Function,object:TrackerConsoleJobs=null):void {
+			var inputArray:Array = new Array();
+			inputArray.push("");
+			inputArray.push(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Change'));
+			if(object!=null || selectedTrackerConsoleJob!=null){
+				if(object!=null){
+					if(employee==null || object.employee.id!=employee.id){
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ThisTrackeritemhasbe',inputArray), "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+							if (event.detail==Alert.YES) {
+								openJobDetails(object);
+							}
+						});
+						return;
+					} else {
+						openJobDetails(object);
+					}	
+				} else if(selectedTrackerConsoleJob!=null) {
+					if(employee==null || selectedTrackerConsoleJob.employee.id!=employee.id){
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ThisTrackeritemhasbe',inputArray), "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+							if (event.detail==Alert.YES) {
+								callLater(functionName);
+							}
+						});
+						return;
+					} else {
+						callLater(functionName);
+					}	
+				}
+			}
+		}
 				
 	]]>
 	                        
@@ -1690,29 +1749,29 @@
 							<mx:icon>@Embed(source='../../../../assets/TrackingStart.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Setup')}" 
-							labelPlacement="bottom" width="20%" click="{setUpJob()}" id="setUpBtn" enabled="false">
+							labelPlacement="bottom" width="20%" click="{employeeTaskCheck(setUpJob)}" id="setUpBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingSetupDone.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{getWashUpLabel(selectedTrackerConsoleJob)}" 
-							labelPlacement="bottom" width="20%" click="{washUpJob()}" id="washUpBtn" enabled="false">
+							labelPlacement="bottom" width="20%" click="{employeeTaskCheck(washUpJob)}" id="washUpBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingWashupStart.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{getStopNextPassLabel(selectedTrackerConsoleJob)}" 
-							labelPlacement="bottom" width="20%" click="{stopOrNextPassJob()}" id="stopBtn" enabled="false">
+							labelPlacement="bottom" width="20%" click="{employeeTaskCheck(stopOrNextPassJob)}" id="stopBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingStop.png')</mx:icon>
 						</mx:Button> 
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Cancel')}" 
-							labelPlacement="bottom" width="20%" click="{cancelJob()}" id="cancelBtn" enabled="false">
+							labelPlacement="bottom" width="20%" click="{employeeTaskCheck(cancelJob)}" id="cancelBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingCancel.png')</mx:icon>
 						</mx:Button>
 					</mx:HBox>
 					<mx:HBox width="100%">
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Pause')}" 
-							labelPlacement="bottom" width="20%" click="{pauseJob()}" id="pauseBtn" enabled="false">
+							labelPlacement="bottom" width="20%" click="{employeeTaskCheck(pauseJob)}" id="pauseBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingPause.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Continue')}" 
-							labelPlacement="bottom" width="20%" click="{continueJob()}" id="continueBtn" enabled="false">
+							labelPlacement="bottom" width="20%" click="{employeeTaskCheck(continueJob)}" id="continueBtn" enabled="false">
 							<mx:icon>@Embed(source='../../../../assets/TrackingContinue.png')</mx:icon>
 						</mx:Button>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Open')}" 
@@ -1813,7 +1872,7 @@
 			<mx:Spacer height="5%"/>
 			
 			<trackercomponent:TrackerProgressBarComponent id="progressBarComponent" width="98%" height="15%" 
-				doubleClickEnabled="true" doubleClick="{openJobDetails(selectedTrackerConsoleJob)}"/>
+				doubleClickEnabled="true" doubleClick="{employeeTaskCheck(openJobDetails,selectedTrackerConsoleJob)}"/>
 			
 		</mx:VBox>
 		
