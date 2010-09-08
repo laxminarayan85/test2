@@ -65,6 +65,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.pages.DefaultPressPicker;
 	import com.efi.printsmith.events.StockPickerSelectEvent;
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
+	import com.efi.printsmith.events.SavePriceListEvent;
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 	import mx.formatters.NumberBaseRoundType;
 
@@ -119,6 +120,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     private var systemPricingPreferences:PreferencesPricingMethod;
 	[Bindable]                                         
      private var priceList:PriceList;  
+     [Bindable]                                         
+     private var speedTable:SpeedTable; 
     [Bindable]                               
     private var wasteChart:WasteChart;  
                                                                                	
@@ -616,9 +619,17 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     	var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setPriceList(pressDefinition.speedTable as PriceListBase);				
-	
+	 	titleWindow.addEventListener(SavePriceListEvent.Save, handleSaveSpeedTable);
     	
     }
+    private function handleSaveSpeedTable(ev:SavePriceListEvent):void
+	{ 
+			pressDefinition.speedTable = ev.priceList as SpeedTable;
+			selectedSpeedTable.label = speedListLabel();
+			AvgImpressPerhour.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable')
+			AvgImpressPerhour.enabled = false;
+	   
+	}
     private function doWashUpPerFountain():void{
     	var tempInt: int;
     	tempInt = parseInt(WashupTimeFountain.text);

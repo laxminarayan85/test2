@@ -233,6 +233,7 @@
                                    
 <![CDATA[
 	import com.efi.printsmith.events.SavePriceListElementEvent;
+	import com.efi.printsmith.events.SaveEvent;
 
 	import com.efi.printsmith.view.*;
 	import com.efi.printsmith.data.*; 
@@ -459,7 +460,8 @@
 	}
 
 	private function handleSaveItemsResult(ev:ResultEvent):void {
-		if (this.parentContainer.name == "Copier Definitions") {
+		priceList = ev.result as PriceListBase;
+		/* if (this.parentContainer.name == "Copier Definitions") {
 				var editCopierDefinitions:CopierDefinitions = this.parentContainer as CopierDefinitions;
 				if (itemType == "WasteChart") {
 					editCopierDefinitions.wasteName.label = priceList.name;
@@ -473,10 +475,15 @@
 					editPressDefinitions.selectedWasteChart.label= priceList.name;
 					
 				} else if (itemType == "SpeedTable") {
-					editPressDefinitions.selectedSpeedTable.label = priceList.name;
-				}		 
-			}
+				editPressDefinitions.selectedSpeedTable.label = priceList.name;
+				editPressDefinitions.selectedSpeedTable.selected =priceList as PriceListBase;
 				
+					
+				}		 
+			} */
+			var selectEvent:SavePriceListEvent = new SavePriceListEvent(SavePriceListEvent.Save, priceList);
+			dispatchEvent(selectEvent);
+
 			PopUpManager.removePopUp(this);
 		
 		

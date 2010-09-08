@@ -1008,25 +1008,25 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Label x="184" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'prospectCmd.ExternalRef')}" textAlign="right"/>
 				<ns1:AddressEditor x="10" y="94" id="ship_to_address_editor" addressLabel="Shipping Address" height="157" width="325"/>
 				<ns1:AddressEditor x="343" y="94" id="bill_to_address_editor" addressLabel="Billing Address" height="157" width="325"/>
-				<ns1:ContactInfoEditor x="10" y="259" height="157" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
-				<ns1:ContactInfoEditor x="344" y="259" height="157" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
-				<mx:Label x="10" y="424" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
-				<mx:Label x="344" y="424" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
-				<mx:ComboBox x="127" y="421" height="22" id="invoicecontactlist" labelFunction="doName" enabled="{contacts.length >0}" width="160" dataProvider="{contacts}" change="updateInvoiceContact();"/>
-				<mx:ComboBox x="461" y="421" height="21" id="statementcontactlist" enabled="{contacts.length >0}" dataProvider="{contacts}" labelFunction="doName" change="updateStatementContact();" width="160"/>
-				<mx:Label x="405" y="469"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.DeleteAdd')}"/>
-				<mx:LinkButton x="547"
+				<ns1:ContactInfoEditor x="10" y="259" height="198" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
+				<ns1:ContactInfoEditor x="344" y="259" height="198" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
+				<mx:Label x="10" y="468" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
+				<mx:Label x="344" y="468" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
+				<mx:ComboBox x="127" y="465" height="22" id="invoicecontactlist" labelFunction="doName" enabled="{contacts.length >0}" width="160" dataProvider="{contacts}" change="updateInvoiceContact();"/>
+				<mx:ComboBox x="461" y="465" height="21" id="statementcontactlist" enabled="{contacts.length >0}" dataProvider="{contacts}" labelFunction="doName" change="updateStatementContact();" width="160"/>
+				<mx:Label x="404" y="506"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.DeleteAdd')}"/>
+				<mx:LinkButton x="546"
 					   id="remove_contact_button"
 					   click="doRemoveContact()"
 					   icon="@Embed(source='../../../../assets/delete16.png')"
 					   width="24"
-					   bottom="66"/>
-		<mx:LinkButton x="579"
+					   bottom="29"/>
+		<mx:LinkButton x="578"
 					   id="add_contact_button"
 					   click="doContact()"
 					   icon="@Embed(source='../../../../assets/add16.png')"
 					   width="24"
-					   bottom="66"/>
+					   bottom="29"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasCreditControl" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
 				<mx:TextInput restrict="0-9\." x="181" y="10" id="credit_limit_edit" width="160" text="{Snowmass.getCurrencyFormatter(false,2).format(account.creditLimit)}"  focusOut="ClearLabel();"/>
