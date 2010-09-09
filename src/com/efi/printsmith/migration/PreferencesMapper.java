@@ -843,6 +843,10 @@ public class PreferencesMapper extends ImportMapper {
 				preferencesSystem.setCompanyIdLabel(value);
 		else if (name.equals("companyID"))
 			preferencesSystem.setCompanyId(value);
+		else if (name.equals("other1"))
+			preferencesSystem.setCompanyOther1(value);
+		else if (name.equals("other2"))
+			preferencesSystem.setCompanyOther2(value);
 		else if (name.equals("workDay_Sunday"))
 			preferencesSystem.setWorkSunday(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("workDay_Monday"))
