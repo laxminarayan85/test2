@@ -125,23 +125,36 @@
 				var diffString:String = "";
 				if(milliSeconds<60000){
 					diffString = "OH"+" 0M ";
-			    	diffString = diffString + numFormatter.format(milliSeconds/1000)+"S";
+			    	//diffString = diffString + numFormatter.format(milliSeconds/1000)+"S";
 			    }  
 			    if(milliSeconds>=60000 && milliSeconds<60000*60){
 			    	diffString = "OH "
-			    	diffString = diffString + numFormatter.format(milliSeconds/60000)+"M ";
-			    	diffString = diffString + numFormatter.format((milliSeconds%60000)/(1000))+"S";
+			    	if(numFormatter.format(milliSeconds/60000).length>1){
+			    		diffString = diffString + numFormatter.format(milliSeconds/60000)+"M ";
+			    	} else if(numFormatter.format(milliSeconds/60000).length==1) {
+			    		diffString = diffString + "0"+numFormatter.format(milliSeconds/60000)+"M ";
+			    	}
+			    	//diffString = diffString + numFormatter.format((milliSeconds%60000)/(1000))+"S";
 			    }
 			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
 			    	diffString = numFormatter.format(milliSeconds/(60000*60))+"H ";
-			    	diffString = diffString+numFormatter.format(milliSeconds%(60000*60)/(60000))+"M ";
-			    	diffString = diffString+numFormatter.format(milliSeconds%60000/1000)+"S";
+			    	if(numFormatter.format(milliSeconds%(60000*60)/(60000)).length>1){
+			    		diffString = diffString+numFormatter.format(milliSeconds%(60000*60)/(60000))+"M ";	
+			    	} else if(numFormatter.format(milliSeconds%(60000*60)/(60000)).length==1){
+			    		diffString = diffString+"0"+numFormatter.format(milliSeconds%(60000*60)/(60000))+"M ";	
+			    	}
+			    	
+			    	//diffString = diffString+numFormatter.format(milliSeconds%60000/1000)+"S";
 			    }
 			    if(milliSeconds>=60000*60*24){
 			    	diffString = numFormatter.format( milliSeconds/(60000*60*24))+"D ";
 			    	diffString = diffString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+"H ";
-			    	diffString = diffString+numFormatter.format(milliSeconds%(60000*60)/(60000))+"M ";
-			    	diffString = diffString+numFormatter.format(milliSeconds%60000/1000)+"S";
+			    	if(numFormatter.format(milliSeconds%(60000*60)/(60000)).length>1){
+			    		diffString = diffString+numFormatter.format(milliSeconds%(60000*60)/(60000))+"M ";
+			    	} else if(numFormatter.format(milliSeconds%(60000*60)/(60000)).length==1){
+			    		diffString = diffString+"0"+numFormatter.format(milliSeconds%(60000*60)/(60000))+"M ";
+			    	}
+			    	//diffString = diffString+numFormatter.format(milliSeconds%60000/1000)+"S";
 			    }
 			    return diffString;
 			}
@@ -231,7 +244,7 @@
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Time')}:" width="20%" textAlign="right"/>
 				<components:CustomTimeEntryDateComponent
 					dataHolder="{_timeCard}" variableName="startDateTime" customText="{_timeCard.startDateTime}" 
-					functionName="setTimeDiffString" showSeconds="true" is24Hour="false" />
+					functionName="setTimeDiffString" is24Hour="false" />
 				
 			</mx:HBox>
 			
@@ -243,7 +256,7 @@
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Time')}:" width="20%" textAlign="right"/>
 				<components:CustomTimeEntryDateComponent
 					dataHolder="{_timeCard}" variableName="endDateTime" customText="{_timeCard.endDateTime}" 
-					functionName="setTimeDiffString" showSeconds="true" is24Hour="false" />
+					functionName="setTimeDiffString" is24Hour="false" />
 				
 			</mx:HBox>
 			
