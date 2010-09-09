@@ -74,7 +74,8 @@ package com.efi.printsmith.control
 
 			//form level items
 			this.addCommand(DeleteStockDefinitionEvent.COMMANDID, DeleteStockDefinitionCommand);
-
+			this.addCommand(DeleteAccountEvent.COMMANDID, DeleteAccountCommand);
+			
 			this.addCommand(AccountsAddressPanelEvent.COMMANDID, AccountsAddressPanelCommand);
 			this.addCommand(AccountsCreditControlPanelEvent.COMMANDID, AccountsCreditControlPanelCommand);
 			this.addCommand(AccountsLogPanelEvent.COMMANDID, AccountsLogPanelCommand);
