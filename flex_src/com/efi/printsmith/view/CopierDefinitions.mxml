@@ -296,10 +296,12 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			copierDefinition = ev.result as CopierDefinition;
 			if (copierDefinition != null) {
 				updateMethodBox();
+				wasteName.label = WasteListLabel();
 				if ( copierDefinition.largeFormat)
 					this.currentState = "Large Format";
 				else
 					this.currentState = "";
+					
 			}
 			stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
 			price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());

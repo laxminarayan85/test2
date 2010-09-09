@@ -10,6 +10,7 @@
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="pricelist"/>
@@ -217,9 +218,15 @@
 	}
 	
 	private function doDelete():void {
+		var temp:PriceListBase
+			temp = dataGrid.selectedItem as PriceListBase;
+			if (temp != null)
+				dataService.deleteItem("PriceListBase", temp.id);
+	}
+	private function handleDeleteResult(event:ResultEvent):void {
+		dataService.getAll(this.itemType);
 		
 	}
-	
 	private function doCancel():void {
 		var cancelEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, null);
 		dispatchEvent(cancelEvent);
