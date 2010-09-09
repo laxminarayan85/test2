@@ -1,18 +1,18 @@
 /* CSS file */
 .winCloseButton {
-    icon: Embed(source="d:\printsmith\Snowmass\flex_src\assets\mdi\close.png");
+    icon: Embed(source="/close.png");
 }
 .winDoMaxButton {
-    icon: Embed(source="d:\printsmith\Snowmass\flex_src\assets\mdi\max.png");
+    icon: Embed(source="/max.png");
 }
 .winDoRestoreButton {
-	icon: Embed(source="d:\printsmith\Snowmass\flex_src\assets\mdi\restore.png");
+	icon: Embed(source="/restore.png");
 }
 .winMinButton	{
-	icon: Embed(source="d:\printsmith\Snowmass\flex_src\assets\mdi\min.png");
+	icon: Embed(source="/min.png");
 }
 .minimizedWinCloseButton	{
-	icon: Embed(source="d:\printsmith\Snowmass\flex_src\assets\mdi\close.png");
+	icon: Embed(source="/close.png");
 }
 .minimizedWinActive	{
 	background-color:#00ffff;	
