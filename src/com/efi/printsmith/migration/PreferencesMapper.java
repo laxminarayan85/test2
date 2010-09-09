@@ -1,7 +1,6 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
-import java.text.ParseException;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -12,25 +11,23 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.efi.printsmith.data.ModelBase;
-import com.efi.printsmith.integration.xpedx.XpdexImportParams;
-
-import com.efi.printsmith.data.SalesCategory;
-import com.efi.printsmith.data.PreferencesAccounting;
-import com.efi.printsmith.data.PreferencesPOS;
-import com.efi.printsmith.data.PreferencesEstimating;
-import com.efi.printsmith.data.PreferencesSystem;
 import com.efi.printsmith.data.Address;
+import com.efi.printsmith.data.Merchandise;
+import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.OutsideService;
+import com.efi.printsmith.data.PreferencesAccounting;
+import com.efi.printsmith.data.PreferencesCashRegister;
+import com.efi.printsmith.data.PreferencesEstimating;
+import com.efi.printsmith.data.PreferencesPOS;
+import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.PreferencesQuantityBreaks;
 import com.efi.printsmith.data.PreferencesStocks;
+import com.efi.printsmith.data.PreferencesSystem;
+import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.SizeTable;
-import com.efi.printsmith.data.PreferencesPricingMethod;
-import com.efi.printsmith.data.PreferencesCashRegister;
-import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.TaxCodes;
-import com.efi.printsmith.data.OutsideService;
-import com.efi.printsmith.data.Merchandise;
-
+import com.efi.printsmith.data.TaxTable;
+import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import com.efi.printsmith.service.DataService;
 
 public class PreferencesMapper extends ImportMapper {
@@ -99,8 +96,10 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesSystemField(key, fieldName, fieldValue);
 		else if (group.equals("Quantity Breaks"))
 			importPreferencesQuantityBreaksField(fieldValue);
-		else if (group.equals("Blank Stock Setup"))
+		else if (group.equals("Blank Stock Setup") || group.equals("Stock Setup") || group.equals("Customer Stock Setup")) {
+			importPreferencesSystemField(key, fieldName, fieldValue);
 			importPreferencesStocksField(group, key, fieldName, fieldValue);
+		}
 		else if (group.equals("Standard Markup")) {
 			importPreferencesStocksField(group, key, fieldName, fieldValue);
 			importPreferencesMarkupsField(group, key, fieldName, fieldValue);
@@ -117,6 +116,7 @@ public class PreferencesMapper extends ImportMapper {
 		else if (group.equals("Local Workstation")) {
 			importPreferencesSystemField(key, fieldName, fieldValue);
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
+			importPreferencesPOSField(key, fieldName, fieldValue);
 		}
 		else if (group.equals("Def Customer")) {
 			importPreferencesSystemField(key, fieldName, fieldValue);
@@ -214,7 +214,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesPricingMethod.setUsed(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesPricingMethod);
 	}
-	private void importPreferencesStocksField(String group, String key, String name, String value) throws NumberFormatException, ParseException {
+	private void importPreferencesStocksField(String group, String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
 		PreferencesStocks preferencesStocks = (PreferencesStocks)dataService.getSingle("PreferencesStocks");
 		SizeTable sizeTable = null;
@@ -237,6 +237,16 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesStocks.setPlies(value);
 		else if (name.equals("micronsFormatString"))
 			preferencesStocks.setMicrons(value);
+		else if (name.equals("ChainOfCustOpenStr"))
+			preferencesStocks.setOpen(value);
+		else if (name.equals("ChainOfCustCloseStr"))
+			preferencesStocks.setClose(value);
+		else if (name.equals("ChainOfCustIncludeCert"))
+			preferencesStocks.setIncludeCerifiedOption(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("ChainOfCustIncludeMgt"))
+			preferencesStocks.setIncludeManagementType(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("ChainOfCustIncludeRcy"))
+			preferencesStocks.setIncludeRecyclePercent(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("cost_customer_supplied"))
 			preferencesStocks.setCustomerCost(Utilities.tokenToDouble(value));
 		else if (name.equals("units_default"))
@@ -335,6 +345,7 @@ public class PreferencesMapper extends ImportMapper {
 				break;
 			}
 		}
+		dataService.addUpdate(preferencesStocks);
 	}
 	private void importPreferencesQuantityBreaksField(String value) throws Exception {
 		DataService dataService = new DataService();
@@ -395,6 +406,7 @@ public class PreferencesMapper extends ImportMapper {
 		dataService.addUpdate(preferencesAccounting);
 	}
 	private void importPreferencesPOSField(String key, String name, String value) throws Exception {
+		String hexDecimalValue= "";
 		DataService dataService = new DataService();
 		PreferencesPOS preferencesPOS = (PreferencesPOS)dataService.getSingle("PreferencesPOS");
 		if (preferencesPOS == null)
@@ -405,14 +417,18 @@ public class PreferencesMapper extends ImportMapper {
 				currentHeader = preferencesPOS.getReceiptHeader();
 			if (Utilities.tokenToInt(key) > 1)
 				currentHeader = currentHeader + "\r";
-			preferencesPOS.setReceiptHeader(currentHeader + value);
+			if(currentHeader.indexOf(value)==-1) {
+				preferencesPOS.setReceiptHeader(currentHeader + value);
+			}
 		} else if (name.equals("Footer Text")) {
 			String currentFooter = "";
 			if (preferencesPOS.getReceiptFooter() != null)
 				currentFooter = preferencesPOS.getReceiptFooter();
 			if (Utilities.tokenToInt(key) > 1)
 				currentFooter = currentFooter + "\r";
-			preferencesPOS.setReceiptFooter(currentFooter + value);
+			if(currentFooter.indexOf(value)==-1) {
+				preferencesPOS.setReceiptFooter(currentFooter + value);
+			}
 		} else if (name.equals("recieptBlankLine_after"))
 			preferencesPOS.setBlankLinesAfterReceipt(Utilities.tokenToInt(value));
 		else if (name.equals("recieptBlankLine_before"))
@@ -447,6 +463,112 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesPOS.setEnableCashDrawer(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("printerName"))
 			preferencesPOS.setDefaultPrinter(value);
+		else if (name.equals("PendingList_show_doc_type_in_number")) 
+			preferencesPOS.setShowDocumentType(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("PendingList_always_show_past_due")) 
+			preferencesPOS.setIncludePastDueDocuments(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("PendingList_showPastDue_colored")) 
+			preferencesPOS.setColorPastDueEntries(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("readyForPickupColor_RGB_red")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setPickupColor("0x"+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setPickupColor("0x"+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		} else if (name.equals("readyForPickupColor_RGB_green")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setPickupColor(preferencesPOS.getPickupColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setPickupColor(preferencesPOS.getPickupColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		} else if (name.equals("readyForPickupColor_RGB_blue")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setPickupColor(preferencesPOS.getPickupColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setPickupColor(preferencesPOS.getPickupColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		}
+		else if (name.equals("pastDueColor_RGB_red")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setPastDueColor("0x"+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setPastDueColor("0x"+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		} else if (name.equals("pastDueColor_RGB_green")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setPastDueColor(preferencesPOS.getPastDueColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setPastDueColor(preferencesPOS.getPastDueColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		} else if (name.equals("pastDueColor_RGB_blue")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setPastDueColor(preferencesPOS.getPastDueColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setPastDueColor(preferencesPOS.getPastDueColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		}
+		else if (name.equals("invoiceItemColor_RGB_red")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setInvoiceColor("0x"+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setInvoiceColor("0x"+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		} else if (name.equals("invoiceItemColor_RGB_green")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setInvoiceColor(preferencesPOS.getInvoiceColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setInvoiceColor(preferencesPOS.getInvoiceColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		} else if (name.equals("invoiceItemColor_RGB_blue")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setInvoiceColor(preferencesPOS.getInvoiceColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setInvoiceColor(preferencesPOS.getInvoiceColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		}
+		else if (name.equals("estimateItemColor_RGB_red")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setEstimateColor("0x"+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setEstimateColor("0x"+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		} else if (name.equals("estimateItemColor_RGB_green")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setEstimateColor(preferencesPOS.getEstimateColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setEstimateColor(preferencesPOS.getEstimateColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		} else if (name.equals("estimateItemColor_RGB_blue")) {
+			if(Utilities.tokenToInt(value)<=255) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
+				preferencesPOS.setEstimateColor(preferencesPOS.getEstimateColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			} else if(Utilities.tokenToInt(value)<=65535) {
+				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
+				preferencesPOS.setEstimateColor(preferencesPOS.getEstimateColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
+			}
+		}
 		dataService.addUpdate(preferencesPOS);
 	}
 	private void importPreferencesEstimatingField(String key, String name, String value) throws Exception {
@@ -640,6 +762,35 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setInkWeightSingular(value);
 		else if (name.equals("inkWeightPlural"))
 			preferencesSystem.setInkWeightPlural(value);
+		else if (name.equals("DaysOfTheWeek_Sunday")) {
+			if(Utilities.tokenToBooleanValue(value)) {
+				preferencesSystem.setWorkFirstDayOfWeek(1);
+			}
+		} else if (name.equals("DaysOfTheWeek_Monday")) {
+			if(Utilities.tokenToBooleanValue(value)) {
+				preferencesSystem.setWorkFirstDayOfWeek(2);
+			}
+		} else if (name.equals("DaysOfTheWeek_Tuesday")) {
+			if(Utilities.tokenToBooleanValue(value)) {
+				preferencesSystem.setWorkFirstDayOfWeek(3);
+			}
+		} else if (name.equals("DaysOfTheWeek_Wednesday")) {
+			if(Utilities.tokenToBooleanValue(value)) {
+				preferencesSystem.setWorkFirstDayOfWeek(4);
+			}
+		} else if (name.equals("DaysOfTheWeek_Thursday")) {
+			if(Utilities.tokenToBooleanValue(value)) {
+				preferencesSystem.setWorkFirstDayOfWeek(5);
+			}
+		} else if (name.equals("DaysOfTheWeek_Friday")) {
+			if(Utilities.tokenToBooleanValue(value)) {
+				preferencesSystem.setWorkFirstDayOfWeek(6);
+			}
+		} else if (name.equals("DaysOfTheWeek_Saturday")) {
+			if(Utilities.tokenToBooleanValue(value)) {
+				preferencesSystem.setWorkFirstDayOfWeek(7);
+			}
+		}
 		dataService.addUpdate(preferencesSystem);
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
