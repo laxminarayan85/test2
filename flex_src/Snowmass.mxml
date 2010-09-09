@@ -299,6 +299,14 @@
 			if ((ss.menu == "rStandardMenuText.Admin")
 				&& (ss.commandName.indexOf("rStandardMenuText.TrackerRoutings") > -1 ))	{
 					doTrackerManager();					
+				}
+			if ((ss.menu == "rStandardMenuText.Pricing")
+				&& (ss.commandName.indexOf("rStandardMenuText.SalesTax") > -1 ))	{
+					doSalesTax();					
+				}
+			if ((ss.menu == "rStandardMenuText.Pricing")
+				&& (ss.commandName.indexOf("rStandardMenuText.WasteChart") > -1 ))	{
+					doWasteChart();					
 				}	
 			
 		}
@@ -346,6 +354,14 @@
 		}
 		public function doChangePassword():void {
 			var event:ChangePasswordEvent = new ChangePasswordEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		public function doSalesTax():void {
+			var event:SalesTaxEvent = new SalesTaxEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		public function doWasteChart():void {
+			var event:WasteChartEvent = new WasteChartEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 		public function doContacts():void {

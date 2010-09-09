@@ -127,8 +127,8 @@ rStandardMenuText.Pricing,	rUserMenuText.MailingServices,CMD_
 rStandardMenuText.Pricing,	rUserMenuText.Miscellaneous,CMD_
 rStandardMenuText.Pricing,	rUserMenuText.Production,CMD_
 rStandardMenuText.Pricing,rStandardMenuText.1,CMD_
-rStandardMenuText.Pricing,rStandardMenuText.WasteChart,CMD_
-rStandardMenuText.Pricing,rStandardMenuText.SalesTax,CMD_
+rStandardMenuText.Pricing,rStandardMenuText.WasteChart,CMD_WasteChart
+rStandardMenuText.Pricing,rStandardMenuText.SalesTax,CMD_SalesTax
 rStandardMenuText.Pricing,rStandardMenuText.1,CMD_
 rStandardMenuText.Pricing,rStandardMenuText.GeneratePriceBook,CMD_
 rStandardMenuText.Pricing,rStandardMenuText.ChangePrices,CMD_

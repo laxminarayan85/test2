@@ -426,7 +426,6 @@
 				   label="Encrypt Credit Card"
 				   click="encryptSampleCC();" width="188"/>
 		<mx:Button x="206" y="100" label="Stock Order" width="188" click="doStockOrder()"/>
-		<mx:Button x="206" y="154" label="sales tax" width="188" click="doSalesTax()"/>
 		<mx:Button x="209" y="130" label="Report Stock order" width="188" click="doStockOrderReport()"/>
 		<mx:Button x="206" y="184" label="Journal Entry" width="188" click="doJournal();"/>
 	</mx:Canvas>

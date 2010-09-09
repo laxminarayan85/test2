@@ -152,6 +152,8 @@ package com.efi.printsmith.control
 			this.addCommand(EditWebConsoleEvent.COMMANDID, EditWebConsoleCommand); 
 			this.addCommand(TableEditorEvent.COMMANDID, TableEditorCommand); 
 			this.addCommand(ChangePasswordEvent.COMMANDID, ChangePasswordCommand);
+			this.addCommand(SalesTaxEvent.COMMANDID, SalesTaxCommand);
+			this.addCommand(WasteChartEvent.COMMANDID, WasteChartCommand);
 			
 			}
 		
