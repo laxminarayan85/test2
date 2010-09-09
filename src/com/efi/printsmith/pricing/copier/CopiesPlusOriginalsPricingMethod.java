@@ -256,7 +256,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 					} else if (pricingCopier.getMatrixType().equals("MarkupTable")) {
 						double markup = unitPrice;
 						
-						pricePerCopy = pricingCopier.getBaseRate().doubleValue() * markup;
+						pricePerCopy = pricingCopier.getMachineCostPerCopy().doubleValue() * markup;
 						pricePerCopy *= pricingCopier.getCopyMarkup2();
 						
 						pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
