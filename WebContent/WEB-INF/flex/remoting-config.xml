@@ -203,7 +203,12 @@
 	</destination>
 	<destination id="copierService">
 		<properties>
-			<source>com.efi.printsmith.service.CopierService</source>
+			<source>
+				com.efi.printsmith.service.CopierService
+			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
 		</properties>
 	</destination>
 	<destination id="versionService">
