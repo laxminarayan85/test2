@@ -60,7 +60,7 @@ package com.efi.mdi.view.window
 //        private var closeIcon:Class;
 		
 		[Bindable]
-        [Embed(source="assets/mdi/cursorresize.png")]
+        [Embed("/assets/mdi/cursorresize.png")]
         private var resizeCursor:Class;
 		 
 		private var _resizeCursorEnabled:Boolean = false;
