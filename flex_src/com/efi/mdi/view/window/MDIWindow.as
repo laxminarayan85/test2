@@ -73,6 +73,7 @@ package com.efi.mdi.view.window
 			this.windowID = id;
 			this.state = OPEN;
 			this.parentWindowId = parentWin;
+			this.styleName = "mdiWindowStyle";
 		}
 		
 		//MS: should be a private function	
@@ -171,13 +172,6 @@ package com.efi.mdi.view.window
 			this.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			this.addEventListener(WindowMaximizeEvent.WINDOW_MAXIMIZE, onMaximizeWindow);
 			
-			
-			//this.setStyle("borderThickness", );
-			this.setStyle("borderColor", 0x0000ff);
-			this.setStyle("borderThicknessBottom", 17);
-			this.setStyle("borderThicknessLeft", 3);
-			this.setStyle("borderThicknessRight", 3);
-			this.setStyle("borderThicknessTop", 3);
 		}
   
 		private function onMaximizeWindow(event:WindowMaximizeEvent):void	{

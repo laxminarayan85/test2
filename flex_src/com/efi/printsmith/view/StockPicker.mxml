@@ -77,7 +77,7 @@
 	[Bindable] private var grades:ArrayCollection;
 	[Bindable] private var vendors:ArrayCollection;
 	[Bindable] private var uoms:ArrayCollection;
-	//[Bindable] private var coatedSides:ArrayCollection;
+	[Bindable] private var coatedSides:ArrayCollection;
 	
 	
 	         
@@ -214,11 +214,14 @@
 		chkShowRigidSubstrate.selected = false;
 		chkShowRollStock.selected = false;
 		chkShowShells.selected = false;
+		chkShowInventoriedStock.selected = false;
+		
 		chkShowRollStock.enabled = true;
 		chkShowLargeFormatStock.enabled = true;
 		chkShowRigidSubstrate.enabled = true;
 		chkShowRollStock.enabled = true;
 		chkShowShells.enabled = true;
+		chkShowInventoriedStock.enabled = true;
 		
 		txtRollWidthMax.enabled = false;
 		txtRollWidthMin.enabled = false;		
@@ -288,7 +291,7 @@
 	 }
 	public function setStocksData(stockDefs:ArrayCollection, groups:ArrayCollection, types:ArrayCollection,
 					finishes:ArrayCollection, colors:ArrayCollection, genericColors:ArrayCollection, 
-					grades:ArrayCollection, vendors:ArrayCollection, uoms:ArrayCollection):void{
+					grades:ArrayCollection, vendors:ArrayCollection, uoms:ArrayCollection, coated:ArrayCollection):void{
 		this.stockDefinitions = stockDefs;
 		if (!containsBlank(groups,"name"))	{
 			var group:StockGroup = new StockGroup();
@@ -338,7 +341,12 @@
 			uoms.addItemAt(u, 0);
 		}
 		this.uoms = uoms;
-		
+		if (!containsBlank(coated,"name"))	{
+			var u:Object= new Object();
+			u.name = "";
+			coated.addItemAt(u, 0);
+		}
+		this.coatedSides = coated;
 	}
 	public function setStockPref(temp:ArrayCollection):void{
 		
@@ -743,16 +751,25 @@
 		if (data is Dimension)	{
 			var dataDim:Dimension = data as Dimension;
 			var arr:Array = searchString.split("x");
-			var wid:Number = parseInt(StringUtil.trim(arr[0] as String));
+			var wid:Number = parseFloat(StringUtil.trim(arr[0] as String));
 			var ht:Number = -1;
 			if (arr.length > 1)	{
-				ht =  parseInt(StringUtil.trim(arr[1] as String));
+				ht =  parseFloat(StringUtil.trim(arr[1] as String));
 				if ((dataDim.width > wid) || (dataDim.height > ht))
 					return false;
 			}
 			else	{
-				if (dataDim.width > wid)	
-					return false;
+				if (
+						(StringUtil.trim(searchString).charAt(0) == 'x') 
+							|| (StringUtil.trim(searchString).charAt(0) == 'X') 
+					)	{
+							if (dataDim.height > ht)	
+								return false;	
+					}
+				else	{
+					 if (dataDim.width > wid)	
+						return false;
+				}
 			} 
 		}
 		return true;		
@@ -766,16 +783,26 @@
 		if (data is Dimension)	{
 			var dataDim:Dimension = data as Dimension;
 			var arr:Array = searchString.split("x");
-			var wid:Number = parseInt(StringUtil.trim(arr[0] as String));
+			var wid:Number = parseFloat(StringUtil.trim(arr[0] as String));
 			var ht:Number = -1;
 			if (arr.length > 1)	{
-				ht =  parseInt(StringUtil.trim(arr[1] as String));
+				ht =  parseFloat(StringUtil.trim(arr[1] as String));
 				if ((dataDim.width < wid) || (dataDim.height < ht))
 					return false;
 			}
 			else	{
-				if (dataDim.width < wid)	
-					return false;
+				if (
+						(StringUtil.trim(searchString).charAt(0) == 'x') 
+							|| (StringUtil.trim(searchString).charAt(0) == 'X') 
+					)	{
+						
+						if (dataDim.height < ht) 
+							return false;
+					}
+				else {
+					 if (dataDim.width < wid) 
+						return false;	
+				}
 			} 
 		}		
 		return true;		
@@ -923,7 +950,7 @@
 		<mx:TextInput x="711" y="166" width="48" enabled="false" id="txtRollWidthMax" change="search();"/>
 		<mx:TextInput x="711" y="62" width="48" id="txtSizeMax" change="search();"/>
 		<mx:TextInput x="382" y="113" width="189" id="txtProductId" change="search();"/>
-		<mx:TextInput x="382" y="139" width="189" id="txtCoatedSides" change="search();"/>
+		<comp:VariableWidthComboBoxComponent x="382" y="139" width="189" id="txtCoatedSides" dataProvider="{coatedSides}" labelField="name" change="search();"/>
 		<comp:VariableWidthComboBoxComponent x="382" y="165" width="189" id="txtGenericColors" dataProvider="{genericColors}" labelField="name" change="search();"/>
 		<mx:TextInput x="382" y="191" width="69" id="txtThickness" change="search();"/>
 		<comp:VariableWidthComboBoxComponent x="459" y="191" width="112" id="txtThicknessUOM" dataProvider="{uoms}" labelField="name" change="search();"/>

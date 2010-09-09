@@ -87,7 +87,7 @@
 				application.showContainer();
 				application.currentUser = res;
 				application.security = new PSSecurity(res);
-				application.containerManager.openNewMDIWindow("Quick Access Panel", new QuickAccessPanel());
+				application.containerManager.openNewMDIWindow("Quick Access Panel", new QuickAccessPanel(),40,20,530,880);
 				
 				if (application.currentUser.forcePasswordChange){
 					var setPassword:SetPassword =  SetPassword(PopUpManager.createPopUp(this, SetPassword, true));

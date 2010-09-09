@@ -20,3 +20,20 @@
 .minimizedWinInactive	{
 	background-color:#c0c0c0;	
 }
+.mdiWindowTitleStyle	{
+	font-weight:bold;
+	font-size:10;
+	color:#ffffff;	
+	alpha:1;
+}
+
+.mdiWindowStyle	{
+	alpha:1;
+	titleStyleName:mdiWindowTitleStyle;
+	borderThicknessBottom:17;
+	borderThicknessLeft:3;
+	borderThicknessRight:3;
+	borderThicknessTop:3;
+	borderColor:#003893;
+	
+}
