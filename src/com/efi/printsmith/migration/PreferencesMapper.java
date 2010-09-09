@@ -800,6 +800,8 @@ public class PreferencesMapper extends ImportMapper {
 				preferencesSystem.setWorkFirstDayOfWeek(7);
 			}
 		}
+		if (address != null)
+			preferencesSystem.setCompanyAddress(address);
 		dataService.addUpdate(preferencesSystem);
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens, XpdexImportParams importParams) {
