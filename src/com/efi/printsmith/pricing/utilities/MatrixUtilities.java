@@ -26,7 +26,7 @@ public class MatrixUtilities {
 	
 	
 	static public double calculateStepPriceSideOne(Matrix matrix, long qty) {
-		if (matrix == null) return 0.0;
+		if (matrix == null || qty == 0) return 0.0;
 		
 		List<MatrixElement> elements = matrix.getElements();
 		
