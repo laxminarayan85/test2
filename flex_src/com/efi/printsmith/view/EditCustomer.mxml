@@ -94,6 +94,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     import mx.core.Application;
     import mx.validators.Validator;
     import mx.events.ValidationResultEvent;    
+    import mx.collections.SortField;
+	import mx.collections.Sort;
     
     private var accounts:ArrayCollection = new ArrayCollection();
     [Bindable]
@@ -555,8 +557,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var sales:SalesRep;
 		var result:Boolean;
 		
-		if (sales_rep_combo.typedText != null && sales_rep_combo.typedText != "" && sales_rep_combo.selectedIndex == -1) {
-			var item:int = findItem(sales_rep_combo.typedText, salesReps);
+		if (sales_rep_combo.text != null && sales_rep_combo.text != "" && sales_rep_combo.selectedIndex == -1) {
+			var item:int = findItem(sales_rep_combo.text, salesReps);
 			if (item == -1) {
 				sales = new SalesRep();
 				sales.name = sales_rep_combo.text;
@@ -654,10 +656,26 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		else
 			this.enabled = true;
 	}
-
+	private function containsBlank(ac:ArrayCollection, field:String):Boolean	{
+	 	for (var i:int = 0; i<ac.length; i++)	{
+	 		if (StringUtil.trim(ac.getItemAt(i)[field] as String) == "")	{
+	 			return true;
+	 		}
+	 	}
+	 	return false;
+	 } 	
 	private function handleLoadSalesReps(ev:ResultEvent):void {
 		var selectedItem:Object = sales_rep_combo.selectedItem;
+		var sort:Sort = new Sort();
 		salesReps = ev.result as ArrayCollection;
+		sort.fields = [new SortField("name",true)];
+	 	salesReps.sort = sort;
+	 	salesReps.refresh();
+		if (!containsBlank(salesReps,"name"))	{
+			var salesRep:SalesRep = new SalesRep();
+			salesRep.name = "";
+			salesReps.addItemAt(salesRep, 0);
+		}
 		sales_rep_combo.selectedItem = selectedItem;
 	}
 	private function handleLoadBusinessTypes(ev:ResultEvent):void {
@@ -1079,7 +1097,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Text x="185" y="116" width="160" id="po_number_edit" text="{account.customerPO}"/>
 				<mx:Text x="369" y="10" width="287" id="master_acct_edit" text=""/>
 				<mx:Button x="10" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.MasterAccount')}" click="doMaster();" width="236"/>
-				<fc:AutoComplete id="sales_rep_combo" x="185" y="34" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" lookAhead="true" />
+				<mx:ComboBox id="sales_rep_combo" x="185" y="34" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();"/>
 				<fc:AutoComplete id="business_type_combo"  x="185" y="60" width="160" dataProvider="{businessTypes}" labelFunction="doBusinessName" focusOut="doBusinessType();" lookAhead="true" />
 					
 				<mx:Label x="57" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipVia')}" textAlign="right" width="120"/>

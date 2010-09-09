@@ -90,6 +90,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.events.SaveAddressEvent;
 	import com.efi.printsmith.components.AddressEditorPopup;
 	import mx.utils.StringUtil;
+	import mx.collections.SortField;
+	import mx.collections.Sort;
 	import mx.rpc.Responder;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -782,7 +784,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	 } 	
 	private function handleLoadSalesReps(ev:ResultEvent):void {
 		var selectedItem:Object = sales_rep_combo.selectedItem;
+		var sort:Sort = new Sort();
 		salesReps = ev.result as ArrayCollection;
+		sort.fields = [new SortField("name",true)];
+	 	salesReps.sort = sort;
+	 	salesReps.refresh();
 		if (!containsBlank(salesReps,"name"))	{
 			var salesRep:SalesRep = new SalesRep();
 			salesRep.name = "";
