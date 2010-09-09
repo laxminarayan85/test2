@@ -124,7 +124,7 @@ package com.efi.printsmith.data
 		public var presetDescriptionLabel:String = "";
 		public var presetNotes:String = "";
 		public var presetNotesLabel:String = "";
-		public var presetQuantity:int = 0;
+		public var presetQuantity:Number = 0;
 		public var presetQuantityLabel:String = "";
 		public var presetShowNotes:Boolean = false;
 		public var presetProductionLocation:ProductionLocations;
@@ -155,9 +155,9 @@ package com.efi.printsmith.data
 		public var presetSetupLabel:String = "";
 		public var presetSetup:Number = 0;
 		public var presetTimeStartLabel:String = "";
-		public var presetTimeStart:Date = new Date();
+		public var presetTimeStartHour:int = 0;
 		public var presetTimeStopLabel:String = "";
-		public var presetTimeStop:Date = new Date();
+		public var presetTimeStopHour:int = 0;
 		public var presetNumberOfColorsLabel:String = "";
 		public var presetNumberOfColors:int = 0;
 		public var presetCoverageLabel:String = "";
@@ -174,6 +174,8 @@ package com.efi.printsmith.data
 		public var presetCuts:int = 0;
 		public var presetSheetsPerLiftLabel:String = "";
 		public var presetSheetsPerLift:Number = 0;
+		public var presetTimeStartMinute:int = 0;
+		public var presetTimeStopMinute:int = 0;
 	
 	}
 }

@@ -49,9 +49,12 @@ public class ChargeService extends SnowmassHibernateService{
 					minutesPerPiece = 60/chargeCost.getPiecesPerHour();
 				}
 				double unitCost = minutesPerPiece * (chargeCost.getLaborRate().doubleValue()/60);
-				//unitCost += chargeCost.getUnitMaterials();
+				unitCost += chargeCost.getUnitMaterials().doubleValue();
 				
 				double markup = chargeDefinition.getMarkup();
+				if (Double.isNaN(markup)) {
+					markup = 1.0;
+				}
 				prices.setSetupPrice(setupCost * markup);
 				prices.setUnitPrice(unitCost * markup);
 				prices.setMaterialSetupPrice(chargeCost.getFixedMaterials().doubleValue());

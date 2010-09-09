@@ -155,13 +155,13 @@ public class Charge extends ModelBase {
 	 */
 	public static final String QTYPERSET = "QtyPerSet";
 	/**
-	 * @generated
-	 */
-	public static final String STARTTIME = "StartTime";
+   * @generated
+   */
+  public static final String STARTHOURS = "StartHours";
 	/**
-	 * @generated
-	 */
-	public static final String ENDTIME = "EndTime";
+   * @generated
+   */
+  public static final String ENDHOURS = "EndHours";
 	/**
 	 * @generated
 	 */
@@ -170,6 +170,15 @@ public class Charge extends ModelBase {
 	 * @generated
 	 */
 	public static final String NEXTRECORD = "NextRecord";
+
+	/**
+   * @generated
+   */
+  public static final String STARTMINUTES = "StartMinutes";
+	/**
+   * @generated
+   */
+  public static final String ENDMINUTES = "EndMinutes";
 
 	/**
 	 * @generated
@@ -893,51 +902,47 @@ public class Charge extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Date startTime;
-	
+  private Integer startHours;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Date getStartTime(){
-    return startTime; 
+  public Integer getStartHours(){
+    return startHours; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setStartTime(Date newVal) {
-    this.startTime = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Date endTime;
-	
-	/**
-	 * @generated
- 	 */
-	public Date getEndTime(){
-    return endTime; 
+   * @generated
+   */	
+  public void setStartHours(Integer newVal) {
+    this.startHours = newVal;
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setEndTime(Date newVal) {
-    this.endTime = newVal;
+   * @generated
+   */	
+ 	@Basic
+  private Integer endHours;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getEndHours(){
+    return endHours; 
   }
-	
- 	
-	
+
+
+	/**
+   * @generated
+   */	
+  public void setEndHours(Integer newVal) {
+    this.endHours = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -984,6 +989,49 @@ public class Charge extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer startMinutes;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getStartMinutes(){
+    return startMinutes; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setStartMinutes(Integer newVal) {
+    this.startMinutes = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer endMinutes;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getEndMinutes(){
+    return endMinutes; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setEndMinutes(Integer newVal) {
+    this.endMinutes = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1016,10 +1064,12 @@ public class Charge extends ModelBase {
     if (SETS.equals(propertyName)) return getSets();
     if (MATERIALSETS.equals(propertyName)) return getMaterialSets();
     if (QTYPERSET.equals(propertyName)) return getQtyPerSet();
-    if (STARTTIME.equals(propertyName)) return getStartTime();
-    if (ENDTIME.equals(propertyName)) return getEndTime();
+    if (STARTHOURS.equals(propertyName)) return getStartHours();
+    if (ENDHOURS.equals(propertyName)) return getEndHours();
     if (CHARGECOSTINGRECORD.equals(propertyName)) return getChargeCostingRecord();
     if (NEXTRECORD.equals(propertyName)) return getNextRecord();
+    if (STARTMINUTES.equals(propertyName)) return getStartMinutes();
+    if (ENDMINUTES.equals(propertyName)) return getEndMinutes();
     return super.getProperty(propertyName);
   }
 	
@@ -1056,10 +1106,12 @@ public class Charge extends ModelBase {
     if (SETS.equals(propertyName)) setSets((Double)newValue); else
     if (MATERIALSETS.equals(propertyName)) setMaterialSets((Double)newValue); else
     if (QTYPERSET.equals(propertyName)) setQtyPerSet((Double)newValue); else
-    if (STARTTIME.equals(propertyName)) setStartTime((Date)newValue); else
-    if (ENDTIME.equals(propertyName)) setEndTime((Date)newValue); else
+    if (STARTHOURS.equals(propertyName)) setStartHours((Integer)newValue); else
+    if (ENDHOURS.equals(propertyName)) setEndHours((Integer)newValue); else
     if (CHARGECOSTINGRECORD.equals(propertyName)) setChargeCostingRecord((ChargeCostingRecord)newValue); else
     if (NEXTRECORD.equals(propertyName)) setNextRecord((String)newValue); else
+    if (STARTMINUTES.equals(propertyName)) setStartMinutes((Integer)newValue); else
+    if (ENDMINUTES.equals(propertyName)) setEndMinutes((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1123,14 +1175,18 @@ public class Charge extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (QTYPERSET.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
-    if (STARTTIME.equals(propertyName)) 
-      return new Class<?>[] {Date.class};		
-    if (ENDTIME.equals(propertyName)) 
-      return new Class<?>[] {Date.class};		
+    if (STARTHOURS.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (ENDHOURS.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     if (CHARGECOSTINGRECORD.equals(propertyName)) 
       return new Class<?>[] {ChargeCostingRecord.class};		
     if (NEXTRECORD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (STARTMINUTES.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (ENDMINUTES.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1168,10 +1224,12 @@ public class Charge extends ModelBase {
     if (SETS.equals(propertyName)) return Charge.class;
     if (MATERIALSETS.equals(propertyName)) return Charge.class;
     if (QTYPERSET.equals(propertyName)) return Charge.class;
-    if (STARTTIME.equals(propertyName)) return Charge.class;
-    if (ENDTIME.equals(propertyName)) return Charge.class;
+    if (STARTHOURS.equals(propertyName)) return Charge.class;
+    if (ENDHOURS.equals(propertyName)) return Charge.class;
     if (CHARGECOSTINGRECORD.equals(propertyName)) return Charge.class;
     if (NEXTRECORD.equals(propertyName)) return Charge.class;
+    if (STARTMINUTES.equals(propertyName)) return Charge.class;
+    if (ENDMINUTES.equals(propertyName)) return Charge.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1237,13 +1295,17 @@ public class Charge extends ModelBase {
       return false;
     if (! SmartEquals(getQtyPerSet(), objT.getQtyPerSet()))
       return false;
-    if (! SmartEquals(getStartTime(), objT.getStartTime()))
+    if (! SmartEquals(getStartHours(), objT.getStartHours()))
       return false;
-    if (! SmartEquals(getEndTime(), objT.getEndTime()))
+    if (! SmartEquals(getEndHours(), objT.getEndHours()))
       return false;
     if (! SmartEquals(getChargeCostingRecord(), objT.getChargeCostingRecord()))
       return false;
     if (! SmartEquals(getNextRecord(), objT.getNextRecord()))
+      return false;
+    if (! SmartEquals(getStartMinutes(), objT.getStartMinutes()))
+      return false;
+    if (! SmartEquals(getEndMinutes(), objT.getEndMinutes()))
       return false;
     return true;
   }			

@@ -195,5 +195,5 @@ public class ChargeCommand extends ModelBase {
     if (! SmartEquals(getName(), objT.getName()))
       return false;
     return true;
-  }			
+  }
 }

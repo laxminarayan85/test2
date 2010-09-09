@@ -47,6 +47,7 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 			materialQuantity = rateQuantity;
 		} else if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Quantity.name())) {
 			rateQuantity = charge.getQuantity();
+			materialQuantity = charge.getMaterialQty();
 		} else {
 			log.error("Invalid ChargeQtyType in Charge: " + chargeDefinition.getQuantityType());
 		}
@@ -82,10 +83,12 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 			log.error("Invalid ChargePriceMethod in Charge: " + chargeDefinition.getPriceMethod());
 		}
 		
-		if (chargeDefinition.getMinimum().doubleValue() > price.doubleValue()) {
+		if (chargeDefinition.getUseMinimumCharge() && chargeDefinition.getMinimum().doubleValue() > price.doubleValue()) {
 			price = chargeDefinition.getMinimum();
 		}
-		charge.setPrice(price);
+		
+		if (!charge.getOverridePrice())
+			charge.setPrice(price);
 		return charge;
 	}
 
@@ -94,12 +97,11 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		
 		if (charge.getChargeDefinition().getUseSetup()) {
 			retVal = charge.getChargeDefinition().getSetupPrice();
-		}
 		
-		if (charge.getChargeDefinition().getQuantityType().equals(ChargeQtyType.SetupSets.name())) {
-			retVal = new BigDecimal(retVal.doubleValue() * charge.getSets());
+			if (charge.getChargeDefinition().getQuantityType().equals(ChargeQtyType.SetupSets.name())) {
+				retVal = new BigDecimal(retVal.doubleValue() * charge.getSets());
+			}
 		}
-		
 		return retVal;
 	}
 	
@@ -122,6 +124,8 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		double tmpQty = 0.0;
 		
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
+
+		if (!chargeDefinition.getUseRate()) return new BigDecimal(0.0);
 		
 		tmpQty = rateQuantity;
 		if (chargeDefinition.getUseRateSets()) {
@@ -131,9 +135,9 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		priceListLookupQuantity = tmpQty; // Use this quantity to lookup price list price if needed
 		retVal = new BigDecimal(tmpQty * charge.getRate().doubleValue());
 
-		if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets) ||
-				chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets)) {
-			retVal = new BigDecimal(retVal.doubleValue() * charge.getSets());
+		if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets.name()) ||
+				chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets.name())) {
+			retVal = new BigDecimal(retVal.doubleValue() * charge.getQtyPerSet());
 		}
 		return retVal;
 	}
@@ -142,31 +146,51 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		Date tmpDate;
 		double retVal = 0.0;
 		
-		if (charge.getStartTime() == null && charge.getEndTime() != null) {
-			// Use End time as the quantity
-			tmpDate = charge.getEndTime();
-			retVal = tmpDate.getHours() * 60;
-			retVal += tmpDate.getMinutes();
-		} else if (charge.getStartTime() != null && charge.getEndTime() == null) {
-			// Use Start time as the quantity
-			tmpDate = charge.getStartTime();
-			retVal = tmpDate.getHours() * 60;
-			retVal += tmpDate.getMinutes();
-		} else if (charge.getStartTime() != null && charge.getEndTime() != null){
-			// Assumes Start Time < End Time (should be validated on UI side. Still works otherwise - just returns negative value.
+		if (charge.getStartHours() == 0 && charge.getStartMinutes() == 0) {
+			retVal = charge.getEndHours() * 60;
+			retVal += charge.getEndMinutes();
+		} else if (charge.getEndHours() == 0 && charge.getEndMinutes() == 0) {
+			retVal = charge.getStartHours() * 60;
+			retVal += charge.getStartMinutes();			
+		} else {
 			int startMinutes = 0;
 			int endMinutes = 0;
 			
-			tmpDate = charge.getStartTime();
-			startMinutes = tmpDate.getHours()*60;
-			startMinutes += tmpDate.getMinutes();
+			startMinutes = charge.getStartHours() * 60;
+			startMinutes += charge.getStartMinutes();
 			
-			tmpDate = charge.getEndTime();
-			endMinutes = tmpDate.getHours()*60;
-			endMinutes += tmpDate.getMinutes();
+			endMinutes = charge.getEndHours() * 60;
+			endMinutes += charge.getEndMinutes();
 			
 			retVal = endMinutes - startMinutes;
 		}
+		
+//		
+//		if (charge.getStartTime() == null && charge.getEndTime() != null) {
+//			// Use End time as the quantity
+//			tmpDate = charge.getEndTime();
+//			retVal = tmpDate.getHours() * 60;
+//			retVal += tmpDate.getMinutes();
+//		} else if (charge.getStartTime() != null && charge.getEndTime() == null) {
+//			// Use Start time as the quantity
+//			tmpDate = charge.getStartTime();
+//			retVal = tmpDate.getHours() * 60;
+//			retVal += tmpDate.getMinutes();
+//		} else if (charge.getStartTime() != null && charge.getEndTime() != null){
+//			// Assumes Start Time < End Time (should be validated on UI side. Still works otherwise - just returns negative value.
+//			int startMinutes = 0;
+//			int endMinutes = 0;
+//			
+//			tmpDate = charge.getStartTime();
+//			startMinutes = tmpDate.getHours()*60;
+//			startMinutes += tmpDate.getMinutes();
+//			
+//			tmpDate = charge.getEndTime();
+//			endMinutes = tmpDate.getHours()*60;
+//			endMinutes += tmpDate.getMinutes();
+//			
+//			retVal = endMinutes - startMinutes;
+//		}
 		
 		if (charge.getChargeDefinition().getUseMinimumTime()) {
 			if (charge.getChargeDefinition().getMinimumTime() > retVal) retVal = charge.getChargeDefinition().getMinimumTime();

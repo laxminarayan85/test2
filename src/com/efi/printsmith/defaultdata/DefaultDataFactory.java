@@ -1,5 +1,7 @@
 package com.efi.printsmith.defaultdata;
 
+import au.com.bytecode.opencsv.CSVReader;
+
 import com.efi.printsmith.data.*;
 
 import java.io.File;
@@ -53,7 +55,7 @@ public class DefaultDataFactory {
 			ProcessTableEditor();
 			ProcessInkColor();
 			ProcessTablesElements();
-			
+			ProcessFoldTemplates();
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
@@ -71,6 +73,13 @@ public class DefaultDataFactory {
 			LoadInkData(new String[] { currentPath });
 		} catch (IOException e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+	}
+	private void ProcessFoldTemplates() {
+		try {
+			LoadFoldTemplateData(new String[] {currentPath});
+		} catch (IOException e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));			
 		}
 	}
 	private void ProcessTablesElements() {
@@ -1574,6 +1583,22 @@ public class DefaultDataFactory {
 			}
 		}
 	}
+	private void LoadFoldTemplateData(String [] args) throws IOException {
+		if (args.length == 0)
+			args = new String[] { ".." };
+		String path = new File(args[0]).getParent();
+		File pathName = new File(path);
+		String[] fileNames = pathName.list();
+		for (int i = 0; i < fileNames.length; i++) {
+			if (fileNames[i].endsWith(".txt") == true
+					&& fileNames[i].toLowerCase().startsWith("foldtemplates") == true) {
+				File f = new File(pathName.getPath(), fileNames[i]);
+				doFoldTemplates(f);
+				break;
+			}
+		}		
+	}
+	
 	private void LoadInkData(String[] args) throws IOException {
 		if (args.length == 0)
 			args = new String[] { ".." };
@@ -1748,7 +1773,33 @@ return rv;
 		}
 		return rv;
 	}
-
+	private int doFoldTemplates(File file) throws java.io.IOException {
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+		
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 6) {
+				throw new java.io.IOException("Expected 6 fields per line in FoldTemplates");
+			}
+			FoldTemplate foldTemplate = new FoldTemplate();
+			
+			foldTemplate.setImageFile(fieldTokens[0]);
+			foldTemplate.setName(fieldTokens[1]);
+			foldTemplate.setDescription(fieldTokens[2]);
+			foldTemplate.setEnabled(fieldTokens[4].equals("1"));
+		
+			try {
+				dataservice.addUpdate(foldTemplate);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
+			}
+		}
+		return -1;
+	}
+	
 	private int doEstimatorTypes(File file) throws java.io.IOException {
 
 		List<?> estimatorTypesList = (List<?>) dataservice

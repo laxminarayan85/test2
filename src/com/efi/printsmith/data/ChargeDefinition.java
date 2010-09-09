@@ -619,7 +619,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
    * @generated
    */
-  public static final String PRESETTIMESTART = "PresetTimeStart";
+  public static final String PRESETTIMESTARTHOUR = "PresetTimeStartHour";
 	/**
    * @generated
    */
@@ -627,7 +627,7 @@ public class ChargeDefinition extends ModelBase {
 	/**
    * @generated
    */
-  public static final String PRESETTIMESTOP = "PresetTimeStop";
+  public static final String PRESETTIMESTOPHOUR = "PresetTimeStopHour";
 	/**
    * @generated
    */
@@ -694,6 +694,15 @@ public class ChargeDefinition extends ModelBase {
    * @generated
    */
   public static final String PRESETSHEETSPERLIFT = "PresetSheetsPerLift";
+
+	/**
+   * @generated
+   */
+  public static final String PRESETTIMESTARTMINUTE = "PresetTimeStartMinute";
+	/**
+   * @generated
+   */
+  public static final String PRESETTIMESTOPMINUTE = "PresetTimeStopMinute";
 
 	/**
 	 * @generated
@@ -3238,12 +3247,12 @@ public class ChargeDefinition extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Integer presetQuantity;
+  private Double presetQuantity;
 
 	/**
    * @generated
  	 */
-  public Integer getPresetQuantity(){
+  public Double getPresetQuantity(){
     return presetQuantity; 
   }
 
@@ -3251,10 +3260,9 @@ public class ChargeDefinition extends ModelBase {
 	/**
    * @generated
    */	
-  public void setPresetQuantity(Integer newVal) {
+  public void setPresetQuantity(Double newVal) {
     this.presetQuantity = newVal;
   }
-
 
 
 	/**
@@ -3859,12 +3867,12 @@ public class ChargeDefinition extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Long presetQuantityPerSet;
+  private Double presetQuantityPerSet;
 
 	/**
    * @generated
  	 */
-  public Long getPresetQuantityPerSet(){
+  public Double getPresetQuantityPerSet(){
     return presetQuantityPerSet; 
   }
 
@@ -3872,10 +3880,9 @@ public class ChargeDefinition extends ModelBase {
 	/**
    * @generated
    */	
-  public void setPresetQuantityPerSet(Long newVal) {
+  public void setPresetQuantityPerSet(Double newVal) {
     this.presetQuantityPerSet = newVal;
   }
-
 
 
 	/**
@@ -3980,21 +3987,21 @@ public class ChargeDefinition extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Date presetTimeStart;
+  private Integer presetTimeStartHour;
 
 	/**
    * @generated
  	 */
-  public Date getPresetTimeStart(){
-    return presetTimeStart; 
+  public Integer getPresetTimeStartHour(){
+    return presetTimeStartHour; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setPresetTimeStart(Date newVal) {
-    this.presetTimeStart = newVal;
+  public void setPresetTimeStartHour(Integer newVal) {
+    this.presetTimeStartHour = newVal;
   }
 
 
@@ -4026,21 +4033,21 @@ public class ChargeDefinition extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Date presetTimeStop;
+  private Integer presetTimeStopHour;
 
 	/**
    * @generated
  	 */
-  public Date getPresetTimeStop(){
-    return presetTimeStop; 
+  public Integer getPresetTimeStopHour(){
+    return presetTimeStopHour; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setPresetTimeStop(Date newVal) {
-    this.presetTimeStop = newVal;
+  public void setPresetTimeStopHour(Integer newVal) {
+    this.presetTimeStopHour = newVal;
   }
 
 
@@ -4419,6 +4426,51 @@ public class ChargeDefinition extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer presetTimeStartMinute;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getPresetTimeStartMinute(){
+    return presetTimeStartMinute; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetTimeStartMinute(Integer newVal) {
+    this.presetTimeStartMinute = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer presetTimeStopMinute;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getPresetTimeStopMinute(){
+    return presetTimeStopMinute; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPresetTimeStopMinute(Integer newVal) {
+    this.presetTimeStopMinute = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -4565,9 +4617,9 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETSETUPLABEL.equals(propertyName)) return getPresetSetupLabel();
     if (PRESETSETUP.equals(propertyName)) return getPresetSetup();
     if (PRESETTIMESTARTLABEL.equals(propertyName)) return getPresetTimeStartLabel();
-    if (PRESETTIMESTART.equals(propertyName)) return getPresetTimeStart();
+    if (PRESETTIMESTARTHOUR.equals(propertyName)) return getPresetTimeStartHour();
     if (PRESETTIMESTOPLABEL.equals(propertyName)) return getPresetTimeStopLabel();
-    if (PRESETTIMESTOP.equals(propertyName)) return getPresetTimeStop();
+    if (PRESETTIMESTOPHOUR.equals(propertyName)) return getPresetTimeStopHour();
     if (PRESETNUMBEROFCOLORSLABEL.equals(propertyName)) return getPresetNumberOfColorsLabel();
     if (PRESETNUMBEROFCOLORS.equals(propertyName)) return getPresetNumberOfColors();
     if (PRESETCOVERAGELABEL.equals(propertyName)) return getPresetCoverageLabel();
@@ -4584,6 +4636,8 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETCUTS.equals(propertyName)) return getPresetCuts();
     if (PRESETSHEETSPERLIFTLABEL.equals(propertyName)) return getPresetSheetsPerLiftLabel();
     if (PRESETSHEETSPERLIFT.equals(propertyName)) return getPresetSheetsPerLift();
+    if (PRESETTIMESTARTMINUTE.equals(propertyName)) return getPresetTimeStartMinute();
+    if (PRESETTIMESTOPMINUTE.equals(propertyName)) return getPresetTimeStopMinute();
     return super.getProperty(propertyName);
   }
 	
@@ -4703,7 +4757,7 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETDESCRIPTIONLABEL.equals(propertyName)) setPresetDescriptionLabel((String)newValue); else
     if (PRESETNOTES.equals(propertyName)) setPresetNotes((String)newValue); else
     if (PRESETNOTESLABEL.equals(propertyName)) setPresetNotesLabel((String)newValue); else
-    if (PRESETQUANTITY.equals(propertyName)) setPresetQuantity((Integer)newValue); else
+    if (PRESETQUANTITY.equals(propertyName)) setPresetQuantity((Double)newValue); else
     if (PRESETQUANTITYLABEL.equals(propertyName)) setPresetQuantityLabel((String)newValue); else
     if (PRESETSHOWNOTES.equals(propertyName)) setPresetShowNotes((Boolean)newValue); else
     if (PRESETPRODUCTIONLOCATION.equals(propertyName)) setPresetProductionLocation((ProductionLocations)newValue); else
@@ -4729,14 +4783,14 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETMATERIALSETSOFLABEL.equals(propertyName)) setPresetMaterialSetsOfLabel((String)newValue); else
     if (PRESETMATERIALRATE.equals(propertyName)) setPresetMaterialRate((BigDecimal)newValue); else
     if (PRESETMATERIALRATELABEL.equals(propertyName)) setPresetMaterialRateLabel((String)newValue); else
-    if (PRESETQUANTITYPERSET.equals(propertyName)) setPresetQuantityPerSet((Long)newValue); else
+    if (PRESETQUANTITYPERSET.equals(propertyName)) setPresetQuantityPerSet((Double)newValue); else
     if (PRESETQUANTITYPERSETLABEL.equals(propertyName)) setPresetQuantityPerSetLabel((String)newValue); else
     if (PRESETSETUPLABEL.equals(propertyName)) setPresetSetupLabel((String)newValue); else
     if (PRESETSETUP.equals(propertyName)) setPresetSetup((BigDecimal)newValue); else
     if (PRESETTIMESTARTLABEL.equals(propertyName)) setPresetTimeStartLabel((String)newValue); else
-    if (PRESETTIMESTART.equals(propertyName)) setPresetTimeStart((Date)newValue); else
+    if (PRESETTIMESTARTHOUR.equals(propertyName)) setPresetTimeStartHour((Integer)newValue); else
     if (PRESETTIMESTOPLABEL.equals(propertyName)) setPresetTimeStopLabel((String)newValue); else
-    if (PRESETTIMESTOP.equals(propertyName)) setPresetTimeStop((Date)newValue); else
+    if (PRESETTIMESTOPHOUR.equals(propertyName)) setPresetTimeStopHour((Integer)newValue); else
     if (PRESETNUMBEROFCOLORSLABEL.equals(propertyName)) setPresetNumberOfColorsLabel((String)newValue); else
     if (PRESETNUMBEROFCOLORS.equals(propertyName)) setPresetNumberOfColors((Integer)newValue); else
     if (PRESETCOVERAGELABEL.equals(propertyName)) setPresetCoverageLabel((String)newValue); else
@@ -4753,6 +4807,8 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETCUTS.equals(propertyName)) setPresetCuts((Integer)newValue); else
     if (PRESETSHEETSPERLIFTLABEL.equals(propertyName)) setPresetSheetsPerLiftLabel((String)newValue); else
     if (PRESETSHEETSPERLIFT.equals(propertyName)) setPresetSheetsPerLift((Long)newValue); else
+    if (PRESETTIMESTARTMINUTE.equals(propertyName)) setPresetTimeStartMinute((Integer)newValue); else
+    if (PRESETTIMESTOPMINUTE.equals(propertyName)) setPresetTimeStopMinute((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -4983,7 +5039,7 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETNOTESLABEL.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PRESETQUANTITY.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {Double.class};		
     if (PRESETQUANTITYLABEL.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PRESETSHOWNOTES.equals(propertyName)) 
@@ -5035,7 +5091,7 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETMATERIALRATELABEL.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PRESETQUANTITYPERSET.equals(propertyName)) 
-      return new Class<?>[] {Long.class};		
+      return new Class<?>[] {Double.class};		
     if (PRESETQUANTITYPERSETLABEL.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PRESETSETUPLABEL.equals(propertyName)) 
@@ -5044,12 +5100,12 @@ public class ChargeDefinition extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (PRESETTIMESTARTLABEL.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (PRESETTIMESTART.equals(propertyName)) 
-      return new Class<?>[] {Date.class};		
+    if (PRESETTIMESTARTHOUR.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     if (PRESETTIMESTOPLABEL.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (PRESETTIMESTOP.equals(propertyName)) 
-      return new Class<?>[] {Date.class};		
+    if (PRESETTIMESTOPHOUR.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     if (PRESETNUMBEROFCOLORSLABEL.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PRESETNUMBEROFCOLORS.equals(propertyName)) 
@@ -5082,6 +5138,10 @@ public class ChargeDefinition extends ModelBase {
       return new Class<?>[] {String.class};		
     if (PRESETSHEETSPERLIFT.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
+    if (PRESETTIMESTARTMINUTE.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (PRESETTIMESTOPMINUTE.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -5233,9 +5293,9 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETSETUPLABEL.equals(propertyName)) return ChargeDefinition.class;
     if (PRESETSETUP.equals(propertyName)) return ChargeDefinition.class;
     if (PRESETTIMESTARTLABEL.equals(propertyName)) return ChargeDefinition.class;
-    if (PRESETTIMESTART.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETTIMESTARTHOUR.equals(propertyName)) return ChargeDefinition.class;
     if (PRESETTIMESTOPLABEL.equals(propertyName)) return ChargeDefinition.class;
-    if (PRESETTIMESTOP.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETTIMESTOPHOUR.equals(propertyName)) return ChargeDefinition.class;
     if (PRESETNUMBEROFCOLORSLABEL.equals(propertyName)) return ChargeDefinition.class;
     if (PRESETNUMBEROFCOLORS.equals(propertyName)) return ChargeDefinition.class;
     if (PRESETCOVERAGELABEL.equals(propertyName)) return ChargeDefinition.class;
@@ -5252,6 +5312,8 @@ public class ChargeDefinition extends ModelBase {
     if (PRESETCUTS.equals(propertyName)) return ChargeDefinition.class;
     if (PRESETSHEETSPERLIFTLABEL.equals(propertyName)) return ChargeDefinition.class;
     if (PRESETSHEETSPERLIFT.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETTIMESTARTMINUTE.equals(propertyName)) return ChargeDefinition.class;
+    if (PRESETTIMESTOPMINUTE.equals(propertyName)) return ChargeDefinition.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -5545,11 +5607,11 @@ public class ChargeDefinition extends ModelBase {
       return false;
     if (! SmartEquals(getPresetTimeStartLabel(), objT.getPresetTimeStartLabel()))
       return false;
-    if (! SmartEquals(getPresetTimeStart(), objT.getPresetTimeStart()))
+    if (! SmartEquals(getPresetTimeStartHour(), objT.getPresetTimeStartHour()))
       return false;
     if (! SmartEquals(getPresetTimeStopLabel(), objT.getPresetTimeStopLabel()))
       return false;
-    if (! SmartEquals(getPresetTimeStop(), objT.getPresetTimeStop()))
+    if (! SmartEquals(getPresetTimeStopHour(), objT.getPresetTimeStopHour()))
       return false;
     if (! SmartEquals(getPresetNumberOfColorsLabel(), objT.getPresetNumberOfColorsLabel()))
       return false;
@@ -5582,6 +5644,10 @@ public class ChargeDefinition extends ModelBase {
     if (! SmartEquals(getPresetSheetsPerLiftLabel(), objT.getPresetSheetsPerLiftLabel()))
       return false;
     if (! SmartEquals(getPresetSheetsPerLift(), objT.getPresetSheetsPerLift()))
+      return false;
+    if (! SmartEquals(getPresetTimeStartMinute(), objT.getPresetTimeStartMinute()))
+      return false;
+    if (! SmartEquals(getPresetTimeStopMinute(), objT.getPresetTimeStopMinute()))
       return false;
     return true;
   }			

@@ -10,6 +10,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -282,16 +284,19 @@ public class DataService extends HibernateService {
 		String columnstring = new String();
 
 		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect, a.externalAcctId, a.contact ";
+//		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect, a.externalAcctId ";
 		try {
 			String queryString = "select new " + className + "( "
-					+ columnstring + ") from " + className + " a order by title";
+					+ columnstring + ") from " + className + " a where a.id is not null order by title";
+//			String queryString = "from " + className + " a order by title";
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
 			if (resultList != null){
 				for (int i=0; i<resultList.size(); i++){
 					Contact c = ((Account) (resultList.get(i))).getContact();
-					Hibernate.initialize(c.getComLinks());
+					if (c != null)
+						Hibernate.initialize(c.getComLinks());
 				}
 			}
 			if (resultList != null)
@@ -1659,17 +1664,18 @@ public class DataService extends HibernateService {
 		List<ChargeCommand> resultList = new ArrayList<ChargeCommand>();
 		log.debug("** getChargeList called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
+		List<PickerObject> pickerList = new ArrayList<PickerObject>();
 		try {
 			Query findAllQuery = em
 					.createQuery("from ChargeCommand fetch all properties order by id");
 			resultList = findAllQuery.getResultList();
-
-			if (resultList != null)
+			if (resultList != null) {
 				for (ChargeCommand chargeCommand : resultList) {
-					List<ChargeCategory> categories = chargeCommand
-							.getChildren();
+					List<ChargeCategory> categories = chargeCommand.getChildren();
+					Collections.sort(categories);
 					for (ChargeCategory category : categories) {
 						List<ChargeDefinition> charges = category.getChildren();
+						Collections.sort(charges);
 						for (ChargeDefinition charge : charges) {
 							if (charge == null) {
 								log.error("null charge found");
@@ -1677,7 +1683,30 @@ public class DataService extends HibernateService {
 						}
 					}
 				}
-			log.debug("** Found " + resultList.size() + "records:");
+//				PickerObject currentChargeCommand = null;
+//				for (ChargeCommand chargeCommand : resultList) {
+//					currentChargeCommand = new PickerObject(chargeCommand.getName(), chargeCommand.getId());
+//					currentChargeCommand.setChildren(new ArrayList<PickerObject>());
+//					pickerList.add(currentChargeCommand);
+//					
+//					List<ChargeCategory> categories = chargeCommand.getChildren();
+//					PickerObject currentChargeCategory = null;
+//					for (ChargeCategory category : categories) {
+//						currentChargeCategory = new PickerObject(category.getName(), category.getId());
+//						currentChargeCategory.setChildren(new ArrayList<PickerObject>());
+//						currentChargeCommand.getChildren().add(currentChargeCategory);
+//						
+//						List<ChargeDefinition> charges = category.getChildren();
+//						PickerObject currentCharge = null;
+//						for (ChargeDefinition charge : charges) {
+//							currentCharge = new PickerObject(charge.getName(), charge.getId());
+//							currentChargeCategory.getChildren().add(currentCharge);
+//						}
+//					}
+//				}
+
+				log.debug("** Found " + resultList.size() + "records:");
+			}
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -3977,5 +4006,5 @@ public class DataService extends HibernateService {
 			closeSession();
 		}
 
-	}
+	}	
 }

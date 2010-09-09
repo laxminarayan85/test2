@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.data.CuttingCharge;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.enums.ChargeQtyType;
@@ -66,6 +67,10 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 			} else if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Quantity)) {
 				charge.setQuantity(job.getPressQty().doubleValue());
 				// TODO handle run direction per PrintSmith Source
+			} else if (charge instanceof CuttingCharge && chargeDefinition.getCutsArePrePress()) {
+				charge.setQuantity((double)job.getSheets());
+				originals = 1;
+				runs = 1;
 			} else {
 				charge.setQuantity(job.getQtyOrdered().doubleValue());
 			}
@@ -121,11 +126,19 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 			if (chargeDefinition.getUseSetup()) {
 				setupPrice = chargeDefinition.getSetupPrice();
 				
-				if (chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets)) {
+				if (chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets.name())) {
 					// TODO account for booklets here
 				}
 			}
 			else if (chargeDefinition.getUseMaterial()) {
+				if (!charge.getOverrideMaterialQuantity()) {
+					if (chargeDefinition.getQuantityType().equals(ChargeQtyType.None.name())) {
+						charge.setMaterialQty(1.0);
+					}
+				}
+				
+				
+				
 				if (chargeDefinition.getUseMaterialSets()) {
 					setCount = chargeDefinition.getMaterialSetCount();
 				} else {
@@ -168,6 +181,9 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 			price = setupPrice.add(materialPrice).add(ratePrice);
 
 			price = price.add(new BigDecimal(PriceListUtilities.calculatePriceListPrice((long)lookupQty, chargeDefinition.getPriceList(), price.doubleValue(), (Job)job)));
+		}
+		if (chargeDefinition.getUseMinimumCharge() && chargeDefinition.getMinimum().doubleValue() > price.doubleValue()) {
+			price = chargeDefinition.getMinimum();
 		}
 		charge.setPrice(price);
 		return charge;

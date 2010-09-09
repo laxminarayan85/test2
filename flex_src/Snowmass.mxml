@@ -63,6 +63,7 @@
 		import mx.core.ComponentDescriptor;
 		import mx.formatters.DateFormatter;
 		import mx.formatters.CurrencyFormatter;
+		import mx.validators.CurrencyValidator;
 		import com.efi.printsmith.events.commandEvents.EditForms.*;
 		import com.efi.printsmith.events.ShowCreditCardMgrEvent;
 		
@@ -1006,6 +1007,12 @@
         
         private function resourceFaultHandler(event:ResourceEvent):void {
 			Alert.show("Error loading resources: " + event.errorText, null, Alert.OK, null, null, null, Alert.OK);
+        }
+
+        public static function getCurrencyValidator():CurrencyValidator {
+        	var currencyValidator:CurrencyValidator = new CurrencyValidator();
+        	currencyValidator.currencySymbol = "$"; // TODO
+        	return currencyValidator;
         }
         
         public static function getCurrencyFormatter(showSymbol:Boolean, precision:Number):CurrencyFormatter {

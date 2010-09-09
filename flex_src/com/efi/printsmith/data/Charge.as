@@ -41,10 +41,12 @@ package com.efi.printsmith.data
 		public var sets:Number = 0;
 		public var materialSets:Number = 0;
 		public var qtyPerSet:Number = 0;
-		public var startTime:Date = new Date();
-		public var endTime:Date = new Date();
+		public var startHours:int = 0;
+		public var endHours:int = 0;
 		public var chargeCostingRecord:ChargeCostingRecord;
 		public var nextRecord:String = "";
+		public var startMinutes:int = 0;
+		public var endMinutes:int = 0;
 	
 	}
 }

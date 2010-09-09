@@ -3,6 +3,7 @@ package com.efi.printsmith.data;
 import com.efi.printsmith.exceptions.*;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.ListIterator;
 
@@ -33,7 +34,7 @@ import org.hibernate.annotations.Where;
 @Table(name="modelbase")
 @SQLDelete(sql="update modelbase set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
-abstract public class ModelBase extends HibernateProxy {
+abstract public class ModelBase extends HibernateProxy implements Comparable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
@@ -276,5 +277,15 @@ abstract public class ModelBase extends HibernateProxy {
 //			throw new UnmodifiablePropertyException(this.getClass(),
 //					propertyName);
 		throw new UnknownPropertyException(this.getClass(), propertyName);
+	}
+	public int compareTo(Object compObject) throws ClassCastException {
+		if (!(compObject instanceof ModelBase))
+			throw new ClassCastException("Comparator expected to compare 2 ModelBase objects");
+	    long compId = ((ModelBase) compObject).getId();  
+	    long result = this.id - compId;
+	    
+	    if (result < 0) return -1;
+	    if (result > 0) return 1;
+	    return 0;
 	}
 }

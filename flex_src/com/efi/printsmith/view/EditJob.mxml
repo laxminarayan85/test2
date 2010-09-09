@@ -1286,7 +1286,8 @@
 				this.mapToJobData();
 				var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
 				chargePicker.charges = this.job.charges;
-				chargePicker.chargeCommands = chargeCommands;
+				// TODO: Restore the following line - only removed to make testing easier
+				// chargePicker.chargeCommands = chargeCommands;
 				chargePicker.job = this.job;
 				chargePicker.setStyle("borderAlpha", 0.9);
 				chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete);

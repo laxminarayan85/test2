@@ -87,7 +87,7 @@ public class ChargeCategory extends ModelBase {
 	 * @generated
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL})
-    @Where(clause="isdeleted <> 'TRUE'")
+	@Where(clause="isdeleted <> 'TRUE'")
 	@JoinTable( name = "chargecategory_children")
 	private java.util.List<ChargeDefinition> children;
 	

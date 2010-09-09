@@ -65,6 +65,9 @@ public class ChargeUtilities {
 		charge.setOverrideRate(false);
 		charge.setOverrideUp(false);
 		charge.setMinimumCharge(chargeDefinition.getMinimum());
+		charge.setQuantity(chargeDefinition.getPresetQuantity());
+		charge.setQtyPerSet(chargeDefinition.getPresetQuantityPerSet());
+		charge.setMaterialQty(chargeDefinition.getPresetMaterialQuantity());
 		return charge;
 	}
 

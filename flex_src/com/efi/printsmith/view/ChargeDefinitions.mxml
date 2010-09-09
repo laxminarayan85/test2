@@ -3,11 +3,12 @@
 				xmlns:common="com.efi.printsmith.common.components.filter.*" 
 width="100%" height="779" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}"
 creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}" name="Charge Definitions" xmlns:ns1="*" fontSize="9">
- <mx:NumberFormatter id="numberFormatter" precision="8" />         
+<mx:NumberFormatter id="pricingNumberFormatter" precision="8" />         
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addChargeToCategory" fault="handleFault(event)" result="handleAddChargeToCategory(event)"/>
 	<mx:method name="addChargeCategoryToCommand" fault="handleFault(event)" result="handleAddChargeCategoryToCommand(event)"/>
 	<mx:method name="getChargeList" fault="handleFault(event)" result="handleLoadChargeCommandResult(event)"/>
+	<mx:method name="getById" fault="handleFault(event)" result="handleRevertCharge(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
@@ -15,64 +16,19 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:RemoteObject id="chargeService" destination="chargeService">
 	<mx:method name="calculateChargeCostingRate" fault="handleFault(event)" result="handleChargeCostingRateResult(event)"/>
 </mx:RemoteObject>
-<mx:states>
-	<mx:State name="Job Aware">
-		
-	</mx:State>
-	<mx:State name="Markup">
-		
-	</mx:State>
-	<mx:State name="Flat Rate">
-		
-	</mx:State>
-	<mx:State name="Always Ask">
-		<mx:SetProperty target="{integrated_ctp_device_check}" name="y" value="139"/>
-		<mx:SetProperty target="{tracker_pre_production_check}" name="y" value="118"/>
-		<mx:SetProperty target="{excluded_from_workflow_check}" name="y" value="97"/>
-		<mx:SetProperty target="{hide_charge_in_printouts_check}" name="width" value="146"/>
-		<mx:SetProperty target="{bindery_operation_check}" name="y" value="97"/>
-		<mx:SetProperty target="{ignore_global_price_changes_check}" name="y" value="118"/>
-		<mx:SetProperty target="{hide_price_only_check}" name="width" value="146"/>
-		<mx:SetProperty target="{bindery_operation_check}" name="width" value="146"/>
-		<mx:SetProperty target="{ignore_global_price_changes_check}" name="width" value="146"/>
-		<mx:SetProperty target="{hide_price_only_check}" name="x" value="384"/>
-		<mx:SetProperty target="{hide_charge_in_printouts_check}" name="x" value="384"/>
-		<mx:SetProperty target="{bindery_operation_check}" name="x" value="384"/>
-		<mx:SetProperty target="{ignore_global_price_changes_check}" name="x" value="384"/>
-	</mx:State>
-	<mx:State name="Price List">
-	</mx:State>
-	<mx:State name="Rate List">
-		
-	</mx:State>
-	<mx:State name="Cut">
-		
-	</mx:State>
-	<mx:State name="Ink">
-		<mx:SetProperty target="{area_edit}" name="text"/>
-		
-	</mx:State>
-	<mx:State name="Shipping">
-		
-	</mx:State>
-	<mx:State name="Fold">
-		
-	</mx:State>
-	<mx:State name="Literal">
-		
-	</mx:State>
-	<mx:State name="Square Area">
-		
-	</mx:State>
-</mx:states>
+<mx:RemoteObject id="foldTemplateService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadFoldTemplates(event)"/>
+</mx:RemoteObject>
 
 <mx:Producer id="producer" destination="accounts"/>
 <mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
+<mx:Script source="../common/scripts/StringUtils.as"/>
 
 <mx:Script>                                   
 <![CDATA[
+	import mx.events.CloseEvent;
 	import com.efi.printsmith.common.components.filter.FilterSearchBy;
 	import com.efi.printsmith.common.components.filter.FilterProperty;
 	import com.efi.printsmith.data.SalesCategory;
@@ -119,7 +75,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import mx.containers.TitleWindow;                                         
 	import mx.collections.ArrayCollection; 
 	import mx.rpc.events.ResultEvent;                                         
-	import mx.rpc.events.FaultEvent;                                         
+	import mx.rpc.events.FaultEvent;         
+	import mx.events.TreeEvent;                                
+	import flash.events.MouseEvent;                                
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
     import mx.printing.FlexPrintJob;
@@ -215,8 +173,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	public var costPricingString:String = new String("");
 	
 	[Bindable]
+	public var foldTemplates:ArrayCollection = new ArrayCollection();
+	
+	[Bindable]
     [Embed("/assets/NoPricing.png")]
     private var noCostingIcon:Class;
+
+	private var currencyValidator:CurrencyValidator = Snowmass.getCurrencyValidator();
+    
+    private var isDirty:Boolean = false;
+    private var scrollToItem:ModelBase = null;
     
 	public function init():void {
 		consumer.subscribe();
@@ -225,15 +191,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));
 	    fireGetAllEvent("ProductCode", new mx.rpc.Responder(handleLoadProductCodeResult, handleFault));
 	    fireGetAllEvent("CostCenter", new mx.rpc.Responder(handleLoadCostCenterResult, handleFault));
-//	    fireGetAllEvent("Charge", new mx.rpc.Responder(handleLoadChargeResult, handleFault));
-//	    fireGetAllEvent("ChargeCategory", new mx.rpc.Responder(handleLoadChargeCategoryResult, handleFault));
-//	    fireGetAllEvent("ChargeCommand", new mx.rpc.Responder(handleLoadChargeCommandResult, handleFault));
 	    fireGetAllEvent("ProductionLocations", new mx.rpc.Responder(handleLoadProductionLocationsResult, handleFault));
 	    getChargeList(true);
 		charge_stack.selectedChild = charge_blank_canvas;
 		updateControlState();
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
-
+		foldTemplateService.getAll("FoldTemplate");
 	}      
 	     
 	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
@@ -262,17 +225,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			
 			tempString = systemPreferences.inkWeightSingular;
 			cover_ink_check.label = StringUtil.substitute(cover_ink_check.label,tempString);
-			
-			
 		}else{
 			this.btnExport.enabled = false;
-
 		}
-	}	   
-	
-	
-		                              
-                                  	
+	}
 	private function doSave():void {
 		if (charge_stack.selectedChild == charge_canvas && charge != null) {
 			mapToCharge();		
@@ -375,14 +331,18 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleLoadCostCenterResult(ev:ResultEvent):void {
 		costCenters = ev.result as ArrayCollection;
 	}
+
+	private function handleLoadFoldTemplates(ev:ResultEvent):void {
+		this.foldTemplates = ev.result as ArrayCollection;
+	}	
 	
 	private function handleChargeCostingRateResult(ev:ResultEvent):void {
-	var temp:String;
-	var roudV:Number;
+		var temp:String;
+		var roudV:Number;
 		var prices:ChargeCostingPrices = ev.result as ChargeCostingPrices;
 		
-		costPricingString = Number(numberFormatter.format(prices.unitPrice + prices.materialUnitPrice)).toFixed(2) + " + " +
-							Number(numberFormatter.format(prices.setupPrice + prices.materialSetupPrice)).toFixed(2);
+		costPricingString = Number(pricingNumberFormatter.format(prices.unitPrice + prices.materialUnitPrice)).toFixed(2) + " + " +
+							Number(pricingNumberFormatter.format(prices.setupPrice + prices.materialSetupPrice)).toFixed(2);
 		
 	}
 	
@@ -392,6 +352,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function handleLoadProductionLocationsResult(ev:ResultEvent):void {
 		locations = ev.result as ArrayCollection;
+	}
+	
+	private function handleRevertCharge(ev:ResultEvent):void {
+		this.charge = ev.result as ChargeDefinition;
+		this.isDirty = false;	
 	}
 	
 	private function handleLoadChargeCommandResult(ev:ResultEvent):void {
@@ -452,6 +417,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
+		isDirty = false;
 		updateDataProvider();
 	}
 	                                 
@@ -563,11 +529,36 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 		return null;
 	}
-	
+
 	private function treeSelectionChanged(event:Event):void {
-		updateTreeSelection();
+		if (this.isDirty) {
+			var infoStr:String;
+			if (this.charge != null) {
+				infoStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'INFO.Doyouwanttosavethech'), charge.title);
+				Alert.show(infoStr,"Warning",Alert.YES|Alert.NO|Alert.CANCEL,this,handleConfirmSaveCharge,null,Alert.YES);
+			}
+		} else {
+			updateTreeSelection();
+		}
 	}
 	
+	private function handleConfirmSaveCharge(event:CloseEvent):void {
+		if (event.detail == Alert.YES) { 
+			this.doSave();
+			updateTreeSelection();
+		} else if (event.detail == Alert.CANCEL) {
+			if (charge != null) {
+				var treeItem:ModelBase = findItemInChargeTree(charge.id);				
+				if (treeItem != null) {
+					chargeTree.selectedItem = treeItem;
+				}
+			}
+		} else {
+			updateTreeSelection();
+		}
+	}
+	
+
 	private function updateTreeSelection():void {
 		var selectedCharge:ChargeDefinition = getSelectedTreeCharge();
 		if (selectedCharge == null) {
@@ -587,6 +578,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		} else {
 			if (selectedCharge != charge) {
 				charge = selectedCharge;
+				isDirty = false;
 				costPricingString = "";
 				chargeService.calculateChargeCostingRate(charge, null);		
 				MapfromChargeData();
@@ -636,28 +628,48 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			localCharge.presetPoundsOfInkLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.0ofInk');
 			localCharge.presetTotalWeightLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.TotalWeight');
 			localCharge.presetAreaLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Area');
-			localCharge.presetUpLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Up');				
+			localCharge.presetUpLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Up');
 			localCharge.presetCutsLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cuts');				
 			localCharge.presetSheetsPerLiftLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift');				
 
 			dataService.addChargeToCategory(localCharge, category);
 		}
-//		chargeCommandDataService.getAll("ChargeCommand");
+	}
+	
+	private function handleDeleteCharge(event:CloseEvent):void {
+		if (event.detail == Alert.OK) {
+			scrollToItem = this.charge.parent;
+			fireDeleteEvent(this.charge, new mx.rpc.Responder(handleDeleteResult, handleFault));
+		}
+	}
+	
+	private function handleDeleteCategory(event:CloseEvent):void {
+		if (event.detail == Alert.OK) {
+			scrollToItem = this.chargeCategory.parent;
+			fireDeleteEvent(this.chargeCategory, new mx.rpc.Responder(handleDeleteResult, handleFault));
+		}
+	}
+	private function handleDeleteCommand(event:CloseEvent):void {
+		if (event.detail == Alert.OK) 
+			fireDeleteEvent(this.chargeCommand, new mx.rpc.Responder(handleDeleteResult, handleFault));
 	}
 	
 	private function doDelete():void {
-		if (this.charge != null) {	
-			fireDeleteEvent(this.charge, new mx.rpc.Responder(handleDeleteResult, handleFault));
+		var deleteStr:String;
+		if (this.charge != null) {
+			deleteStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), charge.title);
+			Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteCharge,null,Alert.OK);
 		} else if (this.chargeCategory != null) {
-			fireDeleteEvent(this.chargeCategory, new mx.rpc.Responder(handleDeleteResult, handleFault));
+			deleteStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), chargeCategory.name);
+			Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteCategory,null,Alert.OK);
 		} else if (this.chargeCommand != null) {
-			fireDeleteEvent(this.chargeCommand, new mx.rpc.Responder(handleDeleteResult, handleFault));
+			deleteStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), chargeCommand.name);
+			Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteCommand,null,Alert.OK);
 		}
-//		dataService.deleteItem("Charge", charge.id);
 	}
 
 	private function doRevert():void {
-		this.charge = this.getSelectedTreeCharge();
+		dataService.getById("ChargeDefinition", this.charge.id); // TODO: Need to be working on a copy rather than reverting from server...
 	}
 	
 	private function fireDeleteEvent(item:ModelBase, callbacks:IResponder):void {
@@ -818,34 +830,37 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		charge.fixedWaste = parseInt(fixed_spoilage_edit.text);
 		charge.baseLinearNumber = parseInt(base_linear_quantity_edit.text);
 		charge.useMinimumCharge = minimum_charge_check.selected;
-		charge.minimum = parseFloat(minimum_charge_edit.text);
+		charge.minimum = parseCurrencyFloat(minimum_charge_edit.text);
 		charge.useMinimumTime = minimum_time_check.selected;
-		charge.minimumTime = parseFloat(minimum_time_edit.text);
+		charge.minimumTime = parseCurrencyFloat(minimum_time_edit.text);
 
 		// Note: Radio buttons are updated dynamically via change events (see charge_group_1_change, etc.)
-		charge.markup = parseFloat(markup_edit.text);
+		charge.markup = parseCurrencyFloat(markup_edit.text);
 		charge.useSetup = setup_check.selected;
 		
 		
-		charge.setupPrice = parseFloat(setup_edit.text);
+		charge.setupPrice = parseCurrencyFloat(setup_edit.text);
 		charge.useRate = rate_check.selected;
-		charge.rate = parseFloat(rate_edit.text);
+		charge.rate = parseCurrencyFloat(rate_edit.text);
 		charge.useMaterial = material_check.selected;
-		charge.material = parseFloat(material_edit.text);
+		charge.material = parseCurrencyFloat(material_edit.text);
 
 		//TOOD: Area/In Sets, etc...
 		charge.useRateSets = in_sets_check.selected;
 		charge.rateSetCount = parseInt(in_sets_edit.text);
 		charge.useArea =  area_check.selected;
-		charge.area= parseFloat(area_edit.text);
+		charge.area= parseCurrencyFloat(area_edit.text);
 		charge.sheet_lift_check = sheet_lift_check.selected;
-		charge.sheetliftCut= parseFloat(sheet_lift_edit.text);
+		charge.sheetliftCut= parseCurrencyFloat(sheet_lift_edit.text);
 		charge.coverlb_check= cover_ink_check.selected;
-		charge.coverlbInk = parseFloat(cover_ink_edit.text);
+		charge.coverlbInk = parseCurrencyFloat(cover_ink_edit.text);
 		charge.ship_markup_check = ship_markup_check.selected;
-		charge.shipMarkup= parseFloat(ship_markup_edit.text);
+		charge.shipMarkup= parseCurrencyFloat(ship_markup_edit.text);
 		charge.useMaterialSets =  in_set_mat_check.selected;
 		charge.materialSetCount = parseInt(in_sets_mat_edit.text);
+		if (this.fold_template_combo.visible == true) {
+			charge.foldTemplate = this.fold_template_combo.selectedItem as FoldTemplate;
+		}
 	}
 	
 	private function updateQtyComboBox(chargeMethod:String):void {
@@ -1034,7 +1049,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_charge_check.enabled = true;
 			minimum_time_check.enabled = true;
 			cut_prepress_radio.visible = false;
-			Ignorecuts_radio.visible =false;
+			Ignorecuts_radio.visible = false;
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
 		} else if (charge_method_combo.selectedItem.data == ChargeMethod.Cut) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1071,6 +1088,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = true;
 			Ignorecuts_radio.visible =true;
 			charge_group_2.enabled = false;
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
 		} else if (charge_method_combo.selectedItem.data == ChargeMethod.FlatRate) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1106,6 +1125,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Fold) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1142,6 +1163,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
+			fold_template_label.visible = true;
+			fold_template_combo.visible = true;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Ink) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1178,6 +1201,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.JobAware) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1213,7 +1238,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
-	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Linear) {
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
+		} else if (charge_method_combo.selectedItem.data == ChargeMethod.Linear) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
 			hide_price_only_check.enabled = true;
@@ -1249,6 +1276,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Markup) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1284,6 +1313,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.PriceList) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1319,6 +1350,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.RateList) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1354,6 +1387,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Shipping) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1389,6 +1424,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			minimum_time_check.enabled = false;
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.SquareArea) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1425,16 +1462,18 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			cut_prepress_radio.visible = false;
 			Ignorecuts_radio.visible =false;
 			charge_group_2.enabled = true;
+			fold_template_label.visible = false;
+			fold_template_combo.visible = false;
 		}
 		price_calc_stack.selectedChild = newCanvas;	
 		UpdatePriceMethod();	
 	}
 	private function changeChargeMethod(event:ListEvent):void {
 		updateControlState();
+		this.isDirty = true;
 	}
 	
-	private function tree_itemClick(evt:Event):void {  
-
+	private function tree_itemClick(evt:Event):void {
 	}
 	
 	private function updateDataProvider():void {
@@ -1547,20 +1586,23 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			chargeTree.validateNow();
 			
 			var treeItem:ModelBase = null;
-			if (charge != null) {
-				treeItem = findItemInChargeTree(charge.id);				
-			} else if (chargeCategory != null) {
-				treeItem = findItemInChargeTree(chargeCategory.id);				
-			} else if (chargeCommand != null) {
-				treeItem = findItemInChargeTree(chargeCommand.id);				
-			}
-			if (treeItem != null) {
+	        if (scrollToItem != null) {
+				var treeItem:ModelBase = null;
+				treeItem = findItemInChargeTree(scrollToItem.id);
 				chargeTree.selectedItem = treeItem;
+				scrollToItem = null;				
+			} else {
+				if (charge != null) {
+					treeItem = findItemInChargeTree(charge.id);				
+				} else if (chargeCategory != null) {
+					treeItem = findItemInChargeTree(chargeCategory.id);				
+				} else if (chargeCommand != null) {
+					treeItem = findItemInChargeTree(chargeCommand.id);				
+				}
+				if (treeItem != null) {
+					chargeTree.selectedItem = treeItem;
+				}
 			}
-//			if (chargeTree.selectedIndex != -1)
-//				chargeTree.scrollToIndex(chargeTree.selectedIndex);
-//			if (treeItem != null)
-//				chargeTree.scrollToIndex(chargeTree.getItemIndex(treeItem));
 			updateTreeSelection();
 		}
 	}
@@ -1636,7 +1678,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    priceListPickerWindow.itemType = "PriceList";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
-	     priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearPriceList);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearPriceList);
+	    this.isDirty = true;
 	}
 
 	private function doWasteChart():void {
@@ -1645,19 +1688,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    priceListPickerWindow.itemType = "WasteChart";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectWasteChart);
-	     priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearWasteChart);
+	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearWasteChart);
+	    this.isDirty = true;
 	}
 	
 	private function doEditWasteChart():void {
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.setPriceList(charge.wasteChart as PriceListBase);		
+	    titleWindow.setPriceList(charge.wasteChart as PriceListBase);
+	    this.isDirty = true;		
 	}
 	
 	private function doEditPriceList():void {
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.setPriceList(charge.priceList as PriceListBase);				
+	    titleWindow.setPriceList(charge.priceList as PriceListBase);
+	    this.isDirty = true;				
 	}
 	
 	private function doPresetInfo():void {
@@ -1666,6 +1712,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    chargePresetInfoWindow.setStyle("borderAlpha", 0.9);
 		chargePresetInfoWindow.setChargeDefinition(this.charge);
 		chargePresetInfoWindow.addEventListener(ChargePresetInfoEvent.CHARGEPRESETOK, handleChargePresetInfoOK);
+		this.isDirty = true;
 	}
 	
 	private function handleChargePresetInfoOK(evt:ChargePresetInfoEvent):void {
@@ -1689,16 +1736,17 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			Alert.show("Price List Picker returned a null price list", "Error");
 		}  
     }
+    
     private function handleClearWasteChart(evt:PriceListPickerSelectEvent):void {
 		charge.wasteChart = null;
 		waste_chart_link.label = wasteChartLabel();
-		
     }
+    
      private function handleClearPriceList(evt:PriceListPickerSelectEvent):void {
 		charge.priceList = null;
 		price_list_link.label = priceListLabel();
-		
     }
+    
     private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
  		if (evt.priceList != null) {
 			charge.priceList = evt.priceList as PriceList;
@@ -1708,6 +1756,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			Alert.show("Price List Picker returned a null price list", "Error");
 		}     	
     }
+    
     private function handlePriceListPickerCancel(evt:PriceListPickerSelectEvent):void {
     	
     }
@@ -1771,26 +1820,27 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			return "None";
 		}
 	}
+	
 	private function doPiecePrice():void{
 		if (setup_check.selected == true){
 			material_check.selected = false;
-			material_edit.text ="";
+			//material_edit.text ="";
 			material_edit.enabled= false;
 			in_set_mat_check.selected = false;
 			in_set_mat_check.enabled = false;
-			in_sets_mat_edit.text = "";
+			//in_sets_mat_edit.text = "";
 			in_sets_mat_edit.enabled = false;
-			
-		
 		}
+		this.isDirty = true;
 	}
 			
 	private	function doPiecePrice2():void{
 		if (material_check.selected == true){
 			setup_check.selected = false;
-			setup_edit.text ="";
+			//setup_edit.text ="";
 			setup_edit.enabled= false;
 		}
+		this.isDirty = true;
 			
 	}
 	private function UpdateAdj():void{
@@ -1806,17 +1856,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	 	else
 	 		adjustable_sets_check.enabled = false;
 	 	if(in_sets_check.selected )
-	 		in_sets_edit.text = charge.rateSetCount.toString(); 
-	 	else
-	 		in_sets_edit.text = "";
+	 		in_sets_edit.text = charge.rateSetCount.toString();
 	}
+	
 	private function UpdatePriceMethod(): void{
 		if (charge != null && pricing_method.selectedValue == "CostPlus") {
 			markup_edit.text = charge.markup.toString();
 			sale_price_per_unit_edit.text = costPricingString;
-			rate_edit.text = "";
-			material_edit.text= "";
-			setup_edit.text= "";
+			//rate_edit.text = "0.0";
+			//material_edit.text= "0.0";
+			//setup_edit.text= "0.0";
 			rate_edit.enabled = false;
 			material_edit.enabled = false;
 			setup_edit.enabled = false;
@@ -1840,8 +1889,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			switch (charge_method_combo.selectedItem.data) {
 				case ChargeMethod.FlatRate:
 				case ChargeMethod.Markup:
-					markup_edit.text = "";
-					sale_price_per_unit_edit.text = "";
+					//markup_edit.text = "0.0";
+					//sale_price_per_unit_edit.text = "0.0";
 					cost_plus_radio.enabled= false;					
 					rate_check.enabled = true;
 					if( charge != null)
@@ -1876,8 +1925,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				case ChargeMethod.RateList:
 				case ChargeMethod.Shipping:
 				case ChargeMethod.SquareArea:
-					markup_edit.text = "";
-					sale_price_per_unit_edit.text = "";
+					//markup_edit.text = "0.0";
+					//sale_price_per_unit_edit.text = "0.0";
 					cost_plus_radio.enabled =true;					
 					rate_check.enabled = true;
 					if( charge != null)
@@ -1911,19 +1960,68 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 		return sc;
 	}
-	private function UpdateChargeCosting():void{
-		charge.markup = parseFloat(markup_edit.text);
+	
+	private function updateChargeCosting(event:Event):void{
+		charge.markup = parseCurrencyFloat(markup_edit.text);
 		if (isNaN(charge.markup)) {
 			charge.markup = 0.0;
 		}
 		chargeService.calculateChargeCostingRate(charge, null);
+		handleFocusOut(event);
+	}
+	
+	private function handleFocusOut(event:Event):void {
+		if (event.currentTarget == fixed_spoilage_edit ||
+			event.currentTarget == base_linear_quantity_edit ||
+			event.currentTarget == minimum_time_edit ||
+			event.currentTarget == area_edit ||
+			event.currentTarget == in_sets_edit ||
+			event.currentTarget == in_sets_mat_edit ||
+			event.currentTarget == sheet_lift_edit ||
+			event.currentTarget == cover_ink_edit ||
+			event.currentTarget == ship_markup_edit) {			
+			(event.currentTarget as TextInput).text = numberFormatter.format((event.currentTarget as TextInput).text);
+		} else if (event.currentTarget == minimum_charge_edit) {
+			(event.currentTarget as TextInput).text = Snowmass.getCurrencyFormatter(false, 4).format((event.currentTarget as TextInput).text);			
+		} else if (event.currentTarget == setup_edit ||
+				   event.currentTarget == rate_edit ||
+				   event.currentTarget == material_edit) {
+			(event.currentTarget as TextInput).text = Snowmass.getCurrencyFormatter(false, 2).format((event.currentTarget as TextInput).text);			
+		}
+	}
+	
+	private function setDocDirty():void {
+		this.isDirty = true;
+	}
+	
+	private function chargeTreeOpening(event:TreeEvent):void {
+		var trigger:Event = event.triggerEvent;
+		
+		if (trigger is MouseEvent) {
+			if ((trigger as MouseEvent).ctrlKey == true) {
+				chargeTree.expandChildrenOf(event.item, event.opening);
+			}
+		}
 	}
     ]]>
                              
 </mx:Script>
     <mx:Dissolve id="dissolveOut" duration="400" alphaFrom="1.0" alphaTo="0.0"/>
     <mx:Dissolve id="dissolveIn" duration="400" alphaFrom="0.0" alphaTo="1.0"/>
-
+   	<mx:NumberValidator source="{fixed_spoilage_edit}" property="text" trigger="{fixed_spoilage_edit}" triggerEvent="focusOut" allowNegative="true"/>
+   	<mx:NumberValidator source="{base_linear_quantity_edit}" property="text" trigger="{base_linear_quantity_edit}" triggerEvent="focusOut" allowNegative="true"/>
+   	<mx:NumberValidator source="{minimum_time_edit}" property="text" trigger="{minimum_time_edit}" triggerEvent="focusOut" allowNegative="true"/>
+   	<mx:NumberValidator source="{markup_edit}" property="text" trigger="{markup_edit}" triggerEvent="focusOut" allowNegative="true"/>
+   	<mx:NumberValidator source="{area_edit}" property="text" trigger="{area_edit}" triggerEvent="focusOut" allowNegative="false"/>
+   	<mx:NumberValidator source="{in_sets_edit}" property="text" trigger="{in_sets_edit}" triggerEvent="focusOut" allowNegative="false"/>
+   	<mx:NumberValidator source="{in_sets_mat_edit}" property="text" trigger="{in_sets_mat_edit}" triggerEvent="focusOut" allowNegative="false"/>
+   	<mx:NumberValidator source="{sheet_lift_edit}" property="text" trigger="{sheet_lift_edit}" triggerEvent="focusOut" allowNegative="false"/>
+   	<mx:CurrencyValidator source="{minimum_charge_edit}" property="text" trigger="{minimum_charge_edit}" triggerEvent="focusOut" allowNegative="true"/>
+   	<mx:CurrencyValidator source="{setup_edit}" property="text" trigger="{setup_edit}" triggerEvent="focusOut" allowNegative="true"/>
+   	<mx:CurrencyValidator source="{rate_edit}" property="text" trigger="{rate_edit}" triggerEvent="focusOut" allowNegative="true"/>
+   	<mx:CurrencyValidator source="{material_edit}" property="text" trigger="{material_edit}" triggerEvent="focusOut" allowNegative="true"/>
+   	<mx:NumberFormatter id="numberFormatter" precision="4" useNegativeSign="true" useThousandsSeparator="true"/>
+   	
 <mx:VBox width="100%" height="100%">
     	<mx:Canvas width="100%" height="100%">
 		<mx:RadioButtonGroup id="area_group" selectedValue="{selected_area_group}" change="area_group_change(event)"/>
@@ -1931,11 +2029,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 		<mx:HDividedBox x="0" y="0" width="100%" height="740" liveDragging="true">
 			<mx:Canvas height="100%" width="227">
-				<mx:Tree width="100%" render="renderFunction()" folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" id="chargeTree" dataProvider="{chargeCommands}" 
-						iconFunction="tree_iconFunction" labelFunction="treeLabel" visible="true" enabled="true" click = "tree_itemClick(event);" dataChange="treeSelectionChanged(event)" change="treeSelectionChanged(event);" bottom="100" top="0"></mx:Tree>
-				<!--<mx:FormItem width="217" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kPSSharedFolderCmd.Filter')}" height="28" bottom="0">
-					<mx:TextInput width="100%" id="tree_filter" change="refreshData()"/>
-				</mx:FormItem>-->
+				<mx:Tree width="100%" render="renderFunction()" folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" id="chargeTree" dataProvider="{chargeCommands}" itemOpening="chargeTreeOpening(event)" 
+						iconFunction="tree_iconFunction" labelFunction="treeLabel" visible="true" enabled="true" click="tree_itemClick(event);" dataChange="treeSelectionChanged(event)" change="treeSelectionChanged(event);" bottom="100" top="0"></mx:Tree>
 				<comp:SmallThrobber id="throbber" height="20" width="20" x="103.5" y="95"/>
 				<mx:Button x="10" y="572" width="20" height="20" id="new_command_button" click="doNewCommand()" enabled="{enableNewCommand}" bottom="78">
 					<mx:icon>@Embed(source='../../../../assets/new_small.png')</mx:icon>
@@ -1988,63 +2083,63 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			<mx:Canvas label="charge_blank_canvas" width="100%" height="100%" id="charge_blank_canvas">
 			</mx:Canvas> 
 			<mx:Canvas label="charge_canvas" width="100%" height="100%" id="charge_canvas" verticalScrollPolicy="auto" horizontalScrollPolicy="off">
-				<mx:Canvas x="0" y="14" width="100%" height="634" horizontalScrollPolicy="off" verticalScrollPolicy="auto" id="canvas4">
-					<mx:TextInput x="125" y="3" width="430" id="charge_name_edit" text="{charge.title}"/>
-					<comp:VariableWidthComboBoxComponent x="126" y="28" width="162" dataProvider="{locations}" id="location_combo" labelField="name" height="21"/>
-					<comp:VariableWidthComboBoxComponent x="397" y="28" width="158" dataProvider="{costCenters}" id="cost_center_combo" labelField="name" height="21"/>
+				<mx:Canvas x="0" y="0" width="100%" height="634" horizontalScrollPolicy="off" verticalScrollPolicy="auto" id="canvas4">
+					<mx:TextInput x="125" y="3" width="430" id="charge_name_edit" text="{charge.title}" change="setDocDirty()"/>
+					<comp:VariableWidthComboBoxComponent x="126" y="28" width="162" dataProvider="{locations}" id="location_combo" labelField="name" height="21" change="setDocDirty()"/>
+					<comp:VariableWidthComboBoxComponent x="397" y="28" width="158" dataProvider="{costCenters}" id="cost_center_combo" labelField="name" height="21" change="setDocDirty()"/>
 					<mx:Label x="10" y="237" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.BaseLinearQuantity')}" textAlign="right" id="label3" width="116"/>
 					<mx:Label x="10" y="212" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FixedSpoilage')}" textAlign="right" id="label4" width="82"/>
 					<mx:Label x="313" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleTagEditCmd.CostCenter')}" textAlign="right" width="76"/>
 					<mx:Label x="10" y="29.5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.ProductionLocation')}" textAlign="right" id="label6" width="108"/>
 
-					<mx:Label x="10" y="129" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ProdCode')}" textAlign="right" id="label10" width="58"/>
+					<mx:Label x="10" y="127" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ProdCode')}" textAlign="right" id="label10" width="58"/>
 					<mx:Label x="10" y="58" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Method')}" textAlign="right" id="label7" width="58"/>
 					<mx:Label x="10" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Charge')}" textAlign="right" id="label5" width="107"/>
 					<comp:VariableWidthComboBoxComponent x="76" y="56" width="132" id="charge_method_combo" change="changeChargeMethod(event);" dataProvider="{ChargeMethod.toArray()}" height="21"/>
 					<mx:Label x="10" y="81" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Quantity')}" textAlign="right" id="label8" width="58"/>
-					<comp:VariableWidthComboBoxComponent x="76" y="79" width="132" id="charge_quantity_combo" dataProvider="{qtyTypes}" height="21"/>
+					<comp:VariableWidthComboBoxComponent x="76" y="79" width="132" id="charge_quantity_combo" dataProvider="{qtyTypes}" height="21" change="setDocDirty()"/>
 					<mx:Label x="10" y="104" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.SalesCat')}" textAlign="right" id="label9" width="58"/>
-					<comp:VariableWidthComboBoxComponent x="76" y="102" width="132" id="charge_sales_category_combo" dataProvider="{salesCategories}" labelField="name" height="21"/>
-					<comp:VariableWidthComboBoxComponent x="76" y="127" width="132" id="product_code_combo" dataProvider="{productCodes}" labelField="name" height="21"/>
-					<mx:CheckBox x="231" y="55.5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Nooverrides')}" id="no_overrides_check" selected="{charge.noOverrides}"/>
-					<mx:CheckBox x="231" y="76" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Donotdiscount')}" id="do_not_discount_check" selected="{charge.doNotDiscount}"/>
-					<mx:CheckBox x="375" y="55.5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Hidepriceonly')}" id="hide_price_only_check" selected="{charge.hidePrice}"/>
-					<mx:CheckBox x="375" y="76" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Hidechargeinprintout')}" id="hide_charge_in_printouts_check" selected="{charge.hideChargeInPrintouts}"/>
-					<mx:CheckBox x="375" y="94" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.BinderyOperation')}" id="bindery_operation_check" selected="{charge.binderyCharge}"/>
-					<mx:CheckBox x="231" y="94" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Excludedfromworkflow')}" id="excluded_from_workflow_check" selected="{charge.excludedFromWorkflow}"/>
-					<mx:CheckBox x="231" y="115" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.TrackerPreProduction')}" id="tracker_pre_production_check" selected="{charge.preproduction}"/>
-					<mx:CheckBox x="375" y="115" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignoreglobalpricecha')}" id="ignore_global_price_changes_check" selected="{charge.ignoreGlobalPriceChanges}"/>
-					<mx:CheckBox  visible="false" x="231" y="145" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.IntegratedCTPDevice')}" id="integrated_ctp_device_check" selected="{charge.integratedCTP}" enabled="false"/>
-					<mx:TextInput x="100" y="210" width="90" id="fixed_spoilage_edit" text="{charge.fixedWaste}" textAlign="right"/>
-					<mx:TextInput x="134" y="235" width="56" id="base_linear_quantity_edit" text="{charge.baseLinearNumber}" textAlign="right"/>
+					<comp:VariableWidthComboBoxComponent x="76" y="102" width="132" id="charge_sales_category_combo" dataProvider="{salesCategories}" labelField="name" height="21" change="setDocDirty()"/>
+					<comp:VariableWidthComboBoxComponent x="76" y="125" width="132" id="product_code_combo" dataProvider="{productCodes}" labelField="name" height="21" change="setDocDirty()"/>
+					<mx:CheckBox x="231" y="55.5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Nooverrides')}" id="no_overrides_check" selected="{charge.noOverrides}" change="setDocDirty()"/>
+					<mx:CheckBox x="231" y="76" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Donotdiscount')}" id="do_not_discount_check" selected="{charge.doNotDiscount}" change="setDocDirty()"/>
+					<mx:CheckBox x="375" y="55.5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Hidepriceonly')}" id="hide_price_only_check" selected="{charge.hidePrice}" change="setDocDirty()"/>
+					<mx:CheckBox x="375" y="76" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Hidechargeinprintout')}" id="hide_charge_in_printouts_check" selected="{charge.hideChargeInPrintouts}" change="setDocDirty()"/>
+					<mx:CheckBox x="375" y="94" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.BinderyOperation')}" id="bindery_operation_check" selected="{charge.binderyCharge}" change="setDocDirty()"/>
+					<mx:CheckBox x="231" y="94" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Excludedfromworkflow')}" id="excluded_from_workflow_check" selected="{charge.excludedFromWorkflow}" change="setDocDirty()"/>
+					<mx:CheckBox x="231" y="115" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.TrackerPreProduction')}" id="tracker_pre_production_check" selected="{charge.preproduction}" change="setDocDirty()"/>
+					<mx:CheckBox x="375" y="115" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignoreglobalpricecha')}" id="ignore_global_price_changes_check" selected="{charge.ignoreGlobalPriceChanges}" change="setDocDirty()"/>
+					<mx:CheckBox  visible="false" x="231" y="145" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.IntegratedCTPDevice')}" id="integrated_ctp_device_check" selected="{charge.integratedCTP}" enabled="false" change="setDocDirty()"/>
+					<mx:TextInput x="100" y="210" restrict="0-9\\.\\-\\," width="90" id="fixed_spoilage_edit" text="{numberFormatter.format(charge.fixedWaste)}" textAlign="right" change="setDocDirty()"/>
+					<mx:TextInput x="134" y="235" restrict="0-9\\.\\-\\," width="56" id="base_linear_quantity_edit" text="{numberFormatter.format(charge.baseLinearNumber)}" textAlign="right" change="setDocDirty()"/>
 					<mx:HRule x="3" y="194" width="710" height="8" id="hrule1"/>
 					<mx:HRule x="3" y="264" width="710" height="8" id="hrule2"/>
 					<mx:HRule x="3" y="384" width="710" height="8" id="hrule3"/>
-					<mx:CheckBox x="209" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumCharge')}" id="minimum_charge_check" selected="{charge.useMinimumCharge}"/>
-					<mx:TextInput x="342" y="210" width="96" id="minimum_charge_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(charge.minimum)}" enabled="{minimum_charge_check.selected}" textAlign="right"/>
-					<mx:CheckBox x="209" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumTime')}" id="minimum_time_check" selected="{charge.useMinimumTime}"/>
-					<mx:TextInput x="342" y="235" width="96" id="minimum_time_edit" text="{charge.minimumTime}" enabled="{minimum_time_check.selected}" textAlign="right"/>
+					<mx:CheckBox x="209" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumCharge')}" id="minimum_charge_check" selected="{charge.useMinimumCharge}" change="setDocDirty()"/>
+					<mx:TextInput x="342" y="210" restrict="0-9\\.\\-\\," width="96" id="minimum_charge_edit" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.minimum)}" enabled="{minimum_charge_check.selected}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
+					<mx:CheckBox x="209" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumTime')}" id="minimum_time_check" selected="{charge.useMinimumTime}" change="setDocDirty()"/>
+					<mx:TextInput x="342" y="235" restrict="0-9" width="96" id="minimum_time_edit" text="{numberFormatter.format(charge.minimumTime)}" enabled="{minimum_time_check.selected}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					
-					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.RunArea')}" groupName="area_group" id="run_area_radio" width="112" value="RunArea"/>
-					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CutsarePrePress')}" id="cut_prepress_radio" width="112"/>
+					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.RunArea')}" groupName="area_group" id="run_area_radio" width="112" value="RunArea" change="setDocDirty()"/>
+					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CutsarePrePress')}" id="cut_prepress_radio" width="112" change="setDocDirty()"/>
 					
-					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FinishedArea')}" groupName="area_group" id="finished_area_radio" width="112" value="FinishArea"/>
-					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignorecuts')}" id="Ignorecuts_radio" width="112"/>
+					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FinishedArea')}" groupName="area_group" id="finished_area_radio" width="112" value="FinishArea" change="setDocDirty()"/>
+					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignorecuts')}" id="Ignorecuts_radio" width="112" change="setDocDirty()"/>
 					
-					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio" width="93" value="CostPlus" />
-					<mx:RadioButton x="4" y="301" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio" width="93" value="PiecePrice" />
-					<mx:TextInput x="182" y="280" width="124" id="markup_edit" text="{charge.markup}" enabled="{cost_plus_radio.selected}" focusOut="UpdateChargeCosting();" textAlign="right"/>
-					<mx:Text x="422" y="282" width="90" id="sale_price_per_unit_edit" text="{costPricingString}" height="17" textAlign="right"/>
-					<mx:CheckBox x="105" y="303" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check" selected="{charge.useSetup}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice();" />
-					<mx:TextInput x="182" y="303" width="124" id="setup_edit" enabled="{setup_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.setupPrice)}" textAlign="right"/>
+					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio" width="93" value="CostPlus"  change="setDocDirty()"/>
+					<mx:RadioButton x="4" y="301" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio" width="93" value="PiecePrice"  change="setDocDirty()"/>
+					<mx:TextInput x="182" y="280" restrict="0-9\\.\\-\\," width="124" id="markup_edit" text="{numberFormatter.format(charge.markup)}" enabled="{cost_plus_radio.selected}" focusOut="updateChargeCosting(event);" textAlign="right" change="setDocDirty()"/>
+					<mx:Text x="422" y="282" width="91" id="sale_price_per_unit_edit" text="{costPricingString}" height="17" textAlign="right"/>
+					<mx:CheckBox x="105" y="303" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Setup')}" id="setup_check" selected="{charge.useSetup}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice();"/>
+					<mx:TextInput x="182" y="303" restrict="0-9\\.\\-\\," width="124" id="setup_edit" enabled="{setup_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 2).format(charge.setupPrice)}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					<mx:CheckBox x="105" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate')}" id="rate_check" selected="{charge.useRate}" width="69" enabled="{piece_pricing_radio.selected}" change="UpdateAdj();"/>
-					<mx:TextInput x="182" y="326" width="124" id="rate_edit" enabled="{rate_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.rate)}" textAlign="right"/>
+					<mx:TextInput x="182" y="326" restrict="0-9\\.\\-\\," width="124" id="rate_edit" enabled="{rate_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 2).format(charge.rate)}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					<mx:CheckBox x="105" y="349" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Material')}" id="material_check" selected="{charge.useMaterial}" width="69" enabled="{piece_pricing_radio.selected}" change="doPiecePrice2();"/>
-					<mx:TextInput x="182" y="349" width="124" id="material_edit" enabled="{material_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.material)}" textAlign="right"/>
+					<mx:TextInput x="182" y="349" restrict="0-9\\.\\-\\," width="124" id="material_edit" enabled="{material_check.selected}" text="{Snowmass.getCurrencyFormatter(false, 2).format(charge.material)}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Area')}" id="area_check" selected="{charge.useArea}" width="118" enabled="{rate_check.selected}" change="UpdateAdjset()"/>
-					<mx:TextInput x="446" y="326" width="124" id="area_edit" enabled="{area_check.selected}" text="{charge.area}" textAlign="right"/>
+					<mx:TextInput x="446" y="326" restrict="0-9\\.\\-\\," width="124" id="area_edit" enabled="{area_check.selected}" text="{numberFormatter.format(charge.area)}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}" id="in_sets_check" selected="{charge.useRateSets}" width="118" enabled="false" change="UpdateAdjset()"/>
-					<mx:TextInput x="446" y="326" width="124" id="in_sets_edit" enabled="{in_sets_check.selected}" text="{charge.rateSetCount}" textAlign="right"/>
+					<mx:TextInput x="446" y="326" restrict="0-9\\.\\-\\," width="124" id="in_sets_edit" enabled="{in_sets_check.selected}" text="{numberFormatter.format(charge.rateSetCount)}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					<mx:Label x="314" y="282" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.SalePriceperUnit')}" id="label1" textAlign="right"/>
 					<mx:Label x="105" y="282" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Markup')}" id="label2" width="69" textAlign="right"/>
 					<mx:ViewStack x="0" y="393" id="price_calc_stack" width="713" height="132" creationPolicy="all">
@@ -2058,35 +2153,35 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 							<mx:Text x="389" y="66" text="x" id="multiplier_2_txt"/>
 							<mx:Text x="256" y="66" text="x" id="multiplier_3_txt"/>
 							<mx:Canvas x="10" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
-								<mx:RadioButton x="8" y="1" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_1" id="na1_radio" width="85" value="None"/>
-								<mx:RadioButton x="8" y="27" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ordered')}" groupName="charge_group_1" id="ordered_radio" width="85" value="Ordered"/>
-								<mx:RadioButton x="8" y="53" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Press')}" groupName="charge_group_1" id="press_radio" width="85" value="Press"/>
+								<mx:RadioButton x="8" y="1" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_1" id="na1_radio" width="85" value="None" change="setDocDirty()"/>
+								<mx:RadioButton x="8" y="27" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ordered')}" groupName="charge_group_1" id="ordered_radio" width="85" value="Ordered" change="setDocDirty()"/>
+								<mx:RadioButton x="8" y="53" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Press')}" groupName="charge_group_1" id="press_radio" width="85" value="Press" change="setDocDirty()"/>
 							</mx:Canvas>
 							<mx:Canvas x="143" y="31" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas3">
-								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_2" id="na2_radio" width="83" value="NA"/>
-								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Colors')}" groupName="charge_group_2" id="colors_radio" width="83" value="Colors"/>
-								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides')}" groupName="charge_group_2" id="sides_radio" width="83" value = "Sides"/>
+								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_2" id="na2_radio" width="83" value="NA" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Colors')}" groupName="charge_group_2" id="colors_radio" width="83" value="Colors" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides')}" groupName="charge_group_2" id="sides_radio" width="83" value = "Sides" change="setDocDirty()"/>
 							</mx:Canvas>
 							<mx:Canvas x="276" y="31" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas2">
-								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_3" id="na3_radio" width="83" value="NA"/>
-								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sheets')}" groupName="charge_group_3" id="sheets_radio" width="83" value="Sheets"/>
-								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Signatures')}" groupName="charge_group_3" id="signatures_radio" width="83" value="Signatures"/>
+								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_3" id="na3_radio" width="83" value="NA" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sheets')}" groupName="charge_group_3" id="sheets_radio" width="83" value="Sheets" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Signatures')}" groupName="charge_group_3" id="signatures_radio" width="83" value="Signatures" change="setDocDirty()"/>
 							</mx:Canvas>
 							<mx:Canvas x="409" y="31" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas1">
-								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_4" id="na4_radio" width="83" value="NA"/>
-								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.xUp')}" groupName="charge_group_4" id="x_up_radio" width="83" value="xUp"/>
-								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Up')}" groupName="charge_group_4" id="slash_up_radio" width="83" value="/Up"/>
+								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_4" id="na4_radio" width="83" value="NA" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.xUp')}" groupName="charge_group_4" id="x_up_radio" width="83" value="xUp" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Up')}" groupName="charge_group_4" id="slash_up_radio" width="83" value="/Up" change="setDocDirty()"/>
 							</mx:Canvas>
-							<mx:CheckBox x="547" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.AdjustableUp')}" id="adjustable_up_check" selected="{charge.adjustUps}"  enabled="{slash_up_radio.selected ||x_up_radio.selected} "/>
+							<mx:CheckBox x="547" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.AdjustableUp')}" id="adjustable_up_check" selected="{charge.adjustUps}"  enabled="{slash_up_radio.selected ||x_up_radio.selected}"  change="setDocDirty()"/>
 						</mx:Canvas>
 						<mx:Canvas label="blank_canvas" width="100%" height="100%" id="blank_canvas" showEffect="dissolveIn" hideEffect="dissolveOut">
 						</mx:Canvas>
 						<mx:Canvas label="markup_canvas" width="100%" height="100%" id="markup_canvas" showEffect="dissolveIn" hideEffect="dissolveOut">
 							<mx:RadioButtonGroup id="markup_type_group" selectedValue="{selected_markup_type_group}" change="markup_type_group_change(event)"/>
-							<mx:RadioButton x="10" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.JobPrice')}" groupName="markup_type_group" width="138" value="JobPrice"/>
-							<mx:RadioButton x="10" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Charges')}" groupName="markup_type_group" width="138" value="Charges"/>
-							<mx:RadioButton x="156" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.EntireJob')}" groupName="markup_type_group" width="138" value="EntireJob"/>
-							<mx:RadioButton x="156" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Invoice')}" groupName="markup_type_group" width="138" value="Invoice"/>
+							<mx:RadioButton x="10" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.JobPrice')}" groupName="markup_type_group" width="138" value="JobPrice" change="setDocDirty()"/>
+							<mx:RadioButton x="10" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Charges')}" groupName="markup_type_group" width="138" value="Charges" change="setDocDirty()"/>
+							<mx:RadioButton x="156" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.EntireJob')}" groupName="markup_type_group" width="138" value="EntireJob" change="setDocDirty()"/>
+							<mx:RadioButton x="156" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Invoice')}" groupName="markup_type_group" width="138" value="Invoice"  change="setDocDirty()"/>
 							<mx:Text x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Selectthetypeofmarku')}" width="291" height="17" fontWeight="bold"/>
 						</mx:Canvas>
 					</mx:ViewStack>
@@ -2096,21 +2191,23 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:LinkButton x="132" y="560" width="291" id="waste_chart_link" label="{wasteChartLabel()}" enabled="{charge.wasteChart != null}" click="doEditWasteChart()"/>
 					<mx:HRule x="-7" y="519" width="710" height="8" id="hrule4"/>
 					<mx:CheckBox x="320" y="349" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.InSets')}"  selected="{charge.useMaterialSets}" id="in_set_mat_check" enabled="{material_check.selected}" width="118" change="UpdateAdjset();"/>
-					<mx:TextInput x="446" y="349" width="124" enabled="{in_set_mat_check.selected}"  text="{charge.materialSetCount}" id="in_sets_mat_edit" textAlign="right"/>
+					<mx:TextInput x="446" y="349" restrict="0-9\\.\\-\\," width="124" enabled="{in_set_mat_check.selected}"  text="{numberFormatter.format(charge.materialSetCount)}" id="in_sets_mat_edit" textAlign="right" focusOut="handleFocusOut(event)"  change="setDocDirty()"/>
 					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
-					<mx:TextInput x="446" y="326" id="sheet_lift_edit" text="{charge.sheetliftCut}" width="124"  enabled="{sheet_lift_check.selected}" textAlign="right"/>
+					<mx:TextInput x="446" y="326" restrict="0-9\\.\\-\\," id="sheet_lift_edit" text="{charge.sheetliftCut}" width="124"  enabled="{sheet_lift_check.selected}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0')}" id="cover_ink_check" selected="{charge.coverlb_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
-					<mx:TextInput x="520" y="280"  restrict="0-9\." id="cover_ink_edit"  text="{Snowmass.getCurrencyFormatter(false,4).format(charge.coverlbInk)}" width="124" enabled="{cover_ink_check.selected}" textAlign="right"/>
+					<mx:TextInput x="446" y="326"  restrict="0-9\." id="cover_ink_edit"  text="{charge.coverlbInk}" width="124" enabled="{cover_ink_check.selected}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" id="ship_markup_check" selected="{charge.ship_markup_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
-					<mx:TextInput x="446" y="326" id="ship_markup_edit" text="{charge.shipMarkup}" width="124" enabled="{ship_markup_check.selected}" textAlign="right"/>
-					<mx:CheckBox x="592" y="313" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablesets')}" id="adjustable_sets_check" selected="{charge.adjustableSets}" />
-					<mx:CheckBox x="592" y="331" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablerate')}" id="adjustable_rate_check" selected="{charge.adjustableRate}"/>
-					<mx:CheckBox x="592" y="349" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablematerial')}" id="adjustable_material_check" selected="{charge.adjustableMaterial}" enabled="{material_check.selected}"/>
+					<mx:TextInput x="446" y="326" id="ship_markup_edit" restrict="0-9\." text="{charge.shipMarkup}" width="124" enabled="{ship_markup_check.selected}" textAlign="right" focusOut="handleFocusOut(event)"  change="setDocDirty()"/>
+					<mx:CheckBox x="592" y="313" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablesets')}" id="adjustable_sets_check" selected="{charge.adjustableSets}" change="setDocDirty()"/>
+					<mx:CheckBox x="592" y="331" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablerate')}" id="adjustable_rate_check" selected="{charge.adjustableRate}" change="setDocDirty()"/>
+					<mx:CheckBox x="592" y="349" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablematerial')}" id="adjustable_material_check" selected="{charge.adjustableMaterial}" enabled="{material_check.selected}" change="setDocDirty()"/>
+					<mx:Label x="10" y="150" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FoldStyle')}" textAlign="right" id="fold_template_label" width="58" visible="false" />
+					<comp:VariableWidthComboBoxComponent x="76" y="148" width="132" id="fold_template_combo" dataProvider="{foldTemplates}" labelField="name" height="21" visible="false"/>
 				</mx:Canvas>
 			</mx:Canvas>
 			<mx:Canvas label="charge_category_canvas" width="100%" height="100%" id="charge_category_canvas">
 				<mx:TextInput x="125" y="3" width="430" id="charge_category_name_edit" text="{chargeCategory.name}"/>
-				<mx:Label x="9" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Category')}" textAlign="right" width="108"/>
+				<mx:Label x="9" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CategoryTitle')}" textAlign="right" width="108"/>
 			</mx:Canvas>
 			<mx:Canvas label="charge_command_canvas" width="100%" height="100%" id="charge_command_canvas">
 				<mx:TextInput x="125" y="3" width="430" id="charge_command_name_edit" text="{chargeCommand.name}"/>

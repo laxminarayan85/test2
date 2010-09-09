@@ -15,6 +15,9 @@ package com.efi.printsmith.data
 		public var isDeleted:Boolean=false;
 				
 		public var name:String = "";
+		public var imageFile:String = "";
+		public var description:String = "";
+		public var enabled:Boolean = false;
 	
 	}
 }
