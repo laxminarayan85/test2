@@ -634,6 +634,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.parentContainer = this;
 	    titleWindow.itemType = "WasteChart";
+	    if ( copierDefinition.wasteChart != null)
+	    	titleWindow.setPriceList(copierDefinition.wasteChart);
 	    titleWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handleWastePickerCancel);
 	    titleWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleWastePickerSelect);
 	    titleWindow.addEventListener(PriceListPickerSelectEvent.SELECTNEWPRICELIST, handleWastePickerNew);

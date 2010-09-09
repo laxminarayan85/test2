@@ -2415,6 +2415,13 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", id);
 			List<Contact> contactlist = query.getResultList();
+			if (contactlist != null){
+				for (int i=0; i<contactlist.size(); i++){
+					Contact c = (Contact) contactlist.get(i);
+					if (c != null)
+						Hibernate.initialize(c.getComLinks());
+				}
+			}
 			if (contactlist != null)
 				log.debug("** Found " + contactlist.size() + "records:");
 			return contactlist;

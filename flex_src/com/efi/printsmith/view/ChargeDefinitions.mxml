@@ -1677,6 +1677,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
 	    priceListPickerWindow.itemType = "PriceList";
+	    if( charge.priceList != null)
+	    	priceListPickerWindow.setPriceList(charge.priceList);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearPriceList);
@@ -1687,6 +1689,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
 	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
 	    priceListPickerWindow.itemType = "WasteChart";
+	    if( charge.wasteChart != null)
+	    	priceListPickerWindow.setPriceList(charge.wasteChart);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectWasteChart);
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearWasteChart);
