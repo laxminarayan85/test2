@@ -94,6 +94,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	import com.efi.printsmith.events.ModelDeleteItemEvent;
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
 	import com.efi.printsmith.events.DeviceListSelectEvent;
+	import com.efi.printsmith.events.SavePriceListEvent;
 	[Bindable]
     private var preferencesStockDefinitions:ArrayCollection = new ArrayCollection();
 	[Bindable]                                         
@@ -1024,10 +1025,17 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 					stockMarkup.enabled = false;
 			}
 	}
+	private function handleSaveWasteTable(ev:SavePriceListEvent):void
+	{ 
+			copierDefinition.wasteChart = ev.priceList as WasteChart;
+			wasteName.label = WasteListLabel();
+				   
+	}
 	 private function doclickwaste(event: MouseEvent):void{
     		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.setPriceList(copierDefinition.wasteChart as PriceListBase);		
+	    titleWindow.setPriceList(copierDefinition.wasteChart as PriceListBase);
+	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSaveWasteTable);		
     	
     }
 	private function WasteListLabel():String {
@@ -1091,7 +1099,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:Button x="194" y="689"  click="doDelete();" width="38" height="38">
 			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="533" y="204.5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wasteCmd.WasteChart')}" click="doWasteChart();"/>
+		<mx:Button x="489" y="205.5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wasteCmd.WasteChart')}" click="doWasteChart();"/>
 		<mx:Button x="534" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.AddCharges')}" click="doAddCharge();"/>
 		<mx:Label x="10" y="286" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.PrinterType')}" textAlign="right" width="104"/>
 		<mx:CheckBox x="122" y="284" label="B&amp;W" id="blackwhitecheck" selected="{copierDefinition.blackwhite}" labelPlacement="right" click="updateMethodBox();"/>
@@ -1162,7 +1170,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:RadioButton x="344" y="524" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SquareAreaFromFinish')}" id="squarefinishsize" groupName="MatrixArea" value="AreaFinishSize"/>
 		<mx:CheckBox x="344" y="544" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.InterpolateMatrixVal')}" id="interpolatematrix" selected="{copierDefinition.interpolateMatrix}"/>
 		<mx:HRule y="595" height="2" left="5" right="5"/>
-		<mx:LinkButton x="674" y="206.5" label="{WasteListLabel()}" width="97" id="wasteName" height="20" click="doclickwaste(event);"/>
+		<mx:LinkButton x="630" y="206.5" label="{WasteListLabel()}" width="141" id="wasteName" height="20" click="doclickwaste(event);"/>
 		<mx:List x="534" y="150" height="46.5" width="231" id="chargelist" dataProvider="{copierDefinition.charges}" labelField="name"></mx:List>
 		<mx:RadioButton x="134" y="565" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixisMarkuptable')}" id="matrixmarkup"  groupName="matrixSetup" value="MarkupTable"/>
 		<mx:Label x="56" y="731" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38"/>

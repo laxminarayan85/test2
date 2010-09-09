@@ -37,6 +37,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
 	import com.efi.printsmith.events.ChargePresetInfoEvent;
 	import com.efi.printsmith.events.ChargeCostingEvent;
+	import com.efi.printsmith.events.SavePriceListEvent;
 	
 	import com.efi.printsmith.pages.ChargeCosting;
 	import com.efi.printsmith.data.ShippingMethod;
@@ -1696,13 +1697,26 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setPriceList(charge.wasteChart as PriceListBase);
+	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSaveWasteTable);
 	    this.isDirty = true;		
 	}
-	
+	private function handleSaveWasteTable(ev:SavePriceListEvent):void
+	{ 
+			charge.wasteChart = ev.priceList as WasteChart;
+			waste_chart_link.label = wasteChartLabel();
+				   
+	}
+	private function handleSavePriceList(ev:SavePriceListEvent):void
+	{ 
+			charge.priceList = ev.priceList as PriceList;
+			price_list_link.label = priceListLabel();
+				   
+	}
 	private function doEditPriceList():void {
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setPriceList(charge.priceList as PriceListBase);
+	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSavePriceList);
 	    this.isDirty = true;				
 	}
 	
