@@ -27,6 +27,8 @@ import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.SizeTable;
 import com.efi.printsmith.data.TaxCodes;
 import com.efi.printsmith.data.TaxTable;
+import com.efi.printsmith.data.Country;
+import com.efi.printsmith.data.AddressFormatting;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import com.efi.printsmith.service.DataService;
 
@@ -123,6 +125,88 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
 			importPreferencesAccountingField(key, fieldName, fieldValue);
 		}
+		else if (group.equals("Address Formats")) {
+			importAddressFormats(key, fieldName, fieldValue);
+		}
+	}
+	private void importAddressFormats(String key, String name, String value) throws Exception {
+		DataService dataService = new DataService();
+		Country country = (Country)dataService.getByPrevId("Country", key);
+		AddressFormatting addressFormatting = null;
+		if (country == null && name.equals("Country Title")) {
+			country = new Country();
+			country.setName(value);
+			country.setPrevId(key);
+			addressFormatting = new AddressFormatting();
+			addressFormatting = (AddressFormatting)dataService.addUpdate(addressFormatting);
+			country.addAddressFormattings(addressFormatting);
+		}
+		if (country.getAddressFormattings().size() == 0) {
+			addressFormatting = new AddressFormatting();
+			addressFormatting = (AddressFormatting)dataService.addUpdate(addressFormatting);
+			country.addAddressFormattings(addressFormatting);
+		}
+		if (name.equals("Country Format")) {
+			int i = value.indexOf("]");
+			int count = 0;
+			int nextStart = 0;
+			while (i > -1) {
+				count++;
+				String fieldName = value.substring(nextStart, i+1);
+				nextStart = i+1;
+				addressFormatting = country.getAddressFormattings().get(country.getAddressFormattings().size() - 1);
+				if (fieldName.equals("[NewLine]")) {
+					addressFormatting = new AddressFormatting();
+					addressFormatting = (AddressFormatting)dataService.addUpdate(addressFormatting);
+					country.addAddressFormattings(addressFormatting);
+					count = 0;
+				}
+				else if (fieldName.equals("[Address1]")) {
+					addressFormatting.setStreet1Position(count);
+					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
+						addressFormatting.setStreet1Separator(value.substring(nextStart,nextStart));
+						nextStart++;
+					}
+				}
+				else if (fieldName.equals("[Address2]")) {
+					addressFormatting.setStreet2Position(count);
+					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
+						addressFormatting.setStreet2Separator(value.substring(nextStart,nextStart));
+						nextStart++;
+					}
+				}
+				else if (fieldName.equals("[Zip]")) {
+					addressFormatting.setZipPosition(count);
+					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
+						addressFormatting.setZipSeparator(value.substring(nextStart,nextStart));
+						nextStart++;
+					}
+				}
+				else if (fieldName.equals("[State]")) {
+					addressFormatting.setStatePosition(count);
+					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
+						addressFormatting.setStateSeparator(value.substring(nextStart,nextStart));
+						nextStart++;
+					}
+				}
+				else if (fieldName.equals("[City]")) {
+					addressFormatting.setCityPosition(count);
+					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
+						addressFormatting.setCitySeparator(value.substring(nextStart,nextStart));
+						nextStart++;
+					}
+				}
+				else if (fieldName.equals("[Country]")) {
+					addressFormatting.setCountryPosition(count);
+					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
+						addressFormatting.setCountrySeparator(value.substring(nextStart,nextStart));
+						nextStart++;
+					}
+				}
+				i = value.indexOf("]", nextStart);
+			}
+		}
+		dataService.addUpdate(country);
 	}
 	private void importPreferencesMarkupsField(String group, String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
