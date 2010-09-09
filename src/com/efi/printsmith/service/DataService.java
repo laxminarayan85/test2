@@ -260,7 +260,7 @@ public class DataService extends HibernateService {
 				+ "a.pcwRecycledPercent, a.fscCertified, a.sfiCertified, a.greenSealCertified, a.sheetsPerSet, a.uom , a.stockunit, a.standardItem ";
 		try {
 			String queryString = "select new " + className + "( "
-					+ columnstring + ") from " + className + " a where a.id < 7000"; 
+					+ columnstring + ") from " + className + " a "; 
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
