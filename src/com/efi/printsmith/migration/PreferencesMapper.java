@@ -494,6 +494,11 @@ public class PreferencesMapper extends ImportMapper {
 				preferencesPOS.setPickupColor(preferencesPOS.getPickupColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
 			}
 		}
+		else if (name.equals("Receipts starting serial number")) {
+			preferencesPOS.setReceiptStartCode(value);
+			if (value != "")
+				preferencesPOS.setReceiptStartNumber(true);
+		}
 		else if (name.equals("pastDueColor_RGB_red")) {
 			if(Utilities.tokenToInt(value)<=255) {
 				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value));
