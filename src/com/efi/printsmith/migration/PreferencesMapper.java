@@ -665,6 +665,12 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setGutterHorizontal(Utilities.tokenToDouble(value));
 		else if (name.equals("finishGutterY"))
 			preferencesEstimating.setGutter(Utilities.tokenToDouble(value));
+		else if (name.equals("Estimator_leave_OpenAfterPrint")) {
+			boolean fieldValue = false;
+			if (Utilities.tokenToBooleanValue(value) == false)
+				fieldValue = true;
+			preferencesEstimating.setCloseInvoicesAndEstimateAfterPrinting(fieldValue);
+		}
 		dataService.addUpdate(preferencesEstimating);
 	}
 	private void importPreferencesSystemField(String key, String name, String value) throws Exception {
@@ -739,7 +745,10 @@ public class PreferencesMapper extends ImportMapper {
 		else if (name.equals("app_autoQuitText"))
 			preferencesSystem.setShutdownMessage(value);
 		else if (name.equals("companyIDLabel"))
-			preferencesSystem.setCompanyIdLabel(value);
+			if (value == "")
+				preferencesSystem.setCompanyIdLabel("Company ID");
+			else
+				preferencesSystem.setCompanyIdLabel(value);
 		else if (name.equals("companyID"))
 			preferencesSystem.setCompanyId(value);
 		else if (name.equals("workDay_Sunday"))
