@@ -1,18 +1,18 @@
 /* CSS file */
 .winCloseButton {
-    icon: Embed("../../flex_src/assets/mdi/close.png");
+    icon: Embed("d:/printsmith/Snowmass/flex_src/assets/mdi/close.png");
 }
 .winDoMaxButton {
-    icon: Embed("../../flex_src/assets/mdi/max.png");
+    icon: Embed("d:/printsmith/Snowmass/flex_src/assets/mdi/max.png");
 }
 .winDoRestoreButton {
-	icon: Embed("../../flex_src/assets/mdi/restore.png");
+	icon: Embed("d:/printsmith/Snowmass/flex_src/assets/mdi/restore.png");
 }
 .winMinButton	{
-	icon: Embed("../../flex_src/assets/mdi/min.png");
+	icon: Embed("d:/printsmith/Snowmass/flex_src/assets/mdi/min.png");
 }
 .minimizedWinCloseButton	{
-	icon: Embed("../../flex_src/assets/mdi/close.png");
+	icon: Embed("d:/printsmith/Snowmass/flex_src/assets/mdi/close.png");
 }
 .minimizedWinActive	{
 	background-color:#00ffff;	
