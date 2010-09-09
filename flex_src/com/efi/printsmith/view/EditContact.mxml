@@ -89,6 +89,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	import com.efi.printsmith.data.PreferencesCreditCard;
 	import com.efi.printsmith.events.SaveAddressEvent;
 	import com.efi.printsmith.components.AddressEditorPopup;
+	import com.efi.printsmith.events.EncryptDataEvent;
 	import mx.utils.StringUtil;
 	import mx.collections.SortField;
 	import mx.collections.Sort;
@@ -107,6 +108,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     import mx.core.Application;
     import mx.validators.Validator;
     import mx.events.ValidationResultEvent;    
+ 	import mx.rpc.IResponder;
    	import com.efi.printsmith.events.commandEvents.Contacts.*;
 
     [Bindable]
@@ -411,7 +413,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		contact.marketing.user9 = user9Tag.text; 
 		
 		contact.creditCard.cardHolderName = cardholder.text;
-		contact.creditCard.cardNumber = cardnumber.text;
+		contact.creditCard.cardDisplayNumber = cardnumber.text;
 		contact.creditCard.expiresDate = cardexpiresdate.selectedDate;
 		
 		
@@ -930,6 +932,55 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 		
 	} 
+
+	private function handleEncryptionResult(event:ResultEvent):void {
+		if (event.result != null && contact.creditCard != null) {
+			contact.creditCard.cardNumber = event.result as String;
+			contact.creditCard.encryption = "2";
+		}
+	}
+
+	private function formatCreditCardNumber(str:String):String {
+		var localString:String = new String;
+		var xPattern:int;
+		
+		if (str != "") {
+			xPattern = str.indexOf("X");
+			
+			if (xPattern < 0) {
+				var callbacks:IResponder = new mx.rpc.Responder(handleEncryptionResult, handleFault);	
+				var encryptCCEvent:EncryptDataEvent = new EncryptDataEvent(EncryptDataEvent.ENCRYPTDATA, str, "AES256WITHSERIALNUMBER", callbacks);
+				var i:Number;
+				
+				contact.creditCard.cardNumber = "";
+				
+				encryptCCEvent.dispatch();
+				
+				for (i = 0; i < str.length; ++i) {
+					if (i > 0 && i < (str.length-4)) {
+						localString = localString.concat("X");
+					}
+					else {
+						localString = localString.concat(str.charAt(i).toString());
+					}
+				}
+				
+				return(localString);
+			}
+		} else {
+			contact.creditCard.cardNumber = "";
+			contact.creditCard.cardHolderName = "";
+			contact.creditCard.encryption = "";
+		}
+		
+		return(str);
+	}
+	
+	private function doReadCardNumber():void{		
+		cardnumber.text = formatCreditCardNumber(cardnumber.text);
+		contact.creditCard.cardDisplayNumber = cardnumber.text;
+	}
+
 	private function doGrade():void{
 	var GradePickerWindow:GradePicker = GradePicker(PopUpManager.createPopUp(this, GradePicker, true));
 	    GradePickerWindow.setStyle("borderAlpha", 0.9);
@@ -1026,7 +1077,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Label x="135" y="159" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Street')}" textAlign="right" width="100"/>
 				<mx:Label x="160" y="185" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Zip')}" textAlign="right" width="75"/>
 				<mx:TextInput x="243" y="30" id="cardholder" text="{contact.creditCard.cardHolderName}"/>
-				<mx:TextInput x="243" y="56" id="cardnumber" text="{contact.creditCard.cardNumber}"/>
+				<mx:TextInput x="243" y="56" id="cardnumber" text="{contact.creditCard.cardDisplayNumber}" focusOut="doReadCardNumber()"/>
 				<mx:DateField x="243" y="108" id="cardexpiresdate" text="{contact.creditCard.expiresDate}" showToday="true" width="160" editable="true"/>
 				<mx:TextInput x="243" y="157" id="cardstreet" text="{contact.creditCard.address.street1}"/>
 				<!--<mx:TextInput x="243" y="183" width="80" id="cardzip" text="{contact.creditCard.address.zip}"/>-->
