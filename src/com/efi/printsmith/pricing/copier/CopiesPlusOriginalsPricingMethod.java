@@ -287,7 +287,8 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 			
 		}
 		
-		
+		if (pricingRecord.getTotalPrice().doubleValue() == 0)
+			pricingRecord.setUnitPrice(0.0);
 		return job;
 	}
 }
