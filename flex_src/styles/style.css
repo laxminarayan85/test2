@@ -1,18 +1,18 @@
 /* CSS file */
 .winCloseButton {
-    icon: Embed(source="close.png");
+    icon: Embed("/close.png");
 }
 .winDoMaxButton {
-    icon: Embed(source="max.png");
+    icon: Embed("/max.png");
 }
 .winDoRestoreButton {
-	icon: Embed(source="restore.png");
+	icon: Embed("/restore.png");
 }
 .winMinButton	{
-	icon: Embed(source="min.png");
+	icon: Embed("/min.png");
 }
 .minimizedWinCloseButton	{
-	icon: Embed(source="close.png");
+	icon: Embed("/close.png");
 }
 .minimizedWinActive	{
 	background-color:#00ffff;	
