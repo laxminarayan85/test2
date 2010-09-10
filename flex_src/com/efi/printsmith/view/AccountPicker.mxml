@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="630" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
-    close="PopUpManager.removePopUp(this);" xmlns:common="com.efi.printsmith.common.components.filter.*"
+    close="cancelPicker();" xmlns:common="com.efi.printsmith.common.components.filter.*"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCustPickerCommand.AccountPicker')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
 
 <mx:RemoteObject id="dataService" destination="dataService">
