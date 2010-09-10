@@ -220,7 +220,7 @@ public class PreferencesMapper extends ImportMapper {
 		}
 		
 		if (name.equals("name"))
-			preferencesCreditCard.setCode(value);
+			preferencesCreditCard.setCardType(value);
 		else if (name.equals("abbrev"))
 			preferencesCreditCard.setAbbreviation(value);
 		else if (name.equals("key"))
