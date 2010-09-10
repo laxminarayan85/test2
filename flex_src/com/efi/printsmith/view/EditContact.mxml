@@ -158,7 +158,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		account= new Account();
 		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
 		this.enabled = false;
-		dataService2.getContactPicker("Contact");  
+		dataService2.getContactPicker();  
 		salesRepDataService.getAll("SalesRep");
 		//cityDataService.getAll("City");
 		//stateDataService.getAll("State");
@@ -195,7 +195,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	      
 	private function doAccountPicker():void {
-		dataService2.getAccountPicker("Account");
+		dataService2.getAccountPicker();
 			
 	}           
 	                                  	
@@ -751,8 +751,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleSaveResult(ev:ResultEvent):void {
 		this.contact = ev.result as Contact;
 		setContact(this.contact);
-		dataService2.getContactPicker("Contact");
-	}
+		dataService2.getContactPicker();
+	} 
 
 	private function handleLoadAccountResult(ev:ResultEvent):void{
 		accounts = ev.result as ArrayCollection;
@@ -825,7 +825,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}                              
 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService2.getContactPicker("Contact");
+		dataService2.getContactPicker();
 		doNew();
 	}
 	

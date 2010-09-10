@@ -1169,7 +1169,7 @@
 		
 			private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
 				preferencesStockDefinitions = event.result as ArrayCollection;
-				stockDataService.getStockPicker("StockDefinition", preferencesStockDefinitions);
+				stockDataService.getStockPicker();
 			}
 
 			private function handleLoadLocationResult(ev:ResultEvent):void

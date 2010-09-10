@@ -151,7 +151,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		first = true;
 		setSettings();
 		this.enabled = false;
-		dataService.getAccountPicker("Account");
+		dataService.getAccountPicker();
 
 		var eventAddress:AccountsAddressPanelEvent = new AccountsAddressPanelEvent(canvasAddress, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventAddress.dispatch();
@@ -644,7 +644,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.EstInvCharges = this.account.invoiceEstimateCharges;
 		this.JobCharges = this.account.jobCharges;
 		doNew();
-		dataService.getAccountPicker("Account")
+		dataService.getAccountPicker()
 	}
 //// load
 	private function handleLoadResult(ev:ResultEvent):void {
@@ -723,7 +723,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getAccountPicker("Account")
+		dataService.getAccountPicker()
 		doNew();
 	}
 		

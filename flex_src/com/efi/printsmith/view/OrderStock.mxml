@@ -92,7 +92,7 @@
 	 	statusWindow.setStock(temp);
 	 }
 	public function loadStockDefinitions():void { 
-		dataService.getStockPicker("StockDefinition", preferencesStockDefinitions);
+		dataService.getStockPicker();
 	}
 	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
 		preferencesStockDefinitions = event.result as ArrayCollection;

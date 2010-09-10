@@ -104,7 +104,7 @@
 	}
 	
 	private function handleDeleteResult(event:ResultEvent):void {
-		dataService.getStockPicker("StockDefinition",this.preferencesStockDefinitions);
+		dataService.getStockPicker();
 	}
 	
 	private function doEnableWebStatus():void {

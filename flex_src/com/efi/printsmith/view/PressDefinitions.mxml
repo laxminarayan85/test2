@@ -152,7 +152,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}      
 	
 	public function loadStockDefinitions():void { 
-		dataServiceStockPicker.getStockPicker("StockDefinition", preferencesStockDefinitions);
+		dataServiceStockPicker.getStockPicker();
 	}
 	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
 		preferencesStockDefinitions = event.result as ArrayCollection;
@@ -164,7 +164,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		getAllEvent.dispatch();			
 	}                                                                  	
 	public function loadPressDefinitions():void {   
-		dataService.getPressPicker("PressDefinition");
+		dataService.getPressPicker();
 	}
 					
 	private function messageHandler(message:IMessage):void

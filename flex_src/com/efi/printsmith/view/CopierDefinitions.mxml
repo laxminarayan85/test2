@@ -144,7 +144,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		consumer.subscribe();
 		notification_consumer.subscribe();   
 		fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));  
-		dataService.getCopierPicker("CopierDefinition");
+		dataService.getCopierPicker();
 		chargeDataService.getAll("Charge");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServiceCostCenter.getAll("CostCenter");
@@ -158,7 +158,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}
 	
 	public function loadStockDefinitions():void { 
-		dataServiceStockPicker.getStockPicker("StockDefinition", preferencesStockDefinitions);
+		dataServiceStockPicker.getStockPicker();
 	}
 	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
 		preferencesStockDefinitions = event.result as ArrayCollection;
@@ -498,7 +498,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		selectedCopierId = (ev.result as CopierDefinition).id;
 		copierDefinition = ev.result as CopierDefinition;
 		
-		dataService.getCopierPicker("CopierDefinition");
+		dataService.getCopierPicker();
 	}
 
 	private function handleLoadChargeResult(ev:ResultEvent):void
@@ -582,7 +582,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		}
 	}	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getCopierPicker("CopierDefinition");
+		dataService.getCopierPicker();
 	}
 	      
 	private function handleFault(ev:FaultEvent):void {  

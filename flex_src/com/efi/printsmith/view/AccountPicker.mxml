@@ -92,7 +92,7 @@
 			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
 			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
 			if (payloadType == "Account") {
-				dataService.getAccountPicker("Account");
+				dataService.getAccountPicker();
 			}
 		}
 	}
@@ -106,7 +106,7 @@
 		accounts.filterFunction = accountFilter;
 	    PopUpManager.centerPopUp(this);
 //	    resetFocus();                                     
-//		dataService.getAccountPicker("Account");
+//		dataService.getAccountPicker();
 
 
 		var editPage:Container = Snowmass.getInstance().containerManager.getActiveWindowContent();
@@ -189,6 +189,8 @@
 		var acctA:Account = a as Account;
 		var acctB:Account = b as Account;
 		
+		if (acctA.contact == null) return -1;
+		if (acctB.contact == null) return -1;
 		if (acctA.contact.lastName < acctB.contact.lastName)	{
 			return -1;
 		}
@@ -200,6 +202,7 @@
 	}
 	private function contactLabel(item:Object, column:DataGridColumn):String	{
 		var acct:Account = item as Account;
+		if (acct.contact == null) return("");
 		return acct.contact.lastName + ", " + acct.contact.firstName + " - " + acct.title;
 	}
 	

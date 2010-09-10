@@ -1,18 +1,18 @@
 /* CSS file */
 .winCloseButton {
-    icon: Embed("/../assets/mdi/close.png");
+    icon: Embed("../mdi/close.png");
 }
 .winDoMaxButton {
-    icon: Embed(source="/../assets/mdi/max.png");
+    icon: Embed(source="../mdi/max.png");
 }
 .winDoRestoreButton {
-	icon: Embed(source="/../assets/mdi/restore.png");
+	icon: Embed(source="../mdi/restore.png");
 }
 .winMinButton	{
-	icon: Embed(source="/../assets/mdi/min.png");
+	icon: Embed(source="../mdi/min.png");
 }
 .minimizedWinCloseButton	{
-	icon: Embed(source="/../assets/mdi/close.png");
+	icon: Embed(source="../mdi/close.png");
 }
 .minimizedWinActive	{
 	background-color:#00ffff;	

@@ -245,22 +245,22 @@ public class DataService extends HibernateService {
 		return null;
 	}
 	
-	public List<?> getStockPicker(String className,
-			List<PreferencesStockDefinition> Columns) throws Exception {
+	public List<?> getStockPicker() throws Exception {
 		log.debug("** getStockPicker.");
 		System.out.println(System.currentTimeMillis());
 		EntityManager em = entityManagerFactory.createEntityManager();
 
 		List<?> resultList = new ArrayList<Object>();
-		String columnstring = new String();
+		String columnStr = new String();
 
-		columnstring = "a.id, a.name, a.weight, a.parentsize, a.color, a.genericColor, a.finish, a.thickness, a.grade, "
+		columnStr = "a.id, a.name, a.weight, a.parentsize, a.color, a.genericColor, a.finish, a.thickness, a.grade, "
 				+ "a.cwt1, a.vendor, a.stocknumber, a.onHand, a.committed, a.onOrder, a.shellItem, a.normalRunSize, "
 				+ "a.stktype, a.stkgroup, a.coated, a.minorder, a.cost1, a.priceExpires, a.forestManagement, "
 				+ "a.pcwRecycledPercent, a.fscCertified, a.sfiCertified, a.greenSealCertified, a.sheetsPerSet, a.uom , a.stockunit, a.standardItem ";
 		try {
-			String queryString = "select new " + className + "( "
-					+ columnstring + ") from " + className + " a "; 
+			String queryString = "select new StockDefinition( "
+					+ columnStr + ") from StockDefinition a left outer join a.normalRunSize left outer join a.parentsize"; 
+					
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
@@ -276,19 +276,20 @@ public class DataService extends HibernateService {
 		return null;
 	}
 
-	public List<?> getAccountPicker(String className) throws Exception {
+	public List<?> getAccountPicker() throws Exception {
 		log.debug("** getAccountPicker .");
 		EntityManager em = entityManagerFactory.createEntityManager();
 
 		List<?> resultList = new ArrayList<Object>();
-		String columnstring = new String();
+		String columnStr = new String();
 
-		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect, a.externalAcctId, a.contact ";
-//		columnstring = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect, a.externalAcctId ";
+		columnStr = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect, a.externalAcctId, a.contact ";
 		try {
-			String queryString = "select new " + className + "( "
-					+ columnstring + ") from " + className + " a where a.id is not null order by title";
-//			String queryString = "from " + className + " a order by title";
+//			String queryString = "select new " + className + "( "
+//					+ columnstring + ") from " + className + " a where a.id is not null order by title";
+			String queryString = "select new Account( "
+				+ columnStr + ") from Account a left outer join a.contact"; 
+
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
@@ -452,17 +453,19 @@ public class DataService extends HibernateService {
 		}
 	}
 
-	public List<?> getContactPicker(String className) throws Exception {
+	public List<?> getContactPicker() throws Exception {
 		log.debug("** getContactPicker .");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<Object> resultList = new ArrayList<Object>();
-		String columnstring = new String();
+		String columnStr = new String();
 
-		columnstring = "a.id, a.firstName, a.lastName, a.contactId, a.parentAccount ";
+		columnStr = "a.id, a.firstName, a.lastName, a.contactId, a.parentAccount ";
 		try {
 			//String queryString = "select new " + className + "( "
 			//		+ columnstring + ") from " + className + " a";
-			String queryString = " from " + className;
+//			String queryString = " from " + className;
+			String queryString = "select new Contact( "
+				+ columnStr + ") from Contact a left outer join a.parentAccount"; 
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
@@ -485,7 +488,7 @@ public class DataService extends HibernateService {
 		return null;
 	}
 
-	public List<?> getPressPicker(String className) throws Exception {
+	public List<?> getPressPicker() throws Exception {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 		log.debug("** getPressPicker .");
@@ -493,8 +496,8 @@ public class DataService extends HibernateService {
 
 		columnstring = "a.id, a.name, a.machineID, a.machineName";
 		try {
-			String queryString = "select new " + className + "( "
-					+ columnstring + ") from " + className + " a" + " order by a.id";
+			String queryString = "select new PressDefinition( "
+					+ columnstring + ") from PressDefinition a order by a.id";
 			Query query = em.createQuery(queryString);
 			resultList = query.getResultList();
 			
@@ -509,7 +512,7 @@ public class DataService extends HibernateService {
 		return null;
 	}
 
-	public List<?> getCopierPicker(String className) throws Exception {
+	public List<?> getCopierPicker() throws Exception {
 		List<?> resultList = new ArrayList<Object>();
 		String columnstring = new String();
 
@@ -518,8 +521,8 @@ public class DataService extends HibernateService {
 
 		columnstring = "a.id, a.name, a.copyID, a.machineName, a.blackwhite, a.color, a.largeFormat";
 		try {
-			String queryString = "select new " + className + "( "
-					+ columnstring + ") from " + className + " a";
+			String queryString = "select new CopierDefinition( "
+					+ columnstring + ") from CopierDefinition a";
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();

@@ -192,7 +192,7 @@
 					if (invoice.id > 0) {
 						dataService.getInvoice(invoice.id);
 					} else {
-						accountDataService.getAccountPicker("Account");
+						accountDataService.getAccountPicker();
 						//doAccountPicker();
 					
 					}

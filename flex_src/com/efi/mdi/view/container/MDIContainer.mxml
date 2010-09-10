@@ -19,7 +19,7 @@
 	headerHeight="0"
 	creationComplete="mdiCreationComplete();"
 	>
-	<mx:Style source="./styles/style.css"/>
+	<mx:Style source="/assets/styles/style.css"/>
 	<mx:Script>
 		<![CDATA[
 			import com.efi.mdi.ContainerManager;

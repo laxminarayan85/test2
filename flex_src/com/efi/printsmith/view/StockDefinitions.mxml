@@ -579,7 +579,7 @@ private function loadCoatedArray():void{
 	}			
 	                                                   	
 	public function loadStockDefinitions():void { 
-		dataService.getStockPicker("StockDefinition", preferencesStockDefinitions);
+		dataService.getStockPicker();
 	}
 	
 /* 	public function loadStockChanges():void {
@@ -1212,7 +1212,7 @@ private function loadCoatedArray():void{
 	
 	private function doAccount():void {
 		
-		dataService.getAccountPicker("Account");
+		dataService.getAccountPicker();
 			
 	}
 	private function handleLoadAccountResult(event:ResultEvent):void {
