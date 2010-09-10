@@ -23,6 +23,7 @@ import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.PreferencesQuantityBreaks;
 import com.efi.printsmith.data.PreferencesStocks;
 import com.efi.printsmith.data.PreferencesSystem;
+import com.efi.printsmith.data.PreferencesCreditCard;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.SizeTable;
 import com.efi.printsmith.data.TaxCodes;
@@ -128,6 +129,8 @@ public class PreferencesMapper extends ImportMapper {
 		else if (group.equals("Address Formats")) {
 			importAddressFormats(key, fieldName, fieldValue);
 		}
+		else if (group.equals("CreditCard Info"))
+			importPreferencesCreditCardField(key, fieldName, fieldValue);
 	}
 	private void importAddressFormats(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
@@ -207,6 +210,26 @@ public class PreferencesMapper extends ImportMapper {
 			}
 		}
 		dataService.addUpdate(country);
+	}
+	private void importPreferencesCreditCardField(String key, String name, String value) throws Exception {
+		DataService dataService = new DataService();
+		PreferencesCreditCard preferencesCreditCard = (PreferencesCreditCard)dataService.getByPrevId("PreferencesCreditCard", key);
+		if (preferencesCreditCard == null) {
+			preferencesCreditCard = new PreferencesCreditCard();
+			preferencesCreditCard.setPrevId(key);
+		}
+		
+		if (name.equals("name"))
+			preferencesCreditCard.setCode(value);
+		else if (name.equals("abbrev"))
+			preferencesCreditCard.setAbbreviation(value);
+		else if (name.equals("key"))
+			preferencesCreditCard.setCode(value);
+		else if (name.equals("firstNumberPrefix"))
+			preferencesCreditCard.setFirstNumberPrefix(Utilities.tokenToLong(value));
+		else if (name.equals("active_accepted"))
+			preferencesCreditCard.setActiveAccepted(Utilities.tokenToBooleanValue(value));
+		dataService.addUpdate(preferencesCreditCard);
 	}
 	private void importPreferencesMarkupsField(String group, String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
