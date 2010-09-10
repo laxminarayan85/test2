@@ -18,6 +18,8 @@ package com.efi.printsmith.data
 		public var cardType:String = "";
 		public var abbreviation:String = "";
 		public var code:String = "";
+		public var activeAccepted:Boolean = false;
+		public var firstNumberPrefix:Number = 0;
 	
 	}
 }
