@@ -184,7 +184,7 @@ public class PreferencesCreditCard extends ModelBase {
 	 */	
 	public void setCode(String newVal) {
     this.code = newVal;
-	}
+  }
     
     /**
 	 * @generated
@@ -227,8 +227,7 @@ public class PreferencesCreditCard extends ModelBase {
 	 */	
 	public void setFirstNumberPrefix(Long newVal) {
     this.firstNumberPrefix = newVal;
-    
-	}
+  }
 	
 	/**
 	 * @generated
@@ -256,7 +255,7 @@ public class PreferencesCreditCard extends ModelBase {
     if (ABBREVIATION.equals(propertyName)) setAbbreviation((String)newValue); else
     if (CODE.equals(propertyName)) setCode((String)newValue); else
     if (ACTIVEACCEPTED.equals(propertyName)) setActiveAccepted((Boolean)newValue); else
-    if (FIRSTNUMBERPREFIX.equals(propertyName)) setFirstNumberPrefix((Long)newValue);
+    if (FIRSTNUMBERPREFIX.equals(propertyName)) setFirstNumberPrefix((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -273,7 +272,11 @@ public class PreferencesCreditCard extends ModelBase {
     if (ABBREVIATION.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (CODE.equals(propertyName)) 
-      return new Class<?>[] {String.class};
+      return new Class<?>[] {String.class};		
+    if (ACTIVEACCEPTED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (FIRSTNUMBERPREFIX.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -310,9 +313,9 @@ public class PreferencesCreditCard extends ModelBase {
     if (! SmartEquals(getCode(), objT.getCode()))
       return false;
     if (! SmartEquals(getActiveAccepted(), objT.getActiveAccepted()))
-    	return false;
+      return false;
     if (! SmartEquals(getFirstNumberPrefix(), objT.getFirstNumberPrefix()))
-    	return false;
+      return false;
     return true;
   }			
 }

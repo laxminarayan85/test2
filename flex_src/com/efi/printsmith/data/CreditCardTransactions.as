@@ -20,7 +20,6 @@ package com.efi.printsmith.data
 		public var transactionResults:int = 0;
 		public var amount:Number = 0;
 		public var taxInAmount:Boolean = false;
-		public var invoice:Invoice;
 		public var poNumber:String = "";
 		public var referenceNumber:String = "";
 		public var approvalCode:String = "";
@@ -44,6 +43,7 @@ package com.efi.printsmith.data
 		public var contact:Contact;
 		public var wsId:int = 0;
 		public var isCurrentTransaction:int = 0;
+		public var orderNumber:String = "";
 	
 	}
 }

@@ -73,10 +73,6 @@ public class CreditCardTransactions extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String INVOICE = "Invoice";
-	/**
-	 * @generated
-	 */
 	public static final String PONUMBER = "PoNumber";
 	/**
 	 * @generated
@@ -169,6 +165,11 @@ public class CreditCardTransactions extends ModelBase {
    * @generated
    */
   public static final String ISCURRENTTRANSACTION = "IsCurrentTransaction";
+
+	/**
+   * @generated
+   */
+  public static final String ORDERNUMBER = "OrderNumber";
 
 	/**
 	 * @generated
@@ -326,30 +327,6 @@ public class CreditCardTransactions extends ModelBase {
 	 */	
 	public void setTaxInAmount(Boolean newVal) {
     this.taxInAmount = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-	private Invoice invoice;
-	
-	/**
-	 * @generated
- 	 */
-	public Invoice getInvoice(){
-    return invoice; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setInvoice(Invoice newVal) {
-    this.invoice = newVal;
   }
 	
  	
@@ -884,6 +861,28 @@ public class CreditCardTransactions extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String orderNumber;
+
+	/**
+   * @generated
+ 	 */
+  public String getOrderNumber(){
+    return orderNumber; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrderNumber(String newVal) {
+    this.orderNumber = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -895,7 +894,6 @@ public class CreditCardTransactions extends ModelBase {
     if (TRANSACTIONRESULTS.equals(propertyName)) return getTransactionResults();
     if (AMOUNT.equals(propertyName)) return getAmount();
     if (TAXINAMOUNT.equals(propertyName)) return getTaxInAmount();
-    if (INVOICE.equals(propertyName)) return getInvoice();
     if (PONUMBER.equals(propertyName)) return getPoNumber();
     if (REFERENCENUMBER.equals(propertyName)) return getReferenceNumber();
     if (APPROVALCODE.equals(propertyName)) return getApprovalCode();
@@ -919,6 +917,7 @@ public class CreditCardTransactions extends ModelBase {
     if (CONTACT.equals(propertyName)) return getContact();
     if (WSID.equals(propertyName)) return getWsId();
     if (ISCURRENTTRANSACTION.equals(propertyName)) return getIsCurrentTransaction();
+    if (ORDERNUMBER.equals(propertyName)) return getOrderNumber();
     return super.getProperty(propertyName);
   }
 	
@@ -934,7 +933,6 @@ public class CreditCardTransactions extends ModelBase {
     if (TRANSACTIONRESULTS.equals(propertyName)) setTransactionResults((Integer)newValue); else
     if (AMOUNT.equals(propertyName)) setAmount((Double)newValue); else
     if (TAXINAMOUNT.equals(propertyName)) setTaxInAmount((Boolean)newValue); else
-    if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
     if (PONUMBER.equals(propertyName)) setPoNumber((String)newValue); else
     if (REFERENCENUMBER.equals(propertyName)) setReferenceNumber((String)newValue); else
     if (APPROVALCODE.equals(propertyName)) setApprovalCode((String)newValue); else
@@ -958,6 +956,7 @@ public class CreditCardTransactions extends ModelBase {
     if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     if (WSID.equals(propertyName)) setWsId((Integer)newValue); else
     if (ISCURRENTTRANSACTION.equals(propertyName)) setIsCurrentTransaction((Integer)newValue); else
+    if (ORDERNUMBER.equals(propertyName)) setOrderNumber((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -979,8 +978,6 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (TAXINAMOUNT.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (INVOICE.equals(propertyName)) 
-      return new Class<?>[] {Invoice.class};		
     if (PONUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (REFERENCENUMBER.equals(propertyName)) 
@@ -1027,6 +1024,8 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (ISCURRENTTRANSACTION.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
+    if (ORDERNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1043,7 +1042,6 @@ public class CreditCardTransactions extends ModelBase {
     if (TRANSACTIONRESULTS.equals(propertyName)) return CreditCardTransactions.class;
     if (AMOUNT.equals(propertyName)) return CreditCardTransactions.class;
     if (TAXINAMOUNT.equals(propertyName)) return CreditCardTransactions.class;
-    if (INVOICE.equals(propertyName)) return CreditCardTransactions.class;
     if (PONUMBER.equals(propertyName)) return CreditCardTransactions.class;
     if (REFERENCENUMBER.equals(propertyName)) return CreditCardTransactions.class;
     if (APPROVALCODE.equals(propertyName)) return CreditCardTransactions.class;
@@ -1067,6 +1065,7 @@ public class CreditCardTransactions extends ModelBase {
     if (CONTACT.equals(propertyName)) return CreditCardTransactions.class;
     if (WSID.equals(propertyName)) return CreditCardTransactions.class;
     if (ISCURRENTTRANSACTION.equals(propertyName)) return CreditCardTransactions.class;
+    if (ORDERNUMBER.equals(propertyName)) return CreditCardTransactions.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1089,8 +1088,6 @@ public class CreditCardTransactions extends ModelBase {
     if (! SmartEquals(getAmount(), objT.getAmount()))
       return false;
     if (! SmartEquals(getTaxInAmount(), objT.getTaxInAmount()))
-      return false;
-    if (! SmartEquals(getInvoice(), objT.getInvoice()))
       return false;
     if (! SmartEquals(getPoNumber(), objT.getPoNumber()))
       return false;
@@ -1137,6 +1134,8 @@ public class CreditCardTransactions extends ModelBase {
     if (! SmartEquals(getWsId(), objT.getWsId()))
       return false;
     if (! SmartEquals(getIsCurrentTransaction(), objT.getIsCurrentTransaction()))
+      return false;
+    if (! SmartEquals(getOrderNumber(), objT.getOrderNumber()))
       return false;
     return true;
   }			
