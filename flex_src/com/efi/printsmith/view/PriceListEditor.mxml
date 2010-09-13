@@ -353,6 +353,7 @@
 			this.quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.RunLength');
 			this.price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Spoilage');
 			this.chkInterpolate.selected = priceList.interpolate;
+			this.radiobutton1.selected = true;
 			PopUpManager.centerPopUp(this);
 		} else if (priceList is SpeedTable) {
 			itemType = "SpeedTable";
