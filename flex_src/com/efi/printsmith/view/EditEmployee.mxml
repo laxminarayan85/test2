@@ -192,10 +192,8 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 
 	}
 	private function mapFromEmployeeData():void{
-		var tCharge:ChargeCommand;
 		var index:int;
 		var i:int;
-		var tempArray:Array = new Array();
 		var tempCom:ComLink;
 		address_editor.setAddress(employee.address);
 		title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees') + "  " + employee.firstName + " "+ employee.lastName;
@@ -206,52 +204,124 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		else
 			employeeStatus= "InActive";
 		employee_status.selectedValue = employeeStatus;
-		for(i=0; i < employee.employeeCharges.length; i++)
-		{	tCharge = employee.employeeCharges[i];
-		 	index = findItem(tCharge.id, charges);
-		 	tempArray.push(index);
-		}
-		charge_types.selectedIndices = tempArray;
 		
-		tempArray = new Array();
+		
+		
+		
 		if(employee.productionParents!=null && employee.productionParents.length>0){
-			for(var i:int=0; i < employee.productionParents.length; i++) {
-				var productionLocations:ProductionLocations = employee.productionParents.getItemAt(i) as ProductionLocations;
-			 	index = findItem(productionLocations.id, productionLocation);
-			 	tempArray.push(index);
+			for each(var productionLocationsObj:ProductionLocations in productionLocation){
+				var isProdLocSelected:Boolean = false;
+				for(var i:int=0; i < employee.productionParents.length; i++) {
+					var productionLocations:ProductionLocations = employee.productionParents.getItemAt(i) as ProductionLocations;
+				 	if(productionLocationsObj.id==productionLocations.id){
+				 		isProdLocSelected = true;
+				 		productionLocationsObj.isSelected = true;
+				 		break;
+				 	}
+				}
+				if(!isProdLocSelected){
+					productionLocationsObj.isSelected = false;
+				}
+			}
+		} else {
+			for each(var productionLocationsObj:ProductionLocations in productionLocation){
+				productionLocationsObj.isSelected = false;
 			}
 		}
-		production_parents.selectedIndices = tempArray;
+		productionLocation.refresh();
 		
-		tempArray = new Array();
+		if(employee.employeeCharges!=null && employee.employeeCharges.length>0){
+			for each(var chargeCommandObj:ChargeCommand in charges){
+				var isChargeSelected:Boolean = false;
+				for(i=0; i < employee.employeeCharges.length; i++) {	
+					var tCharge:ChargeCommand = employee.employeeCharges[i] as ChargeCommand;
+					if(chargeCommandObj.id==tCharge.id){
+						isChargeSelected = true;
+						chargeCommandObj.isSelected = true;
+						break;
+					}
+				}
+				if(!isChargeSelected){
+					chargeCommandObj.isSelected = false;
+				}
+			}
+		} else {
+			for each(var chargeCommandObj:ChargeCommand in charges){
+				chargeCommandObj.isSelected = false;
+			}
+		}
+		charges.refresh();
+		
 		if(employee.employeeCopiers!=null && employee.employeeCopiers.length>0){
-			for(var i:int=0; i < employee.employeeCopiers.length; i++) {
-				var productionCopiers:ProductionCopiers = employee.employeeCopiers.getItemAt(i) as ProductionCopiers;
-			 	index = findItem(productionCopiers.id, copiers);
-			 	tempArray.push(index);
+			for each(var productionCopiersObj:ProductionCopiers in copiers){
+				var isCopierSelected:Boolean = false;
+				for(var i:int=0; i < employee.employeeCopiers.length; i++) {
+					var productionCopiers:ProductionCopiers = employee.employeeCopiers.getItemAt(i) as ProductionCopiers;
+					if(productionCopiers.id == productionCopiersObj.id){
+						isCopierSelected = true;
+						productionCopiersObj.isSelected = true;
+						break;
+					}
+				}
+				if(!isCopierSelected){
+					productionCopiersObj.isSelected = false;
+				}
+			 	/* index = findItem(productionCopiers.id, copiers);
+			 	tempArray.push(index); */
+			}
+		} else {
+			for each(var productionCopiersObj:ProductionCopiers in copiers){
+				productionCopiersObj.isSelected = false;
 			}
 		}
-		copier_list.selectedIndices = tempArray;
+		copiers.refresh();
+		//copier_list.selectedIndices = tempArray;
 		
-		tempArray = new Array();
+		
 		if(employee.employeePricings!=null && employee.employeePricings.length>0){
-			for(var i:int=0; i < employee.employeePricings.length; i++) {
-				var preferencesPricingMethod:PreferencesPricingMethod = employee.employeePricings.getItemAt(i) as PreferencesPricingMethod;
-			 	index = findItem(preferencesPricingMethod.id, pricemethods);
-			 	tempArray.push(index);
+			for each(var preferencesPricingMethodObj:PreferencesPricingMethod in pricemethods){
+				var isPricingMethodSelected:Boolean = false;
+				for(var i:int=0; i < employee.employeePricings.length; i++) {
+					var preferencesPricingMethod:PreferencesPricingMethod = employee.employeePricings.getItemAt(i) as PreferencesPricingMethod;
+				 	if(preferencesPricingMethodObj.id == preferencesPricingMethod.id){
+				 		isPricingMethodSelected = true;
+				 		preferencesPricingMethodObj.isSelected = true;
+				 		break;
+				 	}
+				}
+				if(!isPricingMethodSelected){
+					preferencesPricingMethodObj.isSelected = false;
+				}
+			}
+		} else {
+			for each(var preferencesPricingMethodObj:PreferencesPricingMethod in pricemethods){
+				preferencesPricingMethodObj.isSelected = false;
 			}
 		}
-		pricing_methods.selectedIndices = tempArray;
+		pricemethods.refresh();
 		
-		tempArray = new Array();
+		
 		if(employee.employeePresses!=null && employee.employeePresses.length>0){
-			for(var i:int=0; i < employee.employeePresses.length; i++) {
-				var productionPress:ProductionPress = employee.employeePresses.getItemAt(i) as ProductionPress;
-			 	index = findItem(productionPress.id, presses);
-			 	tempArray.push(index);
+			for each(var productionPressObj:ProductionPress in presses){
+				var isPressSelected:Boolean = false;
+				for(var i:int=0; i < employee.employeePresses.length; i++) {
+					var productionPress:ProductionPress = employee.employeePresses.getItemAt(i) as ProductionPress;
+				 	if(productionPressObj.id == productionPress.id){
+				 		isPressSelected = true;
+				 		productionPressObj.isSelected = true;
+				 		break;
+				 	}
+				}
+				if(!isPressSelected){
+					productionPressObj.isSelected = false;
+				}
+			}
+		} else {
+			for each(var productionPressObj:ProductionPress in presses){
+				productionPressObj.isSelected = false;
 			}
 		}
-		press_list.selectedIndices = tempArray;
+		presses.refresh();
 		
 		if (employee.comLinks != null){
 			phone_edit.text = "";
@@ -583,6 +653,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 	}   
 	private function handleLoadCopier(ev:ResultEvent):void {
 	 	
+	 	
 	 	copiers = ev.result as ArrayCollection;
 	 	if(loadEmployee){
 	 		checkDataCount++;
@@ -687,7 +758,7 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 			}
 	}
 	private function doPricingMethod():void{
-		var tempPriceArray:Array = new Array();
+		/* var tempPriceArray:Array = new Array();
 		var i:int;
 		var tPrice:PreferencesPricingMethod;
 		employee.employeePricings = new ArrayCollection();
@@ -696,11 +767,17 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		{
 		 tPrice = tempPriceArray[i];
 		 employee.employeePricings.addItem(tPrice);
+		} */
+		employee.employeePricings = new ArrayCollection();
+		for each(var preferencesPricingMethod:PreferencesPricingMethod in pricemethods){
+			if(preferencesPricingMethod.isSelected){
+				employee.employeePricings.addItem(preferencesPricingMethod);
+			}
 		}
 		 
 	}
 	private function doCopier():void{
-		var tempcopyArray :Array= new Array();
+		/* var tempcopyArray :Array= new Array();
 		var tCopier:ProductionCopiers;
 		var i:int;
 		employee.employeeCopiers = new ArrayCollection();
@@ -709,11 +786,17 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		{
 		 tCopier = tempcopyArray[i];
 		 employee.employeeCopiers.addItem(tCopier);
+		} */
+		employee.employeeCopiers = new ArrayCollection();
+		for each(var productionCopiers:ProductionCopiers in copiers){
+			if(productionCopiers.isSelected){
+				employee.employeeCopiers.addItem(productionCopiers);
+			}
 		}
 		 
 	}
 	private function doPress():void{
-		var temppressArray :Array= new Array();
+		/* var temppressArray :Array= new Array();
 		var i:int;
 		var tPress:ProductionPress;
 		employee.employeePresses = new ArrayCollection();
@@ -722,11 +805,17 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		{
 		 tPress = temppressArray[i];
 		 employee.employeePresses.addItem(tPress);
+		} */
+		employee.employeePresses = new ArrayCollection();
+		for each(var productionPress:ProductionPress in presses){
+			if(productionPress.isSelected){
+				employee.employeePresses.addItem(productionPress);
+			}
 		}
 		 
 	}
 	private function doCharge():void{
-		var tempchargeArray :Array= new Array();
+		/* var tempchargeArray :Array= new Array();
 		var i:int;
 		var tCharge:ChargeCommand;
 		employee.employeeCharges = new ArrayCollection();
@@ -735,11 +824,16 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		{
 		 tCharge = tempchargeArray[i];
 		 employee.employeeCharges.addItem(tCharge);
+		} */
+		employee.employeeCharges = new ArrayCollection();
+		for each(var chargeCommand:ChargeCommand in charges){
+			if(chargeCommand.isSelected){
+				employee.employeeCharges.addItem(chargeCommand);
+			}
 		}
-		 
 	}
 	private function doParent():void{
-		var tempparentArray :Array= new Array();
+		/* var tempparentArray :Array= new Array();
 		var i:int;
 		var tProduction:ProductionLocations
 		employee.productionParents = new ArrayCollection();
@@ -748,32 +842,49 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		{
 		 tProduction = tempparentArray[i];
 		 employee.productionParents.addItem(tProduction);
+		} */
+		employee.productionParents = new ArrayCollection();
+		for each(var productionLocations:ProductionLocations in productionLocation){
+			if(productionLocations.isSelected){
+				employee.productionParents.addItem(productionLocations);
+			}
 		}
-		 
 	}
 	
 	private function clearSelectedPricings(event:Event):void {
-		if(event.currentTarget.selected){
-			pricing_methods.selectedItems = new Array();
+		for each(var preferencesPricingMethod:PreferencesPricingMethod in pricemethods){
+			if(event.currentTarget.selected){
+				preferencesPricingMethod.isSelected = false;
+			}		
 		}
+		pricemethods.refresh();
 	}
 	
 	private function clearSelectedCharges(event:Event):void {
-		if(event.currentTarget.selected){
-			charge_types.selectedItems = new Array();
+		for each(var chargeCommand:ChargeCommand in charges){
+			if(event.currentTarget.selected){
+				chargeCommand.isSelected = false;
+			}		
 		}
+		charges.refresh();
 	}
 	
 	private function clearSelectedCopiers(event:Event):void {
-		if(event.currentTarget.selected){
-			copier_list.selectedItems = new Array();
+		for each(var productionCopiers:ProductionCopiers in copiers){
+			if(event.currentTarget.selected){
+				productionCopiers.isSelected = false;
+			}		
 		}
+		copiers.refresh();
 	}
 	
 	private function clearSelectedPresses(event:Event):void {
-		if(event.currentTarget.selected){
-			press_list.selectedItems = new Array();
+		for each(var productionPress:ProductionPress in presses){
+			if(event.currentTarget.selected){
+				productionPress.isSelected = false;
+			}		
 		}
+		presses.refresh();
 	}
 ]]>
 
@@ -902,24 +1013,128 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 					<mx:CheckBox x="10" y="154" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.AnyPastDue')}" id="any_past_due" selected="{employee.anyPastDue}"/>
 				</mx:Panel>
 				<mx:Panel x="556" y="30" width="316" height="255" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionParents')}">
-					<mx:List x="10" y="35" id="production_parents" width="100%" dataProvider="{productionLocation}" focusOut="doParent();" labelField="name" allowMultipleSelection="true"></mx:List>
+					<!--<mx:List x="10" y="35" id="production_parents" width="100%" dataProvider="{productionLocation}" focusOut="doParent();" labelField="name" allowMultipleSelection="true"></mx:List>-->
+					<mx:DataGrid x="10" y="35" width="100%" height="110" dataProvider="{productionLocation}">
+						<mx:columns>
+							<mx:DataGridColumn headerText=" "
+								sortable="false" dataField="isSelected" width="200">
+								<mx:headerRenderer>
+									<mx:Component>
+										<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled"/>
+									</mx:Component>
+								</mx:headerRenderer>
+								<mx:itemRenderer>
+									<mx:Component>
+										<components:CustomCheckBoxComponent 
+											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+											selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ProductionParents')}" dataField="name" width="800"/>
+						</mx:columns>
+					</mx:DataGrid> 
 					<mx:CheckBox x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.OnlyshowcheckedProdu')}" id="show_check_production" selected="{employee.onlyShowProductionParents}"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="321" width="323" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.PricingMethods')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPricingMethods')}" id="all_pricing" click="{clearSelectedPricings(event)}" selected="{employee.allPricingMethods}"/>
-					<mx:List x="10" y="40" focusOut="doPricingMethod()" width="283"  height="110" id="pricing_methods" dataProvider="{pricemethods}" labelField="title" allowMultipleSelection="true" itemClick="{employee.allPricingMethods=false}"></mx:List>
+					<mx:DataGrid x="10" y="40" width="283"  height="110" dataProvider="{pricemethods}">
+						<mx:columns>
+							<mx:DataGridColumn headerText=" "
+								sortable="false" dataField="isSelected" width="200">
+								<mx:headerRenderer>
+									<mx:Component>
+										<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allPricingMethods=false}"/>
+									</mx:Component>
+								</mx:headerRenderer>
+								<mx:itemRenderer>
+									<mx:Component>
+										<components:CustomCheckBoxComponent 
+											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+											selectedValue="true" deSelectedValue="false" defaultValue="false"
+											click="{outerDocument.employee.allPricingMethods=false}"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.PricingMethods')}" dataField="title" width="800"/>
+						</mx:columns>
+					</mx:DataGrid> 
+					<!--<mx:List x="10" y="40" focusOut="doPricingMethod()" width="283"  height="110" id="pricing_methods" dataProvider="{pricemethods}" labelField="title" allowMultipleSelection="true" itemClick="{employee.allPricingMethods=false}"></mx:List>-->
 				</mx:Panel>
 				<mx:Panel x="365" y="321" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ChargeType')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallChargeTypes')}" id="all_charge_types" click="{clearSelectedCharges(event)}" selected="{employee.allChargeTypes}"/>
-					<mx:List x="10" y="40" width="318" height="110" id="charge_types" dataProvider="{charges}" labelField="name" allowMultipleSelection="true" focusOut="doCharge();" itemClick="{employee.allChargeTypes=false}"></mx:List>
+					<mx:DataGrid x="10" y="40" width="318" height="110" dataProvider="{charges}">
+						<mx:columns>
+							<mx:DataGridColumn headerText=" "
+								sortable="false" dataField="isSelected" width="200">
+								<mx:headerRenderer>
+									<mx:Component>
+										<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allChargeTypes=false}"/>
+									</mx:Component>
+								</mx:headerRenderer>
+								<mx:itemRenderer>
+									<mx:Component>
+										<components:CustomCheckBoxComponent 
+											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+											selectedValue="true" deSelectedValue="false" defaultValue="false"
+											click="{outerDocument.employee.allChargeTypes=false}"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ChargeType')}" dataField="name" width="800"/>
+						</mx:columns>
+					</mx:DataGrid> 
+					<!--<mx:List x="10" y="40" width="318" height="110" id="charge_types" dataProvider="{charges}" labelField="name" allowMultipleSelection="true" focusOut="doCharge();" itemClick="{employee.allChargeTypes=false}"></mx:List>-->
 				</mx:Panel>
 				<mx:Panel x="10" y="553" width="323" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Press')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPresses')}" id="all_presses" click="{clearSelectedPresses(event)}" selected="{employee.allPresses}"/>
-					<mx:List x="10" y="40" width="283" height="110" id="press_list" dataProvider="{presses}" labelField="name" allowMultipleSelection="true" focusOut="doPress();" itemClick="{employee.allPresses=false}"> </mx:List>
+					<mx:DataGrid x="10" y="40" width="283" height="110" dataProvider="{presses}">
+						<mx:columns>
+							<mx:DataGridColumn headerText=" "
+								sortable="false" dataField="isSelected" width="200">
+								<mx:headerRenderer>
+									<mx:Component>
+										<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allPresses=false}"/>
+									</mx:Component>
+								</mx:headerRenderer>
+								<mx:itemRenderer>
+									<mx:Component>
+										<components:CustomCheckBoxComponent 
+											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+											selectedValue="true" deSelectedValue="false" defaultValue="false"
+											click="{outerDocument.employee.allPresses=false}"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Press')}" dataField="name" width="800"/>
+						</mx:columns>
+					</mx:DataGrid> 
+					<!--<mx:List x="10" y="40" width="283" height="110" id="press_list" dataProvider="{presses}" labelField="name" allowMultipleSelection="true" focusOut="doPress();" itemClick="{employee.allPresses=false}"> </mx:List>-->
 				</mx:Panel>
 				<mx:Panel x="365" y="553" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Copier')}">
 					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallCopiers')}" id="all_copiers" click="{clearSelectedCopiers(event)}" selected="{employee.allCopiers}"/>
-					<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name" focusOut="doCopier();" allowMultipleSelection="true" itemClick="{employee.allCopiers=false}"></mx:List>
+					<mx:DataGrid x="10" y="40" width="318" height="110" dataProvider="{copiers}">
+						<mx:columns>
+							<mx:DataGridColumn headerText=" "
+								sortable="false" dataField="isSelected" width="200">
+								<mx:headerRenderer>
+									<mx:Component>
+										<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allCopiers=false}"/>
+									</mx:Component>
+								</mx:headerRenderer>
+								<mx:itemRenderer>
+									<mx:Component>
+										<components:CustomCheckBoxComponent 
+											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+											selectedValue="true" deSelectedValue="false" defaultValue="false"
+											click="{outerDocument.employee.allCopiers=false}"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Copier')}" dataField="name" width="800"/>
+						</mx:columns>
+					</mx:DataGrid> 
+					<!--<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name" focusOut="doCopier();" allowMultipleSelection="true" itemClick="{employee.allCopiers=false}"></mx:List>-->
 				</mx:Panel>
 			</mx:Canvas>	
 		</mx:TabNavigator>
