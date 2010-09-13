@@ -751,7 +751,7 @@ private function loadCoatedArray():void{
     	stockDefinitions.charges = new ArrayCollection;
     	stockDefinitions.stockChanges = new ArrayCollection;
     	stockDefinitions.normalRunSize = new Dimension();
-  	   
+  	   doStockType();
   	    standardItemCheckEvent();
   	 //     setStockDefinition(stockDefinitions);
   	    
