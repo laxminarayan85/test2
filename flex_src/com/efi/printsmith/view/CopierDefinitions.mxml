@@ -324,9 +324,13 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			
 			if (copierDefinition.salesCat != null) {
 				salesCatName = copierDefinition.salesCat.name;
+				charge_sales_category_combo.selectedIndex = findItem(salesCatName, salesCategories);
+				
 			}
-			else
+			else{
 				salesCatName = "";
+				charge_sales_category_combo.selectedIndex = -1;
+			}
 		
 			if ( copierDefinition.method != null)
 				pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodType.toArray());
@@ -339,7 +343,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			if (copierDefinition.machineName != "") {
 				productionCopiers.selectedIndex = findItem(copierDefinition.machineName, productionCopiersArray);
 			}
-			charge_sales_category_combo.selectedIndex = findItem(salesCatName, salesCategories);
+			
 			
 			 if (copierDefinition.wasteChart != null)
 			 		wasteName.label = WasteListLabel();

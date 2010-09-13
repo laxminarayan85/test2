@@ -431,8 +431,10 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			if (charge_sales_category_combo.selectedIndex == -1)
 				charge_sales_category_combo.text= "";
 		}
-		else
+		else{
 			charge_sales_category_combo.text= "";
+			charge_sales_category_combo.selectedIndex = -1;
+		}
 	
 		if (pressDefinition.costCenter != null){
 			CostCenter.selectedIndex = findItem(pressDefinition.costCenter, costCenterArray);
