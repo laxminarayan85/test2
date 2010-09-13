@@ -1543,10 +1543,16 @@ private function loadCoatedArray():void{
 	
 	private function handleFocusOutEvent(evt:FocusEvent):void
 	{
-		if (evt.target == parentSize) {
+		if (evt.currentTarget == this.parentSize) {
+			var text:String = Snowmass.formatSizeString(this.parentSize.text);
+			this.parentSize.selectedItem = findItem(text, this.dimensions);
+			this.parentSize.text = text;
 			stockDefinitions.parentsize.name = parentSize.text;
 			calstockMWeight(evt);
-		} else if (evt.target == NormalRunSize) {
+		} else if (evt.currentTarget == this.NormalRunSize) {
+			var text:String = Snowmass.formatSizeString(this.NormalRunSize.text);
+			this.NormalRunSize.selectedItem = findItem(text, this.dimensions);
+			this.NormalRunSize.text = text;
 			stockDefinitions.normalRunSize.name = NormalRunSize.text;
 		}
 		super.focusOutHandler(evt);
@@ -1719,26 +1725,27 @@ private function loadCoatedArray():void{
 		var tempFloat:Number;
 		var stckType:StockType;
 		pDim = parentSize.selectedItem as Dimension;
-		parent = pDim.width * pDim.height;
-		stckType = stkType.selectedItem  as StockType;
-		basic = calBasic();
-		if (parent == 0 || basic == 0 || weight_edit.text == '0')
-		{	// not enough data to calculate
-			mWeight.text = '0';
-		}
-		else{
-			if (chkIsMetric.selected){
-				tempFloat = parseFloat(weight_edit.text.replace(',',''))
-				weight = (( parent * tempFloat ) / basic);
-				mWeight.text = Snowmass.getCurrencyFormatter(false, 4).format(weight);
-			}else{
-		
-				weight = ((parent / basic)* parseFloat(weight_edit.text.replace(",",""))*2);
-				mWeight.text =  Snowmass.getCurrencyFormatter(false, 2).format(weight);
+		if (pDim != null) {
+			parent = pDim.width * pDim.height;
+			stckType = stkType.selectedItem  as StockType;
+			basic = calBasic();
+			if (parent == 0 || basic == 0 || weight_edit.text == '0')
+			{	// not enough data to calculate
+				mWeight.text = '0';
 			}
-			calCartonWeight(event);
-		}
- 
+			else{
+				if (chkIsMetric.selected){
+					tempFloat = parseFloat(weight_edit.text.replace(',',''))
+					weight = (( parent * tempFloat ) / basic);
+					mWeight.text = Snowmass.getCurrencyFormatter(false, 4).format(weight);
+				}else{
+			
+					weight = ((parent / basic)* parseFloat(weight_edit.text.replace(",",""))*2);
+					mWeight.text =  Snowmass.getCurrencyFormatter(false, 2).format(weight);
+				}
+				calCartonWeight(event);
+			}
+ 		}
 	}
 	
 private function doRound(evt:FocusEvent):void{

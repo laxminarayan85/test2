@@ -1053,6 +1053,21 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 			return "None";
 		}
 	}
+	private function fieldChanged(evt:FocusEvent):void
+	{	
+		switch (evt.currentTarget) {
+			case this.MaxSize:
+				var text:String = Snowmass.formatSizeString(this.MaxSize.text);
+				this.MaxSize.text = text;
+				break;
+			case this.minSize:
+				var text:String = Snowmass.formatSizeString(this.minSize.text);
+				this.minSize.text = text;
+				break;
+		}
+	}
+	
+	
 ]]>
                              
 </mx:Script>	
@@ -1087,8 +1102,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:HRule y="304" height="13" left="0" right="10"/>
 		<mx:Label x="9" y="413" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumSize')}" id="label2" width="141" textAlign="right"/>
 		<mx:Label x="9" y="435" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MinimumSize')}" id="label3" width="141" textAlign="right"/>
-		<mx:TextInput x="158" y="411" id="MaxSize" text="{copierDefinition.maxSize}" height="20" width="71"/>
-		<mx:TextInput x="158" y="433" id="minSize" text="{copierDefinition.minSize}" height="20" width="71"/>
+		<mx:TextInput x="158" y="411" id="MaxSize" text="{copierDefinition.maxSize}" height="20" width="71" focusOut="fieldChanged(event)"/>
+		<mx:TextInput x="158" y="433" id="minSize" text="{copierDefinition.minSize}" height="20" width="71" focusOut="fieldChanged(event)"/>
 		<mx:HRule y="492" height="0" left="5" right="5"/>
 		<mx:HRule y="675" height="12" left="5" right="5"/>
 		<mx:Button x="542" y="695" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.StockPriceList')}" click="doStockPriceList();" width="107"/>
