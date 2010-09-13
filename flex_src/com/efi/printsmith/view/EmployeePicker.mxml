@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="630" height="575" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="630" height="415" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
 
@@ -117,7 +117,7 @@
 
                              
 	<mx:Canvas width="583" height="100%">
-		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{employees}"
+		<mx:DataGrid id="dataGrid" width="457" height="98%" dataProvider="{employees}"
 		doubleClickEnabled="true" doubleClick="selectEmployee()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3">               
 		<mx:columns>
 		     <mx:DataGridColumn dataField="firstName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" />   
