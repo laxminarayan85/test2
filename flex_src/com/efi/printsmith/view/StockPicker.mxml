@@ -22,6 +22,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import mx.events.DataGridEvent;
 	import com.hillelcoren.utils.StringUtils;
 	import com.efi.printsmith.data.StockType;
 
@@ -86,6 +87,7 @@
            
 	private function handleLoadResult(event:ResultEvent):void {
 		stockDefinitions = event.result as ArrayCollection;
+		defaultSortGrid();
 	}
 
 	
@@ -293,6 +295,8 @@
 					finishes:ArrayCollection, colors:ArrayCollection, genericColors:ArrayCollection, 
 					grades:ArrayCollection, vendors:ArrayCollection, uoms:ArrayCollection, coated:ArrayCollection):void{
 		this.stockDefinitions = stockDefs;
+		defaultSortGrid();
+		
 		if (!containsBlank(groups,"name"))	{
 			var group:StockGroup = new StockGroup();
 			group.name = "";
@@ -721,9 +725,26 @@
 			acFiltered.addItem(stock);
 		}
 		dataGrid.dataProvider = acFiltered;
-		
+		defaultSortGrid();
 	}
 	
+	private function defaultSortGrid():void	{
+		dataGrid.dispatchEvent
+			(
+				new DataGridEvent
+				(
+					DataGridEvent.HEADER_RELEASE,
+					false,
+					true,
+					0,	// The zero-based index of the column to sort in the DataGrid object's columns array.
+					null,
+					0,
+					null,
+					null,
+					0
+				)
+			);
+	}
 	private function match(data:Object, searchString:String, exactIfString:Boolean=false):Boolean	{
 		if (data is String)	{
 			if (!exactIfString)	{
