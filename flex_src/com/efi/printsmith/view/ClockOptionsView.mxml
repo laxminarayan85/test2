@@ -86,7 +86,11 @@
 						} else if(hours==0){
 							hours = 12;
 						}
-						return hours+":"+minutes+" "+am_pm_text;
+						if(String(minutes).length>1){
+							return hours+":"+minutes+" "+am_pm_text;
+						} else {
+							return hours+":"+"0"+minutes+" "+am_pm_text;
+						}
 					}
 				}
 				return "";
