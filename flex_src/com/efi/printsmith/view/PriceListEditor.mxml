@@ -449,7 +449,7 @@
 		if (itemType == "WasteChart") {
 			for (var i:int = 0;i < priceList.elements.length;i++) {
 				var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-				element.amount = element.amount * 100;
+				element.amount = element.amount / 100;
 			}
 		}
 	}
@@ -522,7 +522,7 @@
 				priceList = ev.result as WasteChart;
 			for (var i:int = 0;i < priceList.elements.length;i++) {
 				var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-				element.amount = element.amount / 100;
+				element.amount = element.amount * 100;
 			}
 		} else if (itemType == "SpeedTable") {
 			if (ev.result == null)
