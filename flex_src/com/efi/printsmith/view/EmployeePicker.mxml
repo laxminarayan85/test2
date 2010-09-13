@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="630" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="630" height="575" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
     close="PopUpManager.removePopUp(this);"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
 
@@ -14,6 +14,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import mx.collections.ArrayCollection;
 	
 	import com.efi.printsmith.data.Employee;           
     import mx.managers.PopUpManager;                                 
@@ -80,7 +81,7 @@
 	}
 	                                
 	private function resetFocus():void {                           
-	     focusManager.setFocus(filter_field);                                    
+	     //focusManager.setFocus(filter_field);                                    
 	}    
 	
 	private function editEmployee():void {
@@ -115,7 +116,7 @@
                              
 
                              
-	<mx:Canvas width="583" height="541">
+	<mx:Canvas width="583" height="100%">
 		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{employees}"
 		doubleClickEnabled="true" doubleClick="selectEmployee()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3">               
 		<mx:columns>
@@ -126,14 +127,13 @@
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectEmployee();"  width="108" x="465" y="10"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" enabled="true" click="newEmployee();" id="new_button" width="108" x="465" y="40"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="PopUpManager.removePopUp(this)" id="cancel_button" width="108" x="465" y="93"/>
-		<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
+		<!--<mx:TextInput x="247" y="493" id="filter_field" width="210" keyUp="updateDataGrid()"/>
 		<mx:ComboBox x="55" y="493" id="filter_combobox" width="184">
 			<mx:ArrayCollection>
 				<mx:String>Name</mx:String>
 			</mx:ArrayCollection>
 		</mx:ComboBox>
-		<mx:Label x="10" y="495" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kPSSharedFolderCmd.Filter')}"/>
+		<mx:Label x="10" y="495" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kPSSharedFolderCmd.Filter')}"/>-->
 	</mx:Canvas>
-<mx:Spacer height="10" />        
 
 </mx:TitleWindow>
