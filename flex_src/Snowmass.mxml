@@ -1047,6 +1047,7 @@
         	if (sizeString != null && sizeString.length > 0) {
         		var firstNumber:String = "";
     			var secondNumber:String = "";
+    			var returnString:String = "";
     			var onFirstNumber:Boolean = true;
     			var lastCharNumber = false;
         		for (var i:int = 0;i < sizeString.length;i++) {
@@ -1067,8 +1068,9 @@
         				lastCharNumber = false;
         			}
         		}
+        		returnString = firstNumber + " x " + secondNumber;
         	}
-        	return firstNumber + " x " + secondNumber;
+        	return returnString;
         }
         
         public static function getDateFormatter():DateFormatter {
