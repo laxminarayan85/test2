@@ -40,9 +40,6 @@
 			import mx.collections.ArrayCollection;
 		
 			[Bindable] private var _menuData:ArrayCollection;
-			[Bindable] private var _headerColor:uint;
-			[Bindable] private var _canvasColor:uint;
-			[Bindable] private var _menuColor:uint;
 			
 			[Bindable]
 	        [Embed(source="/assets/mdi/cursorresize.png")]
@@ -55,18 +52,6 @@
 				_menuData = val;	
 			}
 			 
-			public function set headerColor(val:uint):void	{
-				_headerColor = val;
-				
-			}
-			public function set canvasColor(val:uint):void	{
-				_canvasColor = val;
-				
-			}
-			public function set menuColor(val:uint):void	{
-				_menuColor = val;
-				
-			}
 			private function onMenuItemClicked(event:AppMenuItemClickedEvent):void	{
 				dispatchEvent(event);
 			}
@@ -167,13 +152,13 @@
 		]]>
 	</mx:Script>
 	<mx:HBox height="5%" width="100%" borderThickness="0"
-		borderStyle="none" backgroundColor="{_headerColor}">
-		<menu:ApplicationMenuBar id="menubar" menuData="{_menuData}" backgroundColor="{_menuColor}" height="100%" width="80%" />
-		<menu:ApplicationHeader id="header" bgcolor="{_headerColor}" height="100%" width="20%" />
+		borderStyle="none" styleName="headerBoxStyle">
+		<menu:ApplicationMenuBar id="menubar" menuData="{_menuData}"  height="100%" width="80%" />
+		<menu:ApplicationHeader id="header"  height="100%" width="20%" />
 	</mx:HBox>
 			
 	<mx:VDividedBox id="divbox" height="95%" width="100%">
-		<window:ApplicationCanvas id="appCanvas" backgroundColor="{_canvasColor}" height="95%" width="100%" />
+		<window:ApplicationCanvas id="appCanvas"  height="95%" width="100%" />
 		<task:ApplicationTaskBar height="5%" width="100%" id="taskbar" />
 	</mx:VDividedBox> 
 </mx:Panel>

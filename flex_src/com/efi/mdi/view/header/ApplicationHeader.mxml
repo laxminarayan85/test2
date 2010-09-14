@@ -5,7 +5,7 @@
 	paddingBottom="0"
 	paddingTop="0"
 	paddingRight="0"
-	paddingLeft="0" backgroundColor="{_bgcolor}"
+	paddingLeft="0" styleName="headerPanelStyle"
 	 width="100%" height="100%">
 	<mx:Script>
 		<![CDATA[
@@ -24,29 +24,26 @@
 				if (direction == RIGHT)
 					rightPanel.addChild(content);				
 			}
-			
-			public function set bgcolor(val:uint):void	{
-				_bgcolor = val;
-			}
+
 		]]>
 	</mx:Script>
 	<mx:HBox id="leftPanel" borderThickness="0"
 	borderStyle="none"
 	paddingBottom="0"
-	paddingTop="0"  backgroundColor="{_bgcolor}"
+	paddingTop="0"  styleName="leftPanelStyle"
 	paddingRight="0"
 	paddingLeft="0" width="100%" height="100%"
 		verticalAlign="middle" horizontalAlign="left"/>
 	<mx:HBox id="centerPanel" borderThickness="0"
 	borderStyle="none"
-	paddingBottom="0"  backgroundColor="{_bgcolor}"
+	paddingBottom="0"  styleName="centerPanelStyle"
 	paddingTop="0"
 	paddingRight="0"
 	paddingLeft="0" width="100%" height="100%" 
 		verticalAlign="middle" horizontalAlign="center"/>
 	<mx:HBox id="rightPanel" borderThickness="0"
 	borderStyle="none"
-	paddingBottom="0" backgroundColor="{_bgcolor}"
+	paddingBottom="0" styleName="rightPanelStyle"
 	paddingTop="0"
 	paddingRight="0"
 	paddingLeft="0" width="100%" height="100%" 

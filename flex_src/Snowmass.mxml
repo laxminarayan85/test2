@@ -32,7 +32,7 @@
     
 	<!--<mx:MenuBar id="menubar" width="100%" height="39" dataProvider="{_menuItems}" itemClick="onMenuClick(event);"/>-->
    
-	<mdi:MDIContainer id="container" headerColor="{0xb4b4ff}" menuColor="{0x8080ff}" menuData="{_menuItems}" canvasColor="{0x808080}" height="100%" width="100%" />
+	<mdi:MDIContainer id="container"  menuData="{_menuItems}" height="100%" width="100%" />
 
 <mx:RemoteObject id="loginService" destination="loginService"
 	result="handleLoginResult(event)"  fault="handleFault(event)"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <mx:MenuBar xmlns:mx="http://www.adobe.com/2006/mxml" dataProvider="{_menuData}"  
-	itemClick="onMenuItemClick(event);" labelField="label">
+	itemClick="onMenuItemClick(event);" labelField="label" styleName="menuStyle">
 	<mx:Metadata>
 		[Event(name="appMenuItemClicked", type="com.efi.mdi.event.menu.AppMenuItemClickedEvent")]
  	</mx:Metadata>
