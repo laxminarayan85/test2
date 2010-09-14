@@ -169,6 +169,14 @@ public class CreditCardTransactions extends ModelBase {
 	/**
    * @generated
    */
+  public static final String VERBALAUTHCODE = "VerbalAuthCode";
+	/**
+   * @generated
+   */
+  public static final String VERBALAUTHDATE = "VerbalAuthDate";
+	/**
+   * @generated
+   */
   public static final String ORDERNUMBER = "OrderNumber";
 
 	/**
@@ -864,6 +872,52 @@ public class CreditCardTransactions extends ModelBase {
    * @generated
    */	
  	@Basic
+  private String verbalAuthCode;
+
+	/**
+   * @generated
+ 	 */
+  public String getVerbalAuthCode(){
+    return verbalAuthCode; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setVerbalAuthCode(String newVal) {
+    this.verbalAuthCode = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date verbalAuthDate;
+
+	/**
+   * @generated
+ 	 */
+  public Date getVerbalAuthDate(){
+    return verbalAuthDate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setVerbalAuthDate(Date newVal) {
+    this.verbalAuthDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
   private String orderNumber;
 
 	/**
@@ -917,6 +971,8 @@ public class CreditCardTransactions extends ModelBase {
     if (CONTACT.equals(propertyName)) return getContact();
     if (WSID.equals(propertyName)) return getWsId();
     if (ISCURRENTTRANSACTION.equals(propertyName)) return getIsCurrentTransaction();
+    if (VERBALAUTHCODE.equals(propertyName)) return getVerbalAuthCode();
+    if (VERBALAUTHDATE.equals(propertyName)) return getVerbalAuthDate();
     if (ORDERNUMBER.equals(propertyName)) return getOrderNumber();
     return super.getProperty(propertyName);
   }
@@ -956,6 +1012,8 @@ public class CreditCardTransactions extends ModelBase {
     if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     if (WSID.equals(propertyName)) setWsId((Integer)newValue); else
     if (ISCURRENTTRANSACTION.equals(propertyName)) setIsCurrentTransaction((Integer)newValue); else
+    if (VERBALAUTHCODE.equals(propertyName)) setVerbalAuthCode((String)newValue); else
+    if (VERBALAUTHDATE.equals(propertyName)) setVerbalAuthDate((Date)newValue); else
     if (ORDERNUMBER.equals(propertyName)) setOrderNumber((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -1024,6 +1082,10 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (ISCURRENTTRANSACTION.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
+    if (VERBALAUTHCODE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (VERBALAUTHDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
     if (ORDERNUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
@@ -1065,6 +1127,8 @@ public class CreditCardTransactions extends ModelBase {
     if (CONTACT.equals(propertyName)) return CreditCardTransactions.class;
     if (WSID.equals(propertyName)) return CreditCardTransactions.class;
     if (ISCURRENTTRANSACTION.equals(propertyName)) return CreditCardTransactions.class;
+    if (VERBALAUTHCODE.equals(propertyName)) return CreditCardTransactions.class;
+    if (VERBALAUTHDATE.equals(propertyName)) return CreditCardTransactions.class;
     if (ORDERNUMBER.equals(propertyName)) return CreditCardTransactions.class;
     return super.getPropertyOwner(propertyName);
   }
@@ -1134,6 +1198,10 @@ public class CreditCardTransactions extends ModelBase {
     if (! SmartEquals(getWsId(), objT.getWsId()))
       return false;
     if (! SmartEquals(getIsCurrentTransaction(), objT.getIsCurrentTransaction()))
+      return false;
+    if (! SmartEquals(getVerbalAuthCode(), objT.getVerbalAuthCode()))
+      return false;
+    if (! SmartEquals(getVerbalAuthDate(), objT.getVerbalAuthDate()))
       return false;
     if (! SmartEquals(getOrderNumber(), objT.getOrderNumber()))
       return false;
