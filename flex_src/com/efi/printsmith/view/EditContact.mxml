@@ -160,10 +160,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.enabled = false;
 		dataService2.getContactPicker();  
 		salesRepDataService.getAll("SalesRep");
-		//cityDataService.getAll("City");
-		//stateDataService.getAll("State");
-		//countryDataService.getAll("Country");
-	//	zipDataService.getAll("Zip"); 
 		campaignDataService.getAll("Campaigns"); 
 		GradedataService.getAll("Grade");  
 		

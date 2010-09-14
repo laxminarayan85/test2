@@ -20,6 +20,7 @@ package com.efi.printsmith.business.commandDelegates.EditForms
 		public function handleUIEvent(event:EditContactEvent):void {
 			if (checkSecurity(EditContactEvent.COMMANDID)) {
 				var child:EditContact = new EditContact();
+				child.setContact(event.object);
 				var resEvent:ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,child,null,null);
 				responder.result(resEvent);
 			} else {

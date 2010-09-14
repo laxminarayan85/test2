@@ -54,6 +54,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.SportsInterest;
 	import com.efi.printsmith.data.CommonInterest;
 	import com.efi.printsmith.events.SaveAddressEvent;
@@ -968,8 +969,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		tmpItem = item as Contact;
 		var tmpString:String;
 		
-		if (tmpItem != null && tmpItem.firstName != null && tmpItem.lastName != null) {
-			tmpString = tmpItem.firstName +" "+ tmpItem.lastName
+		if (tmpItem != null && tmpItem.lastName != null) {
+			if (tmpItem.firstName == null)
+				tmpString = tmpItem.lastName
+			else
+				tmpString = tmpItem.firstName +" "+ tmpItem.lastName
 			return(tmpString);
 		} else {
 			return "None";
@@ -999,11 +1003,34 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 	
 	}
+		public function handleUIContactEvent(evt:ResultEvent):void {
+			var child:Panel = evt.result as Panel;
+			//addUniqueTab(child);
+			var win:MDIWindow = Application.application.containerManager.getWindowsWithChild(child);
+			if (win == null)	{
+				Application.application.containerManager.openNewMDIWindow(child.className,child);
+			}
+			else	{
+				win.bringWindowToFront();	
+			}
+		}		
 	private function doContact():void{
-		//var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
-	//	event.dispatch();
+		var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIContactEvent, handleFault));
+		event.dispatch();
 	}
 	private function doRemoveContact():void{
+		var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIContactEvent, handleFault));
+		event.dispatch();
+		
+	}
+	private function doStatContact():void{
+		var event:EditContactEvent = new EditContactEvent(account.contact, new mx.rpc.Responder(handleUIContactEvent, handleFault));
+		event.dispatch();
+		
+	}
+	private function doInvContact():void{
+		var event:EditContactEvent = new EditContactEvent(account.billToContact, new mx.rpc.Responder(handleUIContactEvent, handleFault));
+		event.dispatch();
 		
 	}
 		
@@ -1045,6 +1072,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					   icon="@Embed(source='../../../../assets/add16.png')"
 					   width="24"
 					   bottom="29"/>
+		<mx:LinkButton x="295" y="466" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" width="41" id="edit_inv_contact" click="doInvContact()"/>
+		<mx:LinkButton x="629" y="466"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" width="40" id="edit_stat_contact" click="doStatContact()"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasCreditControl" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
 				<mx:TextInput restrict="0-9\." x="181" y="10" id="credit_limit_edit" width="160" text="{Snowmass.getCurrencyFormatter(false,2).format(account.creditLimit)}"  focusOut="ClearLabel();"/>
