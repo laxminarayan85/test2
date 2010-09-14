@@ -210,31 +210,30 @@ public class PriceListUtilities {
 		
 		if (speedTable != null) {
 			List <PriceListElement> speedTableElements = speedTable.getElements();
-			PriceListElement elementToUse = null;
-			PriceListElement lastElement = null;
-			if(speedTableElements != null && speedTableElements.size() > 0) {
-				elementToUse = speedTableElements.get(0);
-				for (int i=1; i < speedTableElements.size(); i++) {
-					PriceListElement curElement = speedTableElements.get(i);
-					if (curElement.getQuantity() > qty) {
-						elementToUse = speedTableElements.get(i-1);
-						break;
-					}
-					lastElement = elementToUse;
+			
+			int i = 0;
+			long lastQty = 0;
+			double lastAmount = 0.0;
+			for (i = 0; i < speedTableElements.size(); i++) {
+				if (i > 0) {
+					lastQty = speedTableElements.get(i-1).getQuantity();
+					lastAmount = speedTableElements.get(i-1).getAmount().doubleValue();
+				} else {
+					lastQty = 0;
+					lastAmount = 0.0;
 				}
-				if (elementToUse.getQuantity() > 0) {
-					retVal = elementToUse.getAmount().doubleValue();
+				if (speedTableElements.get(i).getQuantity() > 0 && speedTableElements.get(i).getQuantity() >= qty) {
+					break;
 				}
-				 if (speedTable.getInterpolate()) {
-					qty = qty - elementToUse.getQuantity();
-					
-					if (qty!= 0 && lastElement != null) {
-						long qtyRange = elementToUse.getQuantity() - lastElement.getQuantity();
-						long lookupRange = qty - lastElement.getQuantity();
-						double priceRange = lastElement.getAmount().doubleValue() - retVal;
-						retVal = ((lookupRange * priceRange) / qtyRange) + lastElement.getAmount().doubleValue();
-					}
-				 }
+			}
+			if (i >= speedTableElements.size()) i = i - 1;
+			if (lastQty > 0 && i > 0) {
+				long qtyRange = speedTableElements.get(i).getQuantity() - lastQty;
+				long lookupRange = qty - lastQty;
+				double priceRange = lastAmount - speedTableElements.get(i).getAmount().doubleValue();
+				retVal = ((lookupRange * priceRange) / qtyRange) + lastAmount;
+			} else {
+				retVal = speedTableElements.get(i).getAmount().doubleValue();
 			}
 		}
 		return retVal;
