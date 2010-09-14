@@ -177,7 +177,7 @@ public class MatrixUtilities {
 			}
 		}
 		if (i >= elements.size()) i = i - 1;
-		if (lastQty > 0 && i > 0) {
+		if (lastQty > 0 && i > 0 && elements.get(i).getLastLine() == false) {
 			long qtyRange = elements.get(i).getQty() - lastQty;
 			long lookupRange = lookup - lastQty;
 			double priceRange = (elements.get(i).getPrice1().doubleValue() - lastPrice);
