@@ -187,7 +187,7 @@ public class ContactMapper extends ImportMapper {
 			} else if ("cc ptr".equals(currentFieldToken)) {
 				contact.setCcImportRec(currentImportToken);
 			} else if ("created".equals(currentFieldToken)) {
-				/* TODO */
+				 contact.setCreated(Utilities.tokenToDate(currentImportToken));
 			} else if ("marketing dates[1]".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("marketing dates[2]".equals(currentFieldToken)) {

@@ -1011,7 +1011,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Text x="80" y="12" text="{contact.contactId}" id="contactID"/>
 				<mx:Label x="391" y="243" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRep')}" textAlign="right" width="83"/>
 				<mx:Label x="397" y="218" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Created')}" textAlign="right" width="93"/>
-				<mx:Text x="498" y="218" width="160" id="createdDate" text="{contact.created.toString()}" height="20"/>
+				<mx:Text x="498" y="218" width="160" id="createdDate" text="{contact.created.toDateString()}" height="20"/>
 				<ns1:AddressListEditor x="363" y="269" id="ship_to_address_editor" height="215" width="357"/>
 				<mx:CheckBox x="10" y="216" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.UseContactAddress')}" id="use_contact_check" />
 				<mx:Text x="172" visible="{defaultContact}" y="201"  width="163"  id="default_contact_text"/>
