@@ -724,7 +724,7 @@
 								}
 							}
 							if(!checkFlag){
-								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisitemalreadyhasaa'), "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisitemalreadyhasaa'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'changePriceCmd.Confirm'), Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 									if (event.detail==Alert.YES) {
 										trackerStatus = "start";
 										trackerConsoleJobsObj.paused = false;
@@ -763,7 +763,7 @@
 								}
 							}
 							if(!checkFlag){
-								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisitemalreadyhasaa'), "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisitemalreadyhasaa'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'changePriceCmd.Confirm'), Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 									if (event.detail==Alert.YES) {
 										trackerStatus = "start";
 										trackerConsoleJobsObj.paused = false;
@@ -1063,7 +1063,7 @@
 		
 		private function cancelJob():void {
 			if(selectedTrackerConsoleJob!=null){
-				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Areyousureyouwanttoc'), "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Areyousureyouwanttoc'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'changePriceCmd.Confirm'), Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 					if (event.detail==Alert.YES) {
 						selectedDGIndex = employee_jobs_grid.selectedIndex;
 						dataService.deleteItem("TrackerConsoleJobs",selectedTrackerConsoleJob.id);
@@ -1543,7 +1543,7 @@
 			if(object!=null || selectedTrackerConsoleJob!=null){
 				if(object!=null){
 					if(employee==null || object.employee.id!=employee.id){
-						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ThisTrackeritemhasbe',inputArray), "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ThisTrackeritemhasbe',inputArray), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'changePriceCmd.Confirm'), Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 							if (event.detail==Alert.YES) {
 								openJobDetails(object);
 							}
@@ -1554,7 +1554,7 @@
 					}	
 				} else if(selectedTrackerConsoleJob!=null) {
 					if(employee==null || selectedTrackerConsoleJob.employee.id!=employee.id){
-						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ThisTrackeritemhasbe',inputArray), "Confirmation", Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ThisTrackeritemhasbe',inputArray), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'changePriceCmd.Confirm'), Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 							if (event.detail==Alert.YES) {
 								callLater(functionName);
 							}

@@ -3797,6 +3797,72 @@ public class DataService extends HibernateService {
 		}
 		return jobsList;
 	}
+	
+	/**
+	 * This method retrieves number of records in RouteStepSetUp table
+	 * @param className
+	 * @return
+	 * @throws Exception
+	 */
+	public Long getRouteStepSetUpCount(String className) throws Exception {
+		log.debug("** getMaxRouteStepSetUpId called.");
+		Long routeStepSetUpCount = 0L;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Session session = (Session) em.getDelegate();
+			String queryString = "select count(*) from " + className
+					+ " where routeData = true";
+			org.hibernate.Query query = session.createQuery(queryString);
+			ScrollableResults rs = query.scroll();
+			if(rs.next()) {
+				routeStepSetUpCount = rs.getLong(0);
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return routeStepSetUpCount;
+	}
+	
+	/**
+	 * This method retrieves RoutingStepSetUp List which orders accordingly 
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<RoutingStepSetUp> getRoutingStepSetUpList() throws Exception {
+		log.debug("** getRoutingStepSetUpList called.");
+		List<RoutingStepSetUp> routingStepSetUpList = new ArrayList<RoutingStepSetUp>();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from RoutingStepSetUp where routeData=true order by id asc";
+			Query query = em.createQuery(queryString);
+			List<RoutingStepSetUp> routingSetUpList = query.getResultList();
+			if(routingSetUpList!=null) {
+				for (RoutingStepSetUp routingStepSetUp : routingSetUpList) {
+					routingStepSetUpList.add(routingStepSetUp);
+					queryString = "from RoutingStepSetUp where routeData=false and parentRoute=:parentRoute order by id asc";
+					query = em.createQuery(queryString);
+					query.setParameter("parentRoute", routingStepSetUp);
+					List<RoutingStepSetUp> stepSetUpList = query.getResultList();
+					if(stepSetUpList!=null) {
+						for (RoutingStepSetUp routingStepSetUpObj : stepSetUpList) {
+							routingStepSetUpList.add(routingStepSetUpObj);
+						}
+					}
+				}	
+			}
+			if(routingStepSetUpList!=null)
+				log.debug("** Found " + routingStepSetUpList.size() + "records:"); 
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return routingStepSetUpList;
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public void deleteItem(String className, Long id) {

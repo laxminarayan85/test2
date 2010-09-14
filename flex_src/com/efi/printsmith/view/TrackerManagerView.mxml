@@ -10,8 +10,31 @@
 		<mx:method name="getActiveJobsForTrackerMgr" fault="handleFault(event)" result="handleLoadJobsResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServiceRouteSetUp" destination="dataService" showBusyCursor="true">
+		<mx:method name="getRouteStepSetUpCount" fault="handleFault(event)" result="handleLoadRouteCountResult(event)"/>
+		<mx:method name="getRoutingStepSetUpList" fault="handleFault(event)" result="handleLoadRouteSetUpResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceSaveRouteSetUp" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveRouteSetUpResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceUpdateRouteSetUp" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteRouteSetUpResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleDeleteRouteSetUpListResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:RemoteObject id="dataServiceFacilty" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadFaciltyResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceLocation" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadLocationResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceDates" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadDatesResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceStation" destination="dataService" showBusyCursor="true">
@@ -30,6 +53,9 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.events.CloseEvent;
+			import com.efi.printsmith.data.ProductionDates;
+			import com.efi.printsmith.data.ProductionLocations;
 			import com.efi.printsmith.pages.EmployeeTrackerReport;
 			import mx.utils.ObjectUtil;
 			import com.efi.printsmith.data.ProductionExceptions;
@@ -45,6 +71,7 @@
 			import com.efi.printsmith.data.TrackerManager;
 			import com.efi.printsmith.data.ProductionStations;
 			import com.efi.printsmith.data.ProductionFacilities;
+			import com.efi.printsmith.data.RoutingStepSetUp;
 			import mx.collections.ArrayCollection;
 			import mx.rpc.events.ResultEvent;
 			import mx.rpc.events.FaultEvent;
@@ -56,20 +83,119 @@
 			
 			[Bindable] public var facilitiesArray:ArrayCollection = new ArrayCollection();
 			
+			[Bindable] public var locationsArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var prodDatesArray:ArrayCollection = new ArrayCollection();
+			
 			[Bindable] public var productionStations:ArrayCollection = new ArrayCollection();
 			
 			[Bindable] private var selectedTrackerConsoleJob:TrackerConsoleJobs;
 			
 			[Bindable] private var exceptionsArray:ArrayCollection = new ArrayCollection();
 			
+			[Bindable] private var routingStepSetUp:RoutingStepSetUp; 
+			
+			[Bindable] private var hoursArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] private var routesStepList:ArrayCollection = new ArrayCollection();
+			
 			private var onLoad:Boolean = false;
 			
 			private var refreshActiveList:Boolean = false;
+			
+			private var routeCount:Number=0;
+			
+			private var isRouteSetUpSave:Boolean = false;
+			
+			private var isItemDeleted:Boolean = false;
+			
+			private var selectedIndexValue:int = -1;
 			
 			private function initTrackerMgrWindow():void {
 				onLoad = true;
 				dataService.getSingle("TrackerManager");
 				dataServiceException.getAll("ProductionExceptions");
+				dataServiceRouteSetUp.getRoutingStepSetUpList();
+				setHoursData();
+			}
+			
+			private function setHoursData():void {
+				var obj:Object = new Object();
+				obj.name = "";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "6 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "7 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "8 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "9 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "10 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "11 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "12 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "1 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "2 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "3 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "4 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "5 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "6 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "7 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "8 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "9 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "10 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "11 pm";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "12 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "1 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "2 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "3 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "4 am";
+				hoursArray.addItem(obj);
+				obj = new Object();
+				obj.name = "5 am";
+				hoursArray.addItem(obj);
+				
 			}
 			
 			private function handleFault(ev:FaultEvent):void {  
@@ -93,6 +219,8 @@
 				if(onLoad){
 					onLoad = false;
 					dataServiceFacilty.getAll("ProductionFacilities");
+					dataServiceLocation.getAll("ProductionLocations");
+					dataServiceDates.getAll("ProductionDates");
 					dataServiceStation.getAll("ProductionStations");
 				}
 			}
@@ -113,6 +241,25 @@
 				list.addItemAt(facility,0);
 				facilitiesArray = list;
 			}
+			
+			private function handleLoadLocationResult(event:ResultEvent):void {
+			    var list:ArrayCollection = event.result as ArrayCollection;
+				var location:ProductionLocations = new ProductionLocations();
+				location.id = 0;
+				location.name = "";
+				list.addItemAt(location,0);
+				locationsArray = list;
+			}
+			
+			private function handleLoadDatesResult(event:ResultEvent):void {
+			    var list:ArrayCollection = event.result as ArrayCollection;
+				var prodDate:ProductionDates = new ProductionDates();
+				prodDate.id = 0;
+				prodDate.name = "";
+				list.addItemAt(prodDate,0);
+				prodDatesArray = list;
+			}
+			
 			
 			private function handleLoadStationResult(event:ResultEvent):void {
 				productionStations = event.result as ArrayCollection;
@@ -341,6 +488,183 @@
 				var employeeTrackerReport:EmployeeTrackerReport = PopUpManager.createPopUp(this,EmployeeTrackerReport,false) as EmployeeTrackerReport;
 				employeeTrackerReport.exceptionsArray = exceptionsArray;
 			}
+			
+			private function handleLoadRouteCountResult(event:ResultEvent):void {
+				routeCount = event.result as Number;
+				var newRoutingStepSetUp:RoutingStepSetUp = new RoutingStepSetUp();
+				if(routeCount==0){
+					newRoutingStepSetUp.title = "New Routing 1";
+				} else {
+					newRoutingStepSetUp.title = "New Routing "+(routeCount+1);
+				}
+				if(trackerManager!=null){
+					newRoutingStepSetUp.productionFacilities = trackerManager.productionFacilities;
+				}	
+				newRoutingStepSetUp.routeData = true;
+				isRouteSetUpSave = true;
+				dataServiceSaveRouteSetUp.addUpdate(newRoutingStepSetUp);
+			}
+			
+			private function handleLoadRouteSetUpResult(event:ResultEvent):void {
+				routesStepList = event.result as ArrayCollection;
+				if(isRouteSetUpSave && routingStepSetUp!=null){
+					isRouteSetUpSave = false;
+					var counter:int = -1;
+					var checkFlag:Boolean = false;
+					if(routesStepList!=null && routesStepList.length>0){
+						for each(var routingStepSetUpObj:RoutingStepSetUp in routesStepList){
+							counter++;	
+							if(routingStepSetUpObj.id==routingStepSetUp.id){
+								routingStepSetUp = routingStepSetUpObj;
+								checkFlag = true;
+								break;
+							}
+						}
+						if(counter>-1 && checkFlag){
+							routeSetUpGrid.selectedIndex = counter;
+						} else {
+							routeSetUpGrid.selectedIndex = -1;
+							routingStepSetUp = null;
+						}
+					} else {
+						routeSetUpGrid.selectedIndex = -1;
+						routingStepSetUp = null;
+					}
+				} else if(isItemDeleted && selectedIndexValue>-1){
+					isItemDeleted = false;
+					if(routesStepList!=null && routesStepList.length>0){
+						if(routesStepList.length-1>=selectedIndexValue) {
+							routeSetUpGrid.selectedIndex = selectedIndexValue;
+							routingStepSetUp = routeSetUpGrid.selectedItem as RoutingStepSetUp;
+						} else {
+							routeSetUpGrid.selectedIndex = routesStepList.length-1;
+							routingStepSetUp = routeSetUpGrid.selectedItem as RoutingStepSetUp;
+						}
+					} else {
+						routeSetUpGrid.selectedIndex = -1;
+						routingStepSetUp = null;
+					}
+				}
+			}
+			
+			private function handleSaveRouteSetUpResult(event:ResultEvent):void {
+				routingStepSetUp = event.result as RoutingStepSetUp;
+				dataServiceRouteSetUp.getRoutingStepSetUpList();
+			}
+			
+			private function doSelectRoute(event:Event):void {
+				if(event.currentTarget.selectedIndex>-1){
+					routingStepSetUp = event.currentTarget.selectedItem as RoutingStepSetUp;
+				} else {
+					routingStepSetUp = null;
+				}
+			}
+			
+			private function doNewRoute():void {
+				dataServiceRouteSetUp.getRouteStepSetUpCount("RoutingStepSetUp");
+			}
+			
+			private function doNewStep():void {
+				if(routingStepSetUp!=null){
+					var newStep:RoutingStepSetUp = new RoutingStepSetUp();
+					newStep.title = "''";
+					newStep.routeData = false;
+					if(routingStepSetUp.parentRoute!=null){
+						newStep.parentRoute = routingStepSetUp.parentRoute;
+						newStep.routeDisabled = routingStepSetUp.parentRoute.routeDisabled;
+						newStep.defaultRouteForNewJobs = routingStepSetUp.parentRoute.defaultRouteForNewJobs;
+						newStep.productionFacilities = routingStepSetUp.parentRoute.productionFacilities;
+					} else {
+						newStep.parentRoute = routingStepSetUp;
+						newStep.routeDisabled = routingStepSetUp.routeDisabled;
+						newStep.defaultRouteForNewJobs = routingStepSetUp.defaultRouteForNewJobs;
+						newStep.productionFacilities = routingStepSetUp.productionFacilities;
+					}
+					isRouteSetUpSave = true;
+					dataServiceSaveRouteSetUp.addUpdate(newStep);
+				}
+			}
+			
+			private function doDeleteRouteSetUp():void {
+				var inputArray:Array = new Array();
+				if(routingStepSetUp!=null && routeSetUpGrid.selectedIndex>-1 && routeSetUpGrid.selectedItem!=null){
+					if(routingStepSetUp.parentRoute!=null){
+						inputArray.push(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.theroutingstep'));
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0',inputArray), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'changePriceCmd.Confirm'), Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+							if (event.detail==Alert.YES) {
+								selectedIndexValue = routeSetUpGrid.selectedIndex;
+								dataServiceUpdateRouteSetUp.deleteItem("RoutingStepSetUp",routingStepSetUp.id);
+							}
+						});
+					} else {
+						inputArray.push(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.theentireroutinglist'));
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0',inputArray), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'changePriceCmd.Confirm'), Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
+							if (event.detail==Alert.YES) {
+								var deleteItemList:ArrayCollection = new ArrayCollection();
+								for each(var routingStepSetUpObj:RoutingStepSetUp in routesStepList) {
+									if(routingStepSetUpObj.parentRoute!=null && routingStepSetUpObj.parentRoute.id == routingStepSetUp.id){
+										deleteItemList.addItem(routingStepSetUpObj);
+									}
+								}
+								deleteItemList.addItem(routingStepSetUp);
+								dataServiceUpdateRouteSetUp.addUpdateDeleteList(null,deleteItemList);
+							}
+						});
+					}
+				}
+			}
+			
+			private function handleDeleteRouteSetUpResult(event:ResultEvent):void {
+				isItemDeleted = true;
+				dataServiceRouteSetUp.getRoutingStepSetUpList();
+			}
+			
+			private function handleDeleteRouteSetUpListResult(event:ResultEvent):void {
+				routeSetUpGrid.selectedIndex = -1;
+				routingStepSetUp = null;
+				dataServiceRouteSetUp.getRoutingStepSetUpList();
+			}
+			
+			private function updateRoutingSetUpTitle():void {
+				if(routingStepSetUp!=null){
+					if(routingStepSetUp.parentRoute!=null){
+						dataServiceUpdateRouteSetUp.addUpdate(routingStepSetUp.parentRoute);
+						for each(var routingStepSetUpObj:RoutingStepSetUp in routesStepList){
+							if(routingStepSetUpObj.id == routingStepSetUp.parentRoute.id){
+								routingStepSetUpObj.title = routingStepSetUp.parentRoute.title;
+								break;
+							}
+						}
+					} else {
+						dataServiceUpdateRouteSetUp.addUpdate(routingStepSetUp);
+					}
+				}
+			}
+			
+			private function updateRoutingSetUpData():void {
+				if(routingStepSetUp!=null){
+					dataServiceUpdateRouteSetUp.addUpdate(routingStepSetUp);
+				}
+			}
+			
+			public function getAutoSchedule(autoScheduleDaysFromOrdered :int,autoScheduleDaysFromWantedBy:int,hourOfDay:String):String {
+				var autoScheduleString:String = "";
+				var inputArray:Array = new Array();
+				if(autoScheduleDaysFromOrdered==0 && autoScheduleDaysFromWantedBy==0){
+					inputArray.push(hourOfDay);
+					inputArray.push(0);
+					autoScheduleString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.DaysO',inputArray);
+				} else if(autoScheduleDaysFromOrdered>autoScheduleDaysFromWantedBy){
+					inputArray.push(hourOfDay);
+					inputArray.push(autoScheduleDaysFromOrdered);
+					autoScheduleString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.DaysO',inputArray);
+				} else if(autoScheduleDaysFromWantedBy>=autoScheduleDaysFromOrdered){
+					inputArray.push(hourOfDay);
+					inputArray.push(autoScheduleDaysFromWantedBy);
+					autoScheduleString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.DaysW',inputArray);
+				}
+				return autoScheduleString;
+			}
 		]]>
 	</mx:Script>
 
@@ -477,6 +801,229 @@
 					</mx:DataGrid>
 					
 				</mx:Panel>
+				
+		</mx:VBox>
+		
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowMgrCmd.RoutingSetup')}"
+				paddingLeft="20" paddingTop="20" width="100%" height="100%">
+				
+				<mx:HBox width="100%" height="10%">
+				
+					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.NewRouting')}"
+						click="{doNewRoute()}"/>
+					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.DuplicateRouting')}"
+						enabled="{routingStepSetUp!=null}"/>
+					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowJobDetailsCmd.Newstep')}"
+						click="{doNewStep()}" enabled="{routingStepSetUp!=null}"/>
+					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.DuplicateStep')}"
+						enabled="{routingStepSetUp!=null}"/>
+					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Delete')}"
+						click="{doDeleteRouteSetUp()}" enabled="{routingStepSetUp!=null}"/>
+				
+				</mx:HBox>
+				
+				<mx:HBox width="90%" height="10%">
+				
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.RouteTitle')}"
+						width="15%"/>
+					
+					<components:CustomStringTextInputComponent 				
+						dataHolder="{(routingStepSetUp.parentRoute!=null)?routingStepSetUp.parentRoute:routingStepSetUp}" 
+						customText="{(routingStepSetUp.parentRoute!=null)?routingStepSetUp.parentRoute.title:routingStepSetUp.title}" variableName="title" 
+						allowSpecialCharacters="true" maxChars="255" width="40%" enabled="{routingStepSetUp!=null}" 
+						focusOut="{updateRoutingSetUpTitle()}"/>
+						
+					<components:CustomCheckBoxComponent
+						dataHolder="{routingStepSetUp}" customText="{routingStepSetUp.routeDisabled}" variableName="routeDisabled"
+						selectedValue="true" deSelectedValue="false" defaultValue="false"
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Disabled')}" width="15%"
+						enabled="{routingStepSetUp!=null}" click="{updateRoutingSetUpData()}"/>
+						
+					<components:CustomCheckBoxComponent
+						dataHolder="{routingStepSetUp}" customText="{routingStepSetUp.defaultRouteForNewJobs}" variableName="defaultRouteForNewJobs"
+						selectedValue="true" deSelectedValue="false" defaultValue="false"
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.DefaultrouteforNEWjo')}" width="20%"
+						enabled="{routingStepSetUp!=null}" click="{updateRoutingSetUpData()}"/>
+				
+				</mx:HBox>
+				
+				<mx:Panel 
+					title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.StepDetails')}"
+					layout="vertical" paddingLeft="20" paddingRight="20" paddingTop="20" width="90%" height="30%">
+					
+					<mx:HBox width="100%" height="50%">
+					
+						<mx:Panel 
+							title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.ToHere')}"
+							layout="vertical" paddingLeft="20" paddingRight="20" paddingTop="20" width="50%">
+							
+							<mx:HBox width="100%">
+							
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Facility')}:"
+									fontWeight="bold" width="50%" textAlign="right"/>
+									
+								<components:CustomComboBoxComponent width="50%"
+									masterList="{facilitiesArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+									dataHolder="{routingStepSetUp}" variableName="productionFacilities" customText="{getCustomTextData(facilitiesArray,routingStepSetUp,routingStepSetUp.productionFacilities)}"
+									enabled="{routingStepSetUp!=null}" change="{updateRoutingSetUpData()}"/>
+								
+							</mx:HBox>
+							
+							<mx:HBox width="100%">
+							
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Location')}:"
+									fontWeight="bold" width="50%" textAlign="right"/>
+									
+								<components:CustomComboBoxComponent width="50%"
+									masterList="{locationsArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+									dataHolder="{routingStepSetUp}" variableName="productionLocations" customText="{getCustomTextData(locationsArray,routingStepSetUp,routingStepSetUp.productionLocations)}"
+									enabled="{routingStepSetUp!=null}" change="{updateRoutingSetUpData()}"/>
+								
+							</mx:HBox>
+							
+							<mx:HBox width="100%" horizontalAlign="center">
+								
+								<components:CustomCheckBoxComponent
+									dataHolder="{routingStepSetUp}" customText="{routingStepSetUp.stepDisabled}" variableName="stepDisabled"
+									selectedValue="true" deSelectedValue="false" defaultValue="false"
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Disabled')}"
+									enabled="{routingStepSetUp!=null}" click="{updateRoutingSetUpData()}"/>
+						
+							</mx:HBox>
+						
+						</mx:Panel>
+						
+						<mx:Panel 
+							title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.WhenComplete')}"
+							layout="vertical" paddingLeft="20" paddingRight="20" paddingTop="20" width="50%">
+							
+							<components:CustomCheckBoxComponent
+								dataHolder="{routingStepSetUp}" customText="{routingStepSetUp.markInvReady}" variableName="markInvReady"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.MarkINVreadyforpicku')}"
+								enabled="{routingStepSetUp!=null}" click="{updateRoutingSetUpData()}"/>
+								
+							<components:CustomCheckBoxComponent
+								dataHolder="{routingStepSetUp}" customText="{routingStepSetUp.treatAsNonProdStep}" variableName="treatAsNonProdStep"
+								selectedValue="true" deSelectedValue="false" defaultValue="false"
+								label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.TreatasNonProduction')}"
+								enabled="{routingStepSetUp!=null}" click="{updateRoutingSetUpData()}"/>
+								
+							<mx:HBox width="100%">
+							
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.CompletionCategory')}:"
+									fontWeight="bold" width="60%" textAlign="right"/>
+									
+								<components:CustomComboBoxComponent width="40%"
+									masterList="{prodDatesArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+									dataHolder="{routingStepSetUp}" variableName="productionDates" customText="{getCustomTextData(prodDatesArray,routingStepSetUp,routingStepSetUp.productionDates)}"
+									enabled="{routingStepSetUp!=null}" change="{updateRoutingSetUpData()}"/>
+							
+							</mx:HBox>
+						
+						</mx:Panel>
+						
+					</mx:HBox>		
+					
+					<mx:Panel 
+						title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.Schedule')}"
+						layout="vertical" paddingLeft="20" paddingRight="20" paddingTop="20" width="100%" height="50%">
+						
+						
+						<mx:HBox width="100%">
+						
+							<mx:HBox width="60%">
+							
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.AutoScheduledaysfrom')}:"
+									fontWeight="bold" width="70%" textAlign="right"/>
+									
+								<components:CustomNumericTextInputComponent width="20%"
+									dataHolder="{routingStepSetUp}" customText="{routingStepSetUp.autoScheduleDaysFromOrdered}" 
+									variableName="autoScheduleDaysFromOrdered" precision="0" rounding="nearest" isInteger="true"
+									enabled="{routingStepSetUp!=null}" focusOut="{updateRoutingSetUpData()}"/>
+									
+								<mx:Label text="O" width="10%"/>
+							
+							</mx:HBox>
+							
+							<mx:HBox width="25%">
+							
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.Hourofday')}:"
+									fontWeight="bold" width="50%" textAlign="right"/>
+									
+								<components:CustomComboBoxComponent width="50%"
+									masterList="{hoursArray}" labelFieldId="name" labelFieldName="name"
+									dataHolder="{routingStepSetUp}" variableName="hourOfDay" customText="{getCustomTextData(hoursArray,routingStepSetUp,routingStepSetUp.hourOfDay)}"
+									enabled="{routingStepSetUp!=null}" change="{updateRoutingSetUpData()}"/>
+									
+							</mx:HBox>
+							
+						</mx:HBox>
+						
+						<!--<mx:HBox width="100%">-->
+						
+							<mx:HBox width="60%">
+								
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.AutoScheduledaysfrom')}:"
+									fontWeight="bold" width="70%" textAlign="right"/>
+									
+								<components:CustomNumericTextInputComponent width="20%"
+									dataHolder="{routingStepSetUp}" customText="{routingStepSetUp.autoScheduleDaysFromWantedBy}" 
+									variableName="autoScheduleDaysFromWantedBy" precision="0" rounding="nearest" isInteger="true"
+									enabled="{routingStepSetUp!=null}" focusOut="{updateRoutingSetUpData()}"/>
+									
+								<mx:Label text="W" width="10%"/>
+							
+							</mx:HBox>
+							
+						<!--</mx:HBox>-->
+					
+					</mx:Panel>
+					
+				</mx:Panel>
+				
+				<mx:DataGrid id="routeSetUpGrid" dataProvider="{routesStepList}" itemClick="{doSelectRoute(event)}" 
+					width="100%" height="50%">
+					<mx:columns>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.Route')}" dataField="title">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{data.title}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Facility')}">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{data.productionFacilities.name}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Location')}">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{data.productionLocations.name}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.StopAction')}"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.DateStamp')}">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{data.productionDates.name}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.AutoSchedule')}">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{outerDocument.getAutoSchedule(data.autoScheduleDaysFromOrdered,data.autoScheduleDaysFromWantedBy,data.hourOfDay)}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				
 				
 		</mx:VBox>
 		
