@@ -559,170 +559,176 @@
 		
 		var ac:ArrayCollection = stockDefinitions;
 		var acFiltered:ArrayCollection = new ArrayCollection();
-		
-		for (var i:int=0; i<ac.length; i++)	{
-			var stock:StockDefinition = ac.getItemAt(i) as StockDefinition;
-			if (txtGroup.text != "")	{
-				if ((stock.stkgroup != null) 
-						&& ((stock.stkgroup as StockGroup).name != null)
-						&& (match((stock.stkgroup as StockGroup).name, txtGroup.text,true) == false)	)
-						continue;		
-			}
-			if (txtName.text != "")	{
-				if ((stock.name != null) 
-						&& (match(stock.name, txtName.text) == false)	)
-						continue;	
-			}
-			if (txtFinish.text != "")	{
-				if ((stock.finish != null) 
-						&& ((stock.finish as StockFinish).name != null)
-						&& (match((stock.finish as StockFinish).name, txtFinish.text, true) == false)	)
-						continue;	
-			}
-			if (txtColor.text != "")	{
-				if ((stock.color != null) 
-						&& ((stock.color as StockColors).name != null)
-						&& (match((stock.color as StockColors).name, txtColor.text, true) == false)	)
-						continue;	
-			}
-			if (txtGrade.text != "")	{
-				if ((stock.grade != null) 
-						&& ((stock.grade as StockGrade).name != null)
-						&& (match((stock.grade as StockGrade).name, txtGrade.text, true) == false)	)
-						continue;	
-			}
-			if (txtMinOrder.text != "")	{
-				if (match(stock.minorder, txtMinOrder.text) == false)	
-						continue;	
-			}
-			if (txtVendor.text != "")	{
-				if ((stock.vendor != null) 
-						&& ((stock.vendor as Vendor).name != null)
-						&& (match((stock.vendor as Vendor).name, txtVendor.text, true) == false)	)
-						continue;	
-			}
-			if (txtStockType.text != "")	{
-				if ((stock.stktype != null) 
-						&& ((stock.stktype as StockType).name != null)
-						&& (match((stock.stktype as StockType).name, txtStockType.text, true) == false)	)
-						continue;	
-			}
-			if (txtProductId.text != "")	{
-				if (match(stock.id + "" , txtProductId.text) == false)	
-						continue;	
-			}
-			if (txtCoatedSides.text != "")	{
-				if ((stock.coated != null) 
-						&& (match(stock.coated , txtCoatedSides.text) == false)	)
-						continue;	
-			}
-			if (txtGenericColors.text != "")	{
-				if ((stock.genericColor != null) 
-						&& ((stock.genericColor as GenericColors).name != null)
-						&& (match((stock.genericColor as GenericColors).name, txtGenericColors.text, true) == false)	)
-						continue;	
-			}
-			if (txtThickness.text != "")	{
-				if (match(stock.thickness, txtThickness.text) == false)	
-						continue;	
-			}
-			if (txtThicknessUOM.text != "")	{
-				if (match(stock.uom, txtThicknessUOM.text, true) == false)	
-						continue;	
-			}
-			if (txtSheetsPerSet.text != "")	{
-				if (match(stock.sheetsPerSet, txtSheetsPerSet.text) == false)	
-						continue;
-			}
-			if (txtStockNumber.text != "")	{
-				if ((stock.stocknumber != null) 
-						&& (match(stock.stocknumber, txtStockNumber.text) == false)	)
-						continue;
-			}
-			if (!chkShowRollStock.selected && !chkShowLargeFormatStock.selected 
-				&& (txtSizeMin.text != ""))	{
-					if (stock.parentsize != null)	{
-						if (matchMin(stock.parentsize, txtSizeMin.text) == false)		
+		if (ac != null)	{
+			for (var i:int=0; i<ac.length; i++)	{
+				
+				var stock:StockDefinition = ac.getItemAt(i) as StockDefinition;
+				
+				if (stock == null)	
+					continue;
+					
+				if (txtGroup.text != "")	{
+					if ((stock.stkgroup != null) 
+							&& ((stock.stkgroup as StockGroup).name != null)
+							&& (match((stock.stkgroup as StockGroup).name, txtGroup.text,true) == false)	)
+							continue;		
+				}
+				if (txtName.text != "")	{
+					if ((stock.name != null) 
+							&& (match(stock.name, txtName.text) == false)	)
+							continue;	
+				}
+				if (txtFinish.text != "")	{
+					if ((stock.finish != null) 
+							&& ((stock.finish as StockFinish).name != null)
+							&& (match((stock.finish as StockFinish).name, txtFinish.text, true) == false)	)
+							continue;	
+				}
+				if (txtColor.text != "")	{
+					if ((stock.color != null) 
+							&& ((stock.color as StockColors).name != null)
+							&& (match((stock.color as StockColors).name, txtColor.text, true) == false)	)
+							continue;	
+				}
+				if (txtGrade.text != "")	{
+					if ((stock.grade != null) 
+							&& ((stock.grade as StockGrade).name != null)
+							&& (match((stock.grade as StockGrade).name, txtGrade.text, true) == false)	)
+							continue;	
+				}
+				if (txtMinOrder.text != "")	{
+					if (match(stock.minorder, txtMinOrder.text) == false)	
+							continue;	
+				}
+				if (txtVendor.text != "")	{
+					if ((stock.vendor != null) 
+							&& ((stock.vendor as Vendor).name != null)
+							&& (match((stock.vendor as Vendor).name, txtVendor.text, true) == false)	)
+							continue;	
+				}
+				if (txtStockType.text != "")	{
+					if ((stock.stktype != null) 
+							&& ((stock.stktype as StockType).name != null)
+							&& (match((stock.stktype as StockType).name, txtStockType.text, true) == false)	)
+							continue;	
+				}
+				if (txtProductId.text != "")	{
+					if (match(stock.id + "" , txtProductId.text) == false)	
+							continue;	
+				}
+				if (txtCoatedSides.text != "")	{
+					if ((stock.coated != null) 
+							&& (match(stock.coated , txtCoatedSides.text) == false)	)
+							continue;	
+				}
+				if (txtGenericColors.text != "")	{
+					if ((stock.genericColor != null) 
+							&& ((stock.genericColor as GenericColors).name != null)
+							&& (match((stock.genericColor as GenericColors).name, txtGenericColors.text, true) == false)	)
+							continue;	
+				}
+				if (txtThickness.text != "")	{
+					if (match(stock.thickness, txtThickness.text) == false)	
+							continue;	
+				}
+				if (txtThicknessUOM.text != "")	{
+					if (match(stock.uom, txtThicknessUOM.text, true) == false)	
+							continue;	
+				}
+				if (txtSheetsPerSet.text != "")	{
+					if (match(stock.sheetsPerSet, txtSheetsPerSet.text) == false)	
 							continue;
-						
-					}	
-			}
-			if (!chkShowRollStock.selected && !chkShowLargeFormatStock.selected 
-				&& (txtSizeMax.text != ""))	{
-					if (stock.parentsize != null)	{
-						if (matchMax(stock.parentsize, txtSizeMax.text) == false)		
-							continue;						
-					}	
-			}
-			if ((chkShowRollStock.selected || chkShowLargeFormatStock.selected) 
-				&& (txtRollWidthMin.text != ""))	{
-					if (stock.parentsize != null)	{
-						if (matchMin(stock.parentsize.width, txtRollWidthMin.text) == false)		
-							continue;						
-					}	
-			}
-			if ((chkShowRollStock.selected || chkShowLargeFormatStock.selected) 
-				&& (txtRollWidthMax.text != ""))	{
-					if (stock.parentsize != null)	{
-						if (matchMax(stock.parentsize.width, txtRollWidthMax.text) == false)		
-							continue;						
-					}	
-			}
-			if (txtWeightMax.text != "")	{
-				if (matchMax(stock.weight, txtWeightMax.text) == false)	
-						continue;
-			}
-			if (txtWeightMin.text != "")	{
-				if (matchMin(stock.weight, txtWeightMin.text) == false)	
-						continue;
-			}
-			if (txtQtyOnHandMax.text != "")	{
-				if (matchMax(stock.onHand, txtQtyOnHandMax.text) == false)	
-						continue;
-			}
-			if (txtQtyOnHandMin.text != "")	{
-				if (matchMin(stock.onHand, txtQtyOnHandMin.text) == false)	
-						continue;
-			}
-			if (txtCwtMax.text != "")	{
-				if (matchMax(stock.cwt1, txtCwtMax.text) == false)	
-						continue;
-			}
-			if (txtCwtMin.text != "")	{
-				if (matchMin(stock.cwt1, txtCwtMin.text) == false)	
-						continue;
-			}
-			if (chkShowRigidSubstrate.selected)	{
-				if (stock.stockunit != 4)
-					continue;
-			}
-			if (chkShowLargeFormatStock.selected)	{
-				if (stock.stockunit != 3)
-					continue;
-			}
-			if (chkShowRollStock.selected)	{
-				if (stock.stockunit != 2)
-					continue;
-			}
-			if (chkShowShells.selected)	{
-				if (stock.shellItem != null)	{
-					var strShellItem:String = "t";
-					if (stock.shellItem == false)	
-						strShellItem = "f";
-					if (match(strShellItem, "t") == false) 	
+				}
+				if (txtStockNumber.text != "")	{
+					if ((stock.stocknumber != null) 
+							&& (match(stock.stocknumber, txtStockNumber.text) == false)	)
+							continue;
+				}
+				if (!chkShowRollStock.selected && !chkShowLargeFormatStock.selected 
+					&& (txtSizeMin.text != ""))	{
+						if (stock.parentsize != null)	{
+							if (matchMin(stock.parentsize, txtSizeMin.text) == false)		
+								continue;
+							
+						}	
+				}
+				if (!chkShowRollStock.selected && !chkShowLargeFormatStock.selected 
+					&& (txtSizeMax.text != ""))	{
+						if (stock.parentsize != null)	{
+							if (matchMax(stock.parentsize, txtSizeMax.text) == false)		
+								continue;						
+						}	
+				}
+				if ((chkShowRollStock.selected || chkShowLargeFormatStock.selected) 
+					&& (txtRollWidthMin.text != ""))	{
+						if (stock.parentsize != null)	{
+							if (matchMin(stock.parentsize.width, txtRollWidthMin.text) == false)		
+								continue;						
+						}	
+				}
+				if ((chkShowRollStock.selected || chkShowLargeFormatStock.selected) 
+					&& (txtRollWidthMax.text != ""))	{
+						if (stock.parentsize != null)	{
+							if (matchMax(stock.parentsize.width, txtRollWidthMax.text) == false)		
+								continue;						
+						}	
+				}
+				if (txtWeightMax.text != "")	{
+					if (matchMax(stock.weight, txtWeightMax.text) == false)	
+							continue;
+				}
+				if (txtWeightMin.text != "")	{
+					if (matchMin(stock.weight, txtWeightMin.text) == false)	
+							continue;
+				}
+				if (txtQtyOnHandMax.text != "")	{
+					if (matchMax(stock.onHand, txtQtyOnHandMax.text) == false)	
+							continue;
+				}
+				if (txtQtyOnHandMin.text != "")	{
+					if (matchMin(stock.onHand, txtQtyOnHandMin.text) == false)	
+							continue;
+				}
+				if (txtCwtMax.text != "")	{
+					if (matchMax(stock.cwt1, txtCwtMax.text) == false)	
+							continue;
+				}
+				if (txtCwtMin.text != "")	{
+					if (matchMin(stock.cwt1, txtCwtMin.text) == false)	
+							continue;
+				}
+				if (chkShowRigidSubstrate.selected)	{
+					if (stock.stockunit != 4)
 						continue;
 				}
-			}	
-			if (chkShowInventoriedStock.selected)	{
-				if (stock.standardItem != null)	{
-					var strStdItem:String = "t";
-					if (stock.standardItem == false)	
-						strStdItem = "f";
-					if (match(strStdItem, "t") == false) 	
+				if (chkShowLargeFormatStock.selected)	{
+					if (stock.stockunit != 3)
 						continue;
 				}
-			}			 
-			acFiltered.addItem(stock);
+				if (chkShowRollStock.selected)	{
+					if (stock.stockunit != 2)
+						continue;
+				}
+				if (chkShowShells.selected)	{
+					if (stock.shellItem != null)	{
+						var strShellItem:String = "t";
+						if (stock.shellItem == false)	
+							strShellItem = "f";
+						if (match(strShellItem, "t") == false) 	
+							continue;
+					}
+				}	
+				if (chkShowInventoriedStock.selected)	{
+					if (stock.standardItem != null)	{
+						var strStdItem:String = "t";
+						if (stock.standardItem == false)	
+							strStdItem = "f";
+						if (match(strStdItem, "t") == false) 	
+							continue;
+					}
+				}			 
+				acFiltered.addItem(stock);
+			}
 		}
 		dataGrid.dataProvider = acFiltered;
 		defaultSortGrid();
