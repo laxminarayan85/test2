@@ -796,21 +796,21 @@ public class PreferencesMapper extends ImportMapper {
 		}
 		if (address == null)
 			address = preferencesSystem.getCompanyAddress();
-		if (name.equals("title"))
+		if (name.equals("title") && value.equals("") == false)
 			address.setName(value);
 		else if (name.equals("address1"))
 			address.setStreet1(value);
 		else if (name.equals("address2"))
 			address.setStreet2(value);
-		else if (name.equals("citystatzip")) {
+		else if (name.equals("citystatezip")) {
 			int i = value.indexOf(",");
 			if (i > -1) {
-				address.setCity(value.substring(0,i-1));
+				address.setCity(value.substring(0,i));
 			}
 			int x = value.indexOf(" ",i+2);
 			if (x > -1) {
-				address.setState(value.substring(i+2, x-1));
-				address.setCity(value.substring(x+1));
+				address.setState(value.substring(i+2, x));
+				address.setZip(value.substring(x+1));
 			}
 		} else if (name.equals("phone"))
 			preferencesSystem.setCompanyPhone(value);
