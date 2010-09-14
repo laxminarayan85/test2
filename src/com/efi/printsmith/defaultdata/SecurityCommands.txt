@@ -37,7 +37,7 @@ rStandardMenuText.Invoice,rStandardMenuText.CreateEstimate,CMD_CreateEstimate
 rStandardMenuText.Invoice,rAltMenuText.CopytonewEstimate,CMD_EditEstimate
 rStandardMenuText.Invoice,rStandardMenuText.1,CMD_
 rStandardMenuText.Invoice,rStandardMenuText.AccountInfo,CMD_Invoice_AccountInfo
-rStandardMenuText.AccountInfo,rStandardMenuText.ReNumberDocuments,CMD_
+rStandardMenuText.Invoice,	rAltMenuText.ReNumberDocuments,CMD_
 rStandardMenuText.Invoice,rAltMenuText.ChangeAccount,CMD_Invoice_ChangeAccounts
 rStandardMenuText.Invoice,	rAltMenuText.Canchangeholdstate,CMD_
 rStandardMenuText.Invoice,rStandardMenuText.Jobs,CMD_Invoice_Jobs
@@ -151,7 +151,7 @@ rStandardMenuText.Reports,rStandardMenuText.1,CMD_
 rStandardMenuText.Reports,rStandardMenuText.MailerCampaigns,CMD_
 rStandardMenuText.Reports,rStandardMenuText.ReportManager,CMD_
 rStandardMenuText.Reports,rStandardMenuText.ReportWriter,CMD_
-rStandardMenuText.DownLoader,rStandardMenuText.Downloader,CMD_
+rStandardMenuText.Reports,rStandardMenuText.Downloader,CMD_
 rStandardMenuText.Reports,rStandardMenuText.1,CMD_
 rStandardMenuText.Reports,rStandardMenuText.1,CMD_
 rStandardMenuText.Reports,rStandardMenuText.Browse,CMD_
@@ -254,6 +254,7 @@ rStandardMenuText.Admin,rStandardMenuText.SynchronizePortable,CMD_
 rStandardMenuText.Admin,	portableCmd.UpdateDataFolder,CMD_
 rStandardMenuText.Admin,rStandardMenuText.UpdatePricingFolder,CMD_
 rStandardMenuText.Admin,rStandardMenuText.SendFile,CMD_
+rStandardMenuText.Admin,	rStandardMenuText.OrderStock,CMD_
 rStandardMenuText.Job,	rStandardMenuText.ChangePricingMethod,CMD_Jobs_ChangePricingMethod
 rStandardMenuText.Job,	rStandardMenuText.1,CMD_
 rStandardMenuText.Job,	rStandardMenuText.ChangeStockSelection,CMD_Jobs_ChangeStock
@@ -262,7 +263,6 @@ rStandardMenuText.Job,	rStandardMenuText.ChangeScheduleSelect,CMD_
 rStandardMenuText.Job,	rStandardMenuText.1,CMD_
 rStandardMenuText.Job,	rStandardMenuText.TrackerProduction,CMD_
 rStandardMenuText.Job,	rStandardMenuText.GeneratePriceList,CMD_
-rStandardMenuText.Job,	rStandardMenuText.OrderStock,CMD_
 rStandardMenuText.Job,	rStandardMenuText.JobTicketNotes,CMD_
 rStandardMenuText.Job,	rStandardMenuText.WebWorkSheet,CMD_
 rStandardMenuText.Job,	rStandardMenuText.DigitalAssets,CMD_
