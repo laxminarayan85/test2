@@ -11,7 +11,7 @@
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceRouteSetUp" destination="dataService" showBusyCursor="true">
-		<mx:method name="getRouteStepSetUpCount" fault="handleFault(event)" result="handleLoadRouteCountResult(event)"/>
+		<!--<mx:method name="getRouteStepSetUpCount" fault="handleFault(event)" result="handleLoadRouteCountResult(event)"/>-->
 		<mx:method name="getRoutingStepSetUpList" fault="handleFault(event)" result="handleLoadRouteSetUpResult(event)"/>
 	</mx:RemoteObject>
 	
@@ -102,8 +102,6 @@
 			private var onLoad:Boolean = false;
 			
 			private var refreshActiveList:Boolean = false;
-			
-			private var routeCount:Number=0;
 			
 			private var isRouteSetUpSave:Boolean = false;
 			
@@ -489,7 +487,7 @@
 				employeeTrackerReport.exceptionsArray = exceptionsArray;
 			}
 			
-			private function handleLoadRouteCountResult(event:ResultEvent):void {
+			/* private function handleLoadRouteCountResult(event:ResultEvent):void {
 				routeCount = event.result as Number;
 				var newRoutingStepSetUp:RoutingStepSetUp = new RoutingStepSetUp();
 				if(routeCount==0){
@@ -503,7 +501,7 @@
 				newRoutingStepSetUp.routeData = true;
 				isRouteSetUpSave = true;
 				dataServiceSaveRouteSetUp.addUpdate(newRoutingStepSetUp);
-			}
+			} */
 			
 			private function handleLoadRouteSetUpResult(event:ResultEvent):void {
 				routesStepList = event.result as ArrayCollection;
@@ -561,7 +559,86 @@
 			}
 			
 			private function doNewRoute():void {
-				dataServiceRouteSetUp.getRouteStepSetUpCount("RoutingStepSetUp");
+				//dataServiceRouteSetUp.getRouteStepSetUpCount("RoutingStepSetUp");
+				var newRoutingStepSetUp:RoutingStepSetUp = new RoutingStepSetUp();
+				var newRoutingCheckFlag:Boolean = false;
+				for each(var routingStepSetUpObj:RoutingStepSetUp in routesStepList){
+					if(routingStepSetUpObj.routeData){
+						if(routingStepSetUpObj.title=="New Routing"){
+							newRoutingCheckFlag = true;
+							false;
+						}
+					}
+				}
+				if(!newRoutingCheckFlag){
+					newRoutingStepSetUp.title = "New Routing";
+				} else {
+					var counter:int=5;
+					for(var i:int=1;i<=counter;i++){
+						var titleExists:Boolean = false;
+						for each(var routingStepSetUpObject:RoutingStepSetUp in routesStepList){
+							if(routingStepSetUpObject.title=="New Routing copy "+i){
+								titleExists = true;
+								break;
+							}
+						}
+						if(!titleExists){
+							newRoutingStepSetUp.title = "New Routing copy "+i;
+							break;
+						}
+						if(i==counter && titleExists){
+							counter = counter+100;
+						}
+					}
+				}
+				if(trackerManager!=null){
+					newRoutingStepSetUp.productionFacilities = trackerManager.productionFacilities;
+				}	
+				newRoutingStepSetUp.routeData = true;
+				isRouteSetUpSave = true;
+				dataServiceSaveRouteSetUp.addUpdate(newRoutingStepSetUp);
+			}
+			
+			private function doDuplicateRouting():void {
+				var newRoutingStepSetUp:RoutingStepSetUp = new RoutingStepSetUp();
+				var counter:int=5;
+				if(routingStepSetUp!=null){
+					for(var i:int=1;i<=counter;i++){
+						var titleExists:Boolean = false;
+						for each(var routingStepSetUpObject:RoutingStepSetUp in routesStepList){
+							if(routingStepSetUp.parentRoute!=null){
+								if(routingStepSetUpObject.title==routingStepSetUp.parentRoute.title+" copy "+i){
+									titleExists = true;
+									break;
+								}	
+							} else if(routingStepSetUp.parentRoute==null){
+								if(routingStepSetUpObject.title==routingStepSetUp.title+" copy "+i){
+									titleExists = true;
+									break;
+								}
+							}
+						}
+						if(!titleExists){
+							if(routingStepSetUp.parentRoute!=null){
+								newRoutingStepSetUp.title = routingStepSetUp.parentRoute.title+" copy "+i;
+							} else if(routingStepSetUp.parentRoute==null){
+								newRoutingStepSetUp.title = routingStepSetUp.title+" copy "+i;
+							}
+							break;
+						}
+						if(i==counter && titleExists){
+							counter = counter+100;
+						}
+					}
+					if(routingStepSetUp.parentRoute!=null){
+						copyData(routingStepSetUp.parentRoute,newRoutingStepSetUp);
+					} else if(routingStepSetUp.parentRoute==null){
+						copyData(routingStepSetUp,newRoutingStepSetUp);
+					}
+					newRoutingStepSetUp.routeData = true;
+					isRouteSetUpSave = true;
+					dataServiceSaveRouteSetUp.addUpdate(newRoutingStepSetUp);
+				}
 			}
 			
 			private function doNewStep():void {
@@ -583,6 +660,35 @@
 					isRouteSetUpSave = true;
 					dataServiceSaveRouteSetUp.addUpdate(newStep);
 				}
+			}
+			
+			private function doDuplicateStep():void {
+				if(routingStepSetUp!=null){
+					var newStep:RoutingStepSetUp = new RoutingStepSetUp();
+					newStep.title = "''";
+					newStep.routeData = false;
+					if(routingStepSetUp.parentRoute!=null){
+						newStep.parentRoute = routingStepSetUp.parentRoute;
+					} else if(routingStepSetUp.parentRoute==null){
+						newStep.parentRoute = routingStepSetUp;
+					}
+					copyData(routingStepSetUp,newStep);
+					isRouteSetUpSave = true;
+					dataServiceSaveRouteSetUp.addUpdate(newStep);
+				}
+			}
+			
+			private function copyData(sourceObject:RoutingStepSetUp, destObject:RoutingStepSetUp):void {
+				destObject.routeDisabled = sourceObject.routeDisabled;
+				destObject.defaultRouteForNewJobs = sourceObject.defaultRouteForNewJobs;
+				destObject.productionFacilities = sourceObject.productionFacilities;
+				destObject.productionLocations = sourceObject.productionLocations;
+				destObject.stepDisabled = sourceObject.stepDisabled;
+				destObject.markInvReady = sourceObject.markInvReady;
+				destObject.treatAsNonProdStep = sourceObject.treatAsNonProdStep;
+				destObject.autoScheduleDaysFromOrdered = sourceObject.autoScheduleDaysFromOrdered;
+				destObject.autoScheduleDaysFromWantedBy = sourceObject.autoScheduleDaysFromWantedBy;
+				destObject.hourOfDay = sourceObject.hourOfDay;
 			}
 			
 			private function doDeleteRouteSetUp():void {
@@ -812,11 +918,11 @@
 					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.NewRouting')}"
 						click="{doNewRoute()}"/>
 					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.DuplicateRouting')}"
-						enabled="{routingStepSetUp!=null}"/>
+						click="{doDuplicateRouting()}" enabled="{routingStepSetUp!=null}"/>
 					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowJobDetailsCmd.Newstep')}"
 						click="{doNewStep()}" enabled="{routingStepSetUp!=null}"/>
 					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.DuplicateStep')}"
-						enabled="{routingStepSetUp!=null}"/>
+						click="{doDuplicateStep()}" enabled="{routingStepSetUp!=null}"/>
 					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Delete')}"
 						click="{doDeleteRouteSetUp()}" enabled="{routingStepSetUp!=null}"/>
 				
