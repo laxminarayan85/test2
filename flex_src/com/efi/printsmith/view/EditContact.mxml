@@ -110,6 +110,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     import mx.events.ValidationResultEvent;    
  	import mx.rpc.IResponder;
    	import com.efi.printsmith.events.commandEvents.Contacts.*;
+   	import com.efi.printsmith.view.CreditCardDataEntry;
+   	
 
     [Bindable]
     private var enableSave:Boolean = true;
@@ -972,9 +974,18 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		return(str);
 	}
 	
-	private function doReadCardNumber():void{		
-		cardnumber.text = formatCreditCardNumber(cardnumber.text);
-		contact.creditCard.cardDisplayNumber = cardnumber.text;
+	private function doReadCardNumber():void{
+	//	var valid:Boolean;
+	//	var returnVal:Array = new Array;
+		
+		cardnumber.text = StringUtil.trim(cardnumber.text);
+		if (CreditCardDataEntry.IsCardNumberModeTen(cardnumber.text) == false) {
+			cardnumber.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.NotValidNumber');
+		} else {
+			contact.creditCard.cardNumber = cardnumber.text;
+			cardnumber.text = formatCreditCardNumber(cardnumber.text);
+			contact.creditCard.cardDisplayNumber = cardnumber.text;
+		}
 	}
 
 	private function doGrade():void{

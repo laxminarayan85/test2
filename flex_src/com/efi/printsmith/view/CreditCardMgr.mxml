@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Credit Card Manager" name="Credit Card Manager"
+<mx:Panel 
+	xmlns:comp="com.efi.printsmith.components.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:vo="com.efi.printsmith.vo.*" 
+	label="Credit Card Manager" name="Credit Card Manager"
 width="100%" height="100%"  creationComplete="init()"  
      title="Credit Card Manager" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*">
 	<mx:RemoteObject id="dataService"
@@ -10,8 +14,18 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:method name="getAll"
 				   fault="handleFault(event)"
 				   result="handleLoadResult(event)"/>
+		<mx:method name="getPendingCreditCardTransations"
+				   fault="handleFault(event)"
+				   result="handleLoadActiveResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataService2"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadCCPreferenceResult(event)"/>
+	</mx:RemoteObject>
+
 <mx:Script>                                   
 <![CDATA[
 	import mx.rpc.events.ResultEvent;
@@ -22,19 +36,41 @@ width="100%" height="100%"  creationComplete="init()"
 	import mx.managers.PopUpManager;
 	import com.efi.printsmith.data.CreditCardTransactions;
 	import com.efi.printsmith.data.CreditCard;
+	import com.efi.printsmith.data.PreferencesCreditCard;
 	import mx.rpc.IResponder;
 	import com.efi.printsmith.events.EncryptDataEvent;
+	import com.efi.printsmith.events.CreditCardTransEvent;
+	import com.efi.printsmith.Constants;
+	import mx.utils.StringUtil;
+	
 		
 	[Bindable]
 	private var creditCardTransactions:ArrayCollection=new ArrayCollection();
+	
+	[Bindable]
+	private var creditCardActiveTransactions:ArrayCollection=new ArrayCollection();
+
+	[Bindable] public static var preferencesCreditCardArray:ArrayCollection = new ArrayCollection();
 		
-	public function init():void{		
+	public function init():void{
+		this.throbber.visible = true;
+		this.throbber.play();
+		
 		dataService.getAll("CreditCardTransactions");
+		dataService.getPendingCreditCardTransations();
+		dataService2.getAll("PreferencesCreditCard");
 	}
+	
 	private function doDoubleClick():void{
 	//	lineItem = dataGrid.selectedItem as CreditCardTransactions
 	//	dataService.getById(lineItem.id);
 	}
+	
+	private function handleCreditCardTransWrite(ev:CreditCardTransEvent):void 
+	{
+		dataService.getPendingCreditCardTransations();
+	}
+	
 	private function handleFault(ev:FaultEvent):void
 	{
 		var message:String;
@@ -46,11 +82,157 @@ width="100%" height="100%"  creationComplete="init()"
 		creditCardTransactions = ev.result as ArrayCollection;
 	}
 	
+	private function handleLoadActiveResult(ev:ResultEvent):void{
+		creditCardActiveTransactions = ev.result as ArrayCollection;
+		this.throbber.visible = false;
+		this.throbber.stop();
+	}
+
+	private function handleLoadCCPreferenceResult(ev:ResultEvent):void{
+		preferencesCreditCardArray = ev.result as ArrayCollection;
+	}
+
+	
 	private function doReceipt():void 
 	{
 		var creditCardManualApproveWindow:CreditCardDataEntry = CreditCardDataEntry(PopUpManager.createPopUp(this, CreditCardDataEntry, true));
 		creditCardManualApproveWindow.setStyle("borderAlpha", 0.9);
+		
+		creditCardManualApproveWindow.addEventListener(CreditCardTransEvent.WRITE, handleCreditCardTransWrite);
 	}
+	
+	private function doRefresh():void 
+	{
+		dataService.getAll("CreditCardTransactions");
+		dataService.getPendingCreditCardTransations();
+	}
+	
+	
+	//=========================
+	
+	private function getActiveTransTitle(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		var title:String = new String;
+		var buf2:String = new String;
+		var buf:String = new String;
+		var format:String = new String;
+		var localCCPref:PreferencesCreditCard = new PreferencesCreditCard;
+		var index:Number;
+		
+		switch (temp.transactionType) {
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeManualEntry:
+				buf2 = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Manualapproval');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypePurchase:	//,	
+				buf2 = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Charge');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeCredit:	//,				
+				buf2 = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Credit');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeAuthOnly:	//,				
+				buf2 = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Authorize');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReversal:	//,				
+				buf2 = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Reverse');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeAdjustment:	//,				
+				buf2 = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Adjustment');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeKeepOnFile:	//,				
+				buf2 = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Keeponfile');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReAutorize:	//	
+				buf2 = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.ChangeAuthorize');
+				break;
+		}
+
+		format = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.tocard');
+	//={0} to card ({1}) {2}
+		
+		
+		if (preferencesCreditCardArray.length > 0 && temp.creditCard.cardDisplayNumber.length > 0) {
+			for (index = 0; index < preferencesCreditCardArray.length; ++index) {
+				localCCPref = preferencesCreditCardArray.getItemAt(index) as PreferencesCreditCard;
+				if (localCCPref != null && localCCPref.firstNumberPrefix.toString() == temp.creditCard.cardDisplayNumber.charAt(0)) {
+					buf = localCCPref.cardType;
+				}
+			}
+		}
+		
+		format = StringUtil.substitute(format,buf2,buf,temp.creditCard.cardDisplayNumber); 
+		return format;
+	}
+	
+	private function getActiveTransAmount(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		return temp.amount.toString();
+	}
+	
+	private function getActiveTransOrderNumber(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		return temp.orderNumber;
+	}
+	
+	private function getActiveTransUser(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		return temp.userName;
+	}
+	
+	
+	private function getActiveTransStatus(item:Object, column:DataGridColumn):String{
+		var temp:CreditCardTransactions =  item as CreditCardTransactions;
+		var title:String = new String;
+		
+		switch (temp.transactionStatus) {
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusUnknown:			// 
+				title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.HoldingcouldbeWEBord');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusWaiting:			//
+				title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Waiting');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusComplete:	//,	
+				switch(temp.transactionResults) {
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsUnknown:			
+					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Unknownresults');
+					break;
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsApproved:		//
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approved') + " -> " + temp.approvalCode.toString()
+					break;
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsDeclined:		//
+					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Declined');
+					break;
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError:		//
+					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Errorinapprovalsyste');
+					break;
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsAuthHold:		//
+					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Holdamountapproved');
+					break;
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsCallCenter:		//
+					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Callcreditcardcenter');
+					break;
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsReversed:		//
+					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approved');
+					break;
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsTimeOut:		//
+					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approvalsystemtimedo');
+					break;
+				}
+				return "Bad results";
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusTimedOut:	//,				
+				title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.PrintSmithtimedout');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusVoided:	//				
+				title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approvalsystemnotrea');
+				break;
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusCanceled:	//,				
+				title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Canceledbyuser');
+				break;
+		}
+		return(title);
+	}
+	
+	
+	//=========================
 	
 	private function getHistoricCardNumber(item:Object, column:DataGridColumn):String{
 		var temp:CreditCardTransactions =  item as CreditCardTransactions;
@@ -61,11 +243,6 @@ width="100%" height="100%"  creationComplete="init()"
 		return temp.creditCard.cardHolderName as String;
 	}
 	
-	private function getHistoricCardDecrypt(item:Object, column:DataGridColumn):String{
-		var temp:CreditCardTransactions =  item as CreditCardTransactions;
-	//	decryptCardData(temp.cardNumber);
-		return "";
-	}
 	private function getHistoricCardExpire(item:Object, column:DataGridColumn):String{
 		var temp:CreditCardTransactions =  item as CreditCardTransactions;
 		if (temp.creditCard.expiresDate != null)
@@ -124,28 +301,28 @@ width="100%" height="100%"  creationComplete="init()"
 	private function getHistoricTransType(item:Object, column:DataGridColumn):String{
 		var temp:CreditCardTransactions =  item as CreditCardTransactions;
 		switch (temp.transactionType) {
-			case 1:			//kTransactionTypeManualEntry
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeManualEntry:
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Manualapproval');
 				break;
-			case 2:	//kTransactionTypePurchase,	
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypePurchase:	//,	
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Charge');
 				break;
-			case 3:	//kTransactionTypeCredit,				
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeCredit:	//,				
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Credit');
 				break;
-			case 4:	//kTransactionTypeAuthOnly,				
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeAuthOnly:	//,				
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Authorize');
 				break;
-			case 5:	//kTransactionTypeReversal,				
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReversal:	//,				
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Reverse');
 				break;
-			case 6:	//kTransactionTypeAdjustment,				
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeAdjustment:	//,				
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Adjustment');
 				break;
-			case 7:	//kTransactionTypeKeepOnFile,				
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeKeepOnFile:	//,				
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Keeponfile');
 				break;
-			case 8:	//kTransactionTypeReAutorize	
+			case Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReAutorize:	//	
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.ChangeAuthorize');
 				break;
 
@@ -156,39 +333,39 @@ width="100%" height="100%"  creationComplete="init()"
 	private function getHistoricTransStatus(item:Object, column:DataGridColumn):String{
 		var temp:CreditCardTransactions =  item as CreditCardTransactions;
 		switch (temp.transactionStatus) {
-			case 0:			// kTransactionStatusUnknown
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusUnknown:			// 
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.HoldingcouldbeWEBord');
 				break;
-			case 1:			//kTransactionStatusWaiting
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusWaiting:			//
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Waiting');
 				break;
-			case 2:	//kTransactionStatusComplete,	
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusComplete:	//,	
 				switch(temp.transactionResults) {
-				case 0:			//kTransactionResultsUnknown
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsUnknown:			
 					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Unknownresults');
-				case 1:		//kTransactionResultsApproved
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsApproved:		//
 					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approved') + " -> " + temp.approvalCode.toString()
-				case 2:		//kTransactionResultsDeclined
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsDeclined:		//
 					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Declined');
-				case 3:		//kTransactionResultsError
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError:		//
 					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Errorinapprovalsyste');
-				case 4:		//kTransactionResultsAuthHold
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsAuthHold:		//
 					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Holdamountapproved');
-				case 5:		//kTransactionResultsCallCenter
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsCallCenter:		//
 					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Callcreditcardcenter');
-				case 6:		//kTransactionResultsReversed
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsReversed:		//
 					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approved');
-				case 7:		//kTransactionResultsTimeOut
+				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsTimeOut:		//
 					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approvalsystemtimedo');
 				}
 				return "Bad results";
-			case 3:	//kTransactionStatusTimedOut,				
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusTimedOut:	//,				
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.PrintSmithtimedout');
 				break;
-			case 4:	//kTransactionStatusVoided				
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusVoided:	//				
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approvalsystemnotrea');
 				break;
-			case 5:	//kTransactionStatusCanceled,				
+			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusCanceled:	//,				
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Canceledbyuser');
 				break;
 		}
@@ -205,41 +382,46 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:Button x="80" y="10" width="38" height="38" click="doReceipt()">
 				<mx:icon>@Embed(source='../../../../assets/receipt.png')</mx:icon>
 			</mx:Button>
-		<mx:Canvas label="Current" width="100%" height="398" y="66">
+		<mx:Button x="126" y="10" width="38" height="38" click="doRefresh()">
+			<mx:icon>@Embed(source='../../../../assets/Refresh.png')</mx:icon>
+			</mx:Button>
+		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Current')}" width="100%" height="398" y="66">
 			<mx:TabNavigator width="100%" height="468" y="3">
 				<mx:Canvas label="Current" width="100%" height="100%">
 					<mx:DataGrid  id="dataGrid" width="100%" 
 						horizontalScrollPolicy="on"
+						dataProvider="{creditCardActiveTransactions}"
 						height="100%">
 						<mx:columns>
-							<mx:DataGridColumn headerText="Transaction"/>
-							<mx:DataGridColumn headerText="Amount" textAlign="right"/>
-							<mx:DataGridColumn headerText="Status" />
-							<mx:DataGridColumn headerText="Order#" />
-							<mx:DataGridColumn headerText="User" />
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Transaction')}" labelFunction="getActiveTransTitle"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Amount')}" textAlign="right" labelFunction="getActiveTransAmount"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Status')}"  labelFunction="getActiveTransStatus"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Order')}" labelFunction="getActiveTransOrderNumber"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.User')}" labelFunction="getActiveTransUser"/>
 						</mx:columns>
 					</mx:DataGrid>
+					<comp:SmallThrobber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
 				</mx:Canvas>
-				<mx:Canvas label="Historic" width="100%" height="100%">
+				<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Historic')}" width="100%" height="100%">
 					<mx:DataGrid  id="dataGrid0" width="100%" 
 						dataProvider="{creditCardTransactions}" 
 						horizontalScrollPolicy="on"
 						height="100%" columnWidth="100">
 						<mx:columns>
-							<mx:DataGridColumn headerText="Date"  labelFunction="getHistoricTransactionDate"/>
-							<mx:DataGridColumn headerText="Type" labelFunction="getHistoricTransType"/>
-							<mx:DataGridColumn headerText="Card Number" labelFunction="getHistoricCardNumber"/>
-							<mx:DataGridColumn headerText="Card Holder" labelFunction="getHistoricCardHolder" />
-							<mx:DataGridColumn headerText="Expiration" labelFunction="getHistoricCardExpire"/>
-							<mx:DataGridColumn headerText="Amount" labelFunction="getHistoricTransAmount" textAlign="right"/>
-							<mx:DataGridColumn headerText="Status" labelFunction="getHistoricTransStatus"/>
-							<mx:DataGridColumn headerText="Order#" labelFunction="getHistoricTransactionOrderNumber"/>
-							<mx:DataGridColumn headerText="Cust#" />
-							<mx:DataGridColumn headerText="User" labelFunction="getHistoricTransactionUser"/>
-							<mx:DataGridColumn headerText="Reference#" labelFunction="getHistoricTransactionReference"/>
-							<mx:DataGridColumn headerText="Message" labelFunction="getHistoricTransactionMessage"/>
-							<mx:DataGridColumn headerText="Flags" />
-							<mx:DataGridColumn headerText="File / Order#" />
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Date')}"  labelFunction="getHistoricTransactionDate"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Type')}" labelFunction="getHistoricTransType"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.CardNumber')}" labelFunction="getHistoricCardNumber"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.CardHolder')}" labelFunction="getHistoricCardHolder" />
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Expiration')}" labelFunction="getHistoricCardExpire"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Amount')}" labelFunction="getHistoricTransAmount" textAlign="right"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Status')}" labelFunction="getHistoricTransStatus"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Order')}" labelFunction="getHistoricTransactionOrderNumber"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Cust')}" />
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.User')}" labelFunction="getHistoricTransactionUser"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Reference')}" labelFunction="getHistoricTransactionReference"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Message')}" labelFunction="getHistoricTransactionMessage"/>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Flags')}" />
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.FileOrder')}" />
 						</mx:columns>
 					</mx:DataGrid>
 				</mx:Canvas>

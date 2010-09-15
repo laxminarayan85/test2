@@ -26,6 +26,32 @@ package com.efi.printsmith
 		static public const USER_EVENT_FAILED_LOGIN:Number = 3;
 		static public const USER_EVENT_PASSWORD_CHANGE:Number = 4;
 
+		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeUnknown:Number = 0;
+		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeManualEntry:Number = 1;
+		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypePurchase:Number = 2;
+		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeCredit:Number = 3;
+		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeAuthOnly:Number = 4;
+		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReversal:Number = 5;
+		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeAdjustment:Number = 6;
+		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeKeepOnFile:Number = 7;
+		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReAutorize:Number = 7;
+
+		static public const CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusUnknown:Number = 0;
+		static public const CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusWaiting:Number = 1;
+		static public const CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusComplete:Number = 2;
+		static public const CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusTimedOut:Number = 3;
+		static public const CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusVoided:Number = 4;
+		static public const CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusCanceled:Number = 5;
+
+		static public const CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsUnknown:Number = 0;
+		static public const CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsApproved:Number = 1;
+		static public const CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsDeclined:Number = 2;
+		static public const CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError:Number = 3;
+		static public const CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsAuthHold:Number = 4;
+		static public const CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsCallCenter:Number = 5;
+		static public const CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsReversed:Number = 6;
+		static public const CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsTimeOut:Number = 7;
+
 		public function Constants()
 		{
 		}
