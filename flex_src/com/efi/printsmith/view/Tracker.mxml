@@ -467,7 +467,11 @@
 							selectedTrackerConsoleJob = trackerConsoleJobsObj;
 							registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 							progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
-							enableRequiredBtns();
+							if(employee!=null){
+								enableRequiredBtns();	
+							} else {
+								resetButtons();
+							}
 							checkFlag = true;
 							break;
 						}
