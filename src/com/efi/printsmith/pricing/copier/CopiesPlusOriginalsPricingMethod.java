@@ -85,11 +85,11 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 				}
 				
 				if (job.getDoubleSided()) {
-					if (side2PricingMethod.equals(Price2Side.NotChangingPrice)) {
+					if (side2PricingMethod.equals(Price2Side.NotChangingPrice.name())) {
 						/* Do nothing - the price is the same */
-					} else if (side2PricingMethod.equals(Price2Side.UsingFirstSideRate)) {
+					} else if (side2PricingMethod.equals(Price2Side.UsingFirstSideRate.name())) {
 						unitPrice *= 2;
-					} else if (side2PricingMethod.equals(Price2Side.UsingSecondSideRate)) {
+					} else if (side2PricingMethod.equals(Price2Side.UsingSecondSideRate.name())) {
 						switch (j) {
 						case (0):
 							unitPrice += pricingMatrix.getElements().get(i).getPrice11().doubleValue();
@@ -122,7 +122,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 							unitPrice += pricingMatrix.getElements().get(i).getPrice20().doubleValue();
 							break;
 						}
-					} else if (side2PricingMethod.equals(Price2Side.CountingAsMoreOriginals)) {
+					} else if (side2PricingMethod.equals(Price2Side.CountingAsMoreOriginals.name())) {
 						/* Note that we are completely overriding the unitPrice here instead of adding to it */
 						for (; i < pricingMatrix.getElements().size(); i++) {
 							if (pricingMatrix.getElements().get(i).getQty() >= job.getQtyOrdered()) break;
@@ -160,7 +160,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 							unitPrice = pricingMatrix.getElements().get(i).getPrice10().doubleValue();
 							break;
 						}
-					} else if (side2PricingMethod.equals(Price2Side.UsingSideFactor)) {
+					} else if (side2PricingMethod.equals(Price2Side.UsingSideFactor.name())) {
 						unitPrice *= pricingCopier.getSideTwoFactor();
 					}
 				}
