@@ -4083,4 +4083,22 @@ public class DataService extends HibernateService {
 		}
 
 	}	
+	
+	@SuppressWarnings("unchecked")
+	public List<?> getPendingCreditCardTransations() throws Exception {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Session session = (Session) em.getDelegate();
+			List<CreditCardTransactions> ccTrans = null;
+			ccTrans = session.createCriteria(CreditCardTransactions.class).add(
+					Restrictions.eq("isCurrentTransaction", 1)).list();
+			return ccTrans;
+		} catch (Exception e) {
+			log.error(e);
+			throw e;
+		} finally {
+			em.close();
+		}
+	}
+
 }
