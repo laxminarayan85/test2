@@ -922,7 +922,27 @@ public class PreferencesMapper extends ImportMapper {
 			if(Utilities.tokenToBooleanValue(value)) {
 				preferencesSystem.setWorkFirstDayOfWeek(7);
 			}
-		}
+		} else if (name.equals("minimumWarnings"))
+			preferencesSystem.setEliminateWarningMessages(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("activateUserEventLogging_PCI_rules"))
+			preferencesSystem.setActivateUserEventLogging(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("autosignon_active")) {
+			if (Utilities.tokenToBooleanValue(value) == false)
+				preferencesSystem.setEnableAutoLogOut(true);
+			else
+				preferencesSystem.setEnableAutoLogOut(false);
+		} else if (name.equals("autosign_seconds"))
+			preferencesSystem.setAutoLogOutSeconds(Utilities.tokenToInt(value));
+		else if (name.equals("PendingList_restrict_pickup_to_ready_items"))
+			preferencesSystem.setOnlyPostMarkedReadyInvoices(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("App_autoAppQuit"))
+			preferencesSystem.setAutomaticQuit(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("App_autoQuitTime"))
+			preferencesSystem.setQuitTime(value);
+		else if (name.equals("App_showFirmInvoicesAtLogin"))
+			preferencesSystem.setShowInvoicesWithToday(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("App_enableLineItemTaxes"))
+			preferencesSystem.setLineItemTaxes(Utilities.tokenToBooleanValue(value));
 		if (address != null)
 			preferencesSystem.setCompanyAddress(address);
 		dataService.addUpdate(preferencesSystem);
