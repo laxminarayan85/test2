@@ -51,7 +51,8 @@
 	public var formIsEmpty:Boolean; 
 	[Bindable]                                     
 	public var prospect_boolean:Boolean; 
-	                                  
+	 [Bindable]                                     
+	public var contact_boolean:Boolean = true;                                  
 	[Bindable]                                
 	private var accounts:ArrayCollection = new ArrayCollection();
                                                                          
@@ -102,7 +103,7 @@
 		notification_consumer.subscribe();   
 		accountTypeRadio.selectedValue = "Customer";  
 		prospect_radio.enabled = prospect_boolean;
-		contact_radio.enabled = prospect_boolean;
+		contact_radio.enabled = contact_boolean;
 		accounts.filterFunction = accountFilter;
 	    PopUpManager.centerPopUp(this);
 //	    resetFocus();                                     

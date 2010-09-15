@@ -126,18 +126,44 @@
 	
 					if (contact.comLinks != null) {
 						var i:int;
-						
-						for (i=0; i<contact.comLinks.length; i++) {
-							var comLink:ComLink = contact.comLinks.getItemAt(i) as ComLink;
-							
-							if (comLink != null) {
+						var comLink:ComLink 
+						i = findItem("Phone", contact.comLinks);
+							if (i != -1){
+								comLink = contact.comLinks.getItemAt(i) as ComLink;
 								displayContact+=comLink.type + ": " + comLink.value + "\n";
 							}
+							i = findItem("Cell", contact.comLinks);
+							if (i != -1){
+								comLink= contact.comLinks.getItemAt(i) as ComLink;
+								displayContact+=comLink.type + ": " + comLink.value + "\n";
+							}
+							i = findItem("Fax", contact.comLinks);
+							if (i != -1){
+								comLink = contact.comLinks.getItemAt(i) as ComLink;
+								displayContact+=comLink.type + ": " + comLink.value + "\n";
+							}
+							i = findItem("Other", contact.comLinks);
+							if (i != -1){
+								comLink = contact.comLinks.getItemAt(i) as ComLink;
+								displayContact+=comLink.type + ": " + comLink.value + "\n";
+							}
+							i = findItem("E-Mail", contact.comLinks);
+							if (i != -1){
+								comLink = contact.comLinks.getItemAt(i) as ComLink;
+								displayContact+=comLink.type + ": " + comLink.value + "\n";
+							}
+								
 						}
-					}
 				}
 			}
-
+		private function findItem(name:String, array:ArrayCollection):int {
+			for each(var element:Object in array) {
+				if (name == element.type) {
+					return array.getItemIndex(element);
+				}
+			}
+			return -1;
+		}
 			private function activateEditContact():void
 			{
 				originalContact=contact;

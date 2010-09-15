@@ -343,7 +343,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				defaultContact = true;
 				use_contact_check.enabled = false;
 				AccountsPicker.enabled = false;
-				default_contact_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.defaultcontact');
+				default_contact_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.invoicecontact');
+				if (contact.parentAccount.billToContact == contact.parentAccount.contact)
+						default_contact_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.defaultcontact');
+			
 			}
 			else{
 				if (contact.parentAccount.billToContact == contact){
@@ -351,6 +354,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					default_contact_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.statementcontact');
 					use_contact_check.enabled = false;
 					AccountsPicker.enabled = false;
+					if (contact.parentAccount.billToContact == contact.parentAccount.contact)
+						default_contact_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.defaultcontact');
+			
 				}
 				else{
 					defaultContact = false;
@@ -599,8 +605,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		return -1;
 	}
 	private function doNew():void {
+		if (contact.parentAccount != null){
+			var tempParent:Account = contact.parentAccount;
+			contact = new Contact();
+			contact.parentAccount = tempParent;
+		}
+		else{
+		
 	    contact = new Contact();
 	    accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
+		 }
 	    contact.creditCard = new CreditCard();
 	    contact.shipToAddress = new ArrayCollection();
 	    
@@ -758,6 +772,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);
 	    accountPickerWindow.formIsEmpty = true;
 	    accountPickerWindow.prospect_boolean = true;
+	    accountPickerWindow.contact_boolean = false;
 	    accountPickerWindow.setAccounts(accounts);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);

@@ -337,7 +337,7 @@
 	 				contact.comLinks.removeItemAt(index);
 	 	}
 	 	else{
-	 		if (other_edit.text != null){
+	 		if (other_edit.text!= ""){
 		 		tempCom = new ComLink();
 		 		tempCom.value = other_edit.text;
 		 		tempCom.type = "Other"
@@ -345,7 +345,7 @@
 	 		}
 	 	}
 	 
- 	index = findCom("E-Mail", contact.comLinks);
+ 		index = findCom("E-Mail", contact.comLinks);
 	 	if ( index != -1){
 	 		tempCom = contact.comLinks.getItemAt(index) as ComLink;
 	 		tempCom.value = email_edit.text;
@@ -355,7 +355,7 @@
 	 				contact.comLinks.removeItemAt(index);
 	 	}
 	 	else{
-	 		if (email_edit.text != null){
+	 		if (email_edit.text!= ""){
 		 		tempCom = new ComLink();
 		 		tempCom.value = email_edit.text;
 		 		tempCom.type = "E-Mail"

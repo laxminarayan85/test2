@@ -982,7 +982,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			if (tmpItem.firstName == null)
 				tmpString = tmpItem.lastName
 			else
-				tmpString = tmpItem.firstName +" "+ tmpItem.lastName
+				tmpString = tmpItem.lastName+ ", " + tmpItem.firstName; 
 			return(tmpString);
 		} else {
 			return "None";
@@ -1050,7 +1050,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:VBox width="100%" height="100%">
 	<mx:Canvas width="742" height="661" verticalScrollPolicy="off">
-		<mx:TabNavigator x="10" y="74" width="681" height="587"  creationPolicy="all">
+		<mx:TabNavigator x="10" y="74" width="723" height="587"  creationPolicy="all">
 			<mx:Canvas id="canvasAddress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Address')}" width="100%" height="100%">
 				<mx:TextInput x="282" y="10" id="name_edit" width="387" text="{account.title}" focusOut="changeName(event)"/>
 				<mx:Text x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Acct')}" width="46"/>
@@ -1082,7 +1082,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					   width="24"
 					   bottom="29"/>
 		<mx:LinkButton x="295" y="466" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" width="41" id="edit_inv_contact" click="doInvContact()"/>
-		<mx:LinkButton x="629" y="466"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" width="40" id="edit_stat_contact" click="doStatContact()"/>
+		<mx:LinkButton x="629" y="466"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" width="52" id="edit_stat_contact" click="doStatContact()"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasCreditControl" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
 				<mx:TextInput restrict="0-9\." x="181" y="10" id="credit_limit_edit" width="160" text="{Snowmass.getCurrencyFormatter(false,2).format(account.creditLimit)}"  focusOut="ClearLabel();"/>

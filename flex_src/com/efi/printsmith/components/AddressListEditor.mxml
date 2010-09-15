@@ -206,11 +206,12 @@
 			  dropShadowEnabled="false">
 		<mx:LinkButton x="183"
 					   y="149"
+					   enabled="{addresses.length >0}" 
 					   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
 					   id="edit_address_button"
 					   click="doEditAddress();"/>
 		<mx:List x="21" y="10" dataProvider="{addresses}" click="doselectedAddress();" id="address_list" labelFunction="updateDisplayAddress" width="291" height="131"></mx:List>
-		<mx:LinkButton x="102" y="149" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" click="doDelete();" id="delete_button"/>
+		<mx:LinkButton x="102" y="149" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}"  enabled="{addresses.length >0}" click="doDelete();" id="delete_button"/>
 		<mx:LinkButton x="21" y="149" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" click="doNew();"/>
 	</mx:Panel>
 </mx:Canvas>

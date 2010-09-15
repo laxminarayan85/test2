@@ -45,7 +45,7 @@
     <mx:TextInput x="85" y="33" width="314" id="street1_edit" text="{address.street1}"/>
     <mx:TextInput x="85" y="56" width="314" id="street2_edit" text="{address.street2}"/>
     <mx:ComboBox id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()"  editable="true" width="170" enabled="true"/>
-    <mx:ComboBox id="statecombo" restrict="A-Z" x="85" y="104" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" editable="true" width="170" enabled="true"/>
+    <mx:ComboBox id="statecombo" restrict="A-z " x="85" y="104" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" editable="true" width="170" enabled="true"/>
     <mx:ComboBox id="zipcombo"  x="85" y="128" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="170" editable="true" enabled="true"/>
     <mx:ComboBox id="countrycombo" x="85" y="152" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" text="{address.country}" editable="true" width="170" enabled="true"/>
     	
