@@ -856,7 +856,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setSlogan(value);
 		else if (name.equals("PEK 4"))
 			preferencesSystem.setSettings(value);
-		else if (name.equals("app_autoQuitText")) {
+		else if (name.equals("App_autoQuitText")) {
 			if (value.equals(""))
 				value = "Warning: PrintSmith is automatically shutting down at ^0.  This is your only warning.  Please finish up and quit now.";
 			preferencesSystem.setShutdownMessage(value);
