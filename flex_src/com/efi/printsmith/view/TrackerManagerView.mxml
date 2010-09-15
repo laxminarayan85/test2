@@ -777,7 +777,20 @@
 			
 			private function updateRoutingSetUpTitle():void {
 				if(routingStepSetUp!=null){
+					var inputArray:Array = new Array();
+					inputArray.push("");
+					inputArray.push("");
+					inputArray.push("");
 					if(routingStepSetUp.parentRoute!=null){
+						for each(var routingStepSetUpObject:RoutingStepSetUp in routesStepList){
+							if(routingStepSetUpObject.id!=routingStepSetUp.parentRoute.id){
+								if(routingStepSetUpObject.title==routingStepSetUp.parentRoute.title){
+									inputArray.push(routingStepSetUp.parentRoute.title);
+									Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_WarningDuplicatename',inputArray));
+									return;
+								}
+							}
+						}
 						dataServiceUpdateRouteSetUp.addUpdate(routingStepSetUp.parentRoute);
 						for each(var routingStepSetUpObj:RoutingStepSetUp in routesStepList){
 							if(routingStepSetUpObj.id == routingStepSetUp.parentRoute.id){
@@ -786,6 +799,15 @@
 							}
 						}
 					} else {
+						for each(var routingStepSetUpObject:RoutingStepSetUp in routesStepList){
+							if(routingStepSetUpObject.id!=routingStepSetUp.id){
+								if(routingStepSetUpObject.title==routingStepSetUp.title){
+									inputArray.push(routingStepSetUp.title);
+									Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_WarningDuplicatename',inputArray));
+									return;
+								}
+							}
+						}
 						dataServiceUpdateRouteSetUp.addUpdate(routingStepSetUp);
 					}
 				}
