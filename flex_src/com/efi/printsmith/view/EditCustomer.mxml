@@ -377,16 +377,25 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 		account.shipToAddress = ship_to_address_editor.getAddress();
 		account.billToAddress = bill_to_address_editor.getAddress();
+		if ( account.billToAddress.street1 == "")
+			account.billToAddress = account.shipToAddress
 
 
 		account.contact = ship_to_contact_editor.getContact();
-		account.billToContact = bill_to_contact_editor.getContact();
-		if (account.billToContact != null) {
-			account.billToContact.parentAccount = account;
+		if (account.contact == null){
+			account.contact = new Contact();
+			account.contact.lastName = account.title;
 		}
+		account.billToContact = bill_to_contact_editor.getContact();
 		if (account.contact != null) {
 			account.contact.parentAccount = account;
 		}
+		if (account.billToContact != null) {
+			account.billToContact.parentAccount = account;
+		}
+		else
+			account.billToContact = account.contact
+	
 		
 		if (account.marketing != null){
 			

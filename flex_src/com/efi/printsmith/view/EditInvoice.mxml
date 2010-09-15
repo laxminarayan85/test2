@@ -705,6 +705,12 @@
                 	navigateToURL(urlRequest, "_blank");
 				}
 			}
+			private function doContactChange():void{
+				var temp:Contact= new Contact();
+				temp = contact_list.selectedItem as Contact
+				if( temp.useContactAddress)
+					bill_to_address_editor.setAddress(temp.address);
+			}
 		]]>
 
 	</mx:Script>
@@ -985,7 +991,7 @@
 									 y="225"
 									 width="217"
 									 dataProvider="{accountcontacts}"
-									 id="contact_list" labelField="lastName">
+									 id="contact_list" labelField="lastName" change="doContactChange()">
 						</mx:ComboBox>
 						<mx:TextInput x="124"
 									  y="255"

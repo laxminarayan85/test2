@@ -225,6 +225,8 @@
 	}
 	private function handleDeleteResult(event:ResultEvent):void {
 		dataService.getAll(this.itemType);
+		var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CLEARPRICELIST, null);
+		dispatchEvent(selectEvent);
 		
 	}
 	private function doCancel():void {

@@ -2134,7 +2134,6 @@ private function doRound(evt:FocusEvent):void{
 				<mx:DateField x="122" y="148" id="Expires" width="159" text="{stockDefinitions.priceExpires}"  editable="true"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MostRecentInventoryC')}" dropShadowEnabled="false">
-				<mx:Button x="10" y="204" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kInventoryHistoryCmd.ShowEntireHistory')}" click="doShowHistory();"/>
 				<mx:DataGrid dataProvider="{stockChanges}" left="5" right="5" top="5" bottom="30" id="stockchangeGrid">
 					<mx:columns>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.User')}" dataField="PSUser"/>
