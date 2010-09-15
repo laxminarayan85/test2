@@ -470,7 +470,7 @@
 							if(employee!=null){
 								enableRequiredBtns();	
 							} else {
-								resetButtons();
+								defaultEnableButtons();
 							}
 							checkFlag = true;
 							break;
