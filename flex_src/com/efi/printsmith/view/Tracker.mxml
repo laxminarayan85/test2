@@ -1343,6 +1343,7 @@
 		}
 		
 		private function copyTrackerConsoleJobObject(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {
+			destination.employee = source.employee;
 			destination.paused = source.paused;
 			destination.passesList = source.passesList;
 			destination.clockBreak = source.clockBreak;
