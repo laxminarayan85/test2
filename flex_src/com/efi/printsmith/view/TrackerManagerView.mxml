@@ -1188,7 +1188,7 @@
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.StopAction')}">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:HBox width="100%" horizontalAlign="center" horizontalGap="1">
+									<mx:HBox width="100%" horizontalAlign="center" verticalAlign="middle" horizontalGap="1">
 										<mx:Image source="@Embed(source='../../../../assets/dot.jpg')" 
 											visible="{data.markInvReady}" includeInLayout="{data.markInvReady}"/>
 										<mx:Image source="@Embed(source='../../../../assets/delta.gif')" 
