@@ -5,6 +5,13 @@
 	<mx:Metadata>
 		[Event(name="appMenuItemClicked", type="com.efi.mdi.event.menu.AppMenuItemClickedEvent")]
  	</mx:Metadata>
+ 	
+ 	<mx:Style>
+ 		.CustomMenuStyle {
+			padding-top: 0; padding-left: 0; padding-right: 0;   
+			padding-bottom: 0; border-thickness: 0;	borderStyle: "solid";
+		}
+ 	</mx:Style>
 
 	<mx:Script>
 		<![CDATA[
@@ -39,6 +46,14 @@
 				var eve:AppMenuItemClickedEvent = new AppMenuItemClickedEvent(AppMenuItemClickedEvent.APP_MENU_ITEM_CLICKED, item);
 				this.dispatchEvent(eve);
 			}
+			
+			override public function getMenuAt(index:int) : Menu {
+	            var menu:Menu = super.getMenuAt(index);
+	            /* menu.styleName = "CustomMenuStyle";
+				menu.itemRenderer = new ClassFactory(CustomMenuItemRenderer);
+				menu.setStyle("openDuration",0); */
+	   			return menu;
+	        }
 			
 		]]>
 	</mx:Script>

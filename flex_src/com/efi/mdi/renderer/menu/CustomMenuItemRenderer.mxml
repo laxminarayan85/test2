@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="100%" 
+	implements="mx.controls.listClasses.IListItemRenderer,
+				mx.controls.menuClasses.IMenuItemRenderer,
+				mx.controls.listClasses.IDropInListItemRenderer"
+				horizontalScrollPolicy="off">
+	
+	<mx:Script>
+	<![CDATA[
+		import mx.core.IFlexDisplayObject;
+		import mx.controls.Alert;
+		import mx.controls.menuClasses.IMenuDataDescriptor;
+		import mx.controls.listClasses.BaseListData;
+		import mx.controls.listClasses.ListData;
+		import mx.controls.Menu;
+		import mx.controls.menuClasses.MenuBarItem;
+		
+		private var _menu:Menu;
+		private var _listData:ListData;
+		
+	    private var lblText:String;
+	    private var isBranch:Boolean;
+	    private var isSeparator:Boolean;
+	    
+		
+		override public function set data(value:Object) : void {
+			super.data = value;
+			
+			this.lblText = this.data.label;
+
+			var dataDescriptor:IMenuDataDescriptor =
+					Menu(_listData.owner).dataDescriptor;
+			
+			this.isBranch = dataDescriptor.isBranch(super.data);
+			this.isSeparator = (dataDescriptor.getType(super.data) == "separator");
+			
+			
+			invalidateProperties();
+			invalidateSize();			
+
+		}
+		
+		public function get menu() : Menu {
+			return _menu;
+		}
+	
+		public function set menu( value:Menu ) : void {
+			_menu = value;
+		}	
+		
+		public function get listData() : BaseListData {
+			return _listData;
+		}
+	
+		public function set listData( value:BaseListData ) : void {
+			_listData = ListData(value);
+			invalidateProperties();
+		}
+		
+		override public function setActualSize(w:Number, h:Number) : void {
+			super.setActualSize( Menu(_listData.owner).width, h );
+		}
+		
+		override protected function commitProperties() : void {
+			
+			super.commitProperties();
+	
+			// Branch icon
+			if ( isBranch ) {
+				this.addEventListener(MouseEvent.CLICK,function(event:MouseEvent):void{
+					Alert.show(event.currentTarget.lblText);
+				},false,0,true);
+					arrow.visible=true;
+					arrow.includeInLayout=true;
+				}
+			else{
+				arrow.visible=false;
+				arrow.includeInLayout=false;
+			}
+			
+			if(isSeparator){
+				lbl.visible = false;
+				lbl.includeInLayout = false;
+				separatorRule.visible = true;
+				separatorRule.includeInLayout = true;
+			} else {
+				separatorRule.visible = false;
+				separatorRule.includeInLayout = false;
+			}
+
+			lbl.text=lblText;
+			
+			invalidateDisplayList();
+		}
+		
+		public function get measuredIconWidth():Number {
+			return 0;
+		}
+    
+	    /**
+	     *  The width of the type icon (radio/check).
+	     */
+	    public function get measuredTypeIconWidth():Number {
+	    	return 0;
+	    }
+	    
+	    /**
+	     *  The width of the branch icon.
+	     */
+	    public function get measuredBranchIconWidth():Number {
+	    	return 0;
+	    }
+	]]>
+	</mx:Script>
+	
+	<mx:Label id="lbl"
+		width="100%" textAlign="left" 
+		paddingLeft="8"
+		paddingRight="6"/>
+		
+	<mx:HRule id="separatorRule" width="100%"/>
+
+	<mx:Image id="arrow" width="20" source="@Embed(source='Assets.swf',symbol='MenuBranchEnabled')"/>
+
+		
+</mx:HBox>
