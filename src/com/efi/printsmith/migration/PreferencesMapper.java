@@ -602,7 +602,7 @@ public class PreferencesMapper extends ImportMapper {
 			}
 		}
 		else if (name.equals("Receipts starting serial number")) {
-			preferencesPOS.setReceiptStartCode(value);
+			preferencesPOS.setStartingNumber(Utilities.tokenToInt(value));
 			if (value != "")
 				preferencesPOS.setReceiptStartNumber(true);
 		}
