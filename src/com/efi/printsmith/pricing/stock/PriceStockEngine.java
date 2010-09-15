@@ -44,6 +44,8 @@ public class PriceStockEngine {
 		priceLogEntry = PriceLogUtilities.createPriceLogEntry(parentEntry, "priceBlankStock", "");
 		
 		long qty = job.getQtyOrdered();
+		if (qty < stockDefinition.getMinorder())
+			qty = stockDefinition.getMinorder();
 		
 		for (int i = 1; i <= 6; i++) {
 			if (i == 1) {
@@ -104,10 +106,12 @@ public class PriceStockEngine {
 		if (stockDefinition == null || copierDefinition == null) return 0.0;
 		
 		double sheetPrice = 0.0;
-
+		long qty = job.getSheets();
+		if (qty < stockDefinition.getMinorder())
+			qty = stockDefinition.getMinorder();
 		priceLogEntry = PriceLogUtilities.createPriceLogEntry(parentEntry, "pricePrintStock", "");
 		sheetPrice = getSheetPrice(job, priceLogEntry);
-		priceLogEntry.setValue(sheetPrice * job.getSheets());
+		priceLogEntry.setValue(sheetPrice * qty);
 		return sheetPrice;		
 	}
 	
@@ -184,6 +188,8 @@ public class PriceStockEngine {
 			else {
 				qty = (job.getQtyOrdered() + job.getBinderyWaste() + job.getEstWaste());// * job.getSignatures(); // TODO: Double-check need to use signatures vs just sheets ordered here
 			}
+			if (qty < stockDefinition.getMinorder())
+				qty = stockDefinition.getMinorder();
 			double markup = 0.0;
 			double stockCost = 0.0;
 			
