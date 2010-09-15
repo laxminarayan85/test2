@@ -797,6 +797,13 @@
 				}
 			}
 			
+			public function getTextAlignValue(obj:Object):String {
+				if(obj!=null){
+					return (obj.parentRoute==null)?"left":"center";
+				}
+				return "left";
+			}
+			
 			public function getAutoSchedule(autoScheduleDaysFromOrdered :int,autoScheduleDaysFromWantedBy:int,hourOfDay:String):String {
 				var autoScheduleString:String = "";
 				var inputArray:Array = new Array();
@@ -1138,7 +1145,7 @@
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.Route')}" dataField="title">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Label text="{data.title}"/>
+									<mx:Label text="{data.title}" textAlign="{outerDocument.getTextAlignValue(data)}"/>
 								</mx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
@@ -1156,7 +1163,18 @@
 								</mx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.StopAction')}"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.StopAction')}">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:HBox width="100%" horizontalAlign="center" horizontalGap="1">
+										<mx:Image source="@Embed(source='../../../../assets/dot.jpg')" 
+											visible="{data.markInvReady}" includeInLayout="{data.markInvReady}"/>
+										<mx:Image source="@Embed(source='../../../../assets/delta.gif')" 
+											visible="{data.treatAsNonProdStep}" includeInLayout="{data.treatAsNonProdStep}"/>
+									</mx:HBox>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.DateStamp')}">
 							<mx:itemRenderer>
 								<mx:Component>
