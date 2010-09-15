@@ -55,19 +55,35 @@ public class ChargeUtilities {
 		charge.setDisplayQty(chargeDefinition.getPresetDisplayQuantity());
 		charge.setHidden(chargeDefinition.getHideChargeInPrintouts());
 		charge.setHidePrice(chargeDefinition.getHidePrice());
-		charge.setPrice(0.0);
+		
+		if (chargeDefinition.getOverridePrice()) {
+			charge.setPrice(chargeDefinition.getPresetPrice());
+		} else {
+			charge.setPrice(0.0);
+		}
+		charge.setOverridePrice(chargeDefinition.getOverridePrice());
+
+		charge.setMaterialQty(chargeDefinition.getPresetMaterialQuantity());
+		charge.setOverrideMaterialQuantity(chargeDefinition.getOverrideMaterialQty());
+		
+		charge.setQuantity(chargeDefinition.getPresetQuantity());
+		charge.setOverrideQuantity(chargeDefinition.getOverrideRateQuantity());
+
+		charge.setRate(chargeDefinition.getRate());
+		charge.setOverrideRate(chargeDefinition.getOverrideRate());
+
 		charge.setSets(chargeDefinition.getRateSetCount());
 		charge.setMaterialSets(chargeDefinition.getMaterialSetCount());
-		charge.setOverridePrice(false);
-		charge.setOverrideQuantity(false);
-		charge.setOverrideMaterialQuantity(false);
 		charge.setRate(chargeDefinition.getRate());
-		charge.setOverrideRate(false);
+		charge.setOverrideRate(chargeDefinition.getOverrideRate());
 		charge.setOverrideUp(false);
 		charge.setMinimumCharge(chargeDefinition.getMinimum());
 		charge.setQuantity(chargeDefinition.getPresetQuantity());
 		charge.setQtyPerSet(chargeDefinition.getPresetQuantityPerSet());
-		charge.setMaterialQty(chargeDefinition.getPresetMaterialQuantity());
+		charge.setStartHours(chargeDefinition.getPresetTimeStartHour());
+		charge.setStartMinutes(chargeDefinition.getPresetTimeStartMinute());
+		charge.setEndHours(chargeDefinition.getPresetTimeStopHour());
+		charge.setEndMinutes(chargeDefinition.getPresetTimeStopMinute());
 		return charge;
 	}
 

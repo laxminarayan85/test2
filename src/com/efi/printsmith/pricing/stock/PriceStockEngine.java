@@ -6,15 +6,9 @@ import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.PriceLogEntry;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.StockDefinition;
-import com.efi.printsmith.data.enums.CopierPricingMethod;
 import com.efi.printsmith.data.enums.StockPriceMethod;
-import com.efi.printsmith.pricing.copier.CopiesPerOriginalPricingMethod;
-import com.efi.printsmith.pricing.copier.CopiesPlusOriginalsPricingMethod;
-import com.efi.printsmith.pricing.copier.CostPlusPricingMethod;
-import com.efi.printsmith.pricing.copier.FlatRatePricingMethod;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.pricing.utilities.PriceLogUtilities;
-import com.efi.printsmith.data.PaperPrice;
 
 public class PriceStockEngine {
 	public double priceStock(Job job) {

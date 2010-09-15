@@ -11,6 +11,7 @@ import com.efi.printsmith.data.enums.ChargeQtyType;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
 public class ChargeShippingPricingMethod extends ChargePricingMethod {
+	@Override
 	public Charge priceCharge(Charge charge) {
 		BigDecimal		price = new BigDecimal(0.0);
 		double		weight;

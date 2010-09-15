@@ -3,15 +3,14 @@ package com.efi.printsmith.pricing.largeformat;
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.Matrix;
-import com.efi.printsmith.data.MatrixElement;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.enums.Price2Side;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
-import com.efi.printsmith.pricing.utilities.MatrixUtilities;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
 public class SquareAreaAndCopiesPricingMethod extends
 		LargeFormatPricingMethod {
+	@Override
 	public Job priceLargeFormatJob (Job job) {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */

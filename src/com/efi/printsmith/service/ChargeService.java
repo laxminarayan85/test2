@@ -57,8 +57,8 @@ public class ChargeService extends SnowmassHibernateService{
 				}
 				prices.setSetupPrice(setupCost * markup);
 				prices.setUnitPrice(unitCost * markup);
-				prices.setMaterialSetupPrice(chargeCost.getFixedMaterials().doubleValue());
-				prices.setMaterialUnitPrice(chargeCost.getUnitMaterials().doubleValue());
+				prices.setMaterialSetupPrice(chargeCost.getFixedMaterials().doubleValue()*markup);
+				prices.setMaterialUnitPrice(chargeCost.getUnitMaterials().doubleValue()*markup);
 			} else if (chargeCost.getCostingMethod().equals(ChargeCostMethod.UnitCost.name())) {
 				double unitCost = chargeCost.getUnitCost().doubleValue();
 				double setupCost = chargeCost.getSetupCost().doubleValue();

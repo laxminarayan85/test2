@@ -46,12 +46,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     
     private var pricingCharge:Charge = null;
     
-	[Bindable] private var chargeDefinition:ChargeDefinition = new ChargeDefinition;
-	[Bindable] private var taxTables:ArrayCollection = new ArrayCollection;	
+	[Bindable] private var chargeDefinition:ChargeDefinition = new ChargeDefinition();
+	[Bindable] private var taxTables:ArrayCollection = new ArrayCollection();	
 	[Bindable] private var startHour:Number = 0;
 	[Bindable] private var startMinute:Number = 0;
 	[Bindable] private var stopHour:Number = 0;
 	[Bindable] private var stopMinute:Number = 0;
+	[Bindable] private var startTimeString:String = "00:00";
+	[Bindable] private var stopTimeString:String = "00:00";
 	
 	public function init():void {
 	    PopUpManager.centerPopUp(this);
@@ -60,6 +62,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}      
 	
 	private function mapToChargeDefinition():void {
+		if (time_start_edit != null) {
+			startTimeString = time_start_edit.text;
+		}
+		if (time_stop_edit != null) {
+			stopTimeString = time_stop_edit.text;
+		}
 		chargeDefinition.rateLabel = rate_label_text.text;
 		chargeDefinition.presetNotesLabel = notes_label_text.text;
 		chargeDefinition.presetPriceLabel = price_label_text.text;
@@ -101,14 +109,25 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		} else {
 			chargeDefinition.presetTaxTable = (tax_table_combo.selectedItem as TaxTable);
 		}
+		
+		var colonPosition:int = startTimeString.indexOf(":");
 		if (time_start_edit != null) {
-			chargeDefinition.presetTimeStartHour = time_start_edit.hour;
-			chargeDefinition.presetTimeStartMinute = time_start_edit.minute;
+			if (startTimeString.indexOf(":") != -1) {
+				chargeDefinition.presetTimeStartHour = parseInt(startTimeString.substr(0,colonPosition));
+				chargeDefinition.presetTimeStartMinute = parseInt(startTimeString.substr(colonPosition+1));
+			} else {
+				chargeDefinition.presetTimeStartMinute = parseInt(startTimeString);
+			}
 		}
 				
 		if (time_stop_edit != null) {
-			chargeDefinition.presetTimeStopHour = time_stop_edit.hour;
-			chargeDefinition.presetTimeStopMinute = time_stop_edit.minute;
+			colonPosition = stopTimeString.indexOf(":");
+			if (stopTimeString.indexOf(":") != -1) {
+				chargeDefinition.presetTimeStopHour = parseInt(stopTimeString.substr(0,colonPosition));
+				chargeDefinition.presetTimeStopMinute = parseInt(stopTimeString.substr(colonPosition+1));
+			} else {
+				chargeDefinition.presetTimeStopMinute = parseInt(stopTimeString);
+			}
 		}
 	}
 	
@@ -129,12 +148,16 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.chargeDefinition = chargeDefinition;
 		
 		this.title = this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargePresetCmd.PresetInfo') + " " + chargeDefinition.title;
-
-		startHour = chargeDefinition.presetTimeStartHour;
-		startMinute = chargeDefinition.presetTimeStartMinute;
-		stopHour = chargeDefinition.presetTimeStopHour;
-		stopMinute = chargeDefinition.presetTimeStopMinute;
 		
+		var hourStr:String = (chargeDefinition.presetTimeStartHour < 10?"0":"") + chargeDefinition.presetTimeStartHour;
+		var minStr:String = (chargeDefinition.presetTimeStartMinute < 10?"0":"") + chargeDefinition.presetTimeStartMinute;
+		startTimeString = hourStr + ":" + minStr;
+
+
+		hourStr = (chargeDefinition.presetTimeStopHour < 10?"0":"") + chargeDefinition.presetTimeStopHour;
+		minStr = (chargeDefinition.presetTimeStopMinute < 10?"0":"") + chargeDefinition.presetTimeStopMinute;
+		stopTimeString = hourStr + ":" + minStr;
+
 		chargeService.createChargeFromChargeDefinition(this.chargeDefinition);
 		this.updateFieldVisibility();
 	}
@@ -198,7 +221,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					quantity_box.includeInLayout = quantity_box.visible = true;	
 				}
 			} else if (chargeDefinition.quantityType == ChargeQtyType.Time) {
-				quantity_box.includeInLayout = quantity_box.visible = true;
+				quantity_box.includeInLayout = quantity_box.visible = false;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
 				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
@@ -218,7 +241,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				cuts_box.includeInLayout = cuts_box.visible = false;
 				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
 				charge_special_info.selectedChild = time;				
-				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = true;
 				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
 			} else if (chargeDefinition.quantityType == ChargeQtyType.None) {
 				quantity_box.includeInLayout = quantity_box.visible = false;
@@ -289,7 +311,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = true;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
@@ -311,7 +333,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = false;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
@@ -385,7 +407,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = false;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
@@ -406,7 +428,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = true;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
@@ -430,7 +452,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = false;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
@@ -452,7 +474,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = true;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 				material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
@@ -474,7 +496,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = false;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 				material_rate_box.includeInLayout = material_rate_box.visible = false;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
@@ -496,7 +518,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = true;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 				material_rate_box.includeInLayout = material_rate_box.visible = false;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
@@ -518,7 +540,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = false;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 				material_rate_box.includeInLayout = material_rate_box.visible = false;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
@@ -539,7 +561,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = true;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 				material_rate_box.includeInLayout = material_rate_box.visible = false;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
@@ -562,7 +584,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = true;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 				material_rate_box.includeInLayout = material_rate_box.visible = false;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
@@ -583,7 +605,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_box.includeInLayout = quantity_box.visible = false;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 				material_rate_box.includeInLayout = material_rate_box.visible = false;
-				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+				in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
@@ -608,6 +630,17 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		mapToChargeDefinition();
 		chargeService.createChargeFromChargeDefinition(this.chargeDefinition);
 	}
+
+	private function updatePriceEdit():void {
+  		if (price_text.text == "") {
+			chargeDefinition.overridPrice = false;
+			chargeDefinition.presetPrice = chargeDefinition.rate;
+		} else {
+			chargeDefinition.overridePrice = true;
+			chargeDefinition.presetPrice = parseCurrencyFloat(price_text.text); 
+		}
+	}
+
 ]]>
                              
 </mx:Script>
@@ -663,23 +696,21 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			<mx:ViewStack id="charge_special_info" width="697" height="129">
 				<mx:HBox label="blank" width="100%" height="100%" id="blank">
 				</mx:HBox>
-				<mx:HBox label="linear" width="100%" height="100%" id="linear">
+				<mx:HBox label="linear" width="100%" height="100%" id="linear" creationPolicy="all">
 				</mx:HBox>
-				<mx:VBox label="time" width="100%" height="100%" id="time">
-					<mx:HBox width="100%" height="50%">
+				<mx:VBox label="time" width="100%" height="100%" id="time" creationPolicy="all">
+					<mx:HBox width="100%" height="50%" horizontalAlign="right">
 						<mx:TextInput text="{chargeDefinition.presetTimeStartLabel}" id="time_start_label_text" textAlign="right"/>
-	                	<comp:TimeEntry id="time_start_edit" showSeconds="false" is24Hour="true" width="76" hour="{startHour}" minute="{startMinute}"
-	                 	         backgroundColor="#000000" backgroundAlpha="0.05" horizontalScrollPolicy="off"
-	                 	         borderColor="#999999" borderThickness="1" borderStyle="solid" cornerRadius="5"/> 
+						<mx:TextInput text="{startTimeString}" id="time_start_edit" textAlign="right"/>
+						<mx:Spacer width="30"/>
 	                </mx:HBox>
-					<mx:HBox width="100%" height="50%">
+					<mx:HBox width="100%" height="50%" horizontalAlign="right">
 						<mx:TextInput text="{chargeDefinition.presetTimeStopLabel}" id="time_end_label_text" textAlign="right"/>
-		                <comp:TimeEntry id="time_stop_edit" showSeconds="false" is24Hour="true" width="76" hour="{stopHour}" minute="{stopMinute}"
-		                          backgroundColor="#000000" backgroundAlpha="0.05" horizontalScrollPolicy="off"
-		                          borderColor="#999999" borderThickness="1" borderStyle="solid" cornerRadius="5"/> 
+						<mx:TextInput text="{stopTimeString}" id="time_stop_edit" textAlign="right"/>
+						<mx:Spacer width="30"/>
 	                </mx:HBox>
 				</mx:VBox>
-				<mx:HBox label="fold" width="100%" height="100%" id="fold">
+				<mx:HBox label="fold" width="100%" height="100%" id="fold" creationPolicy="all">
 					<mx:HBox width="100%" height="100%">
 						<mx:Spacer width="130"/>
 						<mx:Image width="85" height="82" id="fold_image"/>
@@ -701,13 +732,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 						<mx:TextInput text="{chargeDefinition.presetNumberOfColorsLabel}" width="50%" id="number_of_colors_label_text" textAlign="right" focusOut="this.updatePrice(event)"/>
 						<mx:TextInput text="{chargeDefinition.presetNumberOfColors}" width="50%" id="number_of_colors_text" textAlign="right" focusOut="this.updatePrice(event)"/>
 					</mx:HBox>
-					<mx:HBox width="100%" id="pounds_of_ink_box">
-						<mx:TextInput text="{chargeDefinition.presetPoundsOfInkLabel}" width="50%" id="pounds_of_ink_label_text" textAlign="right" focusOut="this.updatePrice(event)"/>
-						<mx:TextInput text="{chargeDefinition.presetPoundsofInk}" width="50%" id="pounds_of_ink_text" textAlign="right" focusOut="this.updatePrice(event)"/>
-					</mx:HBox>
 					<mx:HBox width="100%" id="coverage_box">
 						<mx:TextInput text="{chargeDefinition.presetCoverageLabel}" width="50%" id="coverage_label_text" textAlign="right" focusOut="this.updatePrice(event)"/>
 						<mx:TextInput text="{chargeDefinition.presetCoverage}" width="50%" id="coverage_text" textAlign="right" focusOut="this.updatePrice(event)"/>
+					</mx:HBox>
+					<mx:HBox width="100%" id="pounds_of_ink_box">
+						<mx:TextInput text="{chargeDefinition.presetPoundsOfInkLabel}" width="50%" id="pounds_of_ink_label_text" textAlign="right" focusOut="this.updatePrice(event)"/>
+						<mx:TextInput text="{chargeDefinition.presetPoundsofInk}" width="50%" id="pounds_of_ink_text" textAlign="right" focusOut="this.updatePrice(event)"/>
 					</mx:HBox>
 					<mx:HBox width="100%" id="quantity_box">
 						<mx:TextInput text="{chargeDefinition.presetQuantityLabel}" width="50%" id="quantity_label_text" textAlign="right" focusOut="this.updatePrice(event)"/>
@@ -765,7 +796,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					</mx:HBox>
 					<mx:HBox width="100%" id="price_box">
 						<mx:TextInput text="{chargeDefinition.presetPriceLabel}" width="50%" id="price_label_text" textAlign="right" focusOut="this.updatePrice(event)"/>
-						<mx:TextInput text="{chargeDefinition.presetPrice}" width="50%" id="price_text" textAlign="right" focusOut="this.updatePrice(event)"/>
+						<mx:TextInput text="{chargeDefinition.presetPrice}" width="50%" id="price_text" textAlign="right" change="this.updatePriceEdit()" focusOut="this.updatePrice(event)"/>
 					</mx:HBox>
 				</mx:VBox>
 			</mx:HBox>

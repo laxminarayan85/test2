@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.JobBase;
-import com.efi.printsmith.data.JobMethod;
-import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.enums.ChargeJobQuantity;
 import com.efi.printsmith.data.enums.ChargePriceMethod;
 import com.efi.printsmith.data.enums.ChargeQtyType;
@@ -14,6 +12,7 @@ import com.efi.printsmith.data.enums.RunMethod;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
 public class ChargeLinearPricingMethod extends ChargePricingMethod {
+	@Override
 	public Charge priceCharge(Charge charge) {
 		BigDecimal		price = new BigDecimal(0.0);	// 
 		BigDecimal		materialPrice = new BigDecimal(0.0);	// material price

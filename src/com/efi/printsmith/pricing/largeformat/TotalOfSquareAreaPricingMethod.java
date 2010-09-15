@@ -8,11 +8,10 @@ import com.efi.printsmith.data.enums.Price2Side;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
 import com.efi.printsmith.pricing.utilities.MatrixUtilities;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
-import com.efi.printsmith.data.PreferencesEstimating;
-import com.efi.printsmith.service.DataService;
 
 public class TotalOfSquareAreaPricingMethod extends
 		LargeFormatPricingMethod {
+	@Override
 	public Job priceLargeFormatJob (Job job) {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */

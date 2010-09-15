@@ -19,6 +19,7 @@ import com.efi.printsmith.data.enums.ChargeQtyType;
 public class ChargeInkPricingMethod extends ChargePricingMethod {
 	protected static Logger log = Logger.getLogger(ChargeInkPricingMethod.class);
 	
+	@Override
 	public Charge priceCharge(Charge charge) {
 		InkCharge localCharge = (InkCharge) charge;
 		ChargeDefinition chargeDefinition = localCharge.getChargeDefinition();

@@ -2,7 +2,6 @@ package com.efi.printsmith.pricing.blank;
 
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PricingRecord;
-import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
 
 public class BlankPricingMethod {

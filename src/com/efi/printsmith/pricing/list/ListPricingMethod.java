@@ -2,10 +2,7 @@ package com.efi.printsmith.pricing.list;
 
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PricingRecord;
-import com.efi.printsmith.pricing.utilities.MatrixUtilities;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
-import com.efi.printsmith.service.DataService;
-import com.efi.printsmith.data.PaperPrice;
 
 public class ListPricingMethod {
 	public Job priceListJob(Job job) {

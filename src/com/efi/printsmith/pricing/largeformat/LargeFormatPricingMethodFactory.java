@@ -2,8 +2,6 @@ package com.efi.printsmith.pricing.largeformat;
 
 import org.apache.log4j.Logger;
 
-import com.efi.printsmith.service.CopierService;
-
 
 public class LargeFormatPricingMethodFactory {
 	protected static Logger log = Logger.getLogger(LargeFormatPricingMethodFactory.class);

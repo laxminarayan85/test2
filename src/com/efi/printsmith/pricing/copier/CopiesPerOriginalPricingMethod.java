@@ -1,22 +1,14 @@
 package com.efi.printsmith.pricing.copier;
 
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.Job;
-import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.MatrixElement;
-import com.efi.printsmith.data.PressDefinition;
-import com.efi.printsmith.data.PriceLogEntry;
 import com.efi.printsmith.data.PricingRecord;
-import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.enums.Price2Side;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
 import com.efi.printsmith.pricing.utilities.MatrixUtilities;
-import com.efi.printsmith.pricing.utilities.PriceLogUtilities;
-import com.efi.printsmith.service.PricingService;
 
 public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 	protected static Logger log = Logger.getLogger(CopiesPerOriginalPricingMethod.class);
@@ -63,6 +55,7 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 //		return job;
 //	}
 	
+	@Override
 	public Job priceCopierJob(Job job) {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		

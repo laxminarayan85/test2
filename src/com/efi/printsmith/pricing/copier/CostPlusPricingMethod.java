@@ -10,6 +10,7 @@ import com.efi.printsmith.pricing.stock.PriceStockEngine;
 
 public class CostPlusPricingMethod extends CopierPricingMethod {
 	protected static Logger log = Logger.getLogger(CostPlusPricingMethod.class);
+	@Override
 	public Job priceCopierJob(Job job) {
 		super.priceCopierJob(job);
 

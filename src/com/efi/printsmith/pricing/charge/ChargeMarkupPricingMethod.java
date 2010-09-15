@@ -2,13 +2,12 @@ package com.efi.printsmith.pricing.charge;
 
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
-import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.PriceList;
-import com.efi.printsmith.data.enums.ChargeMarkupType;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
 public class ChargeMarkupPricingMethod extends ChargePricingMethod {
+	@Override
 	public Charge priceCharge(Charge charge) {
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
 		double rate = 0;

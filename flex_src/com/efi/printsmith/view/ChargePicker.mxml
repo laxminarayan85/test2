@@ -5,7 +5,7 @@
 				xmlns:fc="http://www.adobe.com/2006/fc"
 				xmlns:hc="com.hillelcoren.components.*"
 				xmlns:comp="com.efi.printsmith.components.*"
-				width="900"
+				width="1100"
 				height="700"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
 				creationComplete="init()"
@@ -124,21 +124,14 @@
 			[Bindable]
 			public var charges:ArrayCollection;
 
-			[Bindable]
-			public var charge:Charge;
+			[Bindable] public var charge:Charge;
+			[Bindable] public var chargeCommands:ArrayCollection=new ArrayCollection();
+			[Bindable] public var tempOpen:Object=new Object();
+			[Bindable] public var refreshSO:Boolean=false;
+			[Bindable] private var chargeDefinition:ChargeDefinition = new ChargeDefinition();
+			[Bindable] private var startTimeString:String = "00:00";
+			[Bindable] private var stopTimeString:String = "00:00";
 
-			[Bindable]
-			public var chargeCommands:ArrayCollection=new ArrayCollection();
-
-			[Bindable]
-			public var tempOpen:Object=new Object();
-
-			[Bindable]
-			public var refreshSO:Boolean=false;
-
-			[Bindable]
-			private var chargeDefinition:ChargeDefinition = new ChargeDefinition();
-			
 			private var addCharge:Boolean = false;
 			
 			private var focussedFormControl:DisplayObject;
@@ -406,9 +399,17 @@
 					// TODO: Following 2 lines are a hack and need to be fixed/localized
 					this.editingCharge = false;
 					this.add_button.label = "Add";
+					var hourStr:String = (chargeDefinition.presetTimeStartHour < 10?"0":"") + chargeDefinition.presetTimeStartHour;
+					var minStr:String = (chargeDefinition.presetTimeStartMinute < 10?"0":"") + chargeDefinition.presetTimeStartMinute;
+					startTimeString = hourStr + ":" + minStr;
+					hourStr = (chargeDefinition.presetTimeStopHour < 10?"0":"") + chargeDefinition.presetTimeStopHour;
+					minStr = (chargeDefinition.presetTimeStopMinute < 10?"0":"") + chargeDefinition.presetTimeStopMinute;
+					stopTimeString = hourStr + ":" + minStr;
 				}
 				else
 				{
+					startTimeString = "00:00";
+					stopTimeString = "00:00";
 					charge=null;
 				}
 				updateFieldVisibility();			
@@ -466,6 +467,8 @@
 			}
 			
 			private function mapToChargeData():void {
+				startTimeString = time_start_edit.text;
+				stopTimeString = time_stop_edit.text;
 				this.charge.finished=finished_check.selected;
 				this.charge.taxable=taxable_check.selected;
 				this.charge.brokered=brokered_check.selected;
@@ -479,13 +482,26 @@
 				this.charge.price=parseCurrencyFloat(price_edit.text);
 				this.charge.quantity=parseCurrencyFloat(quantity_edit.text);
 				this.charge.materialQty=parseCurrencyFloat(material_quantity_edit.text);
-//				if (this.chargeDefinition.quantityType == ChargeQtyType.Time) {
-//					charge.startHours = time_start_edit.hour;
-//					charge.startMinutes = time_start_edit.minute;
-//		
-//					charge.endHours = time_stop_edit.hour;
-//					charge.endMinutes = time_stop_edit.minute;
-//				}
+		
+				var colonPosition:int = startTimeString.indexOf(":");
+				if (time_start_edit != null) {
+					if (startTimeString.indexOf(":") != -1) {
+						charge.startHours = parseInt(startTimeString.substr(0,colonPosition));
+						charge.startMinutes = parseInt(startTimeString.substr(colonPosition+1));
+					} else {
+						charge.startMinutes = parseInt(startTimeString);
+					}
+				}
+						
+				if (time_stop_edit != null) {
+					colonPosition = stopTimeString.indexOf(":");
+					if (stopTimeString.indexOf(":") != -1) {
+						charge.endHours = parseInt(stopTimeString.substr(0,colonPosition));
+						charge.endMinutes = parseInt(stopTimeString.substr(colonPosition+1));
+					} else {
+						charge.endMinutes = parseInt(stopTimeString);
+					}
+				}
 				if (this.currentState == "InkCharge") {
 					(charge as InkCharge).coverage=parseCurrencyFloat(percent_coverage_edit.text);
 					(charge as InkCharge).poundsOfInk=parseCurrencyFloat(lbs_of_ink_edit.text);
@@ -600,7 +616,6 @@
 	    		 	this.rate_edit.setStyle("textDecoration", "underline");
 	    		 	this.rate_edit.setStyle("fontStyle", "italic");
 	    		}
-	    		updatePrice();
 	  		}	
 
 			private function updatePriceEdit():void {
@@ -611,7 +626,6 @@
 	    			this.charge.overridePrice = true;
 	    			this.charge.price = parseCurrencyFloat(price_edit.text); 
 	    		}
-	    		updatePrice();				
 			}
 			
 			public function updateFieldVisibility():void {
@@ -679,10 +693,10 @@
 							quantity_box.includeInLayout = quantity_box.visible = true;	
 						}
 					} else if (chargeDefinition.quantityType == ChargeQtyType.Time) {
-						quantity_box.includeInLayout = quantity_box.visible = true;
+						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
@@ -698,14 +712,14 @@
 						up_box.includeInLayout = up_box.visible = false;
 						cuts_box.includeInLayout = cuts_box.visible = false;
 						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
-						//charge_special_info.selectedChild = time;				
-						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = true;
+						charge_special_info.selectedChild = time;				
+						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;
 						quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
 					} else if (chargeDefinition.quantityType == ChargeQtyType.None) {
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets && chargeDefinition.adjustableMaterial;
 						price_box.includeInLayout = price_box.visible = true;
@@ -727,7 +741,7 @@
 					quantity_box.includeInLayout = quantity_box.visible = true;
 					material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 					material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-					in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+					in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 					rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 					material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 					price_box.includeInLayout = price_box.visible = true;
@@ -770,7 +784,7 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
@@ -787,13 +801,18 @@
 						cuts_box.includeInLayout = cuts_box.visible = false;
 						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = chargeDefinition.sheet_lift_check && chargeDefinition.adjustableSets;				
 						quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
-						//charge_special_info.selectedChild = fold;				
+						charge_special_info.selectedChild = fold;				
+						if (chargeDefinition.foldTemplate != null) {
+							fold_description.text = chargeDefinition.foldTemplate.description;
+							var imageSource:String = "assets/fold_diagrams/" + chargeDefinition.foldTemplate.imageFile;
+							fold_image.source = imageSource;
+						}
 					} else if (chargeDefinition.quantityType == ChargeQtyType.Sets ||
 							   chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
@@ -861,7 +880,7 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
@@ -882,7 +901,7 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
@@ -906,7 +925,7 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
@@ -923,12 +942,12 @@
 						cuts_box.includeInLayout = cuts_box.visible = false;
 						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;				
 						quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
-				//		charge_special_info.selectedChild = linear;				
+						charge_special_info.selectedChild = linear;				
 					} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
@@ -950,7 +969,7 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
@@ -972,7 +991,7 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
@@ -994,7 +1013,7 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
@@ -1015,7 +1034,7 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
@@ -1038,7 +1057,7 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
@@ -1059,7 +1078,7 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
@@ -1225,6 +1244,31 @@
 											 fontSize="9"
 											 selected="{chargeDefinition.presetShowNotes}" width="100%"/>
 							</mx:HBox>
+							<mx:ViewStack id="charge_special_info" width="100%" height="129">
+								<mx:HBox label="blank" width="100%" height="100%" id="blank">
+								</mx:HBox>
+								<mx:HBox label="linear" width="100%" height="100%" id="linear" creationPolicy="all">
+								</mx:HBox>
+								<mx:VBox label="time" width="100%" height="100%" id="time" creationPolicy="all">
+									<mx:HBox width="100%" height="50%" horizontalAlign="right">
+										<mx:Text text="{chargeDefinition.presetTimeStartLabel}" id="time_start_label_text" textAlign="right"/>
+										<mx:TextInput text="{startTimeString}" id="time_start_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="30"/>
+					                </mx:HBox>
+									<mx:HBox width="100%" height="50%" horizontalAlign="right">
+										<mx:Text text="{chargeDefinition.presetTimeStopLabel}" id="time_end_label_text" textAlign="right"/>
+										<mx:TextInput text="{stopTimeString}" id="time_stop_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="30"/>
+					                </mx:HBox>
+								</mx:VBox>
+								<mx:HBox label="fold" width="100%" height="100%" id="fold" creationPolicy="all">
+									<mx:HBox width="100%" height="100%">
+										<mx:Spacer width="130"/>
+										<mx:Image width="85" height="82" id="fold_image"/>
+										<mx:Text text="" id="fold_description" width="100%" height="83"/>
+									</mx:HBox>
+								</mx:HBox>
+							</mx:ViewStack>
 
 							<mx:HBox width="100%" height="111" verticalScrollPolicy="off">
 								<mx:VBox width="50%" height="110" verticalScrollPolicy="off" verticalAlign="bottom">
@@ -1246,16 +1290,16 @@
 										<mx:TextInput text="{chargeDefinition.presetNumberOfColors}" width="50%" id="number_of_colors_edit" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="pounds_of_ink_box">
-										<mx:Spacer width="8"/>
-										<mx:Text text="{chargeDefinition.presetPoundsofInkLabel}" width="50%" id="lbs_of_ink_label_text" textAlign="right"/>
-										<mx:TextInput text="{chargeDefinition.presetPoundsofInk}" width="50%" id="lbs_of_ink_edit" textAlign="right" focusOut="this.updatePrice()"/>
-										<mx:Spacer width="40"/>
-									</mx:HBox>
 									<mx:HBox width="100%" id="coverage_box">
 										<mx:Spacer width="8"/>
 										<mx:Text text="{chargeDefinition.presetCoverageLabel}" width="50%" id="percent_coverage_label_text" textAlign="right"/>
 										<mx:TextInput text="{(charge as InkCharge).coverage}" width="50%" id="percent_coverage_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:Spacer width="40"/>
+									</mx:HBox>
+									<mx:HBox width="100%" id="pounds_of_ink_box">
+										<mx:Spacer width="8"/>
+										<mx:Text text="{chargeDefinition.presetPoundsofInkLabel}" width="50%" id="lbs_of_ink_label_text" textAlign="right"/>
+										<mx:TextInput text="{chargeDefinition.presetPoundsofInk}" width="50%" id="lbs_of_ink_edit" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>
 									<mx:HBox width="100%" id="quantity_box">
@@ -1300,7 +1344,7 @@
 									</mx:HBox>
 									<mx:HBox width="100%" id="rate_box">
 										<mx:Text text="{chargeDefinition.presetRateLabel}" width="50%" id="rate_label_text" textAlign="right"/>
-										<mx:TextInput text="{chargeDefinition.rate}" width="50%" id="rate_edit" textAlign="right" focusOut="this.updateRate()"/>
+										<mx:TextInput text="{chargeDefinition.rate}" width="50%" id="rate_edit" textAlign="right" change="this.updateRate()" focusOut="updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
 									<mx:HBox width="100%" id="sheets_per_lift_box">
@@ -1330,7 +1374,7 @@
 									</mx:HBox>
 									<mx:HBox width="100%" id="price_box">
 										<mx:Text text="{chargeDefinition.presetPriceLabel}" width="50%" id="price_label_text" textAlign="right"/>
-										<mx:TextInput text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.price)}" width="50%" id="price_edit" textAlign="right" focusOut="this.updatePriceEdit()"/>
+										<mx:TextInput text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.price)}" width="50%" id="price_edit" textAlign="right" change="this.updatePriceEdit()" focusOut="this.updatePrice()"/>
 										<comp:SmallThrobber visible="false" id="pricing_throbber" height="20" width="20"/>
 										<mx:LinkButton width="20" id="refresh_price_btn" height="20" click="updatePrice()" visible="false">
 											<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>

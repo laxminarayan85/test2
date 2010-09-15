@@ -342,8 +342,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var roudV:Number;
 		var prices:ChargeCostingPrices = ev.result as ChargeCostingPrices;
 		
-		costPricingString = Number(pricingNumberFormatter.format(prices.unitPrice + prices.materialUnitPrice)).toFixed(2) + " + " +
-							Number(pricingNumberFormatter.format(prices.setupPrice + prices.materialSetupPrice)).toFixed(2);
+		costPricingString = Number(pricingNumberFormatter.format(prices.unitPrice)).toFixed(2) + " + " +
+							Number(pricingNumberFormatter.format(prices.setupPrice)).toFixed(2);
 		
 	}
 	
@@ -1866,7 +1866,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	 		adjustable_rate_check.enabled= true;
 	 	else
 	 		adjustable_rate_check.enabled = false;
+	 	if (rate_check.enabled)
+	 		in_sets_check.enabled = true;
 	}
+	
 	private function UpdateAdjset():void{
 		
 	 	if (ship_markup_check.selected ||cover_ink_check.selected || sheet_lift_check.selected || in_set_mat_check.selected || in_sets_check.selected)
@@ -1907,9 +1910,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			switch (charge_method_combo.selectedItem.data) {
 				case ChargeMethod.FlatRate:
 				case ChargeMethod.Markup:
-					//markup_edit.text = "0.0";
-					//sale_price_per_unit_edit.text = "0.0";
-					cost_plus_radio.enabled= false;					
+					if (charge_method_combo.selectedItem.data == ChargeMethod.FlatRate) {
+						cost_plus_radio.enabled = true;
+					} else {
+						cost_plus_radio.enabled = false;						
+					}					
 					rate_check.enabled = true;
 					if( charge != null)
 						rate_check.selected = charge.useRate;
@@ -1943,8 +1948,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				case ChargeMethod.RateList:
 				case ChargeMethod.Shipping:
 				case ChargeMethod.SquareArea:
-					//markup_edit.text = "0.0";
-					//sale_price_per_unit_edit.text = "0.0";
 					cost_plus_radio.enabled =true;					
 					rate_check.enabled = true;
 					if( charge != null)

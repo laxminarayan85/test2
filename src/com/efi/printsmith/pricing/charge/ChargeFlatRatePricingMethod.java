@@ -10,7 +10,9 @@ import com.efi.printsmith.service.ChargeService;
 public class ChargeFlatRatePricingMethod extends ChargePricingMethod {
 	protected static Logger log = Logger.getLogger(ChargeFlatRatePricingMethod.class);
 
+	@Override
 	public Charge priceCharge(Charge charge) {
+		if (charge.getOverridePrice()) return charge;
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
 		
 		if (chargeDefinition == null) {
@@ -29,11 +31,7 @@ public class ChargeFlatRatePricingMethod extends ChargePricingMethod {
 				e.printStackTrace();
 			}
 		} else {
-			if (charge.getOverridePrice()) return charge;
-		//	if (chargeDefinition.getNoOverrides()) return charge;
-		//	if (chargeDefinition.getAdjustableRate()) {
 				charge.setPrice(charge.getRate());
-		//	}
 		}
 		return charge;
 	}

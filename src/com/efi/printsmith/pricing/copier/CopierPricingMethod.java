@@ -2,7 +2,6 @@ package com.efi.printsmith.pricing.copier;
 
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.Job;
-import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;

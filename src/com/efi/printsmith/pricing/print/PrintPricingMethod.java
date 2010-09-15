@@ -5,7 +5,6 @@ import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
-import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.WasteChart;
 import java.math.BigDecimal;
 

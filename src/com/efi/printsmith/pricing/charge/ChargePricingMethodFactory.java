@@ -3,9 +3,6 @@ package com.efi.printsmith.pricing.charge;
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.enums.ChargeMethod;
-import com.efi.printsmith.data.enums.ChargePriceMethod;
-import com.efi.printsmith.service.CopierService;
-
 
 public class ChargePricingMethodFactory {
 	protected static Logger log = Logger.getLogger(ChargePricingMethodFactory.class);

@@ -3,7 +3,6 @@ package com.efi.printsmith.pricing.charge;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.CuttingCharge;
-import com.efi.printsmith.data.InkCharge;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.enums.ChargeQtyType;
 
@@ -12,6 +11,7 @@ public class ChargeCutPricingMethod extends ChargePricingMethod {
 	final int runToFinish = 1;
 	final int parentToFinish = 2;
 	
+	@Override
 	public Charge priceCharge(Charge charge) {
 		CuttingCharge localCharge = (CuttingCharge) charge;
 		ChargeDefinition chargeDefinition = localCharge.getChargeDefinition();

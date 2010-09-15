@@ -2,8 +2,6 @@ package com.efi.printsmith.pricing.copier;
 
 import org.apache.log4j.Logger;
 
-import com.efi.printsmith.service.CopierService;
-
 
 public class CopierPricingMethodFactory {
 	protected static Logger log = Logger.getLogger(CopierPricingMethodFactory.class);

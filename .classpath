@@ -5,5 +5,21 @@
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/PrintSmith Server"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/annotations-api.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/catalina-ant.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/catalina-ha.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/catalina-tribes.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/catalina.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/el-api.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/jasper-el.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/jasper-jdt.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/jasper.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/tomcat-coyote.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/tomcat-dbcp.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/tomcat-i18n-es.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/tomcat-i18n-fr.jar"/>
+	<classpathentry kind="lib" path="PrintSmith Server Runtime/lib/tomcat-i18n-ja.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

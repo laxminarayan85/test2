@@ -6,10 +6,8 @@ import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeCostingRecord;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.PriceList;
-import com.efi.printsmith.data.RateTable;
 import com.efi.printsmith.data.enums.ChargeCostMethod;
 import com.efi.printsmith.data.enums.ChargeMethod;
-import com.efi.printsmith.data.enums.ChargePriceMethod;
 import com.efi.printsmith.data.enums.ChargeQtyType;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
@@ -18,8 +16,10 @@ public class ChargeCostUtilities {
 
 	static void updateChargeCost(Charge charge) {
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
-		double totalCost = 0.0;
 		
+		ChargeCostingRecord chargeCostingRecord = charge.getChargeCostingRecord();
+		if (chargeCostingRecord == null) return;
+
 		if (chargeDefinition == null) {
 			log.error("Null ChargeDefinition when costing charge");
 			return;
@@ -28,9 +28,9 @@ public class ChargeCostUtilities {
 		String methodStr = chargeDefinition.getMethod();
 		
 		if (methodStr.equals(ChargeCostMethod.NoCost)) {
-			totalCost = 0.0;
+			chargeCostingRecord.setTotalCost(0.0);
 		} else if (methodStr.equals(ChargeCostMethod.HundredPercent)) {
-			totalCost = charge.getPrice().doubleValue();
+			chargeCostingRecord.setTotalCost(charge.getPrice().doubleValue());
 		} else if (methodStr.equals(ChargeCostMethod.UnitCost)) {
 			if (chargeDefinition.getMethod().equals(ChargeMethod.Ink)) {
 				updateInkChargeCost(charge, chargeDefinition);

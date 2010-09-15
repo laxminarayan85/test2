@@ -12,6 +12,7 @@ import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.service.ChargeService;
 
 public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
+	@Override
 	public Charge priceCharge(Charge charge) {
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
 		BigDecimal rate = new BigDecimal(0);

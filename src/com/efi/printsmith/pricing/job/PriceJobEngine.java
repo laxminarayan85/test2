@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PreferencesPricingMethod;
-import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.pricing.blank.BlankPricingMethodFactory;
 import com.efi.printsmith.pricing.copier.CopierPricingMethod;
 import com.efi.printsmith.pricing.copier.CopierPricingMethodFactory;
@@ -13,7 +12,6 @@ import com.efi.printsmith.pricing.print.PrintPricingMethodFactory;
 import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethod;
 import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethodFactory;
 import com.efi.printsmith.pricing.mailing.MailingPricingMethodFactory;
-import com.efi.printsmith.service.PricingService;
 import com.efi.printsmith.pricing.mailing.MailingPricingMethod;
 import com.efi.printsmith.pricing.blank.BlankPricingMethod;
 import com.efi.printsmith.pricing.linesandinches.LinesAndInchesPricingMethod;

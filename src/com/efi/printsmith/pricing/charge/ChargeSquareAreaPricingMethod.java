@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
-import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.enums.ChargeJobQuantity;
 import com.efi.printsmith.data.enums.ChargeQtyType;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
 public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
+	@Override
 	public Charge priceCharge(Charge charge) {
 		
 		BigDecimal	price;
