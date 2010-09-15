@@ -1100,6 +1100,9 @@
 						trackerConsolePasses.trackDate = nowDate;
 					}
 				}
+				if(employee!=null){
+					selectedTrackerConsoleJob.employee = employee;
+				}
 				selectedTrackerConsoleJob.paused = false;
 				updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 			}
