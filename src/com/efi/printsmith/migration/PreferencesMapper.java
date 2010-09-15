@@ -510,6 +510,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesAccounting.setEstimateAllowPrefixMod(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("estAllowSuffixMod"))
 			preferencesAccounting.setEstimateAllowSuffixMod(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Receipts starting serial number"))
+			preferencesAccounting.setPrintDocument(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesAccounting);
 	}
 	private void importPreferencesPOSField(String key, String name, String value) throws Exception {
