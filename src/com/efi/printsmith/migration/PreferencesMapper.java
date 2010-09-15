@@ -943,6 +943,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setShowInvoicesWithToday(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("App_enableLineItemTaxes"))
 			preferencesSystem.setLineItemTaxes(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("format"))
+			preferencesSystem.setDisplayFormat(value);
 		if (address != null)
 			preferencesSystem.setCompanyAddress(address);
 		dataService.addUpdate(preferencesSystem);
