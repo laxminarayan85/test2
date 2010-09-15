@@ -562,6 +562,29 @@
 				//dataServiceRouteSetUp.getRouteStepSetUpCount("RoutingStepSetUp");
 				var newRoutingStepSetUp:RoutingStepSetUp = new RoutingStepSetUp();
 				var newRoutingCheckFlag:Boolean = false;
+				
+				for each(var routingStepSetUpObj1:RoutingStepSetUp in routesStepList){
+					if(routingStepSetUpObj1.routeData){
+						var duplicateCheckCount:int=0;
+						for each(var routingStepSetUpObj2:RoutingStepSetUp in routesStepList){
+							if(routingStepSetUpObj2.routeData){
+								if(routingStepSetUpObj1.title==routingStepSetUpObj2.title){
+									duplicateCheckCount++;
+								}
+							}
+						}
+						if(duplicateCheckCount>1){
+							var inputArray:Array = new Array();
+							inputArray.push("");
+							inputArray.push("");
+							inputArray.push("");
+							inputArray.push(routingStepSetUpObj1.title);
+							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_WarningDuplicatename',inputArray));
+							return;
+						}
+					}
+				}
+				
 				for each(var routingStepSetUpObj:RoutingStepSetUp in routesStepList){
 					if(routingStepSetUpObj.routeData){
 						if(routingStepSetUpObj.title=="New Routing"){
@@ -603,6 +626,27 @@
 				var newRoutingStepSetUp:RoutingStepSetUp = new RoutingStepSetUp();
 				var counter:int=5;
 				if(routingStepSetUp!=null){
+					for each(var routingStepSetUpObj1:RoutingStepSetUp in routesStepList){
+						if(routingStepSetUpObj1.routeData){
+							var duplicateCheckCount:int=0;
+							for each(var routingStepSetUpObj2:RoutingStepSetUp in routesStepList){
+								if(routingStepSetUpObj2.routeData){
+									if(routingStepSetUpObj1.title==routingStepSetUpObj2.title){
+										duplicateCheckCount++;
+									}
+								}
+							}
+							if(duplicateCheckCount>1){
+								var inputArray:Array = new Array();
+								inputArray.push("");
+								inputArray.push("");
+								inputArray.push("");
+								inputArray.push(routingStepSetUpObj1.title);
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_WarningDuplicatename',inputArray));
+								return;
+							}
+						}
+					}
 					for(var i:int=1;i<=counter;i++){
 						var titleExists:Boolean = false;
 						for each(var routingStepSetUpObject:RoutingStepSetUp in routesStepList){
