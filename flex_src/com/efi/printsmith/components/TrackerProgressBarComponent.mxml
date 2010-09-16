@@ -12,7 +12,7 @@
 			import mx.core.UIComponent;
 			import com.efi.printsmith.data.TrackerConsoleJobs;
 		
-			private var _trackerConsoleJobs:TrackerConsoleJobs;
+			[Bindable] private var _trackerConsoleJobs:TrackerConsoleJobs;
 			
 			[Bindable] public var timer:Timer = new Timer(1000);
 			
@@ -145,28 +145,32 @@
 					var pgBarTrackHeight:Number = pgBar.getStyle("trackHeight") as Number;
 					if(displayValue.actualSetUpTime>0){
 						if(barComponent!=null){
-							estimateSetUpImage = new Image();
-							estimateSetUpImage.source = arrowDownImg;
-							estimateSetUpImage.width = 30;
-							estimateSetUpImage.height = 30;
-							estimateSetUpImage.x = (((displayValue.actualSetUpTime/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
-							estimateSetUpImage.y = -6;
-							estimateSetUpImage.toolTip = "Estimated SetUpTime:\n"+convertMilliSecondsToString((displayValue.actualSetUpTime/displayValue.noOfPasses),true);
-							estimatedSetUpTime = (displayValue.actualSetUpTime/displayValue.noOfPasses);
-							barComponent.addChild(estimateSetUpImage);
+							if(displayValue.employee!=null && !displayValue.employee.hideEstimateTimeTracker) {
+								estimateSetUpImage = new Image();
+								estimateSetUpImage.source = arrowDownImg;
+								estimateSetUpImage.width = 30;
+								estimateSetUpImage.height = 30;
+								estimateSetUpImage.x = (((displayValue.actualSetUpTime/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
+								estimateSetUpImage.y = -6;
+								estimateSetUpImage.toolTip = "Estimated SetUpTime:\n"+convertMilliSecondsToString((displayValue.actualSetUpTime/displayValue.noOfPasses),true);
+								estimatedSetUpTime = (displayValue.actualSetUpTime/displayValue.noOfPasses);
+								barComponent.addChild(estimateSetUpImage);
+							}
 						}
 					}
 					if(displayValue.actualRunTime>0){
 						if(barComponent!=null){
-							estimateRunImage = new Image();
-							estimateRunImage.source = arrowDownImg;
-							estimateRunImage.width = 30;
-							estimateRunImage.height = 30;
-							estimateRunImage.x = ((((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
-							estimateRunImage.y = -6;
-							estimateRunImage.toolTip = "Estimated RunTime:\n"+convertMilliSecondsToString(((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses),true);
-							estimatedRunTime = ((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses);
-							barComponent.addChild(estimateRunImage);
+							if(displayValue.employee!=null && !displayValue.employee.hideEstimateTimeTracker) {
+								estimateRunImage = new Image();
+								estimateRunImage.source = arrowDownImg;
+								estimateRunImage.width = 30;
+								estimateRunImage.height = 30;
+								estimateRunImage.x = ((((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
+								estimateRunImage.y = -6;
+								estimateRunImage.toolTip = "Estimated RunTime:\n"+convertMilliSecondsToString(((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses),true);
+								estimatedRunTime = ((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses);
+								barComponent.addChild(estimateRunImage);
+							}
 						}
 					}
 					for each(var trackerConsolePasses:TrackerConsolePasses in displayValue.passesList){
@@ -260,9 +264,19 @@
 				}
 			}
 		
-			private function setPGLabel(estimatedTime:String,actualTime:String,noOfPasses:int,currentPass:int):String{
+			private function setPGLabel(trackerConsoleJobsObj:TrackerConsoleJobs, estimatedTime:String,actualTime:String,noOfPasses:int,currentPass:int):String{
 				if(noOfPasses>1){
+					if(_trackerConsoleJobs!=null){
+						if(_trackerConsoleJobs.employee!=null && _trackerConsoleJobs.employee.hideEstimateTimeTracker){
+							return "Pass ("+currentPass+" of "+noOfPasses+") "+"--"+" / "+actualTime;
+						}
+					}
 					return "Pass ("+currentPass+" of "+noOfPasses+") "+estimatedTime+" / "+actualTime;
+				}
+				if(_trackerConsoleJobs!=null){
+					if(_trackerConsoleJobs.employee!=null && _trackerConsoleJobs.employee.hideEstimateTimeTracker){
+						return "--"+" / "+actualTime;
+					}
 				}
 				return estimatedTime+" / "+actualTime;
 			}
@@ -273,5 +287,5 @@
 	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 
 	<mx:ProgressBar id="pgBar" width="100%" labelWidth="300" trackHeight="50" barSkin="com.efi.printsmith.skin.TrackerProgressBarSkin" barColor="0x00ff00" 
-			labelPlacement="right" label="{setPGLabel(estimatedTime, actualTime, noOfPasses, currentPass)}" mode="manual"/>
+			labelPlacement="right" label="{setPGLabel(_trackerConsoleJobs, estimatedTime, actualTime, noOfPasses, currentPass)}" mode="manual"/>
 </mx:Canvas>
