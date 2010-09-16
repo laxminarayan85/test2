@@ -33,9 +33,9 @@
 					if (dataGridComp.selectedIndex > -1){
 						var confirmWindow:Alert;
 						if(deleteString!=null){
-							confirmWindow = Alert.show(deleteString, "Confirmation", Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);
+							confirmWindow = Alert.show(deleteString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);
 						} else {
-							confirmWindow = Alert.show("Are you sure you want to\ndelete the selected "+deleteLabel+"?", "Confirmation", Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);	
+							confirmWindow = Alert.show("Are you sure you want to\ndelete the selected "+deleteLabel+"?", resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);	
 						} 
 						confirmWindow.setStyle("backgroundColor", 0xffffff);
 						confirmWindow.setStyle("backgroundAlpha", 0.50);
@@ -46,9 +46,9 @@
 				} else {
 					var confirmWindow:Alert;
 					if(deleteString!=null){
-						confirmWindow = Alert.show(deleteString, "Confirmation", Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);
+						confirmWindow = Alert.show(deleteString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);
 					} else {
-						confirmWindow = Alert.show("Are you sure you want to\ndelete the selected "+deleteLabel+"?", "Confirmation", Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);	
+						confirmWindow = Alert.show("Are you sure you want to\ndelete the selected "+deleteLabel+"?", resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);	
 					} 
 					confirmWindow.setStyle("backgroundColor", 0xffffff);
 					confirmWindow.setStyle("backgroundAlpha", 0.50);

@@ -4,9 +4,9 @@
 	defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
     close="cancelPicker();"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockPicker')}" 
-    xmlns:text="flash.text.*" xmlns:comp="com.efi.printsmith.components.*" borderThickness="3" borderStyle="solid" fontSize="9">
+    xmlns:text="flash.text.*" xmlns:comp="com.efi.printsmith.components.*" borderThickness="3" borderStyle="solid" fontSize="9" xmlns:components="com.efi.printsmith.common.components.*">
           
-	<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="getStockPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
@@ -80,6 +80,12 @@
 	[Bindable] private var uoms:ArrayCollection;
 	[Bindable] private var coatedSides:ArrayCollection;
 	
+	private var deleteCounter:int=0; 
+	
+	private var itemsDeleted:int=0;
+	
+	private var deletedStockDefinitions:ArrayCollection = new ArrayCollection(); 
+	
 	
 	         
 	// Holds a reference to the currently focussed control on the form.
@@ -106,7 +112,30 @@
 	}
 	
 	private function handleDeleteResult(event:ResultEvent):void {
-		dataService.getStockPicker();
+		if(deleteCounter!=0){
+			itemsDeleted++;
+			if(itemsDeleted==deleteCounter){
+				itemsDeleted=0;
+				deleteCounter=0;
+				for each(var id:Number in deletedStockDefinitions){
+					var counter:int=0;
+					var checkFlag:Boolean = false;
+					for each(var stockDefinitionObj:Object in stockDefinitions){
+						if(id==stockDefinitionObj.id){
+							checkFlag = true;
+							break;
+						}
+						counter++;
+					}
+					if(checkFlag){
+						stockDefinitions.removeItemAt(counter);
+						//stockDefinitions.refresh();
+					}
+				}
+				deletedStockDefinitions = new ArrayCollection();
+			}
+		}
+		//dataService.getStockPicker();
 	}
 	
 	private function doEnableWebStatus():void {
@@ -152,11 +181,16 @@
 	}  
 	
 	private function deleteStockDefinition():void {
+		itemsDeleted = 0;
+		deleteCounter = dataGrid.selectedItems.length;
+		deletedStockDefinitions = new ArrayCollection();
 		for (var i:int = 0;i<dataGrid.selectedItems.length;i++) {
 			var temp:StockDefinition
 			temp = dataGrid.selectedItems[i] as StockDefinition;
-			if (temp != null)
+			if (temp != null) {
+				deletedStockDefinitions.addItem(temp.id);
 				dataService.deleteItem("StockDefinition", temp.id);
+			}
 		}
 	} 
 
@@ -897,7 +931,11 @@
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="12%" id="status_button" click="doStatus()"/>
 			<mx:Spacer width="6%" />
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Cancel')}" click="cancelPicker();" id="cancel_button" width="12%" />
-			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" id="select_button0" enabled="{(dataGrid.selectedItem != null)}" click="deleteStockDefinition();" width="12%" />
+			<components:CustomDeleteButtonComponent
+				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" 
+				id="select_button0" enabled="{(dataGrid.selectedItem != null)}" isIcon="false" clickFuncName="deleteStockDefinition" width="12%"
+				deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'changePriceCmd.StockDefinitions')}"/>
+			<!--<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" id="select_button0" enabled="{(dataGrid.selectedItem != null)}" click="deleteStockDefinition();" width="12%" />-->
 		</mx:HBox>
 		<mx:HBox id="searcharea" width="100%" height="35%" >
 			<mx:Form id="col1" width="30%" >
