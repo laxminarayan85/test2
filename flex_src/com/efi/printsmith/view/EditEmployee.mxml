@@ -398,11 +398,11 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 		employee.allPresses	= all_presses.selected;
 		employee.allCopiers	= all_copiers.selected;
 		employee.anyPastDue = any_past_due.selected;
-		employee.showMessageClockin= show_message_clockIn.selected;
-		employee.showMessageClockout = show_message_clockOut.selected;
+		/* employee.showMessageClockin= show_message_clockIn.selected;
+		employee.showMessageClockout = show_message_clockOut.selected; */
 		employee.autoHour = parseInt(hour_edit.text);
 		employee.autoMin = parseInt(minute_edit.text);
-		employee.message = message.text;
+		//employee.message = message.text;
 		employee.exportCode = parseInt(export_code_edit.text);
 		employee.socialSecurity = ssn_edit.text;
 	
@@ -979,11 +979,11 @@ creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.ge
 					<mx:TextInput x="66" y="37" width="79" id="minute_edit" text="{employee.autoMin}" focusOut="doShowTime();" change="validateForm(event);"/>
 					<mx:Text x="180" y="23" width="105" height="20" id="real_time" enabled="false"/>
 				</mx:Panel>
-				<mx:Panel x="10" y="522" width="796" height="173" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Message')}" >
+				<!--<mx:Panel x="10" y="522" width="796" height="173" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Message')}" >
 					<mx:TextInput x="10" y="10" width="746" height="79" id="message" text="{employee.message}"/>
 					<mx:CheckBox x="10" y="97" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.ShowmessageatclockIN')}" id="show_message_clockIn" selected="{employee.showMessageClockin}"/>
 					<mx:CheckBox x="239" y="97" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.ShowmessageatclockOU')}" id="show_message_clockOut" selected="{employee.showMessageClockout}"/>
-				</mx:Panel>
+				</mx:Panel>-->
 			</mx:Canvas>
 			<mx:Canvas id="canvasProduction" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.ProductionFilter')}" width="100%" height="100%">	
 				<mx:Panel x="10" y="30" width="280" height="233"  layout="absolute" title="Include">
