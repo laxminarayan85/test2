@@ -887,7 +887,7 @@ public class PreferencesMapper extends ImportMapper {
 		else if (name.equals("workDay_Saturday"))
 			preferencesSystem.setWorkSaturday(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("firstDayOfWeek_SundayIsZero"))
-			preferencesSystem.setWorkFirstDayOfWeek(Utilities.tokenToInt(value));
+			preferencesSystem.setWorkFirstDayOfWeek(Utilities.tokenToInt(value) + 1);
 		else if (name.equals("useBusinessDaysForFutureDateParsing"))
 			preferencesSystem.setFutureDatesExcludeClosed(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("inkWeightSingular"))
