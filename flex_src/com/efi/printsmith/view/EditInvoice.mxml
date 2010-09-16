@@ -280,7 +280,8 @@
 			{
 				this.invoice = ev.result as InvoiceBase;
 				inv_number.text = invoice.invoiceNumber;
-				this.parent.removeChild(this);
+				//this.parent.removeChild(this);
+				Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 			}
 			
 			private function handleCreateInvoiceResult(ev:ResultEvent):void
@@ -360,7 +361,8 @@
 
 			public function doCancel():void
 			{
-				this.parent.removeChild(this);
+				//this.parent.removeChild(this);
+				Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 			}
 
 			private function doNewJob():void

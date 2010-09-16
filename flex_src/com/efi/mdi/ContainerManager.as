@@ -34,7 +34,8 @@ package com.efi.mdi
 			return _contMgr;
 		}
 		
-		public function getWindowsWithChild(child:DisplayObject):MDIWindow	{
+		
+		public function getWindowWithChild(child:DisplayObject):MDIWindow	{
 			var a:Array = _mdiContainerRef.appCanvas.getChildren(); 
 			for (var i:int=0; i<a.length; i++){
 				if (a[i] is MDIWindow)	{

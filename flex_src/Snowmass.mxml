@@ -313,7 +313,7 @@
 		public function handleUIEvent(evt:ResultEvent):void {
 			var child:Panel = evt.result as Panel;
 			//addUniqueTab(child);
-			var win:MDIWindow = containerManager.getWindowsWithChild(child);
+			var win:MDIWindow = containerManager.getWindowWithChild(child);
 			if (win == null)	{
 				containerManager.openNewMDIWindow(child.className,child);
 			}

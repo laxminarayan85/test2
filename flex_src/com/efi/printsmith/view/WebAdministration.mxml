@@ -854,7 +854,7 @@
 	private function addUniqueTab(tab:DisplayObject):void {
 		var tabFound:Boolean = false;
 		
-		if (Snowmass.getInstance().containerManager.getWindowsWithChild(tab) == null)
+		if (Snowmass.getInstance().containerManager.getWindowWithChild(tab) == null)
 		{
 			Snowmass.getInstance().containerManager.openNewMDIWindow(tab.name, tab as UIComponent);
 		}

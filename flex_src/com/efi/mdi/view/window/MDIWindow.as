@@ -117,6 +117,9 @@ package com.efi.mdi.view.window
 			return _content;	
 		}
 		
+		public function closeWindow():void	{
+			dispatchEvent(new WindowCloseEvent(WindowCloseEvent.WINDOW_CLOSE, this));
+		}
 		private function onClose(event:MouseEvent):void	{
 			dispatchEvent(new WindowCloseEvent(WindowCloseEvent.WINDOW_CLOSE, this));
 		}
