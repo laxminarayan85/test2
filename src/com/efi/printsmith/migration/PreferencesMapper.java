@@ -131,6 +131,8 @@ public class PreferencesMapper extends ImportMapper {
 		}
 		else if (group.equals("CreditCard Info"))
 			importPreferencesCreditCardField(key, fieldName, fieldValue);
+		else if (group.equals("Money Formats"))
+			importPreferencesSystemField(key, fieldName, fieldValue);
 	}
 	private void importAddressFormats(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
@@ -966,6 +968,22 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setLineItemTaxes(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("format"))
 			preferencesSystem.setDisplayFormat(value);
+		else if (name.equals("numberFormatINT"))
+			preferencesSystem.setNumbersIntegers(value);
+		else if (name.equals("numberFormatPCT"))
+			preferencesSystem.setNumbersPercentages(value);
+		else if (name.equals("numberFormatCURRENCY"))
+			preferencesSystem.setNumbersAmount(value);
+		else if (name.equals("numberFormatTAX"))
+			preferencesSystem.setNumbersTaxRate(value);
+		else if (name.equals("numberFormatRATE"))
+			preferencesSystem.setNumbersRate(value);
+		else if (name.equals("numberFormatFACTOR"))
+			preferencesSystem.setNumbersFactor(value);
+		else if (name.equals("numberFormatINVAMT"))
+			preferencesSystem.setNumbersInvoice(value);
+		else if (name.equals("numberFormatINVPCT"))
+			preferencesSystem.setNumbersShortPercent(value);
 		if (address != null)
 			preferencesSystem.setCompanyAddress(address);
 		dataService.addUpdate(preferencesSystem);
