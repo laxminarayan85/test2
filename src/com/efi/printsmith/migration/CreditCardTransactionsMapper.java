@@ -132,6 +132,8 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 			}
 			else if ("permanent".equals(currentFieldToken))
 				creditCardTransaction.setPermanent(Utilities.tokenToBooleanValue(currentImportToken));
+			else if ("internal use1".equals(currentFieldToken))
+				creditCardTransaction.setOrderName(currentFieldToken);
 		}
 		if (contact != null) {
 			contact.setCreditCard(creditCard);

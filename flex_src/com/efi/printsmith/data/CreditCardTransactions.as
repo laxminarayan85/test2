@@ -43,9 +43,12 @@ package com.efi.printsmith.data
 		public var contact:Contact;
 		public var wsId:int = 0;
 		public var isCurrentTransaction:int = 0;
+		public var orderName:String = "";
+		public var orderNumber:String = "";
 		public var verbalAuthCode:String = "";
 		public var verbalAuthDate:Date = new Date();
-		public var orderNumber:String = "";
+		public var firstNumberPrefix:Number = 0;
+		public var activeAccepted:Boolean = false;
 	
 	}
 }

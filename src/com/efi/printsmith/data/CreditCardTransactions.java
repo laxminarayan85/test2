@@ -169,11 +169,23 @@ public class CreditCardTransactions extends ModelBase {
 	/**
    * @generated
    */
+  public static final String ORDERNAME = "OrderName";
+	/**
+   * @generated
+   */
   public static final String VERBALAUTHCODE = "VerbalAuthCode";
 	/**
    * @generated
    */
   public static final String VERBALAUTHDATE = "VerbalAuthDate";
+	/**
+   * @generated
+   */
+  public static final String FIRSTNUMBERPREFIX = "FirstNumberPrefix";
+	/**
+   * @generated
+   */
+  public static final String ACTIVEACCEPTED = "ActiveAccepted";
 	/**
    * @generated
    */
@@ -872,6 +884,29 @@ public class CreditCardTransactions extends ModelBase {
    * @generated
    */	
  	@Basic
+  private String orderName;
+
+	/**
+   * @generated
+ 	 */
+  public String getOrderName(){
+    return orderName; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrderName(String newVal) {
+    this.orderName = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
   private String verbalAuthCode;
 
 	/**
@@ -910,6 +945,52 @@ public class CreditCardTransactions extends ModelBase {
    */	
   public void setVerbalAuthDate(Date newVal) {
     this.verbalAuthDate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long firstNumberPrefix;
+
+	/**
+   * @generated
+ 	 */
+  public Long getFirstNumberPrefix(){
+    return firstNumberPrefix; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFirstNumberPrefix(Long newVal) {
+    this.firstNumberPrefix = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean activeAccepted;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getActiveAccepted(){
+    return activeAccepted; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setActiveAccepted(Boolean newVal) {
+    this.activeAccepted = newVal;
   }
 
 
@@ -971,9 +1052,12 @@ public class CreditCardTransactions extends ModelBase {
     if (CONTACT.equals(propertyName)) return getContact();
     if (WSID.equals(propertyName)) return getWsId();
     if (ISCURRENTTRANSACTION.equals(propertyName)) return getIsCurrentTransaction();
+    if (ORDERNAME.equals(propertyName)) return getOrderName();
+    if (ORDERNUMBER.equals(propertyName)) return getOrderNumber();
     if (VERBALAUTHCODE.equals(propertyName)) return getVerbalAuthCode();
     if (VERBALAUTHDATE.equals(propertyName)) return getVerbalAuthDate();
-    if (ORDERNUMBER.equals(propertyName)) return getOrderNumber();
+    if (FIRSTNUMBERPREFIX.equals(propertyName)) return getFirstNumberPrefix();
+    if (ACTIVEACCEPTED.equals(propertyName)) return getActiveAccepted();
     return super.getProperty(propertyName);
   }
 	
@@ -1012,9 +1096,12 @@ public class CreditCardTransactions extends ModelBase {
     if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     if (WSID.equals(propertyName)) setWsId((Integer)newValue); else
     if (ISCURRENTTRANSACTION.equals(propertyName)) setIsCurrentTransaction((Integer)newValue); else
+    if (ORDERNAME.equals(propertyName)) setOrderName((String)newValue); else
+    if (ORDERNUMBER.equals(propertyName)) setOrderNumber((String)newValue); else
     if (VERBALAUTHCODE.equals(propertyName)) setVerbalAuthCode((String)newValue); else
     if (VERBALAUTHDATE.equals(propertyName)) setVerbalAuthDate((Date)newValue); else
-    if (ORDERNUMBER.equals(propertyName)) setOrderNumber((String)newValue); else
+    if (FIRSTNUMBERPREFIX.equals(propertyName)) setFirstNumberPrefix((Long)newValue); else
+    if (ACTIVEACCEPTED.equals(propertyName)) setActiveAccepted((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1082,12 +1169,18 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (ISCURRENTTRANSACTION.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
+    if (ORDERNAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ORDERNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     if (VERBALAUTHCODE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (VERBALAUTHDATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
-    if (ORDERNUMBER.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
+    if (FIRSTNUMBERPREFIX.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (ACTIVEACCEPTED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1127,9 +1220,12 @@ public class CreditCardTransactions extends ModelBase {
     if (CONTACT.equals(propertyName)) return CreditCardTransactions.class;
     if (WSID.equals(propertyName)) return CreditCardTransactions.class;
     if (ISCURRENTTRANSACTION.equals(propertyName)) return CreditCardTransactions.class;
+    if (ORDERNAME.equals(propertyName)) return CreditCardTransactions.class;
+    if (ORDERNUMBER.equals(propertyName)) return CreditCardTransactions.class;
     if (VERBALAUTHCODE.equals(propertyName)) return CreditCardTransactions.class;
     if (VERBALAUTHDATE.equals(propertyName)) return CreditCardTransactions.class;
-    if (ORDERNUMBER.equals(propertyName)) return CreditCardTransactions.class;
+    if (FIRSTNUMBERPREFIX.equals(propertyName)) return CreditCardTransactions.class;
+    if (ACTIVEACCEPTED.equals(propertyName)) return CreditCardTransactions.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1199,11 +1295,17 @@ public class CreditCardTransactions extends ModelBase {
       return false;
     if (! SmartEquals(getIsCurrentTransaction(), objT.getIsCurrentTransaction()))
       return false;
+    if (! SmartEquals(getOrderName(), objT.getOrderName()))
+      return false;
+    if (! SmartEquals(getOrderNumber(), objT.getOrderNumber()))
+      return false;
     if (! SmartEquals(getVerbalAuthCode(), objT.getVerbalAuthCode()))
       return false;
     if (! SmartEquals(getVerbalAuthDate(), objT.getVerbalAuthDate()))
       return false;
-    if (! SmartEquals(getOrderNumber(), objT.getOrderNumber()))
+    if (! SmartEquals(getFirstNumberPrefix(), objT.getFirstNumberPrefix()))
+      return false;
+    if (! SmartEquals(getActiveAccepted(), objT.getActiveAccepted()))
       return false;
     return true;
   }			
