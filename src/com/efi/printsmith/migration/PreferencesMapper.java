@@ -784,7 +784,28 @@ public class PreferencesMapper extends ImportMapper {
 			if (Utilities.tokenToBooleanValue(value) == false)
 				fieldValue = true;
 			preferencesEstimating.setCloseInvoicesAndEstimateAfterPrinting(fieldValue);
-		}
+		} else if (name.equals("InkByImpressions_not_press"))
+			preferencesEstimating.setCalculateInkbyImpressions(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("ignoreHistoryTitleOnNewDocuments")) {
+			if (Utilities.tokenToBooleanValue(value))
+				preferencesEstimating.setUseHistoryTitleforNewTitle(false);
+			else
+				preferencesEstimating.setUseHistoryTitleforNewTitle(true);
+		} else if (name.equals("Esimator_close_source_doc_on_copy"))
+			preferencesEstimating.setCloseAfterCopy(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Estimator_skipAutoShowJobCharges")) {
+			if (Utilities.tokenToBooleanValue(value))
+				preferencesEstimating.setAutoShowCharges(false);
+			else
+				preferencesEstimating.setAutoShowCharges(true);
+		} else if (name.equals("Estimator_lockParentSize_field"))
+			preferencesEstimating.setUseStockParentSize(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Estimator_dueDate_days_out"))
+			preferencesEstimating.setDueFrom(Utilities.tokenToInt(value));
+		else if (name.equals("Estimator_invAddressEditable"))
+			preferencesEstimating.setCanChangeAddress(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("skipAutoCost_at_posting"))
+			preferencesEstimating.setDoNotCostDuringPost(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesEstimating);
 	}
 	private void importPreferencesSystemField(String key, String name, String value) throws Exception {
