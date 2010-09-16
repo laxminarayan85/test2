@@ -104,7 +104,8 @@
 		accountTypeRadio.selectedValue = "Customer";  
 		prospect_radio.enabled = prospect_boolean;
 		contact_radio.enabled = contact_boolean;
-		accounts.filterFunction = accountFilter;
+		//accounts.filterFunction = accountFilter;
+		buildCustProspectList();
 	    PopUpManager.centerPopUp(this);
 //	    resetFocus();                                     
 //		dataService.getAccountPicker();
