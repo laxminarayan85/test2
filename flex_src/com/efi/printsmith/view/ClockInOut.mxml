@@ -309,7 +309,7 @@
 			}
 			if(employee.trackerClockIn){
 				var child:Panel = new Tracker() as Panel;
-				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowsWithChild(child);
+				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
 				if(win == null) {
 					Snowmass.getInstance().containerManager.openNewMDIWindow(child.className,child);
 				}
