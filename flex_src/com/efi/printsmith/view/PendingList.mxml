@@ -346,8 +346,8 @@
 				showItem = true;
 				break;
 			case "Due Between":
-				if ((txtDateTo.selectedDate != null && this.(item as InvoiceBase).deliveryIntentDate < txtDateTo.selectedDate) &&
-					(txtDateFrom.selectedDate != null && this.(item as InvoiceBase).deliveryIntentDate > txtDateFrom.selectedDate)) {
+				if ((txtDateTo.selectedDate != null && (item as InvoiceBase).deliveryIntentDate < txtDateTo.selectedDate) &&
+					(txtDateFrom.selectedDate != null && (item as InvoiceBase).deliveryIntentDate > txtDateFrom.selectedDate)) {
 					showItem = true;
 				}
 				break;
