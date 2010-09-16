@@ -2,11 +2,14 @@
 <TimeEntry xmlns="com.efi.printsmith.components.*" xmlns:mx="http://www.adobe.com/2006/mxml" initialize="{initTEComponent()}">
 	<mx:Script>
 		<![CDATA[
+			import mx.formatters.DateFormatter;
+			import com.efi.printsmith.components.Throbber;
 			[Bindable] public var dataHolder:Object;
 			[Bindable] public var variableName:String;
 			[Bindable] public var splitString:String;
 			[Bindable] public var functionName:Function;
 			private var _customText:String;
+			private var dateFormatter:DateFormatter = new DateFormatter();
 			
 			private function initTEComponent():void{
 				//timeStepper.addEventListener(Event.CHANGE,updateDataEventListener);
@@ -74,8 +77,76 @@
 							this.am_pm = displayValue.split(splitString)[2];		
 						}
 					}
+					dispatchEvent(new Event("updateTimeEntryData"));
 					_customText = displayValue;
 				}
+			}
+			
+			[Bindable("updateTimeEntryData")]
+			public function get milliSecondsValue():Number {
+				var hourValue:Number = 0;
+				var numberValue:Number = 0;
+				if(!is24Hour){
+					if(am_pm=="am"){
+						if(this.hour==12){
+							hourValue = 0;
+						} else {
+							hourValue = this.hour*60*60*1000;
+						}
+					} else if(this.am_pm=="pm"){
+						if(this.hour==12){
+							hourValue = this.hour*60*60*1000;
+						} else {
+							hourValue = (this.hour+12)*60*60*1000;
+						}
+					}
+				} else {
+					hourValue = this.hour*60*60*1000;
+				}
+				numberValue = hourValue+(this.minute*60*1000);
+				if(showSeconds){
+					numberValue = numberValue + (this.second*1000);
+				}
+				
+				return numberValue;
+			}
+			
+			[Bindable("updateTimeEntryData")]
+			public function get formatValue():String {
+				var todayDate:Date = new Date();
+				if(!is24Hour){
+					if(this.am_pm=="pm"){
+						if(this.hour==12){
+							todayDate.hours = this.hour;
+						} else {
+							todayDate.hours = this.hour+12;
+						}
+					} else {
+						if(this.hour==12){
+							todayDate.hours = 0;
+						} else {
+							todayDate.hours = this.hour;
+						}
+					}
+				} else {
+					todayDate.hours = this.hour;
+				} 
+				todayDate.minutes = this.minute;
+				if(showSeconds){
+					todayDate.seconds = this.second;
+				}
+				if(formatString==null || formatString==""){
+					formatString = "L"+separatorString+((allowLeadingZero)?"NN":"N");
+					if(showSeconds){
+						formatString = formatString + separatorString+((allowLeadingZero)?"SS":"S");
+					} 
+					formatString = formatString + " A";
+				}
+				dateFormatter.formatString = formatString;
+				var formattedDate:String = dateFormatter.format(todayDate);
+				formattedDate = formattedDate.replace("AM",amText);
+				formattedDate = formattedDate.replace("PM",pmText);
+				return formattedDate;
 			}
 		]]>
 	</mx:Script>

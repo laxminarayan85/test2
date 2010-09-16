@@ -78,7 +78,7 @@ is24Hour : if false hour selector allows range of 1-12 and am/pm entry is enable
                       focusOut="fixText(event)" focusIn="setTextFocus(event)" change="setValues(event)"
                       focusAlpha="0" errorString=""/>
                           
-                        <mx:Spacer width="-8" /><mx:Label text=":" /><mx:Spacer width="-16" />
+                        <mx:Spacer width="-8" /><mx:Label text="{separatorString}" /><mx:Spacer width="-16" />
             
         <mx:TextInput id="minuteText" height="100%" borderThickness="0" borderStyle="none" backgroundAlpha="0" 
                       textAlign="center" maxChars="2"
@@ -88,7 +88,7 @@ is24Hour : if false hour selector allows range of 1-12 and am/pm entry is enable
                       focusAlpha="0"   />
             
                         <mx:Spacer width="-8" includeInLayout="{showSeconds}" visible="{showSeconds}" />
-                        <mx:Label text=":" includeInLayout="{showSeconds}" visible="{showSeconds}" />
+                        <mx:Label text="{separatorString}" includeInLayout="{showSeconds}" visible="{showSeconds}" />
                         <mx:Spacer width="-16" includeInLayout="{showSeconds}" visible="{showSeconds}" />
             
         <mx:TextInput id="secondText" height="100%" borderThickness="0" borderStyle="none" backgroundAlpha="0" 
@@ -104,7 +104,7 @@ is24Hour : if false hour selector allows range of 1-12 and am/pm entry is enable
         
         <mx:TextInput id="amPMText" height="100%" borderThickness="0" borderStyle="none" backgroundAlpha="0" 
                       textAlign="center" maxChars="2"
-                      text="{this.am_pm}" 
+                      text="{(this.am_pm=='am')?amText:pmText}" 
                       keyDown="amPMKeyHandler(event)" mouseUp="setTextFocus(event)" mouseDown="setTextFocus(event)" 
                       focusAlpha="0" focusIn="setTextFocus(event)" 
                       editable="false" includeInLayout="{!is24Hour}" visible="{!is24Hour}"  />
@@ -134,8 +134,13 @@ is24Hour : if false hour selector allows range of 1-12 and am/pm entry is enable
             [Bindable] public var minute:Number = 0;
             [Bindable] public var second:Number = 0;
             [Bindable] public var am_pm:String = 'am';
+            [Bindable] public var amText:String = 'am';
+            [Bindable] public var pmText:String = 'pm';
             [Bindable] public var showSeconds:Boolean;
             [Bindable] public var is24Hour:Boolean;
+            [Bindable] public var separatorString:String = ":";
+            [Bindable] public var formatString:String;
+            [Bindable] public var allowLeadingZero:Boolean = true;
             public var defaultHour:Number;
             public var defaultMinute:Number = 0;
             public var defaultSecond:Number = 0;
@@ -177,18 +182,26 @@ is24Hour : if false hour selector allows range of 1-12 and am/pm entry is enable
                 }
                 if(!this.minute)
                 {
-                    minuteText.text = (defaultMinute < 10) ? "0" + String(defaultMinute) : String(defaultMinute);
+                	if(allowLeadingZero){
+                    	minuteText.text = (defaultMinute < 10) ? "0" + String(defaultMinute) : String(defaultMinute);
+                 	} else {
+                 		minuteText.text = String(defaultMinute);
+                 	}
                     this.minute = Number(minuteText.text);
                 }
                 if(!this.second)
                 {
-                    secondText.text = (defaultSecond < 10) ? "0" + String(defaultSecond) : String(defaultSecond);
+                	if(allowLeadingZero){
+                    	secondText.text = (defaultSecond < 10) ? "0" + String(defaultSecond) : String(defaultSecond);
+                 	} else {
+                 		secondText.text = String(defaultSecond);
+                 	}
                     this.second = Number(secondText.text);
                 }
                 
                 if(!this.am_pm)
                 {
-                    this.am_pm = (is24Hour) ? 'pm' : "am";;
+                    this.am_pm = (is24Hour) ? "pm" : "am";
                 }
                 
                 (is24Hour) ? maxHour = 23 : maxHour = 12;
@@ -265,8 +278,8 @@ is24Hour : if false hour selector allows range of 1-12 and am/pm entry is enable
                 }
                 else
                 {
-                    amPMText.text = (amPMText.text == "am") ? "pm" : "am";
-                    this.am_pm = amPMText.text;
+                	amPMText.text = (amPMText.text == amText) ? pmText : amText;
+                    this.am_pm = (amPMText.text==amText)? "am" : "pm";
                 }
             }
             
@@ -274,7 +287,9 @@ is24Hour : if false hour selector allows range of 1-12 and am/pm entry is enable
             {
                 if(!(event.currentTarget == hourText && !is24Hour))
                 {
-                    _focusArea.text = (_focusArea.text.length < 2) ? "0" + _focusArea.text : _focusArea.text;
+                	if(allowLeadingZero){
+                    	_focusArea.text = (_focusArea.text.length < 2) ? "0" + _focusArea.text : _focusArea.text;
+                 	}
                 }
                 _focusArea.setSelection(0, 2);
                 if(event.currentTarget == hourText) this.hour = Number(event.currentTarget.text);
@@ -311,7 +326,9 @@ is24Hour : if false hour selector allows range of 1-12 and am/pm entry is enable
                 }
                 else
                 {
-                    return (value.length < 2) ? ("0" + value) : value;
+                	if(allowLeadingZero)
+                    	return (value.length < 2) ? ("0" + value) : value;
+                    return value;
                 }
             }
             
@@ -371,8 +388,8 @@ is24Hour : if false hour selector allows range of 1-12 and am/pm entry is enable
             {
                 if(event.keyCode == 38 || event.keyCode == 40 || event.keyCode == 37 || event.keyCode == 39) 
                 {
-                    amPMText.text = (amPMText.text == "am") ? "pm" : "am";
-                    this.am_pm = amPMText.text;
+                    amPMText.text = (amPMText.text == amText) ? pmText : amText;
+                    this.am_pm = (amPMText.text==amText)? "am" : "pm";
                     _focusArea.setSelection(0, 2);
                 }
                 
