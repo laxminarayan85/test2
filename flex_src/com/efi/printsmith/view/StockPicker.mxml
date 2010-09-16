@@ -270,30 +270,45 @@
 		
 	}
 	private function UpdateSize():void{
-		if (chkShowRollStock.selected || chkShowLargeFormatStock.selected){
+		if (chkShowRollStock.selected || chkShowLargeFormatStock.selected || chkShowRigidSubstrate.selected){
 			txtSizeMin.enabled = false;
 			txtSizeMax.enabled = false;
 			txtRollWidthMin.enabled = true;
 			txtRollWidthMax.enabled =true;
+			txtSheetsPerSet.text = "";
+			txtSheetsPerSet.enabled = false;
 		} else {
 			txtSizeMin.enabled = true;
 			txtSizeMax.enabled = true;
 			txtRollWidthMin.enabled = false;
 			txtRollWidthMax.enabled =false;
+			txtSheetsPerSet.text = "";
+			txtSheetsPerSet.enabled = true;
 		}
 	}
 	private function doLargeFormatChange():void{
-		search();
-		if (chkShowLargeFormatStock.selected)	{
+		
+		if ((chkShowLargeFormatStock.selected) || (chkShowRigidSubstrate.selected))	{
 			chkShowRollStock.enabled = false;
 		}
 		else	{
 			chkShowRollStock.enabled = true;
 		}
 		UpdateSize();
+		search();
+	}
+	
+	private function doShellsChange():void	{
+		if (chkShowShells.selected)	{
+			chkShowRollStock.enabled = false;
+		}
+		else	{
+			chkShowRollStock.enabled = true;
+		}
+		search();
 	}
 	private function doRollStockChanged():void{
-		search();
+		
 		if (chkShowRollStock.selected)	{
 			chkShowLargeFormatStock.enabled = false;
 			chkShowShells.enabled = false;
@@ -303,7 +318,7 @@
 			chkShowShells.enabled = true;
 		}
 		UpdateSize();
-			
+		search();	
 	}
 	private function doStatus():void{
 		var statusWindow:XpdexStockAvailability = XpdexStockAvailability(PopUpManager.createPopUp(this,XpdexStockAvailability,true));
@@ -923,6 +938,7 @@
 
 ]]>        
 </mx:Script> 
+
 	<mx:VBox id="base" width="100%" height="100%" creationPolicy="all">
 		<mx:HBox id="toolbar" width="100%" height="5%" >
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.SelectStock')}" id="select_button" enabled="{(dataGrid.selectedItem != null) &amp;&amp; dataGrid.selectedItems.length==1}" click="selectStockDefinition();"  width="12%" />
@@ -1047,9 +1063,9 @@
 				<mx:VBox width="80%" height="50%" verticalGap="1">
 					<mx:CheckBox  height="20%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRollStock')}" id="chkShowRollStock" change="doRollStockChanged();"/>
 					<mx:CheckBox height="20%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock" change="doLargeFormatChange();"/>
-					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate" change="search();"/>
+					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate" change="doLargeFormatChange();"/>
 					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock" change="search();"/>
-					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="search();"/>
+					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="doShellsChange();"/>
 				</mx:VBox>
 				
 			</mx:VBox>
