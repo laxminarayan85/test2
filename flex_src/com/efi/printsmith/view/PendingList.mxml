@@ -47,6 +47,8 @@
 	
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.data.Charge;
+	import com.efi.printsmith.data.JobBase;
 	import com.efi.printsmith.common.components.filter.FilterSearchBy;
 	import com.efi.printsmith.common.components.filter.FilterProperty;
 	import com.efi.printsmith.data.Party;
@@ -746,7 +748,30 @@
 
 	private function TreeDisplayLabel(item:XML):String {
 		return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, item.@label)
-	}        
+	}   
+	
+	public function searchJobComment(obj:Object, searchStr:String):Boolean	{
+		var inv:InvoiceBase = obj as InvoiceBase;
+		
+		for (var i:int=0; i<inv.jobs.length; i++)	{
+			var j:JobBase = inv.jobs.getItemAt(i) as JobBase;
+			if ((j.comment != null) && (j.comment.toUpperCase().indexOf(searchStr.toUpperCase()) > -1))
+				return true;
+		}
+		return false;
+	}
+	
+	public function searchLocation(obj:Object, searchStr:String):Boolean	{
+		var inv:InvoiceBase = obj as InvoiceBase;
+		
+		for (var i:int=0; i<inv.charges.length; i++)	{
+			var j:Charge = inv.charges.getItemAt(i) as Charge;
+			if ((j.productionLocation != null) && (j.productionLocation.name.toUpperCase().indexOf(searchStr.toUpperCase()) > -1))
+				return true;
+		}
+		return false;
+	}
+	    
 	private function getSearchBy():ArrayCollection {
 		var sc:ArrayCollection = new ArrayCollection();
 		
@@ -756,7 +781,7 @@
 
 		fp = new FilterProperty(new FilterProperty(null, "firstName"), "contact");
 		sc1 = new FilterSearchBy("First Name", fp);
-		sc.addItem(sc1);
+		sc.addItem(sc1); 
 		
 		fp = new FilterProperty(new FilterProperty(null, "lastName"), "contact");
 		sc1 = new FilterSearchBy("Last Name", fp);
@@ -766,7 +791,9 @@
 		sc1 = new FilterSearchBy("Doc Number", fp);
 		sc.addItem(sc1);
 		
-		//MS:TODO location, JOB COMMENT, WEBREFERENCE
+		//MS:TODO WEBREFERENCE
+		sc1 = new FilterSearchBy("Location", null, searchLocation);
+		sc.addItem(sc1);
 		
 		fp = new FilterProperty(new FilterProperty(null, "comLinks",true, "value","type","Phone"), "contact");
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Phone'), fp);
@@ -784,6 +811,9 @@
 		sc1 = new FilterSearchBy("Doc Title", fp);
 		sc.addItem(sc1);
 
+		sc1 = new FilterSearchBy("Job Comment", null, searchJobComment);
+		sc.addItem(sc1);
+		
 		return sc;
 
 	}
