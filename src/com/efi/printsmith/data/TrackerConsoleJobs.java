@@ -87,6 +87,14 @@ public class TrackerConsoleJobs extends ModelBase{
 	private Long actualTotalTime;
 	
 	private Boolean appendNotesToJobTicketNotes;
+	
+	private Long qtyOrdered;
+	
+	private Long impressions;
+	
+	private Long spoilage;
+	
+	private Long totalCost;
 
 	/**
 	 * @return the productionFacilities
@@ -436,5 +444,63 @@ public class TrackerConsoleJobs extends ModelBase{
 	 */
 	public void setAppendNotesToJobTicketNotes(Boolean appendNotesToJobTicketNotes) {
 		this.appendNotesToJobTicketNotes = appendNotesToJobTicketNotes;
+	}
+
+	/**
+	 * @return the qtyOrdered
+	 */
+	public Long getQtyOrdered() {
+		return qtyOrdered;
+	}
+
+	/**
+	 * @param qtyOrdered the qtyOrdered to set
+	 */
+	public void setQtyOrdered(Long qtyOrdered) {
+		this.qtyOrdered = qtyOrdered;
+	}
+
+	/**
+	 * @return the impressions
+	 */
+	public Long getImpressions() {
+		return impressions;
+	}
+
+	/**
+	 * @param impressions the impressions to set
+	 */
+	public void setImpressions(Long impressions) {
+		this.impressions = impressions;
+	}
+
+	/**
+	 * @return the spoilage
+	 */
+	public Long getSpoilage() {
+		return spoilage;
+	}
+
+	/**
+	 * @param spoilage the spoilage to set
+	 */
+	public void setSpoilage(Long spoilage) {
+		this.spoilage = spoilage;
+	}
+
+	/**
+	 * @return the totalCost
+	 */
+	public Long getTotalCost() {
+		return totalCost;
+	}
+
+	/**
+	 * @param totalCost the totalCost to set
+	 */
+	public void setTotalCost(Long totalCost) {
+		this.totalCost = totalCost;
 	}	
+	
+	
 }

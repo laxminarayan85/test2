@@ -61,6 +61,14 @@ package com.efi.printsmith.data
 		public var actualTotalTime:Number;
 		
 		public var appendNotesToJobTicketNotes:Boolean = false;
+		
+		public var qtyOrdered:Number;
+	
+		public var impressions:Number;
+		
+		public var spoilage:Number;
+		
+		public var totalCost:Number;
 
 	}
 }

@@ -535,7 +535,28 @@
 		}
 		
 		public function getTotalTime(object:Object):String {
+			if(object is Job){
+				var job:Job = object as Job;
+				if(!job.releasedToProduction){
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Release');
+				}
+			}
+			if(employee!=null){
+				if(employee.hideEstimateTimeTracker){
+					return "--";
+				}
+			}
 			return convertMilliSecondsToString((object.runTime+object.setUpTime+object.washUpTime),true);
+		}
+		
+		public function getPriority(object:Object):String {
+			if(object is Job){
+				var job:Job = object as Job;
+				if(!job.releasedToProduction){
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Release');
+				}
+			}
+			return "";
 		}
 		
 		public function getProductionLoc(object:Object):String {
@@ -546,6 +567,16 @@
 			if(object is Charge){
 				var charge:Charge = object as Charge;
 				return charge.productionLocation.name;
+			}
+			return "";
+		}
+		
+		public function getRunDate(object:Object):String {
+			if(object is Job){
+				var job:Job = object as Job;
+				if(!job.releasedToProduction){
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Release');
+				}
 			}
 			return "";
 		}
@@ -573,7 +604,29 @@
 		}
 		
 		public function getTotalJobTime(object:Object):String {
-			return convertMilliSecondsToString((object.actualSetUpTime+object.actualRunTime+object.actualWashTime),true);
+			var qtyOrdered:String = "";
+			var totalTime:String = "";
+			var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
+			if(trackerConsoleJobsObj.employee!=null){
+				if(trackerConsoleJobsObj.employee.hideEstimateTimeTracker){
+					totalTime = "--";
+				} else {
+					totalTime = convertMilliSecondsToString((object.actualSetUpTime+object.actualRunTime+object.actualWashTime),true);
+				}
+			}
+			if(trackerConsoleJobsObj.job!=null){
+				if(!isNaN(trackerConsoleJobsObj.job.qtyOrdered)) {
+					qtyOrdered = String(trackerConsoleJobsObj.job.qtyOrdered);
+				}
+			} else if(trackerConsoleJobsObj.charge!=null){
+				if(!isNaN(trackerConsoleJobsObj.charge.quantity)) {
+					qtyOrdered = String(trackerConsoleJobsObj.charge.quantity);
+				}
+			}
+			if(qtyOrdered=="" || qtyOrdered=="0"){
+				return totalTime;
+			}
+			return totalTime+" / "+qtyOrdered;
 		}
 		
 		public function getActualJobTime(object:Object,updateTimer:Boolean):String {
@@ -1636,7 +1689,7 @@
 						<mx:itemRenderer>
 							<mx:Component>
 								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
-									strikethrough="{outerDocument.getStrikeThroughValue(data)}"/>
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getRunDate(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
@@ -1660,7 +1713,7 @@
 						<mx:itemRenderer>
 							<mx:Component>
 								<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
-									strikethrough="{outerDocument.getStrikeThroughValue(data)}"/>
+									strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getPriority(data)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>

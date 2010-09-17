@@ -123,6 +123,50 @@
 				return "";
 			}
 			
+			private function getEstimatedTotalTime(object:TrackerConsoleJobs):String {
+				if(!object.completed) {
+					if(object.employee!=null){
+						if(object.employee.hideEstimateTimeTracker){
+							return "--";
+						}
+					}
+				}
+				return convertMilliSecondsToString((object.actualSetUpTime+object.actualRunTime+object.actualWashTime),true);
+			}
+			
+			private function getEstimatedSetUpTime(object:TrackerConsoleJobs):String {
+				if(!object.completed) {
+					if(object.employee!=null){
+						if(object.employee.hideEstimateTimeTracker){
+							return "--";
+						}
+					}
+				}
+				return convertMilliSecondsToString(object.actualSetUpTime,true);
+			}
+			
+			private function getEstimatedRunTime(object:TrackerConsoleJobs):String {
+				if(!object.completed) {
+					if(object.employee!=null){
+						if(object.employee.hideEstimateTimeTracker){
+							return "--";
+						}
+					}
+				}
+				return convertMilliSecondsToString(object.actualRunTime,true);
+			}
+			
+			private function getEstimatedWashUpTime(object:TrackerConsoleJobs):String {
+				if(!object.completed) {
+					if(object.employee!=null){
+						if(object.employee.hideEstimateTimeTracker){
+							return "--";
+						}
+					}
+				}
+				return convertMilliSecondsToString(object.actualWashTime,true);
+			}
+			
 			private function getFirstTotalTime(object:TrackerConsoleJobs):String{
 				var totalValue:Number = 0;
 				if(object.completed){
@@ -470,6 +514,214 @@
 				}
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Actuals');
 			}
+			
+			private function getOrderedQty(object:TrackerConsoleJobs, flag:int):String {
+				var qtyOrdered:String = "0";
+				if(!object.completed){
+					if(object.job!=null){
+						if(!isNaN(object.job.qtyOrdered)){
+							qtyOrdered = String(object.job.qtyOrdered);
+						}
+					} else if(object.charge!=null) {
+						if(!isNaN(object.charge.quantity)){
+							qtyOrdered = String(object.charge.quantity);
+						}
+					}
+				} else if(object.completed){
+					if(flag==0){
+						if(object.job!=null){
+							if(!isNaN(object.job.qtyOrdered)){
+								qtyOrdered = String(object.job.qtyOrdered);
+							}
+						} else if(object.charge!=null) {
+							if(!isNaN(object.charge.quantity)){
+								qtyOrdered = String(object.charge.quantity);
+							}
+						}	
+					} else if(flag==1){
+						if(!isNaN(trackerConsoleJobs.qtyOrdered)){
+							qtyOrdered = String(trackerConsoleJobs.qtyOrdered);
+						}
+					}
+				}
+				return qtyOrdered;
+			}
+			
+			private function getImpressions(object:TrackerConsoleJobs, flag:int):String {
+				var impressions:String = "0";
+				if(!object.completed){
+					if(object.job!=null){
+						
+					} else if(object.charge!=null) {
+						if(object.charge.chargeCostingRecord!=null){
+							if(!isNaN(object.charge.chargeCostingRecord.impressions)){
+								impressions = String(object.charge.chargeCostingRecord.impressions);
+							}
+						}
+					}
+				} else if(object.completed) {
+					if(flag==0){
+						if(object.job!=null){
+						
+						} else if(object.charge!=null) {
+							if(object.charge.chargeCostingRecord!=null){
+								if(!isNaN(object.charge.chargeCostingRecord.impressions)){
+									impressions = String(object.charge.chargeCostingRecord.impressions);
+								}
+							}
+						}
+					} else if(flag==1){
+						if(!isNaN(trackerConsoleJobs.impressions)){
+							impressions = String(trackerConsoleJobs.impressions);
+						}
+					}
+				}
+				return impressions;
+			}
+			
+			private function getSpoilage(object:TrackerConsoleJobs, flag:int):String {
+				var spoilage:String = "0";
+				if(!object.completed){
+					if(object.job!=null){
+						
+					} else if(object.charge!=null) {
+						
+					}
+				} else if(object.completed) {
+					if(flag==0){
+						if(object.job!=null){
+						
+						} else if(object.charge!=null) {
+							
+						}
+					} else if(flag==1){
+						if(!isNaN(trackerConsoleJobs.spoilage)){
+							spoilage = String(trackerConsoleJobs.spoilage);
+						}
+					}
+				}
+				return spoilage;
+			}
+			
+			private function getStockCost(object:TrackerConsoleJobs):String {
+				var stockCost:String = "0";
+				if(!object.completed){
+					if(object.employee!=null){
+						if(object.employee.costingAmounts){
+							stockCost = "--";
+						} else {
+							if(object.job!=null){
+								if(object.job.costingRecord!=null){
+									if(!isNaN(object.job.costingRecord.stockCost)){
+										stockCost = String(object.job.costingRecord.stockCost);
+									}
+								}
+							} else if(object.charge!=null) {
+								
+							}
+						}
+					}
+				} else if(object.completed){
+					if(object.job!=null){
+						if(object.job.costingRecord!=null){
+							if(!isNaN(object.job.costingRecord.stockCost)){
+								stockCost = String(object.job.costingRecord.stockCost);
+							}
+						}
+					} else if(object.charge!=null) {
+						
+					}
+				}
+				return stockCost;
+			}
+			
+			private function getLaborCost(object:TrackerConsoleJobs):String {
+				var laborCost:String = "0";
+				if(!object.completed){
+					if(object.employee!=null){
+						if(object.employee.costingAmounts){
+							laborCost = "--";
+						} else {
+							if(object.job!=null){
+								if(object.job.costingRecord!=null){
+									if(!isNaN(object.job.costingRecord.laborCost)){
+										laborCost = String(object.job.costingRecord.laborCost);
+									}
+								}
+							} else if(object.charge!=null) {
+								if(object.charge.chargeCostingRecord!=null){
+									if(!isNaN(object.charge.chargeCostingRecord.laborCost)){
+										laborCost = String(object.charge.chargeCostingRecord.laborCost);
+									}
+								}
+							}
+						}
+					}
+				} else if(object.completed){
+					if(object.job!=null){
+						if(object.job.costingRecord!=null){
+							if(!isNaN(object.job.costingRecord.laborCost)){
+								laborCost = String(object.job.costingRecord.laborCost);
+							}
+						}
+					} else if(object.charge!=null) {
+						if(object.charge.chargeCostingRecord!=null){
+							if(!isNaN(object.charge.chargeCostingRecord.laborCost)){
+								laborCost = String(object.charge.chargeCostingRecord.laborCost);
+							}
+						}
+					}
+				}
+				return laborCost;
+			}
+			
+			private function getTotalCost(object:TrackerConsoleJobs, flag:int):String {
+				var totalCost:String = "0";
+				if(!object.completed){
+					if(object.employee!=null){
+						if(object.employee.costingAmounts){
+							totalCost = "--";
+						} else {
+							if(object.job!=null){
+								if(object.job.costingRecord!=null){
+									if(!isNaN(object.job.costingRecord.totalCost)){
+										totalCost = String(object.job.costingRecord.totalCost);
+									}
+								}
+							} else if(object.charge!=null) {
+								if(object.charge.chargeCostingRecord!=null){
+									if(!isNaN(object.charge.chargeCostingRecord.totalCost)){
+										totalCost = String(object.charge.chargeCostingRecord.totalCost);
+									}
+								}
+							}
+						}
+					}
+				} else if(object.completed) {
+					if(flag==0){
+						if(object.job!=null){
+							if(object.job.costingRecord!=null){
+								if(!isNaN(object.job.costingRecord.totalCost)){
+									totalCost = String(object.job.costingRecord.totalCost);
+								}
+							}
+						} else if(object.charge!=null) {
+							if(object.charge.chargeCostingRecord!=null){
+								if(!isNaN(object.charge.chargeCostingRecord.totalCost)){
+									totalCost = String(object.charge.chargeCostingRecord.totalCost);
+								}
+							}
+						}
+					} else if(flag==1){
+						if(!isNaN(trackerConsoleJobs.totalCost)) {
+							totalCost = String(trackerConsoleJobs.totalCost);
+						}
+					}
+				}
+				return totalCost;
+			}
+			
+			
 		]]>
 	</mx:Script>
 	
@@ -531,41 +783,77 @@
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.PreviousPasses')}" 
 			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" fontWeight="bold" width="25%" textAlign="center"/>
 	</mx:HBox>
-	<mx:HBox width="100%">
+	<mx:HBox width="100%" horizontalGap="2">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Totaltime')}:"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{convertMilliSecondsToString((trackerConsoleJobs.actualSetUpTime+trackerConsoleJobs.actualRunTime+trackerConsoleJobs.actualWashTime),true)}" 
+		<mx:TextInput text="{getEstimatedTotalTime(trackerConsoleJobs)}" 
 			width="25%" enabled="false" disabledColor="#000000"/>
 		<mx:TextInput text="{getSecondTotalTime(trackerConsoleJobs)}" disabledColor="#000000"
 			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstTotalTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
-	<mx:HBox width="100%">
+	<mx:HBox width="100%" horizontalGap="2">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Setup')}:"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualSetUpTime,true)}" 
+		<mx:TextInput text="{getEstimatedSetUpTime(trackerConsoleJobs)}" 
 			width="25%" enabled="false" disabledColor="#000000"/>
 		<mx:TextInput text="{getSecondSetUpTime(trackerConsoleJobs)}" disabledColor="#000000" 
 			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstSetUpTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
-	<mx:HBox width="100%">
+	<mx:HBox width="100%" horizontalGap="2">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Runtime')}:"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualRunTime,true)}" 
+		<mx:TextInput text="{getEstimatedRunTime(trackerConsoleJobs)}" 
 			width="25%" enabled="false" disabledColor="#000000"/>
 		<mx:TextInput text="{getSecondRunTime(trackerConsoleJobs)}" disabledColor="#000000"
 			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstRunTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
-	</mx:HBox>
-	<mx:HBox width="100%">
+	</mx:HBox>	
+	<mx:HBox width="100%" horizontalGap="2">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Washup')}:"
 			width="25%" textAlign="right"/>
-		<mx:TextInput text="{convertMilliSecondsToString(trackerConsoleJobs.actualWashTime,true)}" 
+		<mx:TextInput text="{getEstimatedWashUpTime(trackerConsoleJobs)}" 
 			width="25%" enabled="false" disabledColor="#000000"/>
 		<mx:TextInput text="{getSecondWashTime(trackerConsoleJobs)}" disabledColor="#000000"
 			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstWashTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
+	</mx:HBox>
+	<mx:HBox width="100%" horizontalGap="2">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Ordered')}:"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{getOrderedQty(trackerConsoleJobs,0)}" width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:TextInput text="{getOrderedQty(trackerConsoleJobs,1)}" width="25%" enabled="false" disabledColor="#000000"/>
+	</mx:HBox>
+	<mx:HBox width="100%" horizontalGap="2">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Impressions')}:"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{getImpressions(trackerConsoleJobs,0)}" width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:TextInput text="{getImpressions(trackerConsoleJobs,1)}" width="25%" enabled="false" disabledColor="#000000"/>
+	</mx:HBox>
+	<mx:HBox width="100%" horizontalGap="2">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Spoilage')}:"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{getSpoilage(trackerConsoleJobs,0)}" width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:TextInput text="{getSpoilage(trackerConsoleJobs,1)}" width="25%" enabled="false" disabledColor="#000000"/>
+	</mx:HBox>
+	<mx:HBox width="100%" horizontalGap="2">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.StockCost')}:"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{getStockCost(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:Spacer width="25%"/>
+	</mx:HBox>
+	<mx:HBox width="100%" horizontalGap="2">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.LaborCost')}:"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{getLaborCost(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:Spacer width="25%"/>
+	</mx:HBox>
+	<mx:HBox width="100%" horizontalGap="2">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Cost')}:"
+			width="25%" textAlign="right"/>
+		<mx:TextInput text="{getTotalCost(trackerConsoleJobs,0)}" width="25%" enabled="false" disabledColor="#000000"/>
+		<mx:TextInput text="{getTotalCost(trackerConsoleJobs,1)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	
 	<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.Notes')}"/>
