@@ -47,6 +47,8 @@
 </mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.data.JobBase;
+		import com.efi.printsmith.data.Job;
 		import com.efi.mdi.view.window.MDIWindow;
 		import mx.core.Container;
 		import com.efi.printsmith.data.UserEvent;
@@ -296,6 +298,10 @@
 				&& (ss.commandName.indexOf("rStandardMenuText.ChangePassword") > -1 ))	{
 					doChangePassword();					
 				}
+			if((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.UserLogIn") > -1 ))	{
+					doLogout();
+				}
 			if ((ss.menu == "rStandardMenuText.Admin")
 				&& (ss.commandName.indexOf("rStandardMenuText.TrackerRoutings") > -1 ))	{
 					doTrackerManager();					
@@ -307,8 +313,21 @@
 			if ((ss.menu == "rStandardMenuText.Pricing")
 				&& (ss.commandName.indexOf("rStandardMenuText.WasteChart") > -1 ))	{
 					doWasteChart();					
-				}	
+				}
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.PaperCalculator") > -1 ))	{
+					dopaperCal();					
+				}		
 			
+		}
+		public function dopaperCal():void{
+			var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
+			var job :Job = new Job();
+			paperCalWindow.setStyle("borderAlpha", 0.9);
+		//	if (job.paperCal.colorBar == 0 && estimatingPreferences != null)
+		//		job.paperCal.colorBar = estimatingPreferences.colorBar;
+		//	paperCalWindow.setdimension(dimensionsArray)
+		 	paperCalWindow.setJob(job);
 		}
 		public function handleUIEvent(evt:ResultEvent):void {
 			var child:Panel = evt.result as Panel;
