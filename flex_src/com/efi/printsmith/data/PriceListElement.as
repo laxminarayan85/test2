@@ -18,6 +18,7 @@ package com.efi.printsmith.data
 		public var amount:Number = 0;
 		public var side:int = 0;
 		public var color:int = 0;
+		public var lastLine:Boolean = false;
 	
 	}
 }

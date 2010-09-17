@@ -64,6 +64,11 @@ public class PriceListElement extends ModelBase {
 	public static final String COLOR = "Color";
 
 	/**
+   * @generated
+   */
+  public static final String LASTLINE = "LastLine";
+
+	/**
 	 * @generated
 	 */
 	public PriceListElement() {
@@ -185,6 +190,28 @@ public class PriceListElement extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean lastLine;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getLastLine(){
+    return lastLine; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLastLine(Boolean newVal) {
+    this.lastLine = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -194,6 +221,7 @@ public class PriceListElement extends ModelBase {
     if (AMOUNT.equals(propertyName)) return getAmount();
     if (SIDE.equals(propertyName)) return getSide();
     if (COLOR.equals(propertyName)) return getColor();
+    if (LASTLINE.equals(propertyName)) return getLastLine();
     return super.getProperty(propertyName);
   }
 	
@@ -207,6 +235,7 @@ public class PriceListElement extends ModelBase {
     if (AMOUNT.equals(propertyName)) setAmount((BigDecimal)newValue); else
     if (SIDE.equals(propertyName)) setSide((Integer)newValue); else
     if (COLOR.equals(propertyName)) setColor((Integer)newValue); else
+    if (LASTLINE.equals(propertyName)) setLastLine((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -224,6 +253,8 @@ public class PriceListElement extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (COLOR.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
+    if (LASTLINE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -238,6 +269,7 @@ public class PriceListElement extends ModelBase {
     if (AMOUNT.equals(propertyName)) return PriceListElement.class;
     if (SIDE.equals(propertyName)) return PriceListElement.class;
     if (COLOR.equals(propertyName)) return PriceListElement.class;
+    if (LASTLINE.equals(propertyName)) return PriceListElement.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -256,6 +288,8 @@ public class PriceListElement extends ModelBase {
     if (! SmartEquals(getSide(), objT.getSide()))
       return false;
     if (! SmartEquals(getColor(), objT.getColor()))
+      return false;
+    if (! SmartEquals(getLastLine(), objT.getLastLine()))
       return false;
     return true;
   }			
