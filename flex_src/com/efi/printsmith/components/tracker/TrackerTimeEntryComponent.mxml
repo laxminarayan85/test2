@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TextInput xmlns:mx="http://www.adobe.com/2006/mxml" focusIn="{focusInEventHandler(event)}"
+	focusOut="{focusOutEventHandler(event)}">
+	
+	<mx:Script>
+		<![CDATA[
+			private var _customText:Number;	
+			[Bindable] public var variableName:String;
+			[Bindable] public var dataHolder:Object;
+			
+			public function get customText():Number {
+		        return _customText;
+		    }			  
+		    public function set customText(displayValue:Number):void {	
+		    	_customText = displayValue;
+		    	if(!isNaN(displayValue)){
+		    		this.text = convertMilliSecondsToString(displayValue,true);
+		    	} else {
+		    		this.text = "0:00";
+		    	}
+		    }
+		    
+		    private function focusInEventHandler(event:Event):void {
+		    	this.restrict = "0-9\\:\\";
+		    	if(dataHolder!=null){
+		    		var milliSecondsValue:Number = dataHolder[variableName];
+		    		if(!isNaN(milliSecondsValue)){
+		    			this.text = parseMilliSeconds(milliSecondsValue);
+		    		} else {
+		    			this.text = "0:00";
+		    		}
+		    	}
+		    	this.setSelection(this.selectionBeginIndex, this.text.length);
+		    }
+		    
+		    private function focusOutEventHandler(event:Event):void {
+		    	if(dataHolder!=null){
+			    	if(this.text==null || this.text==""){
+			    		dataHolder[variableName] = 0;
+			    	} else {
+			    		if(this.text.indexOf(":")>-1){
+			    			var minutesValue:Number = 0;
+			    			var secondsValue:Number = 0;
+			    			var splitArray:Array = this.text.split(":");
+			    			if(!isNaN(splitArray[0])){
+			    				minutesValue = Number(splitArray[0])*60*1000;
+			    			}
+			    			if(!isNaN(splitArray[1])){
+			    				secondsValue = Number(splitArray[1])*1000;
+			    			}
+			    			dataHolder[variableName] = minutesValue+secondsValue;
+			    		} else {
+			    			if(!isNaN(Number(this.text))) {
+			    				var numValue:Number = Number(this.text);
+			    				dataHolder[variableName] = numValue*60*1000;
+			    			} else {
+			    				dataHolder[variableName] = 0;
+			    			}
+			    		}
+			    	}
+		    	}
+		    }
+		    
+		    private function parseMilliSeconds(milliSeconds:Number):String {
+		    	var txtString:String = "";
+		    	if(milliSeconds<60000){
+		    		if(milliSeconds==0){
+		    			txtString = "";
+		    		} else {
+						txtString = txtString + "0:"+numFormatter.format(milliSeconds/1000);
+		    		}
+				}
+				if(milliSeconds>=60000 && milliSeconds<60000*60){
+					txtString = txtString + numFormatter.format(milliSeconds/60000);
+		    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
+				}
+				if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
+			    	var hoursValue:Number = Number(numFormatter.format(milliSeconds/(60000*60)))*60;
+			    	var minutesValue:Number = Number(numFormatter.format(milliSeconds%(60000*60)/(60000)));
+			    	txtString = (hoursValue+minutesValue) + ":" + "00";
+			    }
+			    if(milliSeconds>=60000*60*24){
+			    	var daysValue:Number = Number(numFormatter.format( milliSeconds/(60000*60*24)))*24*60;
+			    	var hoursValue:Number = Number(numFormatter.format(milliSeconds%(60000*60*24)/(60000*60)))*60;
+			    	var minutesValue:Number = Number(numFormatter.format(milliSeconds%(60000*60)/(60000)));
+			    	txtString = txtString+(daysValue+hoursValue+minutesValue)+":"+"00";
+			    }
+			    if(txtString==""){
+			    	txtString = "0:00";
+			    }
+				return txtString;
+		    }
+		    
+		    private function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
+				var txtString:String = "";
+				if(showSeconds){
+					if(milliSeconds<60000){
+						if(milliSeconds==0){
+			    			txtString = "";
+			    		} else {
+							txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+			    		}
+					}
+				}
+				if(milliSeconds>=60000 && milliSeconds<60000*60){
+			    	txtString = "0 Hrs ";
+			    	txtString = txtString + numFormatter.format(milliSeconds/60000);
+			    	if(showSeconds){
+			    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
+			    	}
+			    }
+			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
+			    	txtString = numFormatter.format(milliSeconds/(60000*60))+" Hrs ";
+			    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	if(showSeconds){
+			    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
+			    	}
+			    }
+			    if(milliSeconds>=60000*60*24){
+			    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+":";
+			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+			    	/* if(showSeconds){
+			    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
+			    	} */
+			    }
+			    if(txtString==""){
+			    	txtString = "0:00";
+			    }
+			    return txtString;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:NumberFormatter id="numFormatter" useThousandsSeparator="false" precision="0" rounding="none"/>
+	
+</mx:TextInput>

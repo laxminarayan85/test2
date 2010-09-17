@@ -69,6 +69,12 @@ package com.efi.printsmith.data
 		public var spoilage:Number;
 		
 		public var totalCost:Number;
+		
+		public var totalSetUpTime:Number;
+		
+		public var totalRunTime:Number;
+		
+		public var totalWashUpTime:Number;
 
 	}
 }

@@ -1045,6 +1045,9 @@
 						closeJob = true;
 						pauseJob();
 					} else {
+						var totalSetUpTime:Number = 0;
+						var totalRunTime:Number = 0;
+						var totalWashUpTime:Number = 0;
 						var trackerConsoleStopWindow:TrackerConsoleStopWindow = PopUpManager.createPopUp(this,TrackerConsoleStopWindow,true) as TrackerConsoleStopWindow;
 						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 						var trackerConsoleJobsStopBean:TrackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
@@ -1069,6 +1072,20 @@
 								break;
 							}
 						}
+						for each(var trackerConsolePassesObj:TrackerConsolePasses in trackerConsoleJobsStopBean.passesList){
+							if(!(isNaN(trackerConsolePassesObj.setUpTime)) && trackerConsolePassesObj.setUpTime!=0){
+								totalSetUpTime = totalSetUpTime + trackerConsolePassesObj.setUpTime;
+							}
+							if(!(isNaN(trackerConsolePassesObj.runTime)) && trackerConsolePassesObj.runTime!=0){
+								totalRunTime = totalRunTime + trackerConsolePassesObj.runTime;
+							}
+							if(!(isNaN(trackerConsolePassesObj.washUpTime)) && trackerConsolePassesObj.washUpTime!=0){
+								totalWashUpTime = totalWashUpTime + trackerConsolePassesObj.washUpTime;
+							}
+						}
+						trackerConsoleJobsStopBean.totalSetUpTime = totalSetUpTime;
+						trackerConsoleJobsStopBean.totalRunTime = totalRunTime;
+						trackerConsoleJobsStopBean.totalWashUpTime = totalWashUpTime;
 						trackerConsoleJobsStopBean.markStepComplete = true;
 						trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
 						trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;

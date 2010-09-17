@@ -95,6 +95,12 @@ public class TrackerConsoleJobs extends ModelBase{
 	private Long spoilage;
 	
 	private Long totalCost;
+	
+	private Long totalSetUpTime;
+	
+	private Long totalRunTime;
+	
+	private Long totalWashUpTime;
 
 	/**
 	 * @return the productionFacilities
@@ -500,7 +506,48 @@ public class TrackerConsoleJobs extends ModelBase{
 	 */
 	public void setTotalCost(Long totalCost) {
 		this.totalCost = totalCost;
-	}	
-	
+	}
+
+	/**
+	 * @return the totalSetUpTime
+	 */
+	public Long getTotalSetUpTime() {
+		return totalSetUpTime;
+	}
+
+	/**
+	 * @param totalSetUpTime the totalSetUpTime to set
+	 */
+	public void setTotalSetUpTime(Long totalSetUpTime) {
+		this.totalSetUpTime = totalSetUpTime;
+	}
+
+	/**
+	 * @return the totalRunTime
+	 */
+	public Long getTotalRunTime() {
+		return totalRunTime;
+	}
+
+	/**
+	 * @param totalRunTime the totalRunTime to set
+	 */
+	public void setTotalRunTime(Long totalRunTime) {
+		this.totalRunTime = totalRunTime;
+	}
+
+	/**
+	 * @return the totalWashUpTime
+	 */
+	public Long getTotalWashUpTime() {
+		return totalWashUpTime;
+	}
+
+	/**
+	 * @param totalWashUpTime the totalWashUpTime to set
+	 */
+	public void setTotalWashUpTime(Long totalWashUpTime) {
+		this.totalWashUpTime = totalWashUpTime;
+	}
 	
 }

@@ -728,48 +728,48 @@
 	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 	
 	<mx:HBox width="100%">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Item')}"
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Item')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{getInvoiceNumber(trackerConsoleJobs)}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Account')}"
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Account')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{getAccount(trackerConsoleJobs)}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Description')}"
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Description')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{getDescription(trackerConsoleJobs)}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Status')}"
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Status')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{getStatus(trackerConsoleJobs)}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Facility')}"
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Facility')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{trackerConsoleJobs.productionFacilities.name}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Station')}"
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Station')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{trackerConsoleJobs.productionStations.name}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Location')}"
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Location')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{trackerConsoleJobs.productionLocations.name}" width="72%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Employee')}"
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Employee')}:"
 			width="25%" textAlign="right"/>
 		<mx:TextInput text="{trackerConsoleJobs.employee.lastName}, {trackerConsoleJobs.employee.firstName}" width="72%" enabled="false"
 			disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Exceptioncode')}"
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Exceptioncode')}:"
 			width="25%" textAlign="right"/>
 		<components:CustomComboBoxComponent width="72%" enabled="{!trackerConsoleJobs.completed}" disabledColor="#000000"
 			masterList="{exceptionsArray}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
