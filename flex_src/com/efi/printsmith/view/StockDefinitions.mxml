@@ -100,7 +100,6 @@
 			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
 			<mx:SetProperty target="{qtybreaklabel}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}"/>
 			<mx:SetProperty target="{button2}" name="x" value="73"/>
-			<mx:SetProperty target="{label14}" name="width" value="30"/>
 			<mx:SetProperty target="{label15}" name="width" value="55"/>
 			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
 			<mx:SetProperty target="{radiobutton1}" name="y" value="85"/>
