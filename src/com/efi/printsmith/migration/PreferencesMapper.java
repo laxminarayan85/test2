@@ -137,6 +137,7 @@ public class PreferencesMapper extends ImportMapper {
 	private void importAddressFormats(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
 		Country country = (Country)dataService.getByPrevId("Country", key);
+		PreferencesSystem preferencesSystem = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
 		AddressFormatting addressFormatting = null;
 		if (country == null && name.equals("Country Title")) {
 			country = new Country();
@@ -210,7 +211,8 @@ public class PreferencesMapper extends ImportMapper {
 				}
 				i = value.indexOf("]", nextStart);
 			}
-		}
+		} else if (name.equals("Format is Default"))
+			preferencesSystem.setDefaultCountry(Utilities.tokenToInt(key));
 		dataService.addUpdate(country);
 	}
 	private void importPreferencesCreditCardField(String key, String name, String value) throws Exception {
