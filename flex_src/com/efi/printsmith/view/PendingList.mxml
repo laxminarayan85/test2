@@ -11,10 +11,10 @@
 	<mx:states>
 		<mx:State name="stateFilterDates">
 			<mx:AddChild relativeTo="{canvas2}" position="lastChild">
-				<mx:DateField id="txtDateTo" showToday="true" y="34" x="275" selectedDate="{new Date()}"/>
+				<mx:DateField id="txtDateFrom" showToday="true" y="34" x="275" selectedDate="{new Date()}" change="{invoiceBaseArray.refresh();}"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas2}" position="lastChild">
-				<mx:DateField id="txtDateFrom" showToday="true" x="397" y="34" selectedDate="{new Date()}"/>
+				<mx:DateField id="txtDateTo" showToday="true" x="397" y="34" selectedDate="{new Date()}" change="{invoiceBaseArray.refresh();}"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas2}" position="lastChild">
 				<mx:Label text="to" x="374" y="36" textAlign="right"/>
@@ -337,19 +337,29 @@
 		/* If the document type is valid then check on the filter */
 		if (showItem) {
 			showItem = false;
+			var inv:InvoiceBase = item as InvoiceBase;
+				
 			switch (this.cboDgFilter.selectedItem.name) {
 			case "All":
 				showItem = true;
 				break;
 			case "Ready":
-				showItem = true;
+				if ((item as InvoiceBase).completed)
+					showItem = true;
 				break;
 			case "Late":
-				showItem = true;
+				var today:Date = new Date();
+				
+				if ((inv.completed == false)
+					&& (inv.deliveryIntentDate != null)  
+					&& (inv.deliveryIntentDate.time < today.time))
+					showItem = true;
+					
 				break;
 			case "Due Between":
-				if ((txtDateTo.selectedDate != null && (item as InvoiceBase).deliveryIntentDate < txtDateTo.selectedDate) &&
-					(txtDateFrom.selectedDate != null && (item as InvoiceBase).deliveryIntentDate > txtDateFrom.selectedDate)) {
+				if ((inv.deliveryIntentDate != null)
+					&& (txtDateTo.selectedDate != null && (item as InvoiceBase).deliveryIntentDate.time <= txtDateTo.selectedDate.time) &&
+					(txtDateFrom.selectedDate != null && (item as InvoiceBase).deliveryIntentDate.time >= txtDateFrom.selectedDate.time)) {
 					showItem = true;
 				}
 				break;
