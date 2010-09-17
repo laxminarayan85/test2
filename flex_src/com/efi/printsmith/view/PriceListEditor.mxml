@@ -42,6 +42,14 @@
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="y" value="184"/>
 		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="203.5"/>
 		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="171.5"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="403"/>
+		<mx:SetStyle target="{dataGrid}" name="bottom" value="62"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mx:Label x="4" y="346" text="Over Quantity" id="label0"/>
+		</mx:AddChild>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mx:TextInput x="114" y="344" width="113.5" id="over_quantity"/>
+		</mx:AddChild>
 	</mx:State>
 	<mx:State name="Speed Table" basedOn="Price List">
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="enabled" value="false"/>
@@ -97,6 +105,8 @@
 		<mx:SetProperty target="{label1}" name="width" value="82.5"/>
 		<mx:SetProperty target="{dataGrid}" name="width" value="168"/>
 		<mx:SetProperty target="{canvas1}" name="height" value="391"/>
+		<mx:RemoveChild target="{label0}"/>
+		<mx:RemoveChild target="{over_quantity}"/>
 		
 	</mx:State>
 	<mx:State name="Waste Chart" basedOn="Price List">
@@ -175,6 +185,8 @@
 			<mx:RadioButton x="10" y="29" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisPercent')}" groupName="amount_radio_group" value="amtispercent" id="radiobutton3" enabled="false" visible="true"/>
 		</mx:AddChild>
 		<mx:SetProperty target="{title_edit}" name="width" value="207"/>
+		<mx:RemoveChild target="{label0}"/>
+		<mx:RemoveChild target="{over_quantity}"/>
 
 	</mx:State>
 	<mx:State name="Paper Price" basedOn="Price List">
@@ -204,6 +216,9 @@
 		<mx:SetProperty target="{title_edit}" name="x" value="365.5"/>
 		<mx:SetStyle target="{add_pricelistelement_button}" name="bottom" value="4"/>
 		<mx:SetStyle target="{remove_pricelistelement_button}" name="bottom" value="4"/>
+		<mx:RemoveChild target="{label0}"/>
+		<mx:RemoveChild target="{over_quantity}"/>
+		<mx:SetStyle target="{dataGrid}" name="bottom" value="32"/>
 	</mx:State>
 	<mx:State name="CopierMatrix" basedOn="Price List">
 		<mx:RemoveChild target="{label1}"/>
@@ -225,6 +240,8 @@
 		<mx:SetStyle target="{add_pricelistelement_button}" name="bottom" value="40"/>
 		<mx:SetProperty target="{canvas1}" name="width" value="233"/>
 		<mx:SetProperty name="width" value="262"/>
+		<mx:RemoveChild target="{label0}"/>
+		<mx:RemoveChild target="{over_quantity}"/>
 	</mx:State>
 </mx:states>
 <mx:Script source="../common/scripts/StringUtils.as"/>
@@ -308,6 +325,14 @@
 		parentContainer = Snowmass.getInstance().containerManager.getActiveWindowContent(); //.mainNavigator.selectedChild;
 		fillArray();
 		ColorDataService.getAll("StockColors")
+	}
+	
+	public function filterElements(item:com.efi.printsmith.data.PriceListElement):Boolean {
+		return item.lastLine != true;
+	}
+	
+	public function unfilterElements(item:Object):Boolean {
+		return true;
 	}
 
 	private function fillArray():void {
@@ -404,6 +429,13 @@
 		
 		if (validate(priceListValidator) == true)
 		{
+			priceList.elements.filterFunction = unfilterElements;
+			priceList.elements.refresh();
+			for (var i:int = 0;i < priceList.elements.length;i++) {
+				var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement
+				if (element.lastLine == true)
+					element.amount = parseFloat(this.over_quantity.text);
+			}
 			maptoPricelist();
 			
 //			for each(var item:PriceListElement in priceList.elements){
@@ -514,6 +546,13 @@
 				priceList = new PriceList();
 			else
 				priceList = ev.result as PriceList;
+			for (var i:int = 0;i < priceList.elements.length;i++) {
+				 var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+				 if (element.lastLine == true)
+				 	this.over_quantity.text = element.amount.toString();
+			}
+			this.priceList.elements.filterFunction = filterElements;
+			this.priceList.elements.refresh();
 		} else if (itemType == "WasteChart") {
 			if (ev.result == null) {
 				priceList = new WasteChart();

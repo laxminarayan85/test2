@@ -143,6 +143,8 @@ public class PriceListMapper extends ImportMapper {
 						priceListElement = new PriceListElement();
 						priceListElement.setQuantity(Utilities
 								.tokenToLong(currentImportToken));
+						if (rType.equals("P"))
+							priceListElement.setLastLine(true);
 					}
 				} else if ("amount[1]".equals(currentFieldToken) && x == 1) {
 					if (currentImportToken.equals("") == false) {
