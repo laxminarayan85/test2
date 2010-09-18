@@ -13,7 +13,7 @@
 		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
-    
+     
 
 	<mx:Producer id="producer" destination="stockdefinitions"/>
 <!--
@@ -956,7 +956,7 @@
 				deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'changePriceCmd.StockDefinitions')}"/>
 			<!--<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" id="select_button0" enabled="{(dataGrid.selectedItem != null)}" click="deleteStockDefinition();" width="12%" />-->
 		</mx:HBox>
-		<flexlib:WindowShade label="Search Stocks" opened="false" width="100%" height="35%" >
+		<flexlib:WindowShade label="Search Stocks"  width="100%" height="35%" >
 			<mx:HBox id="searcharea" width="100%" height="100%" >
 				<mx:Form id="col1" width="30%" >
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}" width="100%">
