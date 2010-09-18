@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.AccountHistory')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.AccountHistory')}"
-width="786" height="479"  creationComplete="init()"  
-     title="Account History" xmlns:text="flash.text.*">
+width="100%" height="100%"  creationComplete="init()"  
+     title="Account History" xmlns:text="flash.text.*" headerHeight="0">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
