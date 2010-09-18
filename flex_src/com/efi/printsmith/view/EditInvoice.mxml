@@ -367,9 +367,11 @@
 
 			private function doNewJob():void
 			{
-				var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
+				var editJobWindow:EditJob= new EditJob(); //EditJob(PopUpManager.createPopUp(this, EditJob, true));
 				editJobWindow.invoice = this.invoice;
-				editJobWindow.setStyle("borderAlpha", 0.9);
+				//editJobWindow.setStyle("borderAlpha", 0.9);
+				var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+				Snowmass.getInstance().containerManager.openNewMDIWindow("Edit Job",editJobWindow, -1,-1,-1,-1, windowID);
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);
 			}
 
