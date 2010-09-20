@@ -2,6 +2,8 @@
 <mx:TextInput xmlns:mx="http://www.adobe.com/2006/mxml" focusIn="{focusInEventHandler(event)}"
 	focusOut="{focusOutEventHandler(event)}">
 	
+	<mx:Script source="../../util/tracker/TrackerUtil.as"/>
+	
 	<mx:Script>
 		<![CDATA[
 			private var _customText:Object;	
@@ -94,45 +96,6 @@
 			    }
 				return txtString;
 		    }
-		    
-		    private function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
-				var txtString:String = "";
-				if(showSeconds){
-					if(milliSeconds<60000){
-						if(milliSeconds==0){
-			    			txtString = "";
-			    		} else {
-							txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
-			    		}
-					}
-				}
-				if(milliSeconds>=60000 && milliSeconds<60000*60){
-			    	txtString = "0 Hrs ";
-			    	txtString = txtString + numFormatter.format(milliSeconds/60000);
-			    	if(showSeconds){
-			    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
-			    	}
-			    }
-			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
-			    	txtString = numFormatter.format(milliSeconds/(60000*60))+" Hrs ";
-			    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
-			    	if(showSeconds){
-			    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
-			    	}
-			    }
-			    if(milliSeconds>=60000*60*24){
-			    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
-			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+":";
-			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
-			    	/* if(showSeconds){
-			    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
-			    	} */
-			    }
-			    if(txtString==""){
-			    	txtString = "0:00";
-			    }
-			    return txtString;
-			}
 		]]>
 	</mx:Script>
 	

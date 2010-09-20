@@ -5,6 +5,8 @@
 	
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
 	
+	<mx:Script source="../util/tracker/TrackerUtil.as"/>
+	
 	<mx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
@@ -226,41 +228,6 @@
 					return "--";
 				}
 				return quantity;
-			}
-			
-			private function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
-				var txtString:String = "";
-				if(showSeconds){
-					if(milliSeconds<60000){
-						txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
-					}
-				}
-				if(milliSeconds>=60000 && milliSeconds<60000*60){
-			    	txtString = "0 Hrs ";
-			    	txtString = txtString + numFormatter.format(milliSeconds/60000);
-			    	if(showSeconds){
-			    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
-			    	}
-			    }
-			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
-			    	txtString = numFormatter.format(milliSeconds/(60000*60))+" Hrs ";
-			    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
-			    	if(showSeconds){
-			    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
-			    	}
-			    }
-			    if(milliSeconds>=60000*60*24){
-			    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
-			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+" Hrs ";
-			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
-			    	if(showSeconds){
-			    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
-			    	}
-			    }
-			    if(txtString==""){
-			    	txtString = "0:00";
-			    }
-			    return txtString;
 			}
 			
 			private function getImpressions(object:TrackerConsoleJobs, flag:int,treatAsNonProdStep:Boolean):String {

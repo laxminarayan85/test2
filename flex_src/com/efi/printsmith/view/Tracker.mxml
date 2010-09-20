@@ -4,7 +4,7 @@
 	xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:ns1="com.hillelcoren.components.*"
 	creationComplete="{initTrackerConsole()}" 
 	label="Tracker Console" 
-	name="Tracker Console" xmlns:components="com.efi.printsmith.common.components.*" xmlns:trackercomponent="com.efi.printsmith.components.*">
+	name="Tracker Console" xmlns:components="com.efi.printsmith.common.components.*" xmlns:trackercomponent="com.efi.printsmith.components.tracker.*">
 	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getClockedInEmployee" fault="handleFault(event)" result="handleLoadEmployeeResult(event)"/>
@@ -54,6 +54,8 @@
 	</mx:RemoteObject>
 	
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
+	
+	<mx:Script source="../util/tracker/TrackerUtil.as"/>
 	
 	<mx:Script> 
 	                                  
@@ -155,38 +157,6 @@
 			fontSizeList.addItem(fontObj);
 			dataService.getSingle("TrackerConsole");
 			dataServiceException.getAll("ProductionExceptions");
-		}    
-		
-		public function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
-			var txtString:String = "";
-			if(showSeconds){
-				if(milliSeconds<60000){
-					txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
-				}
-			}
-			if(milliSeconds>=60000 && milliSeconds<60000*60){
-		    	txtString = "0 Hrs ";
-		    	txtString = txtString + numFormatter.format(milliSeconds/60000);
-		    	if(showSeconds){
-		    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
-		    	}
-		    }
-		    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
-		    	txtString = numFormatter.format(milliSeconds/(60000*60))+" Hrs ";
-		    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
-		    	if(showSeconds){
-		    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
-		    	}
-		    }
-		    if(milliSeconds>=60000*60*24){
-		    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
-		    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+" Hrs ";
-		    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
-		    	if(showSeconds){
-		    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
-		    	}
-		    }
-		    return txtString;
 		}
 		 
 		private function handleFault(ev:FaultEvent):void {  

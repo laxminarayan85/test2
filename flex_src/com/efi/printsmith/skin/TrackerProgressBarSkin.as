@@ -1,6 +1,6 @@
 package com.efi.printsmith.skin
 {
-	import com.efi.printsmith.components.TrackerProgressBarComponent;
+	import com.efi.printsmith.components.tracker.TrackerProgressBarComponent;
 	import com.efi.printsmith.data.TrackerConsoleJobs;
 	
 	import mx.controls.ProgressBar;

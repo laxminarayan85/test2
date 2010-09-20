@@ -11,6 +11,8 @@
 		<mx:method name="addUpdate" fault="handleFault(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:Script source="../util/tracker/TrackerUtil.as"/>
+	
 	<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.events.TrackerConsoleDetailsEvent;
@@ -126,7 +128,7 @@
 			}
 			
 			public function getTotalJobTime(object:Object):String {
-				return convertMilliSecondsToString((object.actualSetUpTime+object.actualRunTime+object.actualWashTime),true);
+				return convertMilliSecondsToNegString((object.actualSetUpTime+object.actualRunTime+object.actualWashTime),true);
 			}
 			
 			public function getActualJobTime(object:Object):String {
@@ -143,7 +145,7 @@
 						totalValue = totalValue + passes.washUpTime;
 					}
 				}
-				return convertMilliSecondsToString(totalValue,true);
+				return convertMilliSecondsToNegString(totalValue,true);
 			}
 			
 			public function getTimeDifference(object:Object):String {
@@ -162,7 +164,7 @@
 					}
 				}
 				diffTime = totalValue - (object.actualSetUpTime+object.actualRunTime+object.actualWashTime);
-				return convertMilliSecondsToString(diffTime,true);
+				return convertMilliSecondsToNegString(diffTime,true);
 			}
 			
 			public function getEstimatedCost(object:Object):String {
@@ -206,46 +208,6 @@
 			
 			public function getCostDifference(object:Object):String {
 				return costFormatter.format(0); 
-			}
-			
-			public function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
-				var isNegative:Boolean = false;
-				if(milliSeconds<0){
-					isNegative=true;
-					milliSeconds = -(milliSeconds);
-				}
-				var txtString:String = "";
-				if(showSeconds){
-					if(milliSeconds<60000){
-						txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
-					}
-				}
-				if(milliSeconds>=60000 && milliSeconds<60000*60){
-			    	txtString = "0 Hrs ";
-			    	txtString = txtString + numFormatter.format(milliSeconds/60000);
-			    	if(showSeconds){
-			    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
-			    	}
-			    }
-			    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
-			    	txtString = numFormatter.format(milliSeconds/(60000*60))+" Hrs ";
-			    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
-			    	if(showSeconds){
-			    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
-			    	}
-			    }
-			    if(milliSeconds>=60000*60*24){
-			    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
-			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+" Hrs ";
-			    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
-			    	if(showSeconds){
-			    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
-			    	}
-			    }
-			    if(isNegative){
-			    	txtString = "-"+txtString;
-			    }
-			    return txtString;
 			}
 			
 			private function setDates():void {
