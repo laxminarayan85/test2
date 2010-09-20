@@ -352,7 +352,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = true;
 			}			
 			charge_special_info.selectedChild = fold;				
-			if (chargeDefinition.foldTemplate != null) {
+			if (chargeDefinition.foldTemplate != null && fold_description != null) {
 				fold_description.text = chargeDefinition.foldTemplate.description;
 				var imageSource:String = "assets/fold_diagrams/" + chargeDefinition.foldTemplate.imageFile;
 				fold_image.source = imageSource;

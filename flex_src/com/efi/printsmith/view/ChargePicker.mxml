@@ -629,7 +629,7 @@
 			}
 			
 			public function updateFieldVisibility():void {
-				//charge_special_info.selectedChild = blank;
+				charge_special_info.selectedChild = blank;
 				description_box.visible = true;
 				notes_box.visible = true;
 				production_location_box.visible = true;
@@ -1272,49 +1272,49 @@
 
 							<mx:HBox width="100%" height="111" verticalScrollPolicy="off">
 								<mx:VBox width="50%" height="110" verticalScrollPolicy="off" verticalAlign="bottom">
-									<mx:HBox width="100%" id="setup_box">
+									<mx:HBox width="100%" id="setup_box" visible="false">
 										<mx:Spacer width="8"/>
 										<mx:Text text="{chargeDefinition.presetSetupLabel}" width="50%" id="setup_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.setupPrice}" width="50%" id="setup_edit" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="cuts_box">
+									<mx:HBox width="100%" id="cuts_box" visible="false">
 										<mx:Spacer width="8"/>
 										<mx:Text text="{chargeDefinition.presetCutsLabel}" width="50%" id="cuts_label_text" textAlign="right"/>
 										<mx:TextInput text="{(charge as CuttingCharge).cuts}" width="50%" id="cuts_edit" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="number_of_colors_box">
+									<mx:HBox width="100%" id="number_of_colors_box" visible="false">
 										<mx:Spacer width="8"/>
 										<mx:Text text="{chargeDefinition.presetNumberOfColorsLabel}" width="50%" id="number_of_colors_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.presetNumberOfColors}" width="50%" id="number_of_colors_edit" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="coverage_box">
+									<mx:HBox width="100%" id="coverage_box" visible="false">
 										<mx:Spacer width="8"/>
 										<mx:Text text="{chargeDefinition.presetCoverageLabel}" width="50%" id="percent_coverage_label_text" textAlign="right"/>
 										<mx:TextInput text="{(charge as InkCharge).coverage}" width="50%" id="percent_coverage_edit" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="pounds_of_ink_box">
+									<mx:HBox width="100%" id="pounds_of_ink_box" visible="false">
 										<mx:Spacer width="8"/>
 										<mx:Text text="{chargeDefinition.presetPoundsofInkLabel}" width="50%" id="lbs_of_ink_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.presetPoundsofInk}" width="50%" id="lbs_of_ink_edit" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="quantity_box">
+									<mx:HBox width="100%" id="quantity_box" visible="false">
 										<mx:Spacer width="8"/>
 										<mx:Text text="{chargeDefinition.presetQuantityLabel}" width="50%" id="quantity_label_text" textAlign="right"/>
 										<mx:TextInput text="{charge.quantity}" width="50%" id="quantity_edit" textAlign="right" focusOut="this.updateQty()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="material_quantity_box">
+									<mx:HBox width="100%" id="material_quantity_box" visible="false">
 										<mx:Spacer width="8"/>
 										<mx:Text text="{chargeDefinition.presetMaterialQuantityLabel}" width="50%" id="material_quantity_label_text" textAlign="right"/>
 										<mx:TextInput text="{charge.materialQty}" width="50%" id="material_quantity_edit" textAlign="right" focusOut="this.updateMaterialQty()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="material_rate_box">
+									<mx:HBox width="100%" id="material_rate_box" visible="false">
 										<mx:Spacer width="8"/>
 										<mx:Text text="{chargeDefinition.presetMaterialRateLabel}" width="50%" id="material_rate_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.material}" width="50%" id="material_rate" textAlign="right" focusOut="this.updateMaterialRate()"/>
@@ -1322,57 +1322,57 @@
 									</mx:HBox>					
 								</mx:VBox>
 								<mx:VBox width="50%" height="110" verticalScrollPolicy="off" verticalAlign="bottom">					
-									<mx:HBox width="100%" id="price_per_pound_box">
+									<mx:HBox width="100%" id="price_per_pound_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetPricePerPoundLabel}" width="50%" id="price_lb_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.presetPricePerPound}" width="50%" id="price_lb_edit" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="cover_per_pound_box">
+									<mx:HBox width="100%" id="cover_per_pound_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetCoverPerPoundLabel}" width="50%" id="cover_lb_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.presetCoverPerPound}" width="50%" id="cover_lb_edit" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="weight_box">
+									<mx:HBox width="100%" id="weight_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetTotalWeightLabel}" width="50%" id="total_weight_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.presetTotalWeight}" width="50%" id="total_weight_text" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="in_sets_of_box">
+									<mx:HBox width="100%" id="in_sets_of_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetInSetsOfLabel}" width="50%" id="in_sets_of_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.rateSetCount}" width="50%" id="in_sets_of_text" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="rate_box">
+									<mx:HBox width="100%" id="rate_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetRateLabel}" width="50%" id="rate_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.rate}" width="50%" id="rate_edit" textAlign="right" change="this.updateRate()" focusOut="updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="sheets_per_lift_box">
+									<mx:HBox width="100%" id="sheets_per_lift_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetSheetsPerLiftLabel}" width="50%" id="sheets_per_lift_label_text" textAlign="right"/> 
 										<mx:TextInput text="{chargeDefinition.presetSheetsPerLift}" width="50%" id="sheets_per_lift_text" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="material_sets_of_box">
+									<mx:HBox width="100%" id="material_sets_of_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetMaterialSetsOfLabel}" width="50%" id="material_sets_of_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.materialSetCount}" width="50%" id="material_sets_of_text" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="quantity_per_set_box">
+									<mx:HBox width="100%" id="quantity_per_set_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetQuantityPerSetLabel}" width="50%" id="quantity_per_set_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.presetQuantityPerSet}" width="50%" id="quantity_per_set_text" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="area_box">
+									<mx:HBox width="100%" id="area_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetAreaLabel}" width="50%" id="area_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.presetArea}" width="50%" id="area_text" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="up_box">
+									<mx:HBox width="100%" id="up_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetUpLabel}" width="50%" id="up_label_text" textAlign="right"/>
 										<mx:TextInput text="{charge.up}" width="50%" id="up_text" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
-									<mx:HBox width="100%" id="price_box">
+									<mx:HBox width="100%" id="price_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetPriceLabel}" width="50%" id="price_label_text" textAlign="right"/>
 										<mx:TextInput text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.price)}" width="50%" id="price_edit" textAlign="right" change="this.updatePriceEdit()" focusOut="this.updatePrice()"/>
 										<comp:SmallThrobber visible="false" id="pricing_throbber" height="20" width="20"/>

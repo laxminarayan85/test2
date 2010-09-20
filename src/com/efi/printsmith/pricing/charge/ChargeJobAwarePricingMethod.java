@@ -2,12 +2,16 @@ package com.efi.printsmith.pricing.charge;
 
 import java.math.BigDecimal;
 
+import com.efi.printsmith.Constants;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.CuttingCharge;
+import com.efi.printsmith.data.InkCharge;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.JobBase;
+import com.efi.printsmith.data.enums.ChargeJobQuantity;
 import com.efi.printsmith.data.enums.ChargeQtyType;
+import com.efi.printsmith.data.enums.RunMethod;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.service.ChargeService;
 
@@ -35,13 +39,18 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 		}
 		
 		if (chargeDefinition.getUseColors()) {
-			runs = job.getBackColors() + job.getFrontColors();
-		} else if (chargeDefinition.getUseSides()) {
-			if (job.getDoubleSided()) {
-				runs = 2;
+			if (job.getRunMethod().equals(Constants.JOB_RUN_METHOD_WORK_TUMBLE)) {
+				if (job.getBackColors() > job.getFrontColors()) {
+					runs = job.getBackColors();
+				} else {
+					runs = job.getFrontColors();
+				}
 			} else {
-				runs = 1;
+				runs = job.getBackColors() + job.getFrontColors();
 			}
+		} else if (chargeDefinition.getUseSides()) {
+			if (job.getFrontColors() > 0) runs++;
+			if (job.getBackColors() > 0) runs++;
 		} else {
 			runs = 1;
 		}
@@ -63,21 +72,35 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 		}
 			
 		if (!charge.getOverrideQuantity()) {
-			if (chargeDefinition.getQuantityType().equals(ChargeQtyType.None)) {
+			if (chargeDefinition.getJobQty().equals(ChargeJobQuantity.None.name())) {
 				charge.setQuantity(1.0);
-			} else if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Quantity)) {
+			} else if (chargeDefinition.getJobQty().equals(ChargeJobQuantity.Press.name())) {
 				charge.setQuantity(job.getPressQty().doubleValue());
-				// TODO handle run direction per PrintSmith Source
-			} else if (charge instanceof CuttingCharge && chargeDefinition.getCutsArePrePress()) {
+				
+				if (!job.getRunMethod().equals(RunMethod.WorkAndTurn)) {
+					if (job.getRunMethod().equals(RunMethod.WorkAndTumble) && !(charge instanceof CuttingCharge)) {
+						charge.setQuantity(charge.getQuantity()*0.5);
+					} else if (job.getRunMethod().equals(RunMethod.WorkAndTurn) && chargeDefinition.getCutsArePrePress() && !(charge instanceof InkCharge)) {
+						if (originals > 1) {
+							originals /= 2;
+						} else {
+							charge.setQuantity(charge.getQuantity()*0.5);
+						}
+					}
+				}
+			} else if (chargeDefinition.getJobQty().equals(ChargeJobQuantity.Parent.name())) {
 				charge.setQuantity((double)job.getSheets());
 				originals = 1;
 				runs = 1;
 			} else {
 				charge.setQuantity(job.getQtyOrdered().doubleValue());
 			}
+		
+			if ((chargeDefinition.getUseColors() || chargeDefinition.getUseSides() ||
+				chargeDefinition.getUseOriginals() || chargeDefinition.getUseSignatures()) && chargeDefinition.getCutsArePrePress()) {
+				charge.setQuantity(charge.getQuantity()*runs*originals);
+			}
 			
-//			if ((chargeDefinition.getUseColors() || chargeDefinition.getUseSides() ||
-//				chargeDefinition.getUseOriginals() || chargeDefinition.getUseSignatures() && )
 			if (ups > 0 && (chargeDefinition.getUseMultiplyUpCount() || chargeDefinition.getUseDivideByUpCount())) {
 				if (chargeDefinition.getUseMultiplyUpCount()) {
 					charge.setQuantity(charge.getQuantity()*ups);
@@ -86,18 +109,41 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 				}
 			}
 			
-			// TODO account for booklets per PrintSmith Source
-
-			if (!charge.getOverrideMaterialQuantity()) {
-				if (chargeDefinition.getQuantityType().equals(ChargeQtyType.None)) {
-					charge.setMaterialQty(1.0);
-				} else {
-					charge.setMaterialQty(job.getQtyOrdered().doubleValue());
-				} // TODO Additional cases to account for sets
+			if ((chargeDefinition.getUseOriginals() || chargeDefinition.getUseSignatures()) && chargeDefinition.getJobQty().equals(ChargeJobQuantity.Press) &&
+					job != null && job.getPricingMethod().getMethod().equals("Multi Part")) {
+				chargeDefinition.setCutsArePrePress(true);
+				charge.setQuantity(new Double(job.getBinderyWaste()+job.getEstWaste())*runs);
 			}
-			
-//			if ((chargeDefinition.getUseColors() || chargeDefinition.getUseSides() ||
-//			chargeDefinition.getUseOriginals() || chargeDefinition.getUseSignatures() && )
+		}
+		if (!charge.getOverrideMaterialQuantity()) {
+			if (chargeDefinition.getJobQty().equals(ChargeJobQuantity.None.name())) {
+				charge.setMaterialQty(1.0);
+			} else if (chargeDefinition.getJobQty().equals(ChargeJobQuantity.Press.name())) {
+				charge.setMaterialQty(job.getPressQty().doubleValue());
+				
+				if (!job.getRunMethod().equals(RunMethod.WorkAndTurn)) {
+					if (job.getRunMethod().equals(RunMethod.WorkAndTumble) && !(charge instanceof CuttingCharge)) {
+						charge.setMaterialQty(charge.getMaterialQty()*0.5);
+					} else if (job.getRunMethod().equals(RunMethod.WorkAndTurn) && chargeDefinition.getCutsArePrePress() && !(charge instanceof InkCharge)) {
+						if (originals > 1) {
+							originals /= 2;
+						} else {
+							charge.setMaterialQty(charge.getMaterialQty()*0.5);
+						}
+					}
+				}
+			} else if (chargeDefinition.getJobQty().equals(ChargeJobQuantity.Parent.name())) {
+				charge.setMaterialQty((double)job.getSheets());
+				originals = 1;
+				runs = 1;
+			} else {
+				charge.setMaterialQty(job.getQtyOrdered().doubleValue());
+			}
+		
+			if ((chargeDefinition.getUseColors() || chargeDefinition.getUseSides() ||
+				chargeDefinition.getUseOriginals() || chargeDefinition.getUseSignatures()) && chargeDefinition.getCutsArePrePress()) {
+				charge.setMaterialQty(charge.getMaterialQty()*runs*originals);
+			}
 			
 			if (ups > 0 && (chargeDefinition.getUseMultiplyUpCount() || chargeDefinition.getUseDivideByUpCount())) {
 				if (chargeDefinition.getUseMultiplyUpCount()) {
@@ -106,11 +152,41 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 					charge.setMaterialQty(charge.getMaterialQty()/ups);
 				}
 			}
+			
+			if ((chargeDefinition.getUseOriginals() || chargeDefinition.getUseSignatures()) && chargeDefinition.getJobQty().equals(ChargeJobQuantity.Press) &&
+					job != null && job.getPricingMethod().getMethod().equals("Multi Part")) {
+				chargeDefinition.setCutsArePrePress(true);
+				charge.setMaterialQty(new Double(job.getBinderyWaste()+job.getEstWaste()));
+			}
 		}
-		// TODO account for booklets per PrintSmith Source
+
+		if ((chargeDefinition.getUseColors() || chargeDefinition.getUseSides() || chargeDefinition.getUseOriginals() || chargeDefinition.getUseSignatures()) && chargeDefinition.getCutsArePrePress()) {
+			// Multiply before mote these quantities are already used to calculate rate & material quantity. This means that the runs and originals have already been used so they must be set to one to avoid squaring quantities.
+			runs = 1;
+			originals = 1;
+		}
+		
+		
 		if (chargeDefinition.getPriceMethod().equals("CostPlus")) { 
 			ChargeService chargeService = new ChargeService(); //TODO: This needs to be outside of the service.
+			if (chargeDefinition.getUseRateSets()) {
+				setCount = chargeDefinition.getRateSetCount();
+			} else {
+				setCount = 1.0;
+			}
+			if (charge.getOverrideQuantity()) {
+				rateQty = charge.getQuantity();
+			} else {
+				rateQty = calculateChargeSets(charge.getQuantity(), runs, originals, setCount);
+			}
+			lookupQty = rateQty;
+			charge.setQuantity(rateQty);
 			
+//			TODO: Handle Booklets here			
+//			if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets) ||
+//				chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets)) {
+//				lookupQty *= job.getGroupQty();
+//			}
 			try {
 				ChargeCostingPrices prices = chargeService.calculateChargeCostingRate(chargeDefinition, charge);
 				
@@ -123,7 +199,6 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 				log.error(e);
 			}
 		} else {
-			
 			if (chargeDefinition.getUseSetup()) {
 				setupPrice = chargeDefinition.getSetupPrice();
 				
@@ -132,24 +207,18 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 				}
 			}
 			else if (chargeDefinition.getUseMaterial()) {
-				if (!charge.getOverrideMaterialQuantity()) {
-					if (chargeDefinition.getQuantityType().equals(ChargeQtyType.None.name())) {
-						charge.setMaterialQty(1.0);
-					}
-				}
-				
-				
-				
 				if (chargeDefinition.getUseMaterialSets()) {
 					setCount = chargeDefinition.getMaterialSetCount();
 				} else {
 					setCount = 1.0;
 				}
+				
 				if (charge.getOverrideMaterialQuantity()) {
-					materialQty = charge.getMaterialQty();
+					materialQty = charge.getMaterialQty(); 
 				} else {
-					materialQty = calculateChargeSets(charge.getMaterialQty(), runs, originals, setCount);
+					materialQty =  calculateChargeSets(charge.getMaterialQty(), runs, originals, setCount);
 				}
+				
 				lookupQty = materialQty;
 				charge.setMaterialQty(materialQty);
 				materialPrice = chargeDefinition.getMaterial().multiply(new BigDecimal(materialQty));
@@ -172,7 +241,6 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 //				TODO: additional booklet stuff here
 //				if (chargeDefinition.getQuantityType().equals(ChargeQtyType.SetupSets) ||
 //						chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets)) {
-//					ratePrice = ratePrice
 //				}
 			} else if (!chargeDefinition.getUseMaterial() && chargeDefinition.getPriceList() != null) {
 				// TODO: Additional booklet code here
