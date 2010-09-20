@@ -24,6 +24,8 @@
 			
 			[Bindable] public var exceptionsArray:ArrayCollection = new ArrayCollection();
 			
+			[Bindable] public var productionLocations:ArrayCollection = new ArrayCollection();
+			
 			private function initDetailsWindow():void {
 				PopUpManager.centerPopUp(this);
 			}
@@ -403,6 +405,80 @@
 				dispatchEvent(trackerConsoleStopEvent);
 				callLater(closeWindow);
 			}
+			
+			private function resetCalcValues():void {
+				if(trackerConsoleJobs!=null){
+					if(trackerConsoleJobs.initialSpoilageValue!=trackerConsoleJobs.spoilage){
+						trackerConsoleJobs.startSpoilage = 0;
+						trackerConsoleJobs.endSpoilage = 0;
+						trackerConsoleJobs.initialStartSpoilage = 0;
+						trackerConsoleJobs.initialEndSpoilage = 0;
+						trackerConsoleJobs.endSpoilage = 0;
+						trackerConsoleJobs.difference = 0;
+					}
+				}
+			}
+			
+			private function setImpressionsValue():void {
+				if(trackerConsoleJobs.impressions!=trackerConsoleJobs.initialImpressions) {
+					trackerConsoleJobs.initialImpressions = trackerConsoleJobs.impressions;
+					if(trackerConsoleJobs.difference>trackerConsoleJobs.impressions){
+						trackerConsoleJobs.spoilage = trackerConsoleJobs.difference-trackerConsoleJobs.impressions;
+						trackerConsoleJobs.initialSpoilageValue = trackerConsoleJobs.spoilage;
+					} else {
+						trackerConsoleJobs.spoilage = 0;
+						trackerConsoleJobs.initialSpoilageValue = 0;
+					}
+				}
+			}
+			
+			private function setSpoilageValue(stateValue:String):void {
+				if(stateValue=="start"){
+					trackerConsoleJobs.endSpoilage = trackerConsoleJobs.difference+trackerConsoleJobs.startSpoilage;
+				} else if(stateValue=="end"){
+					trackerConsoleJobs.difference = trackerConsoleJobs.endSpoilage-trackerConsoleJobs.startSpoilage;
+				}
+				if(trackerConsoleJobs.startSpoilage!=trackerConsoleJobs.initialStartSpoilage ||
+				trackerConsoleJobs.endSpoilage!=trackerConsoleJobs.initialEndSpoilage){
+					if(trackerConsoleJobs.difference>trackerConsoleJobs.impressions){
+						trackerConsoleJobs.spoilage = trackerConsoleJobs.difference-trackerConsoleJobs.impressions;
+						trackerConsoleJobs.initialSpoilageValue = trackerConsoleJobs.spoilage;
+					} else {
+						trackerConsoleJobs.spoilage = 0;
+						trackerConsoleJobs.initialSpoilageValue = 0;
+					}
+				}
+				trackerConsoleJobs.initialStartSpoilage = trackerConsoleJobs.startSpoilage;
+				trackerConsoleJobs.initialEndSpoilage = trackerConsoleJobs.endSpoilage;
+			}
+			
+			private function getStartSpoilage(treatAsNonProdStep:Boolean,startSpoilage:Number):Object {
+				if(treatAsNonProdStep){
+					return "--";
+				}
+				return startSpoilage;
+			}
+			
+			private function getEndSpoilage(treatAsNonProdStep:Boolean,endSpoilage:Number):Object {
+				if(treatAsNonProdStep){
+					return "--";
+				}
+				return endSpoilage;
+			}
+			
+			private function getDifference(treatAsNonProdStep:Boolean,difference:Number):Object {
+				if(treatAsNonProdStep){
+					return "--";
+				}
+				return difference;
+			}
+			
+			private function getDiffSpoilage(treatAsNonProdStep:Boolean,spoilage:Number):Object {
+				if(treatAsNonProdStep){
+					return "--";
+				}
+				return spoilage;
+			}
 		]]>
 	</mx:Script>
 	
@@ -457,7 +533,9 @@
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.NextLocation')}:"
 			width="20%" textAlign="right"/>
-		<mx:TextInput width="35%" enabled="false" disabledColor="#000000"/>
+		<components:CustomComboBoxComponent width="35%"
+			masterList="{productionLocations}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+			dataHolder="{trackerConsoleJobs}" variableName="nextProductionLocation" customText="{getCustomTextData(productionLocations,trackerConsoleJobs,trackerConsoleJobs.nextProductionLocation)}"/>
 		<components:CustomCheckBoxComponent width="42%" 
 			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.MovetothisNonProduct')}"
 			dataHolder="{trackerConsoleJobs}" variableName="moveToNonProdStep" customText="{trackerConsoleJobs.moveToNonProdStep}"
@@ -542,7 +620,8 @@
 				<components:CustomNumericTextInputComponent width="33%"
 					dataHolder="{trackerConsoleJobs}" variableName="impressions" customText="{getJobImpressions(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.impressions)}" 
 					enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
-					allowNegative="true" precision="0" rounding="nearest" isInteger="true" textAlignStyle="left"/>
+					allowNegative="true" precision="0" rounding="nearest" isInteger="true" textAlignStyle="left"
+					focusOut="{setImpressionsValue()}"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Spoilage')}:"
@@ -551,7 +630,8 @@
 				<components:CustomNumericTextInputComponent width="33%"
 					dataHolder="{trackerConsoleJobs}" variableName="spoilage" customText="{getJobSpoilage(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.spoilage)}" 
 					enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
-					allowNegative="false" precision="0" rounding="nearest" isInteger="true" textAlignStyle="left"/>
+					allowNegative="false" precision="0" rounding="nearest" isInteger="true" textAlignStyle="left" focusIn="{trackerConsoleJobs.initialSpoilageValue=trackerConsoleJobs.spoilage}"
+					focusOut="{resetCalcValues()}"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.BinderyWaste')}:"
@@ -590,8 +670,10 @@
 					<mx:Label 
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.Start')}:" width="50%" textAlign="right"/>
 					<components:CustomNumericTextInputComponent width="50%"
-						dataHolder="{trackerConsoleJobs}" variableName="startSpoilage" customText="{trackerConsoleJobs.startSpoilage}"
-						precision="0" rounding="nearest" allowNegative="true" textAlign="right"/>
+						dataHolder="{trackerConsoleJobs}" variableName="startSpoilage" customText="{getStartSpoilage(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.startSpoilage)}"
+						precision="0" rounding="nearest" allowNegative="true" textAlignStyle="right"
+						enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+						focusOut="{setSpoilageValue('start')}"/>
 					
 				</mx:HBox>
 				
@@ -600,8 +682,10 @@
 					<mx:Label 
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.End')}:" width="50%" textAlign="right"/>
 					<components:CustomNumericTextInputComponent width="50%"
-						dataHolder="{trackerConsoleJobs}" variableName="endSpoilage" customText="{trackerConsoleJobs.endSpoilage}"
-						precision="0" rounding="nearest" allowNegative="true" textAlign="right"/>
+						dataHolder="{trackerConsoleJobs}" variableName="endSpoilage" customText="{getEndSpoilage(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.endSpoilage)}"
+						precision="0" rounding="nearest" allowNegative="true" textAlignStyle="right"
+						enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+						focusOut="{setSpoilageValue('end')}"/>
 					
 				</mx:HBox>
 				
@@ -610,8 +694,8 @@
 					<mx:Label 
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.Difference')}:" width="50%" textAlign="right"/>
 					<components:CustomNumericTextInputComponent width="50%"
-						dataHolder="{trackerConsoleJobs}" variableName="difference" customText="{trackerConsoleJobs.difference}"
-						precision="0" rounding="nearest" allowNegative="true" textAlign="right"/>
+						dataHolder="{trackerConsoleJobs}" variableName="difference" customText="{getDifference(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.difference)}"
+						precision="0" rounding="nearest" allowNegative="true" textAlignStyle="right" enabled="false" disabledColor="#000000"/>
 					
 				</mx:HBox>
 				
@@ -620,8 +704,8 @@
 					<mx:Label 
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.Spoilage')}:" width="50%" textAlign="right"/>
 					<components:CustomNumericTextInputComponent width="50%"
-						dataHolder="{trackerConsoleJobs}" variableName="spoilage" customText="{trackerConsoleJobs.spoilage}"
-						precision="0" rounding="nearest" allowNegative="true" textAlign="right"/>
+						dataHolder="{trackerConsoleJobs}" variableName="spoilage" customText="{getDiffSpoilage(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.spoilage)}"
+						precision="0" rounding="nearest" allowNegative="true" textAlignStyle="right" enabled="false" disabledColor="#000000"/>
 					
 				</mx:HBox>
 				

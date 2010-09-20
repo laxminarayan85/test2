@@ -1018,7 +1018,6 @@
 						var totalSetUpTime:Number = 0;
 						var totalRunTime:Number = 0;
 						var totalWashUpTime:Number = 0;
-						var impressions:Number = 0;
 						var trackerConsoleStopWindow:TrackerConsoleStopWindow = PopUpManager.createPopUp(this,TrackerConsoleStopWindow,true) as TrackerConsoleStopWindow;
 						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 						var trackerConsoleJobsStopBean:TrackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
@@ -1058,19 +1057,18 @@
 						trackerConsoleJobsStopBean.totalRunTime = totalRunTime;
 						trackerConsoleJobsStopBean.totalWashUpTime = totalWashUpTime;
 						trackerConsoleJobsStopBean.totalTime = totalSetUpTime+totalRunTime+totalWashUpTime;
-						if(trackerConsoleJobsStopBean.job!=null){
-					
-						} else if(trackerConsoleJobsStopBean.charge!=null) {
-							if(trackerConsoleJobsStopBean.charge.chargeCostingRecord!=null){
-								if(!isNaN(trackerConsoleJobsStopBean.charge.chargeCostingRecord.impressions)){
-									impressions = trackerConsoleJobsStopBean.charge.chargeCostingRecord.impressions;
-								}
-							}
-						}
-						trackerConsoleJobsStopBean.impressions = impressions;
+						trackerConsoleJobsStopBean.impressions = getImpressions(trackerConsoleJobsStopBean);
+						trackerConsoleJobsStopBean.initialImpressions = trackerConsoleJobsStopBean.impressions;
+						trackerConsoleJobsStopBean.endSpoilage = trackerConsoleJobsStopBean.impressions;
 						trackerConsoleJobsStopBean.spoilage = 0;
+						trackerConsoleJobsStopBean.initialSpoilageValue = trackerConsoleJobsStopBean.spoilage;
+						trackerConsoleJobsStopBean.startSpoilage = trackerConsoleJobsStopBean.spoilage;
+						trackerConsoleJobsStopBean.initialEndSpoilage = trackerConsoleJobsStopBean.endSpoilage;
+						trackerConsoleJobsStopBean.initialStartSpoilage = trackerConsoleJobsStopBean.startSpoilage;
+						trackerConsoleJobsStopBean.difference = trackerConsoleJobsStopBean.endSpoilage-trackerConsoleJobsStopBean.startSpoilage;
 						trackerConsoleJobsStopBean.markStepComplete = true;
 						trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
+						trackerConsoleStopWindow.productionLocations = productionLocationArray;
 						trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;
 						trackerConsoleStopWindow.addEventListener(TrackerConsoleStopEvent.STOP_JOB_EVENT,function(event:TrackerConsoleStopEvent):void {
 							if(event.isStop){
@@ -1286,7 +1284,6 @@
 							var totalWashUpTime:Number = 0;
 							var nowDate:Date = new Date();
 							var totalWashTime:Number = 0;
-							var impressions:Number = 0;
 							closeJob = false;
 							var trackerConsoleStopWindow:TrackerConsoleStopWindow = PopUpManager.createPopUp(this,TrackerConsoleStopWindow,true) as TrackerConsoleStopWindow;
 							registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
@@ -1327,19 +1324,18 @@
 							trackerConsoleJobsStopBean.totalRunTime = totalRunTime;
 							trackerConsoleJobsStopBean.totalWashUpTime = totalWashUpTime;
 							trackerConsoleJobsStopBean.totalTime = totalSetUpTime+totalRunTime+totalWashUpTime;
-							if(trackerConsoleJobsStopBean.job!=null){
-					
-							} else if(trackerConsoleJobsStopBean.charge!=null) {
-								if(trackerConsoleJobsStopBean.charge.chargeCostingRecord!=null){
-									if(!isNaN(trackerConsoleJobsStopBean.charge.chargeCostingRecord.impressions)){
-										impressions = trackerConsoleJobsStopBean.charge.chargeCostingRecord.impressions;
-									}
-								}
-							}
-							trackerConsoleJobsStopBean.impressions = impressions;
+							trackerConsoleJobsStopBean.impressions = getImpressions(trackerConsoleJobsStopBean);
+							trackerConsoleJobsStopBean.initialImpressions = trackerConsoleJobsStopBean.impressions;
+							trackerConsoleJobsStopBean.endSpoilage = trackerConsoleJobsStopBean.impressions;
 							trackerConsoleJobsStopBean.spoilage = 0;
+							trackerConsoleJobsStopBean.initialSpoilageValue = trackerConsoleJobsStopBean.spoilage;
+							trackerConsoleJobsStopBean.startSpoilage = trackerConsoleJobsStopBean.spoilage;
+							trackerConsoleJobsStopBean.initialEndSpoilage = trackerConsoleJobsStopBean.endSpoilage;
+							trackerConsoleJobsStopBean.initialStartSpoilage = trackerConsoleJobsStopBean.startSpoilage;
+							trackerConsoleJobsStopBean.difference = trackerConsoleJobsStopBean.endSpoilage-trackerConsoleJobsStopBean.startSpoilage;
 							trackerConsoleJobsStopBean.markStepComplete = true;
 							trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
+							trackerConsoleStopWindow.productionLocations = productionLocationArray;
 							trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;
 							trackerConsoleStopWindow.addEventListener(TrackerConsoleStopEvent.STOP_JOB_EVENT,function(event:TrackerConsoleStopEvent):void {
 								if(event.isStop){
@@ -1413,6 +1409,7 @@
 		}
 		
 		private function copyFromStopWindow(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {
+			destination.treatAsNonProdStep = source.treatAsNonProdStep;
 			destination.markStepComplete = source.markStepComplete;
 			destination.moveToNonProdStep = source.moveToNonProdStep;
 			if(source.productionExceptions!=null){
@@ -1421,6 +1418,12 @@
 				}
 			}
 			destination.productionExceptions = source.productionExceptions;
+			if(source.nextProductionLocation!=null){
+				if(source.nextProductionLocation.id==0){
+					source.nextProductionLocation = null;
+				}
+			}
+			destination.nextProductionLocation = source.nextProductionLocation;
 			destination.notes = source.notes;
 			destination.appendNotesToJobTicketNotes = source.appendNotesToJobTicketNotes;
 			if(!isNaN(source.totalSetUpTime)){
@@ -1457,6 +1460,34 @@
 				destination.qtyOrdered = source.qtyOrdered;
 			} else {
 				destination.qtyOrdered = 0;
+			}
+			if(!isNaN(source.startSpoilage)){
+				destination.startSpoilage = source.startSpoilage;
+			} else {
+				destination.startSpoilage = 0;
+			}
+			if(!isNaN(source.endSpoilage)){
+				destination.endSpoilage = source.endSpoilage;
+			} else {
+				destination.endSpoilage = 0;
+			}
+			if(!isNaN(source.difference)){
+				destination.difference = source.difference;
+			} else {
+				destination.difference = 0;
+			}
+			if(destination.treatAsNonProdStep){
+				destination.totalTime = 0;
+				destination.totalSetUpTime = 0;
+				destination.totalRunTime = 0;
+				destination.totalWashUpTime = 0;
+				destination.qtyOrdered = 0;
+				destination.impressions = 0;
+				destination.spoilage = 0;
+				destination.totalCost = 0;
+				destination.startSpoilage = 0;
+				destination.endSpoilage = 0;
+				destination.difference = 0;
 			}
 		}
 		
@@ -1691,6 +1722,20 @@
 					}	
 				}
 			}
+		}
+		
+		private function getImpressions(object:TrackerConsoleJobs):Number {
+			var impressions:Number = 0;
+			if(object.job!=null){
+			
+			} else if(object.charge!=null) {
+				if(object.charge.chargeCostingRecord!=null){
+					if(!isNaN(object.charge.chargeCostingRecord.impressions)){
+						impressions = object.charge.chargeCostingRecord.impressions;
+					}
+				}
+			}
+			return impressions;
 		}
 				
 	]]>

@@ -18,6 +18,8 @@ package com.efi.printsmith.data
 		
 		public var productionLocations:ProductionLocations;
 		
+		public var nextProductionLocation:ProductionLocations;
+		
 		public var employee:Employee;
 		
 		public var job:Job;
@@ -75,6 +77,12 @@ package com.efi.printsmith.data
 		public var totalRunTime:Number;
 		
 		public var totalWashUpTime:Number;
+		
+		public var startSpoilage:Number = 0;
+		
+		public var endSpoilage:Number = 0;
+		
+		public var difference:Number = 0;
 
 	}
 }
