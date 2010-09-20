@@ -38,6 +38,9 @@ public class TrackerConsoleJobs extends ModelBase{
 	@ManyToOne( cascade = {CascadeType.MERGE}, optional=true)
 	private ProductionLocations productionLocations;
 	
+	@ManyToOne( cascade = {CascadeType.MERGE}, optional=true)
+	private ProductionLocations nextProductionLocation;
+	
 	@ManyToOne()
 	private Employee employee; 
 	
@@ -101,6 +104,12 @@ public class TrackerConsoleJobs extends ModelBase{
 	private Long totalRunTime;
 	
 	private Long totalWashUpTime;
+	
+	private Long startSpoilage;
+	
+	private Long endSpoilage;
+	
+	private Long difference;
 
 	/**
 	 * @return the productionFacilities
@@ -549,5 +558,63 @@ public class TrackerConsoleJobs extends ModelBase{
 	public void setTotalWashUpTime(Long totalWashUpTime) {
 		this.totalWashUpTime = totalWashUpTime;
 	}
+
+	/**
+	 * @return the nextProductionLocation
+	 */
+	public ProductionLocations getNextProductionLocation() {
+		return nextProductionLocation;
+	}
+
+	/**
+	 * @param nextProductionLocation the nextProductionLocation to set
+	 */
+	public void setNextProductionLocation(ProductionLocations nextProductionLocation) {
+		this.nextProductionLocation = nextProductionLocation;
+	}
+
+	/**
+	 * @return the startSpoilage
+	 */
+	public Long getStartSpoilage() {
+		return startSpoilage;
+	}
+
+	/**
+	 * @param startSpoilage the startSpoilage to set
+	 */
+	public void setStartSpoilage(Long startSpoilage) {
+		this.startSpoilage = startSpoilage;
+	}
+
+	/**
+	 * @return the endSpoilage
+	 */
+	public Long getEndSpoilage() {
+		return endSpoilage;
+	}
+
+	/**
+	 * @param endSpoilage the endSpoilage to set
+	 */
+	public void setEndSpoilage(Long endSpoilage) {
+		this.endSpoilage = endSpoilage;
+	}
+
+	/**
+	 * @return the difference
+	 */
+	public Long getDifference() {
+		return difference;
+	}
+
+	/**
+	 * @param difference the difference to set
+	 */
+	public void setDifference(Long difference) {
+		this.difference = difference;
+	}
+	
+	
 	
 }
