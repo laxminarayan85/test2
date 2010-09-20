@@ -4,19 +4,23 @@
 	
 	<mx:Script>
 		<![CDATA[
-			private var _customText:Number;	
+			private var _customText:Object;	
 			[Bindable] public var variableName:String;
 			[Bindable] public var dataHolder:Object;
 			
-			public function get customText():Number {
+			public function get customText():Object {
 		        return _customText;
 		    }			  
-		    public function set customText(displayValue:Number):void {	
+		    public function set customText(displayValue:Object):void {	
 		    	_customText = displayValue;
-		    	if(!isNaN(displayValue)){
-		    		this.text = convertMilliSecondsToString(displayValue,true);
+		    	if(!isNaN(Number(displayValue))){
+		    		this.text = convertMilliSecondsToString(Number(displayValue),true);
 		    	} else {
-		    		this.text = "0:00";
+		    		if(displayValue=="--") {
+		    			this.text = "--";
+		    		} else {
+		    			this.text = "0:00";
+		    		}
 		    	}
 		    }
 		    

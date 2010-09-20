@@ -170,17 +170,7 @@
 			private function getFirstTotalTime(object:TrackerConsoleJobs):String{
 				var totalValue:Number = 0;
 				if(object.completed){
-					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-						if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
-							totalValue = totalValue + trackerConsolePasses.setUpTime;
-						}
-						if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
-							totalValue = totalValue + trackerConsolePasses.runTime;
-						}
-						if(!(isNaN(trackerConsolePasses.washUpTime)) && trackerConsolePasses.washUpTime!=0){
-							totalValue = totalValue + trackerConsolePasses.washUpTime;
-						}
-					}
+					totalValue = object.totalTime;
 				} else {
 					if(object.currentPass==1){
 						for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
@@ -242,11 +232,7 @@
 			private function getFirstSetUpTime(object:TrackerConsoleJobs):String {
 				var totalSetUpValue:Number = 0;
 				if(object.completed){
-					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-						if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
-							totalSetUpValue = totalSetUpValue + trackerConsolePasses.setUpTime;
-						}
-					}
+					totalSetUpValue = object.totalSetUpTime;
 				} else {
 					if(object.currentPass==1){
 						for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
@@ -273,11 +259,7 @@
 			private function getFirstRunTime(object:TrackerConsoleJobs):String {
 				var totalRunValue:Number = 0;
 				if(object.completed){
-					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-						if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
-							totalRunValue = totalRunValue + trackerConsolePasses.runTime;
-						}
-					}
+					totalRunValue = object.totalRunTime;
 					return convertMilliSecondsToString(totalRunValue,true);
 				} else {
 					if(object.currentPass==1){
@@ -319,11 +301,7 @@
 			private function getFirstWashTime(object:TrackerConsoleJobs):String {
 				var totalWashValue:Number = 0;
 				if(object.completed){
-					for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-						if(!(isNaN(trackerConsolePasses.washUpTime)) && trackerConsolePasses.washUpTime!=0){
-							totalWashValue = totalWashValue + trackerConsolePasses.washUpTime;
-						}
-					}
+					totalWashValue = object.totalWashUpTime;
 					return convertMilliSecondsToString(totalWashValue,true);
 				} else {
 					if(object.currentPass==1){
@@ -472,8 +450,12 @@
 			private function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
 				var txtString:String = "";
 				if(showSeconds){
-					if(milliSeconds<60000){
-						txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+					if(milliSeconds==0){
+						txtString = "";
+					} else {
+						if(milliSeconds<60000){
+							txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+						}
 					}
 				}
 				if(milliSeconds>=60000 && milliSeconds<60000*60){

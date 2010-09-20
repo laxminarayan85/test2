@@ -1048,6 +1048,7 @@
 						var totalSetUpTime:Number = 0;
 						var totalRunTime:Number = 0;
 						var totalWashUpTime:Number = 0;
+						var impressions:Number = 0;
 						var trackerConsoleStopWindow:TrackerConsoleStopWindow = PopUpManager.createPopUp(this,TrackerConsoleStopWindow,true) as TrackerConsoleStopWindow;
 						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 						var trackerConsoleJobsStopBean:TrackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
@@ -1086,6 +1087,18 @@
 						trackerConsoleJobsStopBean.totalSetUpTime = totalSetUpTime;
 						trackerConsoleJobsStopBean.totalRunTime = totalRunTime;
 						trackerConsoleJobsStopBean.totalWashUpTime = totalWashUpTime;
+						trackerConsoleJobsStopBean.totalTime = totalSetUpTime+totalRunTime+totalWashUpTime;
+						if(trackerConsoleJobsStopBean.job!=null){
+					
+						} else if(trackerConsoleJobsStopBean.charge!=null) {
+							if(trackerConsoleJobsStopBean.charge.chargeCostingRecord!=null){
+								if(!isNaN(trackerConsoleJobsStopBean.charge.chargeCostingRecord.impressions)){
+									impressions = trackerConsoleJobsStopBean.charge.chargeCostingRecord.impressions;
+								}
+							}
+						}
+						trackerConsoleJobsStopBean.impressions = impressions;
+						trackerConsoleJobsStopBean.spoilage = 0;
 						trackerConsoleJobsStopBean.markStepComplete = true;
 						trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
 						trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;
@@ -1298,8 +1311,12 @@
 						registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
 						progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
 						if(closeJob){
+							var totalSetUpTime:Number = 0;
+							var totalRunTime:Number = 0;
+							var totalWashUpTime:Number = 0;
 							var nowDate:Date = new Date();
 							var totalWashTime:Number = 0;
+							var impressions:Number = 0;
 							closeJob = false;
 							var trackerConsoleStopWindow:TrackerConsoleStopWindow = PopUpManager.createPopUp(this,TrackerConsoleStopWindow,true) as TrackerConsoleStopWindow;
 							registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
@@ -1325,6 +1342,32 @@
 									break;
 								}
 							}
+							for each(var trackerConsolePassesObj:TrackerConsolePasses in trackerConsoleJobsStopBean.passesList){
+								if(!(isNaN(trackerConsolePassesObj.setUpTime)) && trackerConsolePassesObj.setUpTime!=0){
+									totalSetUpTime = totalSetUpTime + trackerConsolePassesObj.setUpTime;
+								}
+								if(!(isNaN(trackerConsolePassesObj.runTime)) && trackerConsolePassesObj.runTime!=0){
+									totalRunTime = totalRunTime + trackerConsolePassesObj.runTime;
+								}
+								if(!(isNaN(trackerConsolePassesObj.washUpTime)) && trackerConsolePassesObj.washUpTime!=0){
+									totalWashUpTime = totalWashUpTime + trackerConsolePassesObj.washUpTime;
+								}
+							}
+							trackerConsoleJobsStopBean.totalSetUpTime = totalSetUpTime;
+							trackerConsoleJobsStopBean.totalRunTime = totalRunTime;
+							trackerConsoleJobsStopBean.totalWashUpTime = totalWashUpTime;
+							trackerConsoleJobsStopBean.totalTime = totalSetUpTime+totalRunTime+totalWashUpTime;
+							if(trackerConsoleJobsStopBean.job!=null){
+					
+							} else if(trackerConsoleJobsStopBean.charge!=null) {
+								if(trackerConsoleJobsStopBean.charge.chargeCostingRecord!=null){
+									if(!isNaN(trackerConsoleJobsStopBean.charge.chargeCostingRecord.impressions)){
+										impressions = trackerConsoleJobsStopBean.charge.chargeCostingRecord.impressions;
+									}
+								}
+							}
+							trackerConsoleJobsStopBean.impressions = impressions;
+							trackerConsoleJobsStopBean.spoilage = 0;
 							trackerConsoleJobsStopBean.markStepComplete = true;
 							trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
 							trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;
@@ -1410,6 +1453,41 @@
 			destination.productionExceptions = source.productionExceptions;
 			destination.notes = source.notes;
 			destination.appendNotesToJobTicketNotes = source.appendNotesToJobTicketNotes;
+			if(!isNaN(source.totalSetUpTime)){
+				destination.totalSetUpTime = source.totalSetUpTime;
+			} else {
+				destination.totalSetUpTime = 0;
+			}
+			if(!isNaN(source.totalRunTime)){
+				destination.totalRunTime = source.totalRunTime;
+			} else {
+				destination.totalRunTime = 0;
+			}
+			if(!isNaN(source.totalWashUpTime)){
+				destination.totalWashUpTime = source.totalWashUpTime;
+			} else {
+				destination.totalWashUpTime = 0;
+			}
+			if(!isNaN(source.totalTime)){
+				destination.totalTime = source.totalTime;
+			} else {
+				destination.totalTime = 0;
+			}
+			if(!isNaN(source.impressions)){
+				destination.impressions = source.impressions;
+			} else {
+				destination.impressions = 0;
+			}
+			if(!isNaN(source.spoilage)){
+				destination.spoilage = source.spoilage;
+			} else {
+				destination.spoilage = 0;
+			}
+			if(!isNaN(source.qtyOrdered)){
+				destination.qtyOrdered = source.qtyOrdered;
+			} else {
+				destination.qtyOrdered = 0;
+			}
 		}
 		
 		private function copyTrackerConsoleJobObject(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {

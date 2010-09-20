@@ -168,62 +168,38 @@
 				return convertMilliSecondsToString(object.actualWashTime,true);
 			}
 			
-			private function getTotalTime(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):String {
-				var totalTime:Number = 0;
+			private function getTotalTime(treatAsNonProdStep:Boolean,totalTime:Number):Object {
 				if(treatAsNonProdStep){
 					return "--";
 				}
-				for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-					if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
-						totalTime = totalTime + trackerConsolePasses.setUpTime;
-					}
-					if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
-						totalTime = totalTime + trackerConsolePasses.runTime;
-					}
-					if(!(isNaN(trackerConsolePasses.washUpTime)) && trackerConsolePasses.washUpTime!=0){
-						totalTime = totalTime + trackerConsolePasses.washUpTime;
-					}
-				}
-				return convertMilliSecondsToString(totalTime,true);
+				return totalTime;
 			}
 			
-			private function getTotalSetUpTime(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):String {
-				var totalSetUpTime:Number = 0;
-				if(treatAsNonProdStep){
-					return "--";
+			private function updateTotalTime():void {
+				if(trackerConsoleJobs!=null){
+					trackerConsoleJobs.totalTime = trackerConsoleJobs.totalSetUpTime+trackerConsoleJobs.totalRunTime+trackerConsoleJobs.totalWashUpTime;
 				}
-				for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-					if(!(isNaN(trackerConsolePasses.setUpTime)) && trackerConsolePasses.setUpTime!=0){
-						totalSetUpTime = totalSetUpTime + trackerConsolePasses.setUpTime;
-					}
-				}
-				return convertMilliSecondsToString(totalSetUpTime,true);
 			}
 			
-			private function getTotalRunTime(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):String {
-				var totalRunTime:Number = 0;
+			private function getTotalSetUpTime(treatAsNonProdStep:Boolean,setUpTime:Number):Object {
 				if(treatAsNonProdStep){
 					return "--";
 				}
-				for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-					if(!(isNaN(trackerConsolePasses.runTime)) && trackerConsolePasses.runTime!=0){
-						totalRunTime = totalRunTime + trackerConsolePasses.runTime;
-					}
-				}
-				return convertMilliSecondsToString(totalRunTime,true);
+				return setUpTime;
 			}
 			
-			private function getTotalWashUpTime(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):String {
-				var totalWashUpTime:Number = 0;
+			private function getTotalRunTime(treatAsNonProdStep:Boolean,runTime:Number):Object {
 				if(treatAsNonProdStep){
 					return "--";
 				}
-				for each(var trackerConsolePasses:TrackerConsolePasses in object.passesList){
-					if(!(isNaN(trackerConsolePasses.washUpTime)) && trackerConsolePasses.washUpTime!=0){
-						totalWashUpTime = totalWashUpTime + trackerConsolePasses.washUpTime;
-					}
+				return runTime;
+			}
+			
+			private function getTotalWashUpTime(treatAsNonProdStep:Boolean,washUpTime:Number):Object {
+				if(treatAsNonProdStep){
+					return "--";
 				}
-				return convertMilliSecondsToString(totalWashUpTime,true);
+				return washUpTime;
 			}
 			
 			private function getOrderedQty(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):String {
@@ -243,6 +219,13 @@
 					ordered = object.charge.quantity.toString();
 				}
 				return ordered;
+			}
+			
+			private function getJobQty(treatAsNonProdStep:Boolean,quantity:Number):Object {
+				if(treatAsNonProdStep){
+					return "--";
+				}
+				return quantity;
 			}
 			
 			private function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boolean):String {
@@ -303,6 +286,13 @@
 				return impressions;
 			}
 			
+			private function getJobImpressions(treatAsNonProdStep:Boolean,impressions:Number):Object {
+				if(treatAsNonProdStep){
+					return "--";
+				}
+				return impressions;
+			}
+			
 			private function getSpoilage(object:TrackerConsoleJobs, flag:int,treatAsNonProdStep:Boolean):String {
 				var spoilage:String = "0";
 				if(treatAsNonProdStep){
@@ -318,6 +308,13 @@
 					if(!isNaN(trackerConsoleJobs.spoilage)){
 						spoilage = String(trackerConsoleJobs.spoilage);
 					}
+				}
+				return spoilage;
+			}
+			
+			private function getJobSpoilage(treatAsNonProdStep:Boolean,spoilage:Number):Object {
+				if(treatAsNonProdStep){
+					return "--";
 				}
 				return spoilage;
 			}
@@ -526,7 +523,9 @@
 					width="33%" textAlign="right"/>
 				<mx:TextInput text="{getEstimatedTotalTime(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" 
 					width="33%" enabled="false" disabledColor="#000000"/>
-				<mx:TextInput text="{getTotalTime(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<tracker:TrackerTimeEntryComponent 
+					dataHolder="{trackerConsoleJobs}" variableName="totalTime" customText="{getTotalTime(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.totalTime)}"
+					width="33%" enabled="false" disabledColor="#000000"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Setup')}:"
@@ -534,42 +533,58 @@
 				<mx:TextInput text="{getEstimatedSetUpTime(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" 
 					width="33%" enabled="false" disabledColor="#000000"/>
 				<tracker:TrackerTimeEntryComponent 
-					dataHolder="{trackerConsoleJobs}" variableName="totalSetUpTime" customText="{trackerConsoleJobs.totalSetUpTime}"
-					width="33%" disabledColor="#000000"/>
+					dataHolder="{trackerConsoleJobs}" variableName="totalSetUpTime" customText="{getTotalSetUpTime(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.totalSetUpTime)}"
+					width="33%" enabled="{trackerConsoleJobs.employee.allowOverrideCost &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+					focusOut="{updateTotalTime()}"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Runtime')}:"
 					width="33%" textAlign="right"/>
 				<mx:TextInput text="{getEstimatedRunTime(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" 
 					width="33%" enabled="false" disabledColor="#000000"/>
-				<mx:TextInput text="{getTotalRunTime(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<tracker:TrackerTimeEntryComponent 
+					dataHolder="{trackerConsoleJobs}" variableName="totalRunTime" customText="{getTotalRunTime(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.totalRunTime)}"
+					width="33%" enabled="{trackerConsoleJobs.employee.allowOverrideCost &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+					focusOut="{updateTotalTime()}"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Washup')}:"
 					width="33%" textAlign="right"/>
 				<mx:TextInput text="{getEstimatedWashUpTime(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" 
 					width="33%" enabled="false" disabledColor="#000000"/>
-				<mx:TextInput text="{getTotalWashUpTime(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<tracker:TrackerTimeEntryComponent 
+					dataHolder="{trackerConsoleJobs}" variableName="totalWashUpTime" customText="{getTotalWashUpTime(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.totalWashUpTime)}"
+					width="33%" enabled="{trackerConsoleJobs.employee.allowOverrideCost &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+					focusOut="{updateTotalTime()}"/>
 			</mx:HBox>
 			
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.Ordered')}:"
 					width="33%" textAlign="right"/>
 				<mx:TextInput text="{getOrderedQty(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
-				<mx:TextInput text="{getOrderedQty(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent width="33%"
+					appendZeroes="false" dataHolder="{trackerConsoleJobs}" variableName="qtyOrdered" customText="{getJobQty(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.qtyOrdered)}" 
+					enabled="{trackerConsoleJobs.charge!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+					allowNegative="false" precision="4" rounding="nearest" textAlignStyle="left"/>
 			</mx:HBox>
 			
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Impressions')}:"
 					width="33%" textAlign="right"/>
 				<mx:TextInput text="{getImpressions(trackerConsoleJobs,0,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
-				<mx:TextInput text="{getImpressions(trackerConsoleJobs,1,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent width="33%"
+					dataHolder="{trackerConsoleJobs}" variableName="impressions" customText="{getJobImpressions(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.impressions)}" 
+					enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+					allowNegative="true" precision="0" rounding="nearest" isInteger="true" textAlignStyle="left"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Spoilage')}:"
 					width="33%" textAlign="right"/>
 				<mx:TextInput text="{getSpoilage(trackerConsoleJobs,0,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
-				<mx:TextInput text="{getSpoilage(trackerConsoleJobs,1,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent width="33%"
+					dataHolder="{trackerConsoleJobs}" variableName="spoilage" customText="{getJobSpoilage(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.spoilage)}" 
+					enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+					allowNegative="false" precision="0" rounding="nearest" isInteger="true" textAlignStyle="left"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.BinderyWaste')}:"
