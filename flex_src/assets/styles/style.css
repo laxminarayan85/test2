@@ -28,13 +28,14 @@
 }
 
 .mdiWindowStyle	{
-	alpha:1;
+	borderAlpha:1;
 	titleStyleName:mdiWindowTitleStyle;
 	borderThicknessBottom:17;
 	borderThicknessLeft:3;
 	borderThicknessRight:3;
 	borderThicknessTop:3;
 	borderColor:#003893;
+	headerHeight:20;
 	
 }
 

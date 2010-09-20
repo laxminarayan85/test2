@@ -6,8 +6,8 @@ package com.efi.mdi.view.window
 	import com.efi.mdi.event.window.WindowMinimizeEvent;
 	import com.efi.mdi.event.window.WindowResizeStartEvent;
 	
+	import flash.display.Shape;
 	import flash.events.MouseEvent;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import mx.collections.ArrayCollection;
@@ -31,6 +31,7 @@ package com.efi.mdi.view.window
 		private var _btnMinimize:Button;
 		private var _btnClose:Button;
 		private var _btnMaximize:Button;
+		private var shape:Shape;
 		
 		private var _oldX:int = -1;
 		private var _oldY:int = -1;
@@ -164,11 +165,25 @@ package com.efi.mdi.view.window
 			_btnClose.addEventListener(MouseEvent.CLICK, onClose);
 			
 			this.rawChildren.addChild(_btnClose);
+			
+			
+			shape = new Shape();			
+			shape.graphics.clear();
+			shape.graphics.lineStyle(2, 0x0808080);
+			shape.graphics.moveTo(2,13);
+			shape.graphics.lineTo(13,2);
+			shape.graphics.moveTo(7,13);
+			shape.graphics.lineTo(13,7);
+			shape.graphics.moveTo(12,13);
+			shape.graphics.lineTo(13, 12);
+			this.rawChildren.addChild(shape);
+			
 			this.titleBar.doubleClickEnabled = true;
 			this.titleBar.addEventListener(MouseEvent.DOUBLE_CLICK, onHeaderDoubleClick);
 			this.titleBar.addEventListener(MouseEvent.MOUSE_DOWN, onDrag);
 			this.titleBar.addEventListener(MouseEvent.MOUSE_UP, onDrag);
 			this.titleBar.addEventListener(MouseEvent.CLICK, onClick);
+			
 			
 			this.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			this.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
@@ -283,14 +298,9 @@ package com.efi.mdi.view.window
 			_btnMaximize.move(unscaledWidth - _btnMinimize.width - _btnClose.width - pixelsRight - pixelsBetn, pixelsTop);
 			_btnMinimize.move(unscaledWidth - _btnMaximize.width - _btnMinimize.width - _btnClose.width - pixelsRight - (pixelsBetn*2), pixelsTop);
 			
-			graphics.clear();
-			graphics.lineStyle(1, 0x000000);
-			graphics.moveTo(unscaledWidth - 15, unscaledHeight);
-			graphics.lineTo(unscaledWidth, unscaledHeight-15);
-			graphics.moveTo(unscaledWidth - 10, unscaledHeight);
-			graphics.lineTo(unscaledWidth, unscaledHeight-10);
-			graphics.moveTo(unscaledWidth - 5, unscaledHeight);
-			graphics.lineTo(unscaledWidth, unscaledHeight-5);
+			shape.x = unscaledWidth-15;
+			shape.y = unscaledHeight -15;
+			
 		}
 	}
 }
