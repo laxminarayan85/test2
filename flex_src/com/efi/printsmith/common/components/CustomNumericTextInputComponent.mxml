@@ -53,6 +53,7 @@
 	        public var viewablePrecision:int;
 			private var _customText:String;	
 			public var variableName:String;
+			[Bindable] public var textAlignStyle:String;
 			
 			/*
 			 *This method helps to display the tooltip.
@@ -172,7 +173,11 @@
 		     	if(isFocusInEventTrigerred){
 		     		isFocusInEventTrigerred = false;
 		     	}
-		        setStyle('textAlign','right');
+		     	if(textAlignStyle!=null){
+		     		setStyle('textAlign',textAlignStyle);
+		      	} else {
+		      		setStyle('textAlign','right');
+		      	}
 		    }
 			
 			/*
@@ -394,6 +399,8 @@
 							formattedString = formatDecimalsWithPrecision(formattedString);
 						}
 					}
+	        	} else if(viewablePrecision==0){
+	        		formattedString = formatDecimals(formattedString);
 	        	}
 	        	return formattedString;
 			}
