@@ -135,38 +135,14 @@
 			
 			public function getActualJobTime(object:Object):String {
 				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
-				var totalValue:Number = 0;
-				for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
-					if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0) {
-						totalValue = totalValue + passes.setUpTime;
-					}
-					if(!(isNaN(passes.runTime)) && passes.runTime!=0) {
-						totalValue = totalValue + passes.runTime;
-					}
-					if(!(isNaN(passes.washUpTime)) && passes.washUpTime!=0) {
-						totalValue = totalValue + passes.washUpTime;
-					}
-				}
-				return convertMilliSecondsToNegString(totalValue,true);
+				return convertMilliSecondsToNegString(trackerConsoleJobsObj.totalTime,true);
 			}
 			
 			public function getTimeDifference(object:Object):String {
 				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
-				var totalValue:Number = 0;
 				var diffTime:Number = 0;
-				for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
-					if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0) {
-						totalValue = totalValue + passes.setUpTime;
-					}
-					if(!(isNaN(passes.runTime)) && passes.runTime!=0) {
-						totalValue = totalValue + passes.runTime;
-					}
-					if(!(isNaN(passes.washUpTime)) && passes.washUpTime!=0) {
-						totalValue = totalValue + passes.washUpTime;
-					}
-				}
-				diffTime = totalValue - (object.actualSetUpTime+object.actualRunTime+object.actualWashTime);
-				return convertMilliSecondsToString(diffTime,true);
+				diffTime = (trackerConsoleJobsObj.totalTime) - (trackerConsoleJobsObj.actualSetUpTime+trackerConsoleJobsObj.actualRunTime+trackerConsoleJobsObj.actualWashTime);
+				return convertMilliSecondsToNegString(diffTime,true);
 			}
 			
 			public function getEstimatedCost(object:Object):String {
