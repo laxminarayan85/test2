@@ -2413,7 +2413,7 @@ public class DataService extends HibernateService {
 			log.debug("** getByaccountid Id called.");
 
 			String queryString = "select a from " + className
-					+ " a where a.parentAccount.id = :id";
+					+ " a where a.parentAccount.id = :id  order by lastName";
 
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", id);

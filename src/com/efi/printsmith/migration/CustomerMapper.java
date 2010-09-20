@@ -213,8 +213,9 @@ public class CustomerMapper extends ImportMapper {
 					TempB = Utilities.tokenToBooleanValue(currentImportToken);
 					customer.setGenerateStatements(!TempB);
 				} else if ("do finance charges".equals(currentFieldToken)) {
-					customer.setApplyFinanceCharges(Utilities
-							.tokenToBooleanValue(currentImportToken));
+					Boolean tempF;
+					tempF = Utilities.tokenToBooleanValue(currentImportToken);
+					customer.setApplyFinanceCharges(!tempF);
 				} else if ("po required".equals(currentFieldToken)) {
 					customer.setPoRequired(Utilities
 							.tokenToBooleanValue(currentImportToken));

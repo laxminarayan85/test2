@@ -105,12 +105,12 @@
 	
 					if (address.zip != null && address.zip != null && address.zip != "")
 					{
-						displayAddress+=address.zip;
+						displayAddress+=address.zip + "\n";
 					}
 	
 					if (address.country != null && address.country != null && address.country != "")
 					{
-						displayAddress+="\n" + address.country;
+						displayAddress+= address.country;
 					}
 				}
 			}

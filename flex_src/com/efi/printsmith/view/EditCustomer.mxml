@@ -20,7 +20,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveLogResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteLogResult(event)"/>
 </mx:RemoteObject>
-
+<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
+</mx:RemoteObject>
 <mx:RemoteObject id="salesRepDataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSalesReps(event)"/>
     <mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSalesRepResult(event)"/>
@@ -54,6 +56,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.PreferencesAccounting;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.SportsInterest;
 	import com.efi.printsmith.data.CommonInterest;
@@ -110,10 +113,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	[Bindable]
 	private var acctStatusRadioValue:String = "acct_status_new_radio";
-	
+	[Bindable]                                
+	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+    
 	[Bindable]
 	private var acctTypeRadioValue:String = "cash_only";
-	               
+	 [Bindable]                                         
+    private var systemPreferences:PreferencesAccounting;              
 	[Bindable]
 	private var balances:ArrayCollection = new ArrayCollection([
             {Aged:"Current", Value:0},
@@ -124,7 +130,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     
     [Bindable]
     private var customerLogs:ArrayCollection = new ArrayCollection();
-                     
+     [Bindable]
+    private var creditLimitAbb:String = new String;                
     [Bindable]
     private var salesReps:ArrayCollection = new ArrayCollection();
     [Bindable]
@@ -152,6 +159,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		first = true;
 		setSettings();
 		this.enabled = false;
+		dataServiceSystemPreferences.getAll("PreferencesAccounting");
 		dataService.getAccountPicker();
 
 		var eventAddress:AccountsAddressPanelEvent = new AccountsAddressPanelEvent(canvasAddress, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
@@ -261,6 +269,17 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	 }
 	 
 	}
+	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+		systemPreferencesArray = ev.result as ArrayCollection;
+		if (systemPreferencesArray.length > 0)
+		{
+			systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesAccounting;
+			creditLimitAbb = systemPreferences.creditLimit.toString();
+		}else{
+			creditLimitAbb = "";
+
+		}
+	}	                                 
 	private function handleGetMasterResult(ev:ResultEvent):void {
 		var tempmaster:Account = new Account();
 		tempmaster = ev.result as Account
@@ -377,15 +396,23 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		
 		account.shipToAddress = ship_to_address_editor.getAddress();
 		account.billToAddress = bill_to_address_editor.getAddress();
-		if ( account.billToAddress.street1 == "")
-			account.billToAddress = account.shipToAddress
-
-
+		if ( account.billToAddress.street1 == ""){
+			account.billToAddress.city = account.shipToAddress.city;
+			account.billToAddress.country = account.shipToAddress.country;
+			account.billToAddress.name = account.shipToAddress.name;
+			account.billToAddress.state = account.shipToAddress.state;
+			account.billToAddress.street1 = account.shipToAddress.street1;
+			account.billToAddress.street2 = account.shipToAddress.street2;
+			account.billToAddress.zip = account.shipToAddress.zip;
+			account.billToAddress.zone = account.shipToAddress.zone;
+		}
 		account.contact = ship_to_contact_editor.getContact();
 		if (account.contact == null){
 			account.contact = new Contact();
 			account.contact.lastName = account.title;
 		}
+		if( account.contact.lastName == null || account.contact.lastName == "")
+			account.contact.lastName = account.title;
 		account.billToContact = bill_to_contact_editor.getContact();
 		if (account.contact != null) {
 			account.contact.parentAccount = account;
@@ -881,6 +908,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private function changeName(evt:Event):void {
     	validateForm(evt);
     	if (name_edit.text != "") {
+    		if ( account == null){
+    			account = new Account();
+    			setMarketing();
+				this.setAccount(account); 
+    			}
+    			
 	    	if (account.shipToAddress == null) {
 	    		account.shipToAddress = new Address();
 	    		account.shipToAddress.name = name_edit.text;
@@ -909,8 +942,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     }
    private function ClearLabel():void{
     	
-    	if (credit_limit_edit.text == "" || credit_limit_edit.text == "0") 
+    	if (credit_limit_edit.text == "" || credit_limit_edit.text == "0.00") {
     		limit.visible = true;
+    		limit.text = StringUtil.substitute(limit.text,creditLimitAbb);
+    	}
     	else
     		limit.visible = false;
     		
@@ -981,8 +1016,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (tmpItem != null && tmpItem.lastName != null) {
 			if (tmpItem.firstName == null)
 				tmpString = tmpItem.lastName
-			else
-				tmpString = tmpItem.lastName+ ", " + tmpItem.firstName; 
+			else{
+				tmpString = tmpItem.lastName
+				if (tmpItem.firstName != "")
+					tmpString = tmpString + ", " + tmpItem.firstName; 
+			}
 			return(tmpString);
 		} else {
 			return "None";
@@ -1095,7 +1133,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:Label x="181" y="120" text="{account.balance}" textAlign="right" width="160" id="current_balance_edit" />
 				<mx:Label x="181" y="94" text="0.00" textAlign="right" width="160" id="finance_charges_ytd_edit"/>
 				<mx:Label x="36" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Duedaysfromposting')}" textAlign="right"/>
-				<mx:Text x="349" y="12" text="(Using system limit of 2,500.00)&#xd;" width="348" fontWeight="bold" id="limit"/>
+				<mx:Text x="349" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Usingsystemlimitof2')}" width="348" fontWeight="bold" id="limit"/>
 				<mx:Text x="349" y="40" text="Avg. Days to Pay&#xd;" width="304" fontWeight="bold"/>
 				<mx:Text x="349" y="68" text="(Using standard rate of 1.5%)" width="348" fontWeight="bold" id="standardratelabel"/>
 				<mx:CheckBox x="384" y="92" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Nevercalculatefinanc')}" id="never_calculate_finance_check"  selected="{account.applyFinanceCharges}"/>
