@@ -144,23 +144,27 @@
 			}
 			
 			public function getEstimatedCost(object:Object):String {
-				if(object is TrackerConsoleJobs){
-					if(object.job!=null){
-						object = object.job;
-					} else {
-						object = object.charge;
+				var totalCost:String = "0";
+				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
+				if(trackerConsoleJobsObj.job!=null){
+					if(trackerConsoleJobsObj.job.costingRecord!=null){
+						if(!isNaN(trackerConsoleJobsObj.job.costingRecord.totalCost)){
+							totalCost = String(trackerConsoleJobsObj.job.costingRecord.totalCost);
+						}
 					}
-				} 
-				if(object is Job){
-					var job:Job = object as Job;
-					return costFormatter.format(job.totalCost);
+				} else if(trackerConsoleJobsObj.charge!=null) {
+					if(trackerConsoleJobsObj.charge.chargeCostingRecord!=null){
+						if(!isNaN(trackerConsoleJobsObj.charge.chargeCostingRecord.totalCost)){
+							totalCost = String(trackerConsoleJobsObj.charge.chargeCostingRecord.totalCost);
+						}
+					}
 				}
-				return costFormatter.format(0); 
+				return costFormatter.format(totalCost); 
 			}
 			
 			public function getActualCost(object:Object):String {
 				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
-				var totalValue:Number = 0;
+				/* var totalValue:Number = 0;
 				for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
 					if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0) {
 						totalValue = totalValue + passes.setUpTime;
@@ -178,8 +182,8 @@
 						return costFormatter.format(0);
 					}
 					return costFormatter.format((job.totalCost*totalValue)/(trackerConsoleJobsObj.actualSetUpTime+trackerConsoleJobsObj.actualRunTime+trackerConsoleJobsObj.actualWashTime));
-				}
-				return costFormatter.format(0); 
+				} */
+				return costFormatter.format(trackerConsoleJobsObj.totalCost); 
 			}
 			
 			public function getCostDifference(object:Object):String {
