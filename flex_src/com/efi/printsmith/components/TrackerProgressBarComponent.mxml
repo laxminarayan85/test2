@@ -24,11 +24,17 @@
 			
 			[Bindable] public var currentPass:int = 0;
 			
-			[Embed(source="../../../../assets/arrow-down.png")]
-			[Bindable] public var arrowDownImg:Class;
+			[Embed(source="../../../../assets/arrow-down_blue.png")]
+			[Bindable] public var arrowDownSetUpImg:Class;
 			
-			[Embed(source="../../../../assets/arrow-up.png")]
-			[Bindable] public var arrowUpImg:Class;
+			[Embed(source="../../../../assets/arrow-down_red.png")]
+			[Bindable] public var arrowDownRunImg:Class;
+			
+			[Embed(source="../../../../assets/arrow-up_blue.png")]
+			[Bindable] public var arrowUpSetUpImg:Class;
+			
+			[Embed(source="../../../../assets/arrow-up_red.png")]
+			[Bindable] public var arrowUpRunImg:Class;
 			
 			private var estimateSetUpImage:Image;
 			
@@ -147,7 +153,7 @@
 						if(barComponent!=null){
 							if(displayValue.employee!=null && !displayValue.employee.hideEstimateTimeTracker) {
 								estimateSetUpImage = new Image();
-								estimateSetUpImage.source = arrowDownImg;
+								estimateSetUpImage.source = arrowDownSetUpImg;
 								estimateSetUpImage.width = 30;
 								estimateSetUpImage.height = 30;
 								estimateSetUpImage.x = (((displayValue.actualSetUpTime/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
@@ -162,7 +168,7 @@
 						if(barComponent!=null){
 							if(displayValue.employee!=null && !displayValue.employee.hideEstimateTimeTracker) {
 								estimateRunImage = new Image();
-								estimateRunImage.source = arrowDownImg;
+								estimateRunImage.source = arrowDownRunImg;
 								estimateRunImage.width = 30;
 								estimateRunImage.height = 30;
 								estimateRunImage.x = ((((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
@@ -178,11 +184,11 @@
 							if(trackerConsolePasses.setUpCompleted){
 								if(barComponent!=null){
 									actualSetUpImage = new Image();
-									actualSetUpImage.source = arrowUpImg;
+									actualSetUpImage.source = arrowUpSetUpImg;
 									actualSetUpImage.width = 30;
 									actualSetUpImage.height = 30;
 									actualSetUpImage.x = ((trackerConsolePasses.setUpTime/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualSetUpImage.width/2);
-									actualSetUpImage.y = pgBarTrackHeight/2;
+									actualSetUpImage.y = (pgBarTrackHeight/2)+2;
 									if(trackerConsolePasses.setUpTime>totalValue){
 										actualSetUpImage = null;
 									} else {
@@ -194,11 +200,11 @@
 							if(trackerConsolePasses.runCompleted){
 								if(barComponent!=null){
 									actualRunImage = new Image();
-									actualRunImage.source = arrowUpImg;
+									actualRunImage.source = arrowUpRunImg;
 									actualRunImage.width = 30;
 									actualRunImage.height = 30;
 									actualRunImage.x = (((trackerConsolePasses.runTime+trackerConsolePasses.setUpTime)/totalValue)*(pgBar.width-pgBarLabelWidth))-(actualRunImage.width/2);
-									actualRunImage.y = pgBarTrackHeight/2;
+									actualRunImage.y = (pgBarTrackHeight/2)+2;
 									if((trackerConsolePasses.runTime+trackerConsolePasses.setUpTime)>totalValue){
 										actualRunImage = null;
 									} else {
