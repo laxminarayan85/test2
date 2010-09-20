@@ -60,6 +60,11 @@ public class ShippingCharge extends Charge {
 	public static final String TOTALWEIGHT = "TotalWeight";
 
 	/**
+   * @generated
+   */
+  public static final String OVERRIDETOTALWEIGHT = "OverrideTotalWeight";
+
+	/**
 	 * @generated
 	 */
 	public ShippingCharge() {
@@ -153,6 +158,28 @@ public class ShippingCharge extends Charge {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean overrideTotalWeight;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getOverrideTotalWeight(){
+    return overrideTotalWeight; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOverrideTotalWeight(Boolean newVal) {
+    this.overrideTotalWeight = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -161,6 +188,7 @@ public class ShippingCharge extends Charge {
     if (SHIPVIA.equals(propertyName)) return getShipVia();
     if (SHIPTO.equals(propertyName)) return getShipTo();
     if (TOTALWEIGHT.equals(propertyName)) return getTotalWeight();
+    if (OVERRIDETOTALWEIGHT.equals(propertyName)) return getOverrideTotalWeight();
     return super.getProperty(propertyName);
   }
 	
@@ -173,6 +201,7 @@ public class ShippingCharge extends Charge {
     if (SHIPVIA.equals(propertyName)) setShipVia((String)newValue); else
     if (SHIPTO.equals(propertyName)) setShipTo((Address)newValue); else
     if (TOTALWEIGHT.equals(propertyName)) setTotalWeight((Double)newValue); else
+    if (OVERRIDETOTALWEIGHT.equals(propertyName)) setOverrideTotalWeight((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -188,6 +217,8 @@ public class ShippingCharge extends Charge {
       return new Class<?>[] {Address.class};		
     if (TOTALWEIGHT.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
+    if (OVERRIDETOTALWEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -201,6 +232,7 @@ public class ShippingCharge extends Charge {
     if (SHIPVIA.equals(propertyName)) return ShippingCharge.class;
     if (SHIPTO.equals(propertyName)) return ShippingCharge.class;
     if (TOTALWEIGHT.equals(propertyName)) return ShippingCharge.class;
+    if (OVERRIDETOTALWEIGHT.equals(propertyName)) return ShippingCharge.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -217,6 +249,8 @@ public class ShippingCharge extends Charge {
     if (! SmartEquals(getShipTo(), objT.getShipTo()))
       return false;
     if (! SmartEquals(getTotalWeight(), objT.getTotalWeight()))
+      return false;
+    if (! SmartEquals(getOverrideTotalWeight(), objT.getOverrideTotalWeight()))
       return false;
     return true;
   }			
