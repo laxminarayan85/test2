@@ -158,14 +158,22 @@
 		}
 		if(milliSeconds>=60000 && milliSeconds<60000*60){
 	    	txtString = "00:";
-	    	txtString = txtString + numFormatter.format(milliSeconds/60000);
+	    	if(numFormatter.format(milliSeconds/60000).length>1){
+	    		txtString = txtString + numFormatter.format(milliSeconds/60000);
+	    	} else if(numFormatter.format(milliSeconds/60000).length==1) {
+	    		txtString = txtString + "0"+numFormatter.format(milliSeconds/60000);
+	    	}
 	    	if(showSeconds){
 	    		txtString = txtString + " " + numFormatter.format((milliSeconds%60000)/(1000))+"S";
 	    	}
 	    }
 	    if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
 	    	txtString = numFormatter.format(milliSeconds/(60000*60))+":";
-	    	txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    	if(numFormatter.format(milliSeconds%(60000*60)/(60000)).length>1) {
+	    		txtString = txtString + numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    	} else if(numFormatter.format(milliSeconds%(60000*60)/(60000)).length==1){
+	    		txtString = txtString + "0"+numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    	}
 	    	if(showSeconds){
 	    		txtString = txtString + " " + numFormatter.format(milliSeconds%60000/1000)+"S";
 	    	}
@@ -173,7 +181,11 @@
 	    if(milliSeconds>=60000*60*24){
 	    	txtString = numFormatter.format( milliSeconds/(60000*60*24))+" Day(s) ";
 	    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60*24)/(60000*60))+":";
-	    	txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    	if(numFormatter.format(milliSeconds%(60000*60)/(60000)).length>1){
+	    		txtString = txtString+numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    	} else if(numFormatter.format(milliSeconds%(60000*60)/(60000)).length==1){
+	    		txtString = txtString+"0"+numFormatter.format(milliSeconds%(60000*60)/(60000));
+	    	}
 	    	if(showSeconds){
 	    		txtString = txtString+" "+numFormatter.format(milliSeconds%60000/1000)+"S";
 	    	}
