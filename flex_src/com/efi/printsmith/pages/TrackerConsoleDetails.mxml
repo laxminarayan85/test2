@@ -609,7 +609,7 @@
 						} else {
 							if(object.job!=null){
 								if(object.job.costingRecord!=null){
-									if(!isNaN(object.job.costingRecord.laborCost)){
+									if(!isNaN(object.job.costingRecord.acualLaborCost)){
 										laborCost = String(object.job.costingRecord.acualLaborCost);
 									}
 								}
@@ -625,7 +625,7 @@
 				} else if(object.completed){
 					if(object.job!=null){
 						if(object.job.costingRecord!=null){
-							if(!isNaN(object.job.costingRecord.laborCost)){
+							if(!isNaN(object.job.costingRecord.acualLaborCost)){
 								laborCost = String(object.job.costingRecord.acualLaborCost);
 							}
 						}
@@ -647,36 +647,12 @@
 						if(object.employee.costingAmounts){
 							totalCost = "--";
 						} else {
-							if(object.job!=null){
-								if(object.job.costingRecord!=null){
-									if(!isNaN(object.job.costingRecord.totalCost)){
-										totalCost = String(object.job.costingRecord.actualTotalCost);
-									}
-								}
-							} else if(object.charge!=null) {
-								if(object.charge.chargeCostingRecord!=null){
-									if(!isNaN(object.charge.chargeCostingRecord.totalCost)){
-										totalCost = String(object.charge.chargeCostingRecord.totalCost);
-									}
-								}
-							}
+							totalCost = String(Number(getStockCost(trackerConsoleJobs))+Number(getLaborCost(trackerConsoleJobs)));
 						}
 					}
 				} else if(object.completed) {
 					if(flag==0){
-						if(object.job!=null){
-							if(object.job.costingRecord!=null){
-								if(!isNaN(object.job.costingRecord.totalCost)){
-									totalCost = String(object.job.costingRecord.actualTotalCost);
-								}
-							}
-						} else if(object.charge!=null) {
-							if(object.charge.chargeCostingRecord!=null){
-								if(!isNaN(object.charge.chargeCostingRecord.totalCost)){
-									totalCost = String(object.charge.chargeCostingRecord.totalCost);
-								}
-							}
-						}
+						totalCost = String(Number(getStockCost(trackerConsoleJobs))+Number(getLaborCost(trackerConsoleJobs)));
 					} else if(flag==1){
 						if(!isNaN(trackerConsoleJobs.totalCost)) {
 							totalCost = String(trackerConsoleJobs.totalCost);

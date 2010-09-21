@@ -369,19 +369,7 @@
 					return "--";
 				}
 				if(flag==0){
-					if(object.job!=null){
-						if(object.job.costingRecord!=null){
-							if(!isNaN(object.job.costingRecord.totalCost)){
-								totalCost = String(object.job.costingRecord.actualTotalCost);
-							}
-						}
-					} else if(object.charge!=null) {
-						if(object.charge.chargeCostingRecord!=null){
-							if(!isNaN(object.charge.chargeCostingRecord.totalCost)){
-								totalCost = String(object.charge.chargeCostingRecord.totalCost);
-							}
-						}
-					}
+					totalCost = String(Number(getStockCost(object,treatAsNonProdStep))+Number(getLaborCost(object,treatAsNonProdStep)));
 				} else if(flag==1){
 					if(!isNaN(trackerConsoleJobs.totalCost)) {
 						totalCost = String(trackerConsoleJobs.totalCost);
@@ -543,7 +531,7 @@
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.NextLocation')}:"
 			width="20%" textAlign="right"/>
-		<components:CustomComboBoxComponent width="35%"
+		<components:CustomComboBoxComponent width="35%" enabled="false" disabledColor="#000000"
 			masterList="{productionLocations}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 			dataHolder="{trackerConsoleJobs}" variableName="nextProductionLocation" customText="{getCustomTextData(productionLocations,trackerConsoleJobs,trackerConsoleJobs.nextProductionLocation)}"/>
 		<components:CustomCheckBoxComponent width="42%" 
