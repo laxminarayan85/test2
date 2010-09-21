@@ -263,8 +263,7 @@
 				var temp:ChargeDefinition;
 				temp = treeItem as ChargeDefinition
 				if (temp != null)
-					if ( findItem(temp.name, charges)== -1 )
-						charges.addItem(temp);
+					charges.addItem(temp);
 				
 			}
 			private function RemoveCharge():void
