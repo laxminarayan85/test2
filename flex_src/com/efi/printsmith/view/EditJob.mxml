@@ -523,6 +523,7 @@
 	</mx:RemoteObject>
 
 	<mx:RemoteObject id="jobService" destination="jobService">
+		<mx:method name="createJob" fault="handleFault(event)" result="handleCreateJobResult(event)"/>
 		<mx:method name="assignPricingCopierToJob" fault="handleFault(event)" result="handleAssignPricingCopierResult(event)"/>
 		<mx:method name="assignStockToJob" fault="handleFault(event)" result="handleAssignStockResult(event)"/>
 	</mx:RemoteObject>
@@ -724,44 +725,9 @@
 				dataServicePreferencesDefaultPresses.getSingle("PreferencesDefaultPresses");
 				
 				if (job == null) {
+					job = new Job();
 					doNew();
-					if (job.parentSize != null)
-						job.parentSize.name = "";
-					
-					if (job.runSize != null)
-						job.runSize.name = "";
-					if (job.finishSize != null)
-						job.finishSize.name = "";
-					if (job.foldedSize != null)
-						job.foldedSize.name = "";
-					job.frontColors = 1;
-					job.frontPasses = 1;
-					job.inSetsOf = 1;
-					job.sheets = 1;
-					job.numOn = 1;
-					job.numUp = 1;	
-					job.singleSided = true;
-					job.doubleSided = false;	
-					job.pricingRecord = new PricingRecord;			
-					job.pricingRecord.unitPriceOverride = false;
-					job.pricingRecord.totalPriceOverride = false;	
-					job.markup = 2.0;
-					job.totalCost = 0.0;
-					job.unitCost = 0.0;
-					job.parentInvoice = this.invoice as InvoiceBase;
-					job.paperCal = new com.efi.printsmith.data.PaperCalculator();
-					setPaperCalculatorData = true;
-					
-					job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH;
-					job.paperCal.runToFinishGrain = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER;
-					job.paperCal.gripLocation = Constants.PAPER_CALCULATOR_GRIPPER_TOP;
-					job.paperCal.folioLocation = Constants.PAPER_CALCULATOR_FOLIO_TOP;
-					
-					job.paperCal.dAcross = 0;
-					job.paperCal.dDown = 0;
 				}
-				
-				this.copy_single_radio.selected = this.job.singleSided;
 
 				var eventPriceMethod:JobsChangePricingMethodEvent = new JobsChangePricingMethodEvent(job_type, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
 				eventPriceMethod.dispatch();
@@ -779,10 +745,11 @@
 				var eventStock:JobsChangeStockEvent = new JobsChangeStockEvent(chage_stock_button, new mx.rpc.Responder(handleUIControlEvent, handleUIControlFault));
 				eventStock.dispatch(); 
 				
-				if (isNaN(job.id)) {
-					this.enabled=false;
-				}
+//				if (isNaN(job.id)) {
+//					this.enabled=false;
+//				}
 			}
+			
 			public function handleUIControlEvent(evt:ResultEvent):void {
 				evt.result.control.enabled = evt.result.enabled;
 			}		
@@ -852,9 +819,7 @@
 
 			private function doNew():void
 			{
-				job=new Job();
-				job.parentInvoice = invoice as InvoiceBase;
-				setJob(job);
+				jobService.createJob(invoice, job_type.selectedItem as PreferencesPricingMethod);
 			}
 			
 			private function setPreferenceDataforPaperCal():void {
@@ -1112,6 +1077,14 @@
 				dispatchEvent(jobEditCompleteEvent);
 
 				PopUpManager.removePopUp(this);
+			}
+			
+			private function handleCreateJobResult(ev:ResultEvent):void 
+			{
+				this.job = ev.result as Job;
+				setJob(job);
+				setPaperCalculatorData = true;				
+				this.copy_single_radio.selected = this.job.singleSided;
 			}
 			
 			private function handleAssignPricingCopierResult(ev:ResultEvent):void

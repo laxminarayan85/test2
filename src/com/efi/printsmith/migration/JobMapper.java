@@ -4,6 +4,8 @@ import java.io.File;
 
 import org.apache.log4j.Logger;
 import java.util.List;
+
+import com.efi.printsmith.data.CostingRecord;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.ProductionLocations;
@@ -32,7 +34,8 @@ public class JobMapper extends ImportMapper {
 		DataService dataService = new DataService();
 		Job job = new Job();
 		PricingRecord pricingRecord = new PricingRecord();
-		
+		CostingRecord costingRecord = new CostingRecord();
+		job.setCostingRecord(costingRecord);
 		PaperCalculator tempPaper = new PaperCalculator();
 		Dimension dimension = new Dimension();
 		Dimension parentdimension = new Dimension();
@@ -277,7 +280,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("waste".equals(currentFieldToken)) {
 				job.setEstWaste(Utilities.tokenToLong(currentImportToken));
 			} else if ("impressions".equals(currentFieldToken)) {
-				job.setImpositionsPerRun(Utilities.tokenToLong(currentImportToken));
+				job.setImpressionsPerRun(Utilities.tokenToLong(currentImportToken));
 			} else if ("total impressions".equals(currentFieldToken)) {
 				totalQty = Utilities.tokenToLong(currentImportToken);
 				

@@ -17,6 +17,7 @@ package com.efi.printsmith.data
 		public var shipVia:String = "";
 		public var shipTo:Address;
 		public var totalWeight:Number = 0;
+		public var overrideTotalWeight:Boolean = false;
 	
 	}
 }

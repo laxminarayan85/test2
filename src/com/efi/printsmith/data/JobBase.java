@@ -278,7 +278,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */
-  public static final String IMPOSITIONSPERRUN = "ImpositionsPerRun";
+  public static final String IMPRESSIONSPERRUN = "ImpressionsPerRun";
 	/**
    * @generated
    */
@@ -520,6 +520,10 @@ public class JobBase extends ModelBase {
    * @generated
    */
   public static final String ROLLWIDTH = "RollWidth";
+	/**
+   * @generated
+   */
+  public static final String ATTRIBUTE1 = "Attribute1";
 	/**
 	 * @generated
 	 */
@@ -1926,23 +1930,21 @@ public class JobBase extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Long impositionsPerRun;
-
+  private Long impressionsPerRun;
 	/**
    * @generated
  	 */
-  public Long getImpositionsPerRun(){
-    return impositionsPerRun; 
+  public Long getImpressionsPerRun(){
+    return impressionsPerRun; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setImpositionsPerRun(Long newVal) {
-    this.impositionsPerRun = newVal;
+  public void setImpressionsPerRun(Long newVal) {
+    this.impressionsPerRun = newVal;
   }
-
 
 
 	/**
@@ -3278,7 +3280,28 @@ public class JobBase extends ModelBase {
     this.rollWidth = newVal;
   }
   
-  	@Basic
+  	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer attribute1;
+	/**
+   * @generated
+ 	 */
+  public Integer getAttribute1(){
+    return attribute1; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAttribute1(Integer newVal) {
+    this.attribute1 = newVal;
+  }
+
+
+	@Basic
 	private Boolean releasedToProduction;
   	
   	
@@ -3361,7 +3384,7 @@ public class JobBase extends ModelBase {
     if (NUMCOPIESOVERRIDE.equals(propertyName)) return getNumCopiesOverride();
     if (STOCKQTY.equals(propertyName)) return getStockQty();
     if (CUTOFF.equals(propertyName)) return getCutOff();
-    if (IMPOSITIONSPERRUN.equals(propertyName)) return getImpositionsPerRun();
+    if (IMPRESSIONSPERRUN.equals(propertyName)) return getImpressionsPerRun();
     if (TOTALIMPOSITIONS.equals(propertyName)) return getTotalImpositions();
     if (MARKUP.equals(propertyName)) return getMarkup();
     if (TOTALCOST.equals(propertyName)) return getTotalCost();
@@ -3421,6 +3444,7 @@ public class JobBase extends ModelBase {
     if (DELIVEREDDATE.equals(propertyName)) return getDeliveredDate();
     if (USEPAPERCALCUP.equals(propertyName)) return getUsePaperCalcUp();
     if (ROLLWIDTH.equals(propertyName)) return getRollWidth();
+    if (ATTRIBUTE1.equals(propertyName)) return getAttribute1();
     return super.getProperty(propertyName);
   }
 	
@@ -3487,7 +3511,7 @@ public class JobBase extends ModelBase {
     if (NUMCOPIESOVERRIDE.equals(propertyName)) setNumCopiesOverride((Boolean)newValue); else
     if (STOCKQTY.equals(propertyName)) setStockQty((Long)newValue); else
     if (CUTOFF.equals(propertyName)) setCutOff((Double)newValue); else
-    if (IMPOSITIONSPERRUN.equals(propertyName)) setImpositionsPerRun((Long)newValue); else
+    if (IMPRESSIONSPERRUN.equals(propertyName)) setImpressionsPerRun((Long)newValue); else
     if (TOTALIMPOSITIONS.equals(propertyName)) setTotalImpositions((Long)newValue); else
     if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
     if (TOTALCOST.equals(propertyName)) setTotalCost((BigDecimal)newValue); else
@@ -3547,6 +3571,7 @@ public class JobBase extends ModelBase {
     if (DELIVEREDDATE.equals(propertyName)) setDeliveredDate((Date)newValue); else
     if (USEPAPERCALCUP.equals(propertyName)) setUsePaperCalcUp((Boolean)newValue); else
     if (ROLLWIDTH.equals(propertyName)) setRollWidth((Double)newValue); else
+    if (ATTRIBUTE1.equals(propertyName)) setAttribute1((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -3670,7 +3695,7 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Long.class};		
     if (CUTOFF.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
-    if (IMPOSITIONSPERRUN.equals(propertyName)) 
+    if (IMPRESSIONSPERRUN.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (TOTALIMPOSITIONS.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
@@ -3790,6 +3815,8 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (ROLLWIDTH.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
+    if (ATTRIBUTE1.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3857,7 +3884,7 @@ public class JobBase extends ModelBase {
     if (NUMCOPIESOVERRIDE.equals(propertyName)) return JobBase.class;
     if (STOCKQTY.equals(propertyName)) return JobBase.class;
     if (CUTOFF.equals(propertyName)) return JobBase.class;
-    if (IMPOSITIONSPERRUN.equals(propertyName)) return JobBase.class;
+    if (IMPRESSIONSPERRUN.equals(propertyName)) return JobBase.class;
     if (TOTALIMPOSITIONS.equals(propertyName)) return JobBase.class;
     if (MARKUP.equals(propertyName)) return JobBase.class;
     if (TOTALCOST.equals(propertyName)) return JobBase.class;
@@ -3917,6 +3944,7 @@ public class JobBase extends ModelBase {
     if (DELIVEREDDATE.equals(propertyName)) return JobBase.class;
     if (USEPAPERCALCUP.equals(propertyName)) return JobBase.class;
     if (ROLLWIDTH.equals(propertyName)) return JobBase.class;
+    if (ATTRIBUTE1.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -4042,7 +4070,7 @@ public class JobBase extends ModelBase {
       return false;
     if (! SmartEquals(getCutOff(), objT.getCutOff()))
       return false;
-    if (! SmartEquals(getImpositionsPerRun(), objT.getImpositionsPerRun()))
+    if (! SmartEquals(getImpressionsPerRun(), objT.getImpressionsPerRun()))
       return false;
     if (! SmartEquals(getTotalImpositions(), objT.getTotalImpositions()))
       return false;
@@ -4161,6 +4189,8 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getUsePaperCalcUp(), objT.getUsePaperCalcUp()))
       return false;
     if (! SmartEquals(getRollWidth(), objT.getRollWidth()))
+      return false;
+    if (! SmartEquals(getAttribute1(), objT.getAttribute1()))
       return false;
     return true;
   }			

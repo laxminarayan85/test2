@@ -47,6 +47,7 @@ package com.efi.printsmith.data
 		public var nextRecord:String = "";
 		public var startMinutes:int = 0;
 		public var endMinutes:int = 0;
+		public var overrideWeight:Boolean = false;
 	
 	}
 }

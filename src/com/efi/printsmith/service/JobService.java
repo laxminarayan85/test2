@@ -9,9 +9,16 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.classic.Session;
 
+import com.efi.printsmith.Constants;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.CopierDefinition;
+import com.efi.printsmith.data.CostingRecord;
+import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.JobBase;
+import com.efi.printsmith.data.PaperCalculator;
+import com.efi.printsmith.data.PreferencesPricingMethod;
+import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.pricing.charge.ChargeUtilities;
 import com.efi.printsmith.pricing.charge.PriceChargeEngine;
@@ -22,6 +29,48 @@ public class JobService extends SnowmassHibernateService {
 
 	public JobService() {
 		
+	}
+	
+	public Job createJob(InvoiceBase parentInvoice, PreferencesPricingMethod pricingMethod) {
+		Job job = new Job();
+		
+		job.setCostingRecord(new CostingRecord());
+		PaperCalculator paperCalculator = new PaperCalculator();
+		paperCalculator.setWhichStartSize(Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH);
+		paperCalculator.setRunToFinishGrain(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER);
+		paperCalculator.setGripLocation(Constants.PAPER_CALCULATOR_GRIPPER_TOP);
+		paperCalculator.setFolioLocation(Constants.PAPER_CALCULATOR_FOLIO_TOP);
+		paperCalculator.setdAcross(0);
+		paperCalculator.setdDown(0);
+		job.setPaperCal(new PaperCalculator());
+
+		PricingRecord pricingRecord = new PricingRecord();
+		pricingRecord.setUnitPriceOverride(false);
+		pricingRecord.setTotalPriceOverride(false);
+		job.setPricingRecord(new PricingRecord());
+		
+		job.setPricingMethod(pricingMethod);
+		job.setParentInvoice(parentInvoice);
+
+//		if (job.getParentSize() != null)
+//			job.parentSize.name = "";
+//		
+//		if (job.runSize != null)
+//			job.runSize.name = "";
+//		if (job.finishSize != null)
+//			job.finishSize.name = "";
+//		if (job.foldedSize != null)
+//			job.foldedSize.name = "";
+		job.setFrontColors(1);
+		job.setFrontPasses(1);
+		job.setInSetsOf(1L);
+		job.setSheets(1L);
+		job.setNumOn(1L);
+		job.setNumUp(1L);
+		job.setSingleSided(true);
+		job.setDoubleSided(false);
+		
+		return job;
 	}
 	
 	public Job assignStockToJob(Job job, StockDefinition stock) {

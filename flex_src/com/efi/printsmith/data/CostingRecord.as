@@ -14,10 +14,16 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var unitCost:Number = 0;
-		public var totalCost:Number = 0;
-		public var laborCost:Number = 0;
-		public var stockCost:Number = 0;
+		public var actualWashupTime:Number = 0;
+		public var actualTotalCost:Number = 0;
+		public var acualLaborCost:Number = 0;
+		public var actualLaborUnitCost:Number = 0;
+		public var actualRunTime:Number = 0;
+		public var actualSetupTime:Number = 0;
+		public var actualMaterials:Number = 0;
+		public var actualSpoilage:Number = 0;
+		public var actualCost:Number = 0;
+		public var actualUnitCount:Number = 0;
 	
 	}
 }

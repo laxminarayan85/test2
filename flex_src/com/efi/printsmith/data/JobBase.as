@@ -1,6 +1,7 @@
 package com.efi.printsmith.data
 {
-	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayCollection; 
+	import com.efi.printsmith.data.*;
 	
 	[RemoteClass(alias="com.efi.printsmith.data.JobBase")]
 	[Managed]
@@ -70,7 +71,7 @@ package com.efi.printsmith.data
 		public var numCopiesOverride:Boolean = false;
 		public var stockQty:Number = 0;
 		public var cutOff:Number = 0;
-		public var impositionsPerRun:Number = 0;
+		public var impressionsPerRun:Number = 0;
 		public var totalImpositions:Number = 0;
 		public var markup:Number = 0;
 		public var totalCost:Number = 0;
@@ -130,7 +131,7 @@ package com.efi.printsmith.data
 		public var deliveredDate:Date = new Date();
 		public var usePaperCalcUp:Boolean = false;
 		public var rollWidth:Number = 0;
-		public var releasedToProduction:Boolean = false;
+		public var attribute1:int = 0;
 	
 	}
 }

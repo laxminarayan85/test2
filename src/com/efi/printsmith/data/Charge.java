@@ -181,6 +181,11 @@ public class Charge extends ModelBase {
   public static final String ENDMINUTES = "EndMinutes";
 
 	/**
+   * @generated
+   */
+  public static final String OVERRIDEWEIGHT = "OverrideWeight";
+
+	/**
 	 * @generated
 	 */
 	public Charge() {
@@ -1032,6 +1037,28 @@ public class Charge extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean overrideWeight;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getOverrideWeight(){
+    return overrideWeight; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOverrideWeight(Boolean newVal) {
+    this.overrideWeight = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1070,6 +1097,7 @@ public class Charge extends ModelBase {
     if (NEXTRECORD.equals(propertyName)) return getNextRecord();
     if (STARTMINUTES.equals(propertyName)) return getStartMinutes();
     if (ENDMINUTES.equals(propertyName)) return getEndMinutes();
+    if (OVERRIDEWEIGHT.equals(propertyName)) return getOverrideWeight();
     return super.getProperty(propertyName);
   }
 	
@@ -1112,6 +1140,7 @@ public class Charge extends ModelBase {
     if (NEXTRECORD.equals(propertyName)) setNextRecord((String)newValue); else
     if (STARTMINUTES.equals(propertyName)) setStartMinutes((Integer)newValue); else
     if (ENDMINUTES.equals(propertyName)) setEndMinutes((Integer)newValue); else
+    if (OVERRIDEWEIGHT.equals(propertyName)) setOverrideWeight((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1187,6 +1216,8 @@ public class Charge extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (ENDMINUTES.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
+    if (OVERRIDEWEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1230,6 +1261,7 @@ public class Charge extends ModelBase {
     if (NEXTRECORD.equals(propertyName)) return Charge.class;
     if (STARTMINUTES.equals(propertyName)) return Charge.class;
     if (ENDMINUTES.equals(propertyName)) return Charge.class;
+    if (OVERRIDEWEIGHT.equals(propertyName)) return Charge.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1306,6 +1338,8 @@ public class Charge extends ModelBase {
     if (! SmartEquals(getStartMinutes(), objT.getStartMinutes()))
       return false;
     if (! SmartEquals(getEndMinutes(), objT.getEndMinutes()))
+      return false;
+    if (! SmartEquals(getOverrideWeight(), objT.getOverrideWeight()))
       return false;
     return true;
   }			

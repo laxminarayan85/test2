@@ -71,7 +71,7 @@ private void setBody(InputStream bodyAsStream) throws IOException {
         _statusCode = HttpURLConnection.HTTP_OK; // Assume the best
     _statusText = conn.getResponseMessage();
 
-    Vector headerVect = new Vector();
+    Vector<Header> headerVect = new Vector<Header>();
     for (int i = 0; i < Integer.MAX_VALUE; i++) {
       String key = conn.getHeaderFieldKey(i);
       if (key == null)

@@ -47,22 +47,45 @@ import org.hibernate.annotations.Where;
 @Where(clause="isdeleted <> 'TRUE'")
 public class CostingRecord extends ModelBase {
 	/**
-	 * @generated
-	 */
-	public static final String UNITCOST = "UnitCost";
+   * @generated
+   */
+  public static final String ACTUALWASHUPTIME = "ActualWashupTime";
 	/**
-	 * @generated
-	 */
-	public static final String TOTALCOST = "TotalCost";
+   * @generated
+   */
+  public static final String ACTUALTOTALCOST = "ActualTotalCost";
 	/**
-	 * @generated
-	 */
-	public static final String LABORCOST = "LaborCost";
+   * @generated
+   */
+  public static final String ACUALLABORCOST = "AcualLaborCost";
 	/**
-	 * @generated
-	 */
-	public static final String STOCKCOST = "StockCost";
-
+   * @generated
+   */
+  public static final String ACTUALLABORUNITCOST = "ActualLaborUnitCost";
+	/**
+   * @generated
+   */
+  public static final String ACTUALRUNTIME = "ActualRunTime";
+	/**
+   * @generated
+   */
+  public static final String ACTUALSETUPTIME = "ActualSetupTime";
+	/**
+   * @generated
+   */
+  public static final String ACTUALMATERIALS = "ActualMaterials";
+	/**
+   * @generated
+   */
+  public static final String ACTUALSPOILAGE = "ActualSpoilage";
+	/**
+   * @generated
+   */
+  public static final String ACTUALCOST = "ActualCost";
+	/**
+   * @generated
+   */
+  public static final String ACTUALUNITCOUNT = "ActualUnitCount";
 	/**
 	 * @generated
 	 */
@@ -89,129 +112,275 @@ public class CostingRecord extends ModelBase {
 
 
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private BigDecimal unitCost;
-	
+  private Double actualWashupTime;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public BigDecimal getUnitCost(){
-    return unitCost; 
+  public Double getActualWashupTime(){
+    return actualWashupTime; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setUnitCost(BigDecimal newVal) {
-    this.unitCost = newVal;
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setUnitCost(double newVal) {
-    this.unitCost = BigDecimal.valueOf(newVal);
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal totalCost;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getTotalCost(){
-    return totalCost; 
+   * @generated
+   */	
+  public void setActualWashupTime(Double newVal) {
+    this.actualWashupTime = newVal;
   }
 
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setTotalCost(BigDecimal newVal) {
-    this.totalCost = newVal;
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setTotalCost(double newVal) {
-    this.totalCost = BigDecimal.valueOf(newVal);
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private BigDecimal laborCost;
-	
+  private Double actualTotalCost;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public BigDecimal getLaborCost(){
-    return laborCost; 
+  public Double getActualTotalCost(){
+    return actualTotalCost; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setLaborCost(BigDecimal newVal) {
-    this.laborCost = newVal;
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setLaborCost(double newVal) {
-    this.laborCost = BigDecimal.valueOf(newVal);
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal stockCost;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getStockCost(){
-    return stockCost; 
+   * @generated
+   */	
+  public void setActualTotalCost(Double newVal) {
+    this.actualTotalCost = newVal;
   }
 
-	
+
+
 	/**
-	 * @generated
-	 */	
-	public void setStockCost(BigDecimal newVal) {
-    this.stockCost = newVal;
-  }
-	
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal acualLaborCost;
+
 	/**
-	 * @generated
-	 */	
-	public void setStockCost(double newVal) {
-    this.stockCost = BigDecimal.valueOf(newVal);
+   * @generated
+ 	 */
+  public BigDecimal getAcualLaborCost(){
+    return acualLaborCost; 
   }
+
+
+	/**
+   * @generated
+   */	
+  public void setAcualLaborCost(BigDecimal newVal) {
+    this.acualLaborCost = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAcualLaborCost(double newVal) {
+    this.acualLaborCost = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal actualLaborUnitCost;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getActualLaborUnitCost(){
+    return actualLaborUnitCost; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setActualLaborUnitCost(BigDecimal newVal) {
+    this.actualLaborUnitCost = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setActualLaborUnitCost(double newVal) {
+    this.actualLaborUnitCost = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double actualRunTime;
+
+	/**
+   * @generated
+ 	 */
+  public Double getActualRunTime(){
+    return actualRunTime; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setActualRunTime(Double newVal) {
+    this.actualRunTime = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double actualSetupTime;
+
+	/**
+   * @generated
+ 	 */
+  public Double getActualSetupTime(){
+    return actualSetupTime; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setActualSetupTime(Double newVal) {
+    this.actualSetupTime = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double actualMaterials;
+
+	/**
+   * @generated
+ 	 */
+  public Double getActualMaterials(){
+    return actualMaterials; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setActualMaterials(Double newVal) {
+    this.actualMaterials = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double actualSpoilage;
+
+	/**
+   * @generated
+ 	 */
+  public Double getActualSpoilage(){
+    return actualSpoilage; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setActualSpoilage(Double newVal) {
+    this.actualSpoilage = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal actualCost;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getActualCost(){
+    return actualCost; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setActualCost(BigDecimal newVal) {
+    this.actualCost = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setActualCost(double newVal) {
+    this.actualCost = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double actualUnitCount;
+
+	/**
+   * @generated
+ 	 */
+  public Double getActualUnitCount(){
+    return actualUnitCount; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setActualUnitCount(Double newVal) {
+    this.actualUnitCount = newVal;
+  }
+
+
+
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (UNITCOST.equals(propertyName)) return getUnitCost();
-    if (TOTALCOST.equals(propertyName)) return getTotalCost();
-    if (LABORCOST.equals(propertyName)) return getLaborCost();
-    if (STOCKCOST.equals(propertyName)) return getStockCost();
+    if (ACTUALWASHUPTIME.equals(propertyName)) return getActualWashupTime();
+    if (ACTUALTOTALCOST.equals(propertyName)) return getActualTotalCost();
+    if (ACUALLABORCOST.equals(propertyName)) return getAcualLaborCost();
+    if (ACTUALLABORUNITCOST.equals(propertyName)) return getActualLaborUnitCost();
+    if (ACTUALRUNTIME.equals(propertyName)) return getActualRunTime();
+    if (ACTUALSETUPTIME.equals(propertyName)) return getActualSetupTime();
+    if (ACTUALMATERIALS.equals(propertyName)) return getActualMaterials();
+    if (ACTUALSPOILAGE.equals(propertyName)) return getActualSpoilage();
+    if (ACTUALCOST.equals(propertyName)) return getActualCost();
+    if (ACTUALUNITCOUNT.equals(propertyName)) return getActualUnitCount();
     return super.getProperty(propertyName);
   }
 	
@@ -221,10 +390,16 @@ public class CostingRecord extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (UNITCOST.equals(propertyName)) setUnitCost((BigDecimal)newValue); else
-    if (TOTALCOST.equals(propertyName)) setTotalCost((BigDecimal)newValue); else
-    if (LABORCOST.equals(propertyName)) setLaborCost((BigDecimal)newValue); else
-    if (STOCKCOST.equals(propertyName)) setStockCost((BigDecimal)newValue); else
+    if (ACTUALWASHUPTIME.equals(propertyName)) setActualWashupTime((Double)newValue); else
+    if (ACTUALTOTALCOST.equals(propertyName)) setActualTotalCost((Double)newValue); else
+    if (ACUALLABORCOST.equals(propertyName)) setAcualLaborCost((BigDecimal)newValue); else
+    if (ACTUALLABORUNITCOST.equals(propertyName)) setActualLaborUnitCost((BigDecimal)newValue); else
+    if (ACTUALRUNTIME.equals(propertyName)) setActualRunTime((Double)newValue); else
+    if (ACTUALSETUPTIME.equals(propertyName)) setActualSetupTime((Double)newValue); else
+    if (ACTUALMATERIALS.equals(propertyName)) setActualMaterials((Double)newValue); else
+    if (ACTUALSPOILAGE.equals(propertyName)) setActualSpoilage((Double)newValue); else
+    if (ACTUALCOST.equals(propertyName)) setActualCost((BigDecimal)newValue); else
+    if (ACTUALUNITCOUNT.equals(propertyName)) setActualUnitCount((Double)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -234,14 +409,26 @@ public class CostingRecord extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (UNITCOST.equals(propertyName)) 
+    if (ACTUALWASHUPTIME.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ACTUALTOTALCOST.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ACUALLABORCOST.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
-    if (TOTALCOST.equals(propertyName)) 
+    if (ACTUALLABORUNITCOST.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
-    if (LABORCOST.equals(propertyName)) 
+    if (ACTUALRUNTIME.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ACTUALSETUPTIME.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ACTUALMATERIALS.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ACTUALSPOILAGE.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ACTUALCOST.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
-    if (STOCKCOST.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
+    if (ACTUALUNITCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -252,10 +439,16 @@ public class CostingRecord extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (UNITCOST.equals(propertyName)) return CostingRecord.class;
-    if (TOTALCOST.equals(propertyName)) return CostingRecord.class;
-    if (LABORCOST.equals(propertyName)) return CostingRecord.class;
-    if (STOCKCOST.equals(propertyName)) return CostingRecord.class;
+    if (ACTUALWASHUPTIME.equals(propertyName)) return CostingRecord.class;
+    if (ACTUALTOTALCOST.equals(propertyName)) return CostingRecord.class;
+    if (ACUALLABORCOST.equals(propertyName)) return CostingRecord.class;
+    if (ACTUALLABORUNITCOST.equals(propertyName)) return CostingRecord.class;
+    if (ACTUALRUNTIME.equals(propertyName)) return CostingRecord.class;
+    if (ACTUALSETUPTIME.equals(propertyName)) return CostingRecord.class;
+    if (ACTUALMATERIALS.equals(propertyName)) return CostingRecord.class;
+    if (ACTUALSPOILAGE.equals(propertyName)) return CostingRecord.class;
+    if (ACTUALCOST.equals(propertyName)) return CostingRecord.class;
+    if (ACTUALUNITCOUNT.equals(propertyName)) return CostingRecord.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -267,13 +460,25 @@ public class CostingRecord extends ModelBase {
     if (! super.deepEquals(obj))
       return false;
     CostingRecord objT = (CostingRecord)obj;
-    if (! SmartEquals(getUnitCost(), objT.getUnitCost()))
+    if (! SmartEquals(getActualWashupTime(), objT.getActualWashupTime()))
       return false;
-    if (! SmartEquals(getTotalCost(), objT.getTotalCost()))
+    if (! SmartEquals(getActualTotalCost(), objT.getActualTotalCost()))
       return false;
-    if (! SmartEquals(getLaborCost(), objT.getLaborCost()))
+    if (! SmartEquals(getAcualLaborCost(), objT.getAcualLaborCost()))
       return false;
-    if (! SmartEquals(getStockCost(), objT.getStockCost()))
+    if (! SmartEquals(getActualLaborUnitCost(), objT.getActualLaborUnitCost()))
+      return false;
+    if (! SmartEquals(getActualRunTime(), objT.getActualRunTime()))
+      return false;
+    if (! SmartEquals(getActualSetupTime(), objT.getActualSetupTime()))
+      return false;
+    if (! SmartEquals(getActualMaterials(), objT.getActualMaterials()))
+      return false;
+    if (! SmartEquals(getActualSpoilage(), objT.getActualSpoilage()))
+      return false;
+    if (! SmartEquals(getActualCost(), objT.getActualCost()))
+      return false;
+    if (! SmartEquals(getActualUnitCount(), objT.getActualUnitCount()))
       return false;
     return true;
   }			
