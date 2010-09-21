@@ -1017,7 +1017,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 					
 				}
 			}
-			switch ( stock_Price_is_combo.selectedItem){
+			
+			switch ( stock_Price_is_combo.selectedItem.data){
 				case StockPriceMethod.MarkedUpStockCost:
 					copierDigitalStockmarkup.enabled = true;
 					stockMarkup.enabled =true;
