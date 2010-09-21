@@ -146,6 +146,7 @@
 	    case "WasteChart":
 	    	newPriceList = new WasteChart();
 	    	newPriceList.interpolate = true;
+	    	newPriceList.isPercentage = true;
 	    	break;
 	    case "PriceList":
 	    	newPriceList = new PriceList();
