@@ -3,16 +3,12 @@ package com.efi.printsmith.pricing.job;
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.Job;
-import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.PreferencesPricingMethod;
-import com.efi.printsmith.data.StockDefinition;
-import com.efi.printsmith.data.StockType;
 import com.efi.printsmith.pricing.blank.BlankPricingMethodFactory;
 import com.efi.printsmith.pricing.copier.CopierPricingMethod;
 import com.efi.printsmith.pricing.copier.CopierPricingMethodFactory;
 import com.efi.printsmith.pricing.print.PrintPricingMethod;
 import com.efi.printsmith.pricing.print.PrintPricingMethodFactory;
-import com.efi.printsmith.pricing.utilities.StockUtilities;
 import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethod;
 import com.efi.printsmith.pricing.largeformat.LargeFormatPricingMethodFactory;
 import com.efi.printsmith.pricing.mailing.MailingPricingMethodFactory;
@@ -163,8 +159,6 @@ public class PriceJobEngine {
 				mailingPricingMethod.priceMailingJob(job);
 			}
 		}
-
-		StockUtilities.calculateJobWeight(job);
 		return job;
 	}
 }

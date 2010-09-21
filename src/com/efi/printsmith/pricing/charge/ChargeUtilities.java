@@ -23,10 +23,18 @@ public class ChargeUtilities {
 			((SquareAreaCharge)charge).setOverrideArea(false);
 		} else if (chargeDefinition.getMethod().equals(ChargeMethod.Cut.name())) {
 			charge = new CuttingCharge();
+			((CuttingCharge)charge).setCuts(chargeDefinition.getPresetCuts());
 		} else if (chargeDefinition.getMethod().equals(ChargeMethod.Ink.name())) {
 			charge = new InkCharge();
+			((InkCharge)charge).setCoverage((double)chargeDefinition.getPresetCoverage());
+			((InkCharge)charge).setInkWeight(0.0);
+			((InkCharge)charge).setCoverPerPound((double)chargeDefinition.getPresetCoverPerPound());
+			((InkCharge)charge).setPricePerPound(chargeDefinition.getPresetPricePerPound());
+			((InkCharge)charge).setPoundsOfInk(chargeDefinition.getPresetPoundsofInk());
 		} else if (chargeDefinition.getMethod().equals(ChargeMethod.Shipping.name())) {
 			charge = new ShippingCharge();
+			((ShippingCharge)charge).setTotalWeight(0.0);
+			((ShippingCharge)charge).setOverrideTotalWeight(false);			
 		} else {
 			charge=new Charge();
 		}

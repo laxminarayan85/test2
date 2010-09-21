@@ -502,7 +502,7 @@
 						charge.endMinutes = parseInt(stopTimeString);
 					}
 				}
-				if (this.currentState == "InkCharge") {
+				if (this.charge is InkCharge) {
 					(charge as InkCharge).coverage=parseCurrencyFloat(percent_coverage_edit.text);
 					(charge as InkCharge).poundsOfInk=parseCurrencyFloat(lbs_of_ink_edit.text);
 					(charge as InkCharge).coverPerPound=parseCurrencyFloat(cover_lb_edit.text);
@@ -534,7 +534,7 @@
 				charge.rate = localCharge.rate;
 				charge.sets = localCharge.sets;
 				charge.materialSets = localCharge.materialSets;
-				if (currentState == "InkCharge") {
+				if (this.charge is InkCharge) {
 					(charge as InkCharge).poundsOfInk = (localCharge as InkCharge).poundsOfInk;
 					(charge as InkCharge).pricePerPound = (localCharge as InkCharge).pricePerPound;
 					(charge as InkCharge).coverage = (localCharge as InkCharge).coverage;
@@ -553,6 +553,8 @@
 					} else {
 						price_lb_edit.text = (charge as InkCharge).pricePerPound.toString();
 					}
+				} else if (this.charge is ShippingCharge) {
+					(charge as ShippingCharge).totalWeight = (localCharge as ShippingCharge).totalWeight;
 				}
 				if (addCharge) {
 					addCharge = false;
@@ -628,6 +630,15 @@
 	    		}
 			}
 			
+			private function updateTotalWeightEdit():void {
+				if (this.total_weight_text.text == "") {
+					this.charge.overrideTotalWeight = false;
+					this.charge.totalWeight = 0;
+				} else {
+					this.charge.overrideTotalWeight = true;
+					this.charge.totalWeight = parseFloat(total_weight_text.text);
+				}
+			}
 			public function updateFieldVisibility():void {
 				charge_special_info.selectedChild = blank;
 				description_box.visible = true;

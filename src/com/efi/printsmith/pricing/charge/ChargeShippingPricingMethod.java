@@ -7,6 +7,7 @@ import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.data.JobBase;
+import com.efi.printsmith.data.ShippingCharge;
 import com.efi.printsmith.data.enums.ChargeQtyType;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
@@ -17,14 +18,27 @@ public class ChargeShippingPricingMethod extends ChargePricingMethod {
 		double		weight;
 		double		markup;
 		double		factor;
-
+		ShippingCharge localCharge = (ShippingCharge) charge;
+		
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
 		JobBase job = charge.getParentJob();
 		
 		if (chargeDefinition == null) return charge;
-		
-		if (charge.getOverrideQuantity()) {
-			weight = charge.getQuantity();
+//		
+//		if (charge.getOverrideQuantity()) {
+//			weight = charge.getQuantity();
+//		} else if (job == null) {
+//			if (charge.getParentInvoice() != null) {
+//				weight = CalculateInvWeight(charge.getParentInvoice());
+//			} else {
+//				weight = 0;
+//			}
+//		} else {
+//			weight = job.getWeight();
+//		}
+
+		if (localCharge.getOverrideTotalWeight()) {
+			weight = localCharge.getTotalWeight();
 		} else if (job == null) {
 			if (charge.getParentInvoice() != null) {
 				weight = CalculateInvWeight(charge.getParentInvoice());
@@ -34,7 +48,7 @@ public class ChargeShippingPricingMethod extends ChargePricingMethod {
 		} else {
 			weight = job.getWeight();
 		}
-
+		
 		markup = chargeDefinition.getRateSetCount();
 		if (markup == 0) {
 			markup = 1;
@@ -54,7 +68,7 @@ public class ChargeShippingPricingMethod extends ChargePricingMethod {
 			weight *= factor;
 		}
 		
-		charge.setQuantity(weight);
+		localCharge.setTotalWeight(weight);
 		
 		if (chargeDefinition.getUseRate()) {
 			price = chargeDefinition.getRate().multiply(new BigDecimal(weight));
@@ -70,10 +84,10 @@ public class ChargeShippingPricingMethod extends ChargePricingMethod {
 			price = price.multiply(new BigDecimal(markup));
 		}
 		
-		if (!charge.getOverridePrice()) {
-			charge.setPrice(price);
+		if (!localCharge.getOverridePrice()) {
+			localCharge.setPrice(price);
 		}
-		return charge;
+		return localCharge;
 	}
 	//********************************************************************************
 	//	CalculateInvWeight

@@ -74,10 +74,10 @@
 						  y="185"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OfSignatures')}" textAlign="right" width="108"/>
 			</mx:AddChild>
-			<mx:SetProperty target="{total_copies}" name="y" value="207"/>
+			<mx:SetProperty target="{num_signatures}" name="y" value="207"/>
 			<mx:SetProperty target="{label10}" name="x" value="384"/>
 			<mx:SetProperty target="{label10}" name="y" value="207"/>
-			<mx:SetProperty target="{total_copies}" name="text" value="{job.totalCopies}"/>
+			<mx:SetProperty target="{num_signatures}" name="text" value="{job.totalCopies}"/>
 			<mx:SetProperty target="{label10}" name="text">
 				<mx:value>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.TotCopy')}</mx:value>
 			</mx:SetProperty>
@@ -160,7 +160,7 @@
 					<mx:text>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.TotCopy')}</mx:text>
 				</mx:Label>
 			</mx:AddChild>
-			<mx:RemoveChild target="{total_copies}"/>
+			<mx:RemoveChild target="{num_signatures}"/>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="496"
 						  y="207"
@@ -286,7 +286,7 @@
 			<mx:RemoveChild target="{label31}"/>
 			<mx:RemoveChild target="{est_waste}"/>
 			<mx:RemoveChild target="{job_imp}"/>
-			<mx:RemoveChild target="{total_copies}"/>
+			<mx:RemoveChild target="{num_signatures}"/>
 			<mx:RemoveChild target="{label9}"/>
 			<mx:RemoveChild target="{label11}"/>
 			<mx:RemoveChild target="{label8}"/>
@@ -431,7 +431,7 @@
 			<mx:RemoveChild target="{label8}"/>
 			<mx:RemoveChild target="{total_imp}"/>
 			<mx:RemoveChild target="{job_imp}"/>
-			<mx:RemoveChild target="{total_copies}"/>
+			<mx:RemoveChild target="{num_signatures}"/>
 			<mx:SetProperty target="{label34}" name="y" value="49"/>
 			<mx:SetProperty target="{bindery_waste}" name="y" value="47"/>
 			<mx:SetProperty target="{label11}" name="y" value="69"/>
@@ -919,8 +919,8 @@
 				job.oversUnders=parseInt(job_over_under.text);
 				job.qtyOrdered=parseInt(job_ordered.text);
 				job.sheets=parseInt(job_sheets.text);
-				if (num_of_sig != null)
-					job.signatures=parseInt(num_of_sig.text);
+//				if (num_of_sig != null)
+//					job.signatures=parseInt(num_of_sig.text);
 				job.taxable=check_taxtable.selected;
 				job.numUp=parseInt(job_up.text);
 				job.jobNotes=job_notes.text;
@@ -1425,18 +1425,20 @@
 				job.pricingRecord.totalPrice = localJob.pricingRecord.totalPrice;	
 				job.pricingRecord = localJob.pricingRecord;
 				charges = localJob.charges;
-				job.impositionsPerRun = localJob.impositionsPerRun;
-				job.totalImpositions = localJob.totalImpositions;
-				job.estWaste = localJob.estWaste;
-				job.totalCost = localJob.totalCost;
-				job.totalCopies = localJob.totalCopies;
-				job.numCopies = localJob.numCopies;
 				if (job != null) { 
+					job.impositionsPerRun = localJob.impositionsPerRun;
+					job.totalImpositions = localJob.totalImpositions;
+					job.estWaste = localJob.estWaste;
+					job.totalCost = localJob.totalCost;
+					job.totalCopies = localJob.totalCopies;
+					job.numCopies = localJob.numCopies;
+					job.signatures = localJob.signatures;
+					num_signatures.text = job.signatures.toString();
 					job_imp.text = job.impositionsPerRun.toString();
 					total_imp.text = job.totalImpositions.toString();
 					est_waste.text = job.estWaste.toString();
-					if (this.total_copies != null)
-						this.total_copies.text = job.totalCopies.toString();
+//					if (this.num_signatures != null)
+//						this.num_signatures.text = job.totalCopies.toString();
 					if (this.num_copies != null)
 						this.num_copies.text = job.numCopies.toString();
 					if (this.total_copies0 != null)
@@ -1652,47 +1654,47 @@
 				case this.job_number_of_lines:
 					break;
 				case this.job_parent:
-					var text:String = Snowmass.formatSizeString(this.job_parent.text);
-					this.job_parent.selectedIndex = findItem(text, dimensionsArray);
+					var parentStr:String = Snowmass.formatSizeString(this.job_parent.text);
+					this.job_parent.selectedIndex = findItem(parentStr, dimensionsArray);
 					if (this.job_parent.selectedIndex == -1) {
-						this.job_parent.text = text;
+						this.job_parent.text = parentStr;
 						if (job.parentSize == null)
 							job.parentSize = new Dimension()
-						job.parentSize.name = text;
+						job.parentSize.name = parentStr;
 					}
 					else
 						refreshImageAndWeight();
 					break;
 				case this.job_finish_size:
-					var text:String = Snowmass.formatSizeString(this.job_finish_size.text);
-					this.job_finish_size.selectedIndex = findItem(text, dimensionsArray);
+					var finishSizeStr:String = Snowmass.formatSizeString(this.job_finish_size.text);
+					this.job_finish_size.selectedIndex = findItem(finishSizeStr, dimensionsArray);
 					if (this.job_finish_size.selectedIndex == -1) {
-						this.job_finish_size.text = text;
+						this.job_finish_size.text = finishSizeStr;
 						if (job.finishSize == null)
 							job.finishSize = new Dimension();
-						job.finishSize.name = text;
+						job.finishSize.name = finishSizeStr;
 					}
 					else
 						refreshImageAndWeight();
 					break;
 				case this.job_fold_size:
-					var text:String = Snowmass.formatSizeString(this.job_fold_size.text);
-					this.job_fold_size.selectedIndex = findItem(text, dimensionsArray);
+					var foldSizeStr:String = Snowmass.formatSizeString(this.job_fold_size.text);
+					this.job_fold_size.selectedIndex = findItem(foldSizeStr, dimensionsArray);
 					if (this.job_fold_size.selectedIndex == -1) {
-						this.job_fold_size.text = text;
+						this.job_fold_size.text = foldSizeStr;
 						if (job.foldedSize == null)
 							job.foldedSize = new Dimension();
-						job.foldedSize.name = text;
+						job.foldedSize.name = foldSizeStr;
 					}
 					break;
 				case this.job_size:
-					var text:String = Snowmass.formatSizeString(this.job_size.text);
-					this.job_size.selectedIndex = findItem(text, dimensionsArray);
+					var sizeStr:String = Snowmass.formatSizeString(this.job_size.text);
+					this.job_size.selectedIndex = findItem(sizeStr, dimensionsArray);
 					if (this.job_size.selectedIndex == -1) {
-						this.job_size.text = text;
+						this.job_size.text = sizeStr;
 						if (job.runSize == null)
 							job.runSize = new Dimension();
-						job.runSize.name = text;
+						job.runSize.name = sizeStr;
 					}
 					else
 						refreshCalcAndImage();
@@ -2226,7 +2228,7 @@
 							<mx:Label x="496"
 									  y="185"
 									  width="98"
-									  id="total_copies"
+									  id="num_signatures"
 									  text="{job.signatures}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"

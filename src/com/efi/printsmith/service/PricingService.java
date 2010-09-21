@@ -4,6 +4,8 @@ import com.efi.printsmith.data.*;
 import org.apache.log4j.Logger;
 import com.efi.printsmith.pricing.charge.PriceChargeEngine;
 import com.efi.printsmith.pricing.job.PriceJobEngine;
+import com.efi.printsmith.pricing.utilities.JobUtilities;
+import com.efi.printsmith.pricing.utilities.StockUtilities;
 
 public class PricingService extends SnowmassHibernateService {
 
@@ -45,6 +47,8 @@ public class PricingService extends SnowmassHibernateService {
 		this.calculateOvers(job);
 		job.getPricingRecord().setTotalPrice(new Double(Math.round(job.getPricingRecord().getTotalPrice().doubleValue() * 100)) / 100);
 		job.getPricingRecord().setUnitPrice(new Double(Math.round(job.getPricingRecord().getUnitPrice().doubleValue() * 10000)) / 10000);
+		JobUtilities.calculateSignatures(job);
+		StockUtilities.calculateJobWeight(job);
 		return job;
 	}
 	
