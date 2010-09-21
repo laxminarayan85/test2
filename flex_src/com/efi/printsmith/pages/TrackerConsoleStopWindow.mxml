@@ -239,11 +239,13 @@
 				}
 				if(flag==0){
 					if(object.job!=null){
-					
+						if(!isNaN(object.job.totalImpositions)){
+							impressions = String(object.job.totalImpositions);
+						}
 					} else if(object.charge!=null) {
 						if(object.charge.chargeCostingRecord!=null){
-							if(!isNaN(object.charge.chargeCostingRecord.impressions)){
-								impressions = String(object.charge.chargeCostingRecord.impressions);
+							if(!isNaN(object.charge.chargeCostingRecord.totalImpressions)){
+								impressions = String(object.charge.chargeCostingRecord.totalImpressions);
 							}
 						}
 					}
@@ -269,9 +271,17 @@
 				}
 				if(flag==0){
 					if(object.job!=null){
-					
+						if(object.job.costingRecord!=null){
+							if(!isNaN(object.job.costingRecord.actualSpoilage)){
+								spoilage = String(object.job.costingRecord.actualSpoilage);
+							}
+						}
 					} else if(object.charge!=null) {
-						
+						if(object.charge.chargeCostingRecord!=null){
+							if(!isNaN(object.charge.chargeCostingRecord.actualSpoilage)){
+								spoilage = String(object.charge.chargeCostingRecord.actualSpoilage);
+							}
+						}
 					}
 				} else if(flag==1){
 					if(!isNaN(trackerConsoleJobs.spoilage)){
@@ -337,8 +347,8 @@
 					} else {
 						if(object.job!=null){
 							if(object.job.costingRecord!=null){
-								if(!isNaN(object.job.costingRecord.laborCost)){
-									laborCost = String(object.job.costingRecord.laborCost);
+								if(!isNaN(object.job.costingRecord.acualLaborCost)){
+									laborCost = String(object.job.costingRecord.acualLaborCost);
 								}
 							}
 						} else if(object.charge!=null) {
@@ -362,7 +372,7 @@
 					if(object.job!=null){
 						if(object.job.costingRecord!=null){
 							if(!isNaN(object.job.costingRecord.totalCost)){
-								totalCost = String(object.job.costingRecord.totalCost);
+								totalCost = String(object.job.costingRecord.actualTotalCost);
 							}
 						}
 					} else if(object.charge!=null) {

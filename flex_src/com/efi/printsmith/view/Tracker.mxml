@@ -837,17 +837,48 @@
 					trackerconsole_location.customText = getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation);
 				}
 				trackerConsoleJobs.employee = employee;
+				var actualSetUpTime:Number = 0;
+				var actualRunTime:Number = 0;
+				var actualWashTime:Number = 0;
 				if(selectedJob!=null){
 					trackerConsoleJobs.job = selectedJob;
-					trackerConsoleJobs.actualSetUpTime = selectedJob.setUpTime;
-					trackerConsoleJobs.actualRunTime = selectedJob.runTime;
-					trackerConsoleJobs.actualWashTime = selectedJob.washUpTime;
+					if(selectedJob.costingRecord!=null){
+						if(!isNaN(selectedJob.costingRecord.actualSetupTime)){
+							actualSetUpTime = selectedJob.costingRecord.actualSetupTime;
+						}
+					}
+					trackerConsoleJobs.actualSetUpTime = actualSetUpTime;
+					if(selectedJob.costingRecord!=null){
+						if(!isNaN(selectedJob.costingRecord.actualRunTime)){
+							actualRunTime = selectedJob.costingRecord.actualRunTime;
+						}
+					}
+					trackerConsoleJobs.actualRunTime = actualRunTime;
+					if(selectedJob.costingRecord!=null){
+						if(!isNaN(selectedJob.costingRecord.actualWashupTime)){
+							actualWashTime = selectedJob.costingRecord.actualWashupTime;
+						}
+					}
+					trackerConsoleJobs.actualWashTime = actualWashTime;
 					trackerConsoleJobs.noOfPasses = selectedJob.frontPasses+selectedJob.backPasses;
+					if(isNaN(trackerConsoleJobs.noOfPasses) || trackerConsoleJobs.noOfPasses==0){
+						trackerConsoleJobs.noOfPasses=1;
+					}
 				} else if(selectedCharge!=null){
 					trackerConsoleJobs.charge = selectedCharge;
-					trackerConsoleJobs.actualSetUpTime = selectedCharge.setUpTime;
-					trackerConsoleJobs.actualRunTime = selectedCharge.runTime;
-					trackerConsoleJobs.actualWashTime = selectedCharge.washUpTime;
+					if(selectedCharge.chargeCostingRecord!=null){
+						if(!isNaN(selectedCharge.chargeCostingRecord.setupTime)){
+							actualSetUpTime = selectedCharge.chargeCostingRecord.setupTime;
+						}
+					}
+					trackerConsoleJobs.actualSetUpTime = actualSetUpTime;
+					if(selectedCharge.chargeCostingRecord!=null){
+						if(!isNaN(selectedCharge.chargeCostingRecord.runTime)){
+							actualRunTime = selectedCharge.chargeCostingRecord.runTime;
+						}
+					}
+					trackerConsoleJobs.actualRunTime = actualRunTime;
+					trackerConsoleJobs.actualWashTime = actualWashTime;
 					trackerConsoleJobs.noOfPasses = 1;
 				}
 				trackerConsoleJobs.currentPass = 1;				
@@ -1060,7 +1091,7 @@
 						trackerConsoleJobsStopBean.impressions = getImpressions(trackerConsoleJobsStopBean);
 						trackerConsoleJobsStopBean.initialImpressions = trackerConsoleJobsStopBean.impressions;
 						trackerConsoleJobsStopBean.endSpoilage = trackerConsoleJobsStopBean.impressions;
-						trackerConsoleJobsStopBean.spoilage = 0;
+						trackerConsoleJobsStopBean.spoilage = getSpoilage(trackerConsoleJobsStopBean);
 						trackerConsoleJobsStopBean.initialSpoilageValue = trackerConsoleJobsStopBean.spoilage;
 						trackerConsoleJobsStopBean.startSpoilage = trackerConsoleJobsStopBean.spoilage;
 						trackerConsoleJobsStopBean.initialEndSpoilage = trackerConsoleJobsStopBean.endSpoilage;
@@ -1327,7 +1358,7 @@
 							trackerConsoleJobsStopBean.impressions = getImpressions(trackerConsoleJobsStopBean);
 							trackerConsoleJobsStopBean.initialImpressions = trackerConsoleJobsStopBean.impressions;
 							trackerConsoleJobsStopBean.endSpoilage = trackerConsoleJobsStopBean.impressions;
-							trackerConsoleJobsStopBean.spoilage = 0;
+							trackerConsoleJobsStopBean.spoilage = getSpoilage(trackerConsoleJobsStopBean);
 							trackerConsoleJobsStopBean.initialSpoilageValue = trackerConsoleJobsStopBean.spoilage;
 							trackerConsoleJobsStopBean.startSpoilage = trackerConsoleJobsStopBean.spoilage;
 							trackerConsoleJobsStopBean.initialEndSpoilage = trackerConsoleJobsStopBean.endSpoilage;
@@ -1727,15 +1758,35 @@
 		private function getImpressions(object:TrackerConsoleJobs):Number {
 			var impressions:Number = 0;
 			if(object.job!=null){
-			
+				if(!isNaN(object.job.totalImpositions)){
+					impressions = object.job.totalImpositions;
+				}
 			} else if(object.charge!=null) {
 				if(object.charge.chargeCostingRecord!=null){
-					if(!isNaN(object.charge.chargeCostingRecord.impressions)){
-						impressions = object.charge.chargeCostingRecord.impressions;
+					if(!isNaN(object.charge.chargeCostingRecord.totalImpressions)){
+						impressions = object.charge.chargeCostingRecord.totalImpressions;
 					}
 				}
 			}
 			return impressions;
+		}
+		
+		private function getSpoilage(object:TrackerConsoleJobs):Number {
+			var spoilage:Number = 0;
+			if(object.job!=null){
+				if(object.job.costingRecord!=null){
+					if(!isNaN(object.job.costingRecord.actualSpoilage)){
+						spoilage = object.job.costingRecord.actualSpoilage;
+					}
+				}
+			} else if(object.charge!=null) {
+				if(object.charge.chargeCostingRecord!=null){
+					if(!isNaN(object.charge.chargeCostingRecord.actualSpoilage)){
+						spoilage = object.charge.chargeCostingRecord.actualSpoilage;
+					}
+				}
+			}
+			return spoilage;
 		}
 				
 	]]>
