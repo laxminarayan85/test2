@@ -185,6 +185,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private var isDirty:Boolean = false;
     private var scrollToItem:ModelBase = null;
     
+    [Bindable] private var deleteBtnEnabled:Boolean = false;
+    
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
@@ -423,6 +425,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
+		this.chargeCommand = null;
+		this.chargeCategory = null;
+		this.charge = null;
+		deleteBtnEnabled = false;
 		getChargeList();
 	}
 	      
@@ -646,8 +652,21 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function handleDeleteCategory(event:CloseEvent):void {
 		if (event.detail == Alert.OK) {
-			scrollToItem = this.chargeCategory.parent;
-			fireDeleteEvent(this.chargeCategory, new mx.rpc.Responder(handleDeleteResult, handleFault));
+			if(this.chargeCategory!=null){
+				if(this.chargeCategory.children!=null && this.chargeCategory.children.length>0){
+					var deleteStr:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'chargeDefCmd.OKtodeletetheentirec');
+					deleteStr = deleteStr+"\n"+StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Thiswillaffectthe4ch'),null,null,null,null,this.chargeCategory.children.length);
+					Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,function(event:CloseEvent):void {
+						if(event.detail == Alert.OK) {
+							scrollToItem = chargeCategory.parent;
+							fireDeleteEvent(chargeCategory, new mx.rpc.Responder(handleDeleteResult, handleFault));
+						}
+					},null,Alert.OK);
+				} else {
+					scrollToItem = this.chargeCategory.parent;
+					fireDeleteEvent(this.chargeCategory, new mx.rpc.Responder(handleDeleteResult, handleFault));
+				}
+			}
 		}
 	}
 	private function handleDeleteCommand(event:CloseEvent):void {
@@ -657,7 +676,18 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	private function doDelete():void {
 		var deleteStr:String;
-		if (this.charge != null) {
+		if(chargeTree.selectedItem!=null && deleteBtnEnabled){
+			if (chargeTree.selectedItem is ChargeCategory) {
+				this.chargeCategory = chargeTree.selectedItem as ChargeCategory;
+				deleteStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), this.chargeCategory.name);
+				Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteCategory,null,Alert.OK);
+			} else if(chargeTree.selectedItem is ChargeDefinition){
+				this.charge = chargeTree.selectedItem as ChargeDefinition; 
+				deleteStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), this.charge.title);
+				Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteCharge,null,Alert.OK);
+			}
+		}
+		/* if (this.charge != null) {
 			deleteStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), charge.title);
 			Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteCharge,null,Alert.OK);
 		} else if (this.chargeCategory != null) {
@@ -666,7 +696,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		} else if (this.chargeCommand != null) {
 			deleteStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), chargeCommand.name);
 			Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteCommand,null,Alert.OK);
-		}
+		} */
 	}
 
 	private function doRevert():void {
@@ -1475,6 +1505,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function tree_itemClick(evt:Event):void {
+		if(evt.currentTarget.selectedItem!=null){
+			if(evt.currentTarget.selectedItem is ChargeCommand) {
+				deleteBtnEnabled = false;
+			} else {
+				deleteBtnEnabled = true;
+			}
+		} else if(evt.currentTarget.selectedItem==null){
+			deleteBtnEnabled = false;
+		}
 	}
 	
 	private function updateDataProvider():void {
@@ -1591,6 +1630,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				var treeItem:ModelBase = null;
 				treeItem = findItemInChargeTree(scrollToItem.id);
 				chargeTree.selectedItem = treeItem;
+				if(chargeTree.selectedItem is ChargeCommand){
+					deleteBtnEnabled = false;
+				} else {
+					deleteBtnEnabled = true;
+				}
 				scrollToItem = null;				
 			} else {
 				if (charge != null) {
@@ -2083,7 +2127,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
 			</mx:Button>
 			<mx:Label x="10" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="58" textAlign="center"/>
-			<mx:Button x="185" y="2" width="38" height="38" click="doDelete()" id="delete_button">
+			<mx:Button x="185" y="2" width="38" height="38" click="doDelete()" id="delete_button" enabled="{deleteBtnEnabled}">
 				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 			</mx:Button>
 			<mx:Label x="175" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
