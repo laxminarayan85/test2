@@ -984,6 +984,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setNumbersInvoice(value);
 		else if (name.equals("numberFormatINVPCT"))
 			preferencesSystem.setNumbersShortPercent(value);
+		else if (name.equals("App_storeLocationID"))
+			preferencesSystem.setCompanyStoreLocationRef(value);
 		if (address != null)
 			preferencesSystem.setCompanyAddress(address);
 		dataService.addUpdate(preferencesSystem);
