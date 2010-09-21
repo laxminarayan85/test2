@@ -41,6 +41,7 @@ public class PriceListMapper extends ImportMapper {
 					else if (currentImportToken.equals("W")) {
 						wasteChart = new WasteChart();
 						wasteChart.setPrevId(recNo);
+						wasteChart.setIsPercentage(true);
 					}
 					else if (currentImportToken.equals("P")) {
 						priceList = new PriceList();
