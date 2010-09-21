@@ -334,7 +334,7 @@
 			//addUniqueTab(child);
 			var win:MDIWindow = containerManager.getWindowWithChild(child);
 			if (win == null)	{
-				containerManager.openNewMDIWindow(child.className,child);
+				containerManager.openNewMDIWindow(child.title,child);
 			}
 			else	{
 				win.bringWindowToFront();	

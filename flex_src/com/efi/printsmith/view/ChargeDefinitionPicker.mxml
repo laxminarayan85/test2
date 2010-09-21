@@ -379,13 +379,13 @@
 			 height="431"
 			 creationPolicy="all">
 		<mx:Canvas width="100%"
-				   height="431"
+				   height="446"
 				   verticalScrollPolicy="off"
 				   horizontalScrollPolicy="off">
 			<mx:HDividedBox x="10"
-							y="10"
+							y="0"
 							width="100%"
-							height="418"
+							height="443"
 							verticalScrollPolicy="off"
 							horizontalScrollPolicy="off">
 				<mx:Canvas width="210"
@@ -442,6 +442,7 @@
 						labelField="name"
 						 doubleClick="RemoveCharge();"></mx:List>
 					<mx:Button x="22" y="295" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.Remove')}" click="RemoveCharge();" id="remove"/>
+					<mx:Text x="22" y="3" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.SelectedCharges')}" fontWeight="bold"/>
 				</mx:Canvas>
 			</mx:HDividedBox>
 
