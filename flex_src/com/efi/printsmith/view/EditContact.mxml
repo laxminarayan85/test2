@@ -761,7 +761,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
-		this.contact = ev.result as Contact;
+		this.contact = new Contact();
 		setContact(this.contact);
 		dataService2.getContactPicker();
 	} 
