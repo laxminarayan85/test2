@@ -796,13 +796,13 @@ public class PreferencesMapper extends ImportMapper {
 				preferencesEstimating.setUseHistoryTitleforNewTitle(false);
 			else
 				preferencesEstimating.setUseHistoryTitleforNewTitle(true);
-		} else if (name.equals("Esimator_close_source_doc_on_copy"))
+		} else if (name.equals("Estimator_close_source_doc_on_copy"))
 			preferencesEstimating.setCloseAfterCopy(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("Estimator_skipAutoShowJobCharges")) {
-			if (Utilities.tokenToBooleanValue(value))
-				preferencesEstimating.setAutoShowCharges(false);
-			else
+			if (Utilities.tokenToBooleanValue(value) == false)
 				preferencesEstimating.setAutoShowCharges(true);
+			else
+				preferencesEstimating.setAutoShowCharges(false);
 		} else if (name.equals("Estimator_lockParentSize_field"))
 			preferencesEstimating.setUseStockParentSize(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("Estimator_dueDate_days_out"))
@@ -952,12 +952,9 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setEliminateWarningMessages(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("activateUserEventLogging_PCI_rules"))
 			preferencesSystem.setActivateUserEventLogging(Utilities.tokenToBooleanValue(value));
-		else if (name.equals("autosignon_active")) {
-			if (Utilities.tokenToBooleanValue(value) == false)
-				preferencesSystem.setEnableAutoLogOut(true);
-			else
-				preferencesSystem.setEnableAutoLogOut(false);
-		} else if (name.equals("autosign_seconds"))
+		else if (name.equals("autosignon_active"))
+			preferencesSystem.setEnableAutoLogOut(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("autosign_seconds"))
 			preferencesSystem.setAutoLogOutSeconds(Utilities.tokenToInt(value));
 		else if (name.equals("PendingList_restrict_pickup_to_ready_items"))
 			preferencesSystem.setOnlyPostMarkedReadyInvoices(Utilities.tokenToBooleanValue(value));
