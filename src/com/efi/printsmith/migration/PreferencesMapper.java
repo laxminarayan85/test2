@@ -120,6 +120,7 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesSystemField(key, fieldName, fieldValue);
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
 			importPreferencesPOSField(key, fieldName, fieldValue);
+			importPreferencesAccountingField(key, fieldName, fieldValue);
 		}
 		else if (group.equals("Def Customer")) {
 			importPreferencesSystemField(key, fieldName, fieldValue);
@@ -514,7 +515,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesAccounting.setEstimateAllowPrefixMod(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("estAllowSuffixMod"))
 			preferencesAccounting.setEstimateAllowSuffixMod(Utilities.tokenToBooleanValue(value));
-		else if (name.equals("Receipts starting serial number"))
+		else if (name.equals("Memos_printJournalMemo"))
 			preferencesAccounting.setPrintDocument(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesAccounting);
 	}
