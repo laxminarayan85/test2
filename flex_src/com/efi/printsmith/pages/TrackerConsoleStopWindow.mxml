@@ -696,7 +696,7 @@
 			
 		</mx:VBox>
 		
-		<mx:VBox width="40%">
+		<mx:VBox width="40%" height="100%">
 		
 			<mx:Panel layout="vertical" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" width="100%"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.SpoilageCalculator')}">
