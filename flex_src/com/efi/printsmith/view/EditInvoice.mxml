@@ -80,6 +80,7 @@
 	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.pages.TrackerStatusView;
 			import com.efi.printsmith.data.NotePad;
 			import mx.events.ResourceEvent;
 			import mx.controls.dataGridClasses.DataGridColumn;
@@ -136,7 +137,7 @@
 			private var accounts:ArrayCollection=new ArrayCollection();
 
 			[Bindable]
-			private var invoice:InvoiceBase = null;
+			public var invoice:InvoiceBase = null;
 			[Bindable]
 			private var loginUser:Users;
 			[Bindable]
@@ -217,6 +218,14 @@
 				eventCharges.dispatch();
 				
 			}
+			
+			public function openTrackerStatus():void {
+				if(invoice!=null && !isNaN(invoice.id) && invoice.id!=0){
+					var trackerStatusView:TrackerStatusView = PopUpManager.createPopUp(this,TrackerStatusView,true) as TrackerStatusView;
+					trackerStatusView.invoiceId = invoice.id;
+				}
+			}
+			
 			private function handleLoadAccountsResult(ev:ResultEvent):void {
 				accounts = ev.result as ArrayCollection;
 				doAccountPicker();

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowInvHistoryCmd.TrackerStatus')}"
+	creationComplete="{initTrackerStatus()}" showCloseButton="true" close="{closeWindow()}" layout="vertical" width="400" height="300">
+
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getTrackerJobsForTrackerStatus" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script source="../util/tracker/TrackerUtil.as"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			import mx.managers.PopUpManager;
+			import mx.controls.Alert;
+			import mx.rpc.events.FaultEvent;
+			
+			[Bindable] public var trackerConsoleJobsList:ArrayCollection = new ArrayCollection();
+			
+			private function initTrackerStatus():void {
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function set invoiceId(invoiceId:Number):void {
+				if(!isNaN(invoiceId) && invoiceId!=0){
+					dataService.getTrackerJobsForTrackerStatus(invoiceId);
+				}
+			}
+			
+			public function getJobDescription(object:Object):String {
+				return object.description;
+			}
+			
+			private function handleLoadResult(event:ResultEvent):void {
+				trackerConsoleJobsList = event.result as ArrayCollection;
+			}
+		
+			private function handleFault(ev:FaultEvent):void {  
+				var message:String;
+				              
+				message = "Error: "                          
+				+ ev.fault.faultCode + " - "                                  
+				+ ev.fault.faultDetail + " - "                                  
+				+ ev.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, 4);                                 
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
+	
+	<mx:DataGrid dataProvider="{trackerConsoleJobsList}" width="100%" height="100%">
+		<mx:columns>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getInvoiceNumber(data)}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{outerDocument.getJobDescription((data.job==null?data.charge:data.job))}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{data.productionLocations.name}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Facility')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{data.productionFacilities.name}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Employee')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text="{data.employee.lastName}, {data.employee.firstName}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimated')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text=""/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.Actual')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text=""/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.DateCompleted')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text=""/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.Costing')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label text=""/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+		</mx:columns>
+		
+	</mx:DataGrid>
+	
+</mx:TitleWindow>
