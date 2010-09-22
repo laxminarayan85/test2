@@ -189,6 +189,18 @@ public class CreditCardTransactions extends ModelBase {
 	/**
    * @generated
    */
+  public static final String ADDRESS1 = "Address1";
+	/**
+   * @generated
+   */
+  public static final String ZIPCODE = "ZipCode";
+	/**
+   * @generated
+   */
+  public static final String ACCOUNTNUMBER = "AccountNumber";
+	/**
+   * @generated
+   */
   public static final String ORDERNUMBER = "OrderNumber";
 
 	/**
@@ -999,6 +1011,75 @@ public class CreditCardTransactions extends ModelBase {
    * @generated
    */	
  	@Basic
+  private String address1;
+
+	/**
+   * @generated
+ 	 */
+  public String getAddress1(){
+    return address1; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAddress1(String newVal) {
+    this.address1 = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String zipCode;
+
+	/**
+   * @generated
+ 	 */
+  public String getZipCode(){
+    return zipCode; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setZipCode(String newVal) {
+    this.zipCode = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long accountNumber;
+
+	/**
+   * @generated
+ 	 */
+  public Long getAccountNumber(){
+    return accountNumber; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAccountNumber(Long newVal) {
+    this.accountNumber = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
   private String orderNumber;
 
 	/**
@@ -1058,6 +1139,9 @@ public class CreditCardTransactions extends ModelBase {
     if (VERBALAUTHDATE.equals(propertyName)) return getVerbalAuthDate();
     if (FIRSTNUMBERPREFIX.equals(propertyName)) return getFirstNumberPrefix();
     if (ACTIVEACCEPTED.equals(propertyName)) return getActiveAccepted();
+    if (ADDRESS1.equals(propertyName)) return getAddress1();
+    if (ZIPCODE.equals(propertyName)) return getZipCode();
+    if (ACCOUNTNUMBER.equals(propertyName)) return getAccountNumber();
     return super.getProperty(propertyName);
   }
 	
@@ -1102,6 +1186,9 @@ public class CreditCardTransactions extends ModelBase {
     if (VERBALAUTHDATE.equals(propertyName)) setVerbalAuthDate((Date)newValue); else
     if (FIRSTNUMBERPREFIX.equals(propertyName)) setFirstNumberPrefix((Long)newValue); else
     if (ACTIVEACCEPTED.equals(propertyName)) setActiveAccepted((Boolean)newValue); else
+    if (ADDRESS1.equals(propertyName)) setAddress1((String)newValue); else
+    if (ZIPCODE.equals(propertyName)) setZipCode((String)newValue); else
+    if (ACCOUNTNUMBER.equals(propertyName)) setAccountNumber((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1181,6 +1268,12 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {Long.class};		
     if (ACTIVEACCEPTED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (ADDRESS1.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ZIPCODE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ACCOUNTNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1226,6 +1319,9 @@ public class CreditCardTransactions extends ModelBase {
     if (VERBALAUTHDATE.equals(propertyName)) return CreditCardTransactions.class;
     if (FIRSTNUMBERPREFIX.equals(propertyName)) return CreditCardTransactions.class;
     if (ACTIVEACCEPTED.equals(propertyName)) return CreditCardTransactions.class;
+    if (ADDRESS1.equals(propertyName)) return CreditCardTransactions.class;
+    if (ZIPCODE.equals(propertyName)) return CreditCardTransactions.class;
+    if (ACCOUNTNUMBER.equals(propertyName)) return CreditCardTransactions.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1306,6 +1402,12 @@ public class CreditCardTransactions extends ModelBase {
     if (! SmartEquals(getFirstNumberPrefix(), objT.getFirstNumberPrefix()))
       return false;
     if (! SmartEquals(getActiveAccepted(), objT.getActiveAccepted()))
+      return false;
+    if (! SmartEquals(getAddress1(), objT.getAddress1()))
+      return false;
+    if (! SmartEquals(getZipCode(), objT.getZipCode()))
+      return false;
+    if (! SmartEquals(getAccountNumber(), objT.getAccountNumber()))
       return false;
     return true;
   }			

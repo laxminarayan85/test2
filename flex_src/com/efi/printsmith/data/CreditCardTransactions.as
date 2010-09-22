@@ -2,7 +2,6 @@ package com.efi.printsmith.data
 {
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
-	import com.efi.printsmith.Constants;
 	
 	[RemoteClass(alias="com.efi.printsmith.data.CreditCardTransactions")]
 	[Managed]
@@ -50,6 +49,9 @@ package com.efi.printsmith.data
 		public var verbalAuthDate:Date = new Date();
 		public var firstNumberPrefix:Number = 0;
 		public var activeAccepted:Boolean = false;
+		public var address1:String = "";
+		public var zipCode:String = "";
+		public var accountNumber:Number = 0;
 	
 	}
 }
