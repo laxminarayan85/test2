@@ -429,12 +429,14 @@
 		
 		if (validate(priceListValidator) == true)
 		{
-			priceList.elements.filterFunction = unfilterElements;
-			priceList.elements.refresh();
-			for (var i:int = 0;i < priceList.elements.length;i++) {
-				var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement
-				if (element.lastLine == true)
-					element.amount = parseFloat(this.over_quantity.text);
+			if (priceList.elements != null) {
+				priceList.elements.filterFunction = unfilterElements;
+				priceList.elements.refresh();
+				for (var i:int = 0;i < priceList.elements.length;i++) {
+					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement
+					if (element.lastLine == true)
+						element.amount = parseFloat(this.over_quantity.text);
+				}
 			}
 			maptoPricelist();
 			
@@ -536,8 +538,8 @@
 //			priceList = ev.result as com.efi.printsmith.data.Matrix;
 //		}
 //
-		var editPage:Container = parentContainer;
 		
+		var editPage:Container = parentContainer;
 	}
 		
 	private function handleLoadPriceList(ev:ResultEvent):void {
@@ -546,13 +548,15 @@
 				priceList = new PriceList();
 			else
 				priceList = ev.result as PriceList;
-			for (var i:int = 0;i < priceList.elements.length;i++) {
-				 var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-				 if (element.lastLine == true)
-				 	this.over_quantity.text = element.amount.toString();
+			if (priceList.elements != null) {
+				for (var i:int = 0;i < priceList.elements.length;i++) {
+					 var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+					 if (element.lastLine == true)
+					 	this.over_quantity.text = element.amount.toString();
+				}
+				this.priceList.elements.filterFunction = filterElements;
+				this.priceList.elements.refresh();
 			}
-			this.priceList.elements.filterFunction = filterElements;
-			this.priceList.elements.refresh();
 		} else if (itemType == "WasteChart") {
 			if (ev.result == null) {
 				priceList = new WasteChart();

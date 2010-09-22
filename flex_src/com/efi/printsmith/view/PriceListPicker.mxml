@@ -169,6 +169,7 @@
 		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
 	    titleWindow.setStyle("borderAlpha", 0.9);
 	    titleWindow.setPriceList(newPriceList);
+	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSave);
 //	    doSelect();
 //		PopUpManager.removePopUp(this);
 //		dataService.getAll(this.itemType);	
@@ -205,6 +206,7 @@
 	}
 	private function handleSave(ev:SavePriceListEvent):void
 	{ 
+		dataService.getAll(this.itemType);
 		var temp:PriceListBase = ev.priceList as PriceListBase;
 	   var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.SELECTPRICELIST, temp);
 		dispatchEvent(selectEvent);
