@@ -1,13 +1,9 @@
 package com.efi.printsmith.service;
 
-import java.util.Date;
-
-import net.digitalprimates.persistence.hibernate.utils.HibernateUtil;
-import net.digitalprimates.persistence.hibernate.utils.services.HibernateService;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.classic.Session;
 
 import com.efi.printsmith.Constants;
 import com.efi.printsmith.data.Charge;
@@ -15,11 +11,12 @@ import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.CostingRecord;
 import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.data.Job;
-import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.PaperCalculator;
+import com.efi.printsmith.data.PreferencesEstimating;
 import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.StockDefinition;
+import com.efi.printsmith.data.enums.RunMethod;
 import com.efi.printsmith.pricing.charge.ChargeUtilities;
 import com.efi.printsmith.pricing.charge.PriceChargeEngine;
 import com.efi.printsmith.pricing.job.PriceJobEngine;
@@ -35,14 +32,6 @@ public class JobService extends SnowmassHibernateService {
 		Job job = new Job();
 		
 		job.setCostingRecord(new CostingRecord());
-		PaperCalculator paperCalculator = new PaperCalculator();
-		paperCalculator.setWhichStartSize(Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH);
-		paperCalculator.setRunToFinishGrain(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER);
-		paperCalculator.setGripLocation(Constants.PAPER_CALCULATOR_GRIPPER_TOP);
-		paperCalculator.setFolioLocation(Constants.PAPER_CALCULATOR_FOLIO_TOP);
-		paperCalculator.setdAcross(0);
-		paperCalculator.setdDown(0);
-		job.setPaperCal(new PaperCalculator());
 
 		PricingRecord pricingRecord = new PricingRecord();
 		pricingRecord.setUnitPriceOverride(false);
@@ -69,6 +58,55 @@ public class JobService extends SnowmassHibernateService {
 		job.setNumUp(1L);
 		job.setSingleSided(true);
 		job.setDoubleSided(false);
+		job.setRunMethod(RunMethod.Sheetwise.name());
+		DataService dataService = new DataService();
+		PaperCalculator paperCalculator = new PaperCalculator();
+
+		List<PreferencesEstimating> preferencesArray = (List<PreferencesEstimating>) dataService.getAll("PreferencesEstimating");
+		if (preferencesArray != null && preferencesArray.size() > 0) {
+			PreferencesEstimating estimatingPreferences = preferencesArray.get(0);
+		
+			paperCalculator.setWhichStartSize(Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH);
+			paperCalculator.setRunToFinishGrain(estimatingPreferences.getRunToFinishGrain());
+			paperCalculator.setGripLocation(estimatingPreferences.getGripLocation());
+			paperCalculator.setFolioLocation(estimatingPreferences.getFolioLocation());
+			paperCalculator.setdAcross(0);
+			paperCalculator.setdDown(0);
+		
+		
+			paperCalculator.setUseGripEdgeGap(estimatingPreferences.getUseGripEdgeGap());
+			paperCalculator.setGripEdgeGap(estimatingPreferences.getGripEdgeGap());
+			paperCalculator.setUseFolioEdge(estimatingPreferences.getUseFolioEdge());
+			paperCalculator.setFolioEdge(estimatingPreferences.getFolioEdge());
+			paperCalculator.setUseColorBar(estimatingPreferences.getUseColorBar());
+			paperCalculator.setColorBar(estimatingPreferences.getColorBar());
+			paperCalculator.setUseWhiteSpace(estimatingPreferences.getUseWhiteSpace());
+			paperCalculator.setWhiteSpaceLeft(estimatingPreferences.getWhiteSpace());
+			paperCalculator.setWhiteSpaceBottom(estimatingPreferences.getWhiteSpaceBottom());
+			paperCalculator.setWhiteSpaceRight(estimatingPreferences.getWhiteSpaceRight());
+			paperCalculator.setWhiteSpaceTop(estimatingPreferences.getWhiteSpaceTop());
+			paperCalculator.setUseGutter(estimatingPreferences.getUseGutter());
+			paperCalculator.setGutter(estimatingPreferences.getGutter());
+			paperCalculator.setGutterHorizontal(estimatingPreferences.getGutterHorizontal());
+			paperCalculator.setUseBleed(estimatingPreferences.getUseBleed());
+			paperCalculator.setBleedLeft(estimatingPreferences.getBleed());
+			paperCalculator.setBleedBottom(estimatingPreferences.getBleedBottom());
+			paperCalculator.setBleedRight(estimatingPreferences.getBleedRight());
+			paperCalculator.setBleedTop(estimatingPreferences.getBleedTop());
+			paperCalculator.setBackTrimParent(estimatingPreferences.getBackTrimParent());
+			paperCalculator.setTrimFourSides(estimatingPreferences.getTrimFourSides());
+			paperCalculator.setWorkandTumble(estimatingPreferences.getWorkandTumble());
+			paperCalculator.setPrintParentToFinishSection(estimatingPreferences.getPrintParentToFinishSection());
+			paperCalculator.setPrintParentToRunSection(estimatingPreferences.getPrintParentToRunSection());
+			paperCalculator.setPrintRunToFinishSection(estimatingPreferences.getPrintRunToFinishSection());
+			paperCalculator.setAttachToJobTicket(estimatingPreferences.getAttachToJobTicket());
+		} else {
+			log.error("No EstimatingPreferences found. Unable to complete creation of PaperCalculator in Job");
+		}
+		
+		job.setPaperCal(paperCalculator);
+				
+		
 		
 		return job;
 	}

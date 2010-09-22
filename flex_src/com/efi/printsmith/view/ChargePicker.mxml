@@ -555,6 +555,7 @@
 					}
 				} else if (this.charge is ShippingCharge) {
 					(charge as ShippingCharge).totalWeight = (localCharge as ShippingCharge).totalWeight;
+					this.total_weight_text.text = (charge as ShippingCharge).totalWeight.toString();
 				}
 				if (addCharge) {
 					addCharge = false;
@@ -684,7 +685,7 @@
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = ((chargeDefinition.quantityType == ChargeQtyType.Sets) && chargeDefinition.useSetup);
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -707,12 +708,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -730,12 +731,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets && chargeDefinition.adjustableMaterial;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -752,12 +753,12 @@
 					quantity_box.includeInLayout = quantity_box.visible = true;
 					material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 					material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-					in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+					in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 					rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 					material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 					price_box.includeInLayout = price_box.visible = true;
 					price_edit.editable = !chargeDefinition.noOverrides;
-					setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+					setup_box.includeInLayout = setup_box.visible = false;
 					number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 					pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 					coverage_box.includeInLayout = coverage_box.visible = false;
@@ -778,7 +779,7 @@
 					material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 					price_box.includeInLayout = price_box.visible = true;
 					price_edit.editable = !chargeDefinition.noOverrides;
-					setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+					setup_box.includeInLayout = setup_box.visible = false;
 					number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 					pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 					coverage_box.includeInLayout = coverage_box.visible = false;
@@ -795,12 +796,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -823,12 +824,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = ((chargeDefinition.quantityType == ChargeQtyType.Sets) && chargeDefinition.useSetup);
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -851,7 +852,7 @@
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = true;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = true;
 						coverage_box.includeInLayout = coverage_box.visible = true;
@@ -872,7 +873,7 @@
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = true;
 						coverage_box.includeInLayout = coverage_box.visible = true;
@@ -891,12 +892,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = ((chargeDefinition.quantityType == ChargeQtyType.Sets) && chargeDefinition.useSetup);
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -912,12 +913,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -936,12 +937,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = ((chargeDefinition.quantityType == ChargeQtyType.Sets) && chargeDefinition.useSetup);
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -958,12 +959,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -980,12 +981,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -1002,12 +1003,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -1024,12 +1025,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -1045,12 +1046,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -1068,12 +1069,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;
@@ -1089,12 +1090,12 @@
 						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
-						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;;
+						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
 						rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 						material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 						price_box.includeInLayout = price_box.visible = true;
 						price_edit.editable = !chargeDefinition.noOverrides;
-						setup_box.includeInLayout = setup_box.visible = chargeDefinition.useSetup;
+						setup_box.includeInLayout = setup_box.visible = false;
 						number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 						pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
 						coverage_box.includeInLayout = coverage_box.visible = false;

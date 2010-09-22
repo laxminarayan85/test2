@@ -111,8 +111,8 @@ width="726" height="431"  creationComplete="init()"
 			var setupMinutes:Number = this.job.pricingPress.setupMin;
 			setupMinutes = setupMinutes - (parseInt(setupHours) * 60);
 			this.setup_time.text = setupHours + ":" + setupMinutes.toString();
-			var runHours:String = (this.job.impositionsPerRun / this.job.pricingPress.avgImpressPerHour).toFixed(0);
-			var runMinutes:Number = (this.job.impositionsPerRun / this.job.pricingPress.avgImpressPerHour) * 60;
+			var runHours:String = (this.job.impressionsPerRun / this.job.pricingPress.avgImpressPerHour).toFixed(0);
+			var runMinutes:Number = (this.job.impressionsPerRun / this.job.pricingPress.avgImpressPerHour) * 60;
 			runMinutes = runMinutes - (parseInt(runHours) * 60);
 			this.run_time.text = runHours + ":" + runMinutes.toFixed(0);
 			this.washup_time.text = "0:00";
