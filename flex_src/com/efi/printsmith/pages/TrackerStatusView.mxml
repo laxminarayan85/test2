@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowInvHistoryCmd.TrackerStatus')}"
-	creationComplete="{initTrackerStatus()}" showCloseButton="true" close="{closeWindow()}" layout="vertical" width="400" height="300">
+	creationComplete="{initTrackerStatus()}" showCloseButton="true" close="{closeWindow()}" layout="vertical" width="950" height="700">
 
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
-		<mx:method name="getTrackerJobsForTrackerStatus" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getTrackerJobsForTrackerStatus" fault="handleFault(event)" result="handleLoadListResult(event)"/>
+		<mx:method name="getTotalEstimatedTimeForInvoice" fault="handleFault(event)" result="handleLoadEstimatedTimeResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="updateDataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:Script source="../util/tracker/TrackerUtil.as"/>
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.TrackerConsolePasses;
+			import mx.utils.ObjectUtil;
+			import com.efi.printsmith.events.TrackerConsoleDetailsEvent;
+			import com.efi.printsmith.data.TrackerConsoleJobs;
 			import mx.collections.ArrayCollection;
 			import mx.rpc.events.ResultEvent;
 			import mx.managers.PopUpManager;
@@ -18,6 +27,16 @@
 			import mx.rpc.events.FaultEvent;
 			
 			[Bindable] public var trackerConsoleJobsList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var totalEstimatedTime:String = "";
+			
+			[Bindable] public var totalActualTime:String = "";
+			
+			[Bindable] public var statusString:String = "";
+			
+			[Bindable] private var exceptionsArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var selectedTrackerConsoleJob:TrackerConsoleJobs;
 			
 			private function initTrackerStatus():void {
 				PopUpManager.centerPopUp(this);
@@ -27,9 +46,10 @@
 				PopUpManager.removePopUp(this);
 			}
 			
-			public function set invoiceId(invoiceId:Number):void {
-				if(!isNaN(invoiceId) && invoiceId!=0){
-					dataService.getTrackerJobsForTrackerStatus(invoiceId);
+			public function set invoiceId(invoiceIdValue:Number):void {
+				if(!isNaN(invoiceIdValue) && invoiceIdValue!=0){
+					dataService.getTrackerJobsForTrackerStatus(invoiceIdValue);
+					dataService.getTotalEstimatedTimeForInvoice(invoiceIdValue);
 				}
 			}
 			
@@ -37,8 +57,140 @@
 				return object.description;
 			}
 			
-			private function handleLoadResult(event:ResultEvent):void {
+			public function getActualJobTime(object:Object,updateTimer:Boolean,showString:Boolean):Object {
+				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
+				if(!trackerConsoleJobsObj.completed){
+					var totalValue:Number = 0;
+					var initialValue:Number = 0;
+					for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
+						if(passes.passNo<trackerConsoleJobsObj.currentPass) {
+							if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0) {
+								totalValue = totalValue + passes.setUpTime;
+							}
+							if(!(isNaN(passes.runTime)) && passes.runTime!=0) {
+								totalValue = totalValue + passes.runTime;
+							}
+							if(!(isNaN(passes.washUpTime)) && passes.washUpTime!=0) {
+								totalValue = totalValue + passes.washUpTime;
+							}
+						}
+					}
+					for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
+						if(passes.passNo==trackerConsoleJobsObj.currentPass) {
+							if(!trackerConsoleJobsObj.paused) {
+								initialValue = passes.trackDate.time;
+								if(!(isNaN(passes.trackTime)) && passes.trackTime!=0){
+									initialValue = initialValue - passes.trackTime;
+								}
+								if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0){
+									initialValue = initialValue - passes.setUpTime; 
+								}
+								if(!(isNaN(passes.runTime)) && passes.runTime!=0){
+									initialValue = initialValue - passes.runTime; 
+								}
+								initialValue = new Date().time - initialValue;
+							} else {
+								if(!(isNaN(passes.trackTime)) && passes.trackTime!=0){
+									initialValue = initialValue + passes.trackTime;
+								}
+								if(!(isNaN(passes.setUpTime)) && passes.setUpTime!=0){
+									initialValue = initialValue + passes.setUpTime; 
+								}
+								if(!(isNaN(passes.runTime)) && passes.runTime!=0){
+									initialValue = initialValue + passes.runTime; 
+								}
+							}
+						}
+					}
+					if(showString){
+						return convertMilliSecondsToString((totalValue+initialValue),true);
+					} else {
+						return (totalValue+initialValue);
+					}
+				} else if(trackerConsoleJobsObj.completed){
+					if(showString){
+						return convertMilliSecondsToString(trackerConsoleJobsObj.totalTime,true);
+					} else {
+						return trackerConsoleJobsObj.totalTime;
+					}
+				}
+				return "";
+			}
+			
+			public function onJobSelect(event:Event):void {
+				var totalValue:Number = 0;
+				for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+					if(!trackerConsoleJobsObj.updateTimer){
+						trackerConsoleJobsObj.updateTimer = true;
+					} else {
+						trackerConsoleJobsObj.updateTimer = false;
+					}
+					totalValue = totalValue + Number(getActualJobTime(trackerConsoleJobsObj,trackerConsoleJobsObj.updateTimer,false));
+				}
+				totalActualTime = convertMilliSecondsToString(totalValue,true);
+				trackerConsoleJobsList.refresh();
+				if(event.currentTarget.selectedIndex>-1){
+					selectedTrackerConsoleJob = event.currentTarget.selectedItem as TrackerConsoleJobs;
+				}
+			}
+			
+			private function openJobDetails(trackerConsoleJobArg:TrackerConsoleJobs):void {
+				if(trackerConsoleJobArg!=null){
+					var trackerConsoleDetails:TrackerConsoleDetails = PopUpManager.createPopUp(this,TrackerConsoleDetails,true) as TrackerConsoleDetails;
+					registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+					trackerConsoleDetails.trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobArg) as TrackerConsoleJobs;
+					trackerConsoleDetails.exceptionsArray = exceptionsArray;
+					trackerConsoleDetails.addEventListener(TrackerConsoleDetailsEvent.SAVE_JOBDETAILS_EVENT,function(event:TrackerConsoleDetailsEvent):void {
+						if(event.isSave){
+							if(trackerConsoleJobArg!=null){
+								copyFromDetailsWindow(event.trackerConsoleJobs,trackerConsoleJobArg);
+								updateDataService.addUpdate(trackerConsoleJobArg);
+							}
+						}
+					});
+				}
+			}
+			
+			private function copyFromDetailsWindow(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {
+				if(source.productionExceptions!=null){
+					if(source.productionExceptions.id==0){
+						source.productionExceptions = null;
+					}
+				}
+				destination.productionExceptions = source.productionExceptions;
+				destination.notes = source.notes;
+			}
+			
+			private function handleLoadListResult(event:ResultEvent):void {
 				trackerConsoleJobsList = event.result as ArrayCollection;
+				var totalValue:Number = 0;
+				var isActive:Boolean = false;
+				for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+					if(!trackerConsoleJobsObj.completed){
+						isActive = true;
+					}
+					if(!trackerConsoleJobsObj.updateTimer){
+						trackerConsoleJobsObj.updateTimer = true;
+					} else {
+						trackerConsoleJobsObj.updateTimer = false;
+					}
+					totalValue = totalValue + Number(getActualJobTime(trackerConsoleJobsObj,trackerConsoleJobsObj.updateTimer,false));
+				}
+				if(isActive){
+					statusString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Active');
+				} else {
+					statusString = "";
+				}
+				totalActualTime = convertMilliSecondsToString(totalValue,true);
+			}
+			
+			private function handleLoadEstimatedTimeResult(event:ResultEvent):void {
+				var estimatedTime:Number = event.result as Number;
+				if(!isNaN(estimatedTime) && estimatedTime!=0){
+					totalEstimatedTime = convertMilliSecondsToString((estimatedTime*60*1000),true);
+				} else {
+					totalEstimatedTime = convertMilliSecondsToString(0,true);
+				}
 			}
 		
 			private function handleFault(ev:FaultEvent):void {  
@@ -53,71 +205,95 @@
 		]]>
 	</mx:Script>
 	
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
+	
 	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 	
-	<mx:DataGrid dataProvider="{trackerConsoleJobsList}" width="100%" height="100%">
+	<mx:HBox width="100%">
+	
+		<mx:Label width="20%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.Totalestimatedtime')}:"
+			textAlign="right"/>
+		<mx:Label width="20%" text="{totalEstimatedTime}"/>
+		
+		<mx:Label width="20%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.Currentstatus')}:"
+			textAlign="right"/>
+		<mx:Label width="20%" text="{statusString}" textAlign="center"/>
+		
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+	
+		<mx:Label width="20%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.Totalactualtime')}:"
+			textAlign="right"/>
+		<mx:Label width="20%" text="{totalActualTime}"/>
+		
+	</mx:HBox>
+	
+	<mx:DataGrid 
+		dataProvider="{trackerConsoleJobsList}" itemClick="{onJobSelect(event)}" doubleClickEnabled="true" 
+		doubleClick="{openJobDetails(selectedTrackerConsoleJob)}" width="100%" height="100%">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 				<mx:itemRenderer>
 					<mx:Component>
-						<mx:Label text="{outerDocument.getInvoiceNumber(data)}"/>
+						<mx:Label text="{outerDocument.getInvoiceNumber(data)}" fontWeight="{(data.completed?'bold':'normal')}"/>
 					</mx:Component>
 				</mx:itemRenderer>
 			</mx:DataGridColumn>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Description')}">
 				<mx:itemRenderer>
 					<mx:Component>
-						<mx:Label text="{outerDocument.getJobDescription((data.job==null?data.charge:data.job))}"/>
+						<mx:Label text="{outerDocument.getJobDescription((data.job==null?data.charge:data.job))}" fontWeight="{(data.completed?'bold':'normal')}"/>
 					</mx:Component>
 				</mx:itemRenderer>
 			</mx:DataGridColumn>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Location')}">
 				<mx:itemRenderer>
 					<mx:Component>
-						<mx:Label text="{data.productionLocations.name}"/>
+						<mx:Label text="{data.productionLocations.name}" fontWeight="{(data.completed?'bold':'normal')}"/>
 					</mx:Component>
 				</mx:itemRenderer>
 			</mx:DataGridColumn>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Facility')}">
 				<mx:itemRenderer>
 					<mx:Component>
-						<mx:Label text="{data.productionFacilities.name}"/>
+						<mx:Label text="{data.productionFacilities.name}" fontWeight="{(data.completed?'bold':'normal')}"/>
 					</mx:Component>
 				</mx:itemRenderer>
 			</mx:DataGridColumn>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Employee')}">
 				<mx:itemRenderer>
 					<mx:Component>
-						<mx:Label text="{data.employee.lastName}, {data.employee.firstName}"/>
+						<mx:Label text="{data.employee.lastName}, {data.employee.firstName}" fontWeight="{(data.completed?'bold':'normal')}"/>
 					</mx:Component>
 				</mx:itemRenderer>
 			</mx:DataGridColumn>
-			
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimated')}">
 				<mx:itemRenderer>
 					<mx:Component>
-						<mx:Label text=""/>
+						<mx:Label text="{outerDocument.convertMilliSecondsToString((data.actualSetUpTime+data.actualRunTime+data.actualWashTime),true)}"
+							fontWeight="{(data.completed?'bold':'normal')}"/>
 					</mx:Component>
 				</mx:itemRenderer>
 			</mx:DataGridColumn>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.Actual')}">
 				<mx:itemRenderer>
 					<mx:Component>
-						<mx:Label text=""/>
+						<mx:Label text="{outerDocument.getActualJobTime(data,data.updateTimer,true)}" fontWeight="{(data.completed?'bold':'normal')}"/>
 					</mx:Component>
 				</mx:itemRenderer>
 			</mx:DataGridColumn>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.DateCompleted')}">
 				<mx:itemRenderer>
 					<mx:Component>
-						<mx:Label text=""/>
+						<mx:Label text="{outerDocument.dateFormatter.format(data.completedDate)}" fontWeight="{(data.completed?'bold':'normal')}"/>
 					</mx:Component>
 				</mx:itemRenderer>
 			</mx:DataGridColumn>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.Costing')}">
 				<mx:itemRenderer>
 					<mx:Component>
-						<mx:Label text=""/>
+						<mx:Label text="" fontWeight="{(data.completed?'bold':'normal')}"/>
 					</mx:Component>
 				</mx:itemRenderer>
 			</mx:DataGridColumn>

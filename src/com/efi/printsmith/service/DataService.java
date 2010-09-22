@@ -3863,6 +3863,125 @@ public class DataService extends HibernateService {
 		return routingStepSetUpList;
 	}
 	
+	/**
+	 * This method retrieves TrackerConsoleJobsList for Tracker History screen for an Invoice
+	 * @param invoiceId
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TrackerConsoleJobs> getTrackerJobsForTrackerStatus(Long invoiceId) throws Exception {
+		log.debug("** getTrackerJobsForTrackerStatus called.");
+		List<TrackerConsoleJobs> trackerConsoleJobsList = new ArrayList<TrackerConsoleJobs>();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "select tcJobs from TrackerConsoleJobs as tcJobs inner join tcJobs.job as tcjob inner join tcjob.parentInvoice as invoice where invoice.id=:invoiceId";
+			Query query = em.createQuery(queryString);
+			query.setParameter("invoiceId", invoiceId);
+			for(Object object : query.getResultList()){
+				TrackerConsoleJobs trackerConsoleJobs = (TrackerConsoleJobs) object;
+				if(trackerConsoleJobs!=null) {
+					Hibernate.initialize(trackerConsoleJobs.getPassesList());
+					Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
+					trackerConsoleJobsList.add(trackerConsoleJobs);
+				}
+			}
+			queryString = "select tcJobs from TrackerConsoleJobs as tcJobs inner join fetch tcJobs.charge as charge inner join charge.parentJob as chargeJob inner join chargeJob.parentInvoice as invoice where invoice.id=:invoiceId";
+			query = em.createQuery(queryString);
+			query.setParameter("invoiceId", invoiceId);
+			for(Object object : query.getResultList()){
+				TrackerConsoleJobs trackerConsoleJobs = (TrackerConsoleJobs) object;
+				if(trackerConsoleJobs!=null) {
+					Hibernate.initialize(trackerConsoleJobs.getPassesList());
+					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
+					trackerConsoleJobsList.add(trackerConsoleJobs);
+				}
+			}
+			queryString = "select tcJobs from TrackerConsoleJobs as tcJobs inner join fetch tcJobs.charge as charge inner join charge.parentInvoice as invoice where invoice.id=:invoiceId";
+			query = em.createQuery(queryString);
+			query.setParameter("invoiceId", invoiceId);
+			for(Object object : query.getResultList()){
+				TrackerConsoleJobs trackerConsoleJobs = (TrackerConsoleJobs) object;
+				if(trackerConsoleJobs!=null) {
+					Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
+					Hibernate.initialize(trackerConsoleJobs.getPassesList());
+					trackerConsoleJobsList.add(trackerConsoleJobs);
+				}
+			}
+			if(trackerConsoleJobsList!=null)
+				log.debug("** Found " + trackerConsoleJobsList.size() + "records:"); 
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return trackerConsoleJobsList;
+	}
+	
+	/**
+	 * Retrieves Total Estimated Time based on Invoice
+	 * @param invoiceId
+	 * @return
+	 * @throws Exception
+	 */
+	public Double getTotalEstimatedTimeForInvoice(Long invoiceId) throws Exception {
+		Double totalEstimatedTime = 0D;
+		log.debug("** getTotalEstimatedTimeForInvoice called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from InvoiceBase where id=:invoiceId";
+			Query query = em.createQuery(queryString);
+			query.setParameter("invoiceId", invoiceId);
+			InvoiceBase invoiceBase = (InvoiceBase) query.getSingleResult();
+			if(invoiceBase!=null) {
+				if(invoiceBase.getJobs()!=null && invoiceBase.getJobs().size()>0) {
+					for (JobBase jobBase : invoiceBase.getJobs()) {
+						if(jobBase.getCostingRecord()!=null) {
+							if(jobBase.getCostingRecord().getActualSetupTime()!=null){
+								totalEstimatedTime = totalEstimatedTime+jobBase.getCostingRecord().getActualSetupTime();
+							}
+							if(jobBase.getCostingRecord().getActualRunTime()!=null){
+								totalEstimatedTime = totalEstimatedTime+jobBase.getCostingRecord().getActualRunTime();
+							}
+							if(jobBase.getCostingRecord().getActualWashupTime()!=null){
+								totalEstimatedTime = totalEstimatedTime+jobBase.getCostingRecord().getActualWashupTime();
+							}
+						}
+						if(jobBase.getCharges()!=null && jobBase.getCharges().size()>0) {
+							for (Charge charge : jobBase.getCharges()) {
+								if(charge.getChargeCostingRecord()!=null) {
+									if(charge.getChargeCostingRecord().getSetupTime()!=null){
+										totalEstimatedTime = totalEstimatedTime+charge.getChargeCostingRecord().getSetupTime();
+									}
+									if(charge.getChargeCostingRecord().getRunTime()!=null){
+										totalEstimatedTime = totalEstimatedTime+charge.getChargeCostingRecord().getRunTime();
+									}
+								}
+							}
+						}
+					} 
+				}
+				if(invoiceBase.getCharges()!=null && invoiceBase.getCharges().size()>0) {
+					for (Charge charge : invoiceBase.getCharges()) {
+						if(charge.getChargeCostingRecord()!=null) {
+							if(charge.getChargeCostingRecord().getSetupTime()!=null){
+								totalEstimatedTime = totalEstimatedTime+charge.getChargeCostingRecord().getSetupTime();
+							}
+							if(charge.getChargeCostingRecord().getRunTime()!=null){
+								totalEstimatedTime = totalEstimatedTime+charge.getChargeCostingRecord().getRunTime();
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return totalEstimatedTime;
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public void deleteItem(String className, Long id) {
