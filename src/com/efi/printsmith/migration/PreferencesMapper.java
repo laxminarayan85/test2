@@ -811,6 +811,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setCanChangeAddress(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("skipAutoCost_at_posting"))
 			preferencesEstimating.setDoNotCostDuringPost(Utilities.tokenToBooleanValue(value));
+			
 		dataService.addUpdate(preferencesEstimating);
 	}
 	private void importPreferencesSystemField(String key, String name, String value) throws Exception {
@@ -986,6 +987,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setNumbersShortPercent(value);
 		else if (name.equals("App_storeLocationID"))
 			preferencesSystem.setCompanyStoreLocationRef(value);
+		else if (name.equals("App_enable_import_export"))
+			preferencesSystem.setEnablePricingSystem(Utilities.tokenToBooleanValue(value));
 		if (address != null)
 			preferencesSystem.setCompanyAddress(address);
 		dataService.addUpdate(preferencesSystem);
