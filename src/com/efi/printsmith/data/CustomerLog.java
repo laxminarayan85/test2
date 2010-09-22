@@ -52,6 +52,11 @@ public class CustomerLog extends ModelBase {
 	public static final String LOGENTRY = "LogEntry";
 
 	/**
+   * @generated
+   */
+  public static final String ACCOUNT = "Account";
+
+	/**
 	 * @generated
 	 */
 	public CustomerLog() {
@@ -98,12 +103,36 @@ public class CustomerLog extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private Account account;
+
+	/**
+   * @generated
+ 	 */
+  public Account getAccount(){
+    return account; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAccount(Account newVal) {
+    this.account = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (LOGENTRY.equals(propertyName)) return getLogEntry();
+    if (ACCOUNT.equals(propertyName)) return getAccount();
     return super.getProperty(propertyName);
   }
 	
@@ -114,6 +143,7 @@ public class CustomerLog extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (LOGENTRY.equals(propertyName)) setLogEntry((String)newValue); else
+    if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -125,6 +155,8 @@ public class CustomerLog extends ModelBase {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (LOGENTRY.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (ACCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Account.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -136,6 +168,7 @@ public class CustomerLog extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (LOGENTRY.equals(propertyName)) return CustomerLog.class;
+    if (ACCOUNT.equals(propertyName)) return CustomerLog.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -148,6 +181,8 @@ public class CustomerLog extends ModelBase {
       return false;
     CustomerLog objT = (CustomerLog)obj;
     if (! SmartEquals(getLogEntry(), objT.getLogEntry()))
+      return false;
+    if (! SmartEquals(getAccount(), objT.getAccount()))
       return false;
     return true;
   }			

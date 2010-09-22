@@ -695,7 +695,6 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
 	public AccountHistoryData getAccountHistoryByAccountId(Long Id) {
 		log.debug("** AccountHistoryData called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -713,7 +712,25 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+	public List<?> getAccountCustomerLogByAccountId(Long Id) {
+		log.debug("** CustomerLogB called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+		
+			String queryString = "select a from CustomerLog a where a.account.id = :id";
+			Query query = em.createQuery(queryString);
+			query.setParameter("id", Id);
+			List<?> list = query.getResultList();
+			if (list != null)
+				log.debug("** Found " + list.size() + "records:");
+			return list;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
 	public UnpurchasedMerchandise getUnPurchaseByAccountId(Long Id) {
 		log.debug("** getBypurchasesAccountId called.");
 		EntityManager em = entityManagerFactory.createEntityManager();

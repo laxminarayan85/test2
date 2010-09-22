@@ -250,6 +250,9 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("orders year".equals(currentFieldToken)) {
 					customer.setOrdersYear(Utilities
 							.tokenToLong(currentImportToken));
+				} else if ("orders month".equals(currentFieldToken)) {
+					customer.setOrdersMonth(Utilities
+							.tokenToLong(currentImportToken));
 				} else if ("estimate count".equals(currentFieldToken)) {
 					customer.setEstimateCount(Utilities
 							.tokenToLong(currentImportToken));

@@ -15,6 +15,7 @@ package com.efi.printsmith.data
 		public var isDeleted:Boolean=false;
 				
 		public var logEntry:String = "";
+		public var account:Account;
 	
 	}
 }
