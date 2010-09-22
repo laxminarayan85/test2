@@ -105,7 +105,7 @@
 				destination.notes = source.notes;
 			}
 			
-			public function getInvoiceNumber(object:Object):String {
+			/* public function getInvoiceNumber(object:Object):String {
 				if(object is TrackerConsoleJobs){
 					if(object.job!=null){
 						object = object.job;
@@ -127,7 +127,7 @@
 					}
 				}
 				return "";
-			}
+			} */
 			
 			public function getTotalJobTime(object:Object):String {
 				return convertMilliSecondsToNegString((object.actualSetUpTime+object.actualRunTime+object.actualWashTime),true);

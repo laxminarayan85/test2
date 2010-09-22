@@ -47,7 +47,7 @@
 				callLater(closeWindow);
 			}
 			
-			private function getInvoiceNumber(object:Object):String {
+			/* private function getInvoiceNumber(object:Object):String {
 				if(object is TrackerConsoleJobs){
 					if(object.job!=null){
 						object = object.job;
@@ -69,7 +69,7 @@
 					}
 				}
 				return "";
-			}
+			} */
 			
 			private function getAccount(object:Object):String{
 				if(object is TrackerConsoleJobs){
