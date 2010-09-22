@@ -25,6 +25,7 @@ package com.efi.printsmith
 		static public const USER_EVENT_LOGOUT:Number = 2;
 		static public const USER_EVENT_FAILED_LOGIN:Number = 3;
 		static public const USER_EVENT_PASSWORD_CHANGE:Number = 4;
+		static public const USER_EVENT_CREDITCARD_TAKEN:Number = 5;
 
 		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeUnknown:Number = 0;
 		static public const CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeManualEntry:Number = 1;

@@ -37,6 +37,8 @@ package com.efi.printsmith.control
 			//default quick access panel items
 			this.addCommand(EncryptDataEvent.ENCRYPTDATA, EncryptDataCommand);
 			this.addCommand(EncryptDataEvent.DECRYPTDATA, EncryptDataCommand);
+			this.addCommand(EncryptCCTransEvent.ENCRYPTCCTRANS, EncryptCCTCommand);
+			this.addCommand(EncryptCCTransEvent.DECRYPTCCTRANS, EncryptCCTCommand);
 			this.addCommand(ModelAddUpdateEvent.ADDUPDATE, ModelAddUpdateCommand);
 			this.addCommand(ModelDeleteItemEvent.DELETE, ModelDeleteItemCommand);
 			this.addCommand(ModelGetAllEvent.GETALL, ModelGetAllCommand);

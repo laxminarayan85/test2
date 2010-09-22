@@ -13,6 +13,8 @@ import com.efi.printsmith.data.SquareAreaCharge;
 import com.efi.printsmith.data.enums.ChargeCostMethod;
 import com.efi.printsmith.data.enums.ChargeMethod;
 import com.efi.printsmith.data.enums.PreferenceProgramType;
+import com.efi.printsmith.data.CreditCardTransactions;
+
 import com.efi.printsmith.pricing.charge.ChargeCostingPrices;
 import com.efi.printsmith.pricing.charge.ChargeUtilities;
 import com.mchange.lang.ByteUtils;
@@ -81,6 +83,64 @@ public class EncryptionService extends SnowmassHibernateService{
 		}
 		return encryptionData.trim();		// remove empty bytes at the end
 	}
+
+	/*
+	 * A specific version that will handle the whole credit card transaction at one time
+	 * 
+	 */
+	static public CreditCardTransactions encryptCCT(CreditCardTransactions cct) throws Exception {
+		DataService dataService = new DataService();
+		String		temp;
+		
+		PreferencesSystem preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
+		
+		if (preferences == null) {
+			preferences = new PreferencesSystem();
+		}
+		
+		temp = Aes256BitEncryptData(getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences), cct.getCreditCard().getCardNumber());
+		cct.getCreditCard().setCardNumber(temp);
+		
+		temp = Aes256BitEncryptData(getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences), cct.getTrackOne());
+		cct.setTrackOne(temp);
+		
+		temp = Aes256BitEncryptData(getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences), cct.getTrackTwo());
+		cct.setTrackTwo(temp);
+		
+		temp = Aes256BitEncryptData(getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences), cct.getTempCVV2());
+		cct.setTempCVV2(temp);
+		
+		return cct;
+	}
+	/*
+	 * A specific version that will handle the whole credit card transaction at one time
+	 * 
+	 */	
+	static public CreditCardTransactions decryptCCT(CreditCardTransactions cct) throws Exception {
+		DataService dataService = new DataService();
+		String		temp;
+		
+		PreferencesSystem preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
+		
+		if (preferences == null) {
+			preferences = new PreferencesSystem();
+		}
+		
+		temp = Aes256BitDecryptData(getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences), cct.getCreditCard().getCardNumber());
+		cct.getCreditCard().setCardNumber(temp.trim());		// remove empty bytes at the end
+		
+		temp = Aes256BitDecryptData(getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences), cct.getTrackOne());
+		cct.setTrackOne(temp.trim());		// remove empty bytes at the end
+		
+		temp = Aes256BitDecryptData(getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences), cct.getTrackTwo());
+		cct.setTrackTwo(temp.trim());		// remove empty bytes at the end
+		
+		temp = Aes256BitDecryptData(getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences), cct.getTempCVV2());
+		cct.setTempCVV2(temp.trim());		// remove empty bytes at the end
+		
+		return cct;		// remove empty bytes at the end
+	}
+
 	
 	// 
 	// external function to generate a new key and encrypt that key for storage

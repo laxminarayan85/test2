@@ -1157,6 +1157,9 @@
         		case Constants.USER_EVENT_PASSWORD_CHANGE:
         			localEvent.eventString = resourceManager.getString(RESOURCE_BUNDLE, 'kUserEventLogCmd.Userpasswordchange');
         			break;
+        		case Constants.USER_EVENT_CREDITCARD_TAKEN:
+        			localEvent.eventString = resourceManager.getString(RESOURCE_BUNDLE, 'kUserEventLogCmd.CreditCardnumberseen');
+        			break;
         	}
         	
         	if (localEvent.eventString != null) {

@@ -2,6 +2,7 @@ package com.efi.printsmith.data
 {
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
+	import com.efi.printsmith.Constants;
 	
 	[RemoteClass(alias="com.efi.printsmith.data.CreditCardTransactions")]
 	[Managed]
@@ -15,9 +16,9 @@ package com.efi.printsmith.data
 		public var isDeleted:Boolean=false;
 				
 		public var transactionDate:Date = new Date();
-		public var transactionType:int = 0;
-		public var transactionStatus:int = 0;
-		public var transactionResults:int = 0;
+		public var transactionType:int = Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeUnknown;
+		public var transactionStatus:int = Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusUnknown;
+		public var transactionResults:int = Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsUnknown;
 		public var amount:Number = 0;
 		public var taxInAmount:Boolean = false;
 		public var poNumber:String = "";

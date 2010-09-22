@@ -13,16 +13,26 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="creditCardService"
+					 destination="creditCardService">
+		<mx:method name="sendCardTransaction"
+				   fault="handleFault(event)"
+				   result="handleSendCardTransResult(event)"/>
+	</mx:RemoteObject>
 
 <mx:Script source="../common/scripts/StringUtils.as"/>
 	
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.Address;
+	import com.efi.printsmith.data.Contact;
 	import com.efi.printsmith.events.CreditCardTrackReadEvent;
 	import com.efi.printsmith.data.CreditCard;
 	import com.efi.printsmith.data.CreditCardTransactions;
 	import com.efi.printsmith.data.PreferencesCreditCard;
-	import com.efi.printsmith.events.EncryptDataEvent;
+	import com.efi.printsmith.events.EncryptCCTransEvent;
+	
 	import com.efi.printsmith.events.CreditCardTrackReadEvent;
 	import com.efi.printsmith.events.CreditCardTransEvent;
 	import mx.rpc.events.ResultEvent;
@@ -43,12 +53,18 @@ width="100%" height="100%"  creationComplete="init()"
 	[Bindable] public static var preferencesCreditCardArray:ArrayCollection = new ArrayCollection();
 	
 	private var currencyValidator:CurrencyValidator = Snowmass.getCurrencyValidator();
-
+	private var numberHandEntered:Boolean = false;
+	
     public function init():void{		
    		application= Snowmass.getInstance();
      	Snowmass.getInstance().addEventListener(CreditCardTrackReadEvent.BRICKREAD, handleBrickRead);
   	   	localTransation = new CreditCardTransactions;
    		localTransation.creditCard = new CreditCard;
+   		localTransation.contact = new Contact;
+ 		localTransation.contact.address = new Address;
+ 		
+ 		// start out as a charge
+ 		localTransation.transactionType = Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypePurchase;
  		
   		dataService.getAll("PreferencesCreditCard");
    		
@@ -60,6 +76,15 @@ width="100%" height="100%"  creationComplete="init()"
 	//		cardholder.editable = false;
 	//		cardholder.alpha = .5;
 	//	}
+	}
+	
+	private function handleSendCardTransResult(ev:ResultEvent):void
+	{
+		if (ev.result != null) {
+			var results:Number = ev.result as Number;
+			
+			
+		}
 	}
 
 
@@ -105,17 +130,25 @@ width="100%" height="100%"  creationComplete="init()"
 		var selectEvent:CreditCardTransEvent;
 		
 		//
-		// use the ID from record now
-		
+		// log an event to the fact a credit card number was seen, if done.
+		//
+		if (numberHandEntered) {
+			Snowmass.getInstance().logUserEvent(Constants.USER_EVENT_CREDITCARD_TAKEN, null, null);
+		}
+
 		//
 		// update other open windows
+		//
 		selectEvent = new CreditCardTransEvent(CreditCardTransEvent.WRITE, temp);
 		dispatchEvent(selectEvent);
 
 		// close this window TEMP
 		PopUpManager.removePopUp(this);
 		
+		//
+		// use the ID from record now
 		// start process to charge card
+		creditCardService.sendCardTransaction(temp.id);
 		
 	}
 	
@@ -123,31 +156,58 @@ width="100%" height="100%"  creationComplete="init()"
 		
 		localTransation.amount = parseCurrencyFloat(amount.text);
 		localTransation.poNumber = ponumber.text;
+		localTransation.verbalAuthCode = verbAuthNumber.text;
+		localTransation.verbalAuthDate = VerbAuthDate.selectedDate;
+		localTransation.tax = parseCurrencyFloat(tax.text);
+		localTransation.orderNumber = ordernumber.text;
+		localTransation.poNumber = ponumber.text;
+		localTransation.tempCVV2 = cardverification.text;
 		
+		//
+		// follow the chain of events.
+		// encypt
+		// send events
+		// close window
+		// kick start processing of transaction
 		doEncryptCardData();
 	}
 	
+	//
+	// After a Encryption, finish setup of the transaction and kick off
+	//
 	private function handleEncryptionResult(event:ResultEvent):void {
-		if (event.result != null && localTransation.creditCard != null) {
-			localTransation.creditCard.cardNumber = event.result as String;
-			localTransation.creditCard.encryption = "2";
-			localTransation.transactionType = Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypePurchase;
-			localTransation.transactionStatus = Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusWaiting;
+		var cct:CreditCardTransactions;
+		
+		if (event.result != null) {
+			cct = event.result as CreditCardTransactions;
 			
+			// setup and ready for process now
+			localTransation.creditCard.encryption = "3";
+			localTransation.transactionStatus = Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusWaiting;
 			localTransation.isCurrentTransaction = 1;
 
 			if (Snowmass.getInstance().currentUser != null) {
 				localTransation.userName = Snowmass.getInstance().currentUser.name;
 			}
 			
+			//
+			// bring over the items effected by encryption
+			//
+			localTransation.creditCard.cardNumber = cct.creditCard.cardNumber;
+			localTransation.trackOne = cct.trackOne;
+			localTransation.trackTwo = cct.trackTwo;
+			localTransation.tempCVV2 = cct.tempCVV2;
+			
 			// save data
+			// see "handleSaveResult" for next processing step
+			//
 			dataService.addUpdate(localTransation);
-
 		}
 	}
 
 	//****************************************************************************
 	// IsCardNumberModeTen - This is a simple mod 10 of the credit card number to insure its a valid card.
+	//						See "Luhun Algorithm"
 	//
 	//	Test numbers:  6011222233334444
 	//				:  4000000000000002
@@ -256,10 +316,15 @@ width="100%" height="100%"  creationComplete="init()"
 		return [results, message, cardType];
 	}
 	
+	//
+	// encrypt all fields at one time
+	//	Card Number
+	//	Track Data
+	//	CVV2
+	// 
 	private function doEncryptCardData():void{
 		var callbacks:IResponder = new mx.rpc.Responder(handleEncryptionResult, handleFault);	
-		var encryptCCEvent:EncryptDataEvent = new EncryptDataEvent(EncryptDataEvent.ENCRYPTDATA, localTransation.creditCard.cardNumber, "AES256WITHSERIALNUMBER", callbacks);
-		localTransation.creditCard.cardNumber = "";
+		var encryptCCEvent:EncryptCCTransEvent = new EncryptCCTransEvent(EncryptCCTransEvent.ENCRYPTCCTRANS, localTransation, callbacks);
 		encryptCCEvent.dispatch();
 	}
 	
@@ -314,6 +379,8 @@ width="100%" height="100%"  creationComplete="init()"
 		} else {
 			okButton.enabled = true;
 		}
+		
+		numberHandEntered = true;		// user can seen a credit card number
 	}
 	
 	private function doReadCardHolder():void{
@@ -332,24 +399,29 @@ width="100%" height="100%"  creationComplete="init()"
 			okButton.enabled = true;
 		}
 	}
-	
-	private function doReadExpirationDate():void{
+
+	private function doReadExpirationDate(event:Event):void {
 		var valid:Boolean;
 		var returnVal:Array = new Array;
+
+		var dateObj:Date = event.currentTarget.selectedDate as Date;
 		
-		localTransation.creditCard.expiresDate = expires.selectedDate;
-		returnVal = validCreditCard(localTransation.creditCard);
-		
-		valid = returnVal[0] as Boolean;
-		cardstatus.text = returnVal[1] as String;
-		
-		if (valid == false) {
-			okButton.enabled = false;
-		} else {
-			okButton.enabled = true;
+		if (dateObj != null) {
+			localTransation.creditCard.expiresDate = dateObj;
+			
+			returnVal = validCreditCard(localTransation.creditCard);
+			
+			valid = returnVal[0] as Boolean;
+			cardstatus.text = returnVal[1] as String;
+			
+			if (valid == false) {
+				okButton.enabled = false;
+			} else {
+				okButton.enabled = true;
+			}
 		}
 	}
-
+	
 	private function doChargeType():void {
 		localTransation.transactionType = Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypePurchase;
 		ponumber.enabled = true;
@@ -370,10 +442,18 @@ width="100%" height="100%"  creationComplete="init()"
 		refundRefNumber.setStyle('backgroundColor',0x8BE4FF);		// light blue
 	}
 
+    private function dateField_labelFunc(item:Date):String {
+        if (item == null) {
+            return "";
+        }
+        return formatDate.format(item);
+    }
+	
 ]]>
                              
 </mx:Script>
    	<mx:CurrencyValidator source="{amount}" property="text" trigger="{amount}" triggerEvent="focusOut" allowNegative="true"/>
+	<mx:DateFormatter id="formatDate" formatString="MM/DD/YYYY" />
 
 	<mx:Canvas width="100%" height="100%">
 		<mx:TextInput x="197" y="69" width="228" id="cardnumber"  text="{localTransation.creditCard.cardDisplayNumber}"  focusOut="doReadCardNumber()"/>
@@ -391,7 +471,10 @@ width="100%" height="100%"  creationComplete="init()"
 				  y="128"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.CardHolder')}"
 				  fontSize="9" textAlign="right" width="179" id="label0"/>
-		<mx:DateField x="197" y="153" width="170" id="expires"  formatString="MM/DD/YYYY" text="{localTransation.creditCard.expiresDate}" focusOut="doReadExpirationDate()"/>
+		<mx:DateField x="197" y="153" width="170" id="expires"  selectedDate="{localTransation.creditCard.expiresDate}" 
+				labelFunction="dateField_labelFunc" formatString="MM/DD/YYYY" 
+				text="{localTransation.creditCard.expiresDate}" 
+				change="{doReadExpirationDate(event)}"/>
 		<mx:Label x="10"
 				  y="156"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Expires')}"
@@ -424,12 +507,12 @@ width="100%" height="100%"  creationComplete="init()"
 				  fontSize="9" textAlign="right" width="179" id="label7"/>
 		<mx:Label x="375" y="295" text="CVV2/CID" width="69"/>
 		
-		<mx:TextInput x="197" y="323" width="228" id="street" text=""/>
+		<mx:TextInput x="197" y="323" width="228" id="street" text="{localTransation.contact.address.street1}"/>
 		<mx:Label x="10"
 				  y="326"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Street')}"
 				  fontSize="9" textAlign="right" width="179" id="label9"/>
-		<mx:TextInput x="197" y="351" width="228" id="zip"/>		
+		<mx:TextInput x="197" y="351" width="228" id="zip" text="{localTransation.contact.address.zip}"/>		
 		<mx:Label x="10"
 				  y="354"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Zip')}"
@@ -450,16 +533,9 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:Label x="10"
 				  y="469"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.VerbalAuthDate')}"
-				  fontSize="9" textAlign="right" width="179" id="label11"/>
-		<mx:DateField x="197" y="496" width="170" id="VerbAuthTime"/>
-		<mx:Label x="10"
-				  y="499"
-				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.VerbalAuthTime')}"
-				  fontSize="9" textAlign="right" width="179" id="label8"/>
-		
+				  fontSize="9" textAlign="right" width="179" id="label11"/>		
 		
 		<mx:Button x="10" y="542" label="OK" width="70" id="okButton" click="doOK()"/>
-		<mx:Button x="158" y="542" label="Manager SignOn" width="150"/>
 		<mx:Button x="364" y="542" label="Cancel" width="70" click="doClose()"/>
 		
 		<mx:Canvas x="10" y="10" width="514" height="42" id="ChargeRefundArea" borderStyle="solid" borderColor="#518AA2" cornerRadius="6" borderThickness="2">
