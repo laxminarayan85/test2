@@ -155,12 +155,18 @@
 						if(defaultZero) {
 							if(allowSymbol){
 								if(prefix){
-					        		this.text = symbolString+appendZeroesFunctionality(numbFormatter.format("0"));	
+									if(appendZeroes){
+					        			this.text = symbolString+appendZeroesFunctionality(numbFormatter.format("0"));
+					    			}	
 					        	} else if(suffix){
-					        		this.text = appendZeroesFunctionality(numbFormatter.format("0"))+symbolString;	
+					        		if(appendZeroes){
+					        			this.text = appendZeroesFunctionality(numbFormatter.format("0"))+symbolString;
+					        		}	
 					        	}
 							} else {
-								this.text = appendZeroesFunctionality(numbFormatter.format("0"));
+								if(appendZeroes){
+									this.text = appendZeroesFunctionality(numbFormatter.format("0"));
+								}
 							}
 						}
 						else {
@@ -399,9 +405,9 @@
 							formattedString = formatDecimalsWithPrecision(formattedString);
 						}
 					}
-	        	} else if(viewablePrecision==0){
+	        	}/*  else if(viewablePrecision==0){
 	        		formattedString = formatDecimals(formattedString);
-	        	}
+	        	} */
 	        	return formattedString;
 			}
 			

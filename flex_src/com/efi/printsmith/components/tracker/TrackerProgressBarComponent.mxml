@@ -222,9 +222,9 @@
 					currentPass = displayValue.currentPass;
 					estimatedTime = convertMilliSecondsToString(totalValue,true);
 					actualTime = convertMilliSecondsToString(initialValue,true);
-					if(displayValue.paused){
+					if(pgBar.getStyle("barColor")==65280){
 						pgBar.setStyle("barColor",0xffff00);
-					} else {
+					} else if(pgBar.getStyle("barColor")==16776960){
 						pgBar.setStyle("barColor",0x00ff00);
 					}
 				}
