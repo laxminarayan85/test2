@@ -8,7 +8,7 @@ package com.efi.printsmith.data
 	{
 		private var _enabled:Boolean;
 		private var _type:String; 
-		private var _ss:SecuritySetup;
+		private var _ss:SecurityCommands;
 		
 		public function PSMenuItem(label:String, children:ArrayCollection):void	{
 			super(label,children);
@@ -28,10 +28,10 @@ package com.efi.printsmith.data
 			return _enabled;
 		}
 
-		public function get ss ():SecuritySetup	{
+		public function get ss ():SecurityCommands	{
 			return _ss;
 		}
-		public function set ss(val:SecuritySetup):void	{
+		public function set ss(val:SecurityCommands):void	{
 			_ss = val;
 			
 		}

@@ -48,6 +48,7 @@
 <mx:Script>
 	<![CDATA[
 		import com.efi.printsmith.pages.TrackerStatusView;
+		import com.efi.printsmith.data.SecurityCommands;
 		import com.efi.printsmith.data.JobBase;
 		import com.efi.printsmith.data.Job;
 		import com.efi.mdi.view.window.MDIWindow;
@@ -197,9 +198,9 @@
 		
 		private function onMenuItemClicked(event:AppMenuItemClickedEvent):void	{
 			var item:PSMenuItem = event.menuItem as PSMenuItem;
-			var ss:SecuritySetup = item.ss;
+			var ss:SecurityCommands = item.ss;
 			
-			if ((ss.menu == "kVersionActivationCmd.PrintSmith")
+			if ((ss.menu == "rStandardMenuText.Help")
 				&& (ss.commandName.indexOf("usecCmd.QuickAccessPanel") > -1 )) 	{
 					doQuickAccessPanel();	
 				}
@@ -227,10 +228,10 @@
 				&& (ss.commandName.indexOf("rStandardMenuText.ChargeDefinitions") > -1 ))	{
 					doChargeDefinitions();					
 				}
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.ClockInOut") > -1 ))	{
-					doClockInOut()					
-				}	
+//			if ((ss.menu == "rStandardMenuText.Admin")
+//				&& (ss.commandName.indexOf("rStandardMenuText.ClockInOut") > -1 ))	{
+//					doClockInOut()					
+//				}	
 			if ((ss.menu == "rStandardMenuText.AR")
 				&& (ss.commandName.indexOf("rStandardMenuText.Contacts") > -1 ))	{
 					doContacts();		
@@ -259,22 +260,22 @@
 				&& (ss.commandName.indexOf("rStandardMenuText.PostPayments") > -1 ))	{
 					doPayments();					
 				}	
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("genericPrefCmd.PendingList") > -1 ))	{
+			if ((ss.menu == "rStandardMenuText.POS")
+				&& (ss.commandName.indexOf("rStandardMenuText.PendingDocumentWindo") > -1 ))	{
 					doPendingList();					
 				}	
 			if ((ss.menu == "rStandardMenuText.Pricing")
 				&& (ss.commandName.indexOf("rStandardMenuText.PressDefinitions") > -1 ))	{
 					doPressDefinitions();					
 				}	
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("genericPrefCmd.PricingMethod") > -1 ))	{
-					doPricing();					
-				}	
-			if ((ss.menu == "rStandardMenuText.POS")
-				&& (ss.commandName.indexOf("posPendCmd.Schedule") > -1 ))	{
-					doSchedule();					
-				}	
+//			if ((ss.menu == "rStandardMenuText.Admin")
+//				&& (ss.commandName.indexOf("genericPrefCmd.PricingMethod") > -1 ))	{
+//					doPricing();					
+//				}	
+//			if ((ss.menu == "rStandardMenuText.POS")
+//				&& (ss.commandName.indexOf("posPendCmd.Schedule") > -1 ))	{
+//					doSchedule();					
+//				}	
 			if ((ss.menu == "rStandardMenuText.Admin")
 				&& (ss.commandName.indexOf("rStandardMenuText.SecuritySetup") > -1 ))	{
 					doSecurity();					
@@ -289,7 +290,7 @@
 				}	
 			if ((ss.menu == "rStandardMenuText.Invoice")
 				&& (ss.commandName.indexOf("rStandardMenuText.TrackerStatus") > -1 ))	{
-					//doTracker();					
+					doTracker();					
 				}
 			if ((ss.menu == "rStandardMenuText.Admin")
 				&& (ss.commandName.indexOf("rStandardMenuText.UserDefinitions") > -1 ))	{
@@ -304,7 +305,7 @@
 					doLogout();
 				}
 			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.TrackerRoutings") > -1 ))	{
+				&& (ss.commandName.indexOf("rStandardMenuText.TrackerManager") > -1 ))	{
 					doTrackerManager();					
 				}
 			if ((ss.menu == "rStandardMenuText.Pricing")
@@ -363,7 +364,7 @@
 			if (val.indexOf('\t') > -1)	{
 				var i:int = val.indexOf('\t');
 				val = val.substr(i+1);
-				retVal = '\t';
+				//retVal = '\t';
 			}
 			return retVal + resourceManager.getString(RESOURCE_BUNDLE, val);
 		}
@@ -626,12 +627,12 @@
 				for (var j:int=0; j < parent.children.length; j++)	{
 					var child:PSMenuItem = parent.children.getItemAt(j) as PSMenuItem;
 					child.label = getLocalizedMenuLabel(child.label);					
-//					if (child.children != null)	{
-//						for (var k:int=0; k < child.children.length; k++)	{
-//							var child2:PSMenuItem = child.children.getItemAt(k) as PSMenuItem;
-//							child2.label = getLocalizedMenuLabel(child2.label);
-//						}
-//					}
+					if (child.children != null)	{
+						for (var k:int=0; k < child.children.length; k++)	{
+							var child2:PSMenuItem = child.children.getItemAt(k) as PSMenuItem;
+							child2.label = getLocalizedMenuLabel(child2.label);
+						}
+					}
 				}				
 			}	
 			_menuItems = val;

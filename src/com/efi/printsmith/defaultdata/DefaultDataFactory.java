@@ -9,12 +9,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.utilities.*;
+
+import flex.messaging.io.ArrayCollection;
 
 public class DefaultDataFactory {
 
@@ -2071,18 +2074,40 @@ private void LoadProductionFaciltyData(String[] args) throws IOException {
 		InputStreamReader ip = new InputStreamReader(f);
 		java.io.BufferedReader br = new java.io.BufferedReader(ip);
 		String line = null;
-		int rv = -1;
+		int rv = -1; 
 		while ((line = br.readLine()) != null) {
 			if (line.length() > 0) {
+				StringTokenizer stringTokenizer = new StringTokenizer(line,",");
+				String menu = stringTokenizer.nextToken();
+				String command = stringTokenizer.nextToken();
+				String cmdId = stringTokenizer.nextToken();
+				boolean menuItemFlag;
+				int id;
+				
+				if (line.trim().startsWith("kVersionActivationCmd.PrintSmith"))
+					id = 0;
+				
+				if (stringTokenizer.countTokens() == 0) // no more tokens left	
+					menuItemFlag = false;
+				else	{
+					if (stringTokenizer.nextToken().trim().equals("1"))
+						menuItemFlag = true;
+					else
+						menuItemFlag = false;
+				}
+				
 				if (securityCommandsList.size() > 0) {
 					boolean found = false;
 					for (int i = 0; i < securityCommandsList.size(); i++) {
-						if (((SecurityCommands) securityCommandsList.get(i))
-								.getCommandName().trim().equals(
-										line.substring(line.indexOf(",") + 1)) == true
-								&& ((SecurityCommands) securityCommandsList
-										.get(i)).getMenu().trim().equals(
-										line.substring(0, line.indexOf(",")))) {
+						if (
+								((SecurityCommands) securityCommandsList.get(i)).getCommandName().trim().equals(command)
+								&& 
+								((SecurityCommands) securityCommandsList.get(i)).getMenu().trim().equals(menu)								
+								&& 
+								((SecurityCommands) securityCommandsList.get(i)).getMenuItemFlag() == menuItemFlag
+							)
+			
+						{ 
 							found = true;
 							break;
 						}
@@ -2095,11 +2120,11 @@ private void LoadProductionFaciltyData(String[] args) throws IOException {
 //						securityCommands.setCommandId(line.substring(line.indexOf(",")+1));
 						try {
 							SecurityCommands securityCommands = new SecurityCommands();
-							StringTokenizer stringTokenizer = new StringTokenizer(line,",");
-						
-							securityCommands.setMenu(stringTokenizer.nextToken());
-							securityCommands.setCommandName(stringTokenizer.nextToken());
-							securityCommands.setCommandId(stringTokenizer.nextToken());
+							
+							securityCommands.setMenu(menu);
+							securityCommands.setCommandName(command);
+							securityCommands.setCommandId(cmdId);
+							securityCommands.setMenuItemFlag(menuItemFlag);
 							dataservice.addUpdate(securityCommands);
 						} catch (Exception e) {
 							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
@@ -2109,11 +2134,12 @@ private void LoadProductionFaciltyData(String[] args) throws IOException {
 				} else {
 					try {
 						SecurityCommands securityCommands = new SecurityCommands();
-						StringTokenizer stringTokenizer = new StringTokenizer(line,",");
-					
-						securityCommands.setMenu(stringTokenizer.nextToken());
-						securityCommands.setCommandName(stringTokenizer.nextToken());
-						securityCommands.setCommandId(stringTokenizer.nextToken());
+						
+						securityCommands.setMenu(menu);
+						securityCommands.setCommandName(command);
+						securityCommands.setCommandId(cmdId);
+						securityCommands.setMenuItemFlag(menuItemFlag);
+						
 						dataservice.addUpdate(securityCommands);
 					} catch (Exception e) {
 						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
