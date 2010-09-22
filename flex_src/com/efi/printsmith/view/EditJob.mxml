@@ -994,9 +994,8 @@
 				this.copy_single_radio.selected = this.job.singleSided;
 				this.copy_double_radio.selected = this.job.doubleSided;
 				run_method_radiogroup.selectedValue=job.runMethod;
-				
-				
-
+				if (job.foldedSize == null)
+						this.job_fold_size.text = "";
 			}
 
 			private function doSave():void
