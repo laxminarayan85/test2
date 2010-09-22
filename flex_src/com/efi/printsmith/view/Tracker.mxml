@@ -766,6 +766,7 @@
 			if((selectedJob!=null || selectedCharge!=null) && trackerConsole.productionFacilities!=null && trackerConsole.productionStations!=null && employee!=null){
 				if(selectedJob!=null){
 					if(!selectedJob.releasedToProduction){
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'scheduleMyWorkCenterCmd.Itemcouldnotbestarte'));
 						return;
 					}
 				}
@@ -985,6 +986,9 @@
 						break;
 					}
 				}
+				if(employee!=null){
+					selectedTrackerConsoleJob.employee = employee;
+				}
 				updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 			}
 		}
@@ -1007,6 +1011,9 @@
 						trackerConsolePasses.runTime = totalRunTime;
 						break;
 					}
+				}
+				if(employee!=null){
+					selectedTrackerConsoleJob.employee = employee;
 				}
 				updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 			}
@@ -1131,6 +1138,9 @@
 						trackerConsoleJobsStopBean.initialStartSpoilage = trackerConsoleJobsStopBean.startSpoilage;
 						trackerConsoleJobsStopBean.difference = trackerConsoleJobsStopBean.endSpoilage-trackerConsoleJobsStopBean.startSpoilage;
 						trackerConsoleJobsStopBean.markStepComplete = true;
+						if(employee!=null){
+							trackerConsoleJobsStopBean.employee = employee;
+						}
 						trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
 						trackerConsoleStopWindow.productionLocations = productionLocationArray;
 						trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;
@@ -1175,6 +1185,9 @@
 					trackerConsolePassesObj.trackerConsoleJobs = selectedTrackerConsoleJob;
 					selectedTrackerConsoleJob.passesList.addItem(trackerConsolePassesObj);
 					selectedDGIndex = employee_jobs_grid.selectedIndex;
+					if(employee!=null){
+						selectedTrackerConsoleJob.employee = employee;
+					}
 					updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 				}
 			}
@@ -1202,6 +1215,9 @@
 					}
 				}
 				selectedTrackerConsoleJob.paused = true;
+				if(employee!=null){
+					selectedTrackerConsoleJob.employee = employee;
+				}
 				updateDataServiceJob.addUpdate(selectedTrackerConsoleJob);
 			}
 		}
@@ -1398,6 +1414,9 @@
 							trackerConsoleJobsStopBean.initialStartSpoilage = trackerConsoleJobsStopBean.startSpoilage;
 							trackerConsoleJobsStopBean.difference = trackerConsoleJobsStopBean.endSpoilage-trackerConsoleJobsStopBean.startSpoilage;
 							trackerConsoleJobsStopBean.markStepComplete = true;
+							if(employee!=null){
+								trackerConsoleJobsStopBean.employee = employee;
+							}
 							trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
 							trackerConsoleStopWindow.productionLocations = productionLocationArray;
 							trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;
@@ -1473,6 +1492,7 @@
 		}
 		
 		private function copyFromStopWindow(source:TrackerConsoleJobs, destination:TrackerConsoleJobs):void {
+			destination.employee = source.employee;
 			destination.treatAsNonProdStep = source.treatAsNonProdStep;
 			destination.markStepComplete = source.markStepComplete;
 			destination.moveToNonProdStep = source.moveToNonProdStep;

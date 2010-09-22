@@ -60,10 +60,10 @@ package com.efi.printsmith.skin
 								barColorStyle :
 								getStyle("themeColor");
 	
-			var barColor0:Number = ColorUtil.adjustBrightness2(barColor, 40);
+			var barColor0:Number = ColorUtil.adjustBrightness2(0x00ff00, 40);
 	
 			// default fill color for halo uses theme color
-			var fillColors0:Array = [ barColor0, barColor ]; 
+			var fillColors0:Array = [ barColor0, 0x00ff00 ]; 
 			
 			var barColor1:Number = ColorUtil.adjustBrightness2(0x0000ff, 40);
 	

@@ -206,21 +206,21 @@
 				return washUpTime;
 			}
 			
-			private function getOrderedQty(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):String {
-				var ordered:String = "0";
+			private function getOrderedQty(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):Object {
+				var ordered:Number = 0;
 				if(treatAsNonProdStep){
 					return "--";
 				}
 				if(object.job!=null){
 					if(isNaN(object.job.qtyOrdered)){
-						ordered = "0";
+						ordered = 0;
 					} 
-					ordered = object.job.qtyOrdered.toString();
+					ordered = object.job.qtyOrdered;
 				} else if(object.charge!=null){
 					if(isNaN(object.charge.quantity)){
-						ordered = "0";
+						ordered = 0;
 					} 
-					ordered = object.charge.quantity.toString();
+					ordered = object.charge.quantity;
 				}
 				return ordered;
 			}
@@ -232,26 +232,26 @@
 				return quantity;
 			}
 			
-			private function getImpressions(object:TrackerConsoleJobs, flag:int,treatAsNonProdStep:Boolean):String {
-				var impressions:String = "0";
+			private function getImpressions(object:TrackerConsoleJobs, flag:int,treatAsNonProdStep:Boolean):Object {
+				var impressions:Number = 0;
 				if(treatAsNonProdStep){
 					return "--";
 				}
 				if(flag==0){
 					if(object.job!=null){
 						if(!isNaN(object.job.totalImpressions)){
-							impressions = String(object.job.totalImpressions);
+							impressions = object.job.totalImpressions;
 						}
 					} else if(object.charge!=null) {
 						if(object.charge.chargeCostingRecord!=null){
 							if(!isNaN(object.charge.chargeCostingRecord.totalImpressions)){
-								impressions = String(object.charge.chargeCostingRecord.totalImpressions);
+								impressions = object.charge.chargeCostingRecord.totalImpressions;
 							}
 						}
 					}
 				} else if(flag==1){
 					if(!isNaN(trackerConsoleJobs.impressions)){
-						impressions = String(trackerConsoleJobs.impressions);
+						impressions = trackerConsoleJobs.impressions;
 					}
 				}
 				return impressions;
@@ -264,8 +264,8 @@
 				return impressions;
 			}
 			
-			private function getSpoilage(object:TrackerConsoleJobs, flag:int,treatAsNonProdStep:Boolean):String {
-				var spoilage:String = "0";
+			private function getSpoilage(object:TrackerConsoleJobs, flag:int,treatAsNonProdStep:Boolean):Object {
+				var spoilage:Number = 0;
 				if(treatAsNonProdStep){
 					return "--";
 				}
@@ -273,19 +273,19 @@
 					if(object.job!=null){
 						if(object.job.costingRecord!=null){
 							if(!isNaN(object.job.costingRecord.actualSpoilage)){
-								spoilage = String(object.job.costingRecord.actualSpoilage);
+								spoilage = object.job.costingRecord.actualSpoilage;
 							}
 						}
 					} else if(object.charge!=null) {
 						if(object.charge.chargeCostingRecord!=null){
 							if(!isNaN(object.charge.chargeCostingRecord.actualSpoilage)){
-								spoilage = String(object.charge.chargeCostingRecord.actualSpoilage);
+								spoilage = object.charge.chargeCostingRecord.actualSpoilage;
 							}
 						}
 					}
 				} else if(flag==1){
 					if(!isNaN(trackerConsoleJobs.spoilage)){
-						spoilage = String(trackerConsoleJobs.spoilage);
+						spoilage = trackerConsoleJobs.spoilage;
 					}
 				}
 				return spoilage;
@@ -298,14 +298,14 @@
 				return spoilage;
 			}
 			
-			private function getBinderyWaste(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):String {
-				var binderyWaste:String = "0";
+			private function getBinderyWaste(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):Object {
+				var binderyWaste:Number = 0;
 				if(treatAsNonProdStep){
 					return "--";
 				}
 				if(object.job!=null){
 					if(!isNaN(object.job.binderyWaste)) {
-						binderyWaste = String(object.job.binderyWaste);
+						binderyWaste = object.job.binderyWaste;
 					}
 				} else if(object.charge!=null) {
 					
@@ -313,19 +313,19 @@
 				return binderyWaste;
 			}
 			
-			private function getStockCost(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):String {
-				var stockCost:String = "0";
+			private function getStockCost(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):Object {
+				var stockCost:Number = 0;
 				if(treatAsNonProdStep){
 					return "--";
 				}
 				if(object.employee!=null){
 					if(object.employee.costingAmounts){
-						stockCost = "--";
+						return "--";
 					} else {
 						if(object.job!=null){
 							if(object.job.costingRecord!=null){
 								if(!isNaN(object.job.costingRecord.stockCost)){
-									stockCost = String(object.job.costingRecord.stockCost);
+									stockCost = object.job.costingRecord.stockCost;
 								}
 							}
 						} else if(object.charge!=null) {
@@ -336,25 +336,25 @@
 				return stockCost;
 			}
 			
-			private function getLaborCost(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):String {
-				var laborCost:String = "0";
+			private function getLaborCost(object:TrackerConsoleJobs,treatAsNonProdStep:Boolean):Object {
+				var laborCost:Number = 0;
 				if(treatAsNonProdStep){
 					return "--";
 				}
 				if(object.employee!=null){
 					if(object.employee.costingAmounts){
-						laborCost = "--";
+						return "--";
 					} else {
 						if(object.job!=null){
 							if(object.job.costingRecord!=null){
 								if(!isNaN(object.job.costingRecord.acualLaborCost)){
-									laborCost = String(object.job.costingRecord.acualLaborCost);
+									laborCost = object.job.costingRecord.acualLaborCost;
 								}
 							}
 						} else if(object.charge!=null) {
 							if(object.charge.chargeCostingRecord!=null){
 								if(!isNaN(object.charge.chargeCostingRecord.laborCost)){
-									laborCost = String(object.charge.chargeCostingRecord.laborCost);
+									laborCost = object.charge.chargeCostingRecord.laborCost;
 								}
 							}
 						}
@@ -363,21 +363,21 @@
 				return laborCost;
 			}
 			
-			private function getTotalCost(object:TrackerConsoleJobs, flag:int,treatAsNonProdStep:Boolean):String {
-				var totalCost:String = "0";
+			private function getTotalCost(object:TrackerConsoleJobs, flag:int,treatAsNonProdStep:Boolean):Object {
+				var totalCost:Number = 0;
 				if(treatAsNonProdStep){
 					return "--";
 				}
 				if(flag==0){
-					totalCost = String(Number(getStockCost(object,treatAsNonProdStep))+Number(getLaborCost(object,treatAsNonProdStep)));
+					totalCost = Number(getStockCost(object,treatAsNonProdStep))+Number(getLaborCost(object,treatAsNonProdStep));
 				} else if(flag==1){
 					if(!isNaN(trackerConsoleJobs.totalCost)) {
-						totalCost = String(trackerConsoleJobs.totalCost);
+						totalCost = trackerConsoleJobs.totalCost;
 					}
 				}
 				if(object.employee!=null){
 					if(object.employee.costingAmounts){
-						totalCost = "--";
+						return "--";
 					}
 				}
 				return totalCost;
@@ -604,7 +604,10 @@
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.Ordered')}:"
 					width="33%" textAlign="right"/>
-				<mx:TextInput text="{getOrderedQty(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent
+					customText="{getOrderedQty(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
+					precision="0" rounding="nearest" isInteger="true" width="33%" enabled="false" disabledColor="#000000"/>
+				<!--<mx:TextInput text="{getOrderedQty(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>-->
 				<components:CustomNumericTextInputComponent width="33%"
 					appendZeroes="false" dataHolder="{trackerConsoleJobs}" variableName="qtyOrdered" customText="{getJobQty(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.qtyOrdered)}" 
 					enabled="{trackerConsoleJobs.charge!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
@@ -614,7 +617,9 @@
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Impressions')}:"
 					width="33%" textAlign="right"/>
-				<mx:TextInput text="{getImpressions(trackerConsoleJobs,0,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent 
+					customText="{getImpressions(trackerConsoleJobs,0,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
+					allowNegative="true" precision="0" rounding="nearest" isInteger="true" width="33%" enabled="false" disabledColor="#000000"/>
 				<components:CustomNumericTextInputComponent width="33%"
 					dataHolder="{trackerConsoleJobs}" variableName="impressions" customText="{getJobImpressions(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.impressions)}" 
 					enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
@@ -624,7 +629,9 @@
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Spoilage')}:"
 					width="33%" textAlign="right"/>
-				<mx:TextInput text="{getSpoilage(trackerConsoleJobs,0,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent
+					customText="{getSpoilage(trackerConsoleJobs,0,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
+					precision="0" rounding="nearest" isInteger="true" width="33%" enabled="false" disabledColor="#000000"/>
 				<components:CustomNumericTextInputComponent width="33%"
 					dataHolder="{trackerConsoleJobs}" variableName="spoilage" customText="{getJobSpoilage(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.spoilage)}" 
 					enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
@@ -634,26 +641,36 @@
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.BinderyWaste')}:"
 					width="33%" textAlign="right"/>
-				<mx:TextInput text="{getBinderyWaste(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent 
+					customText="{getBinderyWaste(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
+					precision="0" rounding="nearest" isInteger="true" width="33%" enabled="false" disabledColor="#000000"/>
 				<mx:Spacer width="33%"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.StockCost')}:"
 					width="33%" textAlign="right"/>
-				<mx:TextInput text="{getStockCost(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent
+					customText="{getStockCost(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
+					precision="2" rounding="nearest" width="33%" enabled="false" disabledColor="#000000"/>
 				<mx:Spacer width="33%"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.LaborCost')}:"
 					width="33%" textAlign="right"/>
-				<mx:TextInput text="{getLaborCost(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent 
+					customText="{getLaborCost(trackerConsoleJobs,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
+					precision="2" rounding="nearest" width="33%" enabled="false" disabledColor="#000000"/>
 				<mx:Spacer width="33%"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Cost')}:"
 					width="33%" textAlign="right"/>
-				<mx:TextInput text="{getTotalCost(trackerConsoleJobs,0,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
-				<mx:TextInput text="{getTotalCost(trackerConsoleJobs,1,trackerConsoleJobs.treatAsNonProdStep)}" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent 
+					customText="{getTotalCost(trackerConsoleJobs,0,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
+					precision="2" rounding="nearest" width="33%" enabled="false" disabledColor="#000000"/>
+				<components:CustomNumericTextInputComponent 
+					customText="{getTotalCost(trackerConsoleJobs,1,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
+					precision="2" rounding="nearest" width="33%" enabled="false" disabledColor="#000000"/>
 			</mx:HBox>
 			
 		</mx:VBox>
@@ -708,6 +725,8 @@
 				</mx:HBox>
 				
 			</mx:Panel>
+			
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.additionalspoilage')}"/>
 		
 		</mx:VBox>
 		
