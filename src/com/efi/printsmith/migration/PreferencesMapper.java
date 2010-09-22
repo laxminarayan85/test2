@@ -983,7 +983,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setNumbersFactor(value);
 		else if (name.equals("numberFormatINVAMT"))
 			preferencesSystem.setNumbersInvoice(value);
-		else if (name.equals("numberFormatINVPCT"))
+		else if (name.equals("numberFormatINTPCT"))
 			preferencesSystem.setNumbersShortPercent(value);
 		else if (name.equals("App_storeLocationID"))
 			preferencesSystem.setCompanyStoreLocationRef(value);
