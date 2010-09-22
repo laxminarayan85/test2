@@ -7,7 +7,11 @@ public function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boo
 			txtString = "";
 		} else {
 			if(milliSeconds<60000){
-				txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+				if(numFormatter.format(milliSeconds/1000).length>1){
+					txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+				} else if(numFormatter.format(milliSeconds/1000).length==1){
+					txtString = txtString + "0"+numFormatter.format(milliSeconds/1000)+" Second(s)";
+				}
 			}
 		}
 	}
@@ -19,7 +23,11 @@ public function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boo
     		txtString = txtString + "0"+numFormatter.format(milliSeconds/60000);
     	}
     	if(showSeconds){
-    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
+    		if(numFormatter.format((milliSeconds%60000)/(1000)).length>1){
+    			txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
+    		} else if(numFormatter.format((milliSeconds%60000)/(1000)).length==1){
+    			txtString = txtString + ":" + "0"+numFormatter.format((milliSeconds%60000)/(1000));
+    		}
     	}
     }
     if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
@@ -30,7 +38,11 @@ public function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boo
     		txtString = txtString + "0"+numFormatter.format(milliSeconds%(60000*60)/(60000));
     	}
     	if(showSeconds){
-    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
+    		if(numFormatter.format(milliSeconds%60000/1000).length>1){
+    			txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
+    		} else if(numFormatter.format(milliSeconds%60000/1000).length==1){
+    			txtString = txtString + ":" + "0"+numFormatter.format(milliSeconds%60000/1000);
+    		}
     	}
     }
     if(milliSeconds>=60000*60*24){
@@ -42,7 +54,11 @@ public function convertMilliSecondsToString(milliSeconds:Number, showSeconds:Boo
     		txtString = txtString+"0"+numFormatter.format(milliSeconds%(60000*60)/(60000));
     	}
     	if(showSeconds){
-    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
+    		if(numFormatter.format(milliSeconds%60000/1000).length>1){
+    			txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
+    		} else if(numFormatter.format(milliSeconds%60000/1000).length==1){
+    			txtString = txtString+":"+"0"+numFormatter.format(milliSeconds%60000/1000);
+    		}
     	}
     }
     if(txtString==""){
@@ -63,7 +79,11 @@ public function convertMilliSecondsToNegString(milliSeconds:Number, showSeconds:
 			txtString = "";
 		} else {
 			if(milliSeconds<60000){
-				txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+				if(numFormatter.format(milliSeconds/1000).length>1){
+					txtString = txtString + numFormatter.format(milliSeconds/1000)+" Second(s)";
+				} else if(numFormatter.format(milliSeconds/1000).length==1){
+					txtString = txtString + "0"+numFormatter.format(milliSeconds/1000)+" Second(s)";
+				}
 			}
 		}
 	}
@@ -75,7 +95,11 @@ public function convertMilliSecondsToNegString(milliSeconds:Number, showSeconds:
     		txtString = txtString + "0"+numFormatter.format(milliSeconds/60000);
     	}
     	if(showSeconds){
-    		txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
+    		if(numFormatter.format((milliSeconds%60000)/(1000)).length>1){
+    			txtString = txtString + ":" + numFormatter.format((milliSeconds%60000)/(1000));
+    		} else if(numFormatter.format((milliSeconds%60000)/(1000)).length==1){
+    			txtString = txtString + ":" + "0"+numFormatter.format((milliSeconds%60000)/(1000));
+    		}
     	}
     }
     if(milliSeconds>=60000*60 && milliSeconds<60000*60*24){
@@ -86,7 +110,11 @@ public function convertMilliSecondsToNegString(milliSeconds:Number, showSeconds:
     		txtString = txtString + "0"+numFormatter.format(milliSeconds%(60000*60)/(60000));
     	}
     	if(showSeconds){
-    		txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
+    		if(numFormatter.format(milliSeconds%60000/1000).length>1){
+    			txtString = txtString + ":" + numFormatter.format(milliSeconds%60000/1000);
+    		} else if(numFormatter.format(milliSeconds%60000/1000).length==1){
+    			txtString = txtString + ":" + "0"+numFormatter.format(milliSeconds%60000/1000);
+    		}
     	}
     }
     if(milliSeconds>=60000*60*24){
@@ -98,7 +126,11 @@ public function convertMilliSecondsToNegString(milliSeconds:Number, showSeconds:
     		txtString = txtString+"0"+numFormatter.format(milliSeconds%(60000*60)/(60000));
     	}
     	if(showSeconds){
-    		txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
+    		if(numFormatter.format(milliSeconds%60000/1000).length>1){
+    			txtString = txtString+":"+numFormatter.format(milliSeconds%60000/1000);
+    		} else if(numFormatter.format(milliSeconds%60000/1000).length==1){
+    			txtString = txtString+":"+"0"+numFormatter.format(milliSeconds%60000/1000);
+    		}
     	}
     }
     if(txtString==""){
