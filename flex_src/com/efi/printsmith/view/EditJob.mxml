@@ -15,7 +15,7 @@
 				width="100%" height="100%" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
 	<mx:states>
 		<mx:State name="PrintMethod">
-			<mx:SetProperty target="{total_imp}" name="text" value="{job.totalImpositions}"/>
+			<mx:SetProperty target="{total_imp}" name="text" value="{job.totalImpressions}"/>
 			<mx:RemoveChild target="{label14}"/>
 			<mx:RemoveChild target="{number_lines}"/>
 			<mx:RemoveChild target="{job_unit_price}"/>
@@ -955,7 +955,7 @@
 				if (job_imp != null)
 					job.impositionsPerRun = parseInt(job_imp.text);
 				if (total_imp != null)
-					job.totalImpositions = parseInt(total_imp.text);
+					job.totalImpressions = parseInt(total_imp.text);
 				if (job_unitCost != null)
 					job.unitCost = parseFloat(job_unitCost.text);
 				if (job_totalCost != null)
@@ -1426,7 +1426,7 @@
 				job.pricingRecord = localJob.pricingRecord;
 				charges = localJob.charges;
 				if (job != null) { 
-					job.impositionsPerRun = localJob.impositionsPerRun;
+					job.impressionsPerRun = localJob.impressionsPerRun;
 					job.totalImpositions = localJob.totalImpositions;
 					job.estWaste = localJob.estWaste;
 					job.totalCost = localJob.totalCost;
@@ -1434,8 +1434,8 @@
 					job.numCopies = localJob.numCopies;
 					job.signatures = localJob.signatures;
 					num_signatures.text = job.signatures.toString();
-					job_imp.text = job.impositionsPerRun.toString();
-					total_imp.text = job.totalImpositions.toString();
+					job_imp.text = job.impressionsPerRun.toString();
+					total_imp.text = job.totalImpressions.toString();
 					est_waste.text = job.estWaste.toString();
 //					if (this.num_signatures != null)
 //						this.num_signatures.text = job.totalCopies.toString();
@@ -2240,7 +2240,7 @@
 									  y="227"
 									  width="98"
 									  id="total_imp"
-									  height="20" textAlign="right" text="{job.totalImpositions}"/>
+									  height="20" textAlign="right" text="{job.totalImpressions}"/>
 							<mx:Label x="496"
 									  y="248"
 									  width="98"

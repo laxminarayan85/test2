@@ -276,7 +276,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("wash back".equals(currentFieldToken)) {
 				job.setBackWashes(Utilities.tokenToInt(currentImportToken));
 			} else if ("sheets".equals(currentFieldToken)) {
-				job.setTotalImpositions(Utilities.tokenToLong(currentImportToken));
+				job.setTotalImpressions(Utilities.tokenToLong(currentImportToken));
 			} else if ("waste".equals(currentFieldToken)) {
 				job.setEstWaste(Utilities.tokenToLong(currentImportToken));
 			} else if ("impressions".equals(currentFieldToken)) {
@@ -1136,7 +1136,7 @@ public class JobMapper extends ImportMapper {
 		}
 		else{
 				job.setPressQty(qtyPress);
-				job.setTotalImpositions(totalQty);
+				job.setTotalImpressions(totalQty);
 		}
 		if( dutch)
 			tempPaper.setRunToFinishGrain("Swing / Combination");

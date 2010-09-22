@@ -1791,8 +1791,8 @@
 		private function getImpressions(object:TrackerConsoleJobs):Number {
 			var impressions:Number = 0;
 			if(object.job!=null){
-				if(!isNaN(object.job.totalImpositions)){
-					impressions = object.job.totalImpositions;
+				if(!isNaN(object.job.totalImpressions)){
+					impressions = object.job.totalImpressions;
 				}
 			} else if(object.charge!=null) {
 				if(object.charge.chargeCostingRecord!=null){

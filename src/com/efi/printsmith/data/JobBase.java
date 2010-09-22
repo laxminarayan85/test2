@@ -282,8 +282,7 @@ public class JobBase extends ModelBase {
 	/**
    * @generated
    */
-  public static final String TOTALIMPOSITIONS = "TotalImpositions";
-
+  public static final String TOTALIMPRESSIONS = "TotalImpressions";
 	/**
    * @generated
    */
@@ -1951,21 +1950,20 @@ public class JobBase extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Long totalImpositions;
-
+  private Long totalImpressions;
 	/**
    * @generated
  	 */
-  public Long getTotalImpositions(){
-    return totalImpositions; 
+  public Long getTotalImpressions(){
+    return totalImpressions; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setTotalImpositions(Long newVal) {
-    this.totalImpositions = newVal;
+  public void setTotalImpressions(Long newVal) {
+    this.totalImpressions = newVal;
   }
 
 
@@ -3385,7 +3383,7 @@ public class JobBase extends ModelBase {
     if (STOCKQTY.equals(propertyName)) return getStockQty();
     if (CUTOFF.equals(propertyName)) return getCutOff();
     if (IMPRESSIONSPERRUN.equals(propertyName)) return getImpressionsPerRun();
-    if (TOTALIMPOSITIONS.equals(propertyName)) return getTotalImpositions();
+    if (TOTALIMPRESSIONS.equals(propertyName)) return getTotalImpressions();
     if (MARKUP.equals(propertyName)) return getMarkup();
     if (TOTALCOST.equals(propertyName)) return getTotalCost();
     if (UNITCOST.equals(propertyName)) return getUnitCost();
@@ -3512,7 +3510,7 @@ public class JobBase extends ModelBase {
     if (STOCKQTY.equals(propertyName)) setStockQty((Long)newValue); else
     if (CUTOFF.equals(propertyName)) setCutOff((Double)newValue); else
     if (IMPRESSIONSPERRUN.equals(propertyName)) setImpressionsPerRun((Long)newValue); else
-    if (TOTALIMPOSITIONS.equals(propertyName)) setTotalImpositions((Long)newValue); else
+    if (TOTALIMPRESSIONS.equals(propertyName)) setTotalImpressions((Long)newValue); else
     if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
     if (TOTALCOST.equals(propertyName)) setTotalCost((BigDecimal)newValue); else
     if (UNITCOST.equals(propertyName)) setUnitCost((BigDecimal)newValue); else
@@ -3697,7 +3695,7 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (IMPRESSIONSPERRUN.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
-    if (TOTALIMPOSITIONS.equals(propertyName)) 
+    if (TOTALIMPRESSIONS.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     if (MARKUP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
@@ -3885,7 +3883,7 @@ public class JobBase extends ModelBase {
     if (STOCKQTY.equals(propertyName)) return JobBase.class;
     if (CUTOFF.equals(propertyName)) return JobBase.class;
     if (IMPRESSIONSPERRUN.equals(propertyName)) return JobBase.class;
-    if (TOTALIMPOSITIONS.equals(propertyName)) return JobBase.class;
+    if (TOTALIMPRESSIONS.equals(propertyName)) return JobBase.class;
     if (MARKUP.equals(propertyName)) return JobBase.class;
     if (TOTALCOST.equals(propertyName)) return JobBase.class;
     if (UNITCOST.equals(propertyName)) return JobBase.class;
@@ -4072,7 +4070,7 @@ public class JobBase extends ModelBase {
       return false;
     if (! SmartEquals(getImpressionsPerRun(), objT.getImpressionsPerRun()))
       return false;
-    if (! SmartEquals(getTotalImpositions(), objT.getTotalImpositions()))
+    if (! SmartEquals(getTotalImpressions(), objT.getTotalImpressions()))
       return false;
     if (! SmartEquals(getMarkup(), objT.getMarkup()))
       return false;

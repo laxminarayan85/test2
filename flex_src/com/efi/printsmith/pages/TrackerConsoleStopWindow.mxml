@@ -239,8 +239,8 @@
 				}
 				if(flag==0){
 					if(object.job!=null){
-						if(!isNaN(object.job.totalImpositions)){
-							impressions = String(object.job.totalImpositions);
+						if(!isNaN(object.job.totalImpressions)){
+							impressions = String(object.job.totalImpressions);
 						}
 					} else if(object.charge!=null) {
 						if(object.charge.chargeCostingRecord!=null){

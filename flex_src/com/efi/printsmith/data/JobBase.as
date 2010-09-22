@@ -72,7 +72,7 @@ package com.efi.printsmith.data
 		public var stockQty:Number = 0;
 		public var cutOff:Number = 0;
 		public var impressionsPerRun:Number = 0;
-		public var totalImpositions:Number = 0;
+		public var totalImpressions:Number = 0;
 		public var markup:Number = 0;
 		public var totalCost:Number = 0;
 		public var unitCost:Number = 0;

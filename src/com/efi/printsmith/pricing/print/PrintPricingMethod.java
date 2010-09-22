@@ -15,7 +15,7 @@ public class PrintPricingMethod {
 		
 		calculatePressQty(job);
 		calculateImpressionsPerRun(job);
-		calculateTotalImpositions(job);
+		calculateTotalImpressions(job);
 		
 		PressDefinition pressDefinition = job.getPricingPress();
 		PriceStockEngine priceStockEngine = new PriceStockEngine();
@@ -23,13 +23,13 @@ public class PrintPricingMethod {
 		double pressPrice = 0.0;
 		BigDecimal pressSpeed;
 		if (pressDefinition.getSpeedTable() != null) {
-			pressSpeed = new BigDecimal(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), job.getTotalImpositions()));
+			pressSpeed = new BigDecimal(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), job.getTotalImpressions()));
 			job.getPricingPress().setAvgImpressPerHour(pressSpeed);
 		}
 		else
 			pressSpeed = pressDefinition.getAvgImpressPerHour();
 		
-		double runHours = job.getTotalImpositions() / pressSpeed.doubleValue();
+		double runHours = job.getTotalImpressions() / pressSpeed.doubleValue();
 		float setupHours = pressDefinition.getSetupMin().floatValue() / 60;
 		//float wasteHours = job.getEstWaste() / new Double(pressSpeed).floatValue();
 		float totalHours = (float) (runHours + setupHours);
@@ -58,9 +58,9 @@ public class PrintPricingMethod {
  		job.setImpressionsPerRun(job.getImpressionsPerRun() + job.getEstWaste());
 	}
 	
-	private void calculateTotalImpositions(Job job) {
-		long totalImpositions = job.getImpressionsPerRun() * (job.getFrontPasses() + job.getBackPasses()) * job.getSheets();
-		job.setTotalImpositions(totalImpositions);
+	private void calculateTotalImpressions(Job job) {
+		long totalImpressions = job.getImpressionsPerRun() * (job.getFrontPasses() + job.getBackPasses()) * job.getSheets();
+		job.setTotalImpressions(totalImpressions);
 	}
 	
 	private void calculateEstWaste(Job job) {
