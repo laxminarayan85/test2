@@ -214,7 +214,7 @@
 	<mx:Button x="24" y="25" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.SelectAll')}"/>
 	<mx:Button x="196" y="25"  width="50" enabled="{stockSelected}" height="50"  id="delete_button" icon="@Embed(source='../../../../assets/delete48.png')" click="doDelete();"/>
 	<mx:Button x="278" y="25" width="50" enabled="{stockSelected}" height="50" id="placed_button" icon="@Embed(source='../../../../assets/order.png')" click="doPlaced();"/>
-	<mx:Button x="361" y="25" width="50" height="50" id="submit_button" icon="@Embed(source='../../../../assets/Original PS Icons/WebStatus.png')" click="doSubmit();" enabled="{webWorthy}"/>
+	<mx:Button x="361" y="25" width="50" height="50" id="submit_button" icon="@Embed(source='../../../../assets/WebStatus.png')" click="doSubmit();" enabled="{webWorthy}"/>
 	<mx:Button x="447" y="25" width="50"  enabled="{stockSelected}"  height="50" id="receiced_button" click="doRecieved()">
 		<mx:icon>@Embed(source='../../../../assets/orderreceived.png')</mx:icon>
 	</mx:Button>

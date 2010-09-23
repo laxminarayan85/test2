@@ -108,14 +108,14 @@
 									<mx:HBox>
 																
 										<components:CustomRadioButtonComponent id="topGrip" value="Top"
-											icon="@Embed(source='../../../../../assets/Original PS Icons/GripSideTopBottom.png')"
+											icon="@Embed(source='../../../../../assets/GripSideTopBottom.png')"
 											groupName="gripLocationGroup" width="36" height="29" alpha="{setAlphaForGrip(preferencesEstimating,preferencesEstimating.gripLocation,'Top')}"
 											dataHolder="{preferencesEstimating}" variableName="gripLocation" customText="{preferencesEstimating.gripLocation}"
 											click="{setAlphaAfterChange('grip')}"/>
 											
 										<components:CustomRadioButtonComponent id="leftGrip" value="Left"
 											groupName="gripLocationGroup" width="36" height="29"
-											icon="@Embed(source='../../../../../assets/Original PS Icons/GripSideLeftRight.png')"
+											icon="@Embed(source='../../../../../assets/GripSideLeftRight.png')"
 											alpha="{setAlphaForGrip(preferencesEstimating,preferencesEstimating.gripLocation,'Left')}"
 											dataHolder="{preferencesEstimating}" variableName="gripLocation" customText="{preferencesEstimating.gripLocation}"
 											click="{setAlphaAfterChange('grip')}"/>
@@ -165,13 +165,13 @@
 									<mx:HBox>
 																
 										<components:CustomRadioButtonComponent id="topFolio" value="Top" width="36" height="29"
-											icon="@Embed(source='../../../../../assets/Original PS Icons/FolioSideTopBottom.png')"
+											icon="@Embed(source='../../../../../assets/FolioSideTopBottom.png')"
 											groupName="folioLocationGroup" alpha="{setAlphaForFolio(preferencesEstimating,preferencesEstimating.folioLocation,'Top')}"
 											dataHolder="{preferencesEstimating}" variableName="folioLocation" customText="{preferencesEstimating.folioLocation}"
 											click="{setAlphaAfterChange('folio')}"/>
 											
 										<components:CustomRadioButtonComponent id="leftFolio" value="Left" width="36" height="29"
-											icon="@Embed(source='../../../../../assets/Original PS Icons/FolioSideLeftRight.png')"
+											icon="@Embed(source='../../../../../assets/FolioSideLeftRight.png')"
 											groupName="folioLocationGroup" alpha="{setAlphaForFolio(preferencesEstimating,preferencesEstimating.folioLocation,'Left')}"
 											dataHolder="{preferencesEstimating}" variableName="folioLocation" customText="{preferencesEstimating.folioLocation}"
 											click="{setAlphaAfterChange('folio')}"/>

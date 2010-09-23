@@ -87,11 +87,11 @@
 	private var deletedStockDefinitions:ArrayCollection = new ArrayCollection(); 
 	
 	[Bindable]
-    [Embed(source="assets/Original PS Icons/DisclosureDown.png")]
+    [Embed(source="assets/DisclosureDown.png")]
     public var downIcon:Class;
 
     [Bindable]
-    [Embed(source="assets/Original PS Icons/DisclosureUp.png")]
+    [Embed(source="assets/DisclosureUp.png")]
     public var upIcon:Class;
 	         
 	// Holds a reference to the currently focussed control on the form.
@@ -1001,7 +1001,7 @@
 				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Vendor')}" width="100%" >
 					<mx:HBox width="100%">
 						<mx:ComboBox width="90%" id="txtVendor" dataProvider="{vendors}" labelField="name" change="search();"/>
-						<mx:Image width="10%" visible="false" source="assets/Original PS Icons/WebStatus.png" id="web_status"/>
+						<mx:Image width="10%" visible="false" source="assets/WebStatus.png" id="web_status"/>
 					</mx:HBox>
 				</mx:FormItem>				
 			</mx:Form>

@@ -2453,7 +2453,7 @@
 											  y="81"
 											  width="139"
 											  id="cutDiagram"
-											  height="124" click="doPaperCal();" source="assets/Original PS Icons/380.png"/>
+											  height="124" click="doPaperCal();" source="assets/380.png"/>
 								-->	
 									<mx:Canvas x="215"
 											   y="81"

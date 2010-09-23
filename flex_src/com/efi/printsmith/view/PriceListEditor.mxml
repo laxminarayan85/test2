@@ -435,7 +435,7 @@
 				for (var i:int = 0;i < priceList.elements.length;i++) {
 					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement
 					if (element.lastLine == true)
-						element.amount = parseFloat(this.over_quantity.text);
+						element.amount = parseCurrencyFloat(this.over_quantity.text);
 				}
 			}
 			maptoPricelist();
@@ -693,7 +693,8 @@
             		TextInput(dataGrid.itemEditorInstance).text="0";
             	} else {
             		if (event.dataField == "amount") {
-	            		TextInput(dataGrid.itemEditorInstance).text = Snowmass.getCurrencyFormatter(false, 3).format(parsedValue);
+//	            		TextInput(dataGrid.itemEditorInstance).text = Snowmass.getCurrencyFormatter(false, 3).format(parsedValue);
+						TextInput(dataGrid.itemEditorInstance).text = parsedValue.toString();
 	            	}
             	}
             }
@@ -701,13 +702,17 @@
     }  
     
     public function formatAmount(item:Object, column:DataGridColumn):String {
+    	var retVal:String = "";
+    	
     	if (this.priceList.isPercentage == true)
-    		return Number(item.amount).toFixed(1) + "%";
+    		retVal = Number(item.amount).toFixed(1) + "%";
     	else if (itemType == "PaperPrice")
-    		return Number(item.amount).toFixed(2);
+    		retVal = Number(item.amount).toFixed(2);
     	else if (itemType == "SpeedTable")
-    		return Number(item.amount).toFixed(0);
-    	return Number(item.amount).toFixed(2);
+    		retVal = Number(item.amount).toFixed(0);
+    	else
+    		retVal = Number(item.amount).toFixed(2);
+    	return retVal;
     }         
 		
 ]]>        
