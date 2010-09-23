@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Credit Card Approval" name="Credit Card Approval"
+<mx:TitleWindow 
+	xmlns:comp="com.efi.printsmith.components.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:vo="com.efi.printsmith.vo.*" 
+	label="Credit Card Approval" name="Credit Card Approval"
 width="100%" height="100%"  creationComplete="init()" 
 	 showCloseButton="true" 
      title="Credit Card Approval" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*" close="doClose()">
@@ -60,15 +64,14 @@ width="100%" height="100%"  creationComplete="init()"
      	Snowmass.getInstance().addEventListener(CreditCardTrackReadEvent.BRICKREAD, handleBrickRead);
   	   	localTransation = new CreditCardTransactions;
    		localTransation.creditCard = new CreditCard;
-   		localTransation.contact = new Contact;
- 		localTransation.contact.address = new Address;
  		
+ 		this.throbber.visible = false;
+		this.throbber.stop();
+
  		// start out as a charge
  		localTransation.transactionType = Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypePurchase;
  		
   		dataService.getAll("PreferencesCreditCard");
-   		
-		// dataService.getAll("Templates");
 		
 	//	if (application.currentUser.robustPassword == false) {
 	//		cardnumber.editable = false;
@@ -82,8 +85,24 @@ width="100%" height="100%"  creationComplete="init()"
 	{
 		if (ev.result != null) {
 			var results:Number = ev.result as Number;
+			var selectEvent:CreditCardTransEvent;
 			
-			
+			if (results == localTransation.id) {
+				//
+				// update other open windows
+				//
+				selectEvent = new CreditCardTransEvent(CreditCardTransEvent.COMPLETE, localTransation);
+				dispatchEvent(selectEvent);
+		
+				// close this window TEMP
+				PopUpManager.removePopUp(this);
+				
+				//
+				//
+				//
+				this.throbber.visible = false;
+				this.throbber.stop();
+			}
 		}
 	}
 
@@ -129,30 +148,38 @@ width="100%" height="100%"  creationComplete="init()"
 		var temp:CreditCardTransactions = ev.result as CreditCardTransactions;
 		var selectEvent:CreditCardTransEvent;
 		
-		//
-		// log an event to the fact a credit card number was seen, if done.
-		//
-		if (numberHandEntered) {
-			Snowmass.getInstance().logUserEvent(Constants.USER_EVENT_CREDITCARD_TAKEN, null, null);
+		if (temp != null) {
+			//
+			// update the local copy to reflect the new saved changes, (id)
+			//
+			localTransation = temp;
+			
+			//
+			// log an event to the fact a credit card number was seen, if done.
+			//
+			if (numberHandEntered) {
+				Snowmass.getInstance().logUserEvent(Constants.USER_EVENT_CREDITCARD_TAKEN, null, null);
+			}
+	
+			//
+			// update other open windows
+			//
+			selectEvent = new CreditCardTransEvent(CreditCardTransEvent.WRITE, temp);
+			dispatchEvent(selectEvent);
+			
+			//
+			// use the ID from record now
+			// start process to charge card
+			creditCardService.sendCardTransaction(temp.id);
 		}
-
-		//
-		// update other open windows
-		//
-		selectEvent = new CreditCardTransEvent(CreditCardTransEvent.WRITE, temp);
-		dispatchEvent(selectEvent);
-
-		// close this window TEMP
-		PopUpManager.removePopUp(this);
-		
-		//
-		// use the ID from record now
-		// start process to charge card
-		creditCardService.sendCardTransaction(temp.id);
-		
 	}
 	
 	private function doOK():void{
+		this.throbber.visible = true;
+		this.throbber.play();
+		
+		okButton.enabled = false;
+		cancelButton.enabled = false;
 		
 		localTransation.amount = parseCurrencyFloat(amount.text);
 		localTransation.poNumber = ponumber.text;
@@ -456,6 +483,7 @@ width="100%" height="100%"  creationComplete="init()"
 	<mx:DateFormatter id="formatDate" formatString="MM/DD/YYYY" />
 
 	<mx:Canvas width="100%" height="100%">
+		
 		<mx:TextInput x="197" y="69" width="228" id="cardnumber"  text="{localTransation.creditCard.cardDisplayNumber}"  focusOut="doReadCardNumber()"/>
 		<mx:Label x="10"
 				  y="72"
@@ -507,12 +535,12 @@ width="100%" height="100%"  creationComplete="init()"
 				  fontSize="9" textAlign="right" width="179" id="label7"/>
 		<mx:Label x="375" y="295" text="CVV2/CID" width="69"/>
 		
-		<mx:TextInput x="197" y="323" width="228" id="street" text="{localTransation.contact.address.street1}"/>
+		<mx:TextInput x="197" y="323" width="228" id="street" text="{localTransation.creditCard.address1}"/>
 		<mx:Label x="10"
 				  y="326"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Street')}"
 				  fontSize="9" textAlign="right" width="179" id="label9"/>
-		<mx:TextInput x="197" y="351" width="228" id="zip" text="{localTransation.contact.address.zip}"/>		
+		<mx:TextInput x="197" y="351" width="228" id="zip" text="{localTransation.creditCard.zipCode}"/>		
 		<mx:Label x="10"
 				  y="354"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Zip')}"
@@ -536,7 +564,9 @@ width="100%" height="100%"  creationComplete="init()"
 				  fontSize="9" textAlign="right" width="179" id="label11"/>		
 		
 		<mx:Button x="10" y="542" label="OK" width="70" id="okButton" click="doOK()"/>
-		<mx:Button x="364" y="542" label="Cancel" width="70" click="doClose()"/>
+		<mx:Button x="364" y="542" label="Cancel" width="70" id="cancelButton" click="doClose()"/>
+		
+		<comp:SmallThrobber id="throbber" height="20" width="20" visible="true" x="220" y="542"/>
 		
 		<mx:Canvas x="10" y="10" width="514" height="42" id="ChargeRefundArea" borderStyle="solid" borderColor="#518AA2" cornerRadius="6" borderThickness="2">
 			<mx:RadioButtonGroup id="ChargeRefund"/>

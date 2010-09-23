@@ -7,6 +7,7 @@ package com.efi.printsmith.events
 	public class CreditCardTransEvent extends Event
 	{
 		public static const WRITE:String = "Write";
+		public static const COMPLETE:String = "Complete";
 				
 		public var theData:CreditCardTransactions;
 

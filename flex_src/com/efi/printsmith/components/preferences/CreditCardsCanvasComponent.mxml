@@ -164,12 +164,6 @@
 	 	 	 	 	 		<components:CustomStringTextInputComponent allowSpecialCharacters="true"
 	 	 	 	 	 			dataHolder="{preferencesAccounting}" variableName="developmentNumber" customText="{preferencesAccounting.developmentNumber}"/>
 	 	 	 	 	 	</mx:HBox>
-	 	 	 	 	 	<mx:HBox width="100%">
-	 	 	 	 	 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCCprocessorSetupCmd.Port')}"
-	 	 	 	 	 			textAlign="right" width="100"/>
-	 	 	 	 	 		<components:CustomStringTextInputComponent allowSpecialCharacters="true"
-	 	 	 	 	 			dataHolder="{preferencesAccounting}" variableName="portNumber" customText="{preferencesAccounting.portNumber}"/>
-	 	 	 	 	 	</mx:HBox>
 	 	 	 	 	 	<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Useaddressvalidation')}"
 	 	 	 	 	 		dataHolder="{preferencesAccounting}" variableName="useAddressValidation" customText="{preferencesAccounting.useAddressValidation}"
 	 	 	 	 	 		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
@@ -213,11 +207,11 @@
 					
 						<mx:RadioButtonGroup id="CreditCardProcessor" enabled="{preferencesAccounting.activateCreditCardApproval}"/>
 						
-						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useskipjackpro')}"
+						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.UseSkipjackprocessor')}"
 							groupName="CreditCardProcessor" value="{USE_SKIPJACK}" click="{setStatus()}"
 							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
 							
-						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'creditCardPrefCmd.useefspro')}"
+						<components:CustomRadioButtonComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pricePrefCmd.UseEFSprocessor')}"
 							groupName="CreditCardProcessor" value="{USE_EFS}" click="{setStatus()}"
 							dataHolder="{preferencesAccounting}" variableName="creditCardProcessor" customText="{preferencesAccounting.creditCardProcessor}"/>
 							

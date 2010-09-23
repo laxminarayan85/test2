@@ -17,6 +17,7 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:method name="getPendingCreditCardTransations"
 				   fault="handleFault(event)"
 				   result="handleLoadActiveResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataService2"
@@ -24,6 +25,13 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:method name="getAll"
 				   fault="handleFault(event)"
 				   result="handleLoadCCPreferenceResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:RemoteObject id="creditCardService"
+					 destination="creditCardService">
+		<mx:method name="sendCardTransaction"
+				   fault="handleFault(event)"
+				   result="handleSendCardTransResult(event)"/>
 	</mx:RemoteObject>
 
 <mx:Script>                                   
@@ -51,10 +59,13 @@ width="100%" height="100%"  creationComplete="init()"
 	private var creditCardActiveTransactions:ArrayCollection=new ArrayCollection();
 
 	[Bindable] public static var preferencesCreditCardArray:ArrayCollection = new ArrayCollection();
+	
+	[Bindable]
+		private var localTransation:CreditCardTransactions;		// used for local transactions. like delete
 		
 	public function init():void{
-		this.throbber.visible = true;
-		this.throbber.play();
+		this.throbber.visible = false;
+		this.throbber.stop();
 		
 		dataService.getAll("CreditCardTransactions");
 		dataService.getPendingCreditCardTransations();
@@ -98,7 +109,7 @@ width="100%" height="100%"  creationComplete="init()"
 		var creditCardManualApproveWindow:CreditCardDataEntry = CreditCardDataEntry(PopUpManager.createPopUp(this, CreditCardDataEntry, true));
 		creditCardManualApproveWindow.setStyle("borderAlpha", 0.9);
 		
-		creditCardManualApproveWindow.addEventListener(CreditCardTransEvent.WRITE, handleCreditCardTransWrite);
+		creditCardManualApproveWindow.addEventListener(CreditCardTransEvent.COMPLETE, handleCreditCardTransWrite);
 	}
 	
 	private function doRefresh():void 
@@ -106,6 +117,71 @@ width="100%" height="100%"  creationComplete="init()"
 		dataService.getAll("CreditCardTransactions");
 		dataService.getPendingCreditCardTransations();
 	}
+
+	private function handleSendCardTransResult(ev:ResultEvent):void
+	{
+		if (ev.result != null) {
+			var results:Number = ev.result as Number;
+			var selectEvent:CreditCardTransEvent;
+			
+			selectEvent = new CreditCardTransEvent(CreditCardTransEvent.COMPLETE, localTransation);
+			dispatchEvent(selectEvent);
+			
+			dataService.getPendingCreditCardTransations();		
+		}
+		
+		this.throbber.visible = false;
+		this.throbber.stop();
+	}
+
+	private function handleSaveResult(ev:ResultEvent):void{
+		var temp:CreditCardTransactions = ev.result as CreditCardTransactions;
+		var selectEvent:CreditCardTransEvent;
+		
+		if (temp != null) {
+			//
+			// update the local copy to reflect the new saved changes, (id)
+			//
+			localTransation = temp;
+							
+			//
+			// use the ID from record now
+			// start process to charge card
+			creditCardService.sendCardTransaction(temp.id);
+		}
+	}
+	
+	private function doDelete():void 
+	{
+		var creditCardTransactions:CreditCardTransactions = activeGrid.selectedItem as CreditCardTransactions;
+		if (creditCardTransactions != null && creditCardTransactions.transactionType == Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypePurchase &&
+			creditCardTransactions.transactionResults == Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsApproved) {
+			localTransation = new CreditCardTransactions;
+			
+			localTransation.accountNumber = creditCardTransactions.accountNumber;
+			localTransation.creditCard = creditCardTransactions.creditCard;
+			localTransation.isCurrentTransaction = 1;
+			localTransation.orderNumber = creditCardTransactions.orderNumber;
+			localTransation.orderName = creditCardTransactions.orderName;
+			localTransation.firstNumberPrefix = creditCardTransactions.firstNumberPrefix;
+			localTransation.tax = creditCardTransactions.tax;
+			localTransation.amount = creditCardTransactions.amount;
+			localTransation.transactionType = Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReversal;
+			localTransation.transactionStatus = Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusWaiting;
+			if (Snowmass.getInstance().currentUser != null) {
+				localTransation.userName = Snowmass.getInstance().currentUser.name;
+			}
+			// save data
+			// see "handleSaveResult" for next processing step
+			//
+			dataService.addUpdate(localTransation);
+			
+			this.throbber.visible = true;
+			this.throbber.play();
+		}
+	}
+	
+	
 	
 	private function doCopyRefNumber():void
 	{
@@ -203,7 +279,8 @@ width="100%" height="100%"  creationComplete="init()"
 					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Unknownresults');
 					break;
 				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsApproved:		//
-					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approved') + " -> " + temp.approvalCode.toString()
+					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approved') + " -> " + 
+						temp.approvalCode.toString();
 					break;
 				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsDeclined:		//
 					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Declined');
@@ -223,8 +300,10 @@ width="100%" height="100%"  creationComplete="init()"
 				case Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsTimeOut:		//
 					title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.Approvalsystemtimedo');
 					break;
+				default:
+					title = "Bad results";
 				}
-				return "Bad results";
+				break;
 			case Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusTimedOut:	//,				
 				title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardApproveCmd.PrintSmithtimedout');
 				break;
@@ -397,9 +476,12 @@ width="100%" height="100%"  creationComplete="init()"
 		<mx:Button x="126" y="10" width="38" height="38" click="doRefresh()">
 			<mx:icon>@Embed(source='../../../../assets/Refresh.png')</mx:icon>
 			</mx:Button>
+		<mx:Button x="172" y="10" width="38" height="38" click="doDelete()">
+			<mx:icon>@Embed(source='../../../../assets/Delete.png')</mx:icon>
+			</mx:Button>
 		
-		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Current')}" width="100%" height="398" y="66">
-			<mx:TabNavigator width="100%" height="468" y="3">
+		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Current')}" width="776" height="403" y="66">
+			<mx:TabNavigator width="772" height="396" y="3">
 				<mx:Canvas label="Current" width="100%" height="100%">
 					<mx:DataGrid  id="activeGrid" width="100%" 
 						horizontalScrollPolicy="on"
@@ -419,7 +501,7 @@ width="100%" height="100%"  creationComplete="init()"
 					<mx:DataGrid  id="historicGrid" width="100%" 
 						dataProvider="{creditCardTransactions}" 
 						horizontalScrollPolicy="on"
-						height="100%" columnWidth="100">
+						height="100%">
 						<mx:columns>
 							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Date')}"  labelFunction="getHistoricTransactionDate"/>
 							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Type')}" labelFunction="getHistoricTransType"/>
@@ -440,7 +522,7 @@ width="100%" height="100%"  creationComplete="init()"
 				</mx:Canvas>
 			</mx:TabNavigator>
 		</mx:Canvas>
-		<mx:Button x="185" y="18" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.CopyRefundReferencen')}" width="260" click="doCopyRefNumber()"/>
+		<mx:Button x="231" y="18" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.CopyRefundReferencen')}" width="282" click="doCopyRefNumber()"/>
 	
 	</mx:Canvas>
 	

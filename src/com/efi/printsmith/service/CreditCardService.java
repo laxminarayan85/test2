@@ -88,10 +88,26 @@ public class CreditCardService extends SnowmassHibernateService {
 		
 		return(temp);
 	} /* AppeandFormInputData */
+	
+	//
+	// get the current serial number from the preference system
+	//
+	private String GetSerialNumber(PreferencesSystem preferences) {
+		String 		serialNumber;
 
+		if (preferences != null && preferences.getSerialNumber() != null) {
+			serialNumber = preferences.getSerialNumber().toString();
+			if (serialNumber == null)
+				serialNumber = "9999";
+		} else
+			serialNumber = "9999";
+		return(serialNumber);
+	}
+	
 	private String CreateCreditCardTransactionID(DataService dataService, int max, CreditCardTransactions cct)
 	{
 		String 		buf;
+		String		temp;
 		Long		idNumber = cct.getId();
 		String		formattedNumber;
 		int			zeroCnt = 0;
@@ -103,12 +119,8 @@ public class CreditCardService extends SnowmassHibernateService {
 			preferences = new PreferencesSystem();
 		}
 		
-		if (preferences != null) {
-			serialNumber = preferences.getSerialNumber();
-		} else
-			serialNumber = 9999;
-
-		buf = String.format("PS%05d", serialNumber);
+		temp = GetSerialNumber(preferences);
+		buf = String.format("PS%s", temp);
 		formattedNumber = String.format("%d", idNumber);
 		
 		zeroCnt = max - (buf.length()+formattedNumber.length());
@@ -123,13 +135,14 @@ public class CreditCardService extends SnowmassHibernateService {
 
 	// =============================== MAIN ===============================
 	//
-	// Given a credit card transaction database record, read the data and send to approprate processing
+	// Given a credit card transaction database record, read the data and send to appropriate processing
 	//
 	//
 	public Long sendCardTransaction(Long id) throws Exception {
 		Boolean	results;
 		DataService dataService = new DataService();
-	
+		String serialNum, devNum;
+		
 		try {
 			CreditCardTransactions ccTransaction = (CreditCardTransactions)dataService.getById("CreditCardTransactions", id);
 			
@@ -137,6 +150,7 @@ public class CreditCardService extends SnowmassHibernateService {
 			
 			if (preferencesAccounting == null)
 				preferencesAccounting = new PreferencesAccounting();
+			
 			//================================================================
 			// Handle any DEMO mode here
 			//
@@ -144,53 +158,77 @@ public class CreditCardService extends SnowmassHibernateService {
 			// TODO
 			
 			//================================================================
-			// Skipjack system
+			// Bad transaction test, JAVA will crash is not caught here
 			//
-			if(preferencesAccounting.getUseSkipJackProcessor() == true) {
-				if (ccTransaction.getTransactionType() == Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeCredit || 
-						ccTransaction.getTransactionType() == Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReversal || 
-							ccTransaction.getTransactionType() == Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReAutorize) {
-					
-					ccTransaction = skipJackCreditTransaction(dataService, preferencesAccounting, ccTransaction);
-				} else {
-					
-					ccTransaction = skipJackAuthTransaction(dataService, preferencesAccounting, ccTransaction);
-				}
-				
-		    	ccTransaction = SafeDeleteCriticalDataInTransaction(ccTransaction);
-		    	dataService.addUpdate(ccTransaction);
-			} 
-			//================================================================
-			// EFS system
-			//
-			else if(preferencesAccounting.getUseEfsProcessor() == true){
-				//
-				// send the request to EFS (Sage)
-				//
-				ccTransaction = efsTransaction(dataService, preferencesAccounting, ccTransaction);
-				
-				//
-				// zero out critical data
-				//
-		    	ccTransaction = SafeDeleteCriticalDataInTransaction(ccTransaction);
-		    	dataService.addUpdate(ccTransaction);				
-				
-		    	ccTransaction = SafeDeleteCriticalDataInTransaction(ccTransaction);
-		    	dataService.addUpdate(ccTransaction);
-			} 
-			//================================================================
-			// system not read
-			//
-			else {
+			if (ccTransaction.getAmount() == null || ccTransaction.getAmount() == 0.0) {
 		    	ccTransaction.setTransactionStatus(Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusComplete);
-	    		ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError);
+	    		ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsDeclined);
 	    		// TODO - localized version
-	    		ccTransaction.setMessage("Approval system not ready");
-	    		
+	    		ccTransaction.setMessage("Bad value");
+		    	
 	    		ccTransaction = SafeDeleteCriticalDataInTransaction(ccTransaction);
-				dataService.addUpdate(ccTransaction);
+		    	dataService.addUpdate(ccTransaction);
+			} else {
+				//================================================================
+				// Skipjack system
+				//
+				if(preferencesAccounting.getUseSkipJackProcessor() == true) {
+					
+					serialNum = preferencesAccounting.getSerialNumber();
+					devNum = preferencesAccounting.getDevelopmentNumber();
+					
+					//
+					// are the setting done properly
+					//
+					if (serialNum == null || serialNum.length() == 0 || devNum == null || devNum.length() == 0) {
+				    	ccTransaction.setTransactionStatus(Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusComplete);
+			    		ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError);
+			    		// TODO - localized version
+			    		ccTransaction.setMessage("Approval system not ready");
+					} else {
+		
+						if (ccTransaction.getTransactionType() == Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeCredit || 
+								ccTransaction.getTransactionType() == Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReversal || 
+									ccTransaction.getTransactionType() == Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReAutorize) {
+							
+							ccTransaction = skipJackCreditTransaction(dataService, preferencesAccounting, ccTransaction);
+						} else {
+							
+							ccTransaction = skipJackAuthTransaction(dataService, preferencesAccounting, ccTransaction);
+						}
+					}
+					
+			    	ccTransaction = SafeDeleteCriticalDataInTransaction(ccTransaction);
+			    	dataService.addUpdate(ccTransaction);
+				} 
+				//================================================================
+				// EFS system
+				//
+				else if(preferencesAccounting.getUseEfsProcessor() == true){
+					//
+					// send the request to EFS (Sage)
+					//
+					ccTransaction = efsTransaction(dataService, preferencesAccounting, ccTransaction);
+					
+					//
+					// zero out critical data
+					//
+			    	ccTransaction = SafeDeleteCriticalDataInTransaction(ccTransaction);
+			    	dataService.addUpdate(ccTransaction);				
+				} 
+				//================================================================
+				// system not read
+				//
+				else {
+			    	ccTransaction.setTransactionStatus(Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusComplete);
+		    		ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError);
+		    		// TODO - localized version
+		    		ccTransaction.setMessage("Approval system not ready");
+		    		
+		    		ccTransaction = SafeDeleteCriticalDataInTransaction(ccTransaction);
+					dataService.addUpdate(ccTransaction);
+				}
 			}
-			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -225,15 +263,15 @@ public class CreditCardService extends SnowmassHibernateService {
 			if (!url.getProtocol().equals("https")) throw new ProtocolException("CreditCardService only supports HTTPS.");
 			NetworkHelper.enableSSL();
 
-			temp = preferencesAccounting.getSerialNumber();
-			if (temp.length() == 0)
-				temp = "000111114451";
-			sendStr = AppeandFormInputData(sendStr, "szserialnumber", temp, false, false);
+	//		temp = preferencesAccounting.getSerialNumber();
+	//		if (temp == null || temp.length() == 0)
+	//			temp = "000111114451";
+			sendStr = AppeandFormInputData(sendStr, "szserialnumber", preferencesAccounting.getSerialNumber(), false, false);
 			
-			temp =preferencesAccounting.getDevelopmentNumber();
-			if (temp.length() == 0)
-				temp = "666644442222";
-			sendStr = AppeandFormInputData(sendStr, "szdeveloperserialnumber", temp, true, false);
+	//		temp =preferencesAccounting.getDevelopmentNumber();
+	//		if (temp == null || temp.length() == 0)
+	//			temp = "666644442222";
+			sendStr = AppeandFormInputData(sendStr, "szdeveloperserialnumber", preferencesAccounting.getDevelopmentNumber(), true, false);
 			
 			sendStr = AppeandFormInputData(sendStr, "szordernumber", orderName, true, false);
 			
@@ -292,6 +330,19 @@ public class CreditCardService extends SnowmassHibernateService {
 			    }
 		    
 			    if (fieldCnt > 0) {
+					// get status response from the first line.
+					//
+					// 1 = serial number
+					// 2 = transaction amount
+					// 3 = transaction status code
+					// 4 = transation status message
+					// 5 = order number
+					// 6 = transaction date and time
+					// 7 = transaction ID
+					// 8 = approval code
+					// 9 = batch number
+					//
+
 				//	SkipJackResponseSerialNumber = firstLine[0];
 					SkipJackResponseErrorCode = firstLine[1];
 				//	SkipJackResponseNumberRecords = firstLine[2];
@@ -301,7 +352,8 @@ public class CreditCardService extends SnowmassHibernateService {
 					SkipJackResponseTransactionStatusCode = secondLine[2];
 					SkipJackResponseStatusResponseMessage = secondLine[3];
 				//	SkipJackResponseOrderNumber = secondLine[4];
-					SkipJackResponseTransFileName = secondLine[5];			    
+				//  SkipJackResponseTransactionDate = secondLine[5];
+					SkipJackResponseTransFileName = secondLine[6];			    
 			    	
 			    	// good request/response value
 			    	if (SkipJackResponseErrorCode.contentEquals("0")) {
@@ -343,15 +395,14 @@ public class CreditCardService extends SnowmassHibernateService {
 	//		-000 = for a negative
 	//		Otherwise the number of digits will grow to include a total penny count.
 	//*************************************************************************
-	private String FormatSkipJackPennies(double pennies)
+	private String FormatSkipJackPennies(int p)
 	{
 		String temp;
-		Long	p = Double.doubleToLongBits(pennies);
 		
-		if (pennies < 0)
-			temp = String.format("%04ld", p); // account for "-" sign
+		if (p < 0)
+			temp = String.format("%04d", p); // account for "-" sign
 		else
-			temp = String.format("%03ld", p);
+			temp = String.format("%03d", p);
 		return(temp);
 	} /* FormatSkipJackPennies */
 	
@@ -435,15 +486,15 @@ public class CreditCardService extends SnowmassHibernateService {
 				if (!url.getProtocol().equals("https")) throw new ProtocolException("CreditCardService only supports HTTPS.");
 				NetworkHelper.enableSSL();
 
-				temp = preferencesAccounting.getSerialNumber();
-				if (temp.length() == 0)
-					temp = "000111114451";
-				sendStr = AppeandFormInputData(sendStr, "serialnumber", temp, false, false);
+			//	temp = preferencesAccounting.getSerialNumber();
+			//	if (temp == null || temp.length() == 0)
+			//		temp = "000111114451";
+				sendStr = AppeandFormInputData(sendStr, "serialnumber", preferencesAccounting.getSerialNumber(), false, false);
 				
-				temp =preferencesAccounting.getDevelopmentNumber();
-				if (temp.length() == 0)
-					temp = "666644442222";
-				sendStr = AppeandFormInputData(sendStr, "developerserialnumber", temp, true, false);
+			//	temp =preferencesAccounting.getDevelopmentNumber();
+			//	if (temp == null || temp.length() == 0)
+			//		temp = "666644442222";
+				sendStr = AppeandFormInputData(sendStr, "developerserialnumber", preferencesAccounting.getDevelopmentNumber(), true, false);
 				
 				sendStr = AppeandFormInputData(sendStr, "shiptophone", "0000000000", true, true);
 				sendStr = AppeandFormInputData(sendStr, "email", "transaction@skipjack.com", true, false);
@@ -488,10 +539,10 @@ public class CreditCardService extends SnowmassHibernateService {
 					sendStr = AppeandFormInputData(sendStr, "approvalcode", ccTransaction.getApprovalCode(), true, true);
 				}
 				
-				if (ccTransaction.getCreditCard().getAddress() != null) {
-					street = ccTransaction.getCreditCard().getAddress().getStreet1();
-					zip = ccTransaction.getCreditCard().getAddress().getZip();
-				}
+				if (ccTransaction.getCreditCard().getAddress1() != null) 
+					street = ccTransaction.getCreditCard().getAddress1();
+				if (ccTransaction.getCreditCard().getZipCode() != null)
+					zip = ccTransaction.getCreditCard().getZipCode();
 				
 				// ensure the data is not empty, even after purge of spaces and dash
 				street = street.replaceAll(" ", "");
@@ -674,15 +725,15 @@ public class CreditCardService extends SnowmassHibernateService {
 				if (!url.getProtocol().equals("https")) throw new ProtocolException("CreditCardService only supports HTTPS.");
 				NetworkHelper.enableSSL();
 
-				temp = preferencesAccounting.getSerialNumber();
-				if (temp.length() == 0)
-					temp = "000111114451";
-				sendStr = AppeandFormInputData(sendStr, "szserialnumber", temp, false, false);
+			//	temp = preferencesAccounting.getSerialNumber();
+			//	if (temp == null || temp.length() == 0)
+			//		temp = "000111114451";
+				sendStr = AppeandFormInputData(sendStr, "szserialnumber", preferencesAccounting.getSerialNumber(), false, false);
 				
-				temp =preferencesAccounting.getDevelopmentNumber();
-				if (temp.length() == 0)
-					temp = "666644442222";
-				sendStr = AppeandFormInputData(sendStr, "szdeveloperserialnumber", temp, true, false);
+			//	temp =preferencesAccounting.getDevelopmentNumber();
+			//	if (temp == null || temp.length() == 0)
+			//		temp = "666644442222";
+				sendStr = AppeandFormInputData(sendStr, "szdeveloperserialnumber", preferencesAccounting.getDevelopmentNumber(), true, false);
 				
 				// used here as the search and find number in there system
 				if (ccTransaction.getOrderName().length() > 0)
@@ -705,7 +756,7 @@ public class CreditCardService extends SnowmassHibernateService {
 					sendStr = AppeandFormInputData(sendStr, "szNewOrderNumber", ccTransaction.getOrderName(), true, false);
 	
 					sendStr = AppeandFormInputData(sendStr, "szdesiredstatus", "CREDITEX", true, false);			// was "CREDIT"
-					temp = FormatSkipJackPennies((ccTransaction.getAmount() * 100.0));		// Bill, always pass positive number
+					temp = FormatSkipJackPennies((int)(ccTransaction.getAmount() * 100.0));		// Bill, always pass positive number
 					sendStr = AppeandFormInputData(sendStr, "szamount", temp, true, false);
 					
 					// the EX version can except new order string
@@ -721,7 +772,7 @@ public class CreditCardService extends SnowmassHibernateService {
 					
 					sendStr = AppeandFormInputData(sendStr, "szdesiredstatus", "SETTLE", true, false);			// AUTHORIZE
 					
-					temp = FormatSkipJackPennies(((origAmount - ccTransaction.getAmount()) * 100.0));		// Bill, always pass positive number
+					temp = FormatSkipJackPennies((int)((origAmount - ccTransaction.getAmount()) * 100.0));		// Bill, always pass positive number
 					sendStr = AppeandFormInputData(sendStr, "szamount", temp, true, false);
 					
 					sendStr = AppeandFormInputData(sendStr, "szForceSettlement", "0", true, false);	
@@ -830,6 +881,10 @@ public class CreditCardService extends SnowmassHibernateService {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
+			
+			ccTransaction.setTransactionStatus(Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusComplete);
+			ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError);
+			ccTransaction.setMessage(e.getLocalizedMessage());
 		}
 		return(ccTransaction);
 	}
@@ -852,15 +907,15 @@ public class CreditCardService extends SnowmassHibernateService {
 			if (!url.getProtocol().equals("https")) throw new ProtocolException("CreditCardService only supports HTTPS.");
 			NetworkHelper.enableSSL();
 
-			temp = preferencesAccounting.getSerialNumber();
-			if (temp.length() == 0)
-				temp = "000111114451";
-			sendStr = AppeandFormInputData(sendStr, "serialnumber", temp, false, false);
+	//		temp = preferencesAccounting.getSerialNumber();
+	//		if (temp == null || temp.length() == 0)
+	//			temp = "000111114451";
+			sendStr = AppeandFormInputData(sendStr, "serialnumber", preferencesAccounting.getSerialNumber(), false, false);
 			
-			temp =preferencesAccounting.getDevelopmentNumber();
-			if (temp.length() == 0)
-				temp = "666644442222";
-			sendStr = AppeandFormInputData(sendStr, "developerserialnumber", temp, true, false);
+	//		temp =preferencesAccounting.getDevelopmentNumber();
+	//		if (temp == null || temp.length() == 0)
+	//			temp = "666644442222";
+			sendStr = AppeandFormInputData(sendStr, "developerserialnumber", preferencesAccounting.getDevelopmentNumber(), true, false);
 
 			sendStr = AppeandFormInputData(sendStr, "shiptophone", "0000000000", true, true);
 			sendStr = AppeandFormInputData(sendStr, "email", "transaction@skipjack.com", true, false);
@@ -910,10 +965,10 @@ public class CreditCardService extends SnowmassHibernateService {
 				sendStr = AppeandFormInputData(sendStr, "approvalcode", ccTransaction.getApprovalCode(), true, true);
 			}
 			
-			if (ccTransaction.getCreditCard().getAddress() != null) {
-				street = ccTransaction.getCreditCard().getAddress().getStreet1();
-				zip = ccTransaction.getCreditCard().getAddress().getZip();
-			}
+			if (ccTransaction.getCreditCard().getAddress1() != null) 
+				street = ccTransaction.getCreditCard().getAddress1();
+			if (ccTransaction.getCreditCard().getZipCode() != null)
+				zip = ccTransaction.getCreditCard().getZipCode();
 			
 			// ensure the data is not empty, even after purge of spaces and dash
 			street = street.replaceAll(" ", "");
@@ -1098,6 +1153,10 @@ public class CreditCardService extends SnowmassHibernateService {
 			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
+    		
+			ccTransaction.setTransactionStatus(Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusComplete);
+			ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError);
+			ccTransaction.setMessage(e.getLocalizedMessage());
 		}
 		
 		return ccTransaction;
@@ -1138,10 +1197,11 @@ public class CreditCardService extends SnowmassHibernateService {
 			//	Informed by (Robert Brown; rbrown@e-f-s.com) on 1/8/10
 			//
 			if (ccTransaction.getTrackDataUsed() == false) {
-				if (ccTransaction.getCreditCard().getAddress() != null) {
-					street = ccTransaction.getCreditCard().getAddress().getStreet1();
-					zip = ccTransaction.getCreditCard().getAddress().getZip();
-				}
+				
+				if (ccTransaction.getCreditCard().getAddress1() != null) 
+					street = ccTransaction.getCreditCard().getAddress1();
+				if (ccTransaction.getCreditCard().getZipCode() != null)
+					zip = ccTransaction.getCreditCard().getZipCode();
 				
 				// ensure the data is not empty, even after purge of spaces and dash
 				street = street.replaceAll(" ", "");
