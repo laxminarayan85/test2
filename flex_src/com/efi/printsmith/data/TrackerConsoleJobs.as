@@ -83,6 +83,8 @@ package com.efi.printsmith.data
 		public var endSpoilage:Number = 0;
 		
 		public var difference:Number = 0;
+		
+		public var canceled:Boolean = false;
 
 	}
 }

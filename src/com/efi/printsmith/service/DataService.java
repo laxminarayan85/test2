@@ -3607,7 +3607,7 @@ public class DataService extends HibernateService {
 					checkFlag = false;
 				}
 				if(checkFlag){
-					String queryString = "from TrackerConsoleJobs where completed=false";
+					String queryString = "from TrackerConsoleJobs where completed=false and canceled=false";
 					if(trackerConsole.getShowSelectedEmployee()) {
 						queryString = queryString + " and employee = :employee";
 					}
@@ -3667,7 +3667,7 @@ public class DataService extends HibernateService {
 		List<TrackerConsoleJobs> trackerConsoleJobList = new ArrayList<TrackerConsoleJobs>();
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createQuery("from TrackerConsoleJobs where completed=false and employee=:employee");
+			Query query = em.createQuery("from TrackerConsoleJobs where completed=false and canceled=false and employee=:employee");
 			query.setParameter("employee", employee);
 			trackerConsoleJobList = query.getResultList();
 			for (TrackerConsoleJobs trackerConsoleJobs : trackerConsoleJobList) {
@@ -3735,7 +3735,7 @@ public class DataService extends HibernateService {
 			Query findQuery = em.createQuery("from TrackerManager");
 			TrackerManager trackerManager =  (TrackerManager) findQuery.getSingleResult();
 			if(trackerManager!=null) {
-				String queryString = "from TrackerConsoleJobs where completed=false";
+				String queryString = "from TrackerConsoleJobs where completed=false and canceled=false";
 				if(!trackerManager.getShowAllFacilities()) {
 					queryString = queryString + " and productionFacilities = :productionFacilities";
 				}

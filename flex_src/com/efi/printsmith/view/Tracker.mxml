@@ -13,7 +13,7 @@
 		<mx:method name="getJobsChargesForTrackerByEmployee" fault="handleFault(event)" result="handleLoadJobChargesResult(event)"/>
 		<mx:method name="getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole" fault="handleFault(event)" result="handleLoadTCJobsResult(event)"/>
 		<mx:method name="getTrackerConsoleJobsById" fault="handleFault(event)" result="handleLoadTCJobByIdResult(event)"/>
-		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+		<!--<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>-->
 		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleDeleteListResult(event)"/>
 	</mx:RemoteObject>
 	
@@ -23,6 +23,10 @@
 	
 	<mx:RemoteObject id="updateDataServiceJob" destination="dataService" showBusyCursor="true">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleUpdateJobResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="cancelDataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleCancelResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceProductionLocation" destination="dataService" showBusyCursor="true">
@@ -915,7 +919,8 @@
 					trackerConsoleJobs.actualWashTime = actualWashTime;
 					trackerConsoleJobs.noOfPasses = 1;
 				}
-				trackerConsoleJobs.currentPass = 1;				
+				trackerConsoleJobs.currentPass = 1;
+				trackerConsoleJobs.canceled = false;
 				var trackerConsolePasses:TrackerConsolePasses = new TrackerConsolePasses();
 				trackerConsolePasses.passNo = 1;
 				trackerConsolePasses.trackDate = new Date();
@@ -943,7 +948,7 @@
 			}
 		}
 		
-		private function handleDeleteResult(event:ResultEvent):void {
+		private function handleCancelResult(event:ResultEvent):void {
 			if(selectedDGIndex>-1){
 				refreshList = true;
 				progressBarComponent.trackerConsoleJobs = null;
@@ -1198,7 +1203,16 @@
 				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Areyousureyouwanttoc'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'changePriceCmd.Confirm'), Alert.YES | Alert.NO , this, function(event:CloseEvent):void {
 					if (event.detail==Alert.YES) {
 						selectedDGIndex = employee_jobs_grid.selectedIndex;
-						dataService.deleteItem("TrackerConsoleJobs",selectedTrackerConsoleJob.id);
+						selectedTrackerConsoleJob.totalSetUpTime = 0;
+						selectedTrackerConsoleJob.totalRunTime = 0;
+						selectedTrackerConsoleJob.totalWashUpTime = 0;
+						selectedTrackerConsoleJob.totalTime = 0;
+						selectedTrackerConsoleJob.qtyOrdered = 0;
+						selectedTrackerConsoleJob.impressions = 0;
+						selectedTrackerConsoleJob.spoilage = 0;
+						selectedTrackerConsoleJob.totalCost = 0;
+						selectedTrackerConsoleJob.canceled = true;
+						cancelDataService.addUpdate(selectedTrackerConsoleJob);
 					}
 				});	
 			}
@@ -1841,6 +1855,16 @@
 			}
 			return spoilage;
 		}
+		
+		public function getStatusImage(object:Object):Object {
+			[Embed('../../../../assets/StatusRunning.png')]
+			var statusRunningClass:Class;
+			[Embed('../../../../assets/StatusPaused.png')]
+			var statusPausedClass:Class;
+			if(object.paused)
+				return statusPausedClass;
+			return statusRunningClass;
+		}
 				
 	]]>
 	                        
@@ -2074,7 +2098,10 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{outerDocument.getInvoiceNumber(data)}"/>
+								<mx:HBox width="100%">
+									<mx:Image source="{outerDocument.getStatusImage(data)}"/>
+									<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{outerDocument.getInvoiceNumber(data)}"/>
+								</mx:HBox>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>

@@ -110,6 +110,8 @@ public class TrackerConsoleJobs extends ModelBase{
 	private Long endSpoilage;
 	
 	private Long difference;
+	
+	private Boolean canceled;
 
 	/**
 	 * @return the productionFacilities
@@ -614,7 +616,19 @@ public class TrackerConsoleJobs extends ModelBase{
 	public void setDifference(Long difference) {
 		this.difference = difference;
 	}
-	
-	
+
+	/**
+	 * @return the canceled
+	 */
+	public Boolean getCanceled() {
+		return canceled;
+	}
+
+	/**
+	 * @param canceled the canceled to set
+	 */
+	public void setCanceled(Boolean canceled) {
+		this.canceled = canceled;
+	}
 	
 }

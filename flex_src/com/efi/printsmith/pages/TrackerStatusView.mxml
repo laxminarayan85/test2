@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowInvHistoryCmd.TrackerStatus')}"
-	creationComplete="{initTrackerStatus()}" showCloseButton="true" close="{closeWindow()}" layout="vertical" width="950" height="700">
+	creationComplete="{initTrackerStatus()}" showCloseButton="true" close="{dispatchCloseEvent()}" layout="vertical" width="950" height="700">
 
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getTrackerJobsForTrackerStatus" fault="handleFault(event)" result="handleLoadListResult(event)"/>
@@ -16,6 +16,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.TrackerStatusUpdateEvent;
 			import com.efi.printsmith.data.TrackerConsolePasses;
 			import mx.utils.ObjectUtil;
 			import com.efi.printsmith.events.TrackerConsoleDetailsEvent;
@@ -38,8 +39,16 @@
 			
 			[Bindable] public var selectedTrackerConsoleJob:TrackerConsoleJobs;
 			
+			[Bindable] public var releasedToProduction:Boolean = false;
+			
 			private function initTrackerStatus():void {
 				PopUpManager.centerPopUp(this);
+			}
+			
+			private function dispatchCloseEvent():void {
+				var trackerStatusUpdateEvent:TrackerStatusUpdateEvent = new TrackerStatusUpdateEvent(TrackerStatusUpdateEvent.CLOSE_EVENT,releasedToProduction);
+				dispatchEvent(trackerStatusUpdateEvent);
+				callLater(closeWindow);
 			}
 			
 			private function closeWindow():void {
@@ -51,6 +60,24 @@
 					dataService.getTrackerJobsForTrackerStatus(invoiceIdValue);
 					dataService.getTotalEstimatedTimeForInvoice(invoiceIdValue);
 				}
+			}
+			
+			public function getStatusImage(object:Object):Object {
+				[Embed('../../../../assets/StatusRunning.png')]
+				var statusRunningClass:Class;
+				[Embed('../../../../assets/StatusCancelled.png')]
+				var statusCancelledClass:Class;
+				[Embed('../../../../assets/StatusComplete.png')]
+				var statusCompleteClass:Class;
+				[Embed('../../../../assets/StatusPaused.png')]
+				var statusPausedClass:Class;
+				if(object.completed)
+					return statusCompleteClass;
+				if(object.canceled)
+					return statusCancelledClass;
+				if(object.paused)
+					return statusPausedClass;
+				return statusRunningClass;
 			}
 			
 			public function getJobDescription(object:Object):String {
@@ -209,6 +236,9 @@
 	
 	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 	
+	<mx:CheckBox id="chkBox" selected="{releasedToProduction}" click="{releasedToProduction=chkBox.selected}"
+		label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowInvHistoryCmd.Releasetoproduction')}"/>
+	
 	<mx:HBox width="100%">
 	
 		<mx:Label width="20%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.Totalestimatedtime')}:"
@@ -233,6 +263,13 @@
 		dataProvider="{trackerConsoleJobsList}" itemClick="{onJobSelect(event)}" doubleClickEnabled="true" 
 		doubleClick="{openJobDetails(selectedTrackerConsoleJob)}" width="100%" height="100%">
 		<mx:columns>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.Status')}">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Image source="{outerDocument.getStatusImage(data)}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 				<mx:itemRenderer>
 					<mx:Component>

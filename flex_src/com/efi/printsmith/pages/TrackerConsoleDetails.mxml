@@ -117,6 +117,12 @@
 			
 			private function getStatus(object:TrackerConsoleJobs):String{
 				if(object!=null){
+					if(object.completed){
+						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Completed');	
+					}
+					if(object.canceled){
+						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Canceled');	
+					}
 					if(object.paused){
 						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Paused');	
 					} 
@@ -126,7 +132,7 @@
 			}
 			
 			private function getEstimatedTotalTime(object:TrackerConsoleJobs):String {
-				if(!object.completed) {
+				if(!object.completed && !object.canceled) {
 					if(object.employee!=null){
 						if(object.employee.hideEstimateTimeTracker){
 							return "--";
@@ -137,7 +143,7 @@
 			}
 			
 			private function getEstimatedSetUpTime(object:TrackerConsoleJobs):String {
-				if(!object.completed) {
+				if(!object.completed && !object.canceled) {
 					if(object.employee!=null){
 						if(object.employee.hideEstimateTimeTracker){
 							return "--";
@@ -148,7 +154,7 @@
 			}
 			
 			private function getEstimatedRunTime(object:TrackerConsoleJobs):String {
-				if(!object.completed) {
+				if(!object.completed && !object.canceled) {
 					if(object.employee!=null){
 						if(object.employee.hideEstimateTimeTracker){
 							return "--";
@@ -159,7 +165,7 @@
 			}
 			
 			private function getEstimatedWashUpTime(object:TrackerConsoleJobs):String {
-				if(!object.completed) {
+				if(!object.completed && !object.canceled) {
 					if(object.employee!=null){
 						if(object.employee.hideEstimateTimeTracker){
 							return "--";
@@ -171,7 +177,7 @@
 			
 			private function getFirstTotalTime(object:TrackerConsoleJobs):String{
 				var totalValue:Number = 0;
-				if(object.completed){
+				if(object.completed || object.canceled){
 					totalValue = object.totalTime;
 				} else {
 					if(object.currentPass==1){
@@ -233,7 +239,7 @@
 			
 			private function getFirstSetUpTime(object:TrackerConsoleJobs):String {
 				var totalSetUpValue:Number = 0;
-				if(object.completed){
+				if(object.completed || object.canceled){
 					totalSetUpValue = object.totalSetUpTime;
 				} else {
 					if(object.currentPass==1){
@@ -260,7 +266,7 @@
 			
 			private function getFirstRunTime(object:TrackerConsoleJobs):String {
 				var totalRunValue:Number = 0;
-				if(object.completed){
+				if(object.completed || object.canceled){
 					totalRunValue = object.totalRunTime;
 					return convertMilliSecondsToString(totalRunValue,true);
 				} else {
@@ -302,7 +308,7 @@
 			
 			private function getFirstWashTime(object:TrackerConsoleJobs):String {
 				var totalWashValue:Number = 0;
-				if(object.completed){
+				if(object.completed || object.canceled){
 					totalWashValue = object.totalWashUpTime;
 					return convertMilliSecondsToString(totalWashValue,true);
 				} else {
@@ -451,7 +457,7 @@
 			
 			private function getCurrentPassString(object:TrackerConsoleJobs):String {
 				if(object!=null){
-					if(object.noOfPasses>1 && !object.completed){
+					if(object.noOfPasses>1 && !object.completed && !object.canceled){
 						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.CurrentPass');
 					} else {
 						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Actuals');
@@ -462,7 +468,7 @@
 			
 			private function getOrderedQty(object:TrackerConsoleJobs, flag:int):Object {
 				var qtyOrdered:Number = 0;
-				if(!object.completed){
+				if(!object.completed && !object.canceled){
 					if(object.job!=null){
 						if(!isNaN(object.job.qtyOrdered)){
 							qtyOrdered = object.job.qtyOrdered;
@@ -472,7 +478,7 @@
 							qtyOrdered = object.charge.quantity;
 						}
 					}
-				} else if(object.completed){
+				} else if(object.completed || object.canceled){
 					if(flag==0){
 						if(object.job!=null){
 							if(!isNaN(object.job.qtyOrdered)){
@@ -494,7 +500,7 @@
 			
 			private function getImpressions(object:TrackerConsoleJobs, flag:int):Object {
 				var impressions:Number = 0;
-				if(!object.completed){
+				if(!object.completed && !object.canceled){
 					if(object.job!=null){
 						if(!isNaN(object.job.totalImpressions)){
 							impressions = object.job.totalImpressions;
@@ -506,7 +512,7 @@
 							}
 						}
 					}
-				} else if(object.completed) {
+				} else if(object.completed || object.canceled) {
 					if(flag==0){
 						if(object.job!=null){
 							if(!isNaN(object.job.totalImpressions)){
@@ -530,7 +536,7 @@
 			
 			private function getSpoilage(object:TrackerConsoleJobs, flag:int):Object {
 				var spoilage:Number = 0;
-				if(!object.completed){
+				if(!object.completed && !object.canceled){
 					if(object.job!=null){
 						if(object.job.costingRecord!=null){
 							if(!isNaN(object.job.costingRecord.actualSpoilage)){
@@ -544,7 +550,7 @@
 							}
 						}
 					}
-				} else if(object.completed) {
+				} else if(object.completed || object.canceled) {
 					if(flag==0){
 						if(object.job!=null){
 							if(object.job.costingRecord!=null){
@@ -570,7 +576,7 @@
 			
 			private function getStockCost(object:TrackerConsoleJobs):Object {
 				var stockCost:Number = 0;
-				if(!object.completed){
+				if(!object.completed && !object.canceled){
 					if(object.employee!=null){
 						if(object.employee.costingAmounts){
 							return "--";
@@ -586,7 +592,7 @@
 							}
 						}
 					}
-				} else if(object.completed){
+				} else if(object.completed || object.canceled){
 					if(object.job!=null){
 						if(object.job.costingRecord!=null){
 							if(!isNaN(object.job.costingRecord.stockCost)){
@@ -602,7 +608,7 @@
 			
 			private function getLaborCost(object:TrackerConsoleJobs):Object {
 				var laborCost:Number = 0;
-				if(!object.completed){
+				if(!object.completed && !object.canceled){
 					if(object.employee!=null){
 						if(object.employee.costingAmounts){
 							return "--";
@@ -622,7 +628,7 @@
 							}
 						}
 					}
-				} else if(object.completed){
+				} else if(object.completed || object.canceled){
 					if(object.job!=null){
 						if(object.job.costingRecord!=null){
 							if(!isNaN(object.job.costingRecord.acualLaborCost)){
@@ -642,7 +648,7 @@
 			
 			private function getTotalCost(object:TrackerConsoleJobs, flag:int):Object {
 				var totalCost:Number = 0;
-				if(!object.completed){
+				if(!object.completed && !object.canceled){
 					if(object.employee!=null){
 						if(object.employee.costingAmounts){
 							return "--";
@@ -650,7 +656,7 @@
 							totalCost = Number(getStockCost(trackerConsoleJobs))+Number(getLaborCost(trackerConsoleJobs));
 						}
 					}
-				} else if(object.completed) {
+				} else if(object.completed || object.canceled) {
 					if(flag==0){
 						totalCost = Number(getStockCost(trackerConsoleJobs))+Number(getLaborCost(trackerConsoleJobs));
 					} else if(flag==1){
@@ -722,7 +728,7 @@
 			fontWeight="bold" width="25%" textAlign="center"/>
 		<mx:Label text="{getCurrentPassString(trackerConsoleJobs)}" fontWeight="bold" width="25%" textAlign="center"/>
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.PreviousPasses')}" 
-			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" fontWeight="bold" width="25%" textAlign="center"/>
+			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed &amp;&amp; !trackerConsoleJobs.canceled}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed &amp;&amp; !trackerConsoleJobs.canceled}" fontWeight="bold" width="25%" textAlign="center"/>
 	</mx:HBox>
 	<mx:HBox width="100%" horizontalGap="2">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Totaltime')}:"
@@ -730,7 +736,7 @@
 		<mx:TextInput text="{getEstimatedTotalTime(trackerConsoleJobs)}" 
 			width="25%" enabled="false" disabledColor="#000000"/>
 		<mx:TextInput text="{getSecondTotalTime(trackerConsoleJobs)}" disabledColor="#000000"
-			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
+			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed &amp;&amp; !trackerConsoleJobs.canceled}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed &amp;&amp; !trackerConsoleJobs.canceled}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstTotalTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%" horizontalGap="2">
@@ -739,7 +745,7 @@
 		<mx:TextInput text="{getEstimatedSetUpTime(trackerConsoleJobs)}" 
 			width="25%" enabled="false" disabledColor="#000000"/>
 		<mx:TextInput text="{getSecondSetUpTime(trackerConsoleJobs)}" disabledColor="#000000" 
-			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
+			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed &amp;&amp; !trackerConsoleJobs.canceled}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed &amp;&amp; !trackerConsoleJobs.canceled}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstSetUpTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%" horizontalGap="2">
@@ -748,7 +754,7 @@
 		<mx:TextInput text="{getEstimatedRunTime(trackerConsoleJobs)}" 
 			width="25%" enabled="false" disabledColor="#000000"/>
 		<mx:TextInput text="{getSecondRunTime(trackerConsoleJobs)}" disabledColor="#000000"
-			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
+			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed &amp;&amp; !trackerConsoleJobs.canceled}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed &amp;&amp; !trackerConsoleJobs.canceled}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstRunTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>	
 	<mx:HBox width="100%" horizontalGap="2">
@@ -757,7 +763,7 @@
 		<mx:TextInput text="{getEstimatedWashUpTime(trackerConsoleJobs)}" 
 			width="25%" enabled="false" disabledColor="#000000"/>
 		<mx:TextInput text="{getSecondWashTime(trackerConsoleJobs)}" disabledColor="#000000"
-			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed}" width="25%" enabled="false"/>
+			visible="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed &amp;&amp; !trackerConsoleJobs.canceled}" includeInLayout="{trackerConsoleJobs.currentPass>1 &amp;&amp; !trackerConsoleJobs.completed &amp;&amp; !trackerConsoleJobs.canceled}" width="25%" enabled="false"/>
 		<mx:TextInput text="{getFirstWashTime(trackerConsoleJobs)}" width="25%" enabled="false" disabledColor="#000000"/>
 	</mx:HBox>
 	<mx:HBox width="100%" horizontalGap="2">
