@@ -5,7 +5,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:Metadata>
     [Event(name="SaveAddressEvent", type="SaveAddressEvent")]
 </mx:Metadata>
-<mx:RemoteObject id="dataService" destination="dataService">
+<mx:RemoteObject id="dataService" destination="dataService" >
 	<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
@@ -57,6 +57,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:Script source="../common/scripts/StringUtils.as"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.data.PreferencesAccounting;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.SportsInterest;
@@ -129,6 +130,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
             {Aged:"90", Value:0}
          ]);                   
     
+    [Bindable] private var loadComponent:CommonLoadComponent;
+
     [Bindable]
     private var customerLogs:ArrayCollection = new ArrayCollection();
      [Bindable]
@@ -166,7 +169,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		setSettings();
 		this.enabled = false;
 		dataServiceSystemPreferences.getAll("PreferencesAccounting");
-		dataService.getAccountPicker();
+		
+		openAccountPicker();
 
 		var eventAddress:AccountsAddressPanelEvent = new AccountsAddressPanelEvent(canvasAddress, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventAddress.dispatch();
@@ -762,7 +766,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.EstInvCharges = this.account.invoiceEstimateCharges;
 		this.JobCharges = this.account.jobCharges;
 		doNew();
-		dataService.getAccountPicker()
+			
+		openAccountPicker();
 	}
 //// load
 	private function handleLoadResult(ev:ResultEvent):void {
@@ -773,6 +778,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 		else
 			this.enabled = true;
+		
+		if(loadComponent) {
+			loadComponent.close();
+		}	
 	}
 	private function containsBlank(ac:ArrayCollection, field:String):Boolean	{
 	 	for (var i:int = 0; i<ac.length; i++)	{
@@ -827,7 +836,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	
-	
+	private function openAccountPicker():void	{
+		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+		dataService.getAccountPicker();
+		
+	}
 //EndLOAD	
 	
 	private function handleSaveLogResult(ev:ResultEvent):void {
@@ -842,7 +855,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService.getAccountPicker()
+		openAccountPicker();
 		doNew();
 	}
 		
@@ -873,7 +886,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0);                                 
+		Alert.show(message, "Error", 0);    
+		
+		if(loadComponent) {
+			loadComponent.close();
+		}                             
 	}
 	
  

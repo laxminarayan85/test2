@@ -66,6 +66,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:Script> 
                                   
 <![CDATA[
+	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.data.ComLink;
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayCollection;
@@ -142,7 +143,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private var zips:ArrayCollection = new ArrayCollection();
     [Bindable]
     private var creditCardPreferencesArray:ArrayCollection = new ArrayCollection();
-   
+   [Bindable] private var loadComponent:CommonLoadComponent;
+
     [Bindable]
     private var compaigns:ArrayCollection = new ArrayCollection();
       [Bindable]            
@@ -152,7 +154,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     
     private var focussedFormControl:DisplayObject;
     
-   
+   	private function openContactPicker():void	{
+   		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+
+   		dataService2.getContactPicker();  
+   	}
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();  
@@ -160,7 +166,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		account= new Account();
 		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
 		this.enabled = false;
-		dataService2.getContactPicker();  
+		openContactPicker();
 		salesRepDataService.getAll("SalesRep");
 		campaignDataService.getAll("Campaigns"); 
 		GradedataService.getAll("Grade");  
@@ -193,6 +199,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	      
 	private function doAccountPicker():void {
+		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+
 		dataService2.getAccountPicker();
 			
 	}           
@@ -763,7 +771,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleSaveResult(ev:ResultEvent):void {
 		this.contact = new Contact();
 		setContact(this.contact);
-		dataService2.getContactPicker();
+		openContactPicker();
 	} 
 
 	private function handleLoadAccountResult(ev:ResultEvent):void{
@@ -776,7 +784,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    accountPickerWindow.setAccounts(accounts);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);	
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);
+	    
+		if(loadComponent) {
+			loadComponent.close();
+		}    
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
 		contacts = ev.result as ArrayCollection;
@@ -785,6 +797,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			this.doGet();
 		
 		}
+		if(loadComponent) {
+			loadComponent.close();
+		} 
 	}
 	private function handleLoadCampaigns(ev:ResultEvent):void {
 		compaigns = ev.result as ArrayCollection;
@@ -838,7 +853,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}                              
 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		dataService2.getContactPicker();
+		openContactPicker();
 		doNew();
 	}
 	
@@ -849,7 +864,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error");                                 
+		Alert.show(message, "Error");      
+		
+		if(loadComponent) {
+			loadComponent.close();
+		}                           
 	}
 	private function handleSaveCityResult(ev:ResultEvent):void {
 		
