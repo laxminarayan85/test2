@@ -290,7 +290,7 @@
 				}	
 			if ((ss.menu == "rStandardMenuText.Invoice")
 				&& (ss.commandName.indexOf("rStandardMenuText.TrackerStatus") > -1 ))	{
-					doTracker();					
+					//doTracker();					
 				}
 			if ((ss.menu == "rStandardMenuText.Admin")
 				&& (ss.commandName.indexOf("rStandardMenuText.UserDefinitions") > -1 ))	{
