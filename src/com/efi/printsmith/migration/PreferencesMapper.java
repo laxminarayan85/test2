@@ -137,84 +137,126 @@ public class PreferencesMapper extends ImportMapper {
 	}
 	private void importAddressFormats(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
-		Country country = (Country)dataService.getByPrevId("Country", key);
+		Country country = null;
+		if(name.equals("Country Title")){
+			country = (Country)dataService.getByName("Country", value);
+		} else {
+			country = (Country)dataService.getByPrevId("Country", key);
+		}
 		PreferencesSystem preferencesSystem = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
 		AddressFormatting addressFormatting = null;
 		if (country == null && name.equals("Country Title")) {
 			country = new Country();
 			country.setName(value);
 			country.setPrevId(key);
+			country = (Country) dataService.addUpdate(country);
 			addressFormatting = new AddressFormatting();
+			addressFormatting.setCountry(country);
+			addressFormatting = (AddressFormatting)dataService.addUpdate(addressFormatting);
+			//country.addAddressFormattings(addressFormatting);
+		} else if(country!=null) {
+			country.setPrevId(key);
+			country = (Country) dataService.addUpdate(country);
+			if (country.getAddressFormattings()==null || country.getAddressFormattings().size() == 0) {
+				addressFormatting = new AddressFormatting();
+				addressFormatting.setCountry(country);
+				addressFormatting = (AddressFormatting)dataService.addUpdate(addressFormatting);
+			} else {
+				addressFormatting = country.getAddressFormattings().get(country.getAddressFormattings().size() - 1);
+			}
+		}
+		/*if (country.getAddressFormattings().size() == 0) {
+			addressFormatting = new AddressFormatting();
+			addressFormatting.setCountry(country);
 			addressFormatting = (AddressFormatting)dataService.addUpdate(addressFormatting);
 			country.addAddressFormattings(addressFormatting);
-		}
-		if (country.getAddressFormattings().size() == 0) {
-			addressFormatting = new AddressFormatting();
-			addressFormatting = (AddressFormatting)dataService.addUpdate(addressFormatting);
-			country.addAddressFormattings(addressFormatting);
-		}
+		}*/
 		if (name.equals("Country Format")) {
 			int i = value.indexOf("]");
-			int count = 0;
+			int rowCount = 1;
+			int columnCount = 1;
 			int nextStart = 0;
 			while (i > -1) {
-				count++;
+				Integer position = 0;
 				String fieldName = value.substring(nextStart, i+1);
 				nextStart = i+1;
-				addressFormatting = country.getAddressFormattings().get(country.getAddressFormattings().size() - 1);
 				if (fieldName.equals("[NewLine]")) {
-					addressFormatting = new AddressFormatting();
+					/*addressFormatting = new AddressFormatting();
+					addressFormatting.setCountry(country);
 					addressFormatting = (AddressFormatting)dataService.addUpdate(addressFormatting);
-					country.addAddressFormattings(addressFormatting);
-					count = 0;
+					country.addAddressFormattings(addressFormatting);*/
+					rowCount++;
+					columnCount = 1;
 				}
 				else if (fieldName.equals("[Address1]")) {
-					addressFormatting.setStreet1Position(count);
+					position = Integer.valueOf(rowCount+""+columnCount);
+					addressFormatting.setStreet1Position(position);
+					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setStreet1Separator(value.substring(nextStart,nextStart));
+						addressFormatting.setStreet1Separator(value.substring(nextStart,nextStart+1));
 						nextStart++;
 					}
 				}
 				else if (fieldName.equals("[Address2]")) {
-					addressFormatting.setStreet2Position(count);
+					position = Integer.valueOf(rowCount+""+columnCount);
+					addressFormatting.setStreet2Position(position);
+					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setStreet2Separator(value.substring(nextStart,nextStart));
+						addressFormatting.setStreet2Separator(value.substring(nextStart,nextStart+1));
 						nextStart++;
 					}
 				}
 				else if (fieldName.equals("[Zip]")) {
-					addressFormatting.setZipPosition(count);
+					position = Integer.valueOf(rowCount+""+columnCount);
+					addressFormatting.setZipPosition(position);
+					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setZipSeparator(value.substring(nextStart,nextStart));
+						addressFormatting.setZipSeparator(value.substring(nextStart,nextStart+1));
 						nextStart++;
 					}
 				}
 				else if (fieldName.equals("[State]")) {
-					addressFormatting.setStatePosition(count);
+					position = Integer.valueOf(rowCount+""+columnCount);
+					addressFormatting.setStatePosition(position);
+					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setStateSeparator(value.substring(nextStart,nextStart));
+						addressFormatting.setStateSeparator(value.substring(nextStart,nextStart+1));
 						nextStart++;
 					}
 				}
 				else if (fieldName.equals("[City]")) {
-					addressFormatting.setCityPosition(count);
+					position = Integer.valueOf(rowCount+""+columnCount);
+					addressFormatting.setCityPosition(position);
+					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setCitySeparator(value.substring(nextStart,nextStart));
+						addressFormatting.setCitySeparator(value.substring(nextStart,nextStart+1));
 						nextStart++;
 					}
 				}
 				else if (fieldName.equals("[Country]")) {
-					addressFormatting.setCountryPosition(count);
+					position = Integer.valueOf(rowCount+""+columnCount);
+					addressFormatting.setCountryPosition(position);
+					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setCountrySeparator(value.substring(nextStart,nextStart));
+						addressFormatting.setCountrySeparator(value.substring(nextStart,nextStart+1));
 						nextStart++;
 					}
 				}
+				/*addressFormatting.setCountry(country);
+				addressFormatting = (AddressFormatting)dataService.addUpdate(addressFormatting);
+				country.addAddressFormattings(addressFormatting);*/
 				i = value.indexOf("]", nextStart);
 			}
-		} else if (name.equals("Format is Default"))
-			preferencesSystem.setDefaultCountry(Utilities.tokenToInt(key));
-		dataService.addUpdate(country);
+		} else if (name.equals("Format is Default")) {
+			if(Utilities.tokenToBooleanValue(value)) {
+				Country defaultCountry = (Country) dataService.getByPrevId("Country", key);
+				if(defaultCountry!=null) {
+					preferencesSystem.setDefaultCountry(Integer.parseInt(String.valueOf(defaultCountry.getId())));
+					dataService.addUpdate(preferencesSystem);
+				}
+			}
+		}
+		dataService.addUpdate(addressFormatting);
 	}
 	private void importPreferencesCreditCardField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
