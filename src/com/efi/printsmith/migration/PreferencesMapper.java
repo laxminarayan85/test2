@@ -193,8 +193,13 @@ public class PreferencesMapper extends ImportMapper {
 					addressFormatting.setStreet1Position(position);
 					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setStreet1Separator(value.substring(nextStart,nextStart+1));
-						nextStart++;
+						if(value.indexOf("[", nextStart)>-1) {
+							addressFormatting.setStreet1Separator(value.substring(nextStart,value.indexOf("[", nextStart)));
+							nextStart = value.indexOf("[", nextStart);
+						} else {
+							addressFormatting.setStreet1Separator(value.substring(nextStart,nextStart+1));
+							nextStart++;
+						}
 					}
 				}
 				else if (fieldName.equals("[Address2]")) {
@@ -202,8 +207,13 @@ public class PreferencesMapper extends ImportMapper {
 					addressFormatting.setStreet2Position(position);
 					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setStreet2Separator(value.substring(nextStart,nextStart+1));
-						nextStart++;
+						if(value.indexOf("[", nextStart)>-1) {
+							addressFormatting.setStreet2Separator(value.substring(nextStart,value.indexOf("[", nextStart)));
+							nextStart = value.indexOf("[", nextStart);
+						} else {
+							addressFormatting.setStreet2Separator(value.substring(nextStart,nextStart+1));
+							nextStart++;
+						}
 					}
 				}
 				else if (fieldName.equals("[Zip]")) {
@@ -211,8 +221,13 @@ public class PreferencesMapper extends ImportMapper {
 					addressFormatting.setZipPosition(position);
 					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setZipSeparator(value.substring(nextStart,nextStart+1));
-						nextStart++;
+						if(value.indexOf("[", nextStart)>-1) {
+							addressFormatting.setZipSeparator(value.substring(nextStart,value.indexOf("[", nextStart)));
+							nextStart = value.indexOf("[", nextStart);
+						} else {
+							addressFormatting.setZipSeparator(value.substring(nextStart,nextStart+1));
+							nextStart++;
+						}
 					}
 				}
 				else if (fieldName.equals("[State]")) {
@@ -220,8 +235,13 @@ public class PreferencesMapper extends ImportMapper {
 					addressFormatting.setStatePosition(position);
 					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setStateSeparator(value.substring(nextStart,nextStart+1));
-						nextStart++;
+						if(value.indexOf("[", nextStart)>-1) {
+							addressFormatting.setStateSeparator(value.substring(nextStart,value.indexOf("[", nextStart)));
+							nextStart = value.indexOf("[", nextStart);
+						} else {
+							addressFormatting.setStateSeparator(value.substring(nextStart,nextStart+1));
+							nextStart++;
+						}
 					}
 				}
 				else if (fieldName.equals("[City]")) {
@@ -229,8 +249,13 @@ public class PreferencesMapper extends ImportMapper {
 					addressFormatting.setCityPosition(position);
 					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setCitySeparator(value.substring(nextStart,nextStart+1));
-						nextStart++;
+						if(value.indexOf("[", nextStart)>-1) {
+							addressFormatting.setCitySeparator(value.substring(nextStart,value.indexOf("[", nextStart)));
+							nextStart = value.indexOf("[", nextStart);
+						} else {
+							addressFormatting.setCitySeparator(value.substring(nextStart,nextStart+1));
+							nextStart++;
+						}
 					}
 				}
 				else if (fieldName.equals("[Country]")) {
@@ -238,8 +263,13 @@ public class PreferencesMapper extends ImportMapper {
 					addressFormatting.setCountryPosition(position);
 					columnCount++;
 					if (nextStart < value.length() && value.substring(nextStart,nextStart+1).equals("[") == false) {
-						addressFormatting.setCountrySeparator(value.substring(nextStart,nextStart+1));
-						nextStart++;
+						if(value.indexOf("[", nextStart)>-1) {
+							addressFormatting.setCountrySeparator(value.substring(nextStart,value.indexOf("[", nextStart)));
+							nextStart = value.indexOf("[", nextStart);
+						} else {
+							addressFormatting.setCountrySeparator(value.substring(nextStart,nextStart+1));
+							nextStart++;
+						}
 					}
 				}
 				/*addressFormatting.setCountry(country);
