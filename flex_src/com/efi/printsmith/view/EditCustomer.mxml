@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
-width="100%" height="704" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}"
-creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}" name="Customer Editor" xmlns:ns1="com.efi.printsmith.components.*">
+<mx:Panel 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:view="com.efi.printsmith.view.*" 
+	xmlns:vo="com.efi.printsmith.vo.*" 
+	xmlns:fc="http://www.adobe.com/2006/fc" 
+	xmlns:hc="com.hillelcoren.components.*"
+	width="100%" height="100%" 
+	headerHeight="0" 
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}"
+	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}"
+	creationComplete="init()"  
+	name="Customer Editor" 
+	xmlns:ns1="com.efi.printsmith.components.*">
 <mx:Metadata>
     [Event(name="SaveAddressEvent", type="SaveAddressEvent")]
 </mx:Metadata>
@@ -434,13 +444,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		mapFromAccountData();
 		ship_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress'));
 		bill_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.StatementAddress'));
+		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 		if ( account.prospect)
-			title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Prospect')+"  #" + account.accountId+"  "+account.title;
+			mdiWin.title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Prospect')+"  #" + account.accountId+"  "+account.title;
 		else{
 			if ( account.accountId == "")
-				title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelFormCmd.New')+" "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Account')
+				mdiWin.title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelFormCmd.New')+" "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Account')
 			else
-				title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')+"  #" + account.accountId+"  "+account.title;
+				mdiWin.title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')+"  #" + account.accountId+"  "+account.title;
 		}
 	}			
 	
