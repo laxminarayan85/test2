@@ -288,10 +288,6 @@
 				&& (ss.commandName.indexOf("rStandardMenuText.Preferences") > -1 ))	{
 					doSystemPreferences();					
 				}	
-			if ((ss.menu == "rStandardMenuText.Invoice")
-				&& (ss.commandName.indexOf("rStandardMenuText.TrackerStatus") > -1 ))	{
-					//doTracker();					
-				}
 			if ((ss.menu == "rStandardMenuText.Admin")
 				&& (ss.commandName.indexOf("rStandardMenuText.UserDefinitions") > -1 ))	{
 					doUsers();					
