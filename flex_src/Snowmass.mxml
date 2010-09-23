@@ -215,11 +215,19 @@
 			if ((ss.menu == "rStandardMenuText.Reports")
 				&& (ss.commandName.indexOf("rStandardMenuText.AccountHistory") > -1 ))	{
 					doAccountHistory();					
+				}
+			if ((ss.menu == "rStandardMenuText.Reports")
+				&& (ss.commandName.indexOf("rStandardMenuText.StockOrder") > -1 ))	{
+					doAccountHistory();					
 				}	
 			if ((ss.menu == "rStandardMenuText.AR")
 				&& (ss.commandName.indexOf("rStandardMenuText.Accounts") > -1 ))	{
 					doAccounts();					
-				}				
+				}	
+			if ((ss.menu == "rStandardMenuText.AR")
+				&& (ss.commandName.indexOf("rStandardMenuText.JournalEntry") > -1 ))	{
+					doJournal();					
+				}						
 			if ((ss.menu == "rStandardMenuText.POS")
 				&& (ss.commandName.indexOf("rStandardMenuText.OpenCashRegister") > -1 ))	{
 					doCashRegister();					
@@ -316,7 +324,11 @@
 				&& (ss.commandName.indexOf("rStandardMenuText.PaperCalculator") > -1 ))	{
 					dopaperCal();					
 				}	
-				
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.OrderStock") > -1 ))	{
+					doOrderStock();					
+				}	
+					
 			//Menu for Invoice Tracker Status
 			if ((ss.menu == "rStandardMenuText.Invoice")
 				&& (ss.commandName.indexOf("rStandardMenuText.TrackerStatus") > -1 ))	{
@@ -385,8 +397,20 @@
 			var event:EditUserEvent = new EditUserEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
+		private function doJournal():void{
+			var event:JournalEvent = new JournalEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
 		public function doChangePassword():void {
 			var event:ChangePasswordEvent = new ChangePasswordEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		public function doOrderStock():void {
+			var event:OrderStockEvent = new OrderStockEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		public function doStockOrder():void {
+			var event:StockOrderEvent = new StockOrderEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 		public function doSalesTax():void {

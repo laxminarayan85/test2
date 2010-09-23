@@ -380,10 +380,6 @@
 
 	<mx:Canvas width="407"
 			   height="354">
-		<mx:Button x="10"
-				   y="10"
-				   label="Populate Sales Categories"
-				   click="doPopulateSalesCategories();" width="188" enabled="false"/>
 		<mx:Button x="206"
 				   y="10"
 				   label="xpedx Stock Check"
@@ -397,24 +393,15 @@
 				   label="Populate Locations"
 				   click="doPopulateLocations();"  visible="false" width="188" enabled="false"/>
 		<mx:Button x="10"
-				   y="70"
-				   label="Populate Product Codes"
-				   click="doPopulateProductCodes();" width="188"/>
-		<mx:Button x="10"
-				   y="100"
-				   label="Populate Stock Dimensions"
-				   click="doPopulateDimensions();" width="188"/>
-		<mx:Button x="10"
 				   y="314"
 				   label="Generate Report"
 				   click="doSampleReport();" width="188"/>
-		<mx:Button x="10" y="130" label="Populate Stock Types" width="188"  click="doPopulateStockType();" />
 		<mx:Button x="10" y="264" label="Download File From Repository" width="188"  click="doDownload();"  id="btn_download_repository"/>
 		<mx:Button x="10" y="234" label="Upload File To Repository" width="188"  click="doUpload();"  id="btn_upload_repository"/>
 		<mx:Button x="10" y="184" label="Fiery Queue" width="188"  click="showFieryQueue();"  id="btn_fiery_queue"/>
 		<mx:ComboBox x="206" y="314" width="191" id="report_list" dataProvider="{reportTemplates}"></mx:ComboBox>
 		<mx:Button x="206"
-				   y="70"
+				   y="81"
 				   label="Import Stock Catalog"
 				   click="doImportStockCatalog();" width="188"/>
 		<mx:Button x="206"
@@ -425,9 +412,6 @@
 				   y="264"
 				   label="Encrypt Credit Card"
 				   click="encryptSampleCC();" width="188"/>
-		<mx:Button x="206" y="100" label="Stock Order" width="188" click="doStockOrder()"/>
-		<mx:Button x="209" y="130" label="Report Stock order" width="188" click="doStockOrderReport()"/>
-		<mx:Button x="206" y="184" label="Journal Entry" width="188" click="doJournal();"/>
 	</mx:Canvas>
 
 	<mx:ControlBar horizontalAlign="center">

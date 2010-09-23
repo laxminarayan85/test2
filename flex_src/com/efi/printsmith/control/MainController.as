@@ -156,7 +156,9 @@ package com.efi.printsmith.control
 			this.addCommand(ChangePasswordEvent.COMMANDID, ChangePasswordCommand);
 			this.addCommand(SalesTaxEvent.COMMANDID, SalesTaxCommand);
 			this.addCommand(WasteChartEvent.COMMANDID, WasteChartCommand);
-			
+			this.addCommand(OrderStockEvent.COMMANDID, OrderStockCommand);
+			this.addCommand(StockOrderEvent.COMMANDID, StockOrderCommand);
+			this.addCommand(JournalEvent.COMMANDID, JournalCommand);
 			}
 		
 	}

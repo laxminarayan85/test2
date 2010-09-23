@@ -136,7 +136,7 @@ rStandardMenuText.Admin,rStandardMenuText.ClearEstimates,CMD_,1
 rStandardMenuText.Admin,rStandardMenuText.PaperCalculator,CMD_,1
 rStandardMenuText.Admin,rStandardMenuText.PaperTemplates,CMD_,1
 rStandardMenuText.Admin,rStandardMenuText.FoldTemplates,CMD_,1
-rStandardMenuText.Admin,rStandardMenuText.OrderStock,CMD_,1
+rStandardMenuText.Admin,rStandardMenuText.OrderStock,CMD_OrderStock,1
 rStandardMenuText.Admin,rStandardMenuText.BatchPrintDocuments,CMD_,1
 rStandardMenuText.Window,rStandardMenuText.Minimize,CMD_,1
 rStandardMenuText.Window,rStandardMenuText.Maximize,CMD_,1
@@ -260,7 +260,7 @@ rStandardMenuText.AR,rStandardMenuText.VerifyCustomerBalanc,CMD_
 rStandardMenuText.AR,rStandardMenuText.VerifyAllBalances,CMD_
 rStandardMenuText.AR,rStandardMenuText.1,CMD_
 rStandardMenuText.AR,rStandardMenuText.AccountAging,CMD_
-rStandardMenuText.AR,rStandardMenuText.JournalEntry,CMD_
+rStandardMenuText.AR,rStandardMenuText.JournalEntry,CMD_Journal
 rStandardMenuText.AR,rStandardMenuText.PostPOSCharges,CMD_
 rStandardMenuText.Pricing,rStandardMenuText.StockDefinitions,CMD_StockDefinition
 rStandardMenuText.Pricing,	rStandardMenuText.DeleteStock,CMD_StockDefinition_Delete
@@ -294,7 +294,7 @@ rStandardMenuText.Reports,rStandardMenuText.MonthlySales,CMD_
 rStandardMenuText.Reports,rStandardMenuText.OpenOldTape,CMD_
 rStandardMenuText.Reports,rStandardMenuText.DepositTicket,CMD_
 rStandardMenuText.Reports,rStandardMenuText.1,CMD_
-rStandardMenuText.Reports,rStandardMenuText.StockOrder,CMD_
+rStandardMenuText.Reports,rStandardMenuText.StockOrder,CMD_StockOrder
 rStandardMenuText.Reports,rStandardMenuText.ReOrderList,CMD_
 rStandardMenuText.Reports,rStandardMenuText.1,CMD_
 rStandardMenuText.Reports,rStandardMenuText.MailerCampaigns,CMD_

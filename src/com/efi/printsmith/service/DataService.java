@@ -764,6 +764,21 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 		return null;
+	}public Dimension getByDimensionName(String className, String name) {
+		log.debug("** getByName called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			String queryString = "from " + className + " where name = '" + name
+					+ "'";
+			Query query = em.createQuery(queryString);
+			Dimension object = (Dimension) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
 	}
 
 	public ModelBase getByLastFirstName(String className, String namelast,

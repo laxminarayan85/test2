@@ -1,0 +1,12 @@
+"Business Papers","17 x 22"
+"Book Papers","25 x 38"
+"Cover Papers","20 x 26"
+"Index","25.5 x 30.5"
+"Tagboard","24 x 36"
+"Blanks","22 x 38"
+"Vellum Bristol","22.5 x 28.5"
+"Blotter","19 x 24"
+"Label","25 x 38"
+"Newsprint","24 x 36"
+
+	

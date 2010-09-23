@@ -5,6 +5,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.efi.printsmith.data.*;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -59,6 +60,9 @@ public class DefaultDataFactory {
 			ProcessInkColor();
 			ProcessTablesElements();
 			ProcessFoldTemplates();
+			ProcessProductCodesNames();
+			ProcessDoDimension();
+			ProcessStockType();
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
@@ -76,6 +80,20 @@ public class DefaultDataFactory {
 			LoadInkData(new String[] { currentPath });
 		} catch (IOException e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+	}
+	private void ProcessStockType(){
+		try {
+			LoadStockTypeData(new String[] {currentPath});
+		} catch (IOException e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));			
+		}
+	}
+	private void ProcessDoDimension(){
+		try {
+			LoadDimesionData(new String[] {currentPath});
+		} catch (IOException e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));			
 		}
 	}
 	private void ProcessFoldTemplates() {
@@ -1309,6 +1327,13 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 	}
+	private void ProcessProductCodesNames(){
+		try {
+			LoadProductCodesNamesData(new String[] { currentPath });
+		} catch (IOException e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+	}
 
 	private void ProcessSecurityCommands() {
 		try {
@@ -1586,6 +1611,36 @@ public class DefaultDataFactory {
 			}
 		}
 	}
+	private void LoadStockTypeData(String [] args) throws IOException {
+		if (args.length == 0)
+			args = new String[] { ".." };
+		String path = new File(args[0]).getParent();
+		File pathName = new File(path);
+		String[] fileNames = pathName.list();
+		for (int i = 0; i < fileNames.length; i++) {
+			if (fileNames[i].endsWith(".txt") == true
+					&& fileNames[i].toLowerCase().startsWith("stocktypes") == true) {
+				File f = new File(pathName.getPath(), fileNames[i]);
+				doStockType(f);
+				break;
+			}
+			}
+		}		
+	private void LoadDimesionData(String [] args) throws IOException {
+		if (args.length == 0)
+			args = new String[] { ".." };
+		String path = new File(args[0]).getParent();
+		File pathName = new File(path);
+		String[] fileNames = pathName.list();
+		for (int i = 0; i < fileNames.length; i++) {
+			if (fileNames[i].endsWith(".txt") == true
+					&& fileNames[i].toLowerCase().startsWith("dimensions") == true) {
+				File f = new File(pathName.getPath(), fileNames[i]);
+				doDimension(f);
+				break;
+			}
+		}		
+	}
 	private void LoadFoldTemplateData(String [] args) throws IOException {
 		if (args.length == 0)
 			args = new String[] { ".." };
@@ -1776,6 +1831,58 @@ return rv;
 		}
 		return rv;
 	}
+	private int doStockType(File file) throws java.io.IOException {
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+		int index = 0;
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 2) {
+				throw new java.io.IOException("Expected 2 fields per line in Dimension");
+			}
+			index++;
+			Dimension dimension = new Dimension();
+			StockType stockType = new StockType();
+			dimension = dataservice.getByDimensionName("Dimension", fieldTokens[1]);
+			stockType.setSize(dimension);
+			stockType.setName(fieldTokens[0]);
+			stockType.setViewableID(index);
+			
+			try {
+				dataservice.addUpdate(stockType);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
+			}
+		}
+		return -1;
+	}
+	private int doDimension(File file) throws java.io.IOException {
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+	
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 3) {
+				throw new java.io.IOException("Expected 3 fields per line in Dimension");
+			}
+			Dimension dimension = new Dimension();
+			
+			dimension.setName(fieldTokens[2]);
+			dimension.setType("US - Imperial");
+			dimension.setWidth(Float.valueOf(fieldTokens[0]).floatValue());
+			dimension.setHeight(Float.valueOf(fieldTokens[1]).floatValue());
+			try {
+				dataservice.addUpdate(dimension);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
+			}
+		}
+		return -1;
+	}
 	private int doFoldTemplates(File file) throws java.io.IOException {
 		FileInputStream fis = new FileInputStream(file);
 		InputStreamReader fileReader = new InputStreamReader(fis);
@@ -1848,7 +1955,25 @@ return rv;
 		}
 		return rv;
 	}
+	private void LoadProductCodesNamesData(String[] args) throws IOException {
+		if (args.length == 0)
+			args = new String[] { ".." };
 
+		String path = new File(args[0]).getParent();
+		File pathName = new File(path);
+		String[] fileNames = pathName.list();
+		for (int i = 0; i < fileNames.length; i++) {
+			if (fileNames[i].endsWith(".txt") == true
+					&& fileNames[i].toLowerCase().startsWith("productcodenames") == true) {
+				File f = new File(pathName.getPath(), fileNames[i]);
+				int result = doProductCodeFile(f);
+				if (result < 0) {
+					log.debug("** Results: ProductCode file returned -1.");
+				}
+				break;
+			}
+		}
+	}
 	private void LoadCountryData(String[] args) throws IOException {
 		if (args.length == 0)
 			args = new String[] { ".." };
@@ -1868,7 +1993,49 @@ return rv;
 			}
 		}
 	}
+	private int doProductCodeFile(File file) throws java.io.IOException{
+		List<?> productCodeList = (List<?>) dataservice.getAll("ProductCode");
 
+		FileInputStream f = new FileInputStream(file);
+		InputStreamReader ip = new InputStreamReader(f);
+		java.io.BufferedReader br = new java.io.BufferedReader(ip);
+		String line = null;
+		int rv = -1;
+		while ((line = br.readLine()) != null) {
+			if (line.length() > 0) {
+				if (productCodeList.size() > 0) {
+					boolean found = false;
+					for (int i = 0; i < productCodeList.size(); i++) {
+						if (((ProductCode) productCodeList.get(i)).getName().trim()
+								.equals(line.trim()) == true) {
+							found = true;
+							break;
+						}
+					}
+					if (found != true) {
+						ProductCode productCode = new ProductCode();
+						productCode.setName(line.trim());
+						try {
+							dataservice.addUpdate(productCode);
+						} catch (Exception e) {
+							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+							break;
+						}
+					}
+				} else {
+					ProductCode productCode = new ProductCode();
+					productCode.setName(line.trim());
+					try {
+						dataservice.addUpdate(productCode);
+					} catch (Exception e) {
+						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+						break;
+					}
+				}
+			}
+		}
+		return rv;
+	}
 	private int doCountryFile(File file) throws java.io.IOException {
 
 		List<?> countryList = (List<?>) dataservice.getAll("Country");
