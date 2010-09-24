@@ -81,6 +81,8 @@
 	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.JobBase;
+			import com.efi.printsmith.events.TrackerStatusUpdateEvent;
 			import com.efi.printsmith.pages.TrackerStatusView;
 			import com.efi.printsmith.data.NotePad;
 			import mx.events.ResourceEvent;
@@ -223,7 +225,19 @@
 			public function openTrackerStatus():void {
 				if(invoice!=null && !isNaN(invoice.id) && invoice.id!=0){
 					var trackerStatusView:TrackerStatusView = PopUpManager.createPopUp(this,TrackerStatusView,true) as TrackerStatusView;
+					trackerStatusView.releasedToProduction = invoice.releasedToProduction;
 					trackerStatusView.invoiceId = invoice.id;
+					trackerStatusView.addEventListener(TrackerStatusUpdateEvent.CLOSE_EVENT,function(event:TrackerStatusUpdateEvent):void {
+						if(invoice!=null){
+							if(invoice.jobs!=null && invoice.jobs.length>0){
+								for each(var jobBaseObj:JobBase in invoice.jobs){
+									jobBaseObj.releasedToProduction = event.releasedToProduction;
+								}
+							}
+							invoice.releasedToProduction = event.releasedToProduction;
+						}
+						
+					});
 				}
 			}
 			

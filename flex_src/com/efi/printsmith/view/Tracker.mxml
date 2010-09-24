@@ -388,18 +388,32 @@
 		private function handleLoadTCJobsResult(event:ResultEvent):void {
 			trackerConsoleJobsList = event.result as ArrayCollection;
 			if(trackerConsoleJobsAddUpdate){
-				var counter:int = 0;
 				trackerConsoleJobsAddUpdate = false;
-				registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
-				progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
-				for each(var trackerConsoleJobsObject:TrackerConsoleJobs in trackerConsoleJobsList){
-					if(trackerConsoleJobsObject.id == selectedTrackerConsoleJob.id){
-						employee_jobs_grid.selectedIndex = counter;
-						break;
+				if(selectedTrackerConsoleJob!=null){
+					var counter:int=0;
+					var checkFlag:Boolean = false;
+					for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
+						if(trackerConsoleJobsObj.id == selectedTrackerConsoleJob.id){
+							employee_jobs_grid.selectedIndex = counter;
+							selectedTrackerConsoleJob = trackerConsoleJobsObj;
+							registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+							progressBarComponent.trackerConsoleJobs = ObjectUtil.copy(selectedTrackerConsoleJob) as TrackerConsoleJobs;
+							if(employee!=null){
+								enableRequiredBtns();	
+							} else {
+								defaultEnableButtons();
+							}
+							checkFlag = true;
+							break;
+						}
+						counter++;
 					}
-					counter++;
+					if(!checkFlag){
+						resetButtons();
+						selectedTrackerConsoleJob = null;
+						progressBarComponent.trackerConsoleJobs = null;
+					}
 				}
-				enableRequiredBtns();
 			}
 			else if(refreshList){
 				refreshList = false;
