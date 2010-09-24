@@ -791,6 +791,7 @@
 					this.setPricingMethod(evt.pricingMethod as PreferencesPricingMethod);
 					this.enabled = true;
 				}
+//				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent; 
 			}
 			
 			private function handleJobMethodPickerCancel(evt:JobMethodSelectEvent):void {
@@ -1332,6 +1333,8 @@
 			}
 			private function handleStockPickerSelect(evt:StockPickerSelectEvent):void
 			{
+				if (loadComponent)
+					loadComponent.close();
 				if (evt.stockDefinition != null)
 				{
 //					this.job.stock=evt.stockDefinition;
@@ -1388,6 +1391,8 @@
 					this.job.stock=new StockDefinition();
 					Alert.show("Stock Picker returned a null stock", "Error");
 				}
+
+					
 			}
 
 			private function handleStockPickerNew(evt:StockPickerSelectEvent):void
