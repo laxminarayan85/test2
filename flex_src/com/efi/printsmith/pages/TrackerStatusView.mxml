@@ -4,6 +4,7 @@
 	creationComplete="{initTrackerStatus()}" showCloseButton="true" close="{dispatchCloseEvent()}" layout="vertical" width="950" height="700">
 
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadExceptionResult(event)"/>
 		<mx:method name="getTrackerJobsForTrackerStatus" fault="handleFault(event)" result="handleLoadListResult(event)"/>
 		<mx:method name="getTotalEstimatedTimeForInvoice" fault="handleFault(event)" result="handleLoadEstimatedTimeResult(event)"/>
 	</mx:RemoteObject>
@@ -16,6 +17,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.ProductionExceptions;
 			import com.efi.printsmith.events.TrackerStatusUpdateEvent;
 			import com.efi.printsmith.data.TrackerConsolePasses;
 			import mx.utils.ObjectUtil;
@@ -43,6 +45,7 @@
 			
 			private function initTrackerStatus():void {
 				PopUpManager.centerPopUp(this);
+				dataService.getAll("ProductionExceptions");
 			}
 			
 			private function dispatchCloseEvent():void {
@@ -236,6 +239,15 @@
 				} else {
 					totalEstimatedTime = convertMilliSecondsToString(0,true);
 				}
+			}
+			
+			private function handleLoadExceptionResult(event:ResultEvent):void {
+				var list:ArrayCollection = event.result as ArrayCollection;
+				var exception:ProductionExceptions = new ProductionExceptions();
+				exception.id = 0;
+				exception.name = "";
+				list.addItemAt(exception,0);
+				exceptionsArray = list;
 			}
 		
 			private function handleFault(ev:FaultEvent):void {  
