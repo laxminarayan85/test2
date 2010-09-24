@@ -3108,12 +3108,19 @@ public class DataService extends HibernateService {
 								}
 							}
 						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null) and";
+							if(checkFlag){
+								queryString = queryString + " and ";
+							} else {
+								checkFlag = true;
+								queryString = queryString + " where ";
+							}
+							queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
 						}
 						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
 							if(checkFlag) {
 								queryString = queryString + " and charge.productionLocation in (:locations)";
 							} else {
+								checkFlag = true;
 								queryString = queryString + " where charge.productionLocation in (:locations)";
 							}
 						}
@@ -3202,14 +3209,38 @@ public class DataService extends HibernateService {
 								}
 							}
 						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null) and";
+							if(checkFlag){
+								queryString = queryString + " and ";
+							} else {
+								checkFlag = true;
+								queryString = queryString + " where ";
+							}
+							queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
 						}
 						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
 							if(checkFlag) {
 								queryString = queryString + " and charge.productionLocation in (:locations)";
 							} else {
+								checkFlag = true;
 								queryString = queryString + " where charge.productionLocation in (:locations)";
 							}
+						}
+						if(employee.getHideNonReleaseProduction() || trackerConsole.getHideItemsNotReleasedToProd()) {
+							if(checkFlag){
+								queryString = queryString + " and ";
+							} else {
+								checkFlag = true;
+								queryString = queryString + " where ";
+							}
+							queryString = queryString + " (invoice.releasedToProduction=true and invoice.releasedToProduction is not null)";
+						} else {
+							if(checkFlag){
+								queryString = queryString + " and ";
+							} else {
+								checkFlag = true;
+								queryString = queryString + " where ";
+							}
+							queryString = queryString + " ((invoice.releasedToProduction=true or invoice.releasedToProduction=false) and invoice.releasedToProduction is not null)";
 						}
 						queryString = queryString + " order by invoice.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
@@ -3437,12 +3468,19 @@ public class DataService extends HibernateService {
 								}
 							}
 						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null) and";
+							if(checkFlag){
+								queryString = queryString + " and ";
+							} else {
+								checkFlag = true;
+								queryString = queryString + " where ";
+							}
+							queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
 						}
 						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
 							if(checkFlag) {
 								queryString = queryString + " and charge.productionLocation in (:locations)";
 							} else {
+								checkFlag = true;
 								queryString = queryString + " where charge.productionLocation in (:locations)";
 							}
 						}
@@ -3531,14 +3569,38 @@ public class DataService extends HibernateService {
 								}
 							}
 						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null) and";
+							if(checkFlag){
+								queryString = queryString + " and ";
+							} else {
+								checkFlag = true;
+								queryString = queryString + " where ";
+							}
+							queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
 						}
 						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
 							if(checkFlag) {
 								queryString = queryString + " and charge.productionLocation in (:locations)";
 							} else {
+								checkFlag = true;
 								queryString = queryString + " where charge.productionLocation in (:locations)";
 							}
+						}
+						if(employee.getHideNonReleaseProduction() || trackerConsole.getHideItemsNotReleasedToProd()) {
+							if(checkFlag){
+								queryString = queryString + " and ";
+							} else {
+								checkFlag = true;
+								queryString = queryString + " where ";
+							}
+							queryString = queryString + " (invoice.releasedToProduction=true and invoice.releasedToProduction is not null)";
+						} else {
+							if(checkFlag){
+								queryString = queryString + " and ";
+							} else {
+								checkFlag = true;
+								queryString = queryString + " where ";
+							}
+							queryString = queryString + " ((invoice.releasedToProduction=true or invoice.releasedToProduction=false) and invoice.releasedToProduction is not null)";
 						}
 						queryString = queryString + " order by estimate.invoiceNumber asc";
 						Query query = em.createQuery(queryString);

@@ -774,6 +774,12 @@
 						return;
 					}
 				}
+				if(selectedCharge!=null){
+					if(selectedCharge.parentInvoice!=null && !selectedCharge.parentInvoice.releasedToProduction){
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'scheduleMyWorkCenterCmd.Itemcouldnotbestarte'));
+						return;
+					}
+				}
 				for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList) {
 					if(trackerConsoleJobsObj.job!=null && selectedJob!=null){
 						if(trackerConsoleJobsObj.job.id == selectedJob.id && trackerConsoleJobsObj.productionFacilities.id==trackerConsole.productionFacilities.id
@@ -1752,6 +1758,11 @@
 				if(!job.releasedToProduction)
 					return true;
 				return false;
+			} else if(object is Charge){
+				var charge:Charge = object as Charge;
+				if(charge.parentInvoice!=null && !charge.parentInvoice.releasedToProduction)
+					return true;
+				return false;
 			}
 			return false;
 		}
@@ -2098,7 +2109,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:HBox width="100%">
+								<mx:HBox width="100%" verticalAlign="middle">
 									<mx:Image source="{outerDocument.getStatusImage(data)}"/>
 									<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{outerDocument.getInvoiceNumber(data)}"/>
 								</mx:HBox>

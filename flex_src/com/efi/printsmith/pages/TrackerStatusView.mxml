@@ -86,7 +86,7 @@
 			
 			public function getActualJobTime(object:Object,updateTimer:Boolean,showString:Boolean):Object {
 				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
-				if(!trackerConsoleJobsObj.completed){
+				if(!trackerConsoleJobsObj.completed && !trackerConsoleJobsObj.canceled){
 					var totalValue:Number = 0;
 					var initialValue:Number = 0;
 					for each(var passes:TrackerConsolePasses in trackerConsoleJobsObj.passesList){
@@ -134,7 +134,7 @@
 					} else {
 						return (totalValue+initialValue);
 					}
-				} else if(trackerConsoleJobsObj.completed){
+				} else if(trackerConsoleJobsObj.completed || trackerConsoleJobsObj.canceled){
 					if(showString){
 						return convertMilliSecondsToString(trackerConsoleJobsObj.totalTime,true);
 					} else {
@@ -193,7 +193,7 @@
 				var totalValue:Number = 0;
 				var isActive:Boolean = false;
 				for each(var trackerConsoleJobsObj:TrackerConsoleJobs in trackerConsoleJobsList){
-					if(!trackerConsoleJobsObj.completed){
+					if(!trackerConsoleJobsObj.completed && !trackerConsoleJobsObj.canceled){
 						isActive = true;
 					}
 					if(!trackerConsoleJobsObj.updateTimer){

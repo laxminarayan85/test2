@@ -1766,6 +1766,25 @@ public class InvoiceBase extends ModelBase {
 	public void setTax(double newVal) {
     this.tax = BigDecimal.valueOf(newVal);
   }
+	
+	private Boolean releasedToProduction = false;
+
+	/**
+	 * @return the releasedToProduction
+	 */
+	public Boolean getReleasedToProduction() {
+		return releasedToProduction;
+	}
+
+
+	/**
+	 * @param releasedToProduction the releasedToProduction to set
+	 */
+	public void setReleasedToProduction(Boolean releasedToProduction) {
+		this.releasedToProduction = releasedToProduction;
+	}
+
+
 	/**
 	 * @generated
 	 */		

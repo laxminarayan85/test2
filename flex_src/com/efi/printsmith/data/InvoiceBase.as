@@ -1,7 +1,6 @@
 package com.efi.printsmith.data
 {
-	import mx.collections.ArrayCollection; 
-	import com.efi.printsmith.data.*;
+	import mx.collections.ArrayCollection;
 	
 	[RemoteClass(alias="com.efi.printsmith.data.InvoiceBase")]
 	[Managed]
@@ -73,6 +72,7 @@ package com.efi.printsmith.data
 		public var priceSubTotal:Number = 0;
 		public var shipPrice:Number = 0;
 		public var tax:Number = 0;
+		public var releasedToProduction:Boolean = false;
 	
 	}
 }
