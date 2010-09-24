@@ -10,7 +10,7 @@
  		xmlns:control="com.efi.printsmith.control.*" backgroundColor="#003893" xmlns:components="com.efi.printsmith.components.*">
  		<mx:Metadata>
  			[ResourceBundle("psResources")]
- 		</mx:Metadata>
+ 		</mx:Metadata> 
  		 
 	 <!--   <mx:Move 
 	        id="moveLogo" target="{logo}" 
@@ -45,8 +45,15 @@
 <mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleLoadResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dimensionDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadDimensionResult(event)"/>
+	</mx:RemoteObject>
+	<mx:RemoteObject id="jobService" destination="jobService">
+		<mx:method name="createJob" fault="handleFault(event)" result="handleCreateJobResult(event)"/>
+	</mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.data.Dimension;
 		import com.efi.printsmith.pages.TrackerStatusView;
 		import com.efi.printsmith.data.SecurityCommands;
 		import com.efi.printsmith.data.JobBase;
@@ -149,6 +156,8 @@
         		
 		[Bindable]
 		public var currentUser:Users;
+		[Bindable]
+		private var dimensions:ArrayCollection=new ArrayCollection();
 		
 		[Bindable]
 		public var serverVersion:String;
@@ -344,16 +353,39 @@
 				var editInvoice:EditInvoice = win.content as EditInvoice;
 				editInvoice.openTrackerStatus();
 			}
-		}
+		} 
+		private function handleLoadDimensionResult(ev:ResultEvent):void {
+			dimensions = new ArrayCollection();
+			dimensions=ev.result as ArrayCollection;
+			launchPaperCal()
 		
-		public function dopaperCal():void{
-			var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
-			var job :Job = new Job();
+		}
+		private function launchPaperCal():void{
+			jobService.createJob(null, null);
+		}
+		private function handleCreateJobResult(ev:ResultEvent):void 
+			{	var job:Job = new Job();
+				job = ev.result as Job;
+				
+				var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
+			
 			paperCalWindow.setStyle("borderAlpha", 0.9);
-		//	if (job.paperCal.colorBar == 0 && estimatingPreferences != null)
+			//if (job.paperCal.colorBar == 0 && estimatingPreferences != null)
 		//		job.paperCal.colorBar = estimatingPreferences.colorBar;
-		//	paperCalWindow.setdimension(dimensionsArray)
+			paperCalWindow.setdimension(dimensions)
+			job.runSize = new Dimension();
+			job.foldedSize = new Dimension();
+			job.parentSize = new Dimension();
+			job.finishSize = new Dimension();
 		 	paperCalWindow.setJob(job);
+			}
+		public function dopaperCal():void{
+			if (dimensions.length == 0)
+				dimensionDataService.getAll("Dimension");
+			else
+				launchPaperCal()
+			
+			
 		}
 		public function handleUIEvent(evt:ResultEvent):void {
 			var child:Panel = evt.result as Panel;

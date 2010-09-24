@@ -196,6 +196,7 @@
 			{
 				fillRunToFinishGrainArray(RunToFinishGrainArray);
 				job=job2;
+				
 				mapFromJobData();
 			}
 
@@ -260,18 +261,22 @@
 		
 			private function mapFromJobData():void
 			{
-				gripLocationRadioValue=job.paperCal.gripLocation;
+				if ( job.paperCal != null)
+					gripLocationRadioValue=job.paperCal.gripLocation;
 				doGrip();
-				folioLocationRadioValue=job.paperCal.folioLocation;
+				if ( job.paperCal !=null)	
+					folioLocationRadioValue=job.paperCal.folioLocation;
 				doFolio();
-				if (job.paperCal.runToFinishGrain != "") {
-					if (job.paperCal.runToFinishGrain == Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER) {
-						cboRunToFinishGrain.selectedIndex = 0;
-					} else if (job.paperCal.runToFinishGrain == Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN) {
-						cboRunToFinishGrain.selectedIndex = 1;
-					} else if (job.paperCal.runToFinishGrain == Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION) {
-						cboRunToFinishGrain.selectedIndex = 2;
-					} 
+				if ( job.paperCal != null){
+					if (job.paperCal.runToFinishGrain != "") {
+						if (job.paperCal.runToFinishGrain == Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER) {
+							cboRunToFinishGrain.selectedIndex = 0;
+						} else if (job.paperCal.runToFinishGrain == Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN) {
+							cboRunToFinishGrain.selectedIndex = 1;
+						} else if (job.paperCal.runToFinishGrain == Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION) {
+							cboRunToFinishGrain.selectedIndex = 2;
+						} 
+					}
 				}
 
 				calc_order_radio_group.selectedValue = job.paperCal.whichStartSize;
