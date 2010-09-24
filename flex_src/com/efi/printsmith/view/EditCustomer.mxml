@@ -249,6 +249,7 @@
 	
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
 		this.enabled = true;
+		selected_comment_edit.text = "";
 		dataService.getAccount(evt.account.id);
 		
 		/* if (evt.account != null) {
@@ -624,20 +625,30 @@
 			autoDiscountRadioValue = "discount_percent";
 						
 		}
+	
 		certificate_expires_edit.formatString="MM/DD/YYYY";
 		setEditBox();
 		acctStatusRadioValue = account.status;
 		acctTypeRadioValue = account.type;
+		acct_type.selectedValue = acctTypeRadioValue;
 		logDataService.getAccountCustomerLogByAccountId(account.id);
 		
 		if (account.shippingMode != null)			
 			ship_via_combo.selectedIndex = findItem(account.shippingMode.name, shippingMethods);
+		else
+			ship_via_combo.selectedIndex = -1;
 		if (account.taxCode != null)		
 			tax_code_combo.selectedIndex = findItem(account.taxCode.name, taxCodes);
+		else
+			tax_code_combo.selectedIndex = -1;
 		if (account.salesRep != null)
 			sales_rep_combo.selectedIndex = findItem(account.salesRep.name, salesReps);
+		else
+			sales_rep_combo.selectedIndex = -1
 		if (account.taxTable!= null)
 			tax_table_combo.selectedIndex = findItem(account.taxTable.name, taxTables);
+		else
+			tax_table_combo.selectedIndex = -1;
 		
 
 		ship_to_address_editor.setAddress(account.shipToAddress);
@@ -664,6 +675,13 @@
 			
 		}	
 		ClearLabel();
+		if ( account.masterAcct > 0)
+			dataService.getByIdMaster("Account", account.masterAcct );
+		else
+		{
+			masteracctId.text = ""
+			master_acct_edit.text= ""
+		}
 	}
 	
 	private function doSave():void {
@@ -1351,7 +1369,7 @@
 					<mx:Button x="216" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="job_charges_edit" click="doJobCharges();"/>
 				</mx:Panel>
 				<mx:TextInput x="606" y="232" id="security_level_edit" width="50"/>
-				<mx:TextInput x="254" y="10" width="91" id="masteracctId" focusOut="getAccount()"/>
+				<mx:TextInput x="254" y="10" width="91" id="masteracctId" focusOut="getAccount()" />
 			</mx:Canvas>
 			<mx:Canvas id="canvasSales" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesInfo')}" width="100%" height="100%">
 				<mx:Panel x="10" y="10" width="377" height="163" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Balance')}" dropShadowEnabled="false">
