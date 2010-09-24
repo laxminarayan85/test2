@@ -438,6 +438,20 @@
 			<mx:SetProperty target="{job_weight}" name="y" value="69"/>
 			<mx:RemoveChild target="{copy_estimator_canvas}"/>
 			<mx:RemoveChild target="{estimator_viewstack}"/>
+			<mx:SetProperty target="{hrule4}" name="y" value="250"/>
+			<mx:AddChild relativeTo="{hrule2}" position="before">
+				<mx:TextInput x="496"
+							  y="260"
+							  id="job_LFUnitPrice0"
+							  height="20"
+							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.unitPrice)}"
+							  focusOut="editUnitPrice(event)" mouseDown="textInputClick(event)" />
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{hrule2}" position="before">
+				<mx:Label x="385"
+						  y="262"
+						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" textAlign="right" width="108" id="label41"/>
+			</mx:AddChild>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService"
@@ -2368,7 +2382,7 @@
 							<mx:HRule y="273"
 									  height="2.0054946"
 									  right="5"
-									  left="380"/>
+									  left="380" id="hrule4"/>
 							<mx:HRule y="411"
 									  height="2.0054946"
 									  right="5"
