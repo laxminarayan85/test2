@@ -1171,9 +1171,9 @@
 		public function handleUIContactEvent(evt:ResultEvent):void {
 			var child:Panel = evt.result as Panel;
 			//addUniqueTab(child);
-			var win:MDIWindow = Application.application.containerManager.getWindowsWithChild(child);
+			var win:MDIWindow = Application.application.containerManager.getWindowWithChild(child);
 			if (win == null)	{
-				Application.application.containerManager.openNewMDIWindow(child.className,child);
+				Application.application.containerManager.openNewMDIWindow(child.title,child);
 			}
 			else	{
 				win.bringWindowToFront();	
