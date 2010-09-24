@@ -1615,6 +1615,8 @@
 			destination.passesList = source.passesList;
 			destination.clockBreak = source.clockBreak;
 			destination.currentPass = source.currentPass;
+			destination.notes = source.notes;
+			destination.productionExceptions = source.productionExceptions;
 		}
 		
 		private function enableRequiredBtns():void {
@@ -1737,6 +1739,12 @@
 					if(event.isSave){
 						if(trackerConsoleJobArg!=null){
 							copyFromDetailsWindow(event.trackerConsoleJobs,trackerConsoleJobArg);
+							for each(var trackerConsoleJobsObject:TrackerConsoleJobs in trackerConsoleJobsList){
+								if(trackerConsoleJobsObject.id == trackerConsoleJobArg.id){
+									copyFromDetailsWindow(trackerConsoleJobArg,trackerConsoleJobsObject);
+									break;
+								}
+							}
 							updateDataService.addUpdate(trackerConsoleJobArg);
 						}
 					}
@@ -1890,6 +1898,21 @@
 				return statusPausedClass;
 			return statusRunningClass;
 		}
+		
+		public function getStatusTooltip(object:Object):String {
+			if(object.paused)
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Paused');
+			return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Active');
+		}
+		
+		public function getStatusNotesTooltip():String {
+			return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.HasNotes');
+		}
+		
+		public function getStatusExceptionTooltip():String {
+			return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.HasExceptionCode');
+		}
+		
 				
 	]]>
 	                        
@@ -2123,8 +2146,14 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Item')}">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:HBox width="100%" verticalAlign="middle">
-									<mx:Image source="{outerDocument.getStatusImage(data)}"/>
+								<mx:HBox width="100%" verticalAlign="middle" horizontalGap="2">
+									<mx:Image source="{outerDocument.getStatusImage(data)}" toolTip="{outerDocument.getStatusTooltip(data)}"/>
+									<mx:Image source="@Embed(source='../../../../assets/StatusNotes.png')"
+										toolTip="{outerDocument.getStatusNotesTooltip()}"
+										visible="{data.notes!=null &amp;&amp; data.notes!=''}" includeInLayout="{data.notes!=null &amp;&amp; data.notes!=''}"/>
+									<mx:Image source="@Embed(source='../../../../assets/StatusException.png')"
+										toolTip="{outerDocument.getStatusExceptionTooltip()}"
+										visible="{data.productionExceptions!=null}" includeInLayout="{data.productionExceptions!=null}"/>
 									<trackercomponent:TrackerConsoleLabelComponent pendingList="false" text="{outerDocument.getInvoiceNumber(data)}"/>
 								</mx:HBox>
 							</mx:Component>
