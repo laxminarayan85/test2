@@ -518,31 +518,31 @@ private function loadCoatedArray():void{
 	private function loadUomArray():void {
 		
 		var Caliper:Object = new Object;
-		Caliper.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Caliper')
+		Caliper.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Caliper')
 		stockUom.addItem(Caliper);
 
 		var Microns:Object = new Object;
-		Microns.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns')
+		Microns.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Microns')
 		stockUom.addItem(Microns);
 
 		var Points:Object = new Object;
-		Points.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Points')
+		Points.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Points')
 		stockUom.addItem(Points);
 
 		var Mils:Object = new Object;
-		Mils.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Mils')
+		Mils.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Mils')
 		stockUom.addItem(Mils);
 
 		var Thous:Object = new Object;
-		Thous.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Thous')
+		Thous.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thous')
 		stockUom.addItem(Thous);
 
 		var Plies:Object = new Object;
-		Plies.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Plies')
+		Plies.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Plies')
 		stockUom.addItem(Plies);
 
 		var Millimeters:Object = new Object;
-		Millimeters.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Millimeters')
+		Millimeters.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Millimeters')
 		stockUom.addItem(Millimeters);
 		
 	}

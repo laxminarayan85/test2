@@ -82,6 +82,7 @@
 	[Bindable] private var coatedSides:ArrayCollection;
 	
 	private var deleteCounter:int=0; 
+	private var totalStocks:int;
 	
 	private var itemsDeleted:int=0;
 	private var deletedStockDefinitions:ArrayCollection = new ArrayCollection(); 
@@ -154,7 +155,7 @@
 			this.web_status.visible = false;
 			this.status_button.enabled = false;
 		}
-		lblCount.text = (dataGrid.selectedIndex+1) + " / " + (dataGrid.dataProvider as ArrayCollection).length;
+		
 	}
 	
   	private function messageHandler(message:IMessage):void
@@ -338,6 +339,10 @@
 	 
 	 public function setStockArray(data:ArrayCollection)	{
 	 	this.stockDefinitions = data;
+	 	if (data)	{
+	 		totalStocks = data.length;
+	 		lblCount.text = totalStocks + " records found";
+		}
 	 }
 	 
 	 private function containsBlank(ac:ArrayCollection, field:String)	{
@@ -347,11 +352,15 @@
 	 		}
 	 	}
 	 	return false;
-	 }
+	 } 
 	public function setStocksData(stockDefs:ArrayCollection, groups:ArrayCollection, types:ArrayCollection,
 					finishes:ArrayCollection, colors:ArrayCollection, genericColors:ArrayCollection, 
 					grades:ArrayCollection, vendors:ArrayCollection, uoms:ArrayCollection, coated:ArrayCollection):void{
 		this.stockDefinitions = stockDefs;
+		if (stockDefs)
+	 		totalStocks = stockDefs.length;
+	 	lblCount.text = totalStocks + " records found";
+	 		
 		defaultSortGrid();
 		
 		if (!containsBlank(groups,"name"))	{
@@ -788,7 +797,8 @@
 			}
 		}
 		dataGrid.dataProvider = acFiltered;
-		lblCount.text = acFiltered.length + " stocks found";
+		
+		lblCount.text = acFiltered.length + " / " + totalStocks;
 		
 		defaultSortGrid();
 	}
