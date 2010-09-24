@@ -81,6 +81,7 @@
 	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.common.components.CommonLoadComponent;
 			import com.efi.printsmith.data.JobBase;
 			import com.efi.printsmith.events.TrackerStatusUpdateEvent;
 			import com.efi.printsmith.pages.TrackerStatusView;
@@ -148,6 +149,8 @@
 			[Bindable]
 			private var accountcontacts:ArrayCollection=new ArrayCollection();
 			
+		    [Bindable] private var loadComponent:CommonLoadComponent;
+
 			[Bindable]
 			private var shippingMethods:ArrayCollection=new ArrayCollection();
 
@@ -219,6 +222,9 @@
 				eventJobs.dispatch();
 				var eventCharges:InvoiceChargesEvent = new InvoiceChargesEvent(new_job_button,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 				eventCharges.dispatch();
+				
+				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+		
 				
 			}
 			
@@ -321,6 +327,9 @@
 			}
 
 			private function handleFault(ev:FaultEvent):void {  
+				if(loadComponent) {
+					loadComponent.close();
+				}                
 				// TODO: This needs to be restored once the hibernate issues are figured out 3/23/2010
 //				var message:String;
 //				
@@ -650,6 +659,8 @@
 			}
 			private function doAccountPicker():void
 			{
+					
+
 				var accountPickerWindow:AccountPicker=AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 				accountPickerWindow.setStyle("borderAlpha", 0.9);
 				accountPickerWindow.setAccounts(accounts)
@@ -658,6 +669,10 @@
 				accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 				accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
 				accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);
+				
+				if(loadComponent) {
+					loadComponent.close();
+				}
 			}
 
 			private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void

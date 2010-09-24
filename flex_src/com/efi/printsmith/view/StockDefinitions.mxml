@@ -288,6 +288,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.data.CommonInterest;
 	import mx.resources.ResourceManager;
 	import mx.collections.Sort;
@@ -355,6 +356,7 @@
                          
 	[Bindable]                                         
 	private var stockDefinitions:StockDefinition;
+	[Bindable] private var loadComponent:CommonLoadComponent;
 	
 	/* [Bindable]                                         
 	private var stockChange:StockChanges; */
@@ -424,6 +426,9 @@
 		stockDefinitions = new StockDefinition;
 		stockDefinitions.charges = new ArrayCollection;
 		stockDefinitions.stockChanges = new ArrayCollection;
+		
+		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+
 	    loadUomArray();
 	    loadUnitsArray();
 	    
@@ -1072,7 +1077,10 @@
 	     	doGet(); 
 	     	
 	     }
-	    
+  		if(loadComponent) {
+			loadComponent.close();
+		}	
+
 	}
 	
 
@@ -1190,7 +1198,12 @@
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error");                                 
+		Alert.show(message, "Error");            
+
+		if(loadComponent) {
+			loadComponent.close();
+		}	
+                     
 	}
 
 	private function showMessage(message:String,title:String):void {  

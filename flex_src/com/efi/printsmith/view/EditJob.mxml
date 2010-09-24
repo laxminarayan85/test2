@@ -548,6 +548,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.common.components.CommonLoadComponent;
 			import com.efi.printsmith.data.Users;
 			import com.efi.printsmith.data.Dimension;
 			import com.efi.printsmith.data.DigitalAsset;
@@ -662,6 +663,7 @@
 			[Bindable]
 			public var front:Boolean=false;
 
+		    [Bindable] private var loadComponent:CommonLoadComponent;
 
 			[Bindable]
 			private var setPaperCalculatorData:Boolean=false;
@@ -750,6 +752,7 @@
 //				if (isNaN(job.id)) {
 //					this.enabled=false;
 //				}
+				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 			}
 			
 			public function handleUIControlEvent(evt:ResultEvent):void {
@@ -1184,6 +1187,10 @@
 
 				chargeCommandDataService.getChargeList();
 				if (doInitialStockPicker) initialStockPicker();
+				
+				if(loadComponent) {
+					loadComponent.close();
+				}                
 			}
 			
 			private function handleLoadChargeCommandResult(ev:ResultEvent):void
@@ -1232,6 +1239,10 @@
 
 				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
 				Alert.show(message, "Error", 0, null);
+				
+				if(loadComponent) {
+					loadComponent.close();
+				}               
 			}
 
 
