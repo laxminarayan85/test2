@@ -3,6 +3,8 @@
 	layout="absolute" width="100%" height="100%" creationComplete="init()"  
 	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" headerHeight="0"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" name="Stock Definition">
+	
+	<mx:Script source="../common/scripts/CommonUtils.as"/>
 	<mx:states>
 		<mx:State name="Envelope">
 			<mx:RemoveChild target="{MinCutCharge}"/>
@@ -286,6 +288,8 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.CommonInterest;
+	import mx.resources.ResourceManager;
 	import mx.collections.Sort;
 	import mx.collections.SortField;
 	import com.efi.printsmith.events.commandEvents.StockDefinitions.DeleteStockDefinitionEvent;
@@ -448,18 +452,24 @@
 	}		
 	private function handleUIButtonFault(ev:FaultEvent):void {  
 	}
-private function loadCoatedArray():void{
-	var none:Object = new Object;
-	none.name = " ";
-	stockCoated.addItem(none);
-	var one:Object = new Object;
-	 one.name = "1";
-	 stockCoated.addItem(one);
-	 var two:Object = new Object;
-	 two.name = "2";
-	 stockCoated.addItem(two);
-	 coated.selectedIndex = -1;
-}
+	
+	public static function getCoatedArray():ArrayCollection	{
+		var ac:ArrayCollection = new ArrayCollection();
+		var none:Object = new Object;
+		none.name = " ";
+		ac.addItem(none);
+		var one:Object = new Object;
+		 one.name = "1";
+		 ac.addItem(one);
+		 var two:Object = new Object;
+		 two.name = "2";
+		 ac.addItem(two);
+		 return ac;
+	}
+	private function loadCoatedArray():void{
+		stockCoated = getCoatedArray();
+		coated.selectedIndex = -1;
+	}
 	private function loadUnitsArray():void {
 		
 		var Envelope:Object = new Object;
@@ -514,37 +524,42 @@ private function loadCoatedArray():void{
     private function handlePriceListPickerCancel(evt:PriceListPickerSelectEvent):void {
     	
     }
-
-	private function loadUomArray():void {
+	
+	public static function getUomArray():ArrayCollection	{
+		var ac:ArrayCollection = new ArrayCollection();
 		
 		var Caliper:Object = new Object;
-		Caliper.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Caliper')
-		stockUom.addItem(Caliper);
+		Caliper.name = ResourceManager.getInstance().getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Caliper')
+		ac.addItem(Caliper);
 
 		var Microns:Object = new Object;
-		Microns.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Microns')
-		stockUom.addItem(Microns);
+		Microns.name = ResourceManager.getInstance().getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Microns')
+		ac.addItem(Microns);
 
 		var Points:Object = new Object;
-		Points.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Points')
-		stockUom.addItem(Points);
+		Points.name = ResourceManager.getInstance().getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Points')
+		ac.addItem(Points);
 
 		var Mils:Object = new Object;
-		Mils.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Mils')
-		stockUom.addItem(Mils);
+		Mils.name = ResourceManager.getInstance().getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Mils')
+		ac.addItem(Mils);
 
 		var Thous:Object = new Object;
-		Thous.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thous')
-		stockUom.addItem(Thous);
+		Thous.name = ResourceManager.getInstance().getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thous')
+		ac.addItem(Thous);
 
 		var Plies:Object = new Object;
-		Plies.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Plies')
-		stockUom.addItem(Plies);
+		Plies.name = ResourceManager.getInstance().getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Plies')
+		ac.addItem(Plies);
 
 		var Millimeters:Object = new Object;
-		Millimeters.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Millimeters')
-		stockUom.addItem(Millimeters);
+		Millimeters.name = ResourceManager.getInstance().getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Millimeters')
+		ac.addItem(Millimeters);
 		
+		return ac;
+	}
+	private function loadUomArray():void {
+		stockUom = getUomArray();
 	}
 	
 	public function setStockDefinition(stockDefinition:StockDefinition):void
@@ -1151,16 +1166,6 @@ private function loadCoatedArray():void{
 		 
 	}
 	
-	private function sortArray(ac:ArrayCollection, prop:String):void	{
-		var sortField:SortField = new SortField();
-		sortField.name = prop;
-		sortField.caseInsensitive = true;
-		sortField.numeric = false;
-		var sort:Sort = new Sort();
-		sort.fields = [sortField];
-		ac.sort = sort;
-		ac.refresh();	
-	}
 	
 	private function handleLoadStockGenericColor(ev:ResultEvent):void {
 		 stockGenericColor = ev.result as ArrayCollection;

@@ -1,6 +1,19 @@
 // ActionScript file
 import flash.utils.ByteArray;
 
+import mx.collections.Sort;
+import mx.collections.SortField;
+
+public function sortArray(ac:ArrayCollection, prop:String):void	{
+	var sortField:SortField = new SortField();
+	sortField.name = prop;
+	sortField.caseInsensitive = true;
+	sortField.numeric = false;
+	var sort:Sort = new Sort();
+	sort.fields = [sortField];
+	ac.sort = sort;
+	ac.refresh();	
+}
 
 public function compareObject(obj1:Object,obj2:Object):Boolean
 {
