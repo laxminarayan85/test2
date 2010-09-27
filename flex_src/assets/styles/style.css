@@ -1,25 +1,73 @@
 /* CSS file */
+.MDIContainerStyle{	
+	borderStyle:none;
+	paddingBottom:0;
+	paddingLeft:0;
+	paddingRight:0;
+	paddingTop:0;
+	borderThickness:0;
+	borderThicknessBottom:0;
+	borderThicknessLeft:0;
+	borderThicknessRight:0;
+	borderThicknessTop:0;
+	headerHeight:0;
+}
+
 .winCloseButton {
-    icon: Embed("../mdi/close.png");
+    icon: Embed("../mdi/close2.png");
+    fillAlphas:0,0;
+    skin: ClassReference("mx.skins.ProgrammaticSkin");
+    overSkin:ClassReference("mx.skins.halo.ButtonSkin");
+    downSkin:ClassReference("mx.skins.halo.ButtonSkin");
 }
 .winDoMaxButton {
-    icon: Embed(source="../mdi/max.png");
+    icon: Embed(source="../mdi/maximize2.png");
+    fillAlphas:0,0;
+    skin: ClassReference("mx.skins.ProgrammaticSkin");
+    overSkin:ClassReference("mx.skins.halo.ButtonSkin");
+    downSkin:ClassReference("mx.skins.halo.ButtonSkin");
 }
 .winDoRestoreButton {
-	icon: Embed(source="../mdi/restore.png");
+	icon: Embed(source="../mdi/restore2.png");
+	fillAlphas:0,0;
+	skin: ClassReference("mx.skins.ProgrammaticSkin");
+    overSkin:ClassReference("mx.skins.halo.ButtonSkin");
+    downSkin:ClassReference("mx.skins.halo.ButtonSkin");
 }
 .winMinButton	{
-	icon: Embed(source="../mdi/min.png");
+	icon: Embed(source="../mdi/minimize2.png");
+	fillAlphas:0,0;
+	skin: ClassReference("mx.skins.ProgrammaticSkin");
+    overSkin:ClassReference("mx.skins.halo.ButtonSkin");
+    downSkin:ClassReference("mx.skins.halo.ButtonSkin");
 }
+
+
 .minimizedWinCloseButton	{
-	icon: Embed(source="../mdi/close.png");
+	icon: Embed(source="../mdi/close2.png");
+	fillAlphas:0,0;
+	
+	background-color:#FFBE45;
+
+	skin: ClassReference("mx.skins.ProgrammaticSkin");
+    /* overSkin:ClassReference("mx.skins.halo.ButtonSkin"); */
+    /* downSkin:ClassReference("mx.skins.halo.ButtonSkin");*/
+    overSkin:Embed("../mdi/close_min_over_skin.png");	/* I used this to get away from the awkward looking halo which had a blue border */
+    downSkin:Embed("../mdi/close_min_down_skin.png");
 }
 .minimizedWinActive	{
-	background-color:#00ffff;	
+	background-color:#FFBE45;
+	font-weight:bold;
+	font-size:10;	
 }
 .minimizedWinInactive	{
-	background-color:#c0c0c0;	
+	background-color:#196ECD;
+	color:#FFFFFF;
+	font-weight:bold;
+	font-size:10;	
 }
+
+
 .mdiWindowTitleStyle	{
 	font-weight:bold;
 	font-size:10;
@@ -27,40 +75,149 @@
 	alpha:1;
 }
 
+
+/* Core Style used in class MDIWindow.as. Assigned in Constructor */
 .mdiWindowStyle	{
-	borderAlpha:1;
+
 	titleStyleName:mdiWindowTitleStyle;
 	borderThicknessBottom:17;
 	borderThicknessLeft:3;
 	borderThicknessRight:3;
 	borderThicknessTop:3;
 	borderColor:#003893;
-	headerHeight:20;
+	headerHeight:25;
 	
+
+	titleStyleName:mdiWindowTitleStyle;
+	borderThicknessBottom:17;
+	borderThicknessLeft:3;
+	borderThicknessRight:3;
+	borderThicknessTop:3;
+	borderColor:#1462BA;	/* affects color of overall border includcing bottom. Top is handled with Header css*/
+	borderAlpha:1; /* alph between border and background. Since bg is dark gray, setting to zero will make gray */
+	
+	backgroundAlpha: 1;	/* alph between body of panel and background. Since bg is dark gray, setting to zero will make gray */
+	highlightAlphas: 0.0, 0; /* affects header - 1,1 will make white strip at top half of header, 1,0 a quarter white sript, 0,1 blue,white */ 
+	headerColors: #2384F2, #2384F2;
+	headerColors: #1462BA, #1462BA;
+}
+
+
+/* wrapper of menu and header panels */
+.headerBoxStyle	{
+	backgroundColor:#5EA2EC;
+	backgroundColor:#10ef10;
+	borderAlpha:1;
+	backgroundAlpha: 1;
+	paddingBottom:-5;
+	horizontalGap:0;
 }
 
 .headerPanelStyle	{
-	background-color:#afafff
+	background-color:#afafff;
+	background-color:#5EA2EC;
+	paddingBottom:0;
+	borderThickness:0;
+	borderStyle:none;
+	paddingBottom:0;
+	paddingTop:0;
+	paddingRight:0;
+	paddingLeft:0;
+	
 }
 .leftPanelStyle	{
-	background-color:#afafff
+	background-color:#5EA2EC;
+	borderThickness:0;
+	borderStyle:none;
+	paddingBottom:0;
+	paddingTop:0;
+	paddingRight:0;
+	paddingLeft:8; 
+	
+	verticalAlign:middle; 
+	horizontalAlign:left;
 }
 .centerPanelStyle	{
-	background-color:#afafff
+	background-color:#afafff;
+	background-color:#5EA2EC;
+	
+	borderThickness:0;
+	borderStyle:none;
+	paddingBottom:0;  
+	styleName:centerPanelStyle;
+	paddingTop:0;
+	paddingRight:0;
+	paddingLeft:0; 
+	verticalAlign:middle; 
+	horizontalAlign:center;
+		
+		
 }
 .rightPanelStyle	{
-	background-color:#afafff
-}
-.menuStyle	{
-	background-color:#afafff
+	background-color:#5EA2EC;
+	borderThickness:0;
+	borderStyle:none;
+	paddingBottom:0; 
+	styleName:rightPanelStyle;
+	paddingTop:0;
+	paddingRight:0;
+	paddingLeft:0; 
+	verticalAlign:middle; 
+	horizontalAlign:right;
 }
 
-.headerBoxStyle	{
+.headerLabelStyle {
+	fontSize:10;
+	fontWeight:bold;
 }
+
+.headerLogoutButtonStyle {
+	icon: Embed("../mdi/logout.png");
+	/*
+	overSkin:Embed("../mdi/logout_button_down_skin.png");
+	downSkin:Embed("../mdi/logout_button_down_skin.png");
+	*/
+}
+
+.menuStyle	{
+	backgroundColor:#1463BB;
+	backgroundAlpha: 1;
+	
+	borderColor:#1463BB; /* border of menu */
+    color:#FFFFFF;
+    fontWeight:bold;
+	fontSize:10;
+	
+	fillAlphas:1,1;
+    fillColors:#2384F2,#1463BB;
+	focusAlpha:0.5;
+	
+	/* highlightAlphas="[0.3,0.0]"*/
+    itemDownSkin:Embed("../mdi/menu_down_skin.png");
+    itemOverSkin:ClassReference("mx.skins.halo.ActivatorSkin");
+    itemUpSkin:ClassReference("mx.skins.halo.ActivatorSkin");
+	 
+	rollOverColor:#FFBE45;	/* orange highlight on menu list */
+    selectionColor:#000000;
+}
+
+.menuItemStyle {
+	color:#000000;
+	fontWeight:normal;
+}
+
 
 .appCanvasStyle	{
-	background-color:#808080
+	background-color:#808080;
+	background-color:#CCCCCC;
 }
 
 .taskBarStyle	{
+	background-color:#808080;
+	background-color:#E8E8E8;
 }
+
+
+
+
+

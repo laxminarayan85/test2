@@ -8,6 +8,7 @@ package com.efi.mdi.view.window
 	
 	import flash.display.Shape;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import mx.collections.ArrayCollection;
@@ -61,7 +62,7 @@ package com.efi.mdi.view.window
 //        private var closeIcon:Class;
 		
 		[Bindable]
-        [Embed("/assets/mdi/cursorresize.png")]
+        [Embed("/assets/mdi/resize_arrow_orange.png")]
         private var resizeCursor:Class;
 		 
 		private var _resizeCursorEnabled:Boolean = false;
@@ -166,17 +167,7 @@ package com.efi.mdi.view.window
 			
 			this.rawChildren.addChild(_btnClose);
 			
-			
-			shape = new Shape();			
-			shape.graphics.clear();
-			shape.graphics.lineStyle(2, 0x0808080);
-			shape.graphics.moveTo(2,13);
-			shape.graphics.lineTo(13,2);
-			shape.graphics.moveTo(7,13);
-			shape.graphics.lineTo(13,7);
-			shape.graphics.moveTo(12,13);
-			shape.graphics.lineTo(13, 12);
-			this.rawChildren.addChild(shape);
+			addSizingHandle();
 			
 			this.titleBar.doubleClickEnabled = true;
 			this.titleBar.addEventListener(MouseEvent.DOUBLE_CLICK, onHeaderDoubleClick);
@@ -192,6 +183,71 @@ package com.efi.mdi.view.window
 			
 		}
   
+  		private function addSizingHandle():void
+  		{
+  			shape = new Shape();			
+			shape.graphics.clear();
+		
+			var ptH:Number = 1;
+			
+			// Light B1C9E8
+			var pt11:Point = new Point(9,1);
+			var pt12:Point = new Point(9,5);
+			var pt13:Point = new Point(9,9);
+			var pt22:Point = new Point(5,5);
+			var pt23:Point = new Point(5,9);
+			var pt33:Point = new Point(1,9);
+			
+			shape.graphics.lineStyle(2, 0xB1C9E8);
+			shape.graphics.moveTo(pt11.x,pt11.y);
+			shape.graphics.lineTo(pt11.x,pt11.y+ptH);
+			
+			shape.graphics.moveTo(pt12.x,pt12.y);
+			shape.graphics.lineTo(pt12.x,pt12.y+ptH);
+			
+			shape.graphics.moveTo(pt13.x,pt13.y);
+			shape.graphics.lineTo(pt13.x,pt13.y+ptH);
+			
+			shape.graphics.moveTo(pt22.x,pt22.y);
+			shape.graphics.lineTo(pt22.x,pt22.y+ptH);
+			
+			shape.graphics.moveTo(pt23.x,pt23.y);
+			shape.graphics.lineTo(pt23.x,pt23.y+ptH);
+			
+			shape.graphics.moveTo(pt33.x,pt33.y);
+			shape.graphics.lineTo(pt33.x,pt33.y+ptH);
+			
+			// Dark
+			var pt11d:Point = new Point(8,0);
+			var pt12d:Point = new Point(8,4);
+			var pt13d:Point = new Point(8,8);
+			var pt22d:Point = new Point(4,4);
+			var pt23d:Point = new Point(4,8);
+			var pt33d:Point = new Point(0,8);
+			
+			shape.graphics.lineStyle(2, 0x455D80);
+			shape.graphics.moveTo(pt11d.x,pt11d.y);
+			shape.graphics.lineTo(pt11d.x,pt11d.y+ptH);
+			
+			shape.graphics.moveTo(pt12d.x,pt12d.y);
+			shape.graphics.lineTo(pt12d.x,pt12d.y+ptH);
+			
+			shape.graphics.moveTo(pt13d.x,pt13d.y);
+			shape.graphics.lineTo(pt13d.x,pt13d.y+ptH);
+			
+			shape.graphics.moveTo(pt22d.x,pt22d.y);
+			shape.graphics.lineTo(pt22d.x,pt22d.y+ptH);
+			
+			shape.graphics.moveTo(pt23d.x,pt23d.y);
+			shape.graphics.lineTo(pt23d.x,pt23d.y+ptH);
+			
+			shape.graphics.moveTo(pt33d.x,pt33d.y);
+			shape.graphics.lineTo(pt33d.x,pt33d.y+ptH);
+			
+			this.rawChildren.addChild(shape);
+  		}
+  		
+  		
 		private function onMaximizeWindow(event:WindowMaximizeEvent):void	{
 			if (_oldX == -1 && _oldY == -1 && _oldWidth == -1 && _oldHeight ==-1)	{
 				_btnMaximize.styleName = "winDoRestoreButton";//.setStyle("icon", restoreIcon);
@@ -299,7 +355,7 @@ package com.efi.mdi.view.window
 			_btnMinimize.move(unscaledWidth - _btnMaximize.width - _btnMinimize.width - _btnClose.width - pixelsRight - (pixelsBetn*2), pixelsTop);
 			
 			shape.x = unscaledWidth-15;
-			shape.y = unscaledHeight -15;
+			shape.y = unscaledHeight-14;
 			
 		}
 	}

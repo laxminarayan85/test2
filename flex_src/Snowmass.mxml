@@ -53,6 +53,10 @@
 	</mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import mx.events.ListEvent;
+		import com.efi.mdi.view.header.ApplicationHeader;
+		import mx.controls.ComboBox;
+		import mx.controls.Button;
 		import com.efi.printsmith.data.Dimension;
 		import com.efi.printsmith.pages.TrackerStatusView;
 		import com.efi.printsmith.data.SecurityCommands;
@@ -139,6 +143,9 @@
 		public var userName:String;
 		public var userPass:String;
 		
+		private var debug_button:LinkButton;
+		private var languageComboBox:ComboBox;
+				
 		private var gCardDataBuffer:String;
 		private var gQuestionMarkCount:int = 0;
 		private var gCardDataCharCount:int = 0;
@@ -644,7 +651,7 @@
             eventDispatcher.addEventListener(ResourceEvent.COMPLETE, completeHandler);
             eventDispatcher.addEventListener(ResourceEvent.ERROR, resourceFaultHandler);
             resourceManager.localeChain = [ "en_US" ];
-			this.languageComboBox.selectedItem = "en_US";
+    		this.languageComboBox.selectedItem = "en_US";
 			userName = Application.application.parameters.userName;
 			userPass = Application.application.parameters.userPass;
 			container.addEventListener(AppMenuItemClickedEvent.APP_MENU_ITEM_CLICKED, onMenuItemClicked);
@@ -662,11 +669,29 @@
 			versionService.getServerVersion();
             bm = BrowserManager.getInstance();
             bm.init("", "Welcome to Snowmass");
-            
-            
+			
+			container.addToHeader(ApplicationHeader.LEFT, languageComboBox);
+			container.addToHeader(ApplicationHeader.CENTER, debug_button);
+			container.addToHeader(ApplicationHeader.RIGHT, logout_button);
+
 
 		}
 		
+		override protected function createChildren():void	{
+			super.createChildren();
+			
+			debug_button = new LinkButton();
+			debug_button.label = "Debug";
+			debug_button.visible = showDebugButton();
+			debug_button.addEventListener(MouseEvent.CLICK, doDebug);
+			
+						            
+            languageComboBox = new ComboBox();
+            languageComboBox.dataProvider = locales;
+            languageComboBox.labelFunction = languageComboBoxLabelFunction;
+            languageComboBox.addEventListener(ListEvent.CHANGE,languageComboBox_changeHandler); 
+		
+		}
 		private function handleVersionResult(evt:ResultEvent):void {
 			serverVersion = evt.result as String;
 		}
@@ -975,12 +1000,12 @@
 		}
 		
 //		CONFIG::release
-//		private function showDebugButton():Boolean {
+//		private function showDebugButton():Boolean { 
 //			return false;
 //		}
 		
 //		CONFIG::debugging
-		private function doDebug():void {
+		private function doDebug(evt:MouseEvent):void {
 			var debugPopup : Debug = Debug(PopUpManager.createPopUp(this, Debug, true));
 		//	this.mainContainer.visible=false;
 			PopUpManager.centerPopUp(debugPopup);
@@ -1227,9 +1252,5 @@
 </mx:Script>
 	<business:Services id="services" />
 	<control:MainController id="controller" />
-	<mx:LinkButton label="Logout" id="logout_button" enabled="{(currentUser==null)?false:true}" click="{doLogout()}" right="10" top="5"/>
-	<mx:LinkButton label="Debug" id="debug_button" show="{showDebugButton()}" click="{doDebug()}" right="77" top="5"/>
-	<mx:ComboBox top="4" right="150" id="languageComboBox" dataProvider="{locales}"				 
-					labelFunction="languageComboBoxLabelFunction"
-					change="languageComboBox_changeHandler(event)"/>
+	<mx:LinkButton label="Logout" styleName="headerLogoutButtonStyle" id="logout_button" enabled="{(currentUser==null)?false:true}" click="{doLogout()}" right="10" top="5"/>
 </mx:Application>

@@ -49,9 +49,12 @@
 			
 			override public function getMenuAt(index:int) : Menu {
 	            var menu:Menu = super.getMenuAt(index);
-	            /* menu.styleName = "CustomMenuStyle";
-				menu.itemRenderer = new ClassFactory(CustomMenuItemRenderer);
-				menu.setStyle("openDuration",0); */
+	            menu.styleName = "menuItemStyle";
+	            
+	            //menu.styleName = "CustomMenuStyle";
+				//menu.itemRenderer = new ClassFactory(CustomMenuItemRenderer);
+				//menu.setStyle("openDuration",0);
+				
 	   			return menu;
 	        }
 			

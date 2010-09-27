@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
-	borderThickness="0"
-	borderStyle="none"
-	paddingBottom="0"
-	paddingTop="0"
-	paddingRight="0"
-	paddingLeft="0" styleName="headerPanelStyle"
-	 width="100%" height="100%">
+	 styleName="headerPanelStyle"
+	 width="100%" 
+	 height="100%"
+	 >
+	 
 	<mx:Script>
 		<![CDATA[
 			import mx.core.UIComponent;
@@ -27,26 +25,22 @@
 
 		]]>
 	</mx:Script>
-	<mx:HBox id="leftPanel" borderThickness="0"
-	borderStyle="none"
-	paddingBottom="0"
-	paddingTop="0"  styleName="leftPanelStyle"
-	paddingRight="0"
-	paddingLeft="0" width="100%" height="100%"
-		verticalAlign="middle" horizontalAlign="left"/>
-	<mx:HBox id="centerPanel" borderThickness="0"
-	borderStyle="none"
-	paddingBottom="0"  styleName="centerPanelStyle"
-	paddingTop="0"
-	paddingRight="0"
-	paddingLeft="0" width="100%" height="100%" 
-		verticalAlign="middle" horizontalAlign="center"/>
-	<mx:HBox id="rightPanel" borderThickness="0"
-	borderStyle="none"
-	paddingBottom="0" styleName="rightPanelStyle"
-	paddingTop="0"
-	paddingRight="0"
-	paddingLeft="0" width="100%" height="100%" 
-		verticalAlign="middle" horizontalAlign="right"/>
+	
+	<mx:HBox id="leftPanel" 
+		styleName="leftPanelStyle"
+		width="100%" 
+		height="100%"/>
+		
+	<mx:HBox id="centerPanel" 
+		styleName="centerPanelStyle"
+		width="100%" 
+		height="100%" 
+		/>
+		
+	<mx:HBox id="rightPanel" 
+		styleName="rightPanelStyle"
+		width="100%" 
+		height="100%" 
+		/>
 	
 </mx:HBox>
