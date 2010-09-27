@@ -89,7 +89,12 @@
 			public function setAddresses(addrs:ArrayCollection):void{
 				
 				addresses= addrs;
-				if ( this.addresses.length == 0 ){
+				if(addresses!=null){
+					if ( this.addresses.length == 0 ){
+						edit_address_button.enabled = false;
+						delete_button.enabled = false;
+					}
+				} else {
 					edit_address_button.enabled = false;
 					delete_button.enabled = false;
 				}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="400" height="170"
+	creationComplete="{initConfirmWindow()}">
+	<mx:Script>
+		<![CDATA[
+			import com.efi.mdi.event.window.WindowConfirmStatusEvent;
+			import mx.utils.StringUtil;
+			import mx.managers.PopUpManager;
+			[Bindable] public var labelTxt:String = "";
+			
+			private function initConfirmWindow():void{
+				this.setStyle("backgroundColor", 0xffffff);
+				this.setStyle("backgroundAlpha", 0.50);
+				this.setStyle("borderColor", 0xffffff);
+				this.setStyle("borderAlpha", 0.75);
+				this.setStyle("color", 0x000000);
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function setConfirmStatus(status:int):void{
+				var eventObj:WindowConfirmStatusEvent = new WindowConfirmStatusEvent(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,status);
+				dispatchEvent(eventObj);
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function setConfirmText(labelTxt:String):String{
+				return StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'INFO.Doyouwanttosavethech'),labelTxt);
+			}
+		]]>
+	</mx:Script>
+	<mx:Label text="Save changes before closing"/>
+	<mx:Label text="{setConfirmText(labelTxt)}" height="40"/>
+	
+	<mx:HBox width="100%" horizontalAlign="center">
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.DontSave')}" click="{setConfirmStatus(1)}"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{setConfirmStatus(2)}"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Save')}" click="{setConfirmStatus(3)}"/>
+	</mx:HBox>
+</mx:TitleWindow>

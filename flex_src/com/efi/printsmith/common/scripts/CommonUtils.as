@@ -39,3 +39,13 @@ public function compareObject(obj1:Object,obj2:Object):Boolean
     }
     return false;
 }
+
+
+ private function scrubTimeValue(value:Date):Date
+ {
+    if (value is Date)
+    {
+        return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+    }
+    return null;
+ }

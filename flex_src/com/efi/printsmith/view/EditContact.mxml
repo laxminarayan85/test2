@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.data.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
 width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}"
-creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}" name="Contact Editor" xmlns:ns1="com.efi.printsmith.components.*">
+creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}" name="Contact Editor" xmlns:ns1="com.efi.printsmith.components.*"
+implements="com.efi.mdi.IMDIWindowAware">
 
 <mx:RemoteObject id="dataService2" destination="dataService">
 	<mx:method name="getContactPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -63,9 +64,15 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 <mx:StringValidator id="contactLastValidator" source="{last_name_edit}"	property="text"	minLength="2" required="true"/>
 -->
 
+<mx:Script source="../common/scripts/CommonUtils.as"/>
+
 <mx:Script> 
                                   
 <![CDATA[
+	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
+	import com.efi.printsmith.data.ModelBase;
+	import flash.net.registerClassAlias;
+	import mx.utils.ObjectUtil;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.data.ComLink;
@@ -122,6 +129,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
                  
 	[Bindable]                                         
 	private var contact:Contact;
+	[Bindable] private var originalContact:Contact;
 	[Bindable]
 	private var defaultContact:Boolean = false;
 	[Bindable]
@@ -282,7 +290,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			if (contact.marketing == null) setMarketing();
 			if( contact.creditCard == null) setCreditCard();
 			mapFromContactData();
-			setCampaigns()
+			setCampaigns();
+			registerClassAlias("com.efi.printsmith.data.Contact",Contact);
+			originalContact = ObjectUtil.copy(contact) as Contact;
 		}
 		//address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ShippingAddress'));
 	 	ship_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ShippingAddress'));
@@ -402,7 +412,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		contact.comLinks = tmpContact.comLinks;
 		contact.useContactAddress = use_contact_check.selected;
 		contact.shipToAddress = ship_to_address_editor.getAddresses();
-		contact.address = address_editor.getAddress();;
+		contact.address = address_editor.getAddress();
 		
 			
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null) 
@@ -410,8 +420,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				contact.defaultSalesRep = null
 			else
 				contact.defaultSalesRep= sales_rep_combo.selectedItem as SalesRep;
-			
-			
+		
+		
 		contact.marketing.birthDate = birthDate.selectedDate;
 		contact.marketing.followup= followUp.selectedDate;
 		contact.marketing.commonInterst = commonInterest.text;
@@ -426,6 +436,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		contact.marketing.user7 = user4Tag.text;
 		contact.marketing.user8 = user8Tag.text;
 		contact.marketing.user9 = user9Tag.text; 
+		
+		
 		
 		contact.creditCard.cardHolderName = cardholder.text;
 		contact.creditCard.cardDisplayNumber = cardnumber.text;
@@ -447,6 +459,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (contact.parentAccount != null)
 			contact.parentAccount.accountId = accountID.text;
 		saveCampaigns();
+		
 	/*  if (phone_edit.text.length >0){
 	 	index = findCom("Phone", contact.comLinks);
 	 	if (index != 1){
@@ -672,7 +685,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		   contact_editor.setContact(contact);
 			setMarketing();
 			setCreditCard();
-			
+			registerClassAlias("com.efi.printsmith.data.Contact",Contact);
+			originalContact = ObjectUtil.copy(contact) as Contact;
 	     
 	}
 	private function handleContactPickerSelect(evt:ContactPickerSelectEvent):void {
@@ -775,6 +789,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.contact = new Contact();
 		setContact(this.contact);
 		openContactPicker();
+		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
+		dispatchEvent(windowSaveSuccessEvent);
 	} 
 
 	private function handleLoadAccountResult(ev:ResultEvent):void{
@@ -1034,6 +1050,63 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    	
 	}
 	
+	public function getOriginalObject():ArrayCollection {
+		var originalList:ArrayCollection = new ArrayCollection();
+		if(originalContact.marketing!=null && originalContact.marketing.birthDate!=null){
+			originalContact.marketing.birthDate = scrubTimeValue(originalContact.marketing.birthDate);
+		}
+		if(originalContact.marketing!=null && originalContact.marketing.followup!=null){
+			originalContact.marketing.followup = scrubTimeValue(originalContact.marketing.followup);
+		}
+		if(originalContact.marketing!=null && originalContact.marketing.user3!=null){
+			originalContact.marketing.user3 = scrubTimeValue(originalContact.marketing.user3);
+		}
+		if(originalContact.marketing!=null && originalContact.marketing.user4!=null){
+			originalContact.marketing.user4 = scrubTimeValue(originalContact.marketing.user4);
+		}
+		if(originalContact.marketing!=null && originalContact.marketing.user5!=null){
+			originalContact.marketing.user5 = scrubTimeValue(originalContact.marketing.user5);
+		}
+		if(originalContact.creditCard!=null && originalContact.creditCard.expiresDate!=null){
+			originalContact.creditCard.expiresDate = scrubTimeValue(originalContact.creditCard.expiresDate);
+		}
+		originalList.addItem(originalContact);
+		return originalList;
+	}
+	
+	public function getUpdatedObject():ArrayCollection {
+		var updatedList:ArrayCollection = new ArrayCollection();
+		updatedList.addItem(contact);
+		return updatedList;
+	}
+	
+	public function getConfirmationText():String {
+		var confirmationText:String = "";
+		confirmationText = "\n"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobCmd.Contact')+":";
+		if(originalContact!=null && originalContact.parentAccount!=null){
+			confirmationText = confirmationText+" "+originalContact.parentAccount.title;
+		}
+		return confirmationText;
+	}
+	
+	public function onClose():void {
+		if(contact!=null){
+			mapToContactData();
+		}
+	}
+	
+	public function onSave():void {
+		doSave();
+	}
+		
+	public function onDontSave():void {
+		
+	}
+	
+	public function onCancel():void {
+		
+	}
+	
 ]]>	
 
                              
@@ -1072,10 +1145,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:Label x="21" y="94" text="User 4:" textAlign="right"/>
 					<mx:Label x="21" y="122" text="User 5:" textAlign="right"/>
 					<mx:DateField x="119" y="10" id="followUp" text="{contact.marketing.followup}" showToday="false" width="143" enabled="true" editable="true"/>
-					<mx:DateField x="119" y="36" id="birthDate" text= "{contact.marketing.birthDate}" showToday="false" width="143" editable="true"/>
-					<mx:DateField x="119" y="64" id="userDate3" text="{contact.marketing.user3}" showToday="false" width="143" editable="true"/>
-					<mx:DateField x="119" y="92" id="userDate4" text="{contact.marketing.user4}" showToday="false" width="143" editable="true"/>
-					<mx:DateField x="119" y="118" id="userDate5" text= "{contact.marketing.user5}" showToday="false" width="143" editable="true"/>
+					<mx:DateField x="119" y="36" id="birthDate" selectedDate="{contact.marketing.birthDate}" showToday="false" width="143" editable="true"/>
+					<mx:DateField x="119" y="64" id="userDate3" selectedDate="{contact.marketing.user3}" showToday="false" width="143" editable="true"/>
+					<mx:DateField x="119" y="92" id="userDate4" selectedDate="{contact.marketing.user4}" showToday="false" width="143" editable="true"/>
+					<mx:DateField x="119" y="118" id="userDate5" selectedDate= "{contact.marketing.user5}" showToday="false" width="143" editable="true"/>
 				</mx:Panel>
 				<mx:Panel x="10" y="208" width="659" height="195" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.MarketingTags')}" dropShadowEnabled="false">
 					<mx:Label x="28" y="10" text="Lead Source:" textAlign="right"/>

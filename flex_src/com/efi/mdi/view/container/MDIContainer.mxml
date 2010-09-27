@@ -20,8 +20,15 @@
 	creationComplete="mdiCreationComplete();"
 	>
 	<mx:Style source="/assets/styles/style.css"/>
+	
+	<mx:Script source="../../../printsmith/common/scripts/CommonUtils.as"/>
+	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.mdi.event.window.WindowSaveSuccessEvent;
+			import com.efi.mdi.event.window.WindowConfirmStatusEvent;
+			import com.efi.mdi.view.window.MDIConfirmComponent;
+			import com.efi.mdi.IMDIWindowAware;
 			import com.efi.mdi.ContainerManager;
 			import mx.managers.CursorManager;
 			import com.efi.mdi.event.window.WindowResizeEvent;
@@ -90,8 +97,40 @@
 			
 			private function onClose(event:WindowCloseEvent):void	{
 				if (event.child is MDIWindow)	{
-					(event.child as MDIWindow).state = MDIWindow.CLOSED;
-					appCanvas.removeChild(event.child);
+					var mdiWindow:MDIWindow = event.child as MDIWindow;
+					if(mdiWindow.content is IMDIWindowAware){
+						var mdiWindowAware:IMDIWindowAware = mdiWindow.content as IMDIWindowAware;
+						mdiWindowAware.onClose();
+						if(mdiWindowAware.getOriginalObject()!=null && mdiWindowAware.getUpdatedObject()!=null){
+							if(!compareObject(mdiWindowAware.getOriginalObject(),mdiWindowAware.getUpdatedObject())){
+								var mdiConfirmComponent:MDIConfirmComponent = PopUpManager.createPopUp(this,MDIConfirmComponent,true) as MDIConfirmComponent;
+								mdiConfirmComponent.labelTxt = mdiWindowAware.getConfirmationText();
+								mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
+									if(event.windowConfirmStatus==1){
+										mdiWindowAware.onDontSave();
+										mdiWindow.state = MDIWindow.CLOSED;
+										appCanvas.removeChild(mdiWindow);
+									} else if(event.windowConfirmStatus==2) {
+										mdiWindowAware.onCancel();
+									} else if(event.windowConfirmStatus==3) {
+										mdiWindow.content.addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
+											if(event.isSaved){
+												mdiWindow.state = MDIWindow.CLOSED;
+												appCanvas.removeChild(mdiWindow);
+											}	
+										},false,0,true);
+										mdiWindowAware.onSave();
+									}
+								},false,0,true);
+							} else {
+								(event.child as MDIWindow).state = MDIWindow.CLOSED;
+								appCanvas.removeChild(event.child);
+							}
+						}
+					} else {
+						(event.child as MDIWindow).state = MDIWindow.CLOSED;
+						appCanvas.removeChild(event.child);
+					}
 				}
 				if (event.child is MinimizedWindow)	{
 					(event.child as MinimizedWindow).windowRef.state = MDIWindow.CLOSED;
