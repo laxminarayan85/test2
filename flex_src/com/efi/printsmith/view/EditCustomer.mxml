@@ -1297,9 +1297,9 @@
 				<mx:Label x="181" y="120" text="{account.balance}" textAlign="right" width="160" id="current_balance_edit" />
 				<mx:Label x="181" y="94" text="0.00" textAlign="right" width="160" id="finance_charges_ytd_edit"/>
 				<mx:Label x="36" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Duedaysfromposting')}" textAlign="right"/>
-				<mx:Text x="349" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Usingsystemlimitof2')}" width="348" fontWeight="bold" id="limit"/>
+				<mx:Text x="349" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Usingsystemlimitof0')}" width="348" fontWeight="bold" id="limit"/>
 				<mx:Text x="349" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.AvgDaystoPay')}" width="304" fontWeight="bold"/>
-				<mx:Text x="349" y="68" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Usingstandardrateof2')}" width="348" fontWeight="bold"  id="standardratelabel"/>
+				<mx:Text x="349" y="68" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Usingstandardrateof0')}" width="348" fontWeight="bold"  id="standardratelabel"/>
 				<mx:CheckBox x="384" y="92" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Nevercalculatefinanc')}" id="never_calculate_finance_check"  selected="{account.applyFinanceCharges}"/>
 				<mx:Panel x="10" y="146" width="402" height="118" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AutomaticDiscount')}" dropShadowEnabled="false">
 					<mx:TextInput x="85" y="10" width="132" id="auto_discount_percent_edit" text="{account.discount * 100}%" focusOut="addSymbolDiscount()"/>
