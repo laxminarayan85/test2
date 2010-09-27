@@ -30,6 +30,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 		double setCount = 0;
 		double materialQty = 0.0;
 		double rateQty = 0.0;
+		double cuts = 1.0;
 		BigDecimal ratePrice = new BigDecimal(0);
 		
 		JobBase job = charge.getParentJob();
@@ -39,7 +40,8 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 		}
 		
 		if (chargeDefinition.getUseColors()) {
-			if (job.getRunMethod().equals(Constants.JOB_RUN_METHOD_WORK_TUMBLE)) {
+			if (job.getRunMethod().equals(Constants.JOB_RUN_METHOD_WORK_TUMBLE) ||
+					job.getRunMethod().equals(Constants.JOB_RUN_METHOD_WORK_TURN)) {
 				if (job.getBackColors() > job.getFrontColors()) {
 					runs = job.getBackColors();
 				} else {
@@ -166,19 +168,31 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 			originals = 1;
 		}
 		
+		if (charge instanceof CuttingCharge) {
+			cuts = ((CuttingCharge) charge).getCuts();
+		}
 		
 		if (chargeDefinition.getPriceMethod().equals("CostPlus")) { 
 			ChargeService chargeService = new ChargeService(); //TODO: This needs to be outside of the service.
-			if (chargeDefinition.getUseRateSets()) {
-				setCount = chargeDefinition.getRateSetCount();
+			if (charge instanceof CuttingCharge) {
+				if (chargeDefinition.getSheet_lift_check()) {
+					setCount = chargeDefinition.getSheetliftCut();
+				} else {
+					setCount = 1.0;
+				}
 			} else {
-				setCount = 1.0;
+				if (chargeDefinition.getUseRateSets()) {
+					setCount = chargeDefinition.getRateSetCount();
+				} else {
+					setCount = 1.0;
+				}
 			}
 			if (charge.getOverrideQuantity()) {
 				rateQty = charge.getQuantity();
 			} else {
 				rateQty = calculateChargeSets(charge.getQuantity(), runs, originals, setCount);
 			}
+			rateQty *= cuts;
 			lookupQty = rateQty;
 			charge.setQuantity(rateQty);
 			
@@ -219,16 +233,25 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 					materialQty =  calculateChargeSets(charge.getMaterialQty(), runs, originals, setCount);
 				}
 				
+				materialQty *= cuts;				
 				lookupQty = materialQty;
 				charge.setMaterialQty(materialQty);
 				materialPrice = chargeDefinition.getMaterial().multiply(new BigDecimal(materialQty));
 			}
 			
 			if (chargeDefinition.getUseRate()) {
-				if (chargeDefinition.getUseRateSets()) {
-					setCount = chargeDefinition.getRateSetCount();
+				if (charge instanceof CuttingCharge) {
+					if (chargeDefinition.getSheet_lift_check()) {
+						setCount = chargeDefinition.getSheetliftCut();
+					} else {
+						setCount = 1.0;
+					}
 				} else {
-					setCount = 1.0;
+					if (chargeDefinition.getUseRateSets()) {
+						setCount = chargeDefinition.getRateSetCount();
+					} else {
+						setCount = 1.0;
+					}
 				}
 				if (charge.getOverrideQuantity()) {
 					rateQty = charge.getQuantity();

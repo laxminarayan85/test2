@@ -41,6 +41,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     import mx.core.Application;
     import mx.validators.Validator;
     import mx.events.ValidationResultEvent;    
+    import mx.formatters.NumberFormatter;
+    
     
     private var accounts:ArrayCollection = new ArrayCollection();
     
@@ -54,7 +56,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	[Bindable] private var stopMinute:Number = 0;
 	[Bindable] private var startTimeString:String = "00:00";
 	[Bindable] private var stopTimeString:String = "00:00";
-	
+		
 	public function init():void {
 	    PopUpManager.centerPopUp(this);
 	    this.updateFieldVisibility();
@@ -97,6 +99,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		chargeDefinition.presetQuantityPerSetLabel = this.quantity_per_set_label_text.text;
 		chargeDefinition.presetPoundsofInk = parseCurrencyFloat(this.pounds_of_ink_text.text);
 		chargeDefinition.presetPoundsOfInkLabel = this.pounds_of_ink_label_text.text;
+		chargeDefinition.presetCoverage = parseCurrencyFloat(this.coverage_text.text);
+		chargeDefinition.presetCoverageLabel = this.coverage_label_text.text;
+		chargeDefinition.presetNumberOfColors = parseCurrencyFloat(this.number_of_colors_text.text);
+		chargeDefinition.presetNumberOfColorsLabel = this.number_of_colors_label_text.text;
 		chargeDefinition.presetSheetsPerLift = parseCurrencyFloat(this.sheets_per_lift_text.text);
 		chargeDefinition.presetSheetsPerLiftLabel = this.sheets_per_lift_label_text.text;
 		chargeDefinition.presetSetup = parseCurrencyFloat(this.setup_text.text);
@@ -379,6 +385,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				cuts_box.includeInLayout = cuts_box.visible = false;
 				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
 				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = true;
+				
 			} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
 				quantity_box.includeInLayout = quantity_box.visible = false;
 				material_quantity_box.includeInLayout = material_quantity_box.visible = false;

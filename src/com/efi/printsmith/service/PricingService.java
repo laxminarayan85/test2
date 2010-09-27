@@ -34,12 +34,32 @@ public class PricingService extends SnowmassHibernateService {
 	}
 	
 	public Job priceJob(Job job) {
+		if (job == null) {
+			return null;
+		}
+		
 		PriceJobEngine.priceJob(job);
-
+		PricingRecord pricingRecord = job.getPricingRecord();
+		
 		if (job.getCharges() != null) {
 			for (int i=0; i < job.getCharges().size(); i++) {
-				priceCharge(job.getCharges().get(i));
+				Charge charge = job.getCharges().get(i);
+				priceCharge(charge);
 				
+				ChargeCategory category = charge.getChargeDefinition().getParent();
+				if (category != null) {
+					ChargeCommand command = category.getParent();
+					if (command != null) {
+						if (command.getName().equals("Pre Press")) {
+							job.getPricingRecord().setPrepPrice(pricingRecord.getPrepPrice().add(charge.getPrice()));
+						} else if (command.getName().equals("Bindery")) {
+							job.getPricingRecord().setBindPrice(pricingRecord.getBindPrice().add(charge.getPrice()));
+						} else {
+							job.getPricingRecord().setOtherChargePrice(pricingRecord.getOtherChargePrice().add(charge.getPrice()));
+						}
+					}
+					
+				}
 				job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice().doubleValue() + job.getCharges().get(i).getPrice().doubleValue());
 			}
 		}

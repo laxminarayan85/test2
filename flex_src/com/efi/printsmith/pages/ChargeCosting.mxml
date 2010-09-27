@@ -44,6 +44,8 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	[Bindable]
 	public var totalCost:Number = 0;
 	[Bindable]
+	public var piecesPerHour:Number = 0;
+	[Bindable]
 	private var totalSetup:Number= 0;
 	[Bindable]
 	private var enableSpeedTable=false;
@@ -82,7 +84,11 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     	chargeCost.costingMethod = costing_method_combo.selectedItem.data
     	chargeCost.fixedMaterials = parseFloat(fixed_materials_edit.text);
     	chargeCost.laborRate = parseFloat(labor_rate_edit.text);
-    	chargeCost.piecesPerHour = parseFloat(pieces_per_hour_edit.text);
+    	if (chargeCost.costingMethod == ChargeCostMethod.TimeAndMaterial && chargeCost.speedTable == null) {
+    		chargeCost.piecesPerHour = parseFloat(pieces_per_hour_edit.text);    	
+    	} else {
+    		chargeCost.piecesPerHour = .01;
+    	}
     //	chargeCost.rateTable
     	chargeCost.setupCost = parseFloat(setup_cost_edit.text);
     	chargeCost.setupMinutes = parseFloat(setup_minutes_edit.text);
@@ -98,19 +104,24 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     
     
     private function  calculateTotalUnit(event:Event):void{
-    	textFocusOut(event)
-    	totalCost = parseFloat(labor_rate_edit.text)/parseFloat(pieces_per_hour_edit.text);
-    	totalCost = totalCost + parseFloat(fixed_materials_edit.text)+ parseFloat(unit_materials_edit.text);
-    	totalSetup = ((parseInt(setup_minutes_edit.text)/60) * parseFloat(labor_rate_edit.text))
-    	if (totalSetup >0)
-    		total_cost_text.text = Snowmass.getCurrencyFormatter(false,2).format(totalCost)+ " + " + Snowmass.getCurrencyFormatter(false, 2).format(totalSetup)
-    	else
-    		total_cost_text.text = Snowmass.getCurrencyFormatter(false,2).format(totalCost);
-    		
-//    	if(ChargeCostMethod.UnitCost != costing_method_combo.selectedItem as String)
-//    		setup_cost_edit.text ="";
-    	
-    	
+    	textFocusOut(event);
+    	if (chargeCost.costingMethod == ChargeCostMethod.TimeAndMaterial && chargeCost.speedTable == null) {
+	    	totalCost = parseFloat(labor_rate_edit.text)/parseFloat(pieces_per_hour_edit.text);
+	    	totalCost = totalCost + parseFloat(fixed_materials_edit.text)+ parseFloat(unit_materials_edit.text);
+	    	totalSetup = ((parseInt(setup_minutes_edit.text)/60) * parseFloat(labor_rate_edit.text))
+	    	if (totalSetup >0)
+	    		total_cost_text.text = Snowmass.getCurrencyFormatter(false,2).format(totalCost)+ " + " + Snowmass.getCurrencyFormatter(false, 2).format(totalSetup)
+	    	else
+	    		total_cost_text.text = Snowmass.getCurrencyFormatter(false,2).format(totalCost);
+	    	pieces_per_hour_edit.text = chargeCost.piecesPerHour.toString();
+	//    	if(ChargeCostMethod.UnitCost != costing_method_combo.selectedItem as String)
+	//    		setup_cost_edit.text ="";
+    	} else {
+    		totalCost = 0.0;
+    		total_cost_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable');
+    		pieces_per_hour_edit.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable'); 
+    	}
+	    	
     }
 	private function creationCompleteHandler():void { 
 		costing_method_combo.selectedIndex = findItem(chargeCost.costingMethod,ChargeCostMethod.toArray());
@@ -152,9 +163,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	     validate(unitMaterialsValidator);      
 	     validate(laborRateValidator);                 
 	     validate(setupMinutesValidator);   
-	     if (pieces_per_hour_edit.text != resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable'))  
-	    	 validate(piecesPerHourValidator);                 
-	}
+		}
 	    
 	public function textFocusOut(event:Event):void {
 		if (event != null) {
@@ -369,7 +378,6 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 <mx:CurrencyValidator id="unitMaterialsValidator" source="{unit_materials_edit}" required="false" property="text"/>
 <mx:CurrencyValidator id="laborRateValidator" source="{labor_rate_edit}" required="false" property="text"/>
 <mx:NumberValidator id="setupMinutesValidator" source="{setup_minutes_edit}" required="false" property="text"/>
-<mx:NumberValidator id="piecesPerHourValidator" source="{pieces_per_hour_edit}" required="false" precision="3" allowNegative="false" property="text"/>
 	<mx:Canvas width="100%" height="100%">
 		<mx:ComboBox x="144" y="12" width="226" dataProvider="{ChargeCostMethod.toArray()}" id="costing_method_combo" change="validateForm(event);" ></mx:ComboBox>
 		<mx:Label x="10" y="15" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.CostingMethod')}" textAlign="right" width="126"/>

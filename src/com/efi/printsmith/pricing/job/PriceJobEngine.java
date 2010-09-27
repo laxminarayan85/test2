@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PreferencesPricingMethod;
+import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.pricing.blank.BlankPricingMethodFactory;
 import com.efi.printsmith.pricing.copier.CopierPricingMethod;
 import com.efi.printsmith.pricing.copier.CopierPricingMethodFactory;
@@ -25,6 +26,7 @@ public class PriceJobEngine {
 	static public Job priceJob(Job job) {
 		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
 
+		clearPricingRecord(job.getPricingRecord());
 		/*
 		 * TODO: Estimator types should be hard-coded in the system, not a table
 		 * - come back and fix this once that is done so that we can compare
@@ -160,5 +162,25 @@ public class PriceJobEngine {
 			}
 		}
 		return job;
+	}
+	
+	static private void clearPricingRecord(PricingRecord pricingRecord) {
+		pricingRecord.setBindPrice(0.0);
+		if (!pricingRecord.getLaborTotalPriceOverride()) {
+			pricingRecord.setLaborTotalPrice(0.0);
+		}
+		pricingRecord.setOtherChargePrice(0.0);
+		pricingRecord.setOversTotalPrice(0.0);
+		pricingRecord.setPrepPrice(0.0);
+		if (!pricingRecord.getStockTotalPriceOverride()) {
+			pricingRecord.setStockTotalPrice(0.0);
+		}
+		if (!pricingRecord.getTotalPriceOverride()) {
+			pricingRecord.setTotalPrice(0.0);
+		}
+		
+		if (!pricingRecord.getUnitPriceOverride()) {
+			pricingRecord.setUnitPrice(0.0);
+		}
 	}
 }

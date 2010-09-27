@@ -1454,7 +1454,10 @@
 				var localJob:Job = ev.result as Job;
 				refresh_price_btn.visible = true;
 				refresh_price_btn.enabled = true;		
-				job.pricingRecord.totalPrice = localJob.pricingRecord.totalPrice;	
+				job.pricingRecord.totalPrice = localJob.pricingRecord.totalPrice;
+				job.pricingRecord.bindPrice = localJob.pricingRecord.bindPrice;
+				job.pricingRecord.otherChargePrice = localJob.pricingRecord.otherChargePrice;
+				job.pricingRecord.prepPrice = localJob.pricingRecord.prepPrice;
 				job.pricingRecord = localJob.pricingRecord;
 				charges = localJob.charges;
 				if (job != null) { 
@@ -2602,7 +2605,7 @@
 														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTumble')}"
 														groupName="run_method_radiogroup"
 														height="18"
-														value="{Constants.JOB_RUN_METHOD_WORK_TUMBLE" width="169" id="radiobutton3"/>
+														value="{Constants.JOB_RUN_METHOD_WORK_TUMBLE}" width="169" id="radiobutton3"/>
 									</mx:Panel>
 									<mx:Label x="48"
 											  y="54"

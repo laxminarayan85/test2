@@ -1131,7 +1131,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		<mx:CheckBox x="238" y="284" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" click="updateMethodBox();" id="largeformatCheck" selected="{copierDefinition.largeFormat}" change="doCheckDefaultLargeFormat();" labelPlacement="right"/>
 		<mx:Label x="489" y="236" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Method')}" textAlign="right" width="124"/>
 		<mx:Label x="489" y="263" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SalesCat')}" textAlign="right" width="124"/>
-		<mx:ComboBox x="621" y="234.5" height="21" id="pricing_method_combo" dataProvider="{methodType}" change="changePricingMethod(event);" width="144" textAlign="left"></mx:ComboBox>
+		<mx:ComboBox x="621" y="234.5" height="21" id="pricing_method_combo" dataProvider="{methodType.toArray()}" labelField="label" change="changePricingMethod(event);" width="144" textAlign="left"></mx:ComboBox>
 		<mx:ComboBox x="621" y="261.5" height="21" id="charge_sales_category_combo" dataProvider= "{salesCategories}" labelField="name"  width="144" textAlign="left"></mx:ComboBox>
 		<mx:Label x="9" y="457" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumWidth')}" width="141" textAlign="right"/>
 		<mx:Label x="9" y="479" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MinimumWidth')}" width="141" textAlign="right"/>

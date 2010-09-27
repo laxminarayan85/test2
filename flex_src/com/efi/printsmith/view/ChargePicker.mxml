@@ -556,6 +556,9 @@
 				} else if (this.charge is ShippingCharge) {
 					(charge as ShippingCharge).totalWeight = (localCharge as ShippingCharge).totalWeight;
 					this.total_weight_text.text = (charge as ShippingCharge).totalWeight.toString();
+				} else if (this.charge is CuttingCharge) {
+					(charge as CuttingCharge).cuts = (localCharge as CuttingCharge).cuts;
+					this.cuts_edit.text = (charge as CuttingCharge).cuts.toString();
 				}
 				if (addCharge) {
 					addCharge = false;
@@ -750,7 +753,7 @@
 						quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
 					}
 				} else if (this.chargeDefinition.method == ChargeMethod.Cut) {
-					quantity_box.includeInLayout = quantity_box.visible = true;
+					quantity_box.includeInLayout = quantity_box.visible = false;
 					material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 					material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
 					in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;

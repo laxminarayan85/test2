@@ -19,20 +19,21 @@ public class ChargeCutPricingMethod extends ChargePricingMethod {
 		int jobQty = 1;
 		double price = 0.0;
 		
-		if (charge.getParentJob() == null) {
-			if (!charge.getOverrideQuantity()) {
-				charge.setQuantity(0.0);
+		if (localCharge.getParentJob() == null) {
+			if (!localCharge.getOverrideQuantity()) {
+				localCharge.setQuantity(0.0);
 			}
 		} else {
-			if (!charge.getOverrideQuantity()) {
+			if (!localCharge.getOverrideQuantity()) {
 				if (chargeDefinition.getCutsArePrePress()) {
-					charge.setQuantity(new Double(GetCutCount(job, charge, parentToRun)));
+					localCharge.setQuantity(new Double(GetCutCount(job, localCharge, parentToRun)));
 				} else {
-					charge.setQuantity(new Double(GetCutCount(job, charge, runToFinish)));
+					localCharge.setQuantity(new Double(GetCutCount(job, localCharge, runToFinish)));
 				}
-				if (chargeDefinition.getIgnoreCuts() && charge.getQuantity() > 0) {
-					charge.setQuantity(1.0);
+				if (chargeDefinition.getIgnoreCuts() && localCharge.getQuantity() > 0) {
+					localCharge.setQuantity(1.0);
 				}
+				localCharge.setCuts(localCharge.getQuantity().intValue());
 			}
 		}
 		
@@ -47,9 +48,9 @@ public class ChargeCutPricingMethod extends ChargePricingMethod {
 		// TODO: Handle multi-part jobs per PS
 				
 		// TODO: Handle cuts are pre-press
-		charge = jobAwareMethod.priceCharge(charge);
+		localCharge = (CuttingCharge)jobAwareMethod.priceCharge(localCharge);
 		
-		return charge;
+		return localCharge;
 	}
 	//********************************************************************************
 	//	GetCutCount
