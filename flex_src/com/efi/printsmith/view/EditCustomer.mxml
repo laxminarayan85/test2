@@ -5,6 +5,8 @@
 	xmlns:vo="com.efi.printsmith.vo.*" 
 	xmlns:fc="http://www.adobe.com/2006/fc" 
 	xmlns:hc="com.hillelcoren.components.*"
+	xmlns:comp="com.efi.printsmith.components.*"
+	xmlns:components="com.efi.printsmith.common.components.*"
 	width="100%" height="100%" 
 	headerHeight="0" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}"
@@ -1542,9 +1544,11 @@
 		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
 			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="370" y="10" width="38" height="38" click="doDelete();">
-			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
-		</mx:Button>
+		
+		<components:CustomDeleteButtonComponent x="370" y="10" width="38" 
+				id="select_button0" clickFuncName="doDelete" 
+				deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}" height="38"/>
+		
 	    <mx:Label x="360" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
 		<mx:Button x="493" y="10" width="38" height="38" click="doRevert();">
 			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>

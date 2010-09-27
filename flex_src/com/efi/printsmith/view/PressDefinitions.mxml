@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" headerHeight="0" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" headerHeight="0" xmlns:components="com.efi.printsmith.common.components.*" xmlns:vo="com.efi.printsmith.vo.*"
 width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}"
  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}" name="Press Definitions" fontSize="9">
 	<!--<mx:states>
@@ -847,9 +847,13 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Button x="10" y="617"  height="38" click="doNew()" width="50">
 		<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="254" y="617" height="38" click="doDelete()" width="50">
+	
+	<components:CustomDeleteButtonComponent x="254" y="617" width="50" 
+				id="select_button0" clickFuncName="doDelete" 
+				deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}" height="38"/>
+	<!--<mx:Button x="254" y="617" height="38" click="doDelete()" width="50">
 		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
-	</mx:Button>
+	</mx:Button>-->
 		<mx:Button x="312" y="617" width="50" id="btnExport" height="38">
 		<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
 	</mx:Button>
