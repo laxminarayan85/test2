@@ -226,10 +226,12 @@
 		event.dispatch();
 	}
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
-		
-		/* account = new Account();
-		setMarketing();
-		this.setAccount(account);   defect 837*/
+	
+		if ( account == null){
+			account = new Account();
+			setMarketing();
+			this.setAccount(account);
+		}
 		this.enabled = true;
 
 	}
