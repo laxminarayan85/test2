@@ -159,6 +159,7 @@ package com.efi.printsmith.control
 			this.addCommand(OrderStockEvent.COMMANDID, OrderStockCommand);
 			this.addCommand(StockOrderEvent.COMMANDID, StockOrderCommand);
 			this.addCommand(JournalEvent.COMMANDID, JournalCommand);
+		
 			}
 		
 	}

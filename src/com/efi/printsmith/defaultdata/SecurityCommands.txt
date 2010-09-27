@@ -130,7 +130,7 @@ rStandardMenuText.Admin,rStandardMenuText.ShowHelpBar,CMD_,1
 rStandardMenuText.Admin,rStandardMenuText.1,CMD_
 rStandardMenuText.Admin,rStandardMenuText.Preferences,CMD_,1
 rStandardMenuText.Admin,rStandardMenuText.DocumentPreferences,CMD_,1
-rStandardMenuText.Admin,rStandardMenuText.TableEditor,CMD_,1
+rStandardMenuText.Admin,rStandardMenuText.TableEditor,CMD_Table_Editor,1
 rStandardMenuText.Admin,rStandardMenuText.1,CMD_,1
 rStandardMenuText.Admin,rStandardMenuText.ClearEstimates,CMD_,1
 rStandardMenuText.Admin,rStandardMenuText.PaperCalculator,CMD_,1

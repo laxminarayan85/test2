@@ -344,7 +344,10 @@
 				&& (ss.commandName.indexOf("rStandardMenuText.OrderStock") > -1 ))	{
 					doOrderStock();					
 				}	
-					
+			if ((ss.menu == "rStandardMenuText.Admin")
+				&& (ss.commandName.indexOf("rStandardMenuText.TableEditor") > -1 ))	{
+					doTableEditor();					
+				}			
 			//Menu for Invoice Tracker Status
 			if ((ss.menu == "rStandardMenuText.Invoice")
 				&& (ss.commandName.indexOf("rStandardMenuText.TrackerStatus") > -1 ))	{
@@ -442,6 +445,10 @@
 		}
 		public function doChangePassword():void {
 			var event:ChangePasswordEvent = new ChangePasswordEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		public function doTableEditor():void{
+			var event:TableEditorEvent = new TableEditorEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 		public function doOrderStock():void {

@@ -676,7 +676,6 @@
 		<mx:Button label="Import Copier Definitions" id="import_copier_definitions" enabled="true" click="doImportCopierDefinitions();"  width="256" x="274" y="10"/>
 		<mx:Button label="Import Stock Changes" id="import_stock_changes" enabled="true" click="doImportStockChanges();"  width="256" x="276" y="70"/>
 		<mx:Button label="Import Tax Tables" id="import_tax_tables" enabled="true" click="doImportTaxTables();"  width="256" x="12" y="70"/>
-		<mx:Button x="274" y="350" label="TableEditor" width="258" click="doTableEditor();"/>
 		<mx:Button x="10" y="130" label="Import Charge Costing" width="256" id="import_charge_costing" click="doImportChargeCosting();"/>
 		<mx:ProgressBar x="171" y="407" id="progress_bar" label="Importing Data..." indeterminate="true" height="31"/>
 	</mx:Canvas>
