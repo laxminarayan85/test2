@@ -151,14 +151,6 @@ public class CreditCardTransactions extends ModelBase {
 	/**
    * @generated
    */
-  public static final String ACCOUNT = "Account";
-	/**
-   * @generated
-   */
-  public static final String CONTACT = "Contact";
-	/**
-   * @generated
-   */
   public static final String WSID = "WsId";
 
 	/**
@@ -189,15 +181,15 @@ public class CreditCardTransactions extends ModelBase {
 	/**
    * @generated
    */
-  public static final String ADDRESS1 = "Address1";
-	/**
-   * @generated
-   */
-  public static final String ZIPCODE = "ZipCode";
-	/**
-   * @generated
-   */
   public static final String ACCOUNTNUMBER = "AccountNumber";
+	/**
+   * @generated
+   */
+  public static final String PARTIALAVSMATCH = "PartialAVSMatch";
+	/**
+   * @generated
+   */
+  public static final String FAILEDCVV2 = "FailedCVV2";
 	/**
    * @generated
    */
@@ -803,54 +795,6 @@ public class CreditCardTransactions extends ModelBase {
 	/**
    * @generated
    */	
-    @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-  private Account account;
-
-	/**
-   * @generated
- 	 */
-  public Account getAccount(){
-    return account; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setAccount(Account newVal) {
-    this.account = newVal;
-  }
-
-
-
-	/**
-   * @generated
-   */	
-    @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-  private Contact contact;
-
-	/**
-   * @generated
- 	 */
-  public Contact getContact(){
-    return contact; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setContact(Contact newVal) {
-    this.contact = newVal;
-  }
-
-
-
-	/**
-   * @generated
-   */	
  	@Basic
   private Integer wsId;
 
@@ -1011,52 +955,6 @@ public class CreditCardTransactions extends ModelBase {
    * @generated
    */	
  	@Basic
-  private String address1;
-
-	/**
-   * @generated
- 	 */
-  public String getAddress1(){
-    return address1; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setAddress1(String newVal) {
-    this.address1 = newVal;
-  }
-
-
-
-	/**
-   * @generated
-   */	
- 	@Basic
-  private String zipCode;
-
-	/**
-   * @generated
- 	 */
-  public String getZipCode(){
-    return zipCode; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setZipCode(String newVal) {
-    this.zipCode = newVal;
-  }
-
-
-
-	/**
-   * @generated
-   */	
- 	@Basic
   private Long accountNumber;
 
 	/**
@@ -1072,6 +970,52 @@ public class CreditCardTransactions extends ModelBase {
    */	
   public void setAccountNumber(Long newVal) {
     this.accountNumber = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean partialAVSMatch;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getPartialAVSMatch(){
+    return partialAVSMatch; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialAVSMatch(Boolean newVal) {
+    this.partialAVSMatch = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean failedCVV2;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getFailedCVV2(){
+    return failedCVV2; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFailedCVV2(Boolean newVal) {
+    this.failedCVV2 = newVal;
   }
 
 
@@ -1129,8 +1073,6 @@ public class CreditCardTransactions extends ModelBase {
     if (TRACKTWO.equals(propertyName)) return getTrackTwo();
     if (TEMPCVV2.equals(propertyName)) return getTempCVV2();
     if (CREDITCARD.equals(propertyName)) return getCreditCard();
-    if (ACCOUNT.equals(propertyName)) return getAccount();
-    if (CONTACT.equals(propertyName)) return getContact();
     if (WSID.equals(propertyName)) return getWsId();
     if (ISCURRENTTRANSACTION.equals(propertyName)) return getIsCurrentTransaction();
     if (ORDERNAME.equals(propertyName)) return getOrderName();
@@ -1139,9 +1081,9 @@ public class CreditCardTransactions extends ModelBase {
     if (VERBALAUTHDATE.equals(propertyName)) return getVerbalAuthDate();
     if (FIRSTNUMBERPREFIX.equals(propertyName)) return getFirstNumberPrefix();
     if (ACTIVEACCEPTED.equals(propertyName)) return getActiveAccepted();
-    if (ADDRESS1.equals(propertyName)) return getAddress1();
-    if (ZIPCODE.equals(propertyName)) return getZipCode();
     if (ACCOUNTNUMBER.equals(propertyName)) return getAccountNumber();
+    if (PARTIALAVSMATCH.equals(propertyName)) return getPartialAVSMatch();
+    if (FAILEDCVV2.equals(propertyName)) return getFailedCVV2();
     return super.getProperty(propertyName);
   }
 	
@@ -1176,8 +1118,6 @@ public class CreditCardTransactions extends ModelBase {
     if (TRACKTWO.equals(propertyName)) setTrackTwo((String)newValue); else
     if (TEMPCVV2.equals(propertyName)) setTempCVV2((String)newValue); else
     if (CREDITCARD.equals(propertyName)) setCreditCard((CreditCard)newValue); else
-    if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
-    if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     if (WSID.equals(propertyName)) setWsId((Integer)newValue); else
     if (ISCURRENTTRANSACTION.equals(propertyName)) setIsCurrentTransaction((Integer)newValue); else
     if (ORDERNAME.equals(propertyName)) setOrderName((String)newValue); else
@@ -1186,9 +1126,9 @@ public class CreditCardTransactions extends ModelBase {
     if (VERBALAUTHDATE.equals(propertyName)) setVerbalAuthDate((Date)newValue); else
     if (FIRSTNUMBERPREFIX.equals(propertyName)) setFirstNumberPrefix((Long)newValue); else
     if (ACTIVEACCEPTED.equals(propertyName)) setActiveAccepted((Boolean)newValue); else
-    if (ADDRESS1.equals(propertyName)) setAddress1((String)newValue); else
-    if (ZIPCODE.equals(propertyName)) setZipCode((String)newValue); else
     if (ACCOUNTNUMBER.equals(propertyName)) setAccountNumber((Long)newValue); else
+    if (PARTIALAVSMATCH.equals(propertyName)) setPartialAVSMatch((Boolean)newValue); else
+    if (FAILEDCVV2.equals(propertyName)) setFailedCVV2((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1248,10 +1188,6 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {String.class};		
     if (CREDITCARD.equals(propertyName)) 
       return new Class<?>[] {CreditCard.class};		
-    if (ACCOUNT.equals(propertyName)) 
-      return new Class<?>[] {Account.class};		
-    if (CONTACT.equals(propertyName)) 
-      return new Class<?>[] {Contact.class};		
     if (WSID.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (ISCURRENTTRANSACTION.equals(propertyName)) 
@@ -1268,12 +1204,12 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {Long.class};		
     if (ACTIVEACCEPTED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (ADDRESS1.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (ZIPCODE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
     if (ACCOUNTNUMBER.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
+    if (PARTIALAVSMATCH.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (FAILEDCVV2.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1309,8 +1245,6 @@ public class CreditCardTransactions extends ModelBase {
     if (TRACKTWO.equals(propertyName)) return CreditCardTransactions.class;
     if (TEMPCVV2.equals(propertyName)) return CreditCardTransactions.class;
     if (CREDITCARD.equals(propertyName)) return CreditCardTransactions.class;
-    if (ACCOUNT.equals(propertyName)) return CreditCardTransactions.class;
-    if (CONTACT.equals(propertyName)) return CreditCardTransactions.class;
     if (WSID.equals(propertyName)) return CreditCardTransactions.class;
     if (ISCURRENTTRANSACTION.equals(propertyName)) return CreditCardTransactions.class;
     if (ORDERNAME.equals(propertyName)) return CreditCardTransactions.class;
@@ -1319,9 +1253,9 @@ public class CreditCardTransactions extends ModelBase {
     if (VERBALAUTHDATE.equals(propertyName)) return CreditCardTransactions.class;
     if (FIRSTNUMBERPREFIX.equals(propertyName)) return CreditCardTransactions.class;
     if (ACTIVEACCEPTED.equals(propertyName)) return CreditCardTransactions.class;
-    if (ADDRESS1.equals(propertyName)) return CreditCardTransactions.class;
-    if (ZIPCODE.equals(propertyName)) return CreditCardTransactions.class;
     if (ACCOUNTNUMBER.equals(propertyName)) return CreditCardTransactions.class;
+    if (PARTIALAVSMATCH.equals(propertyName)) return CreditCardTransactions.class;
+    if (FAILEDCVV2.equals(propertyName)) return CreditCardTransactions.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1383,10 +1317,6 @@ public class CreditCardTransactions extends ModelBase {
       return false;
     if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
       return false;
-    if (! SmartEquals(getAccount(), objT.getAccount()))
-      return false;
-    if (! SmartEquals(getContact(), objT.getContact()))
-      return false;
     if (! SmartEquals(getWsId(), objT.getWsId()))
       return false;
     if (! SmartEquals(getIsCurrentTransaction(), objT.getIsCurrentTransaction()))
@@ -1403,11 +1333,11 @@ public class CreditCardTransactions extends ModelBase {
       return false;
     if (! SmartEquals(getActiveAccepted(), objT.getActiveAccepted()))
       return false;
-    if (! SmartEquals(getAddress1(), objT.getAddress1()))
-      return false;
-    if (! SmartEquals(getZipCode(), objT.getZipCode()))
-      return false;
     if (! SmartEquals(getAccountNumber(), objT.getAccountNumber()))
+      return false;
+    if (! SmartEquals(getPartialAVSMatch(), objT.getPartialAVSMatch()))
+      return false;
+    if (! SmartEquals(getFailedCVV2(), objT.getFailedCVV2()))
       return false;
     return true;
   }			

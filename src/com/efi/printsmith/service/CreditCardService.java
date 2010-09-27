@@ -558,9 +558,10 @@ public class CreditCardService extends SnowmassHibernateService {
 					zip = "00000";		
 				sendStr = AppeandFormInputData(sendStr, "zipcode", zip, true, true);
 				
-				if (ccTransaction.getContact() != null && ccTransaction.getContact().getContactId().length() > 0)
-					temp = ccTransaction.getContact().getContactId();
-				else
+// TODO: Verify that following omission is correct
+//				if (ccTransaction.getContact() != null && ccTransaction.getContact().getContactId().length() > 0)
+//					temp = ccTransaction.getContact().getContactId();
+//				else
 					temp = String.format("%d", ccTransaction.getId()); // order number not known use record number, have something for level II rate
 				sendStr = AppeandFormInputData(sendStr, "customercode", temp, true, true);
 				
@@ -984,9 +985,10 @@ public class CreditCardService extends SnowmassHibernateService {
 				zip = "00000";		
 			sendStr = AppeandFormInputData(sendStr, "zipcode", zip, true, true);
 			
-			if (ccTransaction.getContact() != null && ccTransaction.getContact().getContactId().length() > 0)
-				temp = ccTransaction.getContact().getContactId();
-			else
+// TODO: Verify that following omission is correct
+//			if (ccTransaction.getContact() != null && ccTransaction.getContact().getContactId().length() > 0)
+//				temp = ccTransaction.getContact().getContactId();
+//			else
 				temp = String.format("%d", ccTransaction.getId()); // order number not known use record number, have something for level II rate
 			sendStr = AppeandFormInputData(sendStr, "customercode", temp, true, true);
 			
@@ -1289,10 +1291,12 @@ public class CreditCardService extends SnowmassHibernateService {
 				sendStr = AppeandFormInputData(sendStr, "C_cvv", temp, true, false);
 			}
 
-			if (ccTransaction.getContact() != null && ccTransaction.getContact().getContactId().length() > 0)
-				temp = ccTransaction.getContact().getContactId();
-			else
+// TODO: Verify that following omission is correct
+//			if (ccTransaction.getContact() != null && ccTransaction.getContact().getContactId().length() > 0)
+//				temp = ccTransaction.getContact().getContactId();
+//			else
 				temp = ccTransaction.getOrderName();
+
 			sendStr = AppeandFormInputData(sendStr, "T_customer_number", temp, true, false);
 			
 			System.out.println(sendStr);

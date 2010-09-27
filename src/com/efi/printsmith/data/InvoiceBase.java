@@ -284,6 +284,11 @@ public class InvoiceBase extends ModelBase {
 	public static final String TAX = "Tax";
 
 	/**
+   * @generated
+   */
+  public static final String RELEASEDTOPRODUCTION = "ReleasedToProduction";
+
+	/**
 	 * @generated
 	 */
 	public InvoiceBase() {
@@ -1850,6 +1855,7 @@ public class InvoiceBase extends ModelBase {
     if (PRICESUBTOTAL.equals(propertyName)) return getPriceSubTotal();
     if (SHIPPRICE.equals(propertyName)) return getShipPrice();
     if (TAX.equals(propertyName)) return getTax();
+    if (RELEASEDTOPRODUCTION.equals(propertyName)) return getReleasedToProduction();
     return super.getProperty(propertyName);
   }
 	
@@ -1918,6 +1924,7 @@ public class InvoiceBase extends ModelBase {
     if (PRICESUBTOTAL.equals(propertyName)) setPriceSubTotal((BigDecimal)newValue); else
     if (SHIPPRICE.equals(propertyName)) setShipPrice((BigDecimal)newValue); else
     if (TAX.equals(propertyName)) setTax((BigDecimal)newValue); else
+    if (RELEASEDTOPRODUCTION.equals(propertyName)) setReleasedToProduction((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2045,6 +2052,8 @@ public class InvoiceBase extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (TAX.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
+    if (RELEASEDTOPRODUCTION.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2114,6 +2123,7 @@ public class InvoiceBase extends ModelBase {
     if (PRICESUBTOTAL.equals(propertyName)) return InvoiceBase.class;
     if (SHIPPRICE.equals(propertyName)) return InvoiceBase.class;
     if (TAX.equals(propertyName)) return InvoiceBase.class;
+    if (RELEASEDTOPRODUCTION.equals(propertyName)) return InvoiceBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2242,6 +2252,8 @@ public class InvoiceBase extends ModelBase {
     if (! SmartEquals(getShipPrice(), objT.getShipPrice()))
       return false;
     if (! SmartEquals(getTax(), objT.getTax()))
+      return false;
+    if (! SmartEquals(getReleasedToProduction(), objT.getReleasedToProduction()))
       return false;
     return true;
   }			

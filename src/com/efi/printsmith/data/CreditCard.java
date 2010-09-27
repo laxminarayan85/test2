@@ -63,10 +63,6 @@ public class CreditCard extends ModelBase {
    */
   public static final String ACCOUNTNUMBER = "AccountNumber";
 	/**
-	 * @generated
-	 */
-	public static final String ADDRESS = "Address";
-	/**
    * @generated
    */
   public static final String ZIPCODE = "ZipCode";
@@ -205,30 +201,6 @@ public class CreditCard extends ModelBase {
 
 
 
-	/**
-	 * @generated
-	 */	
-    @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
-	@Where(clause="isdeleted <> 'TRUE'")
-	private Address address;
-	
-	/**
-	 * @generated
- 	 */
-	public Address getAddress(){
-    return address; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setAddress(Address newVal) {
-    this.address = newVal;
-  }
-	
- 	
-	
 	/**
    * @generated
    */	
@@ -375,7 +347,6 @@ public class CreditCard extends ModelBase {
     if (CARDNUMBER.equals(propertyName)) return getCardNumber();
     if (EXPIRESDATE.equals(propertyName)) return getExpiresDate();
     if (ACCOUNTNUMBER.equals(propertyName)) return getAccountNumber();
-    if (ADDRESS.equals(propertyName)) return getAddress();
     if (ZIPCODE.equals(propertyName)) return getZipCode();
     if (ADDRESS1.equals(propertyName)) return getAddress1();
     if (CREDITCARDID.equals(propertyName)) return getCreditCardID();
@@ -395,7 +366,6 @@ public class CreditCard extends ModelBase {
     if (CARDNUMBER.equals(propertyName)) setCardNumber((String)newValue); else
     if (EXPIRESDATE.equals(propertyName)) setExpiresDate((Date)newValue); else
     if (ACCOUNTNUMBER.equals(propertyName)) setAccountNumber((Long)newValue); else
-    if (ADDRESS.equals(propertyName)) setAddress((Address)newValue); else
     if (ZIPCODE.equals(propertyName)) setZipCode((String)newValue); else
     if (ADDRESS1.equals(propertyName)) setAddress1((String)newValue); else
     if (CREDITCARDID.equals(propertyName)) setCreditCardID((String)newValue); else
@@ -419,8 +389,6 @@ public class CreditCard extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (ACCOUNTNUMBER.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
-    if (ADDRESS.equals(propertyName)) 
-      return new Class<?>[] {Address.class};		
     if (ZIPCODE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (ADDRESS1.equals(propertyName)) 
@@ -447,7 +415,6 @@ public class CreditCard extends ModelBase {
     if (CARDNUMBER.equals(propertyName)) return CreditCard.class;
     if (EXPIRESDATE.equals(propertyName)) return CreditCard.class;
     if (ACCOUNTNUMBER.equals(propertyName)) return CreditCard.class;
-    if (ADDRESS.equals(propertyName)) return CreditCard.class;
     if (ZIPCODE.equals(propertyName)) return CreditCard.class;
     if (ADDRESS1.equals(propertyName)) return CreditCard.class;
     if (CREDITCARDID.equals(propertyName)) return CreditCard.class;
@@ -472,8 +439,6 @@ public class CreditCard extends ModelBase {
     if (! SmartEquals(getExpiresDate(), objT.getExpiresDate()))
       return false;
     if (! SmartEquals(getAccountNumber(), objT.getAccountNumber()))
-      return false;
-    if (! SmartEquals(getAddress(), objT.getAddress()))
       return false;
     if (! SmartEquals(getZipCode(), objT.getZipCode()))
       return false;

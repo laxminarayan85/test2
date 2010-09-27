@@ -18,7 +18,6 @@ package com.efi.printsmith.data
 		public var cardNumber:String = "";
 		public var expiresDate:Date = new Date();
 		public var accountNumber:Number = 0;
-		public var address:Address;
 		public var zipCode:String = "";
 		public var address1:String = "";
 		public var creditCardID:String = "";

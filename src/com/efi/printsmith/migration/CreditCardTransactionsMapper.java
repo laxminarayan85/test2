@@ -62,8 +62,14 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 				creditCard.setEncryption(currentImportToken);
 			else if ("address ID".equals(currentFieldToken)) {
 				Address address = (Address)dataService.getByPrevId("Address", currentImportToken);
-				if (address != null)
-					creditCard.setAddress(address);
+				if (address != null) {
+					if (address.getStreet1() != null) {
+						creditCard.setAddress1(address.getStreet1());
+					}
+					if (address.getZip() != null) {
+						creditCard.setZipCode(address.getZip());
+					}
+				}
 			} else if ("CC Holder Name".equals(currentFieldToken))
 				creditCard.setCardHolderName(currentImportToken);
 			else if ("CC Number".equals(currentFieldToken)) {
@@ -75,13 +81,19 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 			}
 			else if ("customer number".equals(currentFieldToken)) {
 				Account account = (Account)dataService.getByAccountId(currentImportToken);
-				if (account != null)
-					creditCardTransaction.setAccount(account);
+				// Per Danney - no longer used.
+//				if (account != null)
+//					creditCardTransaction.setAccount(account);
+				
+				if (account != null) {
+					creditCard.setAccountNumber(account.getId());
+				}
 			}
 			else if ("contact ID".equals(currentFieldToken)) {
 				Contact contact2 = (Contact)dataService.getByPrevId("Contact",currentImportToken);
-				if (contact2 != null)
-					creditCardTransaction.setContact(contact2);
+				// Per Danney - no longer used
+//				if (contact2 != null)
+//					creditCardTransaction.setContact(contact2);
 			}
 			else if ("ws ID".equals(currentFieldToken))
 				creditCardTransaction.setWsId(Utilities.tokenToInt(currentImportToken));
