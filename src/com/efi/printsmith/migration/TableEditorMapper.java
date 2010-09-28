@@ -40,7 +40,7 @@ public class TableEditorMapper extends ImportMapper {
 							Node nameNode = fieldAttributes.getNamedItem("name");
 							if (nameNode.getNodeValue().equals("title")) {
 								title = recordNodes.item(z).getTextContent();
-							} else if (nameNode.getNodeValue().equals("id")) {
+							} else if (nameNode.getNodeValue().equals("id") && recordNodes.item(z).getTextContent().equals("0") == false) {
 								if (firstRec == false)
 									dataService.addUpdate(modelBase);
 								firstRec = false;
