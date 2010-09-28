@@ -186,6 +186,23 @@ public class Charge extends ModelBase {
   public static final String OVERRIDEWEIGHT = "OverrideWeight";
 
 	/**
+   * @generated
+   */
+  public static final String LINEARX1 = "LinearX1";
+	/**
+   * @generated
+   */
+  public static final String LINEARX2 = "LinearX2";
+	/**
+   * @generated
+   */
+  public static final String LINEARY1 = "LinearY1";
+	/**
+   * @generated
+   */
+  public static final String LINEARY2 = "LinearY2";
+
+	/**
 	 * @generated
 	 */
 	public Charge() {
@@ -1059,6 +1076,91 @@ public class Charge extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean linearX1;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getLinearX1(){
+    return linearX1; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLinearX1(Boolean newVal) {
+    this.linearX1 = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean linearX2;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getLinearX2(){
+    return linearX2; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLinearX2(Boolean newVal) {
+    this.linearX2 = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean linearY1;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getLinearY1(){
+    return linearY1; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLinearY1(Boolean newVal) {
+    this.linearY1 = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean linearY2;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getLinearY2(){
+    return linearY2; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLinearY2(Boolean newVal) {
+    this.linearY2 = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1098,6 +1200,10 @@ public class Charge extends ModelBase {
     if (STARTMINUTES.equals(propertyName)) return getStartMinutes();
     if (ENDMINUTES.equals(propertyName)) return getEndMinutes();
     if (OVERRIDEWEIGHT.equals(propertyName)) return getOverrideWeight();
+    if (LINEARX1.equals(propertyName)) return getLinearX1();
+    if (LINEARX2.equals(propertyName)) return getLinearX2();
+    if (LINEARY1.equals(propertyName)) return getLinearY1();
+    if (LINEARY2.equals(propertyName)) return getLinearY2();
     return super.getProperty(propertyName);
   }
 	
@@ -1141,6 +1247,10 @@ public class Charge extends ModelBase {
     if (STARTMINUTES.equals(propertyName)) setStartMinutes((Integer)newValue); else
     if (ENDMINUTES.equals(propertyName)) setEndMinutes((Integer)newValue); else
     if (OVERRIDEWEIGHT.equals(propertyName)) setOverrideWeight((Boolean)newValue); else
+    if (LINEARX1.equals(propertyName)) setLinearX1((Boolean)newValue); else
+    if (LINEARX2.equals(propertyName)) setLinearX2((Boolean)newValue); else
+    if (LINEARY1.equals(propertyName)) setLinearY1((Boolean)newValue); else
+    if (LINEARY2.equals(propertyName)) setLinearY2((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1218,6 +1328,14 @@ public class Charge extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (OVERRIDEWEIGHT.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (LINEARX1.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LINEARX2.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LINEARY1.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LINEARY2.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1262,6 +1380,10 @@ public class Charge extends ModelBase {
     if (STARTMINUTES.equals(propertyName)) return Charge.class;
     if (ENDMINUTES.equals(propertyName)) return Charge.class;
     if (OVERRIDEWEIGHT.equals(propertyName)) return Charge.class;
+    if (LINEARX1.equals(propertyName)) return Charge.class;
+    if (LINEARX2.equals(propertyName)) return Charge.class;
+    if (LINEARY1.equals(propertyName)) return Charge.class;
+    if (LINEARY2.equals(propertyName)) return Charge.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1340,6 +1462,14 @@ public class Charge extends ModelBase {
     if (! SmartEquals(getEndMinutes(), objT.getEndMinutes()))
       return false;
     if (! SmartEquals(getOverrideWeight(), objT.getOverrideWeight()))
+      return false;
+    if (! SmartEquals(getLinearX1(), objT.getLinearX1()))
+      return false;
+    if (! SmartEquals(getLinearX2(), objT.getLinearX2()))
+      return false;
+    if (! SmartEquals(getLinearY1(), objT.getLinearY1()))
+      return false;
+    if (! SmartEquals(getLinearY2(), objT.getLinearY2()))
       return false;
     return true;
   }			

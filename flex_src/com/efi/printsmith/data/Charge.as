@@ -48,6 +48,10 @@ package com.efi.printsmith.data
 		public var startMinutes:int = 0;
 		public var endMinutes:int = 0;
 		public var overrideWeight:Boolean = false;
+		public var linearX1:Boolean = false;
+		public var linearX2:Boolean = false;
+		public var linearY1:Boolean = false;
+		public var linearY2:Boolean = false;
 	
 	}
 }
