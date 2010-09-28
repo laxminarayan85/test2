@@ -35,12 +35,6 @@
 				   fault="handleFault(event)"
 				   result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
-	<mx:RemoteObject id="pressDataService"
-					 destination="dataService">
-		<mx:method name="getAll"
-				   fault="handleFault(event)"
-				   result="handleLoadPressResult(event)"/>
-	</mx:RemoteObject>
 	<mx:RemoteObject id="locationDataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -68,6 +62,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.Dimension;
 			import mx.validators.CurrencyValidator;
 			import com.efi.printsmith.common.components.filter.FilterSearchBy;
 			import com.efi.printsmith.common.components.filter.FilterProperty;
@@ -110,7 +105,8 @@
 			import mx.events.ValidationResultEvent;
 			import mx.collections.ICollectionView;
 			import mx.rpc.Responder;
-			
+		    import mx.utils.GraphicsUtil;    
+
 			[Bindable]                                         
 		    private var systemPreferences:PreferencesSystem;
 		
@@ -156,11 +152,6 @@
 			{
 				this.height = parent.height - 80;
 				PopUpManager.centerPopUp(this);
-//				pressDataService.getAll("PressDefinition");
-//				locationDataService.getAll("Location");
-//				productDataService.getAll("ProductCode");
-//				chargeDataService.getAll("Charge");
-//				chargeCommandDataService.getAll("ChargeCommand");
 				chargeCommandDataService.getChargeList();
 				dataServiceSystemPreferences.getAll("PreferencesSystem");
 				updateFieldVisibility();			
@@ -334,43 +325,6 @@
 				return item.name + suffix;
 			}
 
-			private function updateCurrentState():void {
-//				if (chargeDefinition.method == ChargeMethod.SquareArea) {
-//					this.currentState = "SquareArea";
-//				} else if (chargeDefinition.method == ChargeMethod.Cut) {
-//					this.currentState = "CuttingCharge";
-//				} else if (chargeDefinition.method == ChargeMethod.Ink) {
-//					this.currentState = "InkCharge";
-//				} else if (chargeDefinition.method == ChargeMethod.Shipping) {
-//					this.currentState = "ShippingCharge";
-//				} else if (chargeDefinition.method == ChargeMethod.Ask) {
-//					if (chargeDefinition.quantityType == ChargeQtyType.None) {
-//						this.currentState = "AlwaysAsk1";
-//					} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
-//						this.currentState = "AlwaysAsk2";
-//					} else if (chargeDefinition.quantityType == ChargeQtyType.Sets) {
-//						this.currentState = "AlwaysAsk4";
-//					} else if (chargeDefinition.quantityType == ChargeQtyType.SetupSets) {
-//						this.currentState = "AlwaysAsk4";
-//					} else if (chargeDefinition.quantityType == ChargeQtyType.Time) {
-//						this.currentState = "AlwaysAsk3";
-//					}
-//				} else if (chargeDefinition.method == ChargeMethod.FlatRate) {
-//					this.currentState = "FlatRate";
-//				} else if (chargeDefinition.method == ChargeMethod.Fold) {
-//					this.currentState = "Fold";
-//				} else if (chargeDefinition.method == ChargeMethod.JobAware) {
-//					this.currentState = "JobAware";
-//				} else if (chargeDefinition.method == ChargeMethod.Linear) {
-//					this.currentState = "Linear";
-//				} else if (chargeDefinition.method == ChargeMethod.Markup) {
-//					this.currentState = "Markup";
-//				} else if (chargeDefinition.method == ChargeMethod.PriceList) {
-//					this.currentState = "PriceList";
-//				} else if (chargeDefinition.method == ChargeMethod.RateList) {
-//					this.currentState = "RateList";
-//				}			
-			}
 			private function handleNewChargeResult(event:ResultEvent):void
 			{
 				if (chargeDefinition.method == ChargeMethod.SquareArea) {
@@ -385,7 +339,6 @@
 					charge = event.result as Charge;
 				}
 				charge.parentJob = job;
-				updateCurrentState();
 				updatePrice();
 			}
 			
@@ -421,9 +374,8 @@
 				chargeDefinition = charge.chargeDefinition;
 				this.editingCharge = true;
 				this.add_button.label = "Save";
-
-				updateCurrentState();
-			}
+				updateFieldVisibility();
+		}
 			
 			private function getSelectedTreeChargeDefinition():ChargeDefinition
 			{
@@ -482,7 +434,10 @@
 				this.charge.price=parseCurrencyFloat(price_edit.text);
 				this.charge.quantity=parseCurrencyFloat(quantity_edit.text);
 				this.charge.materialQty=parseCurrencyFloat(material_quantity_edit.text);
-		
+				this.charge.linearX1 = this.linear_bottom.selected;
+				this.charge.linearX2 = this.linear_top.selected;
+				this.charge.linearY1 = this.linear_right.selected;
+				this.charge.linearY2 = this.linear_left.selected;
 				var colonPosition:int = startTimeString.indexOf(":");
 				if (time_start_edit != null) {
 					if (startTimeString.indexOf(":") != -1) {
@@ -643,6 +598,39 @@
 					this.charge.totalWeight = parseFloat(total_weight_text.text);
 				}
 			}
+			
+			private function drawLinearPageImage():void {
+				linear_image.graphics.clear();
+				
+				if (this.job != null && this.job.runSize != null) {
+					var runSize:Dimension = this.job.runSize;
+					if (runSize.height != 0 && runSize.width != 0) {
+						
+						this.linear_top.label = runSize.width.toString();
+						this.linear_right.label = runSize.height.toString();
+						var imageHeight:Number = 0;
+						var imageWidth:Number = 0;
+						linear_image.graphics.beginFill(0xbcbcbc);
+						GraphicsUtil.drawRoundRectComplex(linear_image.graphics, 0, 0, 80, 80, 0, 0, 0, 0);
+						linear_image.graphics.beginFill(0xf9f6cc);
+
+						if (runSize.height > runSize.width) {
+							imageHeight = 60;
+							
+							imageWidth = 60 * (runSize.width/runSize.height);
+							if (imageWidth < 5) imageWidth = 5;
+							GraphicsUtil.drawRoundRectComplex(linear_image.graphics, 40-(imageWidth/2), 10, imageWidth, imageHeight, 0, 0, 0, 0);
+						} else {
+							imageWidth = 60;
+							
+							imageHeight = 60 * (runSize.height/runSize.width);
+							if (imageHeight < 5) imageHeight = 5;
+							GraphicsUtil.drawRoundRectComplex(linear_image.graphics, 10, 40-(imageHeight/2), imageWidth, imageHeight, 0, 0, 0, 0);
+						}
+					}
+				}
+			}
+
 			public function updateFieldVisibility():void {
 				charge_special_info.selectedChild = blank;
 				description_box.visible = true;
@@ -957,8 +945,9 @@
 						cuts_box.includeInLayout = cuts_box.visible = false;
 						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;				
 						quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
-						charge_special_info.selectedChild = linear;				
-					} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
+						charge_special_info.selectedChild = linear;		
+						drawLinearPageImage();		
+	    			} else if (chargeDefinition.quantityType == ChargeQtyType.Quantity) {
 						quantity_box.includeInLayout = quantity_box.visible = true;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial;
 						material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
@@ -1263,6 +1252,13 @@
 								<mx:HBox label="blank" width="100%" height="100%" id="blank">
 								</mx:HBox>
 								<mx:HBox label="linear" width="100%" height="100%" id="linear" creationPolicy="all">
+									<mx:Canvas width="100%" height="100%">
+										<mx:CheckBox x="327" y="56" id="linear_left" selected="{charge.linearY2}"/>
+										<mx:CheckBox x="380" y="4" id="linear_top" selected="{charge.linearX2}"/>
+										<mx:CheckBox x="380" y="107" id="linear_bottom" selected="{charge.linearX1}"/>
+										<mx:Box width="80" height="80" id="linear_image" borderColor="#000000" borderThickness="1" borderStyle="solid" cornerRadius="5" x="347" y="25"/>
+										<mx:CheckBox x="432" y="56" id="linear_right" selected="{charge.linearY1}"/>
+									</mx:Canvas>
 								</mx:HBox>
 								<mx:VBox label="time" width="100%" height="100%" id="time" creationPolicy="all">
 									<mx:HBox width="100%" height="50%" horizontalAlign="right">

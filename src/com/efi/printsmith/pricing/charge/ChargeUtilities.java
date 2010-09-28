@@ -92,6 +92,10 @@ public class ChargeUtilities {
 		charge.setStartMinutes(chargeDefinition.getPresetTimeStartMinute());
 		charge.setEndHours(chargeDefinition.getPresetTimeStopHour());
 		charge.setEndMinutes(chargeDefinition.getPresetTimeStopMinute());
+		charge.setLinearX1(chargeDefinition.getLinearX1());
+		charge.setLinearX2(chargeDefinition.getLinearX2());
+		charge.setLinearY1(chargeDefinition.getLinearY1());
+		charge.setLinearX2(chargeDefinition.getLinearX2());
 		return charge;
 	}
 

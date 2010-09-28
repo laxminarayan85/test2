@@ -99,25 +99,27 @@ public class ChargeLinearPricingMethod extends ChargePricingMethod {
 			//
 			inches = 0.0;
 			if (chargeDefinition.getUseRunArea()) {
-				// TODO!!!
-//				if (q->linearX1)
-//					inches += job->job.runX;
-//				if (q->linearX2)
-//					inches += job->job.runX;
-//				if (q->linearY1)
-//					inches += job->job.runY;
-//				if (q->linearY2)
-//					inches += job->job.runY;
-//				
+				if (job.getRunSize() != null) {
+					if (charge.getLinearX1())
+						inches += job.getRunSize().getWidth();
+					if (charge.getLinearX1())
+						inches += job.getRunSize().getWidth();
+					if (charge.getLinearY1())
+						inches += job.getRunSize().getHeight();
+					if (charge.getLinearY2())
+						inches += job.getRunSize().getHeight();
+				}
 			} else {
-//				if (q->linearX1)
-//					inches += job->job.finishX;
-//				if (q->linearX2)
-//					inches += job->job.finishX;
-//				if (q->linearY1)
-//					inches += job->job.finishY;
-//				if (q->linearY2)
-//					inches += job->job.finishY;
+				if (job.getFinishSize() != null) {
+					if (charge.getLinearX1())
+						inches += job.getFinishSize().getWidth();
+					if (charge.getLinearX1())
+						inches += job.getFinishSize().getWidth();
+					if (charge.getLinearY1())
+						inches += job.getFinishSize().getHeight();
+					if (charge.getLinearY2())
+						inches += job.getFinishSize().getHeight();
+				}
 			}
 			
 			//***********************************************************************************

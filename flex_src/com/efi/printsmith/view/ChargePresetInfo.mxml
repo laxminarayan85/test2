@@ -42,7 +42,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     import mx.validators.Validator;
     import mx.events.ValidationResultEvent;    
     import mx.formatters.NumberFormatter;
-    
+    import mx.utils.GraphicsUtil;    
     
     private var accounts:ArrayCollection = new ArrayCollection();
     
@@ -61,6 +61,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    PopUpManager.centerPopUp(this);
 	    this.updateFieldVisibility();
 	    dataService.getAll("TaxTable");
+	    linear_image.graphics.clear();
 	}      
 	
 	private function mapToChargeDefinition():void {
@@ -110,6 +111,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		chargeDefinition.presetInSetsOf = parseCurrencyFloat(this.in_sets_of_text.text);
 		chargeDefinition.presetInSetsOfLabel = this.in_sets_of_label_text.text;
 		chargeDefinition.rateSetCount = chargeDefinition.presetInSetsOf;
+		chargeDefinition.linearX1 = this.linear_bottom.selected;
+		chargeDefinition.linearX2 = this.linear_top.selected;
+		chargeDefinition.linearY1 = this.linear_right.selected;
+		chargeDefinition.linearY2 = this.linear_left.selected;
 		if (tax_table_combo.selectedIndex == 0) {
 			chargeDefinition.presetTaxTable = null;
 		} else {
@@ -704,6 +709,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:HBox label="blank" width="100%" height="100%" id="blank">
 				</mx:HBox>
 				<mx:HBox label="linear" width="100%" height="100%" id="linear" creationPolicy="all">
+					<mx:Canvas width="100%" height="100%">
+						<mx:CheckBox x="327" y="56" id="linear_left" selected="{chargeDefinition.linearY2}"/>
+						<mx:CheckBox x="380" y="4" id="linear_top" selected="{chargeDefinition.linearX2}"/>
+						<mx:CheckBox x="380" y="107" id="linear_bottom" selected="{chargeDefinition.linearX1}"/>
+						<mx:Box width="80" height="80" id="linear_image" borderColor="#000000" borderThickness="1" borderStyle="solid" cornerRadius="5" x="347" y="25"/>
+						<mx:CheckBox x="432" y="56" id="linear_right" selected="{chargeDefinition.linearY1}"/>
+					</mx:Canvas>
 				</mx:HBox>
 				<mx:VBox label="time" width="100%" height="100%" id="time" creationPolicy="all">
 					<mx:HBox width="100%" height="50%" horizontalAlign="right">

@@ -67,6 +67,7 @@
 			public function saveContactHandler(evt:SaveContactEvent):void {
 				this.contact = evt.contact;
 				updateDisplayContact();
+				dispatchEvent(evt);
 			}
 	private function containsBlank(ac:ArrayCollection, field:String):Boolean	{
 	 	for (var i:int = 0; i<ac.length; i++)	{

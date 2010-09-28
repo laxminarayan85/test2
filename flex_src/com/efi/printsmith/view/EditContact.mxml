@@ -629,15 +629,14 @@ implements="com.efi.mdi.IMDIWindowAware">
 		return -1;
 	}
 	private function doNew():void {
-		if (contact.parentAccount != null){
+		if (contact != null && contact.parentAccount != null){
 			var tempParent:Account = contact.parentAccount;
 			contact = new Contact();
 			contact.parentAccount = tempParent;
 		}
 		else{
-		
-	    contact = new Contact();
-	    accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
+		    contact = new Contact();
+	   		accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
 		 }
 	    contact.creditCard = new CreditCard();
 	    contact.shipToAddress = new ArrayCollection();

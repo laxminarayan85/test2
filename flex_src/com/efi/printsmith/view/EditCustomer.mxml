@@ -207,6 +207,14 @@
 
 		var eventWeb:AccountsWebPanelEvent = new AccountsWebPanelEvent(canvasWeb, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventWeb.dispatch();
+		this.ship_to_contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);
+		this.bill_to_contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);
+
+	}
+
+	public function saveContactHandler(event:Event):void {
+		this.updateStatementContact();
+		this.updateInvoiceContact();
 	}
 
 	public function handleUIEvent(evt:ResultEvent):void {
@@ -1141,6 +1149,7 @@
     	account.billToContact = statementcontactlist.selectedItem as Contact;
     	bill_to_contact_editor.setContact(account.billToContact);
     }
+    
     private function updateInvoiceContact():void{
      account.contact= invoicecontactlist.selectedItem as Contact;
      ship_to_contact_editor.setContact(account.contact);
