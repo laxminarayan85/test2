@@ -62,6 +62,7 @@
 		import com.efi.printsmith.data.SecurityCommands;
 		import com.efi.printsmith.data.JobBase;
 		import com.efi.printsmith.data.Job;
+	//	import com.efi.printsmith.data.PaperCalculator;
 		import com.efi.mdi.view.window.MDIWindow;
 		import mx.core.Container;
 		import com.efi.printsmith.data.UserEvent;
@@ -374,21 +375,20 @@
 			jobService.createJob(null, null);
 		}
 		private function handleCreateJobResult(ev:ResultEvent):void 
-			{	var job:Job = new Job();
-				job = ev.result as Job;
-				
-				var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
-			
+		{	
+			var job:Job = new Job();
+			job = ev.result as Job;		
+						
+			var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
 			paperCalWindow.setStyle("borderAlpha", 0.9);
-			//if (job.paperCal.colorBar == 0 && estimatingPreferences != null)
-		//		job.paperCal.colorBar = estimatingPreferences.colorBar;
+
 			paperCalWindow.setdimension(dimensions)
 			job.runSize = new Dimension();
 			job.foldedSize = new Dimension();
 			job.parentSize = new Dimension();
 			job.finishSize = new Dimension();
 		 	paperCalWindow.setJob(job);
-			}
+		}
 		public function dopaperCal():void{
 			if (dimensions.length == 0)
 				dimensionDataService.getAll("Dimension");

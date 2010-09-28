@@ -41,6 +41,10 @@ width="100%" height="100%"  creationComplete="init()"
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.events.FaultEvent;
 	import mx.controls.Alert;
+    import mx.printing.FlexPrintJob;
+    import mx.printing.PrintAdvancedDataGrid;
+    import mx.printing.PrintDataGrid;
+    import mx.core.Application;
 	import mx.managers.PopUpManager;
 	import com.efi.printsmith.data.CreditCardTransactions;
 	import com.efi.printsmith.data.CreditCard;
@@ -64,10 +68,10 @@ width="100%" height="100%"  creationComplete="init()"
 		private var localTransation:CreditCardTransactions;		// used for local transactions. like delete
 		
 	public function init():void{
-		this.throbber.visible = false;
-		this.throbber.stop();
+		this.throbber.visible = true;
+		this.throbber.play();
 		
-		dataService.getAll("CreditCardTransactions");
+		dataService.getAllOrderByDescending("CreditCardTransactions", "transactionDate");
 		dataService.getPendingCreditCardTransations();
 		dataService2.getAll("PreferencesCreditCard");
 	}
@@ -114,7 +118,9 @@ width="100%" height="100%"  creationComplete="init()"
 	
 	private function doRefresh():void 
 	{
-		dataService.getAll("CreditCardTransactions");
+		this.throbber.visible = true;
+		this.throbber.play();
+		dataService.getAllOrderByDescending("CreditCardTransactions");
 		dataService.getPendingCreditCardTransations();
 	}
 
@@ -163,6 +169,7 @@ width="100%" height="100%"  creationComplete="init()"
 			localTransation.isCurrentTransaction = 1;
 			localTransation.orderNumber = creditCardTransactions.orderNumber;
 			localTransation.orderName = creditCardTransactions.orderName;
+			localTransation.referenceNumber = creditCardTransactions.referenceNumber;
 			localTransation.firstNumberPrefix = creditCardTransactions.firstNumberPrefix;
 			localTransation.tax = creditCardTransactions.tax;
 			localTransation.amount = creditCardTransactions.amount;
@@ -185,11 +192,61 @@ width="100%" height="100%"  creationComplete="init()"
 	
 	private function doCopyRefNumber():void
 	{
-		var creditCardTransactions:CreditCardTransactions = activeGrid.selectedItem as CreditCardTransactions;
-		if (creditCardTransactions != null) {
+		var creditCardTransactions:CreditCardTransactions
+		
+		if (activeGrid.selectedItem != null) {
+			creditCardTransactions = activeGrid.selectedItem as CreditCardTransactions;
+			System.setClipboard(creditCardTransactions.referenceNumber);
+		} else if (historicGrid.selectedItem != null) {
+			creditCardTransactions = historicGrid.selectedItem as CreditCardTransactions;
 			System.setClipboard(creditCardTransactions.referenceNumber);
 		}
 	}
+
+	private function doPrintActiveList():void {
+		var myPrintJob:FlexPrintJob = new FlexPrintJob();
+	
+		if (myPrintJob.start()) {
+			var myPrintDataGrid:PrintDataGrid = new PrintDataGrid();
+	
+			//Set the print view properties.
+			myPrintDataGrid.width = myPrintJob.pageWidth;
+			myPrintDataGrid.height = myPrintJob.pageHeight;
+	
+			// Set the data provider of the FormPrintView component's data grid
+			// to be the data provider of the displayed data grid.
+			myPrintDataGrid.dataProvider = activeGrid.dataProvider;
+			myPrintDataGrid.columns = activeGrid.columns;
+			myPrintDataGrid.visible = false;
+			myPrintDataGrid.includeInLayout = false;
+			
+			Application.application.addChild(myPrintDataGrid);
+	
+			if(!myPrintDataGrid.validNextPage) {
+				myPrintJob.addObject(myPrintDataGrid);
+			} else {
+				myPrintJob.addObject(myPrintDataGrid);
+	
+				while(true) {
+					// Move the next page of data to the top of the print grid.
+					myPrintDataGrid.nextPage();
+	
+					if(!myPrintDataGrid.validNextPage) {
+						// This is the last page; queue it and exit the print loop.
+						myPrintJob.addObject(myPrintDataGrid);
+	
+						break;
+					} else {
+						myPrintJob.addObject(myPrintDataGrid);
+					}
+				} 
+	
+			}
+	
+			Application.application.removeChild(myPrintDataGrid);
+			myPrintJob.send();
+	 	}
+ 	}
 	
 	//=========================
 	
@@ -332,7 +389,7 @@ width="100%" height="100%"  creationComplete="init()"
 	private function getHistoricCardExpire(item:Object, column:DataGridColumn):String{
 		var temp:CreditCardTransactions =  item as CreditCardTransactions;
 		if (temp.creditCard.expiresDate != null)
-			return temp.creditCard.expiresDate.toString();
+			return temp.creditCard.expiresDate.toDateString();
 		else
 			return "";
 	}
@@ -356,7 +413,7 @@ width="100%" height="100%"  creationComplete="init()"
 	private function getHistoricTransactionDate(item:Object, column:DataGridColumn):String{
 		var temp:CreditCardTransactions =  item as CreditCardTransactions;
 		if(temp.approvalDate != null)
-			return temp.approvalDate.toString();
+			return temp.approvalDate.toDateString();
 		else
 			return "";
 	}
@@ -467,7 +524,7 @@ width="100%" height="100%"  creationComplete="init()"
                              
 </mx:Script>
 	<mx:Canvas width="100%" height="100%">
-		<mx:Button x="30" y="10" width="38" height="38" click="">
+		<mx:Button x="30" y="10" width="38" height="38" click="doPrintActiveList()">
 				<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
 			</mx:Button>
 		<mx:Button x="80" y="10" width="38" height="38" click="doReceipt()">

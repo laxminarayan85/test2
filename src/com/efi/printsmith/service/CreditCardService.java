@@ -1,6 +1,7 @@
 package com.efi.printsmith.service;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.StringTokenizer;
@@ -111,7 +112,6 @@ public class CreditCardService extends SnowmassHibernateService {
 		Long		idNumber = cct.getId();
 		String		formattedNumber;
 		int			zeroCnt = 0;
-		long 		serialNumber;
 		
 		PreferencesSystem preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
 		
@@ -139,7 +139,6 @@ public class CreditCardService extends SnowmassHibernateService {
 	//
 	//
 	public Long sendCardTransaction(Long id) throws Exception {
-		Boolean	results;
 		DataService dataService = new DataService();
 		String serialNum, devNum;
 		
@@ -205,16 +204,26 @@ public class CreditCardService extends SnowmassHibernateService {
 				// EFS system
 				//
 				else if(preferencesAccounting.getUseEfsProcessor() == true){
-					//
-					// send the request to EFS (Sage)
-					//
-					ccTransaction = efsTransaction(dataService, preferencesAccounting, ccTransaction);
+					serialNum = preferencesAccounting.getMerchantID();
+					devNum = preferencesAccounting.getMerchantKey();
 					
+					if (serialNum == null || serialNum.length() == 0 || devNum == null || devNum.length() == 0) {
+				    	ccTransaction.setTransactionStatus(Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusComplete);
+			    		ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError);
+			    		// TODO - localized version
+			    		ccTransaction.setMessage("Approval system not ready");
+					} else {
 					//
-					// zero out critical data
-					//
-			    	ccTransaction = SafeDeleteCriticalDataInTransaction(ccTransaction);
-			    	dataService.addUpdate(ccTransaction);				
+						// send the request to EFS (Sage)
+						//
+						ccTransaction = efsTransaction(dataService, preferencesAccounting, ccTransaction);
+						
+						//
+						// zero out critical data
+						//
+				    	ccTransaction = SafeDeleteCriticalDataInTransaction(ccTransaction);
+				    	dataService.addUpdate(ccTransaction);	
+					}
 				} 
 				//================================================================
 				// system not read
@@ -254,7 +263,6 @@ public class CreditCardService extends SnowmassHibernateService {
 		String 			message = "";
 		double 			origAmount = 0;
 		String 			statusOrigFileName = "";
-		String			temp;
 		
 	//	URL url = new URL("https://developer.skipjackic.com/scripts/evolvcc.dll?AuthorizeAPI");
 		URL url = new URL("https://www.skipjackic.com/scripts/evolvcc.dll?SJAPI_TransactionStatusRequest");
@@ -282,7 +290,7 @@ public class CreditCardService extends SnowmassHibernateService {
 			//String statusStr = response.getStatusText();
 			String responseBody = response.getBody();
 			
-			System.out.println(responseBody);
+		//	System.out.println(responseBody);
 			
 			if (statusCode != 200 || responseBody.length() == 0) {
 				results = false;
@@ -535,8 +543,9 @@ public class CreditCardService extends SnowmassHibernateService {
 				// If this transaction was manually approved, then fill in the approval code here.
 				// This keeps Skipjack from getting a new code for the transaction.
 				//
-				if (ccTransaction.getManualCode().length() > 0) {
-					sendStr = AppeandFormInputData(sendStr, "approvalcode", ccTransaction.getApprovalCode(), true, true);
+				if (ccTransaction.getVerbalAuthCode().length() > 0) {
+					sendStr = AppeandFormInputData(sendStr, "approvalcode", ccTransaction.getVerbalAuthCode(), true, true);
+					ccTransaction.setApprovalCode(ccTransaction.getVerbalAuthCode());
 				}
 				
 				if (ccTransaction.getCreditCard().getAddress1() != null) 
@@ -558,10 +567,9 @@ public class CreditCardService extends SnowmassHibernateService {
 					zip = "00000";		
 				sendStr = AppeandFormInputData(sendStr, "zipcode", zip, true, true);
 				
-// TODO: Verify that following omission is correct
-//				if (ccTransaction.getContact() != null && ccTransaction.getContact().getContactId().length() > 0)
-//					temp = ccTransaction.getContact().getContactId();
-//				else
+				if (ccTransaction.getAccountNumber() != null)
+					temp = ccTransaction.getAccountNumber().toString();
+				else
 					temp = String.format("%d", ccTransaction.getId()); // order number not known use record number, have something for level II rate
 				sendStr = AppeandFormInputData(sendStr, "customercode", temp, true, true);
 				
@@ -577,7 +585,7 @@ public class CreditCardService extends SnowmassHibernateService {
 				if (ccTransaction.getHasCVVdata() == false) {			// if the track data is present, but CVV2 data is not hand entered into the same field
 					temp = EncryptionService.decryptData(ccTransaction.getTrackOne(), "AES256WITHSERIALNUMBER");
 					temp2 = EncryptionService.decryptData(ccTransaction.getTrackTwo(), "AES256WITHSERIALNUMBER");
-					temp.concat(temp2);
+					temp = temp.concat(temp2);
 					if (temp.length() > 0) {
 						temp = temp.replaceAll("%", "");
 						sendStr = AppeandFormInputData(sendStr, "trackdata", temp, true, false);
@@ -602,7 +610,7 @@ public class CreditCardService extends SnowmassHibernateService {
 				String statusStr = response.getStatusText();
 				String responseBody = response.getBody();
 				
-				System.out.println(responseBody);
+		//		System.out.println(responseBody);
 				
 				//
 				// Process a blind credit response, just like a CHARGE but with negative
@@ -789,7 +797,7 @@ public class CreditCardService extends SnowmassHibernateService {
 				String statusStr = response.getStatusText();
 				String responseBody = response.getBody();
 				
-				System.out.println(responseBody);
+		//		System.out.println(responseBody);
 				
 				//
 				// process the response from a CREDIT request
@@ -962,8 +970,9 @@ public class CreditCardService extends SnowmassHibernateService {
 			// If this transaction was manually approved, then fill in the approval code here.
 			// This keeps Skipjack from getting a new code for the transaction.
 			//
-			if (ccTransaction.getManualCode().length() > 0) {
-				sendStr = AppeandFormInputData(sendStr, "approvalcode", ccTransaction.getApprovalCode(), true, true);
+			if (ccTransaction.getVerbalAuthCode().length() > 0) {
+				sendStr = AppeandFormInputData(sendStr, "approvalcode", ccTransaction.getVerbalAuthCode(), true, true);
+				ccTransaction.setApprovalCode(ccTransaction.getVerbalAuthCode());
 			}
 			
 			if (ccTransaction.getCreditCard().getAddress1() != null) 
@@ -985,10 +994,9 @@ public class CreditCardService extends SnowmassHibernateService {
 				zip = "00000";		
 			sendStr = AppeandFormInputData(sendStr, "zipcode", zip, true, true);
 			
-// TODO: Verify that following omission is correct
-//			if (ccTransaction.getContact() != null && ccTransaction.getContact().getContactId().length() > 0)
-//				temp = ccTransaction.getContact().getContactId();
-//			else
+			if (ccTransaction.getAccountNumber() != null)
+				temp = ccTransaction.getAccountNumber().toString();
+			else
 				temp = String.format("%d", ccTransaction.getId()); // order number not known use record number, have something for level II rate
 			sendStr = AppeandFormInputData(sendStr, "customercode", temp, true, true);
 			
@@ -1004,7 +1012,7 @@ public class CreditCardService extends SnowmassHibernateService {
 			if (ccTransaction.getHasCVVdata() == false) {			// if the track data is present, but CVV2 data is not hand entered into the same field
 				temp = EncryptionService.decryptData(ccTransaction.getTrackOne(), "AES256WITHSERIALNUMBER");
 				temp2 = EncryptionService.decryptData(ccTransaction.getTrackTwo(), "AES256WITHSERIALNUMBER");
-				temp.concat(temp2);
+				temp = temp.concat(temp2);
 				if (temp.length() > 0) {
 					temp = temp.replaceAll("%", "");
 					sendStr = AppeandFormInputData(sendStr, "trackdata", temp, true, false);
@@ -1021,8 +1029,8 @@ public class CreditCardService extends SnowmassHibernateService {
 				sendStr = AppeandFormInputData(sendStr, "CVV2", ccTransaction.getTempCVV2(), true, false);
 			}
 
-			System.out.println(sendStr);
-			log.info(sendStr);
+		//	System.out.println(sendStr);
+	//		log.info(sendStr);
 			
 		//	temp = MessageUtil.serializeObject(sendStr).toString();
 		//	System.out.println(temp);
@@ -1034,7 +1042,7 @@ public class CreditCardService extends SnowmassHibernateService {
 			String statusStr = response.getStatusText();
 			String responseBody = response.getBody();
 			
-			System.out.println(responseBody);
+	//		System.out.println(responseBody);
 			
 			if (statusCode != 200 || responseBody.length() == 0) {				
 				ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError);
@@ -1183,16 +1191,8 @@ public class CreditCardService extends SnowmassHibernateService {
 			if (!url.getProtocol().equals("https")) throw new ProtocolException("CreditCardService only supports HTTPS.");
 			NetworkHelper.enableSSL();
 
-			temp = preferencesAccounting.getMerchantID();
-			if (temp.length() == 0)
-				temp = "1234";
-			sendStr = AppeandFormInputData(sendStr, "M_id", temp, false, false);
-			
-			temp =preferencesAccounting.getMerchantKey();
-			if (temp.length() == 0)
-				temp = "abc";
-			sendStr = AppeandFormInputData(sendStr, "M_key", temp, true, false);
-
+			sendStr = AppeandFormInputData(sendStr, "M_id", preferencesAccounting.getMerchantID(), false, false);
+			sendStr = AppeandFormInputData(sendStr, "M_key", preferencesAccounting.getMerchantKey(), true, false);
 			sendStr = AppeandFormInputData(sendStr, "C_name", ccTransaction.getCreditCard().getCardHolderName(), true, true);
 			
 			// Do not include the address or zip if Track data is valid
@@ -1228,10 +1228,13 @@ public class CreditCardService extends SnowmassHibernateService {
 			rightNow.setTime(ccTransaction.getCreditCard().getExpiresDate());
 			temp = String.format("%02d", rightNow.get(Calendar.MONTH) + 1);
 			temp2 = String.format("%02d", (rightNow.get(Calendar.YEAR) - 2000));
-			temp.concat(temp2);
+			temp = temp.concat(temp2);
 			sendStr = AppeandFormInputData(sendStr, "C_exp", temp, true, false);
 			
-			temp = String.format("%.2lf", ccTransaction.getAmount());
+	        DecimalFormat df = new DecimalFormat("#.00");
+	        temp = df.format(ccTransaction.getAmount());
+		//	temp = String.format("%.2lf", ccTransaction.getAmount());
+	        
 			sendStr = AppeandFormInputData(sendStr, "T_amt", temp, true, false);
 
 			if (ccTransaction.getTransactionType() == 
@@ -1260,8 +1263,9 @@ public class CreditCardService extends SnowmassHibernateService {
 			// If this transaction was manually approved, then fill in the approval code here.
 			// This keeps EFS from getting a new code for the transaction.
 			//
-			if (ccTransaction.getManualCode().length() > 0 && ccTransaction.getApprovalCode().length() > 0) {
-				sendStr = AppeandFormInputData(sendStr, "T_auth", ccTransaction.getApprovalCode(), true, true);
+			if (ccTransaction.getVerbalAuthCode().length() > 0) {
+				sendStr = AppeandFormInputData(sendStr, "T_auth", ccTransaction.getVerbalAuthCode(), true, true);
+				ccTransaction.setApprovalCode(ccTransaction.getVerbalAuthCode());
 			}
 					
 			// could have track data when CVV2 not present
@@ -1279,7 +1283,8 @@ public class CreditCardService extends SnowmassHibernateService {
 			}
 
 			if (ccTransaction.getTax() > 0) {
-				temp = String.format("%.2lf", ccTransaction.getTax());
+		        temp = df.format(ccTransaction.getTax());
+			//	temp = String.format("%.2lf", ccTransaction.getTax());
 				sendStr = AppeandFormInputData(sendStr, "T_tax", temp, true, false);
 			} else {
 				sendStr = AppeandFormInputData(sendStr, "T_tax", "0.00", true, false);
@@ -1291,16 +1296,15 @@ public class CreditCardService extends SnowmassHibernateService {
 				sendStr = AppeandFormInputData(sendStr, "C_cvv", temp, true, false);
 			}
 
-// TODO: Verify that following omission is correct
-//			if (ccTransaction.getContact() != null && ccTransaction.getContact().getContactId().length() > 0)
-//				temp = ccTransaction.getContact().getContactId();
-//			else
+			if (ccTransaction.getAccountNumber() != null)
+				temp = ccTransaction.getAccountNumber().toString();
+			else
 				temp = ccTransaction.getOrderName();
 
 			sendStr = AppeandFormInputData(sendStr, "T_customer_number", temp, true, false);
 			
-			System.out.println(sendStr);
-			log.info(sendStr);
+	//		System.out.println(sendStr);
+	//		log.info(sendStr);
 						
 			HttpPostContent postContent = new HttpPostContent(sendStr, HttpContentType.CONTENT_TYPE_DEFAULT);
 			HttpResponse response = NetworkHelper.httpPost(postContent, url.toString(), null);
@@ -1309,7 +1313,7 @@ public class CreditCardService extends SnowmassHibernateService {
 			String statusStr = response.getStatusText();
 			String responseBody = response.getBody();
 			
-			System.out.println(responseBody);
+	//		System.out.println(responseBody);
 			
 			if (statusCode != 200 || responseBody.length() == 0) {				
 				ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError);
@@ -1332,32 +1336,35 @@ public class CreditCardService extends SnowmassHibernateService {
 				// 57				1					field separators (ascii 28)
 				// 58				?					Order Number
 				// ?				?					field separators (ascii 28)
-				
-				String		EFSResponseSTX = "";
+	
+				//	"A485485APPROVED 485485                 10P 00B9NAHZbaa0PS9981000067340"
+
+				int			EFSResponseSTX = 0;
 				String		EFSResponseApprovalIndicator = "";
 				String		EFSResponseCode = "";
 				String		EFSResponseMessage = "";
-				String		EFSResponseInternalUse = "";
+		//		String		EFSResponseInternalUse = "";
 				String		EFSResponseCVVindicator = "";
 				String		EFSResponseAVSindicator = "";
 				String		EFSResponseRISKindicator = "";
 				String		EFSResponseReference = "";
-				String		EFSResponseSeparator = "";
+		//		String		EFSResponseSeparator = "";
 				String		EFSResponseOrderNumber = "";
-
-				EFSResponseSTX = responseBody.substring(0, 1);
+				
+				// first byte is a ascii (0x02) character when proper format
+				EFSResponseSTX = (int)responseBody.substring(0, 1).charAt(0);
 				EFSResponseApprovalIndicator = responseBody.substring(1, 2);
 				EFSResponseCode = responseBody.substring(2, 8);
 				EFSResponseMessage = responseBody.substring(8, 40);
-				EFSResponseInternalUse = responseBody.substring(40, 42);
+		//		EFSResponseInternalUse = responseBody.substring(40, 42);
 				EFSResponseCVVindicator = responseBody.substring(42, 43);
 				EFSResponseAVSindicator = responseBody.substring(43, 44);
 				EFSResponseRISKindicator = responseBody.substring(44, 46);
 				EFSResponseReference = responseBody.substring(46, 56);
-				EFSResponseSeparator = responseBody.substring(56, 57);
-				EFSResponseOrderNumber = responseBody.substring(57, responseBody.length());
+		//		EFSResponseSeparator = responseBody.substring(56, 57);
+				EFSResponseOrderNumber = responseBody.substring(57, responseBody.length()-4);
 				
-				if (EFSResponseSTX.equals("2") && EFSResponseOrderNumber.length() > 0) {
+				if (EFSResponseSTX == 2 && EFSResponseOrderNumber.length() > 0) {
 					
 					// response approval codes
 					// A = approved
@@ -1370,9 +1377,18 @@ public class CreditCardService extends SnowmassHibernateService {
 			    		ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsDeclined);
 					} else if (EFSResponseApprovalIndicator.equals("X")) {
 			    		ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsDeclined);
+					} else {
+			    		ccTransaction.setTransactionResults(Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsError);
 					}
 					
-					ccTransaction.setApprovalCode(EFSResponseCode);
+					//
+					// the credit has no approval code, so use the reference number
+					//
+					if (EFSResponseCode.length() > 0)
+						ccTransaction.setApprovalCode(EFSResponseCode);
+					else
+						ccTransaction.setApprovalCode(EFSResponseReference);
+					
 	    			ccTransaction.setMessage(EFSResponseMessage);
 				
 					//
@@ -1406,8 +1422,7 @@ public class CreditCardService extends SnowmassHibernateService {
 	    				ccTransaction.setFailedAVS(false);
 	    			}
 	    			if (EFSResponseAVSindicator.equals("A") || EFSResponseAVSindicator.equals("Z")) {
-	    				// TODO
-	    				//	cct.partialAVSmatch = 1;
+	    				ccTransaction.setPartialAVSMatch(true);
 	    			}
 					
 	    			// Risk indicators

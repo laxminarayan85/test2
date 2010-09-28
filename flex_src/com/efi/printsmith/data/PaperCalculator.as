@@ -2,6 +2,7 @@ package com.efi.printsmith.data
 {
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
+	import com.efi.printsmith.Constants;
 	
 	[RemoteClass(alias="com.efi.printsmith.data.PaperCalculator")]
 	[Managed]
@@ -48,10 +49,10 @@ package com.efi.printsmith.data
 		public var finishSize:Dimension;
 		public var useGripEdgeGap:Boolean = false;
 		public var runSize:Dimension;
-		public var gripLocation:String = "";
+		public var gripLocation:String = Constants.PAPER_CALCULATOR_GRIPPER_TOP;
 		public var cutstoFinish:int = 0;
 		public var sheetsOut:int = 0;
-		public var folioLocation:String = "";
+		public var folioLocation:String = Constants.PAPER_CALCULATOR_FOLIO_LEFT;
 		public var cutstoRun:int = 0;
 		public var disableFSC:Boolean = false;
 		public var down:int = 0;

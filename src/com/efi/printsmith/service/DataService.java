@@ -4313,5 +4313,25 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 	}
+	
+	public CreditCardTransactions getCCTbyReferenceNumber(String ref) throws Exception {
+		log.debug("** getCCTbyReferenceNumber called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			/*
+			 * The search is for a transaction which is for a CHARGE and its status is COMPLETE and the reference number is a match
+			 */
+			String queryString = "from CreditCardTransactions where TransactionType = 2 and TransactionStatus = 2 and referenceNumber = '" + ref + "'";
+			Query query = em.createQuery(queryString);
+			CreditCardTransactions object = (CreditCardTransactions) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+
 
 }

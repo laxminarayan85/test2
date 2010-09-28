@@ -16,6 +16,10 @@ width="100%" height="100%"  creationComplete="init()"
 				   
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		
+		<mx:method name="getCCTbyReferenceNumber" 
+				fault="handleFault(event)" 
+				result="handleGetByRefResult(event)"/>
+				
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="creditCardService"
@@ -47,6 +51,8 @@ width="100%" height="100%"  creationComplete="init()"
 	import mx.managers.PopUpManager;
 	import mx.rpc.IResponder;
 	import mx.utils.StringUtil;
+	import mx.controls.DateField;
+	
 	import com.efi.printsmith.Constants;
 		
 	[Bindable]	
@@ -64,6 +70,7 @@ width="100%" height="100%"  creationComplete="init()"
      	Snowmass.getInstance().addEventListener(CreditCardTrackReadEvent.BRICKREAD, handleBrickRead);
   	   	localTransation = new CreditCardTransactions;
    		localTransation.creditCard = new CreditCard;
+   		localTransation.verbalAuthDate = null;			// dont have any date
  		
  		this.throbber.visible = false;
 		this.throbber.stop();
@@ -73,12 +80,12 @@ width="100%" height="100%"  creationComplete="init()"
  		
   		dataService.getAll("PreferencesCreditCard");
 		
-	//	if (application.currentUser.robustPassword == false) {
-	//		cardnumber.editable = false;
-	//		cardnumber.alpha = .5;
-	//		cardholder.editable = false;
-	//		cardholder.alpha = .5;
-	//	}
+		if (application.currentUser.robustPassword == false) {
+			cardnumber.editable = false;
+			cardnumber.alpha = .5;
+			cardholder.editable = false;
+			cardholder.alpha = .5;
+		}
 	}
 	
 	private function handleSendCardTransResult(ev:ResultEvent):void
@@ -144,6 +151,19 @@ width="100%" height="100%"  creationComplete="init()"
 		PopUpManager.removePopUp(this);
 	}
 	
+	
+	private function handleGetByRefResult(ev:ResultEvent):void{
+		var temp:CreditCardTransactions = ev.result as CreditCardTransactions;
+		
+		if (temp != null) {
+			localTransation.creditCard = temp.creditCard;
+			localTransation.amount = temp.amount;
+			localTransation.tax = temp.tax;
+			
+			doReadCardNumber();		// handle status update
+		}
+	}
+		
 	private function handleSaveResult(ev:ResultEvent):void{
 		var temp:CreditCardTransactions = ev.result as CreditCardTransactions;
 		var selectEvent:CreditCardTransEvent;
@@ -184,12 +204,19 @@ width="100%" height="100%"  creationComplete="init()"
 		localTransation.amount = parseCurrencyFloat(amount.text);
 		localTransation.poNumber = ponumber.text;
 		localTransation.verbalAuthCode = verbAuthNumber.text;
-		localTransation.verbalAuthDate = VerbAuthDate.selectedDate;
+		
+		if (VerbAuthDate.text.length > 0)
+			localTransation.verbalAuthDate = DateField.stringToDate(VerbAuthDate.text, "MM/DD/YYYY");
+		else
+			localTransation.verbalAuthDate = null;
+			
 		localTransation.tax = parseCurrencyFloat(tax.text);
 		localTransation.orderNumber = ordernumber.text;
 		localTransation.poNumber = ponumber.text;
 		localTransation.tempCVV2 = cardverification.text;
-		
+		localTransation.creditCard.address1 = street.text;
+		localTransation.creditCard.zipCode = zip.text;
+
 		//
 		// follow the chain of events.
 		// encypt
@@ -303,7 +330,7 @@ width="100%" height="100%"  creationComplete="init()"
 		var cardTitle:String = new String;
 		var message:String = new String;
 		var	index:Number;
-		var cardTypeValid:Boolean = true;
+		var cardTypeValid:Boolean = false;
 		var localCCPref:PreferencesCreditCard = new PreferencesCreditCard;
 		var today:Date = new Date;
 		
@@ -382,6 +409,12 @@ width="100%" height="100%"  creationComplete="init()"
 		return(str);
 	}
 	
+	//
+	// lookup a transaction based on the reference number
+	//
+	private function doReadReferenceNumber():void{
+		dataService.getCCTbyReferenceNumber(refundRefNumber.text);
+	}
 	
 	private function doReadCardNumber():void{
 		var valid:Boolean;
@@ -426,7 +459,22 @@ width="100%" height="100%"  creationComplete="init()"
 			okButton.enabled = true;
 		}
 	}
-
+	
+	private function doReadAmount():void{
+		var valid:Boolean;
+		var periodPattern:int;
+		var commaPattern:int;
+		
+		if (amount.text != "") {
+			periodPattern = amount.text.indexOf(".");
+			commaPattern = amount.text.indexOf(",");
+			
+			if (periodPattern < 0 && commaPattern < 0) {
+				amount.text = amount.text.concat(".00");
+			}
+		}
+	}
+	
 	private function doReadExpirationDate(event:Event):void {
 		var valid:Boolean;
 		var returnVal:Array = new Array;
@@ -507,7 +555,7 @@ width="100%" height="100%"  creationComplete="init()"
 				  y="156"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Expires')}"
 				  fontSize="9" textAlign="right" width="179" id="label20"/>
-		<mx:TextInput x="197" y="181" width="170" id="amount" text="{localTransation.amount}"/>
+		<mx:TextInput x="197" y="181" width="170" id="amount" text="{localTransation.amount}" focusOut="doReadAmount()"/>
 		<mx:Label x="10"
 				  y="184"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Amount')}"
@@ -546,7 +594,7 @@ width="100%" height="100%"  creationComplete="init()"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Zip')}"
 				  fontSize="9" textAlign="right" width="179" id="label12"/>
 				  
-		<mx:TextInput x="197" y="406" width="170" id="refundRefNumber" />
+		<mx:TextInput x="197" y="406" width="170" id="refundRefNumber" text ="{localTransation.referenceNumber}" focusOut="doReadReferenceNumber()"/>
 		<mx:Label x="10"
 				  y="409"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.RefundReference')}"
@@ -557,7 +605,7 @@ width="100%" height="100%"  creationComplete="init()"
 				  y="439"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.VerbalAuthNumber')}"
 				  fontSize="9" textAlign="right" width="179" id="label10"/>	
-		<mx:DateField x="197" y="466" width="170" id="VerbAuthDate" formatString="MM/DD/YYYY" text="{localTransation.verbalAuthDate}"/>
+		<mx:TextInput x="197" y="466" width="170" id="VerbAuthDate" text="{localTransation.verbalAuthDate}"/>
 		<mx:Label x="10"
 				  y="469"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.VerbalAuthDate')}"
