@@ -238,7 +238,47 @@
 	private function uploadFiles(evt:Event): void {
 		fileTypeArray = new ArrayCollection;
 		fileTypeArray.addItem("Preferences");
-		fileTypeArray.addItem("TableEditor");
+		fileTypeArray.addItem("Business Type");
+		fileTypeArray.addItem("City");
+		fileTypeArray.addItem("Common Interest");
+		fileTypeArray.addItem("Contact Name Prefixes");
+		fileTypeArray.addItem("Contact Name Suffixes");
+		fileTypeArray.addItem("Country");
+		fileTypeArray.addItem("CTP Substrate");
+		fileTypeArray.addItem("Driver");
+		fileTypeArray.addItem("Generic Colors");
+		fileTypeArray.addItem("Hold State");
+		fileTypeArray.addItem("Ink Color");
+		fileTypeArray.addItem("Job Title");
+		fileTypeArray.addItem("Lead Source");
+		fileTypeArray.addItem("Mailer Type");
+		fileTypeArray.addItem("Marketing Date Labels");
+		fileTypeArray.addItem("Phone Tags");
+		fileTypeArray.addItem("Production Copiers");
+		fileTypeArray.addItem("Production Dates");
+		fileTypeArray.addItem("Production Exceptions");
+		fileTypeArray.addItem("Production Facilities");
+		fileTypeArray.addItem("Production Locations");
+		fileTypeArray.addItem("Production Presses");
+		fileTypeArray.addItem("Production Priority");
+		fileTypeArray.addItem("Production Stations");
+		fileTypeArray.addItem("Products");
+		fileTypeArray.addItem("Report Categories");
+		fileTypeArray.addItem("Sizes - Metric CM");
+		fileTypeArray.addItem("Sizes - Metric IN");
+		fileTypeArray.addItem("Sizes - Metric MM");
+		fileTypeArray.addItem("Sizes - United States");
+		fileTypeArray.addItem("State");
+		fileTypeArray.addItem("Stock Colors");
+		fileTypeArray.addItem("Stock Finish");
+		fileTypeArray.addItem("Stock Forest Management");
+		fileTypeArray.addItem("Stock Grade");
+		fileTypeArray.addItem("Stock Group");
+		fileTypeArray.addItem("Tax Codes");
+		fileTypeArray.addItem("Type of Work");
+		fileTypeArray.addItem("Vendor");
+		fileTypeArray.addItem("WEB Locations");
+		fileTypeArray.addItem("Zip");
 		fileTypeArray.addItem("DL Address Data");
 		fileTypeArray.addItem("DL Price Lists Data");
 		fileTypeArray.addItem("DL Charge Definitions Data");
@@ -270,15 +310,6 @@
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
 					handleSelectPreferencesFile(evt);
-				}
-			}
-		}
-		if (fileName == "TableEditor") {
-			index = fileNameArray.getItemIndex("TableEditor");
-			if (index.valueOf() > -1) {
-				fileReference = fileArray.getItemAt(index) as FileReference;
-				if (fileReference != null) {
-					handleSelectTableEditorFile(evt);
 				}
 			}
 		}
@@ -428,7 +459,17 @@
 				}
 			}
 		}
-		if (index == -1) {
+		if (index == -1 && fileName.substr(0,2) != "DL") {
+			index = fileNameArray.getItemIndex(fileName);
+			if (index.valueOf() > -1) {
+				fileReference = fileArray.getItemAt(index) as FileReference;
+				if (fileReference != null) {
+					handleSelectTableEditorFile(evt);
+				}
+			} else
+				handleLoadFileComplete(evt);
+		}
+		else if (index == -1) {
 			handleLoadFileComplete(evt);
 		}
 	}
