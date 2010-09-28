@@ -106,7 +106,7 @@
 	
 				<mx:Text
 					text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markupissteppedandba')}"
-					height="38" width="50%"/>
+					height="10%" width="50%"/>
 					
 				<mx:HBox width="60%" height="100%" horizontalGap="10">
 				
