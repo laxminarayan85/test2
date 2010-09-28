@@ -22,7 +22,7 @@
 			
 			private function initsaveComp():void {
 				if(isIcon) {
-					[Embed('../../../../../assets/save.png')]
+					[Embed('../../../../../assets/file.png')]
 					var saveClass:Class;
 					this.setStyle("icon", saveClass);
 				}	

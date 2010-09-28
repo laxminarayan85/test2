@@ -1552,9 +1552,15 @@
 		</mx:Button>
 		<mx:Label x="0" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="66" textAlign="center"/>
 		<mx:Label x="74" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="45" textAlign="center"/>
-		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{formIsValid}">
+		
+		
+		<components:CustomSaveButtonComponent  x="171" y="10" width="38" id="select_button1" clickFuncName="doSave" 
+				saveLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}" height="38"/>
+		
+		
+		<!--<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{formIsValid}">
 			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
-		</mx:Button>
+		</mx:Button>-->
 		<mx:Label x="171" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
 		<mx:Button x="217" y="10" width="38" height="38" click="doGet();">
 			<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
