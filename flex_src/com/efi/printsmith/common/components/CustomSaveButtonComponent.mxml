@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" click="{clickEventHandler(event)}"
+	creationComplete="{initsaveComp()}">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.listClasses.ListBase;
+			import mx.controls.DataGrid;
+			import mx.core.Application;
+			import mx.events.CloseEvent;
+			import mx.controls.Alert;
+			[Bindable] public var saveString:String;
+			
+			[Bindable] public var saveLabel:String;
+			
+			[Bindable] public var clickFuncName:Function;
+			
+			[Bindable] public var inputArgumnets:Array;
+			
+			[Bindable] public var dataGridComp:ListBase;
+			
+			[Bindable] public var isIcon:Boolean = true;
+			
+			private function initsaveComp():void {
+				if(isIcon) {
+					[Embed('../../../../../assets/save.png')]
+					var saveClass:Class;
+					this.setStyle("icon", saveClass);
+				}	
+			}
+			
+			private function clickEventHandler(event:Event):void{
+				if(dataGridComp){
+					if (dataGridComp.selectedIndex > -1){
+						var confirmWindow:Alert;
+						if(saveString!=null){
+							confirmWindow = Alert.show(saveString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);
+						} else {
+							confirmWindow = Alert.show("Are you sure you want to\nsave the selected "+saveLabel+"?", resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);	
+						} 
+						confirmWindow.setStyle("backgroundColor", 0xffffff);
+						confirmWindow.setStyle("backgroundAlpha", 0.50);
+						confirmWindow.setStyle("borderColor", 0xffffff);
+						confirmWindow.setStyle("borderAlpha", 0.75);
+						confirmWindow.setStyle("color", 0x000000);
+					}
+				} else {
+					var confirmWindow:Alert;
+					if(saveString!=null){
+						confirmWindow = Alert.show(saveString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);
+					} else {
+						confirmWindow = Alert.show("Are you sure you want to\nsave the selected "+saveLabel+"?", resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmHandler, null, Alert.NO);	
+					} 
+					confirmWindow.setStyle("backgroundColor", 0xffffff);
+					confirmWindow.setStyle("backgroundAlpha", 0.50);
+					confirmWindow.setStyle("borderColor", 0xffffff);
+					confirmWindow.setStyle("borderAlpha", 0.75);
+					confirmWindow.setStyle("color", 0x000000);
+				}
+			}
+			
+			private function confirmHandler(event:CloseEvent):void {
+				if (event.detail == Alert.YES) {
+					callLater(clickFuncName,inputArgumnets);
+				} else if (event.detail == Alert.NO) {
+				
+				}
+			}
+		]]>
+	</mx:Script>
+</mx:Button>

@@ -56,6 +56,10 @@ public class TableEditorMapper extends ImportMapper {
 									modelBase = new Country();
 								else if (title.equals("CTP Substrate"))
 									modelBase = new CTPSubstrate();
+								else if (title.equals("Contact Name Prefixes"))
+									modelBase = new ContactNamePrefix();
+								else if (title.equals("Contact Name Suffixes"))
+									modelBase = new ContactNameSuffixes();
 								else if (title.equals("Driver"))
 									modelBase = new Driver();
 								else if (title.equals("Generic Colors"))
@@ -153,6 +157,10 @@ public class TableEditorMapper extends ImportMapper {
 			((Country) modelBase).setName(value);
 		} else if (modelBase instanceof CTPSubstrate) {
 			((CTPSubstrate) modelBase).setName(value);
+		}else if (modelBase instanceof ContactNamePrefix) {
+				((ContactNamePrefix) modelBase).setName(value);
+		}else if (modelBase instanceof ContactNameSuffixes) {
+				((ContactNameSuffixes) modelBase).setName(value);
 		} else if (modelBase instanceof Driver) {
 			((Driver) modelBase).setName(value);
 		} else if (modelBase instanceof GenericColors) {

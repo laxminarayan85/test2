@@ -1246,8 +1246,16 @@
 			return "";
 		}
 	}
+	private function doContactUpdate():void{
+	if ( account.contact.id == account.billToContact.id)
+			ship_to_contact_editor.setContact(account.billToContact);
 		
-    
+	}
+	private function doContactUpdate2():void{
+		if ( account.contact.id == account.billToContact.id)
+			bill_to_contact_editor.setContact(account.contact);	
+	}	
+     
 ]]>
                              
 </mx:Script>
@@ -1264,10 +1272,10 @@
 				<mx:TextInput x="282" y="66" id="external_acct_id_edit" text="{account.externalAcctId}"/>
 				<mx:Label x="139" y="68" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ExternalAccountingID')}" textAlign="right"/>
 				<mx:Label x="184" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'prospectCmd.ExternalRef')}" textAlign="right"/>
-				<ns1:AddressEditor x="10" y="94" id="ship_to_address_editor" addressLabel="Shipping Address" height="157" width="325"/>
+				<ns1:AddressEditor  x="10" y="94" id="ship_to_address_editor" addressLabel="Shipping Address" height="157" width="325"/>
 				<ns1:AddressEditor x="343" y="94" id="bill_to_address_editor" addressLabel="Billing Address" height="157" width="325"/>
-				<ns1:ContactInfoEditor x="10" y="259" height="198" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
-				<ns1:ContactInfoEditor x="344" y="259" height="198" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
+				<ns1:ContactInfoEditor deactivate="doContactUpdate2()" x="10" y="259" height="198" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
+				<ns1:ContactInfoEditor deactivate="doContactUpdate()" x="344" y="259" height="198" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
 				<mx:Label x="10" y="468" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
 				<mx:Label x="344" y="468" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
 				<mx:ComboBox x="127" y="465" height="22" id="invoicecontactlist" labelFunction="doName" enabled="{contacts.length >0}" width="160" dataProvider="{contacts}" change="updateInvoiceContact();"/>

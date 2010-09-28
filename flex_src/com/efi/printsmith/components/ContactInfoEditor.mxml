@@ -11,8 +11,18 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoad(event)"/>
 		
 	</mx:RemoteObject>
+	<mx:RemoteObject id="predataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPrefix(event)"/>
+		
+	</mx:RemoteObject>
+	<mx:RemoteObject id="suffdataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSuffix(event)"/>
+		
+	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.ContactNamePrefix;
+			import com.efi.printsmith.data.ContactNameSuffixes;
 			import mx.events.FlexEvent;
 			import mx.events.CloseEvent;
 			import com.efi.printsmith.events.SaveContactEvent;
@@ -33,6 +43,10 @@
 			[Bindable]
 			private var jobTitles:ArrayCollection = null;    
 			[Bindable]
+			private var suffixes:ArrayCollection = null;    
+			[Bindable]
+			private var prefixes:ArrayCollection = null;    
+			[Bindable]
 			private var displayContact:String="";
 
 			[Bindable]
@@ -45,6 +59,8 @@
 			public function init():void
 			{ 
 				dataService.getAll("JobTitle");
+				predataService.getAll("ContactNamePrefix");
+				suffdataService.getAll("ContactNameSuffixes")
 				
 			}
 
@@ -68,6 +84,28 @@
 			var job:JobTitle = new JobTitle();
 			job.name = "";
 			jobTitles.addItemAt(job, 0);
+		}
+		
+	}   
+	private function handleLoadPrefix(ev:ResultEvent):void {
+	
+		prefixes = new ArrayCollection();
+	 	prefixes = ev.result as ArrayCollection;
+	 	if (!containsBlank(prefixes,"name"))	{
+			var pre:ContactNamePrefix = new ContactNamePrefix();
+			pre.name = "";
+			prefixes.addItemAt(pre, 0);
+		}
+		
+	}   
+	private function handleLoadSuffix(ev:ResultEvent):void {
+	
+		suffixes = new ArrayCollection();
+	 	suffixes = ev.result as ArrayCollection;
+	 	if (!containsBlank(suffixes,"name"))	{
+			var suf:ContactNameSuffixes = new ContactNameSuffixes();
+			suf.name = "";
+			suffixes.addItemAt(suf, 0);
 		}
 		
 	}   
@@ -180,6 +218,8 @@
 				titleWindow=ContactInfoPopup(PopUpManager.createPopUp(this, ContactInfoPopup, true));
 				if (contact == null) contact = new Contact();
 				titleWindow.setJobTitles(jobTitles);
+				titleWindow.setPrefix(prefixes);
+				titleWindow.setSuffix(suffixes);
 				titleWindow.setContact(contact);
 
 				titleWindow.setStyle("borderAlpha", 0.9);

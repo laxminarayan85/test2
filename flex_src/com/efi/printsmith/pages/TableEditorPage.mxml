@@ -88,9 +88,12 @@ import com.efi.printsmith.data.*;
 		 	case "Dimension":
 		 		tempClass = Dimension
 		 		break;
-		 /* 	case "ContactNameSuffixes":
+		 	case "ContactNameSuffixes":
 		 		tempClass = ContactNameSuffixes
-		 		break; */
+		 		break; 
+		 	case "ContactNamePrefix":
+		 		tempClass = ContactNamePrefix
+		 		break; 
 		 	case "Country":
 		 		tempClass = Country
 		 		break;

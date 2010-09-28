@@ -19,8 +19,8 @@
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoad(event)"/>
-		
 	</mx:RemoteObject>
+	
 	
     <mx:Canvas width="360" height="304">
     <mx:Label tabIndex="1" x="10" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.First')}" width="67" textAlign="right"/>
@@ -29,8 +29,8 @@
     <mx:TextInput tabIndex="4" x="85" y="36" width="265" id="last_name_edit" text="{contact.lastName}"/>
     <mx:Label tabIndex="5" x="10" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Prefix')}" width="67" textAlign="right"/>
     <mx:Label tabIndex="6" x="193" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Suffix')}" width="56" textAlign="right"/>
-    <mx:TextInput tabIndex="7" x="85" y="62" width="95" id="prefix_edit" text="{contact.prefix}"/>
-    <mx:TextInput tabIndex="8" x="252" y="62" width="98" id="suffix_edit" text="{contact.suffix}"/>
+    <mx:ComboBox tabIndex="7" x="85" y="62" width="95" id="prefix_edit" labelField="name" dataProvider="{prefixes}"/>
+    <mx:ComboBox tabIndex="8" x="252" y="62" width="98" id="suffix_edit" labelField="name" dataProvider="{suffixes}"/>
     <mx:Label tabIndex="19" x="10" y="182" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.JobTitle')}" width="67" textAlign="right"/>
     <mx:ComboBox tabIndex="20" x="85" y="180" width="265" id="job_title_edit" labelField="name" dataProvider="{jobTitles}"/>
     <mx:Label tabIndex="21" x="10" y="214" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Salutation')}" width="67" textAlign="right"/>
@@ -79,6 +79,10 @@
 
 	[Bindable]
 	public var comLinkDataProvider:ArrayCollection = null;
+	[Bindable]
+	private var suffixes:ArrayCollection = null;
+	[Bindable]
+	private var prefixes:ArrayCollection = null;
 	[Bindable]
 	private var jobTitles:ArrayCollection = null;    
     private var originalContact:Contact = null;
@@ -163,6 +167,24 @@
 	 		job_title_edit.selectedIndex = -1;
 	 	}
 	}
+	public function setSuffix(tempArray:ArrayCollection):void{
+		suffixes = tempArray;
+		if (suffix_edit.selectedItem != null){
+	 		suffix_edit.selectedIndex = findItem (suffix_edit.selectedItem.name, suffixes);
+	 	}
+	 	else{
+	 		suffix_edit.selectedIndex = -1;
+	 	}
+	}
+	public function setPrefix(tempArray:ArrayCollection):void{
+		prefixes = tempArray;
+		if (prefix_edit.selectedItem != null){
+	 		prefix_edit.selectedIndex = findItem (prefix_edit.selectedItem.name, prefixes);
+	 	}
+	 	else{
+	 		prefix_edit.selectedIndex = -1;
+	 	}
+	}
 	
 	
 	public function setContact(addr:Contact):void {
@@ -177,6 +199,12 @@
 		} */
 		if (contact.jobTitle != null){
 	 		job_title_edit.selectedIndex = findItem (contact.jobTitle.name,jobTitles);
+		 }
+		 if (contact.prefix != null){
+	 		prefix_edit.selectedIndex = findItem (contact.prefix,prefixes);
+		 }
+		  if (contact.suffix != null){
+	 		suffix_edit.selectedIndex = findItem (contact.suffix,suffixes);
 		 }
 		if (contact.comLinks != null){
 			 for (var i:int =0; i < contact.comLinks.length ; i++)
