@@ -8,6 +8,7 @@
 	xmlns:prefcomp="com.efi.printsmith.components.preferences.*"
 	xmlns:components="com.efi.printsmith.common.components.*"
 	width="100%" height="100%" 
+	headerHeight="0"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}"
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
 	name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
@@ -122,6 +123,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>-->
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.ShippingMethod;
 	import com.efi.printsmith.data.SalesRep;
 	import com.efi.printsmith.common.components.CommonLoadComponent;
@@ -742,6 +744,9 @@
 	public function init():void {
 
 		this.currentState="";
+		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences');
 		
 		isLoad = true;
 		checkCount = 22;

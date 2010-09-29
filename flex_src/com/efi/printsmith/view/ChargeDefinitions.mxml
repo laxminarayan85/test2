@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.data.*" xmlns:comp="com.efi.printsmith.components.*" xmlns:effect="com.adobe.ac.mxeffects.*" 
 				xmlns:common="com.efi.printsmith.common.components.filter.*" 
-width="100%" height="779" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}"
+width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}"
 creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}" name="Charge Definitions" xmlns:ns1="*" fontSize="9">
 <mx:NumberFormatter id="pricingNumberFormatter" precision="8" />         
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -28,6 +28,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import mx.events.CloseEvent;
 	import com.efi.printsmith.common.components.filter.FilterSearchBy;
 	import com.efi.printsmith.common.components.filter.FilterProperty;
@@ -189,7 +190,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     
 	public function init():void {
 		consumer.subscribe();
-		notification_consumer.subscribe();     
+		notification_consumer.subscribe();
+		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions');
+		     
 	    charge = new ChargeDefinition();
 	    fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));
 	    fireGetAllEvent("ProductCode", new mx.rpc.Responder(handleLoadProductCodeResult, handleFault));

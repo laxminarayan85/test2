@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="918" height="600"
-	showCloseButton="true" creationComplete="init()"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%"
+	showCloseButton="true" creationComplete="init()" headerHeight="0"
     close="PopUpManager.removePopUp(this);"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.PostPayments')}" 
      label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.PostPayments')}"
@@ -19,6 +19,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.AccountHistoryData;
 	import com.efi.printsmith.data.UnpurchasedMerchandise;
 	import com.efi.printsmith.data.Account;
@@ -60,6 +61,10 @@
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
 	}
 	private function init():void {  
+		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.PostPayments');
+		
 		accountHistoryDate = new AccountHistoryData(); 
 		doGet();
 	 }

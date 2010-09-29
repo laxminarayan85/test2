@@ -2,8 +2,9 @@
 <mx:TitleWindow 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	layout="absolute" 
-	width="892" 
-	height="726" 
+	width="100%" 
+	height="100%"
+	headerHeight="0" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
 	name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
@@ -208,6 +209,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.CashDrawer;
 	import com.efi.printsmith.data.Tape;
 	import com.efi.printsmith.data.UnpurchasedMerchandise;
@@ -350,6 +352,11 @@
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
+		
+
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister');
+		
 		batch = new CashRegisterBatch();
 		tape = new Tape();
 		unPurchase = new UnpurchasedMerchandise();

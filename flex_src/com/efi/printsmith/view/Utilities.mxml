@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="576" height="482" showCloseButton="false" creationComplete="init()"
-    close="PopUpManager.removePopUp(this);"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="100%" height="100%" showCloseButton="false" creationComplete="init()"
+    close="PopUpManager.removePopUp(this);" headerHeight="0" 
     title="Utilities" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
     label="Utilities" name="Utilities"
     verticalScrollPolicy="off">
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import mx.core.UIComponent; 
 	import com.efi.printsmith.data.Contact;           
     import com.efi.printsmith.data.Account;    
@@ -49,6 +50,10 @@
 	private var wait:Boolean = false;
 	                                                       
 	private function init():void {   
+		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = "Utilities";
+
 		this.import_charge_definitions.enabled = false;
 		this.import_charge_costing.enabled =false;
 		this.import_charge.enabled = false;

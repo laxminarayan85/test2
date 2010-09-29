@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
-	layout="absolute" width="376" height="642" 
+	layout="absolute" width="100%" height="100%" headerHeight="0" 
 	creationComplete="init()" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ScheduleBoardManager')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ScheduleBoardManager')}">
 
 <mx:Script>  	
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import mx.containers.Panel;
 	import mx.managers.PopUpManager;
 	import flash.net.navigateToURL;
@@ -16,6 +17,9 @@
 	import com.efi.printsmith.events.commandEvents.ScheduleBoard.*;
 	
 	public function init():void {
+
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ScheduleBoardManager');
 
 		var eventEditCostCenters:ScheduleBoardEditCostCentersEvent = new ScheduleBoardEditCostCentersEvent(scheduleBoard_editcostcenter, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 		eventEditCostCenters.dispatch();

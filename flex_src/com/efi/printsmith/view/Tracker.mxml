@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" 
-	title="Tracker Console" 
+	title="Tracker Console" headerHeight="0"
 	xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:ns1="com.hillelcoren.components.*"
 	creationComplete="{initTrackerConsole()}" 
 	label="Tracker Console" 
@@ -64,6 +64,7 @@
 	<mx:Script> 
 	                                  
 	<![CDATA[
+		import com.efi.mdi.view.window.MDIWindow;
 		import com.efi.printsmith.events.TrackerConsoleDetailsEvent;
 		import mx.utils.StringUtil;
 		import com.efi.printsmith.data.ProductionExceptions;
@@ -147,6 +148,10 @@
 		 
 		 
 		public function initTrackerConsole():void {
+			
+			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+			mdiWin.title ="Tracker Console";
+		
 			var fontObj:Object = new Object();
 			fontObj.key = "Small";
 			fontObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"menu_321.Small");
