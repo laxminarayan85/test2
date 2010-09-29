@@ -102,7 +102,7 @@ public class ChargeLinearPricingMethod extends ChargePricingMethod {
 				if (job.getRunSize() != null) {
 					if (charge.getLinearX1())
 						inches += job.getRunSize().getWidth();
-					if (charge.getLinearX1())
+					if (charge.getLinearX2())
 						inches += job.getRunSize().getWidth();
 					if (charge.getLinearY1())
 						inches += job.getRunSize().getHeight();
@@ -113,7 +113,7 @@ public class ChargeLinearPricingMethod extends ChargePricingMethod {
 				if (job.getFinishSize() != null) {
 					if (charge.getLinearX1())
 						inches += job.getFinishSize().getWidth();
-					if (charge.getLinearX1())
+					if (charge.getLinearX2())
 						inches += job.getFinishSize().getWidth();
 					if (charge.getLinearY1())
 						inches += job.getFinishSize().getHeight();

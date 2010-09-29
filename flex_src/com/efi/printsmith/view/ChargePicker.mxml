@@ -968,6 +968,8 @@
 						cuts_box.includeInLayout = cuts_box.visible = false;
 						sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
 						quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+						charge_special_info.selectedChild = linear;		
+						drawLinearPageImage();		
 					}
 				} else if (this.chargeDefinition.method == ChargeMethod.Markup) {
 						quantity_box.includeInLayout = quantity_box.visible = true;
@@ -1253,11 +1255,11 @@
 								</mx:HBox>
 								<mx:HBox label="linear" width="100%" height="100%" id="linear" creationPolicy="all">
 									<mx:Canvas width="100%" height="100%">
-										<mx:CheckBox x="327" y="56" id="linear_left" selected="{charge.linearY2}"/>
-										<mx:CheckBox x="380" y="4" id="linear_top" selected="{charge.linearX2}"/>
-										<mx:CheckBox x="380" y="107" id="linear_bottom" selected="{charge.linearX1}"/>
+										<mx:CheckBox x="327" y="56" id="linear_left" selected="{charge.linearY2}" change="updatePrice()"/>
+										<mx:CheckBox x="380" y="4" id="linear_top" selected="{charge.linearX2}" change="updatePrice()"/>
+										<mx:CheckBox x="380" y="107" id="linear_bottom" selected="{charge.linearX1}" change="updatePrice()"/>
 										<mx:Box width="80" height="80" id="linear_image" borderColor="#000000" borderThickness="1" borderStyle="solid" cornerRadius="5" x="347" y="25"/>
-										<mx:CheckBox x="432" y="56" id="linear_right" selected="{charge.linearY1}"/>
+										<mx:CheckBox x="432" y="56" id="linear_right" selected="{charge.linearY1}" change="updatePrice()"/>
 									</mx:Canvas>
 								</mx:HBox>
 								<mx:VBox label="time" width="100%" height="100%" id="time" creationPolicy="all">

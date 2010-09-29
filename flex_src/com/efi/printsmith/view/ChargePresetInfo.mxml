@@ -61,7 +61,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	    PopUpManager.centerPopUp(this);
 	    this.updateFieldVisibility();
 	    dataService.getAll("TaxTable");
-	    linear_image.graphics.clear();
+	    if (linear_image != null) {
+		    linear_image.graphics.clear();
+		}
 	}      
 	
 	private function mapToChargeDefinition():void {
@@ -503,6 +505,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				cuts_box.includeInLayout = cuts_box.visible = false;
 				sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = false;								
 				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+				charge_special_info.selectedChild = linear;				
 			}
 		} else if (this.chargeDefinition.method == ChargeMethod.Markup) {
 				quantity_box.includeInLayout = quantity_box.visible = false;

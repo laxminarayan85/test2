@@ -63,7 +63,6 @@ public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
 //					//
 //					// use the sets as defined by the user, the sets in this case means sides
 //					//
-//					if (def->quantityType == kChargeQuantitySets) {
 //						if (q->oCqty) {
 //							if (q->groupQty >= 1 && q->groupQty <= 2)		// in reason
 //								sides = q->groupQty;
@@ -72,7 +71,6 @@ public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
 //						} else {
 //							q->groupQty = sides;
 //						}
-//					}
 //			
 				}
 				
