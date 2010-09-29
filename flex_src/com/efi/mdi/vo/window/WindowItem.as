@@ -1,4 +1,4 @@
-package com.efi.mdi.vo
+package com.efi.mdi.vo.window
 {
 	import mx.collections.ArrayCollection;
 	
@@ -24,7 +24,7 @@ package com.efi.mdi.vo
 			_children.addItem(win);
 		}
 		
-		public function get children():void	{
+		public function get children():ArrayCollection	{
 			return _children;
 		}
 	}

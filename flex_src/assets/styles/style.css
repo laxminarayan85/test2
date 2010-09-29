@@ -75,6 +75,12 @@
 	alpha:1;
 }
 
+.mdiWindowTitleStyleInactive	{
+	font-weight:bold;
+	font-size:10;
+	color:#ffffff;	
+	alpha:1;
+}
 
 /* Core Style used in class MDIWindow.as. Assigned in Constructor */
 .mdiWindowStyle	{
@@ -102,6 +108,29 @@
 	headerColors: #1462BA, #1462BA;
 }
 
+.mdiWindowStyleInactive	{
+	titleStyleName:mdiWindowTitleStyleInactive;
+	borderThicknessBottom:17;
+	borderThicknessLeft:3;
+	borderThicknessRight:3;
+	borderThicknessTop:3;
+	borderColor:#003893;
+	headerHeight:25;
+	
+
+	titleStyleName:mdiWindowTitleStyleInactive;
+	borderThicknessBottom:17;
+	borderThicknessLeft:3;
+	borderThicknessRight:3;
+	borderThicknessTop:3;
+	borderColor:#464646;	/* affects color of overall border includcing bottom. Top is handled with Header css*/
+	borderAlpha:1; /* alph between border and background. Since bg is dark gray, setting to zero will make gray */
+	
+	backgroundAlpha: 1;	/* alph between body of panel and background. Since bg is dark gray, setting to zero will make gray */
+	highlightAlphas: 0.0, 0; /* affects header - 1,1 will make white strip at top half of header, 1,0 a quarter white sript, 0,1 blue,white */ 
+	headerColors: #2384F2, #2384F2;
+	headerColors: #464646, #464646;
+}
 
 /* wrapper of menu and header panels */
 .headerBoxStyle	{

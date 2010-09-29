@@ -78,6 +78,7 @@ package com.efi.mdi.view.window
 			this.styleName = "mdiWindowStyle";
 		}
 		
+		
 		//MS: should be a private function	
 		public function set windowID(val:int):void	{
 			_windowID = val;
@@ -117,6 +118,15 @@ package com.efi.mdi.view.window
 		
 		public function get content():UIComponent	{
 			return _content;	
+		}
+		
+		public function setWindowStyle(active:Boolean):void	{
+			if (active)	{
+				this.styleName =  "mdiWindowStyle";
+			}
+			else	{
+				this.styleName = "mdiWindowStyleInactive";
+			}
 		}
 		
 		public function closeWindow():void	{
@@ -311,6 +321,7 @@ package com.efi.mdi.view.window
 		public function bringWindowToFront():void	{
 			if (state == OPEN)	{
 				this.parent.setChildIndex(this, ContainerManager.getExistingInstance().getCanvasChildrenCount()-1);
+				ContainerManager.getExistingInstance().recalculateWindowStyles();
 			}
 		}
 		private function onClick(event:MouseEvent):void	{

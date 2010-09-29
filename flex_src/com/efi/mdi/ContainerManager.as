@@ -3,6 +3,7 @@ package com.efi.mdi
 	import com.efi.mdi.util.MDIConstants;
 	import com.efi.mdi.view.container.MDIContainer;
 	import com.efi.mdi.view.window.MDIWindow;
+	import com.efi.mdi.vo.window.WindowItem;
 	
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
@@ -34,6 +35,23 @@ package com.efi.mdi
 			return _contMgr;
 		}
 		
+		public function recalculateWindowStyles():void	{
+			var wins:ArrayCollection = getAllWindows();
+			var foundTopWindow:Boolean = false;  
+			
+			for (var i:int=wins.length-1; i>=0; i--)	{
+				var w:MDIWindow = wins.getItemAt(i) as MDIWindow;
+				if (w.visible)	{
+					if (!foundTopWindow)	{
+						foundTopWindow = true;
+						w.setWindowStyle(true);
+					}
+					else	{
+						w.setWindowStyle(false);
+					}
+				} 
+			}
+		}
 		
 		public function getWindowWithChild(child:DisplayObject):MDIWindow	{
 			var a:Array = _mdiContainerRef.appCanvas.getChildren(); 
@@ -87,15 +105,15 @@ package com.efi.mdi
 				
 			}
 			
-//			if (parentWin == -1)	{
-//				if (_windows == null)
-//					_windows = new ArrayCollection();
-//				_windows.addItem(new WindowItem(_nextId));	
-//			}
-//			else	{
-//				var winItem:WindowItem = getWindowFromList(parentWin);
-//				winItem.addChild(new WindowItem(_nextId));
-//			}
+			if (parentWin == -1)	{
+				if (_windows == null)
+					_windows = new ArrayCollection();
+				_windows.addItem(new WindowItem(mdiWindow.windowID));	
+			}
+			else	{
+				var winItem:WindowItem = getWindowFromList(parentWin);
+				winItem.addChild(new WindowItem(mdiWindow.windowID));
+			}
 				
 			_mdiContainerRef.addMDIWindow(mdiWindow);
 			if (height == -1)	
@@ -111,8 +129,19 @@ package com.efi.mdi
 				mdiWindow.width = _mdiContainerRef.appCanvas.width;
 			else
 				mdiWindow.width = width;  
-			
+			 
 			return windowId;
+		}
+		
+		public function getAllWindows():ArrayCollection	{
+			var a:Array = _mdiContainerRef.appCanvas.getChildren();
+			var b:ArrayCollection = new ArrayCollection(); 
+			for (var i:int=0; i<a.length; i++){
+				if (a[i] is MDIWindow)	{
+					b.addItem(a[i] as MDIWindow);
+				} 		
+			}
+			return b;
 		}
 		
 		public function getWindow(id:int):MDIWindow	{
@@ -125,40 +154,41 @@ package com.efi.mdi
 			return null;
 		}
 		
-//		private function getWindowFromList(id:int):WindowItem	{
-//			for (var i:int=0; i<_windows.length; i++){
-//				var win:WindowItem = _windows.getItemAt(i) as WindowItem;
-//				if (win.id == id)
-//					return win;
-//				else	{
-//					if (win.children != null)
-//						getWindowRec(win);
-//					else
-//						continue;
-//				}
-//			}	
-//			return null;
-//		}
-//		
-//		private function getWindowRec(win:WindowItem, id:int):WindowItem	{
-//			for (var i:int=0; i<win.children.length; i++){
-//				var w:WindowItem = win.children.getItemAt(i) as WindowItem;
-//				
-//				if (w.id == id)
-//					return w;
-//				else	{
-//					if (w.children != null)
-//						getWindowRec(w);
-//					else
-//						continue;
-//				}
-//			}
-//		}
+		private function getWindowFromList(id:int):WindowItem	{
+			for (var i:int=0; i<_windows.length; i++){
+				var win:WindowItem = _windows.getItemAt(i) as WindowItem;
+				if (win.id == id)
+					return win;
+				else	{
+					if (win.children != null)
+						getWindowRec(win,id);
+					else
+						continue;
+				}
+			}	
+			return null;
+		}
+		
+		private function getWindowRec(win:WindowItem, id:int):WindowItem	{
+			for (var i:int=0; i<win.children.length; i++){
+				var w:WindowItem = win.children.getItemAt(i) as WindowItem;
+				
+				if (w.id == id)
+					return w;
+				else	{
+					if (w.children != null)
+						getWindowRec(w,id);
+					else
+						continue;
+				}
+			}
+			return null;
+		}
 		// utility methods
 		public function getCanvasRectangle():Rectangle	{
 			return new Rectangle(0,0,_mdiContainerRef.appCanvas.width,_mdiContainerRef.appCanvas.height) ;	
 		}	
-		
+		 
 		public function getContainer():MDIContainer	{
 			return _mdiContainerRef;
 		}

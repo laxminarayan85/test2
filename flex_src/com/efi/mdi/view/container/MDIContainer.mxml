@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel 
+<mx:Panel  
 	xmlns:menu="com.efi.mdi.view.header.*" 
 	xmlns:window="com.efi.mdi.view.window.*"
 	xmlns:task="com.efi.mdi.view.taskbar.*"
@@ -83,6 +83,13 @@
 				event.mdiWindow.visible = false;
 				event.mdiWindow.state = MDIWindow.MINIMIZED;
 				taskbar.addChild(minWin);
+				ContainerManager.getExistingInstance().recalculateWindowStyles();
+			}
+			
+			private function closeWindow(window:MDIWindow):void	{
+				window.state = MDIWindow.CLOSED;
+				appCanvas.removeChild(window);
+				ContainerManager.getExistingInstance().recalculateWindowStyles();
 			}
 			
 			private function onClose(event:WindowCloseEvent):void	{
@@ -98,28 +105,24 @@
 								mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
 									if(event.windowConfirmStatus==1){
 										mdiWindowAware.onDontSave();
-										mdiWindow.state = MDIWindow.CLOSED;
-										appCanvas.removeChild(mdiWindow);
+										closeWindow(mdiWindow);
 									} else if(event.windowConfirmStatus==2) {
 										mdiWindowAware.onCancel();
 									} else if(event.windowConfirmStatus==3) {
 										mdiWindow.content.addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
 											if(event.isSaved){
-												mdiWindow.state = MDIWindow.CLOSED;
-												appCanvas.removeChild(mdiWindow);
+												closeWindow(mdiWindow);
 											}	
 										},false,0,true);
 										mdiWindowAware.onSave();
 									}
 								},false,0,true);
 							} else {
-								(event.child as MDIWindow).state = MDIWindow.CLOSED;
-								appCanvas.removeChild(event.child);
+								closeWindow(event.child as MDIWindow); 
 							}
 						}
 					} else {
-						(event.child as MDIWindow).state = MDIWindow.CLOSED;
-						appCanvas.removeChild(event.child);
+						closeWindow(event.child as MDIWindow); 
 					}
 				}
 				if (event.child is MinimizedWindow)	{
