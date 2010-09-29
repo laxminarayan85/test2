@@ -2,18 +2,15 @@ package com.efi.printsmith.service;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Stroke;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.InvalidParameterException;
@@ -24,20 +21,13 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.persistence.EntityManagerFactory;
 
-import com.efi.printsmith.data.*;
 import org.apache.log4j.Logger;
 
-import net.digitalprimates.persistence.hibernate.utils.HibernateUtil;
-import net.digitalprimates.persistence.hibernate.utils.services.HibernateService;
-
-import org.hibernate.HibernateException;
-import org.hibernate.classic.Session;
-import org.jfree.util.PaintUtilities;
-import org.jfree.util.StrokeList;
-
-import com.efi.printsmith.data.Invoice;
-//import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.Constants;
+import com.efi.printsmith.data.Account;
+import com.efi.printsmith.data.CreditCardTransactions;
+import com.efi.printsmith.data.JobBase;
+import com.efi.printsmith.data.PaperCalculator;
 
 public class PaperCalculatorService extends SnowmassHibernateService {
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
@@ -1945,5 +1935,25 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		}
 		byte[] imageBytes = out.toByteArray(); 
 		return imageBytes;
+	}
+	
+	public List getPaperCalculatorTemplates(int whichToStart, int width, int height) {
+		List returnList = new ArrayList();
+		List<JobBase> templateList = new ArrayList<JobBase>();
+		List<byte[]> imageList = new ArrayList<byte[]>();
+		
+		DataService dataService = new DataService();
+	
+		List<JobBase> job = (List<JobBase>)dataService.getAll("Job");
+		for (int i=0;i<job.size();i++) {
+			JobBase tempJob = job.get(i);	
+			
+			templateList.add(tempJob);
+			imageList.add(GeneratePaperCalculatorImage(tempJob, whichToStart, width, height));
+		}
+		
+		returnList.add(templateList);
+		returnList.add(imageList);
+		return(returnList);
 	}
 }

@@ -9,6 +9,12 @@ width="100%" height="100%"  creationComplete="init()"
 				   fault="handleFault(event)"
 				   result="handleLoadResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="paperCalculatorService"
+					 destination="paperCalculatorService">
+		<mx:method name="getPaperCalculatorTemplates"
+					fault="handleFault(event)"
+					result="handleTemplateLoad(event)"/>
+	</mx:RemoteObject>
 	
 <mx:Script>                                   
 <![CDATA[
@@ -22,16 +28,20 @@ width="100%" height="100%"  creationComplete="init()"
 	import com.efi.printsmith.data.JobBase;
 	import com.efi.printsmith.data.Dimension;
 	import com.efi.printsmith.data.Job;
+	import com.efi.printsmith.Constants;
+	import mx.controls.Image;
 		
 	[Bindable]
 	private var templates:ArrayCollection=new ArrayCollection();
-		   
+			   
    public function init():void{		
-		// dataService.getAll("Templates");
+		 paperCalculatorService.getPaperCalculatorTemplates(Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH, 150, 150);
 	}
+	
 	private function doDoubleClick():void{
 
 	}
+	
 	private function handleFault(ev:FaultEvent):void
 	{
 		var message:String;
@@ -39,6 +49,39 @@ width="100%" height="100%"  creationComplete="init()"
 		message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
 		Alert.show(message, "Error", 0, null);
 	}
+	
+	
+	private function handleTemplateLoad(evt:ResultEvent):void {
+		var resultArray:ArrayCollection = evt.result as ArrayCollection;
+		var templateArray:ArrayCollection = resultArray[0];
+		var imageArray:ArrayCollection = resultArray[1];
+		var i:int;
+		
+		for (i=0;i<templateArray.length;i++)
+		{
+			var job:Job = templateArray[i];
+			var imageByteArray:ByteArray = imageArray[i];
+			
+			var loader:Loader = new Loader();
+			loader.loadBytes(imageByteArray);				 
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loaderCompleteHandler);
+		}
+		
+		templates = templateArray;		// bind to scroll grid control
+	}
+
+	private function loaderCompleteHandler(evt:Event):void {
+		var loader:LoaderInfo = evt.target as LoaderInfo;
+		var bmp:Bitmap = Bitmap(loader.content);
+		
+		var myImage:Image = new Image();
+		myImage.source = bmp;
+		
+	//	this.cutDiagram.removeAllChildren();
+	//	this.cutDiagram.addChild(myImage);
+	}			
+
+
 	private function handleLoadResult(ev:ResultEvent):void{
 		templates = ev.result as ArrayCollection;
 	}
@@ -66,6 +109,7 @@ width="100%" height="100%"  creationComplete="init()"
 		horizontalScrollPolicy="on"
 		rowHeight="150"
 		columnWidth="150"
+		dataProvider="{templates}" 
 		height="418">
 		<mx:columns>
 			<mx:DataGridColumn headerText=""/>
