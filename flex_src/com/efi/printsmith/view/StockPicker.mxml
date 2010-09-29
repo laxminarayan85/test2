@@ -449,7 +449,7 @@
 		}
 	 }
 	 
-	 private function containsBlank(ac:ArrayCollection, field:String)	{
+	 private function containsBlank(ac:ArrayCollection, field:String):Boolean	{
 	 	for (var i:int = 0; i<ac.length; i++)	{
 	 		if (StringUtil.trim(ac.getItemAt(i)[field] as String) == "")	{
 	 			return true;

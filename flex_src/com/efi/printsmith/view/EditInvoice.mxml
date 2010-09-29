@@ -200,6 +200,7 @@
 					if (invoice.id > 0) {
 						dataService.getInvoice(invoice.id);
 					} else {
+						loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 						accountDataService.getAccountPicker();
 						//doAccountPicker();
 					
@@ -223,8 +224,7 @@
 				var eventCharges:InvoiceChargesEvent = new InvoiceChargesEvent(new_job_button,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 				eventCharges.dispatch();
 				
-				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
-		
+				
 				
 			}
 			

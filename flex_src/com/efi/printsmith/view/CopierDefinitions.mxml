@@ -57,6 +57,7 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import mx.rpc.AsyncToken;
 	import com.efi.printsmith.data.MatrixElement;
 	import com.efi.printsmith.data.Charge;
@@ -139,7 +140,8 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	private var productionCopiersArray:ArrayCollection = new ArrayCollection();
 	
 	private var selectedCopierId:Number = -1;
-	
+	[Bindable] private var loadComponent:CommonLoadComponent;
+
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();   
@@ -157,8 +159,9 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		
 	}
 	
-	public function loadStockDefinitions():void { 
-		dataServiceStockPicker.getStockPicker();
+	public function loadStockDefinitions():void {
+		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+ 		dataServiceStockPicker.getStockPicker();
 	}
 	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
 		preferencesStockDefinitions = event.result as ArrayCollection;
@@ -596,7 +599,11 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null, 4);                                 
+		Alert.show(message, "Error", 0, null, null, null, 4);         
+		
+		if(loadComponent) {
+			loadComponent.close();
+		}                          
 	}
        
 	private function doCopyPriceList():void {
@@ -611,9 +618,14 @@ width="898" height="791" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		stockPickerWindow.setStyle("borderAlpha", 0.9);
 	    stockPickerWindow.formIsEmpty = true;
 	   	stockPickerWindow.setStockArray(StockDefinitionArray);
+	   	stockPickerWindow.passStockDataFromParent = false;
 	   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
+	    
+	    if(loadComponent) {
+			loadComponent.close();
+		}  
 	}
 	
 	private function doStockPriceList():void {

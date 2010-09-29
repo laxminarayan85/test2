@@ -200,6 +200,7 @@
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
 	     StockDefinitionArray = ev.result as ArrayCollection;
+	     
 	     this.enabled=true;
    	 loadStockVendor();
 	}
@@ -219,6 +220,7 @@
 		var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 		stockPickerWindow.setStyle("borderAlpha", 0.9);
 	    stockPickerWindow.formIsEmpty = true;
+	    stockPickerWindow.passStockDataFromParent = false;
 	   	stockPickerWindow.setStockArray(StockDefinitionArray);
 	   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);

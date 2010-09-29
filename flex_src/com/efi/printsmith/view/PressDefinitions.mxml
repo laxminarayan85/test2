@@ -51,6 +51,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.data.PreferencesPricingMethod;
 	import com.efi.printsmith.data.SalesCategory;
 	import com.efi.printsmith.data.PreferencesSystem;
@@ -96,6 +97,8 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
     private var sheetPaperStyleAbb:String = new String;
 	[Bindable]
 		private var charges:ArrayCollection=new ArrayCollection();
+
+	[Bindable] private var loadComponent:CommonLoadComponent;
 
     private var press:Boolean = false;
     private var stock:Boolean = false; 
@@ -152,6 +155,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	}      
 	
 	public function loadStockDefinitions():void { 
+		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 		dataServiceStockPicker.getStockPicker();
 	}
 	private function handleLoadPreferencesStockDefinitionResult(event:ResultEvent):void {
@@ -219,11 +223,16 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	     var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 		stockPickerWindow.setStyle("borderAlpha", 0.9);
 	    stockPickerWindow.formIsEmpty = true;
+	    stockPickerWindow.passStockDataFromParent = false;
 	   	stockPickerWindow.setStockArray(StockDefinitionArray);
 	   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
-	
+		
+		if(loadComponent) {
+			loadComponent.close();
+		}                
+
 	}
 	
 	private function doStockPriceList():void {
@@ -535,7 +544,12 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null, 4);                                 
+		Alert.show(message, "Error", 0, null, null, null, 4);        
+		
+		if(loadComponent) {
+			loadComponent.close();
+		}                
+                         
 	}
         
 	private function handleClearWasteChart(evt:PriceListPickerSelectEvent):void {
