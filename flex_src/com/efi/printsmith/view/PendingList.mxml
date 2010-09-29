@@ -47,6 +47,7 @@
 	
 <mx:Script> 
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.Charge;
 	import com.efi.printsmith.data.JobBase;
 	import com.efi.printsmith.common.components.filter.FilterSearchBy;
@@ -188,6 +189,9 @@
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
+
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PendingList');
 
 		invoiceBaseArray.filterFunction = invoiceFilter;
 		this.throbber.visible = true;

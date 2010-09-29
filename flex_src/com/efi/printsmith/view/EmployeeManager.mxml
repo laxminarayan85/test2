@@ -2,11 +2,13 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="100%" height="100%" 
 	creationComplete="init()"
 	name="employeeManager" 
+	headerHeight="0"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.EmployeeManager')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.EmployeeManager')}">
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import mx.controls.Alert;                                         
 	import mx.rpc.*;                                         
 
@@ -18,6 +20,10 @@
 	import com.efi.printsmith.events.commandEvents.Employees.*;
 	
 	public function init():void {
+		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.EmployeeManager');
+		
 		var eventClockInOut:EmployeeClockInOutEvent = new EmployeeClockInOutEvent(button_clockinout, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 		eventClockInOut.dispatch();
 

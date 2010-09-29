@@ -3,7 +3,7 @@
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup')}" 
 	xmlns:ns1="com.adobe.flex.extras.controls.*" xmlns:fc="http://www.adobe.com/2006/fc"
-	 creationComplete="init()" xmlns:ns2="flexlib.controls.*" 
+	headerHeight="0" creationComplete="init()" xmlns:ns2="flexlib.controls.*" 
 	 xmlns:components="com.efi.printsmith..components.*">
 	<mx:states>
 		<mx:State name="newItem">
@@ -51,6 +51,7 @@
 
 <mx:Script>  	
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import com.adobe.cairngorm.commands.Command;
 	import mx.containers.Panel;
 	import mx.managers.PopUpManager;
@@ -89,6 +90,9 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();
 	//	PopUpManager.centerPopUp(this);
+
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup');
 	              
 		dataService.getAll("AccessGroup"); 
 		dataServiceSecurityCommands.getAll("SecurityCommands");

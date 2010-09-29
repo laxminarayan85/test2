@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Estmate History" name="Estmate History"
-width="638" height="479"  creationComplete="init()"  
+width="100%" height="100%" headerHeight="0"  creationComplete="init()"  
      title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory')}" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -14,6 +14,7 @@ width="638" height="479"  creationComplete="init()"
 	
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -42,6 +43,9 @@ width="638" height="479"  creationComplete="init()"
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory');
+
 		doAccount();
 	}  
 	

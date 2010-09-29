@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" headerHeight="0" xmlns:components="com.efi.printsmith.common.components.*" xmlns:vo="com.efi.printsmith.vo.*"
-width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}"
+width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}"
  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}" name="Press Definitions" fontSize="9">
 	<!--<mx:states>
 		<mx:State name="RollFedState">
@@ -51,6 +51,7 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.data.PreferencesPricingMethod;
 	import com.efi.printsmith.data.SalesCategory;
@@ -140,6 +141,11 @@ width="988" height="798" title="{resourceManager.getString(Snowmass.RESOURCE_BUN
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
+		
+		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions');
+		
 		loadPressDefinitions();
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServiceSystemPricingMethodPreferences.getAll("PreferencesPricingMethod");

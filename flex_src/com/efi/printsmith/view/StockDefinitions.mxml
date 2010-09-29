@@ -288,6 +288,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.data.CommonInterest;
 	import mx.resources.ResourceManager;
@@ -420,6 +421,10 @@
 		first = true;
 		consumer.subscribe();
 		notification_consumer.subscribe();
+		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions');
+
 		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServicePreferencesDefaultPress.getSingle("PreferencesDefaultPresses");
