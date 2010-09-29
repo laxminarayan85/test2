@@ -338,9 +338,9 @@ implements="com.efi.mdi.IMDIWindowAware">
  		}else{
  			if (contact.creditCard.expiresDate == null)
  				contact.creditCard.expiresDate = new Date();
- 			if ( contact.creditCard.address == null){
- 				contact.creditCard.address = new Address();
- 				contact.creditCard.address.zip = "";
+ 			if ( contact.creditCard == null){
+ 				contact.creditCard.address1 = "";
+ 				contact.creditCard.zipCode = "";
  			}
  			cardtype.selectedIndex = findIteminCreditCard(contact.creditCard.type, creditCardPreferencesArray)	
  		}
@@ -443,12 +443,10 @@ implements="com.efi.mdi.IMDIWindowAware">
 		contact.creditCard.cardDisplayNumber = cardnumber.text;
 		contact.creditCard.expiresDate = cardexpiresdate.selectedDate;
 		
-		
-		if (contact.creditCard.address != null){
-			contact.creditCard.address.street1 = cardstreet.text;
-			if (cardzip != null && cardzip.selectedItem != null) 
-				contact.creditCard.address.zip = cardzip.text;
-		} 
+		contact.creditCard.address1 = cardstreet.text;
+		if (cardzip != null && cardzip.selectedItem != null) {
+			contact.creditCard.zipCode = cardzip.text;
+		}
 		
 		contact.marketing.noMail = noMail.selected;
 		contact.marketing.personalAcct = personalAccount.selected;
@@ -560,10 +558,9 @@ implements="com.efi.mdi.IMDIWindowAware">
 			setDefaultContact();
 			
 		}
-	 	if (contact.creditCard.address != null)
-			cardzip.selectedIndex = findItem(contact.creditCard.address.zip, zips);
-		else
-			cardzip.selectedIndex = -1;
+		
+		cardzip.selectedIndex = findItem(contact.creditCard.zipCode, zips);
+
 		if (contact.creditCard.expiresDate != null)
 		 	cardexpiresdate.selectedDate =contact.creditCard.expiresDate;
 		if (contact.marketing.followup != null)
@@ -758,7 +755,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 				zip = new Zip();
 				zip.name = cardzip.text;
 				zipDataService.addUpdate(zip);
-				contact.creditCard.address.zip = zip.name;
+				contact.creditCard.zipCode = zip.name;
 			}
 			else {
 				cardzip.selectedItem = item;
@@ -1195,7 +1192,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 				<mx:TextInput x="243" y="30" id="cardholder" text="{contact.creditCard.cardHolderName}"/>
 				<mx:TextInput x="243" y="56" id="cardnumber" text="{contact.creditCard.cardDisplayNumber}" focusOut="doReadCardNumber()"/>
 				<mx:DateField x="243" y="108" id="cardexpiresdate" text="{contact.creditCard.expiresDate}" showToday="true" width="160" editable="true"/>
-				<mx:TextInput x="243" y="157" id="cardstreet" text="{contact.creditCard.address.street1}"/>
+				<mx:TextInput x="243" y="157" id="cardstreet" text="{contact.creditCard.address1}"/>
 				<!--<mx:TextInput x="243" y="183" width="80" id="cardzip" text="{contact.creditCard.address.zip}"/>-->
 				<fc:AutoComplete id="cardzip" x="243" y="183" width="80"  dataProvider="{zips}"  labelField="name" focusOut="doZipCredit()" lookAhead="true"/>
 					
