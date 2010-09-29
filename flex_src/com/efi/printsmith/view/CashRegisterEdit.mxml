@@ -858,7 +858,7 @@
 				
 		</mx:Canvas>
 		<mx:Canvas x="0" y="133" width="408" height="279" id="tax_canvas1" hideEffect="effect" showEffect="effect" borderStyle="inset">
-			<mx:Button x="10" y="200" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Accept')}" click="doAccept();" width="176" enabled="true" id="accept_button"/>
+			<mx:Button x="10" y="200" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Accept')}" click="doAccept();" width="176" enabled="false" id="accept_button"/>
 			<mx:CheckBox x="10" y="243" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintReceipt')}" id="checkbox1"/>
 		</mx:Canvas>
 		<mx:Canvas x="407" y="40" width="261" height="216" id="tax_canvas2" hideEffect="effect" showEffect="effect" borderStyle="inset">

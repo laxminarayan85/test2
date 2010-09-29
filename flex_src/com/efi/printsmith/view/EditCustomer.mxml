@@ -382,6 +382,7 @@
 		inv_estimate_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges');
 		ship_via_combo.selectedIndex = findItem(defaultShipVia, shippingMethods);
 		sales_rep_combo.selectedIndex = findItem(defaultSalesRep, salesReps);
+		sales_rep_combo2.selectedIndex = findItem(defaultSalesRep, salesReps);
 	 	if ( this.enabled == false)
 	 		this.enabled = true;
 	}  
@@ -595,7 +596,7 @@
 
 		if (auto_discount.selectedValue == "discount_dollar") {
 			account.dollarDiscount = true;
-			account.discountDollarAmt = parseFloat(auto_discount_dollar_text.text);
+			account.discountDollarAmt = parseCurrencyFloat(auto_discount_dollar_text.text);
 		} else {
 			account.dollarDiscount = false; 
 			account.discount = parseFloat(auto_discount_percent_edit.text) * .01;
@@ -653,10 +654,14 @@
 			tax_code_combo.selectedIndex = findItem(account.taxCode.name, taxCodes);
 		else
 			tax_code_combo.selectedIndex = -1;
-		if (account.salesRep != null)
+		if (account.salesRep != null){
 			sales_rep_combo.selectedIndex = findItem(account.salesRep.name, salesReps);
-		else
+			sales_rep_combo2.selectedIndex = findItem(account.salesRep.name, salesReps);
+		}
+		else{
 			sales_rep_combo.selectedIndex = -1
+			sales_rep_combo2.selectedIndex = -1
+		}
 		if (account.taxTable!= null)
 			tax_table_combo.selectedIndex = findItem(account.taxTable.name, taxTables);
 		else
@@ -1124,7 +1129,10 @@
 		if  ( this.account.invoiceEstimateCharges.length > 0){
 	     	inv_estimate_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
 	     	inv_estimate_charges_edit.label = StringUtil.substitute(inv_estimate_charges_edit.label,this.account.invoiceEstimateCharges.length);
-	 }
+		 }
+		else
+	 		inv_estimate_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')
+	 		
 	}
 	private function handleChargeDefinitionJobComplete(evt:ChargeDefinitionSelectEvent):void
 	{
@@ -1133,6 +1141,8 @@
 			job_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
 			job_charges_edit.label = StringUtil.substitute(job_charges_edit.label,this.JobCharges.length );
 		}
+		else
+	 		job_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')
 	}
 	private function handleChargeDefinitionCancel(evt:ChargeDefinitionSelectEvent):void
 	{
@@ -1256,13 +1266,15 @@
 		}
 	}
 	private function doContactUpdate():void{
-	if ( account.contact.id == account.billToContact.id)
+	if ((account.contact != null) && (account.billToContact != null))
+		if ( account.contact.id == account.billToContact.id)
 			ship_to_contact_editor.setContact(account.billToContact);
 		
 	}
 	private function doContactUpdate2():void{
-		if ( account.contact.id == account.billToContact.id)
-			bill_to_contact_editor.setContact(account.contact);	
+		if ((account.contact != null) && (account.billToContact != null))
+			if ( account.contact.id == account.billToContact.id)
+				bill_to_contact_editor.setContact(account.contact);	
 	}	
      
 ]]>
