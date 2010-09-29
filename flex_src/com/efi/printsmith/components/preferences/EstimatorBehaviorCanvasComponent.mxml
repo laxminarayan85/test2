@@ -78,12 +78,12 @@
 					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 					
 				<components:CustomCheckBoxComponent
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}"
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeachpass')}"
 					dataHolder="{preferencesEstimating}" variableName="addFixedWasteForEachPass" customText="{preferencesEstimating.addFixedWasteForEachPass}"
 					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 					
 				<components:CustomCheckBoxComponent
-					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeach')}"
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Addfixedwasteforeachcolor')}"
 					dataHolder="{preferencesEstimating}" variableName="addFixedWasteForEachColor" customText="{preferencesEstimating.addFixedWasteForEachColor}"
 					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 					
