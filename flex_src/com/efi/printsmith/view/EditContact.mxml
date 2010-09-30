@@ -1048,23 +1048,25 @@ implements="com.efi.mdi.IMDIWindowAware">
 	
 	public function getOriginalObject():ArrayCollection {
 		var originalList:ArrayCollection = new ArrayCollection();
-		if(originalContact.marketing!=null && originalContact.marketing.birthDate!=null){
-			originalContact.marketing.birthDate = scrubTimeValue(originalContact.marketing.birthDate);
-		}
-		if(originalContact.marketing!=null && originalContact.marketing.followup!=null){
-			originalContact.marketing.followup = scrubTimeValue(originalContact.marketing.followup);
-		}
-		if(originalContact.marketing!=null && originalContact.marketing.user3!=null){
-			originalContact.marketing.user3 = scrubTimeValue(originalContact.marketing.user3);
-		}
-		if(originalContact.marketing!=null && originalContact.marketing.user4!=null){
-			originalContact.marketing.user4 = scrubTimeValue(originalContact.marketing.user4);
-		}
-		if(originalContact.marketing!=null && originalContact.marketing.user5!=null){
-			originalContact.marketing.user5 = scrubTimeValue(originalContact.marketing.user5);
-		}
-		if(originalContact.creditCard!=null && originalContact.creditCard.expiresDate!=null){
-			originalContact.creditCard.expiresDate = scrubTimeValue(originalContact.creditCard.expiresDate);
+		if(originalContact!=null){
+			if(originalContact.marketing!=null && originalContact.marketing.birthDate!=null){
+				originalContact.marketing.birthDate = scrubTimeValue(originalContact.marketing.birthDate);
+			}
+			if(originalContact.marketing!=null && originalContact.marketing.followup!=null){
+				originalContact.marketing.followup = scrubTimeValue(originalContact.marketing.followup);
+			}
+			if(originalContact.marketing!=null && originalContact.marketing.user3!=null){
+				originalContact.marketing.user3 = scrubTimeValue(originalContact.marketing.user3);
+			}
+			if(originalContact.marketing!=null && originalContact.marketing.user4!=null){
+				originalContact.marketing.user4 = scrubTimeValue(originalContact.marketing.user4);
+			}
+			if(originalContact.marketing!=null && originalContact.marketing.user5!=null){
+				originalContact.marketing.user5 = scrubTimeValue(originalContact.marketing.user5);
+			}
+			if(originalContact.creditCard!=null && originalContact.creditCard.expiresDate!=null){
+				originalContact.creditCard.expiresDate = scrubTimeValue(originalContact.creditCard.expiresDate);
+			}
 		}
 		originalList.addItem(originalContact);
 		return originalList;
