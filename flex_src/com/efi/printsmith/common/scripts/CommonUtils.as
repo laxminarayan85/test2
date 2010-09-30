@@ -41,11 +41,26 @@ public function compareObject(obj1:Object,obj2:Object):Boolean
 }
 
 
- private function scrubTimeValue(value:Date):Date
- {
-    if (value is Date)
+private function scrubTimeValue(value:Date):Date
+{
+	if (value is Date)
     {
         return new Date(value.getFullYear(), value.getMonth(), value.getDate());
     }
     return null;
- }
+}
+
+private function defaultToZeroIfNull(value:Number):Number {
+	if(isNaN(value))
+		return 0;
+	return value; 
+}
+
+private function removeSymbols(value:String,symbol:String):String {
+	for (;value.indexOf(symbol, 0) != -1;) {
+		value = value.replace(symbol,"");
+	}
+	return value;
+}
+ 
+ 
