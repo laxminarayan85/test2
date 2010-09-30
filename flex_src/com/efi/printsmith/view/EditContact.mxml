@@ -292,7 +292,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 			mapFromContactData();
 			setCampaigns();
 			registerClassAlias("com.efi.printsmith.data.Contact",Contact);
-			originalContact = ObjectUtil.copy(contact) as Contact;
+			originalContact = ObjectUtil.copy(this.contact) as Contact;
 		}
 		//address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ShippingAddress'));
 	 	ship_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ShippingAddress'));
@@ -782,8 +782,12 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
-		this.contact = new Contact();
-		setContact(this.contact);
+		this.setContact(ev.result as Contact);
+	    contact_editor.setContact(contact);
+		setMarketing();
+		setCreditCard();
+		registerClassAlias("com.efi.printsmith.data.Contact",Contact);
+		originalContact = ObjectUtil.copy(contact) as Contact;
 		openContactPicker();
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
 		dispatchEvent(windowSaveSuccessEvent);
