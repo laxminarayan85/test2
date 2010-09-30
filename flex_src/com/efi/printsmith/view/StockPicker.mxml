@@ -27,6 +27,8 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.common.clientPreferences.so.StockPickerWidthsSO;
+	import com.efi.printsmith.common.clientPreferences.UserClientPreferences;
 	import com.efi.printsmith.data.StockClass;
 	import mx.events.DataGridEvent;
 	import com.hillelcoren.utils.StringUtils;
@@ -104,8 +106,9 @@
 	         
 	// Holds a reference to the currently focussed control on the form.
  	private var focusedFormControl:DisplayObject;                           
-	 
-	           
+	
+	[Bindable] private var colWidths:Object;
+	
 	private function handleLoadResult(event:ResultEvent):void {
 		stockDefinitions = event.result as ArrayCollection;
 		defaultSortGrid();
@@ -275,17 +278,64 @@
 			}
 		}
 	}
-                                                     
+	
+	private function setColumnWidths()	{
+		var tmpCols:Object = UserClientPreferences.getInstance().getData(UserClientPreferences.STOCK_PICKER_GRID_WIDTHS);
+		if (tmpCols == null) 	{	
+			tmpCols = new Object();
+			tmpCols.name = 100;
+			tmpCols.weight = 100;
+			tmpCols.size = 100;
+			tmpCols.color = 100;
+			tmpCols.genericColor = 100;
+			tmpCols.finish = 100;
+			tmpCols.thickness = 100;
+			tmpCols.grade = 100;
+			tmpCols.cwt1 = 100;
+			tmpCols.vendor = 100;
+			tmpCols.stocknumber = 100;
+			tmpCols.id = 100;
+			tmpCols.onHand = 100;
+			tmpCols.committed = 100;
+			tmpCols.onOrder = 100;
+			tmpCols.shellItem = 100;
+			tmpCols.normalSize = 100;
+			tmpCols.basicSize = 100;
+			tmpCols.group = 100;
+			tmpCols.coated = 100;
+			tmpCols.minOrder = 100;
+			tmpCols.cost1 = 100;
+			tmpCols.priceExpires = 100;
+			tmpCols.forestManagement = 100;
+			tmpCols.pcwRecycledPercent = 100;
+			tmpCols.fscCertified = 100;
+			tmpCols.sfiCertified = 100;
+			tmpCols.greenSealCertified = 100;
+		}
+		
+		colWidths = tmpCols;
+					
+	}	
+	                          
 	private function init():void {   
 //		consumer.subscribe();
-//		notification_consumer.subscribe();     
+//		notification_consumer.subscribe();
+
+		setColumnWidths();     
+		
+						
 	    PopUpManager.centerPopUp(this);
 	    ShellLabel();
 	    showSearchBox.setStyle("icon", downIcon);
 	  // dataService.getAllNameIDOnly("StockDefinition");
 	//	dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 	}
-	                                
+	
+	private function onGridResize(event:DataGridEvent):void	{
+		colWidths[event.dataField] = (dataGrid.columns[event.columnIndex] as DataGridColumn).width;
+		UserClientPreferences.getInstance().setData(UserClientPreferences.STOCK_PICKER_GRID_WIDTHS, colWidths);
+	}   
+	                           
 	private function ShellLabel():void{
 		chkShowShells.label = StringUtil.substitute(chkShowShells.label,resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.All'))
 	}	
@@ -1209,36 +1259,36 @@
 		</mx:HBox>
 
 		<mx:DataGrid id="dataGrid" width="100%" height="90%" dataProvider="{stockDefinitions}"
-		doubleClickEnabled="true" allowMultipleSelection="true" doubleClick="selectStockDefinition()" verticalScrollPolicy="auto" horizontalScrollPolicy="on" showHeaders="true" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273" change="doEnableWebStatus();">               
+		doubleClickEnabled="true" columnStretch="onGridResize(event)" allowMultipleSelection="true" doubleClick="selectStockDefinition()" verticalScrollPolicy="auto" horizontalScrollPolicy="on" showHeaders="true" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273" change="doEnableWebStatus();">               
 		<mx:columns>
-		     <mx:DataGridColumn dataField="name" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" width="100"/>
-		     <mx:DataGridColumn dataField="weight" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}"/>
-		     <mx:DataGridColumn labelFunction ="getSizeLabel" sortCompareFunction="sortSize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Size')}"/>
-		     <mx:DataGridColumn labelFunction="getColorLabel" sortCompareFunction="sortColor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}"/>
-		     <mx:DataGridColumn labelFunction="getGenericColorLabel" sortCompareFunction="sortGenColor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GenericColor')}"/>
-		     <mx:DataGridColumn labelFunction="getFinishLabel" sortCompareFunction="sortFinish" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Finish')}"/>
-		     <mx:DataGridColumn dataField="thickness" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thickness')}"/>
-		     <mx:DataGridColumn labelFunction="getGradeLabel" sortCompareFunction="sortGrade" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Grade')}"/>
-		     <mx:DataGridColumn dataField="cwt1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CWT')}"/>
-		     <mx:DataGridColumn labelFunction="getVendorLabel" sortCompareFunction="sortVendor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Vendor')}"/>
-		     <mx:DataGridColumn dataField="stocknumber" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockNumber')}"/>
-		     <mx:DataGridColumn dataField="id" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ProductID')}"/>
-		     <mx:DataGridColumn dataField="onHand" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.QtyOnHand')}"/>
-		     <mx:DataGridColumn dataField="committed" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Committed')}"/>
-		     <mx:DataGridColumn dataField="onOrder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Ordered')}"/>
-		     <mx:DataGridColumn dataField="shellItem" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Shell')}"/>
-		     <mx:DataGridColumn  labelFunction="getNormalSizeLabel" sortCompareFunction="sortNormal" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RunSize')}"/>
-		     <mx:DataGridColumn dataField="basicsize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.BasicSize')}"/>
-		     <mx:DataGridColumn labelFunction="getGroupLabel" sortCompareFunction="sortGroup" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}"/>
-		     <mx:DataGridColumn dataField="coated" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}"/>
-		     <mx:DataGridColumn dataField="minorder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}"/>
-		     <mx:DataGridColumn dataField="cost1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Price')}"/>
-		     <mx:DataGridColumn dataField="priceExpires" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.PriceExpires')}"/>
-		     <mx:DataGridColumn dataField="forestManagement" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ForestMgmt')}"/>
-		     <mx:DataGridColumn dataField="pcwRecycledPercent" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Recycle')}"/>
-		     <mx:DataGridColumn dataField="fscCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.FSC')}"/>
-		     <mx:DataGridColumn dataField="sfiCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.SFI')}"/>
-		     <mx:DataGridColumn dataField="greenSealCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GreenSeal')}"/>
+		     <mx:DataGridColumn width="{colWidths.name}" dataField="name" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" />
+		     <mx:DataGridColumn width="{colWidths.weight}" dataField="weight" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}"/>
+		     <mx:DataGridColumn width="{colWidths.size}" dataField="size" labelFunction ="getSizeLabel" sortCompareFunction="sortSize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Size')}"/>
+		     <mx:DataGridColumn width="{colWidths.color}" dataField="color" labelFunction="getColorLabel" sortCompareFunction="sortColor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}"/>
+		     <mx:DataGridColumn width="{colWidths.genericColor}" dataField="genericColor" labelFunction="getGenericColorLabel" sortCompareFunction="sortGenColor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GenericColor')}"/>
+		     <mx:DataGridColumn width="{colWidths.finish}" dataField="finish" labelFunction="getFinishLabel" sortCompareFunction="sortFinish" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Finish')}"/>
+		     <mx:DataGridColumn width="{colWidths.thickness}" dataField="thickness" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thickness')}"/>
+		     <mx:DataGridColumn width="{colWidths.grade}"  dataField="grade" labelFunction="getGradeLabel" sortCompareFunction="sortGrade" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Grade')}"/>
+		     <mx:DataGridColumn  width="{colWidths.cwt1}" dataField="cwt1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CWT')}"/>
+		     <mx:DataGridColumn width="{colWidths.vendor}" dataField="vendor"   labelFunction="getVendorLabel" sortCompareFunction="sortVendor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Vendor')}"/>
+		     <mx:DataGridColumn  width="{colWidths.stocknumber}" dataField="stocknumber" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockNumber')}"/>
+		     <mx:DataGridColumn  width="{colWidths.id}" dataField="id" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ProductID')}"/>
+		     <mx:DataGridColumn  width="{colWidths.onHand}" dataField="onHand" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.QtyOnHand')}"/>
+		     <mx:DataGridColumn  width="{colWidths.committed}" dataField="committed" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Committed')}"/>
+		     <mx:DataGridColumn  width="{colWidths.onOrder}" dataField="onOrder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Ordered')}"/>
+		     <mx:DataGridColumn  width="{colWidths.shellItem}" dataField="shellItem" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Shell')}"/>
+		     <mx:DataGridColumn   width="{colWidths.normalSize}" dataField="normalSize" labelFunction="getNormalSizeLabel" sortCompareFunction="sortNormal" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RunSize')}"/>
+		     <mx:DataGridColumn  width="{colWidths.basicSize}" dataField="basicsize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.BasicSize')}"/>
+		     <mx:DataGridColumn  width="{colWidths.group}" dataField="group" labelFunction="getGroupLabel" sortCompareFunction="sortGroup" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}"/>
+		     <mx:DataGridColumn  width="{colWidths.coated}" dataField="coated" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}"/>
+		     <mx:DataGridColumn  width="{colWidths.minOrder}" dataField="minorder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}"/>
+		     <mx:DataGridColumn  width="{colWidths.cost1}" dataField="cost1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Price')}"/>
+		     <mx:DataGridColumn  width="{colWidths.priceExpires}" dataField="priceExpires" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.PriceExpires')}"/>
+		     <mx:DataGridColumn  width="{colWidths.forestManagement}" dataField="forestManagement" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ForestMgmt')}"/>
+		     <mx:DataGridColumn  width="{colWidths.pcwRecycledPercent}" dataField="pcwRecycledPercent" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Recycle')}"/> 
+		     <mx:DataGridColumn width="{colWidths.fscCertified}" dataField="fscCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.FSC')}"/>
+		     <mx:DataGridColumn width="{colWidths.sfiCertified}" dataField="sfiCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.SFI')}"/>
+		     <mx:DataGridColumn width="{colWidths.greenSealCertified}" dataField="greenSealCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GreenSeal')}"/>
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Label height="5%" id="lblCount" />
