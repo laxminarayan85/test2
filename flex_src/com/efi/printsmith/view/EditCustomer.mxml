@@ -1243,13 +1243,16 @@
 		
 	}
 	private function getAccount():void{
-		dataService.getByAccountId(masteracctId.text); 
+		if ( account.accountId ==  masteracctId.text)
+			masteracctId.text = "";
+		else
+			dataService.getByAccountId(masteracctId.text); 
 	}
 	private function handleGetaccountIDResult(ev:ResultEvent):void{
 		var tempAccount:Account = new Account();
 		
 		tempAccount = ev.result as Account;
-		if (tempAccount != null){
+		if ((tempAccount != null )&&( !tempAccount.prospect)){
 			account.masterAcct = tempAccount.id;
 			dataService.getByIdMaster("Account", account.masterAcct ); 
 			}
