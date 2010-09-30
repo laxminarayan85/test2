@@ -281,6 +281,9 @@
 	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServicePreferencesStocks" destination="dataService">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPreferencesStocks(event)"/>
+	</mx:RemoteObject>
 
 	<mx:StringValidator id="stockDefinitionNameValidator" source="{stockName}" property="text" minLength="2" required="true"/>
 
@@ -323,6 +326,7 @@
 	import com.efi.printsmith.data.PriceList;
 	import com.efi.printsmith.data.PaperPrice;
 	import com.efi.printsmith.data.PriceListBase;
+	import com.efi.printsmith.data.PreferencesStocks;
 
 	import com.efi.printsmith.events.StockPickerSelectEvent;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
@@ -355,6 +359,8 @@
     private var priceList:PaperPrice;  
 	[Bindable]                                         
     private var systemPreferences:PreferencesSystem;
+    [Bindable]
+    private var preferencesStocks:PreferencesStocks;
 
 	[Bindable]                                         
 	private var StockDefinitionArray:ArrayCollection = new ArrayCollection();
@@ -435,6 +441,7 @@
 		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServicePreferencesDefaultPress.getSingle("PreferencesDefaultPresses");
+		dataServicePreferencesStocks.getSingle("PreferencesStocks");
 		stockDefinitions = new StockDefinition;
 		stockDefinitions.charges = new ArrayCollection;
 		stockDefinitions.stockChanges = new ArrayCollection;
@@ -1132,6 +1139,9 @@
 	private function handleLoadStockForest(ev:ResultEvent):void{
 		stockForests  = ev.result as ArrayCollection;
 		forestMgmt.selectedIndex = -1;
+	}
+	private function handleLoadPreferencesStocks(ev:ResultEvent):void {
+		preferencesStocks = ev.result as PreferencesStocks;
 	}
 	private function handleSaveStockGradeResult(ev:ResultEvent):void {
 		stockDefinitions.grade = ev.result as StockGrade
@@ -1909,6 +1919,23 @@ private function doRound(evt:FocusEvent):void{
 		
 		
 	}
+	
+	private function autoCalculateBlankStock():void {
+		if (this.chkAutocalcblankstock.selected == true) {
+			if (this.Cost1.text.substr(0,1) == "$")
+				var cost:Number = parseFloat(this.Cost1.text.substr(1));
+			else
+				var cost:Number = parseFloat(this.Cost1.text)
+	
+			this.BlankSheetPrice1.text = Snowmass.getCurrencyFormatter(true,3).format(((cost * preferencesStocks.blankMarkup1) / parseInt(this.Costunits.text)));
+			this.BlankSheetPrice2.text = Snowmass.getCurrencyFormatter(true,3).format(((cost * preferencesStocks.blankMarkup2) / parseInt(this.Costunits.text)));
+			this.BlankSheetPrice3.text = Snowmass.getCurrencyFormatter(true,3).format(((cost * preferencesStocks.blankMarkup3) / parseInt(this.Costunits.text)));
+			this.BlankSheetPrice4.text = Snowmass.getCurrencyFormatter(true,3).format(((cost * preferencesStocks.blankMarkup4) / parseInt(this.Costunits.text)));
+			this.BlankSheetPrice5.text = Snowmass.getCurrencyFormatter(true,3).format(((cost * preferencesStocks.blankMarkup5) / parseInt(this.Costunits.text)));
+			this.BlankSheetPrice6.text = Snowmass.getCurrencyFormatter(true,3).format(((cost * preferencesStocks.blankMarkup6) / parseInt(this.Costunits.text)));
+		}
+	}
+	
 	private function convertoCaliper():void{
 		var temp:Object;
 		temp = cboUom.selectedItem;
