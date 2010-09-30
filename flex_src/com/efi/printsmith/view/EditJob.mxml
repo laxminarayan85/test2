@@ -1463,6 +1463,7 @@
 				if (job != null) { 
 					job.impressionsPerRun = localJob.impressionsPerRun;
 					job.totalImpositions = localJob.totalImpositions;
+					job.totalImpressions = localJob.totalImpressions;
 					job.estWaste = localJob.estWaste;
 					job.totalCost = localJob.totalCost;
 					job.totalCopies = localJob.totalCopies;
