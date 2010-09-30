@@ -55,15 +55,15 @@ public class CustomerMapper extends ImportMapper {
 					customer.setAccountId(currentImportToken);
 				} else if ("account type".equals(currentFieldToken)) {
 					if ("1".equals(currentImportToken)) {
-						customer.setType("CustomerTypeDeposit");
+						customer.setType("full_deposit");
 					} else if ("2".equals(currentImportToken)) {
-						customer.setType("CustomerTypeCash");
+						customer.setType("cash_only");
 					} else if ("3".equals(currentImportToken)) {
-						customer.setType("CustomerTypeCheck");
+						customer.setType("cash_check_credit");
 					} else if ("4".equals(currentImportToken)) {
-						customer.setType("CustomerTypeCharge");
+						customer.setType("charge_acct");
 					} else if ("5".equals(currentImportToken)) {
-						customer.setType("CustomerTypeCreditCardOnFile");
+						customer.setType("credit_card_on_file");
 					}
 				} else if ("account status".equals(currentFieldToken)) {
 					if ("1".equals(currentImportToken)) {
