@@ -10,6 +10,7 @@ import com.efi.printsmith.data.PriceListElement;
 import com.efi.printsmith.data.SpeedTable;
 import com.efi.printsmith.data.Dimension;
 import com.efi.printsmith.migration.Utilities;
+import com.efi.printsmith.service.DataService;
 
 public class PriceListUtilities {
 	static public double calculatePriceListPrice(long qty, PriceList priceList,
@@ -39,11 +40,16 @@ public class PriceListUtilities {
 	}
 
 	static public double lookupPaperPrice(PriceListBase priceList, long copies,
-			long colors, long side) {
+		long colors, long side) {
 		double retVal = 0.0;
 
-		if (priceList == null)
-			return retVal;
+		// If stock has no paper price schedule, use the default (first) schedule
+		if (priceList == null) {
+			DataService dataService = new DataService();
+			priceList = (PriceListBase)dataService.getSingle("PaperPrice");
+			if (priceList == null)
+				return retVal;
+		}
 
 		List<PriceListElement> elements = priceList.getElements();
 
