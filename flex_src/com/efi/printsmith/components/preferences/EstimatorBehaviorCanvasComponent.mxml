@@ -4,7 +4,7 @@
 	<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.data.PreferencesEstimating;
-			[Bindable] public var preferencesEstimating:PreferencesEstimating = new PreferencesEstimating();;
+			[Bindable] public var preferencesEstimating:PreferencesEstimating = new PreferencesEstimating();
 		]]>
 	</mx:Script>
 	
@@ -95,6 +95,11 @@
 				<components:CustomCheckBoxComponent
 					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.UsetheHistorytitlefo')}"
 					dataHolder="{preferencesEstimating}" variableName="useHistoryTitleforNewTitle" customText="{preferencesEstimating.useHistoryTitleforNewTitle}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.HistoryView')}"
+					dataHolder="{preferencesEstimating}" variableName="defaultHistoryView" customText="{preferencesEstimating.defaultHistoryView}"
 					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 					
 				<mx:HBox width="100%">

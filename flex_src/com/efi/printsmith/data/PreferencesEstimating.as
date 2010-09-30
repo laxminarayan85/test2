@@ -73,6 +73,7 @@ package com.efi.printsmith.data
 		public var addBarCodes:Boolean = false;
 		public var showRefNumber:Boolean = false;
 		public var barCodeFont:FontDefinition;
+		public var defaultHistoryView:Boolean = false;
 	
 	}
 }
