@@ -69,6 +69,8 @@ implements="com.efi.mdi.IMDIWindowAware">
 <mx:Script> 
                                   
 <![CDATA[
+	import com.efi.mdi.event.window.WindowConfirmStatusEvent;
+	import com.efi.mdi.view.window.MDIConfirmComponent;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
 	import com.efi.printsmith.data.ModelBase;
 	import flash.net.registerClassAlias;
@@ -705,7 +707,37 @@ implements="com.efi.mdi.IMDIWindowAware">
 		this.setContact(contact);
 	}
 	
-	private function doNext():void {  
+	private function doNext():void {
+		onClose();
+		if(getOriginalObject()!=null && getUpdatedObject()!=null){
+			if(!compareObject(getOriginalObject(),getUpdatedObject())){
+				var mdiConfirmComponent:MDIConfirmComponent = PopUpManager.createPopUp(this,MDIConfirmComponent,true) as MDIConfirmComponent;
+				mdiConfirmComponent.labelTxt = getConfirmationText();
+				mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
+					if(event.windowConfirmStatus==1){
+						onDontSave();
+						doNextOperation();
+					} else if(event.windowConfirmStatus==2) {
+						onCancel();
+					} else if(event.windowConfirmStatus==3) {
+						addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
+							if(event.isSaved){
+								doNextOperation();
+							}	
+						},false,0,true);
+						onSave();
+					}
+				},false,0,true);
+			} else {
+				doNextOperation();
+			}
+		}  else {
+			doNextOperation();
+		}
+		    
+	}
+	
+	private function doNextOperation():void {  
 		var itemp:int;
 		var temp:Contact;
 		//itemp = contacts.getItemIndex(account); 
@@ -717,7 +749,38 @@ implements="com.efi.mdi.IMDIWindowAware">
 	    temp = contacts.getItemAt(itemp,0) as Contact;   
 	   	dataService2.getContact(temp.id );                         
 	}
-	private function doPrev():void {              
+	
+	private function doPrev():void {
+		onClose();
+		if(getOriginalObject()!=null && getUpdatedObject()!=null){
+			if(!compareObject(getOriginalObject(),getUpdatedObject())){
+				var mdiConfirmComponent:MDIConfirmComponent = PopUpManager.createPopUp(this,MDIConfirmComponent,true) as MDIConfirmComponent;
+				mdiConfirmComponent.labelTxt = getConfirmationText();
+				mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
+					if(event.windowConfirmStatus==1){
+						onDontSave();
+						doPrevOperation();
+					} else if(event.windowConfirmStatus==2) {
+						onCancel();
+					} else if(event.windowConfirmStatus==3) {
+						addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
+							if(event.isSaved){
+								doPrevOperation();
+							}	
+						},false,0,true);
+						onSave();
+					}
+				},false,0,true);
+			} else {
+				doPrevOperation();
+			}
+		}  else {
+			doPrevOperation();
+		}
+		    
+	}
+	
+	private function doPrevOperation():void {              
 	    var itemp:int;
 	    var temp:Contact;
 	    itemp =	findItemID(contact.id, contacts);
@@ -788,7 +851,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 		setCreditCard();
 		registerClassAlias("com.efi.printsmith.data.Contact",Contact);
 		originalContact = ObjectUtil.copy(contact) as Contact;
-		openContactPicker();
+		//openContactPicker();
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
 		dispatchEvent(windowSaveSuccessEvent);
 	} 
