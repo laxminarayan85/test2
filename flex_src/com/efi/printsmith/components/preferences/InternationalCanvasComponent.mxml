@@ -60,7 +60,7 @@
 					
 				</mx:HBox>
 				
-				<mx:HBox width="100%">
+				<!--<mx:HBox width="100%">
 					
 					<mx:Label
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Authorizethedecrypto')}"
@@ -69,7 +69,7 @@
 					<components:CustomStringTextInputComponent width="150"
 						dataHolder="{preferencesSystem}" variableName="authorizeDecrypt" customText="{preferencesSystem.authorizeDecrypt}" />
 					
-				</mx:HBox>
+				</mx:HBox>-->
 					
 			</mx:VBox>
 			
