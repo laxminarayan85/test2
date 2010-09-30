@@ -10,8 +10,7 @@ package com.efi.printsmith.common.clientPreferences
 		private static const SO_NAME:String = "snowmassSO";
 		
 		public static const STOCK_PICKER_GRID_WIDTHS:String = "StockPickerGridWidths";
-		private static const SO_CLASS_PREFIX:String = "com.efi.printsmith.common.clientPreferences.so.";	
-	
+		
 		
 		public static function getInstance():UserClientPreferences	{
 			if (_instance == null)	{

@@ -27,7 +27,6 @@
 <mx:Script>
                                    
 <![CDATA[
-	import com.efi.printsmith.common.clientPreferences.so.StockPickerWidthsSO;
 	import com.efi.printsmith.common.clientPreferences.UserClientPreferences;
 	import com.efi.printsmith.data.StockClass;
 	import mx.events.DataGridEvent;
