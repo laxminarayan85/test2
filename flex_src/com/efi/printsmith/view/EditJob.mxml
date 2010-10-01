@@ -1695,6 +1695,7 @@
 				case this.job_number_of_lines:
 					break;
 				case this.job_parent:
+					doUpdatePrice = true;
 					var parentStr:String = Snowmass.formatSizeString(this.job_parent.text);
 					this.job_parent.selectedIndex = findItem(parentStr, dimensionsArray);
 					if (this.job_parent.selectedIndex == -1) {
@@ -1707,6 +1708,7 @@
 						refreshImageAndWeight();
 					break;
 				case this.job_finish_size:
+					doUpdatePrice = true;
 					var finishSizeStr:String = Snowmass.formatSizeString(this.job_finish_size.text);
 					this.job_finish_size.selectedIndex = findItem(finishSizeStr, dimensionsArray);
 					if (this.job_finish_size.selectedIndex == -1) {
@@ -1719,6 +1721,7 @@
 						refreshImageAndWeight();
 					break;
 				case this.job_fold_size:
+					doUpdatePrice = true;
 					var foldSizeStr:String = Snowmass.formatSizeString(this.job_fold_size.text);
 					this.job_fold_size.selectedIndex = findItem(foldSizeStr, dimensionsArray);
 					if (this.job_fold_size.selectedIndex == -1) {
@@ -1729,6 +1732,7 @@
 					}
 					break;
 				case this.job_size:
+					doUpdatePrice = true;
 					var sizeStr:String = Snowmass.formatSizeString(this.job_size.text);
 					this.job_size.selectedIndex = findItem(sizeStr, dimensionsArray);
 					if (this.job_size.selectedIndex == -1) {

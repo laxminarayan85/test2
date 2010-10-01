@@ -17,7 +17,7 @@ public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
 		double	totalArea = 0;
 		double	inches;
 		double	colors;
-		double	area;
+		double	area = 0.0;
 		double 	sides;
 		double	originals;
 		double	ups;
@@ -26,7 +26,7 @@ public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
 		JobBase job = charge.getParentJob();
 		
-		if (chargeDefinition.getRateSetCount() == 0) {
+		if (chargeDefinition.getArea() == 0.0) {
 			price = new BigDecimal(0.0);
 		} else {
 			if (job == null) {
@@ -42,9 +42,13 @@ public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
 				
 				if (job.getPaperCal() != null) {
 					if (chargeDefinition.getUseRunArea() || chargeDefinition.getInkCoverage() == "0") {
-						area = (job.getPaperCal().getRunSize().getWidth() * job.getPaperCal().getRunSize().getHeight());
+						if (job.getRunSize() != null) {
+							area = (job.getRunSize().getWidth() * job.getRunSize().getHeight());
+						}
 					} else {
-						area = (job.getPaperCal().getFinishSize().getWidth() * job.getPaperCal().getFinishSize().getHeight());
+						if (job.getFinishSize() != null) {
+							area = (job.getFinishSize().getWidth() * job.getFinishSize().getHeight());
+						}
 					}
 				} else {
 					area = 1;
@@ -114,7 +118,7 @@ public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
 					inches = 1;
 				}
 				
-				totalArea = inches/chargeDefinition.getRateSetCount();
+				totalArea = inches/chargeDefinition.getArea();
 			}
 			
 			if (charge.getOverrideMaterialQuantity()) {
@@ -136,7 +140,7 @@ public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
 		if (!charge.getOverridePrice()) {
 			charge.setPrice(price);
 		}
-		
+				
 		return charge;
 	}
 

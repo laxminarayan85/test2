@@ -2199,10 +2199,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:TextInput x="342" y="235" restrict="0-9" width="96" id="minimum_time_edit" text="{numberFormatter.format(charge.minimumTime)}" enabled="{minimum_time_check.selected}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					
 					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.RunArea')}" groupName="area_group" id="run_area_radio" width="112" value="RunArea" change="setDocDirty()"/>
-					<mx:RadioButton x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CutsarePrePress')}" id="cut_prepress_radio" width="112" change="setDocDirty()"/>
+					<mx:CheckBox x="446" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CutsarePrePress')}" id="cut_prepress_radio" width="112" change="setDocDirty()"/>
 					
 					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FinishedArea')}" groupName="area_group" id="finished_area_radio" width="112" value="FinishArea" change="setDocDirty()"/>
-					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignorecuts')}" id="Ignorecuts_radio" width="112" change="setDocDirty()"/>
+					<mx:CheckBox x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignorecuts')}" id="Ignorecuts_radio" width="112" change="setDocDirty()"/>
 					
 					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio" width="93" value="CostPlus"  change="setDocDirty()"/>
 					<mx:RadioButton x="4" y="301" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio" width="93" value="PiecePrice"  change="setDocDirty()"/>

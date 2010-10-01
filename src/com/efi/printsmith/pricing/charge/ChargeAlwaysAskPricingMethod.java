@@ -161,7 +161,19 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		}
 		
 		if (charge.getChargeDefinition().getUseMinimumTime()) {
-			if (charge.getChargeDefinition().getMinimumTime() > retVal) retVal = charge.getChargeDefinition().getMinimumTime();
+			if (charge.getChargeDefinition().getMinimumTime() > retVal) {
+				int difference = charge.getChargeDefinition().getMinimumTime().intValue() - (int)retVal;
+				
+				if (difference > 60) {
+					int hours = difference/60;
+					charge.setEndHours(charge.getEndHours()+hours);
+					difference -= hours;
+				}
+				
+				charge.setEndMinutes(charge.getEndMinutes() + difference);
+				
+				retVal = charge.getChargeDefinition().getMinimumTime();
+			}
 		}
 		
 		return retVal;

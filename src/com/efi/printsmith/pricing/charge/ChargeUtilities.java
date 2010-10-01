@@ -9,12 +9,6 @@ import com.efi.printsmith.data.SquareAreaCharge;
 import com.efi.printsmith.data.enums.ChargeMethod;
 
 public class ChargeUtilities {
-	static public Charge calculateChargeCost(Charge charge) {
-		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
-		if (chargeDefinition == null) return charge;
-		
-		return charge;
-	}
 
 	static public Charge createChargeFromChargeDefinition(ChargeDefinition chargeDefinition) {
 		Charge charge;
