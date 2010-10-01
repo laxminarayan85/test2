@@ -50,6 +50,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 		int categoryindex = 0;
 		boolean newCommand = false;
 		boolean newCategory = false;
+		boolean useRateSets = false;
 		String description = "";
 		String linkId = "";
 		String categoryId = "";
@@ -290,49 +291,38 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						chargeDefinition.setUseRate(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("use rate sets".equals(currentFieldToken)) {
-						
+						useRateSets = Utilities.tokenToBooleanValue(currentImportToken);
 						if (method.equals("1")) {
-							chargeDefinition.setUseRateSets(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setUseRateSets(useRateSets);
 							
 						} else if (method.equals("2")) {
-							chargeDefinition.setUseRateSets(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setUseRateSets(useRateSets);
 							
 						} else if (method.equals("3")) {
-							chargeDefinition.setUseRateSets(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setUseRateSets(useRateSets);
 							
 						} else if (method.equals("4")) {
-							chargeDefinition.setUseRateSets(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setUseRateSets(useRateSets);
 							
 						} else if (method.equals("5")) {
-							chargeDefinition.setUseRateSets(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setUseRateSets(useRateSets);
 							
 						} else if (method.equals("6")) {
-							chargeDefinition.setUseRateSets(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setUseRateSets(useRateSets);
 							
 						} else if (method.equals("7")) {
-							chargeDefinition.setSheet_lift_check(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setSheet_lift_check(useRateSets);
 													
 						} else if (method.equals("8")) {
 							chargeDefinition.setCoverlb_check(true);
 						} else if (method.equals("9")) {
-							chargeDefinition.setShip_markup_check(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setShip_markup_check(useRateSets);
 						} else if (method.equals("10")) {
-							chargeDefinition.setUseRateSets(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setUseRateSets(useRateSets);
 						} else if (method.equals("11")) {
-							chargeDefinition.setUseRateSets(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setUseRateSets(useRateSets);
 						} else if (method.equals("12")) {
-							chargeDefinition.setUseArea(Utilities
-									.tokenToBooleanValue(currentImportToken));
+							chargeDefinition.setUseArea(useRateSets);
 						}
 									
 					} else if ("use material sets".equals(currentFieldToken)) {
@@ -358,44 +348,37 @@ public class ChargeDefinitionMapper extends ImportMapper {
 						chargeDefinition.setUseSignatures(Utilities
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("rate set count".equals(currentFieldToken)) {
+						Double rateSetCount = 0.0;
+						
+						if (useRateSets) {
+							Utilities.tokenToDouble(currentImportToken);
+						}
 						if (method.equals("1")) {
-							chargeDefinition.setRateSetCount(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setRateSetCount(rateSetCount);
 						} else if (method.equals("2")) {
-							chargeDefinition.setRateSetCount(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setRateSetCount(rateSetCount);
 						} else if (method.equals("3")) {
-							chargeDefinition.setRateSetCount(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setRateSetCount(rateSetCount);
 						} else if (method.equals("4")) {
-							chargeDefinition.setRateSetCount(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setRateSetCount(rateSetCount);
 						} else if (method.equals("5")) {
-							chargeDefinition.setRateSetCount(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setRateSetCount(rateSetCount);
 						} else if (method.equals("6")) {
-							chargeDefinition.setRateSetCount(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setRateSetCount(rateSetCount);
 						} else if (method.equals("7")) {
-							chargeDefinition.setSheetliftCut(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setSheetliftCut(rateSetCount);
 							chargeDefinition.setSheet_lift_check(true);
 						} else if (method.equals("8")) {
-							chargeDefinition.setCoverlbInk(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setCoverlbInk(rateSetCount);
 							chargeDefinition.setCoverlb_check(true);
 						} else if (method.equals("9")) {
-							chargeDefinition.setShipMarkup(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setShipMarkup(rateSetCount);
 						} else if (method.equals("10")) {
-							chargeDefinition.setRateSetCount(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setRateSetCount(rateSetCount);
 						} else if (method.equals("11")) {
-							chargeDefinition.setRateSetCount(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setRateSetCount(rateSetCount);
 						} else if (method.equals("12")) {
-							chargeDefinition.setArea(Utilities
-									.tokenToDouble(currentImportToken));
+							chargeDefinition.setArea(rateSetCount);
 						}
 						
 					} else if ("rate".equals(currentFieldToken)) {
