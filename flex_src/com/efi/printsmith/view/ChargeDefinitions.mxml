@@ -667,22 +667,49 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleDeleteCategory(event:CloseEvent):void {
 		if (event.detail == Alert.OK) {
 			if(this.chargeCategory!=null){
+				var catIndex:int = getNextCategoryIndex();
+				if (catIndex != -1) {
+					if (catIndex < this.chargeCategory.parent.children.length) {
+						scrollToItem = this.chargeCategory.parent.children.getItemAt(catIndex) as ModelBase;
+					} else {
+						scrollToItem = this.chargeCategory.parent;
+					}
+				} else {
+					scrollToItem = this.chargeCategory.parent;
+				}
 				if(this.chargeCategory.children!=null && this.chargeCategory.children.length>0){
 					var deleteStr:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'chargeDefCmd.OKtodeletetheentirec');
 					deleteStr = deleteStr+"\n"+StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Thiswillaffectthe4ch'),null,null,null,null,this.chargeCategory.children.length);
 					Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,function(event:CloseEvent):void {
 						if(event.detail == Alert.OK) {
-							scrollToItem = chargeCategory.parent;
 							fireDeleteEvent(chargeCategory, new mx.rpc.Responder(handleDeleteResult, handleFault));
 						}
 					},null,Alert.OK);
 				} else {
-					scrollToItem = this.chargeCategory.parent;
 					fireDeleteEvent(this.chargeCategory, new mx.rpc.Responder(handleDeleteResult, handleFault));
 				}
 			}
 		}
 	}
+	
+	private function getNextCategoryIndex():int {
+		var i:int = 0;
+		
+		if (chargeCategory == null || chargeCategory.parent == null) return -1;
+		
+		for (i = 0; i < chargeCategory.parent.children.length ; i++) {
+			if (chargeCategory.id == (chargeCategory.parent.children.getItemAt(i) as ModelBase).id) {
+				if (i == chargeCategory.parent.children.length-1) {
+					return i-1; /* return previous element in this case */
+				} else {
+					return i+1; /* not the last element so return next element */
+				}
+			}
+		}
+		
+		return -1;
+	}
+	
 	private function handleDeleteCommand(event:CloseEvent):void {
 		if (event.detail == Alert.OK) 
 			fireDeleteEvent(this.chargeCommand, new mx.rpc.Responder(handleDeleteResult, handleFault));
