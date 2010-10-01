@@ -1254,15 +1254,17 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		}	
 		
 		/* Finish Grain Example */
-		if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER)) {
-			dutch = 0;
-			grain = 0;
-		} else if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN)) {
-			dutch = 0;
-			grain = 1;
-		} else if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION)) {
-			dutch = 1;
-			grain = 0;
+		if (papercal.getRunToFinishGrain() != null) {
+			if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER)) {
+				dutch = 0;
+				grain = 0;
+			} else if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN)) {
+				dutch = 0;
+				grain = 1;
+			} else if (papercal.getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION)) {
+				dutch = 1;
+				grain = 0;
+			}
 		}
 		
 		switch (whichToStart)

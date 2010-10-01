@@ -113,10 +113,18 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		chargeDefinition.presetInSetsOf = parseCurrencyFloat(this.in_sets_of_text.text);
 		chargeDefinition.presetInSetsOfLabel = this.in_sets_of_label_text.text;
 		chargeDefinition.rateSetCount = chargeDefinition.presetInSetsOf;
-		chargeDefinition.linearX1 = this.linear_bottom.selected;
-		chargeDefinition.linearX2 = this.linear_top.selected;
-		chargeDefinition.linearY1 = this.linear_right.selected;
-		chargeDefinition.linearY2 = this.linear_left.selected;
+		if (this.linear_bottom != null) {
+			chargeDefinition.linearX1 = this.linear_bottom.selected;
+		}
+		if (this.linear_top != null) {
+			chargeDefinition.linearX2 = this.linear_top.selected;
+		}
+		if (this.linear_right != null) {
+			chargeDefinition.linearY1 = this.linear_right.selected;
+		}
+		if (this.linear_left != null) {
+			chargeDefinition.linearY2 = this.linear_left.selected;
+		}
 		if (tax_table_combo.selectedIndex == 0) {
 			chargeDefinition.presetTaxTable = null;
 		} else {

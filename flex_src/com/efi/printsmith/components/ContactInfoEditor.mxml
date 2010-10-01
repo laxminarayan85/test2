@@ -210,8 +210,8 @@
 
 			private function popupClose(event:CloseEvent):void
 			{
-				contact=titleWindow.getContact();
-				updateDisplayContact();
+//				contact=titleWindow.getContact();
+//				updateDisplayContact();
 			}
 
 			private function doEditContact():void

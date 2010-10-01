@@ -207,14 +207,17 @@
 
 		var eventWeb:AccountsWebPanelEvent = new AccountsWebPanelEvent(canvasWeb, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventWeb.dispatch();
-		this.ship_to_contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);
-		this.bill_to_contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);
+		this.ship_to_contact_editor.addEventListener("SaveContactEvent", saveShipToContactHandler, false, 1);
+		this.bill_to_contact_editor.addEventListener("SaveContactEvent", saveBillToContactHandler, false, 1);
 
 	}
 
-	public function saveContactHandler(event:Event):void {
-		this.updateStatementContact();
-		this.updateInvoiceContact();
+	public function saveShipToContactHandler(event:Event):void {
+		doContactUpdate();
+	}
+	
+	public function saveBillToContactHandler(event:Event):void {
+		doContactUpdate2();
 	}
 
 	public function handleUIEvent(evt:ResultEvent):void {

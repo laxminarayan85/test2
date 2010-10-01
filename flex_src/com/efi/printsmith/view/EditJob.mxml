@@ -1454,13 +1454,13 @@
 				var localJob:Job = ev.result as Job;
 				refresh_price_btn.visible = true;
 				refresh_price_btn.enabled = true;		
-				job.pricingRecord.totalPrice = localJob.pricingRecord.totalPrice;
-				job.pricingRecord.bindPrice = localJob.pricingRecord.bindPrice;
-				job.pricingRecord.otherChargePrice = localJob.pricingRecord.otherChargePrice;
-				job.pricingRecord.prepPrice = localJob.pricingRecord.prepPrice;
-				job.pricingRecord = localJob.pricingRecord;
 				charges = localJob.charges;
 				if (job != null) { 
+					job.pricingRecord.totalPrice = localJob.pricingRecord.totalPrice;
+					job.pricingRecord.bindPrice = localJob.pricingRecord.bindPrice;
+					job.pricingRecord.otherChargePrice = localJob.pricingRecord.otherChargePrice;
+					job.pricingRecord.prepPrice = localJob.pricingRecord.prepPrice;
+					job.pricingRecord = localJob.pricingRecord;
 					job.impressionsPerRun = localJob.impressionsPerRun;
 					job.totalImpositions = localJob.totalImpositions;
 					job.totalImpressions = localJob.totalImpressions;
@@ -1469,6 +1469,9 @@
 					job.totalCopies = localJob.totalCopies;
 					job.numCopies = localJob.numCopies;
 					job.signatures = localJob.signatures;
+					job.pressQty = localJob.pressQty;
+					job.numUp = localJob.numUp;
+					job.numOn = localJob.numOn;
 					num_signatures.text = job.signatures.toString();
 					job_imp.text = job.impressionsPerRun.toString();
 					total_imp.text = job.totalImpressions.toString();
@@ -1495,6 +1498,8 @@
 						job_price.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice));
 					}
 				}
+				
+				paperCalculatorService.CalcOut(job, job.paperCal.whichStartSize);
 			}
 			
 			private function handlePriceJobFault(ev:FaultEvent):void
@@ -1737,8 +1742,6 @@
 					break;
 				}
 				if (doUpdatePrice) updatePrice();
-				
-				paperCalculatorService.CalcOut(job, job.paperCal.whichStartSize);
 			}
 			
 			public function changeJobSides(evt:Event):void {
@@ -1833,8 +1836,7 @@
 				}else{
 					parent = job.stock.parentsize.width * job.cutOff;
 					//basic = job.stock.stktype.size
-				}
-					
+				}	
 			}
 			public function setPricingMethod(pricingMethod:PreferencesPricingMethod):void {
 				if (pricingMethod != null)  {

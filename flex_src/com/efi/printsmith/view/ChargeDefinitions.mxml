@@ -187,6 +187,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     private var scrollToItem:ModelBase = null;
     
     [Bindable] private var deleteBtnEnabled:Boolean = false;
+    [Bindable] private var inkCoverageLabel:String = "";
     
 	public function init():void {
 		consumer.subscribe();
@@ -205,6 +206,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		updateControlState();
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		foldTemplateService.getAll("FoldTemplate");
+		
+		inkCoverageLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0');
+		
+		var poundStr:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Lb');
+		inkCoverageLabel = StringUtil.substitute(inkCoverageLabel, poundStr); 
 	}      
 	     
 	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
@@ -2266,7 +2272,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 					<mx:TextInput x="446" y="349" restrict="0-9\\.\\-\\," width="124" enabled="{in_set_mat_check.selected}"  text="{charge.materialSetCount}" id="in_sets_mat_edit" textAlign="right" focusOut="handleFocusOut(event)"  change="setDocDirty()"/>
 					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.SheetsLift')}" id="sheet_lift_check" selected="{charge.sheet_lift_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
 					<mx:TextInput x="446" y="326" restrict="0-9\\.\\-\\," id="sheet_lift_edit" text="{charge.sheetliftCut}" width="124"  enabled="{sheet_lift_check.selected}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
-					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0')}" id="cover_ink_check" selected="{charge.coverlb_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
+					<mx:CheckBox x="320" y="326" label="{inkCoverageLabel}" id="cover_ink_check" selected="{charge.coverlb_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
 					<mx:TextInput x="446" y="326"  restrict="0-9\." id="cover_ink_edit"  text="{charge.coverlbInk}" width="124" enabled="{cover_ink_check.selected}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					<mx:CheckBox x="320" y="326" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Markup')}" id="ship_markup_check" selected="{charge.ship_markup_check}" enabled="{rate_check.selected}" width="118" change="UpdateAdjset();"/>
 					<mx:TextInput x="446" y="326" id="ship_markup_edit" restrict="0-9\." text="{charge.shipMarkup}" width="124" enabled="{ship_markup_check.selected}" textAlign="right" focusOut="handleFocusOut(event)"  change="setDocDirty()"/>

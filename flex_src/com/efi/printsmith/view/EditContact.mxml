@@ -60,7 +60,8 @@ implements="com.efi.mdi.IMDIWindowAware">
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 
-<!--<mx:StringValidator id="contactFirstValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
+<!--
+<mx:StringValidator id="contactFirstValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
 <mx:StringValidator id="contactLastValidator" source="{last_name_edit}"	property="text"	minLength="2" required="true"/>
 -->
 
@@ -69,8 +70,6 @@ implements="com.efi.mdi.IMDIWindowAware">
 <mx:Script> 
                                   
 <![CDATA[
-	import com.efi.mdi.event.window.WindowConfirmStatusEvent;
-	import com.efi.mdi.view.window.MDIConfirmComponent;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
 	import com.efi.printsmith.data.ModelBase;
 	import flash.net.registerClassAlias;
@@ -110,7 +109,8 @@ implements="com.efi.mdi.IMDIWindowAware">
 	import mx.containers.TitleWindow;                                         
 	import mx.collections.ArrayCollection;                                         
 	import mx.rpc.events.ResultEvent;                                         
-	import mx.rpc.events.FaultEvent;                                         
+	import mx.rpc.events.FaultEvent;  
+	import mx.events.CloseEvent;
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
     import mx.printing.FlexPrintJob;
@@ -199,8 +199,13 @@ implements="com.efi.mdi.IMDIWindowAware">
 
 		var eventWeb:ContactsWebPanelEvent = new ContactsWebPanelEvent(canvasWeb, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventWeb.dispatch();
-		    
-	}      
+		contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);		    
+	}  
+	
+	private function saveContactHandler(ev:Event):void {
+		this.setContact(contact_editor.contact);
+	}
+	
 	private function handleLoadGradeResult(ev:ResultEvent):void {
 		gradesarray = ev.result as ArrayCollection; 
 		
@@ -295,6 +300,13 @@ implements="com.efi.mdi.IMDIWindowAware">
 			setCampaigns();
 			registerClassAlias("com.efi.printsmith.data.Contact",Contact);
 			originalContact = ObjectUtil.copy(this.contact) as Contact;
+			if (contact.firstName != "" && contact.lastName != "") {
+				this.enableSave = true;
+			} else {
+				this.enableSave = false;
+			}
+		} else {
+			this.enableSave = false;
 		}
 		//address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ShippingAddress'));
 	 	ship_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.ShippingAddress'));
@@ -651,9 +663,21 @@ implements="com.efi.mdi.IMDIWindowAware">
 	 	
 	}  
 	private function doDelete():void {
+		var nameStr:String = "";
+		if (contact != null) {
+			nameStr = this.contact.firstName + " " + this.contact.lastName;
+		}
+		var deleteStr:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), nameStr);
+		Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteContact,null,Alert.OK);
 	    dataService2.deleteItem("Contact",contact.id);
-	 	
-	}  
+	} 
+	
+	private function handleDeleteContact(event:CloseEvent):void {
+		if (event.detail == Alert.OK) {
+			dataService2.deleteItem("Contact", contact.id);
+		}
+	}
+	
 	private function doGet():void{
 		
 		var contactPickerWindow:ContactPicker = ContactPicker(PopUpManager.createPopUp(this, ContactPicker, true));
@@ -707,37 +731,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 		this.setContact(contact);
 	}
 	
-	private function doNext():void {
-		onClose();
-		if(getOriginalObject()!=null && getUpdatedObject()!=null){
-			if(!compareObject(getOriginalObject(),getUpdatedObject())){
-				var mdiConfirmComponent:MDIConfirmComponent = PopUpManager.createPopUp(this,MDIConfirmComponent,true) as MDIConfirmComponent;
-				mdiConfirmComponent.labelTxt = getConfirmationText();
-				mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
-					if(event.windowConfirmStatus==1){
-						onDontSave();
-						doNextOperation();
-					} else if(event.windowConfirmStatus==2) {
-						onCancel();
-					} else if(event.windowConfirmStatus==3) {
-						addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
-							if(event.isSaved){
-								doNextOperation();
-							}	
-						},false,0,true);
-						onSave();
-					}
-				},false,0,true);
-			} else {
-				doNextOperation();
-			}
-		}  else {
-			doNextOperation();
-		}
-		    
-	}
-	
-	private function doNextOperation():void {  
+	private function doNext():void {  
 		var itemp:int;
 		var temp:Contact;
 		//itemp = contacts.getItemIndex(account); 
@@ -749,38 +743,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 	    temp = contacts.getItemAt(itemp,0) as Contact;   
 	   	dataService2.getContact(temp.id );                         
 	}
-	
-	private function doPrev():void {
-		onClose();
-		if(getOriginalObject()!=null && getUpdatedObject()!=null){
-			if(!compareObject(getOriginalObject(),getUpdatedObject())){
-				var mdiConfirmComponent:MDIConfirmComponent = PopUpManager.createPopUp(this,MDIConfirmComponent,true) as MDIConfirmComponent;
-				mdiConfirmComponent.labelTxt = getConfirmationText();
-				mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
-					if(event.windowConfirmStatus==1){
-						onDontSave();
-						doPrevOperation();
-					} else if(event.windowConfirmStatus==2) {
-						onCancel();
-					} else if(event.windowConfirmStatus==3) {
-						addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
-							if(event.isSaved){
-								doPrevOperation();
-							}	
-						},false,0,true);
-						onSave();
-					}
-				},false,0,true);
-			} else {
-				doPrevOperation();
-			}
-		}  else {
-			doPrevOperation();
-		}
-		    
-	}
-	
-	private function doPrevOperation():void {              
+	private function doPrev():void {              
 	    var itemp:int;
 	    var temp:Contact;
 	    itemp =	findItemID(contact.id, contacts);
@@ -845,13 +808,9 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
-		this.setContact(ev.result as Contact);
-	    contact_editor.setContact(contact);
-		setMarketing();
-		setCreditCard();
-		registerClassAlias("com.efi.printsmith.data.Contact",Contact);
-		originalContact = ObjectUtil.copy(contact) as Contact;
-		//openContactPicker();
+		this.contact = new Contact();
+		setContact(this.contact);
+		openContactPicker();
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
 		dispatchEvent(windowSaveSuccessEvent);
 	} 
@@ -979,9 +938,10 @@ implements="com.efi.mdi.IMDIWindowAware">
 	private function validateForm(event:Event):void{                    
         focussedFormControl = event.target as DisplayObject;    
         formIsValid = true;            
-     /*    validate(contactFirstValidator);
-        validate(contactLastValidator);   */      
+//     	validate(contactFirstValidator);
+//        validate(contactLastValidator);      
     }
+    
     private function validate(validator:Validator):Boolean
 	{                
         var validatorSource:DisplayObject = validator.source as DisplayObject;
@@ -989,6 +949,15 @@ implements="com.efi.mdi.IMDIWindowAware">
         var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
         var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
 		formIsValid = formIsValid && currentControlIsValid;
+		
+		var contactNameIsValid:Boolean = false;
+		if (contact_editor.contact != null && contact_editor.contact.firstName != "" &&
+			contact_editor.contact.lastName != "") {
+			contactNameIsValid = true;
+		}
+		
+		formIsValid = formIsValid && contactNameIsValid;
+		enableSave = formIsValid;
         return currentControlIsValid;
 	}
 	private function editCampaigns():void{
@@ -1115,25 +1084,25 @@ implements="com.efi.mdi.IMDIWindowAware">
 	
 	public function getOriginalObject():ArrayCollection {
 		var originalList:ArrayCollection = new ArrayCollection();
-		if(originalContact!=null){
-			if(originalContact.marketing!=null && originalContact.marketing.birthDate!=null){
-				originalContact.marketing.birthDate = scrubTimeValue(originalContact.marketing.birthDate);
-			}
-			if(originalContact.marketing!=null && originalContact.marketing.followup!=null){
-				originalContact.marketing.followup = scrubTimeValue(originalContact.marketing.followup);
-			}
-			if(originalContact.marketing!=null && originalContact.marketing.user3!=null){
-				originalContact.marketing.user3 = scrubTimeValue(originalContact.marketing.user3);
-			}
-			if(originalContact.marketing!=null && originalContact.marketing.user4!=null){
-				originalContact.marketing.user4 = scrubTimeValue(originalContact.marketing.user4);
-			}
-			if(originalContact.marketing!=null && originalContact.marketing.user5!=null){
-				originalContact.marketing.user5 = scrubTimeValue(originalContact.marketing.user5);
-			}
-			if(originalContact.creditCard!=null && originalContact.creditCard.expiresDate!=null){
-				originalContact.creditCard.expiresDate = scrubTimeValue(originalContact.creditCard.expiresDate);
-			}
+		if (originalContact == null) return originalList;
+		
+		if(originalContact.marketing!=null && originalContact.marketing.birthDate!=null){
+			originalContact.marketing.birthDate = scrubTimeValue(originalContact.marketing.birthDate);
+		}
+		if(originalContact.marketing!=null && originalContact.marketing.followup!=null){
+			originalContact.marketing.followup = scrubTimeValue(originalContact.marketing.followup);
+		}
+		if(originalContact.marketing!=null && originalContact.marketing.user3!=null){
+			originalContact.marketing.user3 = scrubTimeValue(originalContact.marketing.user3);
+		}
+		if(originalContact.marketing!=null && originalContact.marketing.user4!=null){
+			originalContact.marketing.user4 = scrubTimeValue(originalContact.marketing.user4);
+		}
+		if(originalContact.marketing!=null && originalContact.marketing.user5!=null){
+			originalContact.marketing.user5 = scrubTimeValue(originalContact.marketing.user5);
+		}
+		if(originalContact.creditCard!=null && originalContact.creditCard.expiresDate!=null){
+			originalContact.creditCard.expiresDate = scrubTimeValue(originalContact.creditCard.expiresDate);
 		}
 		originalList.addItem(originalContact);
 		return originalList;
