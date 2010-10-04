@@ -173,6 +173,7 @@
 		var sortField:SortField = new SortField();
 		sortField.name = "title";
 		sortField.numeric = false;
+		sortField.caseInsensitive = true;
 		var titleSort:Sort = new Sort();
 		titleSort.fields = [sortField];
 		accounts.sort = titleSort;
@@ -182,6 +183,7 @@
 		var sortField:SortField = new SortField();
 		sortField.compareFunction = compareByLastName;
 		sortField.numeric = false;
+		sortField.caseInsensitive = true;
 		var nameSort:Sort = new Sort();
 		nameSort.fields = [sortField];
 		accounts.sort = nameSort;
