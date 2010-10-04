@@ -1489,6 +1489,8 @@
 					if (job_totalCost != null) {
 						job_totalCost.text = job.totalCost.toString();
 					}
+					if (this.num_signatures != null)
+						num_signatures.text = job.totalCopies.toString();
 					
 					if (job.pricingRecord != null) {
 						overs_unit_price.text = Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.oversUnitPrice.toString());
