@@ -30,6 +30,7 @@ import com.efi.printsmith.data.TaxCodes;
 import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.Country;
 import com.efi.printsmith.data.AddressFormatting;
+import com.efi.printsmith.data.EstimatorTypes;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import com.efi.printsmith.service.DataService;
 
@@ -394,8 +395,17 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesPricingMethod.setTitle(value);
 		else if (name.equals("pricingMethodAbbrev"))
 			preferencesPricingMethod.setAbbreviation(value);
-		else if (name.equals("pricingMethod"))
+		else if (name.equals("pricingMethod")) {
 			preferencesPricingMethod.setMethod(value);
+			String estimatorName = getPricingMethodName(Utilities.tokenToInt(key));
+			EstimatorTypes estimatorType = (EstimatorTypes)dataService.getByName("EstimatorTypes", estimatorName);
+			if (estimatorType == null) {
+				estimatorType = new EstimatorTypes();
+				estimatorType.setName(estimatorName);
+				estimatorType = (EstimatorTypes)dataService.addUpdate(estimatorType);
+			}
+			preferencesPricingMethod.setEstimator(estimatorType);
+		}
 		else if (name.equals("showNotes"))
 			preferencesPricingMethod.setShowNotes(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("finished"))
@@ -407,6 +417,74 @@ public class PreferencesMapper extends ImportMapper {
 		else if (name.equals("enabled"))
 			preferencesPricingMethod.setUsed(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesPricingMethod);
+	}
+	private String getPricingMethodName(int key) {
+		String retValue = "";
+		switch (key) {
+		case 1:
+			retValue = "Press Definitions";
+			break;
+		case 2:
+			retValue = "Copier Definitions";
+			break;
+		case 3:
+			retValue = "Copier Definitions";
+			break;
+		case 4:
+			retValue = "Blank Stock";
+			break;
+		case 5:
+			retValue = "List Price";
+			break;
+		case 6:
+			retValue = "In Stock";
+			break;
+		case 7:
+			retValue = "Special Order";
+			break;
+		case 8:
+			retValue = "Customer";
+			break;
+		case 9:
+			retValue = "Outside Service";
+			break;
+		case 10:
+			retValue = "Generic Merchandise";
+			break;
+		case 11:
+			retValue = "Line and Inches";
+			break;
+		case 12:
+			retValue = "Multiple Parts";
+			break;
+		case 13:
+			retValue = "Outside Service";
+			break;
+		case 14:
+			retValue = "Outside Service";
+			break;
+		case 15:
+			retValue = "Outside Service";
+			break;
+		case 16:
+			retValue = "Outside Service";
+			break;
+		case 17:
+			retValue = "Outside Service";
+			break;
+		case 18:
+			retValue = "Press Definitions";
+			break;
+		case 19:
+			retValue = "Copier Definitions";
+			break;
+		case 20:
+			retValue = "Charges Only";
+			break;
+			
+		}
+		
+		return retValue;
 	}
 	private void importPreferencesStocksField(String group, String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
