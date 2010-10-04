@@ -1726,8 +1726,10 @@
 							job.parentSize = new Dimension()
 						job.parentSize.name = parentStr;
 					}
-					else
+					else {
+						job.parentSize = job_parent.selectedItem as Dimension;
 						refreshImageAndWeight();
+					}
 					break;
 				case this.job_finish_size:
 					doUpdatePrice = true;
@@ -1739,8 +1741,10 @@
 							job.finishSize = new Dimension();
 						job.finishSize.name = finishSizeStr;
 					}
-					else
+					else {
+						job.finishSize = job_finish_size.selectedItem as Dimension;
 						refreshImageAndWeight();
+					}
 					break;
 				case this.job_fold_size:
 					doUpdatePrice = true;
@@ -1751,7 +1755,8 @@
 						if (job.foldedSize == null)
 							job.foldedSize = new Dimension();
 						job.foldedSize.name = foldSizeStr;
-					}
+					} else
+						job.foldedSize = job_fold_size.selectedItem as Dimension;
 					break;
 				case this.job_size:
 					doUpdatePrice = true;
@@ -1760,11 +1765,13 @@
 					if (this.job_size.selectedIndex == -1) {
 						this.job_size.text = sizeStr;
 						if (job.runSize == null)
-							job.runSize = new Dimension();
+							job.runSize = new Dimension() as Dimension;
 						job.runSize.name = sizeStr;
 					}
-					else
+					else {
+						job.runSize = job_size.selectedItem as Dimension;
 						refreshCalcAndImage();
+					}
 					break;
 				}
 				if (doUpdatePrice) updatePrice();
