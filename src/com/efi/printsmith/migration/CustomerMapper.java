@@ -417,7 +417,7 @@ public class CustomerMapper extends ImportMapper {
 				} else if ("default est".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("shipping mode".equals(currentFieldToken)) {
-					if (currentImportToken.equals("") == false) {
+					if (currentImportToken.equals("") == false && currentImportToken.equals("0") == false) {
 						ShippingMethod method = (ShippingMethod)dataService.getByName("ShippingMethod", currentImportToken);
 						if (method == null) {
 							method = new ShippingMethod();
