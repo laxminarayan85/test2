@@ -1374,6 +1374,12 @@
 							this.job_finish_size.text = job.finishSize.name;
 						this.job.foldedSize.name = "";
 						job_fold_size.text = "";
+						if (this.job_type.text == "Large Format" && evt.stockDefinition.defaultLargeCopier != null) {
+							job.pricingCopier = evt.stockDefinition.defaultLargeCopier;
+							job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
+							job.costingCopier = evt.stockDefinition.defaultLargeCopier;
+							job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers);
+						}
 					}
 					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color" || this.job_type.text == "Blank" || this.job_type.text == "List") {
 						this.job.parentSize = evt.stockDefinition.parentsize;
@@ -1383,6 +1389,18 @@
 						this.job.finishSize = evt.stockDefinition.parentsize;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 						this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
+						if (this.job_type.text == "B&W" && evt.stockDefinition.defaultBWCopier != null) {
+							job.pricingCopier = evt.stockDefinition.defaultBWCopier;
+							job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
+							job.costingCopier = evt.stockDefinition.defaultBWCopier;
+							job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers);
+						}
+						if (this.job_type.text == "Color" && evt.stockDefinition.defaultColorCopier != null) {
+							job.pricingCopier = evt.stockDefinition.defaultColorCopier;
+							job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
+							job.costingCopier = evt.stockDefinition.defaultColorCopier;
+							job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers);
+						}
 					}
 					else {
 						this.job.parentSize = evt.stockDefinition.normalRunSize;
