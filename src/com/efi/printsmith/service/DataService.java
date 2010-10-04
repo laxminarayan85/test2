@@ -288,7 +288,7 @@ public class DataService extends HibernateService {
 //			String queryString = "select new " + className + "( "
 //					+ columnstring + ") from " + className + " a where a.id is not null order by title";
 			String queryString = "select new Account( "
-				+ columnStr + ") from Account a left outer join a.contact"; 
+				+ columnStr + ") from Account a left outer join a.contact order by a.title "; 
 
 			Query query = em.createQuery(queryString);
 
