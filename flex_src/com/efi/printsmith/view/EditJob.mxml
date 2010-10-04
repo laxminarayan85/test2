@@ -1119,6 +1119,8 @@
 				updatePrice();
 				
 				refreshCalcAndImage();		// new cut diagram to match existing values
+				if (this.estimatingPreferences.showPaperCalculator == true)
+					this.doPaperCal();
 			}
 			
 			private function handleLoadResult(ev:ResultEvent):void
