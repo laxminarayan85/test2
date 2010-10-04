@@ -38,6 +38,7 @@ public class PreferencesMapper extends ImportMapper {
 	public void importFile(File uploadedFile) throws Exception {
 		try {
 			deletePricingMethods();
+			deleteCreditCards();
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			org.w3c.dom.Document doc = db.parse(uploadedFile);
@@ -86,6 +87,15 @@ public class PreferencesMapper extends ImportMapper {
 		List<PreferencesPricingMethod> pricingMethods = (List<PreferencesPricingMethod>)dataService.getAll("PreferencesPricingMethod");
 		for (int i=0;i<pricingMethods.size();i++) {
 			dataService.deleteItem("PreferencesPricingMethod", pricingMethods.get(i).getId());
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void deleteCreditCards() {
+		DataService dataService = new DataService();
+		List<PreferencesCreditCard> creditCards = (List<PreferencesCreditCard>)dataService.getAll("PreferencesCreditCard");
+		for (int i=0;i<creditCards.size();i++) {
+			dataService.deleteItem("PreferencesCreditCard", creditCards.get(i).getId());
 		}
 	}
 	private void importField(String group, String key, String fieldName, String fieldValue) throws Exception {
