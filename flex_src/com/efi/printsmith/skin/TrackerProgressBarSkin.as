@@ -40,91 +40,94 @@ package com.efi.printsmith.skin
 		{
 			super.updateDisplayList(w, h);
 			
-			var trackerConsoleJobs:TrackerConsoleJobs;
+			if(this.parent!=null){
 			
-			var trackWidth:Number = this.parent.parent.parent.width;
-			var progressBar:ProgressBar = this.parent.parent.parent as ProgressBar;
-			var labelWidth:Number = progressBar.getStyle("labelWidth") as Number;
-			trackWidth = trackWidth - labelWidth;
-			
-			var trackerProgressBarComponent:TrackerProgressBarComponent = this.parent.parent.parent.parent as TrackerProgressBarComponent;
-			
-			if(trackerProgressBarComponent!=null){
-				trackerConsoleJobs = trackerProgressBarComponent.trackerConsoleJobs;
-			}
-			
-	
-			// User-defined styles
-			var barColorStyle:* = getStyle("barColor");
-			var barColor:uint = StyleManager.isValidStyleValue(barColorStyle) ?
-								barColorStyle :
-								getStyle("themeColor");
-	
-			var barColor0:Number = ColorUtil.adjustBrightness2(0x00ff00, 40);
-	
-			// default fill color for halo uses theme color
-			var fillColors0:Array = [ barColor0, 0x00ff00 ]; 
-			
-			var barColor1:Number = ColorUtil.adjustBrightness2(0x0000ff, 40);
-	
-			// default fill color for halo uses theme color
-			var fillColors1:Array = [ barColor1, 0x0000ff ]; 
-			
-			var barColor2:Number = ColorUtil.adjustBrightness2(0xff0000, 40);
-	
-			// default fill color for halo uses theme color
-			var fillColors2:Array = [ barColor2, 0xff0000 ]; 
-			
-			var barColor3:Number = ColorUtil.adjustBrightness2(0xffff00, 40);
-	
-			// default fill color for halo uses theme color
-			var fillColors3:Array = [ barColor3, 0xffff00 ]; 
-					
-			graphics.clear();
-			
-			if(trackerConsoleJobs!=null){
-				if(trackerConsoleJobs.paused){
-					// glow
-					drawRoundRect(
-						0, 0, w, h, 0,
-						fillColors3, 0.5,
-						verticalGradientMatrix(0, 0, w - 2, h - 2));
-					
-					// fill
-					drawRoundRect(
-						1, 1, w - 2, h - 2, 0,
-						fillColors3, 1,
-						verticalGradientMatrix(0, 0, w - 2, h - 2));
-				} else {
-					if(trackerProgressBarComponent.totalTime>0){
-						if(trackerProgressBarComponent.estimatedSetUpTime>0 || trackerProgressBarComponent.estimatedRunTime>0){
-							if(trackerProgressBarComponent.estimatedRunTime>0 && w>((trackerProgressBarComponent.estimatedRunTime/trackerProgressBarComponent.totalTime)*trackWidth)) {
-								drawDifferentGraphics(w,h,fillColors0,fillColors1,fillColors2,
-								trackerProgressBarComponent.estimatedSetUpTime,trackerProgressBarComponent.estimatedRunTime,trackerProgressBarComponent.totalTime,
-								true);
-							} else if(trackerProgressBarComponent.estimatedSetUpTime>0 && w>((trackerProgressBarComponent.estimatedSetUpTime/trackerProgressBarComponent.totalTime)*trackWidth)) {
-								drawDifferentGraphics(w,h,fillColors0,fillColors1,fillColors2,
-								trackerProgressBarComponent.estimatedSetUpTime,trackerProgressBarComponent.estimatedRunTime,trackerProgressBarComponent.totalTime,
-								false);
-							} else {
-								if(trackerProgressBarComponent.estimatedSetUpTime>0){
-									drawDefaultGraphics(w,h,fillColors0);
-								} else if(trackerProgressBarComponent.estimatedRunTime>0) {
-									drawDefaultGraphics(w,h,fillColors1);
+				var trackerConsoleJobs:TrackerConsoleJobs;
+				
+				var trackWidth:Number = this.parent.parent.parent.width;
+				var progressBar:ProgressBar = this.parent.parent.parent as ProgressBar;
+				var labelWidth:Number = progressBar.getStyle("labelWidth") as Number;
+				trackWidth = trackWidth - labelWidth;
+				
+				var trackerProgressBarComponent:TrackerProgressBarComponent = this.parent.parent.parent.parent as TrackerProgressBarComponent;
+				
+				if(trackerProgressBarComponent!=null){
+					trackerConsoleJobs = trackerProgressBarComponent.trackerConsoleJobs;
+				}
+				
+		
+				// User-defined styles
+				var barColorStyle:* = getStyle("barColor");
+				var barColor:uint = StyleManager.isValidStyleValue(barColorStyle) ?
+									barColorStyle :
+									getStyle("themeColor");
+		
+				var barColor0:Number = ColorUtil.adjustBrightness2(0x00ff00, 40);
+		
+				// default fill color for halo uses theme color
+				var fillColors0:Array = [ barColor0, 0x00ff00 ]; 
+				
+				var barColor1:Number = ColorUtil.adjustBrightness2(0x0000ff, 40);
+		
+				// default fill color for halo uses theme color
+				var fillColors1:Array = [ barColor1, 0x0000ff ]; 
+				
+				var barColor2:Number = ColorUtil.adjustBrightness2(0xff0000, 40);
+		
+				// default fill color for halo uses theme color
+				var fillColors2:Array = [ barColor2, 0xff0000 ]; 
+				
+				var barColor3:Number = ColorUtil.adjustBrightness2(0xffff00, 40);
+		
+				// default fill color for halo uses theme color
+				var fillColors3:Array = [ barColor3, 0xffff00 ]; 
+						
+				graphics.clear();
+				
+				if(trackerConsoleJobs!=null){
+					if(trackerConsoleJobs.paused){
+						// glow
+						drawRoundRect(
+							0, 0, w, h, 0,
+							fillColors3, 0.5,
+							verticalGradientMatrix(0, 0, w - 2, h - 2));
+						
+						// fill
+						drawRoundRect(
+							1, 1, w - 2, h - 2, 0,
+							fillColors3, 1,
+							verticalGradientMatrix(0, 0, w - 2, h - 2));
+					} else {
+						if(trackerProgressBarComponent.totalTime>0){
+							if(trackerProgressBarComponent.estimatedSetUpTime>0 || trackerProgressBarComponent.estimatedRunTime>0){
+								if(trackerProgressBarComponent.estimatedRunTime>0 && w>((trackerProgressBarComponent.estimatedRunTime/trackerProgressBarComponent.totalTime)*trackWidth)) {
+									drawDifferentGraphics(w,h,fillColors0,fillColors1,fillColors2,
+									trackerProgressBarComponent.estimatedSetUpTime,trackerProgressBarComponent.estimatedRunTime,trackerProgressBarComponent.totalTime,
+									true);
+								} else if(trackerProgressBarComponent.estimatedSetUpTime>0 && w>((trackerProgressBarComponent.estimatedSetUpTime/trackerProgressBarComponent.totalTime)*trackWidth)) {
+									drawDifferentGraphics(w,h,fillColors0,fillColors1,fillColors2,
+									trackerProgressBarComponent.estimatedSetUpTime,trackerProgressBarComponent.estimatedRunTime,trackerProgressBarComponent.totalTime,
+									false);
 								} else {
-									drawDefaultGraphics(w,h,fillColors2);
+									if(trackerProgressBarComponent.estimatedSetUpTime>0){
+										drawDefaultGraphics(w,h,fillColors0);
+									} else if(trackerProgressBarComponent.estimatedRunTime>0) {
+										drawDefaultGraphics(w,h,fillColors1);
+									} else {
+										drawDefaultGraphics(w,h,fillColors2);
+									}
 								}
+							} else {
+								drawDefaultGraphics(w,h,fillColors0);
 							}
 						} else {
 							drawDefaultGraphics(w,h,fillColors0);
 						}
-					} else {
-						drawDefaultGraphics(w,h,fillColors0);
 					}
+					
+				} else {
+					drawDefaultGraphics(w,h,fillColors0);
 				}
-				
-			} else {
-				drawDefaultGraphics(w,h,fillColors0);
 			}
 		}
 		
@@ -139,7 +142,7 @@ package com.efi.printsmith.skin
 			var runWidthValue:Number=0;
 			if(isRunTimeCondition){
 				if(estimatedSetUpTime>0){
-					setUpWidthValue = (estimatedSetUpTime/totalTime)*trackWidth;
+					setUpWidthValue = ((estimatedSetUpTime/totalTime)*trackWidth)-8;
 					widthValue = widthValue-setUpWidthValue;
 					// glow
 					drawRoundRect(
@@ -154,7 +157,7 @@ package com.efi.printsmith.skin
 						verticalGradientMatrix(0, 0, setUpWidthValue - 2, h - 2));
 				}
 				if(estimatedRunTime>0){
-					runWidthValue = ((estimatedRunTime/totalTime)*trackWidth)-setUpWidthValue;
+					runWidthValue = (((estimatedRunTime/totalTime)*trackWidth)-setUpWidthValue)-8;
 					widthValue = widthValue-runWidthValue;
 					// glow
 					drawRoundRect(
@@ -181,7 +184,7 @@ package com.efi.printsmith.skin
 					verticalGradientMatrix(0, 0, widthValue - 2, h - 2));
 			} else {
 				if(estimatedSetUpTime>0){
-					setUpWidthValue = (estimatedSetUpTime/totalTime)*trackWidth;
+					setUpWidthValue = ((estimatedSetUpTime/totalTime)*trackWidth)-8;
 					widthValue = widthValue-setUpWidthValue;
 					// glow
 					drawRoundRect(

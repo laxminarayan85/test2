@@ -77,21 +77,21 @@
 						} */
 					}
 				}
-				if(barComponent!=null){
+				if(contentComponent!=null){
 					if(estimateSetUpImage!=null){
-						barComponent.removeChild(estimateSetUpImage);
+						contentComponent.removeChild(estimateSetUpImage);
 						estimateSetUpImage = null;
 					}
 					if(estimateRunImage!=null){
-						barComponent.removeChild(estimateRunImage);
+						contentComponent.removeChild(estimateRunImage);
 						estimateRunImage = null;
 					}
 					if(actualSetUpImage!=null){
-						barComponent.removeChild(actualSetUpImage);
+						contentComponent.removeChild(actualSetUpImage);
 						actualSetUpImage = null;
 					}
 					if(actualRunImage!=null){
-						barComponent.removeChild(actualRunImage);
+						contentComponent.removeChild(actualRunImage);
 						actualRunImage = null;
 					}
 				}
@@ -152,39 +152,39 @@
 					var pgBarLabelWidth:Number = pgBar.getStyle("labelWidth") as Number;
 					var pgBarTrackHeight:Number = pgBar.getStyle("trackHeight") as Number;
 					if(displayValue.actualSetUpTime>0){
-						if(barComponent!=null){
+						if(contentComponent!=null){
 							if(displayValue.employee!=null && !displayValue.employee.hideEstimateTimeTracker) {
 								estimateSetUpImage = new Image();
 								estimateSetUpImage.source = arrowDownSetUpImg;
 								estimateSetUpImage.width = 30;
 								estimateSetUpImage.height = 30;
-								estimateSetUpImage.x = (((displayValue.actualSetUpTime/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2);
-								estimateSetUpImage.y = -6;
+								estimateSetUpImage.x = (((displayValue.actualSetUpTime/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateSetUpImage.width/2)-8;
+								estimateSetUpImage.y = -7;
 								estimateSetUpImage.toolTip = "Estimated SetUpTime:\n"+convertMilliSecondsToString((displayValue.actualSetUpTime/displayValue.noOfPasses),true);
 								estimatedSetUpTime = (displayValue.actualSetUpTime/displayValue.noOfPasses);
-								barComponent.addChild(estimateSetUpImage);
+								contentComponent.addChild(estimateSetUpImage);
 							}
 						}
 					}
 					if(displayValue.actualRunTime>0){
-						if(barComponent!=null){
+						if(contentComponent!=null){
 							if(displayValue.employee!=null && !displayValue.employee.hideEstimateTimeTracker) {
 								estimateRunImage = new Image();
 								estimateRunImage.source = arrowDownRunImg;
 								estimateRunImage.width = 30;
 								estimateRunImage.height = 30;
-								estimateRunImage.x = ((((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2);
-								estimateRunImage.y = -6;
+								estimateRunImage.x = ((((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses)/totalValue)*(pgBar.width-pgBarLabelWidth))-(estimateRunImage.width/2)-8;
+								estimateRunImage.y = -7;
 								estimateRunImage.toolTip = "Estimated RunTime:\n"+convertMilliSecondsToString(((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses),true);
 								estimatedRunTime = ((displayValue.actualSetUpTime+displayValue.actualRunTime)/displayValue.noOfPasses);
-								barComponent.addChild(estimateRunImage);
+								contentComponent.addChild(estimateRunImage);
 							}
 						}
 					}
 					for each(var trackerConsolePasses:TrackerConsolePasses in displayValue.passesList){
 						if(trackerConsolePasses.passNo==displayValue.currentPass) {
 							if(trackerConsolePasses.setUpCompleted){
-								if(barComponent!=null){
+								if(contentComponent!=null){
 									actualSetUpImage = new Image();
 									actualSetUpImage.source = arrowUpSetUpImg;
 									actualSetUpImage.width = 30;
@@ -195,12 +195,12 @@
 										actualSetUpImage = null;
 									} else {
 										actualSetUpImage.toolTip = "Actual SetUpTime:\n"+convertMilliSecondsToString(trackerConsolePasses.setUpTime,true);
-										barComponent.addChild(actualSetUpImage);
+										contentComponent.addChild(actualSetUpImage);
 									}
 								}
 							}
 							if(trackerConsolePasses.runCompleted){
-								if(barComponent!=null){
+								if(contentComponent!=null){
 									actualRunImage = new Image();
 									actualRunImage.source = arrowUpRunImg;
 									actualRunImage.width = 30;
@@ -211,7 +211,7 @@
 										actualRunImage = null;
 									} else {
 										actualRunImage.toolTip = "Actual RunTime:\n"+convertMilliSecondsToString((trackerConsolePasses.runTime+trackerConsolePasses.setUpTime),true);
-										barComponent.addChild(actualRunImage);
+										contentComponent.addChild(actualRunImage);
 									}
 								}
 							}
