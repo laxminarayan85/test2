@@ -99,7 +99,7 @@
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
 						
-						<mx:DataGridColumn width="140"
+						<!--<mx:DataGridColumn width="140"
 							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobMethod')}"
 							dataField="jobMethod" editable="true">
 							<mx:itemRenderer>
@@ -115,7 +115,7 @@
 										customText="{outerDocument.getCustomTextData(outerDocument.jobMethodsArray,data,data.jobMethod)}"/>
 								</mx:Component>
 							</mx:itemEditor>
-						</mx:DataGridColumn>
+						</mx:DataGridColumn>-->
 						
 					</mx:columns>
 					
