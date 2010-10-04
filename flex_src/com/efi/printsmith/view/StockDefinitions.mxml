@@ -292,6 +292,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import com.efi.mdi.event.window.WindowConfirmStatusEvent;
 	import com.efi.mdi.view.window.MDIConfirmComponent;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
@@ -740,33 +741,8 @@
 	}
 	
 	private function doNext():void {
-		onClose();
-		if(getOriginalObject()!=null && getUpdatedObject()!=null){
-			if(!compareObject(getOriginalObject(),getUpdatedObject())){
-				var mdiConfirmComponent:MDIConfirmComponent = PopUpManager.createPopUp(this,MDIConfirmComponent,true) as MDIConfirmComponent;
-				mdiConfirmComponent.labelTxt = getConfirmationText();
-				mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
-					if(event.windowConfirmStatus==1){
-						onDontSave();
-						doNextOperation();
-					} else if(event.windowConfirmStatus==2) {
-						onCancel();
-					} else if(event.windowConfirmStatus==3) {
-						addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
-							if(event.isSaved){
-								doNextOperation();
-							}	
-						},false,0,true);
-						onSave();
-					}
-				},false,0,true);
-			} else {
-				doNextOperation();
-			}
-		}  else {
-			doNextOperation();
-		}
-		    
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNextOperation);
+		dispatchEvent(mDICompareObjectEvent);
 	}
 	
 	private function doNextOperation():void {
@@ -783,33 +759,8 @@
 	}
 	
 	private function doPrev():void {
-		onClose();
-		if(getOriginalObject()!=null && getUpdatedObject()!=null){
-			if(!compareObject(getOriginalObject(),getUpdatedObject())){
-				var mdiConfirmComponent:MDIConfirmComponent = PopUpManager.createPopUp(this,MDIConfirmComponent,true) as MDIConfirmComponent;
-				mdiConfirmComponent.labelTxt = getConfirmationText();
-				mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
-					if(event.windowConfirmStatus==1){
-						onDontSave();
-						doPrevOperation();
-					} else if(event.windowConfirmStatus==2) {
-						onCancel();
-					} else if(event.windowConfirmStatus==3) {
-						addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
-							if(event.isSaved){
-								doPrevOperation();
-							}	
-						},false,0,true);
-						onSave();
-					}
-				},false,0,true);
-			} else {
-				doPrevOperation();
-			}
-		}  else {
-			doPrevOperation();
-		}
-		    
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doPrevOperation);
+		dispatchEvent(mDICompareObjectEvent);
 	}
 	
 	private function doPrevOperation():void {              
@@ -1564,12 +1515,12 @@
 	 stockDefinitions.qtybreak4 = parseInt(Qtybreak4.text);
 	 stockDefinitions.qtybreak5 = parseInt(Qtybreak5.text);
 	 stockDefinitions.qtybreak6 = parseInt(Qtybreak6.text);	
-	 stockDefinitions.cost1 = defaultToZeroIfNull(parseFloat(removeSymbols(Cost1.text,"$")));
-	 stockDefinitions.cost2 = defaultToZeroIfNull(parseFloat(removeSymbols(Cost2.text,"$")));
-	 stockDefinitions.cost3 = defaultToZeroIfNull(parseFloat(removeSymbols(Cost3.text,"$")));
-	 stockDefinitions.cost4 = defaultToZeroIfNull(parseFloat(removeSymbols(Cost4.text,"$")));
-	 stockDefinitions.cost5 = defaultToZeroIfNull(parseFloat(removeSymbols(Cost5.text,"$")));
-	 stockDefinitions.cost6 = defaultToZeroIfNull(parseFloat(removeSymbols(Cost6.text,"$")));
+	 stockDefinitions.cost1 = parseFloat(removeSymbols(Cost1.text,"$"));
+	 stockDefinitions.cost2 = parseFloat(removeSymbols(Cost2.text,"$"));
+	 stockDefinitions.cost3 = parseFloat(removeSymbols(Cost3.text,"$"));
+	 stockDefinitions.cost4 = parseFloat(removeSymbols(Cost4.text,"$"));
+	 stockDefinitions.cost5 = parseFloat(removeSymbols(Cost5.text,"$"));
+	 stockDefinitions.cost6 = parseFloat(removeSymbols(Cost6.text,"$"));
 	 stockDefinitions.cwt1 = parseFloat(Cwt1.text);
 	 stockDefinitions.cwt2 = parseFloat(Cwt2.text);
 	 stockDefinitions.cwt3 = parseFloat(Cwt3.text);
@@ -1582,12 +1533,12 @@
 	 stockDefinitions.markup4 = parseFloat(Markup4.text);
 	 stockDefinitions.markup5 = parseFloat(Markup5.text);
 	 stockDefinitions.markup6 = parseFloat(Markup6.text);
-	 stockDefinitions.listPerM1 = defaultToZeroIfNull(parseFloat(removeSymbols(ListPerM1.text,"$")));
-	 stockDefinitions.listPerM2 = defaultToZeroIfNull(parseFloat(removeSymbols(ListPerM2.text,"$")));
-	 stockDefinitions.listPerM3 = defaultToZeroIfNull(parseFloat(removeSymbols(ListPerM3.text,"$")));
-	 stockDefinitions.listPerM4 = defaultToZeroIfNull(parseFloat(removeSymbols(ListPerM4.text,"$")));
-	 stockDefinitions.listPerM5 = defaultToZeroIfNull(parseFloat(removeSymbols(ListPerM5.text,"$")));
-	 stockDefinitions.listPerM6 = defaultToZeroIfNull(parseFloat(removeSymbols(ListPerM6.text,"$")));
+	 stockDefinitions.listPerM1 = parseFloat(removeSymbols(ListPerM1.text,"$"));
+	 stockDefinitions.listPerM2 = parseFloat(removeSymbols(ListPerM2.text,"$"));
+	 stockDefinitions.listPerM3 = parseFloat(removeSymbols(ListPerM3.text,"$"));
+	 stockDefinitions.listPerM4 = parseFloat(removeSymbols(ListPerM4.text,"$"));
+	 stockDefinitions.listPerM5 = parseFloat(removeSymbols(ListPerM5.text,"$"));
+	 stockDefinitions.listPerM6 = parseFloat(removeSymbols(ListPerM6.text,"$"));
 	 stockDefinitions.pcwRecycledPercent = parseFloat(percentvalue) * .01 ;
 	 stockDefinitions.normalRunSize = NormalRunSize.selectedItem as Dimension;
 	 stockDefinitions.cutsPer100 = parseInt(CutsPer100.text);
@@ -1599,15 +1550,15 @@
 	 stockDefinitions.blankSheetqty4 = parseInt(BlankSheetqty4.text);
 	 stockDefinitions.blankSheetqty5 = parseInt(BlankSheetqty5.text);
 	 stockDefinitions.blankSheetqty6 = parseInt(BlankSheetqty6.text);
-	 stockDefinitions.blankSheetPrice1 = defaultToZeroIfNull(parseFloat(removeSymbols(BlankSheetPrice1.text,"$")));
-	 stockDefinitions.blankSheetPrice2 = defaultToZeroIfNull(parseFloat(removeSymbols(BlankSheetPrice2.text,"$")));
-	 stockDefinitions.blankSheetPrice3 = defaultToZeroIfNull(parseFloat(removeSymbols(BlankSheetPrice3.text,"$")));
-	 stockDefinitions.blankSheetPrice4 = defaultToZeroIfNull(parseFloat(removeSymbols(BlankSheetPrice4.text,"$")));
-	 stockDefinitions.blankSheetPrice5 = defaultToZeroIfNull(parseFloat(removeSymbols(BlankSheetPrice5.text,"$")));
-	 stockDefinitions.blankSheetPrice6 = defaultToZeroIfNull(parseFloat(removeSymbols(BlankSheetPrice6.text,"$")));
-	 stockDefinitions.copier1PricePerSheet = defaultToZeroIfNull(parseFloat(removeSymbols(DefaultBW.text,"$")));
-	 stockDefinitions.copier2PricePerSheet = defaultToZeroIfNull(parseFloat(removeSymbols(DefaultColor.text,"$")));
-	 stockDefinitions.copier3PricePerSheet = defaultToZeroIfNull(parseFloat(removeSymbols(DefaultLargeFormat.text,"$")));
+	 stockDefinitions.blankSheetPrice1 = parseFloat(removeSymbols(BlankSheetPrice1.text,"$"));
+	 stockDefinitions.blankSheetPrice2 = parseFloat(removeSymbols(BlankSheetPrice2.text,"$"));
+	 stockDefinitions.blankSheetPrice3 = parseFloat(removeSymbols(BlankSheetPrice3.text,"$"));
+	 stockDefinitions.blankSheetPrice4 = parseFloat(removeSymbols(BlankSheetPrice4.text,"$"));
+	 stockDefinitions.blankSheetPrice5 = parseFloat(removeSymbols(BlankSheetPrice5.text,"$"));
+	 stockDefinitions.blankSheetPrice6 = parseFloat(removeSymbols(BlankSheetPrice6.text,"$"));
+	 stockDefinitions.copier1PricePerSheet = parseFloat(removeSymbols(DefaultBW.text,"$"));
+	 stockDefinitions.copier2PricePerSheet = parseFloat(removeSymbols(DefaultColor.text,"$"));
+	 stockDefinitions.copier3PricePerSheet = parseFloat(removeSymbols(DefaultLargeFormat.text,"$"));
 	 stockDefinitions.onHand = parseInt(OnHand.text);
 	 stockDefinitions.committed = parseInt(Committed.text);
 	 stockDefinitions.available = parseInt(Available.text);
@@ -2045,30 +1996,6 @@ private function doRound(evt:FocusEvent):void{
 			if(originalStockDefinitions.expires!=null){
 				originalStockDefinitions.expires = scrubTimeValue(originalStockDefinitions.expires);
 			}
-			originalStockDefinitions.cost1 = defaultToZeroIfNull(originalStockDefinitions.cost1);
-			originalStockDefinitions.cost2 = defaultToZeroIfNull(originalStockDefinitions.cost2);
-			originalStockDefinitions.cost3 = defaultToZeroIfNull(originalStockDefinitions.cost3);
-			originalStockDefinitions.cost4 = defaultToZeroIfNull(originalStockDefinitions.cost4);
-			originalStockDefinitions.cost5 = defaultToZeroIfNull(originalStockDefinitions.cost5);
-			originalStockDefinitions.cost6 = defaultToZeroIfNull(originalStockDefinitions.cost6);
-			
-			originalStockDefinitions.listPerM1 = defaultToZeroIfNull(originalStockDefinitions.listPerM1);
-			originalStockDefinitions.listPerM2 = defaultToZeroIfNull(originalStockDefinitions.listPerM2);
-			originalStockDefinitions.listPerM3 = defaultToZeroIfNull(originalStockDefinitions.listPerM3);
-			originalStockDefinitions.listPerM4 = defaultToZeroIfNull(originalStockDefinitions.listPerM4);
-			originalStockDefinitions.listPerM5 = defaultToZeroIfNull(originalStockDefinitions.listPerM5);
-			originalStockDefinitions.listPerM6 = defaultToZeroIfNull(originalStockDefinitions.listPerM6);
-			
-			originalStockDefinitions.blankSheetPrice1 = defaultToZeroIfNull(originalStockDefinitions.blankSheetPrice1);
-			originalStockDefinitions.blankSheetPrice2 = defaultToZeroIfNull(originalStockDefinitions.blankSheetPrice2);
-			originalStockDefinitions.blankSheetPrice3 = defaultToZeroIfNull(originalStockDefinitions.blankSheetPrice3);
-			originalStockDefinitions.blankSheetPrice4 = defaultToZeroIfNull(originalStockDefinitions.blankSheetPrice4);
-			originalStockDefinitions.blankSheetPrice5 = defaultToZeroIfNull(originalStockDefinitions.blankSheetPrice5);
-			originalStockDefinitions.blankSheetPrice6 = defaultToZeroIfNull(originalStockDefinitions.blankSheetPrice6);
-			
-			originalStockDefinitions.copier1PricePerSheet = defaultToZeroIfNull(originalStockDefinitions.copier1PricePerSheet);
-			originalStockDefinitions.copier2PricePerSheet = defaultToZeroIfNull(originalStockDefinitions.copier2PricePerSheet);
-			originalStockDefinitions.copier3PricePerSheet = defaultToZeroIfNull(originalStockDefinitions.copier3PricePerSheet);
 			
 			
 		}

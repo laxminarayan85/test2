@@ -15,6 +15,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.mdi.event.compare.MDICompareObjectEvent;
+			import com.efi.mdi.compare.ObjectCompareUtil;
 			import com.efi.mdi.event.window.WindowSaveSuccessEvent;
 			import com.efi.mdi.event.window.WindowConfirmStatusEvent;
 			import com.efi.mdi.view.window.MDIConfirmComponent;
@@ -58,7 +60,7 @@
 				mdiWin.addEventListener(WindowMinimizeEvent.WINDOW_MINIMIZE, onMinimize);
 				mdiWin.addEventListener(WindowCloseEvent.WINDOW_CLOSE, onClose);
 				mdiWin.addEventListener(WindowResizeStartEvent.WINDOW_RESIZE_START, onWindowResizeStart);
-				
+				mdiWin.addEventListener(MDICompareObjectEvent.MDI_COMPAREOBJECT,onCompareObject);
 				appCanvas.addChild(mdiWin);		
 				mdiWin.bringWindowToFront();
 														
@@ -99,7 +101,7 @@
 						var mdiWindowAware:IMDIWindowAware = mdiWindow.content as IMDIWindowAware;
 						mdiWindowAware.onClose();
 						if(mdiWindowAware.getOriginalObject()!=null && mdiWindowAware.getUpdatedObject()!=null){
-							if(!compareObject(mdiWindowAware.getOriginalObject(),mdiWindowAware.getUpdatedObject())){
+							if(ObjectCompareUtil.compare(mdiWindowAware.getOriginalObject(),mdiWindowAware.getUpdatedObject())!=0){
 								var mdiConfirmComponent:MDIConfirmComponent = PopUpManager.createPopUp(this,MDIConfirmComponent,true) as MDIConfirmComponent;
 								mdiConfirmComponent.labelTxt = mdiWindowAware.getConfirmationText();
 								mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
@@ -130,6 +132,42 @@
 					appCanvas.removeChild((event.child as MinimizedWindow).windowRef);
 					taskbar.removeChild(event.child);
 				}	
+			}
+			
+			private function onCompareObject(event:MDICompareObjectEvent):void {
+				var functionName:Function = event._functionName;
+				if(event._content is IMDIWindowAware){
+					var _content:UIComponent = event._content;
+					var mdiWindowAware:IMDIWindowAware = event._content as IMDIWindowAware;
+					mdiWindowAware.onClose();
+					if(mdiWindowAware.getOriginalObject()!=null && mdiWindowAware.getUpdatedObject()!=null){
+						if(ObjectCompareUtil.compare(mdiWindowAware.getOriginalObject(),mdiWindowAware.getUpdatedObject())!=0){
+							var mdiConfirmComponent:MDIConfirmComponent = PopUpManager.createPopUp(this,MDIConfirmComponent,true) as MDIConfirmComponent;
+							mdiConfirmComponent.labelTxt = mdiWindowAware.getConfirmationText();
+							mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
+								if(event.windowConfirmStatus==1){
+									mdiWindowAware.onDontSave();
+									callLater(functionName);
+								} else if(event.windowConfirmStatus==2) {
+									mdiWindowAware.onCancel();
+								} else if(event.windowConfirmStatus==3) {
+									_content.addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
+										if(event.isSaved){
+											callLater(functionName);
+										}	
+									},false,0,true);
+									mdiWindowAware.onSave();
+								}
+							},false,0,true);
+						} else {
+							callLater(functionName);
+						}
+					}  else {
+						callLater(functionName);
+					}
+				} else {
+					callLater(functionName);
+				}
 			}
 			
 			private function onWindowResizeStart(event:WindowResizeStartEvent):void	{

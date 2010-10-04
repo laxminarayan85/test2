@@ -1,6 +1,7 @@
 package com.efi.mdi.view.window
 {
 	import com.efi.mdi.ContainerManager;
+	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import com.efi.mdi.event.window.WindowCloseEvent;
 	import com.efi.mdi.event.window.WindowMaximizeEvent;
 	import com.efi.mdi.event.window.WindowMinimizeEvent;
@@ -113,6 +114,7 @@ package com.efi.mdi.view.window
 			if (_content != null)	
 				removeChild(_content);
 			_content = val;
+			_content.addEventListener(MDICompareObjectEvent.MDI_COMPAREOBJECT,onCompareObject,false,0,true);
 			addChild(_content);
 		}
 		
@@ -368,6 +370,10 @@ package com.efi.mdi.view.window
 			shape.x = unscaledWidth-15;
 			shape.y = unscaledHeight-14;
 			
+		}
+		
+		private function onCompareObject(event:MDICompareObjectEvent):void {
+			dispatchEvent(event);
 		}
 	}
 }
