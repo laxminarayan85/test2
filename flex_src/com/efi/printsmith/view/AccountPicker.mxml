@@ -280,7 +280,8 @@
 		fp = new FilterProperty(null, "masterAcct");
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling'), fp);
 		sc.addItem(sc1);
-
+		accounts.filterFunction = filterNullContacts;
+		accounts.refresh();
 		return sc;
 		
 	}
@@ -306,9 +307,17 @@
 		fp = new FilterProperty(null, "masterAcct");
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling'), fp);
 		sc.addItem(sc1);
-
+		accounts.filterFunction = unfilterNullContacts;
+		accounts.refresh();
 		return sc;
 
+	}
+	public function filterNullContacts(item:com.efi.printsmith.data.Account):Boolean {
+		return item.contact != null;
+	}
+	
+	public function unfilterNullContacts(item:com.efi.printsmith.data.Account):Boolean {
+		return true;
 	}
 ]]>        
 </mx:Script>
