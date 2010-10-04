@@ -40,7 +40,7 @@
 					<components:CustomComboBoxComponent
 						masterList="{receiptPrinterArray}" labelFieldId="name" labelFieldName="name"
 						dataHolder="{preferencesPOS}" variableName="receiptPrinterStatus" customText="{getCustomTextData(receiptPrinterArray,preferencesPOS,preferencesPOS.receiptPrinterStatus)}" 
-						updateFirstElement="true" width="120" enabled="{!preferencesPOS.lockSettings}"/>
+						updateFirstElement="true" width="15%" enabled="{!preferencesPOS.lockSettings}"/>
 						
 				</mx:HBox>
 				
