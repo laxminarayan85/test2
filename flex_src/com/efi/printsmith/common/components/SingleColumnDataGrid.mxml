@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:DataGrid xmlns:mx="http://www.adobe.com/2006/mxml" keyDown="onKeyDown(event)" creationComplete="init();" >
+<mx:Script source="../scripts/CommonUtils.as"/>
+	<mx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import mx.events.DataGridEvent;
+			import mx.collections.ArrayCollection;
+			
+			private var _dataField:String;
+			private var _headerText:String;
+			private var _labelFunction:Function;
+			
+			private var timer:Timer;
+			private var searchStr:String = "";
+			
+			private function init():void	{
+				setFocus();
+				//drawFocus(true);
+			}
+			
+			override public function invalidateList():void	{
+				super.invalidateList();
+				init();
+			}
+			public function set dataField(val:String):void	 {
+				_dataField = val;
+			}
+			public function set headerText(val:String):void	 {
+				_headerText = val;
+			}
+			public function set colLabelFunction(val:Function):void	 {
+				_labelFunction = val;
+				labelFunction = val;
+			}
+			
+			private function setFocusOnDataItem():void	{
+				for (var i:int = 0; i<(dataProvider as ArrayCollection).length; i++)	{
+					var x:Object = (dataProvider as ArrayCollection).getItemAt(i);
+					var objData:String = "";
+					
+					if (_dataField != null)	{
+						objData = x[_dataField] as String;
+					}
+					else	{
+						objData = _labelFunction.call(this, x, dgCol);	
+					}
+						
+					if ((objData != null) && (objData.toLowerCase().indexOf(searchStr.toLowerCase()) == 0))	{
+						this.selectedIndex = i;
+						break;
+					}
+										
+				}	
+			}
+			
+			private function onKeyDown(event:KeyboardEvent):void	{
+				event.preventDefault();
+				searchStr += numToChar(event.charCode);
+				
+				setFocusOnDataItem();
+				
+				if (timer)	{	
+					timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
+					timer.stop();
+				}
+				
+				timer = new Timer(1000,1);
+				timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
+				timer.start(); 
+			}
+			
+			private function onTimerComplete(event:TimerEvent):void	{
+				searchStr = "";
+			} 
+		]]>
+	</mx:Script>
+	<mx:columns>
+		<mx:DataGridColumn id="dgCol" dataField="{_dataField}" headerText="{_headerText}" labelFunction="{_labelFunction}" />                         
+	</mx:columns>		
+</mx:DataGrid>

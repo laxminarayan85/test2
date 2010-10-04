@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="630" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
     close="cancelPicker();" xmlns:common="com.efi.printsmith.common.components.filter.*"
+    xmlns:comp="com.efi.printsmith.common.components.*"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kCustPickerCommand.AccountPicker')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
 
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -154,16 +155,16 @@
 	private function buildCustProspectList():void	{
 		accounts.filterFunction = accountFilter;
 		sortAccountsByTitle();
-		dgCol.dataField = "title";
-		dgCol.labelFunction = null;
+		dataGrid.dataField = "title";
+		dataGrid.colLabelFunction = null;
 		pickerFilter.searchCriteria = getSearchByForAccount();
  
 	}  
 	private function buildContactList():void	{
 		accounts.filterFunction = null;
 		sortAccountsByLastName();
-		dgCol.dataField = null;
-		dgCol.labelFunction = contactLabel;
+		dataGrid.dataField = null;
+		dataGrid.colLabelFunction = contactLabel;
 		pickerFilter.searchCriteria = getSearchByForContact();
 		
 	}
@@ -202,7 +203,7 @@
 		else
 			return 0;
 	}
-	private function contactLabel(item:Object, column:DataGridColumn):String	{
+	public function contactLabel(item:Object, column:DataGridColumn):String	{
 		var acct:Account = item as Account;
 		if (acct.contact == null) return("");
 		return acct.contact.lastName + ", " + acct.contact.firstName + " - " + acct.title;
@@ -313,12 +314,10 @@
 
                              
 	<mx:Canvas width="100%" height="100%">
-		<mx:DataGrid id="dataGrid" width="457" height="420" dataProvider="{accounts}"
-		doubleClickEnabled="true" doubleClick="selectAccount()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" y="65">               
-		<mx:columns>
-		     <mx:DataGridColumn id="dgCol" dataField="title" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Name')}" />                         
-		</mx:columns>
-		</mx:DataGrid>
+		<comp:SingleColumnDataGrid id="dataGrid" width="457" height="420" dataProvider="{accounts}"
+		doubleClickEnabled="true" doubleClick="selectAccount()"  showHeaders="false" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" y="65"               
+		dataField="title" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.Name')}"                          
+		/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectAccount();"  width="108" x="471" y="65"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.New')}" enabled="true" click="newAccount();" id="new_button" width="108" x="471" y="95"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="cancelPicker();" id="cancel_button" width="108" x="471" y="150"/>
