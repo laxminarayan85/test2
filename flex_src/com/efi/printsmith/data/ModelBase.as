@@ -9,6 +9,8 @@ package com.efi.printsmith.data
 		public var created:Date;
 		public var modified:Date;
 		public var prevId:String="";
+		public var orderby:Number;
+		public var displayId:Number;
 //		public var isdeleted:Boolean=false;
 		
 		public function ModelBase()
