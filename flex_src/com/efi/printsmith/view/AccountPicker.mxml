@@ -6,6 +6,7 @@
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="getContactPicker" fault="handleFault(event)" result="handleContactLoadResult(event)"/>
 	<mx:method name="getAccountsByPartialName" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
@@ -14,9 +15,13 @@
 <mx:Consumer id="consumer" destination="accounts" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
+<mx:Script source="../common/scripts/CommonUtils.as" />
+
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.common.components.NonModalThrobberHelper;
+	import com.efi.printsmith.components.Throbber;
 	import com.efi.mdi.view.window.MDIWindow;
 	import mx.collections.SortField;
 	import mx.collections.Sort;
@@ -56,7 +61,13 @@
 	public var contact_boolean:Boolean = true;                                  
 	[Bindable]                                
 	private var accounts:ArrayCollection = new ArrayCollection();
-                                                                         
+	
+	private var ctAccounts:ArrayCollection = new ArrayCollection();
+	private var acAccounts:ArrayCollection = new ArrayCollection();
+	private var contactCallInProgress:Boolean;
+	
+	private var throbberHelper:NonModalThrobberHelper;
+	                                                                          
 	[Bindable]                               
 	private var accountRecords:int = 0;
 	         
@@ -66,13 +77,14 @@
 	public function setAccounts( tempAccount:ArrayCollection):void{
 	//	accountTypeRadio.selectedValue = "Customer"; 
 		var i:int;
-		accounts = new ArrayCollection();
-		for(i = 0; i < tempAccount.length; i++) {
-			accounts.addItem(tempAccount.getItemAt(i) as Account);
-		}
-	//    accounts.filterFunction = accountFilter;
+		this.accounts = tempAccount; //new ArrayCollection();
 		
-	}                    
+		acAccounts = cloneAC(tempAccount);
+		
+		
+				
+	}      
+	              
 	private function handleLoadResult(event:ResultEvent):void {
 		accounts = event.result as ArrayCollection;
 		accounts.filterFunction = accountFilter;
@@ -110,7 +122,11 @@
 	    PopUpManager.centerPopUp(this);
 //	    resetFocus();                                     
 //		dataService.getAccountPicker();
-
+		dataService.getContactPicker();
+		
+		contactCallInProgress = true;
+		throbberHelper = new NonModalThrobberHelper(dataGrid,"throbber1");
+		
 
 		var editPage:Container = Snowmass.getInstance().containerManager.getActiveWindowContent();
 		if (editPage.className != "EditCustomer") {
@@ -138,14 +154,53 @@
 		
 		return showItem
 	}
+	
+	private function handleContactLoadResult(event:ResultEvent):void	{
+		var contacts:ArrayCollection = event.result as ArrayCollection;
+		var newAccounts:ArrayCollection = new ArrayCollection();
+		if (contacts != null)	{
+			for (var i:int = 0; i < contacts.length; i++)	{
+				var c:Contact = contacts.getItemAt(i) as Contact;
+				if (c.parentAccount == null)	{
+					var a:Account = new Account();
+					a.title = "Not Assigned";
+					a.contact = c;
+					newAccounts.addItem(a);
+				}
+				else	{
+					for (var j:int = 0; j<acAccounts.length; j++)	{
+						var a:Account = acAccounts.getItemAt(j) as Account;
+						if (a.id == c.parentAccount.id)	{
+							newAccounts.addItem(a);
+							break;
+						}
+					}
+				}			
+			}
+		}
+		ctAccounts = newAccounts;
+		
+		contactCallInProgress = false;
+		if (throbberHelper.hideThrobberIfActive())	{
+			accountTypeChange();
+		}
+	}
+	
 	private function accountTypeChange():void {
 		pickerFilter.clearFilter(true);
 		
 		if (accountTypeRadio.selectedValue == "Contacts") {
-			buildContactList();	
-			new_button.enabled = false;
+			if (contactCallInProgress)	{
+				throbberHelper.showThrobber();	
+			}
+			else	{
+				buildContactList();	
+				new_button.enabled = false;
+			}
 		}
 		else	{
+			throbberHelper.hideThrobberIfActive();
+			
 			buildCustProspectList();
 			new_button.enabled = true;
 		}
@@ -153,6 +208,7 @@
 	}
 	
 	private function buildCustProspectList():void	{
+		accounts = cloneAC(acAccounts);
 		accounts.filterFunction = accountFilter;
 		sortAccountsByTitle();
 		dataGrid.dataField = "title";
@@ -161,6 +217,7 @@
  
 	}  
 	private function buildContactList():void	{
+		accounts = cloneAC(ctAccounts);
 		accounts.filterFunction = null;
 		sortAccountsByLastName();
 		dataGrid.dataField = null;

@@ -88,4 +88,16 @@ private function openConfirmationComponent(confirmationText:String=null):void {
 	commonConfirmationComponent.confirmationText = confirmationText;
 }
  
+public function cloneAC(src:ArrayCollection)	{
+	var dest:ArrayCollection;
+	
+	if (src != null)	{
+		dest = new ArrayCollection();
+		
+		for (var i:int=0; i < src.length; i++)	{
+			dest.addItem(src.getItemAt(i));
+		}
+	}
+	return dest;	
+}
  
