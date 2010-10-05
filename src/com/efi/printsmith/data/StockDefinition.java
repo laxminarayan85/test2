@@ -1986,48 +1986,64 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Integer cutsPer100;
+	@Column(name="cutsPer100", precision=19, scale=2)
+	private BigDecimal cutsPer100;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getCutsPer100(){
+	public BigDecimal getCutsPer100(){
     return cutsPer100; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCutsPer100(Integer newVal) {
+   * @generated
+   */	
+  public void setCutsPer100(BigDecimal newVal) {
     this.cutsPer100 = newVal;
+    this.cutsPer100.setScale(2, RoundingMode.HALF_UP);
   }
-	
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setCutsPer100(double newVal) {
+    this.cutsPer100 = BigDecimal.valueOf(newVal);
+    this.cutsPer100.setScale(2, RoundingMode.HALF_UP);
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Double minCutCharge;
+	@Column(name="minCutCharge", precision=19, scale=2)
+	private BigDecimal minCutCharge;
 	
 	/**
 	 * @generated
  	 */
-	public Double getMinCutCharge(){
+	public BigDecimal getMinCutCharge(){
     return minCutCharge; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setMinCutCharge(Double newVal) {
+   * @generated
+   */	
+  public void setMinCutCharge(BigDecimal newVal) {
     this.minCutCharge = newVal;
+    this.minCutCharge.setScale(2, RoundingMode.HALF_UP);
   }
-	
- 	
-	
+
+	/**
+   * @generated
+   */	
+  public void setMinCutCharge(double newVal) {
+    this.minCutCharge = BigDecimal.valueOf(newVal);
+    this.minCutCharge.setScale(2, RoundingMode.HALF_UP);
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -3139,7 +3155,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	@ManyToMany(targetEntity=ChargeDefinition.class)
+	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private java.util.List<ChargeDefinition> charges;
 	
@@ -3907,8 +3923,8 @@ public class StockDefinition extends ModelBase {
     if (LISTPERM5.equals(propertyName)) setListPerM5((Integer)newValue); else
     if (LISTPERM6.equals(propertyName)) setListPerM6((Integer)newValue); else
     if (NORMALRUNSIZE.equals(propertyName)) setNormalRunSize((Dimension)newValue); else
-    if (CUTSPER100.equals(propertyName)) setCutsPer100((Integer)newValue); else
-    if (MINCUTCHARGE.equals(propertyName)) setMinCutCharge((Double)newValue); else
+    if (CUTSPER100.equals(propertyName)) setCutsPer100((BigDecimal)newValue); else
+    if (MINCUTCHARGE.equals(propertyName)) setMinCutCharge((BigDecimal)newValue); else
     if (DEFAULTPRESS.equals(propertyName)) setDefaultPress((PressDefinition)newValue); else
     if (AUTOCALCULATEBLANK.equals(propertyName)) setAutoCalculateBlank((Boolean)newValue); else
     if (BLANKSHEETQTY1.equals(propertyName)) setBlankSheetqty1((Integer)newValue); else
@@ -4104,9 +4120,9 @@ public class StockDefinition extends ModelBase {
     if (NORMALRUNSIZE.equals(propertyName)) 
       return new Class<?>[] {Dimension.class};		
     if (CUTSPER100.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (MINCUTCHARGE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {BigDecimal.class};		
     if (DEFAULTPRESS.equals(propertyName)) 
       return new Class<?>[] {PressDefinition.class};		
     if (AUTOCALCULATEBLANK.equals(propertyName)) 

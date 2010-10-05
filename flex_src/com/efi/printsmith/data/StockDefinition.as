@@ -71,7 +71,7 @@ package com.efi.printsmith.data
 		public var listPerM5:int = 0;
 		public var listPerM6:int = 0;
 		public var normalRunSize:Dimension;
-		public var cutsPer100:int = 0;
+		public var cutsPer100:Number = 0;
 		public var minCutCharge:Number = 0;
 		public var defaultPress:PressDefinition;
 		public var autoCalculateBlank:Boolean = false;
