@@ -470,6 +470,8 @@
 		var event:DeleteStockDefinitionEvent = new DeleteStockDefinitionEvent(button_delete, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 		event.dispatch();
 		PanelCharges.title = StringUtil.substitute(PanelCharges.title,"10");
+		registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
+		originalStockDefinitions = ObjectUtil.copy(stockDefinitions) as StockDefinition;
 	}      
 
 	public function handleUIButtonEvent(evt:ResultEvent):void {
@@ -716,17 +718,28 @@
 			this.stockDefinitions = new StockDefinition;
 	    	stockDefinitions.charges = new ArrayCollection;
 	    	stockDefinitions.stockChanges = new ArrayCollection;
+	    	registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
+			originalStockDefinitions = ObjectUtil.copy(stockDefinitions) as StockDefinition;
 		}
 	}
 	
 	private function handleStockPickerSelect(evt:StockPickerSelectEvent):void {
-		if (evt.stockDefinition != null) {
-			setStockDefinition(evt.stockDefinition)
-				     
+		/*var inputArguments:Array = new Array();
+		inputArguments.push(evt.stockDefinition);
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doSelectOperation,inputArguments);
+		dispatchEvent(mDICompareObjectEvent); */
+		doSelectOperation(evt.stockDefinition);
+	}
+	
+	private function doSelectOperation(evtStockDefinition:StockDefinition):void {
+		if (evtStockDefinition != null) {
+			setStockDefinition(evtStockDefinition);
 		} else {
 			this.stockDefinitions = new StockDefinition();
 	    	stockDefinitions.charges = new ArrayCollection;
 	    	stockDefinitions.stockChanges = new ArrayCollection;
+	    	registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
+			originalStockDefinitions = ObjectUtil.copy(stockDefinitions) as StockDefinition;
 			Alert.show("Stock Picker returned a null stock", "Error");
 		}
 	}
@@ -800,8 +813,13 @@
 			showMessage(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Unabletosavestockdef'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'importCmd.Save')  );
 		}
 	}
-
+	
 	private function doNew():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNewOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+
+	private function doNewOperation():void {
 		
   	    stockDefinitions = new StockDefinition();
   	    Expires.text = "";
@@ -2010,7 +2028,7 @@ private function doRound(evt:FocusEvent):void{
 	}
 	
 	public function getConfirmationText():String {
-		return "";
+		return "\n"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'changePriceCmd.StockDefinitions');
 	}
 	
 	public function onClose():void {

@@ -138,6 +138,7 @@
 				var functionName:Function = event._functionName;
 				if(event._content is IMDIWindowAware){
 					var _content:UIComponent = event._content;
+					var inputArguments:Array = event._inputArguments;
 					var mdiWindowAware:IMDIWindowAware = event._content as IMDIWindowAware;
 					mdiWindowAware.onClose();
 					if(mdiWindowAware.getOriginalObject()!=null && mdiWindowAware.getUpdatedObject()!=null){
@@ -147,26 +148,46 @@
 							mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
 								if(event.windowConfirmStatus==1){
 									mdiWindowAware.onDontSave();
-									callLater(functionName);
+									if(inputArguments!=null && inputArguments.length>0){
+										callLater(functionName,inputArguments);
+									} else {
+										callLater(functionName);	
+									}
 								} else if(event.windowConfirmStatus==2) {
 									mdiWindowAware.onCancel();
 								} else if(event.windowConfirmStatus==3) {
 									_content.addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
 										if(event.isSaved){
-											callLater(functionName);
+											if(inputArguments!=null && inputArguments.length>0){
+												callLater(functionName,inputArguments);
+											} else {
+												callLater(functionName);	
+											}
 										}	
 									},false,0,true);
 									mdiWindowAware.onSave();
 								}
 							},false,0,true);
 						} else {
-							callLater(functionName);
+							if(inputArguments!=null && inputArguments.length>0){
+								callLater(functionName,inputArguments);
+							} else {
+								callLater(functionName);	
+							}
 						}
 					}  else {
-						callLater(functionName);
+						if(inputArguments!=null && inputArguments.length>0){
+							callLater(functionName,inputArguments);
+						} else {
+							callLater(functionName);	
+						}
 					}
 				} else {
-					callLater(functionName);
+					if(inputArguments!=null && inputArguments.length>0){
+						callLater(functionName,inputArguments);
+					} else {
+						callLater(functionName);	
+					}
 				}
 			}
 			

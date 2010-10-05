@@ -152,12 +152,14 @@ package com.efi.mdi.compare
 	            return stringCompare(typeOfA, typeOfB);
 	        }
 	
-			if(result!=0){
+			/* if(result!=0){
+				trace("OriginalObject Value=="+a);
+				trace("UpdatedObject Value=="+b);
 				if(propertyName!=null){
 					trace("propertyName==>"+propertyName.toString());
 				}
 				trace("result==>"+result);
-			}
+			} */
 	        return result;
 	    }
 	    
