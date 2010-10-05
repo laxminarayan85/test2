@@ -2,6 +2,7 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -44,7 +45,6 @@ public class TableEditorMapper extends ImportMapper {
 							} else if (nameNode.getNodeValue().equals("id") && recordNodes.item(z).getTextContent().equals("0") == false) {
 								if (firstRec == false)
 									dataService.addUpdate(modelBase);
-								firstRec = false;
 								if (title.equals("Business Type"))
 									modelBase = new BusinessType();
 								else if (title.equals("Basic Sizes"))
@@ -134,9 +134,12 @@ public class TableEditorMapper extends ImportMapper {
 								else if (title.equals("Zip"))
 									modelBase = new Zip();
 								recordNumber++;
+								if (firstRec)
+									deleteAll(modelBase);
 								modelBase.setOrderby(recordNumber);
 								modelBase.setPrevId(recordNodes.item(z).getTextContent());
 								modelBase.setDisplayId(Utilities.tokenToLong(recordNodes.item(z).getTextContent()));
+								firstRec = false;
 							} else if (nameNode.getNodeValue().equals("name")) {
 								modelBase = setName(modelBase,recordNodes.item(z).getTextContent());
 							} else if (nameNode.getNodeValue().equals("key")) {
@@ -148,6 +151,19 @@ public class TableEditorMapper extends ImportMapper {
 			}
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	private void deleteAll(ModelBase modelBase) {
+		DataService dataService = new DataService();
+		String className = modelBase.getClass().getName();
+		if (className.lastIndexOf(".") > -1)
+			className = className.substring(className.lastIndexOf(".") + 1);
+		List <ModelBase> list = (List<ModelBase>)dataService.getAll(className);
+		for (int i=0;i<list.size();i++) {
+			dataService.deleteItem(className, list.get(i).getId());
+		}
+	}
+	
 	private ModelBase setName(ModelBase modelBase, String value) {
 		if (modelBase instanceof BusinessType) {
 			((BusinessType) modelBase).setName(value);
