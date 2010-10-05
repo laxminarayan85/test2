@@ -675,7 +675,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 		}
 		var deleteStr:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), nameStr);
 		Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteContact,null,Alert.OK);
-	    dataService2.deleteItem("Contact",contact.id);
+	    //dataService2.deleteItem("Contact",contact.id);
 	} 
 	
 	private function handleDeleteContact(event:CloseEvent):void {
@@ -836,12 +836,19 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
+		/*this.setContact(ev.result as Contact);
+	   	contact_editor.setContact(contact);
+		setMarketing();
+		setCreditCard();
+		registerClassAlias("com.efi.printsmith.data.Contact",Contact);
+		originalContact = ObjectUtil.copy(contact) as Contact;*/
 		this.setContact(ev.result as Contact);
 	   	contact_editor.setContact(contact);
 		setMarketing();
 		setCreditCard();
 		registerClassAlias("com.efi.printsmith.data.Contact",Contact);
 		originalContact = ObjectUtil.copy(contact) as Contact;
+		openContactPicker();
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
 		dispatchEvent(windowSaveSuccessEvent);
 	} 
