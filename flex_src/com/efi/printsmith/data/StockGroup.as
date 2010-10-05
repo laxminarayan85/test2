@@ -16,7 +16,6 @@ package com.efi.printsmith.data
 				
 		public var name:String = "";
 		public var key:String = "";
-		public var orderby:int = 0;
 	
 	}
 }

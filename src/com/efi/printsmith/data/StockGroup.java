@@ -56,11 +56,6 @@ public class StockGroup extends ModelBase {
 	public static final String KEY = "Key";
 
 	/**
-   * @generated
-   */
-  public static final String ORDERBY = "Orderby";
-
-	/**
 	 * @generated
 	 */
 	public StockGroup() {
@@ -130,28 +125,6 @@ public class StockGroup extends ModelBase {
   }
 	
 	/**
-   * @generated
-   */	
- 	@Basic
-  private Integer orderby;
-
-	/**
-   * @generated
- 	 */
-  public Integer getOrderby(){
-    return orderby; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setOrderby(Integer newVal) {
-    this.orderby = newVal;
-  }
-
-
-	/**
 	 * @generated
 	 */		
 	@Transient
@@ -159,7 +132,6 @@ public class StockGroup extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (NAME.equals(propertyName)) return getName();
     if (KEY.equals(propertyName)) return getKey();
-    if (ORDERBY.equals(propertyName)) return getOrderby();
     return super.getProperty(propertyName);
   }
 	
@@ -171,7 +143,6 @@ public class StockGroup extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (NAME.equals(propertyName)) setName((String)newValue); else
     if (KEY.equals(propertyName)) setKey((String)newValue); else
-    if (ORDERBY.equals(propertyName)) setOrderby((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -185,8 +156,6 @@ public class StockGroup extends ModelBase {
       return new Class<?>[] {String.class};		
     if (KEY.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (ORDERBY.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -199,7 +168,6 @@ public class StockGroup extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) return StockGroup.class;
     if (KEY.equals(propertyName)) return StockGroup.class;
-    if (ORDERBY.equals(propertyName)) return StockGroup.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -214,8 +182,6 @@ public class StockGroup extends ModelBase {
     if (! SmartEquals(getName(), objT.getName()))
       return false;
     if (! SmartEquals(getKey(), objT.getKey()))
-      return false;
-    if (! SmartEquals(getOrderby(), objT.getOrderby()))
       return false;
     return true;
   }			
