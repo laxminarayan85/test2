@@ -928,8 +928,12 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setValidateSalesRep(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("foldedSizeIsManual_leave_empty"))
 			preferencesEstimating.setLeaveFoldedSizeEmpty(Utilities.tokenToBooleanValue(value));
-		else if (name.equals("Estimator_skipAutoShowJobCharges"))
-			preferencesEstimating.setAutoShowCharges(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Estimator_skipAutoShowJobCharges")) {
+			if (Utilities.tokenToBooleanValue(value))
+				preferencesEstimating.setAutoShowCharges(false);
+			else
+				preferencesEstimating.setAutoShowCharges(true);
+		}
 		else if (name.equals("ignorePresetPress_from_stock"))
 			preferencesEstimating.setNeverUsePresetPressOnStockChanges(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("fixedWastePass_from_press"))
@@ -939,7 +943,7 @@ public class PreferencesMapper extends ImportMapper {
 		else if (name.equals("Estimator_ticketClose_after_print"))
 			preferencesEstimating.setCloseInvoiceAfterPrintingTicket(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("Estimator_dueDate_days_out"))
-			preferencesEstimating.setDueFrom(Utilities.tokenToInt(value));
+			preferencesEstimating.setNormalDueDateDays(Utilities.tokenToInt(value));
 		else if (name.equals("finishGutterX"))
 			preferencesEstimating.setGutterHorizontal(Utilities.tokenToDouble(value));
 		else if (name.equals("finishGutterY"))
@@ -965,8 +969,6 @@ public class PreferencesMapper extends ImportMapper {
 				preferencesEstimating.setAutoShowCharges(false);
 		} else if (name.equals("Estimator_lockParentSize_field"))
 			preferencesEstimating.setUseStockParentSize(Utilities.tokenToBooleanValue(value));
-		else if (name.equals("Estimator_dueDate_days_out"))
-			preferencesEstimating.setDueFrom(Utilities.tokenToInt(value));
 		else if (name.equals("Estimator_invAddressEditable"))
 			preferencesEstimating.setCanChangeAddress(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("skipAutoCost_at_posting"))
