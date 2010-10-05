@@ -56,6 +56,14 @@ abstract public class ModelBase extends HibernateProxy implements Comparable {
 	@Column(name="isdeleted", nullable = false)
 	Boolean isDeleted = false;
 	
+	@Basic
+	@Column(name="orderby", nullable = true)
+	Integer orderby;
+	
+	@Basic
+	@Column(name="displayId", nullable = true)
+	Long displayId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -87,6 +95,20 @@ abstract public class ModelBase extends HibernateProxy implements Comparable {
 	
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+	
+	public Integer getOrderby() {
+		return orderby;
+	}
+	public void setOrderby(Integer orderby) {
+		this.orderby = orderby;
+	}
+	
+	public Long getDisplayId() {
+		return displayId;
+	}
+	public void setDisplayId(Long displayId) {
+		this.displayId = displayId;
 	}
 
 //	public static final String GUID = "GUID";
