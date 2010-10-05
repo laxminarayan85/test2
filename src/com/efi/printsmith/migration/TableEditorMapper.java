@@ -29,6 +29,7 @@ public class TableEditorMapper extends ImportMapper {
 		DataService dataService = new DataService();
 		String title = "";
 		boolean firstRec = true;
+		int recordNumber = 0;
 		for (int i=0;i<fileNodes.getLength();i++) {
 			NodeList fileChildNodes = fileNodes.item(i).getChildNodes();
 			for (int x=0;x<fileChildNodes.getLength();x++) {
@@ -132,7 +133,10 @@ public class TableEditorMapper extends ImportMapper {
 									modelBase = new WebLocations();
 								else if (title.equals("Zip"))
 									modelBase = new Zip();
+								recordNumber++;
+								modelBase.setOrderby(recordNumber);
 								modelBase.setPrevId(recordNodes.item(z).getTextContent());
+								modelBase.setDisplayId(Utilities.tokenToLong(recordNodes.item(z).getTextContent()));
 							} else if (nameNode.getNodeValue().equals("name")) {
 								modelBase = setName(modelBase,recordNodes.item(z).getTextContent());
 							} else if (nameNode.getNodeValue().equals("key")) {
