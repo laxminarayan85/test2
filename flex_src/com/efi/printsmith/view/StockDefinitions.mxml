@@ -1561,8 +1561,8 @@
 	 stockDefinitions.listPerM6 = parseFloat(removeSymbols(ListPerM6.text,"$"));
 	 stockDefinitions.pcwRecycledPercent = parseFloat(percentvalue) * .01 ;
 	 stockDefinitions.normalRunSize = NormalRunSize.selectedItem as Dimension;
-	 stockDefinitions.cutsPer100 = parseInt(CutsPer100.text);
-	 stockDefinitions.minCutCharge = parseInt(MinCutCharge.text);
+	 stockDefinitions.cutsPer100 = parseFloat(CutsPer100.text);
+	 stockDefinitions.minCutCharge = parseFloat(MinCutCharge.text);
 	// stockDefinitions.defaultPress = DefaultPress.text;
 	 stockDefinitions.blankSheetqty1 = parseInt(removeSymbols(BlankSheetqty1.text,","));
 	 stockDefinitions.blankSheetqty2 = parseInt(removeSymbols(BlankSheetqty2.text,","));
