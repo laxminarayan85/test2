@@ -51,6 +51,8 @@
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 			<mx:TextInput x="114" y="344" width="113.5" id="over_quantity"/>
 		</mx:AddChild>
+		<mx:SetProperty target="{radiobutton2}" name="selected" value="{priceList.isDollar}"/>
+		<mx:SetProperty target="{radiobutton1}" name="selected" value="{priceList.isPercentage}"/>
 	</mx:State>
 	<mx:State name="Speed Table" basedOn="Price List">
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="enabled" value="false"/>
@@ -180,10 +182,10 @@
 		<mx:RemoveChild target="{radiobutton2}"/>
 		<mx:RemoveChild target="{radiobutton1}"/>
 		<mx:AddChild relativeTo="{radio_box}" position="lastChild">
-			<mx:RadioButton x="10" y="6" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisCurrency')}" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton0" enabled="false" visible="true"/>
+			<mx:RadioButton x="10" y="6" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisCurrency')}" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton0" enabled="false" visible="true" selected="{priceList.isDollar}"/>
 		</mx:AddChild>
 		<mx:AddChild relativeTo="{radio_box}" position="lastChild">
-			<mx:RadioButton x="10" y="29" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisPercent')}" groupName="amount_radio_group" value="amtispercent" id="radiobutton3" enabled="false" visible="true"/>
+			<mx:RadioButton x="10" y="29" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisPercent')}" groupName="amount_radio_group" value="amtispercent" id="radiobutton3" enabled="false" visible="true" selected="{priceList.isPercentage}"/>
 		</mx:AddChild>
 		<mx:SetProperty target="{title_edit}" name="width" value="207"/>
 		<mx:RemoveChild target="{label0}"/>
@@ -383,7 +385,6 @@
 			this.quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.RunLength');
 			this.price_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Spoilage');
 			this.chkInterpolate.selected = priceList.interpolate;
-			this.radiobutton1.selected = true;
 			PopUpManager.centerPopUp(this);
 		} else if (priceList is SpeedTable) {
 			itemType = "SpeedTable";
@@ -590,6 +591,7 @@
 				}
 			}
 		}
+		
 		if (copyFLag)
 			priceList.name = priceList.name+' '+ resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Copy')
 	}
@@ -704,7 +706,7 @@
             	}
             }
         }
-    }  
+    }
     
     public function formatAmount(item:Object, column:DataGridColumn):String {
     	var retVal:String = "";
