@@ -70,6 +70,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 <mx:Script> 
                                   
 <![CDATA[
+	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
 	import com.efi.printsmith.data.ModelBase;
 	import flash.net.registerClassAlias;
@@ -639,7 +640,12 @@ implements="com.efi.mdi.IMDIWindowAware">
 		}
 		return -1;
 	}
+	
 	private function doNew():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNewOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	private function doNewOperation():void {
 		if (contact != null && contact.parentAccount != null){
 			var tempParent:Account = contact.parentAccount;
 			contact = new Contact();
@@ -712,14 +718,25 @@ implements="com.efi.mdi.IMDIWindowAware">
 	     
 	}
 	private function handleContactPickerSelect(evt:ContactPickerSelectEvent):void {
+		var inputArguments:Array = new Array();
+		inputArguments.push(evt.contact);
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doSelectOperation,inputArguments);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
+	private function doSelectOperation(evtContact:Contact):void {
 		var temp:Contact = new Contact();
-		temp= evt.contact as Contact;
+		temp= evtContact as Contact;
 		this.enabled = true;
-		dataService2.getContact(temp.id );   
-		
+		dataService2.getContact(temp.id );	
 	}
 	
 	private function handleContactPickerNew(evt:ContactPickerSelectEvent):void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,handleNewOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
+	private function handleNewOperation():void {
 		this.enabled = true;
 		this.contact = new Contact();
 		accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
@@ -731,7 +748,12 @@ implements="com.efi.mdi.IMDIWindowAware">
 		this.setContact(contact);
 	}
 	
-	private function doNext():void {  
+	private function doNext():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNextOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
+	private function doNextOperation():void {  
 		var itemp:int;
 		var temp:Contact;
 		//itemp = contacts.getItemIndex(account); 
@@ -743,7 +765,13 @@ implements="com.efi.mdi.IMDIWindowAware">
 	    temp = contacts.getItemAt(itemp,0) as Contact;   
 	   	dataService2.getContact(temp.id );                         
 	}
-	private function doPrev():void {              
+	
+	private function doPrev():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doPrevOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
+	private function doPrevOperation():void {              
 	    var itemp:int;
 	    var temp:Contact;
 	    itemp =	findItemID(contact.id, contacts);
@@ -808,9 +836,12 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
-		this.contact = new Contact();
-		setContact(this.contact);
-		openContactPicker();
+		this.setContact(ev.result as Contact);
+	   	contact_editor.setContact(contact);
+		setMarketing();
+		setCreditCard();
+		registerClassAlias("com.efi.printsmith.data.Contact",Contact);
+		originalContact = ObjectUtil.copy(contact) as Contact;
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
 		dispatchEvent(windowSaveSuccessEvent);
 	} 
@@ -1084,25 +1115,25 @@ implements="com.efi.mdi.IMDIWindowAware">
 	
 	public function getOriginalObject():ArrayCollection {
 		var originalList:ArrayCollection = new ArrayCollection();
-		if (originalContact == null) return originalList;
-		
-		if(originalContact.marketing!=null && originalContact.marketing.birthDate!=null){
-			originalContact.marketing.birthDate = scrubTimeValue(originalContact.marketing.birthDate);
-		}
-		if(originalContact.marketing!=null && originalContact.marketing.followup!=null){
-			originalContact.marketing.followup = scrubTimeValue(originalContact.marketing.followup);
-		}
-		if(originalContact.marketing!=null && originalContact.marketing.user3!=null){
-			originalContact.marketing.user3 = scrubTimeValue(originalContact.marketing.user3);
-		}
-		if(originalContact.marketing!=null && originalContact.marketing.user4!=null){
-			originalContact.marketing.user4 = scrubTimeValue(originalContact.marketing.user4);
-		}
-		if(originalContact.marketing!=null && originalContact.marketing.user5!=null){
-			originalContact.marketing.user5 = scrubTimeValue(originalContact.marketing.user5);
-		}
-		if(originalContact.creditCard!=null && originalContact.creditCard.expiresDate!=null){
-			originalContact.creditCard.expiresDate = scrubTimeValue(originalContact.creditCard.expiresDate);
+		if (originalContact != null) {
+			if(originalContact.marketing!=null && originalContact.marketing.birthDate!=null){
+				originalContact.marketing.birthDate = scrubTimeValue(originalContact.marketing.birthDate);
+			}
+			if(originalContact.marketing!=null && originalContact.marketing.followup!=null){
+				originalContact.marketing.followup = scrubTimeValue(originalContact.marketing.followup);
+			}
+			if(originalContact.marketing!=null && originalContact.marketing.user3!=null){
+				originalContact.marketing.user3 = scrubTimeValue(originalContact.marketing.user3);
+			}
+			if(originalContact.marketing!=null && originalContact.marketing.user4!=null){
+				originalContact.marketing.user4 = scrubTimeValue(originalContact.marketing.user4);
+			}
+			if(originalContact.marketing!=null && originalContact.marketing.user5!=null){
+				originalContact.marketing.user5 = scrubTimeValue(originalContact.marketing.user5);
+			}
+			if(originalContact.creditCard!=null && originalContact.creditCard.expiresDate!=null){
+				originalContact.creditCard.expiresDate = scrubTimeValue(originalContact.creditCard.expiresDate);
+			}
 		}
 		originalList.addItem(originalContact);
 		return originalList;
