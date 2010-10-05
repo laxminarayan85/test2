@@ -1,9 +1,14 @@
 // ActionScript file
+import com.efi.printsmith.common.components.CommonConfirmationComponent;
+
+import flash.events.TimerEvent;
 import flash.utils.ByteArray;
+import flash.utils.Timer;
 
 import mx.collections.ArrayCollection;
 import mx.collections.Sort;
 import mx.collections.SortField;
+import mx.managers.PopUpManager;
 
 public function sortArray(ac:ArrayCollection, prop:String):void	{
 	var sortField:SortField = new SortField();
@@ -76,6 +81,11 @@ private function removeSymbols(value:String,symbol:String):String {
 		value = value.replace(symbol,"");
 	}
 	return value;
+}
+
+private function openConfirmationComponent(confirmationText:String):void {
+	var commonConfirmationComponent:CommonConfirmationComponent = PopUpManager.createPopUp(this,CommonConfirmationComponent,false) as CommonConfirmationComponent;
+	commonConfirmationComponent.confirmationText = confirmationText;
 }
  
  

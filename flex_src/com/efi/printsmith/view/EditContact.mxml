@@ -167,8 +167,9 @@ implements="com.efi.mdi.IMDIWindowAware">
     private var focussedFormControl:DisplayObject;
     
    	private function openContactPicker():void	{
-   		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
-
+   		if(first){
+   			loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+   		}
    		dataService2.getContactPicker();  
    	}
 	public function init():void {
@@ -842,6 +843,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 		setCreditCard();
 		registerClassAlias("com.efi.printsmith.data.Contact",Contact);
 		originalContact = ObjectUtil.copy(contact) as Contact;*/
+		openConfirmationComponent("The Contact has been successfully saved");
 		this.setContact(ev.result as Contact);
 	   	contact_editor.setContact(contact);
 		setMarketing();
@@ -944,6 +946,10 @@ implements="com.efi.mdi.IMDIWindowAware">
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
 		Alert.show(message, "Error");      
+		
+		if(first){
+			first = false;
+		}
 		
 		if(loadComponent) {
 			loadComponent.close();
