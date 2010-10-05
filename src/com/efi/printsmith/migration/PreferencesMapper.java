@@ -1149,6 +1149,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setCompanyStoreLocationRef(value);
 		else if (name.equals("App_enable_import_export"))
 			preferencesSystem.setEnablePricingSystem(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("roundto"))
+			preferencesSystem.setNumbersRoundto(Utilities.tokenToInt(value));
 		if (address != null)
 			preferencesSystem.setCompanyAddress(address);
 		dataService.addUpdate(preferencesSystem);
