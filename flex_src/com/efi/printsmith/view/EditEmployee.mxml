@@ -43,11 +43,13 @@ implements="com.efi.mdi.IMDIWindowAware">
 <mx:NumberValidator id= "timeValidator2" source="{minute_edit}" property= "text" maxValue="59" minValue="0"  required="false"/>
 
 
+<mx:Script source="../common/scripts/CommonUtils.as"/>
 
 
 <mx:Script> 
                                   
 <![CDATA[
+	import mx.events.CloseEvent;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
 	import mx.utils.ObjectUtil;
 	import flash.net.registerClassAlias;
@@ -546,11 +548,12 @@ implements="com.efi.mdi.IMDIWindowAware">
 			Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardsCmd.Theemployeetimecards'));
 			return;
 		} else {
-	    	dataService.deleteItem("Employee",employee.id);
+			dataService.deleteItem("Employee",employee.id);
 	 	}
 	}
 	
 	private function handleDeleteResult(event:ResultEvent):void {
+		openConfirmationComponent("The Employee has been successfully deleted");
 		doNew();
 		dataService.getAll("Employee");
 	}  
@@ -609,7 +612,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 	
 	
 	private function handleSaveResult(ev:ResultEvent):void {
-		
+		openConfirmationComponent("The Employee has been successfully saved");
 		this.employee = ev.result as Employee;
 		setOriginalEmployee();
 		dataService.getAll("Employee");
