@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="100%" height="100%" 
 	defaultButton="{select_button}" 
-	showCloseButton="false" 
+	showCloseButton="true" 
 	creationComplete="init()"
 	headerHeight="0"
     close="PopUpManager.removePopUp(this);" 
@@ -327,7 +327,8 @@
 	    PopUpManager.centerPopUp(this);
 
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
-		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList');
+		if (mdiWin != null)
+			mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList');
 		
 		parentContainer = Snowmass.getInstance().containerManager.getActiveWindowContent(); //.mainNavigator.selectedChild;
 		fillArray();
