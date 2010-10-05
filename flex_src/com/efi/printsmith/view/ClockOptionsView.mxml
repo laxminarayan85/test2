@@ -124,7 +124,7 @@
 				var requestSent:Boolean = false;
 				var autoClockOutEmployeeList:ArrayCollection = new ArrayCollection();
 				for each(var employeeObj:Employee in employeeList){
-					autoClockOutDetectortList = parentDocument.autoClockOutDetectortList;
+					autoClockOutDetectortList = Snowmass.getInstance().autoClockOutDetectortList;
 					var count:int=-1;
 					var checkFlag:Boolean = false;
 					for each(var autoClockOutDetectorObj:AutoClockOutDetector in autoClockOutDetectortList){

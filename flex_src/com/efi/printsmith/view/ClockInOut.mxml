@@ -90,7 +90,7 @@
 		clockBreak.enabled = false;
 		dataService.getActiveEmployees();
 		dataServicePeriod.getByPeriodOpen("Period");
-		autoClockOutDetectortList = parentDocument.autoClockOutDetectortList;
+		autoClockOutDetectortList = Snowmass.getInstance().autoClockOutDetectortList;
 		//user = application.currentUser;
 	} 
 	
