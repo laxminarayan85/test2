@@ -254,7 +254,9 @@
 	private function handleAccountPickerMasterSelect(evt:AccountPickerSelectEvent):void {
 		if (evt.account != null) {
 			account.masterAcct = evt.account.id;
-			dataService.getByIdMaster("Account", account.masterAcct ); 
+			if ( account.id != account.masterAcct)
+				dataService.getByIdMaster("Account", account.masterAcct ); 
+					
 			
 		} else {
 			
