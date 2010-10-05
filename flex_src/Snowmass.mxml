@@ -1165,10 +1165,10 @@
         }
         
         public static function formatSizeString(sizeString:String):String {
+        	var returnString:String = "";
         	if (sizeString != null && sizeString.length > 0) {
         		var firstNumber:String = "";
     			var secondNumber:String = "";
-    			var returnString:String = "";
     			var onFirstNumber:Boolean = true;
     			var lastCharNumber = false;
         		for (var i:int = 0;i < sizeString.length;i++) {
