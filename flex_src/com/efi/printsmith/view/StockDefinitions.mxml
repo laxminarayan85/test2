@@ -1202,7 +1202,14 @@
 		 pressDefinitions = ev.result as ArrayCollection;
 	}
 	private function handleLoadCopierDefinition(ev:ResultEvent):void {
-		 copierDefinitions = ev.result as ArrayCollection;
+		 copierDefinitions = new ArrayCollection();
+		 var copier:CopierDefinition = new CopierDefinition();
+		 copierDefinitions.addItem(copier);
+		 var resultArray:ArrayCollection = ev.result as ArrayCollection;
+		 for (var i:int;i<resultArray.length;i++) {
+		 	copier = resultArray.getItemAt(i) as CopierDefinition;
+		 	copierDefinitions.addItem(copier);
+		 }
 	}
 	private function handleLoadStockGroup(ev:ResultEvent):void {
 		 stockGroup = ev.result as ArrayCollection;
@@ -1471,15 +1478,24 @@
 	 if (cboDefaultPress != null && cboDefaultPress.selectedItem != null) 
 	 	stockDefinitions.defaultPress = cboDefaultPress.selectedItem as PressDefinition;
 	 	
-	 if (defaultBWCopier != null && defaultBWCopier.selectedItem != null) 
-	 	stockDefinitions.defaultBWCopier = defaultBWCopier.selectedItem as CopierDefinition;
+	 if (defaultBWCopier != null && defaultBWCopier.selectedItem != null)
+	    var copier:CopierDefinition = defaultBWCopier.selectedItem as CopierDefinition;
+	    if (copier != null && copier.name == "")
+	    	copier = null;
+	 	stockDefinitions.defaultBWCopier = copier;
 	 	
-	 if (defaultColorCopier != null && defaultColorCopier.selectedItem != null) 
-	 	stockDefinitions.defaultColorCopier = defaultColorCopier.selectedItem as CopierDefinition;
+	 if (defaultColorCopier != null && defaultColorCopier.selectedItem != null)
+		var copierDefinition:CopierDefinition = defaultColorCopier.selectedItem as CopierDefinition;
+	    if (copierDefinition != null && copierDefinition.name == "")
+	    	copierDefinition = null;
+	 	stockDefinitions.defaultColorCopier = copierDefinition;
 	 if (coated != null && coated.selectedItem != null)
 	 	stockDefinitions.coated = coated.text	
 	 if (defaultLargeCopier != null && defaultLargeCopier.selectedItem != null) 
-	 	stockDefinitions.defaultLargeCopier = defaultLargeCopier.selectedItem as CopierDefinition;	
+	 	var copierDefinition:CopierDefinition = defaultLargeCopier.selectedItem as CopierDefinition;
+	    if (copierDefinition != null && copierDefinition.name == "")
+	    	copierDefinition = null;
+	 	stockDefinitions.defaultLargeCopier = copierDefinition;	
 	  if (forestMgmt != null && forestMgmt.selectedItem != null) 
 	 	stockDefinitions.forestManagement = forestMgmt.text;
 	 
