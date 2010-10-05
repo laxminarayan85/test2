@@ -83,7 +83,7 @@ private function removeSymbols(value:String,symbol:String):String {
 	return value;
 }
 
-private function openConfirmationComponent(confirmationText:String):void {
+private function openConfirmationComponent(confirmationText:String=null):void {
 	var commonConfirmationComponent:CommonConfirmationComponent = PopUpManager.createPopUp(this,CommonConfirmationComponent,false) as CommonConfirmationComponent;
 	commonConfirmationComponent.confirmationText = confirmationText;
 }

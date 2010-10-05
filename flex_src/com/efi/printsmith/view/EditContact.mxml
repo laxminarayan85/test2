@@ -934,6 +934,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}                              
 
 	private function handleDeleteResult(ev:ResultEvent):void {
+		openConfirmationComponent("The Contact has been successfully deleted");
 		openContactPicker();
 		doNew();
 	}

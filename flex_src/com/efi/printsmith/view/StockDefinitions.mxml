@@ -1094,6 +1094,7 @@
 	}
 
 	private function handleSaveResult(ev:ResultEvent):void {
+		openConfirmationComponent("The StockDefinition has been successfully saved");
 		setStockDefinition(ev.result as StockDefinition);
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
 		dispatchEvent(windowSaveSuccessEvent);
@@ -1181,8 +1182,9 @@
 	}	                                 
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		 doNew();
-	     loadStockDefinitions();
+		openConfirmationComponent("The StockDefinition has been successfully deleted");
+		doNew();
+	    loadStockDefinitions();
 	}
 	
 	private function handleLoadDimensionResult(ev:ResultEvent):void {
