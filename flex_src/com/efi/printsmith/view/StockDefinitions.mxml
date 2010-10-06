@@ -1094,6 +1094,7 @@
 	}
 
 	private function handleSaveResult(ev:ResultEvent):void {
+		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'genericPrefCmd.StockDefinitions')));
 		openConfirmationComponent("The StockDefinition has been successfully saved");
 		setStockDefinition(ev.result as StockDefinition);
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
@@ -1182,7 +1183,7 @@
 	}	                                 
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		openConfirmationComponent("The StockDefinition has been successfully deleted");
+		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.DELETE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'genericPrefCmd.StockDefinitions')));
 		doNew();
 	    loadStockDefinitions();
 	}
