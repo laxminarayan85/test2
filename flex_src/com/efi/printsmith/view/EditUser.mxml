@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.data.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" name="User Editor"
-width="100%" height="619" defaultButton="{submitButton}" creationComplete="init()" showCloseButton="true" 
+width="100%" height="619" defaultButton="{submitButton}" creationComplete="init()" showCloseButton="false"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
