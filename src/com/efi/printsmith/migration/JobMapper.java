@@ -35,6 +35,7 @@ public class JobMapper extends ImportMapper {
 		Job job = new Job();
 		PricingRecord pricingRecord = new PricingRecord();
 		CostingRecord costingRecord = new CostingRecord();
+		costingRecord = (CostingRecord)dataService.addUpdate(costingRecord);
 		job.setCostingRecord(costingRecord);
 		PaperCalculator tempPaper = new PaperCalculator();
 		Dimension dimension = new Dimension();
