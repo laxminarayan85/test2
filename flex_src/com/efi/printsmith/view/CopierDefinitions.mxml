@@ -740,43 +740,75 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		this.OEMDeviceID.text = evt.deviceId as String;
 	}
 	
+	private function filterLargeFormatMethod(item:*, index:int, arr:Array):Boolean {
+		if (item.data == CopierPricingMethod.CostPlus.toString())
+			return false;
+		else if (item.data == CopierPricingMethod.FlatRate.toString())
+			return false;
+		else if (item.data == CopierPricingMethod.CopiesAndOriginals.toString())
+			return false;
+		else if (item.data == CopierPricingMethod.CopiesPerOriginals.toString())
+			return false;
+		else if (item.data == CopierPricingMethod.TotalOfAllCopies.toString())
+			return false;
+		else
+			return true;
+	}
+	
+	private function filterDigitalMethod(item:*, index:int, arr:Array):Boolean {
+		if (item.data == CopierPricingMethod.TotalSquareArea.toString())
+			return false;
+		else if (item.data == CopierPricingMethod.SquareAreaOfOriginals.toString())
+			return false;
+		else if (item.data == CopierPricingMethod.SquareAreaAndCopies.toString())
+			return false;
+		else if (item.data == CopierPricingMethod.SquareAreaPerCopy.toString())
+			return false;
+		else
+			return true;
+	}
+		
 	private function updateMethodBox():void { //cej
 		var tempIndex:int = -1;
 		tempIndex = pricing_method_combo.selectedIndex;
 		methodType = new ArrayCollection(CopierPricingMethod.toArray());
+		var methodTypeArray = new Array();
 		var i:int;
 		
 		if (copierDefinition.largeFormat == true  || largeformatCheck.selected) {
+			methodTypeArray = methodType.toArray().filter(filterLargeFormatMethod);
+			pricing_method_combo.dataProvider = methodTypeArray;
 			// Remove unused elements
-			for (i = methodType.length-1; i  >= 0 ; i--) {
-				if (methodType.getItemAt(i).data == CopierPricingMethod.CostPlus) {
+			/*for (i = methodType.length-1; i  >= 0 ; i--) {
+				if (methodType.getItemAt(i).data == CopierPricingMethod.CostPlus.toString()) {
 					methodType.removeItemAt(i);
-				} else if (methodType.getItemAt(i).data == CopierPricingMethod.FlatRate) {
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.FlatRate.toString()) {
 					methodType.removeItemAt(i);
-				} else if (methodType.getItemAt(i).data == CopierPricingMethod.CopiesAndOriginals) {
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.CopiesAndOriginals.toString()) {
 					methodType.removeItemAt(i);
-				} else if (methodType.getItemAt(i).data == CopierPricingMethod.CopiesPerOriginals) {
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.CopiesPerOriginals.toString()) {
 					methodType.removeItemAt(i);
-				} else if (methodType.getItemAt(i).data == CopierPricingMethod.TotalOfAllCopies) {
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.TotalOfAllCopies.toString()) {
 					methodType.removeItemAt(i);
 				}
-			}
+			}*/
 			pricing_method_combo.selectedIndex = tempIndex;
 			maxWidthsize.enabled = true;
 			minWidthsize.enabled = true;
 		} else {
-			// Remove unused elements
-			for (i = methodType.length-1; i  >= 0 ; i--) {
-				if (methodType.getItemAt(i).data == CopierPricingMethod.SquareAreaOfOriginals) {
+			methodTypeArray = methodType.toArray().filter(filterDigitalMethod);
+			pricing_method_combo.dataProvider = methodTypeArray;
+			/*for (i = methodType.length-1; i  >= 0 ; i--) {
+				if (methodType.getItemAt(i).data == CopierPricingMethod.SquareAreaOfOriginals.toString()) {
 					methodType.removeItemAt(i);
-				} else if (methodType.getItemAt(i).data == CopierPricingMethod.TotalSquareArea) {
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.TotalSquareArea.toString()) {
 					methodType.removeItemAt(i);
-				} else if (methodType.getItemAt(i).data == CopierPricingMethod.SquareAreaAndCopies) {
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.SquareAreaAndCopies.toString()) {
 					methodType.removeItemAt(i);
-				} else if (methodType.getItemAt(i).data == CopierPricingMethod.SquareAreaPerCopy) {
+				} else if (methodType.getItemAt(i).data == CopierPricingMethod.SquareAreaPerCopy.toString()) {
 					methodType.removeItemAt(i);
 				}
-			}
+			}*/
 			pricing_method_combo.selectedIndex = tempIndex;
 			maxWidthsize.enabled = false;
 			minWidthsize.enabled = false;
@@ -811,6 +843,13 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			return true;
 	}
 	
+	private function filterCostPlusPrice2Side(item:*, index:int, arr:Array):Boolean {
+		if (item.data == Price2Side.UsingSecondSideRate.toString())
+			return false;
+		else
+			return true;
+	}
+	
 	private function updateControlState():void {
 		var tempMethod:CopierPricingMethod;
 		tempMethod = pricing_method_combo.value as CopierPricingMethod;
@@ -827,9 +866,13 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 				squarefinishsize.visible= false;
 				interpolatematrix.visible= false;
 				copymarkuplabel.visible = false;
+				copyMarkup2.visible = false;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
-				price_2_side.dataProvider = Price2Side.toArray();
+				baseratelabel.visible = false;
+				baseRate_edit.visible = false;
+				var price2SideArray:Array = Price2Side.toArray().filter(filterCostPlusPrice2Side);
+				price_2_side.dataProvider = price2SideArray;
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 			
