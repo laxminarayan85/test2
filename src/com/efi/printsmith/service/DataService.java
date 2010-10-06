@@ -2846,6 +2846,26 @@ public class DataService extends HibernateService {
 		return null;
 	}
 	
+	public long getMaxDisplayId(String className) throws Exception {
+		log.debug("** getMaxDisplayId called.");
+		long maxDisplayId = -1;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Session session = (Session) em.getDelegate();
+			String queryString = "select max(displayId) from " + className;
+			org.hibernate.Query query = session.createQuery(queryString);
+			ScrollableResults rs = query.scroll();
+			if(rs.next()) {
+				maxDisplayId = rs.getLong(0).longValue();
+			}
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return maxDisplayId;
+	}
+	
 	@SuppressWarnings("unchecked")
 	/**
 	 * This method retrieves the list of active employees and inactive employees who are
