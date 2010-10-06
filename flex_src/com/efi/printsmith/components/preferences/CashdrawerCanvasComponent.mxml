@@ -127,11 +127,11 @@
 				
 					<mx:Label
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ASCIICodetoopenDrawe')}"
-						textAlign="right" width="158" />
+						textAlign="right" width="158" visible="false" />
 						
 					<components:CustomNumericTextInputComponent width="50"
 						dataHolder="{preferencesPOS}" variableName="asciiCodeOpenDrawer" customText="{preferencesPOS.asciiCodeOpenDrawer}"
-						precision="0" rounding="nearest" isInteger="true"/>
+						precision="0" rounding="nearest" isInteger="true" visible="false" />
 					
 				</mx:HBox>
 				
@@ -163,10 +163,10 @@
 				
 					<mx:Label
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptStartCode')}"
-						textAlign="right" width="158" />
+						textAlign="right" width="158" visible="false" />
 						
 					<components:CustomStringTextInputComponent width="80" 
-						dataHolder="{preferencesPOS}" variableName="receiptStartCode" customText="{preferencesPOS.receiptStartCode}" />
+						dataHolder="{preferencesPOS}" variableName="receiptStartCode" customText="{preferencesPOS.receiptStartCode}" visible="false" />
 				
 				</mx:HBox>
 				
@@ -174,10 +174,10 @@
 				
 					<mx:Label
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.ReceiptEndCode')}"
-						textAlign="right" width="158" />
+						textAlign="right" width="158" visible="false" />
 						
 					<components:CustomStringTextInputComponent width="80" 
-						dataHolder="{preferencesPOS}" variableName="receiptEndCode" customText="{preferencesPOS.receiptEndCode}" />
+						dataHolder="{preferencesPOS}" variableName="receiptEndCode" customText="{preferencesPOS.receiptEndCode}" visible="false" />
 				
 				</mx:HBox>
 				
@@ -189,12 +189,12 @@
 							
 							<mx:Label
 								text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.BaudRate')}"
-								textAlign="right" width="100" />
+								textAlign="right" width="100" visible="false" />
 								
 							<components:CustomComboBoxComponent
 								masterList="{baudRateArray}" labelFieldId="name" labelFieldName="name"
 								dataHolder="{preferencesPOS}" variableName="baudRate" customText="{getCustomTextData(baudRateArray,preferencesPOS,preferencesPOS.baudRate)}" 
-								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}"/>
+								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}" visible="false" />
 								
 						</mx:HBox>
 						
@@ -202,12 +202,12 @@
 						
 							<mx:Label
 								text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Parity')}"
-								textAlign="right" width="100" />
+								textAlign="right" width="100" visible="false" />
 								
 							<components:CustomComboBoxComponent
 								masterList="{parityArray}" labelFieldId="name" labelFieldName="name"
 								dataHolder="{preferencesPOS}" variableName="parity" customText="{getCustomTextData(parityArray,preferencesPOS,preferencesPOS.parity)}" 
-								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}"/>
+								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}" visible="false" />
 							
 						</mx:HBox>
 						
@@ -219,12 +219,12 @@
 						
 							<mx:Label
 								text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.StopBits')}"
-								textAlign="right" width="100" />
+								textAlign="right" width="100" visible="false" />
 								
 							<components:CustomComboBoxComponent
 								masterList="{stopBitsArray}" labelFieldId="name" labelFieldName="name"
 								dataHolder="{preferencesPOS}" variableName="stopBits" customText="{getCustomTextData(stopBitsArray,preferencesPOS,preferencesPOS.stopBits)}" 
-								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}"/>							
+								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}" visible="false" />							
 							
 						</mx:HBox>
 						
@@ -232,12 +232,12 @@
 						
 							<mx:Label
 								text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.DataSize')}"
-								textAlign="right" width="100" />
+								textAlign="right" width="100" visible="false" />
 							
 							<components:CustomComboBoxComponent
 								masterList="{dataSizeArray}" labelFieldId="name" labelFieldName="name"
 								dataHolder="{preferencesPOS}" variableName="dataSize" customText="{getCustomTextData(dataSizeArray,preferencesPOS,preferencesPOS.dataSize)}" 
-								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}"/>
+								updateFirstElement="true" width="90" enabled="{preferencesPOS.receiptPrinterStatus!='Off'}" visible="false" />
 					
 						</mx:HBox>
 						

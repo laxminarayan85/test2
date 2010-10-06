@@ -707,7 +707,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesPOS.setBlankLinesAfterReceipt(Utilities.tokenToInt(value));
 		else if (name.equals("recieptBlankLine_before"))
 			preferencesPOS.setBlankLinesBeforeReceipt(Utilities.tokenToInt(value));
-		else if (name.equals("caseReceiptTwoCopies"))
+		else if (name.equals("cashReceiptTwoCopies"))
 			preferencesPOS.setPrint2forCash(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("useNamedSerial")) {
 			if (Utilities.tokenToBooleanValue(value)) {
