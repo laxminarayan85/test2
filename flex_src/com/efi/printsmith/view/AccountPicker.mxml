@@ -20,6 +20,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.itemRenderers.AccountPickerContactItemRenderer;
 	import com.efi.printsmith.common.components.NonModalThrobberHelper;
 	import com.efi.printsmith.components.Throbber;
 	import com.efi.mdi.view.window.MDIWindow;
@@ -127,7 +128,7 @@
 		contactCallInProgress = true;
 		throbberHelper = new NonModalThrobberHelper(dataGrid,"throbber1");
 		
-
+		
 		var editPage:Container = Snowmass.getInstance().containerManager.getActiveWindowContent();
 		if (editPage.className != "EditCustomer") {
 			new_button.visible = false;
@@ -212,7 +213,8 @@
 		accounts.filterFunction = accountFilter;
 		sortAccountsByTitle();
 		dataGrid.dataField = "title";
-		dataGrid.colLabelFunction = null;
+		dataGrid.extLabelFunction = null;
+		dataGrid.dgCol.itemRenderer = null;
 		pickerFilter.searchCriteria = getSearchByForAccount();
  
 	}  
@@ -221,7 +223,8 @@
 		accounts.filterFunction = null;
 		sortAccountsByLastName();
 		dataGrid.dataField = null;
-		dataGrid.colLabelFunction = contactLabel;
+		dataGrid.extLabelFunction = contactLabel;
+		dataGrid.dgCol.itemRenderer = new ClassFactory(AccountPickerContactItemRenderer);
 		pickerFilter.searchCriteria = getSearchByForContact();
 		
 	}
@@ -262,8 +265,7 @@
 		else
 			return 0;
 	}
-	public function contactLabel(item:Object, column:DataGridColumn):String	{
-		var acct:Account = item as Account;
+	public static function contactLabel(acct:Account):String	{
 		if (acct.contact == null) return("");
 		return acct.contact.lastName + ", " + acct.contact.firstName + " - " + acct.title;
 	}
@@ -337,7 +339,7 @@
 		fp = new FilterProperty(null, "masterAcct");
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling'), fp);
 		sc.addItem(sc1);
-		accounts.filterFunction = filterNullContacts;
+		//accounts.filterFunction = filterNullContacts;
 		accounts.refresh();
 		return sc;
 		
@@ -364,7 +366,7 @@
 		fp = new FilterProperty(null, "masterAcct");
 		sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.MasterBilling'), fp);
 		sc.addItem(sc1);
-		accounts.filterFunction = unfilterNullContacts;
+		//accounts.filterFunction = unfilterNullContacts;
 		accounts.refresh();
 		return sc;
 
