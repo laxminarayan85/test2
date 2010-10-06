@@ -24,6 +24,7 @@ package com.efi.printsmith.data
 		public var type:String = "";
 		public var encryption:String = "";
 		public var cardDisplayNumber:String = "";
+		public var permanent:int = 0;
 	
 	}
 }

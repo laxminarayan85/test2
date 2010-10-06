@@ -93,10 +93,6 @@ public class CreditCardTransactions extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String PERMANENT = "Permanent";
-	/**
-	 * @generated
-	 */
 	public static final String MANUALCODE = "ManualCode";
 	/**
 	 * @generated
@@ -466,29 +462,6 @@ public class CreditCardTransactions extends ModelBase {
 	 */	
 	public void setMessage(String newVal) {
     this.message = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean permanent;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getPermanent(){
-    return permanent; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setPermanent(Boolean newVal) {
-    this.permanent = newVal;
   }
 	
  	
@@ -1059,7 +1032,6 @@ public class CreditCardTransactions extends ModelBase {
     if (APPROVALCODE.equals(propertyName)) return getApprovalCode();
     if (APPROVALDATE.equals(propertyName)) return getApprovalDate();
     if (MESSAGE.equals(propertyName)) return getMessage();
-    if (PERMANENT.equals(propertyName)) return getPermanent();
     if (MANUALCODE.equals(propertyName)) return getManualCode();
     if (FAILEDAVS.equals(propertyName)) return getFailedAVS();
     if (HASCVVDATA.equals(propertyName)) return getHasCVVdata();
@@ -1104,7 +1076,6 @@ public class CreditCardTransactions extends ModelBase {
     if (APPROVALCODE.equals(propertyName)) setApprovalCode((String)newValue); else
     if (APPROVALDATE.equals(propertyName)) setApprovalDate((Date)newValue); else
     if (MESSAGE.equals(propertyName)) setMessage((String)newValue); else
-    if (PERMANENT.equals(propertyName)) setPermanent((Boolean)newValue); else
     if (MANUALCODE.equals(propertyName)) setManualCode((String)newValue); else
     if (FAILEDAVS.equals(propertyName)) setFailedAVS((Boolean)newValue); else
     if (HASCVVDATA.equals(propertyName)) setHasCVVdata((Boolean)newValue); else
@@ -1160,8 +1131,6 @@ public class CreditCardTransactions extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (MESSAGE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (PERMANENT.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
     if (MANUALCODE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (FAILEDAVS.equals(propertyName)) 
@@ -1231,7 +1200,6 @@ public class CreditCardTransactions extends ModelBase {
     if (APPROVALCODE.equals(propertyName)) return CreditCardTransactions.class;
     if (APPROVALDATE.equals(propertyName)) return CreditCardTransactions.class;
     if (MESSAGE.equals(propertyName)) return CreditCardTransactions.class;
-    if (PERMANENT.equals(propertyName)) return CreditCardTransactions.class;
     if (MANUALCODE.equals(propertyName)) return CreditCardTransactions.class;
     if (FAILEDAVS.equals(propertyName)) return CreditCardTransactions.class;
     if (HASCVVDATA.equals(propertyName)) return CreditCardTransactions.class;
@@ -1288,8 +1256,6 @@ public class CreditCardTransactions extends ModelBase {
     if (! SmartEquals(getApprovalDate(), objT.getApprovalDate()))
       return false;
     if (! SmartEquals(getMessage(), objT.getMessage()))
-      return false;
-    if (! SmartEquals(getPermanent(), objT.getPermanent()))
       return false;
     if (! SmartEquals(getManualCode(), objT.getManualCode()))
       return false;

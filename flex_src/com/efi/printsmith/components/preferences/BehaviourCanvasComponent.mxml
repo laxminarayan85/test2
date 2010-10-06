@@ -85,7 +85,7 @@
 				<mx:HBox width="100%">
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Timeofdaytoquit')}"/>
 					<components:CustomTimeEntryStringComponent
-						showSeconds="false" is24Hour="false" 
+						showSeconds="false" is24Hour="false"  am_pm="true"
 						dataHolder="{preferencesSystem}" variableName="quitTime" customText="{preferencesSystem.quitTime}"/>
 				</mx:HBox>
 				

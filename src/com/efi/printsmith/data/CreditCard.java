@@ -87,6 +87,10 @@ public class CreditCard extends ModelBase {
 	 */
 	public static final String CARDDISPLAYNUMBER = "CardDisplayNumber";
 	/**
+   * @generated
+   */
+  public static final String PERMANENT = "Permanent";
+	/**
 	 * @generated
 	 */
 	public CreditCard() {
@@ -338,6 +342,27 @@ public class CreditCard extends ModelBase {
  	
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer permanent;
+	/**
+   * @generated
+ 	 */
+  public Integer getPermanent(){
+    return permanent; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPermanent(Integer newVal) {
+    this.permanent = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -353,6 +378,7 @@ public class CreditCard extends ModelBase {
     if (TYPE.equals(propertyName)) return getType();
     if (ENCRYPTION.equals(propertyName)) return getEncryption();
     if (CARDDISPLAYNUMBER.equals(propertyName)) return getCardDisplayNumber();
+    if (PERMANENT.equals(propertyName)) return getPermanent();
     return super.getProperty(propertyName);
   }
 	
@@ -372,6 +398,7 @@ public class CreditCard extends ModelBase {
     if (TYPE.equals(propertyName)) setType((String)newValue); else
     if (ENCRYPTION.equals(propertyName)) setEncryption((String)newValue); else
     if (CARDDISPLAYNUMBER.equals(propertyName)) setCardDisplayNumber((String)newValue); else
+    if (PERMANENT.equals(propertyName)) setPermanent((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -401,6 +428,8 @@ public class CreditCard extends ModelBase {
       return new Class<?>[] {String.class};		
     if (CARDDISPLAYNUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (PERMANENT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -421,6 +450,7 @@ public class CreditCard extends ModelBase {
     if (TYPE.equals(propertyName)) return CreditCard.class;
     if (ENCRYPTION.equals(propertyName)) return CreditCard.class;
     if (CARDDISPLAYNUMBER.equals(propertyName)) return CreditCard.class;
+    if (PERMANENT.equals(propertyName)) return CreditCard.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -451,6 +481,8 @@ public class CreditCard extends ModelBase {
     if (! SmartEquals(getEncryption(), objT.getEncryption()))
       return false;
     if (! SmartEquals(getCardDisplayNumber(), objT.getCardDisplayNumber()))
+      return false;
+    if (! SmartEquals(getPermanent(), objT.getPermanent()))
       return false;
     return true;
   }			

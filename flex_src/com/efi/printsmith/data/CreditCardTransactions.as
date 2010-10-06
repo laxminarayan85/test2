@@ -25,7 +25,6 @@ package com.efi.printsmith.data
 		public var approvalCode:String = "";
 		public var approvalDate:Date = new Date();
 		public var message:String = "";
-		public var permanent:Boolean = false;
 		public var manualCode:String = "";
 		public var failedAVS:Boolean = false;
 		public var hasCVVdata:Boolean = false;
