@@ -136,14 +136,15 @@ public class DataService extends HibernateService {
 		}
 		return retVal;
 	}
-
+	
 	public List<?> getAll(String className) {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
 		try {
+			
 			Query findAllQuery = em.createQuery("from " + className
-					+ " fetch all properties order by id");
+					+ " fetch all properties order by orderby,id");
 			resultList = findAllQuery.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
