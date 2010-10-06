@@ -20,6 +20,9 @@ package com.efi.mdi.compare
 	    {
 	        if (a == null && b == null)
 	            return 0;
+	            
+	        if ((a == null && b == "") || (a=="" && b==null))
+	            return 0;
 	    
 	        if (a == null)
 	            return 1;
@@ -39,18 +42,42 @@ package com.efi.mdi.compare
 	                case "boolean":
 	                {
 	                    result = numericCompare(Number(a), Number(b));
+	                    if(result!=0){
+							trace("OriginalObject Value=="+a);
+							trace("UpdatedObject Value=="+b);
+							if(propertyName!=null){
+								trace("propertyName==>"+propertyName.toString());
+							}
+							trace("result==>"+result);
+						}
 	                    break;
 	                }
 	                
 	                case "number":
 	                {
 	                    result = numericCompare(a as Number, b as Number);
+	                    if(result!=0){
+							trace("OriginalObject Value=="+a);
+							trace("UpdatedObject Value=="+b);
+							if(propertyName!=null){
+								trace("propertyName==>"+propertyName.toString());
+							}
+							trace("result==>"+result);
+						}
 	                    break;
 	                }
 	                
 	                case "string":
 	                {
 	                    result = stringCompare(a as String, b as String);
+	                    if(result!=0){
+							trace("OriginalObject Value=="+a);
+							trace("UpdatedObject Value=="+b);
+							if(propertyName!=null){
+								trace("propertyName==>"+propertyName.toString());
+							}
+							trace("result==>"+result);
+						}
 	                    break;
 	                }
 	                
@@ -66,8 +93,18 @@ package com.efi.mdi.compare
 	                    // references found.  A visited reference makes an object 
 	                    // "greater" than another object, only if both objects
 	                    // have a visited reference will the result be 0
-	                    var aRef:Boolean = refs[a];
-	                    var bRef:Boolean = refs[b];
+	                    var aRef:Boolean = false;
+	                    var bRef:Boolean = false;
+	                    
+	                    if(a is Date && b is Date){
+	                    	var aDate:Date = a as Date;
+	                    	var bDate:Date = b as Date;
+	                    	aRef = refs[aDate.time+"Date"];
+	                    	bRef = refs[bDate.time+"Date"];
+	                    } else {
+	                    	aRef = refs[a];
+	                    	bRef = refs[b];
+	                    }
 	                    
 	                    if (aRef && !bRef)
 	                        return 1;
@@ -75,9 +112,19 @@ package com.efi.mdi.compare
 	                        return -1;
 	                    else if (bRef && aRef)
 	                        return 0;
+	                        
+	                        
+	                    if(a is Date && b is Date){
+	                    	var aDate:Date = a as Date;
+	                    	var bDate:Date = b as Date;
+	                    	refs[aDate.time+"Date"] = true;
+	                    	refs[bDate.time+"Date"] = true;
+	                    } else {
+	                    	refs[a] = true;
+	                    	refs[b] = true;
+	                    }
 	                    
-	                    refs[a] = true;
-	                    refs[b] = true;
+	                    
 	                    
 	                    if (desiredDepth != -1 && (currentDepth > desiredDepth))
 	                    {
@@ -88,18 +135,50 @@ package com.efi.mdi.compare
 	                    else if ((a is Array) && (b is Array))
 	                    {
 	                        result = arrayCompare(a as Array, b as Array, currentDepth, desiredDepth, refs);
+	                        if(result!=0){
+								trace("OriginalObject Value=="+a);
+								trace("UpdatedObject Value=="+b);
+								if(propertyName!=null){
+									trace("propertyName==>"+propertyName.toString());
+								}
+								trace("result==>"+result);
+							}
 	                    }
 	                    else if ((a is Date) && (b is Date))
 	                    {
 	                        result = dateCompare(a as Date, b as Date);
+	                        if(result!=0){
+								trace("OriginalObject Value=="+a);
+								trace("UpdatedObject Value=="+b);
+								if(propertyName!=null){
+									trace("propertyName==>"+propertyName.toString());
+								}
+								trace("result==>"+result);
+							}
 	                    }
 	                    else if ((a is IList) && (b is IList))
 	                    {
 	                        result = listCompare(a as IList, b as IList, currentDepth, desiredDepth, refs);
+	                        if(result!=0){
+								trace("OriginalObject Value=="+a);
+								trace("UpdatedObject Value=="+b);
+								if(propertyName!=null){
+									trace("propertyName==>"+propertyName.toString());
+								}
+								trace("result==>"+result);
+							}
 	                    }
 	                    else if ((a is ByteArray) && (b is ByteArray))
 	                    {
 	                        result = byteArrayCompare(a as ByteArray, b as ByteArray);
+	                        if(result!=0){
+								trace("OriginalObject Value=="+a);
+								trace("UpdatedObject Value=="+b);
+								if(propertyName!=null){
+									trace("propertyName==>"+propertyName.toString());
+								}
+								trace("result==>"+result);
+							}
 	                    }
 	                    else if (getQualifiedClassName(a) == getQualifiedClassName(b))
 	                    {
@@ -116,6 +195,12 @@ package com.efi.mdi.compare
 	                        
 	                        if (result != 0)
 	                        {
+	                        	trace("OriginalObject Value=="+a);
+								trace("UpdatedObject Value=="+b);
+								if(propertyName!=null){
+									trace("propertyName==>"+propertyName.toString());
+								}
+								trace("result==>"+result);
 	                            return result;
 	                        }
 	                        
@@ -135,6 +220,12 @@ package com.efi.mdi.compare
 	                            if (result != 0)
 	                            {
 	                                i = aProps.length;
+	                                trace("OriginalObject Value=="+a);
+									trace("UpdatedObject Value=="+b);
+									if(propertyName!=null){
+										trace("propertyName==>"+propertyName.toString());
+									}
+									trace("result==>"+result);
 	                            }
 	                        }
 	                    }
@@ -187,6 +278,9 @@ package com.efi.mdi.compare
                                          caseInsensitive:Boolean = false):int
 	    {
 	        if (a == null && b == null)
+	            return 0;
+	            
+	        if ((a == null && b == "") || (a=="" && b==null))
 	            return 0;
 	
 	        if (a == null)

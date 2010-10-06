@@ -13,7 +13,8 @@
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}"
 	creationComplete="init()"  
 	name="Customer Editor" 
-	xmlns:ns1="com.efi.printsmith.components.*">
+	xmlns:ns1="com.efi.printsmith.components.*"
+	implements="com.efi.mdi.IMDIWindowAware">
 <mx:Metadata>
     [Event(name="SaveAddressEvent", type="SaveAddressEvent")]
 </mx:Metadata>
@@ -66,9 +67,16 @@
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 <mx:StringValidator id="nameValidator" source="{name_edit}"	property="text"	minLength="2" required="true"/>
+
 <mx:Script source="../common/scripts/StringUtils.as"/>
+
+<mx:Script source="../common/scripts/CommonUtils.as"/>
+
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
+	import com.efi.mdi.event.compare.MDICompareObjectEvent;
+	import mx.utils.ObjectUtil;
 	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.data.PreferencesAccounting;
 	import com.efi.mdi.view.window.MDIWindow;
@@ -121,6 +129,8 @@
                  
 	[Bindable]                                         
 	private var account:Account;
+	
+	[Bindable] private var originalAccount:Account;
                 
 	[Bindable]
 	private var autoDiscountRadioValue:String = "discount_dollars";
@@ -238,11 +248,11 @@
 	}
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 	
-		if ( account == null){
+		/* if ( account == null){
 			account = new Account();
 			setMarketing();
 			this.setAccount(account);
-		}
+		} */
 		this.enabled = true;
 
 	}
@@ -264,11 +274,14 @@
 		}
 	}
 	
+	
+	
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
-		this.enabled = true;
-		selected_comment_edit.text = "";
-		dataService.getAccount(evt.account.id);
 		
+		var inputArguments:Array = new Array();
+		inputArguments.push(evt.account);
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doSelectOperation,inputArguments);
+		dispatchEvent(mDICompareObjectEvent);
 		/* if (evt.account != null) {
 			this.setAccount(evt.account);
 			contactdataService.getContactsByAccountId("Contact", account.id);
@@ -281,6 +294,12 @@
 		} */
 	}
 	
+	private function doSelectOperation(accountObj:Account):void {
+		this.enabled = true;
+		selected_comment_edit.text = "";
+		dataService.getAccount(accountObj.id);
+	}
+	
 	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
 		doNew();
 
@@ -290,7 +309,8 @@
 		this.formIsValid = true;
 		contactdataService.getContactsByAccountId("Contact", account.id);
 		setMarketing();
-		
+		mapFromAccountData();
+		setOriginalAccount();
 		this.JobCharges = ev.result.jobCharges;
 		if ( this.JobCharges.length >0){
 			job_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
@@ -357,7 +377,13 @@
 			master_acct_edit.text= ""
 		}
 	}
+	
 	private function doNew():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNewOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
+	private function doNewOperation():void {
 	    business_type_combo.selectedIndex = -1 
 		business_type_combo.text = "";
 		
@@ -378,11 +404,13 @@
 	     	   
 	    
 	    setMarketing();
+	    acctTypeRadioValue = "cash_check_credit";
+	 	acctStatusRadioValue = "CustomerStatusNew";
+	    account.type = "cash_check_credit";
+	    account.status = "CustomerStatusNew";
 	    setAccount(account);
 	    this.formIsValid = false;
 	 	tabNav.selectedIndex = 0;
-	 	acctTypeRadioValue = "cash_check_credit";
-	 	acctStatusRadioValue = "CustomerStatusNew";
 	 	job_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges');
 		inv_estimate_charges_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges');
 		ship_via_combo.selectedIndex = findItem(defaultShipVia, shippingMethods);
@@ -414,7 +442,13 @@
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerMasterSelect);
 	    	   	    
 	}
-	private function doNext():void {  
+	
+	private function doNext():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNextOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
+	private function doNextOperation():void {  
 		var itemp:int;
 		var temp: Account;
 		//itemp = accounts.getItemIndex(account);
@@ -426,10 +460,17 @@
 		temp = accounts.getItemAt(itemp,0) as Account;   
 	   dataService.getAccount(temp.id );                            
 	}
+	
 	private function doRevert():void{
 		dataService.getAccount(account.id);
 	}
-	private function doPrev():void {              
+	
+	private function doPrev():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doPrevOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
+	private function doPrevOperation():void {              
 	    var itemp:int;
 	    var temp: Account;
 	//	itemp = accounts.getItemIndex(account); 
@@ -441,6 +482,7 @@
 		temp = accounts.getItemAt(itemp,0) as Account;   
 	    dataService.getAccount(temp.id );                                           
 	} 
+	
 	private function findItemID(id:int, array:ArrayCollection):int {
 		for each(var element:Object in array) {
 			if (id == element.id) {
@@ -460,6 +502,22 @@
 	{
 		
 		this.account = account;
+		if (account.contact == null){
+			account.contact = new Contact();
+			account.contact.lastName = account.title;
+		}
+		
+		if( account.contact.lastName == null || account.contact.lastName == "")
+			account.contact.lastName = account.title;
+			
+		if (account.contact != null) {
+			account.contact.parentAccount = account;
+		}
+		
+		if(account.billToContact==null) {
+			account.billToContact = account.contact;
+		}
+		
 		mapFromAccountData();
 		ship_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress'));
 		bill_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.StatementAddress'));
@@ -473,6 +531,7 @@
 			else
 				mdiWin.title= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')+"  #" + account.accountId+"  "+account.title;
 		}
+		setOriginalAccount();
 	}			
 	
 	private function messageHandler(message:IMessage):void
@@ -495,7 +554,7 @@
 		account.customerPO = po_number_edit.text;
 		account.shipToAddress = ship_to_address_editor.getAddress();
 		account.billToAddress = bill_to_address_editor.getAddress();
-		if ( account.billToAddress.street1 == ""){
+		if ( account.billToAddress!=null && account.billToAddress.street1 == ""){
 			account.billToAddress.city = account.shipToAddress.city;
 			account.billToAddress.country = account.shipToAddress.country;
 			account.billToAddress.name = account.shipToAddress.name;
@@ -686,7 +745,8 @@
 			
 		
 			if (account.marketing.businessType != null)
-				business_type_combo.selectedIndex = findItem(account.marketing.businessType.name, businessTypes);
+				business_type_combo.selectedItem = account.marketing.businessType;
+				//business_type_combo.selectedIndex = findItem(account.marketing.businessType.name, businessTypes);
 			if (account.marketing.followup != null)
 				followUp.selectedDate =account.marketing.followup;
 			if (account.marketing.birthDate != null)
@@ -699,6 +759,7 @@
 				userDate5.selectedDate =account.marketing.user5;
 			
 		}	
+		certificate_expires_edit.selectedDate = account.resaleCertExpirationDate;
 		ClearLabel();
 		if ( account.masterAcct > 0)
 			dataService.getByIdMaster("Account", account.masterAcct );
@@ -710,9 +771,13 @@
 	}
 	
 	private function doSave():void {
-		mapToAccountData();
-		this.enabled = false;
-		dataService.addUpdate(account);                                        		
+		if(account!=null){
+			mapToAccountData();
+			this.enabled = false;
+			dataService.addUpdate(account);
+		} else {
+			doNewOperation();
+		}                                        		
 	} 
 	private function findContactItem(contact:Contact, array:ArrayCollection):int{
 		for each(var element:Object in array) {
@@ -817,12 +882,14 @@
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
+		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Customer')));
 		this.account = ev.result as Account;
 		this.EstInvCharges = this.account.invoiceEstimateCharges;
 		this.JobCharges = this.account.jobCharges;
-		doNew();
-			
+		doNewOperation();
 		openAccountPicker();
+		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
+		dispatchEvent(windowSaveSuccessEvent);
 	}
 //// load
 	private function handleLoadResult(ev:ResultEvent):void {
@@ -892,7 +959,9 @@
 	
 	
 	private function openAccountPicker():void	{
-		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+		if (first){
+			loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+		}
 		dataService.getAccountPicker();
 		
 	}
@@ -910,6 +979,7 @@
 	
 	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
+		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.DELETE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Customer')));
 		openAccountPicker();
 		doNew();
 	}
@@ -1277,16 +1347,82 @@
 		}
 	}
 	private function doContactUpdate():void{
-	if ((account.contact != null) && (account.billToContact != null))
-		if ( account.contact.id == account.billToContact.id)
-			ship_to_contact_editor.setContact(account.billToContact);
+		if(account!=null){
+			if ((account.contact != null) && (account.billToContact != null))
+				if ( account.contact.id == account.billToContact.id)
+					ship_to_contact_editor.setContact(account.billToContact);
+		}
 		
 	}
 	private function doContactUpdate2():void{
-		if ((account.contact != null) && (account.billToContact != null))
-			if ( account.contact.id == account.billToContact.id)
-				bill_to_contact_editor.setContact(account.contact);	
+		if(account!=null){
+			if ((account.contact != null) && (account.billToContact != null))
+				if ( account.contact.id == account.billToContact.id)
+					bill_to_contact_editor.setContact(account.contact);
+		}	
 	}	
+	
+	public function getOriginalObject():ArrayCollection {
+		var originalList:ArrayCollection = new ArrayCollection();
+		if(originalAccount!=null){
+			if(originalAccount.marketing!=null){
+				if(originalAccount.marketing.birthDate!=null){
+					originalAccount.marketing.birthDate = scrubTimeValue(originalAccount.marketing.birthDate);
+				}
+				if(originalAccount.marketing.followup!=null){
+					originalAccount.marketing.followup = scrubTimeValue(originalAccount.marketing.followup);
+				}
+				if(originalAccount.marketing.user3!=null){
+					originalAccount.marketing.user3 = scrubTimeValue(originalAccount.marketing.user3);
+				}
+				if(originalAccount.marketing.user4!=null){
+					originalAccount.marketing.user4 = scrubTimeValue(originalAccount.marketing.user4);
+				}
+				if(originalAccount.marketing.user5!=null){
+					originalAccount.marketing.user5 = scrubTimeValue(originalAccount.marketing.user5);
+				}
+			}
+			if(originalAccount.resaleCertExpirationDate!=null){
+				originalAccount.resaleCertExpirationDate = scrubTimeValue(originalAccount.resaleCertExpirationDate);
+			}
+		}
+		originalList.addItem(originalAccount);
+		return originalList;
+	}
+		
+	public function getUpdatedObject():ArrayCollection {
+		var updatedList:ArrayCollection = new ArrayCollection();
+		updatedList.addItem(account);
+		return updatedList;
+	}
+	
+	public function getConfirmationText():String {
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		return "\n"+mdiWin.title;
+	}
+	
+	public function onClose():void {
+		if(account!=null){
+			mapToAccountData()
+		}
+	}
+	
+	public function onSave():void {
+		doSave();
+	}
+	
+	public function onDontSave():void {
+		
+	}
+	
+	public function onCancel():void {
+		
+	}
+	
+	public function setOriginalAccount():void {
+		registerClassAlias("com.efi.printsmith.data.Account",Account);
+		originalAccount = ObjectUtil.copy(account) as Account;
+	}
      
 ]]>
                              
