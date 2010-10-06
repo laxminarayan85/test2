@@ -143,7 +143,7 @@ public class CreditCardTransactionsMapper extends ImportMapper {
 					creditCardTransaction.setTaxTable(taxTable);
 			}
 			else if ("permanent".equals(currentFieldToken))
-				creditCardTransaction.setPermanent(Utilities.tokenToBooleanValue(currentImportToken));
+				creditCard.setPermanent(Utilities.tokenToBooleanValue(currentImportToken));
 			else if ("internal use1".equals(currentFieldToken))
 				creditCardTransaction.setOrderName(currentFieldToken);
 		}

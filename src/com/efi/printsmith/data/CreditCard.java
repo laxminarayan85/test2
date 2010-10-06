@@ -345,11 +345,11 @@ public class CreditCard extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Integer permanent;
+  private Boolean permanent;
 	/**
    * @generated
  	 */
-  public Integer getPermanent(){
+  public Boolean getPermanent(){
     return permanent; 
   }
 
@@ -357,7 +357,7 @@ public class CreditCard extends ModelBase {
 	/**
    * @generated
    */	
-  public void setPermanent(Integer newVal) {
+  public void setPermanent(Boolean newVal) {
     this.permanent = newVal;
   }
 
@@ -398,7 +398,7 @@ public class CreditCard extends ModelBase {
     if (TYPE.equals(propertyName)) setType((String)newValue); else
     if (ENCRYPTION.equals(propertyName)) setEncryption((String)newValue); else
     if (CARDDISPLAYNUMBER.equals(propertyName)) setCardDisplayNumber((String)newValue); else
-    if (PERMANENT.equals(propertyName)) setPermanent((Integer)newValue); else
+    if (PERMANENT.equals(propertyName)) setPermanent((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -429,7 +429,7 @@ public class CreditCard extends ModelBase {
     if (CARDDISPLAYNUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PERMANENT.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
