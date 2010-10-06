@@ -1384,7 +1384,10 @@
 					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color" || this.job_type.text == "Blank" || this.job_type.text == "List") {
 						this.job.parentSize = evt.stockDefinition.parentsize;
 						this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
-						this.job.runSize = evt.stockDefinition.parentsize;
+						if (evt.stockDefinition.normalRunSize == null)
+							this.job.runSize = evt.stockDefinition.parentsize;
+						else
+							this.job.runSize = evt.stockDefinition.normalRunSize;
 						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
 						this.job.finishSize = evt.stockDefinition.parentsize;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
