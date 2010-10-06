@@ -105,6 +105,10 @@
 	}     
 	
 	private function newEmployee():void {
+		var editEmployeePage:Container = parentContainer;
+		if (editEmployeePage.className == "EditEmployee") {
+			(editEmployeePage as EditEmployee).doNew();
+		}
 		PopUpManager.removePopUp(this);
 	}
 	

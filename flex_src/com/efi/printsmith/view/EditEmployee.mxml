@@ -49,6 +49,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 <mx:Script> 
                                   
 <![CDATA[
+	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import mx.events.CloseEvent;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
 	import mx.utils.ObjectUtil;
@@ -180,11 +181,23 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}	
 	public function setEmployee(employee2:Employee):void
 	{
-		dataService.getEmployee(employee2.id);
+		var inputArguments:Array = new Array();
+		inputArguments.push(employee2);
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doSelectOperation,inputArguments);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
+	private function doSelectOperation(employeeObj:Employee):void {
+		dataService.getEmployee(employeeObj.id);
 	}
 	private function handleLoadEmployee(evt:ResultEvent):void
 	{
 		this.employee = evt.result as Employee;
+		if(this.employee!=null){
+			this.title = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"employeeMgrCmd.Employee34"),null,null,null,employee.employeeId,employee.lastName+", "+employee.firstName);
+			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+			mdiWin.title = this.title;
+		}
 	 	if(this.employee == null) {
 	 		this.employee = new  Employee();
 	 		this.employee.active = true;
@@ -521,12 +534,20 @@ implements="com.efi.mdi.IMDIWindowAware">
 		return true;
 	} 
 	
+	public function doNew():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNewOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
 		
-    private function doNew():void {
+    private function doNewOperation():void {
+    	this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"employeeMgrCmd.EmployeeNewAccount");
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"employeeMgrCmd.EmployeeNewAccount");
 	    employee = new Employee();
 	    employee.active = true;
 	    employee.comLinks = new ArrayCollection();
-	    setEmployee(employee);
+	    doSelectOperation(employee);
 	 	
 	}
 	
@@ -553,7 +574,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}
 	
 	private function handleDeleteResult(event:ResultEvent):void {
-		openConfirmationComponent("The Employee has been successfully deleted");
+		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.DELETE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Employee')));
 		doNew();
 		dataService.getAll("Employee");
 	}  
@@ -572,7 +593,13 @@ implements="com.efi.mdi.IMDIWindowAware">
 		}
 		return -1;
 	}   
-	private function doNext():void {  
+	
+	private function doNext():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNextOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
+	private function doNextOperation():void {  
 		var itemp:int;
 		itemp = findItemID(employee.id, employees);
 		itemp++;
@@ -580,9 +607,15 @@ implements="com.efi.mdi.IMDIWindowAware">
 			itemp = employees.length - 1;
 		}
 		employee = employees.getItemAt(itemp,0) as Employee;   
-	    setEmployee(employee);                         
+	    doSelectOperation(employee);                         
 	}
-	private function doPrev():void {              
+	
+	private function doPrev():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doPrevOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}
+	
+	private function doPrevOperation():void {              
 	    var itemp:int;
 		itemp = findItemID(employee.id, employees);
 		itemp--;
@@ -590,7 +623,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 			itemp = 0; 
 		}
 		employee = employees.getItemAt(itemp,0) as Employee;   
-	    setEmployee(employee);                                           
+	    doSelectOperation(employee);                                           
 	}                                                	
 	private function send():void
 	{
@@ -612,7 +645,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 	
 	
 	private function handleSaveResult(ev:ResultEvent):void {
-		openConfirmationComponent("The Employee has been successfully saved");
+		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Employee')));
 		this.employee = ev.result as Employee;
 		setOriginalEmployee();
 		dataService.getAll("Employee");
@@ -933,7 +966,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 	
 	public function getConfirmationText():String {
 		if(employee!=null){
-			return employee.lastName;
+			return "\n"+employee.lastName;
 		}
 		return "";
 	} 
