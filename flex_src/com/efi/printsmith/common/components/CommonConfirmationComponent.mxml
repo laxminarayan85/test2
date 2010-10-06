@@ -14,7 +14,7 @@
 			
 			public function set confirmationText(displayValue:String):void {
 				if(displayValue==null || displayValue==""){
-					displayValue = "Saved Successfully";
+					displayValue = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"CommonConfirmation.COMMON");
 				}
 				this._confirmationText = displayValue;
 				confirmationLabel.text = this._confirmationText;

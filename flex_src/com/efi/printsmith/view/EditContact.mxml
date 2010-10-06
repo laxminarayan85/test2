@@ -647,6 +647,9 @@ implements="com.efi.mdi.IMDIWindowAware">
 		dispatchEvent(mDICompareObjectEvent);
 	}
 	private function doNewOperation():void {
+		this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.ContactNewAccount");
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.ContactNewAccount");
 		if (contact != null && contact.parentAccount != null){
 			var tempParent:Account = contact.parentAccount;
 			contact = new Contact();
@@ -716,6 +719,9 @@ implements="com.efi.mdi.IMDIWindowAware">
 			setCreditCard();
 			registerClassAlias("com.efi.printsmith.data.Contact",Contact);
 			originalContact = ObjectUtil.copy(contact) as Contact;
+			this.title = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.Contact34"),null,null,null,contact.contactId,contact.lastName+", "+contact.firstName);
+			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+			mdiWin.title = this.title;
 	     
 	}
 	private function handleContactPickerSelect(evt:ContactPickerSelectEvent):void {
@@ -738,6 +744,9 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}
 	
 	private function handleNewOperation():void {
+		this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.ContactNewAccount");
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.ContactNewAccount");
 		this.enabled = true;
 		this.contact = new Contact();
 		accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
@@ -795,8 +804,12 @@ implements="com.efi.mdi.IMDIWindowAware">
 		return -1;
 	}
 	private function doSave():void {
-		mapToContactData();
-		dataService2.addUpdate(contact);
+		if(contact!=null){
+			mapToContactData();
+			dataService2.addUpdate(contact);
+		} else {
+			doNewOperation();
+		}
 		                                    		
 	}   
 
@@ -843,14 +856,15 @@ implements="com.efi.mdi.IMDIWindowAware">
 		setCreditCard();
 		registerClassAlias("com.efi.printsmith.data.Contact",Contact);
 		originalContact = ObjectUtil.copy(contact) as Contact;*/
-		openConfirmationComponent("The Contact has been successfully saved");
-		this.setContact(ev.result as Contact);
+		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Contact')));
+		/* this.setContact(ev.result as Contact);
 	   	contact_editor.setContact(contact);
 		setMarketing();
 		setCreditCard();
 		registerClassAlias("com.efi.printsmith.data.Contact",Contact);
-		originalContact = ObjectUtil.copy(contact) as Contact;
+		originalContact = ObjectUtil.copy(contact) as Contact; */
 		openContactPicker();
+		doNewOperation();
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
 		dispatchEvent(windowSaveSuccessEvent);
 	} 
@@ -934,7 +948,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}                              
 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		openConfirmationComponent("The Contact has been successfully deleted");
+		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.DELETE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Contact')));
 		openContactPicker();
 		doNew();
 	}
