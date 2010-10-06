@@ -10,7 +10,7 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTableDataResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-	
+		<mx:method name="getMaxDisplayId" fault="handleFault(event)" result="handleGetMaxDisplayIdResult(event)"/>
 </mx:RemoteObject>
 <mx:Script>
                                    
@@ -32,6 +32,9 @@ import com.efi.printsmith.data.*;
 
 [Bindable]                             
 	private var new_pass:String= new String; 
+	
+[Bindable]
+	private var displayId:Number = 0;
 	
 	public function init():void {
 		loadTables();
@@ -60,6 +63,7 @@ import com.efi.printsmith.data.*;
 		var temp:TableEditor;
 		temp = table_combo.selectedItem as TableEditor;
 		dataService.getAll(temp.name)
+		dataService.getMaxDisplayId(temp.name);
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
 		doTableCombo();
@@ -67,6 +71,10 @@ import com.efi.printsmith.data.*;
 	}
 	private function handleSaveResult(ev:ResultEvent):void {
 		doTableCombo();
+	}
+	private function handleGetMaxDisplayIdResult(ev:ResultEvent):void {
+		this.displayId = ev.result as Number;
+		this.displayId = this.displayId + 1;
 	}
 	
 	private function setClassType():Class{
@@ -212,6 +220,7 @@ import com.efi.printsmith.data.*;
 		 	
 		
 		 }
+		 
 		return tempClass;
 	}
 	private function doSave():void{
@@ -227,8 +236,9 @@ import com.efi.printsmith.data.*;
 		tempClass = setClassType();
 		tempObject = new tempClass();
 		tempObject.id = 0;
+		tempObject.displayId = this.displayId;
+		this.displayId = this.displayId + 1;
 		tableDataArray.addItem(tempObject);
-		
 		
 	}
 	
@@ -276,7 +286,7 @@ import com.efi.printsmith.data.*;
 	<mx:Label x="130" y="28" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Tables')}" width="130" textAlign="right"/>
 	<mx:DataGrid  id="datagrid" x="38" y="120" width="416"  editable="true" dataProvider="{tableDataArray}" height="215" change="doAdd()" >
 		<mx:columns>
-			<mx:DataGridColumn   editable="false" id="idcolumn" width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.ID')}" dataField="id"/>
+			<mx:DataGridColumn   editable="false" id="idcolumn" width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.ID')}" dataField="displayId"/>
 			<mx:DataGridColumn  id="keycolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha')}" dataField="keyAlpha"/>
 			<mx:DataGridColumn  id="namecolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Name')}" dataField="name"/>
 		</mx:columns>
