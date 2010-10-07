@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
 	layout="absolute" width="100%" height="100%" creationComplete="init()"  
-	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" headerHeight="0"
+	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
+	xmlns:comp="com.efi.printsmith.common.components.*" headerHeight="0"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" name="Stock Definition"
 	implements="com.efi.mdi.IMDIWindowAware" xmlns:components="com.efi.printsmith.common.components.*">
 	
@@ -706,7 +707,7 @@
 		var stockPickerWindow:StockPicker = StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 		stockPickerWindow.setStyle("borderAlpha", 0.9);
 	    stockPickerWindow.formIsEmpty = true;
-	   	stockPickerWindow.setStocksData(StockDefinitionArray,stockGroup, stockType, stockFinish, stockColor, stockGenericColor, stockGrade, stockVendor, stockUom, stockCoated);
+	   	stockPickerWindow.setStocksData(StockDefinitionArray,cloneAC(stockGroup), cloneAC(stockType), cloneAC(stockFinish), cloneAC(stockColor), cloneAC(stockGenericColor), cloneAC(stockGrade), cloneAC(stockVendor), cloneAC(stockUom), cloneAC(stockCoated));
 	   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
 	    stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
@@ -901,17 +902,18 @@
 		var result:Boolean;
 		
 		if (cbostockClass.text != null && cbostockClass.text != "" && cbostockClass.selectedIndex == -1) {
-			var item:int = findItem(cbostockClass.text, stockClass);
-			if (item == -1) {
+			var item:Object = cbostockClass.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
+			if (item == null) {
 				stockclass = new StockClass();
-				stockclass.name = cbostockClass.text;
-				stockClassDataService.addUpdate(stockclass);
-				stockDefinitions.stkclass = stockclass;
-			
+				
 			}
 			else {
-				cbostockClass.selectedItem = item;
+				//cbostockClass.selectedItem = item;
+				stockclass = item as StockClass;
 			}
+			stockclass.name = cbostockClass.text;
+			stockClassDataService.addUpdate(stockclass);
+			stockDefinitions.stkclass = stockclass;
 		}
 	}
 
@@ -2078,7 +2080,7 @@ private function doRound(evt:FocusEvent):void{
 	<mx:Label x="10" y="63" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Group')}" width="108" textAlign="right"/>
 	<mx:Label x="263" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Class')}" width="109" textAlign="right"/>
 	<mx:ComboBox id="cboStockGroup" x="126" y="61" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" width="116"/>
-	<mx:ComboBox x="380" y="64" width="105" id="cbostockClass" dataProvider="{stockClass}"  labelField="name" focusOut="doStockClass()" editable="true"/>
+	<comp:EditableComboBox x="380" y="64" width="105" id="cbostockClass" dataProvider="{stockClass}"  labelField="name" focusOut="doStockClass()" />
 	<mx:CheckBox x="493" y="67" id="chkIsMetric" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Metric')}" width="135" change="doMetric();"/>
 	<mx:Label x="10" y="87" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Name')}" width="108" textAlign="right"/>
 	<mx:Label x="10" y="111" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="108" textAlign="right"/>

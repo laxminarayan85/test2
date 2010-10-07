@@ -518,7 +518,6 @@
 	 		
 		defaultSortGrid();
 		
-		
 		if (!containsBlank(groups,"name"))	{
 			var group:StockGroup = new StockGroup();
 			group.name = "";

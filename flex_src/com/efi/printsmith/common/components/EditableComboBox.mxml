@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+	editable="true" 
+>
+	<mx:Script>
+		<![CDATA[
+			import mx.messaging.AbstractConsumer;
+			import mx.collections.ArrayCollection;
+			
+			private var _lastSelectedObj:Object;
+			
+//			private var _idField:String;
+//			private var _idValue:Object;
+//			
+//			public function set idField(val:String):void	{
+//				_idField = val;
+//			}
+//			
+//			public function get idValue():Object	{
+//				return _idValue;
+//			}
+			
+			public function get lastSelectedObj():Object	{
+				return _lastSelectedObj;
+			}
+			
+			override public function set selectedIndex(value:int):void	{
+				super.selectedIndex = value;
+				
+				if (value >= 0)
+					_lastSelectedObj = selectedItem;
+//				else	{
+//					if (_lastSelectedObj)	{
+//						_idValue = _lastSelectedObj[_idField];
+//					}	 
+//				}
+			}
+			
+			
+		]]>
+	</mx:Script>
+</mx:ComboBox>
