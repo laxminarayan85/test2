@@ -107,7 +107,7 @@
 		dataGrid.dgCol.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName');
 		
 		var dgc1:DataGridColumn = new DataGridColumn("firstName");
-		var dgc2:DataGridColumn = new DataGridColumn("account");
+		var dgc2:DataGridColumn = new DataGridColumn("parentAccount");
 		
 		dgc1.dataField = "firstName";
 		dgc1.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName');
