@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
-width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}"
- label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}" fontSize="9" xmlns:ns1="com.efi.printsmith.components.preferences.*">
+ xmlns:common="com.efi.printsmith.common.components.*" width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}"
+ label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}" fontSize="9" xmlns:ns1="com.efi.printsmith.components.preferences.*"
+ implements="com.efi.mdi.IMDIWindowAware">
 	<mx:states>
 		<mx:State name="Large Format">
 			<mx:SetProperty target="{colorcheck}" name="selected" value="false"/>
@@ -55,8 +56,15 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 	<mx:Producer id="producer" destination="copydefinitions"/>
 	<mx:Consumer id="consumer" destination="copydefinitions" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+	
+<mx:Script source="../common/scripts/CommonUtils.as"/>
+
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.event.compare.MDICompareObjectEvent;
+	import mx.utils.StringUtil;
+	import mx.utils.ObjectUtil;
+	import flash.net.registerClassAlias;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import mx.rpc.AsyncToken;
@@ -117,6 +125,8 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 	private var salesCategories:ArrayCollection = new ArrayCollection();                     
 	[Bindable]                                         
     private var copierDefinition:CopierDefinition;
+    [Bindable]                                         
+    private var originalCopierDefinition:CopierDefinition;
     [Bindable]
     private var productionMachine:ProductionCopiers;
 	[Bindable]                                         
@@ -293,11 +303,18 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 	}
 	
 	private function doCopierGridClick():void {
-		var  tempCopy : CopierDefinition;	
-		tempCopy=dataGrid.selectedItem as CopierDefinition;
+		var inputArguments:Array = new Array();
+		inputArguments.push(dataGrid.selectedItem as CopierDefinition);
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doSelectOperation,inputArguments);
+		dispatchEvent(mDICompareObjectEvent);	
+	}
+	
+	private function doSelectOperation(copierDefObj:CopierDefinition):void {
+		var  tempCopy : CopierDefinition;
+		tempCopy=copierDefObj as CopierDefinition;
 		pricing_method_combo.selectedIndex =-1;
 		var token:AsyncToken = dataService.getCopierDefinition(tempCopy.id );
-		token.operation = "getCopierDefinition";   
+		token.operation = "getCopierDefinition";	
 	}
 	
 	private function handleGetResult(ev:ResultEvent):void {
@@ -356,8 +373,10 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			
 			 if (copierDefinition.wasteChart != null)
 			 		wasteName.label = WasteListLabel();
-			this.charges = copierDefinition.charges;
+			this.charges = copierDefinition.charges;			
 			updateControlState();
+			copierDefinition.baseRate = parseFloat(baseRate_edit.text.replace(",",""));
+			setOriginalCopierDefinition();
 		} else if (ev.token.operation == "getPricingMatrix") {
 			var matrix:com.efi.printsmith.data.Matrix = ev.result as com.efi.printsmith.data.Matrix;
 			if (matrix != null) {
@@ -508,9 +527,11 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
+		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pmethSetCmd.CopierDefinitions')));
 		selectedCopierId = (ev.result as CopierDefinition).id;
 		copierDefinition = ev.result as CopierDefinition;
-		
+		var token:AsyncToken = dataService.getCopierDefinition(copierDefinition.id);  
+		token.operation = "getCopierDefinition";
 		dataService.getCopierPicker();
 	}
 
@@ -557,6 +578,11 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		dataGrid.verticalScrollPosition = verticalScrollPosition;
 		if (selectedCopierId != -1) {
 			selectDataGridItem(selectedCopierId);
+		} else {
+			if(dataGrid.selectedItem!=null){
+				var token:AsyncToken = dataService.getCopierDefinition((dataGrid.selectedItem as CopierDefinition).id);  
+				token.operation = "getCopierDefinition";
+			}
 		}
 	}
 	
@@ -566,6 +592,9 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			if ((copierDefinitionArray.getItemAt(i) as CopierDefinition).id == id) {
 				dataGrid.selectedIndex = i;
 				dataGrid.scrollToIndex(i);
+				var token:AsyncToken = dataService.getCopierDefinition((copierDefinitionArray.getItemAt(i) as CopierDefinition).id);  
+				token.operation = "getCopierDefinition";
+				break;
 			}
 		}
 	}
@@ -580,6 +609,10 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		this.copierDefinition = ev.result as CopierDefinition;
 	 	updateMethodBox();
 	 	this.enabled = true;
+	 	if(stock_Price_is_combo.selectedItem!=null){
+	 		copierDefinition.stockPriceMethod = stock_Price_is_combo.selectedItem.data;
+	 	}
+	 	setOriginalCopierDefinition();
 	}
 	
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
@@ -595,6 +628,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		}
 	}	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
+		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.DELETE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pmethSetCmd.CopierDefinitions')));
 		dataService.getCopierPicker();
 	}
 	      
@@ -1134,6 +1168,56 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 	}
 	
 	
+	public function getOriginalObject():ArrayCollection {
+		var originalList:ArrayCollection = new ArrayCollection();
+		originalList.addItem(originalCopierDefinition);
+		return originalList;
+	}
+		
+	public function getUpdatedObject():ArrayCollection {
+		var updatedList:ArrayCollection = new ArrayCollection();
+		updatedList.addItem(copierDefinition);
+		return updatedList;
+	}
+	
+	public function getConfirmationText():String {
+		return "\n"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"copierDefCmd.CopierDigitalDefinit");
+	}
+	
+	public function onClose():void {
+		if(copierDefinition!=null) {
+			mapCopierData();
+		}	
+	}
+	
+	public function onSave():void {
+		doSave();
+	}
+	
+	public function onDontSave():void {
+		
+	}
+	
+	public function onCancel():void {
+		if(copierDefinition!=null && copierDefinitionArray!=null && copierDefinitionArray.length>0){
+			var counter:int=0;
+			for each(var copierObj:CopierDefinition in copierDefinitionArray) {
+				if(copierDefinition.id == copierObj.id){
+					dataGrid.selectedItem = copierDefinition;
+					dataGrid.selectedIndex = counter;
+					break;	
+				}
+				counter++;
+			}
+		}
+	}
+	
+	private function setOriginalCopierDefinition():void {
+		registerClassAlias("com.efi.printsmith.data.CopierDefinition",CopierDefinition);
+		originalCopierDefinition = ObjectUtil.copy(copierDefinition) as CopierDefinition;
+	}
+	
+	
 ]]>
                              
 </mx:Script>	
@@ -1181,9 +1265,11 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		<mx:Button x="10" y="689"  click="doNew();" width="38" height="38">
 			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="194" y="689"  click="doDelete();" width="38" height="38">
+		<common:CustomDeleteButtonComponent x="194" y="689" width="38" height="38"
+			clickFuncName="doDelete" deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}"/>
+		<!--<mx:Button x="194" y="689"  click="doDelete();" width="38" height="38">
 			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
-		</mx:Button>
+		</mx:Button>-->
 		<mx:Button x="489" y="205.5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wasteCmd.WasteChart')}" click="doWasteChart();"/>
 		<mx:Button x="534" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.AddCharges')}" click="doAddCharge();"/>
 		<mx:Label x="10" y="286" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.PrinterType')}" textAlign="right" width="104"/>
