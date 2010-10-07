@@ -236,6 +236,8 @@ public class PriceListUtilities {
 				long qtyRange = speedTableElements.get(i).getQuantity() - lastQty;
 				long lookupRange = qty - lastQty;
 				double priceRange = lastAmount - speedTableElements.get(i).getAmount().doubleValue();
+				if (priceRange < 0)
+					priceRange = priceRange * -1;
 				retVal = ((lookupRange * priceRange) / qtyRange) + lastAmount;
 			} else {
 				retVal = speedTableElements.get(i).getAmount().doubleValue();
