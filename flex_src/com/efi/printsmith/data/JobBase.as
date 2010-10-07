@@ -132,6 +132,9 @@ package com.efi.printsmith.data
 		public var usePaperCalcUp:Boolean = false;
 		public var rollWidth:Number = 0;
 		public var attribute1:int = 0;
+		public var defaultJob:Boolean = false;
+		public var multiQtyJob:Boolean = false;
+		public var jobGroup:int = 0;
 	
 	}
 }
