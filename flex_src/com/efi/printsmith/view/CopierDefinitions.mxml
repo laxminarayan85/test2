@@ -261,17 +261,17 @@
 	 	var index:int;
 	 	
 	 	var tempPercent:Number;
-		var tmonthlyMaintenance:Number = parseFloat(monthlyMaintenance.text);
-		var tmonthlyBurdenRate:Number = parseFloat(monthlyBurdenRate.text);
-		var tmonthlyPayment:Number = parseFloat(monthlyPayment.text);
-		var tmonthlyLabor: Number= parseFloat(monthlyLabor.text);
-		var copyMinutes:int = parseFloat(copyMinutes.text);
-		var tonerCopy:Number = parseFloat(tonerCopy.text);
-		var laborCopy:Number = parseFloat(laborCopy.text);
-		var daysOpen: int = parseInt(openDays.text);
-		var developerCopy:Number = parseFloat(developerCopy.text);
-		var hoursOpen:Number = parseFloat(openhours.text);
-		var click:Number= parseFloat(clickCost.text);
+		var tmonthlyMaintenance:Number = parseFloat(monthlyMaintenance.text.replace(",",""));
+		var tmonthlyBurdenRate:Number = parseFloat(monthlyBurdenRate.text.replace(",",""));
+		var tmonthlyPayment:Number = parseFloat(monthlyPayment.text.replace(",",""));
+		var tmonthlyLabor: Number= parseFloat(monthlyLabor.text.replace(",",""));
+		var copyMinutes:int = parseFloat(copyMinutes.text.replace(",",""));
+		var tonerCopy:Number = parseFloat(tonerCopy.text.replace(",",""));
+		var laborCopy:Number = parseFloat(laborCopy.text.replace(",",""));
+		var daysOpen: int = parseInt(openDays.text.replace(",",""));
+		var developerCopy:Number = parseFloat(developerCopy.text.replace(",",""));
+		var hoursOpen:Number = parseFloat(openhours.text.replace(",",""));
+		var click:Number= parseFloat(clickCost.text.replace(",",""));
 		index = percentageUse.text.indexOf('%',0);
 		if ( index == -1){
 			percentageUse.text = percentageUse.text + '%';
@@ -279,24 +279,20 @@
 		}
 	 	percentvalue = percentageUse.text.substr(0,index);
 	 	tempPercent = parseFloat(percentvalue) * .01;
-	 	if (copyMinutes > 0) {
-    		temp = (daysOpen * hoursOpen * tempPercent * 60 * copyMinutes) / 12
-  			 if (temp != 0) {
-        			temp2  = (tmonthlyBurdenRate + tmonthlyLabor + tmonthlyPayment + tmonthlyMaintenance) / temp;
-
-        /* if (large format method AND max roll width <> 0) {
-            temp2 = temp2 / max roll width;
-        } */
-        
-  
-	
-       		 tempmachineCost= temp2 +laborCopy+tonerCopy+developerCopy+ click;
-       		 machineCostperCopy.text = tempmachineCost.toPrecision(3)
-  			 }
+	 	
+		if (copyMinutes > 0) {
+			tempmachineCost = (daysOpen * hoursOpen * tempPercent * 60 * copyMinutes) / 12.0;
+			if (tempmachineCost != 0.0) {
+				tempmachineCost = (tmonthlyBurdenRate + tmonthlyLabor + tmonthlyPayment + tmonthlyMaintenance) / tempmachineCost;
+				if (copierDefinition.largeFormat == true  || largeformatCheck.selected) {
+					tempmachineCost = tempmachineCost / parseFloat(this.maxWidthsize.text);
+				}
+				tempmachineCost= tempmachineCost +laborCopy+tonerCopy+developerCopy+ click;
+       			 machineCostperCopy.text = tempmachineCost.toPrecision(3)
+			}
 		}
-
-
 	}
+	
 	private function doRevert():void{
 		var token:AsyncToken = dataService.getCopierDefinition(copierDefinition.id );  
 		token.operation = "getCopierDefinition";
