@@ -1,15 +1,17 @@
 package com.efi.printsmith.itemRenderers
 {
 	import com.efi.printsmith.data.Account;
+	import com.efi.printsmith.data.Contact;
 	import com.efi.printsmith.view.AccountPicker;
+	import com.efi.printsmith.view.ContactPicker;
 	
 	import mx.controls.Label;
 	import mx.core.IDataRenderer;
 	
-	public class AccountPickerContactItemRenderer extends Label implements IDataRenderer
+	public class PickerContactItemRenderer extends Label implements IDataRenderer
 	{
 		
-		public function AccountPickerContactItemRenderer()
+		public function PickerContactItemRenderer()
 		{
 			super();
 		}
@@ -17,10 +19,20 @@ package com.efi.printsmith.itemRenderers
 		override public function set data(value:Object):void {
 			super.data = value;
 			
-			var a:Account = value as Account;
-			this.text = AccountPicker.contactLabel(a);
+			var a:Account = null;
+			var c:Contact = null;
 			
-			if (a.accountId  == "")	{
+			if (value is Account)	{
+				a = value as Account;
+				c = a.contact;
+				this.text = AccountPicker.contactLabel(a);
+			}
+			if (value is Contact)	{
+				c = value as Contact;
+				a = c.parentAccount;
+			}
+			
+			if ((a == null) || (a.accountId  == ""))	{
 				this.setStyle("color", 0xff0000);
 			}
 			else if (a.prospect)	{

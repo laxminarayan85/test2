@@ -20,7 +20,7 @@
 <mx:Script>
                                    
 <![CDATA[
-	import com.efi.printsmith.itemRenderers.AccountPickerContactItemRenderer;
+	import com.efi.printsmith.itemRenderers.PickerContactItemRenderer;
 	import com.efi.printsmith.common.components.NonModalThrobberHelper;
 	import com.efi.printsmith.components.Throbber;
 	import com.efi.mdi.view.window.MDIWindow;
@@ -224,7 +224,7 @@
 		sortAccountsByLastName();
 		dataGrid.dataField = null;
 		dataGrid.extLabelFunction = contactLabel;
-		dataGrid.dgCol.itemRenderer = new ClassFactory(AccountPickerContactItemRenderer);
+		dataGrid.dgCol.itemRenderer = new ClassFactory(PickerContactItemRenderer);
 		pickerFilter.searchCriteria = getSearchByForContact();
 		
 	}

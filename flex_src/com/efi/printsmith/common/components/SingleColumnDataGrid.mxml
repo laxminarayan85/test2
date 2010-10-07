@@ -3,7 +3,7 @@
 <mx:Script source="../scripts/CommonUtils.as"/>
 	<mx:Script>
 		<![CDATA[
-			import com.efi.printsmith.itemRenderers.AccountPickerContactItemRenderer;
+			import com.efi.printsmith.itemRenderers.PickerContactItemRenderer;
 			import mx.events.FlexEvent;
 			import mx.events.DataGridEvent;
 			import mx.collections.ArrayCollection;

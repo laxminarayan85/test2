@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="654" height="612" defaultButton="{select_button}" showCloseButton="true" creationComplete="init()"
-    close="PopUpManager.removePopUp(this);" xmlns:common="com.efi.printsmith.common.components.filter.*" 
+    close="PopUpManager.removePopUp(this);" xmlns:common="com.efi.printsmith.common.components.filter.*"
+    xmlns:comp="com.efi.printsmith.common.components.*" 
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.ContactPicker')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
 
 <!--<mx:RemoteObject id="dataService" destination="dataService">
@@ -16,6 +17,8 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.itemRenderers.PickerContactItemRenderer;
+	import mx.controls.dataGridClasses.DataGridColumn;
 	import com.efi.printsmith.data.ComLink;
 	import com.efi.printsmith.common.components.filter.FilterProperty;
 	import com.efi.printsmith.common.components.filter.FilterSearchBy;
@@ -74,13 +77,14 @@
 	}
 	public function setContactArray(temp:ArrayCollection):void{
 		contacts = temp;
-		 var sort:Sort = new Sort();
+		var sort:Sort = new Sort();
         sort.fields = [new SortField("lastName", true)];
-       // Assign the Sort object to the view.
-     contacts.sort = sort;
-     // Apply the sort to the collection.
-       contacts.refresh();
+		// Assign the Sort object to the view.
+		contacts.sort = sort;
+		// Apply the sort to the collection.
+		contacts.refresh();
 	}                                                      
+
 	private function init():void {   
 	//	consumer.subscribe();
 	//	notification_consumer.subscribe();     
@@ -88,13 +92,36 @@
 	    PopUpManager.centerPopUp(this);
 	    resetFocus();                                     
 	//	dataService.getContactPicker("Contact");
-	
+		setupDataGrid();
 		var editPage:Container = Snowmass.getInstance().containerManager.getActiveWindowContent(); //.mainNavigator.selectedChild;
 		if (editPage.className != "EditContact") {
 			new_button.visible = false;
 		}
 	}
-	                                
+	                    
+	private function setupDataGrid():void	{
+		dataGrid.itemRenderer = new ClassFactory(PickerContactItemRenderer);
+		var cols:Array = dataGrid.columns;
+		
+		dataGrid.dgCol.width = 40;
+		dataGrid.dgCol.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName');
+		
+		var dgc1:DataGridColumn = new DataGridColumn("firstName");
+		var dgc2:DataGridColumn = new DataGridColumn("account");
+		
+		dgc1.dataField = "firstName";
+		dgc1.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName');
+		cols.push(dgc1);
+		
+		dgc2.dataField = "parentAccount";
+		dgc2.labelFunction = parentLabel;
+		dgc2.sortCompareFunction = parentAcctSort;
+		dgc2.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountName');
+		cols.push(dgc2);
+		
+		dataGrid.columns = cols;
+		
+	}            
 	private function resetFocus():void {                           
 	     //focusManager.setFocus(filter_field);                                    
 	}    
@@ -181,6 +208,12 @@
 		var con1:Contact = obj1 as Contact;
 		var con2:Contact = obj2 as Contact;
 		
+		if (con1.parentAccount == null)	{
+			return -1;
+		}
+		if (con2.parentAccount == null)	{
+			return 1;
+		}
 		if (con1.parentAccount.title < con2.parentAccount.title)	{
 			return -1;
 		}
@@ -210,15 +243,18 @@
  
                              
 	<mx:Canvas width="604" height="557"> 
-		<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{contacts}"
+		<!--<mx:DataGrid id="dataGrid" width="457" height="485" dataProvider="{contacts}"
 		doubleClickEnabled="true"  sortableColumns="true" doubleClick="selectContact()"  showHeaders="true"  borderStyle="solid" borderThickness="3">               
 		<mx:columns>
 		 <mx:DataGridColumn   sortDescending="false"  sortable="true" dataField="lastName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" />                          
 		 <mx:DataGridColumn dataField="firstName" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" />
 		  <mx:DataGridColumn  labelFunction="parentLabel" sortCompareFunction="parentAcctSort" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountName')}" />
-		  <!--<mx:DataGridColumn  labelFunction="phoneFunction" headerText="Phone" />-->      
+		  
 		</mx:columns>
-		</mx:DataGrid>
+		</mx:DataGrid>-->
+		<comp:SingleColumnDataGrid id="dataGrid" width="457" height="485" dataProvider="{contacts}" dataField="lastName" 
+		doubleClickEnabled="true"  sortableColumns="true" doubleClick="selectContact()"  showHeaders="true"  borderStyle="solid" borderThickness="3" />               
+		
 		<common:PickerFilter x="10" y="495" width="417" height="26" showExtendedSearch="true"  searchComponent="{dataGrid}" listData="{contacts}" searchCriteria="{getSearchBy()}" />
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="selectContact();"  width="108" x="465" y="10"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.New')}" enabled="true" click="newContact();" id="new_button" width="108" x="465" y="40"/>

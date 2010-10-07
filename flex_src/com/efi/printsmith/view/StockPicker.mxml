@@ -501,11 +501,13 @@
 	 private function containsBlank(ac:ArrayCollection, field:String):Boolean	{
 	 	for (var i:int = 0; i<ac.length; i++)	{
 	 		if (StringUtil.trim(ac.getItemAt(i)[field] as String) == "")	{
-	 			return true;
+	 			ac.removeItemAt(i);
+	 			return false;
 	 		}
 	 	}
 	 	return false;
 	 } 
+	 
 	public function setStocksData(stockDefs:ArrayCollection, groups:ArrayCollection, types:ArrayCollection,
 					finishes:ArrayCollection, colors:ArrayCollection, genericColors:ArrayCollection, 
 					grades:ArrayCollection, vendors:ArrayCollection, uoms:ArrayCollection, coated:ArrayCollection):void{
@@ -515,6 +517,7 @@
 	 	lblCount.text = totalStocks + " records found";
 	 		
 		defaultSortGrid();
+		
 		
 		if (!containsBlank(groups,"name"))	{
 			var group:StockGroup = new StockGroup();
