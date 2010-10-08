@@ -131,10 +131,23 @@ package com.efi.printsmith.data
 		public var deliveredDate:Date = new Date();
 		public var usePaperCalcUp:Boolean = false;
 		public var rollWidth:Number = 0;
-		public var attribute1:int = 0;
 		public var defaultJob:Boolean = false;
 		public var multiQtyJob:Boolean = false;
 		public var jobGroup:int = 0;
+		public var backColor1:String = "";
+		public var backColor3:String = "";
+		public var backColor4:String = "";
+		public var backColor5:String = "";
+		public var backColor6:String = "";
+		public var backColor7:String = "";
+		public var frontColor1:String = "";
+		public var frontColor2:String = "";
+		public var frontColor4:String = "";
+		public var frontColor3:String = "";
+		public var frontColor5:String = "";
+		public var frontColor6:String = "";
+		public var frontColor7:String = "";
+		public var backColor2:String = "";
 	
 	}
 }
