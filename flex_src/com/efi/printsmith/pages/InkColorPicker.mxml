@@ -70,73 +70,20 @@
 			private function doClose():void{
 				var selectEvent:InkColorEvent;
 				if (front){
-					if (ink1.selectedItem != null)
-						job1.frontInks.addItemAt(ink1.selectedItem as InkColor,0)
-					else
-						job1.frontInks.addItem(ink1.text);
-						
-					if (ink2.selectedItem != null)
-						job1.frontInks.addItemAt(ink2.selectedItem as InkColor,1)
-					else
-						job1.frontInks.addItem(ink2.text);
-						
-					if (ink3.selectedItem != null)
-						job1.frontInks.addItemAt(ink3.selectedItem as InkColor,2)
-					else
-						job1.frontInks.addItem(ink3.text);
-						
-					if (ink4.selectedItem != null)
-						job1.frontInks.addItemAt(ink4.selectedItem as InkColor,3)
-					else
-						job1.frontInks.addItem(ink4.text);
-						
-					if (ink5.selectedItem != null)
-						job1.frontInks.addItemAt(ink5.selectedItem as InkColor,4)
-					else
-						job1.frontInks.addItem(ink1.text);
-					
-					if (ink6.selectedItem != null)
-						job1.frontInks.addItemAt(ink6.selectedItem as InkColor,5)
-					else
-						job1.frontInks.addItem(ink6.text);
-						
-					selectEvent = new InkColorEvent(InkColorEvent.Close, job1.frontInks);
-					dispatchEvent(selectEvent);						
+					job1.frontColor1 = ink1.text;
+					job1.frontColor2 = ink2.text;
+					job1.frontColor3 = ink3.text;
+					job1.frontColor4 = ink4.text;
+					job1.frontColor5 = ink5.text;
+					job1.frontColor6 = ink6.text;		
 				}
 				else{
-					if (ink1.selectedItem != null)
-						job1.backInks.addItemAt(ink1.selectedItem as InkColor,0)
-					else
-						job1.backInks.addItem(ink1.text);
-						
-					if (ink2.selectedItem != null)
-						job1.backInks.addItemAt(ink2.selectedItem as InkColor,1)
-					else
-						job1.backInks.addItem(ink2.text);
-						
-					if (ink3.selectedItem != null)
-						job1.backInks.addItemAt(ink3.selectedItem as InkColor,2)
-					else
-						job1.backInks.addItem(ink3.text);
-						
-					if (ink4.selectedItem != null)
-						job1.backInks.addItemAt(ink4.selectedItem as InkColor,3)
-					else
-						job1.backInks.addItem(ink4.text);
-						
-					if (ink5.selectedItem != null)
-						job1.backInks.addItemAt(ink5.selectedItem as InkColor,4)
-					else
-						job1.backInks.addItem(ink1.text);
-					
-					if (ink6.selectedItem != null)
-						job1.backInks.addItemAt(ink6.selectedItem as InkColor,5)
-					else
-						job1.backInks.addItem(ink6.text);
-						
-					selectEvent = new InkColorEvent(InkColorEvent.Close, job1.backInks);
-					dispatchEvent(selectEvent);	
-				
+					job1.backColor1 = ink1.text;
+					job1.backColor2 = ink2.text;
+					job1.backColor3 = ink3.text;
+					job1.backColor4 = ink4.text;
+					job1.backColor5 = ink5.text;
+					job1.backColor6 = ink6.text;
 				}
 				
 				
@@ -160,41 +107,29 @@
 				job1 = job;
 				
 				if (front){
-					if (job.frontInks != null){
-						temp =  job1.frontInks.getItemAt(0) as InkColor;
-						ink1.text = temp.name;
-						temp = job1.frontInks.getItemAt(1) as InkColor;
-						ink2.text = temp.name;
-						temp = job1.frontInks.getItemAt(2) as InkColor;
-						ink3.text = temp.name;
-						temp =job1.frontInks.getItemAt(3) as InkColor;
-						ink4.text = temp.name;
-						temp = job1.frontInks.getItemAt(4) as InkColor;
-						ink5.text = temp.name;
-						temp = job1.frontInks.getItemAt(5) as InkColor;
-						ink6.text = temp.name;
-					}
-					else
-					job1.frontInks = new ArrayCollection();
+					//if (job.frontInks != null){
+						ink1.text = job1.frontColor1;
+						ink2.text = job1.frontColor2;
+						ink3.text = job1.frontColor3;
+						ink4.text = job1.frontColor4;
+						ink5.text = job1.frontColor5;
+						ink6.text = job1.frontColor6;
+					//}
+					//else
+					//job1.frontInks = new ArrayCollection();
 								
 				}
 				else{
-					if (job.backInks != null){
-						temp =  job1.backInks.getItemAt(0) as InkColor;
-						ink1.text = temp.name;
-						temp = job1.backInks.getItemAt(1) as InkColor;
-						ink2.text = temp.name;
-						temp = job1.backInks.getItemAt(2) as InkColor;
-						ink3.text = temp.name;
-						temp =job1.backInks.getItemAt(3) as InkColor;
-						ink4.text = temp.name;
-						temp = job1.backInks.getItemAt(4) as InkColor;
-						ink5.text = temp.name;
-						temp = job1.backInks.getItemAt(5) as InkColor;
-						ink6.text = temp.name;
-					}
-					else
-						job1.backInks = new ArrayCollection();
+					//if (job.backInks != null){
+						ink1.text = job.backColor1;
+						ink2.text = job.backColor21;
+						ink3.text = job.backColor3;
+						ink4.text = job.backColor4;
+						ink5.text = job.backColor5;
+						ink6.text = job.backColor6;
+					//}
+					//else
+						//job1.backInks = new ArrayCollection();
 				}
 				
 			}
