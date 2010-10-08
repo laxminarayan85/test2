@@ -31,7 +31,8 @@ public class JobService extends SnowmassHibernateService {
 	public Job createJob(InvoiceBase parentInvoice, PreferencesPricingMethod pricingMethod) {
 		Job job = new Job();
 		
-		job.setCostingRecord(new CostingRecord());
+		//Commented by Madhu as it was creating a blank object which doesn't have reference in DB 
+		//job.setCostingRecord(new CostingRecord());
 
 		PricingRecord pricingRecord = new PricingRecord();
 		pricingRecord.setUnitPriceOverride(false);
