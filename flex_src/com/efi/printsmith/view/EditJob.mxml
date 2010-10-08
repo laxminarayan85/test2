@@ -607,6 +607,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.utils.StringUtil;
 			import com.efi.mdi.view.window.MDIWindow;
 			import com.efi.mdi.event.window.WindowCloseEvent;
 			import flash.net.registerClassAlias;
@@ -748,6 +749,8 @@
 			private var doInitialStockPicker:Boolean = false;
 			
 			[Bindable] public var multiQtyJobList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var invoiceMultiQtyJobList:ArrayCollection = new ArrayCollection();
 			
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
@@ -2084,7 +2087,20 @@
 					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveMultiQtyJob); */
 					var editJobWindow:EditJob= new EditJob();
 					var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
-					Snowmass.getInstance().containerManager.openNewMDIWindow("Edit Job",editJobWindow, -1,-1,-1,-1, windowID);
+					var invoiceNumber:String = "";
+					var pricingMethodTitle:String = "";
+					if(job.parentInvoice==null || job.parentInvoice.invoiceNumber==null || job.parentInvoice.invoiceNumber==""){
+						invoiceNumber = "0";
+					} else {
+						invoiceNumber = job.parentInvoice.invoiceNumber;
+					}
+					if(job.pricingMethod==null){
+						pricingMethodTitle = "";
+					} else {
+						pricingMethodTitle = job.pricingMethod.title;
+					}
+					var jobTitle:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"jobCmd.EditJob"),invoiceNumber,0,pricingMethodTitle);
+					Snowmass.getInstance().containerManager.openNewMDIWindow(jobTitle,editJobWindow, -1,-1,-1,-1, windowID);
 					editJobWindow.setJob(multiQtyJobObject);
 					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveMultiQtyJob);
 	    		}

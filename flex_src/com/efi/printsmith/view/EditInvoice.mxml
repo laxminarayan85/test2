@@ -81,6 +81,8 @@
 	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import com.efi.mdi.view.window.MDIWindow;
+			import mx.utils.StringUtil;
 			import mx.controls.RadioButton;
 			import com.efi.printsmith.common.components.CommonLoadComponent;
 			import com.efi.printsmith.data.JobBase;
@@ -164,6 +166,8 @@
 			
 			[Bindable] private var multiQtyJobPresent:Boolean = false;
 			
+			private var selectedJobIndex:int=0;
+			
 			private var radioButtonGroupList:ArrayCollection = new ArrayCollection();
 			public function init():void
 			{
@@ -195,21 +199,33 @@
 				//		this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
 						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
 						invoice_number_edit.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Estimate');
+						
 					} else {
 						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 				//		this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 						invoice_number_edit.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice');
-						
 					}
+					
 					if (invoice.id > 0) {
 						dataService.getInvoice(invoice.id);
+						if (editorType == EDITESTIMATE) {
+							this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')+": "+invoice.invoiceNumber;
+						} else {
+							this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')+": "+invoice.invoiceNumber;
+						}
 					} else {
+						if (editorType == EDITESTIMATE) {
+							this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')+": "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.new');
+						} else {
+							this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')+": "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.new');
+						}
 						loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 						accountDataService.getAccountPicker();
 						//doAccountPicker();
-					
 					}
+					var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+  					mdiWin.title = this.title;
 				}
 				
 				
@@ -410,7 +426,7 @@
 				editJobWindow.invoice = this.invoice;
 				//editJobWindow.setStyle("borderAlpha", 0.9);
 				var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
-				Snowmass.getInstance().containerManager.openNewMDIWindow("Edit Job",editJobWindow, -1,-1,-1,-1, windowID);
+				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobCmd.NewJob'),editJobWindow, -1,-1,-1,-1, windowID);
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);
 			}
 
@@ -500,8 +516,8 @@
 				/* Hack code - needs to come out in favor of using the Pricing Engine asap */
 				if(!target.job.multiQtyJob){
 					var jobList:ArrayCollection = new ArrayCollection();
-					var checkFlag:Boolean = false;
 					for each(var jobBaseObj:JobBase in invoice.jobs){
+						var checkFlag:Boolean = false;
 						if(target.job.jobGroup!=0 && jobBaseObj.jobGroup==target.job.jobGroup && jobBaseObj.multiQtyJob){
 							checkFlag = true;
 						}
@@ -510,6 +526,9 @@
 						}
 					}
 					invoice.jobs = jobList;
+					for each(var jobBaseObject:JobBase in target.invoiceMultiQtyJobList){
+						invoice.jobs.addItem(jobBaseObject);
+					}
 					for each(var jobBaseObject:JobBase in target.multiQtyJobList){
 						invoice.jobs.addItem(jobBaseObject);
 					}
@@ -737,6 +756,7 @@
 				var selectedJob:Job = evt.result as Job;
 				
 				if (selectedJob != null) {
+					selectedJob.jobIndex = selectedJobIndex;
 					invoice.jobs.setItemAt(selectedJob, invoice_job_grid.selectedIndex);
 					invoice_job_grid.selectedItem = selectedJob;
 					openEditJobWindow(selectedJob);
@@ -745,6 +765,7 @@
 			
 			private function doDoubleclickInvoiceItem():void {
 				var selectedJob:Job = invoice_job_grid.selectedItem as Job;
+				selectedJobIndex = selectedJob.jobIndex;
 				if (selectedJob.id != 0) { // this job had been persisted previously	
 					dataService.getJob(selectedJob.id);
 				} else {
@@ -756,7 +777,20 @@
 				var editJobWindow:EditJob= new EditJob(); //EditJob(PopUpManager.createPopUp(this, EditJob, true));
 				//editJobWindow.setStyle("borderAlpha", 0.9);
 				var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
-				Snowmass.getInstance().containerManager.openNewMDIWindow("Edit Job",editJobWindow, -1,-1,-1,-1, windowID);
+				var invoiceNumber:String = "";
+				var pricingMethodTitle:String = "";
+				if(job.parentInvoice==null || job.parentInvoice.invoiceNumber==null || job.parentInvoice.invoiceNumber==""){
+					invoiceNumber = "0";
+				} else {
+					invoiceNumber = job.parentInvoice.invoiceNumber;
+				}
+				if(job.pricingMethod==null){
+					pricingMethodTitle = "";
+				} else {
+					pricingMethodTitle = job.pricingMethod.title;
+				}
+				var jobTitle:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"jobCmd.EditJob"),invoiceNumber,job.jobIndex,pricingMethodTitle);
+				Snowmass.getInstance().containerManager.openNewMDIWindow(jobTitle,editJobWindow, -1,-1,-1,-1, windowID);
 				var multiQtyJobList:ArrayCollection = new ArrayCollection();
 				if(!job.multiQtyJob){
 					for each(var jobBaseObj:JobBase in invoice.jobs) {
@@ -766,7 +800,7 @@
 					}
 				}
 				editJobWindow.setJob(job);
-				editJobWindow.multiQtyJobList = multiQtyJobList;
+				editJobWindow.invoiceMultiQtyJobList = multiQtyJobList;
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveJob);
 				/* var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
 				editJobWindow.setStyle("borderAlpha", 0.9);
@@ -803,10 +837,18 @@
 				multiQtyJobPresent = false;
 				radioButtonGroupList = new ArrayCollection();
 				if(invoice is Invoice) {
+					var invoiceJobList:ArrayCollection = new ArrayCollection();
+					var counter:int=0;
+					for each(var jobBaseObj:JobBase in jobList){
+						counter++;
+						jobBaseObj.jobIndex = counter; 
+						invoiceJobList.addItem(jobBaseObj);
+					}
 					return jobList;
 				} else if(invoice is Estimate) {
 					if(jobList!=null && jobList.length>0){
 						var estimatesJobList:ArrayCollection = new ArrayCollection();
+						var rbCounter:int=0;
 						var counter:int=0;
 						for each(var jobBaseObj:JobBase in jobList){
 							jobBaseObj.hasMultiQtyJobs = false;
@@ -819,13 +861,17 @@
 									}
 								}
 								if(!checkFlag){
-									jobBaseObj.rbIndex = counter;
+									jobBaseObj.rbIndex = rbCounter;
+									counter++;
+									jobBaseObj.jobIndex = counter;
 									estimatesJobList.addItem(jobBaseObj);
 									for each(var jobBaseObject:JobBase in jobList){
 										if(jobBaseObj.jobGroup!=0 && jobBaseObj.jobGroup==jobBaseObject.jobGroup && jobBaseObject.multiQtyJob){
 											jobBaseObj.hasMultiQtyJobs = true;
 											multiQtyJobPresent = true;
-											jobBaseObject.rbIndex = jobBaseObj.rbIndex; 
+											jobBaseObject.rbIndex = jobBaseObj.rbIndex;
+											counter++;
+											jobBaseObject.jobIndex = counter;
 											estimatesJobList.addItem(jobBaseObject);
 										}
 									}
@@ -836,7 +882,7 @@
 									}
 								}
 							}
-							counter++;
+							rbCounter++;
 						}
 						return estimatesJobList;
 					}
