@@ -135,6 +135,7 @@ package com.efi.printsmith.data
 		public var multiQtyJob:Boolean = false;
 		public var jobGroup:int = 0;
 		public var backColor1:String = "";
+		public var backColor2:String = "";
 		public var backColor3:String = "";
 		public var backColor4:String = "";
 		public var backColor5:String = "";
@@ -147,7 +148,6 @@ package com.efi.printsmith.data
 		public var frontColor5:String = "";
 		public var frontColor6:String = "";
 		public var frontColor7:String = "";
-		public var backColor2:String = "";
 	
 	}
 }

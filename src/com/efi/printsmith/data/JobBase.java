@@ -517,10 +517,6 @@ public class JobBase extends ModelBase {
 	 */
 	public static final String ROLLWIDTH = "RollWidth";
 	/**
-   * @generated
-   */
-  public static final String BACKCOLOR2 = "BackColor2";
-	/**
 
    * @generated
 
@@ -546,6 +542,10 @@ public class JobBase extends ModelBase {
    * @generated
    */
   public static final String BACKCOLOR1 = "BackColor1";
+	/**
+   * @generated
+   */
+  public static final String BACKCOLOR2 = "BackColor2";
 	/**
    * @generated
    */
@@ -3393,26 +3393,6 @@ public class JobBase extends ModelBase {
  	
 	
 	/**
-   * @generated
-   */	
- 	@Basic
-  private String backColor2;
-
-	/**
-   * @generated
- 	 */
-  public String getBackColor2(){
-    return backColor2; 
-  }
-
-	/**
-   * @generated
-   */	
-  public void setBackColor2(String newVal) {
-    this.backColor2 = newVal;
-  }
-
-	/**
 
    * @generated
 
@@ -3520,6 +3500,26 @@ public class JobBase extends ModelBase {
    */	
   public void setBackColor1(String newVal) {
     this.backColor1 = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String backColor2;
+
+	/**
+   * @generated
+ 	 */
+  public String getBackColor2(){
+    return backColor2; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setBackColor2(String newVal) {
+    this.backColor2 = newVal;
   }
 
 	/**
@@ -3889,6 +3889,7 @@ public class JobBase extends ModelBase {
     if (MULTIQTYJOB.equals(propertyName)) return getMultiQtyJob();
     if (JOBGROUP.equals(propertyName)) return getJobGroup();
     if (BACKCOLOR1.equals(propertyName)) return getBackColor1();
+    if (BACKCOLOR2.equals(propertyName)) return getBackColor2();
     if (BACKCOLOR3.equals(propertyName)) return getBackColor3();
     if (BACKCOLOR4.equals(propertyName)) return getBackColor4();
     if (BACKCOLOR5.equals(propertyName)) return getBackColor5();
@@ -3901,7 +3902,6 @@ public class JobBase extends ModelBase {
     if (FRONTCOLOR5.equals(propertyName)) return getFrontColor5();
     if (FRONTCOLOR6.equals(propertyName)) return getFrontColor6();
     if (FRONTCOLOR7.equals(propertyName)) return getFrontColor7();
-    if (BACKCOLOR2.equals(propertyName)) return getBackColor2();
     return super.getProperty(propertyName);
   }
 	
@@ -4032,6 +4032,7 @@ public class JobBase extends ModelBase {
     if (MULTIQTYJOB.equals(propertyName)) setMultiQtyJob((Boolean)newValue); else
     if (JOBGROUP.equals(propertyName)) setJobGroup((Integer)newValue); else
     if (BACKCOLOR1.equals(propertyName)) setBackColor1((String)newValue); else
+    if (BACKCOLOR2.equals(propertyName)) setBackColor2((String)newValue); else
     if (BACKCOLOR3.equals(propertyName)) setBackColor3((String)newValue); else
     if (BACKCOLOR4.equals(propertyName)) setBackColor4((String)newValue); else
     if (BACKCOLOR5.equals(propertyName)) setBackColor5((String)newValue); else
@@ -4044,7 +4045,6 @@ public class JobBase extends ModelBase {
     if (FRONTCOLOR5.equals(propertyName)) setFrontColor5((String)newValue); else
     if (FRONTCOLOR6.equals(propertyName)) setFrontColor6((String)newValue); else
     if (FRONTCOLOR7.equals(propertyName)) setFrontColor7((String)newValue); else
-    if (BACKCOLOR2.equals(propertyName)) setBackColor2((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -4296,6 +4296,8 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (BACKCOLOR1.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (BACKCOLOR2.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     if (BACKCOLOR3.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (BACKCOLOR4.equals(propertyName)) 
@@ -4319,8 +4321,6 @@ public class JobBase extends ModelBase {
     if (FRONTCOLOR6.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (FRONTCOLOR7.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (BACKCOLOR2.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
@@ -4453,6 +4453,7 @@ public class JobBase extends ModelBase {
     if (MULTIQTYJOB.equals(propertyName)) return JobBase.class;
     if (JOBGROUP.equals(propertyName)) return JobBase.class;
     if (BACKCOLOR1.equals(propertyName)) return JobBase.class;
+    if (BACKCOLOR2.equals(propertyName)) return JobBase.class;
     if (BACKCOLOR3.equals(propertyName)) return JobBase.class;
     if (BACKCOLOR4.equals(propertyName)) return JobBase.class;
     if (BACKCOLOR5.equals(propertyName)) return JobBase.class;
@@ -4465,7 +4466,6 @@ public class JobBase extends ModelBase {
     if (FRONTCOLOR5.equals(propertyName)) return JobBase.class;
     if (FRONTCOLOR6.equals(propertyName)) return JobBase.class;
     if (FRONTCOLOR7.equals(propertyName)) return JobBase.class;
-    if (BACKCOLOR2.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -4719,6 +4719,8 @@ public class JobBase extends ModelBase {
       return false;
     if (! SmartEquals(getBackColor1(), objT.getBackColor1()))
       return false;
+    if (! SmartEquals(getBackColor2(), objT.getBackColor2()))
+      return false;
     if (! SmartEquals(getBackColor3(), objT.getBackColor3()))
       return false;
     if (! SmartEquals(getBackColor4(), objT.getBackColor4()))
@@ -4742,8 +4744,6 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getFrontColor6(), objT.getFrontColor6()))
       return false;
     if (! SmartEquals(getFrontColor7(), objT.getFrontColor7()))
-      return false;
-    if (! SmartEquals(getBackColor2(), objT.getBackColor2()))
       return false;
     return true;
   }			

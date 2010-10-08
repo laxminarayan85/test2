@@ -53,6 +53,7 @@
 	</mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.events.commandEvents.Help.AboutEvent;
 		import mx.events.ListEvent;
 		import com.efi.mdi.view.header.ApplicationHeader;
 		import mx.controls.ComboBox;
@@ -221,6 +222,10 @@
 				&& (ss.commandName.indexOf("usecCmd.QuickAccessPanel") > -1 )) 	{
 					doQuickAccessPanel();	
 				}
+			if ((ss.menu == "rStandardMenuText.Help")
+				&& (ss.commandName.indexOf("rStandardMenuText.AboutPrintSmith") > -1)) {
+					doAboutPrintSmith();
+				}
 			if ((ss.menu == "rStandardMenuText.Invoice")
 				&& (ss.commandName.indexOf("rStandardMenuText.CreateInvoice") > -1 ))	{
 					doCreateInvoice();					
@@ -339,7 +344,7 @@
 				}
 			if ((ss.menu == "rStandardMenuText.Admin")
 				&& (ss.commandName.indexOf("rStandardMenuText.PaperCalculator") > -1 ))	{
-					dopaperCal();					
+					doPaperCal();					
 				}	
 			if ((ss.menu == "rStandardMenuText.Admin")
 				&& (ss.commandName.indexOf("rStandardMenuText.OrderStock") > -1 ))	{
@@ -389,14 +394,14 @@
 			job.finishSize = new Dimension();
 		 	paperCalWindow.setJob(job);
 		}
-		public function dopaperCal():void{
+		
+		public function doPaperCal():void{
 			if (dimensions.length == 0)
 				dimensionDataService.getAll("Dimension");
 			else
-				launchPaperCal()
-			
-			
+				launchPaperCal();
 		}
+		
 		public function handleUIEvent(evt:ResultEvent):void {
 			var child:Panel = evt.result as Panel;
 			//addUniqueTab(child);
@@ -404,7 +409,7 @@
 			if (win == null)	{
 				containerManager.openNewMDIWindow(child.title,child);
 			}
-			else	{
+			else {
 				win.bringWindowToFront();	
 			}
 		}		
@@ -570,8 +575,14 @@
 			var event:EditEditEstimateEvent = new EditEditEstimateEvent(estimate, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
+		
 		public function doEditInvoice(invoice:InvoiceBase):void {
 			var event:EditEditInvoiceEvent = new EditEditInvoiceEvent(invoice, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+
+		public function doAboutPrintSmith():void {
+			var event:AboutEvent = new AboutEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
 		

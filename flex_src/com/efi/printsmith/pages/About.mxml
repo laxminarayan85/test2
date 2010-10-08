@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*"
+width="100%" height="100%" headerHeight="0"
+ creationComplete="init();"
+    label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.AboutPrintSmith')}"
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.AboutPrintSmith')}">
+<mx:Script source="../common/scripts/StringUtils.as"/>
+
+<mx:Script>
+                                   
+<![CDATA[
+	import mx.validators.RegExpValidator;
+	import mx.collections.ArrayCollection;
+                        
+	import mx.managers.PopUpManager;  
+    import com.efi.printsmith.data.Users;                           
+	import mx.utils.StringUtil;                     
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;                                
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import com.efi.printsmith.events.commandEvents.EditForms.ChangePasswordEvent;
+	import com.efi.printsmith.events.PasswordEvent;
+	import com.efi.printsmith.events.EncryptDataEvent;
+	import mx.rpc.IResponder;
+	import com.efi.printsmith.Constants;
+	                             
+	[Bindable]                             
+	private var old_pass:String = new String;                                   
+    [Bindable]                             
+	private var new_pass:String= new String;                              
+	[Bindable]                             
+	private var verify_pass:String= new String;       
+	[Bindable]                             
+	private var version:String= new String;       
+
+	public function init():void {
+		version = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWinHelpAboutApplicationCommand.Version');
+		version = StringUtil.substitute(version, Snowmass.getInstance().serverVersion); 
+	}		                     
+]]>        
+</mx:Script>
+	<mx:HBox width="100%" height="100%">
+		<mx:Canvas width="100%" height="100%">
+			<mx:Text x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWinHelpAboutApplicationCommand.PrintSmith')}" width="364"/>
+			<mx:Text x="10" y="48" text="{version}" width="364"/>
+			<mx:Text x="10" y="86" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kWinHelpAboutApplicationCommand.Copyright19852010EFI')}" width="364"/>
+		</mx:Canvas>
+	</mx:HBox>
+                            
+</mx:Panel>

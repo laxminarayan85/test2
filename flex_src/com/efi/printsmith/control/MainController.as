@@ -7,6 +7,7 @@ package com.efi.printsmith.control
 	import com.efi.printsmith.commands.commandCommands.Contacts.*;
 	import com.efi.printsmith.commands.commandCommands.EditForms.*;
 	import com.efi.printsmith.commands.commandCommands.Employees.*;
+	import com.efi.printsmith.commands.commandCommands.Help.*;
 	import com.efi.printsmith.commands.commandCommands.Invoice.*;
 	import com.efi.printsmith.commands.commandCommands.PendingList.*;
 	import com.efi.printsmith.commands.commandCommands.StockDefinitions.*;
@@ -18,12 +19,12 @@ package com.efi.printsmith.control
 	import com.efi.printsmith.events.commandEvents.Contacts.*;
 	import com.efi.printsmith.events.commandEvents.EditForms.*;
 	import com.efi.printsmith.events.commandEvents.Employees.*;
+	import com.efi.printsmith.events.commandEvents.Help.*;
 	import com.efi.printsmith.events.commandEvents.Invoice.*;
 	import com.efi.printsmith.events.commandEvents.PendingList.*;
 	import com.efi.printsmith.events.commandEvents.StockDefinitions.*;
 	import com.efi.printsmith.events.commandEvents.SystemPreferences.*;
 	import com.efi.printsmith.events.commandEvents.WebAdmin.*;
-
 	public class MainController extends FrontController
 	{
 		public function MainController() {
@@ -73,7 +74,7 @@ package com.efi.printsmith.control
 			this.addCommand(EditWebAdminEvent.COMMANDID, EditWebAdminCommand);
 			this.addCommand(EditPaymentEvent.COMMANDID, EditPaymentCommand);
 			this.addCommand(ShowCreditCardMgrEvent.COMMANDID, ShowCreditCardMgrCommand);
-
+			this.addCommand(AboutEvent.COMMANDID, AboutCommand);
 			//form level items
 			this.addCommand(DeleteStockDefinitionEvent.COMMANDID, DeleteStockDefinitionCommand);
 			this.addCommand(DeleteAccountEvent.COMMANDID, DeleteAccountCommand);

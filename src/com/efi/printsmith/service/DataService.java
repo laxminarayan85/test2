@@ -86,7 +86,8 @@ public class DataService extends HibernateService {
 						df.LoadDefaultData(this);
 					} catch (Exception e) {
 						log.error("** Exception: " + e.getMessage());
-						System.out.println("Exception caught when creating DataService");
+						System.out
+								.println("Exception caught when creating DataService");
 						System.out.println(e.getMessage());
 					}
 				}
@@ -136,13 +137,13 @@ public class DataService extends HibernateService {
 		}
 		return retVal;
 	}
-	
+
 	public List<?> getAll(String className) {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
 		try {
-			
+
 			Query findAllQuery = em.createQuery("from " + className
 					+ " fetch all properties order by orderby,id");
 			resultList = findAllQuery.getResultList();
@@ -155,7 +156,8 @@ public class DataService extends HibernateService {
 		}
 		return resultList;
 	}
-	public List<?>getUsers(String className) {
+
+	public List<?> getUsers(String className) {
 		log.debug("** getUsers called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
@@ -172,6 +174,7 @@ public class DataService extends HibernateService {
 		}
 		return resultList;
 	}
+
 	public List<?> getCurrentTaxTables(String className) {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -189,6 +192,7 @@ public class DataService extends HibernateService {
 		}
 		return resultList;
 	}
+
 	public List<?> getAllOrderBy(String className, String orderBy) {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -206,7 +210,7 @@ public class DataService extends HibernateService {
 		}
 		return resultList;
 	}
-	
+
 	public List<?> getAllOrderByDescending(String className, String orderBy) {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -245,7 +249,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	public List<?> getStockPicker() throws Exception {
 		log.debug("** getStockPicker.");
 		System.out.println(System.currentTimeMillis());
@@ -260,8 +264,9 @@ public class DataService extends HibernateService {
 				+ "a.pcwRecycledPercent, a.fscCertified, a.sfiCertified, a.greenSealCertified, a.sheetsPerSet, a.uom , a.stockunit, a.standardItem ";
 		try {
 			String queryString = "select new StockDefinition( "
-					+ columnStr + ") from StockDefinition a left outer join a.normalRunSize left outer join a.parentsize"; 
-					
+					+ columnStr
+					+ ") from StockDefinition a left outer join a.normalRunSize left outer join a.parentsize";
+
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
@@ -286,16 +291,18 @@ public class DataService extends HibernateService {
 
 		columnStr = "a.id, a.title, a.accountId, a.externalRef, a.masterAcct, a.prospect, a.externalAcctId, a.contact ";
 		try {
-//			String queryString = "select new " + className + "( "
-//					+ columnstring + ") from " + className + " a where a.id is not null order by title";
+			// String queryString = "select new " + className + "( "
+			// + columnstring + ") from " + className + " a where a.id is not
+			// null order by title";
 			String queryString = "select new Account( "
-				+ columnStr + ") from Account a left outer join a.contact order by a.title "; 
+					+ columnStr
+					+ ") from Account a left outer join a.contact order by a.title ";
 
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
-			if (resultList != null){
-				for (int i=0; i<resultList.size(); i++){
+			if (resultList != null) {
+				for (int i = 0; i < resultList.size(); i++) {
 					Contact c = ((Account) (resultList.get(i))).getContact();
 					if (c != null)
 						Hibernate.initialize(c.getComLinks());
@@ -311,7 +318,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-		
+
 	@SuppressWarnings("unchecked")
 	public List<?> getTracker(String className) throws Exception {
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -334,8 +341,9 @@ public class DataService extends HibernateService {
 				Invoice resultInvoice = new Invoice(invoice.getId(), invoice
 						.getInvoiceNumber(), invoice.getAccount(), invoice
 						.getContact(), invoice.getName(), invoice
-						.getGrandTotal().doubleValue(), invoice.getOrderedDate(), invoice
-						.getWantedDate(), invoice.getProofDate());
+						.getGrandTotal().doubleValue(), invoice
+						.getOrderedDate(), invoice.getWantedDate(), invoice
+						.getProofDate());
 				invoiceList.add(resultInvoice);
 			}
 
@@ -363,45 +371,47 @@ public class DataService extends HibernateService {
 
 			resultList = query.getResultList();
 
-//			for (int i = 0; i < resultList.size(); i++) {
-//				InvoiceBase invoice = resultList.get(i);
-//
-//				for (int j = 0; j < invoice.getJobs().size(); j++) {
-//					Job job = invoice.getJobs().get(j);
-//
-//					if (job == null) {
-//						log.error("Null job found in invoice");
-//					} else {
-//						// if (job.getPricingCopier() != null &&
-//						// job.getPricingCopier().getOemDeviceID() != null &&
-//						// job.getPricingCopier().getOemDeviceID().length() > 0)
-//						// {
-//						job.setParentInvoice(invoice);
-//						retVal.add(job);
-//						// }
-//					}
-//				}
-//			}
-//
-//			Session session = (Session) em.getDelegate();
-//			List<JobBase> jobs = null;
-//			jobs = session.createCriteria(JobBase.class).list();
-//			Iterator<JobBase> it = jobs.iterator();
-//			 List <JobBase> retVal = new ArrayList<JobBase>();
-						
-			 // TODO: Following code is just plain atrocious - let's get it wrapped into the query above instead of hacking at it like a dead moose
+			// for (int i = 0; i < resultList.size(); i++) {
+			// InvoiceBase invoice = resultList.get(i);
+			//
+			// for (int j = 0; j < invoice.getJobs().size(); j++) {
+			// Job job = invoice.getJobs().get(j);
+			//
+			// if (job == null) {
+			// log.error("Null job found in invoice");
+			// } else {
+			// // if (job.getPricingCopier() != null &&
+			// // job.getPricingCopier().getOemDeviceID() != null &&
+			// // job.getPricingCopier().getOemDeviceID().length() > 0)
+			// // {
+			// job.setParentInvoice(invoice);
+			// retVal.add(job);
+			// // }
+			// }
+			// }
+			// }
+			//
+			// Session session = (Session) em.getDelegate();
+			// List<JobBase> jobs = null;
+			// jobs = session.createCriteria(JobBase.class).list();
+			// Iterator<JobBase> it = jobs.iterator();
+			// List <JobBase> retVal = new ArrayList<JobBase>();
+
+			// TODO: Following code is just plain atrocious - let's get it
+			// wrapped into the query above instead of hacking at it like a dead
+			// moose
 			Iterator<InvoiceBase> it = resultList.iterator();
 			while (it.hasNext()) {
 				InvoiceBase invoice = it.next();
 				List<JobBase> jobs = null;
 				jobs = invoice.getJobs();
-				
+
 				Iterator<JobBase> jobIt = jobs.iterator();
 				while (jobIt.hasNext()) {
 					JobBase job = jobIt.next();
-					if (job.getPricingCopier() != null &&
-							job.getPricingCopier().getOemDeviceID() != null &&
-							job.getPricingCopier().getOemDeviceID().length() > 0) {
+					if (job.getPricingCopier() != null
+							&& job.getPricingCopier().getOemDeviceID() != null
+							&& job.getPricingCopier().getOemDeviceID().length() > 0) {
 						job.setParentInvoice(invoice);
 						Iterator assetIt = job.getDigitalAssets().iterator();
 						while (assetIt.hasNext()) {
@@ -462,22 +472,22 @@ public class DataService extends HibernateService {
 
 		columnStr = "a.id, a.firstName, a.lastName, a.contactId, a.parentAccount ";
 		try {
-			//String queryString = "select new " + className + "( "
-			//		+ columnstring + ") from " + className + " a";
-//			String queryString = " from " + className;
-			String queryString = "select new Contact( "
-				+ columnStr + ") from Contact a left outer join a.parentAccount"; 
+			// String queryString = "select new " + className + "( "
+			// + columnstring + ") from " + className + " a";
+			// String queryString = " from " + className;
+			String queryString = "select new Contact( " + columnStr
+					+ ") from Contact a left outer join a.parentAccount";
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
-			
-			if (resultList != null){
-				for (int i=0; i<resultList.size(); i++)	{
+
+			if (resultList != null) {
+				for (int i = 0; i < resultList.size(); i++) {
 					Contact c = (Contact) (resultList.get(i));
-					Hibernate.initialize(c.getComLinks());									 
+					Hibernate.initialize(c.getComLinks());
 				}
-			} 
-			 
+			}
+
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
@@ -497,11 +507,11 @@ public class DataService extends HibernateService {
 
 		columnstring = "a.id, a.name, a.machineID, a.machineName";
 		try {
-			String queryString = "select new PressDefinition( "
-					+ columnstring + ") from PressDefinition a order by a.id";
+			String queryString = "select new PressDefinition( " + columnstring
+					+ ") from PressDefinition a order by a.id";
 			Query query = em.createQuery(queryString);
 			resultList = query.getResultList();
-			
+
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
@@ -522,8 +532,8 @@ public class DataService extends HibernateService {
 
 		columnstring = "a.id, a.name, a.copyID, a.machineName, a.blackwhite, a.color, a.largeFormat";
 		try {
-			String queryString = "select new CopierDefinition( "
-					+ columnstring + ") from CopierDefinition a";
+			String queryString = "select new CopierDefinition( " + columnstring
+					+ ") from CopierDefinition a";
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
@@ -545,11 +555,16 @@ public class DataService extends HibernateService {
 			Query findQuery = em.createQuery("from " + className);
 			ModelBase result = (ModelBase) findQuery.getSingleResult();
 			for (Field field : result.getClass().getDeclaredFields()) {
-				if(field.getType().getName().equals("java.util.List") || field.getType().getName().equals("java.util.ArrayList")) {
-					String propertyName = field.getName().substring(0,1).toUpperCase()+field.getName().substring(1,field.getName().length());
+				if (field.getType().getName().equals("java.util.List")
+						|| field.getType().getName().equals(
+								"java.util.ArrayList")) {
+					String propertyName = field.getName().substring(0, 1)
+							.toUpperCase()
+							+ field.getName().substring(1,
+									field.getName().length());
 					try {
 						Hibernate.initialize(result.getProperty(propertyName));
-					} catch(Exception e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
@@ -610,7 +625,6 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
 
 	public StockDefinition getByStockId(String stockId) {
 		log.debug("** getByStockId called.");
@@ -628,7 +642,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	public StockDefinition getByStockNumber(String stockNumber) {
 		log.debug("** getByStockNumber called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -696,15 +710,17 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+
 	public AccountHistoryData getAccountHistoryByAccountId(Long Id) {
 		log.debug("** AccountHistoryData called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-		
+
 			String queryString = "select a from AccountHistoryData a where a.account.id = :id";
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", Id);
-			AccountHistoryData object = (AccountHistoryData) query.getSingleResult();
+			AccountHistoryData object = (AccountHistoryData) query
+					.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
@@ -713,11 +729,12 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+
 	public List<?> getAccountCustomerLogByAccountId(Long Id) {
 		log.debug("** CustomerLogB called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-		
+
 			String queryString = "select a from CustomerLog a where a.account.id = :id";
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", Id);
@@ -732,15 +749,17 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+
 	public UnpurchasedMerchandise getUnPurchaseByAccountId(Long Id) {
 		log.debug("** getBypurchasesAccountId called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-		
+
 			String queryString = "select a from UnpurchasedMerchandise a where a.account.id = :id";
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", Id);
-			UnpurchasedMerchandise object = (UnpurchasedMerchandise) query.getSingleResult();
+			UnpurchasedMerchandise object = (UnpurchasedMerchandise) query
+					.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
@@ -765,7 +784,9 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 		return null;
-	}public Dimension getByDimensionName(String className, String name) {
+	}
+
+	public Dimension getByDimensionName(String className, String name) {
 		log.debug("** getByName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -904,6 +925,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+
 	public StockForest getByStockForestName(String name) throws Exception {
 		log.debug("** getByStockForestName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -919,8 +941,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
-	
+
 	public GenericColors getByGenericColorsName(String name) throws Exception {
 		log.debug("** getByGenericColorsName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -974,9 +995,11 @@ public class DataService extends HibernateService {
 		log.debug("** getByLocationName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from ProductionLocations where name = '" + name + "'";
+			String queryString = "from ProductionLocations where name = '"
+					+ name + "'";
 			Query query = em.createQuery(queryString);
-			ProductionLocations object = (ProductionLocations) query.getSingleResult();
+			ProductionLocations object = (ProductionLocations) query
+					.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
@@ -1086,8 +1109,6 @@ public class DataService extends HibernateService {
 		return null;
 	}
 
-		
-	
 	public ChargeCommand getByChargeCommandName(String name) throws Exception {
 		log.debug("** getByChargeCommandName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -1376,6 +1397,7 @@ public class DataService extends HibernateService {
 		sequenceValues.setInvoice(value);
 		this.addUpdate(sequenceValues);
 	}
+
 	private void setEstimateId(Estimate estimate) throws Exception {
 		if (estimate.getInvoiceNumber() != null
 				&& estimate.getInvoiceNumber().length() > 0)
@@ -1508,6 +1530,7 @@ public class DataService extends HibernateService {
 		sequenceValues.setCreditCard(value);
 		this.addUpdate(sequenceValues);
 	}
+
 	private void setStockOrderId(StockOrder stockOrder) throws Exception {
 		if (stockOrder.getOrderNumber() != null
 				&& stockOrder.getOrderNumber().length() > 0)
@@ -1603,24 +1626,29 @@ public class DataService extends HibernateService {
 		}
 		return object;
 	}
-	
+
 	/**
 	 * Method used to perform CRUD operations on the List
+	 * 
 	 * @param addUpdateList
 	 * @param deleteList
 	 * @throws Exception
 	 */
-	public void addUpdateDeleteList(List<ModelBase> addUpdateList, List<ModelBase> deleteList) throws Exception {
-		if(deleteList!=null && deleteList.size()>0) {
+	public void addUpdateDeleteList(List<ModelBase> addUpdateList,
+			List<ModelBase> deleteList) throws Exception {
+		if (deleteList != null && deleteList.size() > 0) {
 			for (ModelBase modelBase : deleteList) {
-				if(modelBase.getId()!=null && modelBase.getId().longValue()!=0) {
-					int classNameIndex=modelBase.getClass().getName().lastIndexOf ('.') + 1;
-				    String className = modelBase.getClass().getName().substring(classNameIndex);
+				if (modelBase.getId() != null
+						&& modelBase.getId().longValue() != 0) {
+					int classNameIndex = modelBase.getClass().getName()
+							.lastIndexOf('.') + 1;
+					String className = modelBase.getClass().getName()
+							.substring(classNameIndex);
 					deleteItem(className, modelBase.getId());
 				}
 			}
 		}
-		if(addUpdateList!=null && addUpdateList.size()>0) {
+		if (addUpdateList != null && addUpdateList.size() > 0) {
 			for (ModelBase modelBase : addUpdateList) {
 				addUpdate(modelBase);
 			}
@@ -1707,7 +1735,8 @@ public class DataService extends HibernateService {
 			resultList = findAllQuery.getResultList();
 			if (resultList != null) {
 				for (ChargeCommand chargeCommand : resultList) {
-					List<ChargeCategory> categories = chargeCommand.getChildren();
+					List<ChargeCategory> categories = chargeCommand
+							.getChildren();
 					Collections.sort(categories);
 					for (ChargeCategory category : categories) {
 						List<ChargeDefinition> charges = category.getChildren();
@@ -1719,27 +1748,33 @@ public class DataService extends HibernateService {
 						}
 					}
 				}
-//				PickerObject currentChargeCommand = null;
-//				for (ChargeCommand chargeCommand : resultList) {
-//					currentChargeCommand = new PickerObject(chargeCommand.getName(), chargeCommand.getId());
-//					currentChargeCommand.setChildren(new ArrayList<PickerObject>());
-//					pickerList.add(currentChargeCommand);
-//					
-//					List<ChargeCategory> categories = chargeCommand.getChildren();
-//					PickerObject currentChargeCategory = null;
-//					for (ChargeCategory category : categories) {
-//						currentChargeCategory = new PickerObject(category.getName(), category.getId());
-//						currentChargeCategory.setChildren(new ArrayList<PickerObject>());
-//						currentChargeCommand.getChildren().add(currentChargeCategory);
-//						
-//						List<ChargeDefinition> charges = category.getChildren();
-//						PickerObject currentCharge = null;
-//						for (ChargeDefinition charge : charges) {
-//							currentCharge = new PickerObject(charge.getName(), charge.getId());
-//							currentChargeCategory.getChildren().add(currentCharge);
-//						}
-//					}
-//				}
+				// PickerObject currentChargeCommand = null;
+				// for (ChargeCommand chargeCommand : resultList) {
+				// currentChargeCommand = new
+				// PickerObject(chargeCommand.getName(), chargeCommand.getId());
+				// currentChargeCommand.setChildren(new
+				// ArrayList<PickerObject>());
+				// pickerList.add(currentChargeCommand);
+				//					
+				// List<ChargeCategory> categories =
+				// chargeCommand.getChildren();
+				// PickerObject currentChargeCategory = null;
+				// for (ChargeCategory category : categories) {
+				// currentChargeCategory = new PickerObject(category.getName(),
+				// category.getId());
+				// currentChargeCategory.setChildren(new
+				// ArrayList<PickerObject>());
+				// currentChargeCommand.getChildren().add(currentChargeCategory);
+				//						
+				// List<ChargeDefinition> charges = category.getChildren();
+				// PickerObject currentCharge = null;
+				// for (ChargeDefinition charge : charges) {
+				// currentCharge = new PickerObject(charge.getName(),
+				// charge.getId());
+				// currentChargeCategory.getChildren().add(currentCharge);
+				// }
+				// }
+				// }
 
 				log.debug("** Found " + resultList.size() + "records:");
 			}
@@ -1768,37 +1803,47 @@ public class DataService extends HibernateService {
 					}
 				}
 				long tmpId;
-				
+
 				if (job.getCostingCopier() != null) {
 					tmpId = job.getCostingCopier().getId();
-					job.setCostingCopier((CopierDefinition)this.getById("CopierDefinition", tmpId));
+					job.setCostingCopier((CopierDefinition) this.getById(
+							"CopierDefinition", tmpId));
 				}
 				if (job.getPricingCopier() != null) {
 					tmpId = job.getPricingCopier().getId();
-					job.setPricingCopier((CopierDefinition)this.getById("CopierDefinition", tmpId));
+					job.setPricingCopier((CopierDefinition) this.getById(
+							"CopierDefinition", tmpId));
 				}
 				if (job.getCostingPress() != null) {
 					tmpId = job.getCostingPress().getId();
-					job.setCostingPress((PressDefinition)this.getById("PressDefinition", tmpId));
+					job.setCostingPress((PressDefinition) this.getById(
+							"PressDefinition", tmpId));
 				}
 				if (job.getPricingPress() != null) {
 					tmpId = job.getPricingPress().getId();
-					job.setPricingPress((PressDefinition)this.getById("PressDefinition", tmpId));
+					job.setPricingPress((PressDefinition) this.getById(
+							"PressDefinition", tmpId));
 				}
 				if (job.getParentInvoice() != null) {
 					tmpId = job.getParentInvoice().getId();
-					job.setParentInvoice((InvoiceBase)this.getById("InvoiceBase", tmpId));
+					job.setParentInvoice((InvoiceBase) this.getById(
+							"InvoiceBase", tmpId));
 				}
-				
+				if (job.getStock() != null) {
+					tmpId = job.getStock().getId();
+					job.setStock((StockDefinition) this.getById(
+							"StockDefinition", tmpId));
+				}
+
 			}
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
 			em.close();
 		}
-		return job;		
+		return job;
 	}
-	
+
 	public InvoiceBase getInvoice(Long id) throws Exception {
 		log.debug("** getInvoice called.");
 		InvoiceBase invoice = null;
@@ -1832,7 +1877,7 @@ public class DataService extends HibernateService {
 		}
 		return invoice;
 	}
-	
+
 	public ModelBase saveInvoice(InvoiceBase invoice) throws Exception {
 		log.debug("** addUpdateAccount called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -1851,26 +1896,27 @@ public class DataService extends HibernateService {
 			}
 			List<JobBase> jobs = invoice.getJobs();
 			List<Charge> charges = invoice.getCharges();
-			
+
 			if (jobs != null) {
 				Iterator<JobBase> jobIter = jobs.iterator();
-				
+
 				while (jobIter.hasNext()) {
 					JobBase job = jobIter.next();
-					
-					log.info("assigning parentInvoice to job. Invoice: " + invoice.getId() + " Job: " + job.getId());
+
+					log.info("assigning parentInvoice to job. Invoice: "
+							+ invoice.getId() + " Job: " + job.getId());
 					job.setParentInvoice(invoice);
 				}
 			}
-			
-			
+
 			if (charges != null) {
 				Iterator<Charge> chargeIter = charges.iterator();
-				
+
 				while (chargeIter.hasNext()) {
 					Charge charge = chargeIter.next();
 
-					log.info("assigning parentInvoice to charge. Invoice: " + invoice.getId() + " Charge: " + charge.getId());
+					log.info("assigning parentInvoice to charge. Invoice: "
+							+ invoice.getId() + " Charge: " + charge.getId());
 					charge.setParentInvoice(invoice);
 				}
 			}
@@ -1882,27 +1928,29 @@ public class DataService extends HibernateService {
 				tx.commit();
 				jobs = invoice.getJobs();
 				charges = invoice.getCharges();
-				
+
 				if (jobs != null) {
 					Iterator<JobBase> jobIter = jobs.iterator();
-					
+
 					while (jobIter.hasNext()) {
 						JobBase job = jobIter.next();
-						
-						log.info("assigning parentInvoice to job. Invoice: " + invoice.getId() + " Job: " + job.getId());
+
+						log.info("assigning parentInvoice to job. Invoice: "
+								+ invoice.getId() + " Job: " + job.getId());
 						job.setParentInvoice(invoice);
 						addUpdate(job);
 					}
 				}
-				
-				
+
 				if (charges != null) {
 					Iterator<Charge> chargeIter = charges.iterator();
-					
+
 					while (chargeIter.hasNext()) {
 						Charge charge = chargeIter.next();
 
-						log.info("assigning parentInvoice to charge. Invoice: " + invoice.getId() + " Charge: " + charge.getId());
+						log.info("assigning parentInvoice to charge. Invoice: "
+								+ invoice.getId() + " Charge: "
+								+ charge.getId());
 						charge.setParentInvoice(invoice);
 						addUpdate(charge);
 					}
@@ -1934,9 +1982,9 @@ public class DataService extends HibernateService {
 		} finally {
 			em.close();
 		}
-		return invoice;	
+		return invoice;
 	}
-	
+
 	public StockDefinition getStockDefinition(Long id) throws Exception {
 		log.debug("** getStockDefinition called.");
 		StockDefinition stockDefinition = null;
@@ -1948,7 +1996,8 @@ public class DataService extends HibernateService {
 
 			if (stockDefinition != null) {
 				for (int i = 0; i < stockDefinition.getCharges().size(); i++) {
-					ChargeDefinition chargeDefinition = stockDefinition.getCharges().get(i);
+					ChargeDefinition chargeDefinition = stockDefinition
+							.getCharges().get(i);
 					if (chargeDefinition == null) {
 						log.error("null charge found");
 					}
@@ -1960,7 +2009,8 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 		return stockDefinition;
-	}	
+	}
+
 	public Grade getGrade(Long id) throws Exception {
 		log.debug("** getGrade called.");
 		Grade grade = null;
@@ -1972,7 +2022,7 @@ public class DataService extends HibernateService {
 
 			if (grade != null) {
 				for (int i = 0; i < grade.getCampaigns().size(); i++) {
-					 Campaigns camp = grade.getCampaigns().get(i);
+					Campaigns camp = grade.getCampaigns().get(i);
 					if (camp == null) {
 						log.error("null camp found");
 					}
@@ -1984,7 +2034,7 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 		return grade;
-	}	
+	}
 
 	public PressDefinition getPressDefinition(Long id) throws Exception {
 		log.debug("** getPressDefinition called.");
@@ -1997,7 +2047,8 @@ public class DataService extends HibernateService {
 
 			if (pressDefinition != null) {
 				for (int i = 0; i < pressDefinition.getCharges().size(); i++) {
-					ChargeDefinition chargeDefinition = pressDefinition.getCharges().get(i);
+					ChargeDefinition chargeDefinition = pressDefinition
+							.getCharges().get(i);
 					if (chargeDefinition == null) {
 						log.error("null charge found");
 					}
@@ -2009,7 +2060,8 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 		return pressDefinition;
-	}	
+	}
+
 	public Account getAccount(Long id) throws Exception {
 		log.debug("** getAccount called.");
 		Account account = null;
@@ -2021,25 +2073,29 @@ public class DataService extends HibernateService {
 
 			if (account != null) {
 				for (int i = 0; i < account.getInvoiceEstimateCharges().size(); i++) {
-					ChargeDefinition chargeDefinition = account.getInvoiceEstimateCharges().get(i);
+					ChargeDefinition chargeDefinition = account
+							.getInvoiceEstimateCharges().get(i);
 					if (chargeDefinition == null) {
 						log.error("null charge found");
 					}
 				}
 				for (int i = 0; i < account.getJobCharges().size(); i++) {
-					ChargeDefinition chargeDefinition = account.getJobCharges().get(i);
+					ChargeDefinition chargeDefinition = account.getJobCharges()
+							.get(i);
 					if (chargeDefinition == null) {
 						log.error("null charge found");
 					}
 				}
 				for (int i = 0; i < account.getContact().getComLinks().size(); i++) {
-					 ComLink link = account.getContact().getComLinks().get(i);
+					ComLink link = account.getContact().getComLinks().get(i);
 					if (link == null) {
 						log.error("null charge found");
 					}
 				}
-				for (int i = 0; i < account.getBillToContact().getComLinks().size(); i++) {
-					 ComLink link = account.getBillToContact().getComLinks().get(i);
+				for (int i = 0; i < account.getBillToContact().getComLinks()
+						.size(); i++) {
+					ComLink link = account.getBillToContact().getComLinks()
+							.get(i);
 					if (link == null) {
 						log.error("null charge found");
 					}
@@ -2052,6 +2108,7 @@ public class DataService extends HibernateService {
 		}
 		return account;
 	}
+
 	public CopierDefinition getCopierDefinition(Long id) throws Exception {
 		log.debug("** getCopierDefinition called.");
 		CopierDefinition copierDefinition = null;
@@ -2063,14 +2120,15 @@ public class DataService extends HibernateService {
 
 			if (copierDefinition != null) {
 				for (int i = 0; i < copierDefinition.getCharges().size(); i++) {
-					ChargeDefinition chargeDefinition = copierDefinition.getCharges().get(i);
+					ChargeDefinition chargeDefinition = copierDefinition
+							.getCharges().get(i);
 					if (chargeDefinition == null) {
 						log.error("null charge found");
 					}
 				}
-				
+
 				Matrix matrix = copierDefinition.getCopierMatrix();
-				
+
 				if (matrix != null) {
 					for (int i = 0; i < matrix.getElements().size(); i++) {
 						MatrixElement element = matrix.getElements().get(i);
@@ -2087,6 +2145,7 @@ public class DataService extends HibernateService {
 		}
 		return copierDefinition;
 	}
+
 	public Contact getContact(Long id) throws Exception {
 		log.debug("** getContact called.");
 		Contact contact = null;
@@ -2098,13 +2157,13 @@ public class DataService extends HibernateService {
 
 			if (contact != null) {
 				for (int i = 0; i < contact.getComLinks().size(); i++) {
-					 ComLink link = contact.getComLinks().get(i);
+					ComLink link = contact.getComLinks().get(i);
 					if (link == null) {
 						log.error("null contact found");
 					}
 				}
 				for (int i = 0; i < contact.getShipToAddress().size(); i++) {
-					 Address add = contact.getShipToAddress().get(i);
+					Address add = contact.getShipToAddress().get(i);
 					if (add == null) {
 						log.error("null charge found");
 					}
@@ -2117,6 +2176,7 @@ public class DataService extends HibernateService {
 		}
 		return contact;
 	}
+
 	public TaxTable getTaxTable(Long id) throws Exception {
 		log.debug("** getTaxTable called.");
 		TaxTable taxTable = null;
@@ -2148,32 +2208,48 @@ public class DataService extends HibernateService {
 		InvoiceBase invoice = null;
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Session session = (Session) em.getDelegate();
 			if (docType.equals("I")) {
 				Query findQuery = em
-						.createQuery("from Invoice where invoiceNumber = '"
+						.createQuery("from Invoice a where a.invoiceNumber = '"
 								+ invoiceNumber + "'");
 				invoice = (InvoiceBase) findQuery.getSingleResult();
 			} else {
 				Query findQuery = em
-						.createQuery("from Estimate where invoiceNumber = '"
+						.createQuery("from Estimate a where a.invoiceNumber = '"
 								+ invoiceNumber + "'");
 				invoice = (InvoiceBase) findQuery.getSingleResult();
 			}
 
 			if (invoice != null) {
-				for (int i = 0; i < invoice.getJobs().size(); i++) {
-					JobBase job = invoice.getJobs().get(i);
-					if (job != null) {
-						for (int j = 0; j < job.getCharges().size(); j++) {
-							Charge charge = job.getCharges().get(j);
-							if (charge == null) {
-								log.error("null charge found");
+				if (invoice.getJobs().size() > 0) {
+					for (int i = 0; i < invoice.getJobs().size(); i++) {
+						JobBase job = invoice.getJobs().get(i);
+						if (job != null) {
+							for (int j = 0; j < job.getCharges().size(); j++) {
+								Charge charge = job.getCharges().get(j);
+								if (charge == null) {
+									log.error("null charge found");
+								}
 							}
 						}
 					}
+				} else {
+					invoice.setJobs(new ArrayList<JobBase>());
+				}
+				if (invoice.getCharges().size() > 0) {
+					for (int i = 0; i < invoice.getCharges().size(); i++) {
+						Charge charge = invoice.getCharges().get(i);
+						if (charge == null) {
+							log.error("null charge found");
+						}
+					}
+				} else {
+					invoice.setCharges(new ArrayList<Charge>());
 				}
 			}
+		} catch (GenericJDBCException e) {
+			System.out.println(e);
+			System.out.println(e.getSQL());
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -2190,11 +2266,16 @@ public class DataService extends HibernateService {
 			query.setParameter("id", id);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			for (Field field : object.getClass().getDeclaredFields()) {
-				if(field.getType().getName().equals("java.util.List") || field.getType().getName().equals("java.util.ArrayList")) {
-					String propertyName = field.getName().substring(0,1).toUpperCase()+field.getName().substring(1,field.getName().length());
+				if (field.getType().getName().equals("java.util.List")
+						|| field.getType().getName().equals(
+								"java.util.ArrayList")) {
+					String propertyName = field.getName().substring(0, 1)
+							.toUpperCase()
+							+ field.getName().substring(1,
+									field.getName().length());
 					try {
 						Hibernate.initialize(object.getProperty(propertyName));
-					} catch(Exception e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
@@ -2451,8 +2532,8 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", id);
 			List<Contact> contactlist = query.getResultList();
-			if (contactlist != null){
-				for (int i=0; i<contactlist.size(); i++){
+			if (contactlist != null) {
+				for (int i = 0; i < contactlist.size(); i++) {
 					Contact c = (Contact) contactlist.get(i);
 					if (c != null)
 						Hibernate.initialize(c.getComLinks());
@@ -2475,15 +2556,20 @@ public class DataService extends HibernateService {
 		log.debug("** getByEmployee Id called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			/*DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
-			java.util.Date date = new java.util.Date();*/
+			/*
+			 * DateFormat dateFormat = new
+			 * java.text.SimpleDateFormat("yyyy-MM-dd"); java.util.Date date =
+			 * new java.util.Date();
+			 */
 
-			/*String queryString = "from " + className
-					+ " where to_char(startdatetime,'YYYY-MM-DD') = '"
-					+ dateFormat.format(date).toString()
-					+ "' and employee = :employee and onClock = 1";*/
+			/*
+			 * String queryString = "from " + className + " where
+			 * to_char(startdatetime,'YYYY-MM-DD') = '" +
+			 * dateFormat.format(date).toString() + "' and employee = :employee
+			 * and onClock = 1";
+			 */
 			String queryString = "from " + className
-			+ " where employee = :employee and onClock = 1";
+					+ " where employee = :employee and onClock = 1";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employee", employee);
 			List<TimeCard> timecardlist = query.getResultList();
@@ -2534,10 +2620,12 @@ public class DataService extends HibernateService {
 			DateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
 			java.util.Date date = new java.util.Date();
 
-			/*String queryString = "from " + className
-					+ " where to_char(created,'YYYY-MM-DD') = '"
-					+ dateFormat.format(date).toString()
-					+ "' and employee = :employee";*/
+			/*
+			 * String queryString = "from " + className + " where
+			 * to_char(created,'YYYY-MM-DD') = '" +
+			 * dateFormat.format(date).toString() + "' and employee =
+			 * :employee";
+			 */
 			String queryString = "from " + className
 					+ " where employee = :employee order by period desc";
 			Query query = em.createQuery(queryString);
@@ -2555,7 +2643,8 @@ public class DataService extends HibernateService {
 	}
 
 	/**
-	 * This method retrieves Time Cards for Active Period and Employee 
+	 * This method retrieves Time Cards for Active Period and Employee
+	 * 
 	 * @param className
 	 * @param employee
 	 * @param periodNumber
@@ -2563,12 +2652,14 @@ public class DataService extends HibernateService {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<TimeCard> getByTimeCardByEmployeeByActivePeriod(String className,
-			Employee employee, int periodNumber) throws Exception {
+	public List<TimeCard> getByTimeCardByEmployeeByActivePeriod(
+			String className, Employee employee, int periodNumber)
+			throws Exception {
 		log.debug("** getByTimeCardByEmployeeByActivePeriod called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from " + className
+			String queryString = "from "
+					+ className
 					+ " where employee = :employee and period = :periodNumber order by period desc";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employee", employee);
@@ -2584,9 +2675,10 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * This method retrieves Time Cards for Close Periods and Employee 
+	 * This method retrieves Time Cards for Close Periods and Employee
+	 * 
 	 * @param className
 	 * @param employee
 	 * @param periodNumber
@@ -2594,12 +2686,14 @@ public class DataService extends HibernateService {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<TimeCard> getByTimeCardByEmployeeByClosePeriod(String className,
-			Employee employee, List closePeriods) throws Exception {
+	public List<TimeCard> getByTimeCardByEmployeeByClosePeriod(
+			String className, Employee employee, List closePeriods)
+			throws Exception {
 		log.debug("** getByTimeCardByEmployeeByClosePeriod called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from " + className
+			String queryString = "from "
+					+ className
 					+ " where employee = :employee and period in (:closePeriods) order by period desc";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employee", employee);
@@ -2615,9 +2709,10 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * This method retrieves Time Cards for All Periods and Employee 
+	 * This method retrieves Time Cards for All Periods and Employee
+	 * 
 	 * @param className
 	 * @param employee
 	 * @param periodNumber
@@ -2630,7 +2725,8 @@ public class DataService extends HibernateService {
 		log.debug("** getByTimeCardByEmployeeByAllPeriod called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from " + className
+			String queryString = "from "
+					+ className
 					+ " where employee = :employee and period in (:allPeriods) order by period desc";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employee", employee);
@@ -2646,9 +2742,10 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * This method retrieves Time Cards for Specific Period and Employee 
+	 * This method retrieves Time Cards for Specific Period and Employee
+	 * 
 	 * @param className
 	 * @param employee
 	 * @param periodNumber
@@ -2656,12 +2753,13 @@ public class DataService extends HibernateService {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<TimeCard> getByTimeCardByEmployeeBySpecificPeriod(String className,
-			Employee employee, int period) throws Exception {
+	public List<TimeCard> getByTimeCardByEmployeeBySpecificPeriod(
+			String className, Employee employee, int period) throws Exception {
 		log.debug("** getByTimeCardByEmployeeBySpecificPeriod called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from " + className
+			String queryString = "from "
+					+ className
 					+ " where employee = :employee and period = :period order by period desc";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employee", employee);
@@ -2697,10 +2795,10 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
-	
+
 	/**
 	 * This method retrieves Maximum PeriodNumber
+	 * 
 	 * @param className
 	 * @return
 	 * @throws Exception
@@ -2715,7 +2813,7 @@ public class DataService extends HibernateService {
 					+ " where periodClosed = false";
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
-			if(rs.next()) {
+			if (rs.next()) {
 				maxPeriod = rs.getInteger(0).intValue();
 			}
 		} catch (Exception e) {
@@ -2725,11 +2823,10 @@ public class DataService extends HibernateService {
 		}
 		return maxPeriod;
 	}
-	
-	
-	
+
 	/**
-	 * This method retrieves all close periods 
+	 * This method retrieves all close periods
+	 * 
 	 * @param className
 	 * @return
 	 * @throws Exception
@@ -2753,9 +2850,10 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * This method retrieves all periods 
+	 * This method retrieves all periods
+	 * 
 	 * @param className
 	 * @return
 	 * @throws Exception
@@ -2765,7 +2863,8 @@ public class DataService extends HibernateService {
 		log.debug("** getAllPeriods called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from " + className+" order by periodnumber desc";
+			String queryString = "from " + className
+					+ " order by periodnumber desc";
 			Query query = em.createQuery(queryString);
 			List<Period> periodlist = query.getResultList();
 			if (periodlist != null)
@@ -2778,9 +2877,10 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * This method retrieves List of TimeCards required for Export functionality
+	 * 
 	 * @param orderByField
 	 * @param fromDate
 	 * @param toDate
@@ -2791,26 +2891,34 @@ public class DataService extends HibernateService {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<TimeCard> getEmployeeTimeExports(String orderByField, Date fromDate, Date toDate,
-			int periodFrom, int periodTo, List selectedEmployeeList) throws Exception {
+	public List<TimeCard> getEmployeeTimeExports(String orderByField,
+			Date fromDate, Date toDate, int periodFrom, int periodTo,
+			List selectedEmployeeList) throws Exception {
 		log.debug("** getEmployeeTimeExports called.");
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			String queryString = "from TimeCard tc fetch all properties";
-			if(fromDate==null && toDate==null) {	
-				queryString = queryString+" where period between "+periodFrom+" and "+periodTo;
+			if (fromDate == null && toDate == null) {
+				queryString = queryString + " where period between "
+						+ periodFrom + " and " + periodTo;
 			} else {
-				queryString = queryString+" where (startDateTime between '"+dateFormat.format(fromDate)+"' and '"+dateFormat.format(toDate)+"' " +
-						"or endDateTime between '"+dateFormat.format(fromDate)+"' and '"+dateFormat.format(toDate)+"')";
+				queryString = queryString + " where (startDateTime between '"
+						+ dateFormat.format(fromDate) + "' and '"
+						+ dateFormat.format(toDate) + "' "
+						+ "or endDateTime between '"
+						+ dateFormat.format(fromDate) + "' and '"
+						+ dateFormat.format(toDate) + "')";
 			}
-			queryString = queryString + " and tc.onClock=0 and tc.endDateTime is not null and tc.employee.employeeId in (:employeeIds)";
-			queryString = queryString + " order by tc."+orderByField+" asc";
+			queryString = queryString
+					+ " and tc.onClock=0 and tc.endDateTime is not null and tc.employee.employeeId in (:employeeIds)";
+			queryString = queryString + " order by tc." + orderByField + " asc";
 			Query query = em.createQuery(queryString);
 			query.setParameter("employeeIds", selectedEmployeeList);
 			List<TimeCard> timeCardList = query.getResultList();
-			for(TimeCard timeCard : timeCardList) {
-				timeCard.setEmployee((Employee) getEmployee(timeCard.getEmployee().getId()));
+			for (TimeCard timeCard : timeCardList) {
+				timeCard.setEmployee((Employee) getEmployee(timeCard
+						.getEmployee().getId()));
 			}
 			if (timeCardList != null)
 				log.debug("** Found " + timeCardList.size() + "records:");
@@ -2845,7 +2953,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-	
+
 	public long getMaxDisplayId(String className) throws Exception {
 		log.debug("** getMaxDisplayId called.");
 		long maxDisplayId = -1;
@@ -2855,7 +2963,7 @@ public class DataService extends HibernateService {
 			String queryString = "select max(displayId) from " + className;
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
-			if(rs.next()) {
+			if (rs.next()) {
 				maxDisplayId = rs.getLong(0).longValue();
 			}
 		} catch (Exception e) {
@@ -2865,11 +2973,11 @@ public class DataService extends HibernateService {
 		}
 		return maxDisplayId;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	/**
-	 * This method retrieves the list of active employees and inactive employees who are
-	 * clocked in 
+	 * This method retrieves the list of active employees and inactive employees
+	 * who are clocked in
 	 */
 	public List<Employee> getActiveEmployees() throws Exception {
 		log.debug("** getActiveEmployees called.");
@@ -2889,9 +2997,10 @@ public class DataService extends HibernateService {
 		}
 		return activeEmployees;
 	}
-	
+
 	/**
 	 * This method retrieves list of active employees who are clocked in
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -2917,12 +3026,14 @@ public class DataService extends HibernateService {
 
 	/**
 	 * This method retrieves jobs & charges list based on the employee filtering
+	 * 
 	 * @param employeeId
 	 * @return
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ModelBase> getJobsChargesForTrackerByEmployee(long employeeId, Date todayDate) throws Exception {
+	public List<ModelBase> getJobsChargesForTrackerByEmployee(long employeeId,
+			Date todayDate) throws Exception {
 		log.debug("** getJobsChargesForTrackerByEmployee called.");
 		List<ModelBase> jobChargesList = new ArrayList<ModelBase>();
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -2936,739 +3047,986 @@ public class DataService extends HibernateService {
 			Calendar startDateOfThisWeek = Calendar.getInstance();
 			Calendar endDateOfThisWeek = Calendar.getInstance();
 			endDateOfThisWeek.setTime(todayDate);
-			endDateOfThisWeek.add(Calendar.DATE,8-todayCalendar.get(Calendar.DAY_OF_WEEK));
+			endDateOfThisWeek.add(Calendar.DATE, 8 - todayCalendar
+					.get(Calendar.DAY_OF_WEEK));
 			startDateOfThisWeek.setTime(endDateOfThisWeek.getTime());
 			startDateOfThisWeek.add(Calendar.DATE, -8);
 			Calendar startDateOfNextWeek = Calendar.getInstance();
 			startDateOfNextWeek.setTime(todayDate);
-			startDateOfNextWeek.add(Calendar.DATE,8-todayCalendar.get(Calendar.DAY_OF_WEEK));
+			startDateOfNextWeek.add(Calendar.DATE, 8 - todayCalendar
+					.get(Calendar.DAY_OF_WEEK));
 			Calendar endDateOfNextWeek = Calendar.getInstance();
 			endDateOfNextWeek.setTime(startDateOfNextWeek.getTime());
 			endDateOfNextWeek.add(Calendar.DATE, 8);
 			Query findQuery = em.createQuery("from TrackerConsole");
-			TrackerConsole trackerConsole =  (TrackerConsole) findQuery.getSingleResult();
+			TrackerConsole trackerConsole = (TrackerConsole) findQuery
+					.getSingleResult();
 			Hibernate.initialize(trackerConsole.getSelectedStations());
 			Query employeeQuery = em.createNamedQuery("Employee.byId");
 			employeeQuery.setParameter("id", employeeId);
 			Employee employee = (Employee) employeeQuery.getSingleResult();
-			if(employee!=null) {
-				if(employee.getIncludeInvoice()) {
-					if(employee.getIncludeJobs()) {
+			if (employee != null) {
+				if (employee.getIncludeInvoice()) {
+					if (employee.getIncludeJobs()) {
 						List<String> chargeDefinitionsList = new ArrayList<String>();
 						String queryString = "select job from Invoice as invoice inner join invoice.jobs as job where";
-						if(!employee.getAllPricingMethods()) {
-							queryString = queryString + " job.pricingMethod in (:pricingMethods) and";
+						if (!employee.getAllPricingMethods()) {
+							queryString = queryString
+									+ " job.pricingMethod in (:pricingMethods) and";
 						}
-						if(!employee.getAllCopiers()) {
-							queryString = queryString + " job.costingCopier.machineName in (:copiers) and";
+						if (!employee.getAllCopiers()) {
+							queryString = queryString
+									+ " job.costingCopier.machineName in (:copiers) and";
 						}
-						if(!employee.getAllChargeTypes()) {
-							//queryString = queryString + " job.costingCopier in (:copiers) and";
+						if (!employee.getAllChargeTypes()) {
+							// queryString = queryString + " job.costingCopier
+							// in (:copiers) and";
 						}
-						if(!employee.getAllPresses()) {
-							queryString = queryString + " job.costingPress.machineName in (:presses) and";
+						if (!employee.getAllPresses()) {
+							queryString = queryString
+									+ " job.costingPress.machineName in (:presses) and";
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							queryString = queryString + " job.location in (:locations) and";
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							queryString = queryString
+									+ " job.location in (:locations) and";
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
 							boolean checkFlag = false;
-							if(employee.getCustomerWant()!=null) {
-								if(employee.getCustomerWant().equals("Due_Today") || employee.getCustomerWant().equals("Due_Tomorrow")) {
-									queryString = queryString + " ((to_char(invoice.deliveryIntentDate,'DD/MM/YYYY')=:date or invoice.deliveryIntentDate is null) ";
+							if (employee.getCustomerWant() != null) {
+								if (employee.getCustomerWant().equals(
+										"Due_Today")
+										|| employee.getCustomerWant().equals(
+												"Due_Tomorrow")) {
+									queryString = queryString
+											+ " ((to_char(invoice.deliveryIntentDate,'DD/MM/YYYY')=:date or invoice.deliveryIntentDate is null) ";
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_This_Week") || employee.getCustomerWant().equals("Due_Next")){
-									queryString = queryString + " ((invoice.deliveryIntentDate between :startdate and :enddate or invoice.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")
+										|| employee.getCustomerWant().equals(
+												"Due_Next")) {
+									queryString = queryString
+											+ " ((invoice.deliveryIntentDate between :startdate and :enddate or invoice.deliveryIntentDate is null) ";
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_Any_Time")) {
-									queryString = queryString + " ((invoice.deliveryIntentDate is not null or invoice.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_Any_Time")) {
+									queryString = queryString
+											+ " ((invoice.deliveryIntentDate is not null or invoice.deliveryIntentDate is null) ";
 									checkFlag = true;
 								}
 							}
-							if(employee.getAnyPastDue()) {
-								if(checkFlag) {
+							if (employee.getAnyPastDue()) {
+								if (checkFlag) {
 									queryString = queryString + " or";
 								}
-								queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
-								if(checkFlag) {
+								queryString = queryString
+										+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
+								if (checkFlag) {
 									queryString = queryString + ")";
 								}
 								queryString = queryString + " and";
 							} else {
-								if(checkFlag) {
+								if (checkFlag) {
 									queryString = queryString + ") and";
 								}
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null) and";
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							queryString = queryString
+									+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null) and";
 						}
-						if(employee.getHideNonReleaseProduction() || trackerConsole.getHideItemsNotReleasedToProd()) {
-							queryString = queryString + " (job.releasedToProduction=true and job.releasedToProduction is not null)";
+						if (employee.getHideNonReleaseProduction()
+								|| trackerConsole
+										.getHideItemsNotReleasedToProd()) {
+							queryString = queryString
+									+ " (job.releasedToProduction=true and job.releasedToProduction is not null)";
 						} else {
-							queryString = queryString + " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null)";
+							queryString = queryString
+									+ " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null)";
 						}
-						
-						queryString = queryString + " order by invoice.invoiceNumber,job.jobNumber asc"; 
-						
+
+						queryString = queryString
+								+ " order by invoice.invoiceNumber,job.jobNumber asc";
+
 						Query query = em.createQuery(queryString);
-						if(!employee.getAllPricingMethods()) {
-							query.setParameter("pricingMethods", employee.getEmployeePricings());
+						if (!employee.getAllPricingMethods()) {
+							query.setParameter("pricingMethods", employee
+									.getEmployeePricings());
 						}
-						if(!employee.getAllCopiers()) {
+						if (!employee.getAllCopiers()) {
 							List<String> copiersList = new ArrayList<String>();
-							for (ProductionCopiers productionCopiers : employee.getEmployeeCopiers()) {
+							for (ProductionCopiers productionCopiers : employee
+									.getEmployeeCopiers()) {
 								copiersList.add(productionCopiers.getName());
 							}
 							query.setParameter("copiers", copiersList);
 						}
-						if(!employee.getAllChargeTypes()) {
+						if (!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
-							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
-								chargeDefinitionsList.add(chargeCommand.getName());
+							for (ChargeCommand chargeCommand : employee
+									.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand
+										.getName());
 							}
 						}
-						if(!employee.getAllPresses()) {
+						if (!employee.getAllPresses()) {
 							List<String> pressesList = new ArrayList<String>();
-							for (ProductionPress productionPress : employee.getEmployeePresses()) {
+							for (ProductionPress productionPress : employee
+									.getEmployeePresses()) {
 								pressesList.add(productionPress.getName());
 							}
 							query.setParameter("presses", pressesList);
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations",employee.getProductionParents());
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations", employee
+									.getProductionParents());
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
-							if(employee.getCustomerWant()!=null) {
-								if(employee.getCustomerWant().equals("Due_Today")) {
-									query.setParameter("date",dateFormat.format(todayDate));
-								} else if(employee.getCustomerWant().equals("Due_Tomorrow")) {
-									query.setParameter("date",dateFormat.format(tomorrowCalendar.getTime()));
-								} else if(employee.getCustomerWant().equals("Due_This_Week")) {
-									query.setParameter("startdate",startDateOfThisWeek.getTime());
-									query.setParameter("enddate",endDateOfThisWeek.getTime());
-								} else if(employee.getCustomerWant().equals("Due_Next")) {
-									query.setParameter("startdate",startDateOfNextWeek.getTime());
-									query.setParameter("enddate",endDateOfNextWeek.getTime());
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
+							if (employee.getCustomerWant() != null) {
+								if (employee.getCustomerWant().equals(
+										"Due_Today")) {
+									query.setParameter("date", dateFormat
+											.format(todayDate));
+								} else if (employee.getCustomerWant().equals(
+										"Due_Tomorrow")) {
+									query
+											.setParameter("date", dateFormat
+													.format(tomorrowCalendar
+															.getTime()));
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")) {
+									query.setParameter("startdate",
+											startDateOfThisWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfThisWeek.getTime());
+								} else if (employee.getCustomerWant().equals(
+										"Due_Next")) {
+									query.setParameter("startdate",
+											startDateOfNextWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfNextWeek.getTime());
 								}
 							}
-							if(employee.getAnyPastDue()) {
-								query.setParameter("pastdate",todayDate);
+							if (employee.getAnyPastDue()) {
+								query.setParameter("pastdate", todayDate);
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							query.setParameter("pastdate",todayDate);
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							query.setParameter("pastdate", todayDate);
 						}
 						List<Job> jobList = query.getResultList();
 						for (Job job : jobList) {
-							if(job!=null) {
-								/*if(employee.getIncludeJobCharges()) {
-									if(job.getCharges()!=null && job.getCharges().size()>0) {
-										for (Charge charge : job.getCharges()) {
-											if(charge!=null) {
-												if(!employee.getAllChargeTypes()) {
-													if(charge.getChargeDefinition()!=null) {
-														if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
-															Hibernate.initialize(charge.getParentJob());
-															jobChargesList.add(charge);
-														}
-													}
-												} else {
-													Hibernate.initialize(charge.getParentJob());
-													jobChargesList.add(charge);
-												}
-											}
-										}
-									}
-								}*/
+							if (job != null) {
+								/*
+								 * if(employee.getIncludeJobCharges()) {
+								 * if(job.getCharges()!=null &&
+								 * job.getCharges().size()>0) { for (Charge
+								 * charge : job.getCharges()) { if(charge!=null) {
+								 * if(!employee.getAllChargeTypes()) {
+								 * if(charge.getChargeDefinition()!=null) {
+								 * if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
+								 * Hibernate.initialize(charge.getParentJob());
+								 * jobChargesList.add(charge); } } } else {
+								 * Hibernate.initialize(charge.getParentJob());
+								 * jobChargesList.add(charge); } } } } }
+								 */
 								Hibernate.initialize(job.getParentInvoice());
 								jobChargesList.add(job);
 							}
 						}
 					}
-					if(employee.getIncludeJobCharges()) {
+					if (employee.getIncludeJobCharges()) {
 						boolean checkFlag = false;
 						List<String> chargeDefinitionsList = new ArrayList<String>();
 						String queryString = "select charge from Invoice as invoice inner join invoice.jobs as job inner join job.charges as charge";
-						if(!employee.getAllChargeTypes()) {
+						if (!employee.getAllChargeTypes()) {
 							checkFlag = true;
-							queryString = queryString + "  where charge.chargeDefinition.name in (:charges)";
+							queryString = queryString
+									+ "  where charge.chargeDefinition.name in (:charges)";
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
 							boolean checkBooleanFlag = false;
-							if(employee.getCustomerWant()!=null) {
-								if(checkFlag){
+							if (employee.getCustomerWant() != null) {
+								if (checkFlag) {
 									queryString = queryString + " and ";
 								} else {
 									queryString = queryString + " where ";
 								}
-								if(employee.getCustomerWant().equals("Due_Today") || employee.getCustomerWant().equals("Due_Tomorrow")) {
-									queryString = queryString + " ((to_char(invoice.deliveryIntentDate,'DD/MM/YYYY')=:date or invoice.deliveryIntentDate is null) ";
+								if (employee.getCustomerWant().equals(
+										"Due_Today")
+										|| employee.getCustomerWant().equals(
+												"Due_Tomorrow")) {
+									queryString = queryString
+											+ " ((to_char(invoice.deliveryIntentDate,'DD/MM/YYYY')=:date or invoice.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_This_Week") || employee.getCustomerWant().equals("Due_Next")){
-									queryString = queryString + " ((invoice.deliveryIntentDate between :startdate and :enddate or invoice.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")
+										|| employee.getCustomerWant().equals(
+												"Due_Next")) {
+									queryString = queryString
+											+ " ((invoice.deliveryIntentDate between :startdate and :enddate or invoice.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_Any_Time")) {
-									queryString = queryString + " ((invoice.deliveryIntentDate is not null or invoice.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_Any_Time")) {
+									queryString = queryString
+											+ " ((invoice.deliveryIntentDate is not null or invoice.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								}
 							}
-							if(employee.getAnyPastDue()) {
+							if (employee.getAnyPastDue()) {
 								checkFlag = true;
-								if(checkBooleanFlag) {
+								if (checkBooleanFlag) {
 									queryString = queryString + " or";
 								}
-								queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
-								if(checkBooleanFlag) {
+								queryString = queryString
+										+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
+								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
 							} else {
-								if(checkBooleanFlag) {
+								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							if(checkFlag){
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							if (checkFlag) {
 								queryString = queryString + " and ";
 							} else {
 								checkFlag = true;
 								queryString = queryString + " where ";
 							}
-							queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
+							queryString = queryString
+									+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							if(checkFlag) {
-								queryString = queryString + " and charge.productionLocation in (:locations)";
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							if (checkFlag) {
+								queryString = queryString
+										+ " and charge.productionLocation in (:locations)";
 							} else {
 								checkFlag = true;
-								queryString = queryString + " where charge.productionLocation in (:locations)";
+								queryString = queryString
+										+ " where charge.productionLocation in (:locations)";
 							}
 						}
-						queryString = queryString + " order by invoice.invoiceNumber asc";
+						queryString = queryString
+								+ " order by invoice.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
-						if(!employee.getAllChargeTypes()) {
+						if (!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
-							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
-								chargeDefinitionsList.add(chargeCommand.getName());
+							for (ChargeCommand chargeCommand : employee
+									.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand
+										.getName());
 							}
-							query.setParameter("charges", chargeDefinitionsList);
+							query
+									.setParameter("charges",
+											chargeDefinitionsList);
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations",employee.getProductionParents());
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations", employee
+									.getProductionParents());
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
-							if(employee.getCustomerWant()!=null) {
-								if(employee.getCustomerWant().equals("Due_Today")) {
-									query.setParameter("date",dateFormat.format(todayDate));
-								} else if(employee.getCustomerWant().equals("Due_Tomorrow")) {
-									query.setParameter("date",dateFormat.format(tomorrowCalendar.getTime()));
-								} else if(employee.getCustomerWant().equals("Due_This_Week")) {
-									query.setParameter("startdate",startDateOfThisWeek.getTime());
-									query.setParameter("enddate",endDateOfThisWeek.getTime());
-								} else if(employee.getCustomerWant().equals("Due_Next")) {
-									query.setParameter("startdate",startDateOfNextWeek.getTime());
-									query.setParameter("enddate",endDateOfNextWeek.getTime());
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
+							if (employee.getCustomerWant() != null) {
+								if (employee.getCustomerWant().equals(
+										"Due_Today")) {
+									query.setParameter("date", dateFormat
+											.format(todayDate));
+								} else if (employee.getCustomerWant().equals(
+										"Due_Tomorrow")) {
+									query
+											.setParameter("date", dateFormat
+													.format(tomorrowCalendar
+															.getTime()));
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")) {
+									query.setParameter("startdate",
+											startDateOfThisWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfThisWeek.getTime());
+								} else if (employee.getCustomerWant().equals(
+										"Due_Next")) {
+									query.setParameter("startdate",
+											startDateOfNextWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfNextWeek.getTime());
 								}
 							}
-							if(employee.getAnyPastDue()) {
-								query.setParameter("pastdate",todayDate);
+							if (employee.getAnyPastDue()) {
+								query.setParameter("pastdate", todayDate);
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							query.setParameter("pastdate",todayDate);
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							query.setParameter("pastdate", todayDate);
 						}
 						List<Charge> chargesList = query.getResultList();
 						for (Charge charge : chargesList) {
-							if(charge!=null) {
-								Hibernate.initialize(charge.getParentJob().getParentInvoice());
+							if (charge != null) {
+								Hibernate.initialize(charge.getParentJob()
+										.getParentInvoice());
 								jobChargesList.add(charge);
 							}
 						}
 					}
-					if(employee.getIncludeInvoiceCharges()){
+					if (employee.getIncludeInvoiceCharges()) {
 						boolean checkFlag = false;
 						List<String> chargeDefinitionsList = new ArrayList<String>();
 						String queryString = "select charge from Invoice as invoice inner join invoice.charges as charge";
-						if(!employee.getAllChargeTypes()) {
+						if (!employee.getAllChargeTypes()) {
 							checkFlag = true;
-							queryString = queryString + "  where charge.chargeDefinition.name in (:charges)";
+							queryString = queryString
+									+ "  where charge.chargeDefinition.name in (:charges)";
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
 							boolean checkBooleanFlag = false;
-							if(employee.getCustomerWant()!=null) {
-								if(checkFlag){
+							if (employee.getCustomerWant() != null) {
+								if (checkFlag) {
 									queryString = queryString + " and ";
 								} else {
 									queryString = queryString + " where ";
 								}
-								if(employee.getCustomerWant().equals("Due_Today") || employee.getCustomerWant().equals("Due_Tomorrow")) {
-									queryString = queryString + " ((to_char(invoice.deliveryIntentDate,'DD/MM/YYYY')=:date or invoice.deliveryIntentDate is null) ";
+								if (employee.getCustomerWant().equals(
+										"Due_Today")
+										|| employee.getCustomerWant().equals(
+												"Due_Tomorrow")) {
+									queryString = queryString
+											+ " ((to_char(invoice.deliveryIntentDate,'DD/MM/YYYY')=:date or invoice.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_This_Week") || employee.getCustomerWant().equals("Due_Next")){
-									queryString = queryString + " ((invoice.deliveryIntentDate between :startdate and :enddate or invoice.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")
+										|| employee.getCustomerWant().equals(
+												"Due_Next")) {
+									queryString = queryString
+											+ " ((invoice.deliveryIntentDate between :startdate and :enddate or invoice.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_Any_Time")) {
-									queryString = queryString + " ((invoice.deliveryIntentDate is not null or invoice.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_Any_Time")) {
+									queryString = queryString
+											+ " ((invoice.deliveryIntentDate is not null or invoice.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								}
 							}
-							if(employee.getAnyPastDue()) {
+							if (employee.getAnyPastDue()) {
 								checkFlag = true;
-								if(checkBooleanFlag) {
+								if (checkBooleanFlag) {
 									queryString = queryString + " or";
 								}
-								queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
-								if(checkBooleanFlag) {
+								queryString = queryString
+										+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
+								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
 							} else {
-								if(checkBooleanFlag) {
+								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							if(checkFlag){
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							if (checkFlag) {
 								queryString = queryString + " and ";
 							} else {
 								checkFlag = true;
 								queryString = queryString + " where ";
 							}
-							queryString = queryString + " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
+							queryString = queryString
+									+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							if(checkFlag) {
-								queryString = queryString + " and charge.productionLocation in (:locations)";
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							if (checkFlag) {
+								queryString = queryString
+										+ " and charge.productionLocation in (:locations)";
 							} else {
 								checkFlag = true;
-								queryString = queryString + " where charge.productionLocation in (:locations)";
+								queryString = queryString
+										+ " where charge.productionLocation in (:locations)";
 							}
 						}
-						if(employee.getHideNonReleaseProduction() || trackerConsole.getHideItemsNotReleasedToProd()) {
-							if(checkFlag){
+						if (employee.getHideNonReleaseProduction()
+								|| trackerConsole
+										.getHideItemsNotReleasedToProd()) {
+							if (checkFlag) {
 								queryString = queryString + " and ";
 							} else {
 								checkFlag = true;
 								queryString = queryString + " where ";
 							}
-							queryString = queryString + " (invoice.releasedToProduction=true and invoice.releasedToProduction is not null)";
+							queryString = queryString
+									+ " (invoice.releasedToProduction=true and invoice.releasedToProduction is not null)";
 						} else {
-							if(checkFlag){
+							if (checkFlag) {
 								queryString = queryString + " and ";
 							} else {
 								checkFlag = true;
 								queryString = queryString + " where ";
 							}
-							queryString = queryString + " ((invoice.releasedToProduction=true or invoice.releasedToProduction=false) and invoice.releasedToProduction is not null)";
+							queryString = queryString
+									+ " ((invoice.releasedToProduction=true or invoice.releasedToProduction=false) and invoice.releasedToProduction is not null)";
 						}
-						queryString = queryString + " order by invoice.invoiceNumber asc";
+						queryString = queryString
+								+ " order by invoice.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
-						if(!employee.getAllChargeTypes()) {
+						if (!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
-							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
-								chargeDefinitionsList.add(chargeCommand.getName());
+							for (ChargeCommand chargeCommand : employee
+									.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand
+										.getName());
 							}
-							query.setParameter("charges", chargeDefinitionsList);
+							query
+									.setParameter("charges",
+											chargeDefinitionsList);
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations",employee.getProductionParents());
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations", employee
+									.getProductionParents());
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
-							if(employee.getCustomerWant()!=null) {
-								if(employee.getCustomerWant().equals("Due_Today")) {
-									query.setParameter("date",dateFormat.format(todayDate));
-								} else if(employee.getCustomerWant().equals("Due_Tomorrow")) {
-									query.setParameter("date",dateFormat.format(tomorrowCalendar.getTime()));
-								} else if(employee.getCustomerWant().equals("Due_This_Week")) {
-									query.setParameter("startdate",startDateOfThisWeek.getTime());
-									query.setParameter("enddate",endDateOfThisWeek.getTime());
-								} else if(employee.getCustomerWant().equals("Due_Next")) {
-									query.setParameter("startdate",startDateOfNextWeek.getTime());
-									query.setParameter("enddate",endDateOfNextWeek.getTime());
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
+							if (employee.getCustomerWant() != null) {
+								if (employee.getCustomerWant().equals(
+										"Due_Today")) {
+									query.setParameter("date", dateFormat
+											.format(todayDate));
+								} else if (employee.getCustomerWant().equals(
+										"Due_Tomorrow")) {
+									query
+											.setParameter("date", dateFormat
+													.format(tomorrowCalendar
+															.getTime()));
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")) {
+									query.setParameter("startdate",
+											startDateOfThisWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfThisWeek.getTime());
+								} else if (employee.getCustomerWant().equals(
+										"Due_Next")) {
+									query.setParameter("startdate",
+											startDateOfNextWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfNextWeek.getTime());
 								}
 							}
-							if(employee.getAnyPastDue()) {
-								query.setParameter("pastdate",todayDate);
+							if (employee.getAnyPastDue()) {
+								query.setParameter("pastdate", todayDate);
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							query.setParameter("pastdate",todayDate);
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							query.setParameter("pastdate", todayDate);
 						}
 						List<Charge> chargesList = query.getResultList();
 						for (Charge charge : chargesList) {
-							if(charge!=null) {
-								/*if(!employee.getAllChargeTypes()) {
-									if(charge.getChargeDefinition()!=null) {
-										if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
-											Hibernate.initialize(charge.getParentInvoice());
-											jobChargesList.add(charge);
-										}
-									}
-								} else {*/
+							if (charge != null) {
+								/*
+								 * if(!employee.getAllChargeTypes()) {
+								 * if(charge.getChargeDefinition()!=null) {
+								 * if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
+								 * Hibernate.initialize(charge.getParentInvoice());
+								 * jobChargesList.add(charge); } } } else {
+								 */
 								Hibernate.initialize(charge.getParentInvoice());
 								jobChargesList.add(charge);
-								//}
+								// }
 							}
 						}
 					}
 				}
-				if(employee.getIncludeEstimate()) {
-					if(employee.getIncludeJobs()) {
+				if (employee.getIncludeEstimate()) {
+					if (employee.getIncludeJobs()) {
 						List<String> chargeDefinitionsList = new ArrayList<String>();
 						String queryString = "select job from Estimate as estimate inner join estimate.jobs as job where";
-						if(!employee.getAllPricingMethods()) {
-							queryString = queryString + " job.pricingMethod in (:pricingMethods) and";
+						if (!employee.getAllPricingMethods()) {
+							queryString = queryString
+									+ " job.pricingMethod in (:pricingMethods) and";
 						}
-						if(!employee.getAllCopiers()) {
-							queryString = queryString + " job.costingCopier.machineName in (:copiers) and";
+						if (!employee.getAllCopiers()) {
+							queryString = queryString
+									+ " job.costingCopier.machineName in (:copiers) and";
 						}
-						if(!employee.getAllChargeTypes()) {
-							//queryString = queryString + " job.costingCopier in (:copiers) and";
+						if (!employee.getAllChargeTypes()) {
+							// queryString = queryString + " job.costingCopier
+							// in (:copiers) and";
 						}
-						if(!employee.getAllPresses()) {
-							queryString = queryString + " job.costingPress.machineName in (:presses) and";
+						if (!employee.getAllPresses()) {
+							queryString = queryString
+									+ " job.costingPress.machineName in (:presses) and";
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							queryString = queryString + " job.location in (:locations) and";
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							queryString = queryString
+									+ " job.location in (:locations) and";
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
 							boolean checkFlag = false;
-							if(employee.getCustomerWant()!=null) {
-								if(employee.getCustomerWant().equals("Due_Today") || employee.getCustomerWant().equals("Due_Tomorrow")) {
-									queryString = queryString + " ((to_char(estimate.deliveryIntentDate,'DD/MM/YYYY')=:date or estimate.deliveryIntentDate is null) ";
+							if (employee.getCustomerWant() != null) {
+								if (employee.getCustomerWant().equals(
+										"Due_Today")
+										|| employee.getCustomerWant().equals(
+												"Due_Tomorrow")) {
+									queryString = queryString
+											+ " ((to_char(estimate.deliveryIntentDate,'DD/MM/YYYY')=:date or estimate.deliveryIntentDate is null) ";
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_This_Week") || employee.getCustomerWant().equals("Due_Next")){
-									queryString = queryString + " ((estimate.deliveryIntentDate between :startdate and :enddate or estimate.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")
+										|| employee.getCustomerWant().equals(
+												"Due_Next")) {
+									queryString = queryString
+											+ " ((estimate.deliveryIntentDate between :startdate and :enddate or estimate.deliveryIntentDate is null) ";
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_Any_Time")) {
-									queryString = queryString + " ((estimate.deliveryIntentDate is not null or estimate.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_Any_Time")) {
+									queryString = queryString
+											+ " ((estimate.deliveryIntentDate is not null or estimate.deliveryIntentDate is null) ";
 									checkFlag = true;
 								}
 							}
-							if(employee.getAnyPastDue()) {
-								if(checkFlag) {
+							if (employee.getAnyPastDue()) {
+								if (checkFlag) {
 									queryString = queryString + " or";
 								}
-								queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
-								if(checkFlag) {
+								queryString = queryString
+										+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
+								if (checkFlag) {
 									queryString = queryString + ")";
 								}
 								queryString = queryString + " and";
 							} else {
-								if(checkFlag) {
+								if (checkFlag) {
 									queryString = queryString + ") and";
 								}
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null) and";
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							queryString = queryString
+									+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null) and";
 						}
-						if(employee.getHideNonReleaseProduction() || trackerConsole.getHideItemsNotReleasedToProd()) {
-							queryString = queryString + " (job.releasedToProduction=true and job.releasedToProduction is not null)";
+						if (employee.getHideNonReleaseProduction()
+								|| trackerConsole
+										.getHideItemsNotReleasedToProd()) {
+							queryString = queryString
+									+ " (job.releasedToProduction=true and job.releasedToProduction is not null)";
 						} else {
-							queryString = queryString + " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null)";
+							queryString = queryString
+									+ " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null)";
 						}
-						queryString = queryString + " order by estimate.invoiceNumber,job.jobNumber asc";
+						queryString = queryString
+								+ " order by estimate.invoiceNumber,job.jobNumber asc";
 						Query query = em.createQuery(queryString);
-						if(!employee.getAllPricingMethods()) {
-							query.setParameter("pricingMethods", employee.getEmployeePricings());
+						if (!employee.getAllPricingMethods()) {
+							query.setParameter("pricingMethods", employee
+									.getEmployeePricings());
 						}
-						if(!employee.getAllCopiers()) {
+						if (!employee.getAllCopiers()) {
 							List<String> copiersList = new ArrayList<String>();
-							for (ProductionCopiers productionCopiers : employee.getEmployeeCopiers()) {
+							for (ProductionCopiers productionCopiers : employee
+									.getEmployeeCopiers()) {
 								copiersList.add(productionCopiers.getName());
 							}
 							query.setParameter("copiers", copiersList);
 						}
-						if(!employee.getAllChargeTypes()) {
+						if (!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
-							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
-								chargeDefinitionsList.add(chargeCommand.getName());
+							for (ChargeCommand chargeCommand : employee
+									.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand
+										.getName());
 							}
 						}
-						if(!employee.getAllPresses()) {
+						if (!employee.getAllPresses()) {
 							List<String> pressesList = new ArrayList<String>();
-							for (ProductionPress productionPress : employee.getEmployeePresses()) {
+							for (ProductionPress productionPress : employee
+									.getEmployeePresses()) {
 								pressesList.add(productionPress.getName());
 							}
 							query.setParameter("presses", pressesList);
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations",employee.getProductionParents());
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations", employee
+									.getProductionParents());
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
-							if(employee.getCustomerWant()!=null) {
-								if(employee.getCustomerWant().equals("Due_Today")) {
-									query.setParameter("date",dateFormat.format(todayDate));
-								} else if(employee.getCustomerWant().equals("Due_Tomorrow")) {
-									query.setParameter("date",dateFormat.format(tomorrowCalendar.getTime()));
-								} else if(employee.getCustomerWant().equals("Due_This_Week")) {
-									query.setParameter("startdate",startDateOfThisWeek.getTime());
-									query.setParameter("enddate",endDateOfThisWeek.getTime());
-								} else if(employee.getCustomerWant().equals("Due_Next")) {
-									query.setParameter("startdate",startDateOfNextWeek.getTime());
-									query.setParameter("enddate",endDateOfNextWeek.getTime());
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
+							if (employee.getCustomerWant() != null) {
+								if (employee.getCustomerWant().equals(
+										"Due_Today")) {
+									query.setParameter("date", dateFormat
+											.format(todayDate));
+								} else if (employee.getCustomerWant().equals(
+										"Due_Tomorrow")) {
+									query
+											.setParameter("date", dateFormat
+													.format(tomorrowCalendar
+															.getTime()));
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")) {
+									query.setParameter("startdate",
+											startDateOfThisWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfThisWeek.getTime());
+								} else if (employee.getCustomerWant().equals(
+										"Due_Next")) {
+									query.setParameter("startdate",
+											startDateOfNextWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfNextWeek.getTime());
 								}
 							}
-							if(employee.getAnyPastDue()) {
-								query.setParameter("pastdate",todayDate);
+							if (employee.getAnyPastDue()) {
+								query.setParameter("pastdate", todayDate);
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							query.setParameter("pastdate",todayDate);
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							query.setParameter("pastdate", todayDate);
 						}
-						
+
 						List<Job> jobList = query.getResultList();
 						for (Job job : jobList) {
-							if(job!=null) {
-								/*if(employee.getIncludeJobCharges()) {
-									if(job.getCharges()!=null && job.getCharges().size()>0) {
-										for (Charge charge : job.getCharges()) {
-											if(charge!=null) {
-												if(!employee.getAllChargeTypes()) {
-													if(charge.getChargeDefinition()!=null) {
-														if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
-															Hibernate.initialize(charge.getParentJob());
-															jobChargesList.add(charge);
-														}
-													}
-												} else {
-													Hibernate.initialize(charge.getParentJob());
-													jobChargesList.add(charge);
-												}
-											}
-										}
-									}
-								}*/
+							if (job != null) {
+								/*
+								 * if(employee.getIncludeJobCharges()) {
+								 * if(job.getCharges()!=null &&
+								 * job.getCharges().size()>0) { for (Charge
+								 * charge : job.getCharges()) { if(charge!=null) {
+								 * if(!employee.getAllChargeTypes()) {
+								 * if(charge.getChargeDefinition()!=null) {
+								 * if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
+								 * Hibernate.initialize(charge.getParentJob());
+								 * jobChargesList.add(charge); } } } else {
+								 * Hibernate.initialize(charge.getParentJob());
+								 * jobChargesList.add(charge); } } } } }
+								 */
 								Hibernate.initialize(job.getParentInvoice());
 								jobChargesList.add(job);
 							}
 						}
 					}
-					if(employee.getIncludeJobCharges()) {
+					if (employee.getIncludeJobCharges()) {
 						boolean checkFlag = false;
 						List<String> chargeDefinitionsList = new ArrayList<String>();
 						String queryString = "select charge from Estimate as estimate inner join estimate.jobs as job inner join job.charges as charge";
-						if(!employee.getAllChargeTypes()) {
+						if (!employee.getAllChargeTypes()) {
 							checkFlag = true;
-							queryString = queryString + "  where charge.chargeDefinition.name in (:charges)";
+							queryString = queryString
+									+ "  where charge.chargeDefinition.name in (:charges)";
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
 							boolean checkBooleanFlag = false;
-							if(employee.getCustomerWant()!=null) {
-								if(checkFlag){
+							if (employee.getCustomerWant() != null) {
+								if (checkFlag) {
 									queryString = queryString + " and ";
 								} else {
 									queryString = queryString + " where ";
 								}
-								if(employee.getCustomerWant().equals("Due_Today") || employee.getCustomerWant().equals("Due_Tomorrow")) {
-									queryString = queryString + " ((to_char(estimate.deliveryIntentDate,'DD/MM/YYYY')=:date or estimate.deliveryIntentDate is null) ";
+								if (employee.getCustomerWant().equals(
+										"Due_Today")
+										|| employee.getCustomerWant().equals(
+												"Due_Tomorrow")) {
+									queryString = queryString
+											+ " ((to_char(estimate.deliveryIntentDate,'DD/MM/YYYY')=:date or estimate.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_This_Week") || employee.getCustomerWant().equals("Due_Next")){
-									queryString = queryString + " ((estimate.deliveryIntentDate between :startdate and :enddate or estimate.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")
+										|| employee.getCustomerWant().equals(
+												"Due_Next")) {
+									queryString = queryString
+											+ " ((estimate.deliveryIntentDate between :startdate and :enddate or estimate.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_Any_Time")) {
-									queryString = queryString + " ((estimate.deliveryIntentDate is not null or estimate.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_Any_Time")) {
+									queryString = queryString
+											+ " ((estimate.deliveryIntentDate is not null or estimate.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								}
 							}
-							if(employee.getAnyPastDue()) {
+							if (employee.getAnyPastDue()) {
 								checkFlag = true;
-								if(checkBooleanFlag) {
+								if (checkBooleanFlag) {
 									queryString = queryString + " or";
 								}
-								queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
-								if(checkBooleanFlag) {
+								queryString = queryString
+										+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
+								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
 							} else {
-								if(checkBooleanFlag) {
+								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							if(checkFlag){
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							if (checkFlag) {
 								queryString = queryString + " and ";
 							} else {
 								checkFlag = true;
 								queryString = queryString + " where ";
 							}
-							queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
+							queryString = queryString
+									+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							if(checkFlag) {
-								queryString = queryString + " and charge.productionLocation in (:locations)";
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							if (checkFlag) {
+								queryString = queryString
+										+ " and charge.productionLocation in (:locations)";
 							} else {
 								checkFlag = true;
-								queryString = queryString + " where charge.productionLocation in (:locations)";
+								queryString = queryString
+										+ " where charge.productionLocation in (:locations)";
 							}
 						}
-						queryString = queryString + " order by estimate.invoiceNumber asc";
+						queryString = queryString
+								+ " order by estimate.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
-						if(!employee.getAllChargeTypes()) {
+						if (!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
-							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
-								chargeDefinitionsList.add(chargeCommand.getName());
+							for (ChargeCommand chargeCommand : employee
+									.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand
+										.getName());
 							}
-							query.setParameter("charges", chargeDefinitionsList);
+							query
+									.setParameter("charges",
+											chargeDefinitionsList);
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations",employee.getProductionParents());
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations", employee
+									.getProductionParents());
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
-							if(employee.getCustomerWant()!=null) {
-								if(employee.getCustomerWant().equals("Due_Today")) {
-									query.setParameter("date",dateFormat.format(todayDate));
-								} else if(employee.getCustomerWant().equals("Due_Tomorrow")) {
-									query.setParameter("date",dateFormat.format(tomorrowCalendar.getTime()));
-								} else if(employee.getCustomerWant().equals("Due_This_Week")) {
-									query.setParameter("startdate",startDateOfThisWeek.getTime());
-									query.setParameter("enddate",endDateOfThisWeek.getTime());
-								} else if(employee.getCustomerWant().equals("Due_Next")) {
-									query.setParameter("startdate",startDateOfNextWeek.getTime());
-									query.setParameter("enddate",endDateOfNextWeek.getTime());
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
+							if (employee.getCustomerWant() != null) {
+								if (employee.getCustomerWant().equals(
+										"Due_Today")) {
+									query.setParameter("date", dateFormat
+											.format(todayDate));
+								} else if (employee.getCustomerWant().equals(
+										"Due_Tomorrow")) {
+									query
+											.setParameter("date", dateFormat
+													.format(tomorrowCalendar
+															.getTime()));
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")) {
+									query.setParameter("startdate",
+											startDateOfThisWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfThisWeek.getTime());
+								} else if (employee.getCustomerWant().equals(
+										"Due_Next")) {
+									query.setParameter("startdate",
+											startDateOfNextWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfNextWeek.getTime());
 								}
 							}
-							if(employee.getAnyPastDue()) {
-								query.setParameter("pastdate",todayDate);
+							if (employee.getAnyPastDue()) {
+								query.setParameter("pastdate", todayDate);
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							query.setParameter("pastdate",todayDate);
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							query.setParameter("pastdate", todayDate);
 						}
 						List<Charge> chargesList = query.getResultList();
 						for (Charge charge : chargesList) {
-							if(charge!=null) {
-								Hibernate.initialize(charge.getParentJob().getParentInvoice());
+							if (charge != null) {
+								Hibernate.initialize(charge.getParentJob()
+										.getParentInvoice());
 								jobChargesList.add(charge);
 							}
 						}
 					}
-					if(employee.getIncludeInvoiceCharges()){
+					if (employee.getIncludeInvoiceCharges()) {
 						boolean checkFlag = false;
 						List<String> chargeDefinitionsList = new ArrayList<String>();
 						String queryString = "select charge from Estimate as estimate inner join estimate.charges as charge";
-						if(!employee.getAllChargeTypes()) {
+						if (!employee.getAllChargeTypes()) {
 							checkFlag = true;
-							queryString = queryString + "  where charge.chargeDefinition.name in (:charges)";
+							queryString = queryString
+									+ "  where charge.chargeDefinition.name in (:charges)";
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
 							boolean checkBooleanFlag = false;
-							if(employee.getCustomerWant()!=null) {
-								if(checkFlag){
+							if (employee.getCustomerWant() != null) {
+								if (checkFlag) {
 									queryString = queryString + " and ";
 								} else {
 									queryString = queryString + " where ";
 								}
-								if(employee.getCustomerWant().equals("Due_Today") || employee.getCustomerWant().equals("Due_Tomorrow")) {
-									queryString = queryString + " ((to_char(estimate.deliveryIntentDate,'DD/MM/YYYY')=:date or estimate.deliveryIntentDate is null) ";
+								if (employee.getCustomerWant().equals(
+										"Due_Today")
+										|| employee.getCustomerWant().equals(
+												"Due_Tomorrow")) {
+									queryString = queryString
+											+ " ((to_char(estimate.deliveryIntentDate,'DD/MM/YYYY')=:date or estimate.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_This_Week") || employee.getCustomerWant().equals("Due_Next")){
-									queryString = queryString + " ((estimate.deliveryIntentDate between :startdate and :enddate or estimate.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")
+										|| employee.getCustomerWant().equals(
+												"Due_Next")) {
+									queryString = queryString
+											+ " ((estimate.deliveryIntentDate between :startdate and :enddate or estimate.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
-								} else if(employee.getCustomerWant().equals("Due_Any_Time")) {
-									queryString = queryString + " ((estimate.deliveryIntentDate is not null or estimate.deliveryIntentDate is null) ";
+								} else if (employee.getCustomerWant().equals(
+										"Due_Any_Time")) {
+									queryString = queryString
+											+ " ((estimate.deliveryIntentDate is not null or estimate.deliveryIntentDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								}
 							}
-							if(employee.getAnyPastDue()) {
+							if (employee.getAnyPastDue()) {
 								checkFlag = true;
-								if(checkBooleanFlag) {
+								if (checkBooleanFlag) {
 									queryString = queryString + " or";
 								}
-								queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
-								if(checkBooleanFlag) {
+								queryString = queryString
+										+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
+								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
 							} else {
-								if(checkBooleanFlag) {
+								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							if(checkFlag){
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							if (checkFlag) {
 								queryString = queryString + " and ";
 							} else {
 								checkFlag = true;
 								queryString = queryString + " where ";
 							}
-							queryString = queryString + " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
+							queryString = queryString
+									+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							if(checkFlag) {
-								queryString = queryString + " and charge.productionLocation in (:locations)";
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							if (checkFlag) {
+								queryString = queryString
+										+ " and charge.productionLocation in (:locations)";
 							} else {
 								checkFlag = true;
-								queryString = queryString + " where charge.productionLocation in (:locations)";
+								queryString = queryString
+										+ " where charge.productionLocation in (:locations)";
 							}
 						}
-						if(employee.getHideNonReleaseProduction() || trackerConsole.getHideItemsNotReleasedToProd()) {
-							if(checkFlag){
+						if (employee.getHideNonReleaseProduction()
+								|| trackerConsole
+										.getHideItemsNotReleasedToProd()) {
+							if (checkFlag) {
 								queryString = queryString + " and ";
 							} else {
 								checkFlag = true;
 								queryString = queryString + " where ";
 							}
-							queryString = queryString + " (invoice.releasedToProduction=true and invoice.releasedToProduction is not null)";
+							queryString = queryString
+									+ " (invoice.releasedToProduction=true and invoice.releasedToProduction is not null)";
 						} else {
-							if(checkFlag){
+							if (checkFlag) {
 								queryString = queryString + " and ";
 							} else {
 								checkFlag = true;
 								queryString = queryString + " where ";
 							}
-							queryString = queryString + " ((invoice.releasedToProduction=true or invoice.releasedToProduction=false) and invoice.releasedToProduction is not null)";
+							queryString = queryString
+									+ " ((invoice.releasedToProduction=true or invoice.releasedToProduction=false) and invoice.releasedToProduction is not null)";
 						}
-						queryString = queryString + " order by estimate.invoiceNumber asc";
+						queryString = queryString
+								+ " order by estimate.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
-						if(!employee.getAllChargeTypes()) {
+						if (!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
-							for (ChargeCommand chargeCommand : employee.getEmployeeCharges()) {
-								chargeDefinitionsList.add(chargeCommand.getName());
+							for (ChargeCommand chargeCommand : employee
+									.getEmployeeCharges()) {
+								chargeDefinitionsList.add(chargeCommand
+										.getName());
 							}
-							query.setParameter("charges", chargeDefinitionsList);
+							query
+									.setParameter("charges",
+											chargeDefinitionsList);
 						}
-						if(employee.getOnlyShowProductionParents() || trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations",employee.getProductionParents());
+						if (employee.getOnlyShowProductionParents()
+								|| trackerConsole.getShowEmployeeProdParents()) {
+							query.setParameter("locations", employee
+									.getProductionParents());
 						}
-						if(employee.getCustomerWant()!=null || employee.getAnyPastDue()) {
-							if(employee.getCustomerWant()!=null) {
-								if(employee.getCustomerWant().equals("Due_Today")) {
-									query.setParameter("date",dateFormat.format(todayDate));
-								} else if(employee.getCustomerWant().equals("Due_Tomorrow")) {
-									query.setParameter("date",dateFormat.format(tomorrowCalendar.getTime()));
-								} else if(employee.getCustomerWant().equals("Due_This_Week")) {
-									query.setParameter("startdate",startDateOfThisWeek.getTime());
-									query.setParameter("enddate",endDateOfThisWeek.getTime());
-								} else if(employee.getCustomerWant().equals("Due_Next")) {
-									query.setParameter("startdate",startDateOfNextWeek.getTime());
-									query.setParameter("enddate",endDateOfNextWeek.getTime());
+						if (employee.getCustomerWant() != null
+								|| employee.getAnyPastDue()) {
+							if (employee.getCustomerWant() != null) {
+								if (employee.getCustomerWant().equals(
+										"Due_Today")) {
+									query.setParameter("date", dateFormat
+											.format(todayDate));
+								} else if (employee.getCustomerWant().equals(
+										"Due_Tomorrow")) {
+									query
+											.setParameter("date", dateFormat
+													.format(tomorrowCalendar
+															.getTime()));
+								} else if (employee.getCustomerWant().equals(
+										"Due_This_Week")) {
+									query.setParameter("startdate",
+											startDateOfThisWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfThisWeek.getTime());
+								} else if (employee.getCustomerWant().equals(
+										"Due_Next")) {
+									query.setParameter("startdate",
+											startDateOfNextWeek.getTime());
+									query.setParameter("enddate",
+											endDateOfNextWeek.getTime());
 								}
 							}
-							if(employee.getAnyPastDue()) {
-								query.setParameter("pastdate",todayDate);
+							if (employee.getAnyPastDue()) {
+								query.setParameter("pastdate", todayDate);
 							}
-						} else if(employee.getCustomerWant()==null && employee.getAnyPastDue()) {
-							query.setParameter("pastdate",todayDate);
+						} else if (employee.getCustomerWant() == null
+								&& employee.getAnyPastDue()) {
+							query.setParameter("pastdate", todayDate);
 						}
 						List<Charge> chargesList = query.getResultList();
 						for (Charge charge : chargesList) {
-							if(charge!=null) {
-								/*if(!employee.getAllChargeTypes()) {
-									if(charge.getChargeDefinition()!=null) {
-										if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
-											Hibernate.initialize(charge.getParentInvoice());
-											jobChargesList.add(charge);
-										}
-									}
-								} else {*/
+							if (charge != null) {
+								/*
+								 * if(!employee.getAllChargeTypes()) {
+								 * if(charge.getChargeDefinition()!=null) {
+								 * if(chargeDefinitionsList.contains(charge.getChargeDefinition().getName())) {
+								 * Hibernate.initialize(charge.getParentInvoice());
+								 * jobChargesList.add(charge); } } } else {
+								 */
 								Hibernate.initialize(charge.getParentInvoice());
 								jobChargesList.add(charge);
-								//}
+								// }
 							}
 						}
 					}
@@ -3681,68 +4039,89 @@ public class DataService extends HibernateService {
 		} finally {
 			em.close();
 		}
-		return jobChargesList; 
+		return jobChargesList;
 	}
-	
+
 	/**
-	 * This method retrieves incomplete/in-progress Tracker console jobs based on employee and Tracker Console Configuration
+	 * This method retrieves incomplete/in-progress Tracker console jobs based
+	 * on employee and Tracker Console Configuration
+	 * 
 	 * @param employee
 	 * @return
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<TrackerConsoleJobs> getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(Employee employee) throws Exception {
-		log.debug("** getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole called.");
+	public List<TrackerConsoleJobs> getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(
+			Employee employee) throws Exception {
+		log
+				.debug("** getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole called.");
 		List<TrackerConsoleJobs> trackerConsoleJobList = new ArrayList<TrackerConsoleJobs>();
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			Query findQuery = em.createQuery("from TrackerConsole");
-			TrackerConsole trackerConsole =  (TrackerConsole) findQuery.getSingleResult();
-			if(trackerConsole!=null && trackerConsole.getProductionFacilities()!=null && trackerConsole.getProductionStations()!=null) {
+			TrackerConsole trackerConsole = (TrackerConsole) findQuery
+					.getSingleResult();
+			if (trackerConsole != null
+					&& trackerConsole.getProductionFacilities() != null
+					&& trackerConsole.getProductionStations() != null) {
 				Hibernate.initialize(trackerConsole.getSelectedStations());
 				boolean checkFlag = true;
-				if(trackerConsole.getShowSelectedEmployee() && employee==null) {
+				if (trackerConsole.getShowSelectedEmployee()
+						&& employee == null) {
 					checkFlag = false;
 				}
-				if(checkFlag){
+				if (checkFlag) {
 					String queryString = "from TrackerConsoleJobs where completed=false and canceled=false";
-					if(trackerConsole.getShowSelectedEmployee()) {
+					if (trackerConsole.getShowSelectedEmployee()) {
 						queryString = queryString + " and employee = :employee";
 					}
-					if(!trackerConsole.getShowAllFacilities()){
-						queryString = queryString + " and productionFacilities = :productionFacilities";
+					if (!trackerConsole.getShowAllFacilities()) {
+						queryString = queryString
+								+ " and productionFacilities = :productionFacilities";
 					}
-					if(!trackerConsole.getShowAllStations()) {
-						queryString = queryString + " and productionStations in (:selectedStations)";
+					if (!trackerConsole.getShowAllStations()) {
+						queryString = queryString
+								+ " and productionStations in (:selectedStations)";
 					}
-					queryString = queryString + " order by employee.lastName,employee.firstName,id asc";
+					queryString = queryString
+							+ " order by employee.lastName,employee.firstName,id asc";
 					Query query = em.createQuery(queryString);
-					if(trackerConsole.getShowSelectedEmployee()) {
+					if (trackerConsole.getShowSelectedEmployee()) {
 						query.setParameter("employee", employee);
 					}
-					if(!trackerConsole.getShowAllFacilities()){
-						query.setParameter("productionFacilities", trackerConsole.getProductionFacilities());
+					if (!trackerConsole.getShowAllFacilities()) {
+						query.setParameter("productionFacilities",
+								trackerConsole.getProductionFacilities());
 					}
-					if(!trackerConsole.getShowAllStations()) {
+					if (!trackerConsole.getShowAllStations()) {
 						List<ProductionStations> selectedStations = new ArrayList<ProductionStations>();
-						if(trackerConsole.getSelectedStations()!=null){
-							selectedStations = trackerConsole.getSelectedStations();
+						if (trackerConsole.getSelectedStations() != null) {
+							selectedStations = trackerConsole
+									.getSelectedStations();
 						}
-						selectedStations.add(trackerConsole.getProductionStations());
-						query.setParameter("selectedStations", selectedStations);
+						selectedStations.add(trackerConsole
+								.getProductionStations());
+						query
+								.setParameter("selectedStations",
+										selectedStations);
 					}
 					trackerConsoleJobList = query.getResultList();
 					for (TrackerConsoleJobs trackerConsoleJobs : trackerConsoleJobList) {
-						Hibernate.initialize(trackerConsoleJobs.getPassesList());
-						if(trackerConsoleJobs.getJob()!=null) {
-							Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
-						} else if(trackerConsoleJobs.getCharge()!=null) {
-							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
-							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
-						} 
+						Hibernate
+								.initialize(trackerConsoleJobs.getPassesList());
+						if (trackerConsoleJobs.getJob() != null) {
+							Hibernate.initialize(trackerConsoleJobs.getJob()
+									.getParentInvoice());
+						} else if (trackerConsoleJobs.getCharge() != null) {
+							Hibernate.initialize(trackerConsoleJobs.getCharge()
+									.getParentInvoice());
+							Hibernate.initialize(trackerConsoleJobs.getCharge()
+									.getParentJob().getParentInvoice());
+						}
 					}
 					if (trackerConsoleJobList != null)
-						log.debug("** Found " + trackerConsoleJobList.size() + "records:");
+						log.debug("** Found " + trackerConsoleJobList.size()
+								+ "records:");
 				}
 			}
 		} catch (Exception e) {
@@ -3752,33 +4131,41 @@ public class DataService extends HibernateService {
 		}
 		return trackerConsoleJobList;
 	}
-	
+
 	/**
-	 * This method retrieves incomplete/in-progress Tracker console jobs based on employee
+	 * This method retrieves incomplete/in-progress Tracker console jobs based
+	 * on employee
+	 * 
 	 * @param employee
 	 * @return
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<TrackerConsoleJobs> getActiveTrackerConsoleJobsBasedOnEmployee(Employee employee) throws Exception {
+	public List<TrackerConsoleJobs> getActiveTrackerConsoleJobsBasedOnEmployee(
+			Employee employee) throws Exception {
 		log.debug("** getActiveTrackerConsoleJobsBasedOnEmployee called.");
 		List<TrackerConsoleJobs> trackerConsoleJobList = new ArrayList<TrackerConsoleJobs>();
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			Query query = em.createQuery("from TrackerConsoleJobs where completed=false and canceled=false and employee=:employee");
+			Query query = em
+					.createQuery("from TrackerConsoleJobs where completed=false and canceled=false and employee=:employee");
 			query.setParameter("employee", employee);
 			trackerConsoleJobList = query.getResultList();
 			for (TrackerConsoleJobs trackerConsoleJobs : trackerConsoleJobList) {
 				Hibernate.initialize(trackerConsoleJobs.getPassesList());
-				if(trackerConsoleJobs.getJob()!=null) {
-					Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
-				} else if(trackerConsoleJobs.getCharge()!=null) {
-					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
-					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
-				} 
+				if (trackerConsoleJobs.getJob() != null) {
+					Hibernate.initialize(trackerConsoleJobs.getJob()
+							.getParentInvoice());
+				} else if (trackerConsoleJobs.getCharge() != null) {
+					Hibernate.initialize(trackerConsoleJobs.getCharge()
+							.getParentInvoice());
+					Hibernate.initialize(trackerConsoleJobs.getCharge()
+							.getParentJob().getParentInvoice());
+				}
 			}
 			if (trackerConsoleJobList != null)
-				log.debug("** Found " + trackerConsoleJobList.size() + "records:");
+				log.debug("** Found " + trackerConsoleJobList.size()
+						+ "records:");
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -3786,15 +4173,17 @@ public class DataService extends HibernateService {
 		}
 		return trackerConsoleJobList;
 	}
-	
+
 	/**
 	 * This method retrieves TrackerConsoleJobs Object based on Id
+	 * 
 	 * @param id
 	 * @return
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public TrackerConsoleJobs getTrackerConsoleJobsById(Long id) throws Exception {
+	public TrackerConsoleJobs getTrackerConsoleJobsById(Long id)
+			throws Exception {
 		log.debug("** getTrackerConsoleJobsById called.");
 		TrackerConsoleJobs trackerConsoleJobs = new TrackerConsoleJobs();
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -3803,14 +4192,18 @@ public class DataService extends HibernateService {
 			query.setParameter("id", id);
 			trackerConsoleJobs = (TrackerConsoleJobs) query.getSingleResult();
 			Hibernate.initialize(trackerConsoleJobs.getPassesList());
-			if(trackerConsoleJobs.getJob()!=null) {
-				Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
-			} else if(trackerConsoleJobs.getCharge()!=null) {
-				Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
-				Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
-			} 
-			if(trackerConsoleJobs!=null)
-				log.debug("** Found TrackerConsoleJJob for Id :"+trackerConsoleJobs.getId()); 
+			if (trackerConsoleJobs.getJob() != null) {
+				Hibernate.initialize(trackerConsoleJobs.getJob()
+						.getParentInvoice());
+			} else if (trackerConsoleJobs.getCharge() != null) {
+				Hibernate.initialize(trackerConsoleJobs.getCharge()
+						.getParentInvoice());
+				Hibernate.initialize(trackerConsoleJobs.getCharge()
+						.getParentJob().getParentInvoice());
+			}
+			if (trackerConsoleJobs != null)
+				log.debug("** Found TrackerConsoleJJob for Id :"
+						+ trackerConsoleJobs.getId());
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -3818,54 +4211,65 @@ public class DataService extends HibernateService {
 		}
 		return trackerConsoleJobs;
 	}
-	
+
 	/**
-	 * This method retrieves List of active jobs and charges based on TrackerManager configuration 
+	 * This method retrieves List of active jobs and charges based on
+	 * TrackerManager configuration
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<TrackerConsoleJobs> getActiveJobsForTrackerMgr() throws Exception {
+	public List<TrackerConsoleJobs> getActiveJobsForTrackerMgr()
+			throws Exception {
 		log.debug("** getActiveJobsForTrackerMgr called.");
 		List<TrackerConsoleJobs> jobsList = new ArrayList<TrackerConsoleJobs>();
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			Query findQuery = em.createQuery("from TrackerManager");
-			TrackerManager trackerManager =  (TrackerManager) findQuery.getSingleResult();
-			if(trackerManager!=null) {
+			TrackerManager trackerManager = (TrackerManager) findQuery
+					.getSingleResult();
+			if (trackerManager != null) {
 				String queryString = "from TrackerConsoleJobs where completed=false and canceled=false";
-				if(!trackerManager.getShowAllFacilities()) {
-					queryString = queryString + " and productionFacilities = :productionFacilities";
+				if (!trackerManager.getShowAllFacilities()) {
+					queryString = queryString
+							+ " and productionFacilities = :productionFacilities";
 				}
-				if(!trackerManager.getShowAllStations()) {
-					queryString = queryString + " and productionStations in (:selectedStations)";
+				if (!trackerManager.getShowAllStations()) {
+					queryString = queryString
+							+ " and productionStations in (:selectedStations)";
 				}
 				Query query = em.createQuery(queryString);
-				if(!trackerManager.getShowAllFacilities()){
-					query.setParameter("productionFacilities", trackerManager.getProductionFacilities());
+				if (!trackerManager.getShowAllFacilities()) {
+					query.setParameter("productionFacilities", trackerManager
+							.getProductionFacilities());
 				}
-				if(!trackerManager.getShowAllStations()) {
+				if (!trackerManager.getShowAllStations()) {
 					List<ProductionStations> selectedStations = new ArrayList<ProductionStations>();
-					if(trackerManager.getSelectedStations()!=null){
+					if (trackerManager.getSelectedStations() != null) {
 						selectedStations = trackerManager.getSelectedStations();
 					}
 					query.setParameter("selectedStations", selectedStations);
 				}
 				jobsList = query.getResultList();
-				if(jobsList!=null) {
+				if (jobsList != null) {
 					for (TrackerConsoleJobs trackerConsoleJobs : jobsList) {
-						Hibernate.initialize(trackerConsoleJobs.getPassesList());
-						if(trackerConsoleJobs.getJob()!=null) {
-							Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
-						} else if(trackerConsoleJobs.getCharge()!=null) {
-							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
-							Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
+						Hibernate
+								.initialize(trackerConsoleJobs.getPassesList());
+						if (trackerConsoleJobs.getJob() != null) {
+							Hibernate.initialize(trackerConsoleJobs.getJob()
+									.getParentInvoice());
+						} else if (trackerConsoleJobs.getCharge() != null) {
+							Hibernate.initialize(trackerConsoleJobs.getCharge()
+									.getParentInvoice());
+							Hibernate.initialize(trackerConsoleJobs.getCharge()
+									.getParentJob().getParentInvoice());
 						}
-					}	
+					}
 				}
 			}
-			if(jobsList!=null)
-				log.debug("** Found " + jobsList.size() + "records:"); 
+			if (jobsList != null)
+				log.debug("** Found " + jobsList.size() + "records:");
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -3873,16 +4277,19 @@ public class DataService extends HibernateService {
 		}
 		return jobsList;
 	}
-	
+
 	/**
-	 * Retrieves List of completed Jobs/Charges for Production and Employee Tracker Report 
+	 * Retrieves List of completed Jobs/Charges for Production and Employee
+	 * Tracker Report
+	 * 
 	 * @param fromDate
 	 * @param toDate
 	 * @return
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<TrackerConsoleJobs> getProductionEmployeeTrackerJobs(Date fromDate, Date toDate) throws Exception {
+	public List<TrackerConsoleJobs> getProductionEmployeeTrackerJobs(
+			Date fromDate, Date toDate) throws Exception {
 		log.debug("** getActiveJobsForTrackerMgr called.");
 		List<TrackerConsoleJobs> jobsList = new ArrayList<TrackerConsoleJobs>();
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -3892,19 +4299,22 @@ public class DataService extends HibernateService {
 			query.setParameter("fromDate", fromDate);
 			query.setParameter("toDate", toDate);
 			jobsList = query.getResultList();
-			if(jobsList!=null) {
+			if (jobsList != null) {
 				for (TrackerConsoleJobs trackerConsoleJobs : jobsList) {
 					Hibernate.initialize(trackerConsoleJobs.getPassesList());
-					if(trackerConsoleJobs.getJob()!=null) {
-						Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
-					} else if(trackerConsoleJobs.getCharge()!=null) {
-						Hibernate.initialize(trackerConsoleJobs.getCharge().getParentInvoice());
-						Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
+					if (trackerConsoleJobs.getJob() != null) {
+						Hibernate.initialize(trackerConsoleJobs.getJob()
+								.getParentInvoice());
+					} else if (trackerConsoleJobs.getCharge() != null) {
+						Hibernate.initialize(trackerConsoleJobs.getCharge()
+								.getParentInvoice());
+						Hibernate.initialize(trackerConsoleJobs.getCharge()
+								.getParentJob().getParentInvoice());
 					}
-				}	
+				}
 			}
-			if(jobsList!=null)
-				log.debug("** Found " + jobsList.size() + "records:"); 
+			if (jobsList != null)
+				log.debug("** Found " + jobsList.size() + "records:");
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -3912,9 +4322,10 @@ public class DataService extends HibernateService {
 		}
 		return jobsList;
 	}
-	
+
 	/**
 	 * This method retrieves number of records in RouteStepSetUp table
+	 * 
 	 * @param className
 	 * @return
 	 * @throws Exception
@@ -3929,7 +4340,7 @@ public class DataService extends HibernateService {
 					+ " where routeData = true";
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
-			if(rs.next()) {
+			if (rs.next()) {
 				routeStepSetUpCount = rs.getLong(0);
 			}
 		} catch (Exception e) {
@@ -3939,9 +4350,10 @@ public class DataService extends HibernateService {
 		}
 		return routeStepSetUpCount;
 	}
-	
+
 	/**
-	 * This method retrieves RoutingStepSetUp List which orders accordingly 
+	 * This method retrieves RoutingStepSetUp List which orders accordingly
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -3954,22 +4366,24 @@ public class DataService extends HibernateService {
 			String queryString = "from RoutingStepSetUp where routeData=true order by id asc";
 			Query query = em.createQuery(queryString);
 			List<RoutingStepSetUp> routingSetUpList = query.getResultList();
-			if(routingSetUpList!=null) {
+			if (routingSetUpList != null) {
 				for (RoutingStepSetUp routingStepSetUp : routingSetUpList) {
 					routingStepSetUpList.add(routingStepSetUp);
 					queryString = "from RoutingStepSetUp where routeData=false and parentRoute=:parentRoute order by id asc";
 					query = em.createQuery(queryString);
 					query.setParameter("parentRoute", routingStepSetUp);
-					List<RoutingStepSetUp> stepSetUpList = query.getResultList();
-					if(stepSetUpList!=null) {
+					List<RoutingStepSetUp> stepSetUpList = query
+							.getResultList();
+					if (stepSetUpList != null) {
 						for (RoutingStepSetUp routingStepSetUpObj : stepSetUpList) {
 							routingStepSetUpList.add(routingStepSetUpObj);
 						}
 					}
-				}	
+				}
 			}
-			if(routingStepSetUpList!=null)
-				log.debug("** Found " + routingStepSetUpList.size() + "records:"); 
+			if (routingStepSetUpList != null)
+				log.debug("** Found " + routingStepSetUpList.size()
+						+ "records:");
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -3977,15 +4391,18 @@ public class DataService extends HibernateService {
 		}
 		return routingStepSetUpList;
 	}
-	
+
 	/**
-	 * This method retrieves TrackerConsoleJobsList for Tracker History screen for an Invoice
+	 * This method retrieves TrackerConsoleJobsList for Tracker History screen
+	 * for an Invoice
+	 * 
 	 * @param invoiceId
 	 * @return
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<TrackerConsoleJobs> getTrackerJobsForTrackerStatus(Long invoiceId) throws Exception {
+	public List<TrackerConsoleJobs> getTrackerJobsForTrackerStatus(
+			Long invoiceId) throws Exception {
 		log.debug("** getTrackerJobsForTrackerStatus called.");
 		List<TrackerConsoleJobs> trackerConsoleJobsList = new ArrayList<TrackerConsoleJobs>();
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -3993,38 +4410,42 @@ public class DataService extends HibernateService {
 			String queryString = "select tcJobs from TrackerConsoleJobs as tcJobs inner join tcJobs.job as tcjob inner join tcjob.parentInvoice as invoice where invoice.id=:invoiceId";
 			Query query = em.createQuery(queryString);
 			query.setParameter("invoiceId", invoiceId);
-			for(Object object : query.getResultList()){
+			for (Object object : query.getResultList()) {
 				TrackerConsoleJobs trackerConsoleJobs = (TrackerConsoleJobs) object;
-				if(trackerConsoleJobs!=null) {
+				if (trackerConsoleJobs != null) {
 					Hibernate.initialize(trackerConsoleJobs.getPassesList());
-					Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
+					Hibernate.initialize(trackerConsoleJobs.getJob()
+							.getParentInvoice());
 					trackerConsoleJobsList.add(trackerConsoleJobs);
 				}
 			}
 			queryString = "select tcJobs from TrackerConsoleJobs as tcJobs inner join fetch tcJobs.charge as charge inner join charge.parentJob as chargeJob inner join chargeJob.parentInvoice as invoice where invoice.id=:invoiceId";
 			query = em.createQuery(queryString);
 			query.setParameter("invoiceId", invoiceId);
-			for(Object object : query.getResultList()){
+			for (Object object : query.getResultList()) {
 				TrackerConsoleJobs trackerConsoleJobs = (TrackerConsoleJobs) object;
-				if(trackerConsoleJobs!=null) {
+				if (trackerConsoleJobs != null) {
 					Hibernate.initialize(trackerConsoleJobs.getPassesList());
-					Hibernate.initialize(trackerConsoleJobs.getCharge().getParentJob().getParentInvoice());
+					Hibernate.initialize(trackerConsoleJobs.getCharge()
+							.getParentJob().getParentInvoice());
 					trackerConsoleJobsList.add(trackerConsoleJobs);
 				}
 			}
 			queryString = "select tcJobs from TrackerConsoleJobs as tcJobs inner join fetch tcJobs.charge as charge inner join charge.parentInvoice as invoice where invoice.id=:invoiceId";
 			query = em.createQuery(queryString);
 			query.setParameter("invoiceId", invoiceId);
-			for(Object object : query.getResultList()){
+			for (Object object : query.getResultList()) {
 				TrackerConsoleJobs trackerConsoleJobs = (TrackerConsoleJobs) object;
-				if(trackerConsoleJobs!=null) {
-					Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
+				if (trackerConsoleJobs != null) {
+					Hibernate.initialize(trackerConsoleJobs.getJob()
+							.getParentInvoice());
 					Hibernate.initialize(trackerConsoleJobs.getPassesList());
 					trackerConsoleJobsList.add(trackerConsoleJobs);
 				}
 			}
-			if(trackerConsoleJobsList!=null)
-				log.debug("** Found " + trackerConsoleJobsList.size() + "records:"); 
+			if (trackerConsoleJobsList != null)
+				log.debug("** Found " + trackerConsoleJobsList.size()
+						+ "records:");
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
@@ -4032,14 +4453,16 @@ public class DataService extends HibernateService {
 		}
 		return trackerConsoleJobsList;
 	}
-	
+
 	/**
 	 * Retrieves Total Estimated Time based on Invoice
+	 * 
 	 * @param invoiceId
 	 * @return
 	 * @throws Exception
 	 */
-	public Double getTotalEstimatedTimeForInvoice(Long invoiceId) throws Exception {
+	public Double getTotalEstimatedTimeForInvoice(Long invoiceId)
+			throws Exception {
 		Double totalEstimatedTime = 0D;
 		log.debug("** getTotalEstimatedTimeForInvoice called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -4048,42 +4471,64 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			query.setParameter("invoiceId", invoiceId);
 			InvoiceBase invoiceBase = (InvoiceBase) query.getSingleResult();
-			if(invoiceBase!=null) {
-				if(invoiceBase.getJobs()!=null && invoiceBase.getJobs().size()>0) {
+			if (invoiceBase != null) {
+				if (invoiceBase.getJobs() != null
+						&& invoiceBase.getJobs().size() > 0) {
 					for (JobBase jobBase : invoiceBase.getJobs()) {
-						if(jobBase.getCostingRecord()!=null) {
-							if(jobBase.getCostingRecord().getActualSetupTime()!=null){
-								totalEstimatedTime = totalEstimatedTime+jobBase.getCostingRecord().getActualSetupTime();
+						if (jobBase.getCostingRecord() != null) {
+							if (jobBase.getCostingRecord().getActualSetupTime() != null) {
+								totalEstimatedTime = totalEstimatedTime
+										+ jobBase.getCostingRecord()
+												.getActualSetupTime();
 							}
-							if(jobBase.getCostingRecord().getActualRunTime()!=null){
-								totalEstimatedTime = totalEstimatedTime+jobBase.getCostingRecord().getActualRunTime();
+							if (jobBase.getCostingRecord().getActualRunTime() != null) {
+								totalEstimatedTime = totalEstimatedTime
+										+ jobBase.getCostingRecord()
+												.getActualRunTime();
 							}
-							if(jobBase.getCostingRecord().getActualWashupTime()!=null){
-								totalEstimatedTime = totalEstimatedTime+jobBase.getCostingRecord().getActualWashupTime();
+							if (jobBase.getCostingRecord()
+									.getActualWashupTime() != null) {
+								totalEstimatedTime = totalEstimatedTime
+										+ jobBase.getCostingRecord()
+												.getActualWashupTime();
 							}
 						}
-						if(jobBase.getCharges()!=null && jobBase.getCharges().size()>0) {
+						if (jobBase.getCharges() != null
+								&& jobBase.getCharges().size() > 0) {
 							for (Charge charge : jobBase.getCharges()) {
-								if(charge.getChargeCostingRecord()!=null) {
-									if(charge.getChargeCostingRecord().getSetupTime()!=null){
-										totalEstimatedTime = totalEstimatedTime+charge.getChargeCostingRecord().getSetupTime();
+								if (charge.getChargeCostingRecord() != null) {
+									if (charge.getChargeCostingRecord()
+											.getSetupTime() != null) {
+										totalEstimatedTime = totalEstimatedTime
+												+ charge
+														.getChargeCostingRecord()
+														.getSetupTime();
 									}
-									if(charge.getChargeCostingRecord().getRunTime()!=null){
-										totalEstimatedTime = totalEstimatedTime+charge.getChargeCostingRecord().getRunTime();
+									if (charge.getChargeCostingRecord()
+											.getRunTime() != null) {
+										totalEstimatedTime = totalEstimatedTime
+												+ charge
+														.getChargeCostingRecord()
+														.getRunTime();
 									}
 								}
 							}
 						}
-					} 
+					}
 				}
-				if(invoiceBase.getCharges()!=null && invoiceBase.getCharges().size()>0) {
+				if (invoiceBase.getCharges() != null
+						&& invoiceBase.getCharges().size() > 0) {
 					for (Charge charge : invoiceBase.getCharges()) {
-						if(charge.getChargeCostingRecord()!=null) {
-							if(charge.getChargeCostingRecord().getSetupTime()!=null){
-								totalEstimatedTime = totalEstimatedTime+charge.getChargeCostingRecord().getSetupTime();
+						if (charge.getChargeCostingRecord() != null) {
+							if (charge.getChargeCostingRecord().getSetupTime() != null) {
+								totalEstimatedTime = totalEstimatedTime
+										+ charge.getChargeCostingRecord()
+												.getSetupTime();
 							}
-							if(charge.getChargeCostingRecord().getRunTime()!=null){
-								totalEstimatedTime = totalEstimatedTime+charge.getChargeCostingRecord().getRunTime();
+							if (charge.getChargeCostingRecord().getRunTime() != null) {
+								totalEstimatedTime = totalEstimatedTime
+										+ charge.getChargeCostingRecord()
+												.getRunTime();
 							}
 						}
 					}
@@ -4096,7 +4541,6 @@ public class DataService extends HibernateService {
 		}
 		return totalEstimatedTime;
 	}
-	
 
 	@SuppressWarnings("unchecked")
 	public void deleteItem(String className, Long id) {
@@ -4122,8 +4566,7 @@ public class DataService extends HibernateService {
 			}
 		} catch (Exception e) {
 			log.error(e);
-		}
-		finally {
+		} finally {
 			log.info("** Closing Entity Manager.");
 			em.close();
 		}
@@ -4316,8 +4759,8 @@ public class DataService extends HibernateService {
 			closeSession();
 		}
 
-	}	
-	
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<?> getPendingCreditCardTransations() throws Exception {
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -4334,17 +4777,21 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 	}
-	
-	public CreditCardTransactions getCCTbyReferenceNumber(String ref) throws Exception {
+
+	public CreditCardTransactions getCCTbyReferenceNumber(String ref)
+			throws Exception {
 		log.debug("** getCCTbyReferenceNumber called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			/*
-			 * The search is for a transaction which is for a CHARGE and its status is COMPLETE and the reference number is a match
+			 * The search is for a transaction which is for a CHARGE and its
+			 * status is COMPLETE and the reference number is a match
 			 */
-			String queryString = "from CreditCardTransactions where TransactionType = 2 and TransactionStatus = 2 and referenceNumber = '" + ref + "'";
+			String queryString = "from CreditCardTransactions where TransactionType = 2 and TransactionStatus = 2 and referenceNumber = '"
+					+ ref + "'";
 			Query query = em.createQuery(queryString);
-			CreditCardTransactions object = (CreditCardTransactions) query.getSingleResult();
+			CreditCardTransactions object = (CreditCardTransactions) query
+					.getSingleResult();
 			return object;
 		} catch (Exception e) {
 			log.error(e);
@@ -4353,6 +4800,5 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
-
 
 }
