@@ -160,8 +160,12 @@ package com.efi.mdi
 				if (win.id == id)
 					return win;
 				else	{
-					if (win.children != null)
-						getWindowRec(win,id);
+					if (win.children != null) {
+						var windowItemObj:WindowItem = getWindowRec(win,id);
+						if(windowItemObj==null)
+							continue;
+						return windowItemObj;
+					}
 					else
 						continue;
 				}
