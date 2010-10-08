@@ -1,9 +1,10 @@
 package com.efi.printsmith.events
 {
-	import com.efi.printsmith.data.Address;
 	import com.efi.printsmith.data.Job;
 	
 	import flash.events.Event;
+	
+	import mx.collections.ArrayCollection;
 	
 	public class JobEditCompleteEvent extends Event
 	{
@@ -12,14 +13,17 @@ package com.efi.printsmith.events
 		
 		public var job:Job;
 		
-		public function JobEditCompleteEvent(type:String, job:Job)
+		public var multiQtyJobList:ArrayCollection = new ArrayCollection(); 
+		
+		public function JobEditCompleteEvent(type:String, job:Job, multiQtyJobList:ArrayCollection=null)
 		{
 			super(type, true);
 			this.job = job;
+			this.multiQtyJobList = multiQtyJobList;
 		}
 
 		override public function clone():Event {
-			return new JobEditCompleteEvent(type, job);
+			return new JobEditCompleteEvent(type, job, multiQtyJobList);
 		}
 	}
 }

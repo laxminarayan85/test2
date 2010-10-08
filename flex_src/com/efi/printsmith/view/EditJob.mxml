@@ -22,35 +22,36 @@
 			<mx:RemoveChild target="{label15}"/>
 		</mx:State>
 		<mx:State name="CopyMethod">
-			<mx:SetProperty target="{job_total}" name="y" value="444"/>
-			<mx:SetProperty target="{hrule1}" name="y" value="437"/>
-			<mx:SetProperty target="{hrule2}" name="y" value="433"/>
-			<mx:SetProperty target="{job_other}" name="y" value="409"/>
-			<mx:SetProperty target="{job_bind}" name="y" value="388"/>
-			<mx:SetProperty target="{job_prep}" name="y" value="367"/>
-			<mx:SetProperty target="{label2}" name="y" value="409"/>
-			<mx:SetProperty target="{label3}" name="y" value="367"/>
-			<mx:SetProperty target="{label4}" name="y" value="444"/>
-			<mx:SetProperty target="{label5}" name="y" value="388"/>
-			<mx:SetProperty target="{overs_total_price}" name="y" value="345"/>
-			<mx:SetProperty target="{label1}" name="y" value="347"/>
-			<mx:SetProperty target="{overs_unit_price}" name="y" value="323"/>
-			<mx:SetProperty target="{label6}" name="y" value="325"/>
-			<mx:SetProperty target="{label7}" name="y" value="303"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="y" value="300"/>
-			<mx:SetProperty target="{price_info_btn}" name="y" value="300"/>
-			<mx:SetProperty target="{job_price}" name="y" value="301"/>
+			<mx:SetProperty target="{job_total}" name="y" value="471"/>
+			<mx:SetProperty target="{hrule1}" name="y" value="464"/>
+			<mx:SetProperty target="{hrule2}" name="y" value="460"/>
+			<mx:SetProperty target="{job_other}" name="y" value="436"/>
+			<mx:SetProperty target="{job_bind}" name="y" value="415"/>
+			<mx:SetProperty target="{job_prep}" name="y" value="394"/>
+			<mx:SetProperty target="{label2}" name="y" value="436"/>
+			<mx:SetProperty target="{label3}" name="y" value="394"/>
+			<mx:SetProperty target="{label4}" name="y" value="471"/>
+			<mx:SetProperty target="{label5}" name="y" value="415"/>
+			<mx:SetProperty target="{overs_total_price}" name="y" value="372"/>
+			<mx:SetProperty target="{label1}" name="y" value="374"/>
+			<mx:SetProperty target="{overs_unit_price}" name="y" value="350"/>
+			<mx:SetProperty target="{label6}" name="y" value="352"/>
+			<mx:SetProperty target="{label7}" name="y" value="330"/>
+			<mx:SetProperty target="{refresh_price_btn}" name="y" value="327"/>
+			<mx:SetProperty target="{pricing_throbber}" name="y" value="327"/>
+			<mx:SetProperty target="{price_info_btn}" name="y" value="327"/>
+			<mx:SetProperty target="{job_price}" name="y" value="328"/>
 			<mx:AddChild relativeTo="{label7}" position="before">
-				<mx:TextInput x="496"
-							  y="279"
+				<mx:TextInput x="501"
+							  y="306"
 							  id="job_unitPrice"
 							  height="20"
 							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.unitPrice)}"
 							  focusOut="editUnitPrice(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{label7}" position="before">
-				<mx:Label x="385"
-						  y="281"
+				<mx:Label x="390"
+						  y="308"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" textAlign="right" width="108" id="label0"/>
 			</mx:AddChild>
 			<mx:SetProperty target="{copy_single_radio}" name="width" value="230"/>
@@ -74,30 +75,30 @@
 						  y="185"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OfSignatures')}" textAlign="right" width="108"/>
 			</mx:AddChild>
-			<mx:SetProperty target="{num_signatures}" name="y" value="207"/>
+			<mx:SetProperty target="{num_signatures}" name="y" value="231"/>
 			<mx:SetProperty target="{label10}" name="x" value="384"/>
-			<mx:SetProperty target="{label10}" name="y" value="207"/>
+			<mx:SetProperty target="{label10}" name="y" value="231"/>
 			<mx:SetProperty target="{num_signatures}" name="text" value="{job.totalCopies}"/>
 			<mx:SetProperty target="{label10}" name="text">
 				<mx:value>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.TotCopy')}</mx:value>
 			</mx:SetProperty>
-			<mx:SetProperty target="{job_weight}" name="y" value="229"/>
+			<mx:SetProperty target="{job_weight}" name="y" value="253"/>
 			<mx:SetProperty target="{label11}" name="x" value="384"/>
-			<mx:SetProperty target="{label11}" name="y" value="229"/>
+			<mx:SetProperty target="{label11}" name="y" value="253"/>
 			<mx:SetProperty target="{job_weight}" name="text" value="{job.weight}"/>
 			<mx:RemoveChild target="{job_press}"/>
 			<mx:RemoveChild target="{label12}"/>
 			<mx:AddChild relativeTo="{est_waste}" position="before">
-				<mx:TextInput x="496"
-							  y="115"
+				<mx:TextInput x="497"
+							  y="138"
 							  id="num_copies"
 							  text="{job.numCopies}"
 							  height="20"
 							  width="98" textAlign="right" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{est_waste}" position="before">
-				<mx:Label x="385"
-						  y="117"
+				<mx:Label x="386"
+						  y="140"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Copies')}" textAlign="right" width="108"/>
 			</mx:AddChild>
 			<mx:SetProperty target="{job_price}" name="text">
@@ -107,6 +108,35 @@
 			<mx:RemoveChild target="{number_lines}"/>
 			<mx:RemoveChild target="{job_unit_price}"/>
 			<mx:RemoveChild target="{label15}"/>
+			<mx:SetProperty target="{job_on}" name="x" value="550.3"/>
+			<mx:SetProperty target="{bindery_waste}" name="x" value="497"/>
+			<mx:SetProperty target="{label31}" name="x" value="384"/>
+			<mx:SetProperty target="{label31}" name="y" value="211"/>
+			<mx:SetProperty target="{est_waste}" name="y" value="209"/>
+			<mx:SetProperty target="{label30}" name="x" value="386"/>
+			<mx:SetProperty target="{job_up}" name="x" value="497"/>
+			<mx:SetProperty target="{label30}" name="y" value="116"/>
+			<mx:SetProperty target="{label7}" name="x" value="390"/>
+			<mx:SetProperty target="{job_price}" name="x" value="501"/>
+			<mx:SetProperty target="{refresh_price_btn}" name="x" value="601"/>
+			<mx:SetProperty target="{pricing_throbber}" name="y" value="601"/>
+			<mx:SetProperty target="{price_info_btn}" name="x" value="623"/>
+			<mx:SetProperty target="{label6}" name="x" value="390"/>
+			<mx:SetProperty target="{overs_unit_price}" name="x" value="501"/>
+			<mx:SetProperty target="{label1}" name="x" value="390"/>
+			<mx:SetProperty target="{overs_total_price}" name="x" value="501"/>
+			<mx:SetProperty target="{label3}" name="x" value="390"/>
+			<mx:SetProperty target="{job_prep}" name="x" value="501"/>
+			<mx:SetProperty target="{label5}" name="x" value="390"/>
+			<mx:SetProperty target="{job_bind}" name="x" value="501"/>
+			<mx:SetProperty target="{job_other}" name="x" value="501"/>
+			<mx:SetProperty target="{label2}" name="x" value="390"/>
+			<mx:SetProperty target="{label4}" name="x" value="390"/>
+			<mx:SetProperty target="{job_total}" name="x" value="501.95"/>
+			<mx:SetStyle target="{hrule2}" name="left" value="385"/>
+			<mx:SetStyle target="{hrule2}" name="right" value="0"/>
+			<mx:SetStyle target="{hrule1}" name="left" value="385"/>
+			<mx:SetStyle target="{hrule1}" name="right" value="0"/>
 		</mx:State>
 		<mx:State name="LargeFormat">
 			<mx:RemoveChild target="{runsize_label}"/>
@@ -148,22 +178,22 @@
 							  id="num_copies1"
 							  text="{job.numCopies}"
 							  height="20"
-							  width="98" textAlign="right" focusOut="fieldChanged(event)" x="496" y="116" mouseDown="textInputClick(event)" />
+							  width="98" textAlign="right" focusOut="fieldChanged(event)" x="496" y="139" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label
-						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Copies')}" textAlign="right" width="108" x="384" y="118"/>
+						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Copies')}" textAlign="right" width="108" x="386" y="142"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label
-						  textAlign="right" width="108" id="label39" x="384" y="207">
+						  textAlign="right" width="108" id="label39" x="385" y="253">
 					<mx:text>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.TotCopy')}</mx:text>
 				</mx:Label>
 			</mx:AddChild>
 			<mx:RemoveChild target="{num_signatures}"/>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="496"
-						  y="207"
+						  y="253"
 						  width="98"
 						  id="total_copies0"
 						  text="{job.totalCopies}"
@@ -171,29 +201,30 @@
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="496"
-						  y="185"
+						  y="208"
 						  width="98"
 						  id="num_of_sig0"
 						  text="{job.signatures}"
 						  height="20" textAlign="right"/>
 			</mx:AddChild>
-			<mx:SetProperty target="{label4}" name="y" value="449"/>
-			<mx:SetProperty target="{hrule2}" name="y" value="438"/>
-			<mx:SetProperty target="{hrule1}" name="y" value="442"/>
-			<mx:SetProperty target="{label2}" name="y" value="414"/>
-			<mx:SetProperty target="{job_other}" name="y" value="414"/>
-			<mx:SetProperty target="{job_bind}" name="y" value="393"/>
-			<mx:SetProperty target="{job_prep}" name="y" value="372"/>
-			<mx:SetProperty target="{overs_total_price}" name="y" value="350"/>
-			<mx:SetProperty target="{overs_unit_price}" name="y" value="328"/>
-			<mx:SetProperty target="{job_price}" name="y" value="306"/>
-			<mx:SetProperty target="{refresh_price_btn}" name="y" value="305"/>
-			<mx:SetProperty target="{price_info_btn}" name="y" value="305"/>
-			<mx:SetProperty target="{label7}" name="y" value="308"/>
-			<mx:SetProperty target="{label6}" name="y" value="330"/>
-			<mx:SetProperty target="{label1}" name="y" value="352"/>
-			<mx:SetProperty target="{label3}" name="y" value="372"/>
-			<mx:SetProperty target="{label5}" name="y" value="393"/>
+			<mx:SetProperty target="{label4}" name="y" value="468"/>
+			<mx:SetProperty target="{hrule2}" name="y" value="457"/>
+			<mx:SetProperty target="{hrule1}" name="y" value="461"/>
+			<mx:SetProperty target="{label2}" name="y" value="433"/>
+			<mx:SetProperty target="{job_other}" name="y" value="433"/>
+			<mx:SetProperty target="{job_bind}" name="y" value="412"/>
+			<mx:SetProperty target="{job_prep}" name="y" value="391"/>
+			<mx:SetProperty target="{overs_total_price}" name="y" value="369"/>
+			<mx:SetProperty target="{overs_unit_price}" name="y" value="347"/>
+			<mx:SetProperty target="{job_price}" name="y" value="325"/>
+			<mx:SetProperty target="{refresh_price_btn}" name="y" value="324"/>
+			<mx:SetProperty target="{pricing_throbber}" name="y" value="324"/>
+			<mx:SetProperty target="{price_info_btn}" name="y" value="324"/>
+			<mx:SetProperty target="{label7}" name="y" value="327"/>
+			<mx:SetProperty target="{label6}" name="y" value="349"/>
+			<mx:SetProperty target="{label1}" name="y" value="371"/>
+			<mx:SetProperty target="{label3}" name="y" value="391"/>
+			<mx:SetProperty target="{label5}" name="y" value="412"/>
 			<mx:SetProperty target="{label4}" name="x" value="390"/>
 			<mx:SetStyle target="{hrule2}" name="left" value="385"/>
 			<mx:SetStyle target="{hrule2}" name="right" value="0"/>
@@ -207,6 +238,7 @@
 			<mx:SetProperty target="{overs_unit_price}" name="x" value="501"/>
 			<mx:SetProperty target="{job_price}" name="x" value="501"/>
 			<mx:SetProperty target="{refresh_price_btn}" name="x" value="601"/>
+			<mx:SetProperty target="{pricing_throbber}" name="y" value="601"/>
 			<mx:SetProperty target="{price_info_btn}" name="x" value="623"/>
 			<mx:SetProperty target="{label7}" name="x" value="390"/>
 			<mx:SetProperty target="{label6}" name="x" value="390"/>
@@ -215,7 +247,7 @@
 			<mx:SetProperty target="{label5}" name="x" value="390"/>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:TextInput x="501"
-							  y="287"
+							  y="306"
 							  id="job_LFUnitPrice"
 							  height="20"
 							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.unitPrice)}"
@@ -223,11 +255,12 @@
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="390"
-						  y="289"
+						  y="308"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" textAlign="right" width="108" id="label40"/>
 			</mx:AddChild>
-			<mx:SetProperty target="{job_total}" name="y" value="448"/>
+			<mx:SetProperty target="{job_total}" name="y" value="467"/>
 			<mx:SetProperty target="{job_total}" name="x" value="501"/>
+			<mx:SetProperty target="{label30}" name="x" value="384"/>
 		</mx:State>
 		<mx:State name="Mailing">
 			<mx:RemoveChild target="{customer_suppliled_stock}"/>
@@ -318,33 +351,33 @@
 						  y="209"
 						  text="Vendor" width="67" textAlign="right" id="label35"/>
 			</mx:AddChild>
-			<mx:SetProperty target="{label33}" name="y" value="60"/>
-			<mx:SetProperty target="{job_over_under}" name="y" value="58"/>
+			<mx:SetProperty target="{label33}" name="y" value="83"/>
+			<mx:SetProperty target="{job_over_under}" name="y" value="81"/>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<mx:TextInput x="496" y="29" width="98" focusOut="fieldChanged(event)" id="job_unitCost" text="{job.unitCost}" textAlign="right" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="496" y="52" width="98" focusOut="fieldChanged(event)" id="job_unitCost" text="{job.unitCost}" textAlign="right" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="421"
-						  y="31"
+						  y="52"
 						  text="Unit Cost" width="67" textAlign="right" id="label36"/>
 			</mx:AddChild>
 			<mx:SetProperty target="{label34}" name="x" value="384"/>
-			<mx:SetProperty target="{label34}" name="y" value="88"/>
-			<mx:SetProperty target="{bindery_waste}" name="y" value="86"/>
+			<mx:SetProperty target="{label34}" name="y" value="109"/>
+			<mx:SetProperty target="{bindery_waste}" name="y" value="109"/>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<mx:TextInput x="496" y="114" width="98" focusOut="fieldChanged(event)" id="job_totalCost" text="{job.totalCost}" textAlign="right" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="496" y="137" width="98" focusOut="fieldChanged(event)" id="job_totalCost" text="{job.totalCost}" textAlign="right" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="421"
-						  y="116"
+						  y="137"
 						  text="Total Cost" width="67" textAlign="right" id="label37"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<mx:TextInput x="496" y="144" width="98" focusOut="fieldChanged(event)" id="job_markup" text="{job.markup}" textAlign="right" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="496" y="167" width="98" focusOut="fieldChanged(event)" id="job_markup" text="{job.markup}" textAlign="right" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="421"
-						  y="146"
+						  y="167"
 						  text="Markup" width="67" textAlign="right" id="label38"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
@@ -367,17 +400,19 @@
 			<mx:RemoveChild target="{label6}"/>
 			<mx:RemoveChild target="{label1}"/>
 			<mx:RemoveChild target="{overs_total_price}"/>
-			<mx:SetProperty target="{label3}" name="y" value="300"/>
-			<mx:SetProperty target="{job_prep}" name="y" value="300"/>
-			<mx:SetProperty target="{label5}" name="y" value="321"/>
-			<mx:SetProperty target="{job_bind}" name="y" value="321"/>
-			<mx:SetProperty target="{label2}" name="y" value="342"/>
-			<mx:SetProperty target="{job_other}" name="y" value="342"/>
-			<mx:SetProperty target="{hrule2}" name="y" value="366"/>
-			<mx:SetProperty target="{hrule1}" name="y" value="370"/>
-			<mx:SetProperty target="{job_total}" name="y" value="377"/>
-			<mx:SetProperty target="{label4}" name="y" value="377"/>
+			<mx:SetProperty target="{label3}" name="y" value="330"/>
+			<mx:SetProperty target="{job_prep}" name="y" value="330"/>
+			<mx:SetProperty target="{label5}" name="y" value="351"/>
+			<mx:SetProperty target="{job_bind}" name="y" value="351"/>
+			<mx:SetProperty target="{label2}" name="y" value="372"/>
+			<mx:SetProperty target="{job_other}" name="y" value="372"/>
+			<mx:SetProperty target="{hrule2}" name="y" value="396"/>
+			<mx:SetProperty target="{hrule1}" name="y" value="400"/>
+			<mx:SetProperty target="{job_total}" name="y" value="407"/>
+			<mx:SetProperty target="{label4}" name="y" value="407"/>
 			<mx:RemoveChild target="{job_vendor}"/>
+			<mx:SetProperty target="{label7}" name="x" value="384"/>
+			<mx:SetProperty target="{label3}" name="x" value="384"/>
 		</mx:State>
 		<mx:State name="LinesAndInches" basedOn="Mailing">
 			<mx:AddChild relativeTo="{pricing_throbber}" position="before">
@@ -402,13 +437,13 @@
 			<mx:RemoveChild target="{label36}"/>
 			<mx:RemoveChild target="{label38}"/>
 			<mx:RemoveChild target="{job_markup}"/>
-			<mx:SetProperty target="{job_totalCost}" name="y" value="84"/>
-			<mx:SetProperty target="{bindery_waste}" name="y" value="56"/>
-			<mx:SetProperty target="{job_over_under}" name="y" value="28"/>
-			<mx:SetProperty target="{label33}" name="y" value="30"/>
-			<mx:SetProperty target="{label34}" name="y" value="58"/>
-			<mx:SetProperty target="{label37}" name="y" value="86"/>
+			<mx:SetProperty target="{job_over_under}" name="y" value="53"/>
 			<mx:SetProperty target="{job_vendor}" name="width" value="182"/>
+			<mx:SetProperty target="{bindery_waste}" name="y" value="79"/>
+			<mx:SetProperty target="{label34}" name="y" value="81"/>
+			<mx:SetProperty target="{label37}" name="y" value="109"/>
+			<mx:SetProperty target="{job_totalCost}" name="y" value="107"/>
+			<mx:SetProperty target="{label33}" name="y" value="55"/>
 		</mx:State>
 		<mx:State name="Blank">
 			<mx:RemoveChild target="{label14}"/>
@@ -451,6 +486,16 @@
 				<mx:Label x="385"
 						  y="262"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" textAlign="right" width="108" id="label41"/>
+			</mx:AddChild>
+			<mx:SetProperty target="{label33}" name="y" value="27"/>
+			<mx:RemoveChild target="{label42}"/>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:TextInput x="496"
+							  y="47"
+							  id="job_over_under0"
+							  text="{job.oversUnders}"
+							  height="20"
+							  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
 			</mx:AddChild>
 		</mx:State>
 	</mx:states>
@@ -562,6 +607,11 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.mdi.view.window.MDIWindow;
+			import com.efi.mdi.event.window.WindowCloseEvent;
+			import flash.net.registerClassAlias;
+			import mx.utils.ObjectUtil;
+			import com.efi.printsmith.data.Estimate;
 			import com.efi.printsmith.common.components.CommonLoadComponent;
 			import com.efi.printsmith.data.Users;
 			import com.efi.printsmith.data.Dimension;
@@ -696,6 +746,8 @@
 			private var focussedFormControl:DisplayObject;
 	
 			private var doInitialStockPicker:Boolean = false;
+			
+			[Bindable] public var multiQtyJobList:ArrayCollection = new ArrayCollection();
 			
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
@@ -879,7 +931,9 @@
 			
 			private function doDelete():void
 			{
-				PopUpManager.removePopUp(this);
+				var mdiWindow:MDIWindow = this.parent as MDIWindow;
+				mdiWindow.closeWindow();
+				//PopUpManager.removePopUp(this);
 			}
 			
 			private function doProductionData():void
@@ -910,8 +964,26 @@
 				this.job=job2;
 				loadData();
 				mapFromJobData();
-				
-				
+				this.invoice = job.parentInvoice;
+				if(this.job.jobGroup==0){
+					var counter = 1;
+					if(this.invoice.jobs!=null && this.invoice.jobs.length>0){
+						for(var i:int=1;i<=1000;i++){
+							var checkFlag:Boolean = false;
+							for each(var jobObj:JobBase in this.invoice.jobs){
+								if(jobObj.jobGroup==i){
+									checkFlag = true;
+									break;
+								}
+							}
+							if(!checkFlag){
+								counter = i;
+								break;
+							}
+						}
+					}
+					this.job.jobGroup = counter;
+				}				
 			}
 
 			private function mapToJobData():void
@@ -1019,10 +1091,11 @@
 			private function doSave():void
 			{
 				mapToJobData();
-				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job);
+				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.multiQtyJobList);
 				dispatchEvent(jobEditCompleteEvent);
-
-				PopUpManager.removePopUp(this);
+				var mdiWindow:MDIWindow = this.parent as MDIWindow;
+				mdiWindow.closeWindow();
+				//PopUpManager.removePopUp(this);
 			}
 			private function doSaveTemplate():void
 			{
@@ -1092,15 +1165,17 @@
 
 				setJob(template);
 
-				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job);
+				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.multiQtyJobList);
 				dispatchEvent(jobEditCompleteEvent);
-
-				PopUpManager.removePopUp(this);
+				var mdiWindow:MDIWindow = this.parent as MDIWindow;
+				mdiWindow.closeWindow();
+				//PopUpManager.removePopUp(this);
 			}
 			
 			private function handleCreateJobResult(ev:ResultEvent):void 
 			{
 				this.job = ev.result as Job;
+				job.defaultJob = true;
 				setJob(job);
 				setPaperCalculatorData = true;				
 				this.copy_single_radio.selected = this.job.singleSided;
@@ -1234,12 +1309,12 @@
 							
 							if (tmpPricingMethod.id == job.pricingMethod.id) {
 								this.setPricingMethod(tmpPricingMethod);
-								//cej
-								dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 								break;
 							}
 						}
 		 			}
+		 			//cej
+					dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 	 			}
 				
 			}
@@ -1992,6 +2067,33 @@
 					Alert.show("You may only submit jobs that have been saved to a valid invoice.", "Error", 0, null);
 				}
 	    	}
+	    	
+	    	private function addMultiQtyJob():void {
+	    		if(job!=null){
+	    			mapToJobData();
+	    			registerClassAlias("com.efi.printsmith.data.Job",Job);
+	    			var multiQtyJobObject:Job = ObjectUtil.copy(job) as Job;
+	    			multiQtyJobObject.created = null;
+	    			multiQtyJobObject.modified = null;
+	    			multiQtyJobObject.id = 0;
+	    			multiQtyJobObject.defaultJob = false;
+	    			multiQtyJobObject.multiQtyJob = true;
+	    			/* var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
+					editJobWindow.setStyle("borderAlpha", 0.9);
+					editJobWindow.setJob(multiQtyJobObject);
+					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveMultiQtyJob); */
+					var editJobWindow:EditJob= new EditJob();
+					var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+					Snowmass.getInstance().containerManager.openNewMDIWindow("Edit Job",editJobWindow, -1,-1,-1,-1, windowID);
+					editJobWindow.setJob(multiQtyJobObject);
+					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveMultiQtyJob);
+	    		}
+	    	}
+	    	
+	    	private function saveMultiQtyJob(event:JobEditCompleteEvent):void
+			{
+				multiQtyJobList.addItem(event.job);
+			}
 		]]>
 
 	</mx:Script>
@@ -2252,159 +2354,159 @@
 									  y="2"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}" width="67" textAlign="right" id="label32"/>
 							<mx:TextInput x="496"
-										  y="24"
+										  y="47"
 										  id="job_over_under"
 										  text="{job.oversUnders}"
 										  height="20"
 										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
 							<mx:TextInput x="496"
-										  y="47"
+										  y="70"
 										  id="sets_of"
 										  text="{job.inSetsOf}"
 										  height="20"
 										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
 							<mx:TextInput x="496"
-										  y="301"
+										  y="324"
 										  id="overs_unit_price"
 										  height="20"
 										  width="98" mouseDown="textInputClick(event)" textAlign="right"/>
 							<mx:TextInput x="496"
-										  y="323"
+										  y="346"
 										  id="overs_total_price"
 										  height="20"
 										  width="98" mouseDown="textInputClick(event)" textAlign="right"/>
 							<mx:Label x="385"
-									  y="325"
+									  y="348"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversTotalPrice')}" textAlign="right" width="108" id="label1"/>
 							<mx:Label x="385"
-									  y="387"
+									  y="410"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Other')}" textAlign="right" width="108" id="label2"/>
 							<mx:Label x="385"
-									  y="345"
+									  y="368"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Prep')}" textAlign="right" width="108" id="label3"/>
 							<mx:Label x="496"
-									  y="345"
+									  y="368"
 									  width="98"
 									  id="job_prep"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
-									  y="366"
+									  y="389"
 									  width="98"
 									  id="job_bind"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
-									  y="387"
+									  y="410"
 									  width="98"
 									  id="job_other"
 									  height="20" textAlign="right"/>
 							<mx:Label x="385"
-									  y="422"
+									  y="445"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Total')}" textAlign="right" width="108" id="label4"/>
 							<mx:Label x="496.95"
-									  y="422"
+									  y="445"
 									  width="97.05"
 									  id="job_total"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
-									  y="185"
+									  y="208"
 									  width="98"
 									  id="num_signatures"
 									  text="{job.signatures}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
-									  y="206"
+									  y="229"
 									  width="98"
 									  id="job_imp"
 									  height="20" textAlign="right" text="{job.impressionsPerRun}"/>
 							<mx:Label x="496"
-									  y="227"
+									  y="250"
 									  width="98"
 									  id="total_imp"
 									  height="20" textAlign="right" text="{job.totalImpressions}"/>
 							<mx:Label x="496"
-									  y="248"
+									  y="271"
 									  width="98"
 									  id="job_weight"
 									  height="20" textAlign="right" text="{job.weight}"/>
 							<mx:Label x="385"
-									  y="366"
+									  y="389"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Bind')}" textAlign="right" width="108" id="label5"/>
 							<mx:TextInput x="496"
-										  y="279"
+										  y="302"
 										  id="job_price"
 										  height="20"
 										  width="98" mouseDown="textInputClick(event)" textAlign="right" text="{job.pricingRecord.totalPrice}"/>
 							<mx:Label x="385"
-									  y="281"
+									  y="304"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label7"/>
 							<mx:Label x="385"
-									  y="303"
+									  y="326"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversUnitPrice')}" textAlign="right" width="108" id="label6"/>
 							<mx:TextInput x="496"
-										  y="70"
+										  y="93"
 										  id="job_sheets"
 										  text="{job.sheets}"
 										  height="20"
 										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="496"
-										  y="93"
+										  y="116"
 										  width="45.300003"
 										  id="job_up"
 										  text="{job.numUp}"
 										  height="20" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="548.3"
-										  y="93"
+										  y="116"
 										  width="45.700005"
 										  id="job_on"
 										  text="{job.numOn}"
 										  height="20" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="496"
-										  y="115"
+										  y="138"
 										  id="job_press"
 										  height="20"
 										  width="98"
 										  text="{job.pressQty}" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="496"
-										  y="138"
+										  y="161"
 										  id="bindery_waste"
 										  text="{job.binderyWaste}"
 										  height="20"
 										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="496"
-										  y="161"
+										  y="184"
 										  id="est_waste"
 										  text="{job.estWaste}"
 										  height="20"
 										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:Label x="385"
-									  y="248"
+									  y="271"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Weight')}" textAlign="right" width="108" id="label11"/>
 							<mx:Label x="385"
-									  y="227"
+									  y="250"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.TotImp')}" textAlign="right" width="108" id="label8"/>
 							<mx:Label x="385"
-									  y="206"
+									  y="229"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.ImpRun')}" textAlign="right" width="108" id="label9"/>
 							<mx:Label x="385"
-									  y="185"
+									  y="208"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OfSignatures')}" textAlign="right" width="108" id="label10"/>
 							<mx:Label x="385"
-									  y="163"
+									  y="186"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.EstWaste')}" textAlign="right" width="108" id="label31"/>
 							<mx:Label x="385"
-									  y="140"
+									  y="163"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.BinderyWaste')}" textAlign="right" width="108" id="label34"/>
 							<mx:Label x="385"
-									  y="117"
+									  y="140"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Press')}" textAlign="right" width="108" id="label12"/>
 							<mx:Label x="385"
-									  y="95"
+									  y="118"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UpOn')}" textAlign="right" width="108" id="label30"/>
 							<mx:Label x="385"
-									  y="72"
+									  y="95"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Sheets')}" textAlign="right" width="108" id="label29"/>
 							<mx:Label x="385"
-									  y="49"
+									  y="72"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.InSetsOf')}" textAlign="right" width="108" id="label28"/>
 							<mx:TextInput x="496"
 										  y="1"
@@ -2417,19 +2519,26 @@
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Ordered')}" textAlign="right" width="108"/>
 							<mx:Label x="385"
 									  y="26"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" textAlign="right" width="108" id="label42"
+									  visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}"/>
+							<mx:Button 
+								x="496" y="25" label="+" visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}" click="{addMultiQtyJob()}"/>
+							<mx:Label x="385"
+									  y="49"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversUnders')}" textAlign="right" width="108" id="label33"/>
+									  
 							<mx:VRule x="374"
 									  bottom="5"
 									  top="5"/>
-							<mx:HRule y="273"
+							<mx:HRule y="296"
 									  height="2.0054946"
 									  right="5"
 									  left="380" id="hrule4"/>
-							<mx:HRule y="411"
+							<mx:HRule y="434"
 									  height="2.0054946"
 									  right="5"
 									  left="380" id="hrule2"/>
-							<mx:HRule y="415"
+							<mx:HRule y="438"
 									  height="2.0054946"
 									  right="5"
 									  left="380" id="hrule1"/>
@@ -2760,11 +2869,11 @@
 									<mx:RadioButton x="107" y="78" click="changeJobSides(event)" id="copy_double_radio" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.DoubleSided')}" groupName="copierSides" fontSize="9"/>
 								</mx:Canvas>
 							</mx:ViewStack>
-							<ns1:SmallThrobber visible="false" id="pricing_throbber" x="599" y="278" height="20" width="20"/>
-							<mx:LinkButton x="596" y="278" width="20" id="refresh_price_btn" height="20" click="updatePrice()">
+							<ns1:SmallThrobber visible="false" id="pricing_throbber" x="599" y="301" height="20" width="20"/>
+							<mx:LinkButton x="596" y="301" width="20" id="refresh_price_btn" height="20" click="updatePrice()">
 								<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
 							</mx:LinkButton>
-							<mx:LinkButton x="618" y="278" width="20" id="price_info_btn" height="20" click="showJobPricingInfo()">
+							<mx:LinkButton x="618" y="301" width="20" id="price_info_btn" height="20" click="showJobPricingInfo()">
 								<mx:icon>@Embed(source='../../../../assets/help_small.png')</mx:icon>
 							</mx:LinkButton>
 						
