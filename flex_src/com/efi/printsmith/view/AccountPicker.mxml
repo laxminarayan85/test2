@@ -54,7 +54,7 @@
 	[Bindable]                             
 	private var formIsValid:Boolean = false;                               
 	
-[Bindable]                                     
+	[Bindable]                                     
 	public var formIsEmpty:Boolean; 
 	[Bindable]                                     
 	public var prospect_boolean:Boolean; 
@@ -74,7 +74,17 @@
 	         
 	// Holds a reference to the currently focussed control on the form.
  	private var focusedFormControl:DisplayObject;                           
-           
+	
+	private function searchAll():void	{
+		if (chkSearchAll.selected)	{
+			accounts.filterFunction = null; 
+		}
+		else	{
+			accounts.filterFunction = accountFilter;
+		}
+		pickerFilter.clearFilter(true);
+		refreshData();
+	}           
 	public function setAccounts( tempAccount:ArrayCollection):void{
 	//	accountTypeRadio.selectedValue = "Customer"; 
 		var i:int;
@@ -191,6 +201,9 @@
 		pickerFilter.clearFilter(true);
 		
 		if (accountTypeRadio.selectedValue == "Contacts") {
+			chkSearchAll.selected = false;
+			chkSearchAll.visible = false;
+			
 			if (contactCallInProgress)	{
 				throbberHelper.showThrobber();	
 			}
@@ -200,6 +213,9 @@
 			}
 		}
 		else	{
+			chkSearchAll.selected = false;
+			chkSearchAll.visible = true;
+			
 			throbberHelper.hideThrobberIfActive();
 			
 			buildCustProspectList();
@@ -407,7 +423,8 @@
 		<mx:RadioButton x="49" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Customers')}" groupName="accountTypeRadio" value="Customer" id="customer_radio"/>
 		<mx:RadioButton x="190" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Prospects')}" groupName="accountTypeRadio" value="Prospects" id="prospect_radio"/>
 		<mx:RadioButton x="300" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}" groupName="accountTypeRadio" value="Contacts" id="contact_radio"/>
-	</mx:Canvas>
+		<mx:CheckBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Searchallaccounts')}" id="chkSearchAll" click="searchAll();"  x="131" y="520"/>
+		</mx:Canvas>
 <mx:Spacer height="10" />        
 
 </mx:TitleWindow>
