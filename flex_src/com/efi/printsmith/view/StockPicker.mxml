@@ -500,7 +500,7 @@
 	 
 	 private function containsBlank(ac:ArrayCollection, field:String):Boolean	{
 	 	for (var i:int = 0; i<ac.length; i++)	{
-	 		if (StringUtil.trim(ac.getItemAt(i)[field] as String) == "")	{
+	 		if (((ac.getItemAt(i) as String) == "") || (StringUtil.trim(ac.getItemAt(i)[field] as String) == ""))	{
 	 			ac.removeItemAt(i);
 	 			return false;
 	 		}

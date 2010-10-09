@@ -850,21 +850,32 @@
 
 
 	private function doStockGroup() : void {
-		var group:StockGroup;
-		var result:Boolean;
+//		var group:StockGroup;
+//		var result:Boolean;
 		
-		if (cboStockGroup.text != null && cboStockGroup.text != "" && cboStockGroup.selectedIndex == -1) {
-			var item:int = findItem(cboStockGroup.text, stockGroup);
-			if (item == -1) {
-				group = new StockGroup();
-				group.name = cboStockGroup.text;
-				stockGroupDataService.addUpdate(group);
-				stockDefinitions.stkgroup = group;
-			}
-			else {
-				cboStockGroup.selectedItem = item;
-			}
-		}
+//		if (cboStockGroup.text != null && cboStockGroup.text != "" && cboStockGroup.selectedIndex == -1) {
+//			var item:Object = cboStockGroup.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
+//			if ((item == null) || (item == "")) {
+//				stockclass = new StockClass();
+//			}
+//			else {
+//				stockclass = item as StockClass;
+//			}
+//			stockclass.name = cbostockClass.text;
+//			stockClassDataService.addUpdate(stockclass);
+//			stockDefinitions.stkclass = stockclass;
+//			
+//			var item:int = findItem(cboStockGroup.text, stockGroup);
+//			if (item == -1) {
+//				group = new StockGroup();
+//				group.name = cboStockGroup.text;
+//				stockGroupDataService.addUpdate(group);
+//				stockDefinitions.stkgroup = group;
+//			}
+//			else {
+//				cboStockGroup.selectedItem = item;
+//			}
+//		}
 	}
 	private function doStockType() : void {
 		var type:StockType;
@@ -922,17 +933,28 @@
 		var result:Boolean;
 		
 		if (cboGenericColor.text != null && cboGenericColor.text != "" && cboGenericColor.selectedIndex == -1) {
-			var item:int = findItem(cboGenericColor.text, stockGenericColor);
-			if (item == -1) {
+			var item:Object = cboGenericColor.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
+			if ((item == null) || (item == "")) {
 				colors = new GenericColors();
-				colors.name = cboGenericColor.text;
-				stockGenericColorDataService.addUpdate(colors);
-				stockDefinitions.genericColor = colors;
 			}
 			else {
-				cboGenericColor.selectedItem = item;
-				
+				colors = item as GenericColors;
 			}
+			colors.name = cboGenericColor.text;
+			stockGenericColorDataService.addUpdate(colors);
+			stockDefinitions.genericColor = colors;
+			
+//			var item:int = findItem(cboGenericColor.text, stockGenericColor);
+//			if (item == -1) {
+//				colors = new GenericColors();
+//				colors.name = cboGenericColor.text;
+//				stockGenericColorDataService.addUpdate(colors);
+//				stockDefinitions.genericColor = colors;
+//			}
+//			else {
+//				cboGenericColor.selectedItem = item;
+//				
+//			}
 		}
 	}
 
@@ -941,16 +963,27 @@
 		var result:Boolean;
 		
 		if (cbostkcolor.text != null && cbostkcolor.text != "" && cbostkcolor.selectedIndex == -1) {
-			var item:int = findItem(cbostkcolor.text, stockColor);
-			if (item == -1) {
+			var item:Object = cbostkcolor.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
+			if ((item == null) || (item == "")) {
 				colors = new StockColors();
-				colors.name = cbostkcolor.text;
-				stockColorDataService.addUpdate(colors);
-				stockDefinitions.color = colors;
 			}
 			else {
-				cbostkcolor.selectedItem = item;
+				colors = item as StockColors;
 			}
+			colors.name = cbostkcolor.text;
+			stockColorDataService.addUpdate(colors);
+			stockDefinitions.color = colors;
+			
+//			var item:int = findItem(cbostkcolor.text, stockColor);
+//			if (item == -1) {
+//				colors = new StockColors();
+//				colors.name = cbostkcolor.text;
+//				stockColorDataService.addUpdate(colors);
+//				stockDefinitions.color = colors;
+//			}
+//			else {
+//				cbostkcolor.selectedItem = item;
+//			}
 		}
 	}
 
@@ -959,19 +992,30 @@
 		var result:Boolean;
 		
 		if (cboStockGrade.text != null && cboStockGrade.text != "" && cboStockGrade.selectedIndex == -1) {
-			var item:int = findItem(cboStockGrade.text, stockGrade);
-			if (item == -1) {
+			var item:Object = cboStockGrade.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
+			if ((item == null) || (item == "")) {
 				grades = new StockGrade();
-				grades.name = cboStockGrade.text;
-				stockGradeDataService.addUpdate(grades);
-				stockDefinitions.grade = grades;
-				cboStockGrade.text = grades.name;
-				
 			}
 			else {
-				cboStockGrade.selectedItem = item;
+				grades = item as StockGrade;
 			}
-		stockDefinitions.grade.name = cboStockGrade.text	
+			grades.name = cboStockGrade.text;
+			stockGradeDataService.addUpdate(grades);
+			stockDefinitions.grade = grades;
+
+//			var item:int = findItem(cboStockGrade.text, stockGrade);
+//			if (item == -1) {
+//				grades = new StockGrade();
+//				grades.name = cboStockGrade.text;
+//				stockGradeDataService.addUpdate(grades);
+//				stockDefinitions.grade = grades;
+//				cboStockGrade.text = grades.name;
+//				
+//			}
+//			else {
+//				cboStockGrade.selectedItem = item;
+//			}
+//		stockDefinitions.grade.name = cboStockGrade.text	
 		}
 	}
 
@@ -981,17 +1025,28 @@
 		var result:Boolean;
 		
 		if (cboFinish.text != null && cboFinish.text != "" && cboFinish.selectedIndex == -1) {
-			var item:int = findItem(cboFinish.text, stockFinish);
-			if (item == -1) {
+			var item:Object = cboFinish.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
+			if ((item == null) || (item == "")) {
 				finishing = new StockFinish();
-				finishing.name = this.cboFinish.text;
-				
-				stockFinishDataService.addUpdate(finishing);
-				stockDefinitions.finish = finishing;
 			}
 			else {
-				cboFinish.selectedItem = item;
+				finishing = item as StockFinish;
 			}
+			finishing.name = this.cboFinish.text;
+			stockFinishDataService.addUpdate(finishing);
+			stockDefinitions.finish = finishing;
+			
+//`			var item:int = findItem(cboFinish.text, stockFinish);
+//			if (item == -1) {
+//				finishing = new StockFinish();
+//				finishing.name = this.cboFinish.text;
+//				
+//				stockFinishDataService.addUpdate(finishing);
+//				stockDefinitions.finish = finishing;
+//			}
+//			else {
+//				cboFinish.selectedItem = item;
+//			}
 		}
 	}
 
@@ -2078,14 +2133,14 @@ private function doRound(evt:FocusEvent):void{
 	<mx:RadioButtonGroup id="PaperStyle"/>
 	<mx:Label x="10" y="63" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Group')}" width="108" textAlign="right"/>
 	<mx:Label x="263" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Class')}" width="109" textAlign="right"/>
-	<mx:ComboBox id="cboStockGroup" x="126" y="61" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" width="116"/>
-	<comp:EditableComboBox x="380" y="64" width="105" id="cbostockClass" dataProvider="{stockClass}"  labelField="name" focusOut="doStockClass()" />
+	<comp:EditableComboBox id="cboStockGroup" x="126" y="61" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" width="116"/>
+	<comp:EditableComboBox x="380" y="64" width="105" id="cbostockClass" dataProvider="{stockClass}" optional="true" editable="true" labelField="name" focusOut="doStockClass()" />
 	<mx:CheckBox x="493" y="67" id="chkIsMetric" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Metric')}" width="135" change="doMetric();"/>
 	<mx:Label x="10" y="87" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Name')}" width="108" textAlign="right"/>
 	<mx:Label x="10" y="111" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="108" textAlign="right"/>
-	<mx:ComboBox  x="126" y="109" width="138" id="cbostkcolor" dataProvider="{stockColor}" labelField="name" focusOut="doStockColor()"/>
+	<comp:EditableComboBox optional="true" editable="true" x="126" y="109" width="138" id="cbostkcolor" dataProvider="{stockColor}" labelField="name" focusOut="doStockColor()"/>
 	<mx:TextInput x="126" y="85" width="160" id="stockName" text="{stockDefinitions.name}" change="validateStockName(event);"/>
-	<mx:ComboBox  x="380" y="88" width="105" id ="cboFinish" dataProvider="{stockFinish}" labelField="name" focusOut="doStockFinish()"/>
+	<comp:EditableComboBox optional="true"  x="380" y="88" width="105" id ="cboFinish" dataProvider="{stockFinish}" labelField="name" focusOut="doStockFinish()"/>
 
 	<mx:Label x="310" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Finish')}" width="62" textAlign="right"/>
 	<mx:Label x="10" y="135" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.GenericColor')}" width="108" textAlign="right"/>
@@ -2093,10 +2148,10 @@ private function doRound(evt:FocusEvent):void{
 	<mx:Label x="493" y="92" id="weight_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Weight')}" width="67.5" textAlign="right"/>
 	<mx:Label x="493" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Coated')}" width="67.5" textAlign="right"/>
 
-	<mx:ComboBox  x="126" y="133" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" labelField="name" focusOut="doStockGenericColor()"/>
-	<mx:ComboBox  x="380" y="112" width="105" id="cboStockGrade" dataProvider="{stockGrade}"  labelField="name" focusOut="doStockGrade()"/>
+	<comp:EditableComboBox optional="true" editable="true" x="126" y="133" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" labelField="name" focusOut="doStockGenericColor()"/>
+	<comp:EditableComboBox optional="true"  x="380" y="112" width="105" id="cboStockGrade" dataProvider="{stockGrade}"  labelField="name" focusOut="doStockGrade()"/>
 	<mx:TextInput x="568.5" y="90" width="55" id="weight_edit" text="{stockDefinitions.weight}" focusOut="calstockMWeight(event);"/>
-	<mx:ComboBox x="568.5" y="114" width="55" id="coated" dataProvider="{stockCoated}" labelField="name"/>
+	<comp:EditableComboBox optional="true" editable="true" x="568.5" y="114" width="55" id="coated" dataProvider="{stockCoated}" labelField="name"/>
 
 	<mx:RadioButtonGroup id="stockUnit" change="doStockUnitChangeEvent(event)"/>
 	<mx:RadioButton x="636" y="67" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}"/>

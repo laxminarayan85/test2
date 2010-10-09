@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml" 
-	editable="true" 
+	
 >
 	<mx:Script>
 		<![CDATA[
@@ -8,6 +8,12 @@
 			import mx.collections.ArrayCollection;
 			
 			private var _lastSelectedObj:Object;
+			
+			private var _optional:Boolean;
+			
+			public function set optional(val:Boolean):void	{
+				_optional = val;
+			}
 //			private var _newRecord:Boolean = false;
 //			private var _nameField:String;
 //			private var _idValue:Object;
@@ -26,22 +32,26 @@
 
 			override public function set dataProvider(value:Object):void	{
 				super.dataProvider = value;
-				var blank:String = "";
-				(dataProvider as ArrayCollection).addItemAt(blank,0);
-				selectedItem = blank;
+				
+				if ((_optional) && ((dataProvider as ArrayCollection).length > 0))	{
+					var blank:String = "";
+					(dataProvider as ArrayCollection).addItem(blank);
+					selectedIndex = (dataProvider as ArrayCollection).length - 1;
+				}
+				
 			}
 			override public function set selectedIndex(value:int):void	{
 				super.selectedIndex = value;
 				
-				if (value >= 0)
-					_lastSelectedObj = selectedItem;
-				else	{
-					if (_lastSelectedObj == "")	{
-//						_newRecord = true;
-						(dataProvider as ArrayCollection).addItemAt("",0);
+				if (editable)	{
+					if (value >= 0)
+						_lastSelectedObj = selectedItem;
+					else	{
+						if (_lastSelectedObj == "")	{
+	//						_newRecord = true;
+							(dataProvider as ArrayCollection).addItem("");
+						}
 					}
-					
-				
 				}	
 //				else	{
 //					if (_lastSelectedObj)	{
