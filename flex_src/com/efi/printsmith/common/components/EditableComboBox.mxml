@@ -8,8 +8,8 @@
 			import mx.collections.ArrayCollection;
 			
 			private var _lastSelectedObj:Object;
-			
-//			private var _idField:String;
+//			private var _newRecord:Boolean = false;
+//			private var _nameField:String;
 //			private var _idValue:Object;
 //			
 //			public function set idField(val:String):void	{
@@ -23,12 +23,26 @@
 			public function get lastSelectedObj():Object	{
 				return _lastSelectedObj;
 			}
-			
+
+			override public function set dataProvider(value:Object):void	{
+				super.dataProvider = value;
+				var blank:String = "";
+				(dataProvider as ArrayCollection).addItemAt(blank,0);
+				selectedItem = blank;
+			}
 			override public function set selectedIndex(value:int):void	{
 				super.selectedIndex = value;
 				
 				if (value >= 0)
 					_lastSelectedObj = selectedItem;
+				else	{
+					if (_lastSelectedObj == "")	{
+//						_newRecord = true;
+						(dataProvider as ArrayCollection).addItemAt("",0);
+					}
+					
+				
+				}	
 //				else	{
 //					if (_lastSelectedObj)	{
 //						_idValue = _lastSelectedObj[_idField];

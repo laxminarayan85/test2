@@ -467,7 +467,8 @@
 	    loadCopierDefinition();
 		loadDimensions();
 		loadCoatedArray()
-
+		
+		
 		var event:DeleteStockDefinitionEvent = new DeleteStockDefinitionEvent(button_delete, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 		event.dispatch();
 		PanelCharges.title = StringUtil.substitute(PanelCharges.title,"10");
@@ -903,12 +904,10 @@
 		
 		if (cbostockClass.text != null && cbostockClass.text != "" && cbostockClass.selectedIndex == -1) {
 			var item:Object = cbostockClass.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
-			if (item == null) {
+			if ((item == null) || (item == "")) {
 				stockclass = new StockClass();
-				
 			}
 			else {
-				//cbostockClass.selectedItem = item;
 				stockclass = item as StockClass;
 			}
 			stockclass.name = cbostockClass.text;
