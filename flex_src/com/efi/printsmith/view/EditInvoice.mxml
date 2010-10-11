@@ -1264,15 +1264,13 @@
 										</mx:Component>
 									</mx:itemRenderer>
 								</mx:DataGridColumn>
-								<mx:DataGridColumn visible="{multiQtyJobPresent}">
-									<mx:itemRenderer>
+								<mx:DataGridColumn visible="{multiQtyJobPresent}" itemRenderer="com.efi.printsmith.itemRenderers.MultiQtyRadioButtonRenderer">
+									<!--<mx:itemRenderer>
 										<mx:Component>
 											<mx:RadioButton group="{outerDocument.getRBGroupRef(data)}"
 												selected="{data.defaultJob}" click="{outerDocument.setDefaultJob(data,event)}"/>
-											<!--<mx:RadioButton selected="{data.defaultJob}"
-												visible="{data.multiQtyJob}" includeInLayout="{data.multiQtyJob}" click="{outerDocument.setDefaultJob(data,event)}"/>-->
 										</mx:Component>
-									</mx:itemRenderer>
+									</mx:itemRenderer>-->
 								</mx:DataGridColumn>	
 								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Qty')}"
 												   dataField="qtyOrdered"/>
