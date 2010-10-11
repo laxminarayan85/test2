@@ -133,7 +133,7 @@
 	[Bindable] private var originalAccount:Account;
                 
 	[Bindable]
-	private var autoDiscountRadioValue:String = "discount_dollars";
+	private var autoDiscountRadioValue:String = "discount_dollar";
 	
 	[Bindable]
 	private var acctStatusRadioValue:String = "acct_status_new_radio";
@@ -700,7 +700,7 @@
 			{Aged:"90", Value:account.balance90Day}
 		]);
 		if (account.dollarDiscount) {
-			autoDiscountRadioValue = "discount_dollars";
+			autoDiscountRadioValue = "discount_dollar";
 		} else {
 			autoDiscountRadioValue = "discount_percent";
 						
@@ -758,7 +758,7 @@
 			if (account.marketing.user5!= null)
 				userDate5.selectedDate =account.marketing.user5;
 			
-		}	
+		}
 		certificate_expires_edit.selectedDate = account.resaleCertExpirationDate;
 		ClearLabel();
 		if ( account.masterAcct > 0)
