@@ -12,7 +12,6 @@ package com.efi.mdi.view.window
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import mx.collections.ArrayCollection;
 	import mx.containers.TitleWindow;
 	import mx.controls.Button;
 	import mx.core.UIComponent;
@@ -27,6 +26,7 @@ package com.efi.mdi.view.window
 		public static const MINIMIZED:int = 2;
 		public static const CLOSED:int = -1;
 		
+		private var _closeChildren:Boolean = true;
 		private var _windowID:int;
 		private var _state:int;
 				
@@ -41,10 +41,10 @@ package com.efi.mdi.view.window
 		private var _oldHeight:int = -1;
 		
 		
-		private var _childWindows:ArrayCollection;
-		private var _parentWindowId:int;
-		
-		private var _childWindowSpawned:Boolean;
+//		private var _childWindows:ArrayCollection;
+//		private var _parentWindowId:int;
+//		
+//		private var _childWindowSpawned:Boolean;
 		
 //		[Bindable]
 //        [Embed(source="assets/min.png")]
@@ -68,25 +68,32 @@ package com.efi.mdi.view.window
 		 
 		private var _resizeCursorEnabled:Boolean = false;
 		 
-		public function MDIWindow(winTitle:String, content:UIComponent, id:int, parentWin:int = -1)
+		public function MDIWindow(winTitle:String, content:UIComponent, id:int, parentWin:int = -1, closeChildren:Boolean=true)
 		{
 			super();
 			this.winTitle = winTitle;
 			this.content = content;			
 			this.windowID = id;
 			this.state = OPEN;
-			this.parentWindowId = parentWin;
+			this._closeChildren = closeChildren;
+			//this.parentWindowId = parentWin;
 			this.styleName = "mdiWindowStyle";
 		}
 		
+		public function set closeChildren(val:Boolean):void	{
+			_closeChildren = val;
+		}
 		
+		public function get closeChildren():Boolean	{
+			return _closeChildren;
+		}
 		//MS: should be a private function	
 		public function set windowID(val:int):void	{
 			_windowID = val;
 		}
-		public function set parentWindowId(val:int):void	{
-			_parentWindowId = val;
-		}
+//		public function set parentWindowId(val:int):void	{
+//			_parentWindowId = val;
+//		}
 		public function set state(val:int):void	{
 			_state = val;
 		}
@@ -98,9 +105,9 @@ package com.efi.mdi.view.window
 		public function get windowID():int	{
 			return _windowID;
 		}
-		public function get parentWindowId():int	{
-			return _parentWindowId;
-		}
+//		public function get parentWindowId():int	{
+//			return _parentWindowId;
+//		}
 		public function set winTitle(val:String):void	{
 			_winTitle = val;
 			this.title = _winTitle;
@@ -138,11 +145,11 @@ package com.efi.mdi.view.window
 			dispatchEvent(new WindowCloseEvent(WindowCloseEvent.WINDOW_CLOSE, this));
 		}
 		
-		public function addChildWindow(id:int):void	{
-			if (_childWindows == null)
-				_childWindows = new ArrayCollection();
-			_childWindows.addItem(id); 
-		}		
+//		public function addChildWindow(id:int):void	{
+//			if (_childWindows == null)
+//				_childWindows = new ArrayCollection();
+//			_childWindows.addItem(id); 
+//		}		
 		private function onMinClick(event:MouseEvent):void	{
 			dispatchEvent(new WindowMinimizeEvent(WindowMinimizeEvent.WINDOW_MINIMIZE, this));
 		}

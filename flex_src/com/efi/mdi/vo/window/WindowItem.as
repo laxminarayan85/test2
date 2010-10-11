@@ -18,7 +18,7 @@ package com.efi.mdi.vo.window
 		public function get id():int{
 			return _id;
 		}
-		public function addChild(win:WindowItem):void	{
+		public function addChildWindow(win:WindowItem):void	{
 			if (_children == null)
 				_children = new ArrayCollection();
 			_children.addItem(win);

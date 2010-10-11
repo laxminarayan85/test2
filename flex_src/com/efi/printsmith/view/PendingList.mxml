@@ -47,6 +47,9 @@
 	
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.events.commandEvents.EditForms.EditEditEstimateEvent;
+	import com.efi.printsmith.commands.commandCommands.EditForms.EditEditEstimateCommand;
+	import com.efi.printsmith.events.commandEvents.EditForms.EditEditInvoiceEvent;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.Charge;
 	import com.efi.printsmith.data.JobBase;
@@ -534,14 +537,31 @@
 	private function doApplyFilter():void {
 		
 	}
+	
+	private function doEditInvoice(inv:InvoiceBase):void	{
+		if (Snowmass.getInstance().security.commandEnabled(EditEditInvoiceEvent.COMMANDID)) {
+			var child:EditInvoice = new EditInvoice();
+			child.setInvoice(inv);
+			var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
+		}
+	}
+	private function doEditEstimate(inv:InvoiceBase):void	{
+		if (Snowmass.getInstance().security.commandEnabled(EditEditEstimateEvent.COMMANDID)) {
+			var child:EditInvoice = new EditInvoice();
+			child.setInvoice(inv);
+			var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
+		}
+	}
 	private function handleGetResult(ev:ResultEvent):void {
 		var invoiceBase:InvoiceBase = ev.result as InvoiceBase;
 		
 		if (invoiceBase !=null) {
 			if (invoiceBase is Invoice) {
-				Snowmass.getInstance().doEditInvoice(invoiceBase);
+				doEditInvoice(invoiceBase);
 			} else if (invoiceBase is Estimate) {
-				Snowmass.getInstance().doEditEstimate(invoiceBase);
+				doEditEstimate(invoiceBase);
 			
 			}
 		}
