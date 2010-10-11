@@ -2435,7 +2435,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL})
+    @OneToMany()
     @Where(clause="isdeleted <> 'TRUE'")
 	@JoinTable( name = "account_invoiceestimatecharges")
 	private java.util.List<ChargeDefinition> invoiceEstimateCharges;
@@ -2469,7 +2469,7 @@ public class Account extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL})
+    @OneToMany()
     @Where(clause="isdeleted <> 'TRUE'")
 	@JoinTable( name = "account_jobcharges")
 	private java.util.List<ChargeDefinition> jobCharges;
