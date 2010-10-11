@@ -88,14 +88,27 @@
 				ContainerManager.getExistingInstance().recalculateWindowStyles();
 			}
 			
+			private function closeMinimizedWindow(minWin:MinimizedWindow):void	{
+				closeWindow(minWin.windowRef);
+				taskbar.removeChild(minWin);
+			}
 			private function closeWindow(window:MDIWindow):void	{
+				
 				window.state = MDIWindow.CLOSED;
+				
 				if (window.closeChildren)	{
 					var ac:ArrayCollection = ContainerManager.getExistingInstance().getChildrenOfWindow(window.windowID);
 					if (ac != null)	{
 						for (var i:int=0; i<ac.length; i++)	{
 							var win:MDIWindow = ac.getItemAt(i) as MDIWindow;
-							closeWindow(win);
+							if (win.state == MDIWindow.MINIMIZED)	{
+								var min:MinimizedWindow = ContainerManager.getExistingInstance().getMinimized(win);
+								if (min)
+									closeMinimizedWindow(min);
+							}
+							else	{
+								closeWindow(win);
+							}
 						}
 					} 
 				}
@@ -139,9 +152,7 @@
 					}
 				}
 				if (event.child is MinimizedWindow)	{
-					(event.child as MinimizedWindow).windowRef.state = MDIWindow.CLOSED;
-					appCanvas.removeChild((event.child as MinimizedWindow).windowRef);
-					taskbar.removeChild(event.child);
+					closeMinimizedWindow(event.child as MinimizedWindow);
 				}	
 			}
 			

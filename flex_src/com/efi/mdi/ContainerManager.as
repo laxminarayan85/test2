@@ -2,6 +2,7 @@ package com.efi.mdi
 {
 	import com.efi.mdi.util.MDIConstants;
 	import com.efi.mdi.view.container.MDIContainer;
+	import com.efi.mdi.view.taskbar.MinimizedWindow;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.mdi.vo.window.WindowItem;
 	
@@ -88,6 +89,16 @@ package com.efi.mdi
 		}
 		public function getActiveWindowContent():Container	{
 			return getActiveWindow().content as Container;
+		}
+		public function getMinimized(win:MDIWindow):MinimizedWindow	{
+			var children:Array = _mdiContainerRef.taskbar.getChildren();
+			for (var i:int=0; i<children.length; i++)	{
+				var min:MinimizedWindow = children.pop() as MinimizedWindow;
+				if (min.windowRef == win)	{
+					return min;
+				}
+			}
+			return null;
 		}
 		public function openNewMDIWindow(title:String, content:UIComponent, x:Number = -1, y:Number = -1, height:Number = -1, width:Number = -1, parentWin:int = -1, closeChildren:Boolean=true):int	{
 			
