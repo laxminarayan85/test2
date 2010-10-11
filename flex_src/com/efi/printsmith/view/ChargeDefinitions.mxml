@@ -208,9 +208,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		foldTemplateService.getAll("FoldTemplate");
 		
 		inkCoverageLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0');
-		
-		var poundStr:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Lb');
-		inkCoverageLabel = StringUtil.substitute(inkCoverageLabel, poundStr); 
 	}      
 	     
 	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
@@ -238,7 +235,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			this.btnExport.enabled = systemPreferences.enablePricingSystem;
 			
 			tempString = systemPreferences.inkWeightSingular;
-			cover_ink_check.label = StringUtil.substitute(cover_ink_check.label,tempString);
+			inkCoverageLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0');
+			var poundStr:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Lb');
+			inkCoverageLabel = StringUtil.substitute(inkCoverageLabel, tempString); 
 		}else{
 			this.btnExport.enabled = false;
 		}
