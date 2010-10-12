@@ -52,7 +52,7 @@
 						
 					<components:CustomStringTextInputComponent width="200"
 						dataHolder="{preferencesPOS}" variableName="defaultPrinter" customText="{preferencesPOS.defaultPrinter}"
-						enabled="{preferencesPOS.receiptPrinterStatus=='Named Graphics Printer' || preferencesPOS.receiptPrinterStatus=='Names Serial Port'}"/>
+						enabled="{preferencesPOS.receiptPrinterStatus=='Named Graphics Printer' || preferencesPOS.receiptPrinterStatus=='Named Serial Port'}"/>
 						
 				</mx:HBox>
 				

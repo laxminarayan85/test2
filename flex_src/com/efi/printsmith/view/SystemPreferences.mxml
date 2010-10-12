@@ -520,7 +520,7 @@
 		printer.name="Named Graphics Printer";
 		fillArray.addItem(printer);
 		printer=new Object();
-		printer.name="Names Serial Port";
+		printer.name="Named Serial Port";
 		fillArray.addItem(printer);
 
 	}
