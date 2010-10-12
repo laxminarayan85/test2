@@ -169,6 +169,10 @@ public class JobBase extends ModelBase {
 	 */
 	public static final String RUNMETHOD = "RunMethod";
 	/**
+   * @generated
+   */
+  public static final String WASHUPTIME = "WashupTime";
+	/**
 	 * @generated
 	 */
 	public static final String STOCK = "Stock";
@@ -594,6 +598,15 @@ public class JobBase extends ModelBase {
    * @generated
    */
   public static final String FRONTCOLOR7 = "FrontColor7";
+
+	/**
+   * @generated
+   */
+  public static final String RUNTIME = "RunTime";
+	/**
+   * @generated
+   */
+  public static final String SETUPTIME = "SetupTime";
 
 	/**
 	 * @generated
@@ -1334,6 +1347,26 @@ public class JobBase extends ModelBase {
 	
  	
 	
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long washupTime;
+
+	/**
+   * @generated
+ 	 */
+  public Long getWashupTime(){
+    return washupTime; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setWashupTime(Long newVal) {
+    this.washupTime = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -3763,6 +3796,46 @@ public class JobBase extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long runTime;
+
+	/**
+   * @generated
+ 	 */
+  public Long getRunTime(){
+    return runTime; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setRunTime(Long newVal) {
+    this.runTime = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long setupTime;
+
+	/**
+   * @generated
+ 	 */
+  public Long getSetupTime(){
+    return setupTime; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setSetupTime(Long newVal) {
+    this.setupTime = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -3798,6 +3871,7 @@ public class JobBase extends ModelBase {
     if (PRICINGPRESS.equals(propertyName)) return getPricingPress();
     if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
     if (RUNMETHOD.equals(propertyName)) return getRunMethod();
+    if (WASHUPTIME.equals(propertyName)) return getWashupTime();
     if (STOCK.equals(propertyName)) return getStock();
     if (PARENTSIZE.equals(propertyName)) return getParentSize();
     if (RUNSIZE.equals(propertyName)) return getRunSize();
@@ -3902,6 +3976,8 @@ public class JobBase extends ModelBase {
     if (FRONTCOLOR5.equals(propertyName)) return getFrontColor5();
     if (FRONTCOLOR6.equals(propertyName)) return getFrontColor6();
     if (FRONTCOLOR7.equals(propertyName)) return getFrontColor7();
+    if (RUNTIME.equals(propertyName)) return getRunTime();
+    if (SETUPTIME.equals(propertyName)) return getSetupTime();
     return super.getProperty(propertyName);
   }
 	
@@ -3941,6 +4017,7 @@ public class JobBase extends ModelBase {
     if (PRICINGPRESS.equals(propertyName)) setPricingPress((PressDefinition)newValue); else
     if (COSTINGPRESS.equals(propertyName)) setCostingPress((PressDefinition)newValue); else
     if (RUNMETHOD.equals(propertyName)) setRunMethod((String)newValue); else
+    if (WASHUPTIME.equals(propertyName)) setWashupTime((Long)newValue); else
     if (STOCK.equals(propertyName)) setStock((StockDefinition)newValue); else
     if (PARENTSIZE.equals(propertyName)) setParentSize((Dimension)newValue); else
     if (RUNSIZE.equals(propertyName)) setRunSize((Dimension)newValue); else
@@ -4045,6 +4122,8 @@ public class JobBase extends ModelBase {
     if (FRONTCOLOR5.equals(propertyName)) setFrontColor5((String)newValue); else
     if (FRONTCOLOR6.equals(propertyName)) setFrontColor6((String)newValue); else
     if (FRONTCOLOR7.equals(propertyName)) setFrontColor7((String)newValue); else
+    if (RUNTIME.equals(propertyName)) setRunTime((Long)newValue); else
+    if (SETUPTIME.equals(propertyName)) setSetupTime((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -4114,6 +4193,8 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {PressDefinition.class};		
     if (RUNMETHOD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (WASHUPTIME.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
     if (STOCK.equals(propertyName)) 
       return new Class<?>[] {StockDefinition.class};		
     if (PARENTSIZE.equals(propertyName)) 
@@ -4322,6 +4403,10 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {String.class};		
     if (FRONTCOLOR7.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (RUNTIME.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (SETUPTIME.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -4362,6 +4447,7 @@ public class JobBase extends ModelBase {
     if (PRICINGPRESS.equals(propertyName)) return JobBase.class;
     if (COSTINGPRESS.equals(propertyName)) return JobBase.class;
     if (RUNMETHOD.equals(propertyName)) return JobBase.class;
+    if (WASHUPTIME.equals(propertyName)) return JobBase.class;
     if (STOCK.equals(propertyName)) return JobBase.class;
     if (PARENTSIZE.equals(propertyName)) return JobBase.class;
     if (RUNSIZE.equals(propertyName)) return JobBase.class;
@@ -4466,6 +4552,8 @@ public class JobBase extends ModelBase {
     if (FRONTCOLOR5.equals(propertyName)) return JobBase.class;
     if (FRONTCOLOR6.equals(propertyName)) return JobBase.class;
     if (FRONTCOLOR7.equals(propertyName)) return JobBase.class;
+    if (RUNTIME.equals(propertyName)) return JobBase.class;
+    if (SETUPTIME.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -4536,6 +4624,8 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getCostingPress(), objT.getCostingPress()))
       return false;
     if (! SmartEquals(getRunMethod(), objT.getRunMethod()))
+      return false;
+    if (! SmartEquals(getWashupTime(), objT.getWashupTime()))
       return false;
     if (! SmartEquals(getStock(), objT.getStock()))
       return false;
@@ -4744,6 +4834,10 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getFrontColor6(), objT.getFrontColor6()))
       return false;
     if (! SmartEquals(getFrontColor7(), objT.getFrontColor7()))
+      return false;
+    if (! SmartEquals(getRunTime(), objT.getRunTime()))
+      return false;
+    if (! SmartEquals(getSetupTime(), objT.getSetupTime()))
       return false;
     return true;
   }			

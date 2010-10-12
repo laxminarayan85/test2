@@ -44,6 +44,7 @@ package com.efi.printsmith.data
 		public var pricingPress:PressDefinition;
 		public var costingPress:PressDefinition;
 		public var runMethod:String = "";
+		public var washupTime:Number = 0;
 		public var stock:StockDefinition;
 		public var parentSize:Dimension;
 		public var runSize:Dimension;
@@ -148,6 +149,8 @@ package com.efi.printsmith.data
 		public var frontColor5:String = "";
 		public var frontColor6:String = "";
 		public var frontColor7:String = "";
+		public var runTime:Number = 0;
+		public var setupTime:Number = 0;
 	
 	}
 }
