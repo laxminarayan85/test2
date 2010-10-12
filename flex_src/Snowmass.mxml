@@ -413,6 +413,18 @@
 				win.bringWindowToFront();	
 			}
 		}		
+
+		public function handleNonUniqueUIEvent(evt:ResultEvent):void {
+			var child:Panel = evt.result as Panel;
+			//addUniqueTab(child);
+			var win:MDIWindow = containerManager.getWindowWithChild(child,true);
+			if (win == null)	{
+				containerManager.openNewMDIWindow(child.title,child);
+			}
+			else {
+				win.bringWindowToFront();	
+			}
+		}		
 		
 		private function getLocalizedMenuLabel(val:String):String	{
 			var retVal:String = "";
@@ -564,11 +576,11 @@
 //			event.dispatch();
 		}
 		public function doCreateEstimate():void {
-			var event:EditCreateEstimateEvent = new EditCreateEstimateEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			var event:EditCreateEstimateEvent = new EditCreateEstimateEvent(null, new mx.rpc.Responder(handleNonUniqueUIEvent, handleFault));
 			event.dispatch();
 		}
 		public function doCreateInvoice():void {
-			var event:EditCreateInvoiceEvent = new EditCreateInvoiceEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			var event:EditCreateInvoiceEvent = new EditCreateInvoiceEvent(null, new mx.rpc.Responder(handleNonUniqueUIEvent, handleFault));
 			event.dispatch();
 		}
 		public function doEditEstimate(estimate:InvoiceBase):void {
