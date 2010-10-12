@@ -1806,6 +1806,8 @@
 						if (job.parentSize == null)
 							job.parentSize = new Dimension()
 						job.parentSize.name = parentStr;
+						job.parentSize.width = Snowmass.getWidthFromSizeString(job.parentSize);
+						job.parentSize.height = Snowmass.getLengthFromSizeString(job.parentSize);
 					}
 					else {
 						job.parentSize = job_parent.selectedItem as Dimension;
@@ -1821,6 +1823,8 @@
 						if (job.finishSize == null)
 							job.finishSize = new Dimension();
 						job.finishSize.name = finishSizeStr;
+						job.finishSize.width = Snowmass.getWidthFromSizeString(job.finishSize);
+						job.finishSize.height = Snowmass.getLengthFromSizeString(job.finishSize);
 					}
 					else {
 						job.finishSize = job_finish_size.selectedItem as Dimension;
@@ -1836,6 +1840,8 @@
 						if (job.foldedSize == null)
 							job.foldedSize = new Dimension();
 						job.foldedSize.name = foldSizeStr;
+						job.foldedSize.width = Snowmass.getWidthFromSizeString(job.foldedSize);
+						job.foldedSize.height = Snowmass.getLengthFromSizeString(job.foldedSize);
 					} else
 						job.foldedSize = job_fold_size.selectedItem as Dimension;
 					break;
@@ -1848,6 +1854,8 @@
 						if (job.runSize == null)
 							job.runSize = new Dimension() as Dimension;
 						job.runSize.name = sizeStr;
+						job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
+						job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
 					}
 					else {
 						job.runSize = job_size.selectedItem as Dimension;

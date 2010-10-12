@@ -127,6 +127,7 @@
 		import com.efi.printsmith.components.MultiLineLabelButton;
 		import com.efi.printsmith.events.CreditCardTrackReadEvent;
 		import com.efi.printsmith.Constants;
+		import com.efi.printsmith.data.Dimension;
 		
 		public var timer : Timer;
 		public var nf:NumberFormatter;
@@ -393,6 +394,28 @@
 			job.parentSize = new Dimension();
 			job.finishSize = new Dimension();
 		 	paperCalWindow.setJob(job);
+		}
+		
+		public static function getLengthFromSizeString(size:Dimension):Number {
+			var lengthString:String = "0";
+	
+			var i:int = size.name.indexOf("x");
+			if (i > -1) {
+				lengthString = size.name.substring(0, i - 1);
+			}
+	
+			return parseFloat(lengthString);
+		}
+	
+		public static function getWidthFromSizeString(size:Dimension):Number {
+			var widthString:String = "0";
+	
+			var i:int = size.name.indexOf("x");
+			if (i > -1) {
+				widthString = size.name.substring(i + 2);
+			}
+	
+			return parseFloat(widthString);
 		}
 		
 		public function doPaperCal():void{
