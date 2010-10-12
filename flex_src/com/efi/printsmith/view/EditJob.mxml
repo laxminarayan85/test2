@@ -785,6 +785,10 @@
 					setPreferenceDataforPaperCal();
 					setPaperCalculatorData = false;
 				}
+				if (estimatingPreferences.useStockParentSize)
+					this.job_parent.enabled = false;
+				else
+					this.job_parent.enabled = true;
 			}	                                  
 
 			public function init():void
