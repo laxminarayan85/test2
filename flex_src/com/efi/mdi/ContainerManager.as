@@ -193,6 +193,14 @@ package com.efi.mdi
 		
 		public function removeChildFromTree(win:MDIWindow):void	{
 			var winItem:WindowItem = getWindowFromTree(win.windowID, _baseWindowItem);
+			if (winItem.parentId == -1)	{
+				for (var i:int=0; i<_baseWindowItem.children.length; i++)	{
+					if ((_baseWindowItem.children.getItemAt(i) as WindowItem).id == win.windowID)	
+						_baseWindowItem.children.removeItemAt(i);
+						return;
+				}
+			}
+			
 			var parentWinItem:WindowItem = getWindowFromTree(winItem.parentId, _baseWindowItem);
 			
 			if ((parentWinItem != null) && (parentWinItem.children != null))	{

@@ -90,10 +90,7 @@
 			
 			private function closeMinimizedWindow(minWin:MinimizedWindow, isRoot:Boolean = false):void	{
 				closeWindow(minWin.windowRef, isRoot);
-				taskbar.removeChild(minWin);
-				if (isRoot)	{
-					ContainerManager.getExistingInstance().removeChildFromTree(minWin.windowRef);	
-				}
+				taskbar.removeChild(minWin);				
 			}
 			private function closeWindow(window:MDIWindow, isRoot:Boolean = false):void	{
 				
