@@ -22,7 +22,7 @@
 			
 			private function initConfirmationComp():void {
 				fadeIn.play([confirmationBox]);
-				timer = new Timer(5000);
+				timer = new Timer(2000);
 				timer.addEventListener(TimerEvent.TIMER,function(event:TimerEvent):void {
 					timer.stop();
 					close();
