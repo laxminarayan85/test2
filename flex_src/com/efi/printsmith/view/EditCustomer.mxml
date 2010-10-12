@@ -416,6 +416,8 @@
 		ship_via_combo.selectedIndex = findItem(defaultShipVia, shippingMethods);
 		sales_rep_combo.selectedIndex = findItem(defaultSalesRep, salesReps);
 		sales_rep_combo2.selectedIndex = findItem(defaultSalesRep, salesReps);
+		mapToAccountData();
+		setOriginalAccount();
 	 	if ( this.enabled == false)
 	 		this.enabled = true;
 	}  
