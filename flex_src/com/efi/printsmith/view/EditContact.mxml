@@ -226,8 +226,8 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}           
 	                                  	
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
-		account = new Account();
-		this.setAccount(account);
+		/* account = new Account();
+		this.setAccount(account); */
 		
 	}
 	private function handleGradePickerCancel(evt:GradeSelectEvent):void {
