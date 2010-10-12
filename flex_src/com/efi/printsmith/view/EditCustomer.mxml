@@ -1482,7 +1482,7 @@
 				<mx:Text x="349" y="68" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Usingstandardrateof0')}" width="348" fontWeight="bold"  id="standardratelabel"/>
 				<mx:CheckBox x="384" y="92" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Nevercalculatefinanc')}" id="never_calculate_finance_check"  selected="{account.applyFinanceCharges}"/>
 				<mx:Panel x="10" y="146" width="402" height="118" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AutomaticDiscount')}" dropShadowEnabled="false">
-					<mx:TextInput x="85" y="10" restrict="0-9" width="132" id="auto_discount_percent_edit" text="{account.discount * 100}%" focusOut="addSymbolDiscount()"/>
+					<mx:TextInput x="85" y="10" restrict="0-9\-" width="132" id="auto_discount_percent_edit" text="{account.discount * 100}%" focusOut="addSymbolDiscount()"/>
 					<mx:TextInput x="85" y="40" width="132" id="auto_discount_dollar_text" text="{Snowmass.getCurrencyFormatter(false,2).format(account.discountDollarAmt)}"/>
 					
 					<mx:RadioButtonGroup id="auto_discount" selectedValue="{autoDiscountRadioValue}" change="setEditBox();"/>
