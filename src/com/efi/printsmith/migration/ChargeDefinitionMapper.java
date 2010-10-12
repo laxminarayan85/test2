@@ -498,7 +498,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					} else if ("sequence".equals(currentFieldToken)) {
 						/* TODO */
 					} else if ("ship method".equals(currentFieldToken)) {
-						if (currentImportToken.equals("") == false) {
+						if (currentImportToken.equals("") == false && currentImportToken.equals("0") == false) {
 							ShippingMethod shippingMethod = dataService
 									.getByShippingMethodName(currentImportToken);
 							if (shippingMethod == null) {
