@@ -135,7 +135,7 @@ package com.efi.mdi
 				if (winItem == null)
 					_baseWindowItem.addChildWindow(new WindowItem(mdiWindow.windowID));
 				else
-					winItem.addChildWindow(new WindowItem(mdiWindow.windowID));
+					winItem.addChildWindow(new WindowItem(mdiWindow.windowID,winItem.id));
 			}
 				
 			_mdiContainerRef.addMDIWindow(mdiWindow);
@@ -190,6 +190,26 @@ package com.efi.mdi
 			}
 			return null;
 		}
+		
+		public function removeChildFromTree(win:MDIWindow):void	{
+			var winItem:WindowItem = getWindowFromTree(win.windowID, _baseWindowItem);
+			var parentWinItem:WindowItem = getWindowFromTree(winItem.parentId, _baseWindowItem);
+			
+			if ((parentWinItem != null) && (parentWinItem.children != null))	{
+				if (parentWinItem.children.length == 1)
+					parentWinItem.children = null;
+				else	{
+					for (var i:int=0; i<parentWinItem.children.length; i++)	{
+						var wi:WindowItem = parentWinItem.children.getItemAt(i) as WindowItem;
+						if (wi.id == win.windowID)	{
+							parentWinItem.children.removeItemAt(i);
+							break;
+						}
+					}
+				}
+			}
+		}
+
 		
 		private function getWindowFromTree(id:int, rootNode:WindowItem):WindowItem	{
 			if (rootNode.id == id)

@@ -88,11 +88,14 @@
 				ContainerManager.getExistingInstance().recalculateWindowStyles();
 			}
 			
-			private function closeMinimizedWindow(minWin:MinimizedWindow):void	{
-				closeWindow(minWin.windowRef);
+			private function closeMinimizedWindow(minWin:MinimizedWindow, isRoot:Boolean = false):void	{
+				closeWindow(minWin.windowRef, isRoot);
 				taskbar.removeChild(minWin);
+				if (isRoot)	{
+					ContainerManager.getExistingInstance().removeChildFromTree(minWin.windowRef);	
+				}
 			}
-			private function closeWindow(window:MDIWindow):void	{
+			private function closeWindow(window:MDIWindow, isRoot:Boolean = false):void	{
 				
 				window.state = MDIWindow.CLOSED;
 				
@@ -109,12 +112,17 @@
 							else	{
 								closeWindow(win);
 							}
-						}
+							
+						}						
 					} 
 				}
 				appCanvas.removeChild(window);
 				
-				ContainerManager.getExistingInstance().recalculateWindowStyles();
+				if (isRoot)	{
+					ContainerManager.getExistingInstance().recalculateWindowStyles();
+					ContainerManager.getExistingInstance().removeChildFromTree(window);
+				}
+				
 				
 			}
 			
@@ -131,28 +139,28 @@
 								mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
 									if(event.windowConfirmStatus==1){
 										mdiWindowAware.onDontSave();
-										closeWindow(mdiWindow);
+										closeWindow(mdiWindow, true);
 									} else if(event.windowConfirmStatus==2) {
 										mdiWindowAware.onCancel();
 									} else if(event.windowConfirmStatus==3) {
 										mdiWindow.content.addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
 											if(event.isSaved){
-												closeWindow(mdiWindow);
+												closeWindow(mdiWindow,true);
 											}	
 										},false,0,true);
 										mdiWindowAware.onSave();
 									}
 								},false,0,true);
 							} else {
-								closeWindow(event.child as MDIWindow); 
+								closeWindow(event.child as MDIWindow, true); 
 							}
 						}
 					} else {
-						closeWindow(event.child as MDIWindow); 
+						closeWindow(event.child as MDIWindow, true); 
 					}
 				}
 				if (event.child is MinimizedWindow)	{
-					closeMinimizedWindow(event.child as MinimizedWindow);
+					closeMinimizedWindow(event.child as MinimizedWindow, true);
 				}	
 			}
 			
