@@ -1475,7 +1475,10 @@
 						else
 							this.job.runSize = evt.stockDefinition.normalRunSize;
 						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
-						this.job.finishSize = evt.stockDefinition.parentsize;
+						if (this.job.runSize.width * this.job.runSize.height < this.job.parentSize.width * this.job.parentSize.height)
+							this.job.finishSize = this.job.runSize;
+						else
+							this.job.finishSize = evt.stockDefinition.parentsize;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 						if (this.estimatingPreferences.leaveFoldedSizeEmpty != true)
 							this.job.foldedSize = this.job.finishSize;
