@@ -1,6 +1,7 @@
 package com.efi.printsmith.itemRenderers
 {
 	import com.efi.printsmith.data.JobBase;
+	import com.efi.printsmith.view.EditInvoice;
 	
 	import mx.containers.Box;
 	import mx.controls.RadioButton;
@@ -24,6 +25,10 @@ package com.efi.printsmith.itemRenderers
 					if(jobBase.multiQtyJob || jobBase.hasMultiQtyJobs){
 						radioButton = new RadioButton();
 						radioButton.selected = jobBase.defaultJob;
+						var editInvoice:EditInvoice = this.parentDocument as EditInvoice;
+						if(editInvoice!=null){
+							radioButton.group = editInvoice.getRBGroupRef(value);
+						}
 						addChild(radioButton);
 					}
 				}
