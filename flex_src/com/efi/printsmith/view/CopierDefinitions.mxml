@@ -519,6 +519,7 @@
 	}       
 
 	private function doDelete():void {
+		copierDefinitionArray.removeItemAt(dataGrid.selectedIndex);
 		dataService.deleteItem("CopierDefinition",copierDefinition.id);
 	}
 	
@@ -625,7 +626,7 @@
 	}	                                 
 	private function handleDeleteResult(ev:ResultEvent):void {
 		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.DELETE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pmethSetCmd.CopierDefinitions')));
-		dataService.getCopierPicker();
+		this.doNew();
 	}
 	      
 	private function handleFault(ev:FaultEvent):void {  
