@@ -5,15 +5,14 @@
  implements="com.efi.mdi.IMDIWindowAware">
 	<mx:states>
 		<mx:State name="Large Format">
-			<mx:SetProperty target="{colorcheck}" name="selected" value="false"/>
+			<!--<mx:SetProperty target="{colorcheck}" name="selected" value="false"/>
 			<mx:SetProperty target="{colorcheck}" name="enabled" value="false"/>
 			<mx:SetProperty target="{blackwhitecheck}" name="enabled" value="false"/>
-			<mx:SetProperty target="{blackwhitecheck}" name="selected" value="false"/>
+			<mx:SetProperty target="{blackwhitecheck}" name="selected" value="false"/>-->
 			<mx:SetProperty target="{label1}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.LengthMinute')}"/>
 			<mx:SetProperty target="{label4}"  name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MachineCostperSqUnit')}"/>
-			<mx:SetProperty target="{label4}" name="x" value="509"/>
-			<mx:SetProperty target="{label4}" name="y" value="342"/>
-			<mx:SetProperty target="{copyID}" name="text" value=""/>
+			<mx:SetProperty target="{label4}" name="y" value="364"/>
+			<!--<mx:SetProperty target="{copyID}" name="text" value=""/>-->
 		</mx:State>
 	</mx:states>
  
@@ -288,7 +287,7 @@
 					tempmachineCost = tempmachineCost / parseFloat(this.maxWidthsize.text);
 				}
 				tempmachineCost= tempmachineCost +laborCopy+tonerCopy+developerCopy+ click;
-       			 machineCostperCopy.text = tempmachineCost.toPrecision(3)
+       			 machineCostperCopy.text = Snowmass.getCurrencyFormatter(false,4).format(tempmachineCost);
 			}
 		}
 	}
@@ -319,10 +318,19 @@
 			if (copierDefinition != null) {
 				updateMethodBox();
 				wasteName.label = WasteListLabel();
-				if ( copierDefinition.largeFormat)
+				if ( copierDefinition.largeFormat) {
 					this.currentState = "Large Format";
-				else
+					colorcheck.enabled = false;
+					colorcheck.selected = false;
+					blackwhitecheck.enabled = false;
+					blackwhitecheck.selected = false;
+					copyID.text = ""; 
+				}
+				else {
 					this.currentState = "";
+					colorcheck.enabled = true;
+					blackwhitecheck.enabled = true;
+				}
 					
 			}
 			stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
@@ -371,6 +379,9 @@
 			 		wasteName.label = WasteListLabel();
 			this.charges = copierDefinition.charges;			
 			updateControlState();
+			if (pricing_method_combo.selectedItem != null) {
+				copierDefinition.method = pricing_method_combo.selectedItem.data;
+			}
 			copierDefinition.baseRate = parseFloat(baseRate_edit.text.replace(",",""));
 			setOriginalCopierDefinition();
 		} else if (ev.token.operation == "getPricingMatrix") {
@@ -381,6 +392,7 @@
 	   		}
 			
 		}
+		validateNow();
 	}
 	
 	private function openEditMatrixWindow():void {
