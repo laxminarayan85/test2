@@ -21,7 +21,7 @@
 					result="handleCreateInvoiceResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataService"
-					 destination="dataService">
+					 destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll"
 				   fault="handleFault(event)"
 				   result="handleLoadResult(event)"/>
@@ -79,8 +79,12 @@
 					fault="handleFault(event)"
 					result="handleLoadInvoiceTemplates(event)"/>		
 	</mx:RemoteObject>
+	
+	<mx:Script source="../common/scripts/CommonUtils.as"/>
+	
 	<mx:Script>
 		<![CDATA[
+			import flash.utils.setTimeout;
 			import mx.utils.ObjectUtil;
 			import flash.net.registerClassAlias;
 			import com.efi.mdi.view.window.MDIWindow;
@@ -338,6 +342,11 @@
 				this.invoice = ev.result as InvoiceBase;
 				inv_number.text = invoice.invoiceNumber;
 				//this.parent.removeChild(this);
+				if(invoice is Invoice){
+					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')));
+				} else if(invoice is Estimate){
+					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')));
+				}
 				Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 			}
 			
@@ -789,11 +798,13 @@
 			private function doDoubleclickInvoiceItem():void {
 				var selectedJob:Job = invoice_job_grid.selectedItem as Job;
 				selectedJobIndex = selectedJob.jobIndex;
-				if (selectedJob.id != 0) { // this job had been persisted previously	
+				//Commented to not to retrieve the job from DB 
+				/* if (selectedJob.id != 0) { // this job had been persisted previously	
 					dataService.getJob(selectedJob.id);
 				} else {
 					openEditJobWindow(selectedJob);
-				}
+				} */
+				openEditJobWindow(selectedJob);
 			}
 
 			private function openEditJobWindow(job:Job):void {

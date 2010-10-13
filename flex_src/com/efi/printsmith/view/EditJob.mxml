@@ -828,6 +828,8 @@
 //					this.enabled=false;
 //				}
 				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+				multiQtyCombo.selectedItem = null;
+				multiQtyCombo.selectedIndex = -1;
 			}
 			
 			public function handleUIControlEvent(evt:ResultEvent):void {
@@ -1971,7 +1973,9 @@
 						job.weight= (job.qtyOrdered * job.inSetsOf * job.sheets)* tempweight;
 				  	 }
 				}else{
-					parent = job.stock.parentsize.width * job.cutOff;
+					if(job.stock!=null && job.stock.parentsize!=null){
+						parent = job.stock.parentsize.width * job.cutOff;
+					}
 					//basic = job.stock.stktype.size
 				}	
 			}
@@ -2168,6 +2172,8 @@
 					Snowmass.getInstance().containerManager.openNewMDIWindow(jobTitle,editJobWindow, -1,-1,-1,-1, windowID);
 					editJobWindow.setJob(selectedMultiQtyJob);
 					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, updateJob);
+					multiQtyCombo.selectedItem = null;
+					multiQtyCombo.selectedIndex = -1;
 				}
 			}
 			
