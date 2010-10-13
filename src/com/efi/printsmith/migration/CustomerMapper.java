@@ -38,6 +38,7 @@ public class CustomerMapper extends ImportMapper {
 		Address billToAddress = new Address();
 		Contact shipToContact = new Contact();
 		Contact billToContact = new Contact();
+		TaxTable taxTable = new TaxTable();
 		Marketing marketing = new Marketing();
 		BusinessType businessType = new BusinessType();
 		String contactId = "";
@@ -199,13 +200,21 @@ public class CustomerMapper extends ImportMapper {
 					/* TODO */
 				} else if ("tax code".equals(currentFieldToken)) {
 					/* TODO */
-				} else if ("tax table".equals(currentFieldToken)) {
+				} else if ("tax table ID".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
-						TaxTable taxTable = (TaxTable)dataService.getByPrevId("TaxTable", currentImportToken);
+						 taxTable = (TaxTable)dataService.getByPrevId("TaxTable", currentImportToken);
 						if (taxTable != null)
 							customer.setTaxTable(taxTable);
 					}
-				} else if ("sales ranking".equals(currentFieldToken)) {
+				} else if ("tax table is default".equals(currentFieldToken)) {
+					if (currentImportToken.equals("0") == false) {
+						if ( taxTable.getDefaultTable() != true){
+							taxTable.setDefaultTable(true);
+							dataService.addUpdate(taxTable);
+						}
+												
+					}
+				}else if ("sales ranking".equals(currentFieldToken)) {
 					customer.setSalesRank(Utilities
 							.tokenToLong(currentImportToken));
 				} else if ("do statement".equals(currentFieldToken)) {
