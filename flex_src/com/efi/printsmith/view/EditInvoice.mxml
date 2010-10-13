@@ -582,7 +582,7 @@
 			private function doChangeAcct():void
 			{
 				job_costing_stack.selectedChild=account_info_canvas;
-				viewstack3.selectedChild=this.account_total_canvas;
+				//viewstack3.selectedChild=this.account_total_canvas;
 			}
 			
 			private function showCosting():void
