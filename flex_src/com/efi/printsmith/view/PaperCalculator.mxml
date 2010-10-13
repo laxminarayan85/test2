@@ -203,7 +203,6 @@
 			public function setdimension(dim2:ArrayCollection):void
 			{
 				dimensions=dim2;
-
 			}
 			
 			//
@@ -900,6 +899,7 @@
 		<mx:RadioButton x="532" y="428" label="Parent, Finish" id="parent_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
 		<mx:RadioButton x="634" y="428" label="Parent, Run" id="parent_run" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
 		<mx:RadioButton x="725" y="428" label="Run, Finish" id="run_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
+		<mx:List x="21" y="294" height="310" width="192" id="size_list" dataProvider="{dimensions}" labelFunction="sizeDisplay"></mx:List>
 
 	</mx:Canvas>
 </mx:TitleWindow>
