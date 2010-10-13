@@ -81,6 +81,8 @@
 	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import mx.utils.ObjectUtil;
+			import flash.net.registerClassAlias;
 			import com.efi.mdi.view.window.MDIWindow;
 			import mx.utils.StringUtil;
 			import mx.controls.RadioButton;
@@ -169,6 +171,9 @@
 			private var selectedJobIndex:int=0;
 			
 			private var radioButtonGroupList:ArrayCollection = new ArrayCollection();
+			
+			private var resetJobsList:Boolean = true;
+			
 			public function init():void
 			{
 				loginUser = new Users();
@@ -525,14 +530,31 @@
 							jobList.addItem(jobBaseObj);
 						}
 					}
-					invoice.jobs = jobList;
 					for each(var jobBaseObject:JobBase in target.invoiceMultiQtyJobList){
-						invoice.jobs.addItem(jobBaseObject);
+						jobList.addItem(jobBaseObject);
 					}
 					for each(var jobBaseObject:JobBase in target.multiQtyJobList){
-						invoice.jobs.addItem(jobBaseObject);
+						jobList.addItem(jobBaseObject);
 					}
+					invoice.jobs = jobList;
 				}
+				var updatedJobList:ArrayCollection = new ArrayCollection();
+				for(var i:int=0;i<invoice.jobs.length;i++) {
+					var tempJobBaseObj:JobBase = invoice.jobs.getItemAt(i) as JobBase;
+					if(!isNaN(target.job.id) && target.job.id!=0){
+						if(tempJobBaseObj.id == target.job.id){
+							registerClassAlias("com.efi.printsmith.data.JobBase",JobBase);
+							tempJobBaseObj = ObjectUtil.copy(target.job) as JobBase;
+						}
+					} else {
+						if(tempJobBaseObj.jobIndex == target.job.jobIndex){
+							registerClassAlias("com.efi.printsmith.data.JobBase",JobBase);
+							tempJobBaseObj = ObjectUtil.copy(target.job) as JobBase;
+						}
+					}
+					updatedJobList.addItem(tempJobBaseObj);
+				}
+				invoice.jobs = updatedJobList;
 				if (invoice.jobs != null && invoice.jobs.length > 0) {
 					var i:int;
 					invoice.subTotal = 0;
@@ -567,6 +589,7 @@
 					this.createInvoice.visible = true;
 				}
 				invoice_job_grid.dataProvider = getJobList(invoice.jobs);
+				invoice_job_grid.validateNow();
 			}
 			
 			public function doCreateInvoice():void
@@ -757,8 +780,8 @@
 				
 				if (selectedJob != null) {
 					selectedJob.jobIndex = selectedJobIndex;
-					invoice.jobs.setItemAt(selectedJob, invoice_job_grid.selectedIndex);
-					invoice_job_grid.selectedItem = selectedJob;
+					//invoice.jobs.setItemAt(selectedJob, invoice_job_grid.selectedIndex);
+					//invoice_job_grid.selectedItem = selectedJob;
 					openEditJobWindow(selectedJob);
 				}	
 			}
@@ -834,58 +857,66 @@
 			}
 			
 			private function getJobList(jobList:ArrayCollection):ArrayCollection {
-				multiQtyJobPresent = false;
-				radioButtonGroupList = new ArrayCollection();
-				if(invoice is Invoice) {
-					var invoiceJobList:ArrayCollection = new ArrayCollection();
-					var counter:int=0;
-					for each(var jobBaseObj:JobBase in jobList){
-						counter++;
-						jobBaseObj.jobIndex = counter; 
-						invoiceJobList.addItem(jobBaseObj);
-					}
-					return jobList;
-				} else if(invoice is Estimate) {
-					if(jobList!=null && jobList.length>0){
-						var estimatesJobList:ArrayCollection = new ArrayCollection();
-						var rbCounter:int=0;
+				if(resetJobsList) {
+					resetJobsList = false;
+					multiQtyJobPresent = false;
+					radioButtonGroupList = new ArrayCollection();
+					if(invoice is Invoice) {
+						var invoiceJobList:ArrayCollection = new ArrayCollection();
 						var counter:int=0;
 						for each(var jobBaseObj:JobBase in jobList){
-							jobBaseObj.hasMultiQtyJobs = false;
-							if(!jobBaseObj.multiQtyJob){
-								var checkFlag:Boolean = false;
-								for each(var estimatesJobObj:JobBase in estimatesJobList) {
-									if(estimatesJobObj.id == jobBaseObj.id) {
-										checkFlag = true;
-										break;
-									}
-								}
-								if(!checkFlag){
-									jobBaseObj.rbIndex = rbCounter;
-									counter++;
-									jobBaseObj.jobIndex = counter;
-									estimatesJobList.addItem(jobBaseObj);
-									for each(var jobBaseObject:JobBase in jobList){
-										if(jobBaseObj.jobGroup!=0 && jobBaseObj.jobGroup==jobBaseObject.jobGroup && jobBaseObject.multiQtyJob){
-											jobBaseObj.hasMultiQtyJobs = true;
-											multiQtyJobPresent = true;
-											jobBaseObject.rbIndex = jobBaseObj.rbIndex;
-											counter++;
-											jobBaseObject.jobIndex = counter;
-											estimatesJobList.addItem(jobBaseObject);
+							counter++;
+							jobBaseObj.jobIndex = counter; 
+							invoiceJobList.addItem(jobBaseObj);
+						}
+						resetJobsList = true;
+						return jobList;
+					} else if(invoice is Estimate) {
+						if(jobList!=null && jobList.length>0){
+							var tempMultiQtyJobPresent:Boolean = false;
+							var estimatesJobList:ArrayCollection = new ArrayCollection();
+							var rbCounter:int=0;
+							var counter:int=0;
+							for each(var jobBaseObj:JobBase in jobList){
+								jobBaseObj.hasMultiQtyJobs = false;
+								if(!jobBaseObj.multiQtyJob){
+									var checkFlag:Boolean = false;
+									for each(var estimatesJobObj:JobBase in estimatesJobList) {
+										if(estimatesJobObj.id == jobBaseObj.id) {
+											checkFlag = true;
+											break;
 										}
 									}
-									/* if(jobBaseObj.hasMultiQtyJobs){ */
-										var radioButtonGroup:RadioButtonGroup = new RadioButtonGroup();
-										radioButtonGroup.initialized(this.document,"defaultJob"+jobBaseObj.jobGroup);
-										radioButtonGroupList.addItem(radioButtonGroup);
-									/* } */
+									if(!checkFlag){
+										jobBaseObj.rbIndex = rbCounter;
+										counter++;
+										jobBaseObj.jobIndex = counter;
+										estimatesJobList.addItem(jobBaseObj);
+										for each(var jobBaseObject:JobBase in jobList){
+											if(jobBaseObj.jobGroup!=0 && jobBaseObj.jobGroup==jobBaseObject.jobGroup && jobBaseObject.multiQtyJob){
+												jobBaseObj.hasMultiQtyJobs = true;
+												tempMultiQtyJobPresent = true;
+												jobBaseObject.rbIndex = jobBaseObj.rbIndex;
+												counter++;
+												jobBaseObject.jobIndex = counter;
+												estimatesJobList.addItem(jobBaseObject);
+											}
+										}
+										/* if(jobBaseObj.hasMultiQtyJobs){ */
+											var radioButtonGroup:RadioButtonGroup = new RadioButtonGroup();
+											radioButtonGroup.initialized(this.document,"defaultJob"+jobBaseObj.jobGroup);
+											radioButtonGroupList.addItem(radioButtonGroup);
+										/* } */
+									}
 								}
+								rbCounter++;
 							}
-							rbCounter++;
+							multiQtyJobPresent = tempMultiQtyJobPresent;
+							resetJobsList = true;
+							return estimatesJobList;
 						}
-						return estimatesJobList;
 					}
+					resetJobsList = true;
 				}
 				return null;
 			}
@@ -1265,9 +1296,11 @@
 								<mx:DataGridColumn visible="{multiQtyJobPresent}">
 									<mx:itemRenderer>
 										<mx:Component>
-											<mx:RadioButton group="{outerDocument.getRBGroupRef(data)}"
-												enabled="{data.multiQtyJob || data.hasMultiQtyJobs}"
-												selected="{data.defaultJob}" click="{outerDocument.setDefaultJob(data,event)}"/>
+											<mx:HBox width="100%" horizontalAlign="center">
+												<mx:RadioButton group="{outerDocument.getRBGroupRef(data)}"
+													enabled="{data.multiQtyJob || data.hasMultiQtyJobs}"
+													selected="{data.defaultJob}" click="{outerDocument.setDefaultJob(data,event)}"/>
+											</mx:HBox>
 										</mx:Component>
 									</mx:itemRenderer>
 								</mx:DataGridColumn>	
