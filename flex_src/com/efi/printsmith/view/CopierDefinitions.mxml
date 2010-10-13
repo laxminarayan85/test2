@@ -1154,11 +1154,12 @@
 				   
 	}
 	 private function doclickwaste(event: MouseEvent):void{
+	 	if (copierDefinition.wasteChart != null) {
     		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.setPriceList(copierDefinition.wasteChart as PriceListBase);
-	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSaveWasteTable);		
-    	
+		    titleWindow.setStyle("borderAlpha", 0.9);
+		    titleWindow.setPriceList(copierDefinition.wasteChart as PriceListBase);
+		    titleWindow.addEventListener(SavePriceListEvent.Save, handleSaveWasteTable);		
+  		}
     }
 	private function WasteListLabel():String {
 		if (copierDefinition.wasteChart != null) {
