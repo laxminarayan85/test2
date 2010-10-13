@@ -1499,6 +1499,7 @@
 							job.costingCopier = evt.stockDefinition.defaultColorCopier;
 							job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers);
 						}
+						job.inSetsOf = evt.stockDefinition.sheetsPerSet;
 					}
 					else {
 						this.job.parentSize = evt.stockDefinition.normalRunSize;
