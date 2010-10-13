@@ -148,6 +148,8 @@
 	private var productionLocationArray:ArrayCollection = new ArrayCollection();  
 	[Bindable]
 	private var productionCopiersArray:ArrayCollection = new ArrayCollection();
+	[Bindable]
+	private var price2SideArray:Array = new Array;
 	
 	private var selectedCopierId:Number = -1;
 	[Bindable] private var loadComponent:CommonLoadComponent;
@@ -334,7 +336,7 @@
 					
 			}
 			stock_Price_is_combo.selectedIndex = findItemArray(copierDefinition.stockPriceMethod, StockPriceMethod.toArray());
-			price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
+			price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, price2SideArray);
 			copierDigitalStockmarkup.selected = copierDefinition.useCopierStockMarkup;
 			var salesCatName:String = "";
 			if (copierDefinition.costCenter != null){
@@ -914,9 +916,9 @@
 				RateCopy.visible =false;
 				baseratelabel.visible = false;
 				baseRate_edit.visible = false;
-				var price2SideArray:Array = Price2Side.toArray().filter(filterCostPlusPrice2Side);
+				price2SideArray = Price2Side.toArray().filter(filterCostPlusPrice2Side);
 				price_2_side.dataProvider = price2SideArray;
-				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, price2SideArray);
 				break;
 			
 			case CopierPricingMethod.FlatRate:
@@ -936,9 +938,9 @@
 				RateCopy.enabled = true;
 				baseratelabel.visible =false;
 				baseRate_edit.visible = false;
-				var price2SideArray:Array = Price2Side.toArray().filter(filterFlatRatePrice2Side);
+				price2SideArray = Price2Side.toArray().filter(filterFlatRatePrice2Side);
 				price_2_side.dataProvider = price2SideArray;
-				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
+				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, price2SideArray);
 				break;
 				
 			case CopierPricingMethod.CopiesAndOriginals:
@@ -957,7 +959,8 @@
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
-				price_2_side.dataProvider = Price2Side.toArray();
+				price2SideArray = Price2Side.toArray();
+				price_2_side.dataProvider = price2SideArray;
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
@@ -977,7 +980,8 @@
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
-				price_2_side.dataProvider = Price2Side.toArray();
+				price2SideArray = Price2Side.toArray();
+				price_2_side.dataProvider = price2SideArray;
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
@@ -998,7 +1002,8 @@
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
-				price_2_side.dataProvider = Price2Side.toArray();
+				price2SideArray = Price2Side.toArray();
+				price_2_side.dataProvider = price2SideArray;
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
@@ -1018,7 +1023,8 @@
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
-				price_2_side.dataProvider = Price2Side.toArray();
+				price2SideArray = Price2Side.toArray();
+				price_2_side.dataProvider = price2SideArray;
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
@@ -1038,7 +1044,8 @@
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
-				price_2_side.dataProvider = Price2Side.toArray();
+				price2SideArray = Price2Side.toArray();
+				price_2_side.dataProvider = price2SideArray;
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
@@ -1058,7 +1065,8 @@
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
-				price_2_side.dataProvider = Price2Side.toArray();
+				price2SideArray = Price2Side.toArray();
+				price_2_side.dataProvider = price2SideArray;
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
@@ -1078,7 +1086,8 @@
 				copymarkuplabel.visible = true;
 				ratecopylabel.visible = false;
 				RateCopy.visible =false;
-				price_2_side.dataProvider = Price2Side.toArray();
+				price2SideArray = Price2Side.toArray();
+				price_2_side.dataProvider = price2SideArray;
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 			}
