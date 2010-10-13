@@ -326,7 +326,7 @@
 					colorcheck.selected = false;
 					blackwhitecheck.enabled = false;
 					blackwhitecheck.selected = false;
-					copyID.text = ""; 
+					//copyID.text = ""; 
 				}
 				else {
 					this.currentState = "";
