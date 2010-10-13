@@ -2152,6 +2152,10 @@
 				}
 			}
 			
+			private function doUpdateNumberOn():void {
+				job.numOn = job.sheets;
+			}
+			
 			private function openEditMultiQtyJobWindow():void {
 				if(multiQtyCombo.selectedItem!=null && multiQtyCombo.selectedItem is Job){
 					var selectedMultiQtyJob:Job = multiQtyCombo.selectedItem as Job;
@@ -2551,7 +2555,7 @@
 										  id="job_sheets"
 										  text="{job.sheets}"
 										  height="20"
-										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
+										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)" change="doUpdateNumberOn();"/>
 							<mx:TextInput x="496"
 										  y="116"
 										  width="45.300003"
