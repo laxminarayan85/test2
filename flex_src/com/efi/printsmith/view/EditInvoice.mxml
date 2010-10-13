@@ -233,7 +233,7 @@
 						accountDataService.getAccountPicker();
 						//doAccountPicker();
 					}
-					var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+					var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this,true);
   					mdiWin.title = this.title;
 				}
 				
