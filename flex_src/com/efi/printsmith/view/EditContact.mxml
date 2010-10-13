@@ -205,7 +205,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}  
 	
 	private function saveContactHandler(ev:Event):void {
-		this.setContact(contact_editor.contact);
+		this.setContact(contact_editor.contact,false);
 	}
 	
 	private function handleLoadGradeResult(ev:ResultEvent):void {
@@ -276,7 +276,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 		//producer.send(message);
 	}
 		
-	public function setContact(contact:Contact):void
+	public function setContact(contact:Contact,copyToOriginalObject:Boolean=true):void
 	{
 		if (contact != null){
 			this.contact = contact;
@@ -300,8 +300,10 @@ implements="com.efi.mdi.IMDIWindowAware">
 			if( contact.creditCard == null) setCreditCard();
 			mapFromContactData();
 			setCampaigns();
-			registerClassAlias("com.efi.printsmith.data.Contact",Contact);
-			originalContact = ObjectUtil.copy(this.contact) as Contact;
+			if(copyToOriginalObject){
+				registerClassAlias("com.efi.printsmith.data.Contact",Contact);
+				originalContact = ObjectUtil.copy(this.contact) as Contact;
+			}
 			if (contact.firstName != "" && contact.lastName != "") {
 				this.enableSave = true;
 			} else {
