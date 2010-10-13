@@ -2243,7 +2243,6 @@
 					   y="10"
 					   width="38"
 					   height="38"
-					   click="doNew();"
 					   id="new_job_button">
 				<mx:icon>@Embed(source='../../../../assets/preview.png')</mx:icon>
 			</mx:LinkButton>
@@ -2307,7 +2306,6 @@
 					   y="10"
 					   width="38"
 					   height="38"
-					   click="doNew();"
 					   id="change_account_button">
 				<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
 			</mx:LinkButton>
