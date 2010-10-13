@@ -3,6 +3,8 @@ package com.efi.printsmith.migration;
 import java.io.File;
 
 import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.efi.printsmith.data.CostingRecord;
@@ -72,6 +74,7 @@ public class JobMapper extends ImportMapper {
 				invoiceNumber = currentImportToken;
 			} else if ("job number".equals(currentFieldToken)) {
 				job.setJobNumber(currentImportToken);
+				job.setJobIndex(Utilities.tokenToLong(currentImportToken));
 			} else if ("sales category".equals(currentFieldToken)) {
 				if (currentImportToken.equals("0") == false) {
 					salesCategory = (SalesCategory)dataService.getByPrevId("SalesCategory", currentImportToken);
@@ -92,6 +95,7 @@ public class JobMapper extends ImportMapper {
 					job.setSalesCategory(salesCategory);
 				}
 			} else if ("press ID".equals(currentFieldToken)) {
+//				if (job.getPricingMethod().equals(Constants.))
 				PressDefinition pressDefinition = (PressDefinition) dataService.getByPressId(currentImportToken);
 				if (pressDefinition != null){
 					job.setPress(pressDefinition);
@@ -121,6 +125,7 @@ public class JobMapper extends ImportMapper {
 				/* TODO */
 			} else if ("originals".equals(currentFieldToken)) {
 				job.setSheets(Utilities.tokenToLong(currentImportToken));
+				job.setStockQty(Utilities.tokenToLong(currentImportToken));
 			} else if ("signatures".equals(currentFieldToken)) {
 				job.setSignatures(Utilities.tokenToLong(currentImportToken));
 			} else if ("sets".equals(currentFieldToken)) {
@@ -440,9 +445,51 @@ public class JobMapper extends ImportMapper {
 			} else if ("stock color".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("ink front".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.length() > 0) {
+					String currentString = currentImportToken;
+					ArrayList<String> colors = getInkColors(currentImportToken);
+					
+					for (int index=0; index < 7 && index < colors.size(); index++) {
+						if (index == 0) {
+							job.setFrontColor1(colors.get(index));
+						} else if (index == 1) {
+							job.setFrontColor2(colors.get(index));
+						} else if (index == 2) {
+							job.setFrontColor3(colors.get(index));
+						} else if (index == 3) {
+							job.setFrontColor4(colors.get(index));
+						} else if (index == 4) {
+							job.setFrontColor5(colors.get(index));
+						} else if (index == 5) {
+							job.setFrontColor6(colors.get(index));
+						} else if (index == 6) {
+							job.setFrontColor7(colors.get(index));
+						}
+					}
+				}
 			} else if ("ink back".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.length() > 0) {
+					String currentString = currentImportToken;
+					ArrayList<String> colors = getInkColors(currentImportToken);
+					
+					for (int index=0; index < 7 && index < colors.size(); index++) {
+						if (index == 0) {
+							job.setBackColor1(colors.get(index));
+						} else if (index == 1) {
+							job.setBackColor2(colors.get(index));
+						} else if (index == 2) {
+							job.setBackColor3(colors.get(index));
+						} else if (index == 3) {
+							job.setBackColor4(colors.get(index));
+						} else if (index == 4) {
+							job.setBackColor5(colors.get(index));
+						} else if (index == 5) {
+							job.setBackColor6(colors.get(index));
+						} else if (index == 6) {
+							job.setBackColor7(colors.get(index));
+						}
+					}
+				}
 			} else if ("notes".equals(currentFieldToken)) {
 				job.setJobNotes(currentImportToken);
 			} else if ("location".equals(currentFieldToken)) {
@@ -1149,6 +1196,13 @@ public class JobMapper extends ImportMapper {
 		pricingRecord = (PricingRecord)dataService.addUpdate(pricingRecord);
 		pricingRecord.setId(pricingRecord.getId());
 		job.setPricingRecord(pricingRecord);
+		if (job.getFrontColors() > 0 && job.getBackColors() > 0) {
+			job.setSingleSided(false);
+			job.setDoubleSided(true);
+		} else {
+			job.setSingleSided(true);
+			job.setDoubleSided(false);
+		}
 		job = (Job)dataService.addUpdate(job);
 		job.setId(job.getId());
 		if (invoiceNumber.equals("") == false && docType.equals("") == false) {
@@ -1161,5 +1215,20 @@ public class JobMapper extends ImportMapper {
 		}
 		log.info("Leaving JobMapper->importTokens");
 		return null;
+	}
+		
+	private ArrayList<String> getInkColors(String field) {
+		ArrayList<String> colors = new ArrayList<String>();
+		while (field.contains(",")) {
+			colors.add(field.substring(0, field.indexOf(',')).trim());
+			field = field.substring(field.indexOf(',')).trim();
+		}
+		if (field.contains("&")) {
+			colors.add(field.substring(0, field.indexOf('&')-1).trim());
+			colors.add(field.substring(field.indexOf('&')+1).trim());
+		} else {
+			colors.add(field.trim());
+		}
+		return colors;
 	}
 }
