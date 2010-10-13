@@ -91,9 +91,9 @@ package com.efi.mdi
 			return getActiveWindow().content as Container;
 		}
 		public function getMinimized(win:MDIWindow):MinimizedWindow	{
-			var children:Array = _mdiContainerRef.taskbar.getChildren();
+			var children:ArrayCollection = new ArrayCollection(_mdiContainerRef.taskbar.getChildren());
 			for (var i:int=0; i<children.length; i++)	{
-				var min:MinimizedWindow = children.pop() as MinimizedWindow;
+				var min:MinimizedWindow = children.getItemAt(i) as MinimizedWindow;
 				if (min.windowRef == win)	{
 					return min;
 				}
