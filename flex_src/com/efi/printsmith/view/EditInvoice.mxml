@@ -1279,7 +1279,7 @@
 								 width="143"/>
 						<mx:Button x="245"
 								   y="34"
-								   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Assignto')}"
+								   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Changeacct')}"
 								   click="doAccountPicker()"
 								   width="96"/>
 					</mx:Canvas>							  
