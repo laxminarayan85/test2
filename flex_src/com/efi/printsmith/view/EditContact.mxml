@@ -1115,15 +1115,13 @@ implements="com.efi.mdi.IMDIWindowAware">
 			contact.creditCard.cardNumber = "";
 			contact.creditCard.cardHolderName = "";
 			contact.creditCard.encryption = "";
+			contact.creditCard.permanent = false;
 		}
 		
 		return(str);
 	}
 	
-	private function doReadCardNumber():void{
-	//	var valid:Boolean;
-	//	var returnVal:Array = new Array;
-		
+	private function doReadCardNumber():void{		
 		cardnumber.text = StringUtil.trim(cardnumber.text);
 		if (CreditCardDataEntry.IsCardNumberModeTen(cardnumber.text) == false) {
 			cardnumber.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.NotValidNumber');
@@ -1131,6 +1129,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 			contact.creditCard.cardNumber = cardnumber.text;
 			cardnumber.text = formatCreditCardNumber(cardnumber.text);
 			contact.creditCard.cardDisplayNumber = cardnumber.text;
+			contact.creditCard.permanent = true;		// so data purge will not remove
 		}
 	}
 

@@ -7,6 +7,7 @@ import com.efi.printsmith.data.ChargeCost;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.CuttingCharge;
 import com.efi.printsmith.data.InkCharge;
+import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.PreferencesSystem;
 import com.efi.printsmith.data.ShippingCharge;
 import com.efi.printsmith.data.SquareAreaCharge;
@@ -14,6 +15,7 @@ import com.efi.printsmith.data.enums.ChargeCostMethod;
 import com.efi.printsmith.data.enums.ChargeMethod;
 import com.efi.printsmith.data.enums.PreferenceProgramType;
 import com.efi.printsmith.data.CreditCardTransactions;
+import com.efi.printsmith.data.CreditCard;
 
 import com.efi.printsmith.pricing.charge.ChargeCostingPrices;
 import com.efi.printsmith.pricing.charge.ChargeUtilities;
@@ -24,7 +26,10 @@ import java.security.Key;
 import java.security.Security;
 
 import javassist.bytecode.ByteArray;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -466,20 +471,6 @@ public class EncryptionService extends SnowmassHibernateService{
 	    }
 	    return raw;
 	  }
-	  
-	  /**
-	     * Appends two bytes array into one.
-	     *
-	     * @param a A byte[].
-	     * @param b A byte[].
-	     * @return A byte[].
-	     */
-	//    private static byte[] append(byte[] a, byte[] b) {
-	//        byte[] z = new byte[a.length + b.length];
-	//        System.arraycopy(a, 0, z, 0, a.length);
-	//        System.arraycopy(b, 0, z, a.length, b.length);
-	//        return z;
-	//    }
 	    
 	    // generate a new key for AES 256, the key will be in HEX and be encrypted using a static key
 		// return value:  256bit (32 bytes) that have been turned into HEX, for a total of (64) bytes.
@@ -498,6 +489,112 @@ public class EncryptionService extends SnowmassHibernateService{
 			} 
 			
 			return newKeyString;
+		}
+		
+		@SuppressWarnings("unchecked")
+		public int UpdateAllRecordsToNewKey() throws Exception {
+			int					results = 0;
+			DataService 		dataService = new DataService();
+			SecretKeySpec 		newKey;
+			SecretKeySpec 		origKey;			
+			String				localData;
+			PreferencesSystem 	preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
+			CreditCard			tempCC;
+			List<CreditCard> 	ccRec = new ArrayList<CreditCard>();
+			
+			if (preferences == null) {
+				preferences = new PreferencesSystem();
+			}
+			
+			// get the current key
+			//
+			origKey = getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences);
+			
+			// force a new key
+			preferences.setConfig("");
+			preferences.setSlogan("");
+			preferences.setSettings("");
+			preferences.setProcess("");
+			newKey = getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences);
+
+			// read in array of credit card records
+			ccRec = (List<CreditCard>)dataService.getAll("CreditCard");
+			
+			//
+			// read, decrypt and encrypt all credit card records
+			//
+			for (int i=0;i<ccRec.size();i++) {
+				tempCC = ccRec.get(i);	
+				localData = Aes256BitDecryptData(origKey, tempCC.getCardNumber());
+				tempCC.setCardNumber(Aes256BitEncryptData(newKey, localData));
+				dataService.addUpdate(tempCC);
+			}
+			
+			results = ccRec.size();
+			return(results);
+		}
+		
+		@SuppressWarnings("unchecked")
+		public int PurgeEncryptedDataFields() throws Exception {
+			int					results = 0;
+			int 				i;
+			DataService 		dataService = new DataService();
+			SecretKeySpec 		origKey;			
+			String				localData;
+			PreferencesSystem 	preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
+			CreditCard			tempCC;
+			CreditCardTransactions	tempCCT;
+			List<CreditCard> 	ccRec = new ArrayList<CreditCard>();
+			List<CreditCardTransactions> 	cct = new ArrayList<CreditCardTransactions>();
+			
+			if (preferences == null) {
+				preferences = new PreferencesSystem();
+			}
+			
+			// get the current key
+			//
+			origKey = getAes256KeySpec("AES256WITHSERIALNUMBER", dataService, preferences);
+			
+			// read in array of credit card records
+			ccRec = (List<CreditCard>)dataService.getAll("CreditCard");
+			
+			//
+			// read, encrypt bogus data for all credit card records
+			//
+			for (i=0;i<ccRec.size();i++) {
+				tempCC = ccRec.get(i);	
+				if (tempCC.getPermanent() == null || tempCC.getPermanent() == false) {		// not a card on file
+					localData = "0000000000000000";
+					localData = Aes256BitEncryptData(origKey, localData);
+					tempCC.setCardNumber(localData);
+					dataService.addUpdate(tempCC);
+				}
+			}
+			
+			results = ccRec.size();
+			ccRec.clear();				// release memory
+			
+			// read in array of credit card records
+			cct = (List<CreditCardTransactions>)dataService.getAll("CreditCardTransactions");
+			
+			//
+			// read, encrypt bogus data for all credit card transaction records
+			// This should not be needed, as the data is removed after use, but done here
+			//	for a matter of completeness.
+			//
+			for (i=0;i<cct.size();i++) {
+				tempCCT = cct.get(i);	
+				// test for permanent state
+				localData = "0000000000000000";
+				localData = Aes256BitEncryptData(origKey, localData);
+				tempCCT.setTrackOne(localData);
+				tempCCT.setTrackTwo(localData);
+				tempCCT.setTempCVV2(localData);
+				dataService.addUpdate(tempCCT);
+			}
+			
+			results += cct.size();
+			return(results);
 		}
 }
 

@@ -19,6 +19,12 @@
 		<mx:method name="encryptCCT" />
 		<mx:method name="decryptCCT" />
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="updateEncryptionKeyService" destination="updateEncryptionKeyService"
+		showBusyCursor="false" >
+		<mx:method name="updateAllRecordsToNewKey" />
+		<mx:method name="PurgeEncryptedDataFields" />
+	</mx:RemoteObject>
 
 	<mx:RemoteObject id="dataService" destination="dataService"
 		showBusyCursor="true" >

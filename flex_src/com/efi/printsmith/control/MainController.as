@@ -40,6 +40,8 @@ package com.efi.printsmith.control
 			this.addCommand(EncryptDataEvent.DECRYPTDATA, EncryptDataCommand);
 			this.addCommand(EncryptCCTransEvent.ENCRYPTCCTRANS, EncryptCCTCommand);
 			this.addCommand(EncryptCCTransEvent.DECRYPTCCTRANS, EncryptCCTCommand);
+			this.addCommand(UpdateAllRecordsToNewKeyEvent.UPDATEALLRECORDSTONEWKEY, UpdateAllRecordsToNewKeyCommand);
+			this.addCommand(UpdateAllRecordsToNewKeyEvent.PURGEENCRYPTEDDATAFIELDS, UpdateAllRecordsToNewKeyCommand);
 			this.addCommand(ModelAddUpdateEvent.ADDUPDATE, ModelAddUpdateCommand);
 			this.addCommand(ModelDeleteItemEvent.DELETE, ModelDeleteItemCommand);
 			this.addCommand(ModelGetAllEvent.GETALL, ModelGetAllCommand);

@@ -101,14 +101,14 @@ width="100%" height="100%"  creationComplete="init()"
 				selectEvent = new CreditCardTransEvent(CreditCardTransEvent.COMPLETE, localTransation);
 				dispatchEvent(selectEvent);
 		
-				// close this window TEMP
-				PopUpManager.removePopUp(this);
-				
 				//
 				//
 				//
 				this.throbber.visible = false;
 				this.throbber.stop();
+				
+				// close this window TEMP
+				PopUpManager.removePopUp(this);
 			}
 		}
 	}
@@ -459,22 +459,7 @@ width="100%" height="100%"  creationComplete="init()"
 			okButton.enabled = true;
 		}
 	}
-	
-	private function doReadAmount():void{
-		var valid:Boolean;
-		var periodPattern:int;
-		var commaPattern:int;
 		
-		if (amount.text != "") {
-			periodPattern = amount.text.indexOf(".");
-			commaPattern = amount.text.indexOf(",");
-			
-			if (periodPattern < 0 && commaPattern < 0) {
-				amount.text = amount.text.concat(".00");
-			}
-		}
-	}
-	
 	private function doReadExpirationDate(event:Event):void {
 		var valid:Boolean;
 		var returnVal:Array = new Array;
@@ -555,12 +540,12 @@ width="100%" height="100%"  creationComplete="init()"
 				  y="156"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Expires')}"
 				  fontSize="9" textAlign="right" width="179" id="label20"/>
-		<mx:TextInput x="197" y="181" width="170" id="amount" text="{localTransation.amount}" focusOut="doReadAmount()"/>
+		<mx:TextInput restrict="0-9\." x="197" y="181" width="170" id="amount" text="{Snowmass.getCurrencyFormatter(false, 2).format(localTransation.amount)}"/>
 		<mx:Label x="10"
 				  y="184"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Amount')}"
 				  fontSize="9" textAlign="right" width="179" id="label3"/>
-		<mx:TextInput x="197" y="209" width="170" id="tax" text="{localTransation.tax}"/>
+		<mx:TextInput restrict="0-9\." x="197" y="209" width="170" id="tax" text="{Snowmass.getCurrencyFormatter(false, 2).format(localTransation.tax)}"/>
 		<mx:Label x="10"
 				  y="212"
 				  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Tax')}"

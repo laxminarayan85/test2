@@ -71,7 +71,7 @@ width="100%" height="100%"  creationComplete="init()"
 	public function init():void{
 		
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
-		mdiWin.title = "Credit Card Manager";
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.CreditCardTransactio');	//"Credit Card Manager";
 		
 		this.throbber.visible = true;
 		this.throbber.play();
