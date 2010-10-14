@@ -180,6 +180,7 @@
 			
 			public function init():void
 			{
+				this.bill_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress'));
 				loginUser = new Users();
 				loginUser = Snowmass.getInstance().currentUser;
 				inv_sales_rep.enabled = !(loginUser.lockSalesRep);
@@ -1175,7 +1176,7 @@
 										   id="bill_to_address_editor"
 										   address="{invoice.billToAddress}"
 										   height="156"
-										   width="325"/>
+										   width="325" addressLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress')}"/>
 						<ns1:AddressEditor x="349"
 										   y="159"
 										   id="delivery_intent_address_editor"
