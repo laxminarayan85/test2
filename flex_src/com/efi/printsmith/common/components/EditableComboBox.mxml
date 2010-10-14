@@ -4,6 +4,8 @@
 >
 	<mx:Script>
 		<![CDATA[
+			import com.hillelcoren.utils.StringUtils;
+			import mx.utils.StringUtil;
 			import mx.messaging.AbstractConsumer;
 			import mx.collections.ArrayCollection;
 			
@@ -60,7 +62,31 @@
 //				}
 			}
 			
-			
+			public function doesDuplicateExist():Object	{
+				if (!editable)
+					return null;
+				
+				var str:String = StringUtil.trim(this.text);
+				
+				for (var i:int=0; i<(dataProvider as ArrayCollection).length; i++)	{
+					var obj:Object = (dataProvider as ArrayCollection).getItemAt(i);
+					if ((obj is String) && (obj == ""))
+						continue;
+						
+					if (labelField != null)	{
+						if (str.toLowerCase() == (obj[labelField] as String).toLowerCase())
+							return obj;
+					}
+					else if (labelFunction != null)	{
+						if (str.toLowerCase() == (labelFunction.call(this,obj) as String).toLowerCase())
+							return obj;
+					}
+					else
+						return null;
+				}
+				
+				return null;
+			}
 		]]>
 	</mx:Script>
 </mx:ComboBox>

@@ -849,7 +849,10 @@
 	}
 
 
+	// mandatory, non editable
 	private function doStockGroup() : void {
+		
+//		stockDefinitions.stkgroup = cboStockGroup.selectedItem as StockGroup;
 //		var group:StockGroup;
 //		var result:Boolean;
 		
@@ -877,43 +880,65 @@
 //			}
 //		}
 	}
-	private function doStockType() : void {
-		var type:StockType;
-		var result:Boolean;
-		var dimSize:Dimension
 	
+	// mandatory , non editable
+	private function doStockType() : void {
 		
-		if (stkType.text != null && stkType.text != "" ) {
-			var item:int = findItem(stkType.text, stockType);
-			if (item == -1) {
-				type = new StockType();
-				type.name = stkType.text;
-				stockTypeDataService.addUpdate(type);
-				stockDefinitions.stktype = type;
-				dimSize = type.size;
-				Basicsize.text = dimSize.name
-			}
-			else {
-				stkType.selectedIndex = item;
-				type = stkType.selectedItem as StockType;
-				dimSize = type.size;
-				if(dimSize!=null){
-					Basicsize.text = dimSize.name
-				}
-			
-			}
-			if(dimSize!=null){
-				Basicsize.text = dimSize.name;
-			}
+		var type:StockType;
+		var dimSize:Dimension;
+		
+		type = stkType.selectedItem as StockType;
+//		stockDefinitions.stktype = type;
+	
+		dimSize = type.size;
+		
+		if(dimSize!=null){
+			Basicsize.text = dimSize.name
 		}
+		
 		calstockMWeight(null);
 		
+//		var result:Boolean;
+//		var dimSize:Dimension
+//	
+//				
+//		if (stkType.text != null && stkType.text != "" ) {
+//			var item:int = findItem(stkType.text, stockType);
+//			if (item == -1) {
+//				type = new StockType();
+//				type.name = stkType.text;
+//				stockTypeDataService.addUpdate(type);
+//				stockDefinitions.stktype = type;
+//				dimSize = type.size;
+//				Basicsize.text = dimSize.name
+//			}
+//			else {
+//				stkType.selectedIndex = item;
+//				type = stkType.selectedItem as StockType;
+//				dimSize = type.size;
+//				if(dimSize!=null){
+//					Basicsize.text = dimSize.name
+//				}
+//			
+//			}
+//			if(dimSize!=null){
+//				Basicsize.text = dimSize.name;
+//			}
+//		}
+//		calstockMWeight(null);
+		
 	}
+	
+	// optional editable
 	private function doStockClass() : void {
 		var stockclass:StockClass;
 		var result:Boolean;
 		
-		if (cbostockClass.text != null && cbostockClass.text != "" && cbostockClass.selectedIndex == -1) {
+		if (cbostockClass.text != null 
+				&& cbostockClass.text != "" 
+				&& cbostockClass.selectedIndex == -1
+				&& cbostockClass.doesDuplicateExist() == null) {
+					
 			var item:Object = cbostockClass.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
 			if ((item == null) || (item == "")) {
 				stockclass = new StockClass();
@@ -925,17 +950,24 @@
 			stockClassDataService.addUpdate(stockclass);
 			stockDefinitions.stkclass = stockclass;
 		}
+		
 	}
 
-
+	// optional editable
 	private function doStockGenericColor() : void {
 		var colors:GenericColors;
 		var result:Boolean;
 		
-		if (cboGenericColor.text != null && cboGenericColor.text != "" && cboGenericColor.selectedIndex == -1) {
+		if (cboGenericColor.text != null 
+				&& cboGenericColor.text != "" 
+				&& cboGenericColor.selectedIndex == -1
+				&& cboGenericColor.doesDuplicateExist() == null) {
+
 			var item:Object = cboGenericColor.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
+			
 			if ((item == null) || (item == "")) {
 				colors = new GenericColors();
+								
 			}
 			else {
 				colors = item as GenericColors;
@@ -958,11 +990,15 @@
 		}
 	}
 
+// optional editable
 	private function doStockColor() : void {
 		var colors:StockColors;
 		var result:Boolean;
 		
-		if (cbostkcolor.text != null && cbostkcolor.text != "" && cbostkcolor.selectedIndex == -1) {
+		if (cbostkcolor.text != null 
+				&& cbostkcolor.text != "" 
+				&& cbostkcolor.selectedIndex == -1
+				&& cbostkcolor.doesDuplicateExist() == null) {
 			var item:Object = cbostkcolor.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
 			if ((item == null) || (item == "")) {
 				colors = new StockColors();
@@ -987,86 +1023,92 @@
 		}
 	}
 
+// optional non editable
 	private function doStockGrade() : void {
-		var grades:StockGrade;
-		var result:Boolean;
+//		stockDefinitions.grade = cboStockGrade.selectedItem as StockGrade;
 		
-		if (cboStockGrade.text != null && cboStockGrade.text != "" && cboStockGrade.selectedIndex == -1) {
-			var item:Object = cboStockGrade.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
-			if ((item == null) || (item == "")) {
-				grades = new StockGrade();
-			}
-			else {
-				grades = item as StockGrade;
-			}
-			grades.name = cboStockGrade.text;
-			stockGradeDataService.addUpdate(grades);
-			stockDefinitions.grade = grades;
-
-//			var item:int = findItem(cboStockGrade.text, stockGrade);
-//			if (item == -1) {
+//		var grades:StockGrade;
+//		var result:Boolean;
+//		
+//		if (cboStockGrade.text != null && cboStockGrade.text != "" && cboStockGrade.selectedIndex == -1 
+//			&& cboStockGrade.doesDuplicateExist() == null ) {
+//			var item:Object = cboStockGrade.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
+//			if ((item == null) || (item == "")) {
 //				grades = new StockGrade();
-//				grades.name = cboStockGrade.text;
-//				stockGradeDataService.addUpdate(grades);
-//				stockDefinitions.grade = grades;
-//				cboStockGrade.text = grades.name;
-//				
 //			}
 //			else {
-//				cboStockGrade.selectedItem = item;
+//				grades = item as StockGrade;
 //			}
-//		stockDefinitions.grade.name = cboStockGrade.text	
-		}
+//			grades.name = cboStockGrade.text;
+//			stockGradeDataService.addUpdate(grades);
+//			stockDefinitions.grade = grades;
+//
+////			var item:int = findItem(cboStockGrade.text, stockGrade);
+////			if (item == -1) {
+////				grades = new StockGrade();
+////				grades.name = cboStockGrade.text;
+////				stockGradeDataService.addUpdate(grades);
+////				stockDefinitions.grade = grades;
+////				cboStockGrade.text = grades.name;
+////				
+////			}
+////			else {
+////				cboStockGrade.selectedItem = item;
+////			}
+////		stockDefinitions.grade.name = cboStockGrade.text	
+//		}
 	}
 
-
+// optional non editable
 	private function doStockFinish() : void {
-		var finishing:StockFinish;
-		var result:Boolean;
-		
-		if (cboFinish.text != null && cboFinish.text != "" && cboFinish.selectedIndex == -1) {
-			var item:Object = cboFinish.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
-			if ((item == null) || (item == "")) {
-				finishing = new StockFinish();
-			}
-			else {
-				finishing = item as StockFinish;
-			}
-			finishing.name = this.cboFinish.text;
-			stockFinishDataService.addUpdate(finishing);
-			stockDefinitions.finish = finishing;
-			
-//`			var item:int = findItem(cboFinish.text, stockFinish);
-//			if (item == -1) {
+//		var finishing:StockFinish;
+//		var result:Boolean;
+//		
+//		if (cboFinish.text != null && cboFinish.text != "" && cboFinish.selectedIndex == -1
+//			&& cboFinish.doesDuplicateExist() == null) {
+//			var item:Object = cboFinish.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
+//			if ((item == null) || (item == "")) {
 //				finishing = new StockFinish();
-//				finishing.name = this.cboFinish.text;
-//				
-//				stockFinishDataService.addUpdate(finishing);
-//				stockDefinitions.finish = finishing;
 //			}
 //			else {
-//				cboFinish.selectedItem = item;
+//				finishing = item as StockFinish;
 //			}
-		}
+//			finishing.name = this.cboFinish.text;
+//			stockFinishDataService.addUpdate(finishing);
+//			stockDefinitions.finish = finishing;
+//			
+////`			var item:int = findItem(cboFinish.text, stockFinish);
+////			if (item == -1) {
+////				finishing = new StockFinish();
+////				finishing.name = this.cboFinish.text;
+////				
+////				stockFinishDataService.addUpdate(finishing);
+////				stockDefinitions.finish = finishing;
+////			}
+////			else {
+////				cboFinish.selectedItem = item;
+////			}
+//		}
 	}
 
+// optional non editable
 	private function doStockVendor() : void {
-		var stockvendor:Vendor;
-		var result:Boolean;
-		
-		if (cboVendor.text != null && cboVendor.text != "" && cboVendor.selectedIndex == -1) {
-			var item:int = findItem(cboVendor.text, stockFinish);
-			if (item == -1) {
-				stockvendor = new Vendor();
-				stockvendor.name = this.cboVendor.text;
-				
-				vendorDataService.addUpdate(stockvendor);
-				stockDefinitions.vendor = stockvendor;
-			}
-			else {
-				cboVendor.selectedItem = item;
-			}
-		}
+//		var stockvendor:Vendor;
+//		var result:Boolean;
+//		
+//		if (cboVendor.text != null && cboVendor.text != "" && cboVendor.selectedIndex == -1) {
+//			var item:int = findItem(cboVendor.text, stockFinish);
+//			if (item == -1) {
+//				stockvendor = new Vendor();
+//				stockvendor.name = this.cboVendor.text;
+//				
+//				vendorDataService.addUpdate(stockvendor);
+//				stockDefinitions.vendor = stockvendor;
+//			}
+//			else {
+//				cboVendor.selectedItem = item;
+//			}
+//		}
 	}
 
 
@@ -2175,7 +2217,7 @@ private function doRound(evt:FocusEvent):void{
 				<mx:Label x="261" y="118" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.CartonWeight')}" textAlign="right" width="106.5" id="label4"/>
 				<mx:CheckBox x="301" y="144" id="chkcharge4entiteorder" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ChargeCustomerforEnt')}" width="214"/>
 
-				<mx:ComboBox x="106.5" y="5" width="150.5" id="cboVendor" dataProvider="{stockVendor}" labelField="name" focusOut="doStockVendor()"/>
+				<comp:EditableComboBox x="106.5" y="5" width="150.5" id="cboVendor" dataProvider="{stockVendor}" labelField="name" focusOut="doStockVendor()" optional="true"/>
 				<mx:ComboBox x="106.5" y="33" id="stkType" width="150.5" dataProvider="{stockType}" labelField="name" change="doStockType()" />
 				<mx:TextInput x="356.5" y="5" width="93" id="stockNumber" text="{stockDefinitions.stocknumber}" height="22"/>
 				<fc:AutoComplete x="106.5" y="60" width="132" 
