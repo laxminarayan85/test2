@@ -18,8 +18,12 @@
 	import mx.rpc.events.FaultEvent;
 	import mx.controls.Alert;
 	
+	[Bindable]
+	private var localDelTicket:DeliveryTicket;
+	
 	public function init():void{
-		
+		localDelTicket = new DeliveryTicket;
+//		localDelTicket.deliveryJobs = new DeliveryTicketJobs;
 	}
 	
 	private function handleFault(ev:FaultEvent):void
@@ -37,17 +41,17 @@
 		<mx:Button x="79" y="10" label="Close"/>
 		<mx:Button x="460" y="10" label="Delete"/>
 		<mx:Button x="532" y="10" label="Cancel"/>
-		<mx:TextInput x="135" y="55" width="104"/>
+		<mx:TextInput x="135" y="55" width="104" text="{localDelTicket.ticketNumber}"/>
 		<mx:Label x="10" y="57" text="Ticket Number" width="117" textAlign="right"/>
-		<mx:TextInput x="135" y="83" width="461"/>
+		<mx:TextInput x="135" y="83" width="461" text="{localDelTicket.name}"/>
 		<mx:Label x="10" y="85" text="Description" width="117" textAlign="right"/>
 		<mx:Label x="335" y="57" text="Delivery Date" width="117" textAlign="right"/>
-		<mx:DateField x="460" y="55" width="136"/>
+		<mx:DateField x="460" y="55" width="136" text="{localDelTicket.deliveryDate}"/>
 	</mx:Canvas>
 
 	<mx:TabNavigator width="100%" height="378" y="90">
 		<mx:Canvas label="Delivery What" width="100%" height="100%">
-			<mx:DataGrid  id="dataGrid" x="10" y="10" width="590" dataProvider="" doubleClick="" height="296">
+			<mx:DataGrid  id="dataGrid" x="10" y="10" width="590" dataProvider="{localDelTicket.deliveryJobs}" doubleClick="" height="296">
 				<mx:columns>
 					<mx:DataGridColumn headerText="Inv/Job"/>
 					<mx:DataGridColumn headerText="Order Qty" />
@@ -57,7 +61,7 @@
 				</mx:columns>
 			</mx:DataGrid>
 			<mx:Button x="10" y="309" label="Add…" width="94"/>
-			<mx:TextInput x="391" y="313"/>
+			<mx:TextInput x="391" y="313" text="{localDelTicket.totalWeight}"/>
 			<mx:Label x="307" y="317" text="Total Weight"/>
 		</mx:Canvas>
 		<mx:Canvas label="Deliver Where" width="100%" height="100%">
