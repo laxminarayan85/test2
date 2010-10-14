@@ -2,7 +2,7 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Paper Calculator Template" name="Paper Calculator Template"
 width="100%" height="100%"  creationComplete="init()" 
 	 showCloseButton="true" 
-     title="Paper Calculator Template" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*" close="doClose()">
+     title="Paper Calculator Template" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*" close="doClose()" xmlns:components="com.efi.printsmith.common.components.*">
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -92,25 +92,42 @@ width="100%" height="100%"  creationComplete="init()"
                              
 </mx:Script>
 	<mx:Canvas width="100%" height="100%">
-		<mx:Button x="10" y="10" width="38" height="38" click="">
+		<mx:Button x="27" y="25" width="38" height="38" click="">
 				<mx:icon>@Embed(source='../../../../assets/edit.png')</mx:icon>
 			</mx:Button>
-		<mx:Button x="102" y="10" width="38" height="38" click="">
+		<mx:Button x="119" y="25" width="38" height="38" click="">
 				<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 			</mx:Button>
-		<mx:Button x="56" y="10" width="38" height="38" click="">
+		<mx:Button x="73" y="25" width="38" height="38" click="">
 				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 			</mx:Button>	
+			
 		<mx:RadioButtonGroup id="WhichStart"/>
-		<mx:RadioButton x="285" y="10" label="Parent to Run" groupName="WhichStart"/>
-		<mx:RadioButton x="285" y="36" label="Run to Finish" groupName="WhichStart"/>
+		<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'PaperCalcCmd.StartingSize')}" layout="vertical" width="197" height="96" x="362.5" y="8">
+			<mx:RadioButton label="Parent to Run" groupName="WhichStart"/>
+			<mx:RadioButton label="Run to Finish" groupName="WhichStart"/>
+			<mx:RadioButtonGroup id="whichStart"/>
+		</mx:Panel>
+		
+		<mx:TextArea x="362.5" y="112" width="193" height="96" id="comment"/>
+		<mx:TextInput x="141.5" y="128" width="77" id="parentMin"/>
+		<mx:TextInput x="226.5" y="128" width="77" id="parentMax"/>
+		<mx:TextInput x="141.5" y="158" width="77" id="runMin" />
+		<mx:TextInput x="226.5" y="158" width="77" id="runMax"/>
+		<mx:TextInput x="141.5" y="188" width="77" id="finishMin"/>
+		<mx:TextInput x="226.5" y="188" width="77" id="finishMax"/>
+		<mx:Label x="162" y="102" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcPickerCmd.Min')}" textAlign="center" width="40"/>
+		<mx:Label x="244" y="102" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcPickerCmd.Max')}" textAlign="center" width="40"/>
+		<mx:Label x="27" y="130" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcPickerCmd.FinishSize')}" width="106.5" textAlign="right"/>
+		<mx:Label x="27" y="160" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcPickerCmd.RunSize')}" width="106.5" textAlign="right"/>
+		<mx:Label x="27" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcPickerCmd.ParentSize')}" width="106.5" textAlign="right"/>
 	</mx:Canvas>
 	<mx:DataGrid  id="dataGrid" width="100%" 
 		horizontalScrollPolicy="on"
 		rowHeight="150"
 		columnWidth="150"
 		dataProvider="{templates}" 
-		height="418">
+		height="252">
 		<mx:columns>
 			<mx:DataGridColumn headerText=""/>
 			<mx:DataGridColumn headerText=""/>
