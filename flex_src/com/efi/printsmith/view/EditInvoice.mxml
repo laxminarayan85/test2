@@ -614,7 +614,12 @@
 				invoice.account=accountItem;
 				invoice.shipToAddress=accountItem.shipToAddress;
 				invoice.billToAddress=accountItem.shipToAddress;
-				accountDataService.getContactsByAccountId("Contact", invoice.account.id);
+				//accountDataService.getContactsByAccountId("Contact", invoice.account.id);
+				this.accountcontacts.removeAll();
+				if (accountItem.contact != null)
+					this.accountcontacts.addItem(accountItem.contact);
+				if (accountItem.billToContact != null)
+					this.accountcontacts.addItem(accountItem.billToContact);
 				contact_list.selectedItem=invoice.account.contact as Contact;
 				bill_to_address_editor.setAddress(invoice.billToAddress);
 				this.delivery_intent_address_editor.setAddress(invoice.shipToAddress);
