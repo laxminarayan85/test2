@@ -627,7 +627,10 @@
 			account.salesRep = null;
 		
 		if (tax_table_combo != null && tax_table_combo.selectedItem != null && tax_table_combo.text != "") 
-			account.taxTable = tax_table_combo.selectedItem as TaxTable;
+			if (tax_table_combo.selectedIndex == 0)
+				account.taxTable = null
+			else
+				account.taxTable = tax_table_combo.selectedItem as TaxTable;
 		else
 			account.taxTable = null;
 			
@@ -734,7 +737,7 @@
 		if (account.taxTable!= null)
 			tax_table_combo.selectedIndex = findItem(account.taxTable.name, taxTables);
 		else
-			tax_table_combo.selectedIndex = -1;
+			tax_table_combo.selectedIndex = 0;
 		
 
 		ship_to_address_editor.setAddress(account.shipToAddress);
@@ -937,7 +940,10 @@
 	
 	private function handleLoadTaxTables(ev:ResultEvent):void {
 		var selectedItem:Object = tax_table_combo.selectedItem;
+		var temp:TaxTable = new TaxTable();
 		taxTables = ev.result as ArrayCollection;
+		temp.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Default')+' ' + resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxTable');
+		taxTables.addItemAt(temp, 0);
 		tax_table_combo.selectedItem= selectedItem;
 	}
 	
