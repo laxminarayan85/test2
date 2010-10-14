@@ -612,7 +612,7 @@
 			{
 				invoice.account=accountItem;
 				invoice.shipToAddress=accountItem.shipToAddress;
-				invoice.billToAddress=accountItem.billToAddress;
+				invoice.billToAddress=accountItem.shipToAddress;
 				accountDataService.getContactsByAccountId("Contact", invoice.account.id);
 				contact_list.selectedItem=invoice.account.contact as Contact;
 				bill_to_address_editor.setAddress(invoice.billToAddress);
