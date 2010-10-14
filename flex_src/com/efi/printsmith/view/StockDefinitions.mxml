@@ -1211,6 +1211,7 @@
 	}
 	private function handleLoadPreferencesStocks(ev:ResultEvent):void {
 		preferencesStocks = ev.result as PreferencesStocks;
+		this.autoCalculateBlankStock();
 	}
 	private function handleSaveStockGradeResult(ev:ResultEvent):void {
 		stockDefinitions.grade = ev.result as StockGrade
@@ -2335,7 +2336,7 @@ private function doRound(evt:FocusEvent):void{
 
 				<mx:Label x="3" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Quantity')}" textAlign="right" width="57"/>
 				<mx:Label x="0" y="25" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Price')}" textAlign="right" width="60"/>
-				<mx:CheckBox x="65" y="45" id="chkAutocalcblankstock" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AutoCalculateBlankSt')}" width="295" click="autoCalculateBlankStock();"/>
+				<mx:CheckBox x="65" y="45" id="chkAutocalcblankstock" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AutoCalculateBlankSt')}" width="295" click="dataServicePreferencesStocks.getSingle(&quot;PreferencesStocks&quot;);"/>
 
 			</mx:Panel>
 			<mx:Panel x="10" y="241" width="690" height="124" layout="absolute" dropShadowEnabled="false" title ="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AdjustCopierDigitalM')}">
