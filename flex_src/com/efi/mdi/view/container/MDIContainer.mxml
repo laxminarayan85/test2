@@ -45,7 +45,11 @@
 	        private var resizeCursor:Class;
 			
 			private var _windowResizeInProgress:MDIWindow;
+			private var _windowMenuLabel:String;
 			
+			public function set windowMenuLabel(val:String):void	{
+				_windowMenuLabel = val;
+			}
 			
 			public function set menuData(val:ArrayCollection):void	{
 				_menuData = val;	
@@ -61,7 +65,9 @@
 				mdiWin.addEventListener(WindowCloseEvent.WINDOW_CLOSE, onClose);
 				mdiWin.addEventListener(WindowResizeStartEvent.WINDOW_RESIZE_START, onWindowResizeStart);
 				mdiWin.addEventListener(MDICompareObjectEvent.MDI_COMPAREOBJECT,onCompareObject);
-				appCanvas.addChild(mdiWin);		
+				
+				appCanvas.addChild(mdiWin);
+				menubar.addWindow(mdiWin);		
 				mdiWin.bringWindowToFront();
 														
 			}
@@ -272,7 +278,7 @@
 	
 	<mx:HBox height="4%" width="100%" borderThickness="0"
 		borderStyle="solid" styleName="headerBoxStyle" >
-		<menu:ApplicationMenuBar id="menubar" menuData="{_menuData}"  height="100%" width="80%" />
+		<menu:ApplicationMenuBar id="menubar" menuData="{_menuData}"  windowMenuLabel="{_windowMenuLabel}" height="100%" width="80%" />
 		<menu:ApplicationHeader id="header"  height="100%" width="20%" />
 	</mx:HBox>
 			

@@ -6,7 +6,7 @@ package com.efi.mdi.vo.menu
 	{
 		private var _children:ArrayCollection;
 		private var _label:String;
-		
+				
 		public function ApplicationMenuItem(label:String, children:ArrayCollection):void	{
 			this._label = label;
 			this._children = children;					

@@ -32,7 +32,7 @@
     
 	<!--<mx:MenuBar id="menubar" width="100%" height="39" dataProvider="{_menuItems}" itemClick="onMenuClick(event);"/>-->
    
-	<mdi:MDIContainer id="container"  menuData="{_menuItems}" height="100%" width="100%" />
+	<mdi:MDIContainer id="container"  menuData="{_menuItems}" windowMenuLabel="Window" height="100%" width="100%" />
 
 <mx:RemoteObject id="loginService" destination="loginService"
 	result="handleLoginResult(event)"  fault="handleFault(event)"
@@ -53,6 +53,10 @@
 	</mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.mdi.event.window.WindowResizeEvent;
+		import com.efi.mdi.event.window.WindowRestoreEvent;
+		import com.efi.mdi.view.taskbar.MinimizedWindow;
+		import com.efi.mdi.vo.menu.WindowApplicationMenuItem;
 		import com.efi.printsmith.events.commandEvents.Help.AboutEvent;
 		import mx.events.ListEvent;
 		import com.efi.mdi.view.header.ApplicationHeader;
@@ -216,151 +220,162 @@
 		}
 		
 		private function onMenuItemClicked(event:AppMenuItemClickedEvent):void	{
-			var item:PSMenuItem = event.menuItem as PSMenuItem;
-			var ss:SecurityCommands = item.ss;
-			
-			if ((ss.menu == "rStandardMenuText.Help")
-				&& (ss.commandName.indexOf("usecCmd.QuickAccessPanel") > -1 )) 	{
-					doQuickAccessPanel();	
+			if (event.menuItem is PSMenuItem)	{
+				var item:PSMenuItem = event.menuItem as PSMenuItem;
+				var ss:SecurityCommands = item.ss;
+				
+				if ((ss.menu == "rStandardMenuText.Help")
+					&& (ss.commandName.indexOf("usecCmd.QuickAccessPanel") > -1 )) 	{
+						doQuickAccessPanel();	
+					}
+				if ((ss.menu == "rStandardMenuText.Help")
+					&& (ss.commandName.indexOf("rStandardMenuText.AboutPrintSmith") > -1)) {
+						doAboutPrintSmith();
+					}
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.CreateInvoice") > -1 ))	{
+						doCreateInvoice();					
+		 			}
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.CreateEstimate") > -1 ))	{
+						doCreateEstimate();					
+					}		
+				if ((ss.menu == "rStandardMenuText.Reports")
+					&& (ss.commandName.indexOf("rStandardMenuText.AccountHistory") > -1 ))	{
+						doAccountHistory();					
+					}
+				if ((ss.menu == "rStandardMenuText.Reports")
+					&& (ss.commandName.indexOf("rStandardMenuText.StockOrder") > -1 ))	{
+						doAccountHistory();					
+					}	
+				if ((ss.menu == "rStandardMenuText.AR")
+					&& (ss.commandName.indexOf("rStandardMenuText.Accounts") > -1 ))	{
+						doAccounts();					
+					}	
+				if ((ss.menu == "rStandardMenuText.AR")
+					&& (ss.commandName.indexOf("rStandardMenuText.JournalEntry") > -1 ))	{
+						doJournal();					
+					}						
+				if ((ss.menu == "rStandardMenuText.POS")
+					&& (ss.commandName.indexOf("rStandardMenuText.OpenCashRegister") > -1 ))	{
+						doCashRegister();					
+					}				
+				if ((ss.menu == "rStandardMenuText.Pricing")
+					&& (ss.commandName.indexOf("rStandardMenuText.ChargeDefinitions") > -1 ))	{
+						doChargeDefinitions();					
+					}
+	//			if ((ss.menu == "rStandardMenuText.Admin")
+	//				&& (ss.commandName.indexOf("rStandardMenuText.ClockInOut") > -1 ))	{
+	//					doClockInOut()					
+	//				}	
+				if ((ss.menu == "rStandardMenuText.AR")
+					&& (ss.commandName.indexOf("rStandardMenuText.Contacts") > -1 ))	{
+						doContacts();		
+					}
+				if ((ss.menu == "rStandardMenuText.Pricing")
+					&& (ss.commandName.indexOf("rStandardMenuText.CopierDigitalDefinit") > -1 ))	{
+						doCopyDefinitions();					
+					}		
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.CreditCardManager") > -1 ))	{
+						doCreditCardManager();					
+					}	
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.DeliveryTicketManage") > -1 ))	{
+						doDeliveryTicket();
+					}
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.EmployeeManager") > -1 ))	{
+						doEmployee();					
+					}	
+				if ((ss.menu == "rStandardMenuText.Reports")
+					&& (ss.commandName.indexOf("rStandardMenuText.EstimateHistory") > -1 ))	{
+						doEstimateHistory();					
+					}	
+				if ((ss.menu == "rStandardMenuText.AR")
+					&& (ss.commandName.indexOf("rStandardMenuText.PostPayments") > -1 ))	{
+						doPayments();					
+					}	
+				if ((ss.menu == "rStandardMenuText.POS")
+					&& (ss.commandName.indexOf("rStandardMenuText.PendingDocumentWindo") > -1 ))	{
+						doPendingList();					
+					}	
+				if ((ss.menu == "rStandardMenuText.Pricing")
+					&& (ss.commandName.indexOf("rStandardMenuText.PressDefinitions") > -1 ))	{
+						doPressDefinitions();					
+					}	
+	//			if ((ss.menu == "rStandardMenuText.Admin")
+	//				&& (ss.commandName.indexOf("genericPrefCmd.PricingMethod") > -1 ))	{
+	//					doPricing();					
+	//				}	
+	//			if ((ss.menu == "rStandardMenuText.POS")
+	//				&& (ss.commandName.indexOf("posPendCmd.Schedule") > -1 ))	{
+	//					doSchedule();					
+	//				}	
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.SecuritySetup") > -1 ))	{
+						doSecurity();					
+					}	
+				if ((ss.menu == "rStandardMenuText.Pricing")
+					&& (ss.commandName.indexOf("rStandardMenuText.StockDefinitions") > -1 ))	{
+						doStockDefinitions();					
+					}	
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.Preferences") > -1 ))	{
+						doSystemPreferences();					
+					}	
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.UserDefinitions") > -1 ))	{
+						doUsers();					
+					}	
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.ChangePassword") > -1 ))	{
+						doChangePassword();					
+					}
+				if((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.UserLogIn") > -1 ))	{
+						doLogout();
+					}
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.TrackerManager") > -1 ))	{
+						doTrackerManager();					
+					}
+				if ((ss.menu == "rStandardMenuText.Pricing")
+					&& (ss.commandName.indexOf("rStandardMenuText.SalesTax") > -1 ))	{
+						doSalesTax();					
+					}
+				if ((ss.menu == "rStandardMenuText.Pricing")
+					&& (ss.commandName.indexOf("rStandardMenuText.WasteChart") > -1 ))	{
+						doWasteChart();					
+					}
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.PaperCalculator") > -1 ))	{
+						doPaperCal();					
+					}	
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.OrderStock") > -1 ))	{
+						doOrderStock();					
+					}	
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.TableEditor") > -1 ))	{
+						doTableEditor();					
+					}			
+				//Menu for Invoice Tracker Status
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.TrackerStatus") > -1 ))	{
+						doTrackerStatus();				
+					}		
+			}
+			if (event.menuItem is WindowApplicationMenuItem)	{
+				var winItem:WindowApplicationMenuItem = event.menuItem as WindowApplicationMenuItem;
+				if (winItem.mdiWindow.state == MDIWindow.OPEN)
+					winItem.mdiWindow.bringWindowToFront();
+				if (winItem.mdiWindow.state == MDIWindow.MINIMIZED)	{
+					var min:MinimizedWindow = containerManager.getMinimized(winItem.mdiWindow);
+					min.dispatchEvent(new WindowRestoreEvent(WindowRestoreEvent.WINDOW_RESTORE, min));
 				}
-			if ((ss.menu == "rStandardMenuText.Help")
-				&& (ss.commandName.indexOf("rStandardMenuText.AboutPrintSmith") > -1)) {
-					doAboutPrintSmith();
-				}
-			if ((ss.menu == "rStandardMenuText.Invoice")
-				&& (ss.commandName.indexOf("rStandardMenuText.CreateInvoice") > -1 ))	{
-					doCreateInvoice();					
-	 			}
-			if ((ss.menu == "rStandardMenuText.Invoice")
-				&& (ss.commandName.indexOf("rStandardMenuText.CreateEstimate") > -1 ))	{
-					doCreateEstimate();					
-				}		
-			if ((ss.menu == "rStandardMenuText.Reports")
-				&& (ss.commandName.indexOf("rStandardMenuText.AccountHistory") > -1 ))	{
-					doAccountHistory();					
-				}
-			if ((ss.menu == "rStandardMenuText.Reports")
-				&& (ss.commandName.indexOf("rStandardMenuText.StockOrder") > -1 ))	{
-					doAccountHistory();					
-				}	
-			if ((ss.menu == "rStandardMenuText.AR")
-				&& (ss.commandName.indexOf("rStandardMenuText.Accounts") > -1 ))	{
-					doAccounts();					
-				}	
-			if ((ss.menu == "rStandardMenuText.AR")
-				&& (ss.commandName.indexOf("rStandardMenuText.JournalEntry") > -1 ))	{
-					doJournal();					
-				}						
-			if ((ss.menu == "rStandardMenuText.POS")
-				&& (ss.commandName.indexOf("rStandardMenuText.OpenCashRegister") > -1 ))	{
-					doCashRegister();					
-				}				
-			if ((ss.menu == "rStandardMenuText.Pricing")
-				&& (ss.commandName.indexOf("rStandardMenuText.ChargeDefinitions") > -1 ))	{
-					doChargeDefinitions();					
-				}
-//			if ((ss.menu == "rStandardMenuText.Admin")
-//				&& (ss.commandName.indexOf("rStandardMenuText.ClockInOut") > -1 ))	{
-//					doClockInOut()					
-//				}	
-			if ((ss.menu == "rStandardMenuText.AR")
-				&& (ss.commandName.indexOf("rStandardMenuText.Contacts") > -1 ))	{
-					doContacts();		
-				}
-			if ((ss.menu == "rStandardMenuText.Pricing")
-				&& (ss.commandName.indexOf("rStandardMenuText.CopierDigitalDefinit") > -1 ))	{
-					doCopyDefinitions();					
-				}		
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.CreditCardManager") > -1 ))	{
-					doCreditCardManager();					
-				}	
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.DeliveryTicketManage") > -1 ))	{
-					doDeliveryTicket();
-				}
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.EmployeeManager") > -1 ))	{
-					doEmployee();					
-				}	
-			if ((ss.menu == "rStandardMenuText.Reports")
-				&& (ss.commandName.indexOf("rStandardMenuText.EstimateHistory") > -1 ))	{
-					doEstimateHistory();					
-				}	
-			if ((ss.menu == "rStandardMenuText.AR")
-				&& (ss.commandName.indexOf("rStandardMenuText.PostPayments") > -1 ))	{
-					doPayments();					
-				}	
-			if ((ss.menu == "rStandardMenuText.POS")
-				&& (ss.commandName.indexOf("rStandardMenuText.PendingDocumentWindo") > -1 ))	{
-					doPendingList();					
-				}	
-			if ((ss.menu == "rStandardMenuText.Pricing")
-				&& (ss.commandName.indexOf("rStandardMenuText.PressDefinitions") > -1 ))	{
-					doPressDefinitions();					
-				}	
-//			if ((ss.menu == "rStandardMenuText.Admin")
-//				&& (ss.commandName.indexOf("genericPrefCmd.PricingMethod") > -1 ))	{
-//					doPricing();					
-//				}	
-//			if ((ss.menu == "rStandardMenuText.POS")
-//				&& (ss.commandName.indexOf("posPendCmd.Schedule") > -1 ))	{
-//					doSchedule();					
-//				}	
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.SecuritySetup") > -1 ))	{
-					doSecurity();					
-				}	
-			if ((ss.menu == "rStandardMenuText.Pricing")
-				&& (ss.commandName.indexOf("rStandardMenuText.StockDefinitions") > -1 ))	{
-					doStockDefinitions();					
-				}	
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.Preferences") > -1 ))	{
-					doSystemPreferences();					
-				}	
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.UserDefinitions") > -1 ))	{
-					doUsers();					
-				}	
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.ChangePassword") > -1 ))	{
-					doChangePassword();					
-				}
-			if((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.UserLogIn") > -1 ))	{
-					doLogout();
-				}
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.TrackerManager") > -1 ))	{
-					doTrackerManager();					
-				}
-			if ((ss.menu == "rStandardMenuText.Pricing")
-				&& (ss.commandName.indexOf("rStandardMenuText.SalesTax") > -1 ))	{
-					doSalesTax();					
-				}
-			if ((ss.menu == "rStandardMenuText.Pricing")
-				&& (ss.commandName.indexOf("rStandardMenuText.WasteChart") > -1 ))	{
-					doWasteChart();					
-				}
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.PaperCalculator") > -1 ))	{
-					doPaperCal();					
-				}	
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.OrderStock") > -1 ))	{
-					doOrderStock();					
-				}	
-			if ((ss.menu == "rStandardMenuText.Admin")
-				&& (ss.commandName.indexOf("rStandardMenuText.TableEditor") > -1 ))	{
-					doTableEditor();					
-				}			
-			//Menu for Invoice Tracker Status
-			if ((ss.menu == "rStandardMenuText.Invoice")
-				&& (ss.commandName.indexOf("rStandardMenuText.TrackerStatus") > -1 ))	{
-					doTrackerStatus();				
-				}		
-			
+				
+			}			
 		}
 		
 		public function doTrackerStatus():void {

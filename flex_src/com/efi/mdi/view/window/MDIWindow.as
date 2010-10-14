@@ -5,6 +5,7 @@ package com.efi.mdi.view.window
 	import com.efi.mdi.event.window.WindowCloseEvent;
 	import com.efi.mdi.event.window.WindowMaximizeEvent;
 	import com.efi.mdi.event.window.WindowMinimizeEvent;
+	import com.efi.mdi.event.window.WindowOpenEvent;
 	import com.efi.mdi.event.window.WindowResizeStartEvent;
 	
 	import flash.display.Shape;
@@ -78,6 +79,7 @@ package com.efi.mdi.view.window
 			this._closeChildren = closeChildren;
 			//this.parentWindowId = parentWin;
 			this.styleName = "mdiWindowStyle";
+			
 		}
 		
 		public function set closeChildren(val:Boolean):void	{
