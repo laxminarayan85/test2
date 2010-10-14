@@ -3,9 +3,9 @@ package com.efi.printsmith.itemRenderers
 	import com.efi.printsmith.data.Account;
 	import com.efi.printsmith.data.Contact;
 	import com.efi.printsmith.view.AccountPicker;
-	import com.efi.printsmith.view.ContactPicker;
 	
 	import mx.controls.Label;
+	import mx.controls.dataGridClasses.DataGridColumn;
 	import mx.core.IDataRenderer;
 	
 	public class PickerContactItemRenderer extends Label implements IDataRenderer
@@ -21,6 +21,11 @@ package com.efi.printsmith.itemRenderers
 			
 			var a:Account = null;
 			var c:Contact = null;
+			
+			if (value is DataGridColumn)	{
+				this.text = (value as DataGridColumn).headerText;
+				return;												
+			}
 			
 			if (value is Account)	{
 				a = value as Account;

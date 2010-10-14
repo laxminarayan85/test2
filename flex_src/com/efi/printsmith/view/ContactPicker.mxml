@@ -103,7 +103,6 @@
 		dataGrid.itemRenderer = new ClassFactory(PickerContactItemRenderer);
 		var cols:Array = dataGrid.columns;
 		
-		dataGrid.dgCol.width = 40;
 		dataGrid.dgCol.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName');
 		
 		var dgc1:DataGridColumn = new DataGridColumn("firstName");
@@ -111,11 +110,13 @@
 		
 		dgc1.dataField = "firstName";
 		dgc1.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName');
+		
 		cols.push(dgc1);
 		
 		dgc2.dataField = "parentAccount";
 		dgc2.labelFunction = parentLabel;
 		dgc2.sortCompareFunction = parentAcctSort;
+		
 		dgc2.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountName');
 		cols.push(dgc2);
 		
