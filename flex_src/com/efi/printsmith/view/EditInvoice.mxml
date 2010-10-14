@@ -952,6 +952,12 @@
 				return null;
 			}
 			
+			private function contactLabel(item:Object):String {
+				var tempItem:Contact = item as Contact;
+				var returnString:String = tempItem.lastName + ", " + tempItem.firstName;
+				return returnString;
+			}
+			
 			public function setDefaultJob(object:Object,event:Event):void {
 				if(event.currentTarget.selected) {
 					for each(var jobBaseObj:JobBase in invoice.jobs){
@@ -1256,7 +1262,7 @@
 									 y="225"
 									 width="217"
 									 dataProvider="{accountcontacts}"
-									 id="contact_list" labelField="lastName" change="doContactChange()">
+									 id="contact_list" labelFunction="contactLabel" change="doContactChange()">
 						</mx:ComboBox>
 						<mx:TextInput x="124"
 									  y="255"
