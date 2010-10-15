@@ -52,6 +52,7 @@ package com.efi.printsmith.data
 		public var linearX2:Boolean = false;
 		public var linearY1:Boolean = false;
 		public var linearY2:Boolean = false;
+		public var taxTable:TaxTable;
 	
 	}
 }

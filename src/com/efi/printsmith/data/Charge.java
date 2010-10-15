@@ -203,6 +203,11 @@ public class Charge extends ModelBase {
   public static final String LINEARY2 = "LinearY2";
 
 	/**
+   * @generated
+   */
+  public static final String TAXTABLE = "TaxTable";
+
+	/**
 	 * @generated
 	 */
 	public Charge() {
@@ -1161,6 +1166,29 @@ public class Charge extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private TaxTable taxTable;
+
+	/**
+   * @generated
+ 	 */
+  public TaxTable getTaxTable(){
+    return taxTable; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTaxTable(TaxTable newVal) {
+    this.taxTable = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1204,6 +1232,7 @@ public class Charge extends ModelBase {
     if (LINEARX2.equals(propertyName)) return getLinearX2();
     if (LINEARY1.equals(propertyName)) return getLinearY1();
     if (LINEARY2.equals(propertyName)) return getLinearY2();
+    if (TAXTABLE.equals(propertyName)) return getTaxTable();
     return super.getProperty(propertyName);
   }
 	
@@ -1251,6 +1280,7 @@ public class Charge extends ModelBase {
     if (LINEARX2.equals(propertyName)) setLinearX2((Boolean)newValue); else
     if (LINEARY1.equals(propertyName)) setLinearY1((Boolean)newValue); else
     if (LINEARY2.equals(propertyName)) setLinearY2((Boolean)newValue); else
+    if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1336,6 +1366,8 @@ public class Charge extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (LINEARY2.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (TAXTABLE.equals(propertyName)) 
+      return new Class<?>[] {TaxTable.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1384,6 +1416,7 @@ public class Charge extends ModelBase {
     if (LINEARX2.equals(propertyName)) return Charge.class;
     if (LINEARY1.equals(propertyName)) return Charge.class;
     if (LINEARY2.equals(propertyName)) return Charge.class;
+    if (TAXTABLE.equals(propertyName)) return Charge.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1470,6 +1503,8 @@ public class Charge extends ModelBase {
     if (! SmartEquals(getLinearY1(), objT.getLinearY1()))
       return false;
     if (! SmartEquals(getLinearY2(), objT.getLinearY2()))
+      return false;
+    if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
       return false;
     return true;
   }			

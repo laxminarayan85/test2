@@ -152,6 +152,7 @@ package com.efi.printsmith.data
 		public var runTime:Number = 0;
 		public var setupTime:Number = 0;
 		public var releasedToProduction:Boolean = false;
+		public var taxTable:TaxTable;
 	
 	}
 }
