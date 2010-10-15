@@ -895,6 +895,13 @@
 		
 		if(selectedSection == "genericPrefCmd.CashRegister"){
 			checkCount = 1;
+			for each(var preferencesCashRegister:PreferencesCashRegister in PreferencesCashRegisterArray){
+				if(preferencesCashRegister.taxTable!=null){
+					if(preferencesCashRegister.taxTable.id==-1){
+						preferencesCashRegister.taxTable = null;
+					}
+				}
+			}
 			dataServiceCashRegister.addUpdateDeleteList(PreferencesCashRegisterArray,PreferencesCashRegisterDeleteArray);
 			PreferencesCashRegisterDeleteArray.removeAll();
 		}
@@ -1200,6 +1207,10 @@
 	
 	private function handleLoadTaxTablesResult(event:ResultEvent):void {
 		taxTablesArray = event.result as ArrayCollection;
+		var taxTable:TaxTable = new TaxTable();
+		taxTable.id = -1;
+		taxTable.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.UseParentTaxTable');
+		taxTablesArray.addItemAt(taxTable,0);
 		successCheckCount++;
 		if((isSave || isRevert || isLoad) && checkCount==successCheckCount){
 			if(isSave) {

@@ -6,6 +6,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.TaxTable;
 			import com.efi.printsmith.data.PreferencesCashRegister;
 			import mx.events.DataGridEventReason;
 			import mx.events.DataGridEvent;
@@ -71,6 +72,13 @@
 					preferencesCashRegisterDeleteArray.addItem(newItem);
 					preferencesCashRegisterArray.removeItemAt(cashRegisterGrid.selectedIndex);
 				}
+			}
+			
+			public function getTaxTableName(taxTable:TaxTable):String {
+				if(taxTable!=null){
+					return taxTable.name;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.UseParentTaxTable');
 			}
 		]]>
 	</mx:Script>
@@ -149,14 +157,14 @@
 							dataField="taxTable" editable="true">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Text selectable="false" text="{data.taxTable.name}" />
+									<mx:Text selectable="false" text="{outerDocument.getTaxTableName(data.taxTable)}" />
 								</mx:Component>
 							</mx:itemRenderer>
 							<mx:itemEditor>
 								<mx:Component>
 									<components:CustomComboBoxComponent datagridControl="true" variableName="taxTable"
 										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-										masterList="{outerDocument.taxTablesArray}" updateFirstElement="true"
+										masterList="{outerDocument.taxTablesArray}" 
 										customText="{outerDocument.getCustomTextData(outerDocument.taxTablesArray,data,data.taxTable)}"/>
 								</mx:Component>
 							</mx:itemEditor>
