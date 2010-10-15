@@ -1079,6 +1079,20 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		ProcessPreferencesStockDefinition(columnnames, false, item);
+		
+		//Fix for BugId 1209
+		item = item + 1;
+
+		columnnames = new ColumnNames();
+		columnnames.setInternalName("stkgroup");
+		columnnames.setName("stockPickerCmd.Type");
+		try {
+			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		ProcessPreferencesStockDefinition(columnnames, false, item);
+		
 		item = item + 1;
 
 		columnnames = new ColumnNames();
