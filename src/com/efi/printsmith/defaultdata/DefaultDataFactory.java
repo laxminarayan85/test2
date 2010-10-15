@@ -1084,7 +1084,7 @@ public class DefaultDataFactory {
 		item = item + 1;
 
 		columnnames = new ColumnNames();
-		columnnames.setInternalName("stkgroup");
+		columnnames.setInternalName("type");
 		columnnames.setName("stockPickerCmd.Type");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
