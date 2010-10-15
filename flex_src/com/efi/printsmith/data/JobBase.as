@@ -151,6 +151,7 @@ package com.efi.printsmith.data
 		public var frontColor7:String = "";
 		public var runTime:Number = 0;
 		public var setupTime:Number = 0;
+		public var releasedToProduction:Boolean = false;
 	
 	}
 }
