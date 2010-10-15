@@ -1060,7 +1060,7 @@ public class DefaultDataFactory {
 		item = item + 1;
 
 		columnnames = new ColumnNames();
-		columnnames.setInternalName("stktype");
+		columnnames.setInternalName("basicsize");
 		columnnames.setName("stockPickerCmd.BasicSize");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
@@ -1084,7 +1084,7 @@ public class DefaultDataFactory {
 		item = item + 1;
 
 		columnnames = new ColumnNames();
-		columnnames.setInternalName("type");
+		columnnames.setInternalName("stktype");
 		columnnames.setName("stockPickerCmd.Type");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
