@@ -31,7 +31,7 @@
 				<mx:TextInput x="105" y="8" width="75" id="txtInvoiceNumber"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild">
- 	 	 	 	<mx:TextInput x="105" y="33" width="75" id="txtInvoiceTotalDue"/>
+ 	 	 	 	<mx:TextInput x="105" y="33" width="75" text="{invoice.totalCost}" id="txtInvoiceTotalDue"/>
  	 	 	</mx:AddChild>
 
 
@@ -94,6 +94,7 @@
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:TextInput x="121" y="152" width="75"/>
  	 	 	</mx:AddChild>
+ 	 	 	<mx:SetEventHandler target="{txtInvoiceNumber}" name="change" handler="doGetInvoice();"/>
  	 	</mx:State>
  	 	<mx:State name="paymentPaymentMethod" basedOn="paymentState">
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
@@ -204,11 +205,15 @@
 <mx:RemoteObject id="dataServiceCreditCardPreferences" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCreditCardPreferencesResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dataServiceInvoice" destination="InvoiceService">
+	<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadInvoice(event)"/>
+</mx:RemoteObject>
 	<mx:Producer id="producer" destination="cashregister"/>
 	<mx:Consumer id="consumer" destination="cashregister" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import com.efi.printsmith.data.InvoiceBase;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.CashDrawer;
 	import com.efi.printsmith.data.Tape;
@@ -253,8 +258,11 @@
 	[Bindable]
 	private var systemCashPreferencesArray:ArrayCollection = new ArrayCollection();
 	
-	[Bindable]
+	
+[Bindable]
 	private var itemQty:String;
+	[Bindable]
+	private var invoice:InvoiceBase;
 	[Bindable]
 	private var customerAccount:Account;
 	[Bindable]
@@ -818,6 +826,14 @@
 	private function doTransactionGrid():void{
 		button1.enabled = true;
 	} 
+	private function doGetInvoice():void{
+		
+		dataServiceInvoice.getInvoice(txtInvoiceNumber.text);
+	}
+	private function handleLoadInvoice(invoiceTemp:InvoiceBase):void{
+		if ( inviocetemp != null)
+			invoice = invoiceTemp;
+	}
 ]]>
                              
 </mx:Script>
