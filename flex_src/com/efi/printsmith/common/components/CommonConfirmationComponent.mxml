@@ -39,7 +39,7 @@
 			private function checkTimer():void {
 				if(timer==null){
 					close();
-				} else if(timer!=null && (!timer.running || timer.currentCount>5)){
+				} else if(timer!=null && (!timer.running || timer.currentCount>2)){
 					close();
 				}
 			}
