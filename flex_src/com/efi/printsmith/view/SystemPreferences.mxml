@@ -2328,7 +2328,8 @@
 				id="tvPreference"
 				width="100%" height="100%" 
 				dataProvider="{treeData.node}"
-				change="treeSelect(event);" labelFunction="TreeDisplayLabel"/>
+				change="treeSelect(event);" labelFunction="TreeDisplayLabel"
+				defaultLeafIcon="{null}" folderClosedIcon="{null}" folderOpenIcon="{null}"/>
 			
 		</mx:VBox>
 		
