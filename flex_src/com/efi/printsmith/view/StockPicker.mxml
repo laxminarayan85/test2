@@ -17,6 +17,10 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadItemsResult(event)"/>
 		
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceSystem" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
+	</mx:RemoteObject>	
      
 	
 	<mx:Producer id="producer" destination="stockdefinitions"/>
@@ -27,6 +31,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.common.clientPreferences.UserClientPreferences;
 	import com.efi.printsmith.data.StockClass;
 	import mx.events.DataGridEvent;
@@ -107,6 +112,8 @@
  	private var focusedFormControl:DisplayObject;                           
 	
 	[Bindable] private var colWidths:Object;
+	
+	[Bindable] private var preferencesSystem:PreferencesSystem;
 	
 	private function handleLoadResult(event:ResultEvent):void {
 		stockDefinitions = event.result as ArrayCollection;
@@ -326,6 +333,7 @@
 	    PopUpManager.centerPopUp(this);
 	    ShellLabel();
 	    showSearchBox.setStyle("icon", downIcon);
+	    dataServiceSystem.getAll("PreferencesSystem");
 	  // dataService.getAllNameIDOnly("StockDefinition");
 	//	dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 	}
@@ -1122,6 +1130,17 @@
 			//showSearchBox.label = "Hide Search";
 		}
 	} 
+	
+	private function handleLoadSystemResult(event:ResultEvent):void {
+		var preferencesSystemArray:ArrayCollection = event.result as ArrayCollection;
+		if (preferencesSystemArray!=null && preferencesSystemArray.length > 0) {
+   			preferencesSystem = preferencesSystemArray.getItemAt(0,0) as PreferencesSystem;
+  		}
+	}
+	
+	private function exportData():void {
+		
+	}
 
 ]]>        
 </mx:Script> 
@@ -1133,6 +1152,8 @@
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" enabled="true" click="newStockDefinition();" id="new_button" width="12%" />
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="12%" id="status_button" click="doStatus()"/>
 			<mx:Spacer width="6%" />
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" click="{exportData()}" id="export_button" width="12%"
+				visible="{preferencesSystem.enablePricingSystem}" includeInLayout="{preferencesSystem.enablePricingSystem}" enabled="{(dataGrid.selectedItem != null)}"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Cancel')}" click="cancelPicker();" id="cancel_button" width="12%" />
 			<components:CustomDeleteButtonComponent
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" 
