@@ -1569,7 +1569,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
     @Where(clause="isdeleted <> 'TRUE'")
 	private StockDefinition stock;
 	
