@@ -830,9 +830,11 @@
 		
 		dataServiceInvoice.getInvoice(txtInvoiceNumber.text);
 	}
-	private function handleLoadInvoice(invoiceTemp:InvoiceBase):void{
-		if ( inviocetemp != null)
-			invoice = invoiceTemp;
+	private function handleLoadInvoice(evt:ResultEvent):void {
+		var invoiceTmp:InvoiceBase = evt.result as InvoiceBase;
+		if (invoiceTmp != null) {
+			invoice = invoiceTmp;
+		}
 	}
 ]]>
                              

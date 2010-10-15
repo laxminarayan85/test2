@@ -822,7 +822,7 @@
 		var result:Boolean;
 		
 		if (tax_table_combo.text != null && tax_table_combo.text != "" && tax_table_combo.selectedIndex == -1) {
-			var item:int = findItem(sales_rep_combo.text, taxTables);
+			var item:int = findItem(tax_table_combo.text, taxTables);
 			if (item == -1) {
 				taxtable = new TaxTable();
 				taxtable.name = tax_table_combo.text;

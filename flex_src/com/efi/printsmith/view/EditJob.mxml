@@ -12,7 +12,8 @@
 				verticalScrollPolicy="auto"
 				showCloseButton="false"
 				headerHeight="0"
-				width="100%" height="100%" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*">
+				width="100%" height="100%" xmlns:components="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*"
+				xmlns:commoncomponents="com.efi.printsmith.common.components.*">
 	<mx:states>
 		<mx:State name="PrintMethod">
 			<mx:SetProperty target="{total_imp}" name="text" value="{job.totalImpressions}"/>
@@ -339,7 +340,7 @@
 						  text="Notes" width="67" textAlign="right"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<ns1:CheckBoxRenderer x="85" y="181" id="job_shownotes" selected="false"/>
+				<components:CheckBoxRenderer x="85" y="181" id="job_shownotes" selected="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{label32}" position="before">
 				<mx:Label x="10"
@@ -606,9 +607,16 @@
 					fault="handleFault(event)"
 					result="handleCalculateCuts(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="taxTableDataService" destination="dataService">
+		<mx:method name="getCurrentTaxTables" fault="handleFault(event)" result="handleLoadTaxTables(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTaxTableResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.dataGridClasses.DataGridColumn;
 			import mx.utils.StringUtil;
 			import com.efi.mdi.view.window.MDIWindow;
 			import com.efi.mdi.event.window.WindowCloseEvent;
@@ -641,7 +649,7 @@
 			import com.efi.printsmith.data.PreferencesSystem;
 			import com.efi.printsmith.data.PreferencesEstimating;
 			import com.efi.printsmith.data.PreferencesDefaultPresses;
-	
+			import com.efi.printsmith.data.TaxTable;
 			
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.StockPickerSelectEvent;
@@ -743,6 +751,9 @@
 
 			[Bindable]
 			private var stocks:ArrayCollection=new ArrayCollection();
+
+		    [Bindable]
+		    private var taxTables:ArrayCollection = new ArrayCollection();
 			
     		private var preferencesStockDefinitions:ArrayCollection = new ArrayCollection();
 
@@ -754,6 +765,7 @@
 			
 			[Bindable] public var invoiceMultiQtyJobList:ArrayCollection = new ArrayCollection();
 			
+
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
 				if (systemPreferencesArray.length > 0)
@@ -766,6 +778,15 @@
 		
 			}
 			
+			private function handleLoadTaxTables(ev:ResultEvent):void {
+				var selectedItem:Object = tax_table_combo.selectedItem;
+				var temp:TaxTable = new TaxTable();
+				taxTables = ev.result as ArrayCollection;
+				temp.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Default')+' ' + resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxTable');
+				taxTables.addItemAt(temp, 0);
+				tax_table_combo.selectedItem= selectedItem;
+			}
+
 			private function handleLoadPreferencesDefaultPressesResult(ev:ResultEvent):void {
 				preferencesDefaultPresses = ev.result as PreferencesDefaultPresses;
 			}
@@ -802,6 +823,7 @@
 				pricingMethodDataService.getAll("PreferencesPricingMethod");
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
 				dataServicePreferencesDefaultPresses.getSingle("PreferencesDefaultPresses");
+			    taxTableDataService.getCurrentTaxTables("TaxTable");
 				
 				if (job == null) {
 					job = new Job();
@@ -977,7 +999,7 @@
 				mapFromJobData();
 				this.invoice = job.parentInvoice;
 				if(this.job.jobGroup==0){
-					var counter = 1;
+					var counter:int = 1;
 					if(this.invoice.jobs!=null && this.invoice.jobs.length>0){
 						for(var i:int=1;i<=1000;i++){
 							var checkFlag:Boolean = false;
@@ -1015,6 +1037,14 @@
 					job.description = this.job_type.selectedLabel;
 				}
 				
+				if (tax_table_combo != null && tax_table_combo.selectedItem != null && tax_table_combo.text != "") 
+					if (tax_table_combo.selectedIndex == 0)
+						job.taxTable = null
+					else
+						job.taxTable = tax_table_combo.selectedItem as TaxTable;
+				else
+					job.taxTable = null;
+
 				job.estWaste=parseInt(est_waste.text);
 				job.finished=checked_finished.selected;
 				job.inSetsOf=parseInt(sets_of.text);
@@ -1335,6 +1365,10 @@
 
 			}
 
+			private function handleSaveTaxTableResult(ev:ResultEvent):void {
+				taxTableDataService.getAll("TaxTable");
+			}      
+
 
 			private function handleFault(ev:FaultEvent):void
 			{
@@ -1591,33 +1625,33 @@
 					job.pressQty = localJob.pressQty;
 					job.numUp = localJob.numUp;
 					job.numOn = localJob.numOn;
-					num_signatures.text = job.signatures.toString();
-					job_imp.text = job.impressionsPerRun.toString();
-					total_imp.text = job.totalImpressions.toString();
-					est_waste.text = job.estWaste.toString();
+//					num_signatures.text = job.signatures.toString();
+//					job_imp.text = job.impressionsPerRun.toString();
+//					total_imp.text = job.totalImpressions.toString();
+//					est_waste.text = job.estWaste.toString();
 //					if (this.num_signatures != null)
 //						this.num_signatures.text = job.totalCopies.toString();
-					if (this.num_copies != null)
-						this.num_copies.text = job.numCopies.toString();
-					if (this.total_copies0 != null)
-						this.total_copies0.text = job.totalCopies.toString();
-					if (this.num_copies1 != null)
-						this.num_copies1.text = job.numCopies.toString();
-					if (job_totalCost != null) {
-						job_totalCost.text = job.totalCost.toString();
-					}
-					if (this.num_signatures != null)
-						num_signatures.text = job.totalCopies.toString();
-					
-					if (job.pricingRecord != null) {
-						overs_unit_price.text = Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.oversUnitPrice.toString());
-						overs_total_price.text = Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.oversTotalPrice.toString());
-						job_prep.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.prepPrice.toString());
-						job_bind.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.bindPrice.toString());
-						job_other.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.otherChargePrice.toString());
-						job_total.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice).toString());
-						job_price.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice));
-					}
+//					if (this.num_copies != null)
+//						this.num_copies.text = job.numCopies.toString();
+//					if (this.total_copies0 != null)
+//						this.total_copies0.text = job.totalCopies.toString();
+//					if (this.num_copies1 != null)
+//						this.num_copies1.text = job.numCopies.toString();
+//					if (job_totalCost != null) {
+//						job_totalCost.text = job.totalCost.toString();
+//					}
+//					if (this.num_signatures != null)
+//						num_signatures.text = job.totalCopies.toString();
+//					
+//					if (job.pricingRecord != null) {
+//						overs_unit_price.text = Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.oversUnitPrice.toString());
+//						overs_total_price.text = Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.oversTotalPrice.toString());
+//						job_prep.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.prepPrice.toString());
+//						job_bind.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.bindPrice.toString());
+//						job_other.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.otherChargePrice.toString());
+//						job_total.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice).toString());
+//						job_price.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice));
+//					}
 				}
 				
 				paperCalculatorService.CalcOut(job, job.paperCal.whichStartSize);
@@ -2064,6 +2098,24 @@
 			 	statusWindow.setStock(temp);
 			 }
 	    	
+			private function doTaxTable(): void{                             
+				var taxtable:TaxTable;
+				var result:Boolean;
+				
+				if (tax_table_combo.text != null && tax_table_combo.text != "" && tax_table_combo.selectedIndex == -1) {
+					var item:int = findItem(tax_table_combo.text, taxTables);
+					if (item == -1) {
+						taxtable = new TaxTable();
+						taxtable.name = tax_table_combo.text;
+						taxTableDataService.addUpdate(taxtable);
+						job.taxTable = taxtable;
+					}
+					else {
+						tax_table_combo.selectedItem = item;
+					}
+				}
+			}
+			
 	    	private function doInkEditorFront():void{
 	    		var inkWindow:InkColorPicker = InkColorPicker(PopUpManager.createPopUp(this, InkColorPicker, true));
 				inkWindow.setStyle("borderAlpha", 0.9);
@@ -2202,9 +2254,14 @@
 				}
 				invoiceMultiQtyJobList = updatedJobList;
 			}
+			
+			private function formatChargePrice(item:Object, column:DataGridColumn):String {
+				return this.numberFormatter.format(item.price);
+			}
 		]]>
 
 	</mx:Script>
+   	<mx:NumberFormatter id="numberFormatter" precision="2" useNegativeSign="true" useThousandsSeparator="true"/>
 
 	<mx:VBox width="100%"
 			 height="625"
@@ -2324,14 +2381,14 @@
 						 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
 						 id="check_taxtable"
 						 selected="{job.taxable}" width="70"/>
-			<mx:CheckBox x="171"
+			<mx:CheckBox x="370.5"
 						 y="68"
 						 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
 						 id="checked_finished"
-						 selected="{job.finished}" width="64"/>
-			<fc:AutoComplete x="309"
+						 selected="{job.finished}" width="87"/>
+			<fc:AutoComplete x="525.5"
 							 y="68"
-							 width="125.5"
+							 width="75.5"
 							 id="product"
 							 dataProvider="{productCodes}"
 							 labelField="name"
@@ -2346,30 +2403,42 @@
 			<mx:Label x="10"
 					  y="96"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Comment')}" textAlign="right" width="98"/>
-			<fc:AutoComplete x="506.5"
+			<fc:AutoComplete x="673"
 							 y="68"
-							 width="124"
+							 width="75"
 							 id="job_location"
 							 dataProvider="{locations}"
 							 labelField="name"
 							 height="20"/>
-			<mx:Label x="243"
+			<mx:Label x="465.5"
 					  y="70"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Product')}" textAlign="right" width="58"/>
-			<mx:Label x="442.5"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Product')}" textAlign="right" width="52"/>
+			<mx:Label x="609"
 					  y="70"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Location')}" textAlign="right" width="56"/>
-			<mx:Label x="638.5"
+			<mx:Label x="756"
 					  y="70"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Type')}" textAlign="right" width="63.5"/>
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Type')}" textAlign="right" width="46.5"/>
 			<mx:ComboBox
-						 y="65"
+						 y="67.5"
 						 id="job_type"
 						 dataProvider="{pricingMethods}"
 						 change="updatePricingMethod();"
 						 labelField="title"
 						 right="10"
-						 left="710">
+						 left="810.5">
+			</mx:ComboBox>
+			<mx:Label x="162"
+					  y="70"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" textAlign="right" width="55.5"/>
+			<mx:ComboBox
+						 y="67.5"
+						 id="tax_table_combo"
+						 dataProvider="{taxTables}"
+						 change="updatePricingMethod();"
+						 labelField="name"
+						 right="581.5"
+						 left="221.5">
 			</mx:ComboBox>
 			<mx:Canvas x="0" y="119" width="939" height="512" verticalScrollPolicy="auto" id="canvas2">
 				<mx:HDividedBox x="0"
@@ -2412,7 +2481,7 @@
 									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}"
 													   dataField="description"/>
 									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}"
-													   width="90"
+													   width="90" labelFunction="formatChargePrice"
 													   dataField="price"
 													    textAlign="right"/>
 								</mx:columns>
@@ -2471,16 +2540,26 @@
 										  text="{job.inSetsOf}"
 										  height="20"
 										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
-							<mx:TextInput x="496"
+							<commoncomponents:CustomNumericTextInputComponent x="496"
 										  y="324"
 										  id="overs_unit_price"
 										  height="20"
-										  width="98" mouseDown="textInputClick(event)" textAlign="right"/>
-							<mx:TextInput x="496"
+										  width="98" 
+										  dataHolder="{job.pricingRecord}" variableName="oversUnitPrice"
+										  customText="{job.pricingRecord.oversUnitPrice}"
+										  precision="4" rounding="nearest" allowSymbol="false"
+										  text="{job.pricingRecord.oversUnitPrice}"
+										  mouseDown="textInputClick(event)" textAlign="right"/>
+							<commoncomponents:CustomNumericTextInputComponent x="496"
 										  y="346"
 										  id="overs_total_price"
 										  height="20"
-										  width="98" mouseDown="textInputClick(event)" textAlign="right"/>
+										  width="98" 
+										  dataHolder="{job.pricingRecord}" variableName="oversTotalPrice"
+										  customText="{job.pricingRecord.oversTotalPrice}"
+										  precision="2" rounding="nearest" allowSymbol="false" 
+										  text="{job.pricingRecord.oversTotalPrice}"
+										  mouseDown="textInputClick(event)" textAlign="right"/>
 							<mx:Label x="385"
 									  y="348"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversTotalPrice')}" textAlign="right" width="108" id="label1"/>
@@ -2494,16 +2573,19 @@
 									  y="368"
 									  width="98"
 									  id="job_prep"
+									  text="{numberFormatter.format(job.pricingRecord.prepPrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="389"
 									  width="98"
 									  id="job_bind"
+									  text="{numberFormatter.format(job.pricingRecord.bindPrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="410"
 									  width="98"
 									  id="job_other"
+									  text="{numberFormatter.format(job.pricingRecord.otherChargePrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="385"
 									  y="445"
@@ -2512,6 +2594,7 @@
 									  y="445"
 									  width="97.05"
 									  id="job_total"
+									  text="{numberFormatter.format(job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="208"
@@ -2533,15 +2616,21 @@
 									  y="271"
 									  width="98"
 									  id="job_weight"
-									  height="20" textAlign="right" text="{job.weight}"/>
+									  height="20" textAlign="right" text="{numberFormatter.format(job.weight)}"/>
 							<mx:Label x="385"
 									  y="389"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Bind')}" textAlign="right" width="108" id="label5"/>
-							<mx:TextInput x="496"
+							<commoncomponents:CustomNumericTextInputComponent x="496"
 										  y="302"
 										  id="job_price"
 										  height="20"
-										  width="98" mouseDown="textInputClick(event)" textAlign="right" text="{job.pricingRecord.totalPrice}"/>
+										  width="98" 
+										  dataHolder="{job.pricingRecord}" variableName="totalPrice"
+										  customText="{job.pricingRecord.totalPrice}"
+										  precision="2" rounding="nearest" allowSymbol="false"
+										  mouseDown="textInputClick(event)" 
+										  textAlign="right" 
+										  text="{job.pricingRecord.totalPrice}"/>
 							<mx:Label x="385"
 									  y="304"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label7"/>
@@ -2979,7 +3068,7 @@
 									<mx:RadioButton x="107" y="78" click="changeJobSides(event)" id="copy_double_radio" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.DoubleSided')}" groupName="copierSides" fontSize="9"/>
 								</mx:Canvas>
 							</mx:ViewStack>
-							<ns1:SmallThrobber visible="false" id="pricing_throbber" x="599" y="301" height="20" width="20"/>
+							<components:SmallThrobber visible="false" id="pricing_throbber" x="599" y="301" height="20" width="20"/>
 							<mx:LinkButton x="596" y="301" width="20" id="refresh_price_btn" height="20" click="updatePrice()">
 								<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
 							</mx:LinkButton>
