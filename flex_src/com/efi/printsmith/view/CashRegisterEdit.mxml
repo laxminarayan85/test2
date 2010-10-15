@@ -118,7 +118,7 @@
  	 	 	 	<mx:Label x="72" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.Ref')}"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
- 	 	 	 	<mx:ComboBox x="76" y="88" width="120"  labelField="name" dataProvider="{creditCardPreferencesArray}" id="card_type"></mx:ComboBox>
+ 	 	 	 	<mx:ComboBox x="76" y="88" width="171"  labelField="cardType" dataProvider="{creditCardPreferencesArray}" id="card_type"></mx:ComboBox>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:TextInput x="121" y="114" width="75"  id="card_ref"/>

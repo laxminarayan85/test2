@@ -1664,8 +1664,8 @@
 				<mx:Panel x="10" y="66" width="301" height="134" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Company')}" dropShadowEnabled="false">
 					<mx:Label x="12" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.NumberofEmployees')}" textAlign="right"/>
 					<mx:Label x="10" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AnnualRevenue')}" textAlign="right"/>
-					<mx:TextInput x="119" y="38" width="152" id="annualRev" text="{account.marketing.annualRev}"/>
-					<mx:TextInput x="119" y="10" width="152" id="numberofEmployees" text="{account.marketing.numberofEmployees}"/>
+					<mx:TextInput x="148" y="38" width="123" id="annualRev" text="{account.marketing.annualRev}"/>
+					<mx:TextInput x="148" y="10" width="123" id="numberofEmployees" text="{account.marketing.numberofEmployees}"/>
 					<!--<mx:ComboBox x="119" y="64" width="152" id="businessType_combo" text="{account.marketing.businessType.name}"></mx:ComboBox>
 					
 					<fc:AutoComplete id="business_type_combo" x="119" y="64" width="152" dataProvider="{businessTypes}"  labelField="name" focusOut="doBusinessType();" lookAhead="true" />
