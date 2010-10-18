@@ -2341,6 +2341,7 @@
 			}
 			
 			private function handleSaveGroupResult(event:ResultEvent):void {
+				stockGroups.addItem(event.result as StockGroup);
 				var stockDefinitionsWindow:StockDefinitions = new StockDefinitions();
 				var stockDefinitionsObj:StockDefinition = new StockDefinition();
 				stockDefinitionsObj.stkgroup = event.result as StockGroup;
