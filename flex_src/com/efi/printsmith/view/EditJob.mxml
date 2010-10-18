@@ -1919,6 +1919,7 @@
 					break;
 				case this.job_finish_size:
 					doUpdatePrice = true;
+					var oldDimension:Dimension = this.job_finish_size.selectedItem as Dimension;
 					var finishSizeStr:String = Snowmass.formatSizeString(this.job_finish_size.text);
 					this.job_finish_size.selectedIndex = findItem(finishSizeStr, dimensionsArray);
 					if (this.job_finish_size.selectedIndex == -1) {
@@ -1931,7 +1932,15 @@
 					}
 					else {
 						job.finishSize = job_finish_size.selectedItem as Dimension;
-						refreshImageAndWeight();
+						if (job.finishSize.width * job.finishSize.height > job.runSize.width * job.runSize.height) {
+							job.finishSize = oldDimension;
+							job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
+							var message:String;       
+							message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
+							Alert.show(message, "Warning", 0, null, null, null, 4); 
+							
+						} else
+							refreshCalcAndImage();
 					}
 					break;
 				case this.job_fold_size:
@@ -1950,6 +1959,7 @@
 					break;
 				case this.job_size:
 					doUpdatePrice = true;
+					var oldDimension:Dimension = this.job_size.selectedItem as Dimension;
 					var sizeStr:String = Snowmass.formatSizeString(this.job_size.text);
 					this.job_size.selectedIndex = findItem(sizeStr, dimensionsArray);
 					if (this.job_size.selectedIndex == -1) {
@@ -1962,7 +1972,15 @@
 					}
 					else {
 						job.runSize = job_size.selectedItem as Dimension;
-						refreshCalcAndImage();
+						if (job.runSize.width * job.runSize.height > job.parentSize.width * job.parentSize.height) {
+							job.runSize = oldDimension;
+							job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
+							var message:String;       
+							message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheRunSizeisl");
+							Alert.show(message, "Warning", 0, null, null, null, 4); 
+							
+						} else
+							refreshCalcAndImage();
 					}
 					break;
 				}
