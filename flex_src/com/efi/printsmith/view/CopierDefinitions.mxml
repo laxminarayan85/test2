@@ -384,7 +384,6 @@
 			if (pricing_method_combo.selectedItem != null) {
 				copierDefinition.method = pricing_method_combo.selectedItem.data;
 			}
-			copierDefinition.baseRate = parseFloat(baseRate_edit.text.replace(",",""));
 			setOriginalCopierDefinition();
 		} else if (ev.token.operation == "getPricingMatrix") {
 			var matrix:com.efi.printsmith.data.Matrix = ev.result as com.efi.printsmith.data.Matrix;
@@ -1099,7 +1098,6 @@
 						baseratelabel.visible =true;
 						baseRate_edit.visible = true;
 						baseRate_edit.enabled = true;
-						baseRate_edit.text = machineCostperCopy.text;
 						interpolatematrix.enabled = true;
 						break;
 					case "CopyCost":
