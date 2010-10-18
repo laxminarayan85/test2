@@ -1443,6 +1443,7 @@
 				var stockPickerWindow:StockPicker=StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 				stockPickerWindow.setStyle("borderAlpha", 0.9);
 			   	stockPickerWindow.setStockArray(stocks);
+			   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
 			   	stockPickerWindow.passStockDataFromParent = false;
 				stockPickerWindow.formIsEmpty=true;
 				stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
