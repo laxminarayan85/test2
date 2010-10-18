@@ -516,7 +516,9 @@ public class JobMapper extends ImportMapper {
 				if (currentImportToken.equals("2") == true) 
 					tempPaper.setGripLocation("Left");
 			} else if ("folio edge".equals(currentFieldToken)) {
-				tempPaper.setFolioEdge(Utilities.tokenToDouble(currentImportToken));				
+				tempPaper.setFolioEdge(Utilities.tokenToDouble(currentImportToken));	
+			} else if ("which start size".equals(currentFieldToken)) {
+				tempPaper.setWhichStartSize(Utilities.tokenToInt(currentImportToken));
 			} else if ("folio side".equals(currentFieldToken)) {
 				if (currentImportToken.equals("1") == true) 
 					tempPaper.setFolioLocation("Top");
