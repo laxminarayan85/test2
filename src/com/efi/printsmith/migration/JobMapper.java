@@ -139,133 +139,133 @@ public class JobMapper extends ImportMapper {
 			} else if ("pricing method".equals(currentFieldToken)) {
 				method = currentImportToken;
 				if (method.equals("16")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(false);
 					job.setSpecialOrderStock(false);
 					
 				} else if (method.equals("17")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(false);
 					job.setSpecialOrderStock(true);
 					
 				} else if (method.equals("18")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(true);
 					job.setSpecialOrderStock(false);
 
 				} else if (method.equals("26")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("B&W");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(false);
 					job.setSpecialOrderStock(false);
 				}else if (method.equals("27")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("B&W");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(false);
 					job.setSpecialOrderStock(true);	
 				} else if (method.equals("28")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("B&W");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(true);
 					job.setSpecialOrderStock(false);
 				} else if (method.equals("36")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Color");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(false);
 					job.setSpecialOrderStock(false);
 				} else if (method.equals("37")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Color");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(false);
 					job.setSpecialOrderStock(true);
 				} else if (method.equals("38")){
-					PreferencesPricingMethod Method = dataService.getByMethodType("Color");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(true);
 					job.setSpecialOrderStock(false);
 				} else if (method.equals("46")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Blank");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(false);
 					job.setSpecialOrderStock(false);
 				} else if (method.equals("47")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Blank");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(false);
 					job.setSpecialOrderStock(true);
 				} else if (method.equals("48")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Blank");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(true);
 					job.setSpecialOrderStock(false);
 				} else if (method.equals("56")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("List");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(false);
 					job.setSpecialOrderStock(false);
 				} else if (method.equals("57")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("List");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(false);
 					job.setSpecialOrderStock(true);
 				} else if (method.equals("58")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("List");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					job.setCustomerSuppliedStock(true);
 					job.setSpecialOrderStock(false);
 				} else if (method.equals("60")){
-					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("70")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("80")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Printing");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("90")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Outside Services");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("100")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Merchandise");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("110")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Lines & Inches");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("120")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Multi Part");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("130")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Outside Services");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("140")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Outside Services");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("150")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Outside Services");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("160")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Outside Services");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("170")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Mailing");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 					
 				} else if (method.equals("190")) {
-					PreferencesPricingMethod Method = dataService.getByMethodType("Charges Only");
+					PreferencesPricingMethod Method = dataService.getByMethodType(method);
 					job.setPricingMethod(Method);
 				
 				}
