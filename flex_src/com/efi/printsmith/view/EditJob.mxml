@@ -2087,6 +2087,7 @@
 				if (pricingMethod != null)  {
 					this.job_type.selectedItem = pricingMethod;
 					this.job.pricingMethod = pricingMethod;
+					refreshCalcAndImage();
 					updatePricingMethod();
 				}
 			}
