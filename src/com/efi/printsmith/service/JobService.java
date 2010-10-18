@@ -140,11 +140,15 @@ public class JobService extends SnowmassHibernateService {
 		return job;
 	}
 	
-	public Job assignPricingCopierToJob(Job job, CopierDefinition copier) {
+	public Job assignPricingCopierToJob(Job job, CopierDefinition copier) throws Exception {
 		if (copier == null || job == null) {
 			log.error("Copier or Job null value passed to assignPricingCopierToJob");
 			return job;
 		}
+		
+		// Get the latest for this copier
+		DataService dataService = new DataService();
+		copier = dataService.getCopierDefinition(copier.getId());
 		
 		job.setPricingCopier(copier);
 		
