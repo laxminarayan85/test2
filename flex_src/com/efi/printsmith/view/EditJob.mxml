@@ -1855,6 +1855,8 @@
 					doUpdatePrice = true;
 					break;
 				case this.sets_of:
+					if (job.inSetsOf == 0 || isNaN(job.inSetsOf))
+						job.inSetsOf = 1;
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					updateWeight();
