@@ -612,6 +612,11 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTaxTableResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServiceGroup" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadGroupResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveGroupResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
 	
 	<mx:Script>
@@ -768,7 +773,9 @@
 			
 			[Bindable] public var invoiceMultiQtyJobList:ArrayCollection = new ArrayCollection();
 			
-			private static var thisInstance:EditJob = null;  
+			private static var thisInstance:EditJob = null;
+			
+			[Bindable] private var stockGroups:ArrayCollection = new ArrayCollection();  
 			
 
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
@@ -835,6 +842,7 @@
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
 				dataServicePreferencesDefaultPresses.getSingle("PreferencesDefaultPresses");
 			    taxTableDataService.getCurrentTaxTables("TaxTable");
+			    dataServiceGroup.getAll("StockGroup");
 				
 				if (job == null) {
 					job = new Job();
@@ -863,6 +871,10 @@
 				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 				multiQtyCombo.selectedItem = null;
 				multiQtyCombo.selectedIndex = -1;
+			}
+			
+			private function handleLoadGroupResult(event:ResultEvent):void {
+				stockGroups = event.result as ArrayCollection;
 			}
 			
 			public function handleUIControlEvent(evt:ResultEvent):void {
@@ -2295,6 +2307,51 @@
 			private function formatChargePrice(item:Object, column:DataGridColumn):String {
 				return this.numberFormatter.format(item.price);
 			}
+			
+			private function openStockDefinition():void {
+				var stockDefinitionsWindow:StockDefinitions = new StockDefinitions();
+				var stockDefinitionsObj:StockDefinition = new StockDefinition();
+				var specialObject:StockGroup;
+				for each(var stockGroupObject:StockGroup in stockGroups) {
+					if(stockGroupObject.name=="Special"){
+						specialObject = stockGroupObject;
+						break;
+					}
+				}
+				if(specialObject!=null){
+					var stockDefinitionsWindow:StockDefinitions = new StockDefinitions();
+					var stockDefinitionsObj:StockDefinition = new StockDefinition();
+					stockDefinitionsObj.stkgroup = specialObject;
+					stockDefinitionsWindow.stockDefinitions = stockDefinitionsObj;
+					stockDefinitionsWindow.fromJobPage = true;
+					stockDefinitionsWindow.addEventListener(SpecialOrderStockDefEvent.SPECIAL_ORDER_SAVE_EVENT,function(event:SpecialOrderStockDefEvent):void {
+						job.customerSuppliedStock = false;
+						job.specialOrderStock = true;
+						setStockDefinitionData(event.stockDefinitionObj);
+					}, false, 0, true);
+					var parentWindowId:int = Snowmass.getInstance().containerManager.getWindowWithChild(EditJob.getInstance()).windowID;
+					Snowmass.getInstance().containerManager.openNewMDIWindow(stockDefinitionsWindow.title,stockDefinitionsWindow,-1,-1,-1,-1,parentWindowId);
+				} else {
+					specialObject = new StockGroup();
+					specialObject.name = "Special";
+					dataServiceGroup.addUpdate(specialObject);
+				}
+			}
+			
+			private function handleSaveGroupResult(event:ResultEvent):void {
+				var stockDefinitionsWindow:StockDefinitions = new StockDefinitions();
+				var stockDefinitionsObj:StockDefinition = new StockDefinition();
+				stockDefinitionsObj.stkgroup = event.result as StockGroup;
+				stockDefinitionsWindow.stockDefinitions = stockDefinitionsObj;
+				stockDefinitionsWindow.fromJobPage = true;
+				stockDefinitionsWindow.addEventListener(SpecialOrderStockDefEvent.SPECIAL_ORDER_SAVE_EVENT,function(event:SpecialOrderStockDefEvent):void {
+					job.customerSuppliedStock = false;
+					job.specialOrderStock = true;
+					setStockDefinitionData(event.stockDefinitionObj);
+				}, false, 0, true);
+				var parentWindowId:int = Snowmass.getInstance().containerManager.getWindowWithChild(EditJob.getInstance()).windowID;
+				Snowmass.getInstance().containerManager.openNewMDIWindow(stockDefinitionsWindow.title,stockDefinitionsWindow,-1,-1,-1,-1,parentWindowId);
+			}
 		]]>
 
 	</mx:Script>
@@ -2866,7 +2923,7 @@
 											   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.SpecialOrder')}"
 											   fontSize="9"
 											   height="18"
-											   id="special_order_button" width="108"/>
+											   id="special_order_button" width="108" click="{openStockDefinition()}"/>
 							<!--		<mx:Image x="215"
 											  y="81"
 											  width="139"

@@ -2205,8 +2205,10 @@ private function doRound(evt:FocusEvent):void{
 	<mx:RadioButtonGroup id="PaperStyle"/>
 	<mx:Label x="10" y="63" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Group')}" width="108" textAlign="right"/>
 	<mx:Label x="263" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Class')}" width="109" textAlign="right"/>
-	<comp:EditableComboBox id="cboStockGroup" x="126" y="61" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" width="116"/>
-	<comp:EditableComboBox x="380" y="64" width="105" id="cbostockClass" dataProvider="{stockClass}" optional="true" editable="true" labelField="name" focusOut="doStockClass()" />
+	<comp:EditableComboBox id="cboStockGroup" x="126" y="61" dataProvider="{stockGroup}"  labelField="name" focusOut="doStockGroup()" width="116"
+		enabled="{!fromJobPage}"/>
+	<comp:EditableComboBox x="380" y="64" width="105" id="cbostockClass" dataProvider="{stockClass}" optional="true" editable="true" labelField="name" focusOut="doStockClass()" 
+		enabled="{!fromJobPage}"/>
 	<mx:CheckBox x="493" y="67" id="chkIsMetric" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Metric')}" width="135" change="doMetric();"/>
 	<mx:Label x="10" y="87" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Name')}" width="108" textAlign="right"/>
 	<mx:Label x="10" y="111" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" width="108" textAlign="right"/>
@@ -2258,10 +2260,10 @@ private function doRound(evt:FocusEvent):void{
 				/>
 				<mx:TextInput  restrict="0-9\." x="337" y="60" width="122.5" id="thickNess" focusOut="convertoCaliper();"/>
 				<mx:TextInput  restrict="0-9\." x="106.5" y="116" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}" focusOut="doRound(event)"/>
-				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}"/>
+				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}" enabled="{!fromJobPage}"/>
 				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="rollweight" focusOut="calRollOrder(event);" text="{stockDefinitions.rollWeight}" />
 				<mx:TextInput restrict="0-9\." x="106.5" y="144" width="137" id="minOrder" text="{stockDefinitions.lotcount}" focusOut="calRollOrder(event);" />
-				<mx:TextInput x="375.5" y="116" width="64.5" id="textinput1" text="{stockDefinitions.cartonWeight}"/>
+				<mx:TextInput x="375.5" y="116" width="64.5" id="textinput1" text="{stockDefinitions.cartonWeight}" enabled="{!fromJobPage}"/>
 				<mx:Text x="356.5" y="33" id="Basicsize" text="{stockDefinitions.stktype.size.name}" width="134" height="22"/>
 				<mx:ComboBox x="475" y="60" id="cboUom"  change="ConvertThickness()"  dataProvider="{stockUom}" width="125.5" labelField="name"/>
 				<mx:Panel x="667" y="-2" width="229.5" height="168" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.ChainofCustody')}" dropShadowEnabled="false" id="panel1">
