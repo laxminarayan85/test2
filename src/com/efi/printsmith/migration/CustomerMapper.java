@@ -208,11 +208,10 @@ public class CustomerMapper extends ImportMapper {
 					}
 				} else if ("tax table is default".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false) {
-						if ( taxTable.getDefaultTable() != true){
+						if (taxTable.getDefaultTable() != null && taxTable.getDefaultTable() != true){
 							taxTable.setDefaultTable(true);
 							dataService.addUpdate(taxTable);
-						}
-												
+						}					
 					}
 				}else if ("sales ranking".equals(currentFieldToken)) {
 					customer.setSalesRank(Utilities
