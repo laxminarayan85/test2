@@ -21,6 +21,10 @@
 	<mx:RemoteObject id="dataServiceSystem" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
 	</mx:RemoteObject>	
+	
+	<mx:RemoteObject id="dataServiceGroup" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveGroupResult(event)"/>
+	</mx:RemoteObject>	
      
 	
 	<mx:Producer id="producer" destination="stockdefinitions"/>
@@ -31,6 +35,10 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
+	import com.efi.printsmith.events.SpecialOrderStockDefEvent;
+	import com.efi.printsmith.events.StockDefinitionOpenEvent;
+	import com.efi.printsmith.data.Job;
 	import com.efi.printsmith.data.ColumnNames;
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.common.clientPreferences.UserClientPreferences;
@@ -115,6 +123,12 @@
 	[Bindable] private var colWidths:Object;
 	
 	[Bindable] private var preferencesSystem:PreferencesSystem;
+	
+	[Bindable] public var fromJobPage:Boolean = false;
+	
+	[Bindable] public var editableJob:Job;
+	
+	[Bindable] public var parentWindowId:int;
 	
 	private function handleLoadResult(event:ResultEvent):void {
 		stockDefinitions = event.result as ArrayCollection;
@@ -1177,191 +1191,43 @@
   		}
 	}
 	
-	/* private function addDGColumns(dgColumns:Array,columnName:ColumnNames):void {
-		var dgColumn:DataGridColumn = new DataGridColumn();
-		if(columnName.name!=null && columnName.internalName!=null) {
-			switch(columnName.internalName) {
-				case "parentsize"			:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "size";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.size;
-												}
-												dgColumn.labelFunction = getSizeLabel;
-												dgColumn.sortCompareFunction = sortSize;
-												dgColumns.push(dgColumn);
-												break;
-				case "color"				:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "color";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.color;
-												}
-												dgColumn.labelFunction = getColorLabel;
-												dgColumn.sortCompareFunction = sortColor;
-												dgColumns.push(dgColumn);
-												break;
-				case "genericcolor"			:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "genericColor";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.genericColor;
-												}
-												dgColumn.labelFunction = getGenericColorLabel;
-												dgColumn.sortCompareFunction = sortGenColor;
-												dgColumns.push(dgColumn);
-												break;
-				case "finish"				:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "finish";	 
-												if(colWidths!=null){
-													dgColumn.width = colWidths.finish;
-												}
-												dgColumn.labelFunction = getFinishLabel;
-												dgColumn.sortCompareFunction = sortFinish;
-												dgColumns.push(dgColumn);
-												break;
-				case "grade"				:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "grade";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.grade;
-												}
-												dgColumn.labelFunction = getGradeLabel;
-												dgColumn.sortCompareFunction = sortGrade;
-												dgColumns.push(dgColumn);
-												break;
-				case "vendor"				:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "vendor";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.vendor;
-												}
-												dgColumn.labelFunction = getVendorLabel;
-												dgColumn.sortCompareFunction = sortVendor;
-												dgColumns.push(dgColumn);
-												break;
-				case "onhand"				:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "onHand";	
-												if(colWidths!=null){ 
-													dgColumn.width = colWidths.onHand;
-												}
-												dgColumns.push(dgColumn);
-												break;
-				case "ordered"				:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "onOrder";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.onOrder;
-												}
-												dgColumns.push(dgColumn);
-												break;
-				case "shellitem"			:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "shellItem";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.shellItem;
-												}
-												dgColumns.push(dgColumn);
-												break;
-				case "normalrunsize"		:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "normalSize";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.normalSize;
-												}
-												dgColumn.labelFunction = getNormalSizeLabel;
-												dgColumn.sortCompareFunction = sortNormal;
-												dgColumns.push(dgColumn);
-												break;
-				case "basicsize"			:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "basicSize";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.basicSize;
-												}
-												dgColumns.push(dgColumn);
-												break;
-				case "stkgroup"				:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "group";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.group;
-												}
-												dgColumn.labelFunction = getGroupLabel;
-												dgColumn.sortCompareFunction = sortGroup;
-												dgColumns.push(dgColumn);
-												break;
-				case "stktype"				:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "type";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.type;
-												}
-												dgColumn.labelFunction = getTypeLabel;
-												dgColumn.sortCompareFunction = sortType;
-												dgColumns.push(dgColumn);
-												break;
-				case "priceexpires"			:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "priceExpires";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.priceExpires;
-												}
-												dgColumns.push(dgColumn);
-												break;
-				case "forestmanagement"		:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "forestManagement";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.forestManagement;
-												}
-												dgColumns.push(dgColumn);
-												break;
-				case "pcwrecycledpercent"	:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "pcwRecycledPercent";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.pcwRecycledPercent;
-												}
-												dgColumns.push(dgColumn);
-												break;
-				case "fsccertified"			:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "fscCertified";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.fscCertified;
-												}
-												dgColumns.push(dgColumn);
-												break;
-				case "sficertified"			:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "sfiCertified";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.sfiCertified;
-												}
-												dgColumns.push(dgColumn);
-												break;
-				case "greensealcertified"	:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = "greenSealCertified";
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths.greenSealCertified;
-												}
-												dgColumns.push(dgColumn);
-												break;
-				default						:	dgColumn = new DataGridColumn();
-												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
-												dgColumn.dataField = columnName.internalName;
-												if(colWidths!=null){	 
-													dgColumn.width = colWidths[columnName.internalName];
-												}
-												dgColumns.push(dgColumn);
-				
+	private function setJobCustomerStock(event:Event):void {
+		if(editableJob!=null){
+			editableJob.customerSuppliedStock = event.currentTarget.selected;
+			editableJob.specialOrderStock = !(event.currentTarget.selected);
+		}
+	}
+	
+	private function openStockDefinition():void {
+		var stockDefinitionsWindow:StockDefinitions = new StockDefinitions();
+		var stockDefinitionsObj:StockDefinition = new StockDefinition();
+		var specialObject:StockGroup;
+		for each(var stockGroupObject:StockGroup in stockGroups) {
+			if(stockGroupObject.name=="Special"){
+				specialObject = stockGroupObject;
+				break;
 			}
 		}
-	} */
+		if(specialObject!=null){
+			var stockDefinitionOpenEvent:StockDefinitionOpenEvent = new StockDefinitionOpenEvent(StockDefinitionOpenEvent.OPEN_EVENT,true,specialObject);
+			dispatchEvent(stockDefinitionOpenEvent);
+			callLater(closeWindow);
+		} else {
+			specialObject = new StockGroup();
+			specialObject.name = "Special";
+			dataServiceGroup.addUpdate(specialObject);
+		}
+	}
+	
+	private function handleSaveGroupResult(event:ResultEvent):void {
+		var stockDefinitionOpenEvent:StockDefinitionOpenEvent = new StockDefinitionOpenEvent(StockDefinitionOpenEvent.OPEN_EVENT,true,event.result as StockGroup);
+		dispatchEvent(stockDefinitionOpenEvent);
+		callLater(closeWindow);
+	}
+	
+	private function closeWindow():void {
+		PopUpManager.removePopUp(this);
+	}
 	
 	private function exportData():void {
 		
@@ -1386,6 +1252,12 @@
 				deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'changePriceCmd.StockDefinitions')}"/>
 			<!--<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" id="select_button0" enabled="{(dataGrid.selectedItem != null)}" click="deleteStockDefinition();" width="12%" />-->
 		</mx:HBox>
+		<mx:HBox width="100%" visible="{fromJobPage}" includeInLayout="{fromJobPage}">
+			<mx:CheckBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CustomerSuppliedStoc')}"
+				selected="{editableJob.customerSuppliedStock}" click="{setJobCustomerStock(event)}"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.SpecialOrder')}" click="{openStockDefinition()}"/>
+		</mx:HBox>
+			
 		<mx:LinkButton id="showSearchBox" click="toggleSearchBox();" textAlign="left" label="Search Stocks" width="100%" height="5%"/>
 		<mx:HBox id="searcharea" width="100%" height="30%" >
 			<mx:Form id="col1" width="30%" >

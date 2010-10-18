@@ -616,6 +616,9 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.StockGroup;
+			import com.efi.printsmith.events.SpecialOrderStockDefEvent;
+			import com.efi.printsmith.events.StockDefinitionOpenEvent;
 			import mx.controls.dataGridClasses.DataGridColumn;
 			import mx.utils.StringUtil;
 			import com.efi.mdi.view.window.MDIWindow;
@@ -765,6 +768,8 @@
 			
 			[Bindable] public var invoiceMultiQtyJobList:ArrayCollection = new ArrayCollection();
 			
+			private static var thisInstance:EditJob = null;  
+			
 
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
@@ -812,10 +817,16 @@
 					this.job_parent.enabled = false;
 				else
 					this.job_parent.enabled = true;
-			}	                                  
+			}	                    
+			
+			
+			public static function getInstance() : EditJob {
+				return thisInstance;
+			}	              
 
 			public function init():void
 			{
+				thisInstance = this;
 				this.height = parent.height - 80;
 				PopUpManager.centerPopUp(this);
 				
@@ -1446,9 +1457,29 @@
 			   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
 			   	stockPickerWindow.passStockDataFromParent = false;
 				stockPickerWindow.formIsEmpty=true;
-				stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel);
-				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect);
-				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew);
+				stockPickerWindow.fromJobPage = true;
+				stockPickerWindow.editableJob = this.job;
+				stockPickerWindow.parentWindowId = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+				stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel, false, 0, true);
+				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect, false, 0, true);
+				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew, false, 0, true);
+				stockPickerWindow.addEventListener(StockDefinitionOpenEvent.OPEN_EVENT,function(event:StockDefinitionOpenEvent):void {
+					if(event.isOpened){
+						var specialObject:StockGroup = event.specialStockGroupObject as StockGroup;
+						var stockDefinitionsWindow:StockDefinitions = new StockDefinitions();
+						var stockDefinitionsObj:StockDefinition = new StockDefinition();
+						stockDefinitionsObj.stkgroup = specialObject;
+						stockDefinitionsWindow.stockDefinitions = stockDefinitionsObj;
+						stockDefinitionsWindow.fromJobPage = true;
+						stockDefinitionsWindow.addEventListener(SpecialOrderStockDefEvent.SPECIAL_ORDER_SAVE_EVENT,function(event:SpecialOrderStockDefEvent):void {
+							job.customerSuppliedStock = false;
+							job.specialOrderStock = true;
+							setStockDefinitionData(event.stockDefinitionObj);
+						}, false, 0, true);
+						var parentWindowId:int = Snowmass.getInstance().containerManager.getWindowWithChild(EditJob.getInstance()).windowID;
+						Snowmass.getInstance().containerManager.openNewMDIWindow(stockDefinitionsWindow.title,stockDefinitionsWindow,-1,-1,-1,-1,parentWindowId);
+					}
+				}, false, 0, true);
 			}
 
 			private function handleStockPickerCancel(evt:StockPickerSelectEvent):void
@@ -1472,7 +1503,14 @@
 			{
 				if (loadComponent)
 					loadComponent.close();
-				if (evt.stockDefinition != null)
+				
+				setStockDefinitionData(evt.stockDefinition);
+
+					
+			}
+			
+			private function setStockDefinitionData(stockDefinitionObj:StockDefinition):void {
+				if (stockDefinitionObj != null)
 				{
 //					this.job.stock=evt.stockDefinition;
 					if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed") {
@@ -1481,14 +1519,14 @@
 							cutoff = estimatingPreferences.defaultPressCuttOff;
 						else
 							cutoff = 0;
-						this.job.rollWidth = evt.stockDefinition.parentsize.width;
+						this.job.rollWidth = stockDefinitionObj.parentsize.width;
 						this.roll_width.text = job.rollWidth.toString();
 						this.job.cutOff = cutoff;
 						this.cutOff_edit.text = cutoff.toString();
 						if (job.finishSize == null)
 							job.finishSize = new Dimension();
-						this.job.finishSize.name = evt.stockDefinition.parentsize.name + " x " + cutoff.toString();
-						this.job.finishSize.width = evt.stockDefinition.parentsize.width;
+						this.job.finishSize.name = stockDefinitionObj.parentsize.name + " x " + cutoff.toString();
+						this.job.finishSize.width = stockDefinitionObj.parentsize.width;
 						this.job.finishSize.height = cutoff;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 						if (this.job_finish_size.selectedIndex == -1)
@@ -1499,53 +1537,53 @@
 							this.job.foldedSize = this.job.finishSize;
 							this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
 						}
-						if (this.job_type.text == "Large Format" && evt.stockDefinition.defaultLargeCopier != null) {
-							job.pricingCopier = evt.stockDefinition.defaultLargeCopier;
+						if (this.job_type.text == "Large Format" && stockDefinitionObj.defaultLargeCopier != null) {
+							job.pricingCopier = stockDefinitionObj.defaultLargeCopier;
 							job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
-							job.costingCopier = evt.stockDefinition.defaultLargeCopier;
+							job.costingCopier = stockDefinitionObj.defaultLargeCopier;
 							job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers);
 						}
 					}
 					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color" || this.job_type.text == "Blank" || this.job_type.text == "List") {
-						this.job.parentSize = evt.stockDefinition.parentsize;
+						this.job.parentSize = stockDefinitionObj.parentsize;
 						this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
-						if (evt.stockDefinition.normalRunSize == null || evt.stockDefinition.normalRunSize.name == "")
-							this.job.runSize = evt.stockDefinition.parentsize;
+						if (stockDefinitionObj.normalRunSize == null || stockDefinitionObj.normalRunSize.name == "")
+							this.job.runSize = stockDefinitionObj.parentsize;
 						else
-							this.job.runSize = evt.stockDefinition.normalRunSize;
+							this.job.runSize = stockDefinitionObj.normalRunSize;
 						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
 						if (this.job.runSize.width * this.job.runSize.height < this.job.parentSize.width * this.job.parentSize.height)
 							this.job.finishSize = this.job.runSize;
 						else
-							this.job.finishSize = evt.stockDefinition.parentsize;
+							this.job.finishSize = stockDefinitionObj.parentsize;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 						if (this.estimatingPreferences.leaveFoldedSizeEmpty != true)
 							this.job.foldedSize = this.job.finishSize;
 						this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
-						if (this.job_type.text == "B&W" && evt.stockDefinition.defaultBWCopier != null) {
-							job.pricingCopier = evt.stockDefinition.defaultBWCopier;
+						if (this.job_type.text == "B&W" && stockDefinitionObj.defaultBWCopier != null) {
+							job.pricingCopier = stockDefinitionObj.defaultBWCopier;
 							job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
-							job.costingCopier = evt.stockDefinition.defaultBWCopier;
+							job.costingCopier = stockDefinitionObj.defaultBWCopier;
 							job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers);
 						}
-						if (this.job_type.text == "Color" && evt.stockDefinition.defaultColorCopier != null) {
-							job.pricingCopier = evt.stockDefinition.defaultColorCopier;
+						if (this.job_type.text == "Color" && stockDefinitionObj.defaultColorCopier != null) {
+							job.pricingCopier = stockDefinitionObj.defaultColorCopier;
 							job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
-							job.costingCopier = evt.stockDefinition.defaultColorCopier;
+							job.costingCopier = stockDefinitionObj.defaultColorCopier;
 							job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers);
 						}
-						job.inSetsOf = evt.stockDefinition.sheetsPerSet;
+						job.inSetsOf = stockDefinitionObj.sheetsPerSet;
 					}
 					else {
-						this.job.parentSize = evt.stockDefinition.normalRunSize;
+						this.job.parentSize = stockDefinitionObj.normalRunSize;
 						this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
-						this.job.runSize = evt.stockDefinition.normalRunSize;
+						this.job.runSize = stockDefinitionObj.normalRunSize;
 						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
-						this.job.finishSize = evt.stockDefinition.normalRunSize;
+						this.job.finishSize = stockDefinitionObj.normalRunSize;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 					}
 					this.mapToJobData();
-					jobService.assignStockToJob(this.job, evt.stockDefinition);
+					jobService.assignStockToJob(this.job, stockDefinitionObj);
 //					var i:int;
 //					if (this.job.charges == null) this.job.charges = new ArrayCollection();
 //					for(i = 0; i < this.job.stock.charges.length; i++) {
@@ -1559,8 +1597,6 @@
 					this.job.stock=new StockDefinition();
 					Alert.show("Stock Picker returned a null stock", "Error");
 				}
-
-					
 			}
 
 			private function handleStockPickerNew(evt:StockPickerSelectEvent):void

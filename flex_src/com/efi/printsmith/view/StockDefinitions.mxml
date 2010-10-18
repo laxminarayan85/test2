@@ -236,10 +236,10 @@
 	</mx:RemoteObject>
 	-->
 	<mx:RemoteObject id="pressDefinitionDataService" destination="dataService">
-		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadPressDefinition(event)"/>
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPressDefinition(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="copierDefinitionDataService" destination="dataService">
-		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadCopierDefinition(event)"/>
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCopierDefinition(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="stockGroupDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadStockGroup(event)"/>
@@ -293,6 +293,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.events.SpecialOrderStockDefEvent;
 	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import com.efi.mdi.event.window.WindowConfirmStatusEvent;
 	import com.efi.mdi.view.window.MDIConfirmComponent;
@@ -370,7 +371,7 @@
 	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
                          
 	[Bindable]                                         
-	private var stockDefinitions:StockDefinition;
+	public var stockDefinitions:StockDefinition;
 	[Bindable] private var originalStockDefinitions:StockDefinition;
 	[Bindable] private var loadComponent:CommonLoadComponent;
 	
@@ -430,10 +431,14 @@
 	private var first:Boolean
     private var formIsValid:Boolean = false;
     
+    [Bindable] public var fromJobPage:Boolean = false;
+    
     private var focussedFormControl:DisplayObject;
                                                                          
 	public function init():void {
-		first = true;
+		if(stockDefinitions==null){
+			first = true;
+		} 
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		
@@ -444,9 +449,11 @@
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServicePreferencesDefaultPress.getSingle("PreferencesDefaultPresses");
 		dataServicePreferencesStocks.getSingle("PreferencesStocks");
-		stockDefinitions = new StockDefinition;
-		stockDefinitions.charges = new ArrayCollection;
-		stockDefinitions.stockChanges = new ArrayCollection;
+		if(stockDefinitions==null){
+			stockDefinitions = new StockDefinition;
+			stockDefinitions.charges = new ArrayCollection;
+			stockDefinitions.stockChanges = new ArrayCollection;
+		}
 		
 		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 
@@ -640,11 +647,15 @@
 		dimensionDataService.getAll("Dimension");
 	}
 	
-	public function loadPressDefinition():void {   
-	    pressDefinitionDataService.getAllNameIDOnly("PressDefinition");
+	public function loadPressDefinition():void {
+		//Commented due to the issue in Object comparison as the list of omitting some of the fields    
+		/* pressDefinitionDataService.getAllNameIDOnly("PressDefinition"); */
+	    pressDefinitionDataService.getAll("PressDefinition");
 	}
 	public function loadCopierDefinition():void {   
-	    copierDefinitionDataService.getAllNameIDOnly("CopierDefinition");
+		//Commented due to the issue in Object comparison as the list of omitting some of the fields
+	    /* copierDefinitionDataService.getAllNameIDOnly("CopierDefinition"); */
+	    copierDefinitionDataService.getAll("CopierDefinition");
 	}
 	public function loadStockGrade():void {   
 	    stockGradeDataService.getAll("StockGrade");
@@ -821,9 +832,10 @@
 		dispatchEvent(mDICompareObjectEvent);
 	}
 
-	private function doNewOperation():void {
-		
-  	    stockDefinitions = new StockDefinition();
+	private function doNewOperation(resetObj:Boolean=true):void {
+		if(resetObj){
+  	    	stockDefinitions = new StockDefinition();
+  		}
   	    Expires.text = "";
   	    stockDefinitions.parentsize = new Dimension();
     	stockDefinitions.charges = new ArrayCollection;
@@ -1195,6 +1207,13 @@
 		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'genericPrefCmd.StockDefinitions')));
 		openConfirmationComponent("The StockDefinition has been successfully saved");
 		setStockDefinition(ev.result as StockDefinition);
+		if(fromJobPage) {
+			registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
+			var specialOrderStockDefinitionObject:StockDefinition = ObjectUtil.copy(ev.result) as StockDefinition;
+			var specialOrderStockDefEvent:SpecialOrderStockDefEvent = new SpecialOrderStockDefEvent(SpecialOrderStockDefEvent.SPECIAL_ORDER_SAVE_EVENT,specialOrderStockDefinitionObject);
+			dispatchEvent(specialOrderStockDefEvent);
+			callLater(closeWindow);
+		}
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
 		dispatchEvent(windowSaveSuccessEvent);
 		/* doNew();
@@ -1205,6 +1224,10 @@
 	/* private function handleSaveStockChangesResult(ev:ResultEvent):void {
     	loadStockChanges();
 	} */
+	
+	private function closeWindow():void {
+		Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+	}
 	private function handleLoadStockForest(ev:ResultEvent):void{
 		stockForests  = ev.result as ArrayCollection;
 		forestMgmt.selectedIndex = -1;
@@ -1251,6 +1274,9 @@
 	     	
 	     }
   		if(loadComponent) {
+  			if(stockDefinitions!=null) {
+				doNewOperation(false);
+			}
 			loadComponent.close();
 		}	
 
@@ -1344,6 +1370,9 @@
 		 	Basicsize.text = "";
 		 else
 		 	Basicsize.text = type.size.name;	 
+		 if(fromJobPage){
+		 	doNewOperation(false);
+		 }
 	}
 	
 	private function handleLoadStockColor(ev:ResultEvent):void {
@@ -1734,13 +1763,13 @@
 	{
 		if (evt.currentTarget == this.parentSize) {
 			var text:String = Snowmass.formatSizeString(this.parentSize.text);
-			this.parentSize.selectedItem = findItem(text, this.dimensions);
+			//this.parentSize.selectedItem = findItem(text, this.dimensions);
 			this.parentSize.text = text;
 			stockDefinitions.parentsize.name = parentSize.text;
 			calstockMWeight(evt);
 		} else if (evt.currentTarget == this.NormalRunSize) {
 			var text:String = Snowmass.formatSizeString(this.NormalRunSize.text);
-			this.NormalRunSize.selectedItem = findItem(text, this.dimensions);
+			//this.NormalRunSize.selectedItem = findItem(text, this.dimensions);
 			this.NormalRunSize.text = text;
 			stockDefinitions.normalRunSize.name = NormalRunSize.text;
 		}
@@ -2397,40 +2426,40 @@ private function doRound(evt:FocusEvent):void{
 			</mx:Panel>
 		</mx:Canvas>
 	</mx:TabNavigator>
-	<mx:Button x="20" y="5" width="45" height="38" click="doPrev();">
+	<mx:Button x="20" y="5" width="45" height="38" click="doPrev();" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/previous_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="73" y="5" width="45" height="38" click="doNext();" id="button2">
+	<mx:Button x="73" y="5" width="45" height="38" click="doNext();" id="button2" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/next_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="10" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="55" textAlign="center" id="label15"/>
-	<mx:Label x="80" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center" id="label14"/>
+	<mx:Label x="10" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="55" textAlign="center" id="label15" visible="{!fromJobPage}"/>
+	<mx:Label x="80" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center" id="label14" visible="{!fromJobPage}"/>
 	<mx:Button x="229" y="0" width="38" height="38" click="doSave();" enabled="{enableSave}">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="229" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
-	<mx:Button x="275" y="0" width="38" height="38" click="doGet();">
+	<mx:Button x="275" y="0" width="38" height="38" click="doGet();" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="275" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" width="38" textAlign="center"/>
-	<mx:Button x="321" y="0" width="38" height="38" click="doNew();">
+	<mx:Label x="275" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" width="38" textAlign="center" visible="{!fromJobPage}"/>
+	<mx:Button x="321" y="0" width="38" height="38" click="doNew();" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 	</mx:Button>
-	<mx:Button id="button_delete" x="469" y="0" width="38" height="38" click="doDelete();">
+	<mx:Button id="button_delete" x="469" y="0" width="38" height="38" click="doDelete();" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="459" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
-	<mx:Button x="535" y="0" width="38" height="38" id="btnExport" enabled="false">
+	<mx:Label x="459" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center" visible="{!fromJobPage}"/>
+	<mx:Button x="535" y="0" width="38" height="38" id="btnExport" enabled="false" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="525" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="58" textAlign="center"/>
-	<mx:Button x="592" y="0" width="38" height="38" click="doRevert();">
+	<mx:Label x="525" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="58" textAlign="center" visible="{!fromJobPage}"/>
+	<mx:Button x="592" y="0" width="38" height="38" click="doRevert();" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="582" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
-	<mx:Label x="321" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
-	<mx:Button x="170" y="0" width = "38" height="38"  click="doPriceListButton();">
+	<mx:Label x="582" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center" visible="{!fromJobPage}"/>
+	<mx:Label x="321" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center" visible="{!fromJobPage}"/>
+	<mx:Button x="170" y="0" width = "38" height="38"  click="doPriceListButton();" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/price_list.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="157" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefRpt.PriceList')}" width="64"/>
+	<mx:Label x="157" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefRpt.PriceList')}" width="64" visible="{!fromJobPage}"/>
 </mx:Panel>
