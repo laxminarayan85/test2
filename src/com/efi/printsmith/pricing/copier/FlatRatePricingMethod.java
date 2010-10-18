@@ -33,6 +33,8 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 		price = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies()) + wastePrice;
 		
 		pricingRecord.setTotalPrice(price);
+		if (price == 0)
+			pricingRecord.setUnitPrice(0);
 		priceLogEntry.setValue(price);
 		return job;
 	}
