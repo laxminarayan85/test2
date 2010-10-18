@@ -222,7 +222,7 @@
 		<mx:method name="getStockDefinition" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
+		<mx:method name="getAllOrderBy" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServicePreferencesDefaultPress" destination="dataService">
 		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPreferencesDefaultPressResult(event)"/>
@@ -440,7 +440,7 @@
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions');
 
-		dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
+		dataServicePreferencesStockDefinition.getAllOrderBy("PreferencesStockDefinition","columnorder");
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServicePreferencesDefaultPress.getSingle("PreferencesDefaultPresses");
 		dataServicePreferencesStocks.getSingle("PreferencesStocks");

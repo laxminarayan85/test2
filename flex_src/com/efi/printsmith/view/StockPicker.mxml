@@ -31,6 +31,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.data.ColumnNames;
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.common.clientPreferences.UserClientPreferences;
 	import com.efi.printsmith.data.StockClass;
@@ -308,6 +309,7 @@
 			tmpCols.normalSize = 100;
 			tmpCols.basicSize = 100;
 			tmpCols.group = 100;
+			tmpCols.type = 100;
 			tmpCols.coated = 100;
 			tmpCols.minOrder = 100;
 			tmpCols.cost1 = 100;
@@ -621,6 +623,22 @@
 		dataGrid.columns = newCols;
 		dataGrid.invalidateDisplayList();
 		dataGrid.invalidateList();
+		
+		/* var visiblePrefSDList:ArrayCollection = new ArrayCollection();
+		for each(var preferencesStockDefinition:PreferencesStockDefinition in temp as ArrayCollection) {
+			if(preferencesStockDefinition.visible){
+				visiblePrefSDList.addItem(preferencesStockDefinition);
+			}
+		}
+		var dgColumns:Array = new Array();
+		for each(var preferencesStockDefinitionObj:PreferencesStockDefinition in visiblePrefSDList) {
+			if(preferencesStockDefinitionObj.columns!=null){
+				//addDGColumns(dgColumns,preferencesStockDefinitionObj.columns);
+			}
+		}
+		dataGrid.columns = dgColumns; */
+		/* dataGrid.invalidateDisplayList();
+		dataGrid.invalidateList(); */
 
 	}
 	public function getColorLabel(item:Object, column:DataGridColumn):String{
@@ -697,6 +715,16 @@
 		return getCompareResult(c1.name, c2.name);	
 	}
 	
+	public function sortType(obj1:Object, obj2:Object):int	{
+		var	c1:StockType = (obj1 as StockDefinition).stktype;
+		var	c2:StockType = (obj2 as StockDefinition).stktype;
+		if (c1 == null)
+			return -1;
+		if (c2 == null)
+			return 1;		
+		return getCompareResult(c1.name, c2.name);	
+	}
+	
 	
 	public function sortVendor(obj1:Object, obj2:Object):int	{
 		var	c1:Vendor = (obj1 as StockDefinition).vendor;
@@ -764,6 +792,17 @@
 	public function getGroupLabel(item:Object, column:DataGridColumn):String{
 		var tmpItem:StockGroup;
 		tmpItem = item.stkgroup as StockGroup;
+		
+		if (tmpItem != null && tmpItem.name != null && tmpItem.name != "") {
+			return tmpItem.name;
+		} else {
+			return "None";
+		}
+	}   
+	
+	public function getTypeLabel(item:Object, column:DataGridColumn):String{
+		var tmpItem:StockType;
+		tmpItem = item.stktype as StockType;
 		
 		if (tmpItem != null && tmpItem.name != null && tmpItem.name != "") {
 			return tmpItem.name;
@@ -1138,6 +1177,192 @@
   		}
 	}
 	
+	/* private function addDGColumns(dgColumns:Array,columnName:ColumnNames):void {
+		var dgColumn:DataGridColumn = new DataGridColumn();
+		if(columnName.name!=null && columnName.internalName!=null) {
+			switch(columnName.internalName) {
+				case "parentsize"			:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "size";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.size;
+												}
+												dgColumn.labelFunction = getSizeLabel;
+												dgColumn.sortCompareFunction = sortSize;
+												dgColumns.push(dgColumn);
+												break;
+				case "color"				:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "color";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.color;
+												}
+												dgColumn.labelFunction = getColorLabel;
+												dgColumn.sortCompareFunction = sortColor;
+												dgColumns.push(dgColumn);
+												break;
+				case "genericcolor"			:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "genericColor";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.genericColor;
+												}
+												dgColumn.labelFunction = getGenericColorLabel;
+												dgColumn.sortCompareFunction = sortGenColor;
+												dgColumns.push(dgColumn);
+												break;
+				case "finish"				:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "finish";	 
+												if(colWidths!=null){
+													dgColumn.width = colWidths.finish;
+												}
+												dgColumn.labelFunction = getFinishLabel;
+												dgColumn.sortCompareFunction = sortFinish;
+												dgColumns.push(dgColumn);
+												break;
+				case "grade"				:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "grade";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.grade;
+												}
+												dgColumn.labelFunction = getGradeLabel;
+												dgColumn.sortCompareFunction = sortGrade;
+												dgColumns.push(dgColumn);
+												break;
+				case "vendor"				:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "vendor";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.vendor;
+												}
+												dgColumn.labelFunction = getVendorLabel;
+												dgColumn.sortCompareFunction = sortVendor;
+												dgColumns.push(dgColumn);
+												break;
+				case "onhand"				:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "onHand";	
+												if(colWidths!=null){ 
+													dgColumn.width = colWidths.onHand;
+												}
+												dgColumns.push(dgColumn);
+												break;
+				case "ordered"				:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "onOrder";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.onOrder;
+												}
+												dgColumns.push(dgColumn);
+												break;
+				case "shellitem"			:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "shellItem";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.shellItem;
+												}
+												dgColumns.push(dgColumn);
+												break;
+				case "normalrunsize"		:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "normalSize";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.normalSize;
+												}
+												dgColumn.labelFunction = getNormalSizeLabel;
+												dgColumn.sortCompareFunction = sortNormal;
+												dgColumns.push(dgColumn);
+												break;
+				case "basicsize"			:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "basicSize";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.basicSize;
+												}
+												dgColumns.push(dgColumn);
+												break;
+				case "stkgroup"				:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "group";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.group;
+												}
+												dgColumn.labelFunction = getGroupLabel;
+												dgColumn.sortCompareFunction = sortGroup;
+												dgColumns.push(dgColumn);
+												break;
+				case "stktype"				:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "type";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.type;
+												}
+												dgColumn.labelFunction = getTypeLabel;
+												dgColumn.sortCompareFunction = sortType;
+												dgColumns.push(dgColumn);
+												break;
+				case "priceexpires"			:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "priceExpires";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.priceExpires;
+												}
+												dgColumns.push(dgColumn);
+												break;
+				case "forestmanagement"		:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "forestManagement";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.forestManagement;
+												}
+												dgColumns.push(dgColumn);
+												break;
+				case "pcwrecycledpercent"	:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "pcwRecycledPercent";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.pcwRecycledPercent;
+												}
+												dgColumns.push(dgColumn);
+												break;
+				case "fsccertified"			:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "fscCertified";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.fscCertified;
+												}
+												dgColumns.push(dgColumn);
+												break;
+				case "sficertified"			:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "sfiCertified";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.sfiCertified;
+												}
+												dgColumns.push(dgColumn);
+												break;
+				case "greensealcertified"	:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = "greenSealCertified";
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths.greenSealCertified;
+												}
+												dgColumns.push(dgColumn);
+												break;
+				default						:	dgColumn = new DataGridColumn();
+												dgColumn.headerText = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,columnName.name);
+												dgColumn.dataField = columnName.internalName;
+												if(colWidths!=null){	 
+													dgColumn.width = colWidths[columnName.internalName];
+												}
+												dgColumns.push(dgColumn);
+				
+			}
+		}
+	} */
+	
 	private function exportData():void {
 		
 	}
@@ -1302,6 +1527,7 @@
 		     <mx:DataGridColumn   width="{colWidths.normalSize}" dataField="normalSize" labelFunction="getNormalSizeLabel" sortCompareFunction="sortNormal" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RunSize')}"/>
 		     <mx:DataGridColumn  width="{colWidths.basicSize}" dataField="basicsize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.BasicSize')}"/>
 		     <mx:DataGridColumn  width="{colWidths.group}" dataField="group" labelFunction="getGroupLabel" sortCompareFunction="sortGroup" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}"/>
+		     <mx:DataGridColumn  width="{colWidths.type}" dataField="type" labelFunction="getTypeLabel" sortCompareFunction="sortType" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Type')}"/>
 		     <mx:DataGridColumn  width="{colWidths.coated}" dataField="coated" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}"/>
 		     <mx:DataGridColumn  width="{colWidths.minOrder}" dataField="minorder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}"/>
 		     <mx:DataGridColumn  width="{colWidths.cost1}" dataField="cost1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Price')}"/>
