@@ -5,8 +5,8 @@ package com.efi.mdi.view.window
 	import com.efi.mdi.event.window.WindowCloseEvent;
 	import com.efi.mdi.event.window.WindowMaximizeEvent;
 	import com.efi.mdi.event.window.WindowMinimizeEvent;
-	import com.efi.mdi.event.window.WindowOpenEvent;
 	import com.efi.mdi.event.window.WindowResizeStartEvent;
+	import com.efi.mdi.event.window.WindowTitleChangedEvent;
 	
 	import flash.display.Shape;
 	import flash.events.MouseEvent;
@@ -41,7 +41,7 @@ package com.efi.mdi.view.window
 		private var _oldWidth:int = -1;
 		private var _oldHeight:int = -1;
 		
-		
+		private var _isMaximized:Boolean = false;
 //		private var _childWindows:ArrayCollection;
 //		private var _parentWindowId:int;
 //		
@@ -68,7 +68,10 @@ package com.efi.mdi.view.window
         private var resizeCursor:Class;
 		 
 		private var _resizeCursorEnabled:Boolean = false;
-		 
+		
+		public function get isMaximized():Boolean	{
+			return _isMaximized;
+		} 
 		public function MDIWindow(winTitle:String, content:UIComponent, id:int, parentWin:int = -1, closeChildren:Boolean=true)
 		{
 			super();
@@ -112,9 +115,13 @@ package com.efi.mdi.view.window
 //		}
 		public function set winTitle(val:String):void	{
 			_winTitle = val;
-			this.title = _winTitle;
+			this.title = _winTitle;			
 		}
 		
+		override public function set title(value:String):void	{
+			super.title = value;
+			dispatchEvent(new WindowTitleChangedEvent(WindowTitleChangedEvent.WINDOW_TITLE_CHANGED, this));
+		}		
 		public function get winTitle():String{
 			return _winTitle;
 		}
@@ -268,9 +275,11 @@ package com.efi.mdi.view.window
 			this.rawChildren.addChild(shape);
   		}
   		
-  		
-		private function onMaximizeWindow(event:WindowMaximizeEvent):void	{
-			if (_oldX == -1 && _oldY == -1 && _oldWidth == -1 && _oldHeight ==-1)	{
+  		public function maximize():void	{
+ 			if (_oldX == -1 && _oldY == -1 && _oldWidth == -1 && _oldHeight ==-1)	{
+				
+				_isMaximized = true;
+				
 				_btnMaximize.styleName = "winDoRestoreButton";//.setStyle("icon", restoreIcon);
 				_btnMaximize.toolTip = "Restore";
 				
@@ -287,6 +296,8 @@ package com.efi.mdi.view.window
 				
 			}
 			else	{
+				_isMaximized = false;
+				
 				_btnMaximize.styleName = "winDoMaxButton"; //.setStyle("icon", maxIcon);
 				_btnMaximize.toolTip = "Maximize";
 				
@@ -300,7 +311,10 @@ package com.efi.mdi.view.window
 				_oldWidth = -1;
 				_oldHeight = -1;
 				
-			}
+			} 			
+  		}
+		private function onMaximizeWindow(event:WindowMaximizeEvent):void	{
+			maximize();
 		}
 	
 		

@@ -1,9 +1,7 @@
 // ActionScript file
 import com.efi.printsmith.common.components.CommonConfirmationComponent;
 
-import flash.events.TimerEvent;
 import flash.utils.ByteArray;
-import flash.utils.Timer;
 
 import mx.collections.ArrayCollection;
 import mx.collections.Sort;
@@ -88,7 +86,7 @@ private function openConfirmationComponent(confirmationText:String=null):void {
 	commonConfirmationComponent.confirmationText = confirmationText;
 }
  
-public function cloneAC(src:ArrayCollection)	{
+public function cloneAC(src:ArrayCollection):ArrayCollection	{
 	var dest:ArrayCollection;
 	
 	if (src != null)	{

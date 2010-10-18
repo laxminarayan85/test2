@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <mx:MenuBar xmlns:mx="http://www.adobe.com/2006/mxml" dataProvider="{_menuData}"  
-	itemClick="onMenuItemClick(event);" labelField="label" styleName="menuStyle" >
+	itemClick="onMenuItemClick(event);" labelField="label" styleName="menuStyle" 
+
+	>
+	
 	<mx:Metadata>
 		[Event(name="appMenuItemClicked", type="com.efi.mdi.event.menu.AppMenuItemClickedEvent")]
  	</mx:Metadata>
@@ -15,6 +18,9 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.mdi.view.container.MDIContainer;
+			import com.efi.mdi.ContainerManager;
+			import com.efi.mdi.event.window.WindowTitleChangedEvent;
 			import mx.controls.DataGrid;
 			import com.efi.mdi.view.taskbar.MinimizedWindow;
 			import com.efi.mdi.vo.menu.WindowApplicationMenuItem;
@@ -30,13 +36,40 @@
 			import mx.collections.ArrayCollection;
 			
 			[Bindable] private var _menuData:ArrayCollection;
-			private var _windowMenuLabel:String;
+			[Bindable] private var _windowMenuLabel:String;
+			[Bindable] private var _maxMenuLabel:String;
+			[Bindable] private var _minMenuLabel:String;
+			
+			private var _winMenuItems:ArrayCollection;
+			
+			
+			public function disableMaxMinItems(val:Boolean):void	{
+				var ac:ArrayCollection = getChildrenOfWindowMenuItem();
+				if (ac)	{
+					for (var i:int=0; i<ac.length; i++)	{
+						var menuItem:ApplicationMenuItem = ac.getItemAt(i) as ApplicationMenuItem;
+						if ((menuItem.label == _minMenuLabel) || (menuItem.label == _maxMenuLabel))	{
+							if (val)
+								menuItem.enabled = false;
+							else
+								menuItem.enabled = true;					
+						}
+					}
+					
+				}
+			}
 			
 			
 			public function set windowMenuLabel(val:String):void	{
 				_windowMenuLabel = val;
 			}
 			
+			public function set maxMenuLabel(val:String):void	{
+				_maxMenuLabel = val;
+			}
+			public function set minMenuLabel(val:String):void	{
+				_minMenuLabel = val;
+			}
 			public function set menuData(val:ArrayCollection):void	{
 				_menuData = val;				
 			}
@@ -45,6 +78,8 @@
 				var winMenu:WindowApplicationMenuItem = new WindowApplicationMenuItem(mdi.title, null,mdi);
 				
 				mdi.addEventListener(WindowCloseEvent.WINDOW_CLOSE, removeWindow);			
+				mdi.addEventListener(WindowTitleChangedEvent.WINDOW_TITLE_CHANGED, titleChanged);
+				 
 				var ac:ArrayCollection = getChildrenOfWindowMenuItem();
 				if (ac)	{
 					ac.addItem(winMenu);
@@ -53,10 +88,26 @@
 				
 			}
 			
+			private function titleChanged(event:WindowTitleChangedEvent):void	{
+				var ac:ArrayCollection = getChildrenOfWindowMenuItem();
+				if (ac)	{
+					for (var i:int=0; i<ac.length; i++)	{
+						var menuItem:ApplicationMenuItem = ac.getItemAt(i) as ApplicationMenuItem;
+						if (menuItem is WindowApplicationMenuItem)	{
+							if ((menuItem as WindowApplicationMenuItem).mdiWindow == event.mdiWin)	{
+								menuItem.label = event.mdiWin.title;
+								refreshDataProvider(ac);
+								break;
+							}							
+						}
+					}
+				}					
+			}
+			
 			public function refreshDataProvider(ac:ArrayCollection):void	{
 				
 			}
-			public function removeWindow(event:WindowCloseEvent):void	{
+			private function removeWindow(event:WindowCloseEvent):void	{
 				var ac:ArrayCollection = getChildrenOfWindowMenuItem();
 				if (ac)	{	
 					for (var i:int=0; i<ac.length; i++)	{
@@ -81,12 +132,16 @@
 			
 			private function getChildrenOfWindowMenuItem():ArrayCollection	{
 				if ((_windowMenuLabel) && (_menuData))	{
-					for (var i:int=0; i<_menuData.length; i++)	{
-						var menuItem:ApplicationMenuItem = _menuData.getItemAt(i) as ApplicationMenuItem;
-						if (menuItem.label == _windowMenuLabel)	{
-							return menuItem.children;
-						}
+					if (_winMenuItems == null)	{
+						for (var i:int=0; i<_menuData.length; i++)	{
+							var menuItem:ApplicationMenuItem = _menuData.getItemAt(i) as ApplicationMenuItem;
+							if (menuItem.label == _windowMenuLabel)	{
+								_winMenuItems = menuItem.children;
+								break;
+							}
+						}						
 					}
+					return _winMenuItems;
 				}
 				return null;
 			}			

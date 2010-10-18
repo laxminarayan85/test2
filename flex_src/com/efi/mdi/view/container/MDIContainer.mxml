@@ -45,12 +45,21 @@
 	        private var resizeCursor:Class;
 			
 			private var _windowResizeInProgress:MDIWindow;
-			private var _windowMenuLabel:String;
+			[Bindable] private var _windowMenuLabel:String;
+			[Bindable] private var _maxMenuLabel:String;
+			[Bindable] private var _minMenuLabel:String;
+			
+			private var _allMinimized:Boolean;
 			
 			public function set windowMenuLabel(val:String):void	{
 				_windowMenuLabel = val;
 			}
-			
+			public function set minMenuLabel(val:String):void	{
+				_minMenuLabel = val;
+			}
+			public function set maxMenuLabel(val:String):void	{
+				_maxMenuLabel = val;
+			}
 			public function set menuData(val:ArrayCollection):void	{
 				_menuData = val;	
 			}
@@ -65,6 +74,8 @@
 				mdiWin.addEventListener(WindowCloseEvent.WINDOW_CLOSE, onClose);
 				mdiWin.addEventListener(WindowResizeStartEvent.WINDOW_RESIZE_START, onWindowResizeStart);
 				mdiWin.addEventListener(MDICompareObjectEvent.MDI_COMPAREOBJECT,onCompareObject);
+				
+				allMinimized = false;
 				
 				appCanvas.addChild(mdiWin);
 				menubar.addWindow(mdiWin);		
@@ -84,15 +95,30 @@
 			}
 			
 			private function onMinimize(event:WindowMinimizeEvent):void	{
+				minimizeWindow(event.mdiWindow);
+				
+			}
+			
+			public function minimizeWindow(mdiWin:MDIWindow):void	{
 				var minWin:MinimizedWindow = new MinimizedWindow();
-				minWin.windowRef = event.mdiWindow;
+				minWin.windowRef = mdiWin;
 				minWin.addEventListener(WindowCloseEvent.WINDOW_CLOSE, onClose);
 				minWin.addEventListener(WindowRestoreEvent.WINDOW_RESTORE, onRestore);
-				event.mdiWindow.visible = false;
-				event.mdiWindow.state = MDIWindow.MINIMIZED;
+				mdiWin.visible = false;
+				mdiWin.state = MDIWindow.MINIMIZED;
 				taskbar.addChild(minWin);
 				ContainerManager.getExistingInstance().recalculateWindowStyles();
+				if (appCanvas.getChildren().length == taskbar.getChildren().length)	{
+					allMinimized = true;
+				}
+				
 			}
+			
+			public function set allMinimized(val:Boolean):void	{
+				_allMinimized = val;
+				menubar.disableMaxMinItems(val);
+			}
+			
 			
 			private function closeMinimizedWindow(minWin:MinimizedWindow, isRoot:Boolean = false):void	{
 				closeWindow(minWin.windowRef, isRoot);
@@ -161,6 +187,9 @@
 					} else {
 						closeWindow(event.child as MDIWindow, true); 
 					}
+					
+					if (appCanvas.getChildren().length == 0)
+						allMinimized = true;
 				}
 				if (event.child is MinimizedWindow)	{
 					closeMinimizedWindow(event.child as MinimizedWindow, true);
@@ -271,6 +300,7 @@
 				event.minWindow.windowRef.state = MDIWindow.OPEN;
 				event.minWindow.windowRef.bringWindowToFront();
 				taskbar.removeChild(event.minWindow);
+				allMinimized = false;
 				
 			}
 		]]>
@@ -278,7 +308,7 @@
 	
 	<mx:HBox height="4%" width="100%" borderThickness="0"
 		borderStyle="solid" styleName="headerBoxStyle" >
-		<menu:ApplicationMenuBar id="menubar" menuData="{_menuData}"  windowMenuLabel="{_windowMenuLabel}" height="100%" width="80%" />
+		<menu:ApplicationMenuBar id="menubar" menuData="{_menuData}" windowMenuLabel="{_windowMenuLabel}" maxMenuLabel="{_maxMenuLabel}" minMenuLabel="{_minMenuLabel}"  height="100%" width="80%" />
 		<menu:ApplicationHeader id="header"  height="100%" width="20%" />
 	</mx:HBox>
 			

@@ -32,7 +32,9 @@
     
 	<!--<mx:MenuBar id="menubar" width="100%" height="39" dataProvider="{_menuItems}" itemClick="onMenuClick(event);"/>-->
    
-	<mdi:MDIContainer id="container"  menuData="{_menuItems}" windowMenuLabel="Window" height="100%" width="100%" />
+	<mdi:MDIContainer id="container"  
+		menuData="{_menuItems}" windowMenuLabel="Window" maxMenuLabel="Maximize" minMenuLabel="Minimize"
+		height="100%" width="100%" />
 
 <mx:RemoteObject id="loginService" destination="loginService"
 	result="handleLoginResult(event)"  fault="handleFault(event)"
@@ -364,7 +366,16 @@
 				if ((ss.menu == "rStandardMenuText.Invoice")
 					&& (ss.commandName.indexOf("rStandardMenuText.TrackerStatus") > -1 ))	{
 						doTrackerStatus();				
-					}		
+					}	
+				if ((ss.menu == "rStandardMenuText.Window")
+					&& (ss.commandName.indexOf("rStandardMenuText.Maximize") > -1 ))	{
+						doMaximize();				
+					}	
+				if ((ss.menu == "rStandardMenuText.Window")
+					&& (ss.commandName.indexOf("rStandardMenuText.Minimize") > -1 ))	{
+						doMinimize();				
+					}	
+						
 			}
 			if (event.menuItem is WindowApplicationMenuItem)	{
 				var winItem:WindowApplicationMenuItem = event.menuItem as WindowApplicationMenuItem;
@@ -376,6 +387,14 @@
 				}
 				
 			}			
+		}
+		
+		private function doMinimize():void	{
+			containerManager.minimizeWindow(containerManager.getActiveWindow());
+		}
+		
+		private function doMaximize():void	{
+			containerManager.maximizeWindow(containerManager.getActiveWindow());
 		}
 		
 		public function doTrackerStatus():void {
@@ -741,7 +760,8 @@
 			container.addToHeader(ApplicationHeader.LEFT, languageComboBox);
 			container.addToHeader(ApplicationHeader.CENTER, debug_button);
 			container.addToHeader(ApplicationHeader.RIGHT, logout_button);
-
+			
+			
 
 		}
 		

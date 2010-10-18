@@ -84,9 +84,31 @@ package com.efi.mdi
 			return _contMgr;
 		}
 		
-		private function getActiveWindow():MDIWindow	{
-			return _mdiContainerRef.appCanvas.getChildAt(getCanvasChildrenCount()-1) as MDIWindow;
+		
+		public function getActiveWindow():MDIWindow	{
+			var a:Array = _mdiContainerRef.appCanvas.getChildren();
+			for (var i:int = (a.length-1); i>=0; i--)	{
+				if (a[i] is MDIWindow)	{
+					var win:MDIWindow = a[i] as MDIWindow;	
+					if (win.visible)
+						return win;
+				}
+			}
+			return null;
 		}
+		
+		public function minimizeWindow(mdiWin:MDIWindow):void	{
+			if (mdiWin.state == MDIWindow.OPEN)	{
+				_mdiContainerRef.minimizeWindow(mdiWin);
+			}
+		}
+		
+		public function maximizeWindow(mdiWin:MDIWindow):void	{
+			if (!mdiWin.isMaximized)	{
+				mdiWin.maximize();
+			}
+		}
+		
 		public function getActiveWindowContent():Container	{
 			return getActiveWindow().content as Container;
 		}
@@ -279,6 +301,7 @@ package com.efi.mdi
 			return _mdiContainerRef;
 		}
 		public function getCanvasChildrenCount():int{
+			var i:Array = this._mdiContainerRef.appCanvas.getChildren();
 			return this._mdiContainerRef.appCanvas.numChildren;
 		}
 		
