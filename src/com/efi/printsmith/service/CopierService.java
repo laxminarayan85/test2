@@ -49,7 +49,7 @@ public class CopierService extends SnowmassHibernateService {
 		copierMatrix.setHeader8(0L);
 		copierMatrix.setHeader9(0L);
 		copierMatrix.setHeader10(0L);
-
+		
 		for (int i=0; i<15; i++) {
 			copierMatrix.addElements(newMatrixElement());
 		}
@@ -89,6 +89,7 @@ public class CopierService extends SnowmassHibernateService {
 		copierDefinition.setPriceTwoSide(Price2Side.UsingFirstSideRate.toString());
 		copierDefinition.setLargeFormat(false);
 		copierDefinition.setCopierMatrix(newCopierMatrix());
+		copierDefinition.setMatrixType("CopyCost");
 		return copierDefinition;
 	}
 	
