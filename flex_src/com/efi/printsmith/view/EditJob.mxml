@@ -64,8 +64,8 @@
 			<mx:RemoveChild target="{label8}"/>
 			<mx:RemoveChild target="{label9}"/>
 			<mx:AddChild relativeTo="{job_weight}" position="before">
-				<mx:Label x="496"
-						  y="185"
+				<mx:Label x="497"
+						  y="205"
 						  width="98"
 						  id="num_of_sig"
 						  text="{job.signatures}"
@@ -73,7 +73,7 @@
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{job_weight}" position="before">
 				<mx:Label x="385"
-						  y="185"
+						  y="205"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OfSignatures')}" textAlign="right" width="108"/>
 			</mx:AddChild>
 			<mx:SetProperty target="{num_signatures}" name="y" value="231"/>
@@ -112,8 +112,8 @@
 			<mx:SetProperty target="{job_on}" name="x" value="550.3"/>
 			<mx:SetProperty target="{bindery_waste}" name="x" value="497"/>
 			<mx:SetProperty target="{label31}" name="x" value="384"/>
-			<mx:SetProperty target="{label31}" name="y" value="211"/>
-			<mx:SetProperty target="{est_waste}" name="y" value="209"/>
+			<mx:SetProperty target="{label31}" name="y" value="185"/>
+			<mx:SetProperty target="{est_waste}" name="y" value="183"/>
 			<mx:SetProperty target="{label30}" name="x" value="386"/>
 			<mx:SetProperty target="{job_up}" name="x" value="497"/>
 			<mx:SetProperty target="{label30}" name="y" value="116"/>
@@ -138,6 +138,8 @@
 			<mx:SetStyle target="{hrule2}" name="right" value="0"/>
 			<mx:SetStyle target="{hrule1}" name="left" value="385"/>
 			<mx:SetStyle target="{hrule1}" name="right" value="0"/>
+			<mx:SetProperty target="{est_waste}" name="x" value="497"/>
+			<mx:SetProperty target="{label34}" name="x" value="384"/>
 		</mx:State>
 		<mx:State name="LargeFormat">
 			<mx:RemoveChild target="{runsize_label}"/>
