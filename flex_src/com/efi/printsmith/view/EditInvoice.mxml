@@ -881,7 +881,8 @@
 
 			private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void
 			{
-				this.setAccount(new Account());
+				if (invoice.account == null)
+					this.setAccount(new Account());
 			}
 
 			private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void
