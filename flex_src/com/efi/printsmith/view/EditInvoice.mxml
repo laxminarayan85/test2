@@ -1110,7 +1110,7 @@
 			
 			public function getJobIndex(object:Object):String {
 				if(object.multiQtyJob){
-						
+					return "+++";	
 				}
 				return String(object.jobIndex);
 			}
