@@ -1728,7 +1728,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL})
+    @ManyToOne( cascade = {CascadeType.MERGE})
     @Where(clause="isdeleted <> 'TRUE'")
 	private PricingRecord pricingRecord;
 	
@@ -2366,7 +2366,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL})
+    @ManyToOne( cascade = {CascadeType.MERGE})
     @Where(clause="isdeleted <> 'TRUE'")
 	private PaperCalculator paperCal;
 	

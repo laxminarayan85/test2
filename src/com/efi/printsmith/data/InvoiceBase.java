@@ -455,7 +455,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL})
+    @ManyToOne( cascade = {CascadeType.MERGE})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Address billToAddress;
 	
@@ -479,7 +479,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL})
+    @ManyToOne( cascade = {CascadeType.MERGE})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Address shipToAddress;
 	
