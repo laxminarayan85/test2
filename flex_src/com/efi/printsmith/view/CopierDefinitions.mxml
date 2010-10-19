@@ -839,6 +839,8 @@
 			pricing_method_combo.selectedIndex = tempIndex;
 			maxWidthsize.enabled = true;
 			minWidthsize.enabled = true;
+			this.colorcheck.enabled = false;
+			this.blackwhitecheck.enabled = false;
 		} else {
 			methodTypeArray = methodType.toArray().filter(filterDigitalMethod);
 			pricing_method_combo.dataProvider = methodTypeArray;
@@ -856,6 +858,8 @@
 			pricing_method_combo.selectedIndex = tempIndex;
 			maxWidthsize.enabled = false;
 			minWidthsize.enabled = false;
+			this.colorcheck.enabled = true;
+			this.blackwhitecheck.enabled = true;
 		}
 		if (pricing_method_combo.selectedIndex != -1){
 			pricing_method_combo.selectedIndex = findItemArray(pricing_method_combo.selectedItem.toString(), methodType.toArray());
