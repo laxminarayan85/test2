@@ -139,6 +139,7 @@ public class CopierService extends SnowmassHibernateService {
 			newElement.setPrice18(element.getPrice18());
 			newElement.setPrice19(element.getPrice19());
 			newElement.setPrice20(element.getPrice20());
+			newElement.setQty(element.getQty());
 			matrix.addElements(newElement);
 		}
 		newCopier.setCopierMatrix(matrix);
