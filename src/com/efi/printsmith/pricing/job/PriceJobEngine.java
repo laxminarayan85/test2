@@ -65,7 +65,7 @@ public class PriceJobEngine {
 		// (pricingMethod.getEstimator().getName().equals("Outside Services")) {
 		//			
 		// }
-		if (pricingMethod.getTitle().equals("B&W")) {
+		if (pricingMethod.getMethod().equals("B&W")) {
 			CopierPricingMethod copierPricingMethod = CopierPricingMethodFactory
 					.createCopierPricingMethod(job.getPricingCopier()
 							.getMethod());
@@ -74,7 +74,7 @@ public class PriceJobEngine {
 			} else {
 				copierPricingMethod.priceCopierJob(job);
 			}
-		} else if (pricingMethod.getTitle().equals("Color")) {
+		} else if (pricingMethod.getMethod().equals("Color")) {
 			CopierPricingMethod copierPricingMethod = CopierPricingMethodFactory
 					.createCopierPricingMethod(job.getPricingCopier()
 							.getMethod());
@@ -83,7 +83,7 @@ public class PriceJobEngine {
 			} else {
 				copierPricingMethod.priceCopierJob(job);
 			}
-		} else if (pricingMethod.getTitle().equals("Printing")) {
+		} else if (pricingMethod.getMethod().equals("Printing")) {
 			PrintPricingMethod printPricingMethod = PrintPricingMethodFactory
 					.createPrintPricingMethod();
 			if (printPricingMethod == null) {
@@ -91,7 +91,7 @@ public class PriceJobEngine {
 			} else {
 				printPricingMethod.pricePrintJob(job);
 			}
-		} else if (pricingMethod.getTitle().equals("Roll-Fed")) {
+		} else if (pricingMethod.getMethod().equals("Roll-Fed")) {
 			LargeFormatPricingMethod largeFormatPricingMethod = LargeFormatPricingMethodFactory
 					.createLargeFormatPricingMethod(job.getPricingCopier()
 							.getMethod());
@@ -100,7 +100,7 @@ public class PriceJobEngine {
 			} else {
 				largeFormatPricingMethod.priceLargeFormatJob(job);
 			}
-		} else if (pricingMethod.getTitle().equals("Large Format")) {
+		} else if (pricingMethod.getMethod().equals("Large Format")) {
 			LargeFormatPricingMethod largeFormatPricingMethod = LargeFormatPricingMethodFactory
 					.createLargeFormatPricingMethod(job.getPricingCopier()
 							.getMethod());
@@ -109,7 +109,7 @@ public class PriceJobEngine {
 			} else {
 				largeFormatPricingMethod.priceLargeFormatJob(job);
 			}
-		} else if (pricingMethod.getTitle().equals("Blank")) {
+		} else if (pricingMethod.getMethod().equals("Blank")) {
 			BlankPricingMethod blankPricingMethod = BlankPricingMethodFactory
 					.createBlankPricingMethod();
 			if (blankPricingMethod == null) {
@@ -117,7 +117,7 @@ public class PriceJobEngine {
 			} else {
 				blankPricingMethod.priceBlankJob(job);
 			}
-		} else if (pricingMethod.getTitle().equals("List")) {
+		} else if (pricingMethod.getMethod().equals("List")) {
 			ListPricingMethod listPricingMethod = ListPricingMethodFactory
 					.createListPricingMethod();
 			if (listPricingMethod == null) {
@@ -125,9 +125,9 @@ public class PriceJobEngine {
 			} else {
 				listPricingMethod.priceListJob(job);
 			}
-		} else if (pricingMethod.getTitle().equals("Charges Only")) {
+		} else if (pricingMethod.getMethod().equals("Charges Only")) {
 
-		} else if (pricingMethod.getTitle().equals("Outside Services")) {
+		} else if (pricingMethod.getMethod().equals("Outside Services")) {
 			MailingPricingMethod mailingPricingMethod = MailingPricingMethodFactory
 					.createMailingPricingMethod();
 			if (mailingPricingMethod == null) {
@@ -135,7 +135,7 @@ public class PriceJobEngine {
 			} else {
 				mailingPricingMethod.priceMailingJob(job);
 			}
-		} else if (pricingMethod.getTitle().equals("Merchandise")) {
+		} else if (pricingMethod.getMethod().equals("Merchandise")) {
 			MailingPricingMethod mailingPricingMethod = MailingPricingMethodFactory
 					.createMailingPricingMethod();
 			if (mailingPricingMethod == null) {
@@ -143,7 +143,7 @@ public class PriceJobEngine {
 			} else {
 				mailingPricingMethod.priceMailingJob(job);
 			}
-		} else if (pricingMethod.getTitle().equals("Lines & Inches")) {
+		} else if (pricingMethod.getMethod().equals("Lines & Inches")) {
 			LinesAndInchesPricingMethod linesAndInchesPricingMethod = LinesAndInchesPricingMethodFactory
 					.createLinesAndInchesPricingMethod();
 			if (linesAndInchesPricingMethod == null) {
@@ -152,7 +152,7 @@ public class PriceJobEngine {
 				linesAndInchesPricingMethod.priceLinesAndInchesJob(job);
 			}
 
-		} else if (pricingMethod.getTitle().equals("Mailing")) {
+		} else if (pricingMethod.getMethod().equals("Mailing")) {
 			MailingPricingMethod mailingPricingMethod = MailingPricingMethodFactory
 					.createMailingPricingMethod();
 			if (mailingPricingMethod == null) {

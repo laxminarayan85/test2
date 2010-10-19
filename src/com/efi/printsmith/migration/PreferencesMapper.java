@@ -396,8 +396,8 @@ public class PreferencesMapper extends ImportMapper {
 		else if (name.equals("pricingMethodAbbrev"))
 			preferencesPricingMethod.setAbbreviation(value);
 		else if (name.equals("pricingMethod")) {
-			preferencesPricingMethod.setMethod(value);
-			String estimatorName = getPricingMethodName(Utilities.tokenToInt(key));
+			preferencesPricingMethod.setMethod(getPricingMethodName(Utilities.tokenToInt(key)));
+			String estimatorName = getEstimatorName(Utilities.tokenToInt(key));
 			EstimatorTypes estimatorType = (EstimatorTypes)dataService.getByName("EstimatorTypes", estimatorName);
 			if (estimatorType == null) {
 				estimatorType = new EstimatorTypes();
@@ -418,7 +418,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesPricingMethod.setUsed(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesPricingMethod);
 	}
-	private String getPricingMethodName(int key) {
+	private String getEstimatorName(int key) {
 		String retValue = "";
 		switch (key) {
 		case 1:
@@ -477,6 +477,74 @@ public class PreferencesMapper extends ImportMapper {
 			break;
 		case 19:
 			retValue = "Copier Definitions";
+			break;
+		case 20:
+			retValue = "Charges Only";
+			break;
+			
+		}
+		
+		return retValue;
+	}
+	private String getPricingMethodName(int key) {
+		String retValue = "";
+		switch (key) {
+		case 1:
+			retValue = "Printing";
+			break;
+		case 2:
+			retValue = "B&W";
+			break;
+		case 3:
+			retValue = "Color";
+			break;
+		case 4:
+			retValue = "Blank";
+			break;
+		case 5:
+			retValue = "List";
+			break;
+		case 6:
+			retValue = "In Stock";
+			break;
+		case 7:
+			retValue = "Special Order";
+			break;
+		case 8:
+			retValue = "Customer";
+			break;
+		case 9:
+			retValue = "Outside Services";
+			break;
+		case 10:
+			retValue = "Merchandise";
+			break;
+		case 11:
+			retValue = "Lines & Inches";
+			break;
+		case 12:
+			retValue = "Multi-part Job";
+			break;
+		case 13:
+			retValue = "Outside Services";
+			break;
+		case 14:
+			retValue = "Outside Services";
+			break;
+		case 15:
+			retValue = "Outside Services";
+			break;
+		case 16:
+			retValue = "Outside Services";
+			break;
+		case 17:
+			retValue = "Outside Services";
+			break;
+		case 18:
+			retValue = "Roll Fed";
+			break;
+		case 19:
+			retValue = "LF";
 			break;
 		case 20:
 			retValue = "Charges Only";
