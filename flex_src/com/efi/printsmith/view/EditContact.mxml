@@ -575,7 +575,11 @@ implements="com.efi.mdi.IMDIWindowAware">
 			accountName.text = contact.parentAccount.title;
 			setDefaultContact();
 			
+		}else{
+			accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
+			
 		}
+	
 		
 		cardzip.selectedIndex = findItem(contact.creditCard.zipCode, zips);
 

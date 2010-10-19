@@ -1177,14 +1177,20 @@
     	
     	if (credit_limit_edit.text == "" || credit_limit_edit.text == "0.00") {
     		limit.visible = true;
-    		limit.text = StringUtil.substitute(limit.text,creditLimitAbb);
+    		if ( creditLimitAbb != "0")
+    			limit.text = StringUtil.substitute(limit.text,creditLimitAbb);
+    		else
+    			limit.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.UnlimitedCredit');
     	}
     	else
     		limit.visible = false;
     		
     	if (monthly_finance_charge_edit.text == "" || monthly_finance_charge_edit.text == "0%"){
     		standardratelabel.visible = true;
-    		standardratelabel.text = StringUtil.substitute(standardratelabel.text,financeRateAbb);
+    		if ( financeRateAbb != "0")
+    			standardratelabel.text = StringUtil.substitute(standardratelabel.text,financeRateAbb);
+    		else
+    			standardratelabel.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.financechargesarenev');
     	}
     	else
     		standardratelabel.visible = false;
@@ -1326,9 +1332,13 @@
 		
 	}
 	private function getAccount():void{
-		if ( account.accountId ==  masteracctId.text)
+		if ( (account.accountId ==  masteracctId.text) || (masteracctId.text == "")){
 			masteracctId.text = "";
+			account.masterAcct = 0;
+			master_acct_edit.text= ""
+		}
 		else
+		
 			dataService.getByAccountId(masteracctId.text); 
 	}
 	private function handleGetaccountIDResult(ev:ResultEvent):void{
@@ -1721,7 +1731,7 @@
 		<mx:Label x="74" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="45" textAlign="center"/>
 		
 		
-		<components:CustomSaveButtonComponent  x="171" y="10" width="38" id="select_button1" clickFuncName="doSave" 
+		<components:CustomSaveButtonComponent enabled="{formIsValid}" x="171" y="10" width="38" id="select_button1" clickFuncName="doSave" 
 				saveLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}" height="38"/>
 		
 		
