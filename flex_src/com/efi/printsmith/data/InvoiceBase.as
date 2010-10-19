@@ -74,6 +74,8 @@ package com.efi.printsmith.data
 		public var shipPrice:Number = 0;
 		public var tax:Number = 0;
 		public var releasedToProduction:Boolean = false;
+		public var oldEstimateNumber:String = "";
+		public var oldInvoiceNumber:String = "";
 	
 	}
 }

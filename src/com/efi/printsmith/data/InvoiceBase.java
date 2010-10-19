@@ -289,6 +289,15 @@ public class InvoiceBase extends ModelBase {
   public static final String RELEASEDTOPRODUCTION = "ReleasedToProduction";
 
 	/**
+   * @generated
+   */
+  public static final String OLDESTIMATENUMBER = "OldEstimateNumber";
+	/**
+   * @generated
+   */
+  public static final String OLDINVOICENUMBER = "OldInvoiceNumber";
+
+	/**
 	 * @generated
 	 */
 	public InvoiceBase() {
@@ -1791,6 +1800,51 @@ public class InvoiceBase extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String oldEstimateNumber;
+
+	/**
+   * @generated
+ 	 */
+  public String getOldEstimateNumber(){
+    return oldEstimateNumber; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOldEstimateNumber(String newVal) {
+    this.oldEstimateNumber = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String oldInvoiceNumber;
+
+	/**
+   * @generated
+ 	 */
+  public String getOldInvoiceNumber(){
+    return oldInvoiceNumber; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOldInvoiceNumber(String newVal) {
+    this.oldInvoiceNumber = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1856,6 +1910,8 @@ public class InvoiceBase extends ModelBase {
     if (SHIPPRICE.equals(propertyName)) return getShipPrice();
     if (TAX.equals(propertyName)) return getTax();
     if (RELEASEDTOPRODUCTION.equals(propertyName)) return getReleasedToProduction();
+    if (OLDESTIMATENUMBER.equals(propertyName)) return getOldEstimateNumber();
+    if (OLDINVOICENUMBER.equals(propertyName)) return getOldInvoiceNumber();
     return super.getProperty(propertyName);
   }
 	
@@ -1925,6 +1981,8 @@ public class InvoiceBase extends ModelBase {
     if (SHIPPRICE.equals(propertyName)) setShipPrice((BigDecimal)newValue); else
     if (TAX.equals(propertyName)) setTax((BigDecimal)newValue); else
     if (RELEASEDTOPRODUCTION.equals(propertyName)) setReleasedToProduction((Boolean)newValue); else
+    if (OLDESTIMATENUMBER.equals(propertyName)) setOldEstimateNumber((String)newValue); else
+    if (OLDINVOICENUMBER.equals(propertyName)) setOldInvoiceNumber((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2054,6 +2112,10 @@ public class InvoiceBase extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (RELEASEDTOPRODUCTION.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (OLDESTIMATENUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (OLDINVOICENUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2124,6 +2186,8 @@ public class InvoiceBase extends ModelBase {
     if (SHIPPRICE.equals(propertyName)) return InvoiceBase.class;
     if (TAX.equals(propertyName)) return InvoiceBase.class;
     if (RELEASEDTOPRODUCTION.equals(propertyName)) return InvoiceBase.class;
+    if (OLDESTIMATENUMBER.equals(propertyName)) return InvoiceBase.class;
+    if (OLDINVOICENUMBER.equals(propertyName)) return InvoiceBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2254,6 +2318,10 @@ public class InvoiceBase extends ModelBase {
     if (! SmartEquals(getTax(), objT.getTax()))
       return false;
     if (! SmartEquals(getReleasedToProduction(), objT.getReleasedToProduction()))
+      return false;
+    if (! SmartEquals(getOldEstimateNumber(), objT.getOldEstimateNumber()))
+      return false;
+    if (! SmartEquals(getOldInvoiceNumber(), objT.getOldInvoiceNumber()))
       return false;
     return true;
   }			

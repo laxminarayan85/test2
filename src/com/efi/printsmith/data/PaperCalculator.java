@@ -265,6 +265,11 @@ public class PaperCalculator extends ModelBase {
   public static final String RUNANDTUMBLE = "RunAndTumble";
 
 	/**
+   * @generated
+   */
+  public static final String WORKANDTUMBLE = "WorkAndTumble";
+
+	/**
 	 * @generated
 	 */
 	public PaperCalculator() {
@@ -1541,6 +1546,28 @@ public class PaperCalculator extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean workAndTumble;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getWorkAndTumble(){
+    return workAndTumble; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setWorkAndTumble(Boolean newVal) {
+    this.workAndTumble = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1600,6 +1627,7 @@ public class PaperCalculator extends ModelBase {
     if (SWAP.equals(propertyName)) return getSwap();
     if (RUNOUT.equals(propertyName)) return getRunout();
     if (RUNANDTUMBLE.equals(propertyName)) return getRunAndTumble();
+    if (WORKANDTUMBLE.equals(propertyName)) return getWorkAndTumble();
     return super.getProperty(propertyName);
   }
 	
@@ -1663,6 +1691,7 @@ public class PaperCalculator extends ModelBase {
     if (SWAP.equals(propertyName)) setSwap((Boolean)newValue); else
     if (RUNOUT.equals(propertyName)) setRunout((Integer)newValue); else
     if (RUNANDTUMBLE.equals(propertyName)) setRunAndTumble((Boolean)newValue); else
+    if (WORKANDTUMBLE.equals(propertyName)) setWorkAndTumble((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1780,6 +1809,8 @@ public class PaperCalculator extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (RUNANDTUMBLE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (WORKANDTUMBLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1844,6 +1875,7 @@ public class PaperCalculator extends ModelBase {
     if (SWAP.equals(propertyName)) return PaperCalculator.class;
     if (RUNOUT.equals(propertyName)) return PaperCalculator.class;
     if (RUNANDTUMBLE.equals(propertyName)) return PaperCalculator.class;
+    if (WORKANDTUMBLE.equals(propertyName)) return PaperCalculator.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1962,6 +1994,8 @@ public class PaperCalculator extends ModelBase {
     if (! SmartEquals(getRunout(), objT.getRunout()))
       return false;
     if (! SmartEquals(getRunAndTumble(), objT.getRunAndTumble()))
+      return false;
+    if (! SmartEquals(getWorkAndTumble(), objT.getWorkAndTumble()))
       return false;
     return true;
   }			
