@@ -374,7 +374,12 @@
 				if ((ss.menu == "rStandardMenuText.Window")
 					&& (ss.commandName.indexOf("rStandardMenuText.Minimize") > -1 ))	{
 						doMinimize();				
-					}	
+					}
+				//Menu for Convert to Invoice
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.ConverttoInvoice") > -1 ))	{
+						doConvertInvoice();				
+					}		
 						
 			}
 			if (event.menuItem is WindowApplicationMenuItem)	{
@@ -405,7 +410,18 @@
 					editInvoice.openTrackerStatus();
 				}
 			}
-		} 
+		}
+		
+		public function doConvertInvoice():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.convertToInvoice();
+				}
+			}
+		}
+		 
 		private function handleLoadDimensionResult(ev:ResultEvent):void {
 			dimensions = new ArrayCollection();
 			dimensions=ev.result as ArrayCollection;

@@ -1,31 +1,18 @@
 package com.efi.printsmith.service;
 
+import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
-import javax.persistence.RollbackException;
-
-import net.digitalprimates.persistence.hibernate.utils.HibernateUtil;
-import net.digitalprimates.persistence.hibernate.utils.services.HibernateService;
-
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.classic.Session;
-import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.exception.GenericJDBCException;
 
-import com.efi.printsmith.data.InvoiceBase;
-import com.efi.printsmith.data.Job;
-import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.Charge;
+import com.efi.printsmith.data.Invoice;
+import com.efi.printsmith.data.InvoiceBase;
+import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.exceptions.PropertyException;
 
 public class InvoiceService extends SnowmassHibernateService {
 	protected static Logger log = Logger.getLogger(InvoiceService.class);
@@ -96,5 +83,27 @@ public class InvoiceService extends SnowmassHibernateService {
 		}
 		return invoice;
 		
+	}
+	
+	
+	public Invoice convertToInvoice(ModelBase estimate) throws Exception {
+		Invoice invoice = new Invoice();
+		for (Field estimateField : estimate.getClass().getSuperclass().getDeclaredFields()) {
+			for (Field invoiceField : invoice.getClass().getSuperclass().getDeclaredFields()) {
+				if(estimateField.getName().equals(invoiceField.getName()) && !estimateField.getName().equalsIgnoreCase("IsDeleted")) {
+					String propertyName = estimateField.getName().substring(0, 1)
+					.toUpperCase()
+					+ estimateField.getName().substring(1,
+							estimateField.getName().length());
+					try {
+						invoice.setProperty(propertyName, estimate.getProperty(propertyName));
+					} catch(PropertyException e) {
+						break;
+					}
+					break;
+				}
+			}
+		}
+		return invoice;
 	}
 }
