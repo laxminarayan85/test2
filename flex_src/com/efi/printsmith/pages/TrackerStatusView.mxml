@@ -227,7 +227,11 @@
 				if(isActive){
 					statusString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Active');
 				} else {
-					statusString = "";
+					if(trackerConsoleJobsList==null || trackerConsoleJobsList.length==0){
+						statusString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"workflowInvHistoryCmd.Notstarted");
+					} else {
+						statusString = "";
+					}
 				}
 				totalActualTime = convertMilliSecondsToString(totalValue,true);
 			}
@@ -277,7 +281,9 @@
 		
 		<mx:Label width="20%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.Currentstatus')}:"
 			textAlign="right"/>
-		<mx:Label width="20%" text="{statusString}" textAlign="center"/>
+		<mx:Box width="20%" borderStyle="solid" horizontalAlign="center">
+			<mx:Label width="100%" text="{statusString}" textAlign="center"/>
+		</mx:Box>
 		
 	</mx:HBox>
 	

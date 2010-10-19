@@ -398,11 +398,12 @@
 		}
 		
 		public function doTrackerStatus():void {
-			var child:Panel = new EditInvoice() as Panel;
-			var win:MDIWindow = containerManager.getWindowWithChild(child);
+			var win:MDIWindow = containerManager.getActiveWindow();
 			if(win!=null){
-				var editInvoice:EditInvoice = win.content as EditInvoice;
-				editInvoice.openTrackerStatus();
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.openTrackerStatus();
+				}
 			}
 		} 
 		private function handleLoadDimensionResult(ev:ResultEvent):void {
