@@ -153,6 +153,10 @@ package com.efi.printsmith.data
 		public var setupTime:Number = 0;
 		public var releasedToProduction:Boolean = false;
 		public var taxTable:TaxTable;
+		public var showMultiQty:Boolean = false;
+		public var multiQuantity1:Number = 0;
+		public var multiQuantity2:Number = 0;
+		public var multiQuantity3:Number = 0;
 	
 	}
 }
