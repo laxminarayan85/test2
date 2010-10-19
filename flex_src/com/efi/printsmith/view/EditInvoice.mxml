@@ -619,10 +619,10 @@
 					case "CustomerTypeCash":
 							cust_discount_text5.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CashOnly');
 						break;
-					case "CustomerTypeCheck":
+					case "cash_check_credit":
 							cust_discount_text5.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CashCheckCreditCard');
 						break;
-					case "CustomerTypeCharge":
+					case "charge_acct":
 							cust_discount_text5.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.ChargeAccount');
 						break;
 					case "CustomerTypeCreditCardOnFile":
