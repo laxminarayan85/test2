@@ -20,6 +20,7 @@ import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.Dimension;
 import com.efi.printsmith.data.InvoiceBase;
+import com.efi.printsmith.data.Vendor;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.Constants;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
@@ -794,7 +795,11 @@ public class JobMapper extends ImportMapper {
 			} else if ("pick stock generic color".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("pick stock vendor ID".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("0") == false && currentImportToken.equals("") == false) {
+					Vendor vendor = (Vendor)dataService.getByPrevId("Vendor", currentImportToken);
+					if (vendor != null)
+						job.setVendor(vendor);
+				}
 			} else if ("vender name".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("pick stock weight".equals(currentFieldToken)) {
