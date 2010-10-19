@@ -1534,7 +1534,10 @@ public class InvoiceMapper extends ImportMapper {
 				/* TODO */
 			} else if ("addl tax[5]".equals(currentFieldToken)) {
 				/* TODO */
-			}
+			} else if ("old estimate number".equals(currentFieldToken))
+				invoice.setOldEstimateNumber(currentImportToken);
+			else if ("old invoice number".equals(currentFieldToken))
+				invoice.setOldInvoiceNumber(currentImportToken);
 		}
 		notePad = (NotePad)dataService.addUpdate(notePad);
 		notePad.setId(notePad.getId());
