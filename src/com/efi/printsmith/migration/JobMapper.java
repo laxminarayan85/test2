@@ -824,7 +824,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("is crouser".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("run & tumble".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setRunAndTumble(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("obs_tax in price".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("dutch bottom".equals(currentFieldToken)) {
@@ -840,7 +840,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("digital submitted".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("work & turn new".equals(currentFieldToken)) {
-				tempPaper.setWorkandTumble(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setWorkandTurn(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("override washup time".equals(currentFieldToken)) {
 				job.setOrWashupTime(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("production release".equals(currentFieldToken)) {

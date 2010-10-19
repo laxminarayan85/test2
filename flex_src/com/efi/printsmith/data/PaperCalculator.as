@@ -2,7 +2,6 @@ package com.efi.printsmith.data
 {
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
-	import com.efi.printsmith.Constants;
 	
 	[RemoteClass(alias="com.efi.printsmith.data.PaperCalculator")]
 	[Managed]
@@ -39,7 +38,7 @@ package com.efi.printsmith.data
 		public var defaultPressCuttOff:Number = 0;
 		public var backTrimParent:Boolean = false;
 		public var trimFourSides:Boolean = false;
-		public var workandTumble:Boolean = false;
+		public var workandTurn:Boolean = false;
 		public var runToFinishGrain:String = "";
 		public var printParentToFinishSection:Boolean = false;
 		public var printParentToRunSection:Boolean = false;
@@ -49,10 +48,10 @@ package com.efi.printsmith.data
 		public var finishSize:Dimension;
 		public var useGripEdgeGap:Boolean = false;
 		public var runSize:Dimension;
-		public var gripLocation:String = Constants.PAPER_CALCULATOR_GRIPPER_TOP;
+		public var gripLocation:String = "";
 		public var cutstoFinish:int = 0;
 		public var sheetsOut:int = 0;
-		public var folioLocation:String = Constants.PAPER_CALCULATOR_FOLIO_LEFT;
+		public var folioLocation:String = "";
 		public var cutstoRun:int = 0;
 		public var disableFSC:Boolean = false;
 		public var down:int = 0;
@@ -68,6 +67,7 @@ package com.efi.printsmith.data
 		public var backTrimRun:Boolean = false;
 		public var swap:Boolean = false;
 		public var runout:int = 0;
+		public var runAndTumble:Boolean = false;
 	
 	}
 }
