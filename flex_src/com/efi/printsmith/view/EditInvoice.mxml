@@ -52,6 +52,9 @@
 		<mx:method name="convertToInvoice"
 					fault="handleFault(event)"
 					result="handleConvertInvoiceResult(event)"/>
+		<mx:method name="copyToNewInvoice"
+					fault="handleFault(event)"
+					result="handleCopyToNewInvoiceResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="salesRepDataService"
 					 destination="dataService">
@@ -181,6 +184,8 @@
 			
 			private var resetJobsList:Boolean = true;
 			
+			public var convertedEstimatedId:int=0;
+			
 			public function init():void
 			{
 				this.bill_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress'));
@@ -282,8 +287,14 @@
 			}
 			
 			public function convertToInvoice():void {
-				if(invoice!=null && invoice is Estimate){
+				if(invoice!=null && invoice is Estimate){ 
 					invoiceService.convertToInvoice(invoice);
+				}
+			} 
+			
+			public function copyToNewInvoice():void {
+				if(invoice!=null && invoice is Estimate){
+					invoiceService.copyToNewInvoice(invoice);
 				}
 			} 
 			
@@ -349,15 +360,22 @@
 
 			private function handleSaveResult(ev:ResultEvent):void
 			{
+				var deleted:Boolean = false;
 				this.invoice = ev.result as InvoiceBase;
 				inv_number.text = invoice.invoiceNumber;
 				//this.parent.removeChild(this);
 				if(invoice is Invoice){
+					if(convertedEstimatedId!=0){
+						deleted = true;
+						dataService.deleteItem("Estimate",convertedEstimatedId);
+					}
 					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')));
 				} else if(invoice is Estimate){
 					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')));
 				}
-				Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+				if(!deleted){
+					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+				}
 			}
 			
 			private function handleCreateInvoiceResult(ev:ResultEvent):void
@@ -371,6 +389,7 @@
 					var child:EditInvoice = new EditInvoice();
 					var convertedInvoice:Invoice = event.result as Invoice;
 					convertedInvoice.invoiceNumber = "";
+					child.convertedEstimatedId = convertedInvoice.id;
 					convertedInvoice.id=0;
 					convertedInvoice.created = null;
 					convertedInvoice.modified = null;
@@ -385,10 +404,10 @@
 							jobBaseList.addItem(jobBaseObj);
 						}
 					}
+					convertedInvoice.jobs = jobBaseList;
 					for each(var chargeObj:Charge in convertedInvoice.charges) {
 						chargeObj.parentInvoice = convertedInvoice;
 					}
-					convertedInvoice.jobs = jobBaseList;
 					if (convertedInvoice.jobs != null && convertedInvoice.jobs.length > 0) {
 						var i:int;
 						convertedInvoice.subTotal = 0;
@@ -404,10 +423,49 @@
 					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 				}
 			}
+			
+			private function handleCopyToNewInvoiceResult(event:ResultEvent):void {
+				if(event.result is Invoice){
+					var child:EditInvoice = new EditInvoice();
+					var newInvoice:Invoice = event.result as Invoice;
+					newInvoice.invoiceNumber = "";
+					var jobBaseList:ArrayCollection = new ArrayCollection();
+					for each(var jobBaseObj:JobBase in newInvoice.jobs) {
+						if(jobBaseObj.defaultJob){
+							jobBaseObj.id = 0;
+							jobBaseObj.created = null;
+							jobBaseObj.modified = null;
+							jobBaseObj.multiQtyJob = false;
+							jobBaseObj.parentInvoice = newInvoice;
+							jobBaseList.addItem(jobBaseObj);
+						}
+					}
+					newInvoice.jobs = jobBaseList;
+					for each(var chargeObj:Charge in newInvoice.charges) {
+						chargeObj.parentInvoice = newInvoice;
+					}
+					if (newInvoice.jobs != null && newInvoice.jobs.length > 0) {
+						var i:int;
+						newInvoice.subTotal = 0;
+						for (i=0; i<newInvoice.jobs.length; i++) {
+							var tmpJob:Job = newInvoice.jobs.getItemAt(i) as Job;	
+							newInvoice.subTotal += tmpJob.pricingRecord.totalPrice;
+						}
+					}
+					newInvoice.grandTotal = newInvoice.subTotal;
+					newInvoice.amountDue = newInvoice.grandTotal;
+					child.invoice = newInvoice; 
+					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
+					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+				}
+			} 
+			
 
 			private function handleDeleteResult(event:Event):void
 			{
-
+				if(convertedEstimatedId!=0){
+					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+				}
 			}
 
 			private function handleFault(ev:FaultEvent):void {  

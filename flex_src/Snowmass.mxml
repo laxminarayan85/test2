@@ -375,6 +375,13 @@
 					&& (ss.commandName.indexOf("rStandardMenuText.Minimize") > -1 ))	{
 						doMinimize();				
 					}
+					
+				//Menu for Copy to New Invoice
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rAltMenuText.CopytonewInvoice") > -1 ))	{
+						doCopyToNewInvoice();				
+					}		
+				
 				//Menu for Convert to Invoice
 				if ((ss.menu == "rStandardMenuText.Invoice")
 					&& (ss.commandName.indexOf("rStandardMenuText.ConverttoInvoice") > -1 ))	{
@@ -408,6 +415,16 @@
 				if(win.content is EditInvoice){
 					var editInvoice:EditInvoice = win.content as EditInvoice;
 					editInvoice.openTrackerStatus();
+				}
+			}
+		}
+		
+		public function doCopyToNewInvoice():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.copyToNewInvoice();
 				}
 			}
 		}

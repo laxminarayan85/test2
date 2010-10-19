@@ -1863,6 +1863,11 @@ public class DataService extends HibernateService {
 								log.error("null charge found");
 							}
 						}
+						Hibernate.initialize(job.getPricingPress());
+						Hibernate.initialize(job.getCostingPress());
+						Hibernate.initialize(job.getStock());
+						Hibernate.initialize(job.getPricingCopier());
+						Hibernate.initialize(job.getCostingCopier());
 					}
 				}
 			}

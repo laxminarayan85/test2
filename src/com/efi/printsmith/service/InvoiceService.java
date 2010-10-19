@@ -104,6 +104,29 @@ public class InvoiceService extends SnowmassHibernateService {
 				}
 			}
 		}
+		invoice.setId(estimate.getId());
+		return invoice;
+	}
+	
+	
+	public Invoice copyToNewInvoice(ModelBase estimate) throws Exception {
+		Invoice invoice = new Invoice();
+		for (Field estimateField : estimate.getClass().getSuperclass().getDeclaredFields()) {
+			for (Field invoiceField : invoice.getClass().getSuperclass().getDeclaredFields()) {
+				if(estimateField.getName().equals(invoiceField.getName()) && !estimateField.getName().equalsIgnoreCase("IsDeleted")) {
+					String propertyName = estimateField.getName().substring(0, 1)
+					.toUpperCase()
+					+ estimateField.getName().substring(1,
+							estimateField.getName().length());
+					try {
+						invoice.setProperty(propertyName, estimate.getProperty(propertyName));
+					} catch(PropertyException e) {
+						break;
+					}
+					break;
+				}
+			}
+		}
 		return invoice;
 	}
 }
