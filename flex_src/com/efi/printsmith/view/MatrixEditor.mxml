@@ -26,7 +26,7 @@
 			<mtrx:ByCopyMatrix id="copies_and_originals_editor" x="21" y="0" matrix="{matrix}">
 			</mtrx:ByCopyMatrix>
 		</mx:AddChild>
-		<mx:SetProperty target="{canvas1}" name="width" value="675"/>
+		<mx:SetProperty target="{canvas1}" name="width" value="735"/>
 		<mx:SetProperty name="width" value="762"/>
 		<mx:SetProperty target="{canvas1}" name="height" value="446"/>
 		<mx:SetProperty target="{label1}" name="y" value="375"/>
@@ -46,10 +46,10 @@
 		<mx:SetProperty target="{price5}" name="y" value="373"/>
 		<mx:SetProperty target="{price5}" name="width" value="59.5"/>
 		<mx:SetProperty target="{select_button}" name="y"/>
-		<mx:SetStyle target="{select_button}" name="bottom" value="19"/>
-		<mx:SetStyle target="{clear_button}" name="bottom" value="19"/>
-		<mx:SetStyle target="{select_button}" name="right" value="90"/>
-		<mx:SetStyle target="{clear_button}" name="right" value="-20"/>
+		<mx:SetStyle target="{select_button}" name="bottom" value="21"/>
+		<mx:SetStyle target="{clear_button}" name="bottom" value="21"/>
+		<mx:SetStyle target="{select_button}" name="right" value="150"/>
+		<mx:SetStyle target="{clear_button}" name="right" value="40"/>
 		<mx:SetProperty target="{price6}" name="x" value="383"/>
 		<mx:SetProperty target="{price6}" name="y" value="373"/>
 		<mx:SetProperty target="{price6}" name="width" value="67"/>
@@ -69,6 +69,7 @@
 		<mx:SetProperty target="{price10}" name="width" value="60"/>
 		<mx:SetProperty target="{label1}" name="width" value="75"/>
 		<mx:SetProperty target="{label1}" name="x" value="3"/>
+		<mx:SetProperty target="{price11}" name="x" value="30"/>
 	</mx:State>
 	<mx:State name="COPIESANDORIGINALSTWOSIDES">
 		<mx:SetProperty name="height" value="490"/>
