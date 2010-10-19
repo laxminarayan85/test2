@@ -463,113 +463,116 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		int			out1 = 0;		/* temp values to figure out maximum */
 		int			out2 = 0;	/* temp values to figure out maximum */
 		
-		parentX = job.getParentSize().getWidth().doubleValue();
-		parentY = job.getParentSize().getHeight().doubleValue();
-		runX = job.getRunSize().getWidth().doubleValue();
-		runY = job.getRunSize().getHeight().doubleValue();
-		finishX = job.getFinishSize().getWidth().doubleValue();
-		finishY = job.getFinishSize().getHeight().doubleValue();
-
-		grain = 0;
+		//Added this check for NullPointer exception while selecting PricingMethod from screen
+		if(job.getParentSize()!=null && job.getRunSize()!=null && job.getFinishSize()!=null) {
 		
-		/* Finish Grain */
-		if (job.getPaperCal().getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN)) {
-			grain = 1;
-		}
-
-		if ((parentX > 0 && parentY > 0) || (runX > 0 && runY > 0) || (finishX > 0 && finishY > 0))
-		{
-			//
-			// allow for a grain swap in the paper direction
-			//
-			if (grain == 0)
-			{	// try alternate rotation
-				switch (whichToStart)
-				{	
-					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
-						// old form
-						out2 = LocalCalcOut(job, finishY, finishX, whichToStart);
-						break;
-						
-					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
-						// use run size as parent
-						out2 = LocalCalcOut(job, runY, runX, whichToStart);
-						break;
-						
-					case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
-						// use parent size
-						out2 = LocalCalcOut(job, finishY, finishX, whichToStart);
-						break;
-				}
-				
-				if (out2 < 0)
-				{
-					out2 = 0;
-				}
+			parentX = job.getParentSize().getWidth().doubleValue();
+			parentY = job.getParentSize().getHeight().doubleValue();
+			runX = job.getRunSize().getWidth().doubleValue();
+			runY = job.getRunSize().getHeight().doubleValue();
+			finishX = job.getFinishSize().getWidth().doubleValue();
+			finishY = job.getFinishSize().getHeight().doubleValue();
+	
+			grain = 0;
+			
+			/* Finish Grain */
+			if (job.getPaperCal().getRunToFinishGrain().equals(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN)) {
+				grain = 1;
 			}
-			//
-			// perform the requested sheet combination in the normal sheet dimensions
-			//
-			switch (whichToStart)
-			{	
-				case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
-					out1 = LocalCalcOut(job, finishX, finishY, whichToStart); 
-					break;
-						
-				case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
-					// use run size as parent
-					out1 = LocalCalcOut(job, runX, runY, whichToStart);
-					break;
+	
+			if ((parentX > 0 && parentY > 0) || (runX > 0 && runY > 0) || (finishX > 0 && finishY > 0))
+			{
+				//
+				// allow for a grain swap in the paper direction
+				//
+				if (grain == 0)
+				{	// try alternate rotation
+					switch (whichToStart)
+					{	
+						case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
+							// old form
+							out2 = LocalCalcOut(job, finishY, finishX, whichToStart);
+							break;
+							
+						case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
+							// use run size as parent
+							out2 = LocalCalcOut(job, runY, runX, whichToStart);
+							break;
+							
+						case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
+							// use parent size
+							out2 = LocalCalcOut(job, finishY, finishX, whichToStart);
+							break;
+					}
 					
-				case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
-					// use parent size
-					out1 = LocalCalcOut(job, finishX, finishY, whichToStart); 
-					break;
-			}
-			
-			if (out1 < 0)
-			{
-				out1 = 0;
-			}
-			
-			//
-			// if the first direction has more, then revert all internal numbers to that size output
-			//
-			if (out2 > out1)
-			{
+					if (out2 < 0)
+					{
+						out2 = 0;
+					}
+				}
+				//
+				// perform the requested sheet combination in the normal sheet dimensions
+				//
 				switch (whichToStart)
 				{	
 					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
-						// use parent size
-						LocalCalcOut(job, finishY, finishX, whichToStart);
+						out1 = LocalCalcOut(job, finishX, finishY, whichToStart); 
 						break;
-						
+							
 					case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
 						// use run size as parent
-						LocalCalcOut(job, runY, runX, whichToStart);
+						out1 = LocalCalcOut(job, runX, runY, whichToStart);
 						break;
 						
 					case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
 						// use parent size
-						LocalCalcOut(job, finishY, finishX, whichToStart);
+						out1 = LocalCalcOut(job, finishX, finishY, whichToStart); 
 						break;
 				}
 				
+				if (out1 < 0)
+				{
+					out1 = 0;
+				}
+				
 				//
-				// tell the image creation to swap the sheets for better fit
+				// if the first direction has more, then revert all internal numbers to that size output
 				//
-				job.getPaperCal().setSwap(true);
-				out = out2;
-			}
-			else {
-				//
-				// image creation should use the sheet sizes as entered
-				//
-				job.getPaperCal().setSwap(false);
-				out = out1;
+				if (out2 > out1)
+				{
+					switch (whichToStart)
+					{	
+						case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH:
+							// use parent size
+							LocalCalcOut(job, finishY, finishX, whichToStart);
+							break;
+							
+						case Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN:
+							// use run size as parent
+							LocalCalcOut(job, runY, runX, whichToStart);
+							break;
+							
+						case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
+							// use parent size
+							LocalCalcOut(job, finishY, finishX, whichToStart);
+							break;
+					}
+					
+					//
+					// tell the image creation to swap the sheets for better fit
+					//
+					job.getPaperCal().setSwap(true);
+					out = out2;
+				}
+				else {
+					//
+					// image creation should use the sheet sizes as entered
+					//
+					job.getPaperCal().setSwap(false);
+					out = out1;
+				}
 			}
 		}
-		
 		return out;
 	}	// CalcSheet
 
