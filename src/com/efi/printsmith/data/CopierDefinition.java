@@ -1139,7 +1139,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	@ManyToMany(targetEntity=ChargeDefinition.class)
+	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private java.util.List<ChargeDefinition> charges;
 	
@@ -1248,6 +1248,7 @@ public class CopierDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="flatRate", precision=19, scale=7)
 	private BigDecimal flatRate;
 	
 	/**
@@ -1263,6 +1264,7 @@ public class CopierDefinition extends ModelBase {
 	 */	
 	public void setFlatRate(BigDecimal newVal) {
     this.flatRate = newVal;
+    this.flatRate.setScale(7, RoundingMode.HALF_UP);
   }
 	
 	/**
@@ -1270,6 +1272,7 @@ public class CopierDefinition extends ModelBase {
 	 */	
 	public void setFlatRate(double newVal) {
     this.flatRate = BigDecimal.valueOf(newVal);
+    this.flatRate.setScale(7, RoundingMode.HALF_UP);
   }
  	
 	
