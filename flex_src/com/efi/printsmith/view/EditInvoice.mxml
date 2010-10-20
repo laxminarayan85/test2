@@ -393,6 +393,7 @@
 					convertedInvoice.id=0;
 					convertedInvoice.created = null;
 					convertedInvoice.modified = null;
+					convertedInvoice.releasedToProduction = false;
 					var jobBaseList:ArrayCollection = new ArrayCollection();
 					for each(var jobBaseObj:JobBase in convertedInvoice.jobs) {
 						if(jobBaseObj.defaultJob){
@@ -401,6 +402,7 @@
 							jobBaseObj.modified = null;
 							jobBaseObj.multiQtyJob = false;
 							jobBaseObj.parentInvoice = convertedInvoice;
+							jobBaseObj.releasedToProduction = false;
 							jobBaseList.addItem(jobBaseObj);
 						}
 					}
@@ -429,6 +431,7 @@
 					var child:EditInvoice = new EditInvoice();
 					var newInvoice:Invoice = event.result as Invoice;
 					newInvoice.invoiceNumber = "";
+					newInvoice.releasedToProduction = false;
 					var jobBaseList:ArrayCollection = new ArrayCollection();
 					for each(var jobBaseObj:JobBase in newInvoice.jobs) {
 						if(jobBaseObj.defaultJob){
@@ -437,6 +440,7 @@
 							jobBaseObj.modified = null;
 							jobBaseObj.multiQtyJob = false;
 							jobBaseObj.parentInvoice = newInvoice;
+							jobBaseObj.releasedToProduction = false;
 							jobBaseList.addItem(jobBaseObj);
 						}
 					}
@@ -1115,6 +1119,13 @@
 				}
 				return String(object.jobIndex);
 			}
+			
+			public function getQtyOrdered(item:Object, column:DataGridColumn):String {
+				if(item.showMultiQty){
+					return item[column.dataField]+"+";
+				}
+				return item[column.dataField];
+			}
 		]]>
 
 	</mx:Script>
@@ -1476,7 +1487,7 @@
 									</mx:itemRenderer>
 								</mx:DataGridColumn>	
 								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Qty')}"
-												   dataField="qtyOrdered"/>
+												   dataField="qtyOrdered" labelFunction="getQtyOrdered"/>
 								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
 												   dataField="description"/>
 								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Price')}"

@@ -623,6 +623,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.pages.MultiQtyView;
 			import com.efi.printsmith.data.StockGroup;
 			import com.efi.printsmith.events.SpecialOrderStockDefEvent;
 			import com.efi.printsmith.events.StockDefinitionOpenEvent;
@@ -2376,6 +2377,12 @@
 				var parentWindowId:int = Snowmass.getInstance().containerManager.getWindowWithChild(EditJob.getInstance()).windowID;
 				Snowmass.getInstance().containerManager.openNewMDIWindow(stockDefinitionsWindow.title,stockDefinitionsWindow,-1,-1,-1,-1,parentWindowId);
 			}
+			
+			private function openMultiQtyView():void {
+				mapToJobData();
+				var multiQtyViewWindow:MultiQtyView = PopUpManager.createPopUp(this,MultiQtyView,true) as MultiQtyView;
+				multiQtyViewWindow.multiQtyJob = this.job;
+			}
 		]]>
 
 	</mx:Script>
@@ -2626,7 +2633,7 @@
 										   click="doDigitalAssets()"/>
 							<mx:LinkButton x="10"
 										   y="110"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}"/>
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" click="{openMultiQtyView()}"/>
 							<mx:LinkButton x="22" y="129" label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
 						</mx:Canvas>
 					</mx:Accordion>

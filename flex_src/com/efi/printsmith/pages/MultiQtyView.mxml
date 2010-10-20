@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobMultiQCmd.BidQuantities')}" xmlns:components="com.efi.printsmith.common.components.*"
+	showCloseButton="true" close="{closeWindow()}" creationComplete="{init()}">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import flash.net.registerClassAlias;
+			import mx.utils.ObjectUtil;
+			import com.efi.printsmith.events.PriceJobEvent;
+			import mx.managers.PopUpManager;
+			import com.efi.printsmith.data.Job;
+			import mx.rpc.IResponder;
+			
+			[Bindable] private var _multiQtyJob:Job;
+			
+			private function init():void {
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function get multiQtyJob():Job {
+				return this._multiQtyJob;
+			}
+			
+			public function set multiQtyJob(job:Job):void {
+				this._multiQtyJob = job;
+				setPrice("1");
+				setPrice("2");
+				setPrice("3");
+			}
+			
+			private function updateJob(statusStr:String):void {
+				if(statusStr=="Show"){
+					_multiQtyJob.showMultiQty = true;
+				} else {
+					_multiQtyJob.showMultiQty = false;
+				}
+				closeWindow();
+			}
+			
+			private function setPrice(priceStr:String):void {
+				registerClassAlias("com.efi.printsmith.data.Job",Job);
+				var tmpJob:Job = ObjectUtil.copy(_multiQtyJob) as Job;
+				if(priceStr=='1'){
+					tmpJob.qtyOrdered = _multiQtyJob.multiQuantity1;
+					var price1JobEvent:PriceJobEvent = new PriceJobEvent(tmpJob, new mx.rpc.Responder(handlePrice1JobComplete, handlePriceJobFault));
+					price1JobEvent.dispatch();
+				} else if(priceStr=='2'){
+					tmpJob.qtyOrdered = _multiQtyJob.multiQuantity2;
+					var price2JobEvent:PriceJobEvent = new PriceJobEvent(tmpJob, new mx.rpc.Responder(handlePrice2JobComplete, handlePriceJobFault));
+					price2JobEvent.dispatch();
+				} else if(priceStr=='3'){
+					tmpJob.qtyOrdered = _multiQtyJob.multiQuantity3;
+					var price3JobEvent:PriceJobEvent = new PriceJobEvent(tmpJob, new mx.rpc.Responder(handlePrice3JobComplete, handlePriceJobFault));
+					price3JobEvent.dispatch();
+				}
+				
+			}
+			
+			private function handlePrice1JobComplete(ev:ResultEvent):void
+			{
+				var localJob:Job = ev.result as Job;
+				price1.text = numberFormatter.format(localJob.pricingRecord.totalPrice + localJob.pricingRecord.prepPrice + localJob.pricingRecord.bindPrice + localJob.pricingRecord.otherChargePrice);
+			}
+			
+			private function handlePrice2JobComplete(ev:ResultEvent):void
+			{
+				var localJob:Job = ev.result as Job;
+				price2.text = numberFormatter.format(localJob.pricingRecord.totalPrice + localJob.pricingRecord.prepPrice + localJob.pricingRecord.bindPrice + localJob.pricingRecord.otherChargePrice);
+			}
+			
+			private function handlePrice3JobComplete(ev:ResultEvent):void
+			{
+				var localJob:Job = ev.result as Job;
+				price3.text = numberFormatter.format(localJob.pricingRecord.totalPrice + localJob.pricingRecord.prepPrice + localJob.pricingRecord.bindPrice + localJob.pricingRecord.otherChargePrice);
+			}
+			
+			private function handlePriceJobFault(ev:FaultEvent):void
+			{
+				if (ev != null && ev.fault != null && ev.fault.faultString != null) {				
+					Alert.show(ev.fault.faultString, "Error in Pricing", 0, null);
+				} else {
+					Alert.show("Unknown error when pricing job", "Error in Pricing", 0, null);
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:NumberFormatter id="numberFormatter" precision="2" useNegativeSign="true" useThousandsSeparator="true"/>
+	
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobMultiQCmd.Quantity')}" width="50%" textAlign="center" fontWeight="bold"/>
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobMultiQCmd.Price')}" width="50%" textAlign="center" fontWeight="bold"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<components:CustomNumericTextInputComponent
+			dataHolder="{_multiQtyJob}" variableName="multiQuantity1" customText="{_multiQtyJob.multiQuantity1}"
+			precision="0" rounding="nearest" isInteger="true" focusOut="{setPrice('1')}" width="50%"/>
+		<mx:Label id="price1" width="50%"/>
+	</mx:HBox>	 
+	
+	<mx:HBox width="100%">
+		<components:CustomNumericTextInputComponent
+			dataHolder="{_multiQtyJob}" variableName="multiQuantity2" customText="{_multiQtyJob.multiQuantity2}"
+			precision="0" rounding="nearest" isInteger="true" focusOut="{setPrice('2')}" width="50%"/>
+		<mx:Label id="price2" width="50%"/>
+	</mx:HBox>	
+	
+	<mx:HBox width="100%">
+		<components:CustomNumericTextInputComponent
+			dataHolder="{_multiQtyJob}" variableName="multiQuantity3" customText="{_multiQtyJob.multiQuantity3}"
+			precision="0" rounding="nearest" isInteger="true" focusOut="{setPrice('3')}" width="50%"/>
+		<mx:Label id="price3" width="50%"/>
+	</mx:HBox>	
+	
+	<mx:HBox width="100%" horizontalAlign="center">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobMultiQCmd.Priceincludesdiscoun')}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:HBox width="100%" horizontalAlign="left">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobMultiQCmd.Show')}" click="{updateJob('Show')}"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="right">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobMultiQCmd.Hide')}" click="{updateJob('Hide')}"/>
+		</mx:HBox>
+	</mx:HBox>
+</mx:TitleWindow>
