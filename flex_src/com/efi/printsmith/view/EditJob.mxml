@@ -1101,7 +1101,7 @@
 				else
 					if ( job.parentSize != null)
 						job.parentSize = job_parent.selectedItem as Dimension;
-				if ( job.runSize != null)
+				if ( job.runSize != null && job_size.selectedItem != null)
 					job.runSize = job_size.selectedItem as Dimension;
 				if ( job.foldedSize != null)
 					job.foldedSize = job_fold_size.selectedItem as Dimension;
@@ -1922,7 +1922,7 @@
 					break;
 				case this.job_finish_size:
 					doUpdatePrice = true;
-					var oldDimension:Dimension = this.job_finish_size.selectedItem as Dimension;
+					//var oldDimension:Dimension = this.job_finish_size.selectedItem as Dimension;
 					var finishSizeStr:String = Snowmass.formatSizeString(this.job_finish_size.text);
 					this.job_finish_size.selectedIndex = findItem(finishSizeStr, dimensionsArray);
 					if (this.job_finish_size.selectedIndex == -1) {
@@ -1933,11 +1933,11 @@
 						job.finishSize.width = Snowmass.getWidthFromSizeString(job.finishSize);
 						job.finishSize.height = Snowmass.getLengthFromSizeString(job.finishSize);
 					}
-					else {
+					else if (job_finish_size.selectedItem != null) {
 						job.finishSize = job_finish_size.selectedItem as Dimension;
 						if (job.finishSize.width * job.finishSize.height > job.runSize.width * job.runSize.height) {
-							job.finishSize = oldDimension;
-							job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
+							//job.finishSize = oldDimension;
+							//job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 							var message:String;       
 							message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
 							Alert.show(message, "Warning", 0, null, null, null, 4); 
@@ -1962,7 +1962,7 @@
 					break;
 				case this.job_size:
 					doUpdatePrice = true;
-					var oldDimension:Dimension = this.job_size.selectedItem as Dimension;
+					//var oldDimension:Dimension = this.job_size.selectedItem as Dimension;
 					var sizeStr:String = Snowmass.formatSizeString(this.job_size.text);
 					this.job_size.selectedIndex = findItem(sizeStr, dimensionsArray);
 					if (this.job_size.selectedIndex == -1) {
@@ -1973,11 +1973,11 @@
 						job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
 						job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
 					}
-					else {
+					else if (job_size.selectedItem != null) {
 						job.runSize = job_size.selectedItem as Dimension;
 						if (job.runSize.width * job.runSize.height > job.parentSize.width * job.parentSize.height) {
-							job.runSize = oldDimension;
-							job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
+							//job.runSize = oldDimension;
+							//job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
 							var message:String;       
 							message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheRunSizeisl");
 							Alert.show(message, "Warning", 0, null, null, null, 4); 
