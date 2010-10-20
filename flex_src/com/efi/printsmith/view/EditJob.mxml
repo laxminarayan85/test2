@@ -1002,6 +1002,16 @@
 				productionDataWindow.setJob(this.job);	
 			}
 			
+			private function doPrint():void {
+				if (isNaN(job.id) || job.id == 0) {
+					Alert.show("You must save the job before printing", "Error");
+				} else {
+					var reportName:String = "jobTicket.rpt";
+					var urlRequest:URLRequest = new URLRequest("http://localhost:8080/Snowmass/reportservlet?jobName="+reportName +"&reportParameter="+job.id);
+                	navigateToURL(urlRequest, "_blank");
+				}
+			}
+
 			public function getInvoice():InvoiceBase
 			{
 				return this.invoice;
@@ -2496,6 +2506,7 @@
 					   y="10"
 					   width="38"
 					   height="38"
+					   click="doPrint()"
 					   id="change_account_button">
 				<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
 			</mx:LinkButton>

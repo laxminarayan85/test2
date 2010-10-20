@@ -77,4 +77,32 @@ public class ReportService extends SnowmassHibernateService {
 			throw e;
 		}
 	}
+	
+	public File generateJobTicket(String reportName, String parameter) throws ReportException, IOException {
+		try {
+			Engine engine = new Engine(Engine.EXPORT_PDF);
+			ReportRepository reportRepository = new ReportRepository();
+			File reportFile = reportRepository.getFile(reportName);
+			URL reportURL = reportFile.toURL();
+			engine.setReportFile(reportURL);
+			if (parameter != null) {
+				engine.setPrompt("JobID",  parameter);
+			}
+			engine.execute();
+			File exportedFile = File.createTempFile("snowmassReport", ".pdf");
+			FileOutputStream fos = new FileOutputStream(exportedFile);
+			for (int i = 1; i <= engine.getPageCount(); i++) {
+				fos.write(engine.getPageData(i));
+			}
+			fos.close();
+			return exportedFile;
+		} catch (ReportException e) {
+			log.error(e);
+			throw e;
+		} catch (IOException e) {
+			log.error(e);
+			throw e;
+		}
+	}
+
 }

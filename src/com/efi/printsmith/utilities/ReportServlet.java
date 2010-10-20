@@ -41,11 +41,14 @@ public class ReportServlet extends HttpServlet implements Servlet {
 				System.out.println(tmpProp);
 			}
 			String reportName = request.getParameter("reportName");
-			String invoiceName = request.getParameter("invoiceName");
+			String invoiceName = request.getParameter("invoiceName");		// invoice output
+			String jobName = request.getParameter("jobName");				// job ticket output
 			String reportParameter = request.getParameter("reportParameter");
 			
+			
 			if ((reportName == null || reportName.length() == 0) && 
-					(invoiceName == null || invoiceName.length() == 0) ) {
+					(invoiceName == null || invoiceName.length() == 0) &&
+						(jobName == null || jobName.length() == 0) ) {
 				throw new IOException(
 						"Invalid report URL received by ReportServlet");
 			}
@@ -56,7 +59,10 @@ public class ReportServlet extends HttpServlet implements Servlet {
 				file = reportService.generateReport(reportName, reportParameter);
 			} else if (invoiceName != null && invoiceName.length() > 0) {
 				file = reportService.generateInvoice(invoiceName, reportParameter);
+			} else if (jobName != null && jobName.length() > 0) {
+				file = reportService.generateJobTicket(jobName, reportParameter);
 			}
+			
 			response.setContentType("application/pdf");
 		    response.setHeader("Content-disposition",
 		      "inline; filename=\"invoice.pdf\"");
