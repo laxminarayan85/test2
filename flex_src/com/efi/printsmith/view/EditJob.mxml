@@ -76,10 +76,8 @@
 						  y="205"
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OfSignatures')}" textAlign="right" width="108"/>
 			</mx:AddChild>
-			<mx:SetProperty target="{num_signatures}" name="y" value="231"/>
 			<mx:SetProperty target="{label10}" name="x" value="384"/>
 			<mx:SetProperty target="{label10}" name="y" value="231"/>
-			<mx:SetProperty target="{num_signatures}" name="text" value="{job.totalCopies}"/>
 			<mx:SetProperty target="{label10}" name="text">
 				<mx:value>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.TotCopy')}</mx:value>
 			</mx:SetProperty>
@@ -140,6 +138,14 @@
 			<mx:SetStyle target="{hrule1}" name="right" value="0"/>
 			<mx:SetProperty target="{est_waste}" name="x" value="497"/>
 			<mx:SetProperty target="{label34}" name="x" value="384"/>
+			<mx:RemoveChild target="{num_signatures}"/>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:Label
+						  width="98"
+						  id="total_copies"
+						  text="{job.totalCopies}"
+						  height="20" textAlign="right" x="497" y="231"/>
+			</mx:AddChild>
 		</mx:State>
 		<mx:State name="LargeFormat">
 			<mx:RemoveChild target="{runsize_label}"/>
@@ -1875,6 +1881,10 @@
 					updateWeight();
 					break;
 				case this.job_sheets:
+					if (job.sheets < job.numUp)
+						job.numOn = job.sheets;
+					else
+						job.numOn = job.numUp;
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					updateWeight();

@@ -17,27 +17,62 @@ public abstract class CopierPricingMethod {
 	}
 	
 	private void calculateTotalCopies(Job job) {
-		long totalCopies = job.getQtyOrdered() * job.getInSetsOf() * job.getSheets();
-		long sheets = job.getSheets();
-		long numUp = job.getNumUp();
-		long numOn = job.getNumOn();
-		if (sheets == 0)
-			sheets = 1;
-		if (numUp == 0)
-			numUp = 1;
-		if (numOn == 0)
-			numOn = 1;
-		double temp = sheets / (numUp / numOn);
-		long calcQty = 0;
-		if (temp < 1)
-			calcQty = 1;
+		float	runs;	/* used to hold partial run value */
+		long	iup,ion,iorigs,ordered,press,xpress,xorig,xup;
+		long	iruns,divisor;
+		Boolean	results = true;	/* change this to false to use the old way of calculating sigs */
+		
+		if (job.getNumUp() < 1)	/* up must always be at least 1 */
+			job.setNumUp(new Long(1));
+		if (job.getSheets() < 1)	/* same for originals */
+			job.setSheets(new Long(1));
+		if (job.getNumOn() < 1)	/* on must also be at least 1 */
+			job.setNumOn(new Long(1));
+		if (job.getNumOn() > job.getSheets())				/* max value of on is number of originals */
+			job.setNumOn(job.getSheets());
+		if (job.getNumOn() > job.getNumUp())				/* and can't be more than the number up either */
+			job.setNumOn(job.getNumUp());
+		
+		ion = job.getNumOn();
+		iup = job.getNumUp();
+		iorigs = job.getSheets();
+		
+		if (iorigs / ion < 1)
+			iruns = 1;
 		else
-			calcQty = (long)temp;
-		job.setNumCopies(totalCopies / calcQty);
+			iruns = iorigs / ion;
+		divisor = iup / ion;
+		ordered = job.getQtyOrdered() * job.getInSetsOf();
+		if (iorigs % ion != 0) {	/* got partial runs */
+			xorig = iorigs - (iruns * ion);	/* remaining originals to handle */
+			press = ordered / divisor;	/* press count for main run */
+			if ((press * divisor) < ordered)
+				press++;
+			xup = iup / xorig;	/* divisor for partial press run */
+			xpress = ordered / xup;
+			if ((xpress * xup) < ordered)
+				xpress++;
+			if (press != 0)
+				runs = iruns + ((float)xpress / (float)press);	/* 5.0b15d2 - calculate the number of runs including partials */
+			else
+				runs = iruns;		//¥¥DR 7.1.3
+			iruns++;	/* count partial as full run for signatures */
+		} else {
+			press = ordered / divisor;	/* press count for main run */
+			if ((press * divisor) < ordered)
+				press++;
+			runs = iruns;	/* set value to store in job */
+		}
+		
+		double oddRunCount = (runs - Math.floor(runs));
+		long oddRunQty = (long)(job.getQtyOrdered() * oddRunCount);
+		
+		job.setNumCopies(press);
+		
 		calculateEstWaste(job);
 		long wasteSheets = job.getBinderyWaste() + job.getEstWaste();
 		wasteSheets *= job.getSheets();	
-		job.setTotalCopies(totalCopies / (numUp / numOn) + (wasteSheets * (numUp / numOn)));
+		job.setTotalCopies(ordered / (iup / ion) + (wasteSheets * (iup / ion)) + oddRunQty);
 		if (job.getDoubleSided()) {
 			job.setTotalCopies(job.getTotalCopies() * 2);
 		}

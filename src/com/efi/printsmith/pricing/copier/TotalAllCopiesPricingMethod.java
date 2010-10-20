@@ -25,9 +25,9 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 		MatrixElement matrixElement = null;
 		long lookupQty = 0;
 		if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
-			lookupQty = job.getPressQty()*2;
+			lookupQty = (job.getPressQty() * job.getSheets()) * 2;
 		} else {
-			lookupQty = job.getPressQty();
+			lookupQty = job.getTotalCopies();
 		}
 		matrixElement = MatrixUtilities.lookupMatrixElement(job.getPricingCopier().getCopierMatrix(), lookupQty);
 
