@@ -143,6 +143,15 @@ public class InvoiceService extends SnowmassHibernateService {
 				}
 			}
 			invoice.setJobs(jobBaseList);
+		} else if(invoiceBase instanceof Invoice) {
+			for(JobBase jobBaseObj : invoice.getJobs()) {
+				jobBaseObj.setId(0L);
+				jobBaseObj.setCreated(null);
+				jobBaseObj.setModified(null);
+				jobBaseObj.setMultiQtyJob(false);
+				jobBaseObj.setParentInvoice(invoice);
+				jobBaseObj.setReleasedToProduction(false);
+			}
 		}
 		return invoice;
 	}
