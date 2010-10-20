@@ -67,7 +67,7 @@ public abstract class ChargePricingMethod {
 					retVal++; // There was a fractional value - increment to account for it
 				}
 			}
-			retVal = retVal * runs * originals;
+			retVal = retVal * runs; //* originals;
 		}
 
 		return retVal;
