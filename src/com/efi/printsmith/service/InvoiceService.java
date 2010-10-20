@@ -237,7 +237,9 @@ public class InvoiceService extends SnowmassHibernateService {
 			if(invoiceBase instanceof Invoice) {
 				jobBaseObj.setDefaultJob(true);
 			}	
-			jobBaseObj.setMultiQtyJob(false);
+			if(invoiceBase instanceof Invoice) {
+				jobBaseObj.setMultiQtyJob(false);
+			}
 			jobBaseObj.setParentInvoice(estimate);
 			jobBaseObj.setReleasedToProduction(false);
 			if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
