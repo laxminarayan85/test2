@@ -1686,6 +1686,7 @@
 					job.totalImpositions = localJob.totalImpositions;
 					job.totalImpressions = localJob.totalImpressions;
 					job.estWaste = localJob.estWaste;
+					job.binderyWaste = localJob.binderyWaste;
 					job.totalCost = localJob.totalCost;
 					job.totalCopies = localJob.totalCopies;
 					job.numCopies = localJob.numCopies;
