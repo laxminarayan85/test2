@@ -47,6 +47,9 @@
 	
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.events.CopyToNewInvoiceEvent;
+	import com.efi.printsmith.events.ConvertToInvoiceEvent;
+	import com.efi.printsmith.events.PendingListUpdateEvent;
 	import com.efi.printsmith.events.commandEvents.EditForms.EditEditEstimateEvent;
 	import com.efi.printsmith.commands.commandCommands.EditForms.EditEditEstimateCommand;
 	import com.efi.printsmith.events.commandEvents.EditForms.EditEditInvoiceEvent;
@@ -100,6 +103,8 @@
     private var startDate:Date = new Date();
     [Bindable]
     private var endDate:Date = new Date();
+    
+    private var updatePendingListValue:Boolean = false;
     
     [Embed("../../../../assets/file.png")]
     private var FileIcon:Class;
@@ -290,6 +295,11 @@
 		this.throbber.stop();
 		invoiceBaseArray = ev.result as ArrayCollection;
 		invoiceBaseArray.filterFunction = invoiceFilter;
+		if(updatePendingListValue){
+			updatePendingListValue = false;
+			dgView.dataProvider.refresh();
+			pickerFilter.clearFilter(invoiceBaseArray);
+		}
 	}
 	
 	private function handleLoadPendingListResult(ev:ResultEvent):void {
@@ -542,6 +552,8 @@
 		if (Snowmass.getInstance().security.commandEnabled(EditEditInvoiceEvent.COMMANDID)) {
 			var child:EditInvoice = new EditInvoice();
 			child.setInvoice(inv);
+			child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
+			child.addEventListener(CopyToNewInvoiceEvent.COPY_TO_NEWINVOICE_EVENT,handleCopyToNewInvoiceResult,false,0,true);
 			var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
 			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
 		}
@@ -550,10 +562,42 @@
 		if (Snowmass.getInstance().security.commandEnabled(EditEditEstimateEvent.COMMANDID)) {
 			var child:EditInvoice = new EditInvoice();
 			child.setInvoice(inv);
+			child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
+			child.addEventListener(ConvertToInvoiceEvent.CONVERT_TO_INVOICE_EVENT,handleConvertInvoiceResult,false,0,true);
+			child.addEventListener(CopyToNewInvoiceEvent.COPY_TO_NEWINVOICE_EVENT,handleCopyToNewInvoiceResult,false,0,true);
 			var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
 			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
 		}
 	}
+	
+	private function handleConvertInvoiceResult(event:ConvertToInvoiceEvent):void {
+		if(event.invoice!=null){
+			var child:EditInvoice = new EditInvoice();
+			child.convertedEstimatedId = event.convertedEstimatedId;
+			child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
+			child.invoice = event.invoice; 
+			var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
+		}
+	}
+	
+	private function handleCopyToNewInvoiceResult(event:CopyToNewInvoiceEvent):void {
+		if(event.invoice!=null){
+			var child:EditInvoice = new EditInvoice();
+			child.invoice = event.invoice; 
+			child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
+			var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
+		}
+	}
+	
+	private function updatePendingList(event:PendingListUpdateEvent):void {
+		if(event.invoiceSaved){
+			this.throbber.visible = true;
+			this.throbber.play();
+			dataService.getPending();
+		}
+ 	}
 	private function handleGetResult(ev:ResultEvent):void {
 		var invoiceBase:InvoiceBase = ev.result as InvoiceBase;
 		

@@ -90,6 +90,9 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.PendingListUpdateEvent;
+			import com.efi.printsmith.events.CopyToNewInvoiceEvent;
+			import com.efi.printsmith.events.ConvertToInvoiceEvent;
 			import flash.utils.setTimeout;
 			import mx.utils.ObjectUtil;
 			import flash.net.registerClassAlias;
@@ -287,13 +290,13 @@
 			}
 			
 			public function convertToInvoice():void {
-				if(invoice!=null && invoice is Estimate){ 
+				if(invoice!=null && !isNaN(invoice.id) && invoice.id!=0 && invoice is Estimate){ 
 					invoiceService.convertToInvoice(invoice);
 				}
 			} 
 			
 			public function copyToNewInvoice():void {
-				if(invoice!=null && invoice is Estimate){
+				if(invoice!=null && !isNaN(invoice.id) && invoice.id!=0){
 					invoiceService.copyToNewInvoice(invoice);
 				}
 			} 
@@ -374,6 +377,7 @@
 					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')));
 				}
 				if(!deleted){
+					dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
 					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 				}
 			}
@@ -386,10 +390,9 @@
 			
 			private function handleConvertInvoiceResult(event:ResultEvent):void {
 				if(event.result is Invoice){
-					var child:EditInvoice = new EditInvoice();
 					var convertedInvoice:Invoice = event.result as Invoice;
 					convertedInvoice.invoiceNumber = "";
-					child.convertedEstimatedId = convertedInvoice.id;
+					convertedEstimatedId = convertedInvoice.id;
 					convertedInvoice.id=0;
 					convertedInvoice.created = null;
 					convertedInvoice.modified = null;
@@ -420,31 +423,16 @@
 					}
 					convertedInvoice.grandTotal = convertedInvoice.subTotal;
 					convertedInvoice.amountDue = convertedInvoice.grandTotal;
-					child.invoice = convertedInvoice; 
-					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
+					dispatchEvent(new ConvertToInvoiceEvent(ConvertToInvoiceEvent.CONVERT_TO_INVOICE_EVENT,convertedInvoice,convertedEstimatedId));
 					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 				}
 			}
 			
 			private function handleCopyToNewInvoiceResult(event:ResultEvent):void {
 				if(event.result is Invoice){
-					var child:EditInvoice = new EditInvoice();
 					var newInvoice:Invoice = event.result as Invoice;
 					newInvoice.invoiceNumber = "";
 					newInvoice.releasedToProduction = false;
-					var jobBaseList:ArrayCollection = new ArrayCollection();
-					for each(var jobBaseObj:JobBase in newInvoice.jobs) {
-						if(jobBaseObj.defaultJob){
-							jobBaseObj.id = 0;
-							jobBaseObj.created = null;
-							jobBaseObj.modified = null;
-							jobBaseObj.multiQtyJob = false;
-							jobBaseObj.parentInvoice = newInvoice;
-							jobBaseObj.releasedToProduction = false;
-							jobBaseList.addItem(jobBaseObj);
-						}
-					}
-					newInvoice.jobs = jobBaseList;
 					for each(var chargeObj:Charge in newInvoice.charges) {
 						chargeObj.parentInvoice = newInvoice;
 					}
@@ -458,9 +446,8 @@
 					}
 					newInvoice.grandTotal = newInvoice.subTotal;
 					newInvoice.amountDue = newInvoice.grandTotal;
-					child.invoice = newInvoice; 
-					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
-					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+					dispatchEvent(new CopyToNewInvoiceEvent(CopyToNewInvoiceEvent.COPY_TO_NEWINVOICE_EVENT,newInvoice));
+					//Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 				}
 			} 
 			
@@ -468,6 +455,7 @@
 			private function handleDeleteResult(event:Event):void
 			{
 				if(convertedEstimatedId!=0){
+					dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
 					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 				}
 			}
