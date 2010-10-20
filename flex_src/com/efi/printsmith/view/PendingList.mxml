@@ -47,6 +47,7 @@
 	
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.events.CopyToNewEstimateEvent;
 	import com.efi.printsmith.events.CopyToNewInvoiceEvent;
 	import com.efi.printsmith.events.ConvertToInvoiceEvent;
 	import com.efi.printsmith.events.PendingListUpdateEvent;
@@ -554,6 +555,7 @@
 			child.setInvoice(inv);
 			child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
 			child.addEventListener(CopyToNewInvoiceEvent.COPY_TO_NEWINVOICE_EVENT,handleCopyToNewInvoiceResult,false,0,true);
+			child.addEventListener(CopyToNewEstimateEvent.COPY_TO_NEWESTIMATE_EVENT,handleCopyToNewEstimateResult,false,0,true);
 			var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
 			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
 		}
@@ -565,6 +567,7 @@
 			child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
 			child.addEventListener(ConvertToInvoiceEvent.CONVERT_TO_INVOICE_EVENT,handleConvertInvoiceResult,false,0,true);
 			child.addEventListener(CopyToNewInvoiceEvent.COPY_TO_NEWINVOICE_EVENT,handleCopyToNewInvoiceResult,false,0,true);
+			child.addEventListener(CopyToNewEstimateEvent.COPY_TO_NEWESTIMATE_EVENT,handleCopyToNewEstimateResult,false,0,true);
 			var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
 			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
 		}
@@ -585,6 +588,16 @@
 		if(event.invoice!=null){
 			var child:EditInvoice = new EditInvoice();
 			child.invoice = event.invoice; 
+			child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
+			var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
+		}
+	}
+	
+	private function handleCopyToNewEstimateResult(event:CopyToNewEstimateEvent):void {
+		if(event.estimate!=null){
+			var child:EditInvoice = new EditInvoice();
+			child.invoice = event.estimate; 
 			child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
 			var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
 			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);

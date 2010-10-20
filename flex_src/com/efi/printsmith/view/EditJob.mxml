@@ -2234,6 +2234,14 @@
 	    			multiQtyJobObject.id = 0;
 	    			multiQtyJobObject.defaultJob = false;
 	    			multiQtyJobObject.multiQtyJob = true;
+	    			if(multiQtyJobObject.charges!=null && multiQtyJobObject.charges.length>0){
+	    				for each(var chargeObj:Charge in multiQtyJobObject.charges) {
+	    					chargeObj.id = 0;
+	    					chargeObj.created = null;
+	    					chargeObj.modified = null;
+	    					chargeObj.parentJob = multiQtyJobObject;
+	    				}
+	    			}
 	    			/* var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
 					editJobWindow.setStyle("borderAlpha", 0.9);
 					editJobWindow.setJob(multiQtyJobObject);

@@ -90,6 +90,7 @@ public class InvoiceService extends SnowmassHibernateService {
 	
 	public Invoice convertToInvoice(ModelBase estimate) throws Exception {
 		Invoice invoice = new Invoice();
+		List<JobBase> jobBaseList = new ArrayList<JobBase>();
 		for (Field estimateField : estimate.getClass().getSuperclass().getDeclaredFields()) {
 			for (Field invoiceField : invoice.getClass().getSuperclass().getDeclaredFields()) {
 				if(estimateField.getName().equals(invoiceField.getName()) && !estimateField.getName().equalsIgnoreCase("IsDeleted")) {
@@ -104,6 +105,37 @@ public class InvoiceService extends SnowmassHibernateService {
 					}
 					break;
 				}
+			}
+		}
+		if(invoice.getJobs()!=null && !invoice.getJobs().isEmpty()) {
+			for(JobBase jobBaseObj : invoice.getJobs()) {
+				if(jobBaseObj.getDefaultJob()){
+					jobBaseObj.setId(0L);
+					jobBaseObj.setCreated(null);
+					jobBaseObj.setModified(null);
+					jobBaseObj.setMultiQtyJob(false);
+					jobBaseObj.setParentInvoice(invoice);
+					jobBaseObj.setReleasedToProduction(false);
+					if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
+						for(Charge charge : jobBaseObj.getCharges()) {
+							charge.setId(0L);
+							charge.setModified(null);
+							charge.setCreated(null);
+							charge.setParentJob(jobBaseObj);
+						}
+					}
+					jobBaseList.add(jobBaseObj);
+				}
+			}
+			invoice.setJobs(jobBaseList);
+		}
+		invoice.setJobs(jobBaseList);
+		if(invoice.getCharges()!=null && !invoice.getCharges().isEmpty()) {
+			for(Charge chargeObj : invoice.getCharges()) {
+				chargeObj.setId(0L);
+				chargeObj.setCreated(null);
+				chargeObj.setModified(null);
+				chargeObj.setParentInvoice(invoice);
 			}
 		}
 		invoice.setId(estimate.getId());
@@ -139,6 +171,14 @@ public class InvoiceService extends SnowmassHibernateService {
 					jobBaseObj.setMultiQtyJob(false);
 					jobBaseObj.setParentInvoice(invoice);
 					jobBaseObj.setReleasedToProduction(false);
+					if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
+						for(Charge charge : jobBaseObj.getCharges()) {
+							charge.setId(0L);
+							charge.setModified(null);
+							charge.setCreated(null);
+							charge.setParentJob(jobBaseObj);
+						}
+					}
 					jobBaseList.add(jobBaseObj);
 				}
 			}
@@ -151,8 +191,72 @@ public class InvoiceService extends SnowmassHibernateService {
 				jobBaseObj.setMultiQtyJob(false);
 				jobBaseObj.setParentInvoice(invoice);
 				jobBaseObj.setReleasedToProduction(false);
+				if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
+					for(Charge charge : jobBaseObj.getCharges()) {
+						charge.setId(0L);
+						charge.setModified(null);
+						charge.setCreated(null);
+						charge.setParentJob(jobBaseObj);
+					}
+				}
+			}
+		}
+		if(invoice.getCharges()!=null && !invoice.getCharges().isEmpty()) {
+			for(Charge chargeObj : invoice.getCharges()) {
+				chargeObj.setId(0L);
+				chargeObj.setCreated(null);
+				chargeObj.setModified(null);
+				chargeObj.setParentInvoice(invoice);
 			}
 		}
 		return invoice;
+	}
+	
+	public Estimate copyToNewEstimate(ModelBase invoiceBase) throws Exception {
+		Estimate estimate = new Estimate();
+		for (Field estimateField : invoiceBase.getClass().getSuperclass().getDeclaredFields()) {
+			for (Field invoiceField : estimate.getClass().getSuperclass().getDeclaredFields()) {
+				if(estimateField.getName().equals(invoiceField.getName()) && !estimateField.getName().equalsIgnoreCase("IsDeleted")) {
+					String propertyName = estimateField.getName().substring(0, 1)
+					.toUpperCase()
+					+ estimateField.getName().substring(1,
+							estimateField.getName().length());
+					try {
+						estimate.setProperty(propertyName, invoiceBase.getProperty(propertyName));
+					} catch(PropertyException e) {
+						break;
+					}
+					break;
+				}
+			}
+		}
+		for(JobBase jobBaseObj : estimate.getJobs()) {
+			jobBaseObj.setId(0L);
+			jobBaseObj.setCreated(null);
+			jobBaseObj.setModified(null);
+			if(invoiceBase instanceof Invoice) {
+				jobBaseObj.setDefaultJob(true);
+			}	
+			jobBaseObj.setMultiQtyJob(false);
+			jobBaseObj.setParentInvoice(estimate);
+			jobBaseObj.setReleasedToProduction(false);
+			if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
+				for(Charge charge : jobBaseObj.getCharges()) {
+					charge.setId(0L);
+					charge.setModified(null);
+					charge.setCreated(null);
+					charge.setParentJob(jobBaseObj);
+				}
+			}
+		}
+		if(estimate.getCharges()!=null && !estimate.getCharges().isEmpty()) {
+			for(Charge chargeObj : estimate.getCharges()) {
+				chargeObj.setId(0L);
+				chargeObj.setCreated(null);
+				chargeObj.setModified(null);
+				chargeObj.setParentInvoice(estimate);
+			}
+		}
+		return estimate;
 	}
 }

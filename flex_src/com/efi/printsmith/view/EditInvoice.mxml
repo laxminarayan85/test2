@@ -55,6 +55,9 @@
 		<mx:method name="copyToNewInvoice"
 					fault="handleFault(event)"
 					result="handleCopyToNewInvoiceResult(event)"/>
+		<mx:method name="copyToNewEstimate"
+					fault="handleFault(event)"
+					result="handleCopyToNewEstimateResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="salesRepDataService"
 					 destination="dataService">
@@ -90,6 +93,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.CopyToNewEstimateEvent;
 			import com.efi.printsmith.events.PendingListUpdateEvent;
 			import com.efi.printsmith.events.CopyToNewInvoiceEvent;
 			import com.efi.printsmith.events.ConvertToInvoiceEvent;
@@ -301,6 +305,12 @@
 				}
 			} 
 			
+			public function copyToNewEstimate():void {
+				if(invoice!=null && !isNaN(invoice.id) && invoice.id!=0){
+					invoiceService.copyToNewEstimate(invoice);
+				}
+			} 
+			
 			private function handleLoadAccountsResult(ev:ResultEvent):void {
 				accounts = ev.result as ArrayCollection;
 				doAccountPicker();
@@ -397,7 +407,7 @@
 					convertedInvoice.created = null;
 					convertedInvoice.modified = null;
 					convertedInvoice.releasedToProduction = false;
-					var jobBaseList:ArrayCollection = new ArrayCollection();
+					/* var jobBaseList:ArrayCollection = new ArrayCollection();
 					for each(var jobBaseObj:JobBase in convertedInvoice.jobs) {
 						if(jobBaseObj.defaultJob){
 							jobBaseObj.id = 0;
@@ -406,13 +416,24 @@
 							jobBaseObj.multiQtyJob = false;
 							jobBaseObj.parentInvoice = convertedInvoice;
 							jobBaseObj.releasedToProduction = false;
+							if(jobBaseObj.charges!=null && jobBaseObj.charges.length>0){
+								for each(var chargeObject:Charge in jobBaseObj.charges) {
+									chargeObject.id=0;
+									chargeObject.created = null;
+									chargeObject.modified = null;
+									chargeObject.parentJob = jobBaseObj;
+								}
+							}
 							jobBaseList.addItem(jobBaseObj);
 						}
 					}
 					convertedInvoice.jobs = jobBaseList;
 					for each(var chargeObj:Charge in convertedInvoice.charges) {
+						chargeObj.id=0;
+						chargeObj.created = null;
+						chargeObj.modified = null;
 						chargeObj.parentInvoice = convertedInvoice;
-					}
+					} */
 					if (convertedInvoice.jobs != null && convertedInvoice.jobs.length > 0) {
 						var i:int;
 						convertedInvoice.subTotal = 0;
@@ -433,9 +454,12 @@
 					var newInvoice:Invoice = event.result as Invoice;
 					newInvoice.invoiceNumber = "";
 					newInvoice.releasedToProduction = false;
-					for each(var chargeObj:Charge in newInvoice.charges) {
+					/* for each(var chargeObj:Charge in newInvoice.charges) {
+						chargeObj.id=0;
+						chargeObj.created = null;
+						chargeObj.modified = null;
 						chargeObj.parentInvoice = newInvoice;
-					}
+					} */
 					if (newInvoice.jobs != null && newInvoice.jobs.length > 0) {
 						var i:int;
 						newInvoice.subTotal = 0;
@@ -447,6 +471,32 @@
 					newInvoice.grandTotal = newInvoice.subTotal;
 					newInvoice.amountDue = newInvoice.grandTotal;
 					dispatchEvent(new CopyToNewInvoiceEvent(CopyToNewInvoiceEvent.COPY_TO_NEWINVOICE_EVENT,newInvoice));
+					//Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+				}
+			} 
+			
+			private function handleCopyToNewEstimateResult(event:ResultEvent):void {
+				if(event.result is Estimate){
+					var newEstimate:Estimate = event.result as Estimate;
+					newEstimate.invoiceNumber = "";
+					newEstimate.releasedToProduction = false;
+					/* for each(var chargeObj:Charge in newEstimate.charges) {
+						chargeObj.id=0;
+						chargeObj.created = null;
+						chargeObj.modified = null;
+						chargeObj.parentInvoice = newEstimate;
+					} */
+					if (newEstimate.jobs != null && newEstimate.jobs.length > 0) {
+						var i:int;
+						newEstimate.subTotal = 0;
+						for (i=0; i<newEstimate.jobs.length; i++) {
+							var tmpJob:Job = newEstimate.jobs.getItemAt(i) as Job;	
+							newEstimate.subTotal += tmpJob.pricingRecord.totalPrice;
+						}
+					}
+					newEstimate.grandTotal = newEstimate.subTotal;
+					newEstimate.amountDue = newEstimate.grandTotal;
+					dispatchEvent(new CopyToNewEstimateEvent(CopyToNewEstimateEvent.COPY_TO_NEWESTIMATE_EVENT,newEstimate));
 					//Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 				}
 			} 

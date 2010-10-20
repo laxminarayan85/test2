@@ -381,6 +381,13 @@
 					&& (ss.commandName.indexOf("rAltMenuText.CopytonewInvoice") > -1 ))	{
 						doCopyToNewInvoice();				
 					}		
+					
+				//Menu for Copy to New Estimate
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rAltMenuText.CopytonewEstimate") > -1 ))	{
+						doCopyToNewEstimate();				
+					}		
+					
 				
 				//Menu for Convert to Invoice
 				if ((ss.menu == "rStandardMenuText.Invoice")
@@ -425,6 +432,16 @@
 				if(win.content is EditInvoice){
 					var editInvoice:EditInvoice = win.content as EditInvoice;
 					editInvoice.copyToNewInvoice();
+				}
+			}
+		}
+		
+		public function doCopyToNewEstimate():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.copyToNewEstimate();
 				}
 			}
 		}
