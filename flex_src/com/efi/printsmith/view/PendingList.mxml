@@ -297,7 +297,7 @@
 		invoiceBaseArray.filterFunction = invoiceFilter;
 		if(updatePendingListValue){
 			updatePendingListValue = false;
-			dgView.dataProvider.refresh();
+			DocumentTypeChange();
 			pickerFilter.clearFilter(invoiceBaseArray);
 		}
 	}
@@ -595,6 +595,7 @@
 		if(event.invoiceSaved){
 			this.throbber.visible = true;
 			this.throbber.play();
+			updatePendingListValue = true;
 			dataService.getPending();
 		}
  	}
