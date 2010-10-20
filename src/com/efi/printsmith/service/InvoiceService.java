@@ -2,12 +2,14 @@ package com.efi.printsmith.service;
 
 import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.Charge;
+import com.efi.printsmith.data.Estimate;
 import com.efi.printsmith.data.Invoice;
 import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.data.JobBase;
@@ -109,9 +111,10 @@ public class InvoiceService extends SnowmassHibernateService {
 	}
 	
 	
-	public Invoice copyToNewInvoice(ModelBase estimate) throws Exception {
+	public Invoice copyToNewInvoice(ModelBase invoiceBase) throws Exception {
 		Invoice invoice = new Invoice();
-		for (Field estimateField : estimate.getClass().getSuperclass().getDeclaredFields()) {
+		List<JobBase> jobBaseList = new ArrayList<JobBase>();
+		for (Field estimateField : invoiceBase.getClass().getSuperclass().getDeclaredFields()) {
 			for (Field invoiceField : invoice.getClass().getSuperclass().getDeclaredFields()) {
 				if(estimateField.getName().equals(invoiceField.getName()) && !estimateField.getName().equalsIgnoreCase("IsDeleted")) {
 					String propertyName = estimateField.getName().substring(0, 1)
@@ -119,13 +122,27 @@ public class InvoiceService extends SnowmassHibernateService {
 					+ estimateField.getName().substring(1,
 							estimateField.getName().length());
 					try {
-						invoice.setProperty(propertyName, estimate.getProperty(propertyName));
+						invoice.setProperty(propertyName, invoiceBase.getProperty(propertyName));
 					} catch(PropertyException e) {
 						break;
 					}
 					break;
 				}
 			}
+		}
+		if(invoiceBase instanceof Estimate) {
+			for(JobBase jobBaseObj : invoice.getJobs()) {
+				if(jobBaseObj.getDefaultJob()){
+					jobBaseObj.setId(0L);
+					jobBaseObj.setCreated(null);
+					jobBaseObj.setModified(null);
+					jobBaseObj.setMultiQtyJob(false);
+					jobBaseObj.setParentInvoice(invoice);
+					jobBaseObj.setReleasedToProduction(false);
+					jobBaseList.add(jobBaseObj);
+				}
+			}
+			invoice.setJobs(jobBaseList);
 		}
 		return invoice;
 	}
