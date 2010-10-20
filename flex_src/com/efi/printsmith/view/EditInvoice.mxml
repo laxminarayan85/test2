@@ -776,7 +776,7 @@
 				this.accountcontacts.removeAll();
 				if (accountItem.contact != null)
 					this.accountcontacts.addItem(accountItem.contact);
-				if (accountItem.billToContact != null)
+				if (accountItem.billToContact != null && accountItem.billToContact != accountItem.contact)
 					this.accountcontacts.addItem(accountItem.billToContact);
 				contact_list.selectedItem=invoice.account.contact as Contact;
 				bill_to_address_editor.setAddress(invoice.billToAddress);
