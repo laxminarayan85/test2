@@ -45,7 +45,7 @@
 				   result="handleSaveResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="invoiceService"
-					 destination="invoiceService">
+					 destination="invoiceService" showBusyCursor="true">
 		<mx:method name="saveInvoice"
 				   fault="handleFault(event)"
 				   result="handleSaveResult(event)"/>

@@ -2633,7 +2633,8 @@
 										   click="doDigitalAssets()"/>
 							<mx:LinkButton x="10"
 										   y="110"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" click="{openMultiQtyView()}"/>
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" click="{openMultiQtyView()}"
+										   color="{job.showMultiQty?0x00BB00:0x000000}"/>							
 							<mx:LinkButton x="22" y="129" label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
 						</mx:Canvas>
 					</mx:Accordion>
