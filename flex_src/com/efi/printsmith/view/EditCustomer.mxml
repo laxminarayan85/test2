@@ -74,6 +74,8 @@
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.events.ContactCreateUpdateEvent;
+	import mx.rpc.mxml.Concurrency;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
 	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import mx.utils.ObjectUtil;
@@ -122,6 +124,8 @@
     import mx.events.ValidationResultEvent;    
     import mx.collections.SortField;
 	import mx.collections.Sort;
+	
+	private var myWindowId:int;
     
     private var accounts:ArrayCollection = new ArrayCollection();
     [Bindable]
@@ -219,7 +223,9 @@
 		eventWeb.dispatch();
 		this.ship_to_contact_editor.addEventListener("SaveContactEvent", saveShipToContactHandler, false, 1);
 		this.bill_to_contact_editor.addEventListener("SaveContactEvent", saveBillToContactHandler, false, 1);
-
+		
+		myWindowId = Snowmass.getInstance().containerManager.getWindowWithChild(this, true).windowID;
+		
 	}
 
 	public function saveShipToContactHandler(event:Event):void {
@@ -297,7 +303,8 @@
 	private function doSelectOperation(accountObj:Account):void {
 		this.enabled = true;
 		selected_comment_edit.text = "";
-		dataService.getAccount(accountObj.id);
+		if (accountObj != null)
+			dataService.getAccount(accountObj.id);
 	}
 	
 	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
@@ -1240,9 +1247,11 @@
 	{
 		
 	}
+	
 	private function handleLoadContacts(ev:ResultEvent):void
 	{
 		contacts=ev.result as ArrayCollection
+		deleteContactButtonCheck();
 		invoicecontactlist.selectedIndex = findContactItem(account.contact, contacts)
 		statementcontactlist.selectedIndex = findContactItem(account.billToContact, contacts);
 	}
@@ -1311,26 +1320,161 @@
 			else	{
 				win.bringWindowToFront();	
 			}
+			
+
 		}		
 	private function doContact():void{
-		var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIContactEvent, handleFault));
-		event.dispatch();
+		
+		if (Snowmass.getInstance().security.commandEnabled(EditContactEvent.COMMANDID)) {
+			var child:EditContact = new EditContact();
+			child.addEventListener(ContactCreateUpdateEvent.CONTACT_CREATE, onNewContactAdded);
+			var c:Contact = new Contact();
+			c.parentAccount = account;
+			child.mode = EditContact.CT_NEW;
+			child.contactFromParent = c;
+
+			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, myWindowId); 
+			
+		}
+		
+//		var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIContactEvent, handleFault));
+//		event.dispatch();
+	}
+	
+	private function onNewContactAdded(event:ContactCreateUpdateEvent):void	{
+		contacts.addItem(event.contact);
+		deleteContactButtonCheck();
+	}
+	
+	private function deleteContactButtonCheck():void{
+		if (contacts == null || contacts.length <= 1)
+			remove_contact_button.visible = false;
+			
+		else
+			remove_contact_button.visible = true;
 	}
 	private function doRemoveContact():void{
-		var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIContactEvent, handleFault));
-		event.dispatch();
+//		var event:EditContactEvent = new EditContactEvent(null, new mx.rpc.Responder(handleUIContactEvent, handleFault));
+//		event.dispatch();
+		
+		if ((contacts != null) && (contacts.length > 1))	{
+			var contactWin:EditContact = new EditContact();
+				
+			contactWin.addEventListener(ContactCreateUpdateEvent.CONTACT_DELETE, onContactDelete);
+				
+			contactWin.mode = EditContact.CT_DELETE;
+			contactWin.contactFromParent = account.billToContact;
+			contactWin.deleteContact();
+			//Snowmass.getInstance().containerManager.openNewMDIWindow(contactWin.title, contactWin, -1,-1,-1,-1,myWindowId);
+		}
+
 		
 	}
-	private function doStatContact():void{
-		var event:EditContactEvent = new EditContactEvent(account.contact, new mx.rpc.Responder(handleUIContactEvent, handleFault));
-		event.dispatch();
+	
+	private function onContactDelete(event:ContactCreateUpdateEvent):void	{
+		//MS: add confirm popup here....
+		
+		var ac:ArrayCollection = contacts;
+		var stmtContact:Contact = statementcontactlist.selectedItem as Contact;
+		var invContact:Contact = invoicecontactlist.selectedItem as Contact;
+		
+		if (ac)	{
+			var i:int = 0;
+			for (i=0; i<ac.length; i++)	{
+				if ((ac.getItemAt(i) as Contact).contactId == event.contact.contactId)	{
+					ac.removeItemAt(i);
+					//ac.addItemAt(event.contact, i);
+					break;
+				}
+			}	
+			contacts = ac;	
+			deleteContactButtonCheck();		
+		}
+		
+		if ((stmtContact) && (stmtContact.contactId == event.contact.contactId))	{
+			statementcontactlist.selectedIndex = i;
+			updateStatementContact();
+						
+		}
+		if ((invContact) && (invContact.contactId == event.contact.contactId))	{
+			invoicecontactlist.selectedIndex = i;
+			updateInvoiceContact();			
+		}
+	}
+//	private function doStatContact():void{
+//		var event:EditContactEvent = new EditContactEvent(account.contact, new mx.rpc.Responder(handleUIContactEvent, handleFault));
+//		event.dispatch();
+//		
+//	}
+	private function doContactEdit(isBillToContact:Boolean):void{
+		if (Snowmass.getInstance().security.commandEnabled(EditContactEvent.COMMANDID)) {
+			var contact:Contact;
+			if (isBillToContact)	{
+				// invoice contact
+				contact = account.billToContact;			
+			}
+			else	{
+				// statement contact
+				contact = account.contact;
+			}
+	//		if (contactWindow)	{
+	//			Alert.show("Window already in use");
+	//			Snowmass.getInstance().containerManager.getWindowWithChild(contactWindow, true).;
+	//		}
+			var contactWin:EditContact = new EditContact();
+			
+			if (isBillToContact)	
+				contactWin.addEventListener(ContactCreateUpdateEvent.CONTACT_UPDATE, onBillToContactEdit);
+			else
+				contactWin.addEventListener(ContactCreateUpdateEvent.CONTACT_UPDATE, onStmtContactEdit);
+				
+			contactWin.mode = EditContact.CT_EDIT;
+			contactWin.contactFromParent = contact;
+
+			Snowmass.getInstance().containerManager.openNewMDIWindow(contactWin.title, contactWin, -1,-1,-1,-1,myWindowId);
+
+		}
+	}
+	
+	private function onContactEdit(event:ContactCreateUpdateEvent):void	{
+		var ac:ArrayCollection = contacts;
+		var stmtContact:Contact = statementcontactlist.selectedItem as Contact;
+		var invContact:Contact = invoicecontactlist.selectedItem as Contact;
+		
+		if (ac)	{
+			var i:int = 0;
+			for (i=0; i<ac.length; i++)	{
+				if ((ac.getItemAt(i) as Contact).contactId == event.contact.contactId)	{
+					ac.removeItemAt(i);
+					ac.addItemAt(event.contact, i);
+					break;
+				}
+			}	
+			contacts = ac;			
+		}
+		
+		if ((stmtContact) && (stmtContact.contactId == event.contact.contactId))	{
+			statementcontactlist.selectedIndex = i;		
+			updateStatementContact();			
+		}
+		if ((invContact) && (invContact.contactId == event.contact.contactId))	{
+			invoicecontactlist.selectedIndex = i;
+			updateInvoiceContact();					
+		}
+		
+		setAccount(account);
 		
 	}
-	private function doInvContact():void{
-		var event:EditContactEvent = new EditContactEvent(account.billToContact, new mx.rpc.Responder(handleUIContactEvent, handleFault));
-		event.dispatch();
-		
+	private function onBillToContactEdit(event:ContactCreateUpdateEvent):void	{
+		this.account.billToContact = event.contact;
+		onContactEdit(event);
 	}
+	
+	private function onStmtContactEdit(event:ContactCreateUpdateEvent):void	{
+		this.account.contact = event.contact;
+		onContactEdit(event);
+	}
+	
 	private function getAccount():void{
 		if ( (account.accountId ==  masteracctId.text) || (masteracctId.text == "")){
 			masteracctId.text = "";
@@ -1369,6 +1513,8 @@
 			if ((account.contact != null) && (account.billToContact != null))
 				if ( account.contact.id == account.billToContact.id)
 					ship_to_contact_editor.setContact(account.billToContact);
+				if ( account.contact.id == account.billToContact.id)
+					bill_to_contact_editor.setContact(account.contact);	
 		}
 		
 	}
@@ -1377,6 +1523,8 @@
 			if ((account.contact != null) && (account.billToContact != null))
 				if ( account.contact.id == account.billToContact.id)
 					bill_to_contact_editor.setContact(account.contact);
+				if ( account.contact.id == account.billToContact.id)
+					ship_to_contact_editor.setContact(account.billToContact);		
 		}	
 	}	
 	
@@ -1479,8 +1627,8 @@
 					   icon="@Embed(source='../../../../assets/add16.png')"
 					   width="24"
 					   bottom="29"/>
-		<mx:LinkButton x="295" y="466" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" width="41" id="edit_inv_contact" click="doInvContact()"/>
-		<mx:LinkButton x="629" y="466"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" width="52" id="edit_stat_contact" click="doStatContact()"/>
+		<mx:LinkButton x="295" y="466" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" width="41" id="edit_inv_contact" click="doContactEdit(false);"/>
+		<mx:LinkButton x="629" y="466"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" width="52" id="edit_stat_contact" click="doContactEdit(true);"/>
 			</mx:Canvas>
 			<mx:Canvas id="canvasCreditControl" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.CreditControl')}" width="100%" height="100%">
 				<mx:TextInput restrict="0-9\." x="181" y="10" id="credit_limit_edit" width="160" text="{Snowmass.getCurrencyFormatter(false,2).format(account.creditLimit)}"  focusOut="ClearLabel();"/>

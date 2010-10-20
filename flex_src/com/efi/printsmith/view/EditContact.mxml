@@ -5,10 +5,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 implements="com.efi.mdi.IMDIWindowAware">
 
 <mx:RemoteObject id="dataService2" destination="dataService">
-	<mx:method name="getContactPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="getContactPicker" fault="handleFault(event)" result="handleGetContactPicker(event)"/>
 	<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
-	<mx:method name="getContact" fault="handleFault(event)" result="handleGetResult(event)"/>
+	<mx:method name="getContact" fault="handleFault(event)" result="handleGetContact(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceCreditCardPreferences" destination="dataService">
@@ -70,6 +70,8 @@ implements="com.efi.mdi.IMDIWindowAware">
 <mx:Script> 
                                   
 <![CDATA[
+	import com.efi.printsmith.events.ContactCreateUpdateEvent;
+	import com.efi.printsmith.common.components.NonModalThrobberHelper;
 	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
 	import com.efi.printsmith.data.ModelBase;
@@ -125,6 +127,10 @@ implements="com.efi.mdi.IMDIWindowAware">
    	import com.efi.printsmith.view.CreditCardDataEntry;
    	
 
+/******************************
+ * Variable declarations
+ * ****************************/
+	
     [Bindable]
     private var enableSave:Boolean = true;
     
@@ -135,8 +141,9 @@ implements="com.efi.mdi.IMDIWindowAware">
 	[Bindable] private var originalContact:Contact;
 	[Bindable]
 	private var defaultContact:Boolean = false;
-	[Bindable]
-	private var first:Boolean;	
+//	[Bindable]
+//	private var first:Boolean;	
+
 	[Bindable]
 	private var account:Account;
 	[Bindable]                                         
@@ -166,27 +173,42 @@ implements="com.efi.mdi.IMDIWindowAware">
     
     private var focussedFormControl:DisplayObject;
     
-   	private function openContactPicker():void	{
-   		if(first){
-   			loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
-   		}
-   		dataService2.getContactPicker();  
-   	}
+	
+	private var throbberHelper:NonModalThrobberHelper;
+	private var pickerLoaded:Boolean = false;
+		    
+    private var _mode:int = -1;
+    private var _contactFromParent:Contact = null;
+    
+    public static const CT_FROM_PICKER:int = -1;
+    public static const CT_NEW:int = 0;
+    public static const CT_EDIT:int = 1;
+    public static const CT_DELETE:int = 2;
+    
+/**************************
+ * Functions
+ ***************************/	
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();  
-		first = true;   
-		account= new Account();
+		
+		pickerLoaded = false;
+//		account= new Account();
+		
 		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
-		this.enabled = false;
-		openContactPicker();
 		salesRepDataService.getAll("SalesRep");
 		campaignDataService.getAll("Campaigns"); 
 		GradedataService.getAll("Grade");  
 		
-		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+//		openContactPicker();
+		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this,true);
 		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts');
 		
+		
+		throbberHelper = new NonModalThrobberHelper(mainbox, "throbber1");
+			
+/**** security check required for the screens below ****/		
 		var eventAddress:ContactsAddressPanelEvent = new ContactsAddressPanelEvent(canvasAddress, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventAddress.dispatch();
 
@@ -201,7 +223,132 @@ implements="com.efi.mdi.IMDIWindowAware">
 
 		var eventWeb:ContactsWebPanelEvent = new ContactsWebPanelEvent(canvasWeb, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
 		eventWeb.dispatch();
-		contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);		    
+		
+		contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);
+		
+		
+		// mode stuff 
+		if (_mode == CT_FROM_PICKER)	
+			openContactPicker();
+		else	{
+		 	//set toolbar
+			lblPrevious.visible = false;
+			btnPrevious.visible = false;
+			lblNext.visible = false;
+			btnNext.visible = false;
+			lblGet.visible = false;
+			btnGet.visible = false;
+			lblNew.visible = false;
+			btnNew.visible = false;
+			btnDelete.visible = false;
+			lblDelete.visible = false;
+			lblRevert.visible = false;
+			btnRevert.visible = false;	 
+			
+			if (_mode == CT_EDIT || _mode == CT_DELETE || _mode == CT_NEW)	{
+	    		contact = _contactFromParent;
+	    		
+	    	}
+	    	if (_mode == CT_NEW)	{
+	    		doNewOperation();
+	    	}
+	    	if (_mode == CT_EDIT || _mode==CT_DELETE)	{
+				contact = _contactFromParent;
+				this.setContact(contact);
+				contact_editor.setContact(contact);
+				if (contact.parentAccount)
+				setAccount(contact.parentAccount);
+
+	    	}
+	
+		}
+		
+		
+						    
+	}  
+	
+    
+
+    public function getContact():Contact	{
+    	return contact;
+    }
+
+	public function set mode(val:int):void	{
+		_mode = val;
+		
+	}
+	
+// to save one remote call, send contact if already present with parent
+    public function set contactFromParent(val:Contact):void	{
+    	_contactFromParent = val;
+    	if (_mode ==CT_DELETE)	
+    		contact = _contactFromParent;
+    }
+    
+//    public function set contactIDFromParent(val:int):void	{
+//    	
+//    	if (_mode == CT_EDIT || _mode == CT_DELETE)	{
+//    		dataService2.getContact(val);    		
+//    	}
+//    }
+	
+   	private function openContactPicker():void	{
+   		if(!pickerLoaded){
+//   			loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+   			throbberHelper.showThrobber();
+   			dataService2.getContactPicker();  
+   		}
+   		
+   	}
+	
+	private function handleGetContactPicker(ev:ResultEvent):void {
+		contacts = ev.result as ArrayCollection;
+		pickerLoaded = true;
+		doGet();
+//		if (loadComponent)
+//			loadComponent.close();
+		throbberHelper.hideThrobberIfActive();
+		 
+	}
+	
+	private function handleGetContact(ev:ResultEvent):void {
+		   this.setContact(ev.result as Contact);
+		   contact_editor.setContact(contact);
+			setMarketing();
+			setCreditCard();
+			registerClassAlias("com.efi.printsmith.data.Contact",Contact);
+			originalContact = ObjectUtil.copy(contact) as Contact;
+			this.title = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.Contact34"),null,null,null,contact.contactId,contact.lastName+", "+contact.firstName);
+			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+			mdiWin.title = this.title;
+	     
+	}
+	private function doNewOperation():void {
+		this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.ContactNewAccount");
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this, true);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.ContactNewAccount");
+		if (contact != null && contact.parentAccount != null){
+			var tempParent:Account = contact.parentAccount;
+			contact = new Contact();
+			contact.parentAccount = tempParent;
+			setAccount(tempParent);
+		}
+		else{
+		    contact = new Contact();
+	   		accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
+		 }
+	    contact.creditCard = new CreditCard();
+	    contact.shipToAddress = new ArrayCollection();
+	    
+	    contact_editor.setContact(contact);
+	    
+	    setMarketing();
+	    setCreditCard();
+	    setContact(contact);
+	   
+		setDefaultContact();
+		use_contact_check.enabled = true;
+	 	
 	}  
 	
 	private function saveContactHandler(ev:Event):void {
@@ -218,8 +365,9 @@ implements="com.efi.mdi.IMDIWindowAware">
 	private function handleUIPanelFault(ev:FaultEvent):void {  
 	}
 	      
+	      
 	private function doAccountPicker():void {
-		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+//		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 
 		dataService2.getAccountPicker();
 			
@@ -368,11 +516,11 @@ implements="com.efi.mdi.IMDIWindowAware">
 	{
 	}
                                   
-	private function deleteContact():void {              
+	public function deleteContact():void {              
 	     dataService2.deleteItem("Contact",contact.id);                                     
 	}
 	
-	 private function handleLoadCreditCardPreferencesResult(ev:ResultEvent):void {
+	private function handleLoadCreditCardPreferencesResult(ev:ResultEvent):void {
 		creditCardPreferencesArray = ev.result as ArrayCollection;
 		
 	}	                                                                    
@@ -437,7 +585,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 			if (sales_rep_combo.text == "")
 				contact.defaultSalesRep = null
 			else
-				contact.defaultSalesRep= sales_rep_combo.selectedItem as SalesRep;
+				contact.defaultSalesRep = sales_rep_combo.selectedItem as SalesRep;
 		
 		
 		contact.marketing.birthDate = birthDate.selectedDate;
@@ -582,9 +730,10 @@ implements="com.efi.mdi.IMDIWindowAware">
 	
 		
 		cardzip.selectedIndex = findItem(contact.creditCard.zipCode, zips);
-
+	
 		if (contact.creditCard.expiresDate != null)
 		 	cardexpiresdate.selectedDate =contact.creditCard.expiresDate;
+		
 		if (contact.marketing.followup != null)
 			followUp.selectedDate =contact.marketing.followup;
 		if (contact.marketing.birthDate != null)
@@ -595,6 +744,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 			userDate4.selectedDate =contact.marketing.user4;
 		if (contact.marketing.user5!= null)
 			userDate5.selectedDate =contact.marketing.user5;
+		
 		if (contact.defaultSalesRep != null)
 			sales_rep_combo.selectedIndex = findItem(contact.defaultSalesRep.name, salesReps);
 		else
@@ -652,32 +802,6 @@ implements="com.efi.mdi.IMDIWindowAware">
 		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNewOperation);
 		dispatchEvent(mDICompareObjectEvent);
 	}
-	private function doNewOperation():void {
-		this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.ContactNewAccount");
-		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
-		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.ContactNewAccount");
-		if (contact != null && contact.parentAccount != null){
-			var tempParent:Account = contact.parentAccount;
-			contact = new Contact();
-			contact.parentAccount = tempParent;
-		}
-		else{
-		    contact = new Contact();
-	   		accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
-		 }
-	    contact.creditCard = new CreditCard();
-	    contact.shipToAddress = new ArrayCollection();
-	    
-	    contact_editor.setContact(contact);
-	    
-	    setMarketing();
-	    setCreditCard();
-	    setContact(contact);
-	   
-		setDefaultContact();
-		use_contact_check.enabled = true;
-	 	
-	}  
 	private function doDelete():void {
 		var nameStr:String = "";
 		if (contact != null) {
@@ -718,18 +842,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 		this.enabled = true;
 
 	}
-	private function handleGetResult(ev:ResultEvent):void {
-		   this.setContact(ev.result as Contact);
-		   contact_editor.setContact(contact);
-			setMarketing();
-			setCreditCard();
-			registerClassAlias("com.efi.printsmith.data.Contact",Contact);
-			originalContact = ObjectUtil.copy(contact) as Contact;
-			this.title = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.Contact34"),null,null,null,contact.contactId,contact.lastName+", "+contact.firstName);
-			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
-			mdiWin.title = this.title;
-	     
-	}
+	
 	private function handleContactPickerSelect(evt:ContactPickerSelectEvent):void {
 		var inputArguments:Array = new Array();
 		inputArguments.push(evt.contact);
@@ -869,10 +982,33 @@ implements="com.efi.mdi.IMDIWindowAware">
 		setCreditCard();
 		registerClassAlias("com.efi.printsmith.data.Contact",Contact);
 		originalContact = ObjectUtil.copy(contact) as Contact; */
-		openContactPicker();
-		doNewOperation();
+		
+		if (_mode == CT_FROM_PICKER)	{
+			openContactPicker();
+			doNewOperation();
+		}
+
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
 		dispatchEvent(windowSaveSuccessEvent);
+		
+		if (_mode == CT_EDIT || _mode == CT_NEW)	{
+			this.setContact(ev.result as Contact);
+		   	contact_editor.setContact(contact);
+			setMarketing();
+			setCreditCard();
+			registerClassAlias("com.efi.printsmith.data.Contact",Contact);
+			originalContact = ObjectUtil.copy(contact) as Contact; 
+			if (_mode == CT_EDIT)
+				dispatchEvent(new ContactCreateUpdateEvent(ContactCreateUpdateEvent.CONTACT_UPDATE, contact));
+			else
+				dispatchEvent(new ContactCreateUpdateEvent(ContactCreateUpdateEvent.CONTACT_CREATE, contact));
+			
+			var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this, true);
+			if (win)
+				win.closeWindow(); 
+		}
+	
+
 	} 
 
 	private function handleLoadAccountResult(ev:ResultEvent):void{
@@ -887,21 +1023,11 @@ implements="com.efi.mdi.IMDIWindowAware">
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);
 	    
-		if(loadComponent) {
-			loadComponent.close();
-		}    
+//		if(loadComponent) {
+//			loadComponent.close();
+//		}    
 	}
-	private function handleLoadResult(ev:ResultEvent):void {
-		contacts = ev.result as ArrayCollection;
-		if (first){
-			first = false;
-			this.doGet();
-		
-		}
-		if(loadComponent) {
-			loadComponent.close();
-		} 
-	}
+	
 	private function handleLoadCampaigns(ev:ResultEvent):void {
 		compaigns = ev.result as ArrayCollection;
 	}
@@ -954,9 +1080,19 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}                              
 
 	private function handleDeleteResult(ev:ResultEvent):void {
-		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.DELETE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Contact')));
-		openContactPicker();
-		doNew();
+		if (_mode == CT_FROM_PICKER)	{
+			openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.DELETE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Contact')));
+			openContactPicker();
+			doNew();
+		}
+		if (_mode == CT_DELETE)	{
+			dispatchEvent(new ContactCreateUpdateEvent(ContactCreateUpdateEvent.CONTACT_DELETE, contact));
+			
+			var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this, true);
+			if (win)
+				win.closeWindow(); 
+		
+		}
 	}
 	
 	private function handleFault(ev:FaultEvent):void {  
@@ -968,13 +1104,14 @@ implements="com.efi.mdi.IMDIWindowAware">
 		+ ev.fault.faultString;
 		Alert.show(message, "Error");      
 		
-		if(first){
-			first = false;
-		}
+//		if(pickerLoaded){
+//			first = false;
+//		}
 		
-		if(loadComponent) {
-			loadComponent.close();
-		}                           
+//		if(loadComponent) {
+//			loadComponent.close();
+//		}                           
+		throbberHelper.hideThrobberIfActive();
 	}
 	private function handleSaveCityResult(ev:ResultEvent):void {
 		
@@ -1211,7 +1348,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 </mx:Script>
 
 <mx:VBox width="100%" height="100%">
-	<mx:Canvas width="100%" height="100%">
+	<mx:Canvas id="mainbox" width="100%" height="100%">
 		<mx:TabNavigator x="0" y="70" width="100%" height="100%" creationPolicy="all">
 			<mx:Canvas id="canvasAddress" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Address')}" width="100%" height="100%">
 				<mx:Text x="80" y="90" width="232" id="accountName" text="{account.title}"/>
@@ -1303,34 +1440,34 @@ implements="com.efi.mdi.IMDIWindowAware">
 			<mx:Canvas id="canvasWeb" label="Web" width="100%" height="100%">
 			</mx:Canvas>
 		</mx:TabNavigator>
-		<mx:Button x="20" y="10" width="50" height="38" click="doPrev();">
+		<mx:Button id="btnPrevious" x="20" y="10" width="50" height="38" click="doPrev();">
 			<mx:icon>@Embed(source='../../../../assets/previous_page.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="76" y="10" width="50" height="38" click="doNext();">
+		<mx:Button id="btnNext" x="76" y="10" width="50" height="38" click="doNext();">
 			<mx:icon>@Embed(source='../../../../assets/next_page.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="20" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="58" textAlign="center"/>
-		<mx:Label x="76" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="50" textAlign="center"/>
-		<mx:Button x="171" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}">
+		<mx:Label id="lblPrevious" x="20" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="58" textAlign="center"/>
+		<mx:Label id="lblNext" x="76" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="50" textAlign="center"/>
+		<mx:Button  x="171" y="10" width="38" height="38" click="doSave();" enabled="{enableSave}">
 			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="171" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38" textAlign="center"/>
-		<mx:Button x="217" y="10" width="38" height="38" click="doGet();">
+		<mx:Button id="btnGet" x="217" y="10" width="38" height="38" click="doGet();">
 			<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="217" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" width="38" textAlign="center"/>
-		<mx:Button x="263" y="10" width="38" height="38" click="doNew();">
+		<mx:Label id="lblGet" x="217" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" width="38" textAlign="center"/>
+		<mx:Button id="btnNew" x="263" y="10" width="38" height="38" click="doNew();">
 			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="370" y="10" width="38" height="38" click="doDelete();">
+		<mx:Button id="btnDelete" x="370" y="10" width="38" height="38" click="doDelete();">
 			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 		</mx:Button>
-	    <mx:Label x="360" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
-		<mx:Button x="493" y="10" width="38" height="38" click="dorevert();">
+	    <mx:Label id="lblDelete" x="360" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
+		<mx:Button id="btnRevert" x="493" y="10" width="38" height="38" click="dorevert();">
 			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="483" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
-		<mx:Label x="263" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
+		<mx:Label id="lblRevert" x="483" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
+		<mx:Label id="lblNew" x="263" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
 	</mx:Canvas>
 </mx:VBox>
 </mx:Panel>
