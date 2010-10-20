@@ -1148,6 +1148,9 @@
 					copierDigitalStockmarkup.enabled = false;
 					stockMarkup.enabled = false;
 			}
+		if(copierDefinition!=null) {
+			copierDefinition.baseRate = parseFloat(baseRate_edit.text.replace(",",""));
+		}
 	}
 	private function handleSaveWasteTable(ev:SavePriceListEvent):void
 	{ 
