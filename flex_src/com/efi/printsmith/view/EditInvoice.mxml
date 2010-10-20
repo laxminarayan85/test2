@@ -25,6 +25,9 @@
 		<mx:method name="getAll"
 				   fault="handleFault(event)"
 				   result="handleLoadResult(event)"/>
+		<mx:method name="getSingle"
+				   fault="handleFault(event)"
+				   result="handleLoadSingleResult(event)"/>
 		<mx:method name="deleteItem"
 				   fault="handleFault(event)"
 				   result="handleDeleteResult(event)"/>
@@ -137,6 +140,7 @@
 			import com.efi.printsmith.data.SpecialInstructions;
 			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.data.Users;
+			import com.efi.printsmith.data.PreferencesEstimating;
 			
 			import flash.geom.Matrix;
 			import com.efi.printsmith.data.Account;
@@ -192,6 +196,8 @@
 			private var resetJobsList:Boolean = true;
 			
 			public var convertedEstimatedId:int=0;
+			
+			private var preferencesEstimating:PreferencesEstimating;
 			
 			public function init():void
 			{
@@ -264,6 +270,7 @@
 				this.createInvoice.visible = false;		
 				salesRepDataService.getAll("SalesRep");
 				shippingMethodDataService.getAll("ShippingMethod");
+				dataService.getSingle("PreferencesEstimating");
 				invoiceRepositoryService.getItemList();
 				var eventJobs:InvoiceJobsEvent = new InvoiceJobsEvent(new_job_button0,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 				eventJobs.dispatch();
@@ -369,6 +376,14 @@
 			private function handleLoadResult(event:Event):void
 			{
 
+			}
+			
+			private function handleLoadSingleResult(event:ResultEvent):void {
+				preferencesEstimating = event.result as PreferencesEstimating;
+				if (preferencesEstimating.canChangeAddress)
+					bill_to_address_editor.enabled = true;
+				else
+					bill_to_address_editor.enabled = false;
 			}
 
 			private function handleSaveResult(ev:ResultEvent):void

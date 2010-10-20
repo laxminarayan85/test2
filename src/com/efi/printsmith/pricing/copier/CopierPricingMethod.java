@@ -27,7 +27,13 @@ public abstract class CopierPricingMethod {
 			numUp = 1;
 		if (numOn == 0)
 			numOn = 1;
-		job.setNumCopies(totalCopies / (sheets / (numUp / numOn)));
+		double temp = sheets / (numUp / numOn);
+		long calcQty = 0;
+		if (temp < 1)
+			calcQty = 1;
+		else
+			calcQty = (long)temp;
+		job.setNumCopies(totalCopies / calcQty);
 		calculateEstWaste(job);
 		long wasteSheets = job.getBinderyWaste() + job.getEstWaste();
 		wasteSheets *= job.getSheets();	
