@@ -674,6 +674,8 @@ public class StockDefinitionMapper extends ImportMapper {
 			dimension.setHeight(parentSizeY);
 			dimension = (Dimension)dataService.addUpdate(dimension);
 			stockDefinition.setParentsize(dimension);
+			if (addRunSize == true && parentSizeName.equals(runSizeName))
+				addRunSize = false;
 		}
 		if (addRunSize == true) {
 			dimension = new Dimension();
