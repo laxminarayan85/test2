@@ -219,10 +219,12 @@ public class InvoiceMapper extends ImportMapper {
 				/* TODO */
 			} else if ("subtotal".equals(currentFieldToken)) {
 				invoice.setSubTotal(Utilities.tokenToDouble(currentImportToken));
+				invoice.setPriceSubTotal(Utilities.tokenToDouble(currentImportToken));
 			} else if ("shipping".equals(currentFieldToken)) {
 				invoice.setShipPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total".equals(currentFieldToken)) {
 				invoice.setGrandTotal(Utilities.tokenToDouble(currentImportToken));
+				invoice.setPriceTotal(Utilities.tokenToDouble(currentImportToken));
 			} else if ("amount due".equals(currentFieldToken)) {
 				invoice.setAmountDue(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total cost".equals(currentFieldToken)) {
@@ -757,7 +759,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("price locked".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("firmWantedBy".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setFirmWantedByDate(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("invoice production release".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("has inventoried stock".equals(currentFieldToken)) {
@@ -970,10 +972,12 @@ public class InvoiceMapper extends ImportMapper {
 				/* TODO */
 			} else if ("subtotal".equals(currentFieldToken)) {
 				invoice.setSubTotal(Utilities.tokenToDouble(currentImportToken));
+				invoice.setPriceSubTotal(Utilities.tokenToDouble(currentImportToken));
 			} else if ("shipping".equals(currentFieldToken)) {
 				invoice.setShipPrice(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total".equals(currentFieldToken)) {
 				invoice.setGrandTotal(Utilities.tokenToDouble(currentImportToken));
+				invoice.setPriceTotal(Utilities.tokenToDouble(currentImportToken));
 			} else if ("amount due".equals(currentFieldToken)) {
 				invoice.setAmountDue(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total cost".equals(currentFieldToken)) {
@@ -1511,7 +1515,7 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("price locked".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("firmWantedBy".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setFirmWantedByDate(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("invoice production release".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("has inventoried stock".equals(currentFieldToken)) {
