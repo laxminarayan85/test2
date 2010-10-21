@@ -1367,8 +1367,8 @@
 				</mx:Form>
 				
 				<mx:VBox width="80%" height="50%" verticalGap="1">
-					<mx:CheckBox  height="20%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRollStock')}" id="chkShowRollStock" change="doRollStockChanged();"/>
-					<mx:CheckBox height="20%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock" change="doLargeFormatChange();"/>
+					<mx:CheckBox  height="20%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRollStock')}" id="chkShowRollStock" change="doRollStockChanged();" enabled="{!fromJobPage}"/>
+					<mx:CheckBox height="20%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock" change="doLargeFormatChange();" enabled="{!fromJobPage}"/>
 					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate" change="doLargeFormatChange();"/>
 					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock" change="search();"/>
 					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="doShellsChange();"/>
