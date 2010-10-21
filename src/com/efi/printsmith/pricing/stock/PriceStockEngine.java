@@ -186,7 +186,7 @@ public class PriceStockEngine {
 				}
 			}
 			else {
-				qty = (job.getQtyOrdered() + job.getBinderyWaste() + job.getEstWaste());// * job.getSignatures(); // TODO: Double-check need to use signatures vs just sheets ordered here
+				qty = job.getImpressionsPerRun() * job.getSheets();// * job.getSignatures(); // TODO: Double-check need to use signatures vs just sheets ordered here
 			}
 			if (qty < stockDefinition.getMinorder())
 				qty = stockDefinition.getMinorder();
@@ -212,13 +212,14 @@ public class PriceStockEngine {
 				markup = stockDefinition.getMarkup6();
 				stockCost = stockDefinition.getCost6().doubleValue();
 			} else {
-				markup = stockDefinition.getMarkup1();
-				stockCost = stockDefinition.getCost1().doubleValue();
+				markup = stockDefinition.getMarkup6();
+				stockCost = stockDefinition.getCost6().doubleValue();
 			}
 			if (copierDefinition.getUseCopierStockMarkup()) {
 				markup = copierDefinition.getStockMarkup();
 			}
-			retVal = stockCost/stockDefinition.getCostunits() * markup;
+			retVal = (stockCost * (qty / stockDefinition.getCostunits()) * markup) / qty;
+			//retVal = stockCost/stockDefinition.getCostunits() * markup;
 			priceLogEntry.setDescription("Stock Price: Cost/CostUnits * Qty: " + stockCost + "/" +stockDefinition.getCostunits() + "*" + qty + "*" + markup);
 		}
 		return retVal;
