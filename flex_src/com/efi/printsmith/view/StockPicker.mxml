@@ -1240,7 +1240,7 @@
 		<mx:HBox id="toolbar" width="100%" height="5%" >
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.SelectStock')}" id="select_button" enabled="{(dataGrid.selectedItem != null) &amp;&amp; dataGrid.selectedItems.length==1}" click="selectStockDefinition();"  width="12%" />
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ClearSearch')}" click="clearSearch();" id="clear_button" width="100" x="118" y="10" enabled="false"/>
-			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" enabled="true" click="newStockDefinition();" id="new_button" width="12%" />
+			<!--<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" enabled="true" click="newStockDefinition();" id="new_button" width="12%" />-->
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="12%" id="status_button" click="doStatus()"/>
 			<mx:Spacer width="6%" />
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" click="{exportData()}" id="export_button" width="12%"
