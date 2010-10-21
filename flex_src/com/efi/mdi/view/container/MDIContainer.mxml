@@ -192,7 +192,38 @@
 						allMinimized = true;
 				}
 				if (event.child is MinimizedWindow)	{
-					closeMinimizedWindow(event.child as MinimizedWindow, true);
+					var minimizedWindow:MinimizedWindow = event.child as MinimizedWindow;
+					var mdiWindow:MDIWindow = minimizedWindow.windowRef as MDIWindow;
+					if(mdiWindow.content is IMDIWindowAware){
+						var mdiWindowAware:IMDIWindowAware = mdiWindow.content as IMDIWindowAware;
+						mdiWindowAware.onClose();
+						if(mdiWindowAware.getOriginalObject()!=null && mdiWindowAware.getUpdatedObject()!=null){
+							if(ObjectCompareUtil.compare(mdiWindowAware.getOriginalObject(),mdiWindowAware.getUpdatedObject())!=0){
+								var mdiConfirmComponent:MDIConfirmComponent = PopUpManager.createPopUp(this,MDIConfirmComponent,true) as MDIConfirmComponent;
+								mdiConfirmComponent.labelTxt = mdiWindowAware.getConfirmationText();
+								mdiConfirmComponent.addEventListener(WindowConfirmStatusEvent.WINDOW_CONFIRM_STATUS,function(event:WindowConfirmStatusEvent):void{
+									if(event.windowConfirmStatus==1){
+										mdiWindowAware.onDontSave();
+										closeMinimizedWindow(minimizedWindow, true);
+									} else if(event.windowConfirmStatus==2) {
+										mdiWindowAware.onCancel();
+									} else if(event.windowConfirmStatus==3) {
+										mdiWindow.content.addEventListener(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,function(event:WindowSaveSuccessEvent):void {
+											if(event.isSaved){
+												closeMinimizedWindow(minimizedWindow, true);
+											}	
+										},false,0,true);
+										mdiWindowAware.onSave();
+									}
+								},false,0,true);
+							} else {
+								closeMinimizedWindow(event.child as MinimizedWindow, true);
+							}
+						}
+					} else {
+						closeMinimizedWindow(event.child as MinimizedWindow, true);
+					}
+					//closeMinimizedWindow(event.child as MinimizedWindow, true);
 				}	
 			}
 			
