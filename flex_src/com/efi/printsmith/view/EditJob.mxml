@@ -57,7 +57,6 @@
 			</mx:AddChild>
 			<mx:SetProperty target="{copy_single_radio}" name="width" value="230"/>
 			<mx:SetProperty target="{copy_double_radio}" name="width" value="230"/>
-			<mx:SetProperty target="{pricing_throbber}" name="y" value="301"/>
 			<mx:SetProperty target="{pricing_throbber}" name="visible" value="false"/>
 			<mx:RemoveChild target="{job_imp}"/>
 			<mx:RemoveChild target="{total_imp}"/>
@@ -118,7 +117,6 @@
 			<mx:SetProperty target="{label7}" name="x" value="390"/>
 			<mx:SetProperty target="{job_price}" name="x" value="501"/>
 			<mx:SetProperty target="{refresh_price_btn}" name="x" value="601"/>
-			<mx:SetProperty target="{pricing_throbber}" name="y" value="601"/>
 			<mx:SetProperty target="{price_info_btn}" name="x" value="623"/>
 			<mx:SetProperty target="{label6}" name="x" value="390"/>
 			<mx:SetProperty target="{overs_unit_price}" name="x" value="501"/>
@@ -247,7 +245,6 @@
 			<mx:SetProperty target="{overs_unit_price}" name="x" value="501"/>
 			<mx:SetProperty target="{job_price}" name="x" value="501"/>
 			<mx:SetProperty target="{refresh_price_btn}" name="x" value="601"/>
-			<mx:SetProperty target="{pricing_throbber}" name="y" value="601"/>
 			<mx:SetProperty target="{price_info_btn}" name="x" value="623"/>
 			<mx:SetProperty target="{label7}" name="x" value="390"/>
 			<mx:SetProperty target="{label6}" name="x" value="390"/>
