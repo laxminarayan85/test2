@@ -172,21 +172,26 @@
 		if (contacts != null)	{
 			for (var i:int = 0; i < contacts.length; i++)	{
 				var c:Contact = contacts.getItemAt(i) as Contact;
+				var a:Account = new Account();
+					
 				if (c.parentAccount == null)	{
-					var a:Account = new Account();
 					a.title = "Not Assigned";
-					a.contact = c;
-					newAccounts.addItem(a);
 				}
 				else	{
+					a.title = c.parentAccount.title;
+					
 					for (var j:int = 0; j<acAccounts.length; j++)	{
-						var a:Account = acAccounts.getItemAt(j) as Account;
-						if (a.id == c.parentAccount.id)	{
-							newAccounts.addItem(a);
+						var a1:Account = acAccounts.getItemAt(j) as Account;
+						if (a1.id == c.parentAccount.id)	{
+							a.prospect = a1.prospect;
+							a.accountId = a1.accountId;
 							break;
 						}
 					}
-				}			
+				}
+				a.contact = c;
+				newAccounts.addItem(a);
+			
 			}
 		}
 		ctAccounts = newAccounts;
@@ -307,7 +312,18 @@
 	}
 	private function selectAccount():void {	
 		var temp:Account;
+		
 		temp = dataGrid.selectedItem as Account;
+		if (accountTypeRadio.selectedValue == "Contacts")	{
+			temp = temp.contact.parentAccount;
+			if (temp == null)	{
+				var newEvent:AccountPickerSelectEvent = new AccountPickerSelectEvent(AccountPickerSelectEvent.SELECTUNASSIGNEDCONTACT, dataGrid.selectedItem as Account);
+				dispatchEvent(newEvent);
+				PopUpManager.removePopUp(this);
+				return;
+			}	
+		}
+			
 		dataService.getById("Account", temp.id );
 		
 		

@@ -9,6 +9,7 @@ package com.efi.printsmith.events
 		public static const SELECTACCOUNT:String = "SelectAccount";
 		public static const SELECTNEWACCOUNT:String = "SelectNewAccount";
 		public static const CANCELSELECTACCOUNT:String = "CancelSelectAccount";
+		public static const SELECTUNASSIGNEDCONTACT:String = "SelectUnassignedContact";
 		
 		public var account:Account;
 		
