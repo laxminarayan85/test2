@@ -1487,7 +1487,7 @@
 				stockPickerWindow.formIsEmpty=true;
 				stockPickerWindow.fromJobPage = true;
 				stockPickerWindow.editableJob = this.job;
-				stockPickerWindow.parentWindowId = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+				stockPickerWindow.parentWindowId = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
 				stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel, false, 0, true);
 				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect, false, 0, true);
 				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTNEWSTOCK, handleStockPickerNew, false, 0, true);
@@ -1504,7 +1504,7 @@
 							job.specialOrderStock = true;
 							setStockDefinitionData(event.stockDefinitionObj);
 						}, false, 0, true);
-						var parentWindowId:int = Snowmass.getInstance().containerManager.getWindowWithChild(EditJob.getInstance()).windowID;
+						var parentWindowId:int = Snowmass.getInstance().containerManager.getWindowWithChild(EditJob.getInstance(),true).windowID;
 						Snowmass.getInstance().containerManager.openNewMDIWindow(stockDefinitionsWindow.title,stockDefinitionsWindow,-1,-1,-1,-1,parentWindowId);
 					}
 				}, false, 0, true);
@@ -2265,7 +2265,7 @@
 					editJobWindow.setJob(multiQtyJobObject);
 					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveMultiQtyJob); */
 					var editJobWindow:EditJob= new EditJob();
-					var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+					var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
 					var invoiceNumber:String = "";
 					var pricingMethodTitle:String = "";
 					if(job.parentInvoice==null || job.parentInvoice.invoiceNumber==null || job.parentInvoice.invoiceNumber==""){
@@ -2311,7 +2311,7 @@
 				if(multiQtyCombo.selectedItem!=null && multiQtyCombo.selectedItem is Job){
 					var selectedMultiQtyJob:Job = multiQtyCombo.selectedItem as Job;
 					var editJobWindow:EditJob= new EditJob();
-					var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+					var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
 					var invoiceNumber:String = "";
 					var pricingMethodTitle:String = "";
 					if(selectedMultiQtyJob.parentInvoice==null || selectedMultiQtyJob.parentInvoice.invoiceNumber==null || selectedMultiQtyJob.parentInvoice.invoiceNumber==""){
@@ -2379,7 +2379,7 @@
 						job.specialOrderStock = true;
 						setStockDefinitionData(event.stockDefinitionObj);
 					}, false, 0, true);
-					var parentWindowId:int = Snowmass.getInstance().containerManager.getWindowWithChild(EditJob.getInstance()).windowID;
+					var parentWindowId:int = Snowmass.getInstance().containerManager.getWindowWithChild(EditJob.getInstance(),true).windowID;
 					Snowmass.getInstance().containerManager.openNewMDIWindow(stockDefinitionsWindow.title,stockDefinitionsWindow,-1,-1,-1,-1,parentWindowId);
 				} else {
 					specialObject = new StockGroup();
@@ -2400,7 +2400,7 @@
 					job.specialOrderStock = true;
 					setStockDefinitionData(event.stockDefinitionObj);
 				}, false, 0, true);
-				var parentWindowId:int = Snowmass.getInstance().containerManager.getWindowWithChild(EditJob.getInstance()).windowID;
+				var parentWindowId:int = Snowmass.getInstance().containerManager.getWindowWithChild(EditJob.getInstance(),true).windowID;
 				Snowmass.getInstance().containerManager.openNewMDIWindow(stockDefinitionsWindow.title,stockDefinitionsWindow,-1,-1,-1,-1,parentWindowId);
 			}
 			

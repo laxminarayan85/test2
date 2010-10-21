@@ -403,7 +403,7 @@
 				}
 				if(!deleted){
 					dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
-					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+					Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 				}
 			}
 			
@@ -460,7 +460,7 @@
 					convertedInvoice.grandTotal = convertedInvoice.subTotal;
 					convertedInvoice.amountDue = convertedInvoice.grandTotal;
 					dispatchEvent(new ConvertToInvoiceEvent(ConvertToInvoiceEvent.CONVERT_TO_INVOICE_EVENT,convertedInvoice,convertedEstimatedId));
-					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+					Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 				}
 			}
 			
@@ -521,7 +521,7 @@
 			{
 				if(convertedEstimatedId!=0){
 					dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
-					Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+					Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 				}
 			}
 
@@ -596,7 +596,7 @@
 			public function doCancel():void
 			{
 				//this.parent.removeChild(this);
-				Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+				Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 			}
 
 			private function doNewJob():void
@@ -604,7 +604,7 @@
 				var editJobWindow:EditJob= new EditJob(); //EditJob(PopUpManager.createPopUp(this, EditJob, true));
 				editJobWindow.invoice = this.invoice;
 				//editJobWindow.setStyle("borderAlpha", 0.9);
-				var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+				var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
 				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobCmd.NewJob'),editJobWindow, -1,-1,-1,-1, windowID);
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);
 			}
@@ -1008,7 +1008,7 @@
 			private function openEditJobWindow(job:Job):void {
 				var editJobWindow:EditJob= new EditJob(); //EditJob(PopUpManager.createPopUp(this, EditJob, true));
 				//editJobWindow.setStyle("borderAlpha", 0.9);
-				var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+				var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
 				var invoiceNumber:String = "";
 				var pricingMethodTitle:String = "";
 				if(job.parentInvoice==null || job.parentInvoice.invoiceNumber==null || job.parentInvoice.invoiceNumber==""){
