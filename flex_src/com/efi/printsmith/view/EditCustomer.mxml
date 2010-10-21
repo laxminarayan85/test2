@@ -308,7 +308,7 @@
 	}
 	
 	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
-		doNew();
+		doNew(evt.account.prospect);
 
 	}
 	private function handleAccountPickerUnassigned(evt:AccountPickerSelectEvent):void {
@@ -398,12 +398,14 @@
 		}
 	}
 	
-	private function doNew():void {
-		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNewOperation);
+	private function doNew(isProspect:Boolean = false):void {
+		var a:Array = new Array();
+		a.push(isProspect);
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNewOperation,a);
 		dispatchEvent(mDICompareObjectEvent);
 	}
 	
-	private function doNewOperation():void {
+	private function doNewOperation(isProspect:Boolean = false):void {
 	    business_type_combo.selectedIndex = -1 
 		business_type_combo.text = "";
 		
@@ -414,6 +416,7 @@
 	    masteracctId.text = ""
 		master_acct_edit.text= ""
 	    account = new Account();
+	    account.prospect = isProspect;
 	    account.marketing = new Marketing();
 	    selected_comment_edit.text = "";
 	    contacts = new ArrayCollection();

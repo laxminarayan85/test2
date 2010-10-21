@@ -330,7 +330,11 @@
 	}     
 	
 	private function newAccount():void {
-		var newEvent:AccountPickerSelectEvent = new AccountPickerSelectEvent(AccountPickerSelectEvent.SELECTNEWACCOUNT, new Account());
+		var newacc:Account = new Account();
+		if (accountTypeRadio.selectedValue == "Prospects")	{
+			newacc.prospect = true;
+		}
+		var newEvent:AccountPickerSelectEvent = new AccountPickerSelectEvent(AccountPickerSelectEvent.SELECTNEWACCOUNT, newacc);
 		dispatchEvent(newEvent);
 		PopUpManager.removePopUp(this);
 	}
