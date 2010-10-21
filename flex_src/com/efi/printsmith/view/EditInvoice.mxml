@@ -1093,7 +1093,7 @@
 								if(!jobBaseObj.multiQtyJob){
 									var checkFlag:Boolean = false;
 									for each(var estimatesJobObj:JobBase in estimatesJobList) {
-										if(estimatesJobObj.id == jobBaseObj.id) {
+										if(estimatesJobObj.id == jobBaseObj.id && estimatesJobObj.id!=0 && jobBaseObj.id!=0) {
 											checkFlag = true;
 											break;
 										}
