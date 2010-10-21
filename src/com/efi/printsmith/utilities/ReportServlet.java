@@ -42,13 +42,15 @@ public class ReportServlet extends HttpServlet implements Servlet {
 			}
 			String reportName = request.getParameter("reportName");
 			String invoiceName = request.getParameter("invoiceName");		// invoice output
-			String jobName = request.getParameter("jobName");				// job ticket output
+			String jobTicket = request.getParameter("jobTicket");				// job ticket output
+			String invoiceTicket = request.getParameter("invoiceTicket");			// job tickets for all of invoice
 			String reportParameter = request.getParameter("reportParameter");
 			
 			
 			if ((reportName == null || reportName.length() == 0) && 
 					(invoiceName == null || invoiceName.length() == 0) &&
-						(jobName == null || jobName.length() == 0) ) {
+					(jobTicket == null || jobTicket.length() == 0) &&
+						(invoiceTicket == null || invoiceTicket.length() == 0) ) {
 				throw new IOException(
 						"Invalid report URL received by ReportServlet");
 			}
@@ -59,8 +61,10 @@ public class ReportServlet extends HttpServlet implements Servlet {
 				file = reportService.generateReport(reportName, reportParameter);
 			} else if (invoiceName != null && invoiceName.length() > 0) {
 				file = reportService.generateInvoice(invoiceName, reportParameter);
-			} else if (jobName != null && jobName.length() > 0) {
-				file = reportService.generateJobTicket(jobName, reportParameter);
+			} else if (jobTicket != null && jobTicket.length() > 0) {
+				file = reportService.generateJobTicket(jobTicket, reportParameter, 2);
+			} else if (invoiceTicket != null && invoiceTicket.length() > 0) {
+				file = reportService.generateJobTicket(invoiceTicket, reportParameter, 1);
 			}
 			
 			response.setContentType("application/pdf");

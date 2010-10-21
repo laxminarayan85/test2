@@ -1010,7 +1010,7 @@
 					Alert.show("You must save the job before printing", "Error");
 				} else {
 					var reportName:String = "jobTicket.rpt";
-					var urlRequest:URLRequest = new URLRequest("http://localhost:8080/Snowmass/reportservlet?jobName="+reportName +"&reportParameter="+job.id);
+					var urlRequest:URLRequest = new URLRequest("http://localhost:8080/Snowmass/reportservlet?jobTicket="+reportName +"&reportParameter="+job.id);
                 	navigateToURL(urlRequest, "_blank");
 				}
 			}

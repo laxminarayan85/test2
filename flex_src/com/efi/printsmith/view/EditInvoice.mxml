@@ -815,7 +815,7 @@
 					Alert.show("You must save the Invoice before printing", "Error");
 				} else {
 					var reportName:String = "jobTicket.rpt";
-					var urlRequest:URLRequest = new URLRequest("http://localhost:8080/Snowmass/reportservlet?invoiceName="+reportName +"&reportParameter="+invoice.id);
+					var urlRequest:URLRequest = new URLRequest("http://localhost:8080/Snowmass/reportservlet?invoiceTicket="+reportName +"&reportParameter="+invoice.id);
                 	navigateToURL(urlRequest, "_blank");
 				}
 			}
