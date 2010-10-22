@@ -640,8 +640,13 @@ implements="com.efi.mdi.IMDIWindowAware">
 		tempCredit = cardtype.selectedItem as PreferencesCreditCard;
 		if (contact.creditCard != null && tempCredit != null)
 			contact.creditCard.type = tempCredit.cardType
-		if (contact.parentAccount != null)
+		
+		if (contact.parentAccount != null)	{
 			contact.parentAccount.accountId = accountID.text;
+			if (contact.parentAccount.accountId == "")
+				contact.parentAccount = null;	 	
+		}
+		
 		saveCampaigns();
 		
 	/*  if (phone_edit.text.length >0){

@@ -915,6 +915,7 @@
 		this.account = ev.result as Account;
 		this.EstInvCharges = this.account.invoiceEstimateCharges;
 		this.JobCharges = this.account.jobCharges;
+//		accounts.addItem(account);
 		doNewOperation();
 		openAccountPicker();
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
@@ -1359,6 +1360,10 @@
 	
 	private function onNewContactAdded(event:ContactCreateUpdateEvent):void	{
 		contacts.addItem(event.contact);
+		if (contacts.length == 1) {
+			updateInvoiceContact();
+			updateStatementContact();
+		}
 	}
 	
 
@@ -1616,7 +1621,7 @@
 				<mx:Label x="184" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'prospectCmd.ExternalRef')}" textAlign="right"/>
 				<ns1:AddressEditor  x="10" y="94" id="ship_to_address_editor" addressLabel="Shipping Address" height="157" width="325"/>
 				<ns1:AddressEditor x="343" y="94" id="bill_to_address_editor" addressLabel="Billing Address" height="157" width="325"/>
-				<ns1:ContactInfoEditor deactivate="doContactUpdate2()" x="10" y="259" height="198" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
+				<ns1:ContactInfoEditor deactivate="doContactUpdate2()"  x="10" y="259" height="198" width="325" id="ship_to_contact_editor" contactLabel="Invoice Contact"/>
 				<ns1:ContactInfoEditor deactivate="doContactUpdate()" x="344" y="259" height="198" width="325" id="bill_to_contact_editor" contactLabel="Statement Contact"/>
 				<mx:Label x="10" y="468" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
 				<mx:Label x="344" y="468" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}"/>
