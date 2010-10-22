@@ -1228,7 +1228,7 @@ public class JobMapper extends ImportMapper {
 		ArrayList<String> colors = new ArrayList<String>();
 		while (field.contains(",")) {
 			colors.add(field.substring(0, field.indexOf(',')).trim());
-			field = field.substring(field.indexOf(',')).trim();
+			field = field.substring(field.indexOf(',')+1).trim();
 		}
 		if (field.contains("&")) {
 			colors.add(field.substring(0, field.indexOf('&')-1).trim());
