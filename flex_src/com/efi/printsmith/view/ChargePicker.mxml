@@ -62,6 +62,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.dataGridClasses.DataGridColumn;
 			import com.efi.printsmith.data.Dimension;
 			import mx.validators.CurrencyValidator;
 			import com.efi.printsmith.common.components.filter.FilterSearchBy;
@@ -1114,9 +1115,15 @@
 					}
 				}
 			}
+			
+			private function formatChargePrice(item:Object, column:DataGridColumn):String {
+				return numFormatter.format(item[column.dataField]);
+			}
 	]]>
 
 	</mx:Script>
+	
+	<mx:NumberFormatter id="numFormatter" precision="2" rounding="nearest"  useNegativeSign="true" useThousandsSeparator="true"/>
 
 	<mx:VBox width="100%"
 			 height="100%"
@@ -1188,6 +1195,7 @@
 									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Price')}"
 													   width="90"
 													   dataField="price"
+													   labelFunction="formatChargePrice"
 													   textAlign="right"/>
 								</mx:columns>
 							</mx:DataGrid>
@@ -1387,7 +1395,7 @@
 									</mx:HBox>
 									<mx:HBox width="100%" id="price_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetPriceLabel}" width="50%" id="price_label_text" textAlign="right"/>
-										<mx:TextInput text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.price)}" width="50%" id="price_edit" textAlign="right" change="this.updatePriceEdit()" focusOut="this.updatePrice()"/>
+										<mx:TextInput text="{Snowmass.getCurrencyFormatter(false, 2).format(charge.price)}" width="50%" id="price_edit" textAlign="right" change="this.updatePriceEdit()" focusOut="this.updatePrice()"/>
 										<comp:SmallThrobber visible="false" id="pricing_throbber" height="20" width="20"/>
 										<mx:LinkButton width="20" id="refresh_price_btn" height="20" click="updatePrice()" visible="false">
 											<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
