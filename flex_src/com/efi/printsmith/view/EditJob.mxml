@@ -1109,8 +1109,11 @@
 				if (run_method_radiogroup.selectedValue != null) {
 					job.runMethod=run_method_radiogroup.selectedValue.toString();
 				}
-				if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed")
+				if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed") {
+					if (job.parentSize == null)
+						job.parentSize = new Dimension;
 					job.parentSize.name = this.roll_width.text;
+				}
 				else
 					if ( job.parentSize != null)
 						job.parentSize = job_parent.selectedItem as Dimension;
