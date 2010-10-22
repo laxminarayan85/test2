@@ -1,143 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Estmate History" name="Estmate History"
-width="100%" height="100%" headerHeight="0"  creationComplete="init()"  
-     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory')}" xmlns:text="flash.text.*">
-<mx:RemoteObject id="dataService" destination="dataService">
-	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-	<mx:method name="getByAccountId" fault="handleFault(event)" result="handleLoadResult(event)"/>
-	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
-	<mx:method name="getEstimateByAccountId" fault="handleFault(event)" result="handleLoadResult(event)"/>
-</mx:RemoteObject>
-<mx:Producer id="producer" destination="invoicebase"/>
-	<mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
-	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
-	
-<mx:Script>                                   
-<![CDATA[
-	import com.efi.mdi.view.window.MDIWindow;
-	import mx.controls.Alert;                                         
-	import mx.managers.PopUpManager;                                         
-	import mx.containers.TitleWindow;                                         
-	import mx.collections.ArrayCollection;                                         
-	import mx.rpc.events.ResultEvent;                                         
-	import mx.rpc.events.FaultEvent;                                           
-	import mx.messaging.messages.AsyncMessage;
-	import mx.messaging.messages.IMessage;
-    import mx.printing.FlexPrintJob;
-    import mx.printing.PrintAdvancedDataGrid;
-    import mx.printing.PrintDataGrid;
-    import mx.core.Application;
-    import mx.validators.Validator;
-    import mx.events.ValidationResultEvent;    
-	import com.efi.printsmith.data.Account; 
-	import com.efi.printsmith.data.Invoice;         
-	import com.efi.printsmith.events.AccountPickerSelectEvent;	     
-	
-	[Bindable]                                         
-	private var account:Account;
-	
-	[Bindable]
-    private var estimates:ArrayCollection = new ArrayCollection(); 
-	
-	public function init():void {
-		consumer.subscribe();
-		notification_consumer.subscribe();
+	width="100%" height="100%" headerHeight="0"  creationComplete="init()" layout="vertical"
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory')}" xmlns:text="flash.text.*">
+	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountsResult(event)"/>
+		<mx:method name="getEstimateByAccountId" fault="handleFault(event)" result="handleLoadEstimatesResult(event)"/>
+	</mx:RemoteObject>
 		
-		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
-		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory');
-
-		doAccount();
-	}  
-	
-	private function doAccount():void {
-		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
-	    accountPickerWindow.setStyle("borderAlpha", 0.9);
-	    accountPickerWindow.formIsEmpty = true;
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
-	}
-	private function doGet():void {
-		
-	}  
-	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
-		this.setAccount(new Account());
-	}
-	
-	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
-		if (evt.account != null) {
-			this.setAccount(evt.account);
-		} else {
-			this.setAccount(new Account());
-			Alert.show("Account Picker returned a null account", "Error");
-		}
-	}
-	
-	private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void {
-		this.account = new Account();
-	}
-	
-	public function setAccount(account2:Account):void
-	{
-		this.account = account2;
-		dataService.getEstimateByAccountId("Estimate", this.account.id);
-	
-	}			
-	private function handleLoadResult(ev:ResultEvent):void {
-		estimates = ev.result as ArrayCollection;
-	
-	}
-	private function handleSaveResult(event:Event):void {
-		
-		 dataService.getByAccountId("Estimate", this.account.id);
-		
-	}
-	private function handleDeleteResult(event:Event):void {
-		 dataService.getByAccountId("Estimate", this.account.id);
-		
-		
-	}
-	private function handleFault(event:FaultEvent):void {
-		var message:String;
-		              
-		message = "Error: "                          
-		+ event.fault.faultCode + " - "                                  
-		+ event.fault.faultDetail + " - "                                  
-		+ event.fault.faultString;
-		Alert.show(message, "Error", 0, null, null, null, 4);        	
-	} 	
-	private function messageHandler(message:IMessage):void
-	{
-		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
-		
-		var messageType:String = messageBody.messageType;
-		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
-			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
-			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
-			if (payloadType == "Estimate") {
-		  		dataService.getByAccountId("Estimate", this.account.id);
+	<mx:Script>                                   
+		<![CDATA[
+			import com.efi.printsmith.common.components.CommonLoadComponent;
+			import com.efi.mdi.view.window.MDIWindow;
+			import mx.controls.Alert;                                         
+			import mx.managers.PopUpManager;                                         
+			import mx.containers.TitleWindow;                                         
+			import mx.collections.ArrayCollection;                                         
+			import mx.rpc.events.ResultEvent;                                         
+			import mx.rpc.events.FaultEvent;                                           
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+		    import mx.printing.FlexPrintJob;
+		    import mx.printing.PrintAdvancedDataGrid;
+		    import mx.printing.PrintDataGrid;
+		    import mx.core.Application;
+		    import mx.validators.Validator;
+		    import mx.events.ValidationResultEvent;    
+			import com.efi.printsmith.data.Account; 
+			import com.efi.printsmith.data.Invoice;         
+			import com.efi.printsmith.events.AccountPickerSelectEvent;	     
+			
+			[Bindable]                                         
+			private var account:Account;
+			
+			[Bindable]
+		    private var estimates:ArrayCollection = new ArrayCollection(); 
+		    
+		    [Bindable] private var accounts:ArrayCollection;
+		    
+		    [Bindable] private var loadComponent:CommonLoadComponent;
+			
+			public function init():void {
+				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+				var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+				mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory');
+				dataService.getAccountPicker();		
+			}  
+			
+			private function handleLoadAccountsResult(event:ResultEvent):void {
+				if(loadComponent){
+					loadComponent.close();
+				}
+				accounts = event.result as ArrayCollection;
+				var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+			    accountPickerWindow.setStyle("borderAlpha", 0.9);
+			    accountPickerWindow.formIsEmpty = true;
+			    accountPickerWindow.prospect_boolean = true;
+			    accountPickerWindow.showContactButton = false;
+			    accountPickerWindow.setAccounts(accounts);
+			    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
+			    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);		
 			}
-		}
-	}		
-]]>
-                             
-</mx:Script>
-<mx:Canvas width="100%" height="100%">
-	<mx:Button x="30" y="10" width="38" height="38" click="doGet();">
+			private function doGet():void {
+				
+			} 
+			 
+			private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
+				
+			}
+			
+			private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+				account = evt.account;
+				dataService.getEstimateByAccountId("Estimate", this.account.id);
+			}
+					
+			private function handleLoadEstimatesResult(ev:ResultEvent):void {
+				estimates = ev.result as ArrayCollection;
+			}
+			
+			private function handleFault(event:FaultEvent):void {
+				var message:String;
+				              
+				message = "Error: "                          
+				+ event.fault.faultCode + " - "                                  
+				+ event.fault.faultDetail + " - "                                  
+				+ event.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, 4);        	
+			} 
+		]]>
+	                             
+	</mx:Script>
+	
+	<mx:HBox width="100%" height="8%">
+		<mx:Button width="6%" height="100%" click="{doGet()}">
 			<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
 		</mx:Button>
-		<mx:Label x="30" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" width="38" textAlign="center"/>
-	<mx:DataGrid x="10" y="82"  height="292" id="estimate_grid" dataProvider="{estimates}">
+		<mx:Button width="6%" height="100%">
+			<mx:icon>@Embed(source='../../../../assets/find.png')</mx:icon>
+		</mx:Button>
+		<mx:Button width="6%" height="100%">
+			<mx:icon>@Embed(source='../../../../assets/notes.png')</mx:icon>
+		</mx:Button>
+		<mx:Button width="6%" height="100%">
+			<mx:icon>@Embed(source='../../../../assets/showCostCenter.png')</mx:icon>
+		</mx:Button>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" height="4%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" width="6%" textAlign="center"/>
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Find')}" width="6%" textAlign="center"/>
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Notes')}" width="6%" textAlign="center"/>
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Properties')}" width="6%" textAlign="center"/>		
+	</mx:HBox>
+	
+	<mx:DataGrid id="estimate_grid" width="100%" height="88%" dataProvider="{estimates}">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Created')}" dataField="created"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Estimate')}" dataField="invoiceNumber"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Title')}" dataField="name"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Total')}" dataField="grandTotal"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Status')}" dataField="col2"/>
-			
 		</mx:columns>
 	</mx:DataGrid>
-
-</mx:Canvas>
 
 </mx:Panel>

@@ -59,7 +59,8 @@
 	[Bindable]                                     
 	public var prospect_boolean:Boolean; 
 	 [Bindable]                                     
-	public var contact_boolean:Boolean = true;                                  
+	public var contact_boolean:Boolean = true;
+	[Bindable] public var showContactButton:Boolean = true;                                  
 	[Bindable]                                
 	private var accounts:ArrayCollection = new ArrayCollection();
 	
@@ -442,7 +443,7 @@
 		<mx:RadioButtonGroup id="accountTypeRadio" change="accountTypeChange()"/>
 		<mx:RadioButton x="49" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Customers')}" groupName="accountTypeRadio" value="Customer" id="customer_radio"/>
 		<mx:RadioButton x="190" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Prospects')}" groupName="accountTypeRadio" value="Prospects" id="prospect_radio"/>
-		<mx:RadioButton x="300" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}" groupName="accountTypeRadio" value="Contacts" id="contact_radio"/>
+		<mx:RadioButton x="300" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}" groupName="accountTypeRadio" value="Contacts" id="contact_radio" visible="{showContactButton}"/>
 		<mx:CheckBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Searchallaccounts')}" id="chkSearchAll" click="searchAll();"  x="131" y="520"/>
 		</mx:Canvas>
 <mx:Spacer height="10" />        
