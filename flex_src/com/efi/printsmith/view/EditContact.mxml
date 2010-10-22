@@ -522,8 +522,24 @@ implements="com.efi.mdi.IMDIWindowAware">
 	
 	private function handleLoadCreditCardPreferencesResult(ev:ResultEvent):void {
 		creditCardPreferencesArray = ev.result as ArrayCollection;
-		
-	}	                                                                    
+	}	                                                          
+	
+	private function checkDelBtnEnablity(contactObj:Contact, parentAccountObj:Account):Boolean {
+		if(contactObj!=null){
+			if (parentAccountObj != null){
+				if (parentAccountObj.contact == contactObj){
+					return false;
+				} else {
+					if (parentAccountObj.billToContact == contactObj){
+						return false;
+					}
+				}
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}          
 	private function setDefaultContact():void{
 		if (contact.parentAccount != null){
 			if (contact.parentAccount.contact == contact){
@@ -552,6 +568,10 @@ implements="com.efi.mdi.IMDIWindowAware">
 				}
 			}
 			
+		} else {
+			defaultContact = false;
+			use_contact_check.enabled = true;
+			AccountsPicker.enabled = true;
 		}
 		
 	}	
@@ -725,7 +745,9 @@ implements="com.efi.mdi.IMDIWindowAware">
 			
 		}else{
 			accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');
-			
+			defaultContact = false;
+			use_contact_check.enabled = true;
+			AccountsPicker.enabled = true;
 		}
 	
 		
@@ -804,11 +826,11 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}
 	private function doDelete():void {
 		var nameStr:String = "";
-		if (contact != null) {
+		if (contact != null && !isNaN(contact.id) && contact.id!=0) {
 			nameStr = this.contact.firstName + " " + this.contact.lastName;
+			var deleteStr:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), nameStr);
+			Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteContact,null,Alert.OK);
 		}
-		var deleteStr:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), nameStr);
-		Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteContact,null,Alert.OK);
 	    //dataService2.deleteItem("Contact",contact.id);
 	} 
 	
@@ -1459,7 +1481,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 		<mx:Button id="btnNew" x="263" y="10" width="38" height="38" click="doNew();">
 			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<mx:Button id="btnDelete" x="370" y="10" width="38" height="38" click="doDelete();">
+		<mx:Button id="btnDelete" x="370" y="10" width="38" height="38" click="doDelete();" enabled="{checkDelBtnEnablity(contact, contact.parentAccount)}">
 			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 		</mx:Button>
 	    <mx:Label id="lblDelete" x="360" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
