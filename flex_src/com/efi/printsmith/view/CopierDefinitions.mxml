@@ -317,6 +317,7 @@
 	private function handleGetResult(ev:ResultEvent):void {
 		if (ev.token.operation == "getCopierDefinition") {
 			copierDefinition = ev.result as CopierDefinition;
+			updateMethodBox();
 			if (copierDefinition != null) {
 				updateMethodBox();
 				wasteName.label = WasteListLabel();
@@ -364,8 +365,11 @@
 				charge_sales_category_combo.selectedIndex = -1;
 			}
 		
-			if ( copierDefinition.method != null)
-				pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodType.toArray());
+			if ( copierDefinition.method != null) {
+				var methodTypeArray = new Array();
+				methodTypeArray = methodType.toArray().filter(filterLargeFormatMethod);
+				pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodTypeArray);
+			}
 			if(copierDefinition.matrixType != null){
 				matrixTypeRadioValue = copierDefinition.matrixType;
 			}

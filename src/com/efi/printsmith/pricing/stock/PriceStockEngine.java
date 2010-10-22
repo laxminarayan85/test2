@@ -219,7 +219,8 @@ public class PriceStockEngine {
 				if (copierDefinition.getUseCopierStockMarkup()) {
 					markup = copierDefinition.getStockMarkup();
 				}
-				retVal = (stockCost * (qty / stockDefinition.getCostunits()) * markup) / qty;
+				double temp = qty / stockDefinition.getCostunits().doubleValue();
+				retVal = (stockCost * temp * markup) / qty;
 			}
 			//retVal = stockCost/stockDefinition.getCostunits() * markup;
 			priceLogEntry.setDescription("Stock Price: Cost/CostUnits * Qty: " + stockCost + "/" +stockDefinition.getCostunits() + "*" + qty + "*" + markup);
