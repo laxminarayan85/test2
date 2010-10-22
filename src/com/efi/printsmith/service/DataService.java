@@ -2493,35 +2493,40 @@ public class DataService extends HibernateService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Invoice> getEstimateByAccountId(String className, Long id)
+	public List<Estimate> getEstimateByAccountId(String className, Long id)
 			throws Exception {
-		String columnstring = new String();
-
-		columnstring = "a.id, a.name, a.invoiceNumber, a.grandTotal";
+		log.debug("** getEstimateByAccountId Id called.");
+		List<Estimate> estimateList = new ArrayList<Estimate>();
 		EntityManager em = entityManagerFactory.createEntityManager();
-
 		try {
-			log.debug("** getEstimateByAccountId Id called.");
-			// cej
-			String queryString = "select new " + className + "( "
-					+ columnstring + ") from " + className
-					+ " a where a.account.id = :id";
-			// String queryString = "select a.id, a.name, a.invoiceName from " +
-			// className
-			// + " a where a.account.id = :id";
-
-			Query query = em.createQuery(queryString);
-			query.setParameter("id", id);
-			List<Invoice> invoicelist = query.getResultList();
-			if (invoicelist != null)
-				log.debug("** Found " + invoicelist.size() + "records:");
-			return invoicelist;
+			String columnString = "a.id,a.created,a.invoiceNumber,a.name,a.grandTotal,a.convertedInvoiceNo,a.offPendingDate,a.estimateNotes";
+			Session session = (Session) em.getDelegate();
+			String queryString = "select "+columnString+" from " + className
+					+ " a where a.account.id="+id+" and a.onPendingList=false order by a.created asc";
+			org.hibernate.Query query = session.createQuery(queryString);
+			ScrollableResults rs = query.scroll();
+			while (rs.next()) {
+				Estimate estimate = new Estimate();
+				estimate.setId(rs.getLong(0));
+				estimate.setCreated(rs.getDate(1));
+				estimate.setInvoiceNumber(rs.getString(2));
+				estimate.setName(rs.getString(3));
+				estimate.setGrandTotal(rs.getBigDecimal(4));
+				if(rs.getString(5)==null) {
+					estimate.setConvertedInvoiceNo("");
+				} else {
+					estimate.setConvertedInvoiceNo(rs.getString(5));
+				}
+				estimate.setOffPendingDate(rs.getDate(6));
+				estimate.setEstimateNotes(rs.getString(7));
+				estimateList.add(estimate);
+			}
 		} catch (Exception e) {
 			log.error(e);
 		} finally {
 			em.close();
 		}
-		return null;
+		return estimateList;
 	}
 
 	@SuppressWarnings("unchecked")
