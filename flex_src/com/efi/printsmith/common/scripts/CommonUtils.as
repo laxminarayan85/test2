@@ -30,7 +30,10 @@ public function sortArray(ac:ArrayCollection, prop:String):void	{
             var strLow:String = "abcdefghijklmnopqrstuvwxyz";
             return strLow.charAt(num - 97);
         } else {
-            return num.toString();
+        	if (num == 32)
+        		return " ";
+        	else
+            	return num.toString();
         }
     }        
 public function compareObject(obj1:Object,obj2:Object):Boolean
