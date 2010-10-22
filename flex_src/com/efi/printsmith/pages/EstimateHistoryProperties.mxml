@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="600" height="400"
+	creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}"
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'histDetailCmd.HistoryDetail')}" xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.events.EstimateHistorySaveEvent;
+			import com.efi.printsmith.data.Estimate;
+			import mx.managers.PopUpManager;
+			
+			[Bindable] public var estimate:Estimate;
+			
+			[Bindable] private var statusLabel:String;
+			
+			[Bindable] private var statusString:String;
+			
+			[Bindable] private var showJobs:Boolean = false;
+			
+			private function init():void {
+				statusLabel = "+";
+				statusString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'histDetailCmd.Showjobinformation');
+				PopUpManager.centerPopUp(this);	
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);	
+			}
+			
+			private function showHideJobs():void {
+				if(!showJobs){
+					showJobs = true;
+					statusLabel = "-";
+					statusString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'histDetailCmd.Hidejobinformation');
+				} else if(showJobs){
+					showJobs = false;
+					statusLabel = "+";
+					statusString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'histDetailCmd.Showjobinformation');
+				}
+			}
+			
+			private function saveProperties():void {
+				dispatchEvent(new EstimateHistorySaveEvent(EstimateHistorySaveEvent.ESTIMATES_SAVE_EVENT,estimate));
+				callLater(closeWindow);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY"/>
+	
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')}: "/>
+		<mx:Label text="{estimate.invoiceNumber}"/>
+		<mx:Label text="{estimate.name}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'estHistoryCmd.OffPending')}: "/>
+		<mx:Label text="{dateFormatter.format(estimate.offPendingDate)}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'estHistoryCmd.Status')}: "/>
+		<mx:Label text=""/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.Invoice')}: "/>
+		<mx:Label text="{estimate.convertedInvoiceNo}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.User')}: "/>
+		<mx:Label text=""/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'histDetailCmd.ChangeDescriptionto')}:" fontWeight="bold"/>
+		<components:CustomStringTextInputComponent
+			dataHolder="{estimate}" customText="{estimate.name}" variableName="name"
+			allowSpecialCharacters="true" maxChars="255"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label text="{statusLabel}" click="{showHideJobs()}"/>
+		<mx:Label text="{statusString}" fontWeight="bold"/>
+	</mx:HBox>
+	
+	<mx:List dataProvider="{estimate.jobs}" width="100%" labelField="description" visible="{showJobs}" includeInLayout="{showJobs}"/>
+	<mx:HBox width="100%">
+		<mx:HBox width="100%" horizontalAlign="left">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{saveProperties()}"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="right">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{closeWindow()}"/>
+		</mx:HBox>
+	</mx:HBox>
+</mx:TitleWindow>
