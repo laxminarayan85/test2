@@ -76,6 +76,9 @@ package com.efi.printsmith.data
 		public var releasedToProduction:Boolean = false;
 		public var oldEstimateNumber:String = "";
 		public var oldInvoiceNumber:String = "";
+		public var convertedInvoiceNo:String = "";
+		public var offPendingDate:Date = new Date();
+		public var estimateNotes:String = "";
 	
 	}
 }
