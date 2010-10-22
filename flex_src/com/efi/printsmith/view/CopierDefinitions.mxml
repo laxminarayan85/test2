@@ -369,7 +369,10 @@
 		
 			if ( copierDefinition.method != null) {
 				var methodTypeArray = new Array();
-				methodTypeArray = methodType.toArray().filter(filterLargeFormatMethod);
+				if (copierDefinition.largeFormat == true  || largeformatCheck.selected)
+					methodTypeArray = methodType.toArray().filter(filterLargeFormatMethod);
+				else
+					methodTypeArray = methodType.toArray().filter(filterDigitalMethod);
 				pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodTypeArray);
 			}
 			if(copierDefinition.matrixType != null){
