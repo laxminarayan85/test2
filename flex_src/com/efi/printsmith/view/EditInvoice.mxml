@@ -92,6 +92,15 @@
 					result="handleLoadInvoiceTemplates(event)"/>		
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServiceEstimate" destination="dataService" showBusyCursor="true">
+		<mx:method name="getInvoice"
+					fault="handleFault(event)"
+					result="handleEstimateLoadResult(event)"/>
+		<mx:method name="saveInvoice"
+					fault="handleFault(event)"
+					result="handleEstimateSaveResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script source="../common/scripts/CommonUtils.as"/>
 	
 	<mx:Script>
@@ -388,23 +397,39 @@
 
 			private function handleSaveResult(ev:ResultEvent):void
 			{
-				var deleted:Boolean = false;
+				var convertedEstimate:Boolean = false;
 				this.invoice = ev.result as InvoiceBase;
 				inv_number.text = invoice.invoiceNumber;
 				//this.parent.removeChild(this);
 				if(invoice is Invoice){
 					if(convertedEstimatedId!=0){
-						deleted = true;
-						dataService.deleteItem("Estimate",convertedEstimatedId);
+						convertedEstimate = true;
+						dataServiceEstimate.getInvoice(convertedEstimatedId);
 					}
-					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')));
+					if(!convertedEstimate){
+						openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')));
+					}
 				} else if(invoice is Estimate){
 					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')));
 				}
-				if(!deleted){
+				if(!convertedEstimate){
 					dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
 					Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 				}
+			}
+			
+			private function handleEstimateLoadResult(event:ResultEvent):void {
+				var estimateObj:InvoiceBase = event.result as InvoiceBase;
+				estimateObj.onPendingList = false;
+				estimateObj.offPendingDate = new Date();
+				estimateObj.convertedInvoiceNo = this.invoice.invoiceNumber;
+				dataServiceEstimate.saveInvoice(estimateObj);
+			}
+			
+			private function handleEstimateSaveResult(event:ResultEvent):void {
+				openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')));
+				dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
+				Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 			}
 			
 			private function handleCreateInvoiceResult(ev:ResultEvent):void
