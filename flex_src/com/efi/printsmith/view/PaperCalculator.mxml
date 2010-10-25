@@ -61,13 +61,15 @@
 			private var runBoolean:Boolean;
 			[Bindable]
 			private var finishBoolean:Boolean;
+			[Bindable]
+			private var showWarning:Boolean = true;
 			
 			[Bindable]
 			private var dimensions:ArrayCollection;
 			[Bindable]
-			private var gripLocationRadioValue:String;
+			private var gripLocationRadioValue:String = new String;
 			[Bindable]
-			private var folioLocationRadioValue:String;
+			private var folioLocationRadioValue:String = new String;
 			[Bindable]
 			private var RunToFinishGrainArray:ArrayCollection=new ArrayCollection();
 
@@ -78,6 +80,8 @@
 
 			private function handleCalcOutResult(ev:ResultEvent):void
 			{
+				var message:String;  
+				     
 				if (ev.result != null) {
 					var results:ArrayCollection = ev.result as ArrayCollection;
 					var intValue:Number;
@@ -146,6 +150,12 @@
 					// the values are back, now request the image to be generated
 					//
 					paperCalculatorService.GeneratePaperCalculatorImage(job, job.paperCal.whichStartSize, this.cutDiagram.width-15, this.cutDiagram.height-15);
+					
+					if (job.paperCal.runout == 0 && job.runSize.height > 0 && job.runSize.width > 0 && showWarning) {
+						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningThesheetsizes");
+						Alert.show(message, "Warning", 0, null, null, null, 4); 
+						showWarning = false;
+					}
 				}
 			}
 
@@ -260,11 +270,13 @@
 		
 			private function mapFromJobData():void
 			{
-				if ( job.paperCal != null)
-					gripLocationRadioValue=job.paperCal.gripLocation;
+				if ( job.paperCal != null) {
+					gripLocationRadioValue = job.paperCal.gripLocation;
+				}
 				doGrip();
-				if ( job.paperCal !=null)	
+				if ( job.paperCal !=null) {
 					folioLocationRadioValue=job.paperCal.folioLocation;
+				}
 				doFolio();
 				if ( job.paperCal != null){
 					if (job.paperCal.runToFinishGrain != "") {
@@ -372,12 +384,14 @@
 
 			private function doGrip():void
 			{
-				if (gripLocation.selectedValue == Constants.PAPER_CALCULATOR_GRIPPER_TOP)
+				if (gripLocation.selectedValue == Constants.PAPER_CALCULATOR_GRIPPER_TOP ||
+					gripLocationRadioValue == Constants.PAPER_CALCULATOR_GRIPPER_TOP)
 				{
 					topGrip.alpha=.4;
 					leftGrip.alpha=1;
 				}
-				if (gripLocation.selectedValue == Constants.PAPER_CALCULATOR_GRIPPER_LEFT)
+				if (gripLocation.selectedValue == Constants.PAPER_CALCULATOR_GRIPPER_LEFT ||
+					gripLocationRadioValue == Constants.PAPER_CALCULATOR_GRIPPER_LEFT)
 				{
 					topGrip.alpha=1;
 					leftGrip.alpha=.4;
@@ -386,12 +400,14 @@
 
 			private function doFolio():void
 			{
-				if (folioLocation.selectedValue == Constants.PAPER_CALCULATOR_FOLIO_TOP)
+				if (folioLocation.selectedValue == Constants.PAPER_CALCULATOR_FOLIO_TOP ||
+					folioLocationRadioValue == Constants.PAPER_CALCULATOR_FOLIO_TOP)
 				{
 					topFolio.alpha=0.4;
 					leftFolio.alpha=1;
 				}
-				if (folioLocation.selectedValue == Constants.PAPER_CALCULATOR_FOLIO_LEFT)
+				if (folioLocation.selectedValue == Constants.PAPER_CALCULATOR_FOLIO_LEFT ||
+					folioLocationRadioValue == Constants.PAPER_CALCULATOR_FOLIO_LEFT)
 				{
 					topFolio.alpha=1;
 					leftFolio.alpha=.4;
@@ -400,6 +416,8 @@
 
 			private function refreshCalcAndImage():void
 			{
+				showWarning = true;		// to dificult to place in all the field change and setting change locations
+				
 				mapToJobData();
 				
 				paperCalculatorService.CalcOut(job, job.paperCal.whichStartSize);

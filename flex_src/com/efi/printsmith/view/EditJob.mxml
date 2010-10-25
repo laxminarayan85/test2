@@ -989,6 +989,14 @@
 					job.paperCal.printRunToFinishSection = estimatingPreferences.printRunToFinishSection;
 					job.paperCal.attachToJobTicket=  estimatingPreferences.attachToJobTicket;
 				}
+				
+				if (job.paperCal.gripLocation == "") {
+					job.paperCal.gripLocation = Constants.PAPER_CALCULATOR_GRIPPER_TOP;
+				}
+				
+				if (job.paperCal.folioLocation == "") {
+					job.paperCal.folioLocation = Constants.PAPER_CALCULATOR_FOLIO_TOP;
+				}
 			}
 			
 			private function doDelete():void
@@ -1037,7 +1045,7 @@
 				loadData();
 				mapFromJobData();
 				this.invoice = job.parentInvoice;
-				if(this.job.jobGroup==0){
+				if(this.job.jobGroup==0 && this.invoice != null){
 					var counter:int = 1;
 					if(this.invoice.jobs!=null && this.invoice.jobs.length>0){
 						for(var i:int=1;i<=1000;i++){
