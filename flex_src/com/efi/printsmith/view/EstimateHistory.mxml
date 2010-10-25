@@ -165,8 +165,10 @@
 			}
 			
 			private function doDoubleClick():void {
-				var invoiceBase:InvoiceBase = estimate_grid.selectedItem as InvoiceBase;
-				dataServiceInvoice.getInvoice(invoiceBase.id);
+				if(estimate_grid.selectedIndex>-1 && estimate_grid.selectedItem!=null){
+					var invoiceBase:InvoiceBase = estimate_grid.selectedItem as InvoiceBase;
+					dataServiceInvoice.getInvoice(invoiceBase.id);
+				}
 			}
 			
 			private function doEditEstimate(inv:InvoiceBase):void	{
