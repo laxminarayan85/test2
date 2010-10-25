@@ -741,7 +741,8 @@ public class DefaultDataFactory {
 		ProcessPreferencePendingList(columnnames, true, item);
 		item = item + 1;
 
-		columnnames = new ColumnNames();
+		//Commented for Bug Fix (Id-1110)  
+		/*columnnames = new ColumnNames();
 		columnnames.setName("ReOrderInvCmd.Contact");
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
@@ -749,7 +750,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		ProcessPreferencePendingList(columnnames, false, item);
-		item = item + 1;
+		item = item + 1;*/
 		
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Phone");
