@@ -105,6 +105,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 			import com.efi.printsmith.events.CopyToNewEstimateEvent;
 			import com.efi.printsmith.events.PendingListUpdateEvent;
 			import com.efi.printsmith.events.CopyToNewInvoiceEvent;
@@ -637,6 +638,20 @@
 				var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
 				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobCmd.NewJob'),editJobWindow, -1,-1,-1,-1, windowID);
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);
+			}
+			
+			
+			private function doNewCharge():void {
+				var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
+				chargePicker.charges = this.invoice.charges;
+				chargePicker.setStyle("borderAlpha", 0.9);
+				chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete,false,0,true);
+			}
+			
+			private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
+			{
+				this.invoice.charges=evt.chargeArray;
+				//this.updatePrice();
 			}
 
 			private function addNewJob(event:Event):void
@@ -1272,7 +1287,7 @@
 								   y="10"
 								   width="38"
 								   height="38"
-								   click="doNewJob();"
+								   click="doNewCharge();"
 								   id="new_job_button">
 						<mx:icon>@Embed(source='../../../../assets/new_job.png')</mx:icon>
 					</mx:LinkButton>

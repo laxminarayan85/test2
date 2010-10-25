@@ -1870,6 +1870,7 @@ public class DataService extends HibernateService {
 						Hibernate.initialize(job.getCostingCopier());
 					}
 				}
+				Hibernate.initialize(invoice.getCharges());
 			}
 		} catch (GenericJDBCException e) {
 			log.error(e);
