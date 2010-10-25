@@ -364,7 +364,7 @@ public class EncryptionService extends SnowmassHibernateService{
 		cipher.init(Cipher.ENCRYPT_MODE, spec);
 		
 		if ((newlength % 16) != 0) {
-			newlength = (newlength / 16) + 16;		// even increments 
+			newlength = ((int)(newlength / 16) * 16) + 16;		// even increments 
 		}
 		
 		if (newlength != originallength) {
