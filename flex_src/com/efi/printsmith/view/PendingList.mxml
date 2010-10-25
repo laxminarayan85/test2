@@ -455,6 +455,10 @@
 		pendingLocation.setStyle("borderAlpha", 0.9);
 	}
 	public function handleUIOpenEvent(evt:ResultEvent):void {
+		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
+			var invoiceBase:InvoiceBase = dgView.selectedItem as InvoiceBase;
+			dataService.getInvoice(invoiceBase.id);
+		}
 	}
 	public function handleUINotifyEvent(evt:ResultEvent):void {
 		var pendingNotify:PendingNotify = PendingNotify(PopUpManager.createPopUp(this, PendingNotify, false));
@@ -476,7 +480,7 @@
 		var node:XML = XML(event.currentTarget.selectedItem);
         var selectedname:String = node.attribute("label");
 
-        switch (selectedname){
+        /* switch (selectedname){
                 case "View":
                 case "Print":
                 case "Open":
@@ -485,11 +489,11 @@
                		var eventStatus:PendingListStatusEvent = new PendingListStatusEvent(new mx.rpc.Responder(handleUIStatusEvent, handleFaultNoMessage));
 					eventStatus.dispatch();
                 }
-         }
+         } */
          switch(selectedname){
                 case "View":
                 case "Print":
-                case "Open":
+                case "posPendCmd.Open":
                		var eventOpen:PendingListOpenEvent = new PendingListOpenEvent(new mx.rpc.Responder(handleUIOpenEvent, handleFault));
 					eventOpen.dispatch();
 					break;
@@ -521,6 +525,11 @@
                		var eventPickup:PendingListPickupEvent = new PendingListPickupEvent(new mx.rpc.Responder(handleUIPickupEvent, handleFault));
 					eventPickup.dispatch();
 					break;
+				/* default:
+                {
+               		var eventStatus:PendingListStatusEvent = new PendingListStatusEvent(new mx.rpc.Responder(handleUIStatusEvent, handleFaultNoMessage));
+					eventStatus.dispatch();
+                } */
 
          } 
 
@@ -625,8 +634,10 @@
 		}
 	}
 	private function doDoubleClick():void {
-		var invoiceBase:InvoiceBase = dgView.selectedItem as InvoiceBase;
-		dataService.getInvoice(invoiceBase.id);
+		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
+			var invoiceBase:InvoiceBase = dgView.selectedItem as InvoiceBase;
+			dataService.getInvoice(invoiceBase.id);
+		}
 	}
 
 	public function getAccountLabel(item:Object, column:DataGridColumn):String{
@@ -920,7 +931,7 @@
 		dataProvider="{treeData.node}"
 		labelFunction="TreeDisplayLabel"
 		iconFunction="setIcons"
-		change="treeSelect(event);" left="0" top="0" bottom="50"/>
+		click="treeSelect(event);" left="0" top="0" bottom="50"/>
 
 	<mx:VBox bottom="124" top="0" left="140" right="0">
 		<mx:Canvas width="100%" height="100%">
