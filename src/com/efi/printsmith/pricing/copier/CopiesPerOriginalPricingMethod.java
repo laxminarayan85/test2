@@ -105,7 +105,7 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 						pricePerSecondSide = pricePerCopy*copierDefinition.getSideTwoFactor();
 						pricingRecord.setTotalPrice((pricePerSecondSide * calcQty)+ stockPrice*job.getTotalCopies() + wastePrice);					
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
-						pricingRecord.setTotalPrice(((pricePerSecondSide * calcQty)+ stockPrice*job.getTotalCopies() + wastePrice));					
+						pricingRecord.setTotalPrice(((pricePerCopy * job.getTotalCopies())+ stockPrice*job.getTotalCopies() + wastePrice));					
 					} else {
 						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());
 					}
