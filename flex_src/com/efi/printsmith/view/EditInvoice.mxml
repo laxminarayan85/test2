@@ -276,6 +276,9 @@
 				if (invoice.charges == null) {
 					invoice.charges=new ArrayCollection();
 				}
+				if(!invoice.onPendingList){
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisdocumentislocked'));
+				}
 				this.createInvoice.visible = false;		
 				salesRepDataService.getAll("SalesRep");
 				shippingMethodDataService.getAll("ShippingMethod");
@@ -311,7 +314,9 @@
 			
 			public function convertToInvoice():void {
 				if(invoice!=null && !isNaN(invoice.id) && invoice.id!=0 && invoice is Estimate){ 
-					invoiceService.convertToInvoice(invoice);
+					if(invoice.onPendingList){
+						invoiceService.convertToInvoice(invoice);
+					}
 				}
 			} 
 			
@@ -1241,7 +1246,8 @@
 								   width="38"
 								   height="38"
 								   click="doSave();"
-								   id="file_button">
+								   id="file_button"
+								   enabled="{invoice.onPendingList}">
 						<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 					</mx:LinkButton>
 					<mx:Label x="10"

@@ -17,6 +17,9 @@
 		
 	<mx:Script>                                   
 		<![CDATA[
+			import com.efi.printsmith.events.CopyToNewEstimateEvent;
+			import com.efi.printsmith.events.CopyToNewInvoiceEvent;
+			import com.efi.printsmith.events.commandEvents.EditForms.EditEditEstimateEvent;
 			import com.efi.printsmith.pages.EstimateHistoryProperties;
 			import com.efi.printsmith.data.Estimate;
 			import mx.utils.StringUtil;
@@ -102,6 +105,7 @@
 				if(loadComponent!=null){
 					loadComponent.close();
 				}
+				pageStatus = "";
 				var message:String;
 				              
 				message = "Error: "                          
@@ -139,13 +143,17 @@
 			private function handleLoadSingleEstimateResult(event:ResultEvent):void {
 				estimate = event.result as Estimate;
 				if(pageStatus=="notes"){
+					pageStatus = "";
 					var estimateNotesView:EstimateNotesView = PopUpManager.createPopUp(this,EstimateNotesView,true) as EstimateNotesView;
 					estimateNotesView.estimate = estimate;
 					estimateNotesView.addEventListener(EstimateHistorySaveEvent.ESTIMATES_SAVE_EVENT,saveEstimates,false,0,true);
 				} else if(pageStatus=="properties"){
+					pageStatus = "";
 					var estimateHistoryProperties:EstimateHistoryProperties = PopUpManager.createPopUp(this,EstimateHistoryProperties,true) as EstimateHistoryProperties;
 					estimateHistoryProperties.estimate = estimate;
 					estimateHistoryProperties.addEventListener(EstimateHistorySaveEvent.ESTIMATES_SAVE_EVENT,saveEstimates,false,0,true);
+				} else {
+					doEditEstimate(estimate);
 				}
 			}
 			
@@ -153,6 +161,40 @@
 				openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')));
 				if(account!=null){
 					dataService.getEstimateByAccountId("Estimate", this.account.id);
+				}
+			}
+			
+			private function doDoubleClick():void {
+				var invoiceBase:InvoiceBase = estimate_grid.selectedItem as InvoiceBase;
+				dataServiceInvoice.getInvoice(invoiceBase.id);
+			}
+			
+			private function doEditEstimate(inv:InvoiceBase):void	{
+				if (Snowmass.getInstance().security.commandEnabled(EditEditEstimateEvent.COMMANDID)) {
+					var child:EditInvoice = new EditInvoice();
+					child.setInvoice(inv);
+					child.addEventListener(CopyToNewInvoiceEvent.COPY_TO_NEWINVOICE_EVENT,handleCopyToNewInvoiceResult,false,0,true);
+					child.addEventListener(CopyToNewEstimateEvent.COPY_TO_NEWESTIMATE_EVENT,handleCopyToNewEstimateResult,false,0,true);
+					var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
+				}
+			}
+			
+			private function handleCopyToNewInvoiceResult(event:CopyToNewInvoiceEvent):void {
+				if(event.invoice!=null){
+					var child:EditInvoice = new EditInvoice();
+					child.invoice = event.invoice;
+					var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
+				}
+			}
+			
+			private function handleCopyToNewEstimateResult(event:CopyToNewEstimateEvent):void {
+				if(event.estimate!=null){
+					var child:EditInvoice = new EditInvoice();
+					child.invoice = event.estimate;
+					var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
 				}
 			}
 		]]>
@@ -183,7 +225,7 @@
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Properties')}" width="6%" textAlign="center"/>		
 	</mx:HBox>
 	
-	<mx:DataGrid id="estimate_grid" width="100%" height="88%" dataProvider="{estimates}">
+	<mx:DataGrid id="estimate_grid" width="100%" height="88%" dataProvider="{estimates}" doubleClick="{doDoubleClick()}" doubleClickEnabled="true">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Created')}" dataField="created" labelFunction="getFormattedDate"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Estimate')}" dataField="invoiceNumber"/>

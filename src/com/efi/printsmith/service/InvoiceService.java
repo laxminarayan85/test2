@@ -163,6 +163,21 @@ public class InvoiceService extends SnowmassHibernateService {
 			}
 		}
 		if(invoiceBase instanceof Estimate) {
+			int totalJobSize = 0;
+			int defaultJobCount = 0;
+			if(invoice.getJobs()!=null) {
+				totalJobSize = invoice.getJobs().size();
+			}
+			for(JobBase jobBaseObj : invoice.getJobs()) {
+				if(jobBaseObj.getDefaultJob()) {
+					defaultJobCount++;
+				}
+			}
+			if(totalJobSize!=0 && defaultJobCount==0) {
+				for(JobBase jobBaseObj : invoice.getJobs()) {
+					jobBaseObj.setDefaultJob(true);
+				}
+			}
 			for(JobBase jobBaseObj : invoice.getJobs()) {
 				if(jobBaseObj.getDefaultJob()){
 					jobBaseObj.setId(0L);
@@ -209,6 +224,9 @@ public class InvoiceService extends SnowmassHibernateService {
 				chargeObj.setParentInvoice(invoice);
 			}
 		}
+		invoice.setConvertedInvoiceNo(null);
+		invoice.setOffPendingDate(null);
+		invoice.setOnPendingList(true);
 		return invoice;
 	}
 	
@@ -228,6 +246,21 @@ public class InvoiceService extends SnowmassHibernateService {
 					}
 					break;
 				}
+			}
+		}
+		int totalJobSize = 0;
+		int defaultJobCount = 0;
+		if(estimate.getJobs()!=null) {
+			totalJobSize = estimate.getJobs().size();
+		}
+		for(JobBase jobBaseObj : estimate.getJobs()) {
+			if(jobBaseObj.getDefaultJob()) {
+				defaultJobCount++;
+			}
+		}
+		if(totalJobSize!=0 && defaultJobCount==0) {
+			for(JobBase jobBaseObj : estimate.getJobs()) {
+				jobBaseObj.setDefaultJob(true);
 			}
 		}
 		for(JobBase jobBaseObj : estimate.getJobs()) {
@@ -259,6 +292,9 @@ public class InvoiceService extends SnowmassHibernateService {
 				chargeObj.setParentInvoice(estimate);
 			}
 		}
+		estimate.setConvertedInvoiceNo(null);
+		estimate.setOffPendingDate(null);
+		estimate.setOnPendingList(true);
 		return estimate;
 	}
 }
