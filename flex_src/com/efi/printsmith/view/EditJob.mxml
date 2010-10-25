@@ -48,7 +48,7 @@
 							  id="job_unitPrice"
 							  height="20"
 							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.unitPrice)}"
-							  focusOut="editUnitPrice(event)" mouseDown="textInputClick(event)" />
+							  change="editUnitPrice(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{label7}" position="before">
 				<mx:Label x="390"
@@ -257,7 +257,7 @@
 							  id="job_LFUnitPrice"
 							  height="20"
 							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.unitPrice)}"
-							  focusOut="editUnitPrice(event)" mouseDown="textInputClick(event)" />
+							  change="editUnitPrice(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="390"
@@ -486,7 +486,7 @@
 							  id="job_LFUnitPrice0"
 							  height="20"
 							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.unitPrice)}"
-							  focusOut="editUnitPrice(event)" mouseDown="textInputClick(event)" />
+							  change="editUnitPrice(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{hrule2}" position="before">
 				<mx:Label x="385"
