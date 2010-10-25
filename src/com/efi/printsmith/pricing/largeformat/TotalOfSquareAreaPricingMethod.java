@@ -21,7 +21,7 @@ public class TotalOfSquareAreaPricingMethod extends
 		double stockPrice = priceStockEngine.priceStock(job);
 		long area = 0;
 		try {
-			if (copierDefinition.getSquareAreaType() == "AreaFinishSize")
+			if (copierDefinition.getSquareAreaType().equals("AreaFinishSize"))
 				area = PriceListUtilities.getAreaFromSizeString(job.getFinishSize());
 			else
 				area = new Double(job.getRollWidth() * job.getCutOff()).longValue();
