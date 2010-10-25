@@ -103,6 +103,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 	import com.efi.printsmith.events.SaveAddressEvent;
 	import com.efi.printsmith.components.AddressEditorPopup;
 	import com.efi.printsmith.events.EncryptDataEvent;
+	import com.efi.printsmith.events.CreditCardTrackReadEvent;
 	import mx.utils.StringUtil;
 	import mx.collections.SortField;
 	import mx.collections.Sort;
@@ -199,6 +200,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 		salesRepDataService.getAll("SalesRep");
 		campaignDataService.getAll("Campaigns"); 
 		GradedataService.getAll("Grade");  
+		zipDataService.getAll("Zip");
 		
 //		openContactPicker();
 		
@@ -226,6 +228,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 		
 		contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);
 		
+     	Snowmass.getInstance().addEventListener(CreditCardTrackReadEvent.BRICKREAD, handleBrickRead);
 		
 		// mode stuff 
 		if (_mode == CT_FROM_PICKER)	
@@ -268,6 +271,29 @@ implements="com.efi.mdi.IMDIWindowAware">
 	}  
 	
     
+	private function handleBrickRead(ev:CreditCardTrackReadEvent):void 
+	{
+		var valid:Boolean;
+		var returnVal:Array = new Array;
+		
+		contact.creditCard.cardNumber = ev.brickData.parsedCard.cardNumber;
+		contact.creditCard.cardHolderName = ev.brickData.parsedCard.cardHolderName;
+		
+		contact.creditCard.expiresDate = ev.brickData.parsedCard.expiresDate;
+		cardexpiresdate.selectedDate = contact.creditCard.expiresDate;
+		
+		// following two must be in this order, the formatCreditCardNumber will zero out the cardNumber
+		returnVal = validCreditCard(contact.creditCard);
+		contact.creditCard.cardDisplayNumber = formatCreditCardNumber(ev.brickData.parsedCard.cardNumber);
+		
+		valid = returnVal[0] as Boolean;
+	//	cardstatus.text = returnVal[1] as String;
+		if (valid == true) {
+			contact.creditCard.type = returnVal[1] as String;
+			cardtype.text = returnVal[1] as String;
+			cardtype.selectedIndex = findItem(cardtype.text, creditCardPreferencesArray);
+		}
+	}
 
     public function getContact():Contact	{
     	return contact;
@@ -637,9 +663,9 @@ implements="com.efi.mdi.IMDIWindowAware">
 		contact.marketing.noMail = noMail.selected;
 		contact.marketing.personalAcct = personalAccount.selected;
 		contact.marketing.sportsInterst= sportsInterest.text;
-		tempCredit = cardtype.selectedItem as PreferencesCreditCard;
-		if (contact.creditCard != null && tempCredit != null)
-			contact.creditCard.type = tempCredit.cardType
+//		tempCredit = cardtype.selectedItem as PreferencesCreditCard;
+//		if (contact.creditCard != null && tempCredit != null)
+//			contact.creditCard.type = tempCredit.cardType;
 		
 		if (contact.parentAccount != null)	{
 			contact.parentAccount.accountId = accountID.text;
@@ -755,7 +781,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 			AccountsPicker.enabled = true;
 		}
 	
-		
+		cardzip.text = contact.creditCard.zipCode;
 		cardzip.selectedIndex = findItem(contact.creditCard.zipCode, zips);
 	
 		if (contact.creditCard.expiresDate != null)
@@ -973,6 +999,20 @@ implements="com.efi.mdi.IMDIWindowAware">
 			}
 			else {
 				cardzip.selectedItem = item;
+			}
+		}
+	}
+
+	private function doCreditCardType(): void{                             
+		var sales:SalesRep;
+		var result:Boolean;
+		
+		if (cardtype.text != null && cardtype.text != "" && cardtype.selectedIndex == -1) {
+			var item:int = findItem(cardtype.text, creditCardPreferencesArray);
+			if (item == -1) {
+			}
+			else {
+				contact.creditCard.type = cardtype.text;
 			}
 		}
 	}
@@ -1221,10 +1261,16 @@ implements="com.efi.mdi.IMDIWindowAware">
 			
 	}
 	public function getCreditName(item:Object):String{
-		var tmpCredit:PreferencesCreditCard = item as PreferencesCreditCard
+	//	var tmpCredit:PreferencesCreditCard = item as PreferencesCreditCard
 		
-		if (tmpCredit != null && tmpCredit.cardType != null && tmpCredit.cardType != "") {
-			return tmpCredit.cardType;
+	//	if (tmpCredit != null && tmpCredit.cardType != null && tmpCredit.cardType != "") {
+	//		return tmpCredit.cardType;
+	//	} else {
+	//		return "None";
+	//	}
+	
+		if (contact != null && contact.creditCard != null && contact.creditCard.type != "") {
+			return contact.creditCard.type;
 		} else {
 			return "None";
 		}
@@ -1288,17 +1334,93 @@ implements="com.efi.mdi.IMDIWindowAware">
 		
 		return(str);
 	}
+
+	private function doReadExpirationDate(event:Event):void {
+		var valid:Boolean;
+		var returnVal:Array = new Array;
+
+		var dateObj:Date = event.currentTarget.selectedDate as Date;
+		
+		if (dateObj != null) {
+			contact.creditCard.expiresDate = dateObj;
+			
+			returnVal = validCreditCard(contact.creditCard);
+			
+			valid = returnVal[0] as Boolean;
+			
+		//	if (valid == false) {
+		//		
+		//	}
+		}
+	}
 	
 	private function doReadCardNumber():void{		
+		var returnVal:Array = new Array;
+		var valid:Boolean;
+		
 		cardnumber.text = StringUtil.trim(cardnumber.text);
 		if (CreditCardDataEntry.IsCardNumberModeTen(cardnumber.text) == false) {
 			cardnumber.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.NotValidNumber');
 		} else {
 			contact.creditCard.cardNumber = cardnumber.text;
+			
+			returnVal = validCreditCard(contact.creditCard);
+			valid = returnVal[0] as Boolean;
+			if (valid == true) {
+				contact.creditCard.type = returnVal[1] as String;
+				cardtype.text = returnVal[1] as String;		// update the pop-menu
+				cardtype.selectedIndex = findItem(cardtype.text, creditCardPreferencesArray);
+			}
 			cardnumber.text = formatCreditCardNumber(cardnumber.text);
 			contact.creditCard.cardDisplayNumber = cardnumber.text;
 			contact.creditCard.permanent = true;		// so data purge will not remove
 		}
+	}
+
+	private function validCreditCard(testCC:CreditCard):Array {
+		var results:Boolean = false;
+		var cardType:String = new String;
+		var cardTitle:String = new String;
+		var message:String = new String;
+		var	index:Number;
+		var cardTypeValid:Boolean = false;
+		var localCCPref:PreferencesCreditCard = new PreferencesCreditCard;
+		var today:Date = new Date;
+		
+		if (testCC.cardNumber.length > 0) {
+			cardType = testCC.cardNumber.charAt(0);
+		}
+				
+		if (creditCardPreferencesArray.length > 0) {
+			for (index = 0; index < creditCardPreferencesArray.length; ++index) {
+				localCCPref = creditCardPreferencesArray.getItemAt(index) as PreferencesCreditCard;
+				if (localCCPref != null && localCCPref.activeAccepted == true) {
+					if (localCCPref.firstNumberPrefix.toString() == cardType) {
+						cardTypeValid = true;
+						cardTitle = localCCPref.cardType;
+					}
+				}
+			}
+		}
+		
+		if (testCC.cardNumber.length < 13 || testCC.cardNumber.length > 19) {
+			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.NotValidNumber');
+		} else if (cardTypeValid == false) {
+			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Cardtypenotaccepted');
+		} else if (testCC.cardHolderName.length == 0) {
+			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Needcardholdername');
+		} else if (testCC.expiresDate == null || testCC.expiresDate.valueOf() == 0) {
+			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Needsexpirationdate');
+		} else if (testCC.expiresDate < today) {
+			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Cardisexpired');
+		} else if (CreditCardDataEntry.IsCardNumberModeTen(testCC.cardNumber) == false) {
+			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.NotValidNumber');
+		} else {
+			message = cardTitle;
+			results = true;
+		}
+		
+		return [results, message, cardType];
 	}
 
 	private function doGrade():void{
@@ -1369,10 +1491,18 @@ implements="com.efi.mdi.IMDIWindowAware">
 		
 	}
 	
+    private function dateField_labelFunc(item:Date):String {
+        if (item == null) {
+            return "";
+        }
+        return formatDate.format(item);
+    }
+	
 ]]>	
 
                              
 </mx:Script>
+<mx:DateFormatter id="formatDate" formatString="MM/DD/YYYY" />
 
 <mx:VBox width="100%" height="100%">
 	<mx:Canvas id="mainbox" width="100%" height="100%">
@@ -1457,12 +1587,16 @@ implements="com.efi.mdi.IMDIWindowAware">
 				<mx:Label x="160" y="185" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardManAppvCmd.Zip')}" textAlign="right" width="75"/>
 				<mx:TextInput x="243" y="30" id="cardholder" text="{contact.creditCard.cardHolderName}"/>
 				<mx:TextInput x="243" y="56" id="cardnumber" text="{contact.creditCard.cardDisplayNumber}" focusOut="doReadCardNumber()"/>
-				<mx:DateField x="243" y="108" id="cardexpiresdate" text="{contact.creditCard.expiresDate}" showToday="true" width="160" editable="true"/>
+				<mx:DateField x="243" y="108" id="cardexpiresdate" 
+					labelFunction="dateField_labelFunc" formatString="MM/DD/YYYY" 
+					text="{contact.creditCard.expiresDate}" 
+					change="{doReadExpirationDate(event)}"
+					showToday="true" width="160" editable="true"/>
 				<mx:TextInput x="243" y="157" id="cardstreet" text="{contact.creditCard.address1}"/>
 				<!--<mx:TextInput x="243" y="183" width="80" id="cardzip" text="{contact.creditCard.address.zip}"/>-->
 				<fc:AutoComplete id="cardzip" x="243" y="183" width="80"  dataProvider="{zips}"  labelField="name" focusOut="doZipCredit()" lookAhead="true"/>
 					
-				<mx:ComboBox x="243" y="82" id="cardtype" dataProvider="{creditCardPreferencesArray}" labelFunction="getCreditName" width="112"></mx:ComboBox>
+				<mx:ComboBox x="243" y="82" id="cardtype" dataProvider="{creditCardPreferencesArray}" labelFunction="getCreditName" width="112" focusOut="doCreditCardType()"></mx:ComboBox>
 			</mx:Canvas>
 			<mx:Canvas id="canvasWeb" label="Web" width="100%" height="100%">
 			</mx:Canvas>

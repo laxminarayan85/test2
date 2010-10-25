@@ -1006,6 +1006,7 @@
 			var formatCode:String;
 			var expirationYY:String;
 			var expirationMM:String;
+			var expirationStr:String;
 			var cr:String = String.fromCharCode(13);
 			var k:int;
 			var len:int;
@@ -1027,7 +1028,7 @@
 				localCard.parsedCard.cardNumber = gCardDataBuffer.substring(2,k);
 				
 				myRegExp = new RegExp(" ","g");		// find a SPACE character, all of them
-				localCard.parsedCard.cardNumber.replace(myRegExp,"");	// replace the SPACE with <empty>
+				localCard.parsedCard.cardNumber = localCard.parsedCard.cardNumber.replace(myRegExp,"");	// replace the SPACE with <empty>
 				
 				k += 1;  // skip the "^" symbol
 						
@@ -1064,8 +1065,9 @@
 				// remove white space at the end, ie.. CR, LF, SPACE
 				localCard.trackOne = StringUtil.trim(localCard.trackOne);
 				localCard.trackTwo = StringUtil.trim(localCard.trackTwo);
-				
-				
+
+				localCard.parsedCard.expiresDate = new Date((2000+parseInt(expirationYY)), parseInt(expirationMM), 0);
+
 				selectEvent = new CreditCardTrackReadEvent(CreditCardTrackReadEvent.BRICKREAD, localCard);
 				dispatchEvent(selectEvent);
 			} else {

@@ -119,22 +119,27 @@ width="100%" height="100%"  creationComplete="init()"
 		var valid:Boolean;
 		var returnVal:Array = new Array;
 		
-		localTransation.creditCard.cardNumber = ev.brickData.parsedCard.cardNumber;
-		returnVal = validCreditCard(localTransation.creditCard);
-		
-		valid = returnVal[0] as Boolean;
-		cardstatus.text = returnVal[1] as String;
-		localTransation.creditCard.type = returnVal[2] as String;
-
-		localTransation.creditCard.cardDisplayNumber = formatCreditCardNumber(ev.brickData.parsedCard.cardNumber);
 		localTransation.creditCard.cardHolderName = ev.brickData.parsedCard.cardHolderName;
 		localTransation.creditCard.expiresDate = ev.brickData.parsedCard.expiresDate;
+
+		localTransation.creditCard.cardNumber = ev.brickData.parsedCard.cardNumber;
+		localTransation.creditCard.cardDisplayNumber = formatCreditCardNumber(ev.brickData.parsedCard.cardNumber);
+		returnVal = validCreditCard(localTransation.creditCard);
+		
+		localTransation.creditCard.cardDisplayNumber = formatCreditCardNumber(ev.brickData.parsedCard.cardNumber);
+
+		valid = returnVal[0] as Boolean;
+		cardstatus.text = returnVal[1] as String;
+		localTransation.creditCard.type = returnVal[1] as String;
+
 		
 		if (valid == false) {
 			okButton.enabled = false;
 		} else {
 			okButton.enabled = true;
 		}
+		
+		amount.setFocus();
 	}
 
 	private function handleFault(ev:FaultEvent):void
