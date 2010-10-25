@@ -214,6 +214,7 @@
 <mx:Script>
 <![CDATA[
 	import com.efi.printsmith.data.InvoiceBase;
+	import com.efi.printsmith.data.JobBase;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.CashDrawer;
 	import com.efi.printsmith.data.Tape;
@@ -232,6 +233,8 @@
 	import com.efi.printsmith.data.PreferencesCreditCard;
 	import com.efi.printsmith.data.Account;
 	import com.efi.printsmith.data.UnpurchasedMerchandise;
+
+	import com.efi.printsmith.events.JobEditCompleteEvent;
 
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -506,6 +509,29 @@
 	private function doInvoice():void {
 		this.currentState = "invoiceState";
 	}
+	
+	private function doAddJob():void {
+		var editJobWindow:EditJob= new EditJob();
+		var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
+		Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobCmd.NewJob'),editJobWindow, -1,-1,-1,-1, parentId);
+		editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);
+	}
+
+	private function addNewJob(event:Event):void
+	{
+		var target:EditJob=event.target as EditJob;
+
+		paymentMethodStateString = "";
+		
+		if (target.job != null) {
+			cashRegister.quantity = 1;
+			cashRegister.unitprice = target.job.pricingRecord.unitPrice;
+			cashRegister.subtotal = target.job.pricingRecord.totalPrice;
+				
+			doAccept();
+		}
+	}
+	
 	private var paymentMethodStateString:String = "";
 	private function paymentMethodChanged(event:Event):void {
 		var rbvalue:String = event.currentTarget.selectedValue;
@@ -857,6 +883,9 @@
 	<mx:Button x="242" y="10" width="38" height="38" click="doInvoice();" enabled="{enableSave}" id="btnInvoice">
 		<mx:icon>@Embed(source='../../../../assets/InvoiceWONotes.png')</mx:icon>
 	</mx:Button>
+	<mx:Button x="288" y="10" width="38" height="38" click="doAddJob();" enabled="{enableSave}" id="btnAddJob">
+		<mx:icon>@Embed(source='../../../../assets/new_job.png')</mx:icon>
+	</mx:Button>
 
 	<mx:Canvas x="130" y="80" width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
 		<mx:Button x="19" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CustAcct')}" click="doAccount();"/>
@@ -915,4 +944,5 @@
 	<mx:Label x="150" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Post')}"/>
 	<mx:Label x="199" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Cancel')}"/>
 	<mx:Label x="242" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'barcodeCmd.Invoice')}"/>
+	<mx:Label x="288" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.NewJob')}"/>
 </mx:TitleWindow>
