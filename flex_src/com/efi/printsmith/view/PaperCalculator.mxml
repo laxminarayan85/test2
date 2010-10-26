@@ -52,7 +52,12 @@
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.view.PaperCalculatorTemplate;
-			
+            import mx.events.DragEvent;
+            import mx.managers.DragManager;
+            import mx.core.DragSource;
+            import mx.collections.IList;
+            import mx.collections.ArrayCollection;
+            			
 			[Bindable]
 			private var job:Job;
 			[Bindable]
@@ -305,9 +310,9 @@
 				setOverrideForField(txtCutstoFinish, job.orFinishCuts);
 				
 				// the parent size comes from the stock definition
-				if (job.stock != null)
+				if (job.stock != null) {
 					this.parent_size_edit.enabled = false;
-				else
+				} else
 					this.parent_size_edit.enabled = true;
 
 			}
@@ -505,6 +510,7 @@
 			private function fieldChanged(evt:FocusEvent):void
 			{	
 				var sizeStr:String;
+				var localSize:Dimension;
 				
 				switch (evt.currentTarget) {
 					case parent_size_edit:
@@ -519,26 +525,30 @@
 							job.parentSize.height = Snowmass.getLengthFromSizeString(job.parentSize);
 						}
 						else {
-							job.parentSize = parent_size_edit.selectedItem as Dimension;
+							localSize = parent_size_edit.selectedItem as Dimension;
+							job.parentSize.name = localSize.name;
+							job.parentSize.type = localSize.type;
+							job.parentSize.width = localSize.width;
+							job.parentSize.height = localSize.height;
 						}
 						
 						// keep in sync
 						if (job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
 							job.runSize.name = job.parentSize.name;
+							job.runSize.type = job.parentSize.type;
 							job.runSize.height = job.parentSize.height;
 							job.runSize.width = job.parentSize.width;
 							run_size_edit.text = job.runSize.name;
 							run_size_edit.selectedIndex = parent_size_edit.selectedIndex;
-							run_size_edit.selectedItem = parent_size_edit.selectedItem;
 						}
 
 						if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
 							job.finishSize.name = job.runSize.name;
+							job.finishSize.type = job.runSize.type;
 							job.finishSize.height = job.runSize.height;
 							job.finishSize.width = job.runSize.width;
 							finish_size_edit.text = job.finishSize.name;
 							finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
-							finish_size_edit.selectedItem = run_size_edit.selectedItem;
 						}
 						refreshCalcAndImage();
 						break;
@@ -555,17 +565,21 @@
 							job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
 						}
 						else {
-							job.runSize = run_size_edit.selectedItem as Dimension;
+							localSize = run_size_edit.selectedItem as Dimension;
+							job.runSize.name = localSize.name;
+							job.runSize.type = localSize.type;
+							job.runSize.width = localSize.width;
+							job.runSize.height = localSize.height;
 						}
 						
 						// keep in sync
 						if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
 							job.finishSize.name = job.runSize.name;		
+							job.finishSize.type = job.runSize.type;		
 							job.finishSize.width = job.runSize.width;		
 							job.finishSize.height = job.runSize.height;		
 							finish_size_edit.text = job.finishSize.name;
 							finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
-							finish_size_edit.selectedItem = run_size_edit.selectedItem;
 						}
 						
 						refreshCalcAndImage();
@@ -583,7 +597,11 @@
 							job.finishSize.height = Snowmass.getLengthFromSizeString(job.finishSize);
 						}
 						else {
-							job.finishSize = finish_size_edit.selectedItem as Dimension;
+							localSize = finish_size_edit.selectedItem as Dimension;
+							job.finishSize.name = localSize.name;
+							job.finishSize.type = localSize.type;
+							job.finishSize.width = localSize.width;
+							job.finishSize.height = localSize.height;
 						}
 						
 						refreshCalcAndImage();
@@ -591,6 +609,73 @@
 				
 				}
 			}
+			
+            protected function dragEnterHandler(event:DragEvent):void
+            {
+                event.preventDefault();
+                var myDragTarget:ComboBox=event.currentTarget as ComboBox;
+                
+                if (myDragTarget != null && myDragTarget.enabled == true) {
+               	 	DragManager.acceptDragDrop(myDragTarget);
+               	}
+            }
+ 
+            protected function dragOverHandler(event:DragEvent):void
+            {
+                var myDropTarget:ComboBox=ComboBox(event.currentTarget);
+                
+                if (myDropTarget != null && myDropTarget.enabled == true) {
+               		DragManager.showFeedback(DragManager.COPY);
+               	} else {
+               		DragManager.showFeedback(DragManager.NONE);
+               	}
+            }
+            
+			private function dragDropHandlerAllSizes(event:DragEvent):void {
+              if (event.dragSource.hasFormat("items"))
+              {
+                // Explicitly handle the dragDrop event.            
+                event.preventDefault();
+
+                // Get drop target.
+                var dropTarget:ComboBox = ComboBox(event.currentTarget);
+
+                var itemsArray:Array = 
+                    event.dragSource.dataForFormat('items') as Array;
+                    
+                var tempItem:Dimension = itemsArray[0] as Dimension;
+    			
+    			if(dropTarget != null && tempItem != null) {
+    				
+       				dropTarget.text = tempItem.name;
+       				
+       				if (dropTarget.id == finish_size_edit.id) {
+	   					job.finishSize.name = tempItem.name;		
+	   					job.finishSize.type = tempItem.type;		
+						job.finishSize.width = tempItem.width;		
+						job.finishSize.height = tempItem.height;		
+	
+	       				finish_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
+	       			} else if (dropTarget.id == run_size_edit.id) {
+	   					job.runSize.name = tempItem.name;		
+	   					job.runSize.type = tempItem.type;		
+						job.runSize.width = tempItem.width;		
+						job.runSize.height = tempItem.height;		
+
+	       				run_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
+	       			} else if (dropTarget.id == parent_size_edit.id) {
+	   					job.parentSize.name = tempItem.name;		
+	   					job.parentSize.type = tempItem.type;		
+						job.parentSize.width = tempItem.width;		
+						job.parentSize.height = tempItem.height;		
+	
+	       				parent_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
+	       			}
+	       			
+					refreshCalcAndImage();
+       			}
+              }
+            }
 ]]>
 
 	</mx:Script>
@@ -908,8 +993,11 @@
 					  y="113" width="192" height="20"/>
 		<mx:ComboBox x="21"
 					  y="160"
-					   editable="true"
-					  id="parent_size_edit" width="192"  
+					  editable="true"
+					  dragDrop="dragDropHandlerAllSizes(event);"
+					  dragOver="dragOverHandler(event);"
+					  dragEnter="dragEnterHandler(event);"
+				 	  id="parent_size_edit" width="192"  
 					  labelFunction="sizeDisplay" 
 					  height="20" dataProvider="{dimensions}" focusOut="fieldChanged(event)"/>
 		<mx:Label x="21"
@@ -921,7 +1009,10 @@
 		<mx:ComboBox x="21"
 					  y="207"
 					  dataProvider="{dimensions}"
-					   labelFunction="sizeDisplay"
+					  labelFunction="sizeDisplay"
+					  dragDrop="dragDropHandlerAllSizes(event);"
+					  dragOver="dragOverHandler(event);"
+					  dragEnter="dragEnterHandler(event);"
 					  editable="true"
 					  id="run_size_edit" width="192" height="20" focusOut="fieldChanged(event)"/>
 		<mx:Label x="21"
@@ -932,6 +1023,9 @@
 					  dataProvider="{dimensions}"
 					  labelFunction="sizeDisplay"
 					  editable="true"
+					  dragDrop="dragDropHandlerAllSizes(event);"
+					  dragOver="dragOverHandler(event);"
+					  dragEnter="dragEnterHandler(event);"
 					  id="finish_size_edit" width="192" height="20" focusOut="fieldChanged(event)"/>
 		<mx:Button x="32"
 				   y="21"
@@ -1014,7 +1108,12 @@
 		<mx:RadioButton x="532" y="428" label="Parent, Finish" id="parent_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
 		<mx:RadioButton x="634" y="428" label="Parent, Run" id="parent_run" value="{Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
 		<mx:RadioButton x="725" y="428" label="Run, Finish" id="run_finish" value="{Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH}" groupName="calc_order_radio_group" click="refreshCalcAndImage()" labelPlacement="right"/>
-		<mx:List x="21" y="294" height="310" width="192" id="size_list" dataProvider="{dimensions}" labelFunction="sizeDisplay"></mx:List>
+		<mx:List x="21" y="294" height="310" width="192" 
+			dragEnabled="true"
+			dragMoveEnabled="false"
+			id="size_list" 
+			dataProvider="{dimensions}" 
+			labelFunction="sizeDisplay"></mx:List>
 
 	</mx:Canvas>
 </mx:TitleWindow>

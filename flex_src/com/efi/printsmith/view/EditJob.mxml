@@ -1068,6 +1068,7 @@
 
 			private function mapToJobData():void
 			{
+				var localSize:Dimension;
 				job.binderyWaste=parseInt(bindery_waste.text);
 				job.brokered=check_brokered.selected;
 				job.comment=job_comment.text;
@@ -1122,16 +1123,41 @@
 						job.parentSize = new Dimension;
 					job.parentSize.name = this.roll_width.text;
 				}
-				else
-					if ( job.parentSize != null)
-						job.parentSize = job_parent.selectedItem as Dimension;
-				if ( job.runSize != null && job_size.selectedItem != null)
-					job.runSize = job_size.selectedItem as Dimension;
-				if ( job.foldedSize != null)
-					job.foldedSize = job_fold_size.selectedItem as Dimension;
-				if ( job.finishSize != null && job_finish_size.selectedItem != null)
-					job.finishSize = job_finish_size.selectedItem as Dimension;
-		
+				else {
+					if ( job.parentSize != null) {
+					//	job.parentSize = job_parent.selectedItem as Dimension;
+						localSize = job_parent.selectedItem as Dimension;
+						job.parentSize.name = localSize.name;
+						job.parentSize.type = localSize.type;
+						job.parentSize.height = localSize.height;
+						job.parentSize.width = localSize.width;
+					}
+				}
+				
+				if ( job.runSize != null && job_size.selectedItem != null) {
+				//	job.runSize = job_size.selectedItem as Dimension;
+					localSize = job_size.selectedItem as Dimension;
+					job.runSize.name = localSize.name;
+					job.runSize.type = localSize.type;
+					job.runSize.height = localSize.height;
+					job.runSize.width = localSize.width;
+				}
+				if ( job.foldedSize != null) {
+				//	job.foldedSize = job_fold_size.selectedItem as Dimension;
+					localSize = job_fold_size.selectedItem as Dimension;
+					job.foldedSize.name = localSize.name;
+					job.foldedSize.type = localSize.type;
+					job.foldedSize.height = localSize.height;
+					job.foldedSize.width = localSize.width;
+				}
+				if ( job.finishSize != null && job_finish_size.selectedItem != null) {
+				//	job.finishSize = job_finish_size.selectedItem as Dimension;
+					localSize = job_finish_size.selectedItem as Dimension;
+					job.finishSize.name = localSize.name;
+					job.finishSize.type = localSize.type;
+					job.finishSize.height = localSize.height;
+					job.finishSize.width = localSize.width;
+				}
 
 				if (cutOff_edit != null)
 					job.cutOff= parseInt(cutOff_edit.text);
@@ -1565,6 +1591,7 @@
 						if (job.finishSize == null)
 							job.finishSize = new Dimension();
 						this.job.finishSize.name = stockDefinitionObj.parentsize.name + " x " + cutoff.toString();
+						this.job.finishSize.type = stockDefinitionObj.parentsize.type;
 						this.job.finishSize.width = stockDefinitionObj.parentsize.width;
 						this.job.finishSize.height = cutoff;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
@@ -1573,7 +1600,10 @@
 						this.job.foldedSize.name = "";
 						job_fold_size.text = "";
 						if (this.estimatingPreferences.leaveFoldedSizeEmpty != true) {
-							this.job.foldedSize = this.job.finishSize;
+							this.job.foldedSize.name = this.job.finishSize.name;
+							this.job.foldedSize.type = this.job.finishSize.type;
+							this.job.foldedSize.width = this.job.finishSize.width;
+							this.job.foldedSize.height = this.job.finishSize.height;
 							this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
 						}
 						if (this.job_type.text == "Large Format" && stockDefinitionObj.defaultLargeCopier != null) {
@@ -1585,32 +1615,38 @@
 					}
 					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color" || this.job_type.text == "Blank" || this.job_type.text == "List") {
 						this.job.parentSize.name = stockDefinitionObj.parentsize.name;
+						this.job.parentSize.type = stockDefinitionObj.parentsize.type;
 						this.job.parentSize.height = stockDefinitionObj.parentsize.height;
 						this.job.parentSize.width = stockDefinitionObj.parentsize.width;
 
 						this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
 						if (stockDefinitionObj.normalRunSize == null || stockDefinitionObj.normalRunSize.name == "") {
 							this.job.runSize.name = stockDefinitionObj.parentsize.name;
+							this.job.runSize.type = stockDefinitionObj.parentsize.type;
 							this.job.runSize.height = stockDefinitionObj.parentsize.height;
 							this.job.runSize.width = stockDefinitionObj.parentsize.width;
 						} else {
 							this.job.runSize.name = stockDefinitionObj.normalRunSize.name;
+							this.job.runSize.type = stockDefinitionObj.normalRunSize.type;
 							this.job.runSize.height = stockDefinitionObj.normalRunSize.height;
 							this.job.runSize.width = stockDefinitionObj.normalRunSize.width;
 						}
 						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
 						if (this.job.runSize.width * this.job.runSize.height < this.job.parentSize.width * this.job.parentSize.height) {
 							this.job.finishSize.name = this.job.runSize.name;
+							this.job.finishSize.type = this.job.runSize.type;
 							this.job.finishSize.height = this.job.runSize.height;
 							this.job.finishSize.width = this.job.runSize.width;
 						} else {
 							this.job.finishSize.name = stockDefinitionObj.parentsize.name;
+							this.job.finishSize.type = stockDefinitionObj.parentsize.type;
 							this.job.finishSize.height = stockDefinitionObj.parentsize.height;
 							this.job.finishSize.width = stockDefinitionObj.parentsize.width;
 						}
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 						if (this.estimatingPreferences.leaveFoldedSizeEmpty != true) {
 							this.job.foldedSize.name = this.job.finishSize.name;
+							this.job.foldedSize.type = this.job.finishSize.type;
 							this.job.foldedSize.height = this.job.finishSize.height;
 							this.job.foldedSize.width = this.job.finishSize.width;
 						}
@@ -1631,16 +1667,19 @@
 					}
 					else {
 						this.job.parentSize.name = stockDefinitionObj.normalRunSize.name;
+						this.job.parentSize.type = stockDefinitionObj.normalRunSize.type;
 						this.job.parentSize.height = stockDefinitionObj.normalRunSize.height;
 						this.job.parentSize.width = stockDefinitionObj.normalRunSize.width;
 						this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
 						
 						this.job.runSize.name = stockDefinitionObj.normalRunSize.name;
+						this.job.runSize.type = stockDefinitionObj.normalRunSize.type;
 						this.job.runSize.height = stockDefinitionObj.normalRunSize.height;
 						this.job.runSize.width = stockDefinitionObj.normalRunSize.width;
 						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
 						
 						this.job.finishSize.name = stockDefinitionObj.normalRunSize.name;
+						this.job.finishSize.type = stockDefinitionObj.normalRunSize.type;
 						this.job.finishSize.height = stockDefinitionObj.normalRunSize.height;
 						this.job.finishSize.width = stockDefinitionObj.normalRunSize.width;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
@@ -1895,6 +1934,8 @@
 			private function fieldChanged(evt:FocusEvent):void
 			{	
 				var doUpdatePrice:Boolean = false;
+				var localSize:Dimension;
+				
 				mapToJobData();
 				switch (evt.currentTarget) {
 				case this.job_ordered:
@@ -1969,7 +2010,12 @@
 						job.parentSize.height = Snowmass.getLengthFromSizeString(job.parentSize);
 					}
 					else {
-						job.parentSize = job_parent.selectedItem as Dimension;
+						localSize = job_parent.selectedItem as Dimension;
+						job.parentSize.name = localSize.name;
+						job.parentSize.type = localSize.type;
+						job.parentSize.height = localSize.height;
+						job.parentSize.width = localSize.width;
+
 						refreshImageAndWeight();
 					}
 					break;
@@ -1987,7 +2033,13 @@
 						job.finishSize.height = Snowmass.getLengthFromSizeString(job.finishSize);
 					}
 					else if (job_finish_size.selectedItem != null) {
-						job.finishSize = job_finish_size.selectedItem as Dimension;
+						//job.finishSize = job_finish_size.selectedItem as Dimension;
+						localSize = job_finish_size.selectedItem as Dimension;
+						job.finishSize.name = localSize.name;
+						job.finishSize.type = localSize.type;
+						job.finishSize.height = localSize.height;
+						job.finishSize.width = localSize.width;
+
 						if (job.finishSize.width * job.finishSize.height > job.runSize.width * job.runSize.height) {
 							//job.finishSize = oldDimension;
 							//job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
@@ -2010,8 +2062,14 @@
 						job.foldedSize.name = foldSizeStr;
 						job.foldedSize.width = Snowmass.getWidthFromSizeString(job.foldedSize);
 						job.foldedSize.height = Snowmass.getLengthFromSizeString(job.foldedSize);
-					} else
-						job.foldedSize = job_fold_size.selectedItem as Dimension;
+					} else {
+						//job.foldedSize = job_fold_size.selectedItem as Dimension;
+						localSize = job_fold_size.selectedItem as Dimension;
+						job.foldedSize.name = localSize.name;
+						job.foldedSize.type = localSize.type;
+						job.foldedSize.height = localSize.height;
+						job.foldedSize.width = localSize.width;
+					}
 					break;
 				case this.job_size:
 					doUpdatePrice = true;
@@ -2027,7 +2085,13 @@
 						job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
 					}
 					else if (job_size.selectedItem != null) {
-						job.runSize = job_size.selectedItem as Dimension;
+						//job.runSize = job_size.selectedItem as Dimension;
+						localSize = job_size.selectedItem as Dimension;
+						job.runSize.name = localSize.name;
+						job.runSize.type = localSize.type;
+						job.runSize.height = localSize.height;
+						job.runSize.width = localSize.width;
+
 						if (job.runSize.width * job.runSize.height > job.parentSize.width * job.parentSize.height) {
 							//job.runSize = oldDimension;
 							//job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
@@ -2119,11 +2183,24 @@
 				var finish:Number;
 				var parent:Number;
 				var basic:Number;
-				if ( job.parentSize != null)
-						job.parentSize = job_parent.selectedItem as Dimension;
-				if ( job.finishSize != null && job_finish_size.selectedIndex > -1)
-					job.finishSize = job_finish_size.selectedItem as Dimension;
+				var localSize:Dimension;
 				
+				if ( job.parentSize != null) {
+					//job.parentSize = job_parent.selectedItem as Dimension;
+					localSize = job_parent.selectedItem as Dimension;
+					job.parentSize.name = localSize.name;
+					job.parentSize.type = localSize.type;
+					job.parentSize.height = localSize.height;
+					job.parentSize.width = localSize.width;
+				}
+				if ( job.finishSize != null && job_finish_size.selectedIndex > -1) {
+				//	job.finishSize = job_finish_size.selectedItem as Dimension;
+					localSize = job_finish_size.selectedItem as Dimension;
+					job.finishSize.name = localSize.name;
+					job.finishSize.type = localSize.type;
+					job.finishSize.height = localSize.height;
+					job.finishSize.width = localSize.width;
+				}
 				if ( job.stock != null)
 				 if( this.currentState != "LargeFormat"){
 				   finish = job.finishSize.width * job.finishSize.height;
