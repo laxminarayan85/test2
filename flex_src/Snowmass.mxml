@@ -481,7 +481,7 @@
 		 	paperCalWindow.setJob(job);
 		}
 		
-		public static function getLengthFromSizeString(size:Dimension):Number {
+		public static function getWidthFromSizeString(size:Dimension):Number {
 			var lengthString:String = "0";
 	
 			var i:int = size.name.indexOf("x");
@@ -492,7 +492,7 @@
 			return parseFloat(lengthString);
 		}
 	
-		public static function getWidthFromSizeString(size:Dimension):Number {
+		public static function getLengthFromSizeString(size:Dimension):Number {
 			var widthString:String = "0";
 	
 			var i:int = size.name.indexOf("x");
