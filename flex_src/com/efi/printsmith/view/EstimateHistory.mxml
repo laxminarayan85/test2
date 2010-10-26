@@ -101,6 +101,7 @@
 					
 			private function handleLoadEstimatesResult(ev:ResultEvent):void {
 				estimates = ev.result as ArrayCollection;
+				pickerFilter.clearFilter(true);
 			}
 			
 			private function handleFault(event:FaultEvent):void {
@@ -271,7 +272,7 @@
 		</mx:columns>
 	</mx:DataGrid>
 
-	<filter:PickerFilter width="100%" height="5%" showExtendedSearch="false"
+	<filter:PickerFilter id="pickerFilter" width="100%" height="5%" showExtendedSearch="false"
 		searchComponent="{estimate_grid}" listData="{estimates}" searchCriteria="{getSearchBy()}" />
 	
 </mx:Panel>

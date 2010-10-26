@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="600" height="400"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="600" height="275"
 	creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'histDetailCmd.HistoryDetail')}" xmlns:components="com.efi.printsmith.common.components.*">
 	
@@ -32,10 +32,12 @@
 					showJobs = true;
 					statusLabel = "-";
 					statusString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'histDetailCmd.Hidejobinformation');
+					this.height = 425;
 				} else if(showJobs){
 					showJobs = false;
 					statusLabel = "+";
 					statusString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'histDetailCmd.Showjobinformation');
+					this.height = 275;
 				}
 			}
 			
@@ -83,7 +85,7 @@
 	
 	<mx:HBox width="100%">
 		<mx:Label text="{statusLabel}" click="{showHideJobs()}"/>
-		<mx:Label text="{statusString}" fontWeight="bold"/>
+		<mx:Label text="{statusString}" fontWeight="bold" click="{showHideJobs()}"/>
 	</mx:HBox>
 	
 	<mx:List dataProvider="{estimate.jobs}" width="100%" labelField="description" visible="{showJobs}" includeInLayout="{showJobs}"/>
