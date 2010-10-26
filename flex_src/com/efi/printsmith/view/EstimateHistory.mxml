@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Estmate History" name="Estmate History"
 	width="100%" height="100%" headerHeight="0"  creationComplete="init()" layout="vertical"
-    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory')}">
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory')}" xmlns:filter="com.efi.printsmith.common.components.filter.*">
     
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountsResult(event)"/>
@@ -17,6 +17,8 @@
 		
 	<mx:Script>                                   
 		<![CDATA[
+			import com.efi.printsmith.common.components.filter.FilterSearchBy;
+			import com.efi.printsmith.common.components.filter.FilterProperty;
 			import com.efi.printsmith.events.CopyToNewEstimateEvent;
 			import com.efi.printsmith.events.CopyToNewInvoiceEvent;
 			import com.efi.printsmith.events.commandEvents.EditForms.EditEditEstimateEvent;
@@ -199,6 +201,36 @@
 					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child,-1,-1,-1,-1, parentId);
 				}
 			}
+			
+			private function getSearchBy():ArrayCollection {
+				var sc:ArrayCollection = new ArrayCollection();
+			
+				var fp:FilterProperty = new FilterProperty(null, "created");
+				var sc1:FilterSearchBy = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Created'), fp);
+				sc1.searchFunction = dateComparison;
+				sc.addItem(sc1);
+		
+				fp = new FilterProperty(null, "invoiceNumber");
+				sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Estimate'), fp);
+				sc.addItem(sc1);
+		
+				fp = new FilterProperty(null, "name");
+				sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Title'), fp);
+				sc.addItem(sc1);
+				
+				return sc;
+		
+			}
+			
+			private function dateComparison(item:Object,typedText:String):Boolean {
+				if(item.created==null || typedText==null || StringUtil.trim(typedText)==""){
+					return true;
+				} 
+				if(dateFormatter.format(item.created).indexOf(typedText)==0){
+					return true;
+				}
+				return false;
+			}
 		]]>
 	                             
 	</mx:Script>
@@ -209,9 +241,9 @@
 		<mx:Button width="6%" height="100%" click="{doGet()}">
 			<mx:icon>@Embed(source='../../../../assets/get.png')</mx:icon>
 		</mx:Button>
-		<mx:Button width="6%" height="100%">
+		<!--<mx:Button width="6%" height="100%">
 			<mx:icon>@Embed(source='../../../../assets/find.png')</mx:icon>
-		</mx:Button>
+		</mx:Button>-->
 		<mx:Button width="6%" height="100%" click="{showNotes()}">
 			<mx:icon>@Embed(source='../../../../assets/notes.png')</mx:icon>
 		</mx:Button>
@@ -222,12 +254,12 @@
 	
 	<mx:HBox width="100%" height="4%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Get')}" width="6%" textAlign="center"/>
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Find')}" width="6%" textAlign="center"/>
+		<!--<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Find')}" width="6%" textAlign="center"/>-->
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Notes')}" width="6%" textAlign="center"/>
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Properties')}" width="6%" textAlign="center"/>		
 	</mx:HBox>
 	
-	<mx:DataGrid id="estimate_grid" width="100%" height="88%" dataProvider="{estimates}" doubleClick="{doDoubleClick()}" doubleClickEnabled="true">
+	<mx:DataGrid id="estimate_grid" width="100%" height="83%" dataProvider="{estimates}" doubleClick="{doDoubleClick()}" doubleClickEnabled="true">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Created')}" dataField="created" labelFunction="getFormattedDate"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Estimate')}" dataField="invoiceNumber"/>
@@ -239,4 +271,7 @@
 		</mx:columns>
 	</mx:DataGrid>
 
+	<filter:PickerFilter width="100%" height="5%" showExtendedSearch="false"
+		searchComponent="{estimate_grid}" listData="{estimates}" searchCriteria="{getSearchBy()}" />
+	
 </mx:Panel>

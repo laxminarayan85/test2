@@ -29,7 +29,9 @@
 					_extendedCrit = ac;
 				}
 				else	{
-					filterCanvas.removeChild(cboExtended);
+					if(filterCanvas!=null){
+						filterCanvas.removeChild(cboExtended);
+					}
 				}
 			}					
 			public function get showExtendedSearch():Boolean	{
@@ -136,7 +138,7 @@
 	<mx:HBox height="100%" width="100%" id="filterCanvas">
 		<mx:Label height="100%" width="10%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}:"  />
 		<mx:ComboBox height="100%" width="30%" id="cboSearchBy" dataProvider="{_searchCriteria}" labelField="displayLabel" change="search();"/>
-		<mx:ComboBox height="100%" width="30%" id="cboExtended" dataProvider="{_extendedCrit}" change="search();" />
+		<mx:ComboBox height="100%" width="30%" id="cboExtended" dataProvider="{_extendedCrit}" change="search();" visible="{_showExtendedSearch}" includeInLayout="{_showExtendedSearch}"/>
 		<mx:TextInput height="100%" width="40%" id="txtSearchString"   change="search();" />		
 	</mx:HBox>
 	
