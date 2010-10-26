@@ -1,72 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.vo.*"
-width="494" height="352"
-showCloseButton="true" creationComplete="init();"
-    close="PopUpManager.removePopUp(this);"
-    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'balanceCmd.Status')}" xmlns:text="flash.text.*">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Status')}"
+	creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}">
+	
+	<mx:Style>
+		.boldstyle{
+			font-weight:bold;
+		}
+	</mx:Style>
 
-<mx:RemoteObject id="dataService" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
-</mx:RemoteObject>
-<mx:Script>
-                                   
-<![CDATA[
-	import mx.collections.ArrayCollection;
-
-                                
-	import mx.managers.PopUpManager;                                 
-	import mx.controls.Alert;                          
-	import mx.containers.Canvas;                                
-	import mx.rpc.events.ResultEvent;                                 
-	import mx.rpc.events.FaultEvent;                          
-	import mx.events.ValidationResultEvent;                          
-	import mx.validators.Validator;       
-	import mx.messaging.messages.AsyncMessage;
-	import mx.messaging.messages.IMessage;
-	                             
-	[Bindable]                             
-	private var message:String;                                   
-                           
-
-	public function init():void {
-
-	}
-
-	private function handleLoadResult(ev:ResultEvent):void {
-
-	}
-	                                 
-	private function handleFault(ev:FaultEvent):void {                               
-		message = "Error: " + ev.fault.faultCode + " \n "                                            
-		+ "Detail: " + ev.fault.faultDetail + " \n "                              
-		+ "Message: " + ev.fault.faultString;                                    
-	}
-	                     
-]]>        
-</mx:Script>
-	<mx:HBox width="100%" height="60%">
-		<mx:Canvas width="70%" height="100%">
-			<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice')}"/>
-			<mx:TextInput x="10" y="36" width="306"/>
-			<mx:Label x="10" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.WantedB')}"/>
-			<mx:TextInput x="80" y="64" width="236"/>
-			<mx:Label x="14" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.SalesRep')}"/>
-			<mx:Label x="25" y="120" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.ShipVia')}"/>
-			<mx:Label x="132" y="92" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Takenby')}"/>
-			<mx:TextInput x="80" y="90" width="51"/>
-			<mx:TextInput x="196" y="90" width="120"/>
-			<mx:Label x="142" y="120" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Notified')}"/>
-			<mx:TextInput x="80" y="118" width="51"/>
-			<mx:TextInput x="196" y="118" width="120"/>
-			<mx:Label x="10" y="146" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.Locationupdatedon')}"/>
-			<mx:TextInput x="142" y="144" width="174"/>
-			<mx:TextInput x="62" y="8" width="254"/>
-		</mx:Canvas>
-		<mx:Canvas width="30%" height="100%">
-			<mx:Label x="10" y="10" text="Loc:"/>
-			<mx:TextInput x="39" y="8" width="88"/>
-		</mx:Canvas>
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.managers.PopUpManager;
+			import mx.utils.StringUtil;
+			import com.efi.printsmith.data.InvoiceBase;
+			
+			[Bindable] private var _invoiceBase:InvoiceBase;
+			
+			[Bindable] private var expandOrCollapseFlag:Boolean = true;
+			
+			[Bindable] private var expandOrCollapseLabel:String = "-";
+			
+			private function init():void {
+				PopUpManager.centerPopUp(this);
+			} 
+			
+			public function get invoiceBase():InvoiceBase {
+				return _invoiceBase;	
+			}
+			
+			public function set invoiceBase(tmpInvoiceBase:InvoiceBase):void {
+				_invoiceBase = tmpInvoiceBase;
+				dataService.getInvoice(_invoiceBase.id);
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function getFormattedDate(date:Date):String {
+				if(date==null)
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posStatusCmd.Notspecified');
+				return dateFormatter.format(date);
+			}
+			
+			private function expandOrCollapse():void {
+				if(expandOrCollapseFlag){
+					expandOrCollapseFlag = false;
+					expandOrCollapseLabel = "+";
+				} else {
+					expandOrCollapseFlag = true;
+					expandOrCollapseLabel = "-";
+				}
+			}
+			
+			private function handleLoadResult(event:ResultEvent):void {
+				_invoiceBase = event.result as InvoiceBase;
+			}
+			
+			private function handleFault(ev:FaultEvent):void {  
+				var errorDetail:String="";
+				if (ev.fault!=null && ev.fault.faultCode=="InvalidSecurityAccess"){
+					errorDetail = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, ev.fault.faultDetail);
+					Alert.show(errorDetail,ev.fault.faultCode, Alert.OK, null, null, null, Alert.OK);
+				}else{
+					var message:String;
+					              
+					message = "Error: "                          
+					+ ev.fault.faultCode + " - "                                  
+					+ ev.fault.faultDetail + " - "                                  
+					+ ev.fault.faultString;
+					Alert.show(message, "Error", 0, null, null, null,4);                                 
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
+	
+	<mx:HBox width="100%">
+		<mx:HBox width="100%" horizontalAlign="left" horizontalGap="1">
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.Invoice')}: " styleName="boldstyle"/>
+			<mx:Label text="{_invoiceBase.invoiceNumber} " styleName="boldstyle"/>
+			<mx:Label text="{_invoiceBase.name}" styleName="boldstyle"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="right" horizontalGap="1">
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posStatusCmd.Loc')}:" styleName="boldstyle"/>
+			<mx:Label text="" styleName="boldstyle"/>
+		</mx:HBox>
 	</mx:HBox>
-	<mx:TextArea width="100%" height="40%"/>
-                            
+	
+	<mx:Label text="(#{_invoiceBase.account.accountId}) {_invoiceBase.account.title}" styleName="boldstyle"/>
+	
+	<mx:Label text="{StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Webreferencenumber0'),0)}" styleName="boldstyle"/>
+	
+	<mx:HBox width="100%" horizontalGap="1">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.Wantedby')}: " styleName="boldstyle"/>
+		<mx:Label text="{getFormattedDate(_invoiceBase.wantedDate)}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" horizontalGap="1">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.SalesRep')}: " styleName="boldstyle"/>
+		<mx:Label text="{_invoiceBase.salesRep.name} "/>
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.TakenBy')}:	" styleName="boldstyle"/>
+		<mx:Label text="{_invoiceBase.takenBy}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" horizontalGap="1">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rChargeLabel.ShipVia')}: " styleName="boldstyle"/>
+		<mx:Label text="{_invoiceBase.shippingMethod.name}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" horizontalGap="1">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posStatusCmd.Locationupdatedon')}: " styleName="boldstyle"/>
+		<mx:Label text="{getFormattedDate(_invoiceBase.locationChangeDate)}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" horizontalGap="1">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.Total')}: " styleName="boldstyle"/>
+		<mx:Label text="{_invoiceBase.grandTotal}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" horizontalGap="1">
+		<mx:Label text="{expandOrCollapseLabel}" click="{expandOrCollapse()}"/>
+		<mx:List dataProvider="{_invoiceBase.jobs}" labelField="description" visible="{expandOrCollapseFlag}" includeInLayout="{expandOrCollapseFlag}"/>
+	</mx:HBox>
 </mx:TitleWindow>

@@ -447,8 +447,11 @@
 	}
 
 	public function handleUIStatusEvent(evt:ResultEvent):void {
-		var pendingStatus:PendingStatus = PendingStatus(PopUpManager.createPopUp(this, PendingStatus, false));
-		pendingStatus.setStyle("borderAlpha", 0.9);
+		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
+			var pendingStatus:PendingStatus = PendingStatus(PopUpManager.createPopUp(this, PendingStatus, false));
+			pendingStatus.invoiceBase = dgView.selectedItem as InvoiceBase;
+			pendingStatus.setStyle("borderAlpha", 0.9);
+		}
 	}
 	public function handleUILocationEvent(evt:ResultEvent):void {
 		var pendingLocation:PendingLocation = PendingLocation(PopUpManager.createPopUp(this, PendingLocation, false));
@@ -525,11 +528,11 @@
                		var eventPickup:PendingListPickupEvent = new PendingListPickupEvent(new mx.rpc.Responder(handleUIPickupEvent, handleFault));
 					eventPickup.dispatch();
 					break;
-				/* default:
+				default:
                 {
                		var eventStatus:PendingListStatusEvent = new PendingListStatusEvent(new mx.rpc.Responder(handleUIStatusEvent, handleFaultNoMessage));
 					eventStatus.dispatch();
-                } */
+                }
 
          } 
 
