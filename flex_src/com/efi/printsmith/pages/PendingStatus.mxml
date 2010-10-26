@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Status')}"
-	creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}" width="450" height="400">
+	creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}" width="450" height="275">
 	
 	<mx:Style>
 		.boldstyle{
@@ -20,9 +20,9 @@
 			
 			[Bindable] private var _invoiceBase:InvoiceBase;
 			
-			[Bindable] private var expandOrCollapseFlag:Boolean = true;
+			[Bindable] private var expandOrCollapseFlag:Boolean = false;
 			
-			[Bindable] private var expandOrCollapseLabel:String = "-";
+			[Bindable] private var expandOrCollapseLabel:String = "+";
 			
 			private function init():void {
 				PopUpManager.centerPopUp(this);
