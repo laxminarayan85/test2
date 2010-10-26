@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Status')}"
-	creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}">
+	creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}" width="450" height="400">
 	
 	<mx:Style>
 		.boldstyle{
@@ -51,9 +51,11 @@
 				if(expandOrCollapseFlag){
 					expandOrCollapseFlag = false;
 					expandOrCollapseLabel = "+";
+					this.height = 275;
 				} else {
 					expandOrCollapseFlag = true;
 					expandOrCollapseLabel = "-";
+					this.height = 400;
 				}
 			}
 			
@@ -130,6 +132,7 @@
 	
 	<mx:HBox width="100%" horizontalGap="1">
 		<mx:Label text="{expandOrCollapseLabel}" click="{expandOrCollapse()}"/>
-		<mx:List dataProvider="{_invoiceBase.jobs}" labelField="description" visible="{expandOrCollapseFlag}" includeInLayout="{expandOrCollapseFlag}"/>
+		<mx:List dataProvider="{_invoiceBase.jobs}" labelField="description" visible="{expandOrCollapseFlag}" includeInLayout="{expandOrCollapseFlag}"
+			width="100%"/>
 	</mx:HBox>
 </mx:TitleWindow>
