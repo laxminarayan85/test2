@@ -303,6 +303,13 @@
 				
 				setOverrideForField(txtCutstoRun, job.orRunCuts);
 				setOverrideForField(txtCutstoFinish, job.orFinishCuts);
+				
+				// the parent size comes from the stock definition
+				if (job.stock != null)
+					this.parent_size_edit.enabled = false;
+				else
+					this.parent_size_edit.enabled = true;
+
 			}
 
 			private function findItem(name:String, array:ArrayCollection):int
@@ -347,9 +354,12 @@
 						job.paperCal.whichStartSize = Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH;
 						break;					
 				}
-				job.parentSize=parent_size_edit.selectedItem as Dimension;
-				job.runSize = run_size_edit.selectedItem as Dimension;
-				job.finishSize=finish_size_edit.selectedItem as Dimension;
+			//	if (parent_size_edit.selectedItem != null && parent_size_edit.selectedItem != -1)
+			//		job.parentSize=parent_size_edit.selectedItem as Dimension;
+			//	if (run_size_edit.selectedItem != null && run_size_edit.selectedItem != -1)
+			//		job.runSize = run_size_edit.selectedItem as Dimension;
+			//	if (finish_size_edit.selectedItem != null && finish_size_edit.selectedItem != -1)
+			//		job.finishSize=finish_size_edit.selectedItem as Dimension;
 				
 				job.paperCal.attachToJobTicket=chkAttachToJobTicket.selected;
 				job.paperCal.backTrimParent=chkBackTrimParent.selected;
@@ -494,56 +504,89 @@
 		
 			private function fieldChanged(evt:FocusEvent):void
 			{	
+				var sizeStr:String;
+				
 				switch (evt.currentTarget) {
 					case parent_size_edit:
-						var parentStr:String = Snowmass.formatSizeString(parent_size_edit.text);
-						parent_size_edit.selectedIndex = findItem(parentStr, dimensions);
+						sizeStr = Snowmass.formatSizeString(parent_size_edit.text);
+						parent_size_edit.selectedIndex = findItem(sizeStr, dimensions);
 						if (parent_size_edit.selectedIndex == -1) {
-							parent_size_edit.text = parentStr;
+							parent_size_edit.text = sizeStr;
 							if (job.parentSize == null)
 								job.parentSize = new Dimension()
-							job.parentSize.name = parentStr;
+							job.parentSize.name = sizeStr;
 							job.parentSize.width = Snowmass.getWidthFromSizeString(job.parentSize);
 							job.parentSize.height = Snowmass.getLengthFromSizeString(job.parentSize);
 						}
 						else {
 							job.parentSize = parent_size_edit.selectedItem as Dimension;
-							refreshCalcAndImage();
 						}
+						
+						// keep in sync
+						if (job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
+							job.runSize.name = job.parentSize.name;
+							job.runSize.height = job.parentSize.height;
+							job.runSize.width = job.parentSize.width;
+							run_size_edit.text = job.runSize.name;
+							run_size_edit.selectedIndex = parent_size_edit.selectedIndex;
+							run_size_edit.selectedItem = parent_size_edit.selectedItem;
+						}
+
+						if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
+							job.finishSize.name = job.runSize.name;
+							job.finishSize.height = job.runSize.height;
+							job.finishSize.width = job.runSize.width;
+							finish_size_edit.text = job.finishSize.name;
+							finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
+							finish_size_edit.selectedItem = run_size_edit.selectedItem;
+						}
+						refreshCalcAndImage();
 						break;
 						
 					case run_size_edit:
-						var parentStr:String = Snowmass.formatSizeString(run_size_edit.text);
-						run_size_edit.selectedIndex = findItem(parentStr, dimensions);
+						sizeStr = Snowmass.formatSizeString(run_size_edit.text);
+						run_size_edit.selectedIndex = findItem(sizeStr, dimensions);
 						if (run_size_edit.selectedIndex == -1) {
-							run_size_edit.text = parentStr;
+							run_size_edit.text = sizeStr;
 							if (job.runSize == null)
 								job.runSize = new Dimension()
-							job.runSize.name = parentStr;
+							job.runSize.name = sizeStr;
 							job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
 							job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
 						}
 						else {
 							job.runSize = run_size_edit.selectedItem as Dimension;
-							refreshCalcAndImage();
 						}
+						
+						// keep in sync
+						if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
+							job.finishSize.name = job.runSize.name;		
+							job.finishSize.width = job.runSize.width;		
+							job.finishSize.height = job.runSize.height;		
+							finish_size_edit.text = job.finishSize.name;
+							finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
+							finish_size_edit.selectedItem = run_size_edit.selectedItem;
+						}
+						
+						refreshCalcAndImage();
 						break;
 						
 					case finish_size_edit:
-						var parentStr:String = Snowmass.formatSizeString(finish_size_edit.text);
-						finish_size_edit.selectedIndex = findItem(parentStr, dimensions);
+						sizeStr = Snowmass.formatSizeString(finish_size_edit.text);
+						finish_size_edit.selectedIndex = findItem(sizeStr, dimensions);
 						if (finish_size_edit.selectedIndex == -1) {
-							finish_size_edit.text = parentStr;
+							finish_size_edit.text = sizeStr;
 							if (job.finishSize == null)
 								job.finishSize = new Dimension()
-							job.finishSize.name = parentStr;
+							job.finishSize.name = sizeStr;
 							job.finishSize.width = Snowmass.getWidthFromSizeString(job.finishSize);
 							job.finishSize.height = Snowmass.getLengthFromSizeString(job.finishSize);
 						}
 						else {
 							job.finishSize = finish_size_edit.selectedItem as Dimension;
-							refreshCalcAndImage();
 						}
+						
+						refreshCalcAndImage();
 						break;
 				
 				}

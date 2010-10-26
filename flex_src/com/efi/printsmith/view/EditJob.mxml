@@ -1584,20 +1584,36 @@
 						}
 					}
 					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color" || this.job_type.text == "Blank" || this.job_type.text == "List") {
-						this.job.parentSize = stockDefinitionObj.parentsize;
+						this.job.parentSize.name = stockDefinitionObj.parentsize.name;
+						this.job.parentSize.height = stockDefinitionObj.parentsize.height;
+						this.job.parentSize.width = stockDefinitionObj.parentsize.width;
+
 						this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
-						if (stockDefinitionObj.normalRunSize == null || stockDefinitionObj.normalRunSize.name == "")
-							this.job.runSize = stockDefinitionObj.parentsize;
-						else
-							this.job.runSize = stockDefinitionObj.normalRunSize;
+						if (stockDefinitionObj.normalRunSize == null || stockDefinitionObj.normalRunSize.name == "") {
+							this.job.runSize.name = stockDefinitionObj.parentsize.name;
+							this.job.runSize.height = stockDefinitionObj.parentsize.height;
+							this.job.runSize.width = stockDefinitionObj.parentsize.width;
+						} else {
+							this.job.runSize.name = stockDefinitionObj.normalRunSize.name;
+							this.job.runSize.height = stockDefinitionObj.normalRunSize.height;
+							this.job.runSize.width = stockDefinitionObj.normalRunSize.width;
+						}
 						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
-						if (this.job.runSize.width * this.job.runSize.height < this.job.parentSize.width * this.job.parentSize.height)
-							this.job.finishSize = this.job.runSize;
-						else
-							this.job.finishSize = stockDefinitionObj.parentsize;
+						if (this.job.runSize.width * this.job.runSize.height < this.job.parentSize.width * this.job.parentSize.height) {
+							this.job.finishSize.name = this.job.runSize.name;
+							this.job.finishSize.height = this.job.runSize.height;
+							this.job.finishSize.width = this.job.runSize.width;
+						} else {
+							this.job.finishSize.name = stockDefinitionObj.parentsize.name;
+							this.job.finishSize.height = stockDefinitionObj.parentsize.height;
+							this.job.finishSize.width = stockDefinitionObj.parentsize.width;
+						}
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
-						if (this.estimatingPreferences.leaveFoldedSizeEmpty != true)
-							this.job.foldedSize = this.job.finishSize;
+						if (this.estimatingPreferences.leaveFoldedSizeEmpty != true) {
+							this.job.foldedSize.name = this.job.finishSize.name;
+							this.job.foldedSize.height = this.job.finishSize.height;
+							this.job.foldedSize.width = this.job.finishSize.width;
+						}
 						this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
 						if (this.job_type.text == "B&W" && stockDefinitionObj.defaultBWCopier != null) {
 							job.pricingCopier = stockDefinitionObj.defaultBWCopier;
@@ -1614,11 +1630,19 @@
 						job.inSetsOf = stockDefinitionObj.sheetsPerSet;
 					}
 					else {
-						this.job.parentSize = stockDefinitionObj.normalRunSize;
+						this.job.parentSize.name = stockDefinitionObj.normalRunSize.name;
+						this.job.parentSize.height = stockDefinitionObj.normalRunSize.height;
+						this.job.parentSize.width = stockDefinitionObj.normalRunSize.width;
 						this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
-						this.job.runSize = stockDefinitionObj.normalRunSize;
+						
+						this.job.runSize.name = stockDefinitionObj.normalRunSize.name;
+						this.job.runSize.height = stockDefinitionObj.normalRunSize.height;
+						this.job.runSize.width = stockDefinitionObj.normalRunSize.width;
 						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
-						this.job.finishSize = stockDefinitionObj.normalRunSize;
+						
+						this.job.finishSize.name = stockDefinitionObj.normalRunSize.name;
+						this.job.finishSize.height = stockDefinitionObj.normalRunSize.height;
+						this.job.finishSize.width = stockDefinitionObj.normalRunSize.width;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 					}
 					this.mapToJobData();
