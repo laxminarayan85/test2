@@ -756,7 +756,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		}
 		
 		if (whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
-			if (job.getPaperCal().getTrimFourSides().booleanValue() == true) {	// back trim cuts all the way around
+			if (job.getPaperCal().getBackTrimRun().booleanValue() == true) {	// back trim cuts all the way around
 				
 				// back trim any edge not already counted
 				if (runEdgeLeft == 0)	out += 1;
