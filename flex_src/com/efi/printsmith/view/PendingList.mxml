@@ -454,8 +454,11 @@
 		}
 	}
 	public function handleUILocationEvent(evt:ResultEvent):void {
-		var pendingLocation:PendingLocation = PendingLocation(PopUpManager.createPopUp(this, PendingLocation, false));
-		pendingLocation.setStyle("borderAlpha", 0.9);
+		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
+			var pendingLocation:PendingLocation = PendingLocation(PopUpManager.createPopUp(this, PendingLocation, false));
+			pendingLocation.invoiceBase = dgView.selectedItem as InvoiceBase;
+			pendingLocation.setStyle("borderAlpha", 0.9);
+		}
 	}
 	public function handleUIOpenEvent(evt:ResultEvent):void {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
@@ -520,7 +523,7 @@
                		var eventDueDate:PendingListDueDateEvent = new PendingListDueDateEvent(new mx.rpc.Responder(handleUIDueDateEvent, handleFault));
 					eventDueDate.dispatch();
 					break;
-                case "Location":
+                case "posPendCmd.Location":
                		var eventLocation:PendingListLocationEvent = new PendingListLocationEvent(new mx.rpc.Responder(handleUILocationEvent, handleFault));
 					eventLocation.dispatch();
 					break;
