@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" creationComplete="init()" 
-		xmlns:comp="com.efi.printsmith.components.*" 
+		xmlns:components="com.efi.printsmith.components.*" 
 		xmlns:fc="http://www.adobe.com/2006/fc" 
 		xmlns:pages="com.efi.printsmith.pages.*"
 		xmlns:vo="com.efi.printsmith.vo.*" 
@@ -32,13 +32,18 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
-		<mx:method name="getInvoice" fault="handleFault(event)" result="handleGetResult(event)"/>
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleGetResult(event)"/>		
 	</mx:RemoteObject>
 	<mx:RemoteObject id="invoiceService" destination="invoiceService">
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
  	<mx:RemoteObject id="dataServicePendingList" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServicePrefPOS" destination="dataService">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPreferencesPOSResult(event)"/>		
+		<mx:method name="addUpdate" fault="handleFault(event)"/>
 	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="invoicebase"/>
@@ -47,6 +52,8 @@
 	
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.Constants;
+	import com.efi.printsmith.data.PreferencesPOS;
 	import com.efi.printsmith.events.CopyToNewEstimateEvent;
 	import com.efi.printsmith.events.CopyToNewInvoiceEvent;
 	import com.efi.printsmith.events.ConvertToInvoiceEvent;
@@ -115,6 +122,8 @@
 
     [Embed("../../../../assets/reportWritersmall.png")]
     private var ReportIcon:Class;
+    
+    [Bindable] private var preferencesPOS:PreferencesPOS;
 
 
     [Bindable]
@@ -205,6 +214,8 @@
 		invoiceBaseArray.filterFunction = invoiceFilter;
 		this.throbber.visible = true;
 		this.throbber.play();
+		
+		dataServicePrefPOS.getSingle("PreferencesPOS");
 		
 		dataService.getPending();
 
@@ -641,8 +652,13 @@
 	}
 	private function doDoubleClick():void {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
-			var invoiceBase:InvoiceBase = dgView.selectedItem as InvoiceBase;
-			dataService.getInvoice(invoiceBase.id);
+			if(pendingOptions.selectedValue==null || pendingOptions.selectedValue==Constants.PENDING_OPEN){
+				handleUIOpenEvent(null);
+			} else if(pendingOptions.selectedValue==Constants.PENDING_STATUS) {
+				handleUIStatusEvent(null);
+			} else if(pendingOptions.selectedValue==Constants.PENDING_LOCATION) {
+				handleUILocationEvent(null);
+			}
 		}
 	}
 
@@ -930,14 +946,87 @@
 	private function getExtended():Boolean	{
 		return false;
 	}
+	
+	private function handleLoadPreferencesPOSResult(event:ResultEvent):void {
+		preferencesPOS = event.result as PreferencesPOS;
+		if(preferencesPOS==null){
+			preferencesPOS = new PreferencesPOS();
+			preferencesPOS.pendingOption = Constants.PENDING_OPEN;
+		} else {
+			if(preferencesPOS.pendingOption==null || preferencesPOS.pendingOption==""){
+				preferencesPOS.pendingOption = Constants.PENDING_OPEN;
+			}
+		}
+		pendingOptions.selectedValue = preferencesPOS.pendingOption;
+	}
+	
+	private function savePendingOption():void {
+		var pendingOptionsValue:String = pendingOptions.selectedValue as String;
+		if(pendingOptionsValue==null || pendingOptionsValue=="") {
+			pendingOptionsValue = Constants.PENDING_OPEN;
+		}
+		preferencesPOS.pendingOption = pendingOptionsValue;
+		dataServicePrefPOS.addUpdate(preferencesPOS);
+	}
 ]]>        
 </mx:Script>
-	<mx:Tree width="140"
+	<!--<mx:Tree width="140"
 		id="tvItems" 
 		dataProvider="{treeData.node}"
 		labelFunction="TreeDisplayLabel"
 		iconFunction="setIcons"
-		click="treeSelect(event);" left="0" top="0" bottom="50"/>
+		click="treeSelect(event);" left="0" top="0" bottom="50"/>-->
+		
+	<mx:VBox width="140" left="0" top="0" bottom="50" paddingLeft="5" paddingRight="5" verticalGap="10">
+		<mx:RadioButtonGroup id="pendingOptions"/>
+		<mx:HBox width="100%">
+			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_PICK_UP}" click="{savePendingOption()}" width="10%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp')}" width="90%"/>
+		</mx:HBox>	
+		<mx:HBox width="100%">
+			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_STATUS}" click="{savePendingOption()}" width="10%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Status')}" width="90%"
+				click="{handleUIStatusEvent(null)}"/>
+		</mx:HBox>
+		<mx:HBox width="100%">
+			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_LOCATION}" click="{savePendingOption()}" width="10%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Location')}" width="90%"
+				click="{handleUILocationEvent(null)}"/>
+		</mx:HBox>
+		<mx:HBox width="100%">
+			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_OPEN}" click="{savePendingOption()}" width="10%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Open')}" width="90%"
+				click="{handleUIOpenEvent(null)}"/>
+		</mx:HBox>		
+		<mx:HBox width="100%">
+			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_NOTIFY}" click="{savePendingOption()}" width="10%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Notify')}" width="90%"/>
+		</mx:HBox>	
+		<mx:HBox width="100%">
+			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_DUEDATE}" click="{savePendingOption()}" width="10%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.DueDate')}" width="90%"/>
+		</mx:HBox>	
+		<mx:HBox width="100%">
+			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_DELIVER}" click="{savePendingOption()}" width="10%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Deliver')}" width="90%"/>
+		</mx:HBox>	
+		<mx:HBox width="100%">
+			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_SCHEDULE}" click="{savePendingOption()}" width="10%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Schedule')}" width="90%"/>
+		</mx:HBox>	
+		<mx:HBox width="100%">
+			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_TRACKER}" click="{savePendingOption()}" width="10%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Tracker')}" width="90%"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="right">
+			<components:MultiLineLabelButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.View')}" labelPlacement="bottom" width="80%" height="75"
+				icon="@Embed(source='../../../../assets/view.png')"/>
+		</mx:HBox>		
+		<mx:HBox width="100%" horizontalAlign="right">
+			<components:MultiLineLabelButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Print')}" labelPlacement="bottom" width="80%" height="75"
+				icon="@Embed(source='../../../../assets/reportWritersmall.png')"/>
+		</mx:HBox>		
+	</mx:VBox>
 
 	<mx:VBox bottom="124" top="0" left="140" right="0">
 		<mx:Canvas width="100%" height="100%">
@@ -960,7 +1049,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobCount')}" labelFunction="getJobCountLabel" sortCompareFunction="sortJobCount"/>
 				</mx:columns>
 			</mx:DataGrid>
-			<comp:SmallThrobber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
+			<components:SmallThrobber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
 		</mx:Canvas>
 	</mx:VBox>
 	<!--<mx:Canvas width="100%" height="46" right="0" bottom="0" id="canvas1">
