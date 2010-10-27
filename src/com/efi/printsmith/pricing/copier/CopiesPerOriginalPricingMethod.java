@@ -178,7 +178,7 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 					markup = MatrixUtilities.calculateInterpolation(job.getPricingCopier().getCopierMatrix(), lookupQty);
 				else
 					markup = matrixElement.getPrice1().doubleValue();
-				pricePerCopy = copierDefinition.getBaseRate().doubleValue() * markup;
+				pricePerCopy = copierDefinition.getMachineCostPerCopy().doubleValue() * markup;
 				pricePerCopy *= copierDefinition.getCopyMarkup2();
 				
 				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
