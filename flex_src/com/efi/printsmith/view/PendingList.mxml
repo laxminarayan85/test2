@@ -805,6 +805,12 @@
 		
 	public function getLocationLabel(item:Object, column:DataGridColumn):String{
 		var retVal:String = "";
+		for each(var jobBase:JobBase in item.jobs) {
+			if(jobBase.location!=null){
+				retVal = jobBase.location.name;
+				break;
+			}
+		}
 		if (retVal != "") {
 			return retVal;
 		} else {

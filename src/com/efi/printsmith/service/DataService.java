@@ -449,6 +449,22 @@ public class DataService extends HibernateService {
 					Hibernate.initialize(invoiceBase.getContact().getComLinks());
 				}
 			}
+			
+			String columnString = "a.id,a.comment,a.location";
+			for (InvoiceBase invoiceBase : invoices) {
+				List<JobBase> jobsList = new ArrayList<JobBase>();
+				String queryString = "select "+columnString+" from JobBase" + " a where a.parentInvoice.id="+invoiceBase.getId();
+				org.hibernate.Query query = session.createQuery(queryString);
+				ScrollableResults rs = query.scroll();
+				while (rs.next()) {
+					JobBase jobBase = new JobBase();
+					jobBase.setId(rs.getLong(0));
+					jobBase.setComment(rs.getString(1));
+					jobBase.setLocation((ProductionLocations) rs.get(2));
+					jobsList.add(jobBase);
+				}
+				invoiceBase.setJobs(jobsList);
+			}
 
 			// for (int i = 0; i < invoices.size(); i++) {
 			// InvoiceBase invoice = invoices.get(i);
