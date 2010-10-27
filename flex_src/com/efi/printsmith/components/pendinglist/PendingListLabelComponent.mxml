@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Label xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+		
+			[Bindable] public var fontColorValue:uint;
+			 
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				this.setStyle("color",fontColorValue);
+				this.setStyle("fontWeight","bold");
+			}
+		]]>
+	</mx:Script>
+</mx:Label>

@@ -7,7 +7,7 @@
 		xmlns:common="com.efi.printsmith.common.components.filter.*"
 		headerHeight="0"
 		title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PendingList')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PendingList')}" name="Pending List" 
-		xmlns:text="flash.text.*">
+		xmlns:text="flash.text.*" xmlns:pendinglist="com.efi.printsmith.components.pendinglist.*">
 	<mx:states>
 		<mx:State name="stateFilterDates">
 			<mx:AddChild relativeTo="{canvas2}" position="lastChild">
@@ -52,6 +52,7 @@
 	
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.data.ComLink;
 	import com.efi.printsmith.Constants;
 	import com.efi.printsmith.data.PreferencesPOS;
 	import com.efi.printsmith.events.CopyToNewEstimateEvent;
@@ -123,7 +124,7 @@
     [Embed("../../../../assets/reportWritersmall.png")]
     private var ReportIcon:Class;
     
-    [Bindable] private var preferencesPOS:PreferencesPOS;
+    [Bindable] public var preferencesPOS:PreferencesPOS;
 
 
     [Bindable]
@@ -747,11 +748,10 @@
 		if (tmpInvoice != null && tmpInvoice.contact != null && tmpInvoice.contact.comLinks != null) {
 			var tmpParty:ArrayCollection = tmpInvoice.contact.comLinks;
 			if (tmpParty.length > 0){
-				var retVal:String = tmpParty.getItemAt(0,0).toString();
-				if (retVal != "") {
-					return retVal;
-				} else {
-					return "None";
+				for each(var comLink:ComLink in tmpParty){
+					if(comLink.type == "Phone"){
+						return comLink.value;
+					}
 				}
 			}else{
 				return "None";
@@ -759,6 +759,7 @@
 		}else{
 			return "None";
 		}
+		return "None";
 	}
 	
 	private function sortPhone(obj1:Object, obj2:Object):int 	{
@@ -771,14 +772,24 @@
 		if (con1 != null && con1.contact != null && con1.contact.comLinks != null) {
 			var tmpParty:ArrayCollection = con1.contact.comLinks;
 			if (tmpParty.length > 0){
-				phone1 = tmpParty.getItemAt(0,0).toString();
+				for each(var comLink:ComLink in tmpParty){
+					if(comLink.type == "Phone"){
+						phone1 = comLink.value;
+						break;
+					}
+				}
 			}
 		}
 		
 		if (con2 != null && con2.contact != null && con2.contact.comLinks != null) {
 			var tmpParty:ArrayCollection = con2.contact.comLinks;
 			if (tmpParty.length > 0){
-				phone2 = tmpParty.getItemAt(0,0).toString();
+				for each(var comLink:ComLink in tmpParty){
+					if(comLink.type == "Phone"){
+						phone2 = comLink.value;
+						break;
+					}
+				}
 			}
 		}
 		
@@ -968,6 +979,55 @@
 		preferencesPOS.pendingOption = pendingOptionsValue;
 		dataServicePrefPOS.addUpdate(preferencesPOS);
 	}
+	
+	public function getColorFromPOS(item:Object, preferencesPOSObj:PreferencesPOS):uint {
+		if(item.readyToPickup){
+			if(preferencesPOSObj!=null && preferencesPOSObj.pickupColor!=null && preferencesPOSObj.pickupColor!=""){
+				return uint(parseInt(preferencesPOSObj.pickupColor));
+			}
+		} else if(item is Invoice) {
+			if(preferencesPOSObj!=null && preferencesPOSObj.invoiceColor!=null && preferencesPOSObj.invoiceColor!=""){
+				return uint(parseInt(preferencesPOSObj.invoiceColor));
+			}
+		} else if(item is Estimate) {
+			if(preferencesPOSObj!=null && preferencesPOSObj.estimateColor!=null && preferencesPOSObj.estimateColor!=""){
+				return uint(parseInt(preferencesPOSObj.estimateColor));
+			}
+		}
+		return 0xffffff;
+	}
+	
+	private function getFormattedDate(item:Object, column:DataGridColumn):String {
+		return dateFormatter.format(item[column.dataField]);
+	}
+	
+	private function getHoldState(item:Object, column:DataGridColumn):String {
+		if(item.holdState!=null){
+			return item.holdState.name;
+		}
+		return "";
+	}
+	
+	private function getJobComments(item:Object, column:DataGridColumn):String {
+		var comments:String = "";
+		if(item.jobs!=null) {
+			for each(var jobBase:JobBase in item.jobs){
+				if(jobBase.comment!=null){
+					comments = comments+jobBase.comment;
+				}
+			}
+		}
+		return comments;
+	}
+	
+	private function getSalesRep(item:Object, column:DataGridColumn):String {
+		if(item.salesRep!=null){
+			return item.salesRep.name;
+		}
+		return "";
+	}
+	
+	
 ]]>        
 </mx:Script>
 	<!--<mx:Tree width="140"
@@ -976,6 +1036,8 @@
 		labelFunction="TreeDisplayLabel"
 		iconFunction="setIcons"
 		click="treeSelect(event);" left="0" top="0" bottom="50"/>-->
+		
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
 		
 	<mx:VBox width="140" left="0" top="0" bottom="50" paddingLeft="5" paddingRight="5" verticalGap="10">
 		<mx:RadioButtonGroup id="pendingOptions"/>
@@ -1032,21 +1094,111 @@
 		<mx:Canvas width="100%" height="100%">
 			<mx:DataGrid right="0" left="0" top="0" id="dgView" bottom="0"  dataProvider="{invoiceBaseArray}" doubleClickEnabled="true" doubleClick="doDoubleClick()">
 				<mx:columns>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Account')}" labelFunction="getAccountLabel" sortCompareFunction="sortAccount"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Document')}" dataField="invoiceNumber" sortCompareFunction="sortDocNum"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'ReOrderInvCmd.Contact')}" labelFunction="getContactLabel" sortCompareFunction="sortContact"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.WantedDate')}" dataField="wantedDate"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleLateAndCompletedCmd.Hold')}" dataField="holdState.name"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Phone')}" labelFunction="getContactPhone" sortCompareFunction="sortPhone"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Location')}" labelFunction="getLocationLabel" sortCompareFunction="sortLocation"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Type')}" labelFunction="getTypeLabel" sortCompareFunction="sortType"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.DocumentTitle')}" dataField="name" sortCompareFunction="sortDocTitle" />
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobComment')}" dataField="notes"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ProofDate')}" dataField="proofDate"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.TakenBy')}" dataField="takenBy"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.SalesRep')}" dataField="salesCode"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.WebReference')}" labelFunction="getWebReferenceLabel" sortCompareFunction="sortWeb"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobCount')}" labelFunction="getJobCountLabel" sortCompareFunction="sortJobCount"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Account')}" labelFunction="getAccountLabel" sortCompareFunction="sortAccount">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Document')}" dataField="invoiceNumber" sortCompareFunction="sortDocNum">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'ReOrderInvCmd.Contact')}" labelFunction="getContactLabel" sortCompareFunction="sortContact">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.WantedDate')}" labelFunction="getFormattedDate" dataField="wantedDate">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleLateAndCompletedCmd.Hold')}" dataField="holdState.name" labelFunction="getHoldState">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Phone')}" labelFunction="getContactPhone" sortCompareFunction="sortPhone">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Location')}" labelFunction="getLocationLabel" sortCompareFunction="sortLocation">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Type')}" labelFunction="getTypeLabel" sortCompareFunction="sortType">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.DocumentTitle')}" dataField="name" sortCompareFunction="sortDocTitle">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobComment')}" labelFunction="getJobComments">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ProofDate')}" labelFunction="getFormattedDate" dataField="proofDate">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.TakenBy')}" dataField="takenBy">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.SalesRep')}" labelFunction="getSalesRep" dataField="salesRep.name">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.WebReference')}" labelFunction="getWebReferenceLabel" sortCompareFunction="sortWeb">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobCount')}" labelFunction="getJobCountLabel" sortCompareFunction="sortJobCount">
+						<mx:itemRenderer>
+							<mx:Component>
+								<pendinglist:PendingListLabelComponent fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 				</mx:columns>
 			</mx:DataGrid>
 			<components:SmallThrobber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
