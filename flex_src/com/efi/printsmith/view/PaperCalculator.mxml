@@ -663,6 +663,17 @@
 						job.runSize.height = tempItem.height;		
 
 	       				run_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
+	       				
+	       				// keep in sync
+						if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
+							job.finishSize.name = job.runSize.name;		
+							job.finishSize.type = job.runSize.type;		
+							job.finishSize.width = job.runSize.width;		
+							job.finishSize.height = job.runSize.height;		
+							finish_size_edit.text = job.finishSize.name;
+							finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
+						}
+
 	       			} else if (dropTarget.id == parent_size_edit.id) {
 	   					job.parentSize.name = tempItem.name;		
 	   					job.parentSize.type = tempItem.type;		
@@ -670,6 +681,26 @@
 						job.parentSize.height = tempItem.height;		
 	
 	       				parent_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
+	       				
+	       				// keep in sync
+						if (job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
+							job.runSize.name = job.parentSize.name;
+							job.runSize.type = job.parentSize.type;
+							job.runSize.height = job.parentSize.height;
+							job.runSize.width = job.parentSize.width;
+							run_size_edit.text = job.runSize.name;
+							run_size_edit.selectedIndex = parent_size_edit.selectedIndex;
+						}
+
+						if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
+							job.finishSize.name = job.runSize.name;
+							job.finishSize.type = job.runSize.type;
+							job.finishSize.height = job.runSize.height;
+							job.finishSize.width = job.runSize.width;
+							finish_size_edit.text = job.finishSize.name;
+							finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
+						}
+
 	       			}
 	       			
 					refreshCalcAndImage();
