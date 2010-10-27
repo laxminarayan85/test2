@@ -54,7 +54,7 @@
  	 	 	<mx:SetProperty target="{chkNonTax}" name="enabled" value="false"/>
 
  	 	</mx:State>
- 	 	<mx:State name="paymentState">
+ 	 	<mx:State name="departmentState">
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild">
  	 	 	 	<mx:Label x="46" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Quantity')}" id="label1"/>
  	 	 	</mx:AddChild>
@@ -96,7 +96,7 @@
  	 	 	</mx:AddChild>
  	 	 	<mx:SetEventHandler target="{txtInvoiceNumber}" name="change" handler="doGetInvoice();"/>
  	 	</mx:State>
- 	 	<mx:State name="paymentPaymentMethod" basedOn="paymentState">
+ 	 	<mx:State name="paymentPaymentMethod">
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:Label x="65" y="154" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Amount')}"/>
  	 	 	</mx:AddChild>
@@ -484,7 +484,7 @@
 		accept_button.enabled = false;
 		this.currentState = "";
 		
-		this.currentState = "paymentState";
+		this.currentState = "departmentState";
 		treeStateString = this.currentState;
 		txtPaymentUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(treeItem.rate);
 		txtPaymentDescription.text = treeItem.title;
@@ -600,7 +600,7 @@
 	}
 	
 	private function paymentStateHandler (e:Event):void {
-		if (this.currentState == "paymentState")
+		if (this.currentState == "departmentState")
 		{
 			var node:XML = XML(tvItems.selectedItem);
 			txtPaymentDescription.text = node.@label;
