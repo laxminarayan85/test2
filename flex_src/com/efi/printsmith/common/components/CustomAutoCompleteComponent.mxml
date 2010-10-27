@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Modified by Madhu for Flex 4-->
+<CustomAutoComplete xmlns="com.efi.printsmith.common.components.*" xmlns:mx="http://www.adobe.com/2006/mxml" focusOut="focusOut(event)" focusIn="focusIn(event)" close="closeEvent(event)"  initialize="init()" mouseOver="displayToolTip()">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.TextInput;
+			import mx.utils.StringUtil;
+			import mx.events.ValidationResultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.events.ListEvent;
+			import mx.rpc.events.AbstractEvent;
+			import mx.events.DropdownEvent;
+			import mx.controls.Alert;
+			import mx.controls.listClasses.ListBase;
+			import mx.controls.dataGridClasses.*; 
+			
+			[Inspectable(defaultValue=false, verbose=1,	category="Checking the component is independent or in the datasgrid")]
+	        public var datagridControl:Boolean; 
+	        [Inspectable(defaultValue=false, verbose=1, category="Formatting & Validations")]
+	        public var required:Boolean;
+	        [Inspectable(defaultValue=true, verbose=1, category="Formatting & Validations")]
+	        public var edit:Boolean = true;
+	    	[Bindable] public var check:Boolean=false;
+	    	[Bindable] public var dataHolder:Object;
+	    	[Bindable] public var variableName:String;
+			[Bindable] public var labelFieldId:String;
+			[Bindable] public var columnName:String;
+			[Bindable] public var masterList:Array;
+			[Bindable] public var refreshDataProvider:Boolean=false;
+			[Bindable] public var repeaterElement:Boolean=false;
+			[Bindable] public var showToolTip:Boolean = false;
+			[Bindable] public var changeTypedText:Boolean = true;
+			[Bindable] public var getAllRecords:Boolean = true;
+			[Bindable] public var toolTipProperty:String;
+			private var _glEntryValidation:Boolean = false;
+			private var _customData:Object;
+			[Bindable] public var updateObject:Boolean = false;
+			[Bindable] public var objectLabelFieldId:String;
+			
+			/*
+			 *This method helps to display the tool tip.
+			 */ 		
+			public function displayToolTip():void{
+				if(showToolTip){
+					this.toolTip = this.text;
+				}
+			}
+					
+			public function init():void{
+				if(getAllRecords){
+					filterFunction = sbuFilterFunction;
+				}
+			}
+		    
+		    public function get customText():String {
+		    	this.typedText = customText;
+		        return customText;
+		    }
+		    
+		    /**
+		     * This function temporarily stores componet value.
+		     */
+		     				  
+		    public function set customText(displayValue:String):void {
+		    	if(changeTypedText){
+		    		//this.dataProvider = masterList;
+			    	if(data != null){
+			    		if(data[columnName+"ErrorText"]==""){
+		  			 		displayValue = data[columnName+"ErrorText"];
+		  			 	}
+		  			}
+			    	if(displayValue!=""){
+			    		this.initialLoad = true;
+			    	}
+			    	if(displayValue==null){
+			    		this.typedText = "";
+			    	} else {
+			    		this.typedText = displayValue;	
+			    	}
+			    	textInput.editable = edit;
+			    	callLater(setFontColor);
+		    	}
+		    }
+		    
+		    public function setFontColor():void {
+		    	if(changeItemRenderer){
+		    		if(selectedItem && !(selectedItem is String)) {
+				        if(selectedItem.eventTimenotEarn==1){
+				        	textInput.setStyle("color","0xFF0000");
+				        } else {
+				        	textInput.setStyle("color","0x000000");
+				        }
+			        } else {
+			        	for each(var obj:Object in masterList) {
+			        		if(obj.eventName==typedText) {
+			        			if(obj.eventTimenotEarn==1){
+						        	textInput.setStyle("color","0xFF0000");
+						        } else {
+						        	textInput.setStyle("color","0x000000");
+						        }
+			        		}
+			        	}
+			        }
+		        }
+		    }
+		    
+		    public function get customData():Object {
+		    	return _customData;
+		    }
+		    
+		    /**
+		     * This function temporarily stores componet value.
+		     */
+		     				  
+		    public function set customData(obj:Object):void {
+		    	customText = getCustomTextForAutocomplete();
+		    }
+		    
+		    public function retrieveTextInput():TextInput{
+		    	return TextInput(textInput);
+		    }
+    
+			/**
+		     * This function has got custom implemention for setting style or 
+		     
+		     * background colour display in an datgrid cell on mouse moveover or mouseclick.
+		     */
+		     
+       		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				/* if(toolTipProperty){
+					if(dropdown){
+						dropdown.dataTipFunction = getCustomToolTip;
+					}
+				}
+				if(!check && datagridControl){
+				  var customDataGrid:CustomDataGrid = CustomDataGrid(DataGridListData(listData).owner); 
+				  if(customDataGrid.isItemHighlighted(data)) {
+						setStyle('backgroundColor',0xB2E1FF);
+				   }
+				   else if(customDataGrid.isItemSelected(data)) {
+						setStyle('backgroundColor',0x7FCEFF);
+				   }
+				   else {
+						setStyle('backgroundColor',0xFFFFFF);
+				   }
+				} */
+			}
+			
+			private function getCustomToolTip(item:Object):String {
+		  		return item[toolTipProperty];
+		  	}
+			 
+			
+			/**
+			 * This function get called when the drop-down list is dismissed,
+			 
+			 * helps to save the selected index or drop down value. 
+			 */
+			public function closeEvent(event:DropdownEvent):void {
+				if(event.currentTarget.selectedItem){
+					if(datagridControl){
+						if(data[columnName+"ErrorText"]!=null){
+		  					data[columnName+"ErrorText"] = null;
+		  				}
+		  				if(updateObject){
+		  					data[variableName] = event.currentTarget.selectedItem;
+		  				} else {
+							data[variableName] = event.currentTarget.selectedItem[labelFieldId];
+		  				}
+					}
+					else {
+						if(repeaterElement){
+							if(updateObject){
+								event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem;
+							} else {
+			  					event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem[labelFieldId];
+			  				}
+			  			}
+			  			else {
+			  				if(updateObject){
+			  					dataHolder[variableName] = event.currentTarget.selectedItem;
+			  				} else {
+								dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
+			  				}
+			  			}
+					}
+				}
+			}
+			
+			public function focusIn(event:FocusEvent):void{
+				if(datagridControl){
+					setStyle('backgroundColor',0xFFFFFF);
+					check=true;
+				}
+				if(this.initialLoad){
+					this.initialLoad = false;
+				}
+				if(this.dataProvider.length==0 || refreshDataProvider){
+					this.dataProvider = masterList;
+					customText = getCustomTextForAutocomplete();
+				}
+			}
+			
+			public function getCustomTextForAutocomplete():String{
+				if(data!=null){
+					for each(var obj:Object in masterList) {
+						if(data[variableName]) {
+							if(updateObject){
+								if(obj[labelFieldId] == data[variableName][objectLabelFieldId]){
+									return obj[labelField];
+								}
+							} else {
+								if(obj[labelFieldId] == data[variableName]){
+									return obj[labelField];
+								}
+							}
+						}
+					}
+				}
+				else {
+					for each(var obj1:Object in masterList) {
+						if(dataHolder[variableName]) {
+							if(updateObject){
+								if(obj1[labelFieldId] == dataHolder[variableName][objectLabelFieldId]){
+									return obj1[labelField];
+								}
+							} else {
+								if(obj1[labelFieldId] == dataHolder[variableName]){
+									return obj1[labelField];
+								}
+							}
+						}
+					}
+				}
+				return "";
+			}
+			
+			/**
+			 * This function get called user selects the value from drop-down list,
+			 *
+			 * helps to save the selected item. 
+			 */
+			public function focusOut(event:FocusEvent):void {
+				/* var autocompleteValidator:CustomAutocompleteValidator = new CustomAutocompleteValidator();
+				autocompleteValidator.source = event.currentTarget;
+				autocompleteValidator.property = "typedText";
+				autocompleteValidator.required = required;
+				var validatorEvent:ValidationResultEvent = autocompleteValidator.validate(event.currentTarget.typedText);
+				if(validatorEvent.type == ValidationResultEvent.INVALID){
+					parentCloseEventTriggered = false;
+			  		selectedIndexValue = 0;
+					customText = "";
+					if(data != null){
+	  			 		data[columnName+"ErrorText"] = "";
+	  			 	}
+					return;
+				} */
+				if(event.currentTarget.selectedItem) {
+					try{
+						event.currentTarget.selectedItem[labelFieldId];
+					}
+					catch(error:Error){
+						parentCloseEventTriggered = false;
+			  			selectedIndexValue = 0;
+						event.currentTarget.typedText = "";
+						/* var autocompleteValidator1:CustomAutocompleteValidator = new CustomAutocompleteValidator();
+						autocompleteValidator1.source = event.currentTarget;
+						autocompleteValidator1.property = "typedText";
+						autocompleteValidator1.required = required;
+						var validatorEvent1:ValidationResultEvent = autocompleteValidator1.validate(event.currentTarget.typedText);
+						if(validatorEvent1.type == ValidationResultEvent.INVALID){
+							if(data != null){
+			  			 		data[columnName+"ErrorText"] = "";
+			  			 	}
+							return;
+						} */
+						if(repeaterElement){
+							if(event.currentTarget.getRepeaterItem()){
+								event.currentTarget.getRepeaterItem()[variableName] = null;
+								return;
+							}
+						}
+						else {
+							if(dataHolder){
+								dataHolder[variableName] = null;
+								return;
+							}
+						}
+					}
+					if(datagridControl) {
+						if(data[columnName+"ErrorText"]!=null){
+		  					data[columnName+"ErrorText"] = null;
+		  				}
+		  				if(StringUtil.trim(event.currentTarget.typedText)==""){
+		  					data[variableName] = null;
+		  				}
+		  				else {
+		  					if(!parentCloseEventTriggered){
+			  					for(var i1:int=0;i1<dataProvider.length;i1++){
+						    		if(this.typedText==dataProvider[i1][labelField]){
+						    			this.selectedIndex = i1;
+						    		}
+						    	}
+					    	} else if(selectedIndexValue!=this.selectedIndex){
+					    		if(selectedIndexValue>(this.dataProvider.length-1)){
+					    			for(var i3:int=0;i3<dataProvider.length;i3++){
+							    		if(this.typedText==dataProvider[i3][labelField]){
+							    			this.selectedIndex = i3;
+							    		}
+							    	}
+					    		} else {
+					  				this.selectedIndex = selectedIndexValue;
+					    		}
+					  		}
+					  		if(updateObject) {	
+								data[variableName] = event.currentTarget.selectedItem;
+					  		} else {
+					  			data[variableName] = event.currentTarget.selectedItem[labelFieldId];
+					  		}
+		  				}
+					} else {
+						if(StringUtil.trim(event.currentTarget.typedText) == ""){
+							if(repeaterElement){
+								event.currentTarget.getRepeaterItem()[variableName] = null;
+							}
+							else {
+								dataHolder[variableName] = null;
+							}
+						}
+						else {
+							if(!parentCloseEventTriggered){
+								for(var i2:int=0;i2<dataProvider.length;i2++){
+						    		if(this.typedText==dataProvider[i2][labelField]){
+						    			this.selectedIndex = i2;
+						    		}
+						    	}
+					  		} else if(selectedIndexValue!=this.selectedIndex){
+					  			if(selectedIndexValue>(this.dataProvider.length-1)){
+					    			for(var i4:int=0;i4<dataProvider.length;i4++){
+							    		if(this.typedText==dataProvider[i4][labelField]){
+							    			this.selectedIndex = i4;
+							    		}
+							    	}
+					    		} else {
+					  				this.selectedIndex = selectedIndexValue;
+					    		}
+					  		}
+							if(repeaterElement){
+								if(updateObject) {	
+									event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem;
+								} else {
+									event.currentTarget.getRepeaterItem()[variableName] = event.currentTarget.selectedItem[labelFieldId];
+								}
+							}
+							else {
+								if(updateObject) {
+									dataHolder[variableName] = event.currentTarget.selectedItem;
+								} else {
+									dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
+								}	
+							}
+						}
+					}
+					parentCloseEventTriggered = false;
+			  		selectedIndexValue = 0;
+				}
+				else if(event.currentTarget.selectedItem==""){
+					parentCloseEventTriggered = false;
+			  		selectedIndexValue = 0;
+					event.currentTarget.typedText = "";
+					/* var autocompleteValidator2:CustomAutocompleteValidator = new CustomAutocompleteValidator();
+					autocompleteValidator2.source = event.currentTarget;
+					autocompleteValidator2.property = "typedText";
+					autocompleteValidator2.required = required;
+					var validatorEvent2:ValidationResultEvent = autocompleteValidator2.validate(event.currentTarget.typedText);
+					if(validatorEvent2.type == ValidationResultEvent.INVALID){
+						if(data != null){
+		  			 		data[columnName+"ErrorText"] = "";
+		  			 	}
+						return;
+					} */
+					if(repeaterElement){
+						if(event.currentTarget.getRepeaterItem()){
+							event.currentTarget.getRepeaterItem()[variableName] = null;
+							return;
+						}
+					}
+					else {
+						if(datagridControl){
+							if(data){
+								data[variableName] = null;
+								return;
+							}
+						}
+						if(dataHolder){
+							dataHolder[variableName] = null;
+							return;
+						}
+					}
+				}
+				if(datagridControl){
+	    			setStyle('backgroundColor',0x7FCEFF);
+	  				check=false;
+    			}
+			}
+			
+			/**
+			 * This filter function helps populate data while using auto complete feature
+			 *
+			 * for * displays all the avialable values.
+			 */
+	
+ 			public function sbuFilterFunction(element:*, typedText:String):Boolean {
+ 				if(typedText != null){
+	 				if(typedText=="*") {
+						return true;
+					} else {
+						var label:String = this.itemToLabel(element);
+						return(label.toLowerCase().indexOf(typedText.toLowerCase())==0);
+					}
+ 				}
+ 				return false;
+			}
+		]]>
+	</mx:Script>
+</CustomAutoComplete>

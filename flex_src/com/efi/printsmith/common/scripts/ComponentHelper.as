@@ -11,6 +11,23 @@ public function getCustomTextData(comboData:Object, temp:Object, value:Object):A
 	return tempCollection;
 }
 
+public function getCustomTextForAutocomplete(comboData:Object, temp:Object, variableName:String, labelFieldId:String, labelFieldName:String, updateObject:Boolean=false, objectLabelFieldId:String=null):String{
+	for each(var obj:Object in comboData) {
+		if(temp != null) {
+			if(updateObject){
+				if(obj[labelFieldId] == temp[variableName][objectLabelFieldId]){
+					return obj[labelFieldName];
+				}
+			} else {
+				if(obj[labelFieldId] == temp[variableName]){
+					return obj[labelFieldName];
+				}
+			}
+		}
+	}
+	return "";
+}
+
 public function formatValues(precison:Number,useThousandsSeparator:Boolean,rounding:String,value:Object):String{
 	if(isNaN(Number(value))){
 		return "";
