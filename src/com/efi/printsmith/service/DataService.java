@@ -443,6 +443,12 @@ public class DataService extends HibernateService {
 			List<Estimate> estimates = session.createCriteria(Estimate.class)
 					.add(Restrictions.eq("onPendingList", true)).list();
 			invoices.addAll(estimates);
+			
+			for (InvoiceBase invoiceBase : invoices) {
+				if(invoiceBase.getContact()!=null) {
+					Hibernate.initialize(invoiceBase.getContact().getComLinks());
+				}
+			}
 
 			// for (int i = 0; i < invoices.size(); i++) {
 			// InvoiceBase invoice = invoices.get(i);
