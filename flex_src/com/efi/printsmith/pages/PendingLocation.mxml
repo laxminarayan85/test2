@@ -3,10 +3,14 @@
 	layout="vertical" showCloseButton="true" creationComplete="{init()}" close="{closeWindow()}"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Location')}"
     paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5"
-    xmlns:fc="http://www.adobe.com/2006/fc">
+    xmlns:fc="http://www.adobe.com/2006/fc" xmlns:components="com.efi.printsmith.common.components.*">
+    
+    <mx:Script source="../common/scripts/ComponentHelper.as"/>
     
     <mx:Script>
     	<![CDATA[
+    		import flash.net.registerClassAlias;
+    		import mx.utils.ObjectUtil;
     		import com.efi.printsmith.data.ProductionLocations;
     		import mx.collections.ArrayCollection;
     		import mx.utils.StringUtil;
@@ -23,7 +27,11 @@
     		
     		[Bindable] private var jobsList:ArrayCollection = new ArrayCollection();
     		
-    		[Bindable] private var productionLocationsList:ArrayCollection = new ArrayCollection();
+    		[Bindable] private var productionLocationsList:Array = new Array();
+    		
+    		[Bindable] private var holdStateList:Array = new Array();
+    		
+    		[Bindable] private var selectedJobBase:JobBase;
     		
     		private function init():void {
     			PopUpManager.centerPopUp(this);
@@ -40,6 +48,7 @@
 			public function set invoiceBase(tmpInvoiceBase:InvoiceBase):void {
 				_invoiceBase = tmpInvoiceBase;
 				dataService.getAll("ProductionLocations");
+				dataServiceState.getAll("HoldState");
 			}
 			
 			private function handleLoadResult(event:ResultEvent):void {
@@ -56,28 +65,43 @@
 				if(jobsList.length>1){
 					job_combo.selectedIndex = 1;
 					var jobBaseObj:JobBase = jobsList.getItemAt(1) as JobBase;
-					if(jobBaseObj.location!=null){
-						job_location.selectedIndex = findItem(jobBaseObj.location.id,productionLocationsList);
-					}
+					selectedJobBase = jobBaseObj;
+					/* if(jobBaseObj.location!=null){
+						job_location.selectedIndex = findItem(jobBaseObj.location.id,masterProductionLocationsList);
+					} else {
+						job_location.selectedIndex = -1;
+					} */
 				}
 			}
 			
 			private function handleLoadLocationsResult(event:ResultEvent):void {
 				var arrayList:ArrayCollection = event.result as ArrayCollection;
-				productionLocationsList = new ArrayCollection();
+				productionLocationsList = new Array();
 				if(arrayList!=null){
-					productionLocationsList = arrayList;
+					for each(var obj:Object in arrayList){
+						productionLocationsList.push(obj);
+					}
 				}
 				dataService.getInvoice(_invoiceBase.id);
 			}
 			
-			private function findItem(id:int, array:ArrayCollection):int
+			private function handleLoadHoldStateResult(event:ResultEvent):void {
+				var arrayList:ArrayCollection = event.result as ArrayCollection;
+				holdStateList = new Array();
+				if(arrayList!=null){
+					for each(var obj:Object in arrayList){
+						holdStateList.push(obj);
+					}
+				}
+			}
+			
+			private function findItem(id:int, array:Array):int
 			{
 				for each (var element:Object in array)
 				{
 					if (id == element.id)
 					{
-						return array.getItemIndex(element);
+						return array.indexOf(element);
 					}
 				}
 				return -1;
@@ -137,10 +161,18 @@
 			}
 			
 			private function setJobLocation(event:Event):void {
-				var jobBaseObj:JobBase = event.currentTarget.selectedItem as JobBase; 
-				if(jobBaseObj.location!=null){
+				var jobBaseObj:JobBase = event.currentTarget.selectedItem as JobBase;
+				selectedJobBase = jobBaseObj;
+				/* if(jobBaseObj.location!=null){
 					job_location.selectedIndex = findItem(jobBaseObj.location.id,productionLocationsList);
-				}
+				} else {
+					job_location.selectedIndex = -1;
+					job_location.typedText = "";
+				} */
+			}
+			
+			private function updateJobLocation(event:Event):void {
+				event.currentTarget.selectedItem;
 			}
     	]]>
     </mx:Script>
@@ -148,6 +180,10 @@
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadLocationsResult(event)"/>
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceState" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadHoldStateResult(event)"/>
 	</mx:RemoteObject>
 
 	<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.Invoice')}: {_invoiceBase.invoiceNumber} {_invoiceBase.name}"/>
@@ -169,7 +205,31 @@
 	
 	<mx:HBox width="100%" horizontalAlign="right">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.JobLocation')}:" width="30%" textAlign="right"/>
-		<fc:AutoComplete id="job_location" dataProvider="{productionLocationsList}" labelField="name" width="60%"/>
+		<components:CustomAutoCompleteComponent
+			labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{productionLocationsList}"
+			dataHolder="{selectedJobBase}" variableName="location" customData="{selectedJobBase.location}" customText="{getCustomTextForAutocomplete(productionLocationsList,selectedJobBase,'location','id','name',true,'id')}"/>
+		<!--<fc:AutoComplete id="job_location" dataProvider="{productionLocationsList}" lookAhead="true" labelField="name" width="60%" focusOut="{updateJobLocation(event)}"/>-->
+	</mx:HBox>
+	
+	<mx:HBox width="100%" horizontalAlign="right">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.Comment')}:" width="30%" textAlign="right"/>
+		<components:CustomTextAreaComponent
+			dataHolder="{selectedJobBase}" variableName="comment" customText="{selectedJobBase.comment}"
+			width="60%" height="10%"/>
+	</mx:HBox>
+	
+	<mx:HRule width="100%"/>
+	
+	<mx:HBox width="100%" horizontalAlign="right">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.HoldState')}:" width="30%" textAlign="right"/>
+		<components:CustomAutoCompleteComponent
+			labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{holdStateList}"
+			dataHolder="{_invoiceBase}" variableName="location" customData="{_invoiceBase.holdState}" customText="{getCustomTextForAutocomplete(holdStateList,_invoiceBase,'holdState','id','name',true,'id')}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" horizontalAlign="right">
+		<mx:Spacer width="30%"/>
+		
 	</mx:HBox>
                             
 </mx:TitleWindow>
