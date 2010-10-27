@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" width="412" height="504"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" width="412" height="350"
 	layout="vertical" showCloseButton="true" creationComplete="{init()}" close="{closeWindow()}"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Location')}"
     paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5"
     xmlns:fc="http://www.adobe.com/2006/fc" xmlns:components="com.efi.printsmith.common.components.*">
     
+    <mx:Script source="../common/scripts/CommonUtils.as"/>
+    
     <mx:Script source="../common/scripts/ComponentHelper.as"/>
     
     <mx:Script>
     	<![CDATA[
+    		import com.efi.printsmith.data.Estimate;
+    		import com.efi.printsmith.data.Invoice;
     		import flash.net.registerClassAlias;
     		import mx.utils.ObjectUtil;
     		import com.efi.printsmith.data.ProductionLocations;
@@ -32,6 +36,8 @@
     		[Bindable] private var holdStateList:Array = new Array();
     		
     		[Bindable] private var selectedJobBase:JobBase;
+    		
+    		[Bindable] private var enabledValue:Boolean = true;
     		
     		private function init():void {
     			PopUpManager.centerPopUp(this);
@@ -71,6 +77,8 @@
 					} else {
 						job_location.selectedIndex = -1;
 					} */
+				} else {
+					enabledValue = false;
 				}
 			}
 			
@@ -93,6 +101,15 @@
 						holdStateList.push(obj);
 					}
 				}
+			}
+			
+			private function handleSaveResult(event:ResultEvent):void {
+				if(_invoiceBase is Invoice){
+					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')),Snowmass.getInstance());
+				} else if(_invoiceBase is Estimate){
+					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')),Snowmass.getInstance());
+				}
+				callLater(closeWindow);
 			}
 			
 			private function findItem(id:int, array:Array):int
@@ -162,17 +179,29 @@
 			
 			private function setJobLocation(event:Event):void {
 				var jobBaseObj:JobBase = event.currentTarget.selectedItem as JobBase;
-				selectedJobBase = jobBaseObj;
-				/* if(jobBaseObj.location!=null){
-					job_location.selectedIndex = findItem(jobBaseObj.location.id,productionLocationsList);
+				if(jobBaseObj.id==0){
+					enabledValue = false;
 				} else {
-					job_location.selectedIndex = -1;
-					job_location.typedText = "";
-				} */
+					enabledValue = true;
+				}
+				selectedJobBase = jobBaseObj;
 			}
 			
-			private function updateJobLocation(event:Event):void {
-				event.currentTarget.selectedItem;
+			private function checkStateValue():void {
+				if(_invoiceBase!=null && _invoiceBase.holdState!=null){
+					_invoiceBase.readyToPickup = false;
+				}
+			}
+			
+			private function doSave():void {
+				if(_invoiceBase!=null) {
+					var invoiceJobList:ArrayCollection = new ArrayCollection();
+					registerClassAlias("com.efi.printsmith.data.JobBase",JobBase);
+					invoiceJobList = ObjectUtil.copy(jobsList) as ArrayCollection
+					invoiceJobList.removeItemAt(0);
+					_invoiceBase.jobs = invoiceJobList;
+					dataService.saveInvoice(_invoiceBase);
+				}
 			}
     	]]>
     </mx:Script>
@@ -180,6 +209,7 @@
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadLocationsResult(event)"/>
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="saveInvoice" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceState" destination="dataService" showBusyCursor="true">
@@ -205,7 +235,7 @@
 	
 	<mx:HBox width="100%" horizontalAlign="right">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.JobLocation')}:" width="30%" textAlign="right"/>
-		<components:CustomAutoCompleteComponent
+		<components:CustomAutoCompleteComponent enabled="{enabledValue}"
 			labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{productionLocationsList}"
 			dataHolder="{selectedJobBase}" variableName="location" customData="{selectedJobBase.location}" customText="{getCustomTextForAutocomplete(productionLocationsList,selectedJobBase,'location','id','name',true,'id')}"/>
 		<!--<fc:AutoComplete id="job_location" dataProvider="{productionLocationsList}" lookAhead="true" labelField="name" width="60%" focusOut="{updateJobLocation(event)}"/>-->
@@ -215,21 +245,32 @@
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.Comment')}:" width="30%" textAlign="right"/>
 		<components:CustomTextAreaComponent
 			dataHolder="{selectedJobBase}" variableName="comment" customText="{selectedJobBase.comment}"
-			width="60%" height="10%"/>
+			width="60%" height="10%" enabled="{enabledValue}"/>
 	</mx:HBox>
 	
 	<mx:HRule width="100%"/>
 	
 	<mx:HBox width="100%" horizontalAlign="right">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.HoldState')}:" width="30%" textAlign="right"/>
-		<components:CustomAutoCompleteComponent
+		<components:CustomAutoCompleteComponent focusOut="{checkStateValue()}"
 			labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{holdStateList}"
-			dataHolder="{_invoiceBase}" variableName="location" customData="{_invoiceBase.holdState}" customText="{getCustomTextForAutocomplete(holdStateList,_invoiceBase,'holdState','id','name',true,'id')}"/>
+			dataHolder="{_invoiceBase}" variableName="holdState" customData="{_invoiceBase.holdState}" customText="{getCustomTextForAutocomplete(holdStateList,_invoiceBase,'holdState','id','name',true,'id')}"/>
 	</mx:HBox>
 	
 	<mx:HBox width="100%" horizontalAlign="right">
 		<mx:Spacer width="30%"/>
-		
+		<components:CustomCheckBoxComponent width="70%"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.Readyforpickupdelive')}"
+			dataHolder="{_invoiceBase}" variableName="readyToPickup" customText="{_invoiceBase.readyToPickup}"
+			defaultValue="false" selectedValue="true" deSelectedValue="false" enabled="{_invoiceBase.holdState==null}"/>
 	</mx:HBox>
-                            
+	
+	<mx:HBox width="100%">
+		<mx:HBox width="100%" horizontalAlign="left">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{doSave()}"/>
+	    </mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="right">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{closeWindow()}"/>
+	    </mx:HBox>
+    </mx:HBox>               
 </mx:TitleWindow>

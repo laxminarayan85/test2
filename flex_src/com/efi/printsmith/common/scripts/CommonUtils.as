@@ -1,6 +1,7 @@
 // ActionScript file
 import com.efi.printsmith.common.components.CommonConfirmationComponent;
 
+import flash.display.DisplayObject;
 import flash.utils.ByteArray;
 
 import mx.collections.ArrayCollection;
@@ -84,9 +85,15 @@ private function removeSymbols(value:String,symbol:String):String {
 	return value;
 }
 
-private function openConfirmationComponent(confirmationText:String=null):void {
-	var commonConfirmationComponent:CommonConfirmationComponent = PopUpManager.createPopUp(this,CommonConfirmationComponent,false) as CommonConfirmationComponent;
-	commonConfirmationComponent.confirmationText = confirmationText;
+private function openConfirmationComponent(confirmationText:String=null, parentWindow:DisplayObject=null):void {
+	var commonConfirmationComponent:CommonConfirmationComponent;
+	if(parentWindow==null) {
+		commonConfirmationComponent = PopUpManager.createPopUp(this,CommonConfirmationComponent,false) as CommonConfirmationComponent;
+		commonConfirmationComponent.confirmationText = confirmationText;
+	} else {
+		commonConfirmationComponent = PopUpManager.createPopUp(parentWindow,CommonConfirmationComponent,false) as CommonConfirmationComponent;
+		commonConfirmationComponent.confirmationText = confirmationText;
+	}
 }
  
 public function cloneAC(src:ArrayCollection):ArrayCollection	{
