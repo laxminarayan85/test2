@@ -300,7 +300,8 @@ public class PreferencesPricingMethod extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @Basic
+	@ManyToOne()
 	@Where(clause="isdeleted <> 'TRUE'")
 	private EstimatorTypes estimator;
 	
@@ -313,14 +314,13 @@ public class PreferencesPricingMethod extends ModelBase {
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setEstimator(EstimatorTypes newVal) {
+   * @generated
+   */	
+  public void setEstimator(EstimatorTypes newVal) {
     this.estimator = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
