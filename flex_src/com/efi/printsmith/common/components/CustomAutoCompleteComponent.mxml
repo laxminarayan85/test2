@@ -63,7 +63,6 @@
 		     				  
 		    public function set customText(displayValue:String):void {
 		    	if(changeTypedText){
-		    		//this.dataProvider = masterList;
 			    	if(data != null){
 			    		if(data[columnName+"ErrorText"]==""){
 		  			 		displayValue = data[columnName+"ErrorText"];
@@ -128,23 +127,6 @@
 		     
        		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
-				/* if(toolTipProperty){
-					if(dropdown){
-						dropdown.dataTipFunction = getCustomToolTip;
-					}
-				}
-				if(!check && datagridControl){
-				  var customDataGrid:CustomDataGrid = CustomDataGrid(DataGridListData(listData).owner); 
-				  if(customDataGrid.isItemHighlighted(data)) {
-						setStyle('backgroundColor',0xB2E1FF);
-				   }
-				   else if(customDataGrid.isItemSelected(data)) {
-						setStyle('backgroundColor',0x7FCEFF);
-				   }
-				   else {
-						setStyle('backgroundColor',0xFFFFFF);
-				   }
-				} */
 			}
 			
 			private function getCustomToolTip(item:Object):String {
@@ -242,20 +224,6 @@
 			 * helps to save the selected item. 
 			 */
 			public function focusOut(event:FocusEvent):void {
-				/* var autocompleteValidator:CustomAutocompleteValidator = new CustomAutocompleteValidator();
-				autocompleteValidator.source = event.currentTarget;
-				autocompleteValidator.property = "typedText";
-				autocompleteValidator.required = required;
-				var validatorEvent:ValidationResultEvent = autocompleteValidator.validate(event.currentTarget.typedText);
-				if(validatorEvent.type == ValidationResultEvent.INVALID){
-					parentCloseEventTriggered = false;
-			  		selectedIndexValue = 0;
-					customText = "";
-					if(data != null){
-	  			 		data[columnName+"ErrorText"] = "";
-	  			 	}
-					return;
-				} */
 				if(event.currentTarget.selectedItem) {
 					try{
 						event.currentTarget.selectedItem[labelFieldId];
@@ -264,17 +232,6 @@
 						parentCloseEventTriggered = false;
 			  			selectedIndexValue = 0;
 						event.currentTarget.typedText = "";
-						/* var autocompleteValidator1:CustomAutocompleteValidator = new CustomAutocompleteValidator();
-						autocompleteValidator1.source = event.currentTarget;
-						autocompleteValidator1.property = "typedText";
-						autocompleteValidator1.required = required;
-						var validatorEvent1:ValidationResultEvent = autocompleteValidator1.validate(event.currentTarget.typedText);
-						if(validatorEvent1.type == ValidationResultEvent.INVALID){
-							if(data != null){
-			  			 		data[columnName+"ErrorText"] = "";
-			  			 	}
-							return;
-						} */
 						if(repeaterElement){
 							if(event.currentTarget.getRepeaterItem()){
 								event.currentTarget.getRepeaterItem()[variableName] = null;
@@ -369,17 +326,6 @@
 					parentCloseEventTriggered = false;
 			  		selectedIndexValue = 0;
 					event.currentTarget.typedText = "";
-					/* var autocompleteValidator2:CustomAutocompleteValidator = new CustomAutocompleteValidator();
-					autocompleteValidator2.source = event.currentTarget;
-					autocompleteValidator2.property = "typedText";
-					autocompleteValidator2.required = required;
-					var validatorEvent2:ValidationResultEvent = autocompleteValidator2.validate(event.currentTarget.typedText);
-					if(validatorEvent2.type == ValidationResultEvent.INVALID){
-						if(data != null){
-		  			 		data[columnName+"ErrorText"] = "";
-		  			 	}
-						return;
-					} */
 					if(repeaterElement){
 						if(event.currentTarget.getRepeaterItem()){
 							event.currentTarget.getRepeaterItem()[variableName] = null;
