@@ -47,6 +47,7 @@ package com.efi.printsmith.data
 		public var showDocumentType:Boolean = false;
 		public var includePastDueDocuments:Boolean = false;
 		public var colorPastDueEntries:Boolean = false;
+		public var pendingOption:String = "";
 	
 	}
 }

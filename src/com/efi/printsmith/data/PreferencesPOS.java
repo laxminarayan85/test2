@@ -43,7 +43,9 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "preferencespos")
+//@SQLDelete(sql="update modelbase set isdeleted='TRUE' from preferencespos where modelbase.id=?")
 @SQLDelete(sql="update preferencespos set isdeleted='TRUE' where id=?")
+//Filter added to retrieve only records that have not been soft deleted.
 @Where(clause="isdeleted <> 'TRUE'")
 public class PreferencesPOS extends ModelBase {
 	/**
@@ -180,6 +182,11 @@ public class PreferencesPOS extends ModelBase {
 	public static final String COLORPASTDUEENTRIES = "ColorPastDueEntries";
 
 	/**
+   * @generated
+   */
+  public static final String PENDINGOPTION = "PendingOption";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesPOS() {
@@ -188,22 +195,18 @@ public class PreferencesPOS extends ModelBase {
     this.isDeleted = false;
   }
 
+	@Basic
+	private Boolean isDeleted = false;
+	
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+	
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
  	
 	
-	@Basic
-  private Boolean isDeleted = false;
-
-	public Boolean getIsDeleted() {
-    return isDeleted;
-  }
-
-
-	public void setIsDeleted(Boolean isDeleted) {
-    this.isDeleted = isDeleted;
-  }
-
-
-
 	/**
 	 * @generated
 	 */	
@@ -852,7 +855,7 @@ public class PreferencesPOS extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
+    @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition listFontBean;
 	
 	/**
@@ -876,7 +879,7 @@ public class PreferencesPOS extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
+    @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition headerFontBean;
 	
 	/**
@@ -964,6 +967,26 @@ public class PreferencesPOS extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String pendingOption;
+
+	/**
+   * @generated
+ 	 */
+  public String getPendingOption(){
+    return pendingOption; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setPendingOption(String newVal) {
+    this.pendingOption = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1002,6 +1025,7 @@ public class PreferencesPOS extends ModelBase {
     if (SHOWDOCUMENTTYPE.equals(propertyName)) return getShowDocumentType();
     if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) return getIncludePastDueDocuments();
     if (COLORPASTDUEENTRIES.equals(propertyName)) return getColorPastDueEntries();
+    if (PENDINGOPTION.equals(propertyName)) return getPendingOption();
     return super.getProperty(propertyName);
   }
 	
@@ -1044,6 +1068,7 @@ public class PreferencesPOS extends ModelBase {
     if (SHOWDOCUMENTTYPE.equals(propertyName)) setShowDocumentType((Boolean)newValue); else
     if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) setIncludePastDueDocuments((Boolean)newValue); else
     if (COLORPASTDUEENTRIES.equals(propertyName)) setColorPastDueEntries((Boolean)newValue); else
+    if (PENDINGOPTION.equals(propertyName)) setPendingOption((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1119,6 +1144,8 @@ public class PreferencesPOS extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (COLORPASTDUEENTRIES.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (PENDINGOPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1162,6 +1189,7 @@ public class PreferencesPOS extends ModelBase {
     if (SHOWDOCUMENTTYPE.equals(propertyName)) return PreferencesPOS.class;
     if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) return PreferencesPOS.class;
     if (COLORPASTDUEENTRIES.equals(propertyName)) return PreferencesPOS.class;
+    if (PENDINGOPTION.equals(propertyName)) return PreferencesPOS.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1238,6 +1266,8 @@ public class PreferencesPOS extends ModelBase {
     if (! SmartEquals(getIncludePastDueDocuments(), objT.getIncludePastDueDocuments()))
       return false;
     if (! SmartEquals(getColorPastDueEntries(), objT.getColorPastDueEntries()))
+      return false;
+    if (! SmartEquals(getPendingOption(), objT.getPendingOption()))
       return false;
     return true;
   }			
