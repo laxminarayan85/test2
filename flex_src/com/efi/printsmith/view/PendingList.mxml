@@ -468,6 +468,7 @@
 	public function handleUILocationEvent(evt:ResultEvent):void {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
 			var pendingLocation:PendingLocation = PendingLocation(PopUpManager.createPopUp(this, PendingLocation, false));
+			pendingLocation.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
 			pendingLocation.invoiceBase = dgView.selectedItem as InvoiceBase;
 			pendingLocation.setStyle("borderAlpha", 0.9);
 		}
@@ -488,6 +489,7 @@
 	public function handleUIDueDateEvent(evt:ResultEvent):void {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
 			var pendingChangeDueDate:PendingChangeDueDate = PendingChangeDueDate(PopUpManager.createPopUp(this, PendingChangeDueDate, false));
+			pendingChangeDueDate.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
 			pendingChangeDueDate.invoiceBase = dgView.selectedItem as InvoiceBase;
 			pendingChangeDueDate.setStyle("borderAlpha", 0.9);
 		}

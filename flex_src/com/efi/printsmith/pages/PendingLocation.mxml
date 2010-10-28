@@ -11,6 +11,7 @@
     
     <mx:Script>
     	<![CDATA[
+    		import com.efi.printsmith.events.PendingListUpdateEvent;
     		import com.efi.printsmith.data.Estimate;
     		import com.efi.printsmith.data.Invoice;
     		import flash.net.registerClassAlias;
@@ -109,6 +110,7 @@
 				} else if(_invoiceBase is Estimate){
 					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')),Snowmass.getInstance());
 				}
+				dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
 				callLater(closeWindow);
 			}
 			
@@ -230,7 +232,7 @@
 	
 	<mx:HBox width="100%" horizontalAlign="right">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.DocumentLocation')}:" width="30%" textAlign="right"/>
-		<fc:AutoComplete id="doc_location" dataProvider="{productionLocationsList}" labelField="name" enabled="false" width="60%"/>
+		<fc:AutoComplete id="doc_location" dataProvider="{productionLocationsList}" labelField="name" enabled="false" width="60%" disabledColor="#000000"/>
 	</mx:HBox>
 	
 	<mx:HBox width="100%" horizontalAlign="right">
@@ -245,7 +247,7 @@
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.Comment')}:" width="30%" textAlign="right"/>
 		<components:CustomTextAreaComponent
 			dataHolder="{selectedJobBase}" variableName="comment" customText="{selectedJobBase.comment}"
-			width="60%" height="10%" enabled="{enabledValue}"/>
+			width="60%" height="10%" enabled="{enabledValue}" disabledColor="#000000"/>
 	</mx:HBox>
 	
 	<mx:HRule width="100%"/>
@@ -262,7 +264,7 @@
 		<components:CustomCheckBoxComponent width="70%"
 			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.Readyforpickupdelive')}"
 			dataHolder="{_invoiceBase}" variableName="readyToPickup" customText="{_invoiceBase.readyToPickup}"
-			defaultValue="false" selectedValue="true" deSelectedValue="false" enabled="{_invoiceBase.holdState==null}"/>
+			defaultValue="false" selectedValue="true" deSelectedValue="false" enabled="{_invoiceBase.holdState==null}" disabledColor="#000000"/>
 	</mx:HBox>
 	
 	<mx:HBox width="100%">

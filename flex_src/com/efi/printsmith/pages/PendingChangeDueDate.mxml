@@ -13,6 +13,7 @@
 	<mx:Script>
 	                                   
 	<![CDATA[
+		import com.efi.printsmith.events.PendingListUpdateEvent;
 		import com.efi.printsmith.data.InvoiceBase;
 		import mx.controls.Alert;
 		import mx.rpc.events.FaultEvent;
@@ -75,7 +76,8 @@
 		} 
 		
 		private function handleSaveResult(event:ResultEvent):void {
-			closeWindow();
+			dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
+			callLater(closeWindow);
 		}
 		                     
 	]]>        
