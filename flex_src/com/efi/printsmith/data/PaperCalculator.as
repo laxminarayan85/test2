@@ -35,19 +35,14 @@ package com.efi.printsmith.data
 		public var bleedTop:Number = 0;
 		public var bleedRight:Number = 0;
 		public var bleedBottom:Number = 0;
-		public var defaultPressCuttOff:Number = 0;
 		public var backTrimParent:Boolean = false;
-		public var trimFourSides:Boolean = false;
 		public var workandTurn:Boolean = false;
 		public var runToFinishGrain:String = "";
 		public var printParentToFinishSection:Boolean = false;
 		public var printParentToRunSection:Boolean = false;
 		public var attachToJobTicket:Boolean = false;
 		public var printRunToFinishSection:Boolean = false;
-		public var parentSize:Dimension;
-		public var finishSize:Dimension;
 		public var useGripEdgeGap:Boolean = false;
-		public var runSize:Dimension;
 		public var gripLocation:String = "";
 		public var cutstoFinish:int = 0;
 		public var sheetsOut:int = 0;
@@ -68,7 +63,6 @@ package com.efi.printsmith.data
 		public var swap:Boolean = false;
 		public var runout:int = 0;
 		public var runAndTumble:Boolean = false;
-		public var workAndTumble:Boolean = false;
 	
 	}
 }

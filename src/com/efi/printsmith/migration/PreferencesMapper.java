@@ -964,7 +964,7 @@ public class PreferencesMapper extends ImportMapper {
 		else if (name.equals("whiteSpaceBottom"))
 			preferencesEstimating.setWhiteSpaceBottom(Utilities.tokenToDouble(value));
 		else if (name.equals("backtrimRun"))
-			preferencesEstimating.setTrimFourSides(Utilities.tokenToBooleanValue(value));
+			preferencesEstimating.setBackTrimRun(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("useWhiteSpace"))
 			preferencesEstimating.setUseWhiteSpace(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("grain"))

@@ -59,7 +59,7 @@ package com.efi.printsmith.data
 		public var bleedBottom:Number = 0;
 		public var defaultPressCuttOff:Number = 0;
 		public var backTrimParent:Boolean = false;
-		public var trimFourSides:Boolean = false;
+		public var backTrimRun:Boolean = false;
 		public var workandTumble:Boolean = false;
 		public var runToFinishGrain:String = "";
 		public var printParentToFinishSection:Boolean = false;

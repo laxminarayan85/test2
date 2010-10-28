@@ -133,15 +133,7 @@ public class PaperCalculator extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String DEFAULTPRESSCUTTOFF = "DefaultPressCuttOff";
-	/**
-	 * @generated
-	 */
 	public static final String BACKTRIMPARENT = "BackTrimParent";
-	/**
-	 * @generated
-	 */
-	public static final String TRIMFOURSIDES = "TrimFourSides";
 	/**
    * @generated
    */
@@ -169,19 +161,7 @@ public class PaperCalculator extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String PARENTSIZE = "ParentSize";
-	/**
-	 * @generated
-	 */
-	public static final String FINISHSIZE = "FinishSize";
-	/**
-	 * @generated
-	 */
 	public static final String USEGRIPEDGEGAP = "UseGripEdgeGap";
-	/**
-	 * @generated
-	 */
-	public static final String RUNSIZE = "RunSize";
 	/**
 	 * @generated
 	 */
@@ -263,11 +243,6 @@ public class PaperCalculator extends ModelBase {
    * @generated
    */
   public static final String RUNANDTUMBLE = "RunAndTumble";
-
-	/**
-   * @generated
-   */
-  public static final String WORKANDTUMBLE = "WorkAndTumble";
 
 	/**
 	 * @generated
@@ -781,38 +756,6 @@ public class PaperCalculator extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	@Column(name="defaultPressCuttOff", precision=19, scale=4)
-	private BigDecimal defaultPressCuttOff;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getDefaultPressCuttOff(){
-    return defaultPressCuttOff; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setDefaultPressCuttOff(BigDecimal newVal) {
-    this.defaultPressCuttOff = newVal;
-    this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setDefaultPressCuttOff(double newVal) {
-    this.defaultPressCuttOff = BigDecimal.valueOf(newVal);
-    this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
 	private Boolean backTrimParent;
 	
 	/**
@@ -828,29 +771,6 @@ public class PaperCalculator extends ModelBase {
 	 */	
 	public void setBackTrimParent(Boolean newVal) {
     this.backTrimParent = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean trimFourSides;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getTrimFourSides(){
-    return trimFourSides; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTrimFourSides(Boolean newVal) {
-    this.trimFourSides = newVal;
   }
 	
  	
@@ -996,54 +916,6 @@ public class PaperCalculator extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-	private Dimension parentSize;
-	
-	/**
-	 * @generated
- 	 */
-	public Dimension getParentSize(){
-    return parentSize; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setParentSize(Dimension newVal) {
-    this.parentSize = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-	private Dimension finishSize;
-	
-	/**
-	 * @generated
- 	 */
-	public Dimension getFinishSize(){
-    return finishSize; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setFinishSize(Dimension newVal) {
-    this.finishSize = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Boolean useGripEdgeGap;
 	
@@ -1060,30 +932,6 @@ public class PaperCalculator extends ModelBase {
 	 */	
 	public void setUseGripEdgeGap(Boolean newVal) {
     this.useGripEdgeGap = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-	private Dimension runSize;
-	
-	/**
-	 * @generated
- 	 */
-	public Dimension getRunSize(){
-    return runSize; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setRunSize(Dimension newVal) {
-    this.runSize = newVal;
   }
 	
  	
@@ -1546,28 +1394,6 @@ public class PaperCalculator extends ModelBase {
 
 
 	/**
-   * @generated
-   */	
- 	@Basic
-  private Boolean workAndTumble;
-
-	/**
-   * @generated
- 	 */
-  public Boolean getWorkAndTumble(){
-    return workAndTumble; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setWorkAndTumble(Boolean newVal) {
-    this.workAndTumble = newVal;
-  }
-
-
-	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1594,19 +1420,14 @@ public class PaperCalculator extends ModelBase {
     if (BLEEDTOP.equals(propertyName)) return getBleedTop();
     if (BLEEDRIGHT.equals(propertyName)) return getBleedRight();
     if (BLEEDBOTTOM.equals(propertyName)) return getBleedBottom();
-    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) return getDefaultPressCuttOff();
     if (BACKTRIMPARENT.equals(propertyName)) return getBackTrimParent();
-    if (TRIMFOURSIDES.equals(propertyName)) return getTrimFourSides();
     if (WORKANDTURN.equals(propertyName)) return getWorkandTurn();
     if (RUNTOFINISHGRAIN.equals(propertyName)) return getRunToFinishGrain();
     if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) return getPrintParentToFinishSection();
     if (PRINTPARENTTORUNSECTION.equals(propertyName)) return getPrintParentToRunSection();
     if (ATTACHTOJOBTICKET.equals(propertyName)) return getAttachToJobTicket();
     if (PRINTRUNTOFINISHSECTION.equals(propertyName)) return getPrintRunToFinishSection();
-    if (PARENTSIZE.equals(propertyName)) return getParentSize();
-    if (FINISHSIZE.equals(propertyName)) return getFinishSize();
     if (USEGRIPEDGEGAP.equals(propertyName)) return getUseGripEdgeGap();
-    if (RUNSIZE.equals(propertyName)) return getRunSize();
     if (GRIPLOCATION.equals(propertyName)) return getGripLocation();
     if (CUTSTOFINISH.equals(propertyName)) return getCutstoFinish();
     if (SHEETSOUT.equals(propertyName)) return getSheetsOut();
@@ -1627,7 +1448,6 @@ public class PaperCalculator extends ModelBase {
     if (SWAP.equals(propertyName)) return getSwap();
     if (RUNOUT.equals(propertyName)) return getRunout();
     if (RUNANDTUMBLE.equals(propertyName)) return getRunAndTumble();
-    if (WORKANDTUMBLE.equals(propertyName)) return getWorkAndTumble();
     return super.getProperty(propertyName);
   }
 	
@@ -1658,19 +1478,14 @@ public class PaperCalculator extends ModelBase {
     if (BLEEDTOP.equals(propertyName)) setBleedTop((Double)newValue); else
     if (BLEEDRIGHT.equals(propertyName)) setBleedRight((Double)newValue); else
     if (BLEEDBOTTOM.equals(propertyName)) setBleedBottom((Double)newValue); else
-    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) setDefaultPressCuttOff((BigDecimal)newValue); else
     if (BACKTRIMPARENT.equals(propertyName)) setBackTrimParent((Boolean)newValue); else
-    if (TRIMFOURSIDES.equals(propertyName)) setTrimFourSides((Boolean)newValue); else
     if (WORKANDTURN.equals(propertyName)) setWorkandTurn((Boolean)newValue); else
     if (RUNTOFINISHGRAIN.equals(propertyName)) setRunToFinishGrain((String)newValue); else
     if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) setPrintParentToFinishSection((Boolean)newValue); else
     if (PRINTPARENTTORUNSECTION.equals(propertyName)) setPrintParentToRunSection((Boolean)newValue); else
     if (ATTACHTOJOBTICKET.equals(propertyName)) setAttachToJobTicket((Boolean)newValue); else
     if (PRINTRUNTOFINISHSECTION.equals(propertyName)) setPrintRunToFinishSection((Boolean)newValue); else
-    if (PARENTSIZE.equals(propertyName)) setParentSize((Dimension)newValue); else
-    if (FINISHSIZE.equals(propertyName)) setFinishSize((Dimension)newValue); else
     if (USEGRIPEDGEGAP.equals(propertyName)) setUseGripEdgeGap((Boolean)newValue); else
-    if (RUNSIZE.equals(propertyName)) setRunSize((Dimension)newValue); else
     if (GRIPLOCATION.equals(propertyName)) setGripLocation((String)newValue); else
     if (CUTSTOFINISH.equals(propertyName)) setCutstoFinish((Integer)newValue); else
     if (SHEETSOUT.equals(propertyName)) setSheetsOut((Integer)newValue); else
@@ -1691,7 +1506,6 @@ public class PaperCalculator extends ModelBase {
     if (SWAP.equals(propertyName)) setSwap((Boolean)newValue); else
     if (RUNOUT.equals(propertyName)) setRunout((Integer)newValue); else
     if (RUNANDTUMBLE.equals(propertyName)) setRunAndTumble((Boolean)newValue); else
-    if (WORKANDTUMBLE.equals(propertyName)) setWorkAndTumble((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1743,11 +1557,7 @@ public class PaperCalculator extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (BLEEDBOTTOM.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
-    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
     if (BACKTRIMPARENT.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (TRIMFOURSIDES.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (WORKANDTURN.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
@@ -1761,14 +1571,8 @@ public class PaperCalculator extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (PRINTRUNTOFINISHSECTION.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (PARENTSIZE.equals(propertyName)) 
-      return new Class<?>[] {Dimension.class};		
-    if (FINISHSIZE.equals(propertyName)) 
-      return new Class<?>[] {Dimension.class};		
     if (USEGRIPEDGEGAP.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (RUNSIZE.equals(propertyName)) 
-      return new Class<?>[] {Dimension.class};		
     if (GRIPLOCATION.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (CUTSTOFINISH.equals(propertyName)) 
@@ -1809,8 +1613,6 @@ public class PaperCalculator extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (RUNANDTUMBLE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (WORKANDTUMBLE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1842,19 +1644,14 @@ public class PaperCalculator extends ModelBase {
     if (BLEEDTOP.equals(propertyName)) return PaperCalculator.class;
     if (BLEEDRIGHT.equals(propertyName)) return PaperCalculator.class;
     if (BLEEDBOTTOM.equals(propertyName)) return PaperCalculator.class;
-    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) return PaperCalculator.class;
     if (BACKTRIMPARENT.equals(propertyName)) return PaperCalculator.class;
-    if (TRIMFOURSIDES.equals(propertyName)) return PaperCalculator.class;
     if (WORKANDTURN.equals(propertyName)) return PaperCalculator.class;
     if (RUNTOFINISHGRAIN.equals(propertyName)) return PaperCalculator.class;
     if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) return PaperCalculator.class;
     if (PRINTPARENTTORUNSECTION.equals(propertyName)) return PaperCalculator.class;
     if (ATTACHTOJOBTICKET.equals(propertyName)) return PaperCalculator.class;
     if (PRINTRUNTOFINISHSECTION.equals(propertyName)) return PaperCalculator.class;
-    if (PARENTSIZE.equals(propertyName)) return PaperCalculator.class;
-    if (FINISHSIZE.equals(propertyName)) return PaperCalculator.class;
     if (USEGRIPEDGEGAP.equals(propertyName)) return PaperCalculator.class;
-    if (RUNSIZE.equals(propertyName)) return PaperCalculator.class;
     if (GRIPLOCATION.equals(propertyName)) return PaperCalculator.class;
     if (CUTSTOFINISH.equals(propertyName)) return PaperCalculator.class;
     if (SHEETSOUT.equals(propertyName)) return PaperCalculator.class;
@@ -1875,7 +1672,6 @@ public class PaperCalculator extends ModelBase {
     if (SWAP.equals(propertyName)) return PaperCalculator.class;
     if (RUNOUT.equals(propertyName)) return PaperCalculator.class;
     if (RUNANDTUMBLE.equals(propertyName)) return PaperCalculator.class;
-    if (WORKANDTUMBLE.equals(propertyName)) return PaperCalculator.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1929,11 +1725,7 @@ public class PaperCalculator extends ModelBase {
       return false;
     if (! SmartEquals(getBleedBottom(), objT.getBleedBottom()))
       return false;
-    if (! SmartEquals(getDefaultPressCuttOff(), objT.getDefaultPressCuttOff()))
-      return false;
     if (! SmartEquals(getBackTrimParent(), objT.getBackTrimParent()))
-      return false;
-    if (! SmartEquals(getTrimFourSides(), objT.getTrimFourSides()))
       return false;
     if (! SmartEquals(getWorkandTurn(), objT.getWorkandTurn()))
       return false;
@@ -1947,13 +1739,7 @@ public class PaperCalculator extends ModelBase {
       return false;
     if (! SmartEquals(getPrintRunToFinishSection(), objT.getPrintRunToFinishSection()))
       return false;
-    if (! SmartEquals(getParentSize(), objT.getParentSize()))
-      return false;
-    if (! SmartEquals(getFinishSize(), objT.getFinishSize()))
-      return false;
     if (! SmartEquals(getUseGripEdgeGap(), objT.getUseGripEdgeGap()))
-      return false;
-    if (! SmartEquals(getRunSize(), objT.getRunSize()))
       return false;
     if (! SmartEquals(getGripLocation(), objT.getGripLocation()))
       return false;
@@ -1994,8 +1780,6 @@ public class PaperCalculator extends ModelBase {
     if (! SmartEquals(getRunout(), objT.getRunout()))
       return false;
     if (! SmartEquals(getRunAndTumble(), objT.getRunAndTumble()))
-      return false;
-    if (! SmartEquals(getWorkAndTumble(), objT.getWorkAndTumble()))
       return false;
     return true;
   }			

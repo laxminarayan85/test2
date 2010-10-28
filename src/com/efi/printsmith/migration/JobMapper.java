@@ -839,7 +839,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("back trim parent".equals(currentFieldToken)) {
 				tempPaper.setBackTrimParent(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("back trim run".equals(currentFieldToken)) {
-				tempPaper.setTrimFourSides(Utilities.tokenToBooleanValue(currentImportToken));
+				tempPaper.setBackTrimRun(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("diagram on job".equals(currentFieldToken)) {
 				tempPaper.setAttachToJobTicket(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("digital submitted".equals(currentFieldToken)) {
