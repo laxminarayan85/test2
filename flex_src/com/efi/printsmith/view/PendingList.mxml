@@ -479,8 +479,11 @@
 		}
 	}
 	public function handleUINotifyEvent(evt:ResultEvent):void {
-		var pendingNotify:PendingNotify = PendingNotify(PopUpManager.createPopUp(this, PendingNotify, false));
-		pendingNotify.setStyle("borderAlpha", 0.9);
+		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
+			var pendingNotify:PendingNotify = PendingNotify(PopUpManager.createPopUp(this, PendingNotify, false));
+			pendingNotify.invoiceBase = dgView.selectedItem as InvoiceBase;
+			pendingNotify.setStyle("borderAlpha", 0.9);	
+		}
 	}
 	public function handleUIDueDateEvent(evt:ResultEvent):void {
 		var pendingChangeDueDate:PendingChangeDueDate = PendingChangeDueDate(PopUpManager.createPopUp(this, PendingChangeDueDate, false));
@@ -659,6 +662,8 @@
 				handleUIStatusEvent(null);
 			} else if(pendingOptions.selectedValue==Constants.PENDING_LOCATION) {
 				handleUILocationEvent(null);
+			} else if(pendingOptions.selectedValue==Constants.PENDING_NOTIFY) {
+				handleUINotifyEvent(null);
 			}
 		}
 	}
@@ -1068,7 +1073,8 @@
 		</mx:HBox>		
 		<mx:HBox width="100%">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_NOTIFY}" click="{savePendingOption()}" width="10%"/>
-			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Notify')}" width="90%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Notify')}" width="90%"
+				click="{handleUINotifyEvent(null)}"/>
 		</mx:HBox>	
 		<mx:HBox width="100%">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_DUEDATE}" click="{savePendingOption()}" width="10%"/>
