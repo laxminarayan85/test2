@@ -150,6 +150,7 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 				} else {
 					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(copierDefinition.getCopierMatrix(), lookupQty);
 				}
+				pricePerCopy *= copierDefinition.getCopyMarkup2();
 				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
