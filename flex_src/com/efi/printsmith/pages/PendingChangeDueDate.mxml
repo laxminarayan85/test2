@@ -13,6 +13,7 @@
 	<mx:Script>
 	                                   
 	<![CDATA[
+		import mx.formatters.DateFormatter;
 		import com.efi.printsmith.events.PendingListUpdateEvent;
 		import com.efi.printsmith.data.InvoiceBase;
 		import mx.controls.Alert;
@@ -67,8 +68,8 @@
 				_invoiceBase.wantedDate.fullYear = dateObj.fullYear;
 			} else {
 				_invoiceBase.wantedDate = dateObj;
-				
 			}
+			week_label.text = getWeekName(_invoiceBase.wantedDate);
 		}
 		
 		private function doSave():void {
@@ -78,6 +79,15 @@
 		private function handleSaveResult(event:ResultEvent):void {
 			dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
 			callLater(closeWindow);
+		}
+		
+		private function getWeekName(wantedDate:Date):String {
+			if(wantedDate!=null){
+				var dateFormatter:DateFormatter = new DateFormatter();
+				dateFormatter.formatString = "EEE";
+				return dateFormatter.format(wantedDate);
+			}
+			return "";
 		}
 		                     
 	]]>        
@@ -89,9 +99,10 @@
 	
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Wantedby')}: "/>
-		<mx:DateField id="wantedByDate" selectedDate="{_invoiceBase.wantedDate}" change="{setWantedDate(event)}" formatString="MM/DD/YYYY"/>
+		<mx:DateField id="wantedByDate" selectedDate="{_invoiceBase.wantedDate}" change="{setWantedDate(event)}" formatString="MM/DD/YYYY" height="25"/>
 		<components:CustomTimeEntryDateComponent
-			dataHolder="{_invoiceBase}" variableName="wantedDate" customText="{_invoiceBase.wantedDate}" is24Hour="false" />
+			dataHolder="{_invoiceBase}" variableName="wantedDate" customText="{_invoiceBase.wantedDate}" is24Hour="false" height="25"/>
+		<mx:Label id="week_label" text="{getWeekName(_invoiceBase.wantedDate)}"/>
 	</mx:HBox>
 	
 	<mx:HBox width="100%">
