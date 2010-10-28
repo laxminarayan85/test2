@@ -14,7 +14,7 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 	protected static Logger log = Logger.getLogger(FlatRatePricingMethod.class);
 
 	@Override
-	public Job priceCopierJob(Job job) {
+	public Job priceCopierJob(Job job) throws Exception {
 		log.info("Start priceCopierJob for job " + job.getId());
 		super.priceCopierJob(job);
 

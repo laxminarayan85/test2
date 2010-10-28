@@ -10,9 +10,13 @@ import com.efi.printsmith.pricing.utilities.JobUtilities;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.service.DataService;
 
 public abstract class CopierPricingMethod {
-	public Job priceCopierJob(Job job) {
+	public Job priceCopierJob(Job job) throws Exception {
+		DataService dataService = new DataService();
+		if (job.getPricingCopier() != null)  // Ensure we have the latest copier data.
+			job.setPricingCopier(dataService.getCopierDefinition(job.getPricingCopier().getId()));
 		calculateTotalCopies(job);
 		calculateStockQty(job);
 //		JobUtilities.calculateSignatures(job);

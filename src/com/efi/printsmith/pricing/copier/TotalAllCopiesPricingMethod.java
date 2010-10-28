@@ -11,7 +11,7 @@ import com.efi.printsmith.pricing.utilities.MatrixUtilities;
 public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 
 	@Override
-	public Job priceCopierJob(Job job) {
+	public Job priceCopierJob(Job job) throws Exception {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */

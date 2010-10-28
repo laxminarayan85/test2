@@ -13,7 +13,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 	protected static Logger log = Logger.getLogger(CopiesPlusOriginalsPricingMethod.class);
 
 	@Override
-	public Job priceCopierJob(Job job) {
+	public Job priceCopierJob(Job job) throws Exception {
 		log.info("Start priceCopierJob for job " + job.getId());
 
 		super.priceCopierJob(job);

@@ -11,7 +11,7 @@ import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 public class SquareAreaAndOriginalsPricingMethod extends
 		LargeFormatPricingMethod {
 	@Override
-	public Job priceLargeFormatJob (Job job) {
+	public Job priceLargeFormatJob (Job job) throws Exception {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		super.priceLargeFormatJob(job);

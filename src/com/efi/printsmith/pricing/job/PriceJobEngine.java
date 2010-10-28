@@ -23,7 +23,7 @@ import com.efi.printsmith.pricing.list.ListPricingMethodFactory;
 public class PriceJobEngine {
 	protected static Logger log = Logger.getLogger(PriceJobEngine.class);
 
-	static public Job priceJob(Job job) {
+	static public Job priceJob(Job job) throws Exception {
 		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
 
 		clearPricingRecord(job.getPricingRecord());
