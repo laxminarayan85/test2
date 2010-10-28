@@ -490,6 +490,8 @@
 			var i:int = size.name.indexOf("x");
 			if (i > -1) {
 				lengthString = size.name.substring(0, i - 1);
+				if (lengthString == "")
+					lengthString = "0";
 			}
 	
 			return parseFloat(lengthString);
@@ -501,6 +503,8 @@
 			var i:int = size.name.indexOf("x");
 			if (i > -1) {
 				widthString = size.name.substring(i + 2);
+				if (widthString == "")
+					widthString = "0";
 			}
 	
 			return parseFloat(widthString);
