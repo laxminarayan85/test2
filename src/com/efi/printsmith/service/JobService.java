@@ -112,7 +112,7 @@ public class JobService extends SnowmassHibernateService {
 		return job;
 	}
 	
-	public Job assignStockToJob(Job job, StockDefinition stock) {
+	public Job assignStockToJob(Job job, StockDefinition stock) throws Exception {
 		if (stock == null || job == null) {
 			log.error("Stock or Job null value passed to assignStockToJob");
 			return job;

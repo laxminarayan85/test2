@@ -19,7 +19,7 @@ package com.efi.printsmith.data
 		public var taxTable:TaxTable;
 		public var taxCode:TaxCodes;
 		public var taxAmount:Number = 0;
-		public var type:String = "";
+		public var recordType:String = "";
 		public var checkNum:String = "";
 		public var ref:String = "";
 		public var subTotal:Number = 0;
@@ -27,6 +27,10 @@ package com.efi.printsmith.data
 		public var pos:Boolean = false;
 		public var ar:Boolean = false;
 		public var paymentAmount:Number = 0;
+		public var user:Users;
+		public var account:Account;
+		public var contact:Contact;
+		public var typeID:Number = 0;
 	
 	}
 }

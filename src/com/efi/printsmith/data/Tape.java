@@ -67,9 +67,9 @@ public class Tape extends ModelBase {
 	 */
 	public static final String TAXAMOUNT = "TaxAmount";
 	/**
-	 * @generated
-	 */
-	public static final String TYPE = "Type";
+   * @generated
+   */
+  public static final String RECORDTYPE = "RecordType";
 	/**
 	 * @generated
 	 */
@@ -98,6 +98,23 @@ public class Tape extends ModelBase {
 	 * @generated
 	 */
 	public static final String PAYMENTAMOUNT = "PaymentAmount";
+
+	/**
+   * @generated
+   */
+  public static final String USER = "User";
+	/**
+   * @generated
+   */
+  public static final String ACCOUNT = "Account";
+	/**
+   * @generated
+   */
+  public static final String CONTACT = "Contact";
+	/**
+   * @generated
+   */
+  public static final String TYPEID = "TypeID";
 
 	/**
 	 * @generated
@@ -248,28 +265,28 @@ public class Tape extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private String type;
-	
+  private String recordType;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public String getType(){
-    return type; 
+  public String getRecordType(){
+    return recordType; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setType(String newVal) {
-    this.type = newVal;
+   * @generated
+   */	
+  public void setRecordType(String newVal) {
+    this.recordType = newVal;
   }
-	
- 	
-	
+
+
+
 	/**
 	 * @generated
 	 */	
@@ -448,6 +465,100 @@ public class Tape extends ModelBase {
     this.paymentAmount = BigDecimal.valueOf(newVal);
   }
 	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private Users user;
+
+	/**
+   * @generated
+ 	 */
+  public Users getUser(){
+    return user; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setUser(Users newVal) {
+    this.user = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private Account account;
+
+	/**
+   * @generated
+ 	 */
+  public Account getAccount(){
+    return account; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAccount(Account newVal) {
+    this.account = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private Contact contact;
+
+	/**
+   * @generated
+ 	 */
+  public Contact getContact(){
+    return contact; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setContact(Contact newVal) {
+    this.contact = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long typeID;
+
+	/**
+   * @generated
+ 	 */
+  public Long getTypeID(){
+    return typeID; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTypeID(Long newVal) {
+    this.typeID = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -458,7 +569,7 @@ public class Tape extends ModelBase {
     if (TAXTABLE.equals(propertyName)) return getTaxTable();
     if (TAXCODE.equals(propertyName)) return getTaxCode();
     if (TAXAMOUNT.equals(propertyName)) return getTaxAmount();
-    if (TYPE.equals(propertyName)) return getType();
+    if (RECORDTYPE.equals(propertyName)) return getRecordType();
     if (CHECKNUM.equals(propertyName)) return getCheckNum();
     if (REF.equals(propertyName)) return getRef();
     if (SUBTOTAL.equals(propertyName)) return getSubTotal();
@@ -466,6 +577,10 @@ public class Tape extends ModelBase {
     if (POS.equals(propertyName)) return getPos();
     if (AR.equals(propertyName)) return getAr();
     if (PAYMENTAMOUNT.equals(propertyName)) return getPaymentAmount();
+    if (USER.equals(propertyName)) return getUser();
+    if (ACCOUNT.equals(propertyName)) return getAccount();
+    if (CONTACT.equals(propertyName)) return getContact();
+    if (TYPEID.equals(propertyName)) return getTypeID();
     return super.getProperty(propertyName);
   }
 	
@@ -480,7 +595,7 @@ public class Tape extends ModelBase {
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
     if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
     if (TAXAMOUNT.equals(propertyName)) setTaxAmount((BigDecimal)newValue); else
-    if (TYPE.equals(propertyName)) setType((String)newValue); else
+    if (RECORDTYPE.equals(propertyName)) setRecordType((String)newValue); else
     if (CHECKNUM.equals(propertyName)) setCheckNum((String)newValue); else
     if (REF.equals(propertyName)) setRef((String)newValue); else
     if (SUBTOTAL.equals(propertyName)) setSubTotal((BigDecimal)newValue); else
@@ -488,6 +603,10 @@ public class Tape extends ModelBase {
     if (POS.equals(propertyName)) setPos((Boolean)newValue); else
     if (AR.equals(propertyName)) setAr((Boolean)newValue); else
     if (PAYMENTAMOUNT.equals(propertyName)) setPaymentAmount((BigDecimal)newValue); else
+    if (USER.equals(propertyName)) setUser((Users)newValue); else
+    if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
+    if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
+    if (TYPEID.equals(propertyName)) setTypeID((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -507,7 +626,7 @@ public class Tape extends ModelBase {
       return new Class<?>[] {TaxCodes.class};		
     if (TAXAMOUNT.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
-    if (TYPE.equals(propertyName)) 
+    if (RECORDTYPE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (CHECKNUM.equals(propertyName)) 
       return new Class<?>[] {String.class};		
@@ -523,6 +642,14 @@ public class Tape extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (PAYMENTAMOUNT.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
+    if (USER.equals(propertyName)) 
+      return new Class<?>[] {Users.class};		
+    if (ACCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Account.class};		
+    if (CONTACT.equals(propertyName)) 
+      return new Class<?>[] {Contact.class};		
+    if (TYPEID.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -538,7 +665,7 @@ public class Tape extends ModelBase {
     if (TAXTABLE.equals(propertyName)) return Tape.class;
     if (TAXCODE.equals(propertyName)) return Tape.class;
     if (TAXAMOUNT.equals(propertyName)) return Tape.class;
-    if (TYPE.equals(propertyName)) return Tape.class;
+    if (RECORDTYPE.equals(propertyName)) return Tape.class;
     if (CHECKNUM.equals(propertyName)) return Tape.class;
     if (REF.equals(propertyName)) return Tape.class;
     if (SUBTOTAL.equals(propertyName)) return Tape.class;
@@ -546,6 +673,10 @@ public class Tape extends ModelBase {
     if (POS.equals(propertyName)) return Tape.class;
     if (AR.equals(propertyName)) return Tape.class;
     if (PAYMENTAMOUNT.equals(propertyName)) return Tape.class;
+    if (USER.equals(propertyName)) return Tape.class;
+    if (ACCOUNT.equals(propertyName)) return Tape.class;
+    if (CONTACT.equals(propertyName)) return Tape.class;
+    if (TYPEID.equals(propertyName)) return Tape.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -567,7 +698,7 @@ public class Tape extends ModelBase {
       return false;
     if (! SmartEquals(getTaxAmount(), objT.getTaxAmount()))
       return false;
-    if (! SmartEquals(getType(), objT.getType()))
+    if (! SmartEquals(getRecordType(), objT.getRecordType()))
       return false;
     if (! SmartEquals(getCheckNum(), objT.getCheckNum()))
       return false;
@@ -582,6 +713,14 @@ public class Tape extends ModelBase {
     if (! SmartEquals(getAr(), objT.getAr()))
       return false;
     if (! SmartEquals(getPaymentAmount(), objT.getPaymentAmount()))
+      return false;
+    if (! SmartEquals(getUser(), objT.getUser()))
+      return false;
+    if (! SmartEquals(getAccount(), objT.getAccount()))
+      return false;
+    if (! SmartEquals(getContact(), objT.getContact()))
+      return false;
+    if (! SmartEquals(getTypeID(), objT.getTypeID()))
       return false;
     return true;
   }			

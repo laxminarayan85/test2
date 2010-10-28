@@ -33,12 +33,12 @@ public class PricingService extends SnowmassHibernateService {
 		return charge;
 	}
 	
-	public Job priceJob(Job job) {
+	public Job priceJob(Job job) throws Exception {
 		if (job == null) {
 			return null;
-		}
-		
-		PriceJobEngine.priceJob(job);
+		}else{
+		 PriceJobEngine.priceJob(job);
+		}	
 		PricingRecord pricingRecord = job.getPricingRecord();
 		
 		if (job.getCharges() != null) {
@@ -72,7 +72,7 @@ public class PricingService extends SnowmassHibernateService {
 		return job;
 	}
 	
-	public Invoice priceInvoice(Invoice invoice) {
+	public Invoice priceInvoice(Invoice invoice) throws Exception {
 		log.info("Start priceInvoice for invoice " + invoice.getId());
 		if (invoice.getCharges() != null) {
 			for (Charge charge : invoice.getCharges()) {
