@@ -49,6 +49,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 				else if (pricingMatrix.getHeader8() >= job.getSheets()) j = 7;
 				else if (pricingMatrix.getHeader9() >= job.getSheets()) j = 8;
 				else if (pricingMatrix.getHeader10() >= job.getSheets()) j = 9;
+				else j = 9;
 
 				double unitPrice = 0.0;
 				switch (j) {
