@@ -314,7 +314,7 @@
 			}
 			
 			public function convertToInvoice():void {
-				if(invoice!=null && !isNaN(invoice.id) && invoice.id!=0 && invoice is Estimate){ 
+				if(invoice!=null && invoice is Estimate){ 
 					if(invoice.onPendingList){
 						invoiceService.convertToInvoice(invoice);
 					}
@@ -322,13 +322,13 @@
 			} 
 			
 			public function copyToNewInvoice():void {
-				if(invoice!=null && !isNaN(invoice.id) && invoice.id!=0){
+				if(invoice!=null){
 					invoiceService.copyToNewInvoice(invoice);
 				}
 			} 
 			
 			public function copyToNewEstimate():void {
-				if(invoice!=null && !isNaN(invoice.id) && invoice.id!=0){
+				if(invoice!=null){
 					invoiceService.copyToNewEstimate(invoice);
 				}
 			} 

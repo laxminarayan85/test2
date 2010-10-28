@@ -55,6 +55,9 @@
 	</mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.events.CopyToNewEstimateEvent;
+		import com.efi.printsmith.events.CopyToNewInvoiceEvent;
+		import com.efi.printsmith.events.ConvertToInvoiceEvent;
 		import com.efi.mdi.event.window.WindowResizeEvent;
 		import com.efi.mdi.event.window.WindowRestoreEvent;
 		import com.efi.mdi.view.taskbar.MinimizedWindow;
@@ -527,10 +530,40 @@
 			//addUniqueTab(child);
 			var win:MDIWindow = containerManager.getWindowWithChild(child,true);
 			if (win == null)	{
+				if(child is EditInvoice){
+					child.addEventListener(ConvertToInvoiceEvent.CONVERT_TO_INVOICE_EVENT,handleConvertInvoiceResult,false,0,true);
+					child.addEventListener(CopyToNewInvoiceEvent.COPY_TO_NEWINVOICE_EVENT,handleCopyToNewInvoiceResult,false,0,true);
+					child.addEventListener(CopyToNewEstimateEvent.COPY_TO_NEWESTIMATE_EVENT,handleCopyToNewEstimateResult,false,0,true);
+				}
 				containerManager.openNewMDIWindow(child.title,child);
 			}
 			else {
 				win.bringWindowToFront();	
+			}
+		}
+		
+		private function handleConvertInvoiceResult(event:ConvertToInvoiceEvent):void {
+			if(event.invoice!=null){
+				var child:EditInvoice = new EditInvoice();
+				child.convertedEstimatedId = event.convertedEstimatedId;
+				child.invoice = event.invoice; 
+				containerManager.openNewMDIWindow(child.title,child);
+			}
+		}
+		
+		private function handleCopyToNewInvoiceResult(event:CopyToNewInvoiceEvent):void {
+			if(event.invoice!=null){
+				var child:EditInvoice = new EditInvoice();
+				child.invoice = event.invoice;
+				containerManager.openNewMDIWindow(child.title,child);
+			}
+		}
+		
+		private function handleCopyToNewEstimateResult(event:CopyToNewEstimateEvent):void {
+			if(event.estimate!=null){
+				var child:EditInvoice = new EditInvoice();
+				child.invoice = event.estimate;
+				containerManager.openNewMDIWindow(child.title,child);
 			}
 		}		
 		
