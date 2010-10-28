@@ -80,9 +80,9 @@
 // Data Load Handlers
 	private function handleLoadResult(ev:ResultEvent):void {
 		timeperiodArray = ev.result as ArrayCollection;
+		closeCurrentPeriod = true;
 		if (timeperiodArray != null && timeperiodArray.length > 0)
-		{
-			closeCurrentPeriod = true;
+		{	
 			period = timeperiodArray.getItemAt(0,0) as Period;
 			if(period.type==null || period.type==""){
 				period.type = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly');
@@ -92,7 +92,6 @@
 			}
 		} else
 		{
-			closeCurrentPeriod = false;
 			period = new Period();
 			period.periodNumber = 0;
 			period.periodClosed = false;
@@ -245,7 +244,11 @@
 		period.modified = null;
 		period.prevId = "";
 		period.periodClosed = false;
-		period.periodNumber = maxPeriod+1;
+		if(maxPeriod==-1){
+			period.periodNumber =1;
+		} else {
+			period.periodNumber = maxPeriod+1;
+		}
 	}
 	
 	private function doClickPeriod(selectedButton:RadioButton):void{
