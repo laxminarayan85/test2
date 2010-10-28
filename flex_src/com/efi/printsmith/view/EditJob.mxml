@@ -2048,6 +2048,13 @@
 							Alert.show(message, "Warning", 0, null, null, null, 4); 
 							
 						} else
+							if (this.estimatingPreferences.leaveFoldedSizeEmpty != true) {
+								this.job.foldedSize.name = this.job.finishSize.name;
+								this.job.foldedSize.type = this.job.finishSize.type;
+								this.job.foldedSize.width = this.job.finishSize.width;
+								this.job.foldedSize.height = this.job.finishSize.height;
+								this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
+							}
 							refreshCalcAndImage();
 					}
 					break;
