@@ -1,5 +1,6 @@
 package com.efi.printsmith.service;
 
+import com.efi.printsmith.comparator.InvoiceBaseComparator;
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.defaultdata.*;
 
@@ -465,7 +466,7 @@ public class DataService extends HibernateService {
 				}
 				invoiceBase.setJobs(jobsList);
 			}
-
+			Collections.sort(invoices, new InvoiceBaseComparator());
 			// for (int i = 0; i < invoices.size(); i++) {
 			// InvoiceBase invoice = invoices.get(i);
 			//
