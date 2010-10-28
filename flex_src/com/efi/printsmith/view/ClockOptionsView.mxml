@@ -224,10 +224,10 @@
 						<mx:RadioButtonGroup id="activeStatus" enabled="{employee!=null}"/>
 						
 						<components:CustomRadioButtonComponent value="true" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Active')}" groupName="activeStatus"
-							dataHolder="{employee}" variableName="active" customText="{employee.active}" enabled="{employee!=null}"/>
+							dataHolder="{employee}" variableName="active" customText="{employee.active}" enabled="{employee!=null}" disabledColor="#000000"/>
 						
 						<components:CustomRadioButtonComponent value="false" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Inactive')}" groupName="activeStatus"
-							dataHolder="{employee}" variableName="active" customText="{employee.active}" enabled="{employee!=null}"/>
+							dataHolder="{employee}" variableName="active" customText="{employee.active}" enabled="{employee!=null}" disabledColor="#000000"/>
 							
 					</mx:Panel>
 					
@@ -237,10 +237,10 @@
 							
 							<components:CustomTimeEntryStringComponent 
 								showSeconds="false" enabled="{employee!=null}" functionName="setAutoHours"
-								dataHolder="{employee}" variableName="autoOutTime" customText="{employee.autoOutTime}" is24Hour="true"/>
+								dataHolder="{employee}" variableName="autoOutTime" customText="{employee.autoOutTime}" is24Hour="true" disabledColor="#000000"/>
 							
 							<mx:TextInput id="autoOutText" enabled="false" text="{getAutoOutText(employee.autoOutTime)}"
-								textAlign="center"/>
+								textAlign="center" disabledColor="#000000"/>
 						</mx:HBox>
 							
 					</mx:Panel>
@@ -250,15 +250,15 @@
 				<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Message')}" layout="vertical" width="100%" height="50%">
 				
 					<components:CustomTextAreaComponent width="95%" height="50%" enabled="{employee!=null}"
-						dataHolder="{employee}" variableName="message" customText="{employee.message}"/>
+						dataHolder="{employee}" variableName="message" customText="{employee.message}" disabledColor="#000000"/>
 					
 					<components:CustomCheckBoxComponent height="25%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.ShowmessageatclockIN')}"
 						dataHolder="{employee}" variableName="showMessageClockin" customText="{employee.showMessageClockin}"
-						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee!=null}"/>
+						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee!=null}" disabledColor="#000000"/>
 						
 					<components:CustomCheckBoxComponent height="25%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.ShowmessageatclockOU')}"
 						dataHolder="{employee}" variableName="showMessageClockout" customText="{employee.showMessageClockout}"
-						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee!=null}"/>
+						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee!=null}" disabledColor="#000000"/>
 				</mx:Panel>
 				
 			</mx:VBox>

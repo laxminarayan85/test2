@@ -303,7 +303,7 @@
 				<mx:HBox width="100%">
 					<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Period')}"
 						textAlign="right"/>
-					<common:CustomStringTextInputComponent	enabled="false"
+					<common:CustomStringTextInputComponent	enabled="false" disabledColor="#000000"
 						dataHolder="{period}" variableName="periodNumber" customText="{period.periodNumber}" width="70%"/>
 				</mx:HBox>
 				
@@ -311,13 +311,13 @@
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.From')}"
 						width="30%" textAlign="right"/>
 					<mx:DateField id="txtCurrentFrom"  selectedDate="{period.fromDate}" 
-						width="70%" formatString="MM/DD/YYYY" enabled="false"/>
+						width="70%" formatString="MM/DD/YYYY" enabled="false" disabledColor="#000000"/>
 				</mx:HBox>
 				<mx:HBox width="100%">
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.To')}"
 						width="30%" textAlign="right"/>
 					<mx:DateField id="txtCurrentTo"  selectedDate="{period.toDate}"
-						width="70%" formatString="MM/DD/YYYY" enabled="false"/>
+						width="70%" formatString="MM/DD/YYYY" enabled="false" disabledColor="#000000"/>
 				</mx:HBox>
 				<mx:HBox width="100%" horizontalAlign="center">
 					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Closecurrentperiod')}" 
@@ -332,7 +332,7 @@
 						masterList="{DaysArray}" labelFieldId="displayName" labelFieldName="displayName" updateFirstElement="true"
 						dataHolder="{period}" variableName="day" customText="{getCustomTextData(DaysArray,period,period.day)}"
 						enabled="{(period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Weekly') ||
-						period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.BiWeekly'))}"/>
+						period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.BiWeekly'))}" disabledColor="#000000"/>
 				</mx:HBox>
 			</mx:Panel>
 		</mx:VBox>
@@ -357,13 +357,13 @@
 			<mx:HBox width="100%">	
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.From')}"
 					width="30%" textAlign="right"/>
-				<mx:DateField id="txtCustomFrom"  selectedDate="{period.customfromDate}" change="{setFromDate(event)}"
+				<mx:DateField id="txtCustomFrom"  selectedDate="{period.customfromDate}" change="{setFromDate(event)}" disabledColor="#000000"
 					width="70%" formatString="MM/DD/YYYY" enabled="{period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')}"/>
 			</mx:HBox>
 			<mx:HBox width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.To')}"
 					width="30%" textAlign="right"/>
-				<mx:DateField id="txtCustomTo"  selectedDate="{period.customtoDate}" change="{setToDate(event)}"
+				<mx:DateField id="txtCustomTo"  selectedDate="{period.customtoDate}" change="{setToDate(event)}" disabledColor="#000000"
 					width="70%" formatString="MM/DD/YYYY" enabled="{period.type==resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Custom')}"/>
 			</mx:HBox>
 		</mx:Panel>

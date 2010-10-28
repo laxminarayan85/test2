@@ -222,7 +222,7 @@
 	
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Period')}:"/>
-		<components:CustomStringTextInputComponent enabled="false"
+		<components:CustomStringTextInputComponent enabled="false" disabledColor="#000000"
 			dataHolder="{_timeCard}" variableName="" customText="{_timeCard.period}"
 			visible="{editData}" includeInLayout="{editData}"/>	
 		<components:CustomComboBoxComponent
@@ -262,7 +262,7 @@
 			
 			<mx:HBox width="100%" horizontalAlign="right">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Total')}:"/>
-				<mx:TextInput enabled="false" text="{timeDifference}"/>
+				<mx:TextInput enabled="false" disabledColor="#000000" text="{timeDifference}"/>
 			</mx:HBox>
 			
 			<components:CustomCheckBoxComponent label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Paidtimeoff')}"
@@ -280,7 +280,7 @@
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardEditorCmd.Total')}:"/>
 					<components:CustomTimeEntryStringComponent
 						dataHolder="{_timeCard}" variableName="billable" customText="{_timeCard.billable}" 
-						showSeconds="false" is24Hour="true" enabled="{!_timeCard.paidTimeOff}"/>
+						showSeconds="false" is24Hour="true" enabled="{!_timeCard.paidTimeOff}" disabledColor="#000000"/>
 					
 				</mx:HBox>
 			
@@ -323,7 +323,7 @@
 						<mx:Component>
 							<components:CustomCheckBoxComponent 
 								datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
-								selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!data.isDisabled}"/>
+								selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!data.isDisabled}" disabledColor="#000000"/>
 						</mx:Component>
 					</mx:itemRenderer>
 				</mx:DataGridColumn>
