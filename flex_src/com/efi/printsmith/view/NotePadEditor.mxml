@@ -66,7 +66,13 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	private function handleSaveResult(event:ResultEvent):void {
 		this.notePad = event.result as NotePad;
 		invoice.notes = notePad;
-		dataInvoiceService.addUpdate(this.invoice);
+		if ( isNaN(invoice.id)){
+			PopUpManager.removePopUp(this);
+		}else{
+			
+			dataInvoiceService.addUpdate(this.invoice);
+		}
+			
 		
 	}
 	private function handleSaveInvoiceResult(event:Event):void {
