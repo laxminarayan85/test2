@@ -776,7 +776,9 @@
 							tempJobBaseObj = ObjectUtil.copy(target.job) as JobBase;
 						}
 					}
+					
 					updatedJobList.addItem(tempJobBaseObj);
+					tempJobBaseObj
 				}
 				invoice.jobs = updatedJobList;
 				if (invoice.jobs != null && invoice.jobs.length > 0) {
@@ -796,6 +798,7 @@
 				
 				invoice.grandTotal = invoice.subTotal;
 				invoice.amountDue = invoice.grandTotal;
+				
 				this.showJobs();
 			}
 

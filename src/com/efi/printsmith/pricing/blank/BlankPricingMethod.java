@@ -5,7 +5,7 @@ import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
 
 public class BlankPricingMethod {
-	public Job priceBlankJob(Job job) {
+	public Job priceBlankJob(Job job) throws Exception {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		

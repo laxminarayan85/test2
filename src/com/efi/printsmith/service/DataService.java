@@ -1937,6 +1937,11 @@ public class DataService extends HibernateService {
 
 					log.info("assigning parentInvoice to job. Invoice: "
 							+ invoice.getId() + " Job: " + job.getId());
+					PriceLogEntry priceLogEntry = job.getPricingRecord().getPriceLogEntry();
+					if (priceLogEntry == null)
+						priceLogEntry = new PriceLogEntry();
+					priceLogEntry = (PriceLogEntry)addUpdate(priceLogEntry);
+					job.getPricingRecord().setPriceLogEntry(priceLogEntry);
 					job.setParentInvoice(invoice);
 				}
 			}
@@ -1966,9 +1971,10 @@ public class DataService extends HibernateService {
 
 					while (jobIter.hasNext()) {
 						JobBase job = jobIter.next();
-
+						
 						log.info("assigning parentInvoice to job. Invoice: "
 								+ invoice.getId() + " Job: " + job.getId());
+						
 						job.setParentInvoice(invoice);
 						addUpdate(job);
 					}

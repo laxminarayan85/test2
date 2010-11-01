@@ -11,7 +11,7 @@ import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.pricing.utilities.PriceLogUtilities;
 
 public class PriceStockEngine {
-	public double priceStock(Job job) {
+	public double priceStock(Job job) throws Exception {
 		if (job == null) return 0.0;
 		double retVal = 0.0;
 		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
@@ -25,7 +25,7 @@ public class PriceStockEngine {
 		return retVal;
 	}
 	
-	private double priceBlankStock(Job job) {
+	private double priceBlankStock(Job job) throws Exception {
 		double retVal = 0.0;
 		PricingRecord pricingRecord = null;
 		PriceLogEntry parentEntry= null;
@@ -89,7 +89,7 @@ public class PriceStockEngine {
 		return retVal;
 	}
 	
-	private double pricePrintStock(Job job) {
+	private double pricePrintStock(Job job) throws Exception {
 		PricingRecord pricingRecord = null;
 		PriceLogEntry parentEntry= null;
 		PriceLogEntry priceLogEntry = null;
@@ -115,7 +115,7 @@ public class PriceStockEngine {
 		return sheetPrice;		
 	}
 	
-	private double priceCopierStock(Job job) {
+	private double priceCopierStock(Job job) throws Exception {
 		PricingRecord pricingRecord = null;
 		PriceLogEntry parentEntry= null;
 		PriceLogEntry priceLogEntry = null;

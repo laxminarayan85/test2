@@ -39,7 +39,7 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 		return job;
 	}
 	
-	private void calculateUnitPrice(Job job) {
+	private void calculateUnitPrice(Job job) throws Exception {
 		PriceStockEngine priceStockEngine = new PriceStockEngine();
 		PricingRecord pricingRecord = job.getPricingRecord();
 		

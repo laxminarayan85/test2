@@ -9,7 +9,7 @@ import com.efi.printsmith.data.WasteChart;
 import java.math.BigDecimal;
 
 public class PrintPricingMethod {
-	public Job pricePrintJob(Job job) {
+	public Job pricePrintJob(Job job) throws Exception {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		
