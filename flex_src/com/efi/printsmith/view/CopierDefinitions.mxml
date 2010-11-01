@@ -830,7 +830,9 @@
 		methodType = new ArrayCollection(CopierPricingMethod.toArray());
 		var methodTypeArray = new Array();
 		var i:int;
-		
+		copierDefinition.largeFormat = largeformatCheck.selected;
+		copierDefinition.blackwhite = this.blackwhitecheck.selected;
+		copierDefinition.color = colorcheck.selected;
 		if (copierDefinition.largeFormat == true  || largeformatCheck.selected) {
 			methodTypeArray = methodType.toArray().filter(filterLargeFormatMethod);
 			pricing_method_combo.dataProvider = methodTypeArray;
