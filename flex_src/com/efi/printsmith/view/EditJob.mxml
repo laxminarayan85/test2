@@ -2474,6 +2474,8 @@
 				if ( job.finishSize != null)
 					this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 	    		
+	    		job.paperCal = localJob.paperCal;
+	    		
 	    		refreshCalcAndImage();
 	    	}
 	    	

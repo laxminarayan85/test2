@@ -274,9 +274,9 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				if ((papercal.getUseGripEdgeGap().booleanValue() == true || papercal.getUseColorBar().booleanValue() == true) && whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH) {
 					
 					if (papercal.getUseGripEdgeGap().booleanValue() == true) {
-						if (papercal.getFolioLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)) {
+						if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)) {
 							ajust2Y = papercal.getGripEdgeGap().doubleValue();
-						} else if (papercal.getFolioLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT)) {
+						} else if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT)) {
 							ajust2X = papercal.getGripEdgeGap().doubleValue();
 						}
 					}
@@ -1673,7 +1673,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			
 			if ((whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH && papercal.getBackTrimRun().booleanValue() == true) || 
 						((whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN || whichToStart == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_FINISH) && 
-									papercal.getBackTrimRun().booleanValue() == true))
+									papercal.getBackTrimParent().booleanValue() == true))
 			{	// set origin so that items are centered in the form
 				width = (papercal.getAcross().doubleValue() * (bleedRect.width + gutterH)) - gutterH;
 				height = (papercal.getDown().doubleValue() * (bleedRect.height + gutterV)) - gutterV;

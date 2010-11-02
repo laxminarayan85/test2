@@ -7,6 +7,7 @@
 				creationComplete="init();"
 				showCloseButton="true"
 				close="PopUpManager.removePopUp(this);" fontSize="9">
+				
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -36,7 +37,9 @@
 		<![CDATA[
 			import mx.controls.Alert;
 			import mx.controls.Image;
+			import mx.utils.ObjectUtil;
 			import mx.managers.PopUpManager;
+			import com.efi.mdi.view.window.MDIWindow;
 			import mx.containers.TitleWindow;
 			import mx.collections.ArrayCollection;
 			import mx.rpc.events.ResultEvent;
@@ -64,6 +67,9 @@
 			[Bindable]
 			private var job:Job;
 			[Bindable]
+			private var originalJob:Job;
+			
+			[Bindable]
 			private var parentBoolean:Boolean;
 			[Bindable]
 			private var runBoolean:Boolean;
@@ -73,7 +79,7 @@
 			private var showWarning:Boolean = true;
 			
 			[Bindable]
-			var dimensionTarget:Object=new Object();
+			private var dimensionTarget:Object=new Object();
 			
 			[Bindable]
 			private var dimensions:ArrayCollection;
@@ -86,6 +92,12 @@
 
 			private function init():void
 			{
+			//	consumer.subscribe();
+			//	notification_consumer.subscribe();  
+
+			//	var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+			//	mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PaperCalculator');
+
 				refreshCalcAndImage();
 			}
 
@@ -260,6 +272,9 @@
 				fillRunToFinishGrainArray(RunToFinishGrainArray);
 				job=job2;
 				
+				registerClassAlias("com.efi.printsmith.data.Job",Job);
+				originalJob = ObjectUtil.copy(job) as Job;
+
 				mapFromJobData();
 			}
 
@@ -753,6 +768,39 @@
        			}
               }
             }
+            
+		 	public function getOriginalObject():ArrayCollection {
+				var originalList:ArrayCollection = new ArrayCollection();
+				originalList.addItem(originalJob);
+				return originalList;
+			}
+				
+			public function getUpdatedObject():ArrayCollection {
+				var updatedList:ArrayCollection = new ArrayCollection();
+				updatedList.addItem(job);
+				return updatedList;
+			}
+			
+			public function getConfirmationText():String {
+				return "\n"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"genericPrefCmd.PaperCalculator");
+			}
+
+            public function onClose():void {
+
+			}
+			
+			public function onSave():void {
+				doSave();
+			}
+			
+			public function onDontSave():void {
+				
+			}
+			
+			public function onCancel():void {
+
+			}
+
 ]]>
 
 	</mx:Script>
