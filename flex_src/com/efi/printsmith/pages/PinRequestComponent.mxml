@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 	title="Enter your Pin Number" layout="vertical" xmlns:components="com.efi.printsmith.common.components.*"
-	creationComplete="{initReqComp()}" width="400" height="150">
+	creationComplete="{initReqComp()}" keyDown="{keyDownEnterHandler(event)}" width="400" height="150">
 	
 	<mx:Script>
 		<![CDATA[
@@ -15,6 +15,7 @@
 			
 			private function initReqComp():void {
 				PopUpManager.centerPopUp(this);
+				pinnumber.setFocus();
 			}
 			
 			private function expandOrCollapse():void {
@@ -65,6 +66,12 @@
 				var pinRequestEvent:PinRequestEvent = new PinRequestEvent(PinRequestEvent.PINREQUEST,false);
 				dispatchEvent(pinRequestEvent);
 				PopUpManager.removePopUp(this);
+			}
+			
+			private function keyDownEnterHandler(event:KeyboardEvent):void {
+				if(event.keyCode==Keyboard.ENTER){
+					validatePinNumber();
+				}
 			}
 		]]>
 	</mx:Script>
