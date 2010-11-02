@@ -828,7 +828,11 @@
 				if (estimatingPreferencesArray.length > 0) {
 					estimatingPreferences = estimatingPreferencesArray.getItemAt(0) as PreferencesEstimating;
 				}
-				if (job.paperCal != null)
+				
+				// only init from preference for a new empty paper calc struct
+				if (job.paperCal != null && (job.paperCal.whichStartSize == 0 ||
+											job.paperCal.gripLocation == "" ||
+											job.paperCal.folioLocation == ""))
 				{
 					setPreferenceDataforPaperCal();
 					setPaperCalculatorData = false;
