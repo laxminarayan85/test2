@@ -568,12 +568,14 @@
 			if (ev.result == null) {
 				priceList = new WasteChart();
 				priceList.interpolate = true;
+				priceList.isPercentage = true;
 			}
-			else
+			else {
 				priceList = ev.result as WasteChart;
-			for (var i:int = 0;i < priceList.elements.length;i++) {
-				var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-				element.amount = element.amount * 100;
+				for (var i:int = 0;i < priceList.elements.length;i++) {
+					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+					element.amount = element.amount * 100;
+				}
 			}
 		} else if (itemType == "SpeedTable") {
 			if (ev.result == null)
