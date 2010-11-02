@@ -2296,21 +2296,27 @@
 					}
 				} else if (pricingMethod.title == "B&W") {
 					this.currentState = "CopyMethod";
-					estimator_viewstack.selectedChild = copy_estimator_canvas;	
+					estimator_viewstack.selectedChild = copy_estimator_canvas;
+					copiers.filterFunction = filterBWCopiers;
+					copiers.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultBWCopier != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);	
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);
 					}			
 				} else if (pricingMethod.title == "Color") {
 					this.currentState = "CopyMethod";
-					estimator_viewstack.selectedChild = copy_estimator_canvas;				
+					estimator_viewstack.selectedChild = copy_estimator_canvas;	
+					copiers.filterFunction = filterColorCopiers;
+					copiers.refresh();			
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultColorCopier != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, copiers);	
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, copiers);
 					}	
 				} else if (pricingMethod.title == "Large Format") {
 					this.currentState = "LargeFormat";
-					estimator_viewstack.selectedChild = copy_estimator_canvas;	
+					estimator_viewstack.selectedChild = copy_estimator_canvas;
+					copiers.filterFunction = filterLFCopiers;
+					copiers.refresh();	
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultLargeFormat != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);
@@ -2334,6 +2340,19 @@
 					this.currentState = "Blank";
 				}
 			}
+			
+			public function filterBWCopiers(item:CopierDefinition):Boolean {
+				return item.blackwhite == true;
+			}
+			
+			public function filterColorCopiers(item:CopierDefinition):Boolean {
+				return item.color == true;
+			}
+			
+			public function filterLFCopiers(item:CopierDefinition):Boolean {
+				return item.largeFormat == true;
+			}
+			
 			private function updateWeight():void{
 				var tempweight:Number;
 				var finish:Number;
