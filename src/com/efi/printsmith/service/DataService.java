@@ -1944,10 +1944,50 @@ public class DataService extends HibernateService {
 					priceLogEntry = (PriceLogEntry)addUpdate(priceLogEntry);
 					job.getPricingRecord().setPriceLogEntry(priceLogEntry);
 					//Make sure dimensions are using valid dimension objects
-					job.setParentSize(dataService.getByDimensionName("Dimension", job.getParentSize().getName()));
-					job.setRunSize(dataService.getByDimensionName("Dimension", job.getRunSize().getName()));
-					job.setFinishSize(dataService.getByDimensionName("Dimension", job.getFinishSize().getName()));
-					job.setFoldedSize(dataService.getByDimensionName("Dimension", job.getFoldedSize().getName()));
+					if (job.getParentSize() != null) {
+						Dimension dimension = dataService.getByDimensionName("Dimension", job.getParentSize().getName());
+						if (dimension == null && job.getParentSize().getName().equals("") == false) {
+							dimension = new Dimension();
+							dimension.setName(job.getParentSize().getName());
+							dimension.setHeight(job.getParentSize().getHeight());
+							dimension.setWidth(job.getParentSize().getWidth());
+							dimension = (Dimension)addUpdate(dimension);
+						}
+						job.setParentSize(dimension);
+					}
+					if (job.getRunSize() != null) {
+						Dimension dimension = dataService.getByDimensionName("Dimension", job.getRunSize().getName());
+						if (dimension == null && job.getRunSize().getName().equals("") == false) {
+							dimension = new Dimension();
+							dimension.setName(job.getRunSize().getName());
+							dimension.setHeight(job.getRunSize().getHeight());
+							dimension.setWidth(job.getRunSize().getWidth());
+							dimension = (Dimension)addUpdate(dimension);
+						}
+						job.setRunSize(dimension);
+					}
+					if (job.getFinishSize() != null) {
+						Dimension dimension = dataService.getByDimensionName("Dimension", job.getFinishSize().getName());
+						if (dimension == null && job.getFinishSize().getName().equals("") == false) {
+							dimension = new Dimension();
+							dimension.setName(job.getFinishSize().getName());
+							dimension.setHeight(job.getFinishSize().getHeight());
+							dimension.setWidth(job.getFinishSize().getWidth());
+							dimension = (Dimension)addUpdate(dimension);
+						}
+						job.setFinishSize(dimension);
+					}
+					if (job.getFoldedSize() != null) {
+						Dimension dimension = dataService.getByDimensionName("Dimension", job.getFoldedSize().getName());
+						if (dimension == null && job.getFoldedSize().getName().equals("") == false) {
+							dimension = new Dimension();
+							dimension.setName(job.getFoldedSize().getName());
+							dimension.setHeight(job.getFoldedSize().getHeight());
+							dimension.setWidth(job.getFoldedSize().getWidth());
+							dimension = (Dimension)addUpdate(dimension);
+						}
+						job.setFoldedSize(dimension);
+					}
 					job.setParentInvoice(invoice);
 				}
 			}
