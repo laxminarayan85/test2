@@ -18,6 +18,9 @@
 		<mx:method name="deleteItem"
 				   fault="handleFault(event)"
 				   result="handleDeleteResult(event)"/>
+		<mx:method name="getDimensionByWildcardName"
+				   fault="handleFault(event)"
+				   result="handleDimesionByNameResult(event)"/>
 	</mx:RemoteObject>
 
 	<mx:RemoteObject id="paperCalculatorService"
@@ -68,6 +71,9 @@
 			private var finishBoolean:Boolean;
 			[Bindable]
 			private var showWarning:Boolean = true;
+			
+			[Bindable]
+			var dimensionTarget:Object=new Object();
 			
 			[Bindable]
 			private var dimensions:ArrayCollection;
@@ -185,6 +191,48 @@
 			private function handleLoadResult(ev:ResultEvent):void
 			{
 
+			}
+			
+			private function handleDimesionByNameResult(ev:ResultEvent):void
+			{
+				var matchingDimensions:ArrayCollection=new ArrayCollection();
+
+				matchingDimensions = ev.result as ArrayCollection;
+				if (matchingDimensions.length > 0) {
+					var dim:Dimension = matchingDimensions.getItemAt(0) as Dimension;
+					
+					if (dim != null) {
+						switch(dimensionTarget) {
+						case parent_size_edit:
+							job.parentSize.height = dim.height;
+							job.parentSize.width = dim.width;
+							job.parentSize.name = dim.name;
+							job.parentSize.type = dim.type;
+							parent_size_edit.text = dim.name;
+							parent_size_edit.selectedIndex = findItem(dim.name, dimensions);
+							break;
+						case run_size_edit:
+							job.runSize.height = dim.height;
+							job.runSize.width = dim.width;
+							job.runSize.name = dim.name;
+							job.runSize.type = dim.type;
+							run_size_edit.text = dim.name;
+							run_size_edit.selectedIndex = findItem(dim.name, dimensions);
+							break;
+						case finish_size_edit:
+							job.finishSize.height = dim.height;
+							job.finishSize.width = dim.width;
+							job.finishSize.name = dim.name;
+							job.finishSize.type = dim.type;
+							finish_size_edit.text = dim.name;
+							finish_size_edit.selectedIndex = findItem(dim.name, dimensions);
+							break;
+						}
+					}
+				}
+				
+				dimensionChangePropagate();
+				refreshCalcAndImage();
 			}
 
 			private function handleDeleteResult(ev:ResultEvent):void
@@ -480,33 +528,77 @@
 				runBoolean = false;
 				finishBoolean = true;
 			}
-		/* 	private function doDimension():void{
-				var tempDim:Dimension;
-				tempDim = dimension_list.selectedItem as Dimension;
-				if (parentBoolean){
-					job.parentSize = tempDim;
-				}
-				if (runBoolean){
-					job.runSize = tempDim;
-				}
-				if (finishBoolean){
-					job.finishSize = tempDim;
-				}
-				
-			} */
-		private function sizeDisplay(item:Object):String{
-			var tmpItem:Dimension ;
-			var tmpString:String;
-			tmpItem = item as Dimension;
-			
-			if (tmpItem != null ) {
-				tmpString = tmpItem.width.toString() + " x " + tmpItem.height.toString()
-				return tmpString;
-			} else {
-				return "None";
+
+		private function dimensionChangePropagate():void
+		{	
+			// keep in sync
+			if (job.runSize.width == 0 || job.runSize.height == 0 || job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
+				job.runSize.name = job.parentSize.name;
+				job.runSize.type = job.parentSize.type;
+				job.runSize.height = job.parentSize.height;
+				job.runSize.width = job.parentSize.width;
+				run_size_edit.text = job.runSize.name;
+				run_size_edit.selectedIndex = parent_size_edit.selectedIndex;
+			}
+
+			if (job.finishSize.width == 0 || job.finishSize.height == 0 || job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
+				job.finishSize.name = job.runSize.name;
+				job.finishSize.type = job.runSize.type;
+				job.finishSize.height = job.runSize.height;
+				job.finishSize.width = job.runSize.width;
+				finish_size_edit.text = job.finishSize.name;
+				finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
 			}
 		}
 		
+		private function dimensionChange(target:Object):void
+		{	
+			dimensionTarget = target;
+			
+			switch(dimensionTarget) {
+			case parent_size_edit:
+				if (job.parentSize.height == 0 || job.parentSize.width == 0) {
+					dataService.getDimensionByWildcardName(parent_size_edit.text);
+				} else {
+					parent_size_edit.text = job.parentSize.name;
+					dimensionChangePropagate();
+					refreshCalcAndImage();
+				}
+				break;
+			case run_size_edit:
+				if (job.runSize.height == 0 || job.runSize.width == 0) {
+					if (run_size_edit.text.length == 0) {		// user emptys the size field
+							job.runSize = new Dimension();
+							run_size_edit.selectedItem = null;
+							dimensionChangePropagate();
+							refreshCalcAndImage();
+						} else {
+							dataService.getDimensionByWildcardName(run_size_edit.text);
+						}
+				} else {
+					run_size_edit.text = job.runSize.name;
+					dimensionChangePropagate();
+					refreshCalcAndImage();
+				}
+				break;
+			case finish_size_edit:
+				if (job.finishSize.height == 0 || job.finishSize.width == 0) {
+					if (finish_size_edit.text.length == 0) {		// user emptys the size field
+						job.finishSize = new Dimension();
+						finish_size_edit.selectedItem = null;
+						dimensionChangePropagate();
+						refreshCalcAndImage();
+					} else {
+						dataService.getDimensionByWildcardName(finish_size_edit.text);
+					}
+				} else {
+					finish_size_edit.text = job.finishSize.name;
+					dimensionChangePropagate();
+					refreshCalcAndImage();
+				}
+				break;
+			}
+		}
 			private function fieldChanged(evt:FocusEvent):void
 			{	
 				var sizeStr:String;
@@ -517,7 +609,7 @@
 						sizeStr = Snowmass.formatSizeString(parent_size_edit.text);
 						parent_size_edit.selectedIndex = findItem(sizeStr, dimensions);
 						if (parent_size_edit.selectedIndex == -1) {
-							parent_size_edit.text = sizeStr;
+						//	parent_size_edit.text = sizeStr;
 							if (job.parentSize == null)
 								job.parentSize = new Dimension()
 							job.parentSize.name = sizeStr;
@@ -531,33 +623,15 @@
 							job.parentSize.width = localSize.width;
 							job.parentSize.height = localSize.height;
 						}
-						
-						// keep in sync
-						if (job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
-							job.runSize.name = job.parentSize.name;
-							job.runSize.type = job.parentSize.type;
-							job.runSize.height = job.parentSize.height;
-							job.runSize.width = job.parentSize.width;
-							run_size_edit.text = job.runSize.name;
-							run_size_edit.selectedIndex = parent_size_edit.selectedIndex;
-						}
-
-						if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
-							job.finishSize.name = job.runSize.name;
-							job.finishSize.type = job.runSize.type;
-							job.finishSize.height = job.runSize.height;
-							job.finishSize.width = job.runSize.width;
-							finish_size_edit.text = job.finishSize.name;
-							finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
-						}
-						refreshCalcAndImage();
+												
+						dimensionChange(parent_size_edit);
 						break;
 						
 					case run_size_edit:
 						sizeStr = Snowmass.formatSizeString(run_size_edit.text);
 						run_size_edit.selectedIndex = findItem(sizeStr, dimensions);
 						if (run_size_edit.selectedIndex == -1) {
-							run_size_edit.text = sizeStr;
+					//		run_size_edit.text = sizeStr;
 							if (job.runSize == null)
 								job.runSize = new Dimension()
 							job.runSize.name = sizeStr;
@@ -572,24 +646,14 @@
 							job.runSize.height = localSize.height;
 						}
 						
-						// keep in sync
-						if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
-							job.finishSize.name = job.runSize.name;		
-							job.finishSize.type = job.runSize.type;		
-							job.finishSize.width = job.runSize.width;		
-							job.finishSize.height = job.runSize.height;		
-							finish_size_edit.text = job.finishSize.name;
-							finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
-						}
-						
-						refreshCalcAndImage();
+						dimensionChange(run_size_edit);
 						break;
 						
 					case finish_size_edit:
 						sizeStr = Snowmass.formatSizeString(finish_size_edit.text);
 						finish_size_edit.selectedIndex = findItem(sizeStr, dimensions);
 						if (finish_size_edit.selectedIndex == -1) {
-							finish_size_edit.text = sizeStr;
+					//		finish_size_edit.text = sizeStr;
 							if (job.finishSize == null)
 								job.finishSize = new Dimension()
 							job.finishSize.name = sizeStr;
@@ -604,12 +668,19 @@
 							job.finishSize.height = localSize.height;
 						}
 						
-						refreshCalcAndImage();
+						dimensionChange(finish_size_edit);
 						break;
 				
 				}
 			}
-			
+	
+			private function dimensionLabelFunc(item:Object):String {
+				if(item!=null){
+					return item.name;
+				}
+				return "";
+			}
+		
             protected function dragEnterHandler(event:DragEvent):void
             {
                 event.preventDefault();
@@ -665,15 +736,7 @@
 	       				run_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
 	       				
 	       				// keep in sync
-						if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
-							job.finishSize.name = job.runSize.name;		
-							job.finishSize.type = job.runSize.type;		
-							job.finishSize.width = job.runSize.width;		
-							job.finishSize.height = job.runSize.height;		
-							finish_size_edit.text = job.finishSize.name;
-							finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
-						}
-
+						dimensionChangePropagate();
 	       			} else if (dropTarget.id == parent_size_edit.id) {
 	   					job.parentSize.name = tempItem.name;		
 	   					job.parentSize.type = tempItem.type;		
@@ -683,24 +746,7 @@
 	       				parent_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
 	       				
 	       				// keep in sync
-						if (job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
-							job.runSize.name = job.parentSize.name;
-							job.runSize.type = job.parentSize.type;
-							job.runSize.height = job.parentSize.height;
-							job.runSize.width = job.parentSize.width;
-							run_size_edit.text = job.runSize.name;
-							run_size_edit.selectedIndex = parent_size_edit.selectedIndex;
-						}
-
-						if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
-							job.finishSize.name = job.runSize.name;
-							job.finishSize.type = job.runSize.type;
-							job.finishSize.height = job.runSize.height;
-							job.finishSize.width = job.runSize.width;
-							finish_size_edit.text = job.finishSize.name;
-							finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
-						}
-
+						dimensionChangePropagate();
 	       			}
 	       			
 					refreshCalcAndImage();
@@ -937,7 +983,7 @@
 					 y="563"
 					 id="cboRunToFinishGrain"
 					 dataProvider="{RunToFinishGrainArray}"
-					 labelField="name"
+					 labelField="dimensionLabelFunc"
 					 change="refreshCalcAndImage()"
 					 width="129" height="20"/>
 
@@ -1029,7 +1075,7 @@
 					  dragOver="dragOverHandler(event);"
 					  dragEnter="dragEnterHandler(event);"
 				 	  id="parent_size_edit" width="192"  
-					  labelFunction="sizeDisplay" 
+					  labelFunction="dimensionLabelFunc" 
 					  height="20" dataProvider="{dimensions}" focusOut="fieldChanged(event)"/>
 		<mx:Label x="21"
 				  y="139"
@@ -1040,7 +1086,7 @@
 		<mx:ComboBox x="21"
 					  y="207"
 					  dataProvider="{dimensions}"
-					  labelFunction="sizeDisplay"
+					  labelFunction="dimensionLabelFunc"
 					  dragDrop="dragDropHandlerAllSizes(event);"
 					  dragOver="dragOverHandler(event);"
 					  dragEnter="dragEnterHandler(event);"
@@ -1052,7 +1098,7 @@
 		<mx:ComboBox x="21"
 					  y="254"
 					  dataProvider="{dimensions}"
-					  labelFunction="sizeDisplay"
+					  labelFunction="dimensionLabelFunc"
 					  editable="true"
 					  dragDrop="dragDropHandlerAllSizes(event);"
 					  dragOver="dragOverHandler(event);"
@@ -1144,7 +1190,7 @@
 			dragMoveEnabled="false"
 			id="size_list" 
 			dataProvider="{dimensions}" 
-			labelFunction="sizeDisplay"></mx:List>
+			labelFunction="dimensionLabelFunc"></mx:List>
 
 	</mx:Canvas>
 </mx:TitleWindow>

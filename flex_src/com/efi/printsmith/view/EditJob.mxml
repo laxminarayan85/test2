@@ -518,6 +518,10 @@
 		<mx:method name="deleteItem"
 				   fault="handleFault(event)"
 				   result="handleDeleteResult(event)"/>
+		<mx:method name="getDimensionByWildcardName"
+				   fault="handleFault(event)"
+				   result="handleDimesionByNameResult(event)"/>
+
 	</mx:RemoteObject>
 	<mx:RemoteObject id="copierDataService"
 					 destination="dataService">
@@ -751,6 +755,9 @@
 			public var refreshSO:Boolean=false;
 			[Bindable]
 			public var front:Boolean=false;
+
+			[Bindable]
+			var dimensionJobTarget:Object=new Object();
 
 		    [Bindable] private var loadComponent:CommonLoadComponent;
 
@@ -1597,15 +1604,18 @@
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 						if (this.job_finish_size.selectedIndex == -1)
 							this.job_finish_size.text = job.finishSize.name;
-						this.job.foldedSize.name = "";
+					//	this.job.foldedSize.name = "";
+						
+						this.job.foldedSize = new Dimension();
 						job_fold_size.text = "";
-						if (this.estimatingPreferences.leaveFoldedSizeEmpty != true) {
-							this.job.foldedSize.name = this.job.finishSize.name;
-							this.job.foldedSize.type = this.job.finishSize.type;
-							this.job.foldedSize.width = this.job.finishSize.width;
-							this.job.foldedSize.height = this.job.finishSize.height;
-							this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
-						}
+						job_fold_size.selectedItem = null;
+					//	if (this.estimatingPreferences.leaveFoldedSizeEmpty != true) {
+					//		this.job.foldedSize.name = this.job.finishSize.name;
+					//		this.job.foldedSize.type = this.job.finishSize.type;
+					//		this.job.foldedSize.width = this.job.finishSize.width;
+					//		this.job.foldedSize.height = this.job.finishSize.height;
+					//		this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
+					//	}
 						if (this.job_type.text == "Large Format" && stockDefinitionObj.defaultLargeCopier != null) {
 							job.pricingCopier = stockDefinitionObj.defaultLargeCopier;
 							job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
@@ -1632,6 +1642,15 @@
 							this.job.runSize.width = stockDefinitionObj.normalRunSize.width;
 						}
 						this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
+						
+						this.job.foldedSize = new Dimension();
+						this.job.finishSize = new Dimension();
+						job_fold_size.text = "";
+						job_finish_size.text = "";
+						
+						job_fold_size.selectedItem = null;
+						job_finish_size.selectedItem = null;
+					/*
 						if (this.job.runSize.width * this.job.runSize.height < this.job.parentSize.width * this.job.parentSize.height) {
 							this.job.finishSize.name = this.job.runSize.name;
 							this.job.finishSize.type = this.job.runSize.type;
@@ -1651,6 +1670,8 @@
 							this.job.foldedSize.width = this.job.finishSize.width;
 						}
 						this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
+						*/
+						
 						if (this.job_type.text == "B&W" && stockDefinitionObj.defaultBWCopier != null) {
 							job.pricingCopier = stockDefinitionObj.defaultBWCopier;
 							job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
@@ -1684,6 +1705,9 @@
 						this.job.finishSize.width = stockDefinitionObj.normalRunSize.width;
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 					}
+					
+					dimensionChangePropagate();
+					
 					this.mapToJobData();
 					jobService.assignStockToJob(this.job, stockDefinitionObj);
 //					var i:int;
@@ -1916,7 +1940,130 @@
 				this.cutDiagram.removeAllChildren();
 				this.cutDiagram.addChild(myImage);
 			}			
-						
+
+			private function dimensionChangePropagate():void
+			{	
+				// keep in sync
+				if (job.runSize.width == 0 || job.runSize.height == 0 || job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
+					job.runSize.name = job.parentSize.name;
+					job.runSize.type = job.parentSize.type;
+					job.runSize.height = job.parentSize.height;
+					job.runSize.width = job.parentSize.width;
+					job_size.text = job.runSize.name;
+					job_size.selectedIndex = job_parent.selectedIndex;
+				}
+	
+				if (job.finishSize.width == 0 || job.finishSize.height == 0 || job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
+					job.finishSize.name = job.runSize.name;
+					job.finishSize.type = job.runSize.type;
+					job.finishSize.height = job.runSize.height;
+					job.finishSize.width = job.runSize.width;
+					job_finish_size.text = job.finishSize.name;
+					job_finish_size.selectedIndex = job_size.selectedIndex;
+				}
+				
+				if (this.estimatingPreferences.leaveFoldedSizeEmpty != true) {
+					if (job.foldedSize.width == 0 || job.foldedSize.height == 0 || job.foldedSize.width > job.finishSize.width || job.foldedSize.height > job.finishSize.height) {
+						job.foldedSize.name = job.finishSize.name;
+						job.foldedSize.type = job.finishSize.type;
+						job.foldedSize.width = job.finishSize.width;
+						job.foldedSize.height = job.finishSize.height;
+						job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
+					} 
+				}
+			}
+			
+			private function dimensionChange(target:Object):void
+			{	
+				dimensionJobTarget = target;
+				
+				switch(dimensionJobTarget) {
+				case job_parent:
+					if (job.parentSize.height == 0 || job.parentSize.width == 0) {
+						dataService.getDimensionByWildcardName(job_parent.text);
+					} else {
+						job_parent.text = job.parentSize.name;
+						dimensionChangePropagate();
+						refreshCalcAndImage();
+					}
+					break;
+				case job_size:
+					if (job.runSize.height == 0 || job.runSize.width == 0) {
+						if (job_size.text.length == 0) {		// user emptys the size field
+							this.job.runSize = new Dimension();
+							job_size.selectedItem = null;
+							dimensionChangePropagate();
+							refreshCalcAndImage();
+						} else {
+							dataService.getDimensionByWildcardName(job_size.text);
+						}
+					} else {
+						job_size.text = job.runSize.name;
+						dimensionChangePropagate();
+						refreshCalcAndImage();
+					}
+					break;
+				case job_finish_size:
+					if (job.finishSize.height == 0 || job.finishSize.width == 0) {
+						if (job_finish_size.text.length == 0) {		// user emptys the size field
+							this.job.finishSize = new Dimension();
+							job_finish_size.selectedItem = null;
+							dimensionChangePropagate();
+							refreshCalcAndImage();
+						} else {
+							dataService.getDimensionByWildcardName(job_finish_size.text);
+						}
+					} else {
+						job_finish_size.text = job.finishSize.name;
+						dimensionChangePropagate();
+						refreshCalcAndImage();
+					}
+					break;
+				}
+			}
+	
+			private function handleDimesionByNameResult(ev:ResultEvent):void
+			{
+				var matchingDimensions:ArrayCollection=new ArrayCollection();
+
+				matchingDimensions = ev.result as ArrayCollection;
+				if (matchingDimensions.length > 0) {
+					var dim:Dimension = matchingDimensions.getItemAt(0) as Dimension;
+					
+					if (dim != null) {
+						switch(dimensionJobTarget) {
+						case job_parent:
+							job.parentSize.height = dim.height;
+							job.parentSize.width = dim.width;
+							job.parentSize.name = dim.name;
+							job.parentSize.type = dim.type;
+							job_parent.text = dim.name;
+							job_parent.selectedIndex = findItem(dim.name, dimensionsArray);
+							break;
+						case job_size:
+							job.runSize.height = dim.height;
+							job.runSize.width = dim.width;
+							job.runSize.name = dim.name;
+							job.runSize.type = dim.type;
+							job_size.text = dim.name;
+							job_size.selectedIndex = findItem(dim.name, dimensionsArray);
+							break;
+						case job_finish_size:
+							job.finishSize.height = dim.height;
+							job.finishSize.width = dim.width;
+							job.finishSize.name = dim.name;
+							job.finishSize.type = dim.type;
+							job_finish_size.text = dim.name;
+							job_finish_size.selectedIndex = findItem(dim.name, dimensionsArray);
+							break;
+						}
+					}
+				}
+				
+				dimensionChangePropagate();
+				refreshCalcAndImage();
+			}
+					
 			private function refreshCalcAndImage():void
 			{				
 				mapToJobData();
@@ -1935,6 +2082,7 @@
 			{	
 				var doUpdatePrice:Boolean = false;
 				var localSize:Dimension;
+				var message:String;       
 				
 				mapToJobData();
 				switch (evt.currentTarget) {
@@ -2004,7 +2152,7 @@
 					var parentStr:String = Snowmass.formatSizeString(this.job_parent.text);
 					this.job_parent.selectedIndex = findItem(parentStr, dimensionsArray);
 					if (this.job_parent.selectedIndex == -1) {
-						this.job_parent.text = parentStr;
+					//	this.job_parent.text = parentStr;
 						if (job.parentSize == null)
 							job.parentSize = new Dimension()
 						job.parentSize.name = parentStr;
@@ -2017,9 +2165,8 @@
 						job.parentSize.type = localSize.type;
 						job.parentSize.height = localSize.height;
 						job.parentSize.width = localSize.width;
-
-						refreshImageAndWeight();
 					}
+					dimensionChange(job_parent);
 					break;
 				case this.job_finish_size:
 					doUpdatePrice = true;
@@ -2027,7 +2174,7 @@
 					var finishSizeStr:String = Snowmass.formatSizeString(this.job_finish_size.text);
 					this.job_finish_size.selectedIndex = findItem(finishSizeStr, dimensionsArray);
 					if (this.job_finish_size.selectedIndex == -1) {
-						this.job_finish_size.text = finishSizeStr;
+					//	this.job_finish_size.text = finishSizeStr;
 						if (job.finishSize == null)
 							job.finishSize = new Dimension();
 						job.finishSize.name = finishSizeStr;
@@ -2045,27 +2192,19 @@
 						if (job.finishSize.width * job.finishSize.height > job.runSize.width * job.runSize.height) {
 							//job.finishSize = oldDimension;
 							//job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
-							var message:String;       
 							message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
 							Alert.show(message, "Warning", 0, null, null, null, 4); 
 							
-						} else
-							if (this.estimatingPreferences.leaveFoldedSizeEmpty != true) {
-								this.job.foldedSize.name = this.job.finishSize.name;
-								this.job.foldedSize.type = this.job.finishSize.type;
-								this.job.foldedSize.width = this.job.finishSize.width;
-								this.job.foldedSize.height = this.job.finishSize.height;
-								this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
-							}
-							refreshCalcAndImage();
+						}
 					}
+					dimensionChange(job_finish_size);
 					break;
 				case this.job_fold_size:
 					doUpdatePrice = true;
 					var foldSizeStr:String = Snowmass.formatSizeString(this.job_fold_size.text);
 					this.job_fold_size.selectedIndex = findItem(foldSizeStr, dimensionsArray);
 					if (this.job_fold_size.selectedIndex == -1) {
-						this.job_fold_size.text = foldSizeStr;
+					//	this.job_fold_size.text = foldSizeStr;
 						if (job.foldedSize == null)
 							job.foldedSize = new Dimension();
 						job.foldedSize.name = foldSizeStr;
@@ -2079,6 +2218,7 @@
 						job.foldedSize.height = localSize.height;
 						job.foldedSize.width = localSize.width;
 					}
+					dimensionChange(job_fold_size);
 					break;
 				case this.job_size:
 					doUpdatePrice = true;
@@ -2086,7 +2226,7 @@
 					var sizeStr:String = Snowmass.formatSizeString(this.job_size.text);
 					this.job_size.selectedIndex = findItem(sizeStr, dimensionsArray);
 					if (this.job_size.selectedIndex == -1) {
-						this.job_size.text = sizeStr;
+					//	this.job_size.text = sizeStr;
 						if (job.runSize == null)
 							job.runSize = new Dimension() as Dimension;
 						job.runSize.name = sizeStr;
@@ -2104,13 +2244,12 @@
 						if (job.runSize.width * job.runSize.height > job.parentSize.width * job.parentSize.height) {
 							//job.runSize = oldDimension;
 							//job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
-							var message:String;       
 							message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheRunSizeisl");
 							Alert.show(message, "Warning", 0, null, null, null, 4); 
-							
-						} else
-							refreshCalcAndImage();
+						}
 					}
+					
+					dimensionChange(job_size);
 					break;
 				}
 				if (doUpdatePrice) updatePrice();

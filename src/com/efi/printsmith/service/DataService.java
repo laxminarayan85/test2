@@ -4844,4 +4844,22 @@ public class DataService extends HibernateService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<?> getDimensionByWildcardName(String name) throws Exception {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Session session = (Session) em.getDelegate();
+			List <Dimension> objects = null;
+			String localWildName = name + "%";		// wild card on end of search string
+			objects = session.createCriteria(Dimension.class).add(
+					Restrictions.ilike("name", localWildName)).list();		// no-case sensitivity
+			return objects;
+		} catch (Exception e) {
+			log.error(e);
+			throw e;
+		} finally {
+			em.close();
+		}
+	}
+
 }

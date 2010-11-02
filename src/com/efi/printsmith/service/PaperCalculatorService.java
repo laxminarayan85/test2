@@ -28,6 +28,7 @@ import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.CreditCardTransactions;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.PaperCalculator;
+import com.efi.printsmith.data.enums.RunMethod;
 
 public class PaperCalculatorService extends SnowmassHibernateService {
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
@@ -300,7 +301,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 					//
 					// work and tumble adds another gripper or color bar to the opposite side, which ever is larger
 					//
-					if (job.getRunMethod().equals("WorkAndTumble")) {		// (GetJobRunDirection(job) & kJobRunDirectionRunAndTumble)
+					if (job.getRunMethod().equals(RunMethod.WorkAndTumble)) {		// (GetJobRunDirection(job) & kJobRunDirectionRunAndTumble)
 						if (papercal.getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_TOP)){
 							if (ajust2Y >= ajust3Y)
 								ajustY += ajust2Y;
@@ -357,8 +358,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 
 				/* number sheets w/o dutch */
 				results = papercal.getAcross().intValue() * papercal.getDown().intValue();				
-				papercal.setrMargin((parentX - (papercal.getAcross().intValue() * sheetX) + (papercal.getAcross().intValue()-1) * gutterX));
-				papercal.setbMargin((parentY - (papercal.getDown().intValue()*sheetY)+ (papercal.getDown().intValue()-1)*gutterY));
+				papercal.setrMargin(parentX - ((papercal.getAcross().doubleValue() * sheetX) + (papercal.getAcross().doubleValue()-1.0) * gutterX));
+				papercal.setbMargin(parentY - ((papercal.getDown().doubleValue()*sheetY)+ (papercal.getDown().doubleValue()-1.0)*gutterY));
 			
 				//
 				// add the DUTCH or Swing cut numbers to the results
@@ -773,7 +774,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 						else
 							runEdgeTop += 1;
 								
-						if (job.getRunMethod().equals("WorkAndTumble")) {		// work and tumble is on
+						if (job.getRunMethod().equals(RunMethod.WorkAndTumble)) {		// work and tumble is on
 							out++;							// add one for the oposite site
 							if (job.getPaperCal().getGripLocation().equals(Constants.PAPER_CALCULATOR_GRIPPER_LEFT))
 								runEdgeRight += 1;
@@ -943,6 +944,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			double 			scale = 1.0;
 			Rectangle		box = new Rectangle();
 			
+			dim = RoundDbl(dim, 3);
+			
 			if (dim > 0 && r.width > 0 && r.height > 0)
 			{
 				box.setRect(r.x*scale, r.y*scale, r.width*scale, r.height*scale);
@@ -987,6 +990,8 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 			int				xpos;				// 
 			double 			scale = 1.0;
 			Rectangle		box = new Rectangle();
+			
+			dim = RoundDbl(dim, 3);
 			
 			if (dim > 0 && r.width > 0 && r.height > 0)
 			{
@@ -1429,7 +1434,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 							}
 						}
 
-						if (job.getRunMethod().equals("WorkAndTumble"))
+						if (job.getRunMethod().equals(RunMethod.WorkAndTumble))
 						{	// finish work and tumble (tail) grip (and form inset)
 							// place the tail grip
 							tailGripRect.y = (sheetRect.y+sheetRect.height) - tailGripRect.height;
@@ -1454,7 +1459,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 							formRect.width -= width;
 						}
 
-						if (job.getRunMethod().equals("WorkAndTumble"))
+						if (job.getRunMethod().equals(RunMethod.WorkAndTumble))
 						{	// finish work and tumble (tail ... right side) grip (and form inset)
 							
 							// place the tail grip
@@ -1487,10 +1492,10 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 
 						if (formRect.y+formRect.height > colorbarRect.y)
 						{	// update (i.e., inset) the form
-							formRect.height = (colorbarRect.y);
+							formRect.height = (colorbarRect.y - formRect.y);
 						}
 
-						if (job.getRunMethod().equals("WorkAndTumble"))
+						if (job.getRunMethod().equals(RunMethod.WorkAndTumble))
 						{	// work and tumble (head) color bar form inset
 							if (formRect.y < sheetRect.y + inset + width)
 							{	// update (i.e., inset) the form
@@ -1507,9 +1512,9 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 						
 						if (formRect.x+formRect.width > colorbarRect.x)
 						{	// update (i.e., inset) the form
-							formRect.width = colorbarRect.x;
+							formRect.width = (colorbarRect.x - formRect.x);
 						}
-						if (job.getRunMethod().equals("WorkAndTumble"))
+						if (job.getRunMethod().equals(RunMethod.WorkAndTumble))
 						{	// work and tumble (left side) color bar form inset
 							if (formRect.x < sheetRect.x + inset + width)
 							{	// update (i.e., inset) the form
@@ -1598,7 +1603,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 						g.fill(intersectRect);
 					}
 					
-					if (job.getRunMethod().equals("WorkAndTumble"))
+					if (job.getRunMethod().equals(RunMethod.WorkAndTumble))
 					{	// paint the tail grip
 						g.setColor(Color.red);	
 						g.fill(tailGripRect);
@@ -1625,7 +1630,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 				{	// paint the color bar(s)
 					PaintColorBar(g, colorbarRect);
 					
-					if (job.getRunMethod().equals("WorkAndTumble"))
+					if (job.getRunMethod().equals(RunMethod.WorkAndTumble))
 					{	// draw it again across the sheet (work and tumble) ... don't forget that we're staying within the sheet
 						width = colorBarWidth * scale;
 						inset = 0;	// todo - expose inset value to user
