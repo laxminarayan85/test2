@@ -52,6 +52,7 @@
 	
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.common.clientPreferences.UserClientPreferences;
 	import com.efi.printsmith.common.scripts.DateUtil;
 	import com.efi.printsmith.data.ComLink;
 	import com.efi.printsmith.Constants;
@@ -226,12 +227,10 @@
 		this.throbber.play();
 		
 		dataServicePrefPOS.getSingle("PreferencesPOS");
-		
-		dataService.getPending();
-
 		fillDocumentArray(DocumentArray);
 		fillFilterArray(FilterArray);
 		fillFindArray(FindArray);
+		dataService.getPending();
 		dataServicePendingList.getAll("PreferencesPendingList");
 	}
 
@@ -319,8 +318,32 @@
 		invoiceBaseArray.filterFunction = invoiceFilter;
 		if(updatePendingListValue){
 			updatePendingListValue = false;
-			DocumentTypeChange();
+			refreshData();
 			pickerFilter.clearFilter(invoiceBaseArray);
+		}
+		if(UserClientPreferences.getInstance().getData(UserClientPreferences.PENDINGLIST_DOCTYPE)!=null) {
+			if(DocumentArray!=null && DocumentArray.length>0){
+				for(var i:int=0;i<DocumentArray.length;i++) {
+					var docObj:Object = DocumentArray.getItemAt(i);
+					if(docObj.name==UserClientPreferences.getInstance().getData(UserClientPreferences.PENDINGLIST_DOCTYPE)) {
+						cboDocumentType.selectedIndex = i;
+						break;
+					}
+				}
+			}
+			refreshData();
+		}
+		if(UserClientPreferences.getInstance().getData(UserClientPreferences.PENDINGLIST_FILTER)!=null) {
+			 if(FilterArray!=null && FilterArray.length>0){
+				for(var i:int=0;i<FilterArray.length;i++) {
+					var filterObj:Object = FilterArray.getItemAt(i);
+					if(filterObj.name==UserClientPreferences.getInstance().getData(UserClientPreferences.PENDINGLIST_FILTER)) {
+						cboDgFilter.selectedIndex = i;
+						break;
+					}
+				}
+			}
+			refreshData();
 		}
 	}
 	
@@ -612,7 +635,12 @@
 
 	}
 
-	private function DocumentTypeChange():void {
+	private function DocumentTypeChange(event:Event):void {
+		if(event.currentTarget.selectedItem!=null){
+			UserClientPreferences.getInstance().setData(UserClientPreferences.PENDINGLIST_DOCTYPE, event.currentTarget.selectedItem.name);
+		} else {
+			UserClientPreferences.getInstance().setData(UserClientPreferences.PENDINGLIST_DOCTYPE, null);
+		}
 		refreshData();	
 	}
 	
@@ -620,12 +648,17 @@
 		refreshData();
 	}
 	
-	private function FilterChange():void {
+	private function FilterChange(event:Event):void {
 		/* if (this.cboDgFilter.text=="Due Between"){
 			this.currentState = "stateFilterDates";
 		}else{
 			this.currentState = "";
 		} */
+		if(event.currentTarget.selectedItem!=null){
+			UserClientPreferences.getInstance().setData(UserClientPreferences.PENDINGLIST_FILTER, event.currentTarget.selectedItem.name);
+		} else {
+			UserClientPreferences.getInstance().setData(UserClientPreferences.PENDINGLIST_FILTER, null);
+		}
 		refreshData();
 	}
 	private function doApplyFind():void {
@@ -1292,8 +1325,8 @@
 		
 	<mx:Canvas bottom="50" right="0" left="140" height="66" id="canvas2">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Filter')}" x="19" y="30" id="label2"/>
-		<mx:ComboBox id="cboDgFilter" dataProvider="{FilterArray}" labelField="name" change="FilterChange()" x="124" y="32" width="143"/>
+		<mx:ComboBox id="cboDgFilter" dataProvider="{FilterArray}" labelField="name" change="FilterChange(event)" x="124" y="32" width="143"/>
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invPrefCmd.DocumentType')}" x="19" y="5" id="label3"/>
-		<mx:ComboBox id="cboDocumentType" dataProvider="{DocumentArray}" labelField="name" change="DocumentTypeChange()" x="124" y="3" width="143"/>
+		<mx:ComboBox id="cboDocumentType" dataProvider="{DocumentArray}" labelField="name" change="DocumentTypeChange(event)" x="124" y="3" width="143"/>
 	</mx:Canvas>
 </mx:Panel>
