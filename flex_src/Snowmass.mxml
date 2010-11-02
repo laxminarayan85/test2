@@ -342,6 +342,10 @@
 						doLogout();
 					}
 				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.TrackerConsole") > -1 ))	{
+						doTracker();					
+					}
+				if ((ss.menu == "rStandardMenuText.Admin")
 					&& (ss.commandName.indexOf("rStandardMenuText.TrackerManager") > -1 ))	{
 						doTrackerManager();					
 					}
