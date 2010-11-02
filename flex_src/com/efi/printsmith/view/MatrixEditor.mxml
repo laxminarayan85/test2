@@ -493,6 +493,8 @@
 <mx:Script>
                                    
 <![CDATA[
+	import mx.collections.Sort;
+	import mx.collections.SortField;
 	import com.efi.printsmith.data.enums.CopierPricingMethod;
 	import com.efi.printsmith.events.SavePriceListElementEvent;
 
@@ -568,6 +570,11 @@
 				this.price20.text = element.price20.toString();
 		}
 		this.matrix.elements.filterFunction = filterMatrix;
+		var sortField:SortField = new SortField("qty");
+		sortField.numeric = true;
+		var sort:Sort = new Sort();
+		sort.fields = [sortField];
+		this.matrix.elements.sort = sort;
 		this.matrix.elements.refresh();
 	}   
 	
