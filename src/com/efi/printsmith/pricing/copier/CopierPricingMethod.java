@@ -66,7 +66,7 @@ public abstract class CopierPricingMethod {
 				runs = iruns;		//¥¥DR 7.1.3
 			iruns++;	/* count partial as full run for signatures */
 		} else {
-			press = ordered / divisor;	/* press count for main run */
+			press = (ordered / divisor) * job.getSignatures();	/* press count for main run */
 			if ((press * divisor) < ordered)
 				press++;
 			runs = iruns;	/* set value to store in job */
@@ -81,7 +81,7 @@ public abstract class CopierPricingMethod {
 		calculateBinderyWaste(job);
 		long wasteSheets = job.getBinderyWaste() + job.getEstWaste();
 		wasteSheets *= job.getSheets();	
-		job.setTotalCopies(ordered / (iup / ion) + (wasteSheets * (iup / ion)) + oddRunQty);
+		job.setTotalCopies(ordered / (iup / ion) * job.getSignatures() + (wasteSheets * (iup / ion)) * job.getSignatures() + oddRunQty);
 		if (oddRunQty == 0 && iorigs > iup)
 			job.setTotalCopies(job.getTotalCopies() * (iorigs / iup));
 		if (job.getDoubleSided()) {
