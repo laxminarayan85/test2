@@ -2669,6 +2669,13 @@
 				var multiQtyViewWindow:MultiQtyView = PopUpManager.createPopUp(this,MultiQtyView,true) as MultiQtyView;
 				multiQtyViewWindow.multiQtyJob = this.job;
 			}
+			
+			private function getStockName(stockDefObj:StockDefinition):String {
+				if(stockDefObj!=null){
+					return stockDefObj.weight+"# "+stockDefObj.name;
+				}
+				return "";
+			}
 		]]>
 
 	</mx:Script>
@@ -3215,7 +3222,7 @@
 												  width="171"
 												  height="20"
 												  id="job_stock"
-												  text="{job.stock.name}"
+												  text="{getStockName(job.stock)}"
 												  fontSize="9" mouseDown="textInputClick(event)" />
 									<mx:Label x="6"
 											  y="37"
