@@ -64,6 +64,8 @@ public class PrintPricingMethod {
 	}
 	
 	private void calculateEstWaste(Job job) {
+		if (job.getEstWasteOverride())
+			return;
 		PressDefinition pressDefinition = job.getPricingPress();
 		if (pressDefinition != null) {
 			double estWaste = 0.0;

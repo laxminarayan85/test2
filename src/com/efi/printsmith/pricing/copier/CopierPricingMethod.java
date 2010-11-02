@@ -90,6 +90,8 @@ public abstract class CopierPricingMethod {
 	}
 	
 	private void calculateEstWaste(Job job) {
+		if (job.getEstWasteOverride())
+			return;
 		CopierDefinition copierDefinition = job.getPricingCopier();
 		if (copierDefinition != null) {
 			double estWaste = 0.0;
