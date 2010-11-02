@@ -976,7 +976,11 @@ public class CopierDefinitionMapper extends ImportMapper {
 					copierDefinition.setMethod("SquareAreaAndCopies");
 				else if (currentImportToken.equals("9"))
 					copierDefinition.setMethod("SquareAreaPerCopy");
-
+			} else if ("sheet area finish".equals(currentFieldToken)) {
+				if (Utilities.tokenToBooleanValue(currentImportToken))
+					copierDefinition.setSquareAreaType("AreaFinishSize");
+				else
+					copierDefinition.setSquareAreaType("AreaRunSize");
 			} else if ("schedule type".equals(currentFieldToken)) {
 				if (currentImportToken.equals("1") == true)
 					copierDefinition.setMatrixType("CopyCost");

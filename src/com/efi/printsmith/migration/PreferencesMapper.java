@@ -544,7 +544,7 @@ public class PreferencesMapper extends ImportMapper {
 			retValue = "Roll Fed";
 			break;
 		case 19:
-			retValue = "LF";
+			retValue = "Large Format";
 			break;
 		case 20:
 			retValue = "Charges Only";
