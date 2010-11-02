@@ -1001,7 +1001,7 @@
 				if (evt.account != null)
 				{
 					if (evt.account.status == "CustomerStatusFrozen"){
-						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'messages.148'));
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'Customer_Acct.FROZEN'));
 						this.setAccount(new Account());
 					}
 					else{
