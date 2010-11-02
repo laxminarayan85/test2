@@ -144,26 +144,18 @@ public class PriceStockEngine {
 			if (job.getTotalCopies() > 0)
 			{
 				sheetPrice = stockDefinition.getCopier1PricePerSheet().doubleValue();
-				double markup = copierDefinition.getStockMarkup();
-				sheetPrice = (job.getTotalCopies() * sheetPrice * markup) / job.getTotalCopies();
 			}
 			priceLogEntry.setDescription("Stock price is copier 1 price per sheet");
 		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name())) {
 			if (job.getTotalCopies() > 0)
 			{
 				sheetPrice = stockDefinition.getCopier2PricePerSheet().doubleValue();
-				double markup = copierDefinition.getStockMarkup();
-				double temp = job.getTotalCopies() / stockDefinition.getCostunits().doubleValue();
-				sheetPrice = (sheetPrice * temp * markup) / job.getTotalCopies();
 			}
 			priceLogEntry.setDescription("Stock price is copier 2 price per sheet");
 		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name())) {
 			if (job.getTotalCopies() > 0)
 			{
 				sheetPrice = stockDefinition.getCopier3PricePerSheet().doubleValue();
-				double markup = copierDefinition.getStockMarkup();
-				double temp = job.getTotalCopies() / stockDefinition.getCostunits().doubleValue();
-				sheetPrice = (sheetPrice * temp * markup) / job.getTotalCopies();
 			}
 			priceLogEntry.setDescription("Stock price is copier 3 price per sheet");
 		} else {
