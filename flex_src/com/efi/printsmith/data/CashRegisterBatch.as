@@ -14,16 +14,8 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var change:Number = 0;
-		public var tendered:Number = 0;
-		public var subTotal:Number = 0;
-		public var quantity:Number = 0;
-		public var taxAmount:Number = 0;
-		public var totalPrice:Number = 0;
 		public var transactions:ArrayCollection;
 		public var name:String = "";
-		public var posted:Boolean = false;
-		public var postedDate:Date = new Date();
 	
 	}
 }
