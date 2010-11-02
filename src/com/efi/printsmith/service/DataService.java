@@ -1913,6 +1913,7 @@ public class DataService extends HibernateService {
 	public ModelBase saveInvoice(InvoiceBase invoice) throws Exception {
 		log.debug("** addUpdateAccount called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
+		DataService dataService = new DataService();
 		try {
 			if (invoice.getId() == null || invoice.getId() == 0) {
 				invoice.setId(null);
