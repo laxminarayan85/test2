@@ -3143,19 +3143,19 @@ public class DataService extends HibernateService {
 										|| employee.getCustomerWant().equals(
 												"Due_Tomorrow")) {
 									queryString = queryString
-											+ " ((to_char(invoice.deliveryIntentDate,'DD/MM/YYYY')=:date or invoice.deliveryIntentDate is null) ";
+											+ " ((to_char(invoice.wantedDate,'DD/MM/YYYY')=:date or invoice.wantedDate is null) ";
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
 										"Due_This_Week")
 										|| employee.getCustomerWant().equals(
 												"Due_Next")) {
 									queryString = queryString
-											+ " ((invoice.deliveryIntentDate between :startdate and :enddate or invoice.deliveryIntentDate is null) ";
+											+ " ((invoice.wantedDate between :startdate and :enddate or invoice.wantedDate is null) ";
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
 										"Due_Any_Time")) {
 									queryString = queryString
-											+ " ((invoice.deliveryIntentDate is not null or invoice.deliveryIntentDate is null) ";
+											+ " ((invoice.wantedDate is not null or invoice.wantedDate is null) ";
 									checkFlag = true;
 								}
 							}
@@ -3164,7 +3164,7 @@ public class DataService extends HibernateService {
 									queryString = queryString + " or";
 								}
 								queryString = queryString
-										+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
+										+ " (invoice.wantedDate < :pastdate or invoice.wantedDate is null)";
 								if (checkFlag) {
 									queryString = queryString + ")";
 								}
@@ -3177,7 +3177,7 @@ public class DataService extends HibernateService {
 						} else if (employee.getCustomerWant() == null
 								&& employee.getAnyPastDue()) {
 							queryString = queryString
-									+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null) and";
+									+ " (invoice.wantedDate < :pastdate or invoice.wantedDate is null) and";
 						}
 						if (employee.getHideNonReleaseProduction()
 								|| trackerConsole
@@ -3304,7 +3304,7 @@ public class DataService extends HibernateService {
 										|| employee.getCustomerWant().equals(
 												"Due_Tomorrow")) {
 									queryString = queryString
-											+ " ((to_char(invoice.deliveryIntentDate,'DD/MM/YYYY')=:date or invoice.deliveryIntentDate is null) ";
+											+ " ((to_char(invoice.wantedDate,'DD/MM/YYYY')=:date or invoice.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
@@ -3312,13 +3312,13 @@ public class DataService extends HibernateService {
 										|| employee.getCustomerWant().equals(
 												"Due_Next")) {
 									queryString = queryString
-											+ " ((invoice.deliveryIntentDate between :startdate and :enddate or invoice.deliveryIntentDate is null) ";
+											+ " ((invoice.wantedDate between :startdate and :enddate or invoice.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
 										"Due_Any_Time")) {
 									queryString = queryString
-											+ " ((invoice.deliveryIntentDate is not null or invoice.deliveryIntentDate is null) ";
+											+ " ((invoice.wantedDate is not null or invoice.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								}
@@ -3329,7 +3329,7 @@ public class DataService extends HibernateService {
 									queryString = queryString + " or";
 								}
 								queryString = queryString
-										+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
+										+ " (invoice.wantedDate < :pastdate or invoice.wantedDate is null)";
 								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
@@ -3347,7 +3347,7 @@ public class DataService extends HibernateService {
 								queryString = queryString + " where ";
 							}
 							queryString = queryString
-									+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
+									+ " (invoice.wantedDate < :pastdate or invoice.wantedDate is null)";
 						}
 						if (employee.getOnlyShowProductionParents()
 								|| trackerConsole.getShowEmployeeProdParents()) {
@@ -3445,7 +3445,7 @@ public class DataService extends HibernateService {
 										|| employee.getCustomerWant().equals(
 												"Due_Tomorrow")) {
 									queryString = queryString
-											+ " ((to_char(invoice.deliveryIntentDate,'DD/MM/YYYY')=:date or invoice.deliveryIntentDate is null) ";
+											+ " ((to_char(invoice.wantedDate,'DD/MM/YYYY')=:date or invoice.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
@@ -3453,13 +3453,13 @@ public class DataService extends HibernateService {
 										|| employee.getCustomerWant().equals(
 												"Due_Next")) {
 									queryString = queryString
-											+ " ((invoice.deliveryIntentDate between :startdate and :enddate or invoice.deliveryIntentDate is null) ";
+											+ " ((invoice.wantedDate between :startdate and :enddate or invoice.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
 										"Due_Any_Time")) {
 									queryString = queryString
-											+ " ((invoice.deliveryIntentDate is not null or invoice.deliveryIntentDate is null) ";
+											+ " ((invoice.wantedDate is not null or invoice.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								}
@@ -3470,7 +3470,7 @@ public class DataService extends HibernateService {
 									queryString = queryString + " or";
 								}
 								queryString = queryString
-										+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
+										+ " (invoice.wantedDate < :pastdate or invoice.wantedDate is null)";
 								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
@@ -3488,7 +3488,7 @@ public class DataService extends HibernateService {
 								queryString = queryString + " where ";
 							}
 							queryString = queryString
-									+ " (invoice.deliveryIntentDate < :pastdate or invoice.deliveryIntentDate is null)";
+									+ " (invoice.wantedDate < :pastdate or invoice.wantedDate is null)";
 						}
 						if (employee.getOnlyShowProductionParents()
 								|| trackerConsole.getShowEmployeeProdParents()) {
@@ -3626,19 +3626,19 @@ public class DataService extends HibernateService {
 										|| employee.getCustomerWant().equals(
 												"Due_Tomorrow")) {
 									queryString = queryString
-											+ " ((to_char(estimate.deliveryIntentDate,'DD/MM/YYYY')=:date or estimate.deliveryIntentDate is null) ";
+											+ " ((to_char(estimate.wantedDate,'DD/MM/YYYY')=:date or estimate.wantedDate is null) ";
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
 										"Due_This_Week")
 										|| employee.getCustomerWant().equals(
 												"Due_Next")) {
 									queryString = queryString
-											+ " ((estimate.deliveryIntentDate between :startdate and :enddate or estimate.deliveryIntentDate is null) ";
+											+ " ((estimate.wantedDate between :startdate and :enddate or estimate.wantedDate is null) ";
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
 										"Due_Any_Time")) {
 									queryString = queryString
-											+ " ((estimate.deliveryIntentDate is not null or estimate.deliveryIntentDate is null) ";
+											+ " ((estimate.wantedDate is not null or estimate.wantedDate is null) ";
 									checkFlag = true;
 								}
 							}
@@ -3647,7 +3647,7 @@ public class DataService extends HibernateService {
 									queryString = queryString + " or";
 								}
 								queryString = queryString
-										+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
+										+ " (estimate.wantedDate < :pastdate or estimate.wantedDate is null)";
 								if (checkFlag) {
 									queryString = queryString + ")";
 								}
@@ -3660,7 +3660,7 @@ public class DataService extends HibernateService {
 						} else if (employee.getCustomerWant() == null
 								&& employee.getAnyPastDue()) {
 							queryString = queryString
-									+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null) and";
+									+ " (estimate.wantedDate < :pastdate or estimate.wantedDate is null) and";
 						}
 						if (employee.getHideNonReleaseProduction()
 								|| trackerConsole
@@ -3786,7 +3786,7 @@ public class DataService extends HibernateService {
 										|| employee.getCustomerWant().equals(
 												"Due_Tomorrow")) {
 									queryString = queryString
-											+ " ((to_char(estimate.deliveryIntentDate,'DD/MM/YYYY')=:date or estimate.deliveryIntentDate is null) ";
+											+ " ((to_char(estimate.wantedDate,'DD/MM/YYYY')=:date or estimate.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
@@ -3794,13 +3794,13 @@ public class DataService extends HibernateService {
 										|| employee.getCustomerWant().equals(
 												"Due_Next")) {
 									queryString = queryString
-											+ " ((estimate.deliveryIntentDate between :startdate and :enddate or estimate.deliveryIntentDate is null) ";
+											+ " ((estimate.wantedDate between :startdate and :enddate or estimate.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
 										"Due_Any_Time")) {
 									queryString = queryString
-											+ " ((estimate.deliveryIntentDate is not null or estimate.deliveryIntentDate is null) ";
+											+ " ((estimate.wantedDate is not null or estimate.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								}
@@ -3811,7 +3811,7 @@ public class DataService extends HibernateService {
 									queryString = queryString + " or";
 								}
 								queryString = queryString
-										+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
+										+ " (estimate.wantedDate < :pastdate or estimate.wantedDate is null)";
 								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
@@ -3829,7 +3829,7 @@ public class DataService extends HibernateService {
 								queryString = queryString + " where ";
 							}
 							queryString = queryString
-									+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
+									+ " (estimate.wantedDate < :pastdate or estimate.wantedDate is null)";
 						}
 						if (employee.getOnlyShowProductionParents()
 								|| trackerConsole.getShowEmployeeProdParents()) {
@@ -3927,7 +3927,7 @@ public class DataService extends HibernateService {
 										|| employee.getCustomerWant().equals(
 												"Due_Tomorrow")) {
 									queryString = queryString
-											+ " ((to_char(estimate.deliveryIntentDate,'DD/MM/YYYY')=:date or estimate.deliveryIntentDate is null) ";
+											+ " ((to_char(estimate.wantedDate,'DD/MM/YYYY')=:date or estimate.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
@@ -3935,13 +3935,13 @@ public class DataService extends HibernateService {
 										|| employee.getCustomerWant().equals(
 												"Due_Next")) {
 									queryString = queryString
-											+ " ((estimate.deliveryIntentDate between :startdate and :enddate or estimate.deliveryIntentDate is null) ";
+											+ " ((estimate.wantedDate between :startdate and :enddate or estimate.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								} else if (employee.getCustomerWant().equals(
 										"Due_Any_Time")) {
 									queryString = queryString
-											+ " ((estimate.deliveryIntentDate is not null or estimate.deliveryIntentDate is null) ";
+											+ " ((estimate.wantedDate is not null or estimate.wantedDate is null) ";
 									checkBooleanFlag = true;
 									checkFlag = true;
 								}
@@ -3952,7 +3952,7 @@ public class DataService extends HibernateService {
 									queryString = queryString + " or";
 								}
 								queryString = queryString
-										+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
+										+ " (estimate.wantedDate < :pastdate or estimate.wantedDate is null)";
 								if (checkBooleanFlag) {
 									queryString = queryString + ")";
 								}
@@ -3970,7 +3970,7 @@ public class DataService extends HibernateService {
 								queryString = queryString + " where ";
 							}
 							queryString = queryString
-									+ " (estimate.deliveryIntentDate < :pastdate or estimate.deliveryIntentDate is null)";
+									+ " (estimate.wantedDate < :pastdate or estimate.wantedDate is null)";
 						}
 						if (employee.getOnlyShowProductionParents()
 								|| trackerConsole.getShowEmployeeProdParents()) {
