@@ -7,7 +7,7 @@
 	name="Tracker Console" xmlns:components="com.efi.printsmith.common.components.*" xmlns:trackercomponent="com.efi.printsmith.components.tracker.*">
 	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
-		<mx:method name="getClockedInEmployee" fault="handleFault(event)" result="handleLoadEmployeeResult(event)"/>
+		<mx:method name="getActiveEmployees" fault="handleFault(event)" result="handleLoadEmployeeResult(event)"/>
 		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadTrackerConsoleResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTrackerConsoleResult(event)"/>
 		<mx:method name="getJobsChargesForTrackerByEmployee" fault="handleFault(event)" result="handleLoadJobChargesResult(event)"/>
@@ -199,7 +199,7 @@
 				dataService.addUpdate(trackerConsole);
 			}
 			if(onLoad){
-				dataService.getClockedInEmployee();	
+				dataService.getActiveEmployees();	
 				dataServiceFacilty.getAll("ProductionFacilities");
 				dataServiceStation.getAll("ProductionStations");		
 				dataServiceProductionLocation.getAll("ProductionLocations");
@@ -210,16 +210,22 @@
 			var list:ArrayCollection = event.result as ArrayCollection;
 			for each(var employeeObject:Employee in list){
 				employeeObject.employeeName = employeeObject.lastName+", "+employeeObject.firstName;
+				if(employeeObject.clockIn){
+					employeeObject.enabled = true;
+				} else {
+					employeeObject.enabled = false;
+				}
 			}
 			var employeeObj:Employee = new Employee();
 			employeeObj.employeeId = null;
 			employeeObj.employeeName = "";
+			employeeObj.enabled = true;
 			list.addItemAt(employeeObj,0);
 			employeesArray = list;
 			if(trackerConsole.selectedEmployee!=null){
 				var checkFlag:Boolean = false;
 				for each(var employeeObject:Employee in employeesArray) {
-					if(trackerConsole.selectedEmployee.employeeId==employeeObject.employeeId){
+					if(trackerConsole.selectedEmployee.employeeId==employeeObject.employeeId && employeeObject.enabled){
 						checkFlag = true;
 						trackerConsole.selectedEmployee = employeeObject;
 						employee = trackerConsole.selectedEmployee;
@@ -229,6 +235,7 @@
 				if(!checkFlag){
 					trackerConsole.selectedEmployee = null;
 					employee = null;
+					employee_combo.selectedIndex = 0;
 				}
 			}
 			
@@ -369,7 +376,7 @@
 				closeEventTriggered = true;
 				selectedCharge = null;
 				selectedJob = null;
-				dataService.getClockedInEmployee();
+				dataService.getActiveEmployees();
 			},false,0,true);
 		}
 		
@@ -388,7 +395,7 @@
 				closeEventTriggered = true;
 				selectedCharge = null;
 				selectedJob = null;
-				dataService.getClockedInEmployee();
+				dataService.getActiveEmployees();
 			},false,0,true);
 			if(employee!=null){
 				registerClassAlias("com.efi.printsmith.data.Employee",Employee);
@@ -1943,7 +1950,7 @@
 			
 			<mx:HBox width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowStopCmd.Employee')}"/>
-				<components:CustomComboBoxComponent width="20%" change="{getEmployee(event)}"
+				<components:DisabledComboBox id="employee_combo" width="20%" change="{getEmployee(event)}"
 					masterList="{employeesArray}" updateObject="true" objectLabelFieldId="employeeId" labelFieldId="employeeId" labelFieldName="employeeName"
 					dataHolder="{trackerConsole}" variableName="selectedEmployee" customText="{getCustomTextData(employeesArray,trackerConsole,trackerConsole.selectedEmployee)}"/>
 				<mx:Image source="@Embed(source='../../../../assets/punchclock.png')" 
