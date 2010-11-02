@@ -55,6 +55,9 @@
 	</mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.data.Estimate;
+		import com.efi.printsmith.data.Invoice;
+		import com.efi.printsmith.events.ReviewDocUpdateEvent;
 		import com.efi.printsmith.events.CopyToNewEstimateEvent;
 		import com.efi.printsmith.events.CopyToNewInvoiceEvent;
 		import com.efi.printsmith.events.ConvertToInvoiceEvent;
@@ -400,6 +403,12 @@
 				if ((ss.menu == "rStandardMenuText.Invoice")
 					&& (ss.commandName.indexOf("rStandardMenuText.ConverttoInvoice") > -1 ))	{
 						doConvertInvoice();				
+					}	
+				
+				//Menu for Review Doc
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.ReviewAnyDocument") > -1 ))	{
+						doReviewDoc();				
 					}		
 						
 			}
@@ -413,6 +422,19 @@
 				}
 				
 			}			
+		}
+		
+		private function doReviewDoc():void {
+			var reviewDocWindow:ReviewDocumentView = PopUpManager.createPopUp(this,ReviewDocumentView,false) as ReviewDocumentView;
+			reviewDocWindow.addEventListener(ReviewDocUpdateEvent.REVIEW_DOC_UPDATE,function(event:ReviewDocUpdateEvent):void {
+				if(event.invoice!=null){
+					if(event.invoice is Invoice){
+						doEditInvoice(event.invoice);
+					} else if(event.invoice is Estimate){
+						doEditEstimate(event.invoice);
+					}
+				}
+			},false,0,true);
 		}
 		
 		private function doMinimize():void	{
@@ -732,14 +754,26 @@
 			var event:EditCreateInvoiceEvent = new EditCreateInvoiceEvent(null, new mx.rpc.Responder(handleNonUniqueUIEvent, handleFault));
 			event.dispatch();
 		}
-		public function doEditEstimate(estimate:InvoiceBase):void {
-			var event:EditEditEstimateEvent = new EditEditEstimateEvent(estimate, new mx.rpc.Responder(handleUIEvent, handleFault));
-			event.dispatch();
+		
+		public function doEditInvoice(inv:InvoiceBase):void	{
+			if (security.commandEnabled(EditEditInvoiceEvent.COMMANDID)) {
+				var child:EditInvoice = new EditInvoice();
+				child.setInvoice(inv);
+				child.addEventListener(CopyToNewInvoiceEvent.COPY_TO_NEWINVOICE_EVENT,handleCopyToNewInvoiceResult,false,0,true);
+				child.addEventListener(CopyToNewEstimateEvent.COPY_TO_NEWESTIMATE_EVENT,handleCopyToNewEstimateResult,false,0,true);
+				containerManager.openNewMDIWindow(child.title, child);
+			}
 		}
 		
-		public function doEditInvoice(invoice:InvoiceBase):void {
-			var event:EditEditInvoiceEvent = new EditEditInvoiceEvent(invoice, new mx.rpc.Responder(handleUIEvent, handleFault));
-			event.dispatch();
+		public function doEditEstimate(inv:InvoiceBase):void	{
+			if (security.commandEnabled(EditEditEstimateEvent.COMMANDID)) {
+				var child:EditInvoice = new EditInvoice();
+				child.setInvoice(inv);
+				child.addEventListener(ConvertToInvoiceEvent.CONVERT_TO_INVOICE_EVENT,handleConvertInvoiceResult,false,0,true);
+				child.addEventListener(CopyToNewInvoiceEvent.COPY_TO_NEWINVOICE_EVENT,handleCopyToNewInvoiceResult,false,0,true);
+				child.addEventListener(CopyToNewEstimateEvent.COPY_TO_NEWESTIMATE_EVENT,handleCopyToNewEstimateResult,false,0,true);
+				containerManager.openNewMDIWindow(child.title, child);
+			}
 		}
 
 		public function doAboutPrintSmith():void {

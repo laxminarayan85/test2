@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	headerHeight="0" showCloseButton="false" creationComplete="{init()}">
+	
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getInvoiceByInvoiceNumber" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.events.ReviewDocUpdateEvent;
+			import com.efi.printsmith.events.commandEvents.EditForms.EditEditEstimateEvent;
+			import com.efi.printsmith.events.commandEvents.EditForms.EditEditInvoiceEvent;
+			import com.efi.printsmith.data.Estimate;
+			import com.efi.printsmith.data.Invoice;
+			import com.efi.printsmith.events.ConvertToInvoiceEvent;
+			import com.efi.printsmith.events.CopyToNewInvoiceEvent;
+			import com.efi.printsmith.events.CopyToNewEstimateEvent;
+			import mx.utils.StringUtil;
+			import com.efi.printsmith.data.InvoiceBase;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			
+			private function init():void {
+				PopUpManager.centerPopUp(this);
+				options.selectedValue = "I";
+				options_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'reviewInvCmd.EnterInvoice')+":";
+				invoice_number.setFocus();
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);				
+			}
+			
+			private function keyDownEnterHandler(event:KeyboardEvent):void {
+				if(event.keyCode == Keyboard.ENTER) {
+					getInvoiceByInvoiceNumber();	
+				}
+			}
+			
+			private function getInvoiceByInvoiceNumber():void {
+				var docType:String = "";
+				if(options.selectedValue!=null){
+					docType = options.selectedValue as String;
+				}
+				if(invoice_number.text!=null && StringUtil.trim(invoice_number.text)!=""){
+					dataService.getInvoiceByInvoiceNumber(invoice_number.text,docType);
+				}
+			}
+			
+			private function changeOptionsLabel(event:Event):void {
+				if(event.currentTarget.selectedValue=="I"){
+					resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'reviewInvCmd.EnterInvoice')+":";
+				} else if(event.currentTarget.selectedValue=="E"){
+					resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'reviewInvCmd.EnterEstimate')+":";
+				} else if(event.currentTarget.selectedValue=="W"){
+					resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'reviewInvCmd.EnterWebRef')+":";
+				}
+			}
+			
+			private function handleLoadResult(event:ResultEvent):void {
+				var invoiceBase:InvoiceBase = event.result as InvoiceBase
+				if(invoiceBase==null){
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_NOTFOUND'));
+				} else {
+					dispatchEvent(new ReviewDocUpdateEvent(ReviewDocUpdateEvent.REVIEW_DOC_UPDATE,invoiceBase));
+					callLater(closeWindow);
+				}
+			}
+			
+			private function handleFault(ev:FaultEvent):void {  
+				var message:String;
+				message = "Error: "                          
+				+ ev.fault.faultCode + " - "                                  
+				+ ev.fault.faultDetail + " - "                                  
+				+ ev.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, 4);                                 
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%">
+		<mx:VBox width="85%">
+			<mx:HBox width="100%">
+				<mx:RadioButtonGroup id="options" change="{changeOptionsLabel(event)}"/>
+				<mx:RadioButton groupName="options" 
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'reviewInvCmd.Invoice')}" value="I"/>
+				<mx:RadioButton groupName="options" 
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'reviewInvCmd.Estimate')}" value="E"/>
+				<mx:RadioButton groupName="options" 
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'reviewInvCmd.WebReference')}" value="W"/>
+			</mx:HBox>
+			<mx:HBox width="100%">
+				<mx:Label id="options_label"/>
+				<mx:TextInput text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobDataCmd.NA')}" 
+					enabled="false" disabledColor="#000000"/>
+				<mx:TextInput id="invoice_number" restrict="0-9" keyDown="{keyDownEnterHandler(event)}"/>
+				<mx:TextInput text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobDataCmd.NA')}" 
+					enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+		</mx:VBox>
+		<mx:VBox width="15%">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" 
+				click="{getInvoiceByInvoiceNumber()}" width="100%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}"
+				click="{closeWindow()}" width="100%"/>
+		</mx:VBox>
+	</mx:HBox>
+</mx:TitleWindow>
