@@ -2,6 +2,7 @@
 <mx:Label xmlns:mx="http://www.adobe.com/2006/mxml">
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.FontDefinition;
 		
 			[Bindable] public var fontColorValue:uint;
 			 
@@ -9,7 +10,41 @@
 			{
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
 				this.setStyle("color",fontColorValue);
-				this.setStyle("fontWeight","bold");
+				//this.setStyle("fontWeight","bold");
+			}
+			
+			public function set listFont(displayValue:FontDefinition):void {
+				if(displayValue!=null){
+					if(displayValue.fontName!=null){
+						this.setStyle("fontFamily",displayValue.fontName);	
+					}
+					if(displayValue.size!=0) { 
+						this.setStyle("fontSize",displayValue.size);
+					}
+					if(displayValue.isBold){
+						this.setStyle("fontWeight","bold");
+					} else {
+						this.setStyle("fontWeight","normal");
+					}
+					if(displayValue.isItalic){
+						this.setStyle("fontStyle","italic");
+					} else {
+						this.setStyle("fontStyle","normal");
+					}
+					if(displayValue.isUnderline){
+						this.setStyle("textDecoration","underline");
+					} else {
+						this.setStyle("textDecoration","none");
+					}
+					if(displayValue.isShadow){
+						var dropShadowFilter:DropShadowFilter = new DropShadowFilter(5,30,0x000000,.8);
+			            var filtersArray:Array = new Array();
+			            filtersArray.push(dropShadowFilter);
+			            this.filters = filtersArray;
+					} else {
+						this.filters = null;
+					} 
+				}
 			}
 		]]>
 	</mx:Script>
