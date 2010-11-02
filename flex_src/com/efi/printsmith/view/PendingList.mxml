@@ -52,6 +52,7 @@
 	
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.common.scripts.DateUtil;
 	import com.efi.printsmith.data.ComLink;
 	import com.efi.printsmith.Constants;
 	import com.efi.printsmith.data.PreferencesPOS;
@@ -145,35 +146,43 @@
 
 	private function fillDocumentArray(fillArray:ArrayCollection):void {
 		var array:Object=new Object();
-		array.name="All";
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.All");
 		fillArray.addItem(array);
 		array=new Object();
-		array.name="Invoices";
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.Invoices");
 		fillArray.addItem(array);
 		array=new Object();
-		array.name="Estimates";
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.Estimates");
 		fillArray.addItem(array);
 		array=new Object();
-		array.name="Web Orders";
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.WebOrders");
 		fillArray.addItem(array);
 		array=new Object();
-		array.name="Web RFQ's";
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.WebRFQs");
 		fillArray.addItem(array);
 	}
 	private function fillFilterArray(fillArray:ArrayCollection):void {
 		var array:Object=new Object();
-		array.name="All";
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.All");
 		fillArray.addItem(array);
 		array=new Object();
-		array.name="Ready";
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.Ready");
 		fillArray.addItem(array);
 		array=new Object();
-		array.name="Late";
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.Late");
 		fillArray.addItem(array);
 		array=new Object();
-		array.name="Due Between";
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueToday");
 		fillArray.addItem(array);
 		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueTomorrow");
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueNextWeek");
+		fillArray.addItem(array);
+		array=new Object();
+		array.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueThisWeek");
+		fillArray.addItem(array);
 	}
 	private function fillFindArray(fillArray:ArrayCollection):void {
 		var array:Object=new Object();
@@ -349,17 +358,17 @@
 		
 		/* First make sure we have the right document type */
 		switch (this.cboDocumentType.selectedItem.name) {
-		case "All":
+		case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.All"):
 			showItem = true;
 			break;
-		case "Invoices":
+		case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.Invoices"):
 			if (item is Invoice) showItem = true;
 			break;
-		case "Estimates":
+		case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.Estimates"):
 			if (item is Estimate) showItem = true;
 			break;
-		case "Web Orders":
-		case "Web RFQ's":
+		case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.WebOrders"):
+		case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.WebRFQs"):
 			showItem = false;
 			break;
 		}
@@ -370,29 +379,54 @@
 			var inv:InvoiceBase = item as InvoiceBase;
 				
 			switch (this.cboDgFilter.selectedItem.name) {
-			case "All":
-				showItem = true;
-				break;
-			case "Ready":
-				if ((item as InvoiceBase).completed)
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.All"):
 					showItem = true;
-				break;
-			case "Late":
-				var today:Date = new Date();
-				
-				if ((inv.completed == false)
-					&& (inv.deliveryIntentDate != null)  
-					&& (inv.deliveryIntentDate.time < today.time))
-					showItem = true;
+					break;
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.Ready"):
+					if ((item as InvoiceBase).completed || (item as InvoiceBase).readyToPickup)
+						showItem = true;
+					break;
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.Late"):
+					var today:Date = new Date();
 					
-				break;
-			case "Due Between":
-				if ((inv.deliveryIntentDate != null)
-					&& (txtDateTo.selectedDate != null && (item as InvoiceBase).deliveryIntentDate.time <= txtDateTo.selectedDate.time) &&
-					(txtDateFrom.selectedDate != null && (item as InvoiceBase).deliveryIntentDate.time >= txtDateFrom.selectedDate.time)) {
-					showItem = true;
-				}
-				break;
+					if ((inv.completed == false && inv.readyToPickup == false)
+						&& (inv.wantedDate != null)  
+						&& (inv.wantedDate.time < today.time))
+						showItem = true;
+						
+					break;
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueToday"):
+					var today:Date = new Date();
+					if ((inv.completed == false && inv.readyToPickup == false)
+						&& (inv.wantedDate != null)  
+						&& (dateFormatterObj.format(inv.wantedDate) == dateFormatterObj.format(today)))
+						showItem = true;
+						
+					break;
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueTomorrow"):
+					var tomorrowDate:Date = DateUtil.addDays(new Date(),1);
+					if ((inv.completed == false && inv.readyToPickup == false)
+						&& (inv.wantedDate != null)  
+						&& (dateFormatterObj.format(inv.wantedDate) == dateFormatterObj.format(tomorrowDate)))
+						showItem = true;
+						
+					break;
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueNextWeek"):
+					var nextWeekNumber:int = DateUtil.getWeek(DateUtil.addDays(new Date(),7));
+					if ((inv.completed == false && inv.readyToPickup == false)
+						&& (inv.wantedDate != null)  
+						&& (DateUtil.getWeek(inv.wantedDate) == nextWeekNumber))
+						showItem = true;
+						
+					break;
+				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueThisWeek"):
+					var thisWeekNumber:int = DateUtil.getWeek(new Date());
+					if ((inv.completed == false && inv.readyToPickup == false)
+						&& (inv.wantedDate != null)  
+						&& (DateUtil.getWeek(inv.wantedDate) == thisWeekNumber))
+						showItem = true;
+						
+					break;
 			}
 		}
 		
@@ -570,11 +604,11 @@
 	}
 	
 	private function FilterChange():void {
-		if (this.cboDgFilter.text=="Due Between"){
+		/* if (this.cboDgFilter.text=="Due Between"){
 			this.currentState = "stateFilterDates";
 		}else{
 			this.currentState = "";
-		}
+		} */
 		refreshData();
 	}
 	private function doApplyFind():void {
@@ -1056,6 +1090,8 @@
 		click="treeSelect(event);" left="0" top="0" bottom="50"/>-->
 		
 	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
+	
+	<mx:DateFormatter id="dateFormatterObj" formatString="MM/DD/YYYY"/>
 		
 	<mx:VBox width="140" left="0" top="0" bottom="50" paddingLeft="5" paddingRight="5" verticalGap="10">
 		<mx:RadioButtonGroup id="pendingOptions"/>
