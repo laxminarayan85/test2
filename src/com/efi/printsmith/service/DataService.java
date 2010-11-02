@@ -1942,6 +1942,11 @@ public class DataService extends HibernateService {
 						priceLogEntry = new PriceLogEntry();
 					priceLogEntry = (PriceLogEntry)addUpdate(priceLogEntry);
 					job.getPricingRecord().setPriceLogEntry(priceLogEntry);
+					//Make sure dimensions are using valid dimension objects
+					job.setParentSize(dataService.getByDimensionName("Dimension", job.getParentSize().getName()));
+					job.setRunSize(dataService.getByDimensionName("Dimension", job.getRunSize().getName()));
+					job.setFinishSize(dataService.getByDimensionName("Dimension", job.getFinishSize().getName()));
+					job.setFoldedSize(dataService.getByDimensionName("Dimension", job.getFoldedSize().getName()));
 					job.setParentInvoice(invoice);
 				}
 			}
