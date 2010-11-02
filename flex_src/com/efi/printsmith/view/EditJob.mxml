@@ -1134,36 +1134,44 @@
 					if ( job.parentSize != null) {
 						//job.parentSize = job_parent.selectedItem as Dimension;
 						localSize = job_parent.selectedItem as Dimension;
-						job.parentSize.name = localSize.name;
-						job.parentSize.type = localSize.type;
-						job.parentSize.height = localSize.height;
-						job.parentSize.width = localSize.width;
+						if (localSize != null) {
+							job.parentSize.name = localSize.name;
+							job.parentSize.type = localSize.type;
+							job.parentSize.height = localSize.height;
+							job.parentSize.width = localSize.width;
+						}
 					}
 				}
 				
 				if ( job.runSize != null && job_size.selectedItem != null) {
 					//job.runSize = job_size.selectedItem as Dimension;
 					localSize = job_size.selectedItem as Dimension;
-					job.runSize.name = localSize.name;
-					job.runSize.type = localSize.type;
-					job.runSize.height = localSize.height;
-					job.runSize.width = localSize.width;
+					if (localSize != null) {
+						job.runSize.name = localSize.name;
+						job.runSize.type = localSize.type;
+						job.runSize.height = localSize.height;
+						job.runSize.width = localSize.width;
+					}
 				}
 				if ( job.foldedSize != null) {
 					//job.foldedSize = job_fold_size.selectedItem as Dimension;
 					localSize = job_fold_size.selectedItem as Dimension;
-					job.foldedSize.name = localSize.name;
-					job.foldedSize.type = localSize.type;
-					job.foldedSize.height = localSize.height;
-					job.foldedSize.width = localSize.width;
+					if (localSize != null) {
+						job.foldedSize.name = localSize.name;
+						job.foldedSize.type = localSize.type;
+						job.foldedSize.height = localSize.height;
+						job.foldedSize.width = localSize.width;
+					}
 				}
 				if ( job.finishSize != null && job_finish_size.selectedItem != null) {
 					//job.finishSize = job_finish_size.selectedItem as Dimension;
 					localSize = job_finish_size.selectedItem as Dimension;
-					job.finishSize.name = localSize.name;
-					job.finishSize.type = localSize.type;
-					job.finishSize.height = localSize.height;
-					job.finishSize.width = localSize.width;
+					if (localSize != null) {
+						job.finishSize.name = localSize.name;
+						job.finishSize.type = localSize.type;
+						job.finishSize.height = localSize.height;
+						job.finishSize.width = localSize.width;
+					}
 				}
 
 				if (cutOff_edit != null)
