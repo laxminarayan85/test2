@@ -3189,12 +3189,12 @@ public class DataService extends HibernateService {
 								|| trackerConsole
 										.getHideItemsNotReleasedToProd()) {
 							queryString = queryString
-									+ " (job.releasedToProduction=true and job.releasedToProduction is not null)";
+									+ " (job.releasedToProduction=true and job.releasedToProduction is not null) and";
 						} else {
 							queryString = queryString
-									+ " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null)";
+									+ " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null) and";
 						}
-
+						queryString = queryString + " (invoice.completed=false and invoice.readyToPickup=false and invoice.onPendingList=true)";
 						queryString = queryString
 								+ " order by invoice.invoiceNumber,job.jobNumber asc";
 
@@ -3366,6 +3366,12 @@ public class DataService extends HibernateService {
 										+ " where charge.productionLocation in (:locations)";
 							}
 						}
+						if (checkFlag) {
+							queryString = queryString + " and (invoice.completed=false and invoice.readyToPickup=false and invoice.onPendingList=true)";
+						} else {
+							checkFlag = true;
+							queryString = queryString + " where (invoice.completed=false and invoice.readyToPickup=false and invoice.onPendingList=true)";
+						}
 						queryString = queryString
 								+ " order by invoice.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
@@ -3528,6 +3534,12 @@ public class DataService extends HibernateService {
 							queryString = queryString
 									+ " ((invoice.releasedToProduction=true or invoice.releasedToProduction=false) and invoice.releasedToProduction is not null)";
 						}
+						if (checkFlag) {
+							queryString = queryString + " and (invoice.completed=false and invoice.readyToPickup=false and invoice.onPendingList=true)";
+						} else {
+							checkFlag = true;
+							queryString = queryString + " where (invoice.completed=false and invoice.readyToPickup=false and invoice.onPendingList=true)";
+						}
 						queryString = queryString
 								+ " order by invoice.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
@@ -3672,11 +3684,12 @@ public class DataService extends HibernateService {
 								|| trackerConsole
 										.getHideItemsNotReleasedToProd()) {
 							queryString = queryString
-									+ " (job.releasedToProduction=true and job.releasedToProduction is not null)";
+									+ " (job.releasedToProduction=true and job.releasedToProduction is not null) and";
 						} else {
 							queryString = queryString
-									+ " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null)";
+									+ " ((job.releasedToProduction=true or job.releasedToProduction=false) and job.releasedToProduction is not null) and";
 						}
+						queryString = queryString + " (estimate.completed=false and estimate.readyToPickup=false and estimate.onPendingList=true)";
 						queryString = queryString
 								+ " order by estimate.invoiceNumber,job.jobNumber asc";
 						Query query = em.createQuery(queryString);
@@ -3848,6 +3861,12 @@ public class DataService extends HibernateService {
 										+ " where charge.productionLocation in (:locations)";
 							}
 						}
+						if (checkFlag) {
+							queryString = queryString + " and (estimate.completed=false and estimate.readyToPickup=false and estimate.onPendingList=true)";
+						} else {
+							checkFlag = true;
+							queryString = queryString + " where (estimate.completed=false and estimate.readyToPickup=false and estimate.onPendingList=true)";
+						}
 						queryString = queryString
 								+ " order by estimate.invoiceNumber asc";
 						Query query = em.createQuery(queryString);
@@ -4009,6 +4028,12 @@ public class DataService extends HibernateService {
 							}
 							queryString = queryString
 									+ " ((invoice.releasedToProduction=true or invoice.releasedToProduction=false) and invoice.releasedToProduction is not null)";
+						}
+						if (checkFlag) {
+							queryString = queryString + " and (estimate.completed=false and estimate.readyToPickup=false and estimate.onPendingList=true)";
+						} else {
+							checkFlag = true;
+							queryString = queryString + " where (estimate.completed=false and estimate.readyToPickup=false and estimate.onPendingList=true)";
 						}
 						queryString = queryString
 								+ " order by estimate.invoiceNumber asc";
