@@ -576,6 +576,10 @@
 	private function doCheckDefaultLargeFormat():void {
     	if (largeformatCheck.selected == true){
     		this.currentState = "Large Format";
+    		copierDefinition.blackwhite = false;
+    		copierDefinition.color = false;
+    		this.blackwhitecheck.selected = false;
+    		this.colorcheck.selected = false;
     	}else{
     		this.currentState = "";
     	}
