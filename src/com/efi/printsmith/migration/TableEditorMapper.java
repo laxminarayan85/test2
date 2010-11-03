@@ -101,14 +101,42 @@ public class TableEditorMapper extends ImportMapper {
 									modelBase = new ReportCategories();
 								else if (title.equals("Sales Rep:"))
 									modelBase = new SalesRep();
-								else if (title.equals("Sizes - Metric CM"))
+								else if (title.equals("Sizes - Metric CM")) {
 									modelBase = new SizeMetricCM();
-								else if (title.equals("Sizes - Metric IN"))
+									SizeTable sizeTable = (SizeTable)dataService.getByName("SizeTable", title);
+									if (sizeTable == null) {
+										sizeTable = new SizeTable();
+										sizeTable.setName(title);
+										dataService.addUpdate(sizeTable);
+									}
+								}	
+								else if (title.equals("Sizes - Metric IN")) {
 									modelBase = new SizeMetricIN();
-								else if (title.equals("Sizes - Metric MM"))
+									SizeTable sizeTable = (SizeTable)dataService.getByName("SizeTable", title);
+									if (sizeTable == null) {
+										sizeTable = new SizeTable();
+										sizeTable.setName(title);
+										dataService.addUpdate(sizeTable);
+									}
+								}
+								else if (title.equals("Sizes - Metric MM")) {
 									modelBase = new SizeMetricMM();
-								else if (title.equals("Sizes - United States"))
+									SizeTable sizeTable = (SizeTable)dataService.getByName("SizeTable", title);
+									if (sizeTable == null) {
+										sizeTable = new SizeTable();
+										sizeTable.setName(title);
+										dataService.addUpdate(sizeTable);
+									}
+								}
+								else if (title.equals("Sizes - United States")) {
 									modelBase = new SizeUS();
+									SizeTable sizeTable = (SizeTable)dataService.getByName("SizeTable", title);
+									if (sizeTable == null) {
+										sizeTable = new SizeTable();
+										sizeTable.setName(title);
+										dataService.addUpdate(sizeTable);
+									}
+								}	
 								else if (title.equals("Sports Interest"))
 									modelBase = new SportsInterest();
 								else if (title.equals("State"))
