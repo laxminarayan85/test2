@@ -36,6 +36,7 @@
 				separatorObject = new Object();
 				if(addEditFlag=="add"){
 					country = new Country();
+					country.id = 0;
 					addressFormatArray = new ArrayCollection();
 				} else {
 					country = countryList.selectedItem as Country;
@@ -59,6 +60,10 @@
 				var addressLayoutComponent:AddressLayoutComponent = PopUpManager.createPopUp(this,AddressLayoutComponent,true) as AddressLayoutComponent;
 				registerClassAlias("com.efi.printsmith.data.Country",Country);
 				var countryObject:Country = ObjectUtil.copy(country) as Country;
+				addressLayoutComponent.addEditFlag = addEditFlag;
+				if(addEditFlag=="edit") {
+					addressLayoutComponent.selectedCountryIndex = countryList.selectedIndex;
+				}
 				addressLayoutComponent.countryArray = countryArray;
 				addressLayoutComponent.country = countryObject;
 				addressLayoutComponent.separatorObject = separatorObject;
@@ -466,7 +471,7 @@
 						textAlign="right" />
 						
 					<components:CustomComboBoxComponent id="countryComboBox" width="20%"
-						masterList="{countryArray}" labelFieldId="id" labelFieldName="name"
+						masterList="{countryArray}" labelFieldId="id" labelFieldName="name" defaultVariableName="defaultCountryName" nameDefaulting="true"
 						dataHolder="{preferencesSystem}" variableName="defaultCountry" customText="{getCustomTextData(countryArray,preferencesSystem,preferencesSystem.defaultCountry)}" 
 						updateFirstElement="true" change="{parentDocument.setCurrentCountry(event);setListFocus(event);setFormatText(event)}"/>
 						

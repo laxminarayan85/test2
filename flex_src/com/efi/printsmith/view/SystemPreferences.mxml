@@ -884,8 +884,12 @@
 		
 		if(selectedSection == "genericPrefCmd.AddressFormatting") {
 			checkCount = 2;
-			dataServiceSystem.addUpdate(preferencesSystem);
-			dataServiceCountry.addUpdateDeleteList(countryAddArray,countryDeleteArray);
+			if(preferencesSystem.defaultCountry==0 && preferencesSystem.defaultCountryName!=null){
+				dataServiceCountry.addUpdateDeleteList(countryAddArray,countryDeleteArray);
+			} else {
+				dataServiceSystem.addUpdate(preferencesSystem);
+				dataServiceCountry.addUpdateDeleteList(countryAddArray,countryDeleteArray);
+			}
 		}
 		
 		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
@@ -1467,6 +1471,15 @@
 		CountryArray = ev.result as ArrayCollection;
 		registerClassAlias("com.efi.printsmith.data.Country",Country);
 		CountryOrigArray = ObjectUtil.copy(CountryArray) as ArrayCollection;
+		if(preferencesSystem.defaultCountry==0 && preferencesSystem.defaultCountryName!=null){
+			for each(var countryObj:Country in CountryArray) {
+				if(countryObj.name==preferencesSystem.defaultCountryName){
+					preferencesSystem.defaultCountry = countryObj.id;
+   	 				dataServiceSystem.addUpdate(preferencesSystem);
+   	 				break;
+   				}
+   			}
+    	}
 		registerClassAlias("com.efi.printsmith.data.PreferencesSystem",PreferencesSystem);
 		preferencesSystemOrigObj = ObjectUtil.copy(preferencesSystem) as PreferencesSystem;
 		setCurrentCountry();

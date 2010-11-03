@@ -24,6 +24,10 @@
 			
 			[Bindable] public var separatorObject:Object = new Object();
 			
+			[Bindable] public var selectedCountryIndex:int = 0;
+			
+			[Bindable] public var addEditFlag:String = ""; 
+			
 			private function initLayoutComp():void{
 				PopUpManager.centerPopUp(this);
 			}
@@ -82,11 +86,22 @@
 			
 			private function saveUpdateData():void {
 				if(country.name!=null && StringUtil.trim(country.name)!=""){
-					for each(var countryObj:Country in countryArray) {
-						if(countryObj.name == country.name && countryObj.id!=country.id){
-							Alert.show("Entered Country Name already exists");
-							return;
+					if(addEditFlag=="add") {
+						for each(var countryObj:Country in countryArray) {
+							if(countryObj.name == country.name && (countryObj.id!=country.id || (countryObj.id==0 && country.id==0))){
+								Alert.show("Entered Country Name already exists");
+								return;
+							}
 						}
+					}
+					if(addEditFlag=="edit") {
+						for(var i:int=0;i<countryArray.length;i++){
+							var countryObject:Country = countryArray.getItemAt(i) as Country;
+							if(countryObject.name == country.name && (countryObject.id!=country.id || (countryObject.id==0 && country.id==0)) && selectedCountryIndex!=i){
+								Alert.show("Entered Country Name already exists");
+								return;
+							}
+						}	
 					}
 					var event:AddressFormatEvent = new AddressFormatEvent(AddressFormatEvent.ADDRESSFORMAT_CHANGED,true);
 					dispatchEvent(event);

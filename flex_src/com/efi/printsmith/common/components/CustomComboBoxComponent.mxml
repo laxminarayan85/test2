@@ -30,6 +30,8 @@
 			[Bindable] public var updateFirstElement:Boolean = false;
 			[Bindable] public var updateObject:Boolean = false;
 			[Bindable] public var objectLabelFieldId:String;
+			[Bindable] public var defaultVariableName:String;
+			[Bindable] public var nameDefaulting:Boolean=false;
 			
 			/**
 			 * This method helps to perform some opreration onload of component.
@@ -105,10 +107,25 @@
 					      		 	break;
 				  		 		}
 		       				} else {
-				   		 		if((dataProvider[index])[labelFieldId] == displayValue.getItemAt(objDataGridData)[variableName]){
-					       		 	this.selectedIndex = index;
-					      		 	break;
-				  		 		}
+		       					if(nameDefaulting && defaultVariableName!=null){
+		       						if(displayValue.getItemAt(objDataGridData)[defaultVariableName]!=null && displayValue.getItemAt(objDataGridData)[defaultVariableName]!=""){
+		       							if((dataProvider[index])[labelFieldId] == displayValue.getItemAt(objDataGridData)[variableName]
+		       							&& (dataProvider[index])[labelFieldName] == displayValue.getItemAt(objDataGridData)[defaultVariableName]){
+							       		 	this.selectedIndex = index;
+							      		 	break;
+						  		 		}
+		       						} else {
+			       						if((dataProvider[index])[labelFieldId] == displayValue.getItemAt(objDataGridData)[variableName]){
+							       		 	this.selectedIndex = index;
+							      		 	break;
+						  		 		}
+		       						}
+		       					} else {
+					   		 		if((dataProvider[index])[labelFieldId] == displayValue.getItemAt(objDataGridData)[variableName]){
+						       		 	this.selectedIndex = index;
+						      		 	break;
+					  		 		}
+		       					}
 		       				}
 		       			} 
 		       		} 
@@ -251,7 +268,12 @@
 								if(event.currentTarget.selectedItem[labelFieldId]==0){
 									dataHolder["nullUpdated"] = true;
 								}
-								dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
+								if(nameDefaulting && defaultVariableName!=null){
+									dataHolder[defaultVariableName] = event.currentTarget.selectedItem[labelFieldName];
+									dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
+								} else {
+									dataHolder[variableName] = event.currentTarget.selectedItem[labelFieldId];
+								}
 							}
 						}
 					}
