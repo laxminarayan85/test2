@@ -5,6 +5,7 @@ import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.MatrixElement;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.enums.Price2Side;
+import com.efi.printsmith.data.enums.StockPriceMethod;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
 import com.efi.printsmith.pricing.utilities.MatrixUtilities;
 
@@ -33,7 +34,7 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 		matrixElement = MatrixUtilities.lookupMatrixElement(job.getPricingCopier().getCopierMatrix(), lookupQty);
 
 		double pricePerCopy = 0.0;
-		double pricePerSecondSide = 0.0;
+		double pricePerSecondSide = 0.0;	
 		
 		if (!pricingRecord.getTotalPriceOverride()) {
 			if (copierDefinition.getMatrixType().equals("CopyCost")) {
@@ -50,7 +51,7 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 						pricingRecord.setUnitPrice(pricePerSecondSide);
 						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies() / 2)) + (stockPrice*(job.getTotalCopies() / 2)));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());					
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*(job.getTotalCopies() / 2));					
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
 						pricePerSecondSide = matrixElement.getPrice2().doubleValue() * copierDefinition.getCopyMarkup2();
 						pricingRecord.setUnitPrice(pricePerSecondSide);
@@ -81,7 +82,7 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 						pricingRecord.setUnitPrice(pricePerSecondSide);
 						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies())) + (stockPrice*(job.getTotalCopies() / 2)));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());					
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*(job.getTotalCopies() / 2));					
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
 						pricePerSecondSide = matrixElement.getPrice2().doubleValue() * copierDefinition.getCopyMarkup2();
 						pricingRecord.setUnitPrice(pricePerSecondSide);
@@ -109,7 +110,7 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 						pricingRecord.setUnitPrice(pricePerSecondSide);
 						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies())) + (stockPrice*(job.getTotalCopies() / 2)));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());					
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*(job.getTotalCopies() / 2));					
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
 						pricePerSecondSide = matrixElement.getPrice2().doubleValue();
 						pricingRecord.setUnitPrice(pricePerSecondSide);
@@ -139,7 +140,7 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 						pricingRecord.setUnitPrice(pricePerSecondSide);
 						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies())) + (stockPrice*(job.getTotalCopies() / 2)));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());					
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*(job.getTotalCopies() / 2));					
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
 						pricePerSecondSide = matrixElement.getPrice2().doubleValue();
 						pricingRecord.setUnitPrice(pricePerSecondSide);
