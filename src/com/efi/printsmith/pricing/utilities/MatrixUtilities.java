@@ -5,13 +5,16 @@ import java.util.List;
 import com.efi.printsmith.data.StampSchedule;
 import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.MatrixElement;
+import com.efi.printsmith.comparator.MatrixElementComparator;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 public class MatrixUtilities {
 	static public MatrixElement lookupMatrixElement(Matrix matrix, long lookup) {
 		if (matrix == null) return null;
 		
 		List<MatrixElement> elements = matrix.getElements();
-		
+		Collections.sort(elements, new MatrixElementComparator());
 		int i = 0;
 		
 		for (i = 0; i < elements.size(); i++) {
@@ -29,7 +32,7 @@ public class MatrixUtilities {
 		if (matrix == null || qty == 0) return 0.0;
 		
 		List<MatrixElement> elements = matrix.getElements();
-		
+		Collections.sort(elements, new MatrixElementComparator());
 		int i = 0;
 		double runningTotal = 0.0;
 		long prevQty = 0;
@@ -50,7 +53,7 @@ public class MatrixUtilities {
 		if (matrix == null) return 0.0;
 		
 		List<MatrixElement> elements = matrix.getElements();
-		
+		Collections.sort(elements, new MatrixElementComparator());
 		int i = 0;
 		double runningTotal = 0.0;
 		long prevQty = 0;
@@ -100,6 +103,7 @@ public class MatrixUtilities {
 			}
 			
 			List<MatrixElement> elements = matrix.getElements();
+			Collections.sort(elements, new MatrixElementComparator());
 			for (int i = 0; i < elements.size(); i++) {
 				if (elements.get(i).getQty() <= yLookup) {
 					if (element == 1)
@@ -160,7 +164,7 @@ public class MatrixUtilities {
 		if (matrix == null) return retVal;
 		
 		List<MatrixElement> elements = matrix.getElements();
-		
+		Collections.sort(elements, new MatrixElementComparator());
 		int i = 0;
 		long lastQty = 0;
 		double lastPrice = 0.0;
