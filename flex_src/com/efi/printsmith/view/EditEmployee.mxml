@@ -647,6 +647,7 @@ implements="com.efi.mdi.IMDIWindowAware">
 	private function handleSaveResult(ev:ResultEvent):void {
 		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Employee')));
 		this.employee = ev.result as Employee;
+		dataService.getEmployee(this.employee.id);
 		setOriginalEmployee();
 		dataService.getAll("Employee");
 		var autoClockOutDetectortList:ArrayCollection = Snowmass.getInstance().autoClockOutDetectortList as ArrayCollection;
