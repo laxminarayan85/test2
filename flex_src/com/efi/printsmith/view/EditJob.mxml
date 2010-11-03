@@ -626,10 +626,15 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveGroupResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServiceStocks" destination="dataService">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadStocksResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.PreferencesStocks;
 			import com.efi.printsmith.pages.MultiQtyView;
 			import com.efi.printsmith.data.StockGroup;
 			import com.efi.printsmith.events.SpecialOrderStockDefEvent;
@@ -790,6 +795,8 @@
 			
 			[Bindable] private var stockGroups:ArrayCollection = new ArrayCollection();  
 			
+			[Bindable] private var preferencesStocks:PreferencesStocks;
+			
 
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
@@ -860,6 +867,7 @@
 				dataServicePreferencesDefaultPresses.getSingle("PreferencesDefaultPresses");
 			    taxTableDataService.getCurrentTaxTables("TaxTable");
 			    dataServiceGroup.getAll("StockGroup");
+			    dataServiceStocks.getSingle("PreferencesStocks");
 				
 				if (job == null) {
 					job = new Job();
@@ -892,6 +900,10 @@
 			
 			private function handleLoadGroupResult(event:ResultEvent):void {
 				stockGroups = event.result as ArrayCollection;
+			}
+			
+			private function handleLoadStocksResult(event:ResultEvent):void {
+				preferencesStocks = event.result as PreferencesStocks;
 			}
 			
 			public function handleUIControlEvent(evt:ResultEvent):void {
@@ -2713,9 +2725,26 @@
 				multiQtyViewWindow.multiQtyJob = this.job;
 			}
 			
-			private function getStockName(stockDefObj:StockDefinition):String {
+			private function getStockName(stockDefObj:StockDefinition,preferencesStocks:PreferencesStocks):String {
 				if(stockDefObj!=null){
-					return stockDefObj.weight+"# "+stockDefObj.name;
+					if(preferencesStocks!=null){
+						if(preferencesStocks.weight!=null && preferencesStocks.weight!=""){
+							var stockName:String = "";
+							stockName = preferencesStocks.weight;
+							stockName = stockName.replace("^0",stockDefObj.weight);						
+							stockName = stockName.replace("^1",stockDefObj.name);
+							if(stockDefObj.finish!=null){
+								stockName = stockName.replace("^2",stockDefObj.finish.name);	
+							} else {
+								stockName = stockName.replace("^2","");
+							}
+							stockName = stockName.replace("^3","");
+							stockName = stockName.replace("^4","");
+							stockName = stockName.replace("^5","");
+							return stockName;
+						}
+					}
+					return stockDefObj.name;
 				}
 				return "";
 			}
@@ -3265,7 +3294,7 @@
 												  width="171"
 												  height="20"
 												  id="job_stock"
-												  text="{getStockName(job.stock)}"
+												  text="{getStockName(job.stock,preferencesStocks)}"
 												  fontSize="9" mouseDown="textInputClick(event)" />
 									<mx:Label x="6"
 											  y="37"
