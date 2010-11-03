@@ -197,7 +197,7 @@ public class PriceStockEngine {
 			else if (pricingMethod.getMethod().equals("Printing")){
 				qty = job.getImpressionsPerRun() * job.getSheets();// * job.getSignatures(); // TODO: Double-check need to use signatures vs just sheets ordered here
 			} else
-				qty = job.getNumCopies() * (job.getSheets() / job.getNumOn());
+				qty = (job.getNumCopies() * (job.getSheets() / job.getNumOn()) / job.getPaperCal().getSheetsOut());
 			if (qty < stockDefinition.getMinorder())
 				qty = stockDefinition.getMinorder();
 			double markup = 0.0;
