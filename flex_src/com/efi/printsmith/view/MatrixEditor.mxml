@@ -545,9 +545,12 @@
 	public function setMatrix(matrix:com.efi.printsmith.data.Matrix):void {
 		if (matrix == null) return;
 		this.matrix = matrix;
+		var newMatrix:Boolean = true;
 		for (var i:int=0;i<this.matrix.elements.length;i++) {
 			var element:com.efi.printsmith.data.MatrixElement = this.matrix.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
 			if (element.lastLine == true)
+				if (element.qty > 0)
+					newMatrix = false;
 				this.price1.text = element.price1.toString();
 				this.price2.text = element.price2.toString();
 				this.price3.text = element.price3.toString();
@@ -570,11 +573,13 @@
 				this.price20.text = element.price20.toString();
 		}
 		this.matrix.elements.filterFunction = filterMatrix;
-		var sortField:SortField = new SortField("qty");
-		sortField.numeric = true;
-		var sort:Sort = new Sort();
-		sort.fields = [sortField];
-		this.matrix.elements.sort = sort;
+		if (newMatrix == false) {
+			var sortField:SortField = new SortField("qty");
+			sortField.numeric = true;
+			var sort:Sort = new Sort();
+			sort.fields = [sortField];
+			this.matrix.elements.sort = sort;
+		}
 		this.matrix.elements.refresh();
 	}   
 	
