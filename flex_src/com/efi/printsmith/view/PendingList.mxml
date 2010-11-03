@@ -127,6 +127,8 @@
     private var ReportIcon:Class;
     
     [Bindable] public var preferencesPOS:PreferencesPOS;
+    
+    [Bindable] private var invoiceBaseArrayLength:int=0;
 
 
     [Bindable]
@@ -315,6 +317,7 @@
 		this.throbber.visible = false;
 		this.throbber.stop();
 		invoiceBaseArray = ev.result as ArrayCollection;
+		invoiceBaseArrayLength = invoiceBaseArray.length;
 		invoiceBaseArray.filterFunction = invoiceFilter;
 		if(updatePendingListValue){
 			updatePendingListValue = false;
@@ -1315,6 +1318,9 @@
 			</mx:DataGrid>
 			<components:SmallThrobber id="throbber" height="20" width="20" visible="true" horizontalCenter="0" verticalCenter="0"/>
 		</mx:Canvas>
+		<mx:Box width="10%" borderStyle="solid">
+			<mx:Label text="{invoiceBaseArray.length} / {invoiceBaseArrayLength}"/>
+		</mx:Box>
 	</mx:VBox>
 	<!--<mx:Canvas width="100%" height="46" right="0" bottom="0" id="canvas1">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Find')}" x="10" y="4" id="label1"/>
