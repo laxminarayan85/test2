@@ -775,6 +775,8 @@
 	}
 	
 	private function changePricingMethod(event:Event):void {
+		if (this.pricing_method_combo.value == CopierPricingMethod.FlatRate)
+			copierDefinition.priceTwoSide = "NotChangingPrice";
 		updateControlState();
 	}
 	private function changeStockPriceIs(event:Event):void{
