@@ -80,8 +80,17 @@
 	}		
 	
 	private function doClockOptionsView():void {
-		var titleWindow:ClockOptionsView = ClockOptionsView(PopUpManager.createPopUp(this, ClockOptionsView, true));
-     	titleWindow.setStyle("borderAlpha", 0.9);
+		var clockOptionsView:ClockOptionsView = new ClockOptionsView();
+		var child:TitleWindow = clockOptionsView as TitleWindow;
+		var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+		if (win == null)	{
+			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
+		}
+		else	{
+			win.bringWindowToFront();	
+		}
+		/* var titleWindow:ClockOptionsView = ClockOptionsView(PopUpManager.createPopUp(this, ClockOptionsView, true));
+     	titleWindow.setStyle("borderAlpha", 0.9); */
 	}
 	
 	private function doExportView():void {

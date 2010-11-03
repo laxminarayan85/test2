@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
-	layout="vertical" width="600" height="500" showCloseButton="true"
-	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ClockOptions')}"
-	close="{closeWindow()}" creationComplete="{initClockOptsWindow()}" xmlns:components="com.efi.printsmith.common.components.*">
-	
+	layout="vertical" width="100%" height="100%" showCloseButton="true"
+	headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ClockOptions')}"
+	close="{closeWindow()}" creationComplete="{initClockOptsWindow()}" xmlns:components="com.efi.printsmith.common.components.*"
+	implements="com.efi.mdi.IMDIWindowAware">
+
+	<mx:Script source="../common/scripts/CommonUtils.as"/>
+		
 	<mx:Script>
 		<![CDATA[
+			import mx.utils.StringUtil;
+			import com.efi.mdi.view.window.MDIWindow;
+			import com.efi.mdi.event.window.WindowSaveSuccessEvent;
+			import com.efi.mdi.event.compare.MDICompareObjectEvent;
+			import mx.utils.ObjectUtil;
 			import com.efi.printsmith.data.TimeCard;
 			import com.efi.printsmith.model.AutoClockOutDetector;
 			import mx.controls.Alert;
@@ -19,6 +27,8 @@
 			
 			[Bindable] public var employee:Employee;
 			
+			[Bindable] public var originalEmployee:Employee;
+			
 			[Bindable] public var autoClockOutDetectortList:ArrayCollection = new ArrayCollection();
 			
 			[Bindable] public var requestCount:int=0;
@@ -27,15 +37,26 @@
 			
 			private function initClockOptsWindow():void {
 				PopUpManager.centerPopUp(this);
+				var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+				mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ClockOptions');
 				dataService.getAll("Employee");
 			}
 			
 			private function setEmployeeObj(event:Event):void {
-				if(event.currentTarget.selectedIndex>-1){
-					employee = event.currentTarget.selectedItem as Employee;
+				var inputArguments:Array = new Array();
+				inputArguments.push(event.currentTarget.selectedIndex);
+				inputArguments.push(event.currentTarget.selectedItem);
+				var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doSelectOperation,inputArguments);
+				dispatchEvent(mDICompareObjectEvent);
+			}
+			
+			private function doSelectOperation(index:int, item:Object):void {
+				if(index>-1 && item!=null){
+					employee = item as Employee;
 				} else {
 					employee = null;
 				}
+				setOriginalEmployee();
 			}
 			
 			private function handleLoadResult(event:ResultEvent):void {
@@ -43,7 +64,18 @@
 				for each(var employeeObj:Employee in employeeList){
 					employeeObj.autoOutTime = employeeObj.autoHour+":"+employeeObj.autoMin;
 				}
-				employee = null;
+				if(employee!=null){
+					var counter:int=0;
+					for each(var employeeObject:Employee in employeeList){
+						if(employeeObject.id == employee.id) {
+							employeeDG.selectedItem = employeeObject;
+							employeeDG.selectedIndex = counter;
+							break;
+						}
+						counter++;
+					}
+				}
+				setOriginalEmployee();
 			}
 			
 			private function handleFault(ev:FaultEvent):void {  
@@ -97,8 +129,9 @@
 			}
 			
 			private function doSave():void {
-				dataService.addUpdateDeleteList(employeeList,null);
-				
+				if(employee!=null){
+					dataService.addUpdate(employee);
+				}
 			}
 			
 			private function triggerAutoClockoutDetector(autoClockOutEmployeeList:ArrayCollection):void {
@@ -115,12 +148,15 @@
 				autoClockOutDetector.timeCard =	timecardArray.getItemAt(0,0) as TimeCard; 
 				autoClockOutDetector.start();
 				autoClockOutDetectortList.addItem(autoClockOutDetector);
-				if(requestCount==checkCount){
+				/* if(requestCount==checkCount){
 					PopUpManager.removePopUp(this);
-				}
+				} */
 			}
 			
 			private function handleSaveResult(event:ResultEvent):void {
+				openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Employee')));
+				this.employee = event.result as Employee;
+				setOriginalEmployee();
 				var requestSent:Boolean = false;
 				var autoClockOutEmployeeList:ArrayCollection = new ArrayCollection();
 				for each(var employeeObj:Employee in employeeList){
@@ -157,9 +193,10 @@
 				if(requestSent){
 					triggerAutoClockoutDetector(autoClockOutEmployeeList);
 				}
-				if(!requestSent){
+				dispatchEvent(new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true));
+				/* if(!requestSent){
 					PopUpManager.removePopUp(this);
-				}
+				} */
 			}
 			
 			private function doRevert():void {
@@ -169,12 +206,62 @@
 			private function closeWindow():void{
 				PopUpManager.removePopUp(this);
 			}
+			
+			public function setOriginalEmployee():void {
+				registerClassAlias("com.efi.printsmith.data.Employee",Employee);
+				originalEmployee = ObjectUtil.copy(employee) as Employee;
+			}
+			
+			public function getOriginalObject():ArrayCollection {
+				var originalList:ArrayCollection = new ArrayCollection();
+				originalList.addItem(originalEmployee);
+				return originalList;
+			}
+				
+			public function getUpdatedObject():ArrayCollection {
+				var updatedList:ArrayCollection = new ArrayCollection();
+				updatedList.addItem(employee);
+				return updatedList;
+			}
+			
+			public function getConfirmationText():String {
+				if(employee!=null){
+					return "\n"+employee.lastName;
+				}
+				return "";
+			} 
+				
+			public function onClose():void {
+				
+			}
+			
+			public function onSave():void {
+				doSave();
+			}
+			
+			public function onDontSave():void {
+				dataService.getAll("Employee");
+			}
+			
+			public function onCancel():void {
+				if(employee!=null && employeeList!=null && employeeList.length>0){
+					var counter:int=0;
+					for each(var employeeObj:Employee in employeeList) {
+						if(employeeObj.id == employee.id){
+							employeeDG.selectedItem = employeeObj;
+							employeeDG.selectedIndex = counter;
+							break;	
+						}
+						counter++;
+					}
+				}
+			}
 		]]>
 	</mx:Script>
 	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
-		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceTimeCard" destination="dataService" showBusyCursor="true">
@@ -267,7 +354,7 @@
 		<mx:Spacer width="2%"/>
 	</mx:HBox>
 	
-	<mx:DataGrid dataProvider="{employeeList}" width="100%" height="45%" itemClick="{setEmployeeObj(event)}">
+	<mx:DataGrid id="employeeDG" dataProvider="{employeeList}" width="100%" height="45%" itemClick="{setEmployeeObj(event)}">
 		<mx:columns>
 			<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Status')}" dataField="active" textAlign="center">
 				<mx:itemRenderer>
