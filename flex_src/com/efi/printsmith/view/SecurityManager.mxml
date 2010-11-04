@@ -4,7 +4,7 @@
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup')}" 
 	xmlns:ns1="com.adobe.flex.extras.controls.*" xmlns:fc="http://www.adobe.com/2006/fc"
 	headerHeight="0" creationComplete="init()" xmlns:ns2="flexlib.controls.*" 
-	 xmlns:components="com.efi.printsmith..components.*">
+	 >
 	<mx:states>
 		<mx:State name="newItem">
 			<mx:RemoveChild target="{button1}"/>
@@ -71,20 +71,30 @@
  	
  	[Bindable]
    	private var accessGroupLists:ArrayCollection = new ArrayCollection();
-   	[Bindable]
+   	
    	private var securitySetupLists:ArrayCollection = new ArrayCollection();
+    
     [Bindable]
-   	private var securtiyCommandsLists:ArrayCollection = new ArrayCollection();
+   	private var securityCommandsLists:ArrayCollection = new ArrayCollection();
+	
 	[Bindable]                             
 	private var access:AccessGroup;  
+	
 	[Bindable]                             
 	private var rename:Boolean;   
+	
 	[Bindable]                             
 	private var org_pos:int;   
+	
 	[Bindable]                             
 	private var security:SecuritySetup;     
+	
 	[Bindable]
 	private var securityCommands:SecurityCommands;
+	
+	private var rawSecurityCommands:ArrayCollection;
+	private var _commandsRecd:Boolean = false;
+	private var _setupRecd:Boolean = false;
 			
 	public function init():void {
 		consumer.subscribe();
@@ -126,13 +136,14 @@
 	
 	private function handleLoadSecurityResult(ev:ResultEvent):void {
 		securitySetupLists = ev.result as ArrayCollection;
-		if (securitySetupLists != null)
-			if (securitySetupLists.length == 0){
-				addCommands();
-			}
-		securitySetupLists.filterFunction=filterForTestData;
-		dataGrid.invalidateDisplayList();
-		ArrayCollection(dataGrid.dataProvider).refresh();
+		setupRecd = true;
+//		if (securitySetupLists != null)
+//			if (securitySetupLists.length == 0){
+//				addCommands();
+//			}
+//		
+//		dataGrid.invalidateDisplayList();
+//		ArrayCollection(dataGrid.dataProvider).refresh();
 	}	
 
     private function filterForTestData(item:Object):Boolean{
@@ -141,9 +152,52 @@
 	}
 
 	private function handleLoadSecurityCommandsResult(ev:ResultEvent):void {
-		securtiyCommandsLists = ev.result as ArrayCollection;
+		rawSecurityCommands = ev.result as ArrayCollection;
+//		if (rawSecurityCommands != null)	{
+//			for (var i:int=0; i<rawSecurityCommands.length; i++)	{
+//				var sc:SecurityCommands = rawSecurityCommands.getItemAt(i) as SecurityCommands;
+//				if (sc.commandName == "rStandardMenuText.1")	{
+//					rawSecurityCommands.removeItemAt(i);
+//					continue;
+//				}			
+//				sc["enable"] = false;
+//			}
+//		}
+		
+		commandsRecd = true;
 	}	
-
+	
+	private function set commandsRecd(val:Boolean): void	{
+		_commandsRecd = val;
+		if (_commandsRecd && _setupRecd)	{
+			populateDataProvider();
+		}
+	}
+	private function set setupRecd(val:Boolean): void	{
+		_setupRecd = val;
+		if (_commandsRecd && _setupRecd)	{
+			populateDataProvider();
+		}
+	}
+	
+	private function populateDataProvider():void	{
+		for (var i:int=0; i<rawSecurityCommands.length; i++)	{
+			var sc:SecurityCommands = rawSecurityCommands.getItemAt(i) as SecurityCommands;
+			if (sc.commandName == "rStandardMenuText.1")	{
+				rawSecurityCommands.removeItemAt(i);
+				continue;
+			}
+			sc["enable"] = false;
+			for (var j:int=0; j <securitySetupLists.length; j++)	{
+				var ss:SecuritySetup = securitySetupLists.getItemAt(j) as SecuritySetup;
+				if (ss.securityCmd.commandId == sc.commandId)	{
+					sc["enable"] = true;
+					break;
+				}
+			} 
+		}
+		securityCommandsLists = rawSecurityCommands;
+	}
   	private function messageHandler(message:IMessage):void
 	{
 		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
@@ -177,7 +231,7 @@
 	}
 
 	private function addCommands():void{
-		for each(var item:SecurityCommands in securtiyCommandsLists){
+		for each(var item:SecurityCommands in securityCommandsLists){
 			security = new SecuritySetup();
 			security.accessGroup = access;
 			security.commandName = item.commandName;
@@ -281,7 +335,7 @@
 	}
 
 	private function gridDisplayLabelCommand(item:Object, column:DataGridColumn):String{
-		var tmpItem:SecuritySetup = item as SecuritySetup;
+		var tmpItem:SecurityCommands = item as SecurityCommands;
 		var returnvalue:String = "";
 		if (tmpItem != null) {
 			returnvalue = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpItem.commandName.toString())
@@ -294,7 +348,7 @@
 		return returnvalue;
 	}
 	private function gridDisplayLabelMenu(item:Object, column:DataGridColumn):String{
-		var tmpItem:SecuritySetup = item as SecuritySetup;
+		var tmpItem:SecurityCommands = item as SecurityCommands;
 		var returnvalue:String = "";
 		if (tmpItem != null) {
 			returnvalue = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpItem.menu.toString())
@@ -324,7 +378,7 @@
 		<mx:Label x="264" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center" id="label3"/>
 		<mx:VBox bottom="0" right="0" left="200" top="80">
 			<mx:DataGrid id="dataGrid"  
-				dataProvider="{securitySetupLists}"  sortableColumns="false" width="100%" height="100%" editable="true">
+				dataProvider="{securityCommandsLists}"  sortableColumns="false" width="100%" height="100%" editable="true">
 				<mx:columns> 
 					<mx:DataGridColumn  sortable="false" width="50"  textAlign="center" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Enabled')}" dataField="enable"
 						editorDataField="selected"
