@@ -1206,6 +1206,10 @@
 			_permissions = val;			
 		}
 		
+		public function get permissions():ArrayCollection	{
+			return _permissions;			
+		}
+		
 		public function loadPermissions():void	{
 			Chimp.unload();
 			Chimp.load(_permissions);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.AccountHistory')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'historyCmd.AccountHistory')}"
-width="100%" height="100%"  creationComplete="init()"  
+width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
      title="Account History" xmlns:text="flash.text.*" headerHeight="0">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -19,6 +19,9 @@ width="100%" height="100%"  creationComplete="init()"
 
 <mx:Script>                                   
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
+	import com.efi.printsmith.security.PSSecurityUtils;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                  
@@ -43,13 +46,53 @@ width="100%" height="100%"  creationComplete="init()"
 	[Bindable]
     private var invoices:ArrayCollection = new ArrayCollection(); 
 	
+	private var _securityCleared:Boolean;
+	private var _securityCallback:Function;
+	private var _securityInputArgs:Array;
+	
+	public function preInit():void	{
+		if (checkSecurityAccess())
+			this.addEventListener(FlexEvent.CREATION_COMPLETE, init);		
+	}
+	
 	public function init():void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
-		
 		doAccount();
+		
 	}  
 	
+	public function getSecurityCommand():String {
+		return PSSecurityCommands.REPORTS_ACCOUNTHISTORY;
+	}
+
+	public function securityCallback():void	{
+		if (this.parent != null)	
+			Snowmass.getInstance().containerManager.getWindowWithChild(this, true).closeWindow();
+	}
+	
+	public function checkSecurityAccess():Boolean	{
+		_securityCallback = securityCallback;
+		if (PSSecurityUtils.getInstance().checkSecurityAccess(this))
+			_securityCleared = true;
+		else
+			_securityCleared = false;
+		return _securityCleared;		
+	}
+	
+	public function isSecurityCleared():Boolean	{
+		return _securityCleared;
+	}
+	
+
+	
+	public function getCallbackFunction():Function	{
+		return _securityCallback;
+	}
+	
+	public function getInputArgs():Array	{
+		return _securityInputArgs;
+	}
 	private function doAccount():void {
 		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);
