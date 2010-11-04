@@ -36,7 +36,7 @@ rStandardMenuText.Invoice,	rStandardMenuText.Invoicefromsharedtem,Invoice_InvFro
 rStandardMenuText.Invoice,	rStandardMenuText.Invoicefromaccountwo,Invoice_InvFromAcc,1
 rStandardMenuText.Invoice,	rStandardMenuText.Estimatefromlocaltem,Invoice_EstFromLocal,1
 rStandardMenuText.Invoice,	rStandardMenuText.Estimatefromsharedte,Invoice_EstFromShared,1
-rStandardMenuText.Invoice,	rStandardMenuText.Estimatefromaccountw,EstFromAcc,1
+rStandardMenuText.Invoice,	rStandardMenuText.Estimatefromaccountw,Invoice_EstFromAcc,1
 rStandardMenuText.Invoice,rStandardMenuText.1,null,1
 rStandardMenuText.Invoice,rStandardMenuText.AccountInfo,Invoice_AccountInfo,1
 rStandardMenuText.Invoice,rAltMenuText.ChangeAccount,Invoice_ChangeAccount,1
