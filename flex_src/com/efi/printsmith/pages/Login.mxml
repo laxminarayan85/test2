@@ -14,6 +14,8 @@
 </mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import com.gorillalogic.security.ChimpConstants;
+			import com.gorillalogic.security.Chimp;
 			import mx.collections.ArrayCollection;
 			import mx.rpc.events.ResultEvent;
 			import mx.rpc.IResponder;
@@ -39,14 +41,14 @@
 			import com.efi.printsmith.security.PSSecurity;
 			[Bindable]	
 				private var application:Snowmass;
-			[Bindable]	
+			[Bindable]	 
 				private var users:ArrayCollection;
-				
+	
+	
 	private function init():void	{
 				application= Snowmass.getInstance();
 				dataService.getUsers("Users");
-			} 
-			
+			}
 	private function handlePasswordCancel(event:PasswordEvent):void{
 		application.currentUser.forcePasswordChange = true;
 		logout();
@@ -87,7 +89,6 @@
 				application.showContainer();
 				application.currentUser = res;
 				application.security = new PSSecurity(res);
-				application.containerManager.openNewMDIWindow("Quick Access Panel", new QuickAccessPanel(),40,20,530,880);
 				
 				if (application.currentUser.forcePasswordChange){
 					var setPassword:SetPassword =  SetPassword(PopUpManager.createPopUp(this, SetPassword, true));
@@ -97,6 +98,8 @@
 		 		    setPassword.addEventListener(PasswordEvent.OK, handlePasswordOK);
 				}
 				Snowmass.getInstance().logUserEvent(Constants.USER_EVENT_LOGIN, null, res.text);
+				
+				
 			}
 			application.updateTitle();
 		} else {

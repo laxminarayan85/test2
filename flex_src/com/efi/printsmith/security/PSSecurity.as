@@ -38,7 +38,7 @@ package com.efi.printsmith.security
 
 			var service:Object = ServiceLocator.getInstance().getRemoteObject("dataService");
 			if (user.accessGroup != null) {
-				var call:Object = service.getFromParent("SecuritySetup", "accessgroup",user.accessGroup.id);
+				var call:Object = service.getAllQuery("SecuritySetup", "  where accessGroup.id = " + user.accessGroup.id);
 				call.addResponder(new Responder(handleResult,handleFault));
 			}
 			
@@ -59,20 +59,29 @@ package com.efi.printsmith.security
 			var securitySetupList:ArrayCollection = evt.result as ArrayCollection;
 			var i:int;
 			securityDictionary = new Dictionary();
+			var perms:ArrayCollection = new ArrayCollection();
 			
 			for (i = 0; i<securitySetupList.length; i++) {
 				var securitySetup:SecuritySetup = securitySetupList.getItemAt(i) as SecuritySetup;
 					
-				securityDictionary[securitySetup.commandId] = securitySetup.enable;
+				securityDictionary[securitySetup.commandId] = true;
+				if (securitySetup.securityCmd.menuItemFlag == true)
+					updateMenuItems(securitySetup.securityCmd);
+				if (securitySetup.securityCmd.commandId != null)
+					perms.addItem(securitySetup.securityCmd.commandId);
 				
-				updateMenuItems(securitySetup);
 			}
 			
 			Application.application.menuItems= menuItems;
+			
 			setupComplete = true;
+			
+			Application.application.permissions = perms;
+			Application.application.openQAP();
+		
 		}
 		
-		private function updateMenuItems(ss:SecuritySetup):void	{
+		private function updateMenuItems(ss:SecurityCommands):void	{
 			for (var i:int=0; i < menuItems.length; i++)	{
 				var p:PSMenuItem = menuItems.getItemAt(i) as PSMenuItem;
 				if (p.label == ss.menu)	{
@@ -81,8 +90,8 @@ package com.efi.printsmith.security
 						for (var j:int=0; j < level1Children.length; j++)	{
 							var p1:PSMenuItem = level1Children.getItemAt(j) as PSMenuItem;
 							if (ss.commandName.indexOf('\t') == -1)	{
-								if (p1.label == ss.commandName)	{
-									p1.enabled = ss.enable;
+								if (p1.ss.commandId == ss.commandId)	{
+									p1.enabled = true;
 									return;
 								}
 								else	{
@@ -90,8 +99,8 @@ package com.efi.printsmith.security
 									if (level2Children != null)	{
 										for (var k:int=0; k < level2Children.length; k++)	{
 											var p2:PSMenuItem = level2Children.getItemAt(k) as PSMenuItem;
-											if (p2.label == StringUtil.trim(ss.commandName))	{
-												p2.enabled = ss.enable;
+											if (p2.ss.commandId == StringUtil.trim(ss.commandId))	{
+												p2.enabled = true;
 												return;
 											}
 										}
@@ -161,11 +170,12 @@ package com.efi.printsmith.security
 		}
 		
 		public function commandEnabled(commandId:String):Boolean {
-			if (setupComplete && securityDictionary.hasOwnProperty(commandId)) {
-				return securityDictionary[commandId] as Boolean;
-			} else {
-				return false;
-			}
+//			if (setupComplete && securityDictionary.hasOwnProperty(commandId)) {
+//				return securityDictionary[commandId] as Boolean;
+//			} else {
+//				return false;
+//			}
+			return true;
 		}
 		
 		

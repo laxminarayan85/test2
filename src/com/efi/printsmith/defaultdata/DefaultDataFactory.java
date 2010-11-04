@@ -6,17 +6,21 @@ import com.efi.printsmith.data.*;
 
 import java.io.File;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.utilities.*;
+
 
 import flex.messaging.io.ArrayCollection;
 
@@ -1222,12 +1226,37 @@ public class DefaultDataFactory {
 	}
 	AccessGroup adminaccessgroup = new AccessGroup();
 
+	private HashMap<String, ArrayList<String>> createPermissionsList()	{
+		String path = new File(currentPath).getParent();
+		File accessFile = new File(path + File.separator + "AccessGroupSecurity.txt");
+		String line = null;
+		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+		map.put("Minimum", new ArrayList<String>());
+		map.put("Production", new ArrayList<String>());
+		map.put("Counter", new ArrayList<String>());
+		map.put("Manager", new ArrayList<String>());
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(accessFile));
+			while ((line = br.readLine()) != null)	{
+				StringTokenizer st = new StringTokenizer(line,",");
+				String key = st.nextToken();
+				String value = ((String) st.nextToken()) + "-" + ((String) st.nextToken()); 
+				((ArrayList<String>) map.get(key) ).add(value);
+			}
+		}
+		catch (IOException ioe)	{
+			log.error("error in createPermissionsList " + ioe);
+		}
+		return map;
+	}
 	private void ProcessAccessGroup() {
 		List<?> itemList = (List<?>) dataservice.getAll("AccessGroup");
 
 		if (itemList.size() > 0)
 			return;
 
+		HashMap<String, ArrayList<String>> permissionsList = createPermissionsList();
 		
 		adminaccessgroup.setName("System Admin");
 		try {
@@ -1235,7 +1264,7 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		AddSecuritySetup(adminaccessgroup, true);
+		AddSecuritySetup(adminaccessgroup, null);
 
 		AccessGroup accessgroup = new AccessGroup();
 		accessgroup.setName("Minimum");
@@ -1244,7 +1273,7 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		AddSecuritySetup(accessgroup, false);
+		AddSecuritySetup(accessgroup, permissionsList.get("Minimum"));
 
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Production");
@@ -1253,7 +1282,7 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		AddSecuritySetup(accessgroup, false);
+		AddSecuritySetup(accessgroup, permissionsList.get("Production"));
 
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Counter");
@@ -1262,7 +1291,7 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		AddSecuritySetup(accessgroup, false);
+		AddSecuritySetup(accessgroup,permissionsList.get("Counter"));
 
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Manager");
@@ -1271,29 +1300,27 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		AddSecuritySetup(accessgroup, false);
+		AddSecuritySetup(accessgroup,permissionsList.get("Manager"));
 	}
 
-	private void AddSecuritySetup(AccessGroup accessGroup, Boolean enabledStatus) {
+	private void AddSecuritySetup(AccessGroup accessGroup, ArrayList<String> permissions) {
 		List<?> itemList = (List<?>) dataservice.getAll("SecurityCommands");
-
-		for (int i = 0; i < itemList.size(); i++) {
-			SecuritySetup securitySetup = new SecuritySetup();
-			securitySetup.setAccessGroup(accessGroup);
-			securitySetup.setMenu(((SecurityCommands) itemList.get(i))
-					.getMenu());
-			if (enabledStatus == true) {
-				securitySetup.setEnable(true);
-			}
-			securitySetup.setCommandName((((SecurityCommands) itemList.get(i))
-					.getCommandName()));
 			
-			securitySetup.setCommandId((((SecurityCommands) itemList.get(i))
-					.getCommandId()));
-			try {
-				dataservice.addUpdate(securitySetup);
-			} catch (Exception e) {
-				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		for (int i = 0; i < itemList.size(); i++) {
+			SecurityCommands seccom = (SecurityCommands) itemList.get(i);
+			
+			if ((permissions == null)	
+					|| ((permissions != null)
+						 &&	(permissions.contains(seccom.getMenu() + "-" + seccom.getCommandName()))))	{
+					SecuritySetup securitySetup = new SecuritySetup();
+					securitySetup.setAccessGroup(accessGroup);
+					securitySetup.setSecurityCmd((SecurityCommands) itemList.get(i));
+					try {
+						dataservice.addUpdate(securitySetup);
+					} catch (Exception e) {
+						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+					}
+				
 			}
 
 		}
@@ -2263,7 +2290,11 @@ private void LoadProductionFaciltyData(String[] args) throws IOException {
 				String menu = stringTokenizer.nextToken();
 				String command = stringTokenizer.nextToken();
 				String cmdId = stringTokenizer.nextToken();
+				if (cmdId.trim().equalsIgnoreCase("null"))
+					cmdId = null;
+				
 				boolean menuItemFlag;
+				
 				int id;
 				
 				if (line.trim().startsWith("kVersionActivationCmd.PrintSmith"))

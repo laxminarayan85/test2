@@ -14,11 +14,8 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var enable:Boolean = false;
-		public var menu:String = "";
-		public var commandId:String = "";
-		public var commandName:String = "";
 		public var accessGroup:AccessGroup;
+		public var securityCmd:SecurityCommands;
 	
 	}
 }

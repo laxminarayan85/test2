@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"  
-		width="100%" height="100%" pageTitle="Snowmass"
+		width="100%" height="100%" pageTitle="Snowmass" 
  		xmlns:local="*" creationComplete="init()"  xmlns:ns1="com.efi.printsmith.view.*" 
  		applicationComplete="initAppFunctions()"
  		xmlns:ns2="flexlib.controls.*" 
@@ -82,7 +82,9 @@
 		import com.efi.printsmith.pages.QuickAccessPanel;
 		import com.efi.mdi.ContainerManager;
 		import com.efi.mdi.event.menu.AppMenuItemClickedEvent;
-		
+		import com.gorillalogic.security.ChimpAction;
+		import com.gorillalogic.security.Chimp;
+	
 		import com.efi.printsmith.data.SecuritySetup;
 		import mx.events.MenuEvent;
 		import com.efi.printsmith.data.PSMenuItem;
@@ -186,12 +188,14 @@
 		public var containerManager:ContainerManager;
         private static var thisInstance:Snowmass = null;  
 		
+		private var _permissions:ArrayCollection;
+				
 		[Bindable]
 		private var locales:Array = ["de_DE", "en_AU", "en_GB", "en_US", "es_CL", "es_CO", "es_ES", "es_MX", "fr_CA", "fr_FR", "ja_JP", "lv_LV", "nl_NL", "pt_PT", "ru_RU"];
 		public static function getInstance() : Snowmass {
 			return thisInstance;
 		}		
-		
+			
     	private function showLoginPage() : void
 		{
 		}
@@ -213,6 +217,11 @@
 			this.languageComboBox.visible = true;
 			this.debug_button.visible = true;				
 		}
+		
+		public function openQAP():void	{
+			containerManager.openNewMDIWindow("Quick Access Panel", new QuickAccessPanel(),40,20,530,880);				
+		}
+		
 		private function showLogin():void	{
 			var loginPopup : Login = Login(PopUpManager.createPopUp(this, Login, true));
 			hideContainer();	
@@ -887,8 +896,7 @@
 			container.addToHeader(ApplicationHeader.CENTER, debug_button);
 			container.addToHeader(ApplicationHeader.RIGHT, logout_button);
 			
-			
-
+		
 		}
 		
 		override protected function createChildren():void	{
@@ -1172,7 +1180,6 @@
 				bm.setTitle("Welcome to Snowmass");
 			}
 		}
-		
 		private function handleLoginResult(event:ResultEvent):void	{
 					
 			var res:Users = event.result as Users;
@@ -1182,11 +1189,10 @@
 					showLogin();
 					logUserEvent(Constants.USER_EVENT_FAILED_LOGIN, null, res.name);
 				} else {
+					
 					currentUser = res;
 					security = new PSSecurity(currentUser);
-					showContainer();
-					containerManager.openNewMDIWindow("Quick Access Panel", new QuickAccessPanel(),40,20,530,880);
-				
+					showContainer();					
 					logUserEvent(Constants.USER_EVENT_LOGIN, null, null);
 				}
  			} else {
@@ -1196,6 +1202,15 @@
 			}
 		}
 		
+		public function set permissions(val:ArrayCollection):void	{
+			_permissions = val;			
+		}
+		
+		public function loadPermissions():void	{
+			Chimp.unload();
+			Chimp.load(_permissions);
+			
+		}
 		private function handleFault(ev:FaultEvent):void {
 			var errorDetail:String="";
 			if (ev.fault!=null && ev.fault.faultCode=="InvalidSecurityAccess"){
