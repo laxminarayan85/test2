@@ -337,7 +337,7 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 		 pressDefinition.minPaperSize = MinPaperSize.text;
 		 pressDefinition.maxRollWidth = MaxRollWidth.text;
 		 pressDefinition.minRollWidth = MinRollWidth.text;
-		 pressDefinition.cutoffLength = parseInt(cutoff.text);
+		 pressDefinition.cutoffLength = parseFloat(cutoff.text);
 		 pressDefinition.laborRate = parseFloat(LaborRate.text);
 		 pressDefinition.laborMarkup = parseFloat(laborMarkup.text);
 		 pressDefinition.fixedWaste = parseInt(FixedWaste.text);
