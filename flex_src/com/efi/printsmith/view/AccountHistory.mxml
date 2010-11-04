@@ -47,15 +47,15 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
     private var invoices:ArrayCollection = new ArrayCollection(); 
 	
 	private var _securityCleared:Boolean;
-	private var _securityCallback:Function;
-	private var _securityInputArgs:Array;
+//	private var _securityCallback:Function;
+//	private var _securityInputArgs:Array;
 	
 	public function preInit():void	{
 		if (checkSecurityAccess())
 			this.addEventListener(FlexEvent.CREATION_COMPLETE, init);		
 	}
 	
-	public function init():void {
+	public function init(event:FlexEvent=null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		doAccount();
@@ -66,13 +66,10 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
 		return PSSecurityCommands.REPORTS_ACCOUNTHISTORY;
 	}
 
-	public function securityCallback():void	{
-		if (this.parent != null)	
-			Snowmass.getInstance().containerManager.getWindowWithChild(this, true).closeWindow();
-	}
+
 	
 	public function checkSecurityAccess():Boolean	{
-		_securityCallback = securityCallback;
+//		_securityCallback = securityCallback;
 		if (PSSecurityUtils.getInstance().checkSecurityAccess(this))
 			_securityCleared = true;
 		else
@@ -80,19 +77,18 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
 		return _securityCleared;		
 	}
 	
-	public function isSecurityCleared():Boolean	{
+	public function get securityCleared():Boolean	{
 		return _securityCleared;
 	}
 	
-
 	
-	public function getCallbackFunction():Function	{
-		return _securityCallback;
-	}
-	
-	public function getInputArgs():Array	{
-		return _securityInputArgs;
-	}
+//	public function getCallbackFunction():Function	{
+//		return _securityCallback;
+//	}
+//	
+//	public function getInputArgs():Array	{
+//		return _securityInputArgs;
+//	}
 	private function doAccount():void {
 		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);

@@ -6,10 +6,10 @@ package com.efi.printsmith.security
 	
 		 function checkSecurityAccess():Boolean;
 		
-		 function isSecurityCleared():Boolean;
+		 function get securityCleared():Boolean
 		
-		 function getCallbackFunction():Function;
-		 function getInputArgs():Array;
+//		 function getCallbackFunction():Function;
+//		 function getInputArgs():Array;
 		
 	}
 }
