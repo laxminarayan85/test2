@@ -75,7 +75,10 @@ public abstract class CopierPricingMethod {
 		double oddRunCount = (runs - Math.floor(runs));
 		long oddRunQty = (long)(job.getQtyOrdered() * oddRunCount);
 		
-		job.setNumCopies(press);
+		if (job.getNumCopiesOverride() == false)
+			job.setNumCopies(press);
+		else
+			job.setQtyOrdered(job.getNumCopies());
 		
 		calculateEstWaste(job);
 		calculateBinderyWaste(job);

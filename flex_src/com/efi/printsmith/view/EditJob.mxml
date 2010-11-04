@@ -91,7 +91,7 @@
 							  y="138"
 							  id="num_copies"
 							  text="{job.numCopies}"
-							  height="20"
+							  height="20" change="editNumCopies(event)"
 							  width="98" textAlign="right" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{est_waste}" position="before">
@@ -1809,6 +1809,7 @@
 					job.pressQty = localJob.pressQty;
 					job.numUp = localJob.numUp;
 					job.numOn = localJob.numOn;
+					job.qtyOrdered = localJob.qtyOrdered;
 					if (job.pricingRecord != null) {
 						overs_total_price.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice.toString());
 						job_price.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice));
@@ -2100,6 +2101,16 @@
 				refreshCalcAndImage();
 				updateWeight();
 			}
+			
+			private function editNumCopies(e:Event) {
+				if (this.num_copies.text == "") {
+	    			job.numCopiesOverride = false;
+	    			job.numCopies = 0;
+	    		} else {
+	    			job.numCopiesOverride = true;
+	    			job.numCopies = parseInt(num_copies.text);
+	    		}
+			}
 
 
 			private function fieldChanged(evt:FocusEvent):void
@@ -2170,6 +2181,9 @@
 					doUpdatePrice = true;
 					break;
 				case this.job_number_of_lines:
+					break;
+				case this.num_copies:
+					doUpdatePrice = true;
 					break;
 				case this.job_parent:
 					doUpdatePrice = true;
