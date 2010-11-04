@@ -1809,6 +1809,10 @@
 					job.pressQty = localJob.pressQty;
 					job.numUp = localJob.numUp;
 					job.numOn = localJob.numOn;
+					if (job.pricingRecord != null) {
+						overs_total_price.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice.toString());
+						job_price.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice));
+					}
 //					num_signatures.text = job.signatures.toString();
 //					job_imp.text = job.impressionsPerRun.toString();
 //					total_imp.text = job.totalImpressions.toString();
@@ -3019,7 +3023,7 @@
 										  dataHolder="{job.pricingRecord}" variableName="oversUnitPrice"
 										  customText="{job.pricingRecord.oversUnitPrice}"
 										  precision="4" rounding="nearest" allowSymbol="false"
-										  text="{job.pricingRecord.oversUnitPrice}"
+										  text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.oversUnitPrice)}"
 										  mouseDown="textInputClick(event)" textAlign="right"/>
 							<commoncomponents:CustomNumericTextInputComponent x="496"
 										  y="346"
@@ -3027,9 +3031,9 @@
 										  height="20"
 										  width="98" 
 										  dataHolder="{job.pricingRecord}" variableName="oversTotalPrice"
-										  customText="{job.pricingRecord.oversTotalPrice}"
+										  customText="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice)}"
 										  precision="2" rounding="nearest" allowSymbol="false" 
-										  text="{job.pricingRecord.oversTotalPrice}"
+										  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice)}"
 										  mouseDown="textInputClick(event)" textAlign="right"/>
 							<mx:Label x="385"
 									  y="348"
@@ -3044,19 +3048,19 @@
 									  y="368"
 									  width="98"
 									  id="job_prep"
-									  text="{numberFormatter.format(job.pricingRecord.prepPrice)}"
+									  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.prepPrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="389"
 									  width="98"
 									  id="job_bind"
-									  text="{numberFormatter.format(job.pricingRecord.bindPrice)}"
+									  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.bindPrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="410"
 									  width="98"
 									  id="job_other"
-									  text="{numberFormatter.format(job.pricingRecord.otherChargePrice)}"
+									  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.otherChargePrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="385"
 									  y="445"
@@ -3065,7 +3069,7 @@
 									  y="445"
 									  width="97.05"
 									  id="job_total"
-									  text="{numberFormatter.format(job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice)}"
+									  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="208"
@@ -3097,11 +3101,11 @@
 										  height="20"
 										  width="98" 
 										  dataHolder="{job.pricingRecord}" variableName="totalPrice"
-										  customText="{job.pricingRecord.totalPrice}"
+										  customText="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice)}"
 										  precision="2" rounding="nearest" allowSymbol="false"
 										  mouseDown="textInputClick(event)" 
 										  textAlign="right" 
-										  text="{job.pricingRecord.totalPrice}"/>
+										  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice)}"/>
 							<mx:Label x="385"
 									  y="304"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label7"/>
