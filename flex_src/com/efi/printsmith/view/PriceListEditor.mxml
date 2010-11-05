@@ -578,8 +578,10 @@
 				}
 			}
 		} else if (itemType == "SpeedTable") {
-			if (ev.result == null)
-				priceList = new SpeedTable();
+			if (ev.result == null) {
+				priceList = new SpeedTable(); 
+				priceList.interpolate = true;
+			}
 			else
 				priceList = ev.result as SpeedTable;
 		} else if (itemType == "PaperPrice") {
@@ -719,7 +721,7 @@
     	else if (itemType == "PaperPrice")
     		retVal = Number(item.amount).toFixed(2);
     	else if (itemType == "SpeedTable")
-    		retVal = Number(item.amount).toFixed(0);
+    		retVal = Number(item.amount).toFixed(0).replace(".","");
     	else
     		retVal = Number(item.amount).toFixed(2);
     	return retVal;
