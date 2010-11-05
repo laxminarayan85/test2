@@ -745,6 +745,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesAccounting.setEstimateAllowSuffixMod(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("Memos_printJournalMemo"))
 			preferencesAccounting.setPrintDocument(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Estimator_defaultJournalFormat"))
+			preferencesAccounting.setJournalDocumentPreference(value);
 		dataService.addUpdate(preferencesAccounting);
 	}
 	private void importPreferencesPOSField(String key, String name, String value) throws Exception {
@@ -1041,9 +1043,57 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setCanChangeAddress(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("skipAutoCost_at_posting"))
 			preferencesEstimating.setDoNotCostDuringPost(Utilities.tokenToBooleanValue(value));
-			
+		else if (name.equals("Estimator_defaultInvoiceFormat"))
+			preferencesEstimating.setDefaultInvoice(getDefaultDocumentFormat(value));
+		else if (name.equals("Estimator_defaultEstimateFormat"))
+			preferencesEstimating.setDefaultEstimate(getDefaultDocumentFormat(value));
+		
 		dataService.addUpdate(preferencesEstimating);
 	}
+	
+	private int getDefaultDocumentFormat(String document) {
+		int returnValue = 0;
+		
+		if (document.equals("No default specified"))
+			returnValue = 0;
+		else if (document.equals("Alternate Currency"))
+			returnValue = 1;
+		else if (document.equals("Credit Memo"))
+			returnValue = 2;
+		else if (document.equals("Estimate - Long Form"))
+			returnValue = 3;
+		else if (document.equals("Estimate - Short Form"))
+			returnValue = 4;
+		else if (document.equals("Fax Form"))
+			returnValue = 5;
+		else if (document.equals("Invoice - Long Form"))
+			returnValue = 6;
+		else if (document.equals("Invoice - Short Form"))
+			returnValue = 7;
+		else if (document.equals("Quote Form"))
+			returnValue = 8;
+		else if (document.equals("Quote Letter"))
+			returnValue = 9;
+		else if (document.equals("Standard"))
+			returnValue = 10;
+		else if (document.equals("Thank you letter"))
+			returnValue = 11;
+		else if (document.equals("Unit pricing / each"))
+			returnValue = 12;
+		else if (document.equals("Unit pricing / thousand"))
+			returnValue = 13;
+		else if (document.equals("[en]!TaxName !Remarks"))
+			returnValue = 14;
+		else if (document.equals("[en]!TaxName +Remarks"))
+			returnValue = 15;
+		else if (document.equals("[en]+Tax Name !Remarks"))
+			returnValue = 16;
+		else if (document.equals("[en]+Tax Name +Remards"))
+			returnValue = 17;
+		
+		return returnValue;
+	}
+	
 	private void importPreferencesSystemField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
 		PreferencesSystem preferencesSystem = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
