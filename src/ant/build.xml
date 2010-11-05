@@ -91,6 +91,7 @@
 			resource-bundle-list="CairngormMessages SharedResources charts collections containers controls core datamanagement effects formatters logging messaging psResources rpc skins states styles utils validators"
 			locale="${locale}">
 
+	        <keep-as3-metadata name="Protected"/>
 			<define name="CONFIG::debugging" value="false"/>
 			<define name="CONFIG::release" value="true"/>
 
