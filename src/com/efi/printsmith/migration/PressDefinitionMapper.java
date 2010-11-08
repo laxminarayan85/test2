@@ -81,8 +81,8 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("maxY".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("isWeb".equals(currentFieldToken)) {
-				pressDefinition.setPerfector(Utilities
-						.tokenToBooleanValue(currentImportToken));
+				//pressDefinition.setPerfector(Utilities
+						//.tokenToBooleanValue(currentImportToken));
 			} else if ("variable speed".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("use waste".equals(currentFieldToken)) {
