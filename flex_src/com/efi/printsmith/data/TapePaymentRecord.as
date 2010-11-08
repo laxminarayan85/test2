@@ -30,6 +30,7 @@ package com.efi.printsmith.data
 		public var amountBalance:Number = 0;
 		public var changeAmount:Number = 0;
 		public var refundAmount:Number = 0;
+		public var subTotal:Number = 0;
 	
 	}
 }

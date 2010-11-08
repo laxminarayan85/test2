@@ -34,6 +34,7 @@ package com.efi.printsmith.data
 		public var checkNumber:String = "";
 		public var cct:CreditCardTransactions;
 		public var invoice:Invoice;
+		public var subTotal:Number = 0;
 	
 	}
 }

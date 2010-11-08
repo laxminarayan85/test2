@@ -130,6 +130,11 @@ public class TapeSaleRecord extends ModelBase {
 	public static final String INVOICE = "Invoice";
 
 	/**
+   * @generated
+   */
+  public static final String SUBTOTAL = "SubTotal";
+
+	/**
 	 * @generated
 	 */
 	public TapeSaleRecord() {
@@ -615,6 +620,33 @@ public class TapeSaleRecord extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal subTotal;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getSubTotal(){
+    return subTotal; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setSubTotal(BigDecimal newVal) {
+    this.subTotal = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+  public void setSubTotal(double newVal) {
+    this.subTotal = BigDecimal.valueOf(newVal);
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -640,6 +672,7 @@ public class TapeSaleRecord extends ModelBase {
     if (CHECKNUMBER.equals(propertyName)) return getCheckNumber();
     if (CCT.equals(propertyName)) return getCct();
     if (INVOICE.equals(propertyName)) return getInvoice();
+    if (SUBTOTAL.equals(propertyName)) return getSubTotal();
     return super.getProperty(propertyName);
   }
 	
@@ -669,6 +702,7 @@ public class TapeSaleRecord extends ModelBase {
     if (CHECKNUMBER.equals(propertyName)) setCheckNumber((String)newValue); else
     if (CCT.equals(propertyName)) setCct((CreditCardTransactions)newValue); else
     if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
+    if (SUBTOTAL.equals(propertyName)) setSubTotal((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -718,6 +752,8 @@ public class TapeSaleRecord extends ModelBase {
       return new Class<?>[] {CreditCardTransactions.class};		
     if (INVOICE.equals(propertyName)) 
       return new Class<?>[] {Invoice.class};		
+    if (SUBTOTAL.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -748,6 +784,7 @@ public class TapeSaleRecord extends ModelBase {
     if (CHECKNUMBER.equals(propertyName)) return TapeSaleRecord.class;
     if (CCT.equals(propertyName)) return TapeSaleRecord.class;
     if (INVOICE.equals(propertyName)) return TapeSaleRecord.class;
+    if (SUBTOTAL.equals(propertyName)) return TapeSaleRecord.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -798,6 +835,8 @@ public class TapeSaleRecord extends ModelBase {
     if (! SmartEquals(getCct(), objT.getCct()))
       return false;
     if (! SmartEquals(getInvoice(), objT.getInvoice()))
+      return false;
+    if (! SmartEquals(getSubTotal(), objT.getSubTotal()))
       return false;
     return true;
   }			

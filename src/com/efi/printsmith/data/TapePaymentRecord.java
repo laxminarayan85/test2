@@ -114,6 +114,11 @@ public class TapePaymentRecord extends ModelBase {
 	public static final String REFUNDAMOUNT = "RefundAmount";
 
 	/**
+   * @generated
+   */
+  public static final String SUBTOTAL = "SubTotal";
+
+	/**
 	 * @generated
 	 */
 	public TapePaymentRecord() {
@@ -505,6 +510,33 @@ public class TapePaymentRecord extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal subTotal;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getSubTotal(){
+    return subTotal; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setSubTotal(BigDecimal newVal) {
+    this.subTotal = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+  public void setSubTotal(double newVal) {
+    this.subTotal = BigDecimal.valueOf(newVal);
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -526,6 +558,7 @@ public class TapePaymentRecord extends ModelBase {
     if (AMOUNTBALANCE.equals(propertyName)) return getAmountBalance();
     if (CHANGEAMOUNT.equals(propertyName)) return getChangeAmount();
     if (REFUNDAMOUNT.equals(propertyName)) return getRefundAmount();
+    if (SUBTOTAL.equals(propertyName)) return getSubTotal();
     return super.getProperty(propertyName);
   }
 	
@@ -551,6 +584,7 @@ public class TapePaymentRecord extends ModelBase {
     if (AMOUNTBALANCE.equals(propertyName)) setAmountBalance((Double)newValue); else
     if (CHANGEAMOUNT.equals(propertyName)) setChangeAmount((Double)newValue); else
     if (REFUNDAMOUNT.equals(propertyName)) setRefundAmount((Double)newValue); else
+    if (SUBTOTAL.equals(propertyName)) setSubTotal((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -592,6 +626,8 @@ public class TapePaymentRecord extends ModelBase {
       return new Class<?>[] {Double.class};		
     if (REFUNDAMOUNT.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
+    if (SUBTOTAL.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -618,6 +654,7 @@ public class TapePaymentRecord extends ModelBase {
     if (AMOUNTBALANCE.equals(propertyName)) return TapePaymentRecord.class;
     if (CHANGEAMOUNT.equals(propertyName)) return TapePaymentRecord.class;
     if (REFUNDAMOUNT.equals(propertyName)) return TapePaymentRecord.class;
+    if (SUBTOTAL.equals(propertyName)) return TapePaymentRecord.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -660,6 +697,8 @@ public class TapePaymentRecord extends ModelBase {
     if (! SmartEquals(getChangeAmount(), objT.getChangeAmount()))
       return false;
     if (! SmartEquals(getRefundAmount(), objT.getRefundAmount()))
+      return false;
+    if (! SmartEquals(getSubTotal(), objT.getSubTotal()))
       return false;
     return true;
   }			
