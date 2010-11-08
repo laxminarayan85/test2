@@ -275,8 +275,10 @@
 						} else {
 							this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')+": "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.new');
 						}
-						loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
-						accountDataService.getAccountPicker();
+						if(invoice.account==null){
+							loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+							accountDataService.getAccountPicker();
+						}
 						//doAccountPicker();
 					}
 					var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this,true);
@@ -1047,15 +1049,17 @@
 			}
 			
 			private function doDoubleclickInvoiceItem():void {
-				var selectedJob:Job = invoice_job_grid.selectedItem as Job;
-				selectedJobIndex = selectedJob.jobIndex;
-				//Commented to not to retrieve the job from DB 
-				/* if (selectedJob.id != 0) { // this job had been persisted previously	
-					dataService.getJob(selectedJob.id);
-				} else {
+				if(invoice_job_grid.selectedIndex>-1 && invoice_job_grid.selectedItem!=null){
+					var selectedJob:Job = invoice_job_grid.selectedItem as Job;
+					selectedJobIndex = selectedJob.jobIndex;
+					//Commented to not to retrieve the job from DB 
+					/* if (selectedJob.id != 0) { // this job had been persisted previously	
+						dataService.getJob(selectedJob.id);
+					} else {
+						openEditJobWindow(selectedJob);
+					} */
 					openEditJobWindow(selectedJob);
-				} */
-				openEditJobWindow(selectedJob);
+				}
 			}
 			
 			private function enableDeliveryIntentAddress():void {
@@ -1555,7 +1559,7 @@
 						<mx:TextInput x="489"
 									  y="323"
 									  id="inv_hold_state"
-									  text="{invoice.holdState}"
+									  text="{invoice.holdState.name}"
 									  height="20"/>
 						<mx:TextInput x="489"
 									  y="344"
@@ -1573,7 +1577,7 @@
 						<mx:Button x="245"
 								   y="34"
 								   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Changeacct')}"
-								   click="doAccountPicker()"
+								   click="{accountDataService.getAccountPicker()}"
 								   width="96"/>
 					</mx:Canvas>							  
 					<mx:Canvas width="100%"
