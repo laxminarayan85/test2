@@ -1482,14 +1482,14 @@
 							<mx:RadioButton x="10"
 											y="31"
 											label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.ContactShipAddress')}"
-											groupName="delivery_intent_radio_group"/>
+											groupName="delivery_intent_radio_group" enabled="{contact_list.selectedIndex&gt;0}"/>
 							<mx:RadioButton x="10"
 											y="74"
 											label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.OtherAddress')}"
 											groupName="delivery_intent_radio_group" click="enableDeliveryIntentAddress();"/>
 							<mx:ComboBox x="31"
 										 y="51"
-										 width="239">
+										 width="239" enabled="{contact_list.selectedIndex&gt;0}">
 							</mx:ComboBox>
 						</mx:Panel>
 						<mx:Label x="16"
