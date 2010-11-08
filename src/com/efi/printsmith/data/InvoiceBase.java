@@ -320,6 +320,35 @@ public class InvoiceBase extends ModelBase {
   public static final String READYTOPICKUP = "ReadyToPickup";
 
 	/**
+   * @generated
+   */
+  public static final String TAXCODE = "TaxCode";
+	/**
+   * @generated
+   */
+  public static final String CREDITCARD = "CreditCard";
+	/**
+   * @generated
+   */
+  public static final String WEBPAYMENTAMOUNT = "WebPaymentAmount";
+	/**
+   * @generated
+   */
+  public static final String WEBPAYMENTAUTHWAITING = "WebPaymentAuthWaiting";
+	/**
+   * @generated
+   */
+  public static final String WEBPAYMENTCOMPLETE = "WebPaymentComplete";
+	/**
+   * @generated
+   */
+  public static final String WEBPAYMENTAPPROVALCODE = "WebPaymentApprovalCode";
+	/**
+   * @generated
+   */
+  public static final String WEBPAYMENTTYPE = "WebPaymentType";
+
+	/**
 	 * @generated
 	 */
 	public InvoiceBase() {
@@ -482,7 +511,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.MERGE})
+    @ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private Address billToAddress;
 	
@@ -506,7 +535,7 @@ public class InvoiceBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.MERGE})
+    @ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private Address shipToAddress;
 	
@@ -1962,6 +1991,155 @@ public class InvoiceBase extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private TaxCodes taxCode;
+
+	/**
+   * @generated
+ 	 */
+  public TaxCodes getTaxCode(){
+    return taxCode; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setTaxCode(TaxCodes newVal) {
+    this.taxCode = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private CreditCard creditCard;
+
+	/**
+   * @generated
+ 	 */
+  public CreditCard getCreditCard(){
+    return creditCard; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setCreditCard(CreditCard newVal) {
+    this.creditCard = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal webPaymentAmount;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getWebPaymentAmount(){
+    return webPaymentAmount; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setWebPaymentAmount(BigDecimal newVal) {
+    this.webPaymentAmount = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+  public void setWebPaymentAmount(double newVal) {
+    this.webPaymentAmount = BigDecimal.valueOf(newVal);
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean webPaymentAuthWaiting;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getWebPaymentAuthWaiting(){
+    return webPaymentAuthWaiting; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setWebPaymentAuthWaiting(Boolean newVal) {
+    this.webPaymentAuthWaiting = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean webPaymentComplete;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getWebPaymentComplete(){
+    return webPaymentComplete; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setWebPaymentComplete(Boolean newVal) {
+    this.webPaymentComplete = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String webPaymentApprovalCode;
+
+	/**
+   * @generated
+ 	 */
+  public String getWebPaymentApprovalCode(){
+    return webPaymentApprovalCode; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setWebPaymentApprovalCode(String newVal) {
+    this.webPaymentApprovalCode = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String webPaymentType;
+
+	/**
+   * @generated
+ 	 */
+  public String getWebPaymentType(){
+    return webPaymentType; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setWebPaymentType(String newVal) {
+    this.webPaymentType = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2034,6 +2212,13 @@ public class InvoiceBase extends ModelBase {
     if (ESTIMATENOTES.equals(propertyName)) return getEstimateNotes();
     if (STATUS.equals(propertyName)) return getStatus();
     if (READYTOPICKUP.equals(propertyName)) return getReadyToPickup();
+    if (TAXCODE.equals(propertyName)) return getTaxCode();
+    if (CREDITCARD.equals(propertyName)) return getCreditCard();
+    if (WEBPAYMENTAMOUNT.equals(propertyName)) return getWebPaymentAmount();
+    if (WEBPAYMENTAUTHWAITING.equals(propertyName)) return getWebPaymentAuthWaiting();
+    if (WEBPAYMENTCOMPLETE.equals(propertyName)) return getWebPaymentComplete();
+    if (WEBPAYMENTAPPROVALCODE.equals(propertyName)) return getWebPaymentApprovalCode();
+    if (WEBPAYMENTTYPE.equals(propertyName)) return getWebPaymentType();
     return super.getProperty(propertyName);
   }
 	
@@ -2110,6 +2295,13 @@ public class InvoiceBase extends ModelBase {
     if (ESTIMATENOTES.equals(propertyName)) setEstimateNotes((String)newValue); else
     if (STATUS.equals(propertyName)) setStatus((String)newValue); else
     if (READYTOPICKUP.equals(propertyName)) setReadyToPickup((Boolean)newValue); else
+    if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
+    if (CREDITCARD.equals(propertyName)) setCreditCard((CreditCard)newValue); else
+    if (WEBPAYMENTAMOUNT.equals(propertyName)) setWebPaymentAmount((BigDecimal)newValue); else
+    if (WEBPAYMENTAUTHWAITING.equals(propertyName)) setWebPaymentAuthWaiting((Boolean)newValue); else
+    if (WEBPAYMENTCOMPLETE.equals(propertyName)) setWebPaymentComplete((Boolean)newValue); else
+    if (WEBPAYMENTAPPROVALCODE.equals(propertyName)) setWebPaymentApprovalCode((String)newValue); else
+    if (WEBPAYMENTTYPE.equals(propertyName)) setWebPaymentType((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2253,6 +2445,20 @@ public class InvoiceBase extends ModelBase {
       return new Class<?>[] {String.class};		
     if (READYTOPICKUP.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (TAXCODE.equals(propertyName)) 
+      return new Class<?>[] {TaxCodes.class};		
+    if (CREDITCARD.equals(propertyName)) 
+      return new Class<?>[] {CreditCard.class};		
+    if (WEBPAYMENTAMOUNT.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (WEBPAYMENTAUTHWAITING.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (WEBPAYMENTCOMPLETE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (WEBPAYMENTAPPROVALCODE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (WEBPAYMENTTYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2330,6 +2536,13 @@ public class InvoiceBase extends ModelBase {
     if (ESTIMATENOTES.equals(propertyName)) return InvoiceBase.class;
     if (STATUS.equals(propertyName)) return InvoiceBase.class;
     if (READYTOPICKUP.equals(propertyName)) return InvoiceBase.class;
+    if (TAXCODE.equals(propertyName)) return InvoiceBase.class;
+    if (CREDITCARD.equals(propertyName)) return InvoiceBase.class;
+    if (WEBPAYMENTAMOUNT.equals(propertyName)) return InvoiceBase.class;
+    if (WEBPAYMENTAUTHWAITING.equals(propertyName)) return InvoiceBase.class;
+    if (WEBPAYMENTCOMPLETE.equals(propertyName)) return InvoiceBase.class;
+    if (WEBPAYMENTAPPROVALCODE.equals(propertyName)) return InvoiceBase.class;
+    if (WEBPAYMENTTYPE.equals(propertyName)) return InvoiceBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2474,6 +2687,20 @@ public class InvoiceBase extends ModelBase {
     if (! SmartEquals(getStatus(), objT.getStatus()))
       return false;
     if (! SmartEquals(getReadyToPickup(), objT.getReadyToPickup()))
+      return false;
+    if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
+      return false;
+    if (! SmartEquals(getCreditCard(), objT.getCreditCard()))
+      return false;
+    if (! SmartEquals(getWebPaymentAmount(), objT.getWebPaymentAmount()))
+      return false;
+    if (! SmartEquals(getWebPaymentAuthWaiting(), objT.getWebPaymentAuthWaiting()))
+      return false;
+    if (! SmartEquals(getWebPaymentComplete(), objT.getWebPaymentComplete()))
+      return false;
+    if (! SmartEquals(getWebPaymentApprovalCode(), objT.getWebPaymentApprovalCode()))
+      return false;
+    if (! SmartEquals(getWebPaymentType(), objT.getWebPaymentType()))
       return false;
     return true;
   }			

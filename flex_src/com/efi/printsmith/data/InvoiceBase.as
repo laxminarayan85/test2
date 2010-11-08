@@ -81,6 +81,13 @@ package com.efi.printsmith.data
 		public var estimateNotes:String = "";
 		public var status:String = "";
 		public var readyToPickup:Boolean = false;
+		public var taxCode:TaxCodes;
+		public var creditCard:CreditCard;
+		public var webPaymentAmount:Number = 0;
+		public var webPaymentAuthWaiting:Boolean = false;
+		public var webPaymentComplete:Boolean = false;
+		public var webPaymentApprovalCode:String = "";
+		public var webPaymentType:String = "";
 	
 	}
 }
