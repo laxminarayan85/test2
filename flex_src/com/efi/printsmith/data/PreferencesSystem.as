@@ -92,6 +92,8 @@ package com.efi.printsmith.data
 		public var oprocess:String = "";
 		public var oslogan:String = "";
 		public var osettings:String = "";
+		public var useTextSorting:Boolean = false;
+		public var useChileTaxIdVerification:Boolean = false;
 	
 	}
 }

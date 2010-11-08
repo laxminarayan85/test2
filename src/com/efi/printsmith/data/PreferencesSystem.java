@@ -43,7 +43,9 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "preferencessystem")
+//@SQLDelete(sql="update modelbase set isdeleted='TRUE' from preferencessystem where modelbase.id=?")
 @SQLDelete(sql="update preferencessystem set isdeleted='TRUE' where id=?")
+//Filter added to retrieve only records that have not been soft deleted.
 @Where(clause="isdeleted <> 'TRUE'")
 public class PreferencesSystem extends ModelBase {
 	/**
@@ -360,6 +362,15 @@ public class PreferencesSystem extends ModelBase {
 	public static final String OSETTINGS = "Osettings";
 
 	/**
+   * @generated
+   */
+  public static final String USETEXTSORTING = "UseTextSorting";
+	/**
+   * @generated
+   */
+  public static final String USECHILETAXIDVERIFICATION = "UseChileTaxIdVerification";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesSystem() {
@@ -368,22 +379,18 @@ public class PreferencesSystem extends ModelBase {
     this.isDeleted = false;
   }
 
+	@Basic
+	private Boolean isDeleted = false;
+	
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+	
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
  	
 	
-	@Basic
-  private Boolean isDeleted = false;
-
-	public Boolean getIsDeleted() {
-    return isDeleted;
-  }
-
-
-	public void setIsDeleted(Boolean isDeleted) {
-    this.isDeleted = isDeleted;
-  }
-
-
-
 	/**
 	 * @generated
 	 */	
@@ -687,7 +694,7 @@ public class PreferencesSystem extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
-	@Where(clause="isdeleted <> 'TRUE'")
+    @Where(clause="isdeleted <> 'TRUE'")
 	private Address companyAddress;
 	
 	/**
@@ -2178,6 +2185,46 @@ public class PreferencesSystem extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean useTextSorting;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getUseTextSorting(){
+    return useTextSorting; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setUseTextSorting(Boolean newVal) {
+    this.useTextSorting = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean useChileTaxIdVerification;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getUseChileTaxIdVerification(){
+    return useChileTaxIdVerification; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setUseChileTaxIdVerification(Boolean newVal) {
+    this.useChileTaxIdVerification = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2261,6 +2308,8 @@ public class PreferencesSystem extends ModelBase {
     if (OPROCESS.equals(propertyName)) return getOprocess();
     if (OSLOGAN.equals(propertyName)) return getOslogan();
     if (OSETTINGS.equals(propertyName)) return getOsettings();
+    if (USETEXTSORTING.equals(propertyName)) return getUseTextSorting();
+    if (USECHILETAXIDVERIFICATION.equals(propertyName)) return getUseChileTaxIdVerification();
     return super.getProperty(propertyName);
   }
 	
@@ -2348,6 +2397,8 @@ public class PreferencesSystem extends ModelBase {
     if (OPROCESS.equals(propertyName)) setOprocess((String)newValue); else
     if (OSLOGAN.equals(propertyName)) setOslogan((String)newValue); else
     if (OSETTINGS.equals(propertyName)) setOsettings((String)newValue); else
+    if (USETEXTSORTING.equals(propertyName)) setUseTextSorting((Boolean)newValue); else
+    if (USECHILETAXIDVERIFICATION.equals(propertyName)) setUseChileTaxIdVerification((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2513,6 +2564,10 @@ public class PreferencesSystem extends ModelBase {
       return new Class<?>[] {String.class};		
     if (OSETTINGS.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (USETEXTSORTING.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USECHILETAXIDVERIFICATION.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2601,6 +2656,8 @@ public class PreferencesSystem extends ModelBase {
     if (OPROCESS.equals(propertyName)) return PreferencesSystem.class;
     if (OSLOGAN.equals(propertyName)) return PreferencesSystem.class;
     if (OSETTINGS.equals(propertyName)) return PreferencesSystem.class;
+    if (USETEXTSORTING.equals(propertyName)) return PreferencesSystem.class;
+    if (USECHILETAXIDVERIFICATION.equals(propertyName)) return PreferencesSystem.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2767,6 +2824,10 @@ public class PreferencesSystem extends ModelBase {
     if (! SmartEquals(getOslogan(), objT.getOslogan()))
       return false;
     if (! SmartEquals(getOsettings(), objT.getOsettings()))
+      return false;
+    if (! SmartEquals(getUseTextSorting(), objT.getUseTextSorting()))
+      return false;
+    if (! SmartEquals(getUseChileTaxIdVerification(), objT.getUseChileTaxIdVerification()))
       return false;
     return true;
   }			

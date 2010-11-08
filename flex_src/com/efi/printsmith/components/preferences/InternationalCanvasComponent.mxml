@@ -22,6 +22,16 @@
 			<mx:Spacer width="30"/>
 			
 			<mx:VBox width="100%" height="100%">
+				
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Useinternationalslow')}"
+					dataHolder="{preferencesSystem}" variableName="useTextSorting" customText="{preferencesSystem.useTextSorting}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.UseChileTaxIDverific')}"
+					dataHolder="{preferencesSystem}" variableName="useChileTaxIdVerification" customText="{preferencesSystem.useChileTaxIdVerification}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 	
 				<components:CustomCheckBoxComponent
 					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Disabletextstyles')}"
