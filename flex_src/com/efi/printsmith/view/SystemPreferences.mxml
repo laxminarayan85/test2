@@ -12,7 +12,8 @@
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}"
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
 	name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
-	xmlns:ns1="com.efi.printsmith.components.*">
+	xmlns:ns1="com.efi.printsmith.components.*"
+	implements="com.efi.mdi.IMDIWindowAware">
 	
 	<mx:Script source="../common/scripts/Validation.as"/>
 	<mx:Script source="../common/scripts/CommonUtils.as"/>
@@ -123,6 +124,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>-->
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.ShippingMethod;
 	import com.efi.printsmith.data.SalesRep;
@@ -988,6 +990,7 @@
 			dataServiceSalesCategory.addUpdateDeleteList(PreferencesSalesCategoryArray,PreferencesSalesCategoryDeleteArray);
 			PreferencesSalesCategoryDeleteArray.removeAll();
 		}
+		dispatchEvent(new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true));
 
 	}
 	private function mapFromPrefereincesIntegrationData():void {
@@ -2327,6 +2330,171 @@
 	    }
 	    
 	    return _rtn;
+	}
+	
+	
+	public function getOriginalObject():ArrayCollection {
+		var originalList:ArrayCollection = new ArrayCollection();
+		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
+			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International") {
+			originalList.addItem(preferencesSystemOrigObj);
+		}
+		
+		if(selectedSection == "genericPrefCmd.AddressFormatting") {
+			originalList.addItem(preferencesSystemOrigObj);
+			originalList.addItem(CountryOrigArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
+			originalList.addItem(preferencesPOSOrigObj);
+		}
+		
+		if(selectedSection == "genericPrefCmd.CashRegister"){
+			originalList.addItem(PreferencesCashRegisterOrigArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.PendingList"){
+			originalList.addItem(preferencesPOSOrigObj);
+			originalList.addItem(PreferencesPendingListOrigArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
+			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			originalList.addItem(preferencesEstimatingOrigObj);
+		}
+		
+		if(selectedSection == "genericPrefCmd.QuantityBreaks"){
+			originalList.addItem(PreferencesQuantityBreaksOrigArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.Markups"){
+			originalList.addItem(PreferencesMarkupsOrigArray);
+			originalList.addItem(PreferencesMarkupsMerchandiseOrigArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.StocksandSizes"){
+			originalList.addItem(preferencesStocksOrigObj);
+		}
+		
+		if(selectedSection == "genericPrefCmd.StockDefinitions"){
+			originalList.addItem(PreferencesStockDefinitionOrigArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.PricingMethod"){
+			originalList.addItem(PreferencesPricingMethodOrigArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.CreditDefaults" || selectedSection == "genericPrefCmd.AgingPeriods" || 
+			selectedSection == "genericPrefCmd.GLProfiles" || selectedSection == "genericPrefCmd.OrderNumberFormat" ||
+			selectedSection == "genericPrefCmd.JournalEntries"){
+			originalList.addItem(preferencesAccountingOrigObj);
+		}
+		
+		if(selectedSection == "genericPrefCmd.CreditCardInfo"){
+			originalList.addItem(preferencesAccountingOrigObj);
+			originalList.addItem(PreferencesCreditCardOrigArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.Integration"){
+			originalList.addItem(preferencesIntegrationOrigObj);
+		}
+		
+		if(selectedSection == "genericPrefCmd.SalesCategories"){
+			originalList.addItem(PreferencesSalesCategoryOrigArray);
+		}
+		return originalList;
+	}
+		
+	public function getUpdatedObject():ArrayCollection {
+		var updatedList:ArrayCollection = new ArrayCollection();
+		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
+			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International") {
+			updatedList.addItem(preferencesSystem);
+		}
+		
+		if(selectedSection == "genericPrefCmd.AddressFormatting") {
+			updatedList.addItem(preferencesSystem);
+			updatedList.addItem(CountryArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.Receipt" || selectedSection == "genericPrefCmd.CashDrawer"){
+			updatedList.addItem(preferencesPOS);
+		}
+		
+		if(selectedSection == "genericPrefCmd.CashRegister"){
+			updatedList.addItem(PreferencesCashRegisterArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.PendingList"){
+			updatedList.addItem(preferencesPOS);
+			updatedList.addItem(PreferencesPendingListArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
+			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			updatedList.addItem(preferencesEstimating);
+		}
+		
+		if(selectedSection == "genericPrefCmd.QuantityBreaks"){
+			updatedList.addItem(PreferencesQuantityBreaksArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.Markups"){
+			updatedList.addItem(PreferencesMarkupsArray);
+			updatedList.addItem(PreferencesMarkupsMerchandiseArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.StocksandSizes"){
+			updatedList.addItem(preferencesStocks);
+		}
+		
+		if(selectedSection == "genericPrefCmd.StockDefinitions"){
+			updatedList.addItem(PreferencesStockDefinitionArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.PricingMethod"){
+			updatedList.addItem(PreferencesPricingMethodArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.CreditDefaults" || selectedSection == "genericPrefCmd.AgingPeriods" || 
+			selectedSection == "genericPrefCmd.GLProfiles" || selectedSection == "genericPrefCmd.OrderNumberFormat" ||
+			selectedSection == "genericPrefCmd.JournalEntries"){
+			updatedList.addItem(preferencesAccounting);
+		}
+		
+		if(selectedSection == "genericPrefCmd.CreditCardInfo"){
+			updatedList.addItem(preferencesAccounting);
+			updatedList.addItem(PreferencesCreditCardArray);
+		}
+		
+		if(selectedSection == "genericPrefCmd.Integration"){
+			updatedList.addItem(preferencesIntegration);
+		}
+		
+		if(selectedSection == "genericPrefCmd.SalesCategories"){
+			updatedList.addItem(PreferencesSalesCategoryArray);
+		}
+		return updatedList;
+	}
+	
+	public function getConfirmationText():String {
+		return "\nPreferences "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,selectedSection);
+	}
+	
+	public function onClose():void {
+		
+	}
+	
+	public function onSave():void {
+		doSave();
+	}
+	
+	public function onDontSave():void {
+		
+	}
+	
+	public function onCancel():void {
+		
 	}
 	
 ]]>
