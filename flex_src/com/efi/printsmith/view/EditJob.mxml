@@ -1769,6 +1769,7 @@
 			{
 				var copierDefinition:CopierDefinition = job_pricing_copier.selectedItem as CopierDefinition;
 				jobService.assignPricingCopierToJob(this.job, copierDefinition);
+				this.checkCopierSize();
 				this.updatePrice();			
 			}
 			
@@ -1966,6 +1967,28 @@
 				this.cutDiagram.addChild(myImage);
 			}			
 
+			private function checkCopierSize():void {
+				var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
+				var minSize:Dimension = new Dimension();
+				minSize.name = copier.minSize;
+				var maxSize:Dimension = new Dimension();
+				maxSize.name = copier.maxSize;
+				var minSizeWidth:Number = Snowmass.getWidthFromSizeString(minSize);
+				var minSizeLength:Number = Snowmass.getLengthFromSizeString(minSize);
+				var maxSizeWidth:Number = Snowmass.getWidthFromSizeString(maxSize);
+				var maxSizeLength:Number = Snowmass.getLengthFromSizeString(maxSize);
+				var runSize:Dimension = this.job_size.selectedItem as Dimension;
+				var message:String = "";
+				if (runSize.width * runSize.height < minSizeWidth * minSizeLength) {
+					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeisless");
+					Alert.show(message, "Warning", 0, null, null, null, 4); 
+				}
+				if (runSize.width * runSize.height > maxSizeWidth * maxSizeLength) {
+					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeexceed");
+					Alert.show(message, "Warning", 0, null, null, null, 4); 
+				}
+			}
+
 			private function dimensionChangePropagate():void
 			{	
 				// keep in sync
@@ -1996,6 +2019,8 @@
 						job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
 					} 
 				}
+				if (this.currentState == "CopyMethod")
+					this.checkCopierSize();
 			}
 			
 			private function dimensionChange(target:Object):void
