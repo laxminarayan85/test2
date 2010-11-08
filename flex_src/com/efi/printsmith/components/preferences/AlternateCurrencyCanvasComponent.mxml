@@ -34,7 +34,7 @@
 						textAlign="right" width="124" />
 						
 					<components:CustomStringTextInputComponent width="338"
-						focusIn="{parentDocument.setAlternateCurrencyText(event)}"
+						focusOut="{parentDocument.setAlternateCurrencyText(preferencesSystem.displayFormat,preferencesSystem.alternateRoundto)}"
 						allowSpecialCharacters="true" dataHolder="{preferencesSystem}" variableName="displayFormat" customText="{preferencesSystem.displayFormat}"/>
 					
 				</mx:HBox>
@@ -59,7 +59,7 @@
 						
 					<components:CustomNumericTextInputComponent width="75"
 						dataHolder="{preferencesSystem}" variableName="alternateRoundto" customText="{preferencesSystem.alternateRoundto}"
-						precision="0" rounding="nearest" isInteger="true"/>
+						focusOut="{parentDocument.setAlternateCurrencyText(preferencesSystem.displayFormat,preferencesSystem.alternateRoundto)}" precision="0" rounding="nearest" isInteger="true" allowNegative="true"/>
 						
 					<components:CustomCheckBoxComponent
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Alwaysrounddown')}"

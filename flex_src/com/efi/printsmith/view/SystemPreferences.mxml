@@ -127,6 +127,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>-->
 <mx:Script>                                   
 <![CDATA[
+	import mx.utils.StringUtil;
 	import mx.events.FlexEvent;
 	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
@@ -1056,7 +1057,7 @@
 
 		//set controls for System items
 		setDisplayText(null,preferencesSystem.numbersIntegers,"Integers");
-		setAlternateCurrencyText(null,preferencesSystem.displayFormat);
+		setAlternateCurrencyText(preferencesSystem.displayFormat,preferencesSystem.alternateRoundto);
 		setCurrentRange();
 		
 	}
@@ -2081,44 +2082,160 @@
 		} 
 	}
 
-	public function setAlternateCurrencyText(event:Event=null,text:String=null):void{
-		if(event!=null){
-			text = event.currentTarget.text;
-		}
-		currentnumberstext = text;
-		var number1:Number = 1234.567890
-		var number2:Number = 0.0
-		var number3:Number = -1234.567890
-		var number4:Number = 0.555555
-		var str:String = currentnumberstext;
-		if ( str == null)
-			str = new String();
-		if (str.substr(str.indexOf(";")).length > 0){
-			str = str.substr(0,str.indexOf(";"))
-		}
- 
-		var fmt1:mx.formatters.CurrencyFormatter = new CurrencyFormatter();
-		if (str.length > 0){
-			if (str.substr(str.indexOf(".")).length > 0){
-				fmt1.precision = str.substr(str.indexOf(".")).length 
-			}else{
-				fmt1.precision = 0;
+	public function setAlternateCurrencyText(formatStr:String,roundingValue:int):void{
+		
+		var number1:Number = 1234.56;
+		var number2:Number = 0.00;
+		var number3:Number = -1234.56;
+		var number4:Number = 0.55;
+		var currencySymbol:String = "";
+		var currencyArray:Array;
+		var numberBeforeDecimalArray:Array;
+		var thousandSeparatorCounter:int=0;
+		var thousandSeparatorObj:String="";
+		var thousandSeparatorArray:Array;
+		var sampleFormatString:String = "";
+		var numberFormatString:String = "";
+		var commaFormattedString:String = "";
+		var numFormatter:NumberFormatter = new NumberFormatter();
+		var number2String:String="";
+		var number4String:String="";
+		numFormatter.useThousandsSeparator = false;
+		numFormatter.rounding = "nearest";
+		
+		if(formatStr!=null && StringUtil.trim(formatStr)!=""){
+			if(formatStr.indexOf("'")>-1){
+				currencyArray = formatStr.split("'");
+				if(currencyArray.length==3){
+					currencySymbol = currencyArray[1];
+					sampleFormatString = currencySymbol;				
+					if(currencyArray[2].indexOf(".")>-1){
+						numberBeforeDecimalArray = currencyArray[2].split(".");
+						if(roundingValue<numberBeforeDecimalArray[1].length){
+							numFormatter.precision = roundingValue;
+							number1 = Number(numFormatter.format(number1));
+							number2 = Number(numFormatter.format(number2)); 
+							number4 = Number(numFormatter.format(number4));
+							if(roundingValue<0){
+								number1 = Number(roundOfNegativeValue(number1,roundingValue));
+								number2 = Number(roundOfNegativeValue(number2,roundingValue));
+								number4 = Number(roundOfNegativeValue(number4,roundingValue));
+							}
+						}
+						numFormatter.precision = numberBeforeDecimalArray[1].length;
+						numberFormatString = numFormatter.format(number1);
+						number2String = numFormatter.format(number2);
+						number4String = numFormatter.format(number4);
+						commaFormattedString = numberFormatString.split(".")[0];
+						if(numberBeforeDecimalArray[0].length>=4) {
+							if(numberBeforeDecimalArray[0].indexOf(",")>-1){
+								thousandSeparatorArray = numberBeforeDecimalArray[0].split(",");
+								for(var i:int=thousandSeparatorArray.length-1;i>=0;i--) {
+									thousandSeparatorObj = thousandSeparatorArray[i];
+									thousandSeparatorCounter = thousandSeparatorCounter+thousandSeparatorObj.length;
+									if(thousandSeparatorCounter<=3){
+										commaFormattedString = addCommas(commaFormattedString,thousandSeparatorCounter);
+									}
+								}
+								if(commaFormattedString!=""){
+									numberFormatString = commaFormattedString+"."+numberFormatString.split(".")[1];
+								}
+							}
+						}
+					} else {
+						if(roundingValue<0){
+							numFormatter.precision = roundingValue;
+							number1 = Number(numFormatter.format(number1));
+							number2 = Number(numFormatter.format(number2)); 
+							number4 = Number(numFormatter.format(number4));
+							if(roundingValue<0){
+								number1 = Number(roundOfNegativeValue(number1,roundingValue));
+								number2 = Number(roundOfNegativeValue(number2,roundingValue));
+								number4 = Number(roundOfNegativeValue(number4,roundingValue));
+							}
+						}
+						numFormatter.precision = 0;
+						numberFormatString = numFormatter.format(number1);
+						number2String = numFormatter.format(number2);
+						number4String = numFormatter.format(number4);
+						commaFormattedString = ""+numberFormatString;
+						if(currencyArray[2].length>=4) {
+							if(currencyArray[2].indexOf(",")>-1){
+								thousandSeparatorArray = currencyArray[2].split(",");
+								for(var i:int=thousandSeparatorArray.length-1;i>=0;i--) {
+									thousandSeparatorObj = thousandSeparatorArray[i];
+									thousandSeparatorCounter = thousandSeparatorCounter+thousandSeparatorObj.length;
+									if(thousandSeparatorCounter<=3){
+										commaFormattedString = addCommas(commaFormattedString,thousandSeparatorCounter);
+									}
+								}
+								if(commaFormattedString!=""){
+									numberFormatString = commaFormattedString;
+								}
+							}
+						}
+					}
+					alternatecurrency_canvas.txtSampleArea.text = sampleFormatString+numberFormatString
+																  +"\n"+sampleFormatString+number2String
+																  +"\n"+"-"+sampleFormatString+numberFormatString
+																  +"\n"+sampleFormatString+number4String;
+				} else {
+					alternatecurrency_canvas.txtSampleArea.text = "";
+				}
+			} else {
+				alternatecurrency_canvas.txtSampleArea.text = "";
 			}
-			if (str.substr(str.indexOf(dollar)).length > 0){
-				fmt1.currencySymbol = dollar;
-			}  
-			if (str.substr(str.indexOf(yen)).length > 0){
-				fmt1.currencySymbol = yen;
-			}  
-			if (str.substr(str.indexOf(euro)).length > 0){
-				fmt1.currencySymbol = euro;
-			}
-			alternatecurrency_canvas.txtSampleArea.text = fmt1.format(number1)+ "\n" + fmt1.format(number2)+ "\n" + fmt1.format(number3)+ "\n" + fmt1.format(number4);
-		}else{
+		} else {
 			alternatecurrency_canvas.txtSampleArea.text = "";
 		}
-
 	}
+	
+	public function roundOfNegativeValue(value:Number,precision:int):String {
+		var v:Number = value;
+		
+		
+		// Shift decimal right as Math functions
+		// perform only integer ceil/round/floor.
+		v = v * Math.pow(10, precision);
+		
+		// Attempt to get rid of floating point errors
+		v = Number(v.toString()); 
+		
+		v = Math.round(v);
+		
+		// Shift decimal left to get back decimal to original point.
+		v = v / Math.pow(10, precision); 
+		
+		return v.toString()
+	}
+	
+	public function addCommas(numberFormatString:String, position:int):String {
+		var numCounter:int = 0;
+		var commaFormattedString:String = "";
+		for(var i:int=numberFormatString.length-1;i>=0;i--){
+			var number:Number = Number(numberFormatString.charAt(i));
+			if(!isNaN(number)){
+				numCounter++;
+				if(numCounter==position){
+					commaFormattedString = commaFormattedString + number + ",";
+				} else {
+					commaFormattedString = commaFormattedString + number;
+				}
+			} else {
+				commaFormattedString = commaFormattedString+numberFormatString.charAt(i);
+			}
+		}
+		commaFormattedString = reverseString(commaFormattedString);
+		return commaFormattedString
+	}
+	
+	public function reverseString(reverseStr:String):String {
+		var reversedString:String = "";
+		for(var i:int=reverseStr.length-1;i>=0;i--){
+			reversedString = reversedString+reverseStr.charAt(i);
+		}
+		return reversedString;
+	} 
 	
 	public function setDisplayText(event:Event=null,text:String=null,compName:String=null):void{
 		if(event!=null){
