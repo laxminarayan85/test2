@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" creationComplete="init()" 
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" 
+		implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();" 
 		xmlns:components="com.efi.printsmith.components.*" 
 		xmlns:fc="http://www.adobe.com/2006/fc" 
 		xmlns:pages="com.efi.printsmith.pages.*"
@@ -50,8 +51,11 @@
 	<mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 	
+	<mx:Script source="../security/PSSecurityInclude.as" />
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.security.PSSecurityCommands;
+	import mx.events.FlexEvent;
 	import com.efi.printsmith.common.clientPreferences.UserClientPreferences;
 	import com.efi.printsmith.common.scripts.DateUtil;
 	import com.efi.printsmith.data.ComLink;
@@ -217,7 +221,11 @@
 		fillArray.addItem(array);
 	}
 
-	public function init():void {
+	public function getSecurityCommand():String {
+		return PSSecurityCommands.POS_PENDINGDOCWINDOW;
+	}
+	
+	public function init(event:FlexEvent = null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
 

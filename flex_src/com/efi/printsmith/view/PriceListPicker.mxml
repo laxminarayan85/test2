@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="574" height="346" defaultButton="{select_button}" showCloseButton="false" creationComplete="init()"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="574" height="346" defaultButton="{select_button}" showCloseButton="false" 
+	implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();" 
     close="PopUpManager.removePopUp(this);"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList')}" 
     xmlns:text="flash.text.*" 
@@ -16,10 +17,12 @@
 <mx:Producer id="producer" destination="pricelist"/>
 <mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
-
+<mx:Script source="../security/PSSecurityInclude.as" />
 <mx:Script>
                                    
-<![CDATA[ 
+<![CDATA[
+	import com.efi.printsmith.security.PSSecurityCommands;
+	import mx.events.FlexEvent; 
 	import com.efi.printsmith.data.Contact;           
     import com.efi.printsmith.data.Account;    
     import com.efi.printsmith.view.EditContact;
@@ -106,8 +109,12 @@
 		else
 			dataGrid.selectedIndex = findItem(this.priceList.name,list);
 	}
-	                                                       
-	private function init():void {   
+	
+	public function getSecurityCommand():String {
+		return PSSecurityCommands.PRICING_LISTPRICESCHED;
+	}
+		                                                       
+	private function init(event:FlexEvent=null):void {   
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 

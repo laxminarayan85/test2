@@ -369,6 +369,10 @@
 					&& (ss.commandName.indexOf("rStandardMenuText.WasteChart") > -1 ))	{
 						doWasteChart();					
 					}
+				if ((ss.menu == "rStandardMenuText.Pricing")
+					&& (ss.commandName.indexOf("rStandardMenuText.ListPriceSchedules") > -1 ))	{
+						doPricing();					
+				}	
 				if ((ss.menu == "rStandardMenuText.Admin")
 					&& (ss.commandName.indexOf("rStandardMenuText.PaperCalculator") > -1 ))	{
 						doPaperCal();					

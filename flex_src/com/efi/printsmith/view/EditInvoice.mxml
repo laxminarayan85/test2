@@ -10,7 +10,7 @@
 		  height="689"
 		  headerHeight="0"
 		  title="Edit Invoice"
-		  creationComplete="init()"
+		  implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
 		  name="Invoice Editor"
 		  fontSize="9" xmlns:components="com.efi.printsmith.common.components.*">
 	
@@ -102,9 +102,14 @@
 	</mx:RemoteObject>
 	
 	<mx:Script source="../common/scripts/CommonUtils.as"/>
-	
+	<mx:Script source="../security/PSSecurityInclude.as" />
+
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.security.PSSecurityUtils;
+			import com.efi.printsmith.security.PSSecurity;
+			import com.efi.printsmith.security.PSSecurityCommands;
+			import mx.events.FlexEvent;
 			import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 			import com.efi.printsmith.events.CopyToNewEstimateEvent;
 			import com.efi.printsmith.events.PendingListUpdateEvent;
@@ -209,7 +214,16 @@
 			
 			private var preferencesEstimating:PreferencesEstimating;
 			
-			public function init():void
+			
+			public function getSecurityCommand():String {
+				if ((invoice != null) && (invoice is Estimate))
+					return PSSecurityCommands.INVOICE_CREATEESTIMATE;
+				else 
+					return PSSecurityCommands.INVOICE_CREATEINVOICE;
+			}
+		
+		
+			public function init(event:FlexEvent = null):void
 			{
 				this.bill_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress'));
 				loginUser = new Users();

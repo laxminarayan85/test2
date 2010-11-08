@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Estmate History" name="Estmate History"
-	width="100%" height="100%" headerHeight="0"  creationComplete="init()" layout="vertical"
+	width="100%" height="100%" headerHeight="0" implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();" layout="vertical"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory')}" xmlns:filter="com.efi.printsmith.common.components.filter.*">
     
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
@@ -14,9 +14,12 @@
 	</mx:RemoteObject>
 	
 	<mx:Script source="../common/scripts/CommonUtils.as"/>
-		
+	<mx:Script source="../security/PSSecurityInclude.as" />
+	
 	<mx:Script>                                   
 		<![CDATA[
+			import com.efi.printsmith.security.PSSecurityCommands;
+			import mx.events.FlexEvent;
 			import com.efi.printsmith.common.components.filter.FilterSearchBy;
 			import com.efi.printsmith.common.components.filter.FilterProperty;
 			import com.efi.printsmith.events.CopyToNewEstimateEvent;
@@ -65,7 +68,11 @@
 		    
 		    private var pageStatus:String = "";
 			
-			public function init():void {
+			public function getSecurityCommand():String {
+				return PSSecurityCommands.REPORTS_ESTIMATEHISTORY;
+			}
+			
+			public function init(event:FlexEvent = null):void {
 				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 				var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 				mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory');

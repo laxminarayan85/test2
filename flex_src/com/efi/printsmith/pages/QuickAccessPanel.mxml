@@ -19,7 +19,7 @@
 	 	[Protected(permissions="Admin_Utilities",notInPermissionAction="disable",componentId="utilities")]
 	 	[Protected(permissions="Admin_ScheduleBoardManager",notInPermissionAction="disable",componentId="schedule_jobs")]
 	 	[Protected(permissions="POS_PendingDocWindow",notInPermissionAction="disable",componentId="pending_documents")]
-	 	[Protected(permissions="??????",notInPermissionAction="disable",componentId="pricing")]
+	 	[Protected(permissions="Pricing_ListPriceSched",notInPermissionAction="disable",componentId="pricing")]
 	 	[Protected(permissions="Reports_AccountHistory",notInPermissionAction="disable",componentId="account_history")]
 	 	[Protected(permissions="Reports_EstimateHistory",notInPermissionAction="disable",componentId="estimate_history")]
 	 	[Protected(permissions="POS_CashRegisterWindow",notInPermissionAction="disable",componentId="cash_register")]

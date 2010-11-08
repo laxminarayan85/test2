@@ -15,7 +15,7 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 	
 
-
+<mx:Script source="../security/PSSecurityInclude.as" />
 
 <mx:Script>                                   
 <![CDATA[
@@ -46,14 +46,7 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
 	[Bindable]
     private var invoices:ArrayCollection = new ArrayCollection(); 
 	
-	private var _securityCleared:Boolean;
-//	private var _securityCallback:Function;
-//	private var _securityInputArgs:Array;
 	
-	public function preInit():void	{
-		if (checkSecurityAccess())
-			this.addEventListener(FlexEvent.CREATION_COMPLETE, init);		
-	}
 	
 	public function init(event:FlexEvent=null):void {
 		consumer.subscribe();
@@ -61,34 +54,13 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
 		doAccount();
 		
 	}  
-	
 	public function getSecurityCommand():String {
 		return PSSecurityCommands.REPORTS_ACCOUNTHISTORY;
 	}
 
 
+
 	
-	public function checkSecurityAccess():Boolean	{
-//		_securityCallback = securityCallback;
-		if (PSSecurityUtils.getInstance().checkSecurityAccess(this))
-			_securityCleared = true;
-		else
-			_securityCleared = false;
-		return _securityCleared;		
-	}
-	
-	public function get securityCleared():Boolean	{
-		return _securityCleared;
-	}
-	
-	
-//	public function getCallbackFunction():Function	{
-//		return _securityCallback;
-//	}
-//	
-//	public function getInputArgs():Array	{
-//		return _securityInputArgs;
-//	}
 	private function doAccount():void {
 		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);
