@@ -135,6 +135,14 @@
 									
 								<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
 									dataHolder="{preferencesStocks}" variableName="plies" customText="{preferencesStocks.plies}" width="200" />
+							
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockmillimetersname')}"
+									textAlign="right" />
+									
+								<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
+									dataHolder="{preferencesStocks}" variableName="millimeters" customText="{preferencesStocks.millimeters}" width="200" />
+									
+									
 									
 							</mx:VBox>
 							
