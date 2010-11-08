@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" width="574" height="346" defaultButton="{select_button}" showCloseButton="false" 
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:common="com.efi.printsmith.common.components.*" xmlns:vo="com.efi.printsmith.vo.*" width="574" height="346" defaultButton="{select_button}" showCloseButton="false" 
 	implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();" 
     close="PopUpManager.removePopUp(this);"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList')}" 
@@ -31,6 +31,7 @@
     import com.efi.printsmith.data.Charge;   
     import com.efi.printsmith.events.PriceListPickerSelectEvent;
     import com.efi.printsmith.events.SavePriceListEvent;
+    import com.efi.printsmith.common.components.CustomDeleteButtonComponent;
          
 	import mx.managers.PopUpManager;     
 	import com.efi.printsmith.data.SpeedTable;  
@@ -263,7 +264,7 @@
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" click="doNew();" id="new_button" width="108" x="399" y="80"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" click="doEdit();" id="edit_button" width="108" x="399" y="113"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" click="doCopy();" id="copy_button" width="108" x="397.5" y="143"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" click="doDelete();" id="delete_button" width="108" x="399" y="173"/>
+		<common:CustomDeleteButtonComponent isIcon="false" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefRpt.Speedtable')}" clickFuncName="doDelete" id="delete_button" width="108" x="399" y="173"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" id="cancel_button" width="108" x="397.5" y="213"/>
 		<mx:HRule x="399" y="70" width="109.5"/>
 		<mx:HRule x="397.5" y="203" width="109.5"/>
