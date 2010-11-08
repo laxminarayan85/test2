@@ -194,6 +194,7 @@
 			var sc:SecurityCommands = rawSecurityCommands.getItemAt(i) as SecurityCommands;
 			if (sc.commandName == "rStandardMenuText.1")	{
 				rawSecurityCommands.removeItemAt(i);
+				i--;
 				continue;
 			}
 			sc["enable"] = false;
@@ -205,7 +206,11 @@
 				}
 			} 
 		}
+		dataGrid.dataProvider = null;
+		
 		securityCommandsLists = rawSecurityCommands;
+		
+		dataGrid.dataProvider = securityCommandsLists;
 	}
   	private function messageHandler(message:IMessage):void
 	{
@@ -341,6 +346,7 @@
 	    access = event.currentTarget.selectedItem as AccessGroup
 		if (access!=null)
 			SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
+		
 	}
 
 	private function gridDisplayLabelCommand(item:Object, column:DataGridColumn):String{
