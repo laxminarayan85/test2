@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}"
-width="100%" height="100%" headerHeight="0" creationComplete="init()"  
+width="100%" height="100%" headerHeight="0"  preinitialize="preInit();"
+ implements="com.efi.printsmith.security.ISecureComponent"
      title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.WorkinProgress')}" xmlns:text="flash.text.*">
+      <mx:Script source="../security/PSSecurityInclude.as" />
 <mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getPending" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="getPendingIntegratedJobs" fault="handleFault(event)" result="handleLoadIntegratedJobs(event)"/>
@@ -23,6 +25,8 @@ width="100%" height="100%" headerHeight="0" creationComplete="init()"
 
 <mx:Script>
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.view.window.MDIWindow;
 	import mx.formatters.DateFormatter;
 	import com.efi.printsmith.data.JobJDFStatus;
@@ -62,7 +66,10 @@ width="100%" height="100%" headerHeight="0" creationComplete="init()"
 	[Bindable]
 	private var integratedJobs:ArrayCollection = new ArrayCollection();
 	
-	public function init():void {
+	 public function getSecurityCommand():String {
+    	return PSSecurityCommands.REPORTS_WORKINPROGRESS;
+    }
+	public function init(event:FlexEvent=null):void {
 		notification_consumer.subscribe();
 		
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);

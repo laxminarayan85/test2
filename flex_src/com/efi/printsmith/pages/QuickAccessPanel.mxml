@@ -35,6 +35,7 @@
 	 	[Protected(permissions="Reports_ReportWriter",notInPermissionAction="disable",componentId="report_writer")]
 	 	[Protected(permissions="Admin_EmployeeManager",notInPermissionAction="disable",componentId="employee_manager")]
 	 	[Protected(permissions="Admin_SecuritySetup",notInPermissionAction="disable",componentId="admin_button")]
+	 	[Protected(permissions="Admin_UserDefintions",notInPermissionAction="disable",componentId="users")]
 	 	
 	
 	</mx:Metadata>

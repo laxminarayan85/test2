@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Delivery Ticket" name="Delivery Ticket"
-width="100%" height="100%" headerHeight="0"  creationComplete="init()"  
+width="100%" height="100%" headerHeight="0"  preinitialize="preInit();"
+ implements="com.efi.printsmith.security.ISecureComponent"
      title="Delivery Ticket" xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*">
+                <mx:Script source="../security/PSSecurityInclude.as" />
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -29,6 +31,8 @@ width="100%" height="100%" headerHeight="0"  creationComplete="init()"
 	</mx:RemoteObject>
 <mx:Script>                                   
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.view.window.MDIWindow;
 	import mx.rpc.events.ResultEvent;
 
@@ -59,7 +63,10 @@ width="100%" height="100%" headerHeight="0"  creationComplete="init()"
 		deliveryTicketEditWindow.setStyle("borderAlpha", 0.9);
 	 //	deliveryTicketEditWindow.setJob(job);
 	}
-	public function init():void{
+	public function getSecurityCommand():String {
+    	return PSSecurityCommands.ADMIN_DELIVERYTICKETMANAGER;
+    }	
+	public function init(event:FlexEvent = null):void{
 		
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 		mdiWin.title = "Delivery Ticket Manager";

@@ -754,8 +754,8 @@
 
 		public function doUtilities():void {
 			var child:Utilities = new Utilities();
-//			addUniqueTab(child);
-			containerManager.openNewMDIWindow("Utilities", child);
+			if (child.checkSecurityAccess())
+				containerManager.openNewMDIWindow("Utilities", child);
 		}
 
 		public function doClockInOut():void {
@@ -1259,8 +1259,8 @@
 
 		public function doDeliveryTicket():void{
 			var child:DeliveryTicketMgr = new DeliveryTicketMgr();
-			//addUniqueTab(child);
-			containerManager.openNewMDIWindow("Delivery Ticket Manager", child);
+			if (child.checkSecurityAccess())
+				containerManager.openNewMDIWindow("Delivery Ticket Manager", child);
 		}		
 		
 		/**
