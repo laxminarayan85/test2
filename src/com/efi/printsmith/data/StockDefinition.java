@@ -3155,7 +3155,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	@ManyToMany(targetEntity=ChargeDefinition.class)
+	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private java.util.List<ChargeDefinition> charges;
 	
@@ -3189,6 +3189,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="copier1PricePerSheet", precision=19, scale=8)
 	private BigDecimal copier1PricePerSheet;
 	
 	/**
@@ -3204,6 +3205,7 @@ public class StockDefinition extends ModelBase {
 	 */	
 	public void setCopier1PricePerSheet(BigDecimal newVal) {
     this.copier1PricePerSheet = newVal;
+    this.copier1PricePerSheet.setScale(8, RoundingMode.HALF_UP);
   }
 	
 	/**
@@ -3211,6 +3213,7 @@ public class StockDefinition extends ModelBase {
 	 */	
 	public void setCopier1PricePerSheet(double newVal) {
     this.copier1PricePerSheet = BigDecimal.valueOf(newVal);
+    this.copier1PricePerSheet.setScale(8, RoundingMode.HALF_UP);
   }
  	
 	
@@ -3218,6 +3221,7 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="copier2PricePerSheet", precision=19, scale=8)
 	private BigDecimal copier2PricePerSheet;
 	
 	/**
@@ -3233,6 +3237,7 @@ public class StockDefinition extends ModelBase {
 	 */	
 	public void setCopier2PricePerSheet(BigDecimal newVal) {
     this.copier2PricePerSheet = newVal;
+    this.copier2PricePerSheet.setScale(8, RoundingMode.HALF_UP);
   }
 	
 	/**
@@ -3240,6 +3245,7 @@ public class StockDefinition extends ModelBase {
 	 */	
 	public void setCopier2PricePerSheet(double newVal) {
     this.copier2PricePerSheet = BigDecimal.valueOf(newVal);
+    this.copier2PricePerSheet.setScale(8, RoundingMode.HALF_UP);
   }
  	
 	
