@@ -9,6 +9,17 @@
 		headerHeight="0"
 		title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PendingList')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PendingList')}" name="Pending List" 
 		xmlns:text="flash.text.*" xmlns:pendinglist="com.efi.printsmith.components.pendinglist.*">
+<mx:Metadata>
+	 	[Protected(permissions="PendingList_Pickup",notInPermissionAction="disable",componentId="pickup_option")]
+	 	[Protected(permissions="PendingList_Status",notInPermissionAction="disable",componentId="status_option")]
+	 	[Protected(permissions="PendingList_Location",notInPermissionAction="disable",componentId="location_option")]
+	 	[Protected(permissions="PendingList_Open",notInPermissionAction="disable",componentId="open_option")]
+	 	[Protected(permissions="PendingList_Notify",notInPermissionAction="disable",componentId="notify_option")]
+	 	[Protected(permissions="PendingList_Deliver",notInPermissionAction="disable",componentId="deliver_option")]
+	 	[Protected(permissions="PendingList_Schedule",notInPermissionAction="disable",componentId="schedule_option")]
+	 	[Protected(permissions="PendingList_Tracker",notInPermissionAction="disable",componentId="tracker_option")]
+</mx:Metadata>
+
 	<mx:states>
 		<mx:State name="stateFilterDates">
 			<mx:AddChild relativeTo="{canvas2}" position="lastChild">
@@ -1162,52 +1173,52 @@
 		
 	<mx:VBox width="140" left="0" top="0" bottom="50" paddingLeft="5" paddingRight="5" verticalGap="10">
 		<mx:RadioButtonGroup id="pendingOptions"/>
-		<mx:HBox width="100%">
+		<mx:HBox width="100%" id="pickup_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_PICK_UP}" click="{savePendingOption()}" width="10%"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp')}" width="90%"/>
 		</mx:HBox>	
-		<mx:HBox width="100%">
+		<mx:HBox width="100%" id="status_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_STATUS}" click="{savePendingOption()}" width="10%"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Status')}" width="90%"
 				click="{handleUIStatusEvent(null)}"/>
 		</mx:HBox>
-		<mx:HBox width="100%">
+		<mx:HBox width="100%"  id="location_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_LOCATION}" click="{savePendingOption()}" width="10%"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Location')}" width="90%"
 				click="{handleUILocationEvent(null)}"/>
 		</mx:HBox>
-		<mx:HBox width="100%">
+		<mx:HBox width="100%"  id="open_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_OPEN}" click="{savePendingOption()}" width="10%"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Open')}" width="90%"
 				click="{handleUIOpenEvent(null)}"/>
 		</mx:HBox>		
-		<mx:HBox width="100%">
+		<mx:HBox width="100%"  id="notify_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_NOTIFY}" click="{savePendingOption()}" width="10%"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Notify')}" width="90%"
 				click="{handleUINotifyEvent(null)}"/>
 		</mx:HBox>	
-		<mx:HBox width="100%">
+		<mx:HBox width="100%"  id="due_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_DUEDATE}" click="{savePendingOption()}" width="10%"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.DueDate')}" width="90%"
 				click="{handleUIDueDateEvent(null)}"/>
 		</mx:HBox>	
-		<mx:HBox width="100%">
+		<mx:HBox width="100%"  id="deliver_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_DELIVER}" click="{savePendingOption()}" width="10%"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Deliver')}" width="90%"/>
 		</mx:HBox>	
-		<mx:HBox width="100%">
+		<mx:HBox width="100%"  id="schedule_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_SCHEDULE}" click="{savePendingOption()}" width="10%"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Schedule')}" width="90%"/>
 		</mx:HBox>	
-		<mx:HBox width="100%">
+		<mx:HBox width="100%"  id="tracker_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_TRACKER}" click="{savePendingOption()}" width="10%"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Tracker')}" width="90%"/>
 		</mx:HBox>
-		<mx:HBox width="100%" horizontalAlign="right">
+		<mx:HBox width="100%" horizontalAlign="right"  id="view_option">
 			<components:MultiLineLabelButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.View')}" labelPlacement="bottom" width="80%" height="75"
 				icon="@Embed(source='../../../../assets/view.png')"/>
 		</mx:HBox>		
-		<mx:HBox width="100%" horizontalAlign="right">
+		<mx:HBox width="100%" horizontalAlign="right"  id="print_option">
 			<components:MultiLineLabelButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Print')}" labelPlacement="bottom" width="80%" height="75"
 				icon="@Embed(source='../../../../assets/reportWritersmall.png')"/>
 		</mx:HBox>		
