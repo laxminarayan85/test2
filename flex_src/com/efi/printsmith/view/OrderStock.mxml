@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="928" height="674" creationComplete="init()"  
-	 close="PopUpManager.removePopUp(this);" showCloseButton="true"
-	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
+	 close="PopUpManager.removePopUp(this);" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.OrderStock')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.OrderStock')}" name="Stock Order">
 	
 	<mx:RemoteObject id="vendorDataService" destination="dataService">
@@ -80,6 +79,9 @@
 	    loadStockFinish();
 	    webWorthy = false;
 	    
+	}
+	public function docancel():void{
+		PopUpManager.removePopUp(this);
 	}
 	public function loadStockVendor():void {   
 	    vendorDataService.getAll("Vendor");
@@ -383,7 +385,7 @@
 	<mx:Button x="305" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/get.png')" click=" doGet();"/>
 	<mx:Button x="392" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/print.png')" click="doReport()">
 	</mx:Button>
-	<mx:Button x="489" y="10"  width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/cancel.png')" enabled="{webWorthy}"/>
+	<mx:Button x="489" y="10"  click="docancel();" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/cancel.png')" />
 	<mx:Label x="32" y="56" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Order')}"/>
 	<mx:Label x="177" y="56" textAlign="right"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.AutoOrder')}"/>
 	<mx:Label x="284" y="56"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.SelectStock')}"/>

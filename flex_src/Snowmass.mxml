@@ -263,7 +263,7 @@
 					}
 				if ((ss.menu == "rStandardMenuText.Reports")
 					&& (ss.commandName.indexOf("rStandardMenuText.StockOrder") > -1 ))	{
-						doAccountHistory();					
+						doStockOrder();					
 					}	
 				if ((ss.menu == "rStandardMenuText.AR")
 					&& (ss.commandName.indexOf("rStandardMenuText.Accounts") > -1 ))	{
