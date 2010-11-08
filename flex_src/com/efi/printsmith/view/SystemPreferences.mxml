@@ -1053,16 +1053,10 @@
 		
 	}
 	private function mapFromPreferencesAccountingData():void {
-		
-		if( preferencesAccounting.invoiceDocument != null)
-			if (preferencesAccounting.invoiceDocument.length == 0){
-				preferencesAccounting.invoiceDocument = "123456789"
-			}
-		if( preferencesAccounting.estimateDocument != null)
-			if (preferencesAccounting.estimateDocument.length == 0){
-				preferencesAccounting.estimateDocument = "123456789"
-			}
-		 
+		if( preferencesAccounting.invoiceDocument == null || preferencesAccounting.invoiceDocument=="")
+			preferencesAccounting.invoiceDocument = "123456789";
+		if( preferencesAccounting.estimateDocument == null || preferencesAccounting.estimateDocument=="")
+			preferencesAccounting.estimateDocument = "123456789";
 	}
 
 	private function mapFromPreferencesAllData():void {

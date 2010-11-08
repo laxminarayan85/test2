@@ -11,17 +11,25 @@
 			
 			private function updateComp(preferencesAccounting:PreferencesAccounting):void{
 				if(preferencesAccounting && !updated){
-					txtSampleInvoice.text = preferencesAccounting.invoicePrefix + preferencesAccounting.invoiceDocument + preferencesAccounting.invoiceSuffix;
-					txtSampleEstimate.text = preferencesAccounting.estimatePrefix + preferencesAccounting.estimateDocument + preferencesAccounting.estimateSuffix;
+					txtSampleInvoice.text = ((preferencesAccounting.invoicePrefix==null)?"":preferencesAccounting.invoicePrefix) 
+											+ ((preferencesAccounting.invoiceDocument==null)?"":preferencesAccounting.invoiceDocument) 
+											+ ((preferencesAccounting.invoiceSuffix==null)?"":preferencesAccounting.invoiceSuffix);
+					txtSampleEstimate.text = ((preferencesAccounting.estimatePrefix==null)?"":preferencesAccounting.estimatePrefix) 
+											+ ((preferencesAccounting.estimateDocument==null)?"":preferencesAccounting.estimateDocument) 
+											+ ((preferencesAccounting.estimateSuffix==null)?"":preferencesAccounting.estimateSuffix);
 					updated = true;
 				}
 			}
 			
 			private function setOrderNumberFormatSample(item:String):void{
 				if (item=="invoice"){
-					txtSampleInvoice.text = txtInvoicePrefix.text + txtInvoiceDocument.text + txtInvoiceSuffix.text;
+					txtSampleInvoice.text = ((txtInvoicePrefix.text==null)?"":txtInvoicePrefix.text) 
+											+ ((txtInvoiceDocument.text==null)?"":txtInvoiceDocument.text) 
+											+ ((txtInvoiceSuffix.text==null)?"":txtInvoiceSuffix.text);
 				}else{
-					txtSampleEstimate.text = txtEstimatePrefix.text + txtEstimateDocument.text + txtEstimateSuffix.text;
+					txtSampleEstimate.text = ((txtEstimatePrefix.text==null)?"":txtEstimatePrefix.text) 
+											+ ((txtEstimateDocument.text==null)?"":txtEstimateDocument.text) 
+											+ ((txtEstimateSuffix.text==null)?"":txtEstimateSuffix.text);
 				}
 			}
 		]]>
