@@ -3,7 +3,9 @@
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup')}" 
 	xmlns:ns1="com.adobe.flex.extras.controls.*" xmlns:fc="http://www.adobe.com/2006/fc"
-	headerHeight="0" creationComplete="init()" xmlns:ns2="flexlib.controls.*" 
+	headerHeight="0" 
+	implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
+	xmlns:ns2="flexlib.controls.*" 
 	 >
 	<mx:states>
 		<mx:State name="newItem">
@@ -47,10 +49,13 @@
 	<mx:Producer id="producer" destination="accessgroup"/>
 	<mx:Consumer id="consumer" destination="accessgroup" message="messageHandler(event.message)"/>
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Script source="../security/PSSecurityInclude.as" />
 
 
 <mx:Script>  	
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.adobe.cairngorm.commands.Command;
 	import mx.containers.Panel;
@@ -96,7 +101,11 @@
 	private var _commandsRecd:Boolean = false;
 	private var _setupRecd:Boolean = false;
 			
-	public function init():void {
+	           
+	public function getSecurityCommand():String {
+		return PSSecurityCommands.ADMIN_SECURITYSETUP;
+	}		
+	public function init(event:FlexEvent=null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
 	//	PopUpManager.centerPopUp(this);

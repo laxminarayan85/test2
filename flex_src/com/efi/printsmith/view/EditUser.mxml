@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.data.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" name="User Editor"
-width="100%" height="619" defaultButton="{submitButton}" creationComplete="init()" showCloseButton="false"
+width="100%" height="619" defaultButton="{submitButton}" 
+implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
+		  
+showCloseButton="false"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -22,9 +25,13 @@ width="100%" height="619" defaultButton="{submitButton}" creationComplete="init(
 <mx:Consumer id="consumer" destination="users" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
+<mx:Script source="../security/PSSecurityInclude.as" />
+
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.security.PSSecurityCommands;
+	import mx.events.FlexEvent;
 	import mx.controls.dataGridClasses.DataGridColumn;
     import com.efi.printsmith.data.Users;  
     import com.efi.printsmith.data.AccessGroup;
@@ -70,7 +77,11 @@ width="100%" height="619" defaultButton="{submitButton}" creationComplete="init(
  	
  	private var focusedFormControl:DisplayObject;                           
            
-	public function init():void {
+	public function getSecurityCommand():String {
+		return PSSecurityCommands.ADMIN_USERDEFINTIONS;
+	}
+		       
+	public function init(event:FlexEvent = null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 	    resetFocus();              

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.data.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
 width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}"
-creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}" name="Contact Editor" xmlns:ns1="com.efi.printsmith.components.*"
-implements="com.efi.mdi.IMDIWindowAware">
+preinitialize="preInit();"
+	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Contacts')}" name="Contact Editor" xmlns:ns1="com.efi.printsmith.components.*"
+implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent">
 
 <mx:RemoteObject id="dataService2" destination="dataService">
 	<mx:method name="getContactPicker" fault="handleFault(event)" result="handleGetContactPicker(event)"/>
@@ -66,10 +67,11 @@ implements="com.efi.mdi.IMDIWindowAware">
 -->
 
 <mx:Script source="../common/scripts/CommonUtils.as"/>
-
+<mx:Script source="../security/PSSecurityInclude.as" />
 <mx:Script> 
                                   
 <![CDATA[
+	import mx.events.FlexEvent;
 	import com.efi.printsmith.events.ContactCreateUpdateEvent;
 	import com.efi.printsmith.common.components.NonModalThrobberHelper;
 	import com.efi.mdi.event.compare.MDICompareObjectEvent;
@@ -127,6 +129,8 @@ implements="com.efi.mdi.IMDIWindowAware">
    	import com.efi.printsmith.events.commandEvents.Contacts.*;
    	import com.efi.printsmith.view.CreditCardDataEntry;
    	
+	import com.efi.printsmith.security.PSSecurityCommands;
+	
 
 /******************************
  * Variable declarations
@@ -189,7 +193,11 @@ implements="com.efi.mdi.IMDIWindowAware">
 /**************************
  * Functions
  ***************************/	
-	public function init():void {
+ 	
+ 	public function getSecurityCommand():String {
+    	return PSSecurityCommands.AR_CONTACTS;
+    }
+	public function init(event:FlexEvent=null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();  
 		

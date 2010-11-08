@@ -18,17 +18,19 @@ package com.efi.printsmith.business.commandDelegates.EditForms
 		}
 		
 		public function handleUIEvent(event:EditContactEvent):void {
-			if (checkSecurity(EditContactEvent.COMMANDID)) {
+//			if (checkSecurity(EditContactEvent.COMMANDID)) {
 				var child:EditContact = new EditContact();
 			//	child.setContact(event.object);
-				var resEvent:ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,child,null,null);
-				responder.result(resEvent);
-			} else {
-				/* report error */
-				var fault:Fault = new Fault("InvalidSecurityAccess","","genericPrefCmd.Insufficientaccessle")
-				var faultEvent:FaultEvent = new FaultEvent(FaultEvent.FAULT,false, true, fault, null, null);
-				responder.fault(faultEvent);
-			}
+				if (child.checkSecurityAccess())	{
+					var resEvent:ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,child,null,null);
+					responder.result(resEvent);
+				}
+//			} else {
+//				/* report error */
+//				var fault:Fault = new Fault("InvalidSecurityAccess","","genericPrefCmd.Insufficientaccessle")
+//				var faultEvent:FaultEvent = new FaultEvent(FaultEvent.FAULT,false, true, fault, null, null);
+//				responder.fault(faultEvent);
+//			}
 		}
 	}
 }

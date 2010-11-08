@@ -11,10 +11,10 @@
 	headerHeight="0" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}"
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}"
-	creationComplete="init()"  
+	preinitialize="preInit();"
 	name="Customer Editor" 
 	xmlns:ns1="com.efi.printsmith.components.*"
-	implements="com.efi.mdi.IMDIWindowAware">
+	implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent">
 <mx:Metadata>
     [Event(name="SaveAddressEvent", type="SaveAddressEvent")]
 </mx:Metadata>
@@ -71,9 +71,11 @@
 <mx:Script source="../common/scripts/StringUtils.as"/>
 
 <mx:Script source="../common/scripts/CommonUtils.as"/>
+<mx:Script source="../security/PSSecurityInclude.as" />
 
 <mx:Script>                                   
 <![CDATA[
+	import mx.events.FlexEvent;
 	import com.efi.printsmith.events.ContactCreateUpdateEvent;
 	import mx.rpc.mxml.Concurrency;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
@@ -124,6 +126,7 @@
     import mx.events.ValidationResultEvent;    
     import mx.collections.SortField;
 	import mx.collections.Sort;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	
 	private var myWindowId:int;
     
@@ -188,7 +191,11 @@
 	private var first:Boolean = false;
     private var focussedFormControl:DisplayObject;
     
-	public function init():void {
+    public function getSecurityCommand():String {
+    	return PSSecurityCommands.AR_ACCOUNTS;
+    }
+    
+	public function init(event:FlexEvent = null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 		first = true;
