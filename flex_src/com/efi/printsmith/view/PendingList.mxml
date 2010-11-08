@@ -1207,9 +1207,14 @@
 
 	<mx:VBox bottom="124" top="0" left="140" right="0">
 		<mx:Canvas width="100%" height="100%">
-			<mx:DataGrid right="0" left="0" top="0" id="dgView" bottom="0"  dataProvider="{invoiceBaseArray}" doubleClickEnabled="true" doubleClick="doDoubleClick()">
+			<mx:DataGrid right="0" left="0" top="0" id="dgView" bottom="0"  dataProvider="{invoiceBaseArray}" doubleClickEnabled="true" doubleClick="doDoubleClick()" draggableColumns="false">
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Account')}" labelFunction="getAccountLabel" sortCompareFunction="sortAccount">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1217,6 +1222,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Document')}" dataField="invoiceNumber" sortCompareFunction="sortDocNum">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1224,6 +1234,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'ReOrderInvCmd.Contact')}" labelFunction="getContactLabel" sortCompareFunction="sortContact">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1231,6 +1246,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.WantedDate')}" labelFunction="getFormattedDate" dataField="wantedDate">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1238,6 +1258,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleLateAndCompletedCmd.Hold')}" dataField="holdState.name" labelFunction="getHoldState">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1245,6 +1270,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Phone')}" labelFunction="getContactPhone" sortCompareFunction="sortPhone">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1252,6 +1282,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Location')}" labelFunction="getLocationLabel" sortCompareFunction="sortLocation">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1259,6 +1294,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Type')}" labelFunction="getTypeLabel" sortCompareFunction="sortType">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1266,6 +1306,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.DocumentTitle')}" dataField="name" sortCompareFunction="sortDocTitle">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1273,6 +1318,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobComment')}" labelFunction="getJobComments">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1280,6 +1330,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.ProofDate')}" labelFunction="getFormattedDate" dataField="proofDate">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1287,6 +1342,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.TakenBy')}" dataField="takenBy">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1294,6 +1354,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.SalesRep')}" labelFunction="getSalesRep" dataField="salesRep.name">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1301,6 +1366,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.WebReference')}" labelFunction="getWebReferenceLabel" sortCompareFunction="sortWeb">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
@@ -1308,6 +1378,11 @@
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobCount')}" labelFunction="getJobCountLabel" sortCompareFunction="sortJobCount">
+						<mx:headerRenderer>
+							<mx:Component>
+								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
+							</mx:Component>
+						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
 								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
