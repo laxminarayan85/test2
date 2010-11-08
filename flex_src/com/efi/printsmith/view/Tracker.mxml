@@ -2,10 +2,11 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%" 
 	title="Tracker Console" headerHeight="0"
 	xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:ns1="com.hillelcoren.components.*"
-	creationComplete="{initTrackerConsole()}" 
+	preinitialize="preInit();"
+ 	implements="com.efi.printsmith.security.ISecureComponent"
 	label="Tracker Console" 
 	name="Tracker Console" xmlns:components="com.efi.printsmith.common.components.*" xmlns:trackercomponent="com.efi.printsmith.components.tracker.*">
-	
+	 <mx:Script source="../security/PSSecurityInclude.as" />
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getActiveEmployees" fault="handleFault(event)" result="handleLoadEmployeeResult(event)"/>
 		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadTrackerConsoleResult(event)"/>
@@ -64,6 +65,8 @@
 	<mx:Script> 
 	                                  
 	<![CDATA[
+		import mx.events.FlexEvent;
+		import com.efi.printsmith.security.PSSecurityCommands;
 		import com.efi.mdi.event.window.WindowCloseEvent;
 		import com.efi.mdi.view.window.MDIWindow;
 		import com.efi.printsmith.events.TrackerConsoleDetailsEvent;
@@ -147,8 +150,11 @@
 		
 		[Bindable] private var completedTrackerConsoleJob:TrackerConsoleJobs;
 		 
-		 
-		public function initTrackerConsole():void {
+		
+		public function getSecurityCommand():String {
+	    	return PSSecurityCommands.ADMIN_TRACKERCONSOLE;
+	    } 
+		private function init(event:FlexEvent=null):void {
 			
 			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 			mdiWin.title ="Tracker Console";

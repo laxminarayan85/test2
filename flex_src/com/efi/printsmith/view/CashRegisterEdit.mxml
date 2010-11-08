@@ -8,10 +8,11 @@
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
 	name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CashRegister')}" 
-	creationComplete="init()" 
+		preinitialize="preInit();"
+ 	implements="com.efi.printsmith.security.ISecureComponent"
 	xmlns:components="com.efi.printsmith.components.*" 
 	xmlns:vo="com.efi.printsmith.vo.*">
-
+<mx:Script source="../security/PSSecurityInclude.as" />
 	<mx:CurrencyFormatter precision="2" id="currencyFormatter"/>
 	<mx:NumberFormatter precision="2" id="numberFormatter"/>
 	<mx:NumberFormatter precision="0" id="quantityFormatter"/>
@@ -213,6 +214,8 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.printsmith.data.InvoiceBase;
 	import com.efi.printsmith.data.JobBase;
 	import com.efi.mdi.view.window.MDIWindow;
@@ -360,7 +363,11 @@
 			batch.tendered = batch.tendered+ payment.paymentAmount;
 			batch.change = batch.tendered - batch.totalPrice;
 	}	
-	public function init():void {
+	
+	public function getSecurityCommand():String {
+    	return PSSecurityCommands.POS_OPENCASHREGISTER;
+    }
+	public function init(event:FlexEvent = null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		

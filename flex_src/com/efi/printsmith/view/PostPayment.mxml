@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%"
-	showCloseButton="true" creationComplete="init()" headerHeight="0"
+	showCloseButton="true" 	preinitialize="preInit();"
+ 	implements="com.efi.printsmith.security.ISecureComponent" headerHeight="0"
     close="PopUpManager.removePopUp(this);"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.PostPayments')}" 
      label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.PostPayments')}"
     xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
-	
+	<mx:Script source="../security/PSSecurityInclude.as" />
 	
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAccount" fault="handleFault(event)" result="handleGetResult(event)"/>
@@ -19,6 +20,8 @@
 <mx:Script>
                                    
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.AccountHistoryData;
 	import com.efi.printsmith.data.UnpurchasedMerchandise;
@@ -46,6 +49,7 @@
 	private var accountHistoryDate: AccountHistoryData;;
 	[Bindable]                             
 	private var unPurchase: Number;
+	
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 		
 		account = new Account();
@@ -60,7 +64,12 @@
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
 	}
-	private function init():void {  
+	
+	public function getSecurityCommand():String {
+    	return PSSecurityCommands.AR_POSTPAYMENTS;
+    }
+    
+	private function init(event:FlexEvent =  null):void {  
 		
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.PostPayments');
