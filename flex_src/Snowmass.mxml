@@ -624,8 +624,11 @@
 		
 		private function doQuickAccessPanel():void	{
 			var child:Container = new QuickAccessPanel();
-			
-			containerManager.openNewMDIWindow("Quick Access Panel",child,40,20,530,880);//addUniqueTab(child);
+			var mdiwin:MDIWindow = containerManager.getWindowWithChild(child);
+			if (mdiwin == null)
+				containerManager.openNewMDIWindow("Quick Access Panel",child,40,20,530,880);//addUniqueTab(child);
+			else
+				mdiwin.bringWindowToFront();
 		}
 		public function doAccounts():void {
 			var event:EditCustomerEvent = new EditCustomerEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
