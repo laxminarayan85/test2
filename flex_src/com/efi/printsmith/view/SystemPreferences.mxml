@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
-	layout="vertical" creationPolicy="all" creationComplete="init();" 
+	layout="vertical" creationPolicy="all" 
+	preinitialize="preInit();"
+ 	implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent"
+ 
 	xmlns:fc="http://www.adobe.com/2006/fc" 
 	xmlns:vo="com.efi.printsmith.vo.*"
 	xmlns:cmp="com.efi.printsmith.components.*"
@@ -13,11 +16,11 @@
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
 	name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
 	xmlns:ns1="com.efi.printsmith.components.*"
-	implements="com.efi.mdi.IMDIWindowAware">
+	>
 	
 	<mx:Script source="../common/scripts/Validation.as"/>
 	<mx:Script source="../common/scripts/CommonUtils.as"/>
-
+ <mx:Script source="../security/PSSecurityInclude.as" />
  	<mx:RemoteObject id="dataServiceSystem" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSystemResult(event)"/>
@@ -124,6 +127,8 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>-->
 <mx:Script>                                   
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.data.ShippingMethod;
@@ -742,8 +747,11 @@
 		layoutOption.name = "Country";
 		addressLayoutArray.addItem(layoutOption);
 	}
-		
-	public function init():void {
+
+    public function getSecurityCommand():String {
+    	return PSSecurityCommands.ADMIN_PREFERENCES;
+    }		
+	public function init(event:FlexEvent=null):void {
 
 		this.currentState="";
 		

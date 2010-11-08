@@ -2,7 +2,10 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.data.*" xmlns:comp="com.efi.printsmith.components.*" xmlns:effect="com.adobe.ac.mxeffects.*" 
 				xmlns:common="com.efi.printsmith.common.components.filter.*" 
 width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}"
-creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}" name="Charge Definitions" xmlns:ns1="*" fontSize="9">
+ preinitialize="preInit();"
+ implements="com.efi.printsmith.security.ISecureComponent"
+ label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}" name="Charge Definitions" xmlns:ns1="*" fontSize="9">
+   <mx:Script source="../security/PSSecurityInclude.as" />
 <mx:NumberFormatter id="pricingNumberFormatter" precision="8" />         
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addChargeToCategory" fault="handleFault(event)" result="handleAddChargeToCategory(event)"/>
@@ -28,6 +31,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:Script>                                   
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.view.window.MDIWindow;
 	import mx.events.CloseEvent;
 	import com.efi.printsmith.common.components.filter.FilterSearchBy;
@@ -189,7 +194,10 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     [Bindable] private var deleteBtnEnabled:Boolean = false;
     [Bindable] private var inkCoverageLabel:String = "";
     
-	public function init():void {
+    public function getSecurityCommand():String {
+    	return PSSecurityCommands.PRICING_CHARGEDEF;
+    }
+	public function init(event:FlexEvent = null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" preinitialize="preInit();" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
  xmlns:common="com.efi.printsmith.common.components.*" width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}"
  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}" fontSize="9" xmlns:ns1="com.efi.printsmith.components.preferences.*"
- implements="com.efi.mdi.IMDIWindowAware">
+ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent">
+  <mx:Script source="../security/PSSecurityInclude.as" />
 	<mx:states>
 		<mx:State name="Large Format">
 			<!--<mx:SetProperty target="{colorcheck}" name="selected" value="false"/>
@@ -60,6 +61,8 @@
 
 <mx:Script>                                   
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import mx.utils.StringUtil;
 	import mx.utils.ObjectUtil;
@@ -156,7 +159,10 @@
 	private var selectedCopierId:Number = -1;
 	[Bindable] private var loadComponent:CommonLoadComponent;
 
-	public function init():void {
+ 	public function getSecurityCommand():String {
+    	return PSSecurityCommands.PRICING_COPIERDIGITALDEF;
+    }
+	public function init(event:FlexEvent = null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();   
 		
