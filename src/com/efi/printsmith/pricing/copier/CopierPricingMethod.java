@@ -50,6 +50,12 @@ public abstract class CopierPricingMethod {
 		else
 			iruns = iorigs / ion;
 		divisor = iup / ion;
+		
+		if (job.getNumCopiesOverride()) {
+			job.setQtyOrdered(job.getNumCopies());
+			job.setNumCopiesOverride(false);
+		}
+		
 		ordered = job.getQtyOrdered() * job.getInSetsOf();
 		if (iorigs % ion != 0) {	/* got partial runs */
 			xorig = iorigs - (iruns * ion);	/* remaining originals to handle */
@@ -74,11 +80,6 @@ public abstract class CopierPricingMethod {
 		
 		double oddRunCount = (runs - Math.floor(runs));
 		long oddRunQty = (long)(job.getQtyOrdered() * oddRunCount);
-		
-		if (job.getNumCopiesOverride() == false)
-			job.setNumCopies(press);
-		else
-			job.setQtyOrdered(job.getNumCopies());
 		
 		calculateEstWaste(job);
 		calculateBinderyWaste(job);
