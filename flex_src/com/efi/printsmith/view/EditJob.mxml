@@ -2001,15 +2001,16 @@
 					job_size.selectedIndex = job_parent.selectedIndex;
 				}
 	
-				if (job.finishSize.width == 0 || job.finishSize.height == 0 || job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
-					job.finishSize.name = job.runSize.name;
-					job.finishSize.type = job.runSize.type;
-					job.finishSize.height = job.runSize.height;
-					job.finishSize.width = job.runSize.width;
-					job_finish_size.text = job.finishSize.name;
-					job_finish_size.selectedIndex = job_size.selectedIndex;
+				if (this.currentState != "LargeFormat") {
+					if (job.finishSize.width == 0 || job.finishSize.height == 0 || job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
+						job.finishSize.name = job.runSize.name;
+						job.finishSize.type = job.runSize.type;
+						job.finishSize.height = job.runSize.height;
+						job.finishSize.width = job.runSize.width;
+						job_finish_size.text = job.finishSize.name;
+						job_finish_size.selectedIndex = job_size.selectedIndex;
+					}
 				}
-				
 				if (this.estimatingPreferences.leaveFoldedSizeEmpty != true) {
 					if (job.foldedSize.width == 0 || job.foldedSize.height == 0 || job.foldedSize.width > job.finishSize.width || job.foldedSize.height > job.finishSize.height) {
 						job.foldedSize.name = job.finishSize.name;
