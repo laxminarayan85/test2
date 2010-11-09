@@ -2163,8 +2163,8 @@
 					updateWeight();
 					break;
 				case this.job_sheets:
-					if (isNaN(job.sheets))
-						job.sheets = 0;
+					if (isNaN(job.sheets) || job.sheets == 0)
+						job.sheets = 1;
 					if (job.sheets < job.numUp)
 						job.numOn = job.sheets;
 					else
