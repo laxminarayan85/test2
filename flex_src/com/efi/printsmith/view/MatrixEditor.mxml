@@ -548,7 +548,7 @@
 		var newMatrix:Boolean = true;
 		for (var i:int=0;i<this.matrix.elements.length;i++) {
 			var element:com.efi.printsmith.data.MatrixElement = this.matrix.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
-			if (element.lastLine == true)
+			if (element.lastLine == true) {
 				if (element.qty > 0)
 					newMatrix = false;
 				this.price1.text = element.price1.toString();
@@ -571,6 +571,7 @@
 				this.price18.text = element.price18.toString();
 				this.price19.text = element.price19.toString();
 				this.price20.text = element.price20.toString();
+			}
 		}
 		this.matrix.elements.filterFunction = filterMatrix;
 		if (newMatrix == false) {
