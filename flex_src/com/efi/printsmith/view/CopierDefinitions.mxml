@@ -234,6 +234,13 @@
 	private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
 	{
 		this.copierDefinition.charges=evt.chargeArray;
+		this.charges = this.copierDefinition.charges;
+		if  (this.charges.length > 0){
+	     	this.charges_button.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
+	     	this.charges_button.label = StringUtil.substitute(this.charges_button.label,this.charges.length);
+		 }
+		 else
+	 		this.charges_button.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.AddCharges')
 	}
 	
 	private function handleChargeDefinitionCancel(evt:ChargeDefinitionSelectEvent):void
@@ -411,6 +418,12 @@
 	   		}
 			
 		}
+		if  (this.charges.length > 0){
+	     	this.charges_button.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
+	     	this.charges_button.label = StringUtil.substitute(this.charges_button.label,this.charges.length);
+		 }
+		 else
+	 		this.charges_button.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.AddCharges')
 		validateNow();
 	}
 	
@@ -545,7 +558,7 @@
 		this.enabled = false;		
 		pricing_method_combo.selectedIndex = -1;
 		pricing_method_combo.text = "";
-		
+		this.charges_button.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.AddCharges')
 		copierService.newCopier();
 	}       
 
@@ -1325,7 +1338,7 @@
 			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 		</mx:Button>-->
 		<mx:Button x="489" y="205.5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wasteCmd.WasteChart')}" click="doWasteChart();"/>
-		<mx:Button x="534" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.AddCharges')}" click="doAddCharge();"/>
+		<mx:Button x="534" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.AddCharges')}" click="doAddCharge();" id="charges_button"/>
 		<mx:Label x="10" y="286" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.PrinterType')}" textAlign="right" width="104"/>
 		<mx:CheckBox x="122" y="284" label="B&amp;W" id="blackwhitecheck" selected="{copierDefinition.blackwhite}" labelPlacement="right" click="updateMethodBox();"/>
 		<mx:CheckBox x="178" y="284" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'targePriceCmd.Color')}" click="updateMethodBox();" id="colorcheck" selected="{copierDefinition.color}" labelPlacement="right" width="52"/>
