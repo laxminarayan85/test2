@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Delivery Ticket Edit" name="Delivery Ticket Edit"
-	width="100%" height="100%"  
-	creationComplete="init()"  
-	showCloseButton="true"
-     title="Delivery Ticket Edit" 
-     xmlns:text="flash.text.*" xmlns:ns1="com.efi.printsmith.components.*">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryTicket')}"
+	layout="vertical" width="1000" height="750"  creationComplete="init()"  showCloseButton="true" close="{closeWindow()}"
+    xmlns:ns1="com.efi.printsmith.components.*" xmlns:components="com.efi.printsmith.common.components.*">
 	
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.InvoiceBase;
+	import mx.managers.PopUpManager;
 	import mx.rpc.events.ResultEvent;
 
 	import com.efi.printsmith.data.DeliveryTicketJobs;
@@ -18,147 +18,345 @@
 	import mx.rpc.events.FaultEvent;
 	import mx.controls.Alert;
 	
-	[Bindable]
-	private var localDelTicket:DeliveryTicket;
+	[Bindable] private var deliveryTicket:DeliveryTicket;
+	
+	[Bindable] private var _invoiceBase:InvoiceBase;
 	
 	public function init():void{
-		localDelTicket = new DeliveryTicket;
-//		localDelTicket.deliveryJobs = new DeliveryTicketJobs;
+		PopUpManager.centerPopUp(this);	
+	}
+	
+	private function closeWindow():void {
+		PopUpManager.removePopUp(this);
+	}
+	
+	public function setInvoice(tmpInvoiceBase:InvoiceBase):void {
+		_invoiceBase = tmpInvoiceBase;
+		deliveryTicket = new DeliveryTicket();
 	}
 	
 	private function handleFault(ev:FaultEvent):void
-			{
-				var message:String;
-
-				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
-				Alert.show(message, "Error", 0, null);
-			}
+	{
+		var message:String;
+		message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+		Alert.show(message, "Error", 0, null);
+	}
 ]]>
                              
 </mx:Script>
-	<mx:Canvas width="606" height="126">
-		<mx:Button x="10" y="10" label="File"/>
-		<mx:Button x="79" y="10" label="Close"/>
-		<mx:Button x="460" y="10" label="Delete"/>
-		<mx:Button x="532" y="10" label="Cancel"/>
-		<mx:TextInput x="135" y="55" width="104" text="{localDelTicket.ticketNumber}"/>
-		<mx:Label x="10" y="57" text="Ticket Number" width="117" textAlign="right"/>
-		<mx:TextInput x="135" y="83" width="461" text="{localDelTicket.name}"/>
-		<mx:Label x="10" y="85" text="Description" width="117" textAlign="right"/>
-		<mx:Label x="335" y="57" text="Delivery Date" width="117" textAlign="right"/>
-		<mx:DateField x="460" y="55" width="136" text="{localDelTicket.deliveryDate}"/>
-	</mx:Canvas>
-
-	<mx:TabNavigator width="100%" height="378" y="90">
-		<mx:Canvas label="Delivery What" width="100%" height="100%">
-			<mx:DataGrid  id="dataGrid" x="10" y="10" width="590" dataProvider="{localDelTicket.deliveryJobs}" doubleClick="" height="296">
+	
+	<mx:HBox width="100%" height="7%">	
+		<mx:Button width="10%" height="100%">
+			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+		</mx:Button>
+		<mx:Button width="10%" click="{closeWindow()}" height="100%">
+			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
+		</mx:Button>
+		<mx:Spacer width="70%"/>
+		<mx:Button width="10%" height="100%">
+			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+		</mx:Button>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" height="3%">
+		<mx:Label width="10%" height="100%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.File')}" textAlign="center"/>
+		<mx:Label width="10%" height="100%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Close')}" textAlign="center"/>
+		<mx:Spacer width="70%"/>
+		<mx:Label width="10%" height="100%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Delete')}" textAlign="center"/>
+	</mx:HBox>
+	
+	<mx:VBox width="100%" height="10%">
+		<mx:HBox width="100%" height="50%" horizontalGap="1">
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.TicketNumber')}:" width="20%" textAlign="right"/>
+			<mx:TextInput id="ticket_number" width="15%"/>
+			<mx:Spacer width="30%"/>
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryDate')}:" width="20%" textAlign="right"/>
+			<mx:DateField selectedDate="{deliveryTicket.deliveryDate}" width="15%"/>
+		</mx:HBox>
+		<mx:HBox width="100%" height="50%" horizontalGap="1">
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Description')}:" width="20%" textAlign="right"/>
+			<components:CustomStringTextInputComponent
+				dataHolder="{deliveryTicket}" variableName="name" customText="{deliveryTicket.name}" width="80%"/>
+		</mx:HBox>
+	</mx:VBox>
+	
+	<mx:TabNavigator width="100%" height="65%">
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliverWhat')}" width="100%" height="100%">
+			<mx:DataGrid  id="dataGrid" width="100%" dataProvider="{deliveryTicket.deliveryJobs}" height="100%">
 				<mx:columns>
-					<mx:DataGridColumn headerText="Inv/Job"/>
-					<mx:DataGridColumn headerText="Order Qty" />
-					<mx:DataGridColumn headerText="Shipped Qty" />
-					<mx:DataGridColumn headerText="Description" />
-					<mx:DataGridColumn headerText="Weight" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.InvJob')}"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.OrderQty')}" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.ShippedQty')}" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Description')}" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Weight')}" />
 				</mx:columns>
 			</mx:DataGrid>
-			<mx:Button x="10" y="309" label="Add…" width="94"/>
-			<mx:TextInput x="391" y="313" text="{localDelTicket.totalWeight}"/>
-			<mx:Label x="307" y="317" text="Total Weight"/>
-		</mx:Canvas>
-		<mx:Canvas label="Deliver Where" width="100%" height="100%">
-			<ns1:AddressEditor x="10" y="56" id="ship_to_address_editor" addressLabel="Address" height="157" width="214"/>
-			<ns1:ContactInfoEditor x="466" y="56" height="157" width="268" id="ship_to_contact_editor" contactLabel="Contact"/>
-			<mx:ComboBox x="64" y="29"></mx:ComboBox>
-			<mx:Label x="23" y="31" text="From"/>
-			<ns1:AddressEditor x="232" y="56" id="ship_to_address_editor0" addressLabel="Address" height="157" width="214"/>
-			<mx:ComboBox x="286" y="29"></mx:ComboBox>
-			<mx:Label x="243" y="33" text="To"/>
-			<mx:ComboBox x="509" y="2"></mx:ComboBox>
-			<mx:Label x="466" y="6" text="Attn"/>
-			<mx:ComboBox x="523" y="29" width="146"></mx:ComboBox>
-			<mx:Label x="466" y="33" text="Address"/>
-			<mx:CheckBox x="23" y="221" label="Other"/>
-			<mx:CheckBox x="175" y="300" label="Other"/>
-			<mx:CheckBox x="243" y="221" label="Other"/>
-			<mx:CheckBox x="480" y="221" label="Other"/>
-			<mx:TextInput x="175" y="270"/>
-			<mx:Label x="23" y="272" text="Email Address" width="124" textAlign="right"/>
-		</mx:Canvas>
-		<mx:Canvas label="Deliver How" width="100%" height="100%">
-			<mx:TextInput x="58.5" y="228" width="530" height="53"/>
-			<mx:TextInput x="99" y="66"/>
-			<mx:TextInput x="99" y="96"/>
-			<mx:TextInput x="380" y="36"/>
-			<mx:TextInput x="380" y="66"/>
-			<mx:TextInput x="380" y="96"/>
-			<mx:TextInput x="380" y="126"/>
-			<mx:ComboBox x="99" y="36"></mx:ComboBox>
-			<mx:ComboBox x="99" y="126"></mx:ComboBox>
-			<mx:Label x="17" y="38" text="Ship Via" textAlign="right" width="74"/>
-			<mx:Label x="17" y="68" text="Cost" textAlign="right" width="74"/>
-			<mx:Label x="17" y="98" text="Tracking" textAlign="right" width="74"/>
-			<mx:Label x="278" y="36" text="Customer PO" textAlign="right" width="94"/>
-			<mx:Label x="298" y="66" text="Order No." textAlign="right" width="74"/>
-			<mx:Label x="298" y="96" text="Part No." textAlign="right" width="74"/>
-			<mx:Label x="298" y="126" text="Reference" textAlign="right" width="74"/>
-			<mx:Label x="17" y="128" text="Driver" textAlign="right" width="74"/>
-			<mx:Label x="58.5" y="202" text="Delivery Comments" textAlign="left" width="194"/>
-			<mx:CheckBox x="99" y="156" label="COD"/>
-		</mx:Canvas>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Add')}"/>
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.TotalWeight')}" 
+					textAlign="right" width="20%"/>
+				<components:CustomNumericTextInputComponent
+ 					dataHolder="{deliveryTicket}" variableName="totalWeight" customText="{deliveryTicket.totalWeight}"
+ 					precision="2" rounding="nearest" textAlignStyle="left"/>
+			</mx:HBox>
+		</mx:VBox>
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliverWhere')}" width="100%" height="100%">
+			<mx:HBox width="100%" height="85%">
+				<mx:VBox width="33%" height="100%">
+					<mx:HBox width="100%" height="20%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.From')}:"/>
+						<mx:ComboBox/>
+					</mx:HBox>
+					<ns1:AddressEditor width="100%" height="70%"/>
+					<components:CustomCheckBoxComponent height="10%"
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Other')}"
+						dataHolder="{deliveryTicket}" variableName="fromOther" customText="{deliveryTicket.fromOther}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+				</mx:VBox>
+				<mx:VBox width="33%" height="100%">
+					<mx:HBox width="100%" height="20%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.To')}:"/>
+						<mx:ComboBox/>
+					</mx:HBox>
+					<ns1:AddressEditor width="100%" height="70%"/>
+					<components:CustomCheckBoxComponent height="10%"
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Other')}"
+						dataHolder="{deliveryTicket}" variableName="toOther" customText="{deliveryTicket.toOther}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+				</mx:VBox>
+				<mx:VBox width="33%" height="100%">
+					<mx:HBox width="100%" height="10%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Attn')}:"/>
+						<mx:ComboBox/>
+					</mx:HBox>
+					<mx:HBox width="100%" height="10%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Address')}:"/>
+						<mx:ComboBox/>
+					</mx:HBox>
+					<ns1:ContactInfoEditor width="100%" height="70%"/>
+					<components:CustomCheckBoxComponent height="10%"
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Other')}"
+						dataHolder="{deliveryTicket}" variableName="attOther" customText="{deliveryTicket.attOther}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+				</mx:VBox>
+			</mx:HBox>
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Address')}:"/>
+				<components:CustomEmailTextInputComponent
+					dataHolder="{deliveryTicket}" variableName="email" customText="{deliveryTicket.email}"/>
+			</mx:HBox>
+			<components:CustomCheckBoxComponent height="10%"
+				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Other')}"
+				dataHolder="{deliveryTicket}" variableName="emailOther" customText="{deliveryTicket.emailOther}"
+				defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+		</mx:VBox>
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliverHow')}" width="100%" height="100%" horizontalAlign="center">
+			<mx:HBox width="100%" height="75%">
+				<mx:Spacer width="10%"/>
+				<mx:Panel width="40%" height="100%" layout="vertical"
+					title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Shipping')}">
+					<mx:HBox width="100%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShipVia')}:" width="50%"
+							textAlign="right"/>
+						<mx:ComboBox width="50%"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Cost')}:" width="50%"
+							textAlign="right"/>
+						<components:CustomNumericTextInputComponent
+							dataHolder="{deliveryTicket}" customText="{deliveryTicket.shipCost}" variableName="shipCost"
+							precision="2" rounding="nearest" width="50%"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Tracking')}:" width="50%"
+							textAlign="right"/>
+						<components:CustomStringTextInputComponent
+							dataHolder="{deliveryTicket}" customText="{deliveryTicket.trackingNumber}" variableName="trackingNumber" width="50%"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Driver')}:" width="50%"
+							textAlign="right"/>
+						<mx:ComboBox width="50%"/>
+					</mx:HBox>
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.COD')}"
+						dataHolder="{deliveryTicket}" customText="{deliveryTicket.cod}" variableName="cod"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+				</mx:Panel>
+				<mx:Panel width="40%" height="100%" layout="vertical"
+					title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Numbers')}">
+					<mx:HBox width="100%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.CustomerPO')}:" width="50%"
+							textAlign="right"/>
+						<components:CustomStringTextInputComponent
+							dataHolder="{deliveryTicket}" customText="{deliveryTicket.customerPO}" variableName="customerPO" width="50%"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.OrderNo')}:" width="50%"
+							textAlign="right"/>
+						<components:CustomNumericTextInputComponent
+							dataHolder="{deliveryTicket}" customText="{deliveryTicket.orderNumber}" variableName="orderNumber" width="50%"
+							precision="0" rounding="nearest" isInteger="true"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.PartNo')}:" width="50%"
+							textAlign="right"/>
+						<components:CustomStringTextInputComponent
+							dataHolder="{deliveryTicket}" customText="{deliveryTicket.partNumber}" variableName="partNumber" width="50%"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Reference')}:" width="50%"
+							textAlign="right"/>
+						<components:CustomStringTextInputComponent
+							dataHolder="{deliveryTicket}" customText="{deliveryTicket.reference}" variableName="reference" width="50%"/>
+					</mx:HBox>
+				</mx:Panel>
+				<mx:Spacer width="10%"/>
+			</mx:HBox>
+			<mx:Panel width="80%" height="25%" layout="vertical"
+				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryComments')}">
+				<components:CustomTextAreaComponent width="100%" height="100%"
+					dataHolder="{deliveryTicket}" customText="{deliveryTicket.preComment}" variableName="preComment"/>
+			</mx:Panel>
+		</mx:VBox>
 		
-		<mx:Canvas label="Printing" width="100%" height="100%">
-			<mx:Button x="28" y="10" height="38" width="38" click=""	>
-				<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
-			</mx:Button>
-			<mx:Button x="28" y="71" height="38" width="38" click=""	>
-				<mx:icon>@Embed(source='../../../../assets/print_carton_labels.png')</mx:icon>
-			</mx:Button>
-			<mx:Label x="100" y="20" text="Format"/>
-			<mx:ComboBox x="152" y="18"></mx:ComboBox>
-			<mx:Label x="100" y="81" text="Label Format"/>
-			<mx:ComboBox x="186" y="79"></mx:ComboBox>
-			<mx:VDividedBox x="28" y="56" height="2" width="461">
-			</mx:VDividedBox>
-			<mx:Button x="363" y="79" label="Define Label" width="99"/>
-			<mx:TextInput x="152" y="130" width="64"/>
-			<mx:Label x="39" y="130" text="Carton Count" width="105" textAlign="right"/>
-			<mx:TextInput x="152" y="158" width="64"/>
-			<mx:TextInput x="152" y="184" width="64"/>
-			<mx:TextInput x="325" y="130" width="64"/>
-			<mx:Label x="235" y="132" text="Start Number" width="82" textAlign="right"/>
-			<mx:TextInput x="325" y="158" width="64"/>
-			<mx:Label x="235" y="160" text="Skip Count" width="82" textAlign="right"/>
-			<mx:Label x="39" y="186" text="Total Items" width="105" textAlign="right"/>
-			<mx:Label x="39" y="158" text="Items per carton" width="105" textAlign="right"/>
-			<mx:CheckBox x="61" y="221" label="Attention Name" width="177"/>
-			<mx:CheckBox x="285" y="221" label="Delivery Comments" width="177"/>
-			<mx:CheckBox x="61" y="244" label="Customer Name" width="177"/>
-			<mx:CheckBox x="61" y="269" label="Address" width="177"/>
-			<mx:CheckBox x="61" y="291" label="Order Number" width="177"/>
-			<mx:CheckBox x="285" y="291" label="PO Number" width="177"/>
-			<mx:CheckBox x="61" y="313" label="Delivery Description" width="177"/>
-			<mx:CheckBox x="285" y="313" label="Estimated Weight" width="177"/>
-			<mx:RadioButtonGroup id="radiogroup1"/>
-			<mx:RadioButton x="285" y="243" label="Todays Date" groupName="radiogroup1"/>
-			<mx:RadioButton x="285" y="269" label="Delivery Date" groupName="radiogroup1"/>
-			
-		</mx:Canvas>
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Printing')}" width="100%" height="100%">
+			<mx:HBox width="100%" height="10%">
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Print')}" labelPlacement="bottom" 
+					width="8%" height="100%">
+					<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
+				</mx:Button>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Format')}:"/>
+				<mx:ComboBox/>
+			</mx:HBox>
+			<mx:HRule width="100%"/>
+			<mx:HBox width="100%" height="90%">
+				
+				<mx:VBox width="20%">
+					<mx:Spacer height="45%"/>
+					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Labels')}" labelPlacement="bottom" 
+						width="40%" height="10%">
+						<mx:icon>@Embed(source='../../../../assets/print_carton_labels.png')</mx:icon>
+					</mx:Button>
+					<mx:Spacer height="45%"/>
+				</mx:VBox>
+				
+				<mx:VBox width="80%" height="100%">
+					<mx:HBox width="100%">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.LabelFormat')}" fontWeight="bold"/>
+						<mx:ComboBox/>
+						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.DefineLabelFormat')}"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Carton')}" layout="vertical" width="50%">
+							<mx:HBox width="100%">
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.CartonCount')}:" width="50%" textAlign="right"/>
+								<components:CustomNumericTextInputComponent
+									dataHolder="{deliveryTicket}" customText="{deliveryTicket.cartonCount}" variableName="cartonCount"
+									precision="0" rounding="nearest" isInteger="true" width="50%"/>
+							</mx:HBox>
+							<mx:HBox width="100%">
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.ItemsPerCarton')}:" width="50%" textAlign="right"/>
+								<components:CustomNumericTextInputComponent
+									dataHolder="{deliveryTicket}" customText="{deliveryTicket.itemsPerCarton}" variableName="itemsPerCarton"
+									precision="0" rounding="nearest" isInteger="true" width="50%"/>
+							</mx:HBox>
+							<mx:HBox width="100%">
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.TotalItems')}:" width="50%" textAlign="right"/>
+								<components:CustomNumericTextInputComponent
+									dataHolder="{deliveryTicket}" customText="{deliveryTicket.totalItemsInCarton}" variableName="totalItemsInCarton"
+									precision="0" rounding="nearest" isInteger="true" width="50%"/>
+							</mx:HBox>
+						</mx:Panel>
+						<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.LabelControl')}" layout="vertical" width="50%">
+							<mx:HBox width="100%">
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.StartNumber')}:" width="50%" textAlign="right"/>
+								<components:CustomNumericTextInputComponent
+									dataHolder="{deliveryTicket}" customText="{deliveryTicket.labelStartCount}" variableName="labelStartCount"
+									precision="0" rounding="nearest" isInteger="true" width="50%"/>
+							</mx:HBox>
+							<mx:HBox width="100%">
+								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.SkipCount')}:" width="50%" textAlign="right"/>
+								<components:CustomNumericTextInputComponent
+									dataHolder="{deliveryTicket}" customText="{deliveryTicket.labelSkipCount}" variableName="labelSkipCount"
+									precision="0" rounding="nearest" isInteger="true" width="50%"/>
+							</mx:HBox>
+						</mx:Panel>
+					</mx:HBox>
+					<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.LabelOptions')}" layout="vertical" width="100%">
+						<mx:HBox width="80%">
+							<mx:VBox width="50%">
+								<components:CustomCheckBoxComponent
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.AttentionName')}"
+									dataHolder="{deliveryTicket}" variableName="attNameCheck" customText="{deliveryTicket.attNameCheck}"
+									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+								<components:CustomCheckBoxComponent
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.CustomerName')}"
+									dataHolder="{deliveryTicket}" variableName="customerNameCheck" customText="{deliveryTicket.customerNameCheck}"
+									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+								<components:CustomCheckBoxComponent
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.Address')}"
+									dataHolder="{deliveryTicket}" variableName="addressCheck" customText="{deliveryTicket.addressCheck}"
+									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+								<components:CustomCheckBoxComponent
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.OrderNumber')}"
+									dataHolder="{deliveryTicket}" variableName="orderNumberCheck" customText="{deliveryTicket.orderNumberCheck}"
+									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+								<components:CustomCheckBoxComponent
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryDescription')}"
+									dataHolder="{deliveryTicket}" variableName="deliveryDescCheck" customText="{deliveryTicket.deliveryDescCheck}"
+									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+							</mx:VBox>
+							
+							<mx:VBox width="50%">
+								<components:CustomCheckBoxComponent
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryComments')}"
+									dataHolder="{deliveryTicket}" variableName="deliveryCommentsCheck" customText="{deliveryTicket.deliveryCommentsCheck}"
+									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+								<mx:RadioButtonGroup id="dateOptions" selectedValue="{deliveryTicket.dateType}"/>
+								<mx:RadioButton groupName="dateOptions"
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.TodaysDate')}" value="todayDate"/>
+								<mx:RadioButton groupName="dateOptions"
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryDate')}" value="deliveryDate"/>
+								<components:CustomCheckBoxComponent
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.PONumber')}"
+									dataHolder="{deliveryTicket}" variableName="poNumberCheck" customText="{deliveryTicket.poNumberCheck}"
+									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+								<components:CustomCheckBoxComponent
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.EstimatedWeight')}"
+									dataHolder="{deliveryTicket}" variableName="estWeightCheck" customText="{deliveryTicket.estWeightCheck}"
+									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+							</mx:VBox>
+						</mx:HBox>
+					</mx:Panel>
+				</mx:VBox>
+			</mx:HBox>
+		</mx:VBox>
 		
-		<mx:Canvas label="Status" width="100%" height="100%">
-			<mx:TextInput x="34" y="29" width="455" height="58"/>
-			<mx:Label x="34" y="10" text="Follow up Comments" width="136"/>
-			<mx:Label x="34" y="117" text="Change Location" width="136" fontWeight="bold"/>
-			<mx:Label x="34" y="143" text="Location" width="86" textAlign="right"/>
-			<mx:TextInput x="137" y="141" width="307"/>
-			<mx:DataGrid x="34" y="169" width="455">
-				<mx:columns>
-					<mx:DataGridColumn headerText="Delivered" dataField="col1"/>
-					<mx:DataGridColumn headerText="Inv/Job" dataField="col2"/>
-					<mx:DataGridColumn headerText="Description" dataField="col3"/>
-				</mx:columns>
-			</mx:DataGrid>
-			<mx:Button x="34" y="313" label="Update location on selected items" width="304"/>
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Status')}" width="100%" height="100%" horizontalAlign="center">
+		
+			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.FollowupComments')}" layout="vertical" width="90%" height="40%">
+				<components:CustomTextAreaComponent
+					dataHolder="{deliveryTicket}" customText="{deliveryTicket.postComment}" variableName="postComment"
+					width="100%" height="100%"/>
+			</mx:Panel>
 			
-		</mx:Canvas>
+			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.ChangeLocations')}" layout="vertical" width="90%">
+				<mx:HBox width="100%">
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Location')}:" fontWeight="bold"/>
+					<mx:ComboBox/>
+				</mx:HBox>
+				<mx:DataGrid width="100%">
+					<mx:columns>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Delivered')}" dataField="col1"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.InvJob')}" dataField="col2"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Description')}" dataField="col3"/>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Updatelocationonsele')}"/>
+			</mx:Panel>
+		</mx:VBox>
+		
 	</mx:TabNavigator>
 	
 </mx:TitleWindow>
