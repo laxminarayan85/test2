@@ -31,6 +31,21 @@
 			</mx:AddChild>
 		</mx:State>
 	</mx:states>
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.AccessGroup;
+		]]>
+	</mx:Script>
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.AccessGroup;
+		]]>
+	</mx:Script>
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.AccessGroup;
+		]]>
+	</mx:Script>
 	 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -54,6 +69,7 @@
 
 <mx:Script>  	
 <![CDATA[
+	import mx.controls.Image;
 	import mx.events.FlexEvent;
 	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.view.window.MDIWindow;
@@ -100,7 +116,8 @@
 	private var rawSecurityCommands:ArrayCollection;
 	private var _commandsRecd:Boolean = false;
 	private var _setupRecd:Boolean = false;
-			
+	
+	public var listOfLockedCommands:ArrayCollection;		
 	           
 	public function getSecurityCommand():String {
 		return PSSecurityCommands.ADMIN_SECURITYSETUP;
@@ -115,6 +132,18 @@
 	              
 		dataService.getAll("AccessGroup"); 
 		dataServiceSecurityCommands.getAll("SecurityCommands");
+		
+		listOfLockedCommands = new ArrayCollection();
+		listOfLockedCommands.addItem("Help_QuickAccess");
+		listOfLockedCommands.addItem("Quit_Abort");
+		listOfLockedCommands.addItem("Quit_AutoShutdown");
+		listOfLockedCommands.addItem("Admin_ConfigureQuickAccess");
+		listOfLockedCommands.addItem("Admin_UserLogIn");
+		listOfLockedCommands.addItem("Admin_AutoLogin");
+		listOfLockedCommands.addItem("CreditCard_ReadMagneticCard");
+		listOfLockedCommands.addItem("Preferences_AutoBackupManager");
+		
+		
 		
 	}                
 
@@ -374,6 +403,7 @@
 			returnvalue="Item Not Found"
 		}
 		return returnvalue;
+		
 	}
 
 ]]>
@@ -393,18 +423,69 @@
 		<mx:Label x="264" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center" id="label3"/>
 		<mx:VBox bottom="0" right="0" left="200" top="80">
 			<mx:DataGrid id="dataGrid"  
-				dataProvider="{securityCommandsLists}"  sortableColumns="false" width="100%" height="100%" editable="true">
+				dataProvider="{securityCommandsLists}"  sortableColumns="false" width="100%" height="100%" editable="false">
 				<mx:columns> 
 					<mx:DataGridColumn  sortable="false" width="50"  textAlign="center" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Enabled')}" dataField="enable"
 						editorDataField="selected"
 							itemEditor="mx.controls.CheckBox">
 					   <mx:itemRenderer>
 					      <mx:Component>
-					         <mx:CheckBox click="data.enable=!data.enable"  selected="{data.enable}"/>
+					      		<mx:HBox horizontalAlign="center">
+					      			<mx:Script>
+					      			<![CDATA[
+					      				import com.efi.printsmith.data.AccessGroup;
+					      			]]>
+					      			</mx:Script>	
+					      			<mx:CheckBox width="30%" click="data.enable=!data.enable"   selected="{data.enable}"
+					      				enabled="{!(((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name == 'System Admin') 
+					      				|| ((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name == 'Minimum')
+					      				|| (outerDocument.listOfLockedCommands.contains(data.commandId)))}" 
+					      				/>
+					      				
+					      		</mx:HBox>
+					      		
+					      </mx:Component>						
+					   </mx:itemRenderer> 
+					</mx:DataGridColumn>
+					<!--<mx:DataGridColumn sortable="false" width="100"  textAlign="center" 
+						itemEditor="mx.controls.Label">
+					   <mx:itemRenderer>
+					      <mx:Component>
+					      		
+					      		<mx:Label width="100%" text="{outerDocument.listOfLockedCommands.contains(data.commandId) + data.commandId}"  >
+					      			
+					      			<mx:Script>
+					      			<![CDATA[
+					      				import com.efi.printsmith.data.AccessGroup;
+					      			]]>
+					      		</mx:Script>
+					      		</mx:Label>
+					      					
+					      </mx:Component>						
+					   </mx:itemRenderer> 
+					</mx:DataGridColumn>-->
+					<mx:DataGridColumn sortable="false" width="10"  textAlign="center" 
+						itemEditor="mx.controls.Image">
+					   <mx:itemRenderer>
+					      <mx:Component>
+					      		<mx:Canvas>
+					      			<mx:Script>
+					      			<![CDATA[
+					      				import com.efi.printsmith.data.AccessGroup;
+					      			]]>
+					      		</mx:Script>	
+					      		<mx:Image width="100%" source="@Embed(source='../../../../assets/LineItemLock.png')" 
+					      			visible="{(((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name == 'System Admin') 
+					      				|| ((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name == 'Minimum')
+					      				|| (outerDocument.listOfLockedCommands.contains(data.commandId)))}" />
+					      		
+					      		</mx:Canvas>
+					      					
 					      </mx:Component>						
 					   </mx:itemRenderer> 
 					</mx:DataGridColumn>
 
+					      			
 						<mx:DataGridColumn  sortable="false" width="300" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Menu')}" labelFunction="gridDisplayLabelMenu"  editable="false"/>
 						<mx:DataGridColumn  sortable="false" width="300" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.CommandName')}" labelFunction="gridDisplayLabelCommand" editable="false"/>
 				</mx:columns>
