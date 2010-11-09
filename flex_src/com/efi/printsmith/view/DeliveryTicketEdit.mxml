@@ -15,8 +15,13 @@
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadAddResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServicePreferenceSystem" destination="dataService" showBusyCursor="true">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPSResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.data.PreferencesSystem;
 		import com.efi.printsmith.events.PendingListPickerEvent;
 		import com.efi.printsmith.events.PendingListUpdateEvent;
 		import mx.events.DataGridEventReason;
@@ -38,6 +43,10 @@
 		
 		[Bindable] private var _invoiceBase:InvoiceBase;
 		
+		[Bindable] private var fromContactList:ArrayCollection = new ArrayCollection();
+		
+		[Bindable] private var toContactList:ArrayCollection = new ArrayCollection();
+		
 		public function init():void{
 			PopUpManager.centerPopUp(this);	
 		}
@@ -51,10 +60,25 @@
 			dataServiceInvoice.getInvoice(_invoiceBase.id);
 		}
 		
+		private function handleLoadPSResult(event:ResultEvent):void {
+			var preferencesSystem:PreferencesSystem = event.result as PreferencesSystem;
+			if(preferencesSystem!=null && preferencesSystem.companyAddress!=null){
+				deliveryTicket.fromAddress = preferencesSystem.companyAddress;
+				from_address.setAddress(deliveryTicket.fromAddress);
+				fromContactList.addItem(preferencesSystem.companyAddress);
+			}
+			
+		}
+		
 		private function handleLoadResult(event:ResultEvent):void {
 			_invoiceBase = event.result as InvoiceBase;
 			deliveryTicket = new DeliveryTicket();
 			if(_invoiceBase!=null){
+				if(_invoiceBase.account!=null && _invoiceBase.account.shipToAddress!=null) {
+					deliveryTicket.toAddress = _invoiceBase.account.shipToAddress;
+					to_address.setAddress(deliveryTicket.toAddress);
+					toContactList.addItem(_invoiceBase.account.shipToAddress);
+				}
 				if(_invoiceBase.deliveryIntentDate!=null){
 					deliveryTicket.deliveryDate = _invoiceBase.deliveryIntentDate;
 				} else {
@@ -66,6 +90,7 @@
 				copyJobs(deliveryTicketJobsList,_invoiceBase);
 				deliveryTicket.deliveryJobs = deliveryTicketJobsList;
 			}
+			dataServicePreferenceSystem.getSingle("PreferencesSystem");
 		}
 		
 		private function handleLoadAddResult(event:ResultEvent):void {
@@ -249,9 +274,12 @@
 				<mx:VBox width="33%" height="100%">
 					<mx:HBox width="100%" height="20%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.From')}:"/>
-						<mx:ComboBox/>
+						<components:CustomComboBoxComponent
+							dataHolder="{deliveryTicket}" variableName="fromAddress" updateObject="true" objectLabelFieldId="id"
+							labelFieldId="id" labelFieldName="name" masterList="{fromContactList}"
+							customText="{getCustomTextData(fromContactList,deliveryTicket,deliveryTicket.fromAddress)}"/> 
 					</mx:HBox>
-					<ns1:AddressEditor width="100%" height="70%"/>
+					<ns1:AddressEditor id="from_address" width="100%" height="70%"/>
 					<components:CustomCheckBoxComponent height="10%"
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Other')}"
 						dataHolder="{deliveryTicket}" variableName="fromOther" customText="{deliveryTicket.fromOther}"
@@ -260,9 +288,12 @@
 				<mx:VBox width="33%" height="100%">
 					<mx:HBox width="100%" height="20%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.To')}:"/>
-						<mx:ComboBox/>
+						<components:CustomComboBoxComponent
+							dataHolder="{deliveryTicket}" variableName="toAddress" updateObject="true" objectLabelFieldId="id"
+							labelFieldId="id" labelFieldName="name" masterList="{toContactList}"
+							customText="{getCustomTextData(toContactList,deliveryTicket,deliveryTicket.toAddress)}"/> 
 					</mx:HBox>
-					<ns1:AddressEditor width="100%" height="70%"/>
+					<ns1:AddressEditor id="to_address" width="100%" height="70%"/>
 					<components:CustomCheckBoxComponent height="10%"
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Other')}"
 						dataHolder="{deliveryTicket}" variableName="toOther" customText="{deliveryTicket.toOther}"
