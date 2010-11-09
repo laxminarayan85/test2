@@ -16,6 +16,11 @@ package com.efi.printsmith.data
 				
 		public var transactions:ArrayCollection;
 		public var name:String = "";
+		public var accumSubTotal:Number = 0;
+		public var accumTotal:Number = 0;
+		public var accumTaxTotal:Number = 0;
+		public var accumTendered:Number = 0;
+		public var accumChange:Number = 0;
 	
 	}
 }
