@@ -931,7 +931,11 @@
 			
 			private function handleJobMethodPickerCancel(evt:JobMethodSelectEvent):void {
 				this.enabled = true;
-				PopUpManager.removePopUp(this);
+				if(loadComponent)
+					loadComponent.close();
+				var mdiWindow:MDIWindow = this.parent as MDIWindow;
+				mdiWindow.closeWindow();
+				//PopUpManager.removePopUp(this);
 			}
 
 			private function findItem(name:String, array:ArrayCollection):int
