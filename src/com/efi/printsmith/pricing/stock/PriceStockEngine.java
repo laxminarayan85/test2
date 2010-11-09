@@ -198,8 +198,8 @@ public class PriceStockEngine {
 				qty = job.getImpressionsPerRun() * job.getSheets();// * job.getSignatures(); // TODO: Double-check need to use signatures vs just sheets ordered here
 			} else {
 				qty = (job.getNumCopies() * (job.getSheets() / job.getNumOn()));
-				if (job.getPaperCal().getSheetsOut() > 0)
-					qty = qty / job.getPaperCal().getSheetsOut();
+				if (job.getPaperCal().getRunout() > 0)
+					qty = qty / job.getPaperCal().getRunout();
 			}
 			if (qty < stockDefinition.getMinorder())
 				qty = stockDefinition.getMinorder();
