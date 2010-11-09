@@ -445,7 +445,7 @@
 						charge.startHours = parseInt(startTimeString.substr(0,colonPosition));
 						charge.startMinutes = parseInt(startTimeString.substr(colonPosition+1));
 					} else {
-						charge.startMinutes = parseInt(startTimeString);
+						charge.startHours = parseInt(startTimeString);
 					}
 				}
 						

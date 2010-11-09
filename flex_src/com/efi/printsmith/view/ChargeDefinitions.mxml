@@ -363,8 +363,12 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			var roudV:Number;
 			var prices:ChargeCostingPrices = ev.result as ChargeCostingPrices;
 			
-			costPricingString = Number(pricingNumberFormatter.format(prices.unitPrice)).toFixed(2) + " + " +
-								Number(pricingNumberFormatter.format(prices.setupPrice)).toFixed(2);
+			if (prices.setupPrice != 0) {
+				costPricingString = Number(pricingNumberFormatter.format(prices.unitPrice)).toFixed(2) + " + " +
+									Number(pricingNumberFormatter.format(prices.setupPrice)).toFixed(2);
+			} else {
+				costPricingString = Number(pricingNumberFormatter.format(prices.unitPrice)).toFixed(2);
+			}
 		} else {
 			costPricingString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable');
 		}
@@ -721,7 +725,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		if (event.detail == Alert.OK) 
 			fireDeleteEvent(this.chargeCommand, new mx.rpc.Responder(handleDeleteResult, handleFault));
 	}
-	
+		
 	private function doDelete():void {
 		var deleteStr:String;
 		if(chargeTree.selectedItem!=null && deleteBtnEnabled){
@@ -729,10 +733,14 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 				this.chargeCategory = chargeTree.selectedItem as ChargeCategory;
 				deleteStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), this.chargeCategory.name);
 				Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteCategory,null,Alert.OK);
-			} else if(chargeTree.selectedItem is ChargeDefinition){
+			} else if (chargeTree.selectedItem is ChargeDefinition) {
 				this.charge = chargeTree.selectedItem as ChargeDefinition; 
 				deleteStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), this.charge.title);
 				Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteCharge,null,Alert.OK);
+			} else if (chargeTree.selectedItem is ChargeCommand) {
+				this.chargeCommand = chargeTree.selectedItem as ChargeCommand;
+				deleteStr = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), this.chargeCommand.title);
+				Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteCommand,null,Alert.OK);
 			}
 		}
 		/* if (this.charge != null) {
@@ -1553,11 +1561,11 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 	
 	private function tree_itemClick(evt:Event):void {
 		if(evt.currentTarget.selectedItem!=null){
-			if(evt.currentTarget.selectedItem is ChargeCommand) {
-				deleteBtnEnabled = false;
-			} else {
+//			if(evt.currentTarget.selectedItem is ChargeCommand) {
+//				deleteBtnEnabled = false;
+//			} else {
 				deleteBtnEnabled = true;
-			}
+//			}
 		} else if(evt.currentTarget.selectedItem==null){
 			deleteBtnEnabled = false;
 		}

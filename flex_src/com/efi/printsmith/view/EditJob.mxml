@@ -1983,20 +1983,24 @@
 				var maxSizeLength:Number = Snowmass.getLengthFromSizeString(maxSize);
 				var runSize:Dimension = this.job_size.selectedItem as Dimension;
 				var message:String = "";
-				if (runSize.width * runSize.height < minSizeWidth * minSizeLength) {
-					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeisless");
-					Alert.show(message, "Warning", 0, null, null, null, 4); 
-				}
-				if (runSize.width * runSize.height > maxSizeWidth * maxSizeLength) {
-					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeexceed");
-					Alert.show(message, "Warning", 0, null, null, null, 4); 
+				if (runSize != null) {
+					if (runSize.width * runSize.height < minSizeWidth * minSizeLength) {
+						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeisless");
+						Alert.show(message, "Warning", 0, null, null, null, 4); 
+					}
+					if (runSize.width * runSize.height > maxSizeWidth * maxSizeLength) {
+						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeexceed");
+						Alert.show(message, "Warning", 0, null, null, null, 4); 
+					}
 				}
 			}
 
 			private function dimensionChangePropagate():void
 			{	
+				if (job == null) return;
+				
 				// keep in sync
-				if (job.runSize.width == 0 || job.runSize.height == 0 || job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
+				if ((job.runSize != null && job.parentSize != null) && (job.runSize.width == 0 || job.runSize.height == 0 || job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height)) {
 					job.runSize.name = job.parentSize.name;
 					job.runSize.type = job.parentSize.type;
 					job.runSize.height = job.parentSize.height;
@@ -2006,7 +2010,7 @@
 				}
 	
 				if (this.currentState != "LargeFormat") {
-					if (job.finishSize.width == 0 || job.finishSize.height == 0 || job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
+					if ((job.finishSize != null && job.runSize != null) && (job.finishSize.width == 0 || job.finishSize.height == 0 || job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height)) {
 						job.finishSize.name = job.runSize.name;
 						job.finishSize.type = job.runSize.type;
 						job.finishSize.height = job.runSize.height;
@@ -2015,8 +2019,9 @@
 						job_finish_size.selectedIndex = job_size.selectedIndex;
 					}
 				}
+				
 				if (this.estimatingPreferences.leaveFoldedSizeEmpty != true) {
-					if (job.foldedSize.width == 0 || job.foldedSize.height == 0 || job.foldedSize.width > job.finishSize.width || job.foldedSize.height > job.finishSize.height) {
+					if ((job.foldedSize != null && job.finishSize != null) && (job.foldedSize.width == 0 || job.foldedSize.height == 0 || job.foldedSize.width > job.finishSize.width || job.foldedSize.height > job.finishSize.height)) {
 						job.foldedSize.name = job.finishSize.name;
 						job.foldedSize.type = job.finishSize.type;
 						job.foldedSize.width = job.finishSize.width;

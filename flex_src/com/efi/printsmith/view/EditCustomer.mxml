@@ -446,6 +446,9 @@
 		ship_via_combo.selectedIndex = findItem(defaultShipVia, shippingMethods);
 		sales_rep_combo.selectedIndex = findItem(defaultSalesRep, salesReps);
 		sales_rep_combo2.selectedIndex = findItem(defaultSalesRep, salesReps);
+		this.JobCharges = new ArrayCollection;
+		this.EstInvCharges = new ArrayCollection;
+		
 		mapToAccountData();
 		setOriginalAccount();
 	 	if ( this.enabled == false)

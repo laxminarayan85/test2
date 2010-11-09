@@ -113,6 +113,14 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		chargeDefinition.presetInSetsOf = parseCurrencyFloat(this.in_sets_of_text.text);
 		chargeDefinition.presetInSetsOfLabel = this.in_sets_of_label_text.text;
 		chargeDefinition.rateSetCount = chargeDefinition.presetInSetsOf;
+		chargeDefinition.presetTimeStartLabel = this.time_start_label_text.text;
+		chargeDefinition.presetTimeStopLabel = this.time_end_label_text.text;
+		chargeDefinition.presetSetupLabel = this.setup_label_text.text;
+		chargeDefinition.presetPricePerPoundLabel = this.price_per_pound_label_text.text;
+		chargeDefinition.presetCoverPerPoundLabel = this.cover_per_pound_label_text.text;
+		chargeDefinition.presetTotalWeightLabel = this.total_weight_label_text.text;
+		chargeDefinition.presetAreaLabel = this.area_label_text.text;
+		chargeDefinition.presetUpLabel = this.up_label_text.text;
 		if (this.linear_bottom != null) {
 			chargeDefinition.linearX1 = this.linear_bottom.selected;
 		}
