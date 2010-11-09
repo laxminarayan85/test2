@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="500" height="500" creationComplete="{init()}" 
+	xmlns:filter="com.efi.printsmith.common.components.filter.*" xmlns:pendinglist="com.efi.printsmith.components.pendinglist.*">
+	
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getPending" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServicePrefPOS" destination="dataService" showBusyCursor="true">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPreferencesPOSResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.events.PendingListPickerEvent;
+			import com.efi.printsmith.data.Invoice;
+			import com.efi.printsmith.data.Estimate;
+			import com.efi.printsmith.data.PreferencesPOS;
+			import mx.controls.Alert;
+			import com.efi.printsmith.data.JobBase;
+			import com.efi.printsmith.data.Charge;
+			import com.efi.printsmith.common.components.filter.FilterSearchBy;
+			import com.efi.printsmith.common.components.filter.FilterProperty;
+			import com.efi.printsmith.data.InvoiceBase;
+			import mx.controls.dataGridClasses.DataGridColumn;
+			import mx.rpc.events.ResultEvent;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.FaultEvent;
+			import mx.collections.ArrayCollection;
+			
+			[Bindable] private var pendingList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var preferencesPOS:PreferencesPOS;
+			
+			private function init():void {
+				PopUpManager.centerPopUp(this);
+				dataServicePrefPOS.getSingle("PreferencesPOS");
+				dataService.getPending();
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function handleLoadResult(event:ResultEvent):void {
+				pendingList = event.result as ArrayCollection;
+			}
+			
+			public function getAccountLabel(item:Object, column:DataGridColumn):String{
+				var tmpInvoice:InvoiceBase = item as InvoiceBase;
+				
+				if (tmpInvoice != null && tmpInvoice.account != null && tmpInvoice.account.title != null && tmpInvoice.account.title != "") {
+					return tmpInvoice.account.title;
+				} else {
+					return "None";
+				}
+			}
+			
+			private function getSearchBy():ArrayCollection {
+				var sc:ArrayCollection = new ArrayCollection();
+				
+				var fp:FilterProperty = new FilterProperty(new FilterProperty(null, "title"), "account");
+				var sc1:FilterSearchBy = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Name'), fp);
+				sc.addItem(sc1); 
+		
+				fp = new FilterProperty(new FilterProperty(null, "firstName"), "contact");
+				sc1 = new FilterSearchBy("First Name", fp);
+				sc.addItem(sc1); 
+				
+				fp = new FilterProperty(new FilterProperty(null, "lastName"), "contact");
+				sc1 = new FilterSearchBy("Last Name", fp);
+				sc.addItem(sc1);
+				
+				fp = new FilterProperty(null, "invoiceNumber");
+				sc1 = new FilterSearchBy("Doc Number", fp);
+				sc.addItem(sc1);
+				
+				//MS:TODO WEBREFERENCE
+				sc1 = new FilterSearchBy("Location", null, searchLocation);
+				sc.addItem(sc1);
+				
+				fp = new FilterProperty(new FilterProperty(null, "comLinks",true, "value","type","Phone"), "contact");
+				sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Phone'), fp);
+				sc.addItem(sc1);
+			
+				fp = new FilterProperty(null, "customerPO");
+				sc1 = new FilterSearchBy("PO", fp);
+				sc.addItem(sc1);
+		
+				fp = new FilterProperty(new FilterProperty(null,"id"), "account");
+				sc1 = new FilterSearchBy("Customer #", fp);
+				sc.addItem(sc1);
+		
+				fp = new FilterProperty(null, "name");
+				sc1 = new FilterSearchBy("Doc Title", fp);
+				sc.addItem(sc1);
+		
+				sc1 = new FilterSearchBy("Job Comment", null, searchJobComment);
+				sc.addItem(sc1);
+				
+				return sc;
+		
+			}
+			
+			public function searchJobComment(obj:Object, searchStr:String):Boolean	{
+				var inv:InvoiceBase = obj as InvoiceBase;
+				
+				for (var i:int=0; i<inv.jobs.length; i++)	{
+					var j:JobBase = inv.jobs.getItemAt(i) as JobBase;
+					if ((j.comment != null) && (j.comment.toUpperCase().indexOf(searchStr.toUpperCase()) > -1))
+						return true;
+				}
+				return false;
+			}
+			
+			public function searchLocation(obj:Object, searchStr:String):Boolean	{
+				var inv:InvoiceBase = obj as InvoiceBase;
+				
+				for (var i:int=0; i<inv.charges.length; i++)	{
+					var j:Charge = inv.charges.getItemAt(i) as Charge;
+					if ((j.productionLocation != null) && (j.productionLocation.name.toUpperCase().indexOf(searchStr.toUpperCase()) > -1))
+						return true;
+				}
+				return false;
+			}
+			
+			private function handleFault(ev:FaultEvent):void
+			{
+				var message:String;
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null);
+			}
+			
+			private function handleLoadPreferencesPOSResult(event:ResultEvent):void {
+				preferencesPOS = event.result as PreferencesPOS;
+			}
+			
+			public function getColorFromPOS(item:Object, preferencesPOSObj:PreferencesPOS):uint {
+				var todayDate:Date = new Date();
+				if(item.readyToPickup || item.completed){
+					if(preferencesPOSObj!=null && preferencesPOSObj.pickupColor!=null && preferencesPOSObj.pickupColor!=""){
+						return uint(parseInt(preferencesPOSObj.pickupColor));
+					}
+				} else if ((item.completed == false && item.readyToPickup == false)
+								&& (item.wantedDate != null)  
+								&& (item.wantedDate.time < todayDate.time) && preferencesPOSObj!=null && preferencesPOSObj.colorPastDueEntries
+								&& preferencesPOSObj.pastDueColor!=null && preferencesPOSObj.pastDueColor!="") {
+					return uint(parseInt(preferencesPOSObj.pastDueColor));				
+				} else if(item is Invoice) {
+					if(preferencesPOSObj!=null && preferencesPOSObj.invoiceColor!=null && preferencesPOSObj.invoiceColor!=""){
+						return uint(parseInt(preferencesPOSObj.invoiceColor));
+					}
+				} else if(item is Estimate) {
+					if(preferencesPOSObj!=null && preferencesPOSObj.estimateColor!=null && preferencesPOSObj.estimateColor!=""){
+						return uint(parseInt(preferencesPOSObj.estimateColor));
+					}
+				}
+				return 0xffffff;
+			}
+			
+			private function doSelect():void {
+				if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
+					dispatchEvent(new PendingListPickerEvent(PendingListPickerEvent.PENDINGLIST_PICKER_SELECT_EVENT,dgView.selectedItem as InvoiceBase));
+					callLater(closeWindow);
+				}
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%" height="80%">
+	
+		<mx:DataGrid id="dgView" dataProvider="{pendingList}" headerHeight="0" doubleClickEnabled="true" doubleClick="{doSelect()}" width="70%" height="100%">
+			<mx:columns>
+				<mx:DataGridColumn labelFunction="getAccountLabel">
+					<mx:itemRenderer>
+						<mx:Component>
+							<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+				<mx:DataGridColumn dataField="invoiceNumber">
+					<mx:itemRenderer>
+						<mx:Component>
+							<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+			</mx:columns>
+		</mx:DataGrid>
+		
+		<mx:VBox width="30%" height="100%">
+			<mx:Spacer height="30%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Select')}" click="{doSelect()}"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{closeWindow()}"/>
+			<mx:Spacer height="30%"/>
+		</mx:VBox>
+		
+	</mx:HBox>
+	<filter:PickerFilter id="pickerFilter" width="100%" height="26" searchComponent="{dgView}" listData="{pendingList}"  showExtendedSearch="false" searchCriteria="{getSearchBy()}" />
+</mx:TitleWindow>

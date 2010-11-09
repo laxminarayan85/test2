@@ -3,47 +3,146 @@
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryTicket')}"
 	layout="vertical" width="1000" height="750"  creationComplete="init()"  showCloseButton="true" close="{closeWindow()}"
     xmlns:ns1="com.efi.printsmith.components.*" xmlns:components="com.efi.printsmith.common.components.*">
+    
+    <mx:Script source="../common/scripts/ComponentHelper.as"/>
+    
+    <mx:RemoteObject id="dataServiceInvoice" destination="dataService" showBusyCursor="true">
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	</mx:RemoteObject>
 	
-<mx:Script>                                   
-<![CDATA[
-	import com.efi.printsmith.data.InvoiceBase;
-	import mx.managers.PopUpManager;
-	import mx.rpc.events.ResultEvent;
-
-	import com.efi.printsmith.data.DeliveryTicketJobs;
-	import com.efi.printsmith.data.Broker;
-	import com.efi.printsmith.data.DeliveryTicket;
-	import mx.collections.ArrayCollection;
-	import mx.rpc.events.ResultEvent;
-	import mx.rpc.events.FaultEvent;
-	import mx.controls.Alert;
+	<mx:RemoteObject id="dataServiceAdd" destination="dataService" showBusyCursor="true">
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadAddResult(event)"/>
+	</mx:RemoteObject>
 	
-	[Bindable] private var deliveryTicket:DeliveryTicket;
+	<mx:Script>                                   
+	<![CDATA[
+		import com.efi.printsmith.events.PendingListPickerEvent;
+		import com.efi.printsmith.events.PendingListUpdateEvent;
+		import mx.events.DataGridEventReason;
+		import mx.events.DataGridEvent;
+		import com.efi.printsmith.data.JobBase;
+		import com.efi.printsmith.data.InvoiceBase;
+		import mx.managers.PopUpManager;
+		import mx.rpc.events.ResultEvent;
 	
-	[Bindable] private var _invoiceBase:InvoiceBase;
-	
-	public function init():void{
-		PopUpManager.centerPopUp(this);	
-	}
-	
-	private function closeWindow():void {
-		PopUpManager.removePopUp(this);
-	}
-	
-	public function setInvoice(tmpInvoiceBase:InvoiceBase):void {
-		_invoiceBase = tmpInvoiceBase;
-		deliveryTicket = new DeliveryTicket();
-	}
-	
-	private function handleFault(ev:FaultEvent):void
-	{
-		var message:String;
-		message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
-		Alert.show(message, "Error", 0, null);
-	}
-]]>
-                             
-</mx:Script>
+		import com.efi.printsmith.data.DeliveryTicketJobs;
+		import com.efi.printsmith.data.Broker;
+		import com.efi.printsmith.data.DeliveryTicket;
+		import mx.collections.ArrayCollection;
+		import mx.rpc.events.ResultEvent;
+		import mx.rpc.events.FaultEvent;
+		import mx.controls.Alert;
+		
+		[Bindable] private var deliveryTicket:DeliveryTicket;
+		
+		[Bindable] private var _invoiceBase:InvoiceBase;
+		
+		public function init():void{
+			PopUpManager.centerPopUp(this);	
+		}
+		
+		private function closeWindow():void {
+			PopUpManager.removePopUp(this);
+		}
+		
+		public function setInvoice(tmpInvoiceBase:InvoiceBase):void {
+			_invoiceBase = tmpInvoiceBase;
+			dataServiceInvoice.getInvoice(_invoiceBase.id);
+		}
+		
+		private function handleLoadResult(event:ResultEvent):void {
+			_invoiceBase = event.result as InvoiceBase;
+			deliveryTicket = new DeliveryTicket();
+			if(_invoiceBase!=null){
+				if(_invoiceBase.deliveryIntentDate!=null){
+					deliveryTicket.deliveryDate = _invoiceBase.deliveryIntentDate;
+				} else {
+					deliveryTicket.deliveryDate = new Date();
+				}
+			}
+			if(_invoiceBase!=null && _invoiceBase.jobs!=null && _invoiceBase.jobs.length>0) {
+				var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
+				copyJobs(deliveryTicketJobsList,_invoiceBase);
+				deliveryTicket.deliveryJobs = deliveryTicketJobsList;
+			}
+		}
+		
+		private function handleLoadAddResult(event:ResultEvent):void {
+			var invoiceBaseObj:InvoiceBase = event.result as InvoiceBase;
+			if(invoiceBaseObj!=null && invoiceBaseObj.jobs!=null && invoiceBaseObj.jobs.length>0) {
+				var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
+				if(deliveryTicket.deliveryJobs!=null) {
+					deliveryTicketJobsList = deliveryTicket.deliveryJobs;
+					copyJobs(deliveryTicketJobsList,invoiceBaseObj);
+				}
+			}
+		}
+		
+		private function copyJobs(deliveryTicketJobsList:ArrayCollection,invoiceBaseObj:InvoiceBase):void {
+			var counter:int=0;
+			for each(var jobBase:JobBase in invoiceBaseObj.jobs){
+				counter++;
+				var deliveryTicketJobs:DeliveryTicketJobs = new DeliveryTicketJobs();
+				deliveryTicketJobs.account = invoiceBaseObj.account;
+				deliveryTicketJobs.invoiceId = invoiceBaseObj.id;
+				deliveryTicketJobs.invoiceNumber = invoiceBaseObj.invoiceNumber;
+				deliveryTicketJobs.jobId = jobBase.id;
+				if(!isNaN(jobBase.jobIndex) && jobBase.jobIndex!=0){
+					deliveryTicketJobs.jobNumber = jobBase.jobIndex;
+				} else {
+					deliveryTicketJobs.jobNumber = counter;
+				}
+				deliveryTicketJobs.description = jobBase.description;
+				deliveryTicketJobs.qtyOrder = jobBase.qtyOrdered;
+				deliveryTicketJobs.qtyShipped = jobBase.qtyOrdered;
+				deliveryTicketJobs.weight = jobBase.weight;
+				deliveryTicketJobs.parentDeliveryTicket = deliveryTicket;
+				deliveryTicketJobsList.addItem(deliveryTicketJobs);
+			}
+		}
+		
+		private function handleSaveResult(event:ResultEvent):void {
+			dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
+			callLater(closeWindow);
+		}
+		
+		private function handleFault(ev:FaultEvent):void
+		{
+			var message:String;
+			message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+			Alert.show(message, "Error", 0, null);
+		}
+		
+		private function processJobs(event:DataGridEvent):void{
+				
+			if (event.reason == DataGridEventReason.CANCELLED){
+			    // Do not update cell.
+			    return;
+			}           
+			
+			if(event.dataField == "qtyShipped" || event.dataField == "description" || event.dataField == "weight")
+			{
+				// Close the cell editor.
+				dataGrid.destroyItemEditor();
+			}	
+		}
+		
+		private function setDeliveryDate(event:Event):void {
+			deliveryTicket.deliveryDate = event.currentTarget.selectedDate;
+		}
+		
+		private function addJobs():void {
+			var pendingListPicker:PendingListPicker = PopUpManager.createPopUp(this,PendingListPicker,false) as PendingListPicker;
+			pendingListPicker.addEventListener(PendingListPickerEvent.PENDINGLIST_PICKER_SELECT_EVENT,function(event:PendingListPickerEvent):void {
+				if(event.invoiceBase!=null){
+					dataServiceAdd.getInvoice(event.invoiceBase.id);
+				}
+			},false,0,true);
+		}
+	]]>
+	                             
+	</mx:Script>
 	
 	<mx:HBox width="100%" height="7%">	
 		<mx:Button width="10%" height="100%">
@@ -71,7 +170,7 @@
 			<mx:TextInput id="ticket_number" width="15%"/>
 			<mx:Spacer width="30%"/>
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryDate')}:" width="20%" textAlign="right"/>
-			<mx:DateField selectedDate="{deliveryTicket.deliveryDate}" width="15%"/>
+			<mx:DateField selectedDate="{deliveryTicket.deliveryDate}" change="{setDeliveryDate(event)}" width="15%"/>
 		</mx:HBox>
 		<mx:HBox width="100%" height="50%" horizontalGap="1">
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Description')}:" width="20%" textAlign="right"/>
@@ -82,16 +181,61 @@
 	
 	<mx:TabNavigator width="100%" height="65%">
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliverWhat')}" width="100%" height="100%">
-			<mx:DataGrid  id="dataGrid" width="100%" dataProvider="{deliveryTicket.deliveryJobs}" height="100%">
+			<mx:DataGrid  id="dataGrid" width="100%" dataProvider="{deliveryTicket.deliveryJobs}" height="100%"
+				itemEditEnd="{processJobs(event)}" editable="true">
 				<mx:columns>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.InvJob')}"/>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.OrderQty')}" />
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.ShippedQty')}" />
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Description')}" />
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Weight')}" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.InvJob')}" editable="false">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label text="{data.invoiceNumber}/{data.jobNumber}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.OrderQty')}" dataField="qtyOrder" editable="false"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.ShippedQty')}" dataField="qtyShipped">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(0,true,'nearest',data.qtyShipped)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+						<mx:itemEditor>
+							<mx:Component>
+								<components:CustomNumericTextInputComponent
+									datagridControl="true" variableName="qtyShipped" customText="{data.qtyShipped}"
+									precision="0" rounding="nearest" isInteger="true" allowNegative="true" textAlignStyle="left"/>
+							</mx:Component>
+						</mx:itemEditor>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Description')}" dataField="description">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Text selectable="false" text="{data.description}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+						<mx:itemEditor>
+							<mx:Component>
+								<components:CustomStringTextInputComponent
+									datagridControl="true" variableName="description" customText="{data.description}" allowSpecialCharacters="true"/>
+							</mx:Component>
+						</mx:itemEditor>
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Weight')}" dataField="weight">
+						<mx:itemRenderer>
+							<mx:Component>
+									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.weight)}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+						<mx:itemEditor>
+							<mx:Component>
+									<components:CustomNumericTextInputComponent
+										datagridControl="true" variableName="weight" customText="{data.weight}"
+										precision="2" rounding="nearest" allowNegative="true" textAlignStyle="left"/>
+							</mx:Component>
+						</mx:itemEditor>
+					</mx:DataGridColumn>
 				</mx:columns>
 			</mx:DataGrid>
-			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Add')}"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Add')}" click="{addJobs()}"/>
 			<mx:HBox width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.TotalWeight')}" 
 					textAlign="right" width="20%"/>

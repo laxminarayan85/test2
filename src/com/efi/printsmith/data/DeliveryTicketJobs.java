@@ -32,8 +32,11 @@ import org.hibernate.annotations.Where;
  * @generated
  */	
 @NamedQueries({
+
   @NamedQuery(name = "DeliveryTicketJobs.findall", query = "from DeliveryTicketJobs"),
+
   @NamedQuery(name = "DeliveryTicketJobs.byId", query = "select a from DeliveryTicketJobs a where a.id= :id")
+
 })
 
 
@@ -43,7 +46,9 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "deliveryticketjobs")
+//@SQLDelete(sql="update modelbase set isdeleted='TRUE' from deliveryticketjobs where modelbase.id=?")
 @SQLDelete(sql="update deliveryticketjobs set isdeleted='TRUE' where id=?")
+//Filter added to retrieve only records that have not been soft deleted.
 @Where(clause="isdeleted <> 'TRUE'")
 public class DeliveryTicketJobs extends ModelBase {
 	/**
@@ -96,42 +101,66 @@ public class DeliveryTicketJobs extends ModelBase {
 	public static final String PARENTDELIVERYTICKET = "ParentDeliveryTicket";
 
 	/**
+
+   * @generated
+
+   */
+
+  public static final String INVOICENUMBER = "InvoiceNumber";
+	/**
+
+   * @generated
+
+   */
+
+  public static final String INVOICEID = "InvoiceId";
+	/**
+
+   * @generated
+
+   */
+
+  public static final String JOBID = "JobId";
+
+	/**
 	 * @generated
 	 */
 	public DeliveryTicketJobs() {
+
     this.created = new Date();
+
     this.modified = new Date();
+
     this.isDeleted = false;
+
   }
 
+	@Basic
+	private Boolean isDeleted = false;
+	
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+	
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
  	
 	
-	@Basic
-  private Boolean isDeleted = false;
-
-	public Boolean getIsDeleted() {
-    return isDeleted;
-  }
-
-
-	public void setIsDeleted(Boolean isDeleted) {
-    this.isDeleted = isDeleted;
-  }
-
-
-
 	/**
 	 * @generated
 	 */	
     @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
+    @Where(clause="isdeleted <> 'TRUE'")
 	private Account account;
 	
 	/**
 	 * @generated
  	 */
 	public Account getAccount(){
+
     return account; 
+
   }
 
 	
@@ -139,7 +168,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setAccount(Account newVal) {
+
     this.account = newVal;
+
   }
 	
  	
@@ -154,7 +185,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
  	 */
 	public Integer getOrderNumber(){
+
     return orderNumber; 
+
   }
 
 	
@@ -162,7 +195,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrderNumber(Integer newVal) {
+
     this.orderNumber = newVal;
+
   }
 	
  	
@@ -177,7 +212,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
  	 */
 	public String getDocumentType(){
+
     return documentType; 
+
   }
 
 	
@@ -185,7 +222,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setDocumentType(String newVal) {
+
     this.documentType = newVal;
+
   }
 	
  	
@@ -200,7 +239,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
  	 */
 	public String getDescription(){
+
     return description; 
+
   }
 
 	
@@ -208,7 +249,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setDescription(String newVal) {
+
     this.description = newVal;
+
   }
 	
  	
@@ -223,7 +266,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
  	 */
 	public Long getJobNumber(){
+
     return jobNumber; 
+
   }
 
 	
@@ -231,7 +276,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setJobNumber(Long newVal) {
+
     this.jobNumber = newVal;
+
   }
 	
  	
@@ -246,7 +293,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
  	 */
 	public Integer getLineNumber(){
+
     return lineNumber; 
+
   }
 
 	
@@ -254,7 +303,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setLineNumber(Integer newVal) {
+
     this.lineNumber = newVal;
+
   }
 	
  	
@@ -269,7 +320,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
  	 */
 	public Integer getQtyOrder(){
+
     return qtyOrder; 
+
   }
 
 	
@@ -277,7 +330,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setQtyOrder(Integer newVal) {
+
     this.qtyOrder = newVal;
+
   }
 	
  	
@@ -292,7 +347,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
  	 */
 	public Integer getQtyShipped(){
+
     return qtyShipped; 
+
   }
 
 	
@@ -300,7 +357,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setQtyShipped(Integer newVal) {
+
     this.qtyShipped = newVal;
+
   }
 	
  	
@@ -315,7 +374,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
  	 */
 	public Double getWeight(){
+
     return weight; 
+
   }
 
 	
@@ -323,7 +384,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setWeight(Double newVal) {
+
     this.weight = newVal;
+
   }
 	
  	
@@ -338,7 +401,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getCompleted(){
+
     return completed; 
+
   }
 
 	
@@ -346,7 +411,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setCompleted(Boolean newVal) {
+
     this.completed = newVal;
+
   }
 	
  	
@@ -361,7 +428,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getManualNonInvoiceItem(){
+
     return manualNonInvoiceItem; 
+
   }
 
 	
@@ -369,7 +438,9 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setManualNonInvoiceItem(Boolean newVal) {
+
     this.manualNonInvoiceItem = newVal;
+
   }
 	
  	
@@ -378,14 +449,16 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
     @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
+    @Where(clause="isdeleted <> 'TRUE'")
 	private DeliveryTicket parentDeliveryTicket;
 	
 	/**
 	 * @generated
  	 */
 	public DeliveryTicket getParentDeliveryTicket(){
+
     return parentDeliveryTicket; 
+
   }
 
 	
@@ -393,28 +466,152 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */	
 	public void setParentDeliveryTicket(DeliveryTicket newVal) {
+
     this.parentDeliveryTicket = newVal;
+
   }
 	
+	/**
+
+   * @generated
+
+   */	
+
+ 	@Basic
+
+  private String invoiceNumber;
+
+	/**
+
+   * @generated
+
+ 	 */
+
+  public String getInvoiceNumber(){
+
+    return invoiceNumber; 
+
+  }
+
+	/**
+
+   * @generated
+
+   */	
+
+  public void setInvoiceNumber(String newVal) {
+
+    this.invoiceNumber = newVal;
+
+  }
+
+	/**
+
+   * @generated
+
+   */	
+
+ 	@Basic
+
+  private Long invoiceId;
+
+	/**
+
+   * @generated
+
+ 	 */
+
+  public Long getInvoiceId(){
+
+    return invoiceId; 
+
+  }
+
+	/**
+
+   * @generated
+
+   */	
+
+  public void setInvoiceId(Long newVal) {
+
+    this.invoiceId = newVal;
+
+  }
+
+	/**
+
+   * @generated
+
+   */	
+
+ 	@Basic
+
+  private Long jobId;
+
+	/**
+
+   * @generated
+
+ 	 */
+
+  public Long getJobId(){
+
+    return jobId; 
+
+  }
+
+	/**
+
+   * @generated
+
+   */	
+
+  public void setJobId(Long newVal) {
+
+    this.jobId = newVal;
+
+  }
+
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
+
     if (ACCOUNT.equals(propertyName)) return getAccount();
+
     if (ORDERNUMBER.equals(propertyName)) return getOrderNumber();
+
     if (DOCUMENTTYPE.equals(propertyName)) return getDocumentType();
+
     if (DESCRIPTION.equals(propertyName)) return getDescription();
+
     if (JOBNUMBER.equals(propertyName)) return getJobNumber();
+
     if (LINENUMBER.equals(propertyName)) return getLineNumber();
+
     if (QTYORDER.equals(propertyName)) return getQtyOrder();
+
     if (QTYSHIPPED.equals(propertyName)) return getQtyShipped();
+
     if (WEIGHT.equals(propertyName)) return getWeight();
+
     if (COMPLETED.equals(propertyName)) return getCompleted();
+
     if (MANUALNONINVOICEITEM.equals(propertyName)) return getManualNonInvoiceItem();
+
     if (PARENTDELIVERYTICKET.equals(propertyName)) return getParentDeliveryTicket();
+
+    if (INVOICENUMBER.equals(propertyName)) return getInvoiceNumber();
+
+    if (INVOICEID.equals(propertyName)) return getInvoiceId();
+
+    if (JOBID.equals(propertyName)) return getJobId();
+
     return super.getProperty(propertyName);
+
   }
 	
 	/**
@@ -423,19 +620,39 @@ public class DeliveryTicketJobs extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
+
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
+
     if (ORDERNUMBER.equals(propertyName)) setOrderNumber((Integer)newValue); else
+
     if (DOCUMENTTYPE.equals(propertyName)) setDocumentType((String)newValue); else
+
     if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
+
     if (JOBNUMBER.equals(propertyName)) setJobNumber((Long)newValue); else
+
     if (LINENUMBER.equals(propertyName)) setLineNumber((Integer)newValue); else
+
     if (QTYORDER.equals(propertyName)) setQtyOrder((Integer)newValue); else
+
     if (QTYSHIPPED.equals(propertyName)) setQtyShipped((Integer)newValue); else
+
     if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
+
     if (COMPLETED.equals(propertyName)) setCompleted((Boolean)newValue); else
+
     if (MANUALNONINVOICEITEM.equals(propertyName)) setManualNonInvoiceItem((Boolean)newValue); else
+
     if (PARENTDELIVERYTICKET.equals(propertyName)) setParentDeliveryTicket((DeliveryTicket)newValue); else
+
+    if (INVOICENUMBER.equals(propertyName)) setInvoiceNumber((String)newValue); else
+
+    if (INVOICEID.equals(propertyName)) setInvoiceId((Long)newValue); else
+
+    if (JOBID.equals(propertyName)) setJobId((Long)newValue); else
+
     super.setProperty(propertyName, newValue);
+
   }
 	
 	/**
@@ -444,31 +661,69 @@ public class DeliveryTicketJobs extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
+
     if (ACCOUNT.equals(propertyName)) 
+
       return new Class<?>[] {Account.class};		
+
     if (ORDERNUMBER.equals(propertyName)) 
+
       return new Class<?>[] {Integer.class};		
+
     if (DOCUMENTTYPE.equals(propertyName)) 
+
       return new Class<?>[] {String.class};		
+
     if (DESCRIPTION.equals(propertyName)) 
+
       return new Class<?>[] {String.class};		
+
     if (JOBNUMBER.equals(propertyName)) 
+
       return new Class<?>[] {Long.class};		
+
     if (LINENUMBER.equals(propertyName)) 
+
       return new Class<?>[] {Integer.class};		
+
     if (QTYORDER.equals(propertyName)) 
+
       return new Class<?>[] {Integer.class};		
+
     if (QTYSHIPPED.equals(propertyName)) 
+
       return new Class<?>[] {Integer.class};		
+
     if (WEIGHT.equals(propertyName)) 
+
       return new Class<?>[] {Double.class};		
+
     if (COMPLETED.equals(propertyName)) 
+
       return new Class<?>[] {Boolean.class};		
+
     if (MANUALNONINVOICEITEM.equals(propertyName)) 
+
       return new Class<?>[] {Boolean.class};		
+
     if (PARENTDELIVERYTICKET.equals(propertyName)) 
+
       return new Class<?>[] {DeliveryTicket.class};		
+
+    if (INVOICENUMBER.equals(propertyName)) 
+
+      return new Class<?>[] {String.class};		
+
+    if (INVOICEID.equals(propertyName)) 
+
+      return new Class<?>[] {Long.class};		
+
+    if (JOBID.equals(propertyName)) 
+
+      return new Class<?>[] {Long.class};		
+
     return super.getPropertyClass(propertyName);
+
   }
 	
 
@@ -478,19 +733,39 @@ public class DeliveryTicketJobs extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
+
     if (ACCOUNT.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (ORDERNUMBER.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (DOCUMENTTYPE.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (DESCRIPTION.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (JOBNUMBER.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (LINENUMBER.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (QTYORDER.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (QTYSHIPPED.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (WEIGHT.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (COMPLETED.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (MANUALNONINVOICEITEM.equals(propertyName)) return DeliveryTicketJobs.class;
+
     if (PARENTDELIVERYTICKET.equals(propertyName)) return DeliveryTicketJobs.class;
+
+    if (INVOICENUMBER.equals(propertyName)) return DeliveryTicketJobs.class;
+
+    if (INVOICEID.equals(propertyName)) return DeliveryTicketJobs.class;
+
+    if (JOBID.equals(propertyName)) return DeliveryTicketJobs.class;
+
     return super.getPropertyOwner(propertyName);
+
   }
 	
 	/**
@@ -498,33 +773,74 @@ public class DeliveryTicketJobs extends ModelBase {
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
+
     if (! super.deepEquals(obj))
+
       return false;
+
     DeliveryTicketJobs objT = (DeliveryTicketJobs)obj;
+
     if (! SmartEquals(getAccount(), objT.getAccount()))
+
       return false;
+
     if (! SmartEquals(getOrderNumber(), objT.getOrderNumber()))
+
       return false;
+
     if (! SmartEquals(getDocumentType(), objT.getDocumentType()))
+
       return false;
+
     if (! SmartEquals(getDescription(), objT.getDescription()))
+
       return false;
+
     if (! SmartEquals(getJobNumber(), objT.getJobNumber()))
+
       return false;
+
     if (! SmartEquals(getLineNumber(), objT.getLineNumber()))
+
       return false;
+
     if (! SmartEquals(getQtyOrder(), objT.getQtyOrder()))
+
       return false;
+
     if (! SmartEquals(getQtyShipped(), objT.getQtyShipped()))
+
       return false;
+
     if (! SmartEquals(getWeight(), objT.getWeight()))
+
       return false;
+
     if (! SmartEquals(getCompleted(), objT.getCompleted()))
+
       return false;
+
     if (! SmartEquals(getManualNonInvoiceItem(), objT.getManualNonInvoiceItem()))
+
       return false;
+
     if (! SmartEquals(getParentDeliveryTicket(), objT.getParentDeliveryTicket()))
+
       return false;
+
+    if (! SmartEquals(getInvoiceNumber(), objT.getInvoiceNumber()))
+
+      return false;
+
+    if (! SmartEquals(getInvoiceId(), objT.getInvoiceId()))
+
+      return false;
+
+    if (! SmartEquals(getJobId(), objT.getJobId()))
+
+      return false;
+
     return true;
+
   }			
 }

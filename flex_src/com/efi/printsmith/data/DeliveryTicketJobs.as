@@ -26,6 +26,9 @@ package com.efi.printsmith.data
 		public var completed:Boolean = false;
 		public var manualNonInvoiceItem:Boolean = false;
 		public var parentDeliveryTicket:DeliveryTicket;
+		public var invoiceNumber:String = "";
+		public var invoiceId:Number = 0;
+		public var jobId:Number = 0;
 	
 	}
 }
