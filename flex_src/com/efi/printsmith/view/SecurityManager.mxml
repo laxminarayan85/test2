@@ -5,8 +5,10 @@
 	xmlns:ns1="com.adobe.flex.extras.controls.*" xmlns:fc="http://www.adobe.com/2006/fc"
 	headerHeight="0" 
 	implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
-	xmlns:ns2="flexlib.controls.*" 
+	xmlns:ns2="flexlib.controls.*"  xmlns:val="com.efi.printsmith.validators.*"
 	 >
+	<val:DuplicateFieldValidator id="dupval" required="true" source="{txtNewItem}" property="text" propName="name" propId="id" existingItems="{accessGroupLists}" />
+	<mx:Script source="../common/scripts/CommonUtils.as" />
 	<mx:states>
 		<mx:State name="newItem">
 			<mx:RemoveChild target="{button1}"/>
@@ -16,7 +18,7 @@
 			<mx:RemoveChild target="{label3}"/>
 			<mx:RemoveChild target="{button3}"/>
 			<mx:AddChild position="lastChild">
-				<mx:TextInput x="315" y="24" id="txtNewItem" focusOut="doAccessGroupEdit();"/>
+				<mx:TextInput x="315" y="24" id="txtNewItem" />
 			</mx:AddChild>
 			<mx:AddChild position="lastChild">
 				<mx:Label x="208" y="26" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessGroup')}" textAlign="right" width="99"/>
@@ -31,21 +33,7 @@
 			</mx:AddChild>
 		</mx:State>
 	</mx:states>
-	<mx:Script>
-		<![CDATA[
-			import com.efi.printsmith.data.AccessGroup;
-		]]>
-	</mx:Script>
-	<mx:Script>
-		<![CDATA[
-			import com.efi.printsmith.data.AccessGroup;
-		]]>
-	</mx:Script>
-	<mx:Script>
-		<![CDATA[
-			import com.efi.printsmith.data.AccessGroup;
-		]]>
-	</mx:Script>
+	
 	 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -118,6 +106,7 @@
 	private var _setupRecd:Boolean = false;
 	
 	public var listOfLockedCommands:ArrayCollection;		
+	public var listOfLockedAccessGroups:ArrayCollection;		
 	           
 	public function getSecurityCommand():String {
 		return PSSecurityCommands.ADMIN_SECURITYSETUP;
@@ -143,6 +132,10 @@
 		listOfLockedCommands.addItem("CreditCard_ReadMagneticCard");
 		listOfLockedCommands.addItem("Preferences_AutoBackupManager");
 		
+		listOfLockedAccessGroups = new ArrayCollection();
+		listOfLockedAccessGroups.addItem("System Admin");
+		listOfLockedAccessGroups.addItem("Minimum");
+		
 		
 		
 	}                
@@ -158,16 +151,20 @@
 		accessGroupLists = ev.result as ArrayCollection;
 		if (access == null){
 			access = accessGroupLists.getItemAt(0,0) as AccessGroup;
-			this.tvAccessGroups.selectedIndex = 0
+			this.tvAccessGroups.selectedIndex = 0;
+			checkForLockedAccessGroup(access);			
 		}
 		SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
 	}
 
 	private function handleSaveResult(ev:ResultEvent):void {
+		access.id = (ev.result as AccessGroup).id;
+		
 		mapToSecurityData();
+		
 	}	
 	private function handleDeleteResult(ev:ResultEvent):void{
-		dataService.getAll("AccessGroup");
+		//dataService.getAll("AccessGroup");
 	}
 	private function handleSaveSecurityResult(ev:ResultEvent):void {
 	}	
@@ -218,6 +215,7 @@
 		}
 	}
 	
+
 	private function populateDataProvider():void	{
 		for (var i:int=0; i<rawSecurityCommands.length; i++)	{
 			var sc:SecurityCommands = rawSecurityCommands.getItemAt(i) as SecurityCommands;
@@ -260,6 +258,7 @@
     }
 
 	private function mapToSecurityData():void{
+		
 		var i:int;
 		for (i= 0 ; i < securitySetupLists.length ; i++)
 		{
@@ -288,48 +287,62 @@
 	public function doSave():void {                                    
 		mapToAccessGroup()
 	}  
-	public function doAccessGroupEdit():void{ 
-		var index:int;
-		if (rename == true){
-			if (txtNewItem.text != access.name)
-			{
-				index = findItem(txtNewItem.text,accessGroupLists)
-				if( index == -1){
-					access.name = txtNewItem.text;
-					rename = false;
-					this.currentState = "";
-					accessGroupLists.setItemAt(access,org_pos);
-				}
-				else{
-					txtNewItem.text= ""
-					doRename();
-				}
-			}
-			this.currentState = "";
-		}else{
-			index = findItem(txtNewItem.text,accessGroupLists)
-			if( index == -1){
-				addItem(txtNewItem.text);
-			}
-			else{
-				doNew();
-			}
-		}
-		
-	}
+//	public function doAccessGroupEdit():void{ 
+//		var index:int;
+//		if (rename == true){
+//			if (txtNewItem.text != access.name)
+//			{
+//				index = findItem(txtNewItem.text,accessGroupLists)
+//				if( index == -1){
+//					access.name = txtNewItem.text;
+//					rename = false;
+//					this.currentState = "";
+//					accessGroupLists.setItemAt(access,org_pos);
+//				}
+//				else{
+//					txtNewItem.text= ""
+//					doRename();
+//				}
+//			}
+//			this.currentState = "";
+//		}else{
+//			index = findItem(txtNewItem.text,accessGroupLists)
+//			if( index == -1){
+//				addItem(txtNewItem.text);
+//			}
+//			else{
+//				doNew();
+//			}
+//		}
+//		
+//	}
 	public function doNew():void {
 		this.currentState = "newItem";
+		this.dupval.originalObj = null;
 		txtNewItem.text= "";
 		
 	} 
 	
 	public function doOKNewGroup():void {
-		if (this.rename == false)
+//		doAccessGroupEdit();
+		if (this.rename == false)	{
 			this.access = new AccessGroup();
+		}
 		this.access.name = txtNewItem.text;
+		this.access.orderby = 100;
 		this.currentState = "";
 		this.mapToAccessGroup();
+		if (this.rename == false)
+			addAccessGroupToList(access);
 		this.rename = false;
+		
+	}
+	
+	private function addAccessGroupToList(acc:AccessGroup):void	{
+		accessGroupLists.addItem(access);
+		this.tvAccessGroups.selectedIndex = accessGroupLists.length;
+		securitySetupLists = new ArrayCollection();
+		populateDataProvider();
 	}
 	
 	public function doCancelNewGroup():void {
@@ -341,6 +354,7 @@
 		//var access:AccessGroup = event.currentTarget.selectedItem as AccessGroup
 		this.currentState = "newItem";
 		rename = true;
+		this.dupval.originalObj = access;
 		txtNewItem.text= access.name;
 		org_pos = findItem(access.name , accessGroupLists);
 	}
@@ -356,28 +370,49 @@
 	public function doDelete():void{
 		var index:int;
 		index = findItem(access.name, accessGroupLists);
-		accessGroupLists.removeItemAt(index);
+		var tmp:ArrayCollection = cloneAC(accessGroupLists);
+		tmp.removeItemAt(index);
+		accessGroupLists = tmp;
+//		(tvAccessGroups.dataProvider as ArrayCollection).removeItemAt(index);
+		tvAccessGroups.selectedIndex = 0;
 		dataService.deleteItem("AccessGroup", access.id);
 		
 	}
-	private function addItem(itemName:String):void {
-		this.currentState = "";
-		if (itemName != '') {
-			securitySetupLists.removeAll();
-			access = new AccessGroup();
-			access.name = itemName;
-			accessGroupLists.addItem(access)
-			this.tvAccessGroups.selectedIndex = accessGroupLists.length;
-			addCommands();                      
-		}		
-	}
+//	private function addItem(itemName:String):void {
+//		this.currentState = "";
+//		if (itemName != '') {
+//			securitySetupLists.removeAll();
+//			access = new AccessGroup();
+//			access.name = itemName;
+//			accessGroupLists.addItem(access)
+//			this.tvAccessGroups.selectedIndex = accessGroupLists.length;
+//			addCommands();
+//			                      
+//		}		
+//	}
 	private function treeSelect(event:Event):void {
+		currentState = "";
 	    access = event.currentTarget.selectedItem as AccessGroup
-		if (access!=null)
+		if (access!=null)	{
 			SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
-		
-	}
+			checkForLockedAccessGroup(access);
+		}
 
+	}
+	
+	private function checkForLockedAccessGroup(access:AccessGroup)	{
+		if (listOfLockedAccessGroups.contains(access.name))	{
+			button4.enabled = false;
+			button1.enabled = false;
+			button2.enabled = false;
+		}
+		else	{
+			button4.enabled = true;
+			button1.enabled = true;
+			button2.enabled = true;
+		}
+	}
+	
 	private function gridDisplayLabelCommand(item:Object, column:DataGridColumn):String{
 		var tmpItem:SecurityCommands = item as SecurityCommands;
 		var returnvalue:String = "";
@@ -437,9 +472,20 @@
 					      			]]>
 					      			</mx:Script>	
 					      			<mx:CheckBox width="30%" click="data.enable=!data.enable"   selected="{data.enable}"
-					      				enabled="{!(((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name == 'System Admin') 
-					      				|| ((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name == 'Minimum')
-					      				|| (outerDocument.listOfLockedCommands.contains(data.commandId)))}" 
+					      				enabled="{!
+					      				(
+					      					(
+					      						outerDocument.listOfLockedAccessGroups.contains((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name)
+					      					) 
+					      						
+					      				|| 
+					      					(
+					      						(outerDocument.tvAccessGroups.selectedItem as AccessGroup).name == 'Minimum'
+					      					)
+					      				|| 	(
+					      						outerDocument.listOfLockedCommands.contains(data.commandId)
+					      					)
+					      				)}" 
 					      				/>
 					      				
 					      		</mx:HBox>
