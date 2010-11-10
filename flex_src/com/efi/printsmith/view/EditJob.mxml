@@ -1543,6 +1543,8 @@
 				stockPickerWindow.formIsEmpty=true;
 				stockPickerWindow.fromJobPage = true;
 				stockPickerWindow.editableJob = this.job;
+				if (this.currentState == "LargeFormat")
+					stockPickerWindow.setLargeFormatOnly();
 				stockPickerWindow.parentWindowId = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
 				stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel, false, 0, true);
 				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect, false, 0, true);

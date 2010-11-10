@@ -134,6 +134,15 @@
 		stockDefinitions = event.result as ArrayCollection;
 		defaultSortGrid();
 	}
+	
+	public function setLargeFormatOnly() {
+		this.chkShowLargeFormatStock.selected = true;
+		this.chkShowRigidSubstrate.selected = true;
+		this.chkShowLargeFormatStock.enabled = false;
+		this.chkShowRigidSubstrate.enabled = false;
+		this.chkShowRollStock.enabled = false;
+		this.search();
+	}
 
 	public function set passStockDataFromParent(val:Boolean):void	{
 		_passStockDataFromParent = val;
@@ -1008,7 +1017,7 @@
 						if (match(strStdItem, "t") == false) 	
 							continue;
 					}
-				}			 
+				}
 				acFiltered.addItem(stock);
 			}
 		}
