@@ -27,7 +27,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 import com.efi.printsmith.messaging.MessageServiceAdapter;
-import com.efi.printsmith.data.CashRegister;
+import com.efi.printsmith.data.TaxTable;
 
 public class TaxService extends SnowmassHibernateService {
 
@@ -40,16 +40,16 @@ public class TaxService extends SnowmassHibernateService {
 
 	}
 	
-	public CashRegister calculateTax(CashRegister cashRegister) {
+	public BigDecimal calculateTax(TaxTable taxTable, BigDecimal subAmount) {
 		BigDecimal tax= new BigDecimal(0) ;
 		
-		if ( cashRegister.getSubtotal().compareTo(cashRegister.getTaxTable().getMinAmount()) < 0 ){
-			tax.equals(new BigDecimal(0));
+		if ( taxTable.getMinAmount().compareTo(subAmount) < 0) {
+			//
 		}
 		else{
-			tax = cashRegister.getSubtotal().multiply(cashRegister.getTaxTable().getEffectiveTaxRate());
+			tax = subAmount.multiply(taxTable.getEffectiveTaxRate());
 		}
-		cashRegister.setTaxamount(tax);
-		return cashRegister;
+
+		return tax;
 	}
 }
