@@ -281,6 +281,8 @@
 						}
 						//doAccountPicker();
 					}
+					if (invoice.account != null)
+						this.setAccount(invoice.account);
 					var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this,true);
   					mdiWin.title = this.title;
 				}
