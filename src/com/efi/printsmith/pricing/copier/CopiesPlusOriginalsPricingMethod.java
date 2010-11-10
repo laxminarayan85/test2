@@ -2,12 +2,15 @@ package com.efi.printsmith.pricing.copier;
 
 import org.apache.log4j.Logger;
 
+import com.efi.printsmith.comparator.MatrixElementComparator;
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.enums.Price2Side;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 	protected static Logger log = Logger.getLogger(CopiesPlusOriginalsPricingMethod.class);
@@ -21,6 +24,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 		CopierDefinition pricingCopier = job.getPricingCopier();
 		if (pricingCopier != null) {
 			Matrix pricingMatrix = pricingCopier.getCopierMatrix();
+			Collections.sort(pricingMatrix.getElements(), new MatrixElementComparator());
 			String side2PricingMethod = pricingCopier.getPriceTwoSide();
 			long calcQty = job.getSheets(); 
 			PriceStockEngine priceStockEngine = new PriceStockEngine();
@@ -38,17 +42,22 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 //					if (pricingMatrix.getHeaderValues()[j] > job.getSheets()) break;
 //				}
 //				if (j > 0) j--;
-				
-				if (pricingMatrix.getHeader1() >= job.getSheets()) j = 0;
-				else if (pricingMatrix.getHeader2() >= job.getSheets()) j = 1;
-				else if (pricingMatrix.getHeader3() >= job.getSheets()) j = 2;
-				else if (pricingMatrix.getHeader4() >= job.getSheets()) j = 3;
-				else if (pricingMatrix.getHeader5() >= job.getSheets()) j = 4;
-				else if (pricingMatrix.getHeader6() >= job.getSheets()) j = 5;
-				else if (pricingMatrix.getHeader7() >= job.getSheets()) j = 6;
-				else if (pricingMatrix.getHeader8() >= job.getSheets()) j = 7;
-				else if (pricingMatrix.getHeader9() >= job.getSheets()) j = 8;
-				else if (pricingMatrix.getHeader10() >= job.getSheets()) j = 9;
+				long originals = 0;
+				if (job.getDoubleSided() && pricingCopier.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
+					originals = job.getSheets() * 2;
+				} else {
+					originals = job.getSheets();
+				}
+				if (pricingMatrix.getHeader1() >= originals) j = 0;
+				else if (pricingMatrix.getHeader2() >= originals) j = 1;
+				else if (pricingMatrix.getHeader3() >= originals) j = 2;
+				else if (pricingMatrix.getHeader4() >= originals) j = 3;
+				else if (pricingMatrix.getHeader5() >= originals) j = 4;
+				else if (pricingMatrix.getHeader6() >= originals) j = 5;
+				else if (pricingMatrix.getHeader7() >= originals) j = 6;
+				else if (pricingMatrix.getHeader8() >= originals) j = 7;
+				else if (pricingMatrix.getHeader9() >= originals) j = 8;
+				else if (pricingMatrix.getHeader10() >= originals) j = 9;
 				else j = 9;
 
 				double unitPrice = 0.0;
@@ -125,7 +134,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						}
 					} else if (side2PricingMethod.equals(Price2Side.CountingAsMoreOriginals.name())) {
 						/* Note that we are completely overriding the unitPrice here instead of adding to it */
-						for (; i < pricingMatrix.getElements().size(); i++) {
+						/*for (; i < pricingMatrix.getElements().size(); i++) {
 							if (pricingMatrix.getElements().get(i).getQty() >= job.getQtyOrdered()) break;
 						}
 						if (i >0) i--;
@@ -160,7 +169,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						case (9):
 							unitPrice = pricingMatrix.getElements().get(i).getPrice10().doubleValue();
 							break;
-						}
+						}*/
 					} else if (side2PricingMethod.equals(Price2Side.UsingSideFactor.name())) {
 						unitPrice *= pricingCopier.getSideTwoFactor();
 					}
