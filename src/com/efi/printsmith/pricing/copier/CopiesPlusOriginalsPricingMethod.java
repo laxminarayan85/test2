@@ -192,7 +192,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 							} else if (pricingCopier.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
 								pricingRecord.setTotalPrice(((pricePerCopy * job.getTotalCopies()) + (pricePerSecondSide * job.getTotalCopies())+ stockPrice*job.getTotalCopies() + wastePrice) * 2);					
 							} else {
-								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());
+								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*job.getTotalCopies()) / 2);
 							}
 						} else {
 							pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies() + wastePrice);				
@@ -220,7 +220,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 								pricingRecord.setUnitPrice(pricePerSecondSide + stockPrice);
 								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (pricePerSecondSide * job.getTotalCopies())+ stockPrice*job.getTotalCopies() + wastePrice);					
 							} else {
-								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());
+								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*job.getTotalCopies()) / 2);
 							}
 						} else {
 							pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
@@ -244,7 +244,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 								pricingRecord.setUnitPrice(pricePerSecondSide + stockPrice);
 								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (pricePerSecondSide * job.getTotalCopies())+ stockPrice*job.getTotalCopies() + wastePrice);					
 							} else {
-								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());
+								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*job.getTotalCopies()) / 2);
 							}
 						} else {
 							pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
@@ -272,7 +272,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 								pricingRecord.setUnitPrice(pricePerSecondSide + stockPrice);
 								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (pricePerSecondSide * job.getTotalCopies())+ stockPrice*job.getTotalCopies() + wastePrice);					
 							} else {
-								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());
+								pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*job.getTotalCopies()) / 2);
 							}
 						} else {
 							pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
