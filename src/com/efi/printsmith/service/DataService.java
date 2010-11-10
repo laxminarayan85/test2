@@ -1303,6 +1303,7 @@ public class DataService extends HibernateService {
 			sequenceValues.setGrade(new Long(0));
 			sequenceValues.setCreditCard(new Long(0));
 			sequenceValues.setStockOrder(new Long(0));
+			sequenceValues.setDeliveryTicket(new Long(0));
 		}
 		return sequenceValues;
 	}
@@ -4931,6 +4932,127 @@ public class DataService extends HibernateService {
 		} finally {
 			em.close();
 		}
+	}
+	
+	/**
+	 * This method saves/updates DeliveryTicket data
+	 * @param deliveryTicket
+	 * @throws Exception
+	 */
+	public void saveDeliveryTicket(DeliveryTicket deliveryTicket) throws Exception {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			try {
+				/*if(deliveryTicket.getFromAddress()!=null && deliveryTicket.getFromAddress().getId()==0) {
+					Address fromAddress = (Address) em.merge(deliveryTicket.getFromAddress());
+					deliveryTicket.setFromAddress(fromAddress);
+				}
+				if(deliveryTicket.getToAddress()!=null && deliveryTicket.getToAddress().getId()==0) {
+					Address toAddress = (Address) em.merge(deliveryTicket.getToAddress());
+					deliveryTicket.setToAddress(toAddress);
+				}
+				if(deliveryTicket.getDeliveryContact()!=null && deliveryTicket.getDeliveryContact().getId()==0) {
+					this.setContactId(deliveryTicket.getDeliveryContact());
+					Contact deliveryContact = (Contact) em.merge(deliveryTicket.getDeliveryContact());
+					deliveryTicket.setDeliveryContact(deliveryContact);
+				}*/
+				setDeliveryTicketId(deliveryTicket);
+				for (DeliveryTicketJobs deliveryTicketJobs : deliveryTicket.getDeliveryJobs()) {
+					deliveryTicketJobs.setParentDeliveryTicket(deliveryTicket);
+				}
+				deliveryTicket = (DeliveryTicket) em.merge(deliveryTicket);
+				for (DeliveryTicketJobs deliveryTicketJobs : deliveryTicket.getDeliveryJobs()) {
+					deliveryTicketJobs.setParentDeliveryTicket(deliveryTicket);
+					em.merge(deliveryTicketJobs);
+				}
+				tx.commit();
+			} catch (RollbackException e) {
+				ConstraintViolationException cve = (ConstraintViolationException) e
+				.getCause();
+				SQLException sqle = cve.getSQLException().getNextException();
+				while (sqle != null) {
+					sqle = sqle.getNextException();
+				}
+			} catch (PersistenceException e) {
+				log.error("** Error: " + e.getMessage());
+				GenericJDBCException jdbcEx = (GenericJDBCException) e
+						.getCause();
+				System.out.println(jdbcEx.getSQL());
+				tx.rollback();
+				throw new Exception(e.getMessage());
+			} catch (Exception e) {
+				log.error("** Error: " + e.getMessage());
+				tx.rollback();
+				throw new Exception(e.getMessage());
+			}
+		}
+		catch (Exception e) {
+			log.error("Exception caught");
+			throw new Exception(e.getMessage());
+		} finally {
+			em.close();
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @param deliveryTicket
+	 * @throws Exception
+	 */
+	private void setDeliveryTicketId(DeliveryTicket deliveryTicket) throws Exception {
+		if (deliveryTicket.getTicketNumber() != null
+				&& deliveryTicket.getTicketNumber() != 0)
+			return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getDeliveryTicket();
+		if(value==null)
+			value = new Long(0); 
+		boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("DeliveryTicket",
+					" where ticketNumber = " + value);
+			if (modelBase == null)
+				goodId = true;
+		}
+		deliveryTicket.setTicketNumber(Integer.parseInt(value.toString()));
+		sequenceValues.setDeliveryTicket(value);
+		this.addUpdate(sequenceValues);
+	}
+	
+	public Contact getContactById(Long contactId) throws Exception {
+		log.debug("** getById called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("Contact" + ".byId");
+			query.setParameter("id", contactId);
+			Contact object = (Contact) query.getSingleResult();
+			for (Field field : object.getClass().getDeclaredFields()) {
+				if (field.getType().getName().equals("java.util.List")
+						|| field.getType().getName().equals(
+								"java.util.ArrayList")) {
+					String propertyName = field.getName().substring(0, 1)
+							.toUpperCase()
+							+ field.getName().substring(1,
+									field.getName().length());
+					try {
+						Hibernate.initialize(object.getProperty(propertyName));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			Hibernate.initialize(object.getComLinks());
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
 	}
 
 }

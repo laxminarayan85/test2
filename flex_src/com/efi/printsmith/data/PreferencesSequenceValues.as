@@ -29,6 +29,7 @@ package com.efi.printsmith.data
 		public var creditCard:Number = 0;
 		public var estimate:Number = 0;
 		public var stockOrder:Number = 0;
+		public var deliveryTicket:Number = 0;
 	
 	}
 }

@@ -6,9 +6,12 @@
     
     <mx:Script source="../common/scripts/ComponentHelper.as"/>
     
+    <mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+    	<mx:method name="saveDeliveryTicket" fault="handleFault(event)" result="handleSaveResult(event)"/>
+    </mx:RemoteObject>
+    
     <mx:RemoteObject id="dataServiceInvoice" destination="dataService" showBusyCursor="true">
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceAdd" destination="dataService" showBusyCursor="true">
@@ -20,11 +23,15 @@
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceContact" destination="dataService" showBusyCursor="true">
-		<mx:method name="getById" fault="handleFault(event)" result="handleLoadContactResult(event)"/>
+		<mx:method name="getContactById" fault="handleFault(event)" result="handleLoadContactResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.data.Campaigns;
+		import com.efi.printsmith.data.ComLink;
+		import mx.utils.ObjectUtil;
+		import flash.net.registerClassAlias;
 		import com.efi.printsmith.data.Contact;
 		import com.efi.printsmith.data.Address;
 		import com.efi.printsmith.data.PreferencesSystem;
@@ -97,14 +104,7 @@
 					}
 					toContactList.addItem(_invoiceBase.account.shipToAddress);					
 					if(_invoiceBase.account.contact!=null){
-						deliveryTicket.deliveryContact = _invoiceBase.account.contact;
-						if(contact_address!=null){
-							contact_address.setContact(deliveryTicket.deliveryContact);
-						}
-						attnList.addItem(_invoiceBase.account.contact);
-						if(_invoiceBase.account.contact.shipToAddress!=null && _invoiceBase.account.contact.shipToAddress.length>0) {
-							dataServiceContact.getById("Contact",_invoiceBase.account.contact.id);
-						}
+						dataServiceContact.getContactById(_invoiceBase.account.contact.id);
 					}
 				}
 				if(_invoiceBase.deliveryIntentDate!=null){
@@ -124,7 +124,8 @@
 			addressList.addItemAt(emptyAddress,0);
 			if(_invoiceBase!=null && _invoiceBase.jobs!=null && _invoiceBase.jobs.length>0) {
 				var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
-				copyJobs(deliveryTicketJobsList,_invoiceBase);
+				copyJobs(deliveryTicketJobsList,_invoiceBase,true);
+				updateTotalWeight();
 				deliveryTicket.deliveryJobs = deliveryTicketJobsList;
 			}
 			dataServicePreferenceSystem.getSingle("PreferencesSystem");
@@ -132,9 +133,16 @@
 		
 		private function handleLoadContactResult(event:ResultEvent):void {
 			var contact:Contact = event.result as Contact;
-			if(contact!=null && contact.shipToAddress!=null && contact.shipToAddress.length>0){
-				for each(var addressObj:Address in contact.shipToAddress){
-					addressList.addItem(addressObj);
+			if(contact!=null){
+				deliveryTicket.deliveryContact = contact;
+				if(contact_address!=null){
+					contact_address.setContact(deliveryTicket.deliveryContact);
+				}
+				attnList.addItem(deliveryTicket.deliveryContact);
+				if(contact.shipToAddress!=null && contact.shipToAddress.length>0){
+					for each(var addressObj:Address in contact.shipToAddress){
+						addressList.addItem(addressObj);
+					}
 				}
 			}
 		}
@@ -145,12 +153,13 @@
 				var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
 				if(deliveryTicket.deliveryJobs!=null) {
 					deliveryTicketJobsList = deliveryTicket.deliveryJobs;
-					copyJobs(deliveryTicketJobsList,invoiceBaseObj);
+					copyJobs(deliveryTicketJobsList,invoiceBaseObj,false);
+					updateTotalWeight();
 				}
 			}
 		}
 		
-		private function copyJobs(deliveryTicketJobsList:ArrayCollection,invoiceBaseObj:InvoiceBase):void {
+		private function copyJobs(deliveryTicketJobsList:ArrayCollection,invoiceBaseObj:InvoiceBase,defaultInvoice:Boolean):void {
 			var counter:int=0;
 			for each(var jobBase:JobBase in invoiceBaseObj.jobs){
 				counter++;
@@ -168,7 +177,12 @@
 				deliveryTicketJobs.qtyOrder = jobBase.qtyOrdered;
 				deliveryTicketJobs.qtyShipped = jobBase.qtyOrdered;
 				deliveryTicketJobs.weight = jobBase.weight;
+				deliveryTicketJobs.originalWeight = deliveryTicketJobs.weight;
+				deliveryTicketJobs.jobBase = jobBase;
 				deliveryTicketJobs.parentDeliveryTicket = deliveryTicket;
+				if(!defaultInvoice){
+					deliveryTicketJobs.manualNonInvoiceItem = true;
+				}
 				deliveryTicketJobsList.addItem(deliveryTicketJobs);
 			}
 		}
@@ -260,12 +274,134 @@
 			}
 			return item.street1+", "+item.city;
 		}
+		
+		private function setOtherFromAddress():void {
+			if(deliveryTicket.fromOther){
+				var fromAddress:Address = new Address();
+				if(deliveryTicket.fromAddress!=null){
+					registerClassAlias("com.efi.printsmith.data.Address",Address);
+					fromAddress = ObjectUtil.copy(deliveryTicket.fromAddress) as Address;
+				}
+				fromAddress.id=0;
+				fromAddress.created = null;
+				fromAddress.modified = null;
+				deliveryTicket.fromAddress = fromAddress;
+				from_address.setAddress(deliveryTicket.fromAddress);
+			}
+		}
+		
+		private function setOtherToAddress():void {
+			if(deliveryTicket.toOther){
+				var toAddress:Address = new Address();
+				if(deliveryTicket.toAddress!=null){
+					registerClassAlias("com.efi.printsmith.data.Address",Address);
+					toAddress = ObjectUtil.copy(deliveryTicket.toAddress) as Address;
+				}
+				toAddress.id=0;
+				toAddress.created = null;
+				toAddress.modified = null;
+				deliveryTicket.toAddress = toAddress;
+				to_address.setAddress(deliveryTicket.toAddress);
+			}
+		}
+		
+		private function setOtherAttnContact():void {
+			if(deliveryTicket.attOther){
+				var deliveryContact:Contact = new Contact();
+				if(deliveryTicket.deliveryContact!=null){
+					registerClassAlias("com.efi.printsmith.data.Contact",Contact);
+					deliveryContact = ObjectUtil.copy(deliveryTicket.deliveryContact) as Contact;
+					if(deliveryContact.address!=null){
+						deliveryContact.address.id = 0;
+						deliveryContact.address.created = null;
+						deliveryContact.address.modified = null;
+					}
+					if(deliveryContact.comLinks!=null){
+						for each(var comLink:ComLink in deliveryContact.comLinks){
+							comLink.id = 0;
+							comLink.created = null;
+							comLink.modified = null;
+						}
+					}
+					if(deliveryContact.shipToAddress!=null){
+						for each(var address:Address in deliveryContact.shipToAddress){
+							address.id = 0;
+							address.created = null;
+							address.modified = null;
+						}
+					}
+					if(deliveryContact.campaigns!=null){
+						for each(var campaigns:Campaigns in deliveryContact.campaigns){
+							campaigns.id = 0;
+							campaigns.created = null;
+							campaigns.modified = null;
+						}
+					}
+				}
+				deliveryContact.id=0;
+				deliveryContact.created = null;
+				deliveryContact.modified = null;
+				deliveryTicket.deliveryContact = deliveryContact;
+				contact_address.setContact(deliveryTicket.deliveryContact);
+			}
+		}
+		
+		private function doSave():void {
+			deliveryTicket.fromAddress = from_address.getAddress();
+			dataService.saveDeliveryTicket(deliveryTicket);
+		}
+		
+		public function updateTotalWeight():void {
+			if(!deliveryTicket.totalWeightUpdated) {
+				var totalWeight:Number = 0;
+				for each(var deliveryTicketJobs:DeliveryTicketJobs in deliveryTicket.deliveryJobs) {
+					totalWeight = totalWeight + deliveryTicketJobs.weight;
+				}
+				deliveryTicket.totalWeight = totalWeight;
+				deliveryTicket.originalTotalWeight = totalWeight;
+			}
+		}
+		
+		public function updateWeight(item:Object):void {
+			var deliveryTicketJobObject:DeliveryTicketJobs = item as DeliveryTicketJobs;
+			if(!deliveryTicketJobObject.weightUpdated){
+				var job:JobBase = deliveryTicketJobObject.jobBase; 
+				if (job != null && job.stock != null && job.finishSize!=null && job.parentSize!=null) {
+				   var finish:Number = job.finishSize.width * job.finishSize.height;
+				   var parent:Number = job.parentSize.width * job.parentSize.height;
+				   if (parent > 0.0){
+						var tempweight:Number = ((finish / parent )* job.stock.mweight) / 1000;
+						deliveryTicketJobObject.weight = (deliveryTicketJobObject.qtyShipped * job.inSetsOf * job.sheets)* tempweight;
+						deliveryTicketJobObject.originalWeight = deliveryTicketJobObject.weight;
+				   }
+				}
+			}
+			updateTotalWeight();
+		}
+		
+		private function checkTotalWeightUpdatedValue():void {
+			if(deliveryTicket!=null && !deliveryTicket.totalWeightUpdated){
+				if(deliveryTicket.totalWeight!=deliveryTicket.originalTotalWeight){
+					deliveryTicket.totalWeightUpdated = true;
+				}
+			}
+		}
+		
+		public function checkJobWeightUpdatedValue(item:Object):void {
+			var deliveryTicketJobObject:DeliveryTicketJobs = item as DeliveryTicketJobs;
+			if(deliveryTicketJobObject!=null && !deliveryTicketJobObject.weightUpdated){
+				if(deliveryTicketJobObject.weight!=deliveryTicketJobObject.originalWeight){
+					deliveryTicketJobObject.weightUpdated = true;
+				}
+			}
+			updateTotalWeight();
+		}
 	]]>
 	                             
 	</mx:Script>
 	
 	<mx:HBox width="100%" height="7%">	
-		<mx:Button width="10%" height="100%">
+		<mx:Button width="10%" height="100%" click="{doSave()}">
 			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 		</mx:Button>
 		<mx:Button width="10%" click="{closeWindow()}" height="100%">
@@ -322,7 +458,7 @@
 							<mx:Component>
 								<components:CustomNumericTextInputComponent
 									datagridControl="true" variableName="qtyShipped" customText="{data.qtyShipped}"
-									precision="0" rounding="nearest" isInteger="true" allowNegative="true" textAlignStyle="left"/>
+									precision="0" rounding="nearest" isInteger="true" allowNegative="true" textAlignStyle="left" focusOut="{outerDocument.updateWeight(data)}"/>
 							</mx:Component>
 						</mx:itemEditor>
 					</mx:DataGridColumn>
@@ -349,7 +485,8 @@
 							<mx:Component>
 									<components:CustomNumericTextInputComponent
 										datagridControl="true" variableName="weight" customText="{data.weight}"
-										precision="2" rounding="nearest" allowNegative="true" textAlignStyle="left"/>
+										precision="2" rounding="nearest" allowNegative="true" textAlignStyle="left"
+										focusOut="{outerDocument.checkJobWeightUpdatedValue(data)}"/>
 							</mx:Component>
 						</mx:itemEditor>
 					</mx:DataGridColumn>
@@ -361,7 +498,7 @@
 					textAlign="right" width="20%"/>
 				<components:CustomNumericTextInputComponent
  					dataHolder="{deliveryTicket}" variableName="totalWeight" customText="{deliveryTicket.totalWeight}"
- 					precision="2" rounding="nearest" textAlignStyle="left"/>
+ 					precision="2" rounding="nearest" textAlignStyle="left" focusOut="{checkTotalWeightUpdatedValue()}"/>
 			</mx:HBox>
 		</mx:VBox>
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliverWhere')}" width="100%" height="100%" creationComplete="{updateAddress(deliveryTicket)}">
@@ -379,7 +516,7 @@
 					<components:CustomCheckBoxComponent height="10%"
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Other')}"
 						dataHolder="{deliveryTicket}" variableName="fromOther" customText="{deliveryTicket.fromOther}"
-						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						defaultValue="false" selectedValue="true" deSelectedValue="false" click="{setOtherFromAddress()}"/>
 				</mx:VBox>
 				<mx:VBox width="33%" height="100%">
 					<mx:HBox width="100%" height="20%">
@@ -394,7 +531,7 @@
 					<components:CustomCheckBoxComponent height="10%"
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Other')}"
 						dataHolder="{deliveryTicket}" variableName="toOther" customText="{deliveryTicket.toOther}"
-						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						defaultValue="false" selectedValue="true" deSelectedValue="false" click="{setOtherToAddress()}"/>
 				</mx:VBox>
 				<mx:VBox width="33%" height="100%">
 					<mx:HBox width="100%" height="10%">
@@ -413,7 +550,7 @@
 					<components:CustomCheckBoxComponent height="10%"
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Other')}"
 						dataHolder="{deliveryTicket}" variableName="attOther" customText="{deliveryTicket.attOther}"
-						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						defaultValue="false" selectedValue="true" deSelectedValue="false" click="{setOtherAttnContact()}"/>
 				</mx:VBox>
 			</mx:HBox>
 			<mx:HBox width="100%">

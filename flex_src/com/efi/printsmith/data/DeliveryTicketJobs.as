@@ -29,6 +29,8 @@ package com.efi.printsmith.data
 		public var invoiceNumber:String = "";
 		public var invoiceId:Number = 0;
 		public var jobId:Number = 0;
+		public var jobBase:JobBase;
+		public var weightUpdated:Boolean = false;
 	
 	}
 }

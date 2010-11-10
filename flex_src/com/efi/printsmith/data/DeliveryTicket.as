@@ -58,6 +58,7 @@ package com.efi.printsmith.data
 		public var estWeightCheck:Boolean = false;
 		public var dateType:String = "";
 		public var deliveryJobs:ArrayCollection;
+		public var totalWeightUpdated:Boolean = false;
 	
 	}
 }
