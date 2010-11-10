@@ -14,23 +14,7 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var transactionDate:Date = new Date();
-		public var status:String = "";
-		public var taxTable:TaxTable;
-		public var taxCode:TaxCodes;
-		public var taxAmount:Number = 0;
-		public var recordType:String = "";
-		public var checkNum:String = "";
-		public var ref:String = "";
-		public var subTotal:Number = 0;
-		public var total:Number = 0;
-		public var pos:Boolean = false;
-		public var ar:Boolean = false;
-		public var paymentAmount:Number = 0;
-		public var user:Users;
-		public var account:Account;
-		public var contact:Contact;
-		public var typeID:Number = 0;
+		public var batches:ArrayCollection;
 	
 	}
 }

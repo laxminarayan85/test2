@@ -260,8 +260,8 @@
 
 	import com.efi.printsmith.data.TaxTable;
 	import com.efi.printsmith.data.TaxCodes;
-	import com.efi.printsmith.data.CashRegister;
-	import com.efi.printsmith.data.CashRegisterBatch;
+	
+	import com.efi.printsmith.data.TapeSessionBatch;
 	import com.efi.printsmith.data.TapePaymentRecord;
 	import com.efi.printsmith.data.TapeSaleRecord;
 	
@@ -342,7 +342,7 @@
 	private var cashDrawer:CashDrawer;
 //Data view variables
 	[Bindable]
-	private var batch:CashRegisterBatch;
+	private var batch:TapeSessionBatch;
 	[Bindable]
 	private var tape:Tape;
 	[Bindable]
@@ -503,7 +503,7 @@
 		
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, myKeyDownHandler);
 		
-		batch = new CashRegisterBatch();
+		batch = new TapeSessionBatch();
 		batch.transactions = new ArrayCollection();
 		
 		tape = new Tape();
@@ -577,7 +577,7 @@
 		tape = ev.result as Tape;
 	}
 	private function handleBatchSaveResult(ev:ResultEvent):void{
-		batch = new CashRegisterBatch();
+		batch = new TapeSessionBatch();
 		batch.transactions = new ArrayCollection();
 		
 		UpdateBatchNumbers();
@@ -1222,7 +1222,7 @@
 	}
 	
 	private function doRevert():void{
-		batch = new CashRegisterBatch();
+		batch = new TapeSessionBatch();
 		batch.transactions = new ArrayCollection();
 		
 		InitSaleRecord();		// setup for another sale

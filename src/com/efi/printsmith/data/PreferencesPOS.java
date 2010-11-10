@@ -854,7 +854,7 @@ public class PreferencesPOS extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade = {CascadeType.ALL}, optional=true)
+    @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition listFontBean;
 	
@@ -878,7 +878,7 @@ public class PreferencesPOS extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade = {CascadeType.ALL}, optional=true)
+    @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition headerFontBean;
 	

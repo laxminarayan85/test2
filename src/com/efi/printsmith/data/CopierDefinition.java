@@ -1139,7 +1139,7 @@ public class CopierDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	@ManyToMany(targetEntity=ChargeDefinition.class, cascade = {CascadeType.ALL})
+	@ManyToMany(targetEntity=ChargeDefinition.class)
 	@Where(clause="isdeleted <> 'TRUE'")
 	private java.util.List<ChargeDefinition> charges;
 	

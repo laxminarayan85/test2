@@ -29,24 +29,17 @@ import org.hibernate.annotations.Where;
 /**
  * @generated
  */
-@NamedQueries( {
-
-		@NamedQuery(name = "DeliveryTicketJobs.findall", query = "from DeliveryTicketJobs"),
-
-		@NamedQuery(name = "DeliveryTicketJobs.byId", query = "select a from DeliveryTicketJobs a where a.id= :id")
-
+@NamedQueries({
+  @NamedQuery(name = "DeliveryTicketJobs.findall", query = "from DeliveryTicketJobs"),
+  @NamedQuery(name = "DeliveryTicketJobs.byId", query = "select a from DeliveryTicketJobs a where a.id= :id")
 })
 /*
  * @generated
  */
 @Entity
 @Table(name = "deliveryticketjobs")
-// @SQLDelete(sql=
-// "update modelbase set isdeleted='TRUE' from deliveryticketjobs where modelbase.id=?"
-// )
-@SQLDelete(sql = "update deliveryticketjobs set isdeleted='TRUE' where id=?")
-// Filter added to retrieve only records that have not been soft deleted.
-@Where(clause = "isdeleted <> 'TRUE'")
+@SQLDelete(sql="update deliveryticketjobs set isdeleted='TRUE' where id=?")
+@Where(clause="isdeleted <> 'TRUE'")
 public class DeliveryTicketJobs extends ModelBase {
 	/**
 	 * @generated
@@ -126,14 +119,10 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public DeliveryTicketJobs() {
-
-		this.created = new Date();
-
-		this.modified = new Date();
-
-		this.isDeleted = false;
-
-	}
+    this.created = new Date();
+    this.modified = new Date();
+    this.isDeleted = false;
+  }
 
 	@Basic
 	private Boolean isDeleted = false;
@@ -150,26 +139,22 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	@ManyToOne()
-	@Where(clause = "isdeleted <> 'TRUE'")
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Account account;
 
 	/**
 	 * @generated
 	 */
 	public Account getAccount() {
-
-		return account;
-
-	}
+    return account; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setAccount(Account newVal) {
-
-		this.account = newVal;
-
-	}
+    this.account = newVal;
+  }
 
 	/**
 	 * @generated
@@ -181,19 +166,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public Integer getOrderNumber() {
-
-		return orderNumber;
-
-	}
+    return orderNumber; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setOrderNumber(Integer newVal) {
-
-		this.orderNumber = newVal;
-
-	}
+    this.orderNumber = newVal;
+  }
 
 	/**
 	 * @generated
@@ -205,19 +186,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public String getDocumentType() {
-
-		return documentType;
-
-	}
+    return documentType; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setDocumentType(String newVal) {
-
-		this.documentType = newVal;
-
-	}
+    this.documentType = newVal;
+  }
 
 	/**
 	 * @generated
@@ -229,19 +206,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public String getDescription() {
-
-		return description;
-
-	}
+    return description; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setDescription(String newVal) {
-
-		this.description = newVal;
-
-	}
+    this.description = newVal;
+  }
 
 	/**
 	 * @generated
@@ -253,19 +226,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public Long getJobNumber() {
-
-		return jobNumber;
-
-	}
+    return jobNumber; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setJobNumber(Long newVal) {
-
-		this.jobNumber = newVal;
-
-	}
+    this.jobNumber = newVal;
+  }
 
 	/**
 	 * @generated
@@ -277,19 +246,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public Integer getLineNumber() {
-
-		return lineNumber;
-
-	}
+    return lineNumber; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setLineNumber(Integer newVal) {
-
-		this.lineNumber = newVal;
-
-	}
+    this.lineNumber = newVal;
+  }
 
 	/**
 	 * @generated
@@ -301,19 +266,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public Integer getQtyOrder() {
-
-		return qtyOrder;
-
-	}
+    return qtyOrder; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setQtyOrder(Integer newVal) {
-
-		this.qtyOrder = newVal;
-
-	}
+    this.qtyOrder = newVal;
+  }
 
 	/**
 	 * @generated
@@ -325,19 +286,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public Integer getQtyShipped() {
-
-		return qtyShipped;
-
-	}
+    return qtyShipped; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setQtyShipped(Integer newVal) {
-
-		this.qtyShipped = newVal;
-
-	}
+    this.qtyShipped = newVal;
+  }
 
 	/**
 	 * @generated
@@ -349,19 +306,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public Double getWeight() {
-
-		return weight;
-
-	}
+    return weight; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setWeight(Double newVal) {
-
-		this.weight = newVal;
-
-	}
+    this.weight = newVal;
+  }
 
 	/**
 	 * @generated
@@ -373,19 +326,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getCompleted() {
-
-		return completed;
-
-	}
+    return completed; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setCompleted(Boolean newVal) {
-
-		this.completed = newVal;
-
-	}
+    this.completed = newVal;
+  }
 
 	/**
 	 * @generated
@@ -397,44 +346,36 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getManualNonInvoiceItem() {
-
-		return manualNonInvoiceItem;
-
-	}
+    return manualNonInvoiceItem; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setManualNonInvoiceItem(Boolean newVal) {
-
-		this.manualNonInvoiceItem = newVal;
-
-	}
+    this.manualNonInvoiceItem = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
 	@ManyToOne()
-	@Where(clause = "isdeleted <> 'TRUE'")
+	@Where(clause="isdeleted <> 'TRUE'")
 	private DeliveryTicket parentDeliveryTicket;
 
 	/**
 	 * @generated
 	 */
 	public DeliveryTicket getParentDeliveryTicket() {
-
-		return parentDeliveryTicket;
-
-	}
+    return parentDeliveryTicket; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setParentDeliveryTicket(DeliveryTicket newVal) {
-
-		this.parentDeliveryTicket = newVal;
-
-	}
+    this.parentDeliveryTicket = newVal;
+  }
 
 	/**
 	 * @generated
@@ -446,19 +387,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public String getInvoiceNumber() {
-
-		return invoiceNumber;
-
-	}
+    return invoiceNumber; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setInvoiceNumber(String newVal) {
-
-		this.invoiceNumber = newVal;
-
-	}
+    this.invoiceNumber = newVal;
+  }
 
 	/**
 	 * @generated
@@ -470,19 +407,15 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public Long getInvoiceId() {
-
-		return invoiceId;
-
-	}
+    return invoiceId; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setInvoiceId(Long newVal) {
-
-		this.invoiceId = newVal;
-
-	}
+    this.invoiceId = newVal;
+  }
 
 	/**
 	 * @generated
@@ -494,44 +427,36 @@ public class DeliveryTicketJobs extends ModelBase {
 	 * @generated
 	 */
 	public Long getJobId() {
-
-		return jobId;
-
-	}
+    return jobId; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setJobId(Long newVal) {
-
-		this.jobId = newVal;
-
-	}
+    this.jobId = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@Where(clause = "isdeleted <> 'TRUE'")
+	@ManyToOne()
+	@Where(clause="isdeleted <> 'TRUE'")
 	private JobBase jobBase;
 
 	/**
 	 * @generated
 	 */
 	public JobBase getJobBase() {
-
-		return jobBase;
-
-	}
+    return jobBase; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setJobBase(JobBase newVal) {
-
-		this.jobBase = newVal;
-
-	}
+    this.jobBase = newVal;
+  }
 
 	/**
 	 * 
@@ -547,10 +472,8 @@ public class DeliveryTicketJobs extends ModelBase {
 	 */
 
 	public Boolean getWeightUpdated() {
-
-		return weightUpdated;
-
-	}
+    return weightUpdated; 
+  }
 
 	/**
 	 * 
@@ -558,10 +481,8 @@ public class DeliveryTicketJobs extends ModelBase {
 	 */
 
 	public void setWeightUpdated(Boolean newVal) {
-
-		this.weightUpdated = newVal;
-
-	}
+    this.weightUpdated = newVal;
+  }
 
 	/**
 	 * @generated
@@ -570,61 +491,25 @@ public class DeliveryTicketJobs extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName)
 			throws UnknownPropertyException {
-
-		if (ACCOUNT.equals(propertyName))
-			return getAccount();
-
-		if (ORDERNUMBER.equals(propertyName))
-			return getOrderNumber();
-
-		if (DOCUMENTTYPE.equals(propertyName))
-			return getDocumentType();
-
-		if (DESCRIPTION.equals(propertyName))
-			return getDescription();
-
-		if (JOBNUMBER.equals(propertyName))
-			return getJobNumber();
-
-		if (LINENUMBER.equals(propertyName))
-			return getLineNumber();
-
-		if (QTYORDER.equals(propertyName))
-			return getQtyOrder();
-
-		if (QTYSHIPPED.equals(propertyName))
-			return getQtyShipped();
-
-		if (WEIGHT.equals(propertyName))
-			return getWeight();
-
-		if (COMPLETED.equals(propertyName))
-			return getCompleted();
-
-		if (MANUALNONINVOICEITEM.equals(propertyName))
-			return getManualNonInvoiceItem();
-
-		if (PARENTDELIVERYTICKET.equals(propertyName))
-			return getParentDeliveryTicket();
-
-		if (INVOICENUMBER.equals(propertyName))
-			return getInvoiceNumber();
-
-		if (INVOICEID.equals(propertyName))
-			return getInvoiceId();
-
-		if (JOBID.equals(propertyName))
-			return getJobId();
-
-		if (JOBBASE.equals(propertyName))
-			return getJobBase();
-
-		if (WEIGHTUPDATED.equals(propertyName))
-			return getWeightUpdated();
-
-		return super.getProperty(propertyName);
-
-	}
+    if (ACCOUNT.equals(propertyName)) return getAccount();
+    if (ORDERNUMBER.equals(propertyName)) return getOrderNumber();
+    if (DOCUMENTTYPE.equals(propertyName)) return getDocumentType();
+    if (DESCRIPTION.equals(propertyName)) return getDescription();
+    if (JOBNUMBER.equals(propertyName)) return getJobNumber();
+    if (LINENUMBER.equals(propertyName)) return getLineNumber();
+    if (QTYORDER.equals(propertyName)) return getQtyOrder();
+    if (QTYSHIPPED.equals(propertyName)) return getQtyShipped();
+    if (WEIGHT.equals(propertyName)) return getWeight();
+    if (COMPLETED.equals(propertyName)) return getCompleted();
+    if (MANUALNONINVOICEITEM.equals(propertyName)) return getManualNonInvoiceItem();
+    if (PARENTDELIVERYTICKET.equals(propertyName)) return getParentDeliveryTicket();
+    if (INVOICENUMBER.equals(propertyName)) return getInvoiceNumber();
+    if (INVOICEID.equals(propertyName)) return getInvoiceId();
+    if (JOBID.equals(propertyName)) return getJobId();
+    if (JOBBASE.equals(propertyName)) return getJobBase();
+    if (WEIGHTUPDATED.equals(propertyName)) return getWeightUpdated();
+    return super.getProperty(propertyName);
+  }
 
 	/**
 	 * @generated
@@ -633,78 +518,25 @@ public class DeliveryTicketJobs extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue)
 			throws PropertyException {
-
-		if (ACCOUNT.equals(propertyName))
-			setAccount((Account) newValue);
-		else
-
-		if (ORDERNUMBER.equals(propertyName))
-			setOrderNumber((Integer) newValue);
-		else
-
-		if (DOCUMENTTYPE.equals(propertyName))
-			setDocumentType((String) newValue);
-		else
-
-		if (DESCRIPTION.equals(propertyName))
-			setDescription((String) newValue);
-		else
-
-		if (JOBNUMBER.equals(propertyName))
-			setJobNumber((Long) newValue);
-		else
-
-		if (LINENUMBER.equals(propertyName))
-			setLineNumber((Integer) newValue);
-		else
-
-		if (QTYORDER.equals(propertyName))
-			setQtyOrder((Integer) newValue);
-		else
-
-		if (QTYSHIPPED.equals(propertyName))
-			setQtyShipped((Integer) newValue);
-		else
-
-		if (WEIGHT.equals(propertyName))
-			setWeight((Double) newValue);
-		else
-
-		if (COMPLETED.equals(propertyName))
-			setCompleted((Boolean) newValue);
-		else
-
-		if (MANUALNONINVOICEITEM.equals(propertyName))
-			setManualNonInvoiceItem((Boolean) newValue);
-		else
-
-		if (PARENTDELIVERYTICKET.equals(propertyName))
-			setParentDeliveryTicket((DeliveryTicket) newValue);
-		else
-
-		if (INVOICENUMBER.equals(propertyName))
-			setInvoiceNumber((String) newValue);
-		else
-
-		if (INVOICEID.equals(propertyName))
-			setInvoiceId((Long) newValue);
-		else
-
-		if (JOBID.equals(propertyName))
-			setJobId((Long) newValue);
-		else
-
-		if (JOBBASE.equals(propertyName))
-			setJobBase((JobBase) newValue);
-		else
-
-		if (WEIGHTUPDATED.equals(propertyName))
-			setWeightUpdated((Boolean) newValue);
-		else
-
-			super.setProperty(propertyName, newValue);
-
-	}
+    if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
+    if (ORDERNUMBER.equals(propertyName)) setOrderNumber((Integer)newValue); else
+    if (DOCUMENTTYPE.equals(propertyName)) setDocumentType((String)newValue); else
+    if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
+    if (JOBNUMBER.equals(propertyName)) setJobNumber((Long)newValue); else
+    if (LINENUMBER.equals(propertyName)) setLineNumber((Integer)newValue); else
+    if (QTYORDER.equals(propertyName)) setQtyOrder((Integer)newValue); else
+    if (QTYSHIPPED.equals(propertyName)) setQtyShipped((Integer)newValue); else
+    if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
+    if (COMPLETED.equals(propertyName)) setCompleted((Boolean)newValue); else
+    if (MANUALNONINVOICEITEM.equals(propertyName)) setManualNonInvoiceItem((Boolean)newValue); else
+    if (PARENTDELIVERYTICKET.equals(propertyName)) setParentDeliveryTicket((DeliveryTicket)newValue); else
+    if (INVOICENUMBER.equals(propertyName)) setInvoiceNumber((String)newValue); else
+    if (INVOICEID.equals(propertyName)) setInvoiceId((Long)newValue); else
+    if (JOBID.equals(propertyName)) setJobId((Long)newValue); else
+    if (JOBBASE.equals(propertyName)) setJobBase((JobBase)newValue); else
+    if (WEIGHTUPDATED.equals(propertyName)) setWeightUpdated((Boolean)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 
 	/**
 	 * @generated
@@ -712,79 +544,43 @@ public class DeliveryTicketJobs extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName)
-			throws UnknownPropertyException {
-
-		if (ACCOUNT.equals(propertyName))
-
-			return new Class<?>[] { Account.class };
-
-		if (ORDERNUMBER.equals(propertyName))
-
-			return new Class<?>[] { Integer.class };
-
-		if (DOCUMENTTYPE.equals(propertyName))
-
-			return new Class<?>[] { String.class };
-
-		if (DESCRIPTION.equals(propertyName))
-
-			return new Class<?>[] { String.class };
-
-		if (JOBNUMBER.equals(propertyName))
-
-			return new Class<?>[] { Long.class };
-
-		if (LINENUMBER.equals(propertyName))
-
-			return new Class<?>[] { Integer.class };
-
-		if (QTYORDER.equals(propertyName))
-
-			return new Class<?>[] { Integer.class };
-
-		if (QTYSHIPPED.equals(propertyName))
-
-			return new Class<?>[] { Integer.class };
-
-		if (WEIGHT.equals(propertyName))
-
-			return new Class<?>[] { Double.class };
-
-		if (COMPLETED.equals(propertyName))
-
-			return new Class<?>[] { Boolean.class };
-
-		if (MANUALNONINVOICEITEM.equals(propertyName))
-
-			return new Class<?>[] { Boolean.class };
-
-		if (PARENTDELIVERYTICKET.equals(propertyName))
-
-			return new Class<?>[] { DeliveryTicket.class };
-
-		if (INVOICENUMBER.equals(propertyName))
-
-			return new Class<?>[] { String.class };
-
-		if (INVOICEID.equals(propertyName))
-
-			return new Class<?>[] { Long.class };
-
-		if (JOBID.equals(propertyName))
-
-			return new Class<?>[] { Long.class };
-
-		if (JOBBASE.equals(propertyName))
-
-			return new Class<?>[] { JobBase.class };
-
-		if (WEIGHTUPDATED.equals(propertyName))
-
-			return new Class<?>[] { Boolean.class };
-
-		return super.getPropertyClass(propertyName);
-
-	}
+			throws UnknownPropertyException {	
+    if (ACCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Account.class};		
+    if (ORDERNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (DOCUMENTTYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DESCRIPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (JOBNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (LINENUMBER.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (QTYORDER.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (QTYSHIPPED.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (WEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COMPLETED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (MANUALNONINVOICEITEM.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PARENTDELIVERYTICKET.equals(propertyName)) 
+      return new Class<?>[] {DeliveryTicket.class};		
+    if (INVOICENUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (INVOICEID.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (JOBID.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (JOBBASE.equals(propertyName)) 
+      return new Class<?>[] {JobBase.class};		
+    if (WEIGHTUPDATED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    return super.getPropertyClass(propertyName);
+  }
 
 	/**
 	 * @generated
@@ -792,146 +588,69 @@ public class DeliveryTicketJobs extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName)
-			throws UnknownPropertyException {
-
-		if (ACCOUNT.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (ORDERNUMBER.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (DOCUMENTTYPE.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (DESCRIPTION.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (JOBNUMBER.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (LINENUMBER.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (QTYORDER.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (QTYSHIPPED.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (WEIGHT.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (COMPLETED.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (MANUALNONINVOICEITEM.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (PARENTDELIVERYTICKET.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (INVOICENUMBER.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (INVOICEID.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (JOBID.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (JOBBASE.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		if (WEIGHTUPDATED.equals(propertyName))
-			return DeliveryTicketJobs.class;
-
-		return super.getPropertyOwner(propertyName);
-
-	}
+			throws UnknownPropertyException {	
+    if (ACCOUNT.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (ORDERNUMBER.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (DOCUMENTTYPE.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (DESCRIPTION.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (JOBNUMBER.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (LINENUMBER.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (QTYORDER.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (QTYSHIPPED.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (WEIGHT.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (COMPLETED.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (MANUALNONINVOICEITEM.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (PARENTDELIVERYTICKET.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (INVOICENUMBER.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (INVOICEID.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (JOBID.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (JOBBASE.equals(propertyName)) return DeliveryTicketJobs.class;
+    if (WEIGHTUPDATED.equals(propertyName)) return DeliveryTicketJobs.class;
+    return super.getPropertyOwner(propertyName);
+  }
 
 	/**
 	 * @generated
 	 */
 	@Override
 	public boolean deepEquals(Object obj) {
-
-		if (!super.deepEquals(obj))
-
-			return false;
-
-		DeliveryTicketJobs objT = (DeliveryTicketJobs) obj;
-
-		if (!SmartEquals(getAccount(), objT.getAccount()))
-
-			return false;
-
-		if (!SmartEquals(getOrderNumber(), objT.getOrderNumber()))
-
-			return false;
-
-		if (!SmartEquals(getDocumentType(), objT.getDocumentType()))
-
-			return false;
-
-		if (!SmartEquals(getDescription(), objT.getDescription()))
-
-			return false;
-
-		if (!SmartEquals(getJobNumber(), objT.getJobNumber()))
-
-			return false;
-
-		if (!SmartEquals(getLineNumber(), objT.getLineNumber()))
-
-			return false;
-
-		if (!SmartEquals(getQtyOrder(), objT.getQtyOrder()))
-
-			return false;
-
-		if (!SmartEquals(getQtyShipped(), objT.getQtyShipped()))
-
-			return false;
-
-		if (!SmartEquals(getWeight(), objT.getWeight()))
-
-			return false;
-
-		if (!SmartEquals(getCompleted(), objT.getCompleted()))
-
-			return false;
-
-		if (!SmartEquals(getManualNonInvoiceItem(), objT
-				.getManualNonInvoiceItem()))
-
-			return false;
-
-		if (!SmartEquals(getParentDeliveryTicket(), objT
-				.getParentDeliveryTicket()))
-
-			return false;
-
-		if (!SmartEquals(getInvoiceNumber(), objT.getInvoiceNumber()))
-
-			return false;
-
-		if (!SmartEquals(getInvoiceId(), objT.getInvoiceId()))
-
-			return false;
-
-		if (!SmartEquals(getJobId(), objT.getJobId()))
-
-			return false;
-
-		if (!SmartEquals(getJobBase(), objT.getJobBase()))
-
-			return false;
-
-		if (!SmartEquals(getWeightUpdated(), objT.getWeightUpdated()))
-
-			return false;
-
-		return true;
-
-	}
+    if (! super.deepEquals(obj))
+      return false;
+    DeliveryTicketJobs objT = (DeliveryTicketJobs)obj;
+    if (! SmartEquals(getAccount(), objT.getAccount()))
+      return false;
+    if (! SmartEquals(getOrderNumber(), objT.getOrderNumber()))
+      return false;
+    if (! SmartEquals(getDocumentType(), objT.getDocumentType()))
+      return false;
+    if (! SmartEquals(getDescription(), objT.getDescription()))
+      return false;
+    if (! SmartEquals(getJobNumber(), objT.getJobNumber()))
+      return false;
+    if (! SmartEquals(getLineNumber(), objT.getLineNumber()))
+      return false;
+    if (! SmartEquals(getQtyOrder(), objT.getQtyOrder()))
+      return false;
+    if (! SmartEquals(getQtyShipped(), objT.getQtyShipped()))
+      return false;
+    if (! SmartEquals(getWeight(), objT.getWeight()))
+      return false;
+    if (! SmartEquals(getCompleted(), objT.getCompleted()))
+      return false;
+    if (! SmartEquals(getManualNonInvoiceItem(), objT.getManualNonInvoiceItem()))
+      return false;
+    if (! SmartEquals(getParentDeliveryTicket(), objT.getParentDeliveryTicket()))
+      return false;
+    if (! SmartEquals(getInvoiceNumber(), objT.getInvoiceNumber()))
+      return false;
+    if (! SmartEquals(getInvoiceId(), objT.getInvoiceId()))
+      return false;
+    if (! SmartEquals(getJobId(), objT.getJobId()))
+      return false;
+    if (! SmartEquals(getJobBase(), objT.getJobBase()))
+      return false;
+    if (! SmartEquals(getWeightUpdated(), objT.getWeightUpdated()))
+      return false;
+    return true;
+  }
 }

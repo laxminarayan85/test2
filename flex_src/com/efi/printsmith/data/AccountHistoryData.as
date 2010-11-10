@@ -18,7 +18,7 @@ package com.efi.printsmith.data
 		public var account:Account;
 		public var journal:Journal;
 		public var invoice:Invoice;
-		public var payments:CashRegister;
+		public var payments:TapePaymentRecord;
 		public var financeCharge:int = 0;
 		public var depositTaken:int = 0;
 		public var depositRefund:int = 0;

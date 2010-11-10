@@ -32,8 +32,8 @@ import org.hibernate.annotations.Where;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "ContactNameSuffixes.findall", query = "from ContactNameSuffixes"),
-	@NamedQuery(name = "ContactNameSuffixes.byId", query = "select a from ContactNameSuffixes a where a.id= :id")
+  @NamedQuery(name = "ContactNameSuffixes.findall", query = "from ContactNameSuffixes"),
+  @NamedQuery(name = "ContactNameSuffixes.byId", query = "select a from ContactNameSuffixes a where a.id= :id")
 })
 
 
@@ -57,10 +57,10 @@ public class ContactNameSuffixes extends ModelBase {
 	 * @generated
 	 */
 	public ContactNameSuffixes() {
-		this.created = new Date();
-		this.modified = new Date();
-		this.isDeleted = false;
-	}
+    this.created = new Date();
+    this.modified = new Date();
+    this.isDeleted = false;
+  }
 
 	@Basic
 	private Boolean isDeleted = false;
@@ -84,16 +84,16 @@ public class ContactNameSuffixes extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
 	
 	/**
 	 * @generated
@@ -101,9 +101,9 @@ public class ContactNameSuffixes extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -111,9 +111,9 @@ public class ContactNameSuffixes extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -121,10 +121,10 @@ public class ContactNameSuffixes extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -133,20 +133,20 @@ public class ContactNameSuffixes extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return ContactNameSuffixes.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return ContactNameSuffixes.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		ContactNameSuffixes objT = (ContactNameSuffixes)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    ContactNameSuffixes objT = (ContactNameSuffixes)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    return true;
+  }			
 }

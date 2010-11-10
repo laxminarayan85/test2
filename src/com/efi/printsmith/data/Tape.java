@@ -47,75 +47,9 @@ import org.hibernate.annotations.Where;
 @Where(clause="isdeleted <> 'TRUE'")
 public class Tape extends ModelBase {
 	/**
-	 * @generated
-	 */
-	public static final String TRANSACTIONDATE = "TransactionDate";
-	/**
-	 * @generated
-	 */
-	public static final String STATUS = "Status";
-	/**
-	 * @generated
-	 */
-	public static final String TAXTABLE = "TaxTable";
-	/**
-	 * @generated
-	 */
-	public static final String TAXCODE = "TaxCode";
-	/**
-	 * @generated
-	 */
-	public static final String TAXAMOUNT = "TaxAmount";
-	/**
    * @generated
    */
-  public static final String RECORDTYPE = "RecordType";
-	/**
-	 * @generated
-	 */
-	public static final String CHECKNUM = "CheckNum";
-	/**
-	 * @generated
-	 */
-	public static final String REF = "Ref";
-	/**
-	 * @generated
-	 */
-	public static final String SUBTOTAL = "SubTotal";
-	/**
-	 * @generated
-	 */
-	public static final String TOTAL = "Total";
-	/**
-	 * @generated
-	 */
-	public static final String POS = "Pos";
-	/**
-	 * @generated
-	 */
-	public static final String AR = "Ar";
-	/**
-	 * @generated
-	 */
-	public static final String PAYMENTAMOUNT = "PaymentAmount";
-
-	/**
-   * @generated
-   */
-  public static final String USER = "User";
-	/**
-   * @generated
-   */
-  public static final String ACCOUNT = "Account";
-	/**
-   * @generated
-   */
-  public static final String CONTACT = "Contact";
-	/**
-   * @generated
-   */
-  public static final String TYPEID = "TypeID";
-
+  public static final String BATCHES = "Batches";
 	/**
 	 * @generated
 	 */
@@ -142,420 +76,39 @@ public class Tape extends ModelBase {
 
 
 	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Date transactionDate;
-	
-	/**
-	 * @generated
- 	 */
-	public Date getTransactionDate(){
-    return transactionDate; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTransactionDate(Date newVal) {
-    this.transactionDate = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String status;
-	
-	/**
-	 * @generated
- 	 */
-	public String getStatus(){
-    return status; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setStatus(String newVal) {
-    this.status = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-	private TaxTable taxTable;
-	
-	/**
-	 * @generated
- 	 */
-	public TaxTable getTaxTable(){
-    return taxTable; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTaxTable(TaxTable newVal) {
-    this.taxTable = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-	private TaxCodes taxCode;
-	
-	/**
-	 * @generated
- 	 */
-	public TaxCodes getTaxCode(){
-    return taxCode; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTaxCode(TaxCodes newVal) {
-    this.taxCode = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal taxAmount;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getTaxAmount(){
-    return taxAmount; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTaxAmount(BigDecimal newVal) {
-    this.taxAmount = newVal;
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setTaxAmount(double newVal) {
-    this.taxAmount = BigDecimal.valueOf(newVal);
-  }
- 	
-	
-	/**
    * @generated
    */	
- 	@Basic
-  private String recordType;
-
-	/**
-   * @generated
- 	 */
-  public String getRecordType(){
-    return recordType; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setRecordType(String newVal) {
-    this.recordType = newVal;
-  }
-
-
-
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String checkNum;
-	
-	/**
-	 * @generated
- 	 */
-	public String getCheckNum(){
-    return checkNum; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setCheckNum(String newVal) {
-    this.checkNum = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String ref;
-	
-	/**
-	 * @generated
- 	 */
-	public String getRef(){
-    return ref; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setRef(String newVal) {
-    this.ref = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal subTotal;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getSubTotal(){
-    return subTotal; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setSubTotal(BigDecimal newVal) {
-    this.subTotal = newVal;
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setSubTotal(double newVal) {
-    this.subTotal = BigDecimal.valueOf(newVal);
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal total;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getTotal(){
-    return total; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTotal(BigDecimal newVal) {
-    this.total = newVal;
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setTotal(double newVal) {
-    this.total = BigDecimal.valueOf(newVal);
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean pos;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getPos(){
-    return pos; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setPos(Boolean newVal) {
-    this.pos = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean ar;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getAr(){
-    return ar; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setAr(Boolean newVal) {
-    this.ar = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal paymentAmount;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getPaymentAmount(){
-    return paymentAmount; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setPaymentAmount(BigDecimal newVal) {
-    this.paymentAmount = newVal;
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setPaymentAmount(double newVal) {
-    this.paymentAmount = BigDecimal.valueOf(newVal);
-  }
-	/**
-   * @generated
-   */	
-    @ManyToOne()
+    @OneToMany(  cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
-  private Users user;
+    @JoinTable( name = "tape_batches")
+  private java.util.List<TapeBatch> batches;
 
 	/**
    * @generated
  	 */
-  public Users getUser(){
-    return user; 
+  public java.util.List<TapeBatch> getBatches(){
+    return batches; 
   }
 
 
 	/**
    * @generated
    */	
-  public void setUser(Users newVal) {
-    this.user = newVal;
-  }
-
-
-
-	/**
-   * @generated
-   */	
-    @ManyToOne()
-    @Where(clause="isdeleted <> 'TRUE'")
-  private Account account;
-
-	/**
-   * @generated
- 	 */
-  public Account getAccount(){
-    return account; 
+  public void addBatches(TapeBatch obj) {
+    if (batches == null) {
+      batches = new java.util.ArrayList<TapeBatch>();
+    }
+    batches.add(obj);
   }
 
 
 	/**
    * @generated
    */	
-  public void setAccount(Account newVal) {
-    this.account = newVal;
+  public void setBatches(java.util.List<TapeBatch> newVal) {
+    this.batches = newVal;
   }
 
-
-
-	/**
-   * @generated
-   */	
-    @ManyToOne()
-    @Where(clause="isdeleted <> 'TRUE'")
-  private Contact contact;
-
-	/**
-   * @generated
- 	 */
-  public Contact getContact(){
-    return contact; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setContact(Contact newVal) {
-    this.contact = newVal;
-  }
-
-
-
-	/**
-   * @generated
-   */	
- 	@Basic
-  private Long typeID;
-
-	/**
-   * @generated
- 	 */
-  public Long getTypeID(){
-    return typeID; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setTypeID(Long newVal) {
-    this.typeID = newVal;
-  }
 
 
 	/**
@@ -564,23 +117,7 @@ public class Tape extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (TRANSACTIONDATE.equals(propertyName)) return getTransactionDate();
-    if (STATUS.equals(propertyName)) return getStatus();
-    if (TAXTABLE.equals(propertyName)) return getTaxTable();
-    if (TAXCODE.equals(propertyName)) return getTaxCode();
-    if (TAXAMOUNT.equals(propertyName)) return getTaxAmount();
-    if (RECORDTYPE.equals(propertyName)) return getRecordType();
-    if (CHECKNUM.equals(propertyName)) return getCheckNum();
-    if (REF.equals(propertyName)) return getRef();
-    if (SUBTOTAL.equals(propertyName)) return getSubTotal();
-    if (TOTAL.equals(propertyName)) return getTotal();
-    if (POS.equals(propertyName)) return getPos();
-    if (AR.equals(propertyName)) return getAr();
-    if (PAYMENTAMOUNT.equals(propertyName)) return getPaymentAmount();
-    if (USER.equals(propertyName)) return getUser();
-    if (ACCOUNT.equals(propertyName)) return getAccount();
-    if (CONTACT.equals(propertyName)) return getContact();
-    if (TYPEID.equals(propertyName)) return getTypeID();
+    if (BATCHES.equals(propertyName)) return getBatches();
     return super.getProperty(propertyName);
   }
 	
@@ -590,23 +127,7 @@ public class Tape extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (TRANSACTIONDATE.equals(propertyName)) setTransactionDate((Date)newValue); else
-    if (STATUS.equals(propertyName)) setStatus((String)newValue); else
-    if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
-    if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
-    if (TAXAMOUNT.equals(propertyName)) setTaxAmount((BigDecimal)newValue); else
-    if (RECORDTYPE.equals(propertyName)) setRecordType((String)newValue); else
-    if (CHECKNUM.equals(propertyName)) setCheckNum((String)newValue); else
-    if (REF.equals(propertyName)) setRef((String)newValue); else
-    if (SUBTOTAL.equals(propertyName)) setSubTotal((BigDecimal)newValue); else
-    if (TOTAL.equals(propertyName)) setTotal((BigDecimal)newValue); else
-    if (POS.equals(propertyName)) setPos((Boolean)newValue); else
-    if (AR.equals(propertyName)) setAr((Boolean)newValue); else
-    if (PAYMENTAMOUNT.equals(propertyName)) setPaymentAmount((BigDecimal)newValue); else
-    if (USER.equals(propertyName)) setUser((Users)newValue); else
-    if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
-    if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
-    if (TYPEID.equals(propertyName)) setTypeID((Long)newValue); else
+    if (BATCHES.equals(propertyName)) setBatches((java.util.List<TapeBatch>)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -616,40 +137,8 @@ public class Tape extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (TRANSACTIONDATE.equals(propertyName)) 
-      return new Class<?>[] {Date.class};		
-    if (STATUS.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (TAXTABLE.equals(propertyName)) 
-      return new Class<?>[] {TaxTable.class};		
-    if (TAXCODE.equals(propertyName)) 
-      return new Class<?>[] {TaxCodes.class};		
-    if (TAXAMOUNT.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
-    if (RECORDTYPE.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (CHECKNUM.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (REF.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (SUBTOTAL.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
-    if (TOTAL.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
-    if (POS.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (AR.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (PAYMENTAMOUNT.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
-    if (USER.equals(propertyName)) 
-      return new Class<?>[] {Users.class};		
-    if (ACCOUNT.equals(propertyName)) 
-      return new Class<?>[] {Account.class};		
-    if (CONTACT.equals(propertyName)) 
-      return new Class<?>[] {Contact.class};		
-    if (TYPEID.equals(propertyName)) 
-      return new Class<?>[] {Long.class};		
+    if (BATCHES.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, TapeBatch.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -660,23 +149,7 @@ public class Tape extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (TRANSACTIONDATE.equals(propertyName)) return Tape.class;
-    if (STATUS.equals(propertyName)) return Tape.class;
-    if (TAXTABLE.equals(propertyName)) return Tape.class;
-    if (TAXCODE.equals(propertyName)) return Tape.class;
-    if (TAXAMOUNT.equals(propertyName)) return Tape.class;
-    if (RECORDTYPE.equals(propertyName)) return Tape.class;
-    if (CHECKNUM.equals(propertyName)) return Tape.class;
-    if (REF.equals(propertyName)) return Tape.class;
-    if (SUBTOTAL.equals(propertyName)) return Tape.class;
-    if (TOTAL.equals(propertyName)) return Tape.class;
-    if (POS.equals(propertyName)) return Tape.class;
-    if (AR.equals(propertyName)) return Tape.class;
-    if (PAYMENTAMOUNT.equals(propertyName)) return Tape.class;
-    if (USER.equals(propertyName)) return Tape.class;
-    if (ACCOUNT.equals(propertyName)) return Tape.class;
-    if (CONTACT.equals(propertyName)) return Tape.class;
-    if (TYPEID.equals(propertyName)) return Tape.class;
+    if (BATCHES.equals(propertyName)) return Tape.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -688,39 +161,7 @@ public class Tape extends ModelBase {
     if (! super.deepEquals(obj))
       return false;
     Tape objT = (Tape)obj;
-    if (! SmartEquals(getTransactionDate(), objT.getTransactionDate()))
-      return false;
-    if (! SmartEquals(getStatus(), objT.getStatus()))
-      return false;
-    if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
-      return false;
-    if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
-      return false;
-    if (! SmartEquals(getTaxAmount(), objT.getTaxAmount()))
-      return false;
-    if (! SmartEquals(getRecordType(), objT.getRecordType()))
-      return false;
-    if (! SmartEquals(getCheckNum(), objT.getCheckNum()))
-      return false;
-    if (! SmartEquals(getRef(), objT.getRef()))
-      return false;
-    if (! SmartEquals(getSubTotal(), objT.getSubTotal()))
-      return false;
-    if (! SmartEquals(getTotal(), objT.getTotal()))
-      return false;
-    if (! SmartEquals(getPos(), objT.getPos()))
-      return false;
-    if (! SmartEquals(getAr(), objT.getAr()))
-      return false;
-    if (! SmartEquals(getPaymentAmount(), objT.getPaymentAmount()))
-      return false;
-    if (! SmartEquals(getUser(), objT.getUser()))
-      return false;
-    if (! SmartEquals(getAccount(), objT.getAccount()))
-      return false;
-    if (! SmartEquals(getContact(), objT.getContact()))
-      return false;
-    if (! SmartEquals(getTypeID(), objT.getTypeID()))
+    if (! SmartEquals(getBatches(), objT.getBatches()))
       return false;
     return true;
   }			

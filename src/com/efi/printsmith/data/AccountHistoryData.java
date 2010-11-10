@@ -204,25 +204,24 @@ public class AccountHistoryData extends ModelBase {
 	 */	
     @ManyToOne()
 	@Where(clause="isdeleted <> 'TRUE'")
-	private CashRegister payments;
+	private TapePaymentRecord payments;
 	
 	/**
 	 * @generated
  	 */
-	public CashRegister getPayments(){
+	public TapePaymentRecord getPayments(){
     return payments; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPayments(CashRegister newVal) {
+   * @generated
+   */	
+  public void setPayments(TapePaymentRecord newVal) {
     this.payments = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -317,7 +316,7 @@ public class AccountHistoryData extends ModelBase {
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     if (JOURNAL.equals(propertyName)) setJournal((Journal)newValue); else
     if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
-    if (PAYMENTS.equals(propertyName)) setPayments((CashRegister)newValue); else
+    if (PAYMENTS.equals(propertyName)) setPayments((TapePaymentRecord)newValue); else
     if (FINANCECHARGE.equals(propertyName)) setFinanceCharge((Integer)newValue); else
     if (DEPOSITTAKEN.equals(propertyName)) setDepositTaken((Integer)newValue); else
     if (DEPOSITREFUND.equals(propertyName)) setDepositRefund((Integer)newValue); else
@@ -339,7 +338,7 @@ public class AccountHistoryData extends ModelBase {
     if (INVOICE.equals(propertyName)) 
       return new Class<?>[] {Invoice.class};		
     if (PAYMENTS.equals(propertyName)) 
-      return new Class<?>[] {CashRegister.class};		
+      return new Class<?>[] {TapePaymentRecord.class};		
     if (FINANCECHARGE.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (DEPOSITTAKEN.equals(propertyName)) 
