@@ -47,11 +47,7 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql="update tapesalerecord set isdeleted='TRUE' where id=?")
 //Filter added to retrieve only records that have not been soft deleted.
 @Where(clause="isdeleted <> 'TRUE'")
-public class TapeSaleRecord extends ModelBase {
-	/**
-	 * @generated
-	 */
-	public static final String ISDELETEDRECORD = "IsDeletedRecord";
+public class TapeSaleRecord extends Transactions {
 	/**
 	 * @generated
 	 */
@@ -64,22 +60,6 @@ public class TapeSaleRecord extends ModelBase {
 	 * @generated
 	 */
 	public static final String ORRATE = "OrRate";
-	/**
-	 * @generated
-	 */
-	public static final String TAXTABLE = "TaxTable";
-	/**
-	 * @generated
-	 */
-	public static final String TAXCODE = "TaxCode";
-	/**
-	 * @generated
-	 */
-	public static final String TAXAMOUNT = "TaxAmount";
-	/**
-	 * @generated
-	 */
-	public static final String TAXEXEMPT = "TaxExempt";
 	/**
 	 * @generated
 	 */
@@ -115,24 +95,7 @@ public class TapeSaleRecord extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String REFNUMBER = "RefNumber";
-	/**
-	 * @generated
-	 */
-	public static final String CHECKNUMBER = "CheckNumber";
-	/**
-	 * @generated
-	 */
-	public static final String CCT = "Cct";
-	/**
-	 * @generated
-	 */
 	public static final String INVOICE = "Invoice";
-
-	/**
-   * @generated
-   */
-  public static final String SUBTOTAL = "SubTotal";
 
 	/**
 	 * @generated
@@ -153,29 +116,6 @@ public class TapeSaleRecord extends ModelBase {
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean isDeletedRecord;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getIsDeletedRecord(){
-    return isDeletedRecord; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setIsDeletedRecord(Boolean newVal) {
-    this.isDeletedRecord = newVal;
-  }
-	
  	
 	
 	/**
@@ -243,100 +183,6 @@ public class TapeSaleRecord extends ModelBase {
 	 */	
 	public void setOrRate(Boolean newVal) {
     this.orRate = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-    @Where(clause="isdeleted <> 'TRUE'")
-	private TaxTable taxTable;
-	
-	/**
-	 * @generated
- 	 */
-	public TaxTable getTaxTable(){
-    return taxTable; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTaxTable(TaxTable newVal) {
-    this.taxTable = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-    @Where(clause="isdeleted <> 'TRUE'")
-	private TaxCodes taxCode;
-	
-	/**
-	 * @generated
- 	 */
-	public TaxCodes getTaxCode(){
-    return taxCode; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTaxCode(TaxCodes newVal) {
-    this.taxCode = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Double taxAmount;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getTaxAmount(){
-    return taxAmount; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTaxAmount(Double newVal) {
-    this.taxAmount = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean taxExempt;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getTaxExempt(){
-    return taxExempt; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setTaxExempt(Boolean newVal) {
-    this.taxExempt = newVal;
   }
 	
  	
@@ -530,76 +376,6 @@ public class TapeSaleRecord extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
-	private String refNumber;
-	
-	/**
-	 * @generated
- 	 */
-	public String getRefNumber(){
-    return refNumber; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setRefNumber(String newVal) {
-    this.refNumber = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private String checkNumber;
-	
-	/**
-	 * @generated
- 	 */
-	public String getCheckNumber(){
-    return checkNumber; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setCheckNumber(String newVal) {
-    this.checkNumber = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-    @Where(clause="isdeleted <> 'TRUE'")
-	private CreditCardTransactions cct;
-	
-	/**
-	 * @generated
- 	 */
-	public CreditCardTransactions getCct(){
-    return cct; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setCct(CreditCardTransactions newVal) {
-    this.cct = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
     @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
 	private Invoice invoice;
@@ -620,46 +396,14 @@ public class TapeSaleRecord extends ModelBase {
   }
 	
 	/**
-   * @generated
-   */	
- 	@Basic
-  private BigDecimal subTotal;
-
-	/**
-   * @generated
- 	 */
-  public BigDecimal getSubTotal(){
-    return subTotal; 
-  }
-
-	/**
-   * @generated
-   */	
-  public void setSubTotal(BigDecimal newVal) {
-    this.subTotal = newVal;
-  }
-
-	/**
-   * @generated
-   */	
-  public void setSubTotal(double newVal) {
-    this.subTotal = BigDecimal.valueOf(newVal);
-  }
-
-	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (ISDELETEDRECORD.equals(propertyName)) return getIsDeletedRecord();
     if (ISPICKUP.equals(propertyName)) return getIsPickup();
     if (OPPRICE.equals(propertyName)) return getOpPrice();
     if (ORRATE.equals(propertyName)) return getOrRate();
-    if (TAXTABLE.equals(propertyName)) return getTaxTable();
-    if (TAXCODE.equals(propertyName)) return getTaxCode();
-    if (TAXAMOUNT.equals(propertyName)) return getTaxAmount();
-    if (TAXEXEMPT.equals(propertyName)) return getTaxExempt();
     if (CASHREGISTERDEPT.equals(propertyName)) return getCashRegisterDept();
     if (UNITPRICE.equals(propertyName)) return getUnitPrice();
     if (TOTAL.equals(propertyName)) return getTotal();
@@ -668,11 +412,7 @@ public class TapeSaleRecord extends ModelBase {
     if (DEPARTMENT.equals(propertyName)) return getDepartment();
     if (PAYMODE.equals(propertyName)) return getPaymode();
     if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
-    if (REFNUMBER.equals(propertyName)) return getRefNumber();
-    if (CHECKNUMBER.equals(propertyName)) return getCheckNumber();
-    if (CCT.equals(propertyName)) return getCct();
     if (INVOICE.equals(propertyName)) return getInvoice();
-    if (SUBTOTAL.equals(propertyName)) return getSubTotal();
     return super.getProperty(propertyName);
   }
 	
@@ -682,14 +422,9 @@ public class TapeSaleRecord extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (ISDELETEDRECORD.equals(propertyName)) setIsDeletedRecord((Boolean)newValue); else
     if (ISPICKUP.equals(propertyName)) setIsPickup((Boolean)newValue); else
     if (OPPRICE.equals(propertyName)) setOpPrice((Boolean)newValue); else
     if (ORRATE.equals(propertyName)) setOrRate((Boolean)newValue); else
-    if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
-    if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
-    if (TAXAMOUNT.equals(propertyName)) setTaxAmount((Double)newValue); else
-    if (TAXEXEMPT.equals(propertyName)) setTaxExempt((Boolean)newValue); else
     if (CASHREGISTERDEPT.equals(propertyName)) setCashRegisterDept((PreferencesCashRegister)newValue); else
     if (UNITPRICE.equals(propertyName)) setUnitPrice((Double)newValue); else
     if (TOTAL.equals(propertyName)) setTotal((Double)newValue); else
@@ -698,11 +433,7 @@ public class TapeSaleRecord extends ModelBase {
     if (DEPARTMENT.equals(propertyName)) setDepartment((String)newValue); else
     if (PAYMODE.equals(propertyName)) setPaymode((String)newValue); else
     if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
-    if (REFNUMBER.equals(propertyName)) setRefNumber((String)newValue); else
-    if (CHECKNUMBER.equals(propertyName)) setCheckNumber((String)newValue); else
-    if (CCT.equals(propertyName)) setCct((CreditCardTransactions)newValue); else
     if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
-    if (SUBTOTAL.equals(propertyName)) setSubTotal((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -712,21 +443,11 @@ public class TapeSaleRecord extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (ISDELETEDRECORD.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
     if (ISPICKUP.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (OPPRICE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (ORRATE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (TAXTABLE.equals(propertyName)) 
-      return new Class<?>[] {TaxTable.class};		
-    if (TAXCODE.equals(propertyName)) 
-      return new Class<?>[] {TaxCodes.class};		
-    if (TAXAMOUNT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (TAXEXEMPT.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (CASHREGISTERDEPT.equals(propertyName)) 
       return new Class<?>[] {PreferencesCashRegister.class};		
@@ -744,16 +465,8 @@ public class TapeSaleRecord extends ModelBase {
       return new Class<?>[] {String.class};		
     if (SALESCATEGORY.equals(propertyName)) 
       return new Class<?>[] {SalesCategory.class};		
-    if (REFNUMBER.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (CHECKNUMBER.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (CCT.equals(propertyName)) 
-      return new Class<?>[] {CreditCardTransactions.class};		
     if (INVOICE.equals(propertyName)) 
       return new Class<?>[] {Invoice.class};		
-    if (SUBTOTAL.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -764,14 +477,9 @@ public class TapeSaleRecord extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (ISDELETEDRECORD.equals(propertyName)) return TapeSaleRecord.class;
     if (ISPICKUP.equals(propertyName)) return TapeSaleRecord.class;
     if (OPPRICE.equals(propertyName)) return TapeSaleRecord.class;
     if (ORRATE.equals(propertyName)) return TapeSaleRecord.class;
-    if (TAXTABLE.equals(propertyName)) return TapeSaleRecord.class;
-    if (TAXCODE.equals(propertyName)) return TapeSaleRecord.class;
-    if (TAXAMOUNT.equals(propertyName)) return TapeSaleRecord.class;
-    if (TAXEXEMPT.equals(propertyName)) return TapeSaleRecord.class;
     if (CASHREGISTERDEPT.equals(propertyName)) return TapeSaleRecord.class;
     if (UNITPRICE.equals(propertyName)) return TapeSaleRecord.class;
     if (TOTAL.equals(propertyName)) return TapeSaleRecord.class;
@@ -780,11 +488,7 @@ public class TapeSaleRecord extends ModelBase {
     if (DEPARTMENT.equals(propertyName)) return TapeSaleRecord.class;
     if (PAYMODE.equals(propertyName)) return TapeSaleRecord.class;
     if (SALESCATEGORY.equals(propertyName)) return TapeSaleRecord.class;
-    if (REFNUMBER.equals(propertyName)) return TapeSaleRecord.class;
-    if (CHECKNUMBER.equals(propertyName)) return TapeSaleRecord.class;
-    if (CCT.equals(propertyName)) return TapeSaleRecord.class;
     if (INVOICE.equals(propertyName)) return TapeSaleRecord.class;
-    if (SUBTOTAL.equals(propertyName)) return TapeSaleRecord.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -796,21 +500,11 @@ public class TapeSaleRecord extends ModelBase {
     if (! super.deepEquals(obj))
       return false;
     TapeSaleRecord objT = (TapeSaleRecord)obj;
-    if (! SmartEquals(getIsDeletedRecord(), objT.getIsDeletedRecord()))
-      return false;
     if (! SmartEquals(getIsPickup(), objT.getIsPickup()))
       return false;
     if (! SmartEquals(getOpPrice(), objT.getOpPrice()))
       return false;
     if (! SmartEquals(getOrRate(), objT.getOrRate()))
-      return false;
-    if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
-      return false;
-    if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
-      return false;
-    if (! SmartEquals(getTaxAmount(), objT.getTaxAmount()))
-      return false;
-    if (! SmartEquals(getTaxExempt(), objT.getTaxExempt()))
       return false;
     if (! SmartEquals(getCashRegisterDept(), objT.getCashRegisterDept()))
       return false;
@@ -828,15 +522,7 @@ public class TapeSaleRecord extends ModelBase {
       return false;
     if (! SmartEquals(getSalesCategory(), objT.getSalesCategory()))
       return false;
-    if (! SmartEquals(getRefNumber(), objT.getRefNumber()))
-      return false;
-    if (! SmartEquals(getCheckNumber(), objT.getCheckNumber()))
-      return false;
-    if (! SmartEquals(getCct(), objT.getCct()))
-      return false;
     if (! SmartEquals(getInvoice(), objT.getInvoice()))
-      return false;
-    if (! SmartEquals(getSubTotal(), objT.getSubTotal()))
       return false;
     return true;
   }			

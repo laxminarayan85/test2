@@ -49,9 +49,9 @@ import org.hibernate.annotations.Where;
 @Where(clause="isdeleted <> 'TRUE'")
 public class TapeSessionBatch extends ModelBase {
 	/**
-	 * @generated
-	 */
-	public static final String PAYMENTTRANSACTIONS = "PaymentTransactions";
+   * @generated
+   */
+  public static final String TRANSACTIONSLIST = "TransactionsList";
 	/**
 	 * @generated
 	 */
@@ -79,10 +79,6 @@ public class TapeSessionBatch extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String SALESTRANSACTIONS = "SalesTransactions";
-	/**
-	 * @generated
-	 */
 	public static final String SESSIONID = "SessionID";
 
 	/**
@@ -107,39 +103,37 @@ public class TapeSessionBatch extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @OneToMany(  cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
-    @JoinTable( name = "tapesessionbatch_paymenttransactions")
-	private java.util.List<TapePaymentRecord> paymentTransactions;
-	
+    @JoinTable( name = "tapesessionbatch_transactionslists")
+  private java.util.List<Transactions> transactionsLists;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public java.util.List<TapePaymentRecord> getPaymentTransactions(){
-    return paymentTransactions; 
+  public java.util.List<Transactions> getTransactionsLists(){
+    return transactionsLists; 
   }
 
 	/**
-	 * @generated
-	 */	
-	public void addPaymentTransactions(TapePaymentRecord obj) {
-    if (paymentTransactions == null) {
-      paymentTransactions = new java.util.ArrayList<TapePaymentRecord>();
+   * @generated
+   */	
+  public void addTransactionsLists(Transactions obj) {
+    if (transactionsLists == null) {
+      transactionsLists = new java.util.ArrayList<Transactions>();
     }
-    paymentTransactions.add(obj);
+    transactionsLists.add(obj);
   }
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setPaymentTransactions(java.util.List<TapePaymentRecord> newVal) {
-    this.paymentTransactions = newVal;
+   * @generated
+   */	
+  public void setTransactionsLists(java.util.List<Transactions> newVal) {
+    this.transactionsLists = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -311,40 +305,6 @@ public class TapeSessionBatch extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany(  cascade = {CascadeType.ALL})
-    @Where(clause="isdeleted <> 'TRUE'")
-    @JoinTable( name = "tapesessionbatch_salestransactions")
-	private java.util.List<TapeSaleRecord> salesTransactions;
-	
-	/**
-	 * @generated
- 	 */
-	public java.util.List<TapeSaleRecord> getSalesTransactions(){
-    return salesTransactions; 
-  }
-
-	/**
-   * @generated
-   */	
-  public void addSalesTransactions(TapeSaleRecord obj) {
-    if (salesTransactions == null) {
-      salesTransactions = new java.util.ArrayList<TapeSaleRecord>();
-    }
-    salesTransactions.add(obj);
-  }
-
-	/**
-	 * @generated
-	 */	
-	public void setSalesTransactions(java.util.List<TapeSaleRecord> newVal) {
-    this.salesTransactions = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Long sessionID;
 	
@@ -369,14 +329,13 @@ public class TapeSessionBatch extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (PAYMENTTRANSACTIONS.equals(propertyName)) return getPaymentTransactions();
+    if (TRANSACTIONSLIST.equals(propertyName)) return getTransactionsLists();
     if (NAME.equals(propertyName)) return getName();
     if (ACCUMSUBTOTAL.equals(propertyName)) return getAccumSubTotal();
     if (ACCUMTOTAL.equals(propertyName)) return getAccumTotal();
     if (ACCUMTAXTOTAL.equals(propertyName)) return getAccumTaxTotal();
     if (ACCUMTENDERED.equals(propertyName)) return getAccumTendered();
     if (ACCUMCHANGE.equals(propertyName)) return getAccumChange();
-    if (SALESTRANSACTIONS.equals(propertyName)) return getSalesTransactions();
     if (SESSIONID.equals(propertyName)) return getSessionID();
     return super.getProperty(propertyName);
   }
@@ -387,14 +346,13 @@ public class TapeSessionBatch extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (PAYMENTTRANSACTIONS.equals(propertyName)) setPaymentTransactions((java.util.List<TapePaymentRecord>)newValue); else
+    if (TRANSACTIONSLIST.equals(propertyName)) setTransactionsLists((java.util.List<Transactions>)newValue); else
     if (NAME.equals(propertyName)) setName((String)newValue); else
     if (ACCUMSUBTOTAL.equals(propertyName)) setAccumSubTotal((BigDecimal)newValue); else
     if (ACCUMTOTAL.equals(propertyName)) setAccumTotal((BigDecimal)newValue); else
     if (ACCUMTAXTOTAL.equals(propertyName)) setAccumTaxTotal((BigDecimal)newValue); else
     if (ACCUMTENDERED.equals(propertyName)) setAccumTendered((BigDecimal)newValue); else
     if (ACCUMCHANGE.equals(propertyName)) setAccumChange((BigDecimal)newValue); else
-    if (SALESTRANSACTIONS.equals(propertyName)) setSalesTransactions((java.util.List<TapeSaleRecord>)newValue); else
     if (SESSIONID.equals(propertyName)) setSessionID((Long)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -405,8 +363,8 @@ public class TapeSessionBatch extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (PAYMENTTRANSACTIONS.equals(propertyName)) 
-      return new Class<?>[] {java.util.List.class, TapePaymentRecord.class};		
+    if (TRANSACTIONSLIST.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, Transactions.class};		
     if (NAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (ACCUMSUBTOTAL.equals(propertyName)) 
@@ -419,8 +377,6 @@ public class TapeSessionBatch extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (ACCUMCHANGE.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
-    if (SALESTRANSACTIONS.equals(propertyName)) 
-      return new Class<?>[] {java.util.List.class, TapeSaleRecord.class};		
     if (SESSIONID.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
     return super.getPropertyClass(propertyName);
@@ -433,14 +389,13 @@ public class TapeSessionBatch extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (PAYMENTTRANSACTIONS.equals(propertyName)) return TapeSessionBatch.class;
+    if (TRANSACTIONSLIST.equals(propertyName)) return TapeSessionBatch.class;
     if (NAME.equals(propertyName)) return TapeSessionBatch.class;
     if (ACCUMSUBTOTAL.equals(propertyName)) return TapeSessionBatch.class;
     if (ACCUMTOTAL.equals(propertyName)) return TapeSessionBatch.class;
     if (ACCUMTAXTOTAL.equals(propertyName)) return TapeSessionBatch.class;
     if (ACCUMTENDERED.equals(propertyName)) return TapeSessionBatch.class;
     if (ACCUMCHANGE.equals(propertyName)) return TapeSessionBatch.class;
-    if (SALESTRANSACTIONS.equals(propertyName)) return TapeSessionBatch.class;
     if (SESSIONID.equals(propertyName)) return TapeSessionBatch.class;
     return super.getPropertyOwner(propertyName);
   }
@@ -453,7 +408,7 @@ public class TapeSessionBatch extends ModelBase {
     if (! super.deepEquals(obj))
       return false;
     TapeSessionBatch objT = (TapeSessionBatch)obj;
-    if (! SmartEquals(getPaymentTransactions(), objT.getPaymentTransactions()))
+    if (! SmartEquals(getTransactionsLists(), objT.getTransactionsLists()))
       return false;
     if (! SmartEquals(getName(), objT.getName()))
       return false;
@@ -466,8 +421,6 @@ public class TapeSessionBatch extends ModelBase {
     if (! SmartEquals(getAccumTendered(), objT.getAccumTendered()))
       return false;
     if (! SmartEquals(getAccumChange(), objT.getAccumChange()))
-      return false;
-    if (! SmartEquals(getSalesTransactions(), objT.getSalesTransactions()))
       return false;
     if (! SmartEquals(getSessionID(), objT.getSessionID()))
       return false;

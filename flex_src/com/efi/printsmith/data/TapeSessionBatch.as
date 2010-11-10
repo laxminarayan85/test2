@@ -14,14 +14,13 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var paymentTransactions:ArrayCollection;
+		public var transactionsList:ArrayCollection;
 		public var name:String = "";
 		public var accumSubTotal:Number = 0;
 		public var accumTotal:Number = 0;
 		public var accumTaxTotal:Number = 0;
 		public var accumTendered:Number = 0;
 		public var accumChange:Number = 0;
-		public var salesTransactions:ArrayCollection;
 		public var sessionID:Number = 0;
 	
 	}
