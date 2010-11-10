@@ -55,6 +55,8 @@
 			private var focussedFormControl:DisplayObject;
 			private var originalContact:Contact;
 			private var titleWindow:ContactInfoPopup=null;
+			
+			[Bindable] public var enableEditBtn:Boolean = true;
 
 			public function init():void
 			{ 
@@ -255,6 +257,7 @@
 					   y="121"
 					   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
 					   id="edit_contact_button"
+					   enabled="{enableEditBtn}"
 					   click="doEditContact();"/>
 	</mx:Panel>
 </mx:Canvas>

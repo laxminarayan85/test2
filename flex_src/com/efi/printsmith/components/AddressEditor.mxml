@@ -47,6 +47,8 @@
 			private var titleWindow:AddressEditorPopup=null;
 			
 			[Bindable] public var openedFromEmployee:Boolean = false;
+			
+			[Bindable] public var enableEditBtn:Boolean = true;
 
 			public function init():void
 			{ 
@@ -173,6 +175,7 @@
 					   y="93"
 					   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
 					   id="edit_address_button"
+					   enabled="{enableEditBtn}"
 					   click="doEditAddress();"/>
 	</mx:Panel>
 </mx:Canvas>
