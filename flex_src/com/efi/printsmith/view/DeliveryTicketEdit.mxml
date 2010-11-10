@@ -19,8 +19,13 @@
 		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPSResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServiceContact" destination="dataService" showBusyCursor="true">
+		<mx:method name="getById" fault="handleFault(event)" result="handleLoadContactResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.data.Contact;
 		import com.efi.printsmith.data.Address;
 		import com.efi.printsmith.data.PreferencesSystem;
 		import com.efi.printsmith.events.PendingListPickerEvent;
@@ -75,6 +80,9 @@
 				}
 				fromContactList.addItem(preferencesSystem.companyAddress);
 			}
+			var emptyFromContact:Address = new Address();
+			emptyFromContact.id=0;
+			fromContactList.addItemAt(emptyFromContact,0);
 			
 		}
 		
@@ -87,7 +95,7 @@
 					if(to_address!=null){
 						to_address.setAddress(deliveryTicket.toAddress);
 					}
-					toContactList.addItem(_invoiceBase.account.shipToAddress);
+					toContactList.addItem(_invoiceBase.account.shipToAddress);					
 					if(_invoiceBase.account.contact!=null){
 						deliveryTicket.deliveryContact = _invoiceBase.account.contact;
 						if(contact_address!=null){
@@ -95,9 +103,7 @@
 						}
 						attnList.addItem(_invoiceBase.account.contact);
 						if(_invoiceBase.account.contact.shipToAddress!=null && _invoiceBase.account.contact.shipToAddress.length>0) {
-							for each(var addressObj:Address in _invoiceBase.account.contact.shipToAddress){
-								addressList.addItem(addressObj);
-							}
+							dataServiceContact.getById("Contact",_invoiceBase.account.contact.id);
 						}
 					}
 				}
@@ -107,12 +113,30 @@
 					deliveryTicket.deliveryDate = new Date();
 				}
 			}
+			var emptyToContact:Address = new Address();
+			emptyToContact.id=0;
+			toContactList.addItemAt(emptyToContact,0);
+			var emptyAttnContact:Contact = new Contact();
+			emptyAttnContact.id=0;
+			attnList.addItemAt(emptyAttnContact,0);
+			var emptyAddress:Address = new Address();
+			emptyAddress.id=0;
+			addressList.addItemAt(emptyAddress,0);
 			if(_invoiceBase!=null && _invoiceBase.jobs!=null && _invoiceBase.jobs.length>0) {
 				var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
 				copyJobs(deliveryTicketJobsList,_invoiceBase);
 				deliveryTicket.deliveryJobs = deliveryTicketJobsList;
 			}
 			dataServicePreferenceSystem.getSingle("PreferencesSystem");
+		}
+		
+		private function handleLoadContactResult(event:ResultEvent):void {
+			var contact:Contact = event.result as Contact;
+			if(contact!=null && contact.shipToAddress!=null && contact.shipToAddress.length>0){
+				for each(var addressObj:Address in contact.shipToAddress){
+					addressList.addItem(addressObj);
+				}
+			}
 		}
 		
 		private function handleLoadAddResult(event:ResultEvent):void {
@@ -200,8 +224,41 @@
 			}
 		}
 		
+		private function setFromAddress():void {
+			deliveryTicket.fromOther = false;
+			from_address.setAddress(deliveryTicket.fromAddress);
+		}
+		
+		private function setToAddress():void {
+			deliveryTicket.toOther = false;
+			to_address.setAddress(deliveryTicket.toAddress);
+		}
+		
+		private function setAttnContact():void {
+			deliveryTicket.attOther = false;
+			contact_address.setContact(deliveryTicket.deliveryContact);
+		}
+		
+		private function setToAddressFromAddress(event:Event):void {
+			if(event.currentTarget.selectedItem!=null && !isNaN(event.currentTarget.selectedItem.id) && event.currentTarget.selectedItem.id!=0){
+				deliveryTicket.toOther = true;
+				deliveryTicket.toAddress = event.currentTarget.selectedItem as Address;
+				to_address.setAddress(event.currentTarget.selectedItem as Address);
+			}
+		}
+		
 		private function getDeliveryContactName(item:Object):String {
+			if(isNaN(item.id) || item.id==0){
+				return "";
+			}
 			return item.lastName+", "+item.firstName;
+		}
+		
+		private function getAddressName(item:Object):String {
+			if(isNaN(item.id) || item.id==0){
+				return "";
+			}
+			return item.street1+", "+item.city;
 		}
 	]]>
 	                             
@@ -315,7 +372,8 @@
 						<components:CustomComboBoxComponent
 							dataHolder="{deliveryTicket}" variableName="fromAddress" updateObject="true" objectLabelFieldId="id"
 							labelFieldId="id" labelFieldName="name" masterList="{fromContactList}"
-							customText="{getCustomTextData(fromContactList,deliveryTicket,deliveryTicket.fromAddress)}"/> 
+							customText="{getCustomTextData(fromContactList,deliveryTicket,deliveryTicket.fromAddress)}"
+							change="{setFromAddress()}"/> 
 					</mx:HBox>
 					<ns1:AddressEditor id="from_address" width="100%" height="70%" enableEditBtn="{deliveryTicket.fromOther}"/>
 					<components:CustomCheckBoxComponent height="10%"
@@ -329,7 +387,8 @@
 						<components:CustomComboBoxComponent
 							dataHolder="{deliveryTicket}" variableName="toAddress" updateObject="true" objectLabelFieldId="id"
 							labelFieldId="id" labelFieldName="name" masterList="{toContactList}"
-							customText="{getCustomTextData(toContactList,deliveryTicket,deliveryTicket.toAddress)}"/> 
+							customText="{getCustomTextData(toContactList,deliveryTicket,deliveryTicket.toAddress)}"
+							change="{setToAddress()}"/> 
 					</mx:HBox>
 					<ns1:AddressEditor id="to_address" width="100%" height="70%" enableEditBtn="{deliveryTicket.toOther}"/>
 					<components:CustomCheckBoxComponent height="10%"
@@ -343,11 +402,12 @@
 						<components:CustomComboBoxComponent
 							dataHolder="{deliveryTicket}" variableName="deliveryContact" updateObject="true" objectLabelFieldId="id"
 							labelFieldId="id" labelFieldName="name" labelFunction="getDeliveryContactName" masterList="{attnList}"
-							customText="{getCustomTextData(attnList,deliveryTicket,deliveryTicket.deliveryContact)}"/> 
+							customText="{getCustomTextData(attnList,deliveryTicket,deliveryTicket.deliveryContact)}"
+							change="{setAttnContact()}"/> 
 					</mx:HBox>
 					<mx:HBox width="100%" height="10%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Address')}:"/>
-						<mx:ComboBox/>
+						<mx:ComboBox dataProvider="{addressList}" labelFunction="getAddressName" change="{setToAddressFromAddress(event)}"/>
 					</mx:HBox>
 					<ns1:ContactInfoEditor id="contact_address" width="100%" height="70%" enableEditBtn="{deliveryTicket.attOther}"/>
 					<components:CustomCheckBoxComponent height="10%"
