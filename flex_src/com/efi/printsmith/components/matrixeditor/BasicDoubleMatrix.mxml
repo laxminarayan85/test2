@@ -7,15 +7,19 @@
 					showHeaders="true" borderStyle="solid" borderThickness="3" x="0" 
 					editable="true" enabled="true" horizontalGridLines="true"
 					top="50" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
-					doubleClickEnabled="true" height="100%">
+					itemEditEnd="formatData(event);"
+					doubleClickEnabled="true" height="100%" id="matrix_grid">
 				<mx:columns>
 				     <mx:DataGridColumn dataField="qty" headerText="{header1}" sortable="false" width="60"/>
 				     <mx:DataGridColumn dataField="price1" headerText="{header2}" editable="true" sortable="false" width="60"/>
 				     <mx:DataGridColumn dataField="price2" headerText="{header3}" editable="true" sortable="false" width="60"/>
 				</mx:columns>
+		<mx:Script source="../../common/scripts/StringUtils.as"/>
 		<mx:Script>
 			<![CDATA[
-				import com.efi.printsmith.data.Matrix; 
+				import com.efi.printsmith.data.Matrix;
+				import mx.events.*;
+				import mx.controls.*;
 				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
 				[Bindable] public var header1:String = "";
 				[Bindable] public var header2:String = "Side 1";
@@ -23,6 +27,23 @@
 				
 				public function mapToMatrix():void {
 					
+				}
+				
+				private function formatData(event:DataGridEvent) {
+					// Check the reason for the event.
+			        if (event.reason == DataGridEventReason.CANCELLED)
+			        {
+			            return;
+			        }            
+			
+			        var newData:String= 
+			            TextInput(event.currentTarget.itemEditorInstance).text;
+					var parsedValue:Number = parseCurrencyFloat(newData);
+			        if(newData != "") {
+		            	if (isNaN(parsedValue)) {
+		            		TextInput(matrix_grid.itemEditorInstance).text="0";
+		            	}
+			        }
 				}
 			]]>
 		</mx:Script>
