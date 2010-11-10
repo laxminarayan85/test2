@@ -80,7 +80,7 @@ public abstract class CopierPricingMethod {
 		
 		double oddRunCount = (runs - Math.floor(runs));
 		long oddRunQty = (long)(job.getQtyOrdered() * oddRunCount);
-		
+		job.setNumCopies(press);
 		calculateEstWaste(job);
 		calculateBinderyWaste(job);
 		long wasteSheets = job.getBinderyWaste() + job.getEstWaste();
