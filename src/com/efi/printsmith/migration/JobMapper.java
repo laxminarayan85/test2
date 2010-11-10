@@ -38,6 +38,7 @@ public class JobMapper extends ImportMapper {
 		Job job = new Job();
 		PricingRecord pricingRecord = new PricingRecord();
 		CostingRecord costingRecord = new CostingRecord();
+		/*job.setCostingRecord(costingRecord);*/
 		costingRecord = (CostingRecord)dataService.addUpdate(costingRecord);
 		job.setCostingRecord(costingRecord);
 		PaperCalculator tempPaper = new PaperCalculator();
@@ -347,11 +348,12 @@ public class JobMapper extends ImportMapper {
 			} else if ("labor markup".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("setup time".equals(currentFieldToken)) {
-				/* TODO */
+				costingRecord.setActualSetupTime(Utilities.tokenToDouble(currentImportToken));
+				
 			} else if ("run time".equals(currentFieldToken)) {
-				/* TODO */
+				costingRecord.setActualRunTime(Utilities.tokenToDouble(currentImportToken));
 			} else if ("labor cost".equals(currentFieldToken)) {
-				/* TODO */
+				costingRecord.setAcualLaborCost(Utilities.tokenToDouble(currentImportToken));
 			} else if ("labor markup amt".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("o sets".equals(currentFieldToken)) {
@@ -781,7 +783,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("parent area".equals(currentFieldToken)) {
 				tempPaper.setParentSqrArea(Utilities.tokenToDouble(currentImportToken));
 			} else if ("washup time".equals(currentFieldToken)) {
-				/* TODO */
+				costingRecord.setActualWashupTime(Utilities.tokenToDouble(currentImportToken));
 			} else if ("pick stock group".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("pick stock type".equals(currentFieldToken)) {
@@ -1203,6 +1205,11 @@ public class JobMapper extends ImportMapper {
 		pricingRecord = (PricingRecord)dataService.addUpdate(pricingRecord);
 		pricingRecord.setId(pricingRecord.getId());
 		job.setPricingRecord(pricingRecord);
+
+		costingRecord = (CostingRecord)dataService.addUpdate(costingRecord);
+		costingRecord.setId(costingRecord.getId());
+		job.setCostingRecord(costingRecord);
+
 		if (job.getFrontColors() > 0 && job.getBackColors() > 0) {
 			job.setSingleSided(false);
 			job.setDoubleSided(true);
@@ -1210,6 +1217,7 @@ public class JobMapper extends ImportMapper {
 			job.setSingleSided(true);
 			job.setDoubleSided(false);
 		}
+
 		job = (Job)dataService.addUpdate(job);
 		job.setId(job.getId());
 		if (invoiceNumber.equals("") == false && docType.equals("") == false) {
