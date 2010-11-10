@@ -47,6 +47,7 @@
 							  y="306"
 							  id="job_unitPrice"
 							  height="20"
+							  tabEnabled="false"
 							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.unitPrice)}"
 							  change="editUnitPrice(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
@@ -92,6 +93,7 @@
 							  id="num_copies"
 							  text="{job.numCopies}"
 							  height="20" change="editNumCopies(event)"
+							  tabIndex="6"
 							  width="98" textAlign="right" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{est_waste}" position="before">
@@ -849,7 +851,7 @@
 				thisInstance = this;
 				this.height = parent.height - 80;
 				PopUpManager.centerPopUp(this);
-				
+				this.job_description.setFocus();
 				
 				pricingMethodDataService.getAll("PreferencesPricingMethod");
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
@@ -2917,6 +2919,7 @@
 							 id="product"
 							 dataProvider="{productCodes}"
 							 labelField="name"
+							 tabIndex="27"
 							 height="20"/>
 			<mx:TextInput
 						  y="94"
@@ -2924,6 +2927,7 @@
 						  id="job_comment"
 						  text="{job.comment}"
 						  height="20"
+						  tabIndex="30"
 						  right="10"/>
 			<mx:Label x="10"
 					  y="96"
@@ -2934,6 +2938,7 @@
 							 id="job_location"
 							 dataProvider="{locations}"
 							 labelField="name"
+							 tabIndex="28"
 							 height="20"/>
 			<mx:Label x="465.5"
 					  y="70"
@@ -2951,6 +2956,7 @@
 						 change="updatePricingMethod();"
 						 labelField="title"
 						 right="10"
+						 tabIndex="29"
 						 left="810.5">
 			</mx:ComboBox>
 			<mx:Label x="162"
@@ -2963,6 +2969,7 @@
 						 change="updatePricingMethod();"
 						 labelField="name"
 						 right="581.5"
+						 tabIndex="26"
 						 left="221.5">
 			</mx:ComboBox>
 			<mx:Canvas x="0" y="119" width="939" height="512" verticalScrollPolicy="auto" id="canvas2">
@@ -3050,6 +3057,7 @@
 										 width="281"
 										 id="job_description"
 										 text="{job.description}"
+										 tabIndex="0"
 										 height="40"/>
 							<mx:Label x="10"
 									  y="2"
@@ -3059,18 +3067,22 @@
 										  id="job_over_under"
 										  text="{job.oversUnders}"
 										  height="20"
+										  tabIndex="2"
+										  tabEnabled="false"
 										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
 							<mx:TextInput x="496"
 										  y="70"
 										  id="sets_of"
 										  text="{job.inSetsOf}"
 										  height="20"
+								          tabEnabled="false"
 										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
 							<commoncomponents:CustomNumericTextInputComponent x="496"
 										  y="324"
 										  id="overs_unit_price"
 										  height="20"
 										  width="98" 
+										  tabEnabled="false"
 										  dataHolder="{job.pricingRecord}" variableName="oversUnitPrice"
 										  customText="{job.pricingRecord.oversUnitPrice}"
 										  precision="4" rounding="nearest" allowSymbol="false"
@@ -3081,6 +3093,7 @@
 										  id="overs_total_price"
 										  height="20"
 										  width="98" 
+										  tabEnabled="false"
 										  dataHolder="{job.pricingRecord}" variableName="oversTotalPrice"
 										  customText="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice)}"
 										  precision="2" rounding="nearest" allowSymbol="false" 
@@ -3156,6 +3169,7 @@
 										  precision="2" rounding="nearest" allowSymbol="false"
 										  mouseDown="textInputClick(event)" 
 										  textAlign="right" 
+										  tabEnabled="false"
 										  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice)}"/>
 							<mx:Label x="385"
 									  y="304"
@@ -3168,36 +3182,42 @@
 										  id="job_sheets"
 										  text="{job.sheets}"
 										  height="20"
+										  tabIndex="3"
 										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)" change="doUpdateNumberOn();"/>
 							<mx:TextInput x="496"
 										  y="116"
 										  width="45.300003"
 										  id="job_up"
 										  text="{job.numUp}"
+										  tabIndex="4"
 										  height="20" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="548.3"
 										  y="116"
 										  width="45.700005"
 										  id="job_on"
 										  text="{job.numOn}"
+										  tabIndex="5"
 										  height="20" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="496"
 										  y="138"
 										  id="job_press"
 										  height="20"
 										  width="98"
+										  tabIndex="6"
 										  text="{job.pressQty}" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="496"
 										  y="161"
 										  id="bindery_waste"
 										  text="{job.binderyWaste}"
 										  height="20"
+										  tabIndex="7"
 										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="496"
 										  y="184"
 										  id="est_waste"
 										  text="{job.estWaste}"
 										  height="20"
+										  tabIndex="8"
 										  width="98" mouseDown="textInputClick(event)" textAlign="right" change="editEstWaste(event)" focusOut="fieldChanged(event)"/>
 							<mx:Label x="385"
 									  y="271"
@@ -3234,6 +3254,7 @@
 										  id="job_ordered"
 										  text="{job.qtyOrdered}"
 										  height="20"
+										  tabIndex="1"
 										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
 							<mx:Label x="385"
 									  y="3"
@@ -3292,6 +3313,7 @@
 												  height="20"
 												  id="number_lines"
 												  fontSize="9"
+												  tabIndex="14"
 												  mouseDown="textInputClick(event)" />
 									<mx:Label x="6"
 											  y="147"
@@ -3310,6 +3332,7 @@
 												  width="100"
 												  height="20"
 												  id="job_unit_price"
+												  tabIndex="15"
 												  fontSize="9" mouseDown="textInputClick(event)" />
 									<mx:Label x="6"
 											  y="103"
@@ -3328,6 +3351,7 @@
 												  width="171"
 												  height="20"
 												  id="job_stock"
+												  tabIndex="9"
 												  text="{getStockName(job.stock)}"
 												  fontSize="9" mouseDown="textInputClick(event)" />
 									<mx:Label x="6"
@@ -3381,10 +3405,10 @@
 											   height="18"
 											   id="chage_stock_button"
 											   click="changeStockDefinition()" width="62"/>
-									<mx:ComboBox x="108" y="79" width="99" id="job_parent" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="79" width="99" id="job_parent" tabIndex="10" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" tabIndex="11" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" tabIndex="12" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" tabIndex="13" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
 								</mx:Canvas>
 								<mx:Canvas label="merchandise_canvas"
 										   width="100%"
@@ -3427,6 +3451,7 @@
 													 id="job_pricing_press"
 													 dataProvider="{presses}"
 													 labelField="name"
+													 tabIndex="16"
 													 fontSize="9"/>
 									<mx:Label x="10"
 											  y="7"
@@ -3439,6 +3464,7 @@
 													 id="job_costing_press"
 													 dataProvider="{presses}"
 													 labelField="name"
+													 tabIndex="17"
 													 fontSize="9"/>
 									<mx:Label x="10"
 											  y="30"
@@ -3510,6 +3536,7 @@
 												  height="20"
 												  id="front_colors_text"
 												  fontSize="9" textAlign="center"
+												  tabIndex="18"
 												  text="{job.frontColors}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
 									<mx:TextInput x="96"
 												  y="71"
@@ -3517,12 +3544,14 @@
 												  height="20"
 												  id="front_passes_text"
 												  fontSize="9" textAlign="center"
+												  tabIndex="19"
 												  text="{job.frontPasses}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
 									<mx:TextInput x="96"
 												  y="94"
 												  width="46"
 												  height="20"
 												  id="back_passes_text"
+												  tabIndex="23"
 												  fontSize="9" textAlign="center"
 												  text="{job.backPasses}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
 									<mx:TextInput x="144"
@@ -3531,6 +3560,7 @@
 												  height="20"
 												  id="front_washes_text"
 												  fontSize="9" textAlign="center"
+												  tabIndex="20"
 												  text="{job.frontWashes}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
 									<mx:List x="192"
 												  y="71"
@@ -3538,6 +3568,7 @@
 												  height="20"
 												  id="front_inks_text"
 												  fontSize="9" textAlign="center"
+												  tabIndex="21"
 												   dataProvider="{job.frontInks}"
 												    labelField="name" click="doInkEditorFront();" wordWrap="true"/>
 									<mx:List x="192"
@@ -3545,6 +3576,7 @@
 												  width="156"
 												  height="20"
 												  id="back_inks_text"
+												  tabIndex="25"
 												  fontSize="9" textAlign="center"
 												   dataProvider="{job.backInks}"
 												    labelField="name" click="doInkEditorBack();"/>
@@ -3553,6 +3585,7 @@
 												  width="46"
 												  height="20"
 												  id="back_washes_text"
+												  tabIndex="24"
 												  fontSize="9" textAlign="center"
 												  text="{job.backWashes}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
 									<mx:TextInput x="48"
@@ -3560,6 +3593,7 @@
 												  width="46"
 												  height="20"
 												  id="back_colors_text"
+												  tabIndex="22"
 												  fontSize="9" textAlign="center"
 												  text="{job.backColors}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
 								</mx:Canvas>
@@ -3572,6 +3606,7 @@
 													 dataProvider="{copiers}"
 													 labelField="name"
 													 change="changePricingCopier()"
+													 tabIndex="16"
 													 fontSize="9"/>
 									<mx:Label x="10"
 											  y="7"
@@ -3584,6 +3619,7 @@
 													 id="job_costing_copier"
 													 dataProvider="{copiers}"
 													 labelField="name"
+													 tabIndex="17"
 													 fontSize="9"/>
 									<mx:Label x="10"
 											  y="30"
