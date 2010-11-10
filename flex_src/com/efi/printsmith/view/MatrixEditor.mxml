@@ -694,6 +694,16 @@
 				this.currentState = "COPIESANDORIGINALSTWOSIDES";
 			} else {
 				this.currentState = "COPIESANDORIGINALS";
+				this.price11.enabled = false;
+				this.price12.enabled = false;
+				this.price13.enabled = false;
+				this.price14.enabled = false;
+				this.price15.enabled = false;
+				this.price16.enabled = false;
+				this.price17.enabled = false;
+				this.price18.enabled = false;
+				this.price19.enabled = false;
+				this.price20.enabled = false;
 			}
 			break;
 		case CopierPricingMethod.CopiesPerOriginals:
@@ -750,26 +760,26 @@
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" y="373" right="112" bottom="5"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" right="2" bottom="5"/>
 		<mx:Label x="0" y="315" text="Over Quantity" id="label1"/>
-		<mx:TextInput x="110" y="313" width="100" id="price1"/>
-		<mx:TextInput x="110" y="269" width="100" id="price20"/>
-		<mx:TextInput x="110" y="239" width="100" id="price19"/>
-		<mx:TextInput x="110" y="209" width="100" id="price18"/>
-		<mx:TextInput x="110" y="179" width="100" id="price17"/>
-		<mx:TextInput x="110" y="149" width="100" id="price16"/>
-		<mx:TextInput x="110" y="119" width="100" id="price15"/>
-		<mx:TextInput x="110" y="89" width="100" id="price14"/>
-		<mx:TextInput x="29" y="78" width="100" id="price13"/>
-		<mx:TextInput x="75" y="59" width="100" id="price12"/>
-		<mx:TextInput x="10" y="239" width="100" id="price11"/>
-		<mx:TextInput x="10" y="209" width="100" id="price10"/>
-		<mx:TextInput x="10" y="179" width="100" id="price9"/>
-		<mx:TextInput x="10" y="149" width="100" id="price8"/>
-		<mx:TextInput x="10" y="119" width="100" id="price7"/>
-		<mx:TextInput x="10" y="89" width="100" id="price6"/>
-		<mx:TextInput x="10" y="59" width="100" id="price5"/>
-		<mx:TextInput x="45" y="78" width="100" id="price4"/>
-		<mx:TextInput x="110" y="29" width="100" id="price3"/>
-		<mx:TextInput x="45" y="48" width="100" id="price2"/>
+		<mx:TextInput x="110" y="313" width="100" id="price1" tabIndex="0"/>
+		<mx:TextInput x="110" y="269" width="100" id="price20" tabIndex="19"/>
+		<mx:TextInput x="110" y="239" width="100" id="price19" tabIndex="18"/>
+		<mx:TextInput x="110" y="209" width="100" id="price18" tabIndex="17"/>
+		<mx:TextInput x="110" y="179" width="100" id="price17" tabIndex="16"/>
+		<mx:TextInput x="110" y="149" width="100" id="price16" tabIndex="15"/>
+		<mx:TextInput x="110" y="119" width="100" id="price15" tabIndex="14"/>
+		<mx:TextInput x="110" y="89" width="100" id="price14" tabIndex="13"/>
+		<mx:TextInput x="29" y="78" width="100" id="price13" tabIndex="12"/>
+		<mx:TextInput x="75" y="59" width="100" id="price12" tabIndex="11"/>
+		<mx:TextInput x="10" y="239" width="100" id="price11" tabIndex="10"/>
+		<mx:TextInput x="10" y="209" width="100" id="price10" tabIndex="9"/>
+		<mx:TextInput x="10" y="179" width="100" id="price9" tabIndex="8"/>
+		<mx:TextInput x="10" y="149" width="100" id="price8" tabIndex="7"/>
+		<mx:TextInput x="10" y="119" width="100" id="price7" tabIndex="6"/>
+		<mx:TextInput x="10" y="89" width="100" id="price6" tabIndex="5"/>
+		<mx:TextInput x="10" y="59" width="100" id="price5" tabIndex="4"/>
+		<mx:TextInput x="45" y="78" width="100" id="price4" tabIndex="3"/>
+		<mx:TextInput x="110" y="29" width="100" id="price3" tabIndex="2"/>
+		<mx:TextInput x="45" y="48" width="100" id="price2" tabIndex="1"/>
 
 	</mx:Canvas>
 </mx:TitleWindow>
