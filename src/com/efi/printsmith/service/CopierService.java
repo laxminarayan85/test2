@@ -91,6 +91,10 @@ public class CopierService extends SnowmassHibernateService {
 		copierDefinition.setLargeFormat(false);
 		copierDefinition.setCopierMatrix(newCopierMatrix());
 		copierDefinition.setMatrixType("CopyCost");
+		copierDefinition.setCopyMarkup(1.0);
+		copierDefinition.setCopyMarkup2(1.0);
+		copierDefinition.setStockMarkup(1.0);
+		copierDefinition.setSideTwoFactor(2.0);
 		return copierDefinition;
 	}
 	
