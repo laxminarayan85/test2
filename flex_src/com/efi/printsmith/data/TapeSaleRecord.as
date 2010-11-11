@@ -27,6 +27,7 @@ package com.efi.printsmith.data
 		public var salesCategory:SalesCategory;
 		public var invoice:Invoice;
 		public var accountHistoryData:AccountHistoryData;
+		public var contact:Contact;
 	
 	}
 }

@@ -98,11 +98,6 @@ public class TapeSessionBatch extends ModelBase {
    */
   public static final String ACCOUNT = "Account";
 	/**
-   * @generated
-   */
-  public static final String CONTACT = "Contact";
-
-	/**
 	 * @generated
 	 */
 	public TapeSessionBatch() {
@@ -434,27 +429,6 @@ public class TapeSessionBatch extends ModelBase {
   }
 
 	/**
-   * @generated
-   */	
-    @ManyToOne()
-    @Where(clause="isdeleted <> 'TRUE'")
-  private Contact contact;
-
-	/**
-   * @generated
- 	 */
-  public Contact getContact(){
-    return contact; 
-  }
-
-	/**
-   * @generated
-   */	
-  public void setContact(Contact newVal) {
-    this.contact = newVal;
-  }
-
-	/**
 	 * @generated
 	 */		
 	@Transient
@@ -472,7 +446,6 @@ public class TapeSessionBatch extends ModelBase {
     if (USER.equals(propertyName)) return getUser();
     if (WORKSTATION.equals(propertyName)) return getWorkstation();
     if (ACCOUNT.equals(propertyName)) return getAccount();
-    if (CONTACT.equals(propertyName)) return getContact();
     return super.getProperty(propertyName);
   }
 	
@@ -494,7 +467,6 @@ public class TapeSessionBatch extends ModelBase {
     if (USER.equals(propertyName)) setUser((Users)newValue); else
     if (WORKSTATION.equals(propertyName)) setWorkstation((String)newValue); else
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
-    if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -528,8 +500,6 @@ public class TapeSessionBatch extends ModelBase {
       return new Class<?>[] {String.class};		
     if (ACCOUNT.equals(propertyName)) 
       return new Class<?>[] {Account.class};		
-    if (CONTACT.equals(propertyName)) 
-      return new Class<?>[] {Contact.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -552,7 +522,6 @@ public class TapeSessionBatch extends ModelBase {
     if (USER.equals(propertyName)) return TapeSessionBatch.class;
     if (WORKSTATION.equals(propertyName)) return TapeSessionBatch.class;
     if (ACCOUNT.equals(propertyName)) return TapeSessionBatch.class;
-    if (CONTACT.equals(propertyName)) return TapeSessionBatch.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -587,8 +556,6 @@ public class TapeSessionBatch extends ModelBase {
     if (! SmartEquals(getWorkstation(), objT.getWorkstation()))
       return false;
     if (! SmartEquals(getAccount(), objT.getAccount()))
-      return false;
-    if (! SmartEquals(getContact(), objT.getContact()))
       return false;
     return true;
   }			

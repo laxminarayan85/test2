@@ -103,6 +103,11 @@ public abstract class TapeSaleRecord extends Transactions {
   public static final String ACCOUNTHISTORYDATA = "AccountHistoryData";
 
 	/**
+   * @generated
+   */
+  public static final String CONTACT = "Contact";
+
+	/**
 	 * @generated
 	 */
 	public TapeSaleRecord() {
@@ -422,6 +427,27 @@ public abstract class TapeSaleRecord extends Transactions {
   }
 
 	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private Contact contact;
+
+	/**
+   * @generated
+ 	 */
+  public Contact getContact(){
+    return contact; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setContact(Contact newVal) {
+    this.contact = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -440,6 +466,7 @@ public abstract class TapeSaleRecord extends Transactions {
     if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
     if (INVOICE.equals(propertyName)) return getInvoice();
     if (ACCOUNTHISTORYDATA.equals(propertyName)) return getAccountHistoryData();
+    if (CONTACT.equals(propertyName)) return getContact();
     return super.getProperty(propertyName);
   }
 	
@@ -462,6 +489,7 @@ public abstract class TapeSaleRecord extends Transactions {
     if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
     if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
     if (ACCOUNTHISTORYDATA.equals(propertyName)) setAccountHistoryData((AccountHistoryData)newValue); else
+    if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -497,6 +525,8 @@ public abstract class TapeSaleRecord extends Transactions {
       return new Class<?>[] {Invoice.class};		
     if (ACCOUNTHISTORYDATA.equals(propertyName)) 
       return new Class<?>[] {AccountHistoryData.class};		
+    if (CONTACT.equals(propertyName)) 
+      return new Class<?>[] {Contact.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -520,6 +550,7 @@ public abstract class TapeSaleRecord extends Transactions {
     if (SALESCATEGORY.equals(propertyName)) return TapeSaleRecord.class;
     if (INVOICE.equals(propertyName)) return TapeSaleRecord.class;
     if (ACCOUNTHISTORYDATA.equals(propertyName)) return TapeSaleRecord.class;
+    if (CONTACT.equals(propertyName)) return TapeSaleRecord.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -556,6 +587,8 @@ public abstract class TapeSaleRecord extends Transactions {
     if (! SmartEquals(getInvoice(), objT.getInvoice()))
       return false;
     if (! SmartEquals(getAccountHistoryData(), objT.getAccountHistoryData()))
+      return false;
+    if (! SmartEquals(getContact(), objT.getContact()))
       return false;
     return true;
   }			
