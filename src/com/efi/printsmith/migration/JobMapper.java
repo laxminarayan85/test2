@@ -1217,7 +1217,7 @@ public class JobMapper extends ImportMapper {
 			job.setSingleSided(true);
 			job.setDoubleSided(false);
 		}
-
+		job.setReleasedToProduction(false);
 		job = (Job)dataService.addUpdate(job);
 		job.setId(job.getId());
 		if (invoiceNumber.equals("") == false && docType.equals("") == false) {

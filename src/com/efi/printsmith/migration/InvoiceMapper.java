@@ -798,6 +798,7 @@ public class InvoiceMapper extends ImportMapper {
 			sequenceValues.setEstimate(Long.parseLong(invoice.getInvoiceNumber()));
 			dataService.addUpdate(sequenceValues);
 		}
+		invoice.setReleasedToProduction(false);
 		return invoice;
 	}
 	
@@ -1557,6 +1558,7 @@ public class InvoiceMapper extends ImportMapper {
 			sequenceValues.setInvoice(Long.parseLong(invoice.getInvoiceNumber()));
 			dataService.addUpdate(sequenceValues);
 		}
+		invoice.setReleasedToProduction(false);
 		log.info("Leaving InvoiceMapper->createEstimate");
 		return invoice;
 	}
