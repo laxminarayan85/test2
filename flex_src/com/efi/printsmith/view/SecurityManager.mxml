@@ -3,6 +3,7 @@
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup')}" 
 	xmlns:ns1="com.adobe.flex.extras.controls.*" xmlns:fc="http://www.adobe.com/2006/fc"
+	xmlns:components="com.efi.printsmith.common.components.*"
 	headerHeight="0" 
 	implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
 	xmlns:ns2="flexlib.controls.*"  xmlns:val="com.efi.printsmith.validators.*"
@@ -57,6 +58,8 @@
 
 <mx:Script>  	
 <![CDATA[
+	import mx.events.ListEvent;
+	import mx.events.TreeEvent;
 	import mx.controls.Image;
 	import mx.events.FlexEvent;
 	import com.efi.printsmith.security.PSSecurityCommands;
@@ -150,13 +153,19 @@
 	private function handleLoadResult(ev:ResultEvent):void {
 		accessGroupLists = ev.result as ArrayCollection;
 		if (access == null){
-			access = accessGroupLists.getItemAt(0,0) as AccessGroup;
-			this.tvAccessGroups.selectedIndex = 0;
-			checkForLockedAccessGroup(access);			
+			selectFirstAccessGroup();		
 		}
+		else
+			SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
+	}
+	
+	private function selectFirstAccessGroup():void	{
+		access = accessGroupLists.getItemAt(0,0) as AccessGroup;
+		this.tvAccessGroups.selectedIndex = 0;
+		checkForLockedAccessGroup(access);			
 		SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
 	}
-
+	
 	private function handleSaveResult(ev:ResultEvent):void {
 		access.id = (ev.result as AccessGroup).id;
 		
@@ -216,27 +225,35 @@
 	}
 	
 
-	private function populateDataProvider():void	{
-		for (var i:int=0; i<rawSecurityCommands.length; i++)	{
-			var sc:SecurityCommands = rawSecurityCommands.getItemAt(i) as SecurityCommands;
-			if (sc.commandName == "rStandardMenuText.1")	{
-				rawSecurityCommands.removeItemAt(i);
-				i--;
-				continue;
-			}
-			sc["enable"] = false;
-			for (var j:int=0; j <securitySetupLists.length; j++)	{
-				var ss:SecuritySetup = securitySetupLists.getItemAt(j) as SecuritySetup;
-				if (ss.securityCmd.commandId == sc.commandId)	{
-					sc["enable"] = true;
-					break;
-				}
-			} 
-		}
+	private function populateDataProvider(clearData:Boolean = false):void	{
+		
 		dataGrid.dataProvider = null;
-		
-		securityCommandsLists = rawSecurityCommands;
-		
+			
+		if (!clearData)	{
+			if (rawSecurityCommands)	{
+				for (var i:int=0; i<rawSecurityCommands.length; i++)	{
+					var sc:SecurityCommands = rawSecurityCommands.getItemAt(i) as SecurityCommands;
+					if (sc.commandName == "rStandardMenuText.1")	{
+						rawSecurityCommands.removeItemAt(i);
+						i--;
+						continue;
+					}
+					sc["enable"] = false;
+					for (var j:int=0; j <securitySetupLists.length; j++)	{
+						var ss:SecuritySetup = securitySetupLists.getItemAt(j) as SecuritySetup;
+						if (ss.securityCmd.commandId == sc.commandId)	{
+							sc["enable"] = true;
+							break;
+						}
+					} 
+				}
+			}
+			
+			securityCommandsLists = rawSecurityCommands;
+		}
+		else	{
+			securityCommandsLists = new ArrayCollection();
+		}		
 		dataGrid.dataProvider = securityCommandsLists;
 	}
   	private function messageHandler(message:IMessage):void
@@ -335,6 +352,7 @@
 		if (this.rename == false)
 			addAccessGroupToList(access);
 		this.rename = false;
+		checkForLockedAccessGroup(access);
 		
 	}
 	
@@ -374,8 +392,8 @@
 		tmp.removeItemAt(index);
 		accessGroupLists = tmp;
 //		(tvAccessGroups.dataProvider as ArrayCollection).removeItemAt(index);
-		tvAccessGroups.selectedIndex = 0;
 		dataService.deleteItem("AccessGroup", access.id);
+		selectFirstAccessGroup();
 		
 	}
 //	private function addItem(itemName:String):void {
@@ -396,6 +414,9 @@
 		if (access!=null)	{
 			SecuritydataService.getFromParent("SecuritySetup", "accessgroup",access.id);
 			checkForLockedAccessGroup(access);
+		}
+		else	{
+			populateDataProvider(true);
 		}
 
 	}
@@ -451,9 +472,11 @@
 		<mx:Button x="264" y="10" width="38" height="38"  click="doNew()" id="button3">
 			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<mx:Button x="310" y="10" width="38" height="38" id="button1" click="doDelete();">
-			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
-		</mx:Button>
+		
+			<components:CustomDeleteButtonComponent x="310" y="10" width="38" height="38" id="button1" 
+								clickFuncName="doDelete" 
+								deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessGroup')}"/>
+	
 		<mx:Label x="310" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="47" textAlign="center" id="label1"/>
 		<mx:Label x="264" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center" id="label3"/>
 		<mx:VBox bottom="0" right="0" left="200" top="80">
@@ -478,10 +501,6 @@
 					      						outerDocument.listOfLockedAccessGroups.contains((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name)
 					      					) 
 					      						
-					      				|| 
-					      					(
-					      						(outerDocument.tvAccessGroups.selectedItem as AccessGroup).name == 'Minimum'
-					      					)
 					      				|| 	(
 					      						outerDocument.listOfLockedCommands.contains(data.commandId)
 					      					)
@@ -521,9 +540,15 @@
 					      			]]>
 					      		</mx:Script>	
 					      		<mx:Image width="100%" source="@Embed(source='../../../../assets/LineItemLock.png')" 
-					      			visible="{(((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name == 'System Admin') 
-					      				|| ((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name == 'Minimum')
-					      				|| (outerDocument.listOfLockedCommands.contains(data.commandId)))}" />
+					      			visible="{(
+					      					(
+					      						outerDocument.listOfLockedAccessGroups.contains((outerDocument.tvAccessGroups.selectedItem as AccessGroup).name)
+					      					) 
+					      						
+					      				|| 	(
+					      						outerDocument.listOfLockedCommands.contains(data.commandId)
+					      					)
+					      				)}" />
 					      		
 					      		</mx:Canvas>
 					      					
@@ -550,5 +575,5 @@
 		</mx:Button>
 		<mx:Label x="365" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Rename')}" width="59" id="label4"/>
 		
-		
+							
 </mx:Panel>
