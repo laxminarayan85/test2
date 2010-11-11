@@ -156,15 +156,15 @@ public function getInvoiceNumber(object:Object):String {
 	} 
 	if(object is Job){
 		var job:Job = object as Job;
-		return String(job.parentInvoice.invoiceNumber);	
+		return String(job.parentInvoice.invoiceNumber)+"/"+job.jobNumber+"/-";	
 	}
 	if(object is Charge){
 		var charge:Charge = object as Charge;
 		if(charge.parentInvoice!=null){
-			return String(charge.parentInvoice.invoiceNumber);
+			return String(charge.parentInvoice.invoiceNumber)+"/-/-";
 		}
 		if(charge.parentJob!=null){
-			return String(charge.parentJob.jobNumber)+" / "+charge.parentJob.parentInvoice.invoiceNumber;
+			return charge.parentJob.parentInvoice.invoiceNumber+"/"+String(charge.parentJob.jobNumber)+"/"+charge.chargeNumber;
 		}
 	}
 	return "";

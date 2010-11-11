@@ -3,6 +3,8 @@ package com.efi.printsmith.migration;
 import java.io.File;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import org.apache.log4j.Logger;
+
+import java.util.Iterator;
 import java.util.List;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.ModelBase;
@@ -12,6 +14,7 @@ import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.InvoiceBase;
+import com.efi.printsmith.data.PreferencesSequenceValues;
 
 public class ChargeMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(ChargeMapper.class);
@@ -100,6 +103,19 @@ public class ChargeMapper extends ImportMapper {
 						JobBase job = jobs.get(i);
 						charge.setParentJob(job);
 						job.addCharges(charge);
+						if(job.getCharges()!=null) {
+							//Resetting chargeNumber in sequencevalues back to 0
+							PreferencesSequenceValues sequenceValues = dataService.getSequenceValues();
+							sequenceValues.setCharge(new Long(0));
+							dataService.addUpdate(sequenceValues);
+							Iterator<Charge> chargeIter = job.getCharges().iterator();
+							while (chargeIter.hasNext()) {
+								Charge chargeObj = chargeIter.next();
+								//Resetting the chargeNumber in charge back to 0
+								chargeObj.setChargeNumber(new Long(0));
+								dataService.setChargeId(chargeObj);
+							}
+						}
 						dataService.addUpdate(job);
 					}
 				}

@@ -30,6 +30,7 @@ package com.efi.printsmith.data
 		public var estimate:Number = 0;
 		public var stockOrder:Number = 0;
 		public var deliveryTicket:Number = 0;
+		public var charge:Number = 0;
 	
 	}
 }

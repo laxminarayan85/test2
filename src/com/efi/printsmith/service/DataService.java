@@ -1304,6 +1304,7 @@ public class DataService extends HibernateService {
 			sequenceValues.setCreditCard(new Long(0));
 			sequenceValues.setStockOrder(new Long(0));
 			sequenceValues.setDeliveryTicket(new Long(0));
+			sequenceValues.setCharge(new Long(0));
 		}
 		return sequenceValues;
 	}
@@ -1446,16 +1447,44 @@ public class DataService extends HibernateService {
 			return;
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
 		Long value = sequenceValues.getJob();
-		boolean goodId = false;
+		
+		if(value==null)
+			value = new Long(0);
+		
+		value++;
+		/*boolean goodId = false;
 		while (goodId == false) {
 			value++;
 			ModelBase modelBase = this.getQuery("Job", " where jobNumber = '"
 					+ value.toString() + "'");
 			if (modelBase == null)
 				goodId = true;
-		}
+		}*/
 		job.setJobNumber(value.toString());
 		sequenceValues.setJob(value);
+		this.addUpdate(sequenceValues);
+	}
+	
+	public void setChargeId(Charge charge) throws Exception {
+		if (charge.getChargeNumber() != null && charge.getChargeNumber()!=0)
+			return;
+		PreferencesSequenceValues sequenceValues = getSequenceValues();
+		Long value = sequenceValues.getCharge();
+		
+		if(value==null)
+			value = new Long(0);
+		
+		value++;
+		/*boolean goodId = false;
+		while (goodId == false) {
+			value++;
+			ModelBase modelBase = this.getQuery("Charge", " where chargeNumber = "
+					+ value);
+			if (modelBase == null)
+				goodId = true;
+		}*/
+		charge.setChargeNumber(Long.parseLong(value.toString()));
+		sequenceValues.setCharge(value);
 		this.addUpdate(sequenceValues);
 	}
 
@@ -2015,6 +2044,11 @@ public class DataService extends HibernateService {
 
 				if (jobs != null) {
 					Iterator<JobBase> jobIter = jobs.iterator();
+					
+					//Resetting jobNumber in sequencevalues back to 0
+					PreferencesSequenceValues sequenceValues = getSequenceValues();
+					sequenceValues.setJob(new Long(0));
+					addUpdate(sequenceValues);
 
 					while (jobIter.hasNext()) {
 						JobBase job = jobIter.next();
@@ -2022,9 +2056,27 @@ public class DataService extends HibernateService {
 						log.info("assigning parentInvoice to job. Invoice: "
 								+ invoice.getId() + " Job: " + job.getId());
 						
+						if(job.getCharges()!=null) {
+							//Resetting chargeNumber in sequencevalues back to 0
+							sequenceValues = getSequenceValues();
+							sequenceValues.setCharge(new Long(0));
+							addUpdate(sequenceValues);
+							Iterator<Charge> chargeIter = job.getCharges().iterator();
+							
+							while (chargeIter.hasNext()) {
+								Charge charge = chargeIter.next();
+								//Resetting the chargeNumber in charge back to 0
+								charge.setChargeNumber(new Long(0));
+								setChargeId(charge);
+							}
+						}
+						
+						//Resetting the jobnumber in job back to null
+						job.setJobNumber(null);
 						job.setParentInvoice(invoice);
 						addUpdate(job);
 					}
+					
 				}
 
 				if (charges != null) {
