@@ -1951,6 +1951,22 @@
 		private function clearData():void {
 			completedTracketConsoleJobsList = new ArrayCollection();
 		}
+		
+		private function getErrorLabel(employeeObj:Employee, productionFacilities:ProductionFacilities, productionStations:ProductionStations, trackerListObj:ArrayCollection):String {
+			if(employeeObj==null){
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Needsemployeeprofile');
+			}
+			if(productionFacilities==null){
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.NeedscurrentFacility');
+			}
+			if(productionStations==null){
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.NeedscurrentStationN');
+			}
+			if(trackerListObj==null || trackerListObj.length==0){
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Noavailableitemsfort');
+			}
+			return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Tochangefilteringpro');
+		}
 				
 	]]>
 	                        
@@ -1973,6 +1989,7 @@
 					click="{openClockInOut()}" buttonMode="true" useHandCursor="true"/>		
 				<mx:Image source="@Embed(source='../../../../assets/EmployeeEdit.png')" 
 					click="{openEditEmployee()}" buttonMode="true" useHandCursor="true"/>
+				<mx:Label text="{getErrorLabel(employee,trackerConsole.productionFacilities,trackerConsole.productionStations,trackerList)}" color="0xFF0000"/>
 			</mx:HBox>
 			
 			<mx:DataGrid width="90%" height="30%" id="invoiceGrid" dataProvider="{trackerList}" itemClick="{doSelectJob(event)}">
