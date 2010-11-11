@@ -29,6 +29,12 @@
 					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Onlypostinvoicesmark')}"/>
 					
 				<components:CustomCheckBoxComponent
+					customText="{preferencesSystem.initializePrinter}"
+					variableName="initializePrinter" dataHolder="{preferencesSystem}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Initializeprinterbef')}"/>
+					
+				<components:CustomCheckBoxComponent
 					customText="{preferencesSystem.enablePricingSystem}" variableName="enablePricingSystem"
 					dataHolder="{preferencesSystem}" selectedValue="true" deSelectedValue="false" defaultValue="false"
 					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.EnablePricingsystemI')}"/>
