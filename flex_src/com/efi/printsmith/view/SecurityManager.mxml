@@ -38,6 +38,7 @@
 	 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveSetupResult(event)"/>
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
@@ -58,6 +59,7 @@
 
 <mx:Script>  	
 <![CDATA[
+	import mx.controls.Alert;
 	import mx.events.ListEvent;
 	import mx.events.TreeEvent;
 	import mx.controls.Image;
@@ -105,6 +107,8 @@
 	private var securityCommands:SecurityCommands;
 	
 	private var rawSecurityCommands:ArrayCollection;
+	private var dbSecurityCommands:ArrayCollection;
+	
 	private var _commandsRecd:Boolean = false;
 	private var _setupRecd:Boolean = false;
 	
@@ -171,7 +175,13 @@
 		
 		mapToSecurityData();
 		
+	}
+	
+	private function handleSaveSetupResult(ev:ResultEvent):void {
+		//Alert.show("Saved successfully");
+		
 	}	
+		
 	private function handleDeleteResult(ev:ResultEvent):void{
 		//dataService.getAll("AccessGroup");
 	}
@@ -249,12 +259,14 @@
 				}
 			}
 			
-			securityCommandsLists = rawSecurityCommands;
+			securityCommandsLists = rawSecurityCommands;			
 		}
 		else	{
 			securityCommandsLists = new ArrayCollection();
+			checkForLockedAccessGroup(null);
 		}		
 		dataGrid.dataProvider = securityCommandsLists;
+		
 	}
   	private function messageHandler(message:IMessage):void
 	{
@@ -302,7 +314,30 @@
 
 	}
 	public function doSave():void {                                    
-		mapToAccessGroup()
+		//mapToAccessGroup()
+		var addUpdateList:ArrayCollection = new ArrayCollection();
+		var deleteList:ArrayCollection = new ArrayCollection();
+		
+		for (var i:int=0; i<securityCommandsLists.length; i++)	{
+			var sc:SecurityCommands = securityCommandsLists.getItemAt(i) as SecurityCommands;
+			if (sc["enable"] == true)	{
+				var ss:SecuritySetup = new SecuritySetup();
+				ss.accessGroup = access;
+				ss.securityCmd = sc;
+				addUpdateList.addItem(ss);
+			}
+			else	{
+				for (var j:int=0; j<securitySetupLists.length; j++)	{
+					var oldss:SecuritySetup = securitySetupLists.getItemAt(j) as SecuritySetup;
+					if (oldss.securityCmd.commandId == sc.commandId)	{
+						deleteList.addItem(oldss);
+					}
+				}
+			}
+		}		
+		
+		dataService.addUpdateDeleteList(addUpdateList, deleteList);
+	
 	}  
 //	public function doAccessGroupEdit():void{ 
 //		var index:int;
@@ -422,7 +457,7 @@
 	}
 	
 	private function checkForLockedAccessGroup(access:AccessGroup)	{
-		if (listOfLockedAccessGroups.contains(access.name))	{
+		if (access == null || listOfLockedAccessGroups.contains(access.name))	{
 			button4.enabled = false;
 			button1.enabled = false;
 			button2.enabled = false;
