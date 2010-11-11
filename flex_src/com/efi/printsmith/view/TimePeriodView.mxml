@@ -290,6 +290,8 @@
 ]]>
                              
 </mx:Script>	
+
+	<mx:DateFormatter id="defaultDateFormatter" formatString="MM/DD/YYYY"/>
 	
 	<mx:DateFormatter id="dateFormatter" formatString="EEE"/>
 	
@@ -310,14 +312,18 @@
 				<mx:HBox width="100%">	
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.From')}"
 						width="30%" textAlign="right"/>
-					<mx:DateField id="txtCurrentFrom"  selectedDate="{period.fromDate}" 
-						width="70%" formatString="MM/DD/YYYY" enabled="false" disabledColor="#000000"/>
+					<mx:TextInput id="txtCurrentFrom" text="{defaultDateFormatter.format(period.fromDate)}"
+						width="70%" enabled="false" disabledColor="#000000"/>
+					<!--<mx:DateField id="txtCurrentFrom"  selectedDate="{period.fromDate}" 
+						width="70%" formatString="MM/DD/YYYY" enabled="false" disabledColor="#000000"/>-->
 				</mx:HBox>
 				<mx:HBox width="100%">
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.To')}"
 						width="30%" textAlign="right"/>
-					<mx:DateField id="txtCurrentTo"  selectedDate="{period.toDate}"
-						width="70%" formatString="MM/DD/YYYY" enabled="false" disabledColor="#000000"/>
+					<mx:TextInput id="txtCurrentTo" text="{defaultDateFormatter.format(period.toDate)}"
+						width="70%" enabled="false" disabledColor="#000000"/>
+					<!--<mx:DateField id="txtCurrentTo"  selectedDate="{period.toDate}"
+						width="70%" formatString="MM/DD/YYYY" enabled="false" disabledColor="#000000"/>-->
 				</mx:HBox>
 				<mx:HBox width="100%" horizontalAlign="center">
 					<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimePeriodCmd.Closecurrentperiod')}" 
