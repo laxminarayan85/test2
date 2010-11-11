@@ -82,6 +82,27 @@ public class TapeSessionBatch extends ModelBase {
 	public static final String SESSIONID = "SessionID";
 
 	/**
+   * @generated
+   */
+  public static final String ROUNDAMOUNT = "RoundAmount";
+	/**
+   * @generated
+   */
+  public static final String USER = "User";
+	/**
+   * @generated
+   */
+  public static final String WORKSTATION = "Workstation";
+	/**
+   * @generated
+   */
+  public static final String ACCOUNT = "Account";
+	/**
+   * @generated
+   */
+  public static final String CONTACT = "Contact";
+
+	/**
 	 * @generated
 	 */
 	public TapeSessionBatch() {
@@ -324,6 +345,116 @@ public class TapeSessionBatch extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal roundAmount;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getRoundAmount(){
+    return roundAmount; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setRoundAmount(BigDecimal newVal) {
+    this.roundAmount = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+  public void setRoundAmount(double newVal) {
+    this.roundAmount = BigDecimal.valueOf(newVal);
+  }
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private Users user;
+
+	/**
+   * @generated
+ 	 */
+  public Users getUser(){
+    return user; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setUser(Users newVal) {
+    this.user = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String workstation;
+
+	/**
+   * @generated
+ 	 */
+  public String getWorkstation(){
+    return workstation; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setWorkstation(String newVal) {
+    this.workstation = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private Account account;
+
+	/**
+   * @generated
+ 	 */
+  public Account getAccount(){
+    return account; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setAccount(Account newVal) {
+    this.account = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private Contact contact;
+
+	/**
+   * @generated
+ 	 */
+  public Contact getContact(){
+    return contact; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setContact(Contact newVal) {
+    this.contact = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -337,6 +468,11 @@ public class TapeSessionBatch extends ModelBase {
     if (ACCUMTENDERED.equals(propertyName)) return getAccumTendered();
     if (ACCUMCHANGE.equals(propertyName)) return getAccumChange();
     if (SESSIONID.equals(propertyName)) return getSessionID();
+    if (ROUNDAMOUNT.equals(propertyName)) return getRoundAmount();
+    if (USER.equals(propertyName)) return getUser();
+    if (WORKSTATION.equals(propertyName)) return getWorkstation();
+    if (ACCOUNT.equals(propertyName)) return getAccount();
+    if (CONTACT.equals(propertyName)) return getContact();
     return super.getProperty(propertyName);
   }
 	
@@ -354,6 +490,11 @@ public class TapeSessionBatch extends ModelBase {
     if (ACCUMTENDERED.equals(propertyName)) setAccumTendered((BigDecimal)newValue); else
     if (ACCUMCHANGE.equals(propertyName)) setAccumChange((BigDecimal)newValue); else
     if (SESSIONID.equals(propertyName)) setSessionID((Long)newValue); else
+    if (ROUNDAMOUNT.equals(propertyName)) setRoundAmount((BigDecimal)newValue); else
+    if (USER.equals(propertyName)) setUser((Users)newValue); else
+    if (WORKSTATION.equals(propertyName)) setWorkstation((String)newValue); else
+    if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
+    if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -379,6 +520,16 @@ public class TapeSessionBatch extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (SESSIONID.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
+    if (ROUNDAMOUNT.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (USER.equals(propertyName)) 
+      return new Class<?>[] {Users.class};		
+    if (WORKSTATION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ACCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Account.class};		
+    if (CONTACT.equals(propertyName)) 
+      return new Class<?>[] {Contact.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -397,6 +548,11 @@ public class TapeSessionBatch extends ModelBase {
     if (ACCUMTENDERED.equals(propertyName)) return TapeSessionBatch.class;
     if (ACCUMCHANGE.equals(propertyName)) return TapeSessionBatch.class;
     if (SESSIONID.equals(propertyName)) return TapeSessionBatch.class;
+    if (ROUNDAMOUNT.equals(propertyName)) return TapeSessionBatch.class;
+    if (USER.equals(propertyName)) return TapeSessionBatch.class;
+    if (WORKSTATION.equals(propertyName)) return TapeSessionBatch.class;
+    if (ACCOUNT.equals(propertyName)) return TapeSessionBatch.class;
+    if (CONTACT.equals(propertyName)) return TapeSessionBatch.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -423,6 +579,16 @@ public class TapeSessionBatch extends ModelBase {
     if (! SmartEquals(getAccumChange(), objT.getAccumChange()))
       return false;
     if (! SmartEquals(getSessionID(), objT.getSessionID()))
+      return false;
+    if (! SmartEquals(getRoundAmount(), objT.getRoundAmount()))
+      return false;
+    if (! SmartEquals(getUser(), objT.getUser()))
+      return false;
+    if (! SmartEquals(getWorkstation(), objT.getWorkstation()))
+      return false;
+    if (! SmartEquals(getAccount(), objT.getAccount()))
+      return false;
+    if (! SmartEquals(getContact(), objT.getContact()))
       return false;
     return true;
   }			

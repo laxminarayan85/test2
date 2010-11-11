@@ -22,6 +22,11 @@ package com.efi.printsmith.data
 		public var accumTendered:Number = 0;
 		public var accumChange:Number = 0;
 		public var sessionID:Number = 0;
+		public var roundAmount:Number = 0;
+		public var user:Users;
+		public var workstation:String = "";
+		public var account:Account;
+		public var contact:Contact;
 	
 	}
 }

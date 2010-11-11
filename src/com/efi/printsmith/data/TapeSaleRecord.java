@@ -47,7 +47,7 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql="update tapesalerecord set isdeleted='TRUE' where id=?")
 //Filter added to retrieve only records that have not been soft deleted.
 @Where(clause="isdeleted <> 'TRUE'")
-public class TapeSaleRecord extends Transactions {
+public abstract class TapeSaleRecord extends Transactions {
 	/**
 	 * @generated
 	 */
@@ -96,6 +96,11 @@ public class TapeSaleRecord extends Transactions {
 	 * @generated
 	 */
 	public static final String INVOICE = "Invoice";
+
+	/**
+   * @generated
+   */
+  public static final String ACCOUNTHISTORYDATA = "AccountHistoryData";
 
 	/**
 	 * @generated
@@ -396,6 +401,27 @@ public class TapeSaleRecord extends Transactions {
   }
 	
 	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private AccountHistoryData accountHistoryData;
+
+	/**
+   * @generated
+ 	 */
+  public AccountHistoryData getAccountHistoryData(){
+    return accountHistoryData; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setAccountHistoryData(AccountHistoryData newVal) {
+    this.accountHistoryData = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -413,6 +439,7 @@ public class TapeSaleRecord extends Transactions {
     if (PAYMODE.equals(propertyName)) return getPaymode();
     if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
     if (INVOICE.equals(propertyName)) return getInvoice();
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) return getAccountHistoryData();
     return super.getProperty(propertyName);
   }
 	
@@ -434,6 +461,7 @@ public class TapeSaleRecord extends Transactions {
     if (PAYMODE.equals(propertyName)) setPaymode((String)newValue); else
     if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
     if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) setAccountHistoryData((AccountHistoryData)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -467,6 +495,8 @@ public class TapeSaleRecord extends Transactions {
       return new Class<?>[] {SalesCategory.class};		
     if (INVOICE.equals(propertyName)) 
       return new Class<?>[] {Invoice.class};		
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) 
+      return new Class<?>[] {AccountHistoryData.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -489,6 +519,7 @@ public class TapeSaleRecord extends Transactions {
     if (PAYMODE.equals(propertyName)) return TapeSaleRecord.class;
     if (SALESCATEGORY.equals(propertyName)) return TapeSaleRecord.class;
     if (INVOICE.equals(propertyName)) return TapeSaleRecord.class;
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) return TapeSaleRecord.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -523,6 +554,8 @@ public class TapeSaleRecord extends Transactions {
     if (! SmartEquals(getSalesCategory(), objT.getSalesCategory()))
       return false;
     if (! SmartEquals(getInvoice(), objT.getInvoice()))
+      return false;
+    if (! SmartEquals(getAccountHistoryData(), objT.getAccountHistoryData()))
       return false;
     return true;
   }			
