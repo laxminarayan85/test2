@@ -4059,7 +4059,7 @@ public class DataService extends HibernateService {
 								queryString = queryString + " where ";
 							}
 							queryString = queryString
-									+ " (invoice.releasedToProduction=true and invoice.releasedToProduction is not null)";
+									+ " (estimate.releasedToProduction=true and estimate.releasedToProduction is not null)";
 						} else {
 							if (checkFlag) {
 								queryString = queryString + " and ";
@@ -4068,7 +4068,7 @@ public class DataService extends HibernateService {
 								queryString = queryString + " where ";
 							}
 							queryString = queryString
-									+ " ((invoice.releasedToProduction=true or invoice.releasedToProduction=false) and invoice.releasedToProduction is not null)";
+									+ " ((estimate.releasedToProduction=true or estimate.releasedToProduction=false) and estimate.releasedToProduction is not null)";
 						}
 						if (checkFlag) {
 							queryString = queryString + " and (estimate.completed=false and estimate.readyToPickup=false and estimate.onPendingList=true)";
