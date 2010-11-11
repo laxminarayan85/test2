@@ -20,6 +20,7 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 
 		double price = 0.0;
 		PricingRecord pricingRecord = job.getPricingRecord();
+		PriceStockEngine priceStockEngine = new PriceStockEngine();
 		if (pricingRecord == null) {
 			pricingRecord = new PricingRecord();
 			pricingRecord.setUnitPriceOverride(false);
@@ -29,10 +30,17 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 		pricingRecord.setPriceLogEntry(priceLogEntry);
 
 		calculateUnitPrice(job);
+		double stockPrice = 0.0;
+		if (job.getStock() != null)
+			stockPrice = priceStockEngine.priceStock(job);
 		double wastePrice = ((job.getBinderyWaste().doubleValue() + job.getEstWaste().doubleValue()) * pricingRecord.getUnitPrice().doubleValue()) * job.getSheets();
-		price = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies()) + wastePrice;
+		int runout = job.getPaperCal().getRunout();
+		if (runout == 0)
+			runout = 1;
+		price = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies()) + (stockPrice * (job.getTotalCopies() / runout)) + wastePrice;
 		
 		pricingRecord.setTotalPrice(price);
+		pricingRecord.setUnitPrice(price / job.getTotalCopies());
 		if (price == 0)
 			pricingRecord.setUnitPrice(0);
 		priceLogEntry.setValue(price);
@@ -40,7 +48,7 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 	}
 	
 	private void calculateUnitPrice(Job job) throws Exception {
-		PriceStockEngine priceStockEngine = new PriceStockEngine();
+		//PriceStockEngine priceStockEngine = new PriceStockEngine();
 		PricingRecord pricingRecord = job.getPricingRecord();
 		
 		double price = 0.0;
@@ -55,9 +63,9 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 				
 				price = ratePerCopy;
 				if (job.getStock() != null) {
-					double stockPrice = priceStockEngine.priceStock(job);
+					//double stockPrice = priceStockEngine.priceStock(job);
 					
-					price += stockPrice;
+					//price += stockPrice;
 				}
 				if (job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 					price = (price * job.getPricingCopier().getSideTwoFactor()) / 2;
