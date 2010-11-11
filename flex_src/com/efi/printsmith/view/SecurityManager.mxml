@@ -393,7 +393,7 @@
 		accessGroupLists = tmp;
 //		(tvAccessGroups.dataProvider as ArrayCollection).removeItemAt(index);
 		dataService.deleteItem("AccessGroup", access.id);
-		selectFirstAccessGroup();
+		populateDataProvider(true);
 		
 	}
 //	private function addItem(itemName:String):void {
