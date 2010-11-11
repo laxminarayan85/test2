@@ -331,13 +331,17 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 	}
 	private function mapAccountData():void {
 		 //pressDefinition.pressDefID = PressDefID;
-		 pressDefinition.name = Name.text;
+		 if (Name.text == "")
+		 	pressDefinition.name = "Untitled Press";
+		 else
+		 	pressDefinition.name = Name.text;
 		 if ( productionPress.selectedItem != null)
 		 	pressDefinition.machineName = productionPress.selectedItem.name as String;
 		 pressDefinition.outputDescrip = OutPutDescription.text;
 		 if (ProductionLocation.selectedItem != null)
 			 pressDefinition.productionLocation = ProductionLocation.text;
-		 pressDefinition.costCenter = CostCenter.selectedItem.name as String;
+		 if (CostCenter.selectedItem != null)
+		 	pressDefinition.costCenter = CostCenter.selectedItem.name as String;
 		// pressDefinition.oemDeviceID = OEMDeviceID.text;
 		 pressDefinition.machineID = parseInt(MachineId.text) 
 		 pressDefinition.costingPress = CostingPress.selected;
