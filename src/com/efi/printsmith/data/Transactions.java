@@ -32,8 +32,8 @@ import org.hibernate.annotations.Where;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "Transactions.findall", query = "from Transactions"),
-	@NamedQuery(name = "Transactions.byId", query = "select a from Transactions a where a.id= :id")
+  @NamedQuery(name = "Transactions.findall", query = "from Transactions"),
+  @NamedQuery(name = "Transactions.byId", query = "select a from Transactions a where a.id= :id")
 })
 
 
@@ -90,13 +90,18 @@ public class Transactions extends ModelBase {
 	public static final String CCT = "Cct";
 
 	/**
+   * @generated
+   */
+  public static final String ACCOUNTHISTORYDATA = "AccountHistoryData";
+
+	/**
 	 * @generated
 	 */
 	public Transactions() {
-		this.created = new Date();
-		this.modified = new Date();
-		this.isDeleted = false;
-	}
+    this.created = new Date();
+    this.modified = new Date();
+    this.isDeleted = false;
+  }
 
 	@Basic
 	private Boolean isDeleted = false;
@@ -120,16 +125,16 @@ public class Transactions extends ModelBase {
 	 * @generated
  	 */
 	public Double getTaxAmount(){
-		return taxAmount; 
-	}
+    return taxAmount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxAmount(Double newVal) {
-		this.taxAmount = newVal;
-	}
+    this.taxAmount = newVal;
+  }
 	
  	
 	
@@ -144,16 +149,16 @@ public class Transactions extends ModelBase {
 	 * @generated
  	 */
 	public TaxCodes getTaxCode(){
-		return taxCode; 
-	}
+    return taxCode; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxCode(TaxCodes newVal) {
-		this.taxCode = newVal;
-	}
+    this.taxCode = newVal;
+  }
 	
  	
 	
@@ -167,16 +172,16 @@ public class Transactions extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTaxExempt(){
-		return taxExempt; 
-	}
+    return taxExempt; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxExempt(Boolean newVal) {
-		this.taxExempt = newVal;
-	}
+    this.taxExempt = newVal;
+  }
 	
  	
 	
@@ -191,16 +196,16 @@ public class Transactions extends ModelBase {
 	 * @generated
  	 */
 	public TaxTable getTaxTable(){
-		return taxTable; 
-	}
+    return taxTable; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTaxTable(TaxTable newVal) {
-		this.taxTable = newVal;
-	}
+    this.taxTable = newVal;
+  }
 	
  	
 	
@@ -214,16 +219,16 @@ public class Transactions extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getIsDeletedRecord(){
-		return isDeletedRecord; 
-	}
+    return isDeletedRecord; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setIsDeletedRecord(Boolean newVal) {
-		this.isDeletedRecord = newVal;
-	}
+    this.isDeletedRecord = newVal;
+  }
 	
  	
 	
@@ -237,16 +242,16 @@ public class Transactions extends ModelBase {
 	 * @generated
  	 */
 	public Integer getIndex(){
-		return index; 
-	}
+    return index; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setIndex(Integer newVal) {
-		this.index = newVal;
-	}
+    this.index = newVal;
+  }
 	
  	
 	
@@ -260,16 +265,16 @@ public class Transactions extends ModelBase {
 	 * @generated
  	 */
 	public String getCheckNumber(){
-		return checkNumber; 
-	}
+    return checkNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCheckNumber(String newVal) {
-		this.checkNumber = newVal;
-	}
+    this.checkNumber = newVal;
+  }
 	
  	
 	
@@ -283,23 +288,23 @@ public class Transactions extends ModelBase {
 	 * @generated
  	 */
 	public BigDecimal getSubTotal(){
-		return subTotal; 
-	}
+    return subTotal; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSubTotal(BigDecimal newVal) {
-		this.subTotal = newVal;
-	}
+    this.subTotal = newVal;
+  }
 	
 	/**
 	 * @generated
 	 */	
 	public void setSubTotal(double newVal) {
-		this.subTotal = BigDecimal.valueOf(newVal);
-	}
+    this.subTotal = BigDecimal.valueOf(newVal);
+  }
  	
 	
 	/**
@@ -312,16 +317,16 @@ public class Transactions extends ModelBase {
 	 * @generated
  	 */
 	public String getRefNumber(){
-		return refNumber; 
-	}
+    return refNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRefNumber(String newVal) {
-		this.refNumber = newVal;
-	}
+    this.refNumber = newVal;
+  }
 	
  	
 	
@@ -336,35 +341,57 @@ public class Transactions extends ModelBase {
 	 * @generated
  	 */
 	public CreditCardTransactions getCct(){
-		return cct; 
-	}
+    return cct; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCct(CreditCardTransactions newVal) {
-		this.cct = newVal;
-	}
+    this.cct = newVal;
+  }
 	
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private AccountHistoryData accountHistoryData;
+
+	/**
+   * @generated
+ 	 */
+  public AccountHistoryData getAccountHistoryData(){
+    return accountHistoryData; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setAccountHistoryData(AccountHistoryData newVal) {
+    this.accountHistoryData = newVal;
+  }
+
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (TAXAMOUNT.equals(propertyName)) return getTaxAmount();
-		if (TAXCODE.equals(propertyName)) return getTaxCode();
-		if (TAXEXEMPT.equals(propertyName)) return getTaxExempt();
-		if (TAXTABLE.equals(propertyName)) return getTaxTable();
-		if (ISDELETEDRECORD.equals(propertyName)) return getIsDeletedRecord();
-		if (INDEX.equals(propertyName)) return getIndex();
-		if (CHECKNUMBER.equals(propertyName)) return getCheckNumber();
-		if (SUBTOTAL.equals(propertyName)) return getSubTotal();
-		if (REFNUMBER.equals(propertyName)) return getRefNumber();
-		if (CCT.equals(propertyName)) return getCct();
-		return super.getProperty(propertyName);
-	}
+    if (TAXAMOUNT.equals(propertyName)) return getTaxAmount();
+    if (TAXCODE.equals(propertyName)) return getTaxCode();
+    if (TAXEXEMPT.equals(propertyName)) return getTaxExempt();
+    if (TAXTABLE.equals(propertyName)) return getTaxTable();
+    if (ISDELETEDRECORD.equals(propertyName)) return getIsDeletedRecord();
+    if (INDEX.equals(propertyName)) return getIndex();
+    if (CHECKNUMBER.equals(propertyName)) return getCheckNumber();
+    if (SUBTOTAL.equals(propertyName)) return getSubTotal();
+    if (REFNUMBER.equals(propertyName)) return getRefNumber();
+    if (CCT.equals(propertyName)) return getCct();
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) return getAccountHistoryData();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -372,18 +399,19 @@ public class Transactions extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (TAXAMOUNT.equals(propertyName)) setTaxAmount((Double)newValue); else
-		if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
-		if (TAXEXEMPT.equals(propertyName)) setTaxExempt((Boolean)newValue); else
-		if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
-		if (ISDELETEDRECORD.equals(propertyName)) setIsDeletedRecord((Boolean)newValue); else
-		if (INDEX.equals(propertyName)) setIndex((Integer)newValue); else
-		if (CHECKNUMBER.equals(propertyName)) setCheckNumber((String)newValue); else
-		if (SUBTOTAL.equals(propertyName)) setSubTotal((BigDecimal)newValue); else
-		if (REFNUMBER.equals(propertyName)) setRefNumber((String)newValue); else
-		if (CCT.equals(propertyName)) setCct((CreditCardTransactions)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (TAXAMOUNT.equals(propertyName)) setTaxAmount((Double)newValue); else
+    if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
+    if (TAXEXEMPT.equals(propertyName)) setTaxExempt((Boolean)newValue); else
+    if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
+    if (ISDELETEDRECORD.equals(propertyName)) setIsDeletedRecord((Boolean)newValue); else
+    if (INDEX.equals(propertyName)) setIndex((Integer)newValue); else
+    if (CHECKNUMBER.equals(propertyName)) setCheckNumber((String)newValue); else
+    if (SUBTOTAL.equals(propertyName)) setSubTotal((BigDecimal)newValue); else
+    if (REFNUMBER.equals(propertyName)) setRefNumber((String)newValue); else
+    if (CCT.equals(propertyName)) setCct((CreditCardTransactions)newValue); else
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) setAccountHistoryData((AccountHistoryData)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -391,28 +419,30 @@ public class Transactions extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (TAXAMOUNT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TAXCODE.equals(propertyName)) 
-			return new Class<?>[] {TaxCodes.class};		
-		if (TAXEXEMPT.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (TAXTABLE.equals(propertyName)) 
-			return new Class<?>[] {TaxTable.class};		
-		if (ISDELETEDRECORD.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (INDEX.equals(propertyName)) 
-			return new Class<?>[] {Integer.class};		
-		if (CHECKNUMBER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SUBTOTAL.equals(propertyName)) 
-			return new Class<?>[] {BigDecimal.class};		
-		if (REFNUMBER.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (CCT.equals(propertyName)) 
-			return new Class<?>[] {CreditCardTransactions.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (TAXAMOUNT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TAXCODE.equals(propertyName)) 
+      return new Class<?>[] {TaxCodes.class};		
+    if (TAXEXEMPT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TAXTABLE.equals(propertyName)) 
+      return new Class<?>[] {TaxTable.class};		
+    if (ISDELETEDRECORD.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (INDEX.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (CHECKNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SUBTOTAL.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (REFNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CCT.equals(propertyName)) 
+      return new Class<?>[] {CreditCardTransactions.class};		
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) 
+      return new Class<?>[] {AccountHistoryData.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -421,47 +451,50 @@ public class Transactions extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (TAXAMOUNT.equals(propertyName)) return Transactions.class;
-		if (TAXCODE.equals(propertyName)) return Transactions.class;
-		if (TAXEXEMPT.equals(propertyName)) return Transactions.class;
-		if (TAXTABLE.equals(propertyName)) return Transactions.class;
-		if (ISDELETEDRECORD.equals(propertyName)) return Transactions.class;
-		if (INDEX.equals(propertyName)) return Transactions.class;
-		if (CHECKNUMBER.equals(propertyName)) return Transactions.class;
-		if (SUBTOTAL.equals(propertyName)) return Transactions.class;
-		if (REFNUMBER.equals(propertyName)) return Transactions.class;
-		if (CCT.equals(propertyName)) return Transactions.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (TAXAMOUNT.equals(propertyName)) return Transactions.class;
+    if (TAXCODE.equals(propertyName)) return Transactions.class;
+    if (TAXEXEMPT.equals(propertyName)) return Transactions.class;
+    if (TAXTABLE.equals(propertyName)) return Transactions.class;
+    if (ISDELETEDRECORD.equals(propertyName)) return Transactions.class;
+    if (INDEX.equals(propertyName)) return Transactions.class;
+    if (CHECKNUMBER.equals(propertyName)) return Transactions.class;
+    if (SUBTOTAL.equals(propertyName)) return Transactions.class;
+    if (REFNUMBER.equals(propertyName)) return Transactions.class;
+    if (CCT.equals(propertyName)) return Transactions.class;
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) return Transactions.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		Transactions objT = (Transactions)obj;
-		if (! SmartEquals(getTaxAmount(), objT.getTaxAmount()))
-			return false;
-		if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
-			return false;
-		if (! SmartEquals(getTaxExempt(), objT.getTaxExempt()))
-			return false;
-		if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
-			return false;
-		if (! SmartEquals(getIsDeletedRecord(), objT.getIsDeletedRecord()))
-			return false;
-		if (! SmartEquals(getIndex(), objT.getIndex()))
-			return false;
-		if (! SmartEquals(getCheckNumber(), objT.getCheckNumber()))
-			return false;
-		if (! SmartEquals(getSubTotal(), objT.getSubTotal()))
-			return false;
-		if (! SmartEquals(getRefNumber(), objT.getRefNumber()))
-			return false;
-		if (! SmartEquals(getCct(), objT.getCct()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    Transactions objT = (Transactions)obj;
+    if (! SmartEquals(getTaxAmount(), objT.getTaxAmount()))
+      return false;
+    if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
+      return false;
+    if (! SmartEquals(getTaxExempt(), objT.getTaxExempt()))
+      return false;
+    if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
+      return false;
+    if (! SmartEquals(getIsDeletedRecord(), objT.getIsDeletedRecord()))
+      return false;
+    if (! SmartEquals(getIndex(), objT.getIndex()))
+      return false;
+    if (! SmartEquals(getCheckNumber(), objT.getCheckNumber()))
+      return false;
+    if (! SmartEquals(getSubTotal(), objT.getSubTotal()))
+      return false;
+    if (! SmartEquals(getRefNumber(), objT.getRefNumber()))
+      return false;
+    if (! SmartEquals(getCct(), objT.getCct()))
+      return false;
+    if (! SmartEquals(getAccountHistoryData(), objT.getAccountHistoryData()))
+      return false;
+    return true;
+  }			
 }

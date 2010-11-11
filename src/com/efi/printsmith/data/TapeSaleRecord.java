@@ -100,11 +100,6 @@ public abstract class TapeSaleRecord extends Transactions {
 	/**
    * @generated
    */
-  public static final String ACCOUNTHISTORYDATA = "AccountHistoryData";
-
-	/**
-   * @generated
-   */
   public static final String CONTACT = "Contact";
 
 	/**
@@ -410,27 +405,6 @@ public abstract class TapeSaleRecord extends Transactions {
    */	
     @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
-  private AccountHistoryData accountHistoryData;
-
-	/**
-   * @generated
- 	 */
-  public AccountHistoryData getAccountHistoryData(){
-    return accountHistoryData; 
-  }
-
-	/**
-   * @generated
-   */	
-  public void setAccountHistoryData(AccountHistoryData newVal) {
-    this.accountHistoryData = newVal;
-  }
-
-	/**
-   * @generated
-   */	
-    @ManyToOne()
-    @Where(clause="isdeleted <> 'TRUE'")
   private Contact contact;
 
 	/**
@@ -465,7 +439,6 @@ public abstract class TapeSaleRecord extends Transactions {
     if (PAYMODE.equals(propertyName)) return getPaymode();
     if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
     if (INVOICE.equals(propertyName)) return getInvoice();
-    if (ACCOUNTHISTORYDATA.equals(propertyName)) return getAccountHistoryData();
     if (CONTACT.equals(propertyName)) return getContact();
     return super.getProperty(propertyName);
   }
@@ -488,7 +461,6 @@ public abstract class TapeSaleRecord extends Transactions {
     if (PAYMODE.equals(propertyName)) setPaymode((String)newValue); else
     if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
     if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
-    if (ACCOUNTHISTORYDATA.equals(propertyName)) setAccountHistoryData((AccountHistoryData)newValue); else
     if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -523,8 +495,6 @@ public abstract class TapeSaleRecord extends Transactions {
       return new Class<?>[] {SalesCategory.class};		
     if (INVOICE.equals(propertyName)) 
       return new Class<?>[] {Invoice.class};		
-    if (ACCOUNTHISTORYDATA.equals(propertyName)) 
-      return new Class<?>[] {AccountHistoryData.class};		
     if (CONTACT.equals(propertyName)) 
       return new Class<?>[] {Contact.class};		
     return super.getPropertyClass(propertyName);
@@ -549,7 +519,6 @@ public abstract class TapeSaleRecord extends Transactions {
     if (PAYMODE.equals(propertyName)) return TapeSaleRecord.class;
     if (SALESCATEGORY.equals(propertyName)) return TapeSaleRecord.class;
     if (INVOICE.equals(propertyName)) return TapeSaleRecord.class;
-    if (ACCOUNTHISTORYDATA.equals(propertyName)) return TapeSaleRecord.class;
     if (CONTACT.equals(propertyName)) return TapeSaleRecord.class;
     return super.getPropertyOwner(propertyName);
   }
@@ -585,8 +554,6 @@ public abstract class TapeSaleRecord extends Transactions {
     if (! SmartEquals(getSalesCategory(), objT.getSalesCategory()))
       return false;
     if (! SmartEquals(getInvoice(), objT.getInvoice()))
-      return false;
-    if (! SmartEquals(getAccountHistoryData(), objT.getAccountHistoryData()))
       return false;
     if (! SmartEquals(getContact(), objT.getContact()))
       return false;

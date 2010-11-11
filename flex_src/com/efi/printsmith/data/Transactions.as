@@ -24,6 +24,7 @@ package com.efi.printsmith.data
 		public var subTotal:Number = 0;
 		public var refNumber:String = "";
 		public var cct:CreditCardTransactions;
+		public var accountHistoryData:AccountHistoryData;
 	
 	}
 }
