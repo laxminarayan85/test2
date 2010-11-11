@@ -68,8 +68,8 @@
 					var counter:int=0;
 					for each(var employeeObject:Employee in employeeList){
 						if(employeeObject.id == employee.id) {
-							employeeDG.selectedItem = employeeObject;
 							employeeDG.selectedIndex = counter;
+							employee = employeeObject;
 							break;
 						}
 						counter++;
@@ -204,7 +204,7 @@
 			}
 			
 			private function closeWindow():void{
-				PopUpManager.removePopUp(this);
+				Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 			}
 			
 			public function setOriginalEmployee():void {
