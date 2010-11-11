@@ -325,7 +325,8 @@
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 	    PopUpManager.centerPopUp(this);
-
+		if (this.title_edit != null)
+			this.title_edit.setFocus();
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 		if (mdiWin != null)
 			mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PriceList');
