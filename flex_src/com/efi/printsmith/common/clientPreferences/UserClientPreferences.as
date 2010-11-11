@@ -11,9 +11,13 @@ package com.efi.printsmith.common.clientPreferences
 		
 		public static const STOCK_PICKER_GRID_WIDTHS:String = "StockPickerGridWidths";
 		
-		public static const PENDINGLIST_DOCTYPE = "PendingListDocType";
+		public static const PENDINGLIST_DOCTYPE:String = "PendingListDocType";
 		
-		public static const PENDINGLIST_FILTER = "PendingListFilter";
+		public static const PENDINGLIST_FILTER:String = "PendingListFilter";
+		
+		public static const REVIEWDOC_OPTION:String = "ReviewDocOption";
+		
+		public static const REVIEWDOC_VALUE:String = "ReviewDocValue";
 		
 		
 		public static function getInstance():UserClientPreferences	{

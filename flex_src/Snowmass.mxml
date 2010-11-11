@@ -439,15 +439,17 @@
 		
 		private function doReviewDoc():void {
 			var reviewDocWindow:ReviewDocumentView = PopUpManager.createPopUp(this,ReviewDocumentView,false) as ReviewDocumentView;
-			reviewDocWindow.addEventListener(ReviewDocUpdateEvent.REVIEW_DOC_UPDATE,function(event:ReviewDocUpdateEvent):void {
-				if(event.invoice!=null){
-					if(event.invoice is Invoice){
-						doEditInvoice(event.invoice);
-					} else if(event.invoice is Estimate){
-						doEditEstimate(event.invoice);
-					}
+			reviewDocWindow.addEventListener(ReviewDocUpdateEvent.REVIEW_DOC_UPDATE,handleReviewDocument,false,0,true);
+		}
+		
+		private function handleReviewDocument(event:ReviewDocUpdateEvent):void {
+			if(event.invoice!=null){
+				if(event.invoice is Invoice){
+					doEditInvoice(event.invoice);
+				} else if(event.invoice is Estimate){
+					doEditEstimate(event.invoice);
 				}
-			},false,0,true);
+			}
 		}
 		
 		private function doMinimize():void	{
