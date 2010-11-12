@@ -101,6 +101,8 @@ public class TableEditorMapper extends ImportMapper {
 									modelBase = new ReportCategories();
 								else if (title.equals("Sales Rep:"))
 									modelBase = new SalesRep();
+								else if (title.equals("Ship Via:"))
+									modelBase = new ShippingMethod();
 								else if (title.equals("Sizes - Metric CM")) {
 									modelBase = new SizeMetricCM();
 									SizeTable sizeTable = (SizeTable)dataService.getByName("SizeTable", title);
@@ -279,6 +281,8 @@ public class TableEditorMapper extends ImportMapper {
 			((Vendor) modelBase).setName(value);
 		} else if (modelBase instanceof Zip) {
 			((Zip) modelBase).setName(value);
+		} else if (modelBase instanceof ShippingMethod) {
+			((ShippingMethod) modelBase).setName(value);
 		}
 
 		return modelBase;
