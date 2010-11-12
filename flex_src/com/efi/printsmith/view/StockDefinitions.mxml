@@ -2387,9 +2387,9 @@ private function doRound(evt:FocusEvent):void{
 				<mx:Label x="24" y="30" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Color')}" textAlign="right" width="93"/>
 				<mx:Label x="31" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" textAlign="right"/>
 
-				<mx:TextInput restrict="0-9\." x="125" y="3" width="90" id="DefaultBW" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.copier1PricePerSheet)}"/>
-				<mx:TextInput restrict="0-9\." x="125" y="28" width="90" id="DefaultColor" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.copier2PricePerSheet)}"/>
-				<mx:TextInput restrict="0-9\." x="125" y="53" width="90" id="DefaultLargeFormat" text="{Snowmass.getCurrencyFormatter(true, 3).format(stockDefinitions.copier3PricePerSheet)}"/>
+				<mx:TextInput restrict="0-9\." x="125" y="3" width="90" id="DefaultBW" text="{Snowmass.getCurrencyFormatter(true, 4).format(stockDefinitions.copier1PricePerSheet)}"/>
+				<mx:TextInput restrict="0-9\." x="125" y="28" width="90" id="DefaultColor" text="{Snowmass.getCurrencyFormatter(true, 4).format(stockDefinitions.copier2PricePerSheet)}"/>
+				<mx:TextInput restrict="0-9\." x="125" y="53" width="90" id="DefaultLargeFormat" text="{Snowmass.getCurrencyFormatter(true, 4).format(stockDefinitions.copier3PricePerSheet)}"/>
 				<mx:ComboBox x="223" y="3" width="201" id="defaultBWCopier" focusOut="doCopierDefinitionBW();" dataProvider="{copierDefinitions}" labelField="name"/>
 				<mx:ComboBox x="223" y="28" width="201" id="defaultColorCopier" focusOut="doCopierDefinitionColor();" dataProvider="{copierDefinitions}" labelField="name"/>
 				<mx:ComboBox x="223" y="53" width="201" id="defaultLargeCopier" focusOut="doCopierDefinitionLarge();" dataProvider="{copierDefinitions}" labelField="name"/>
