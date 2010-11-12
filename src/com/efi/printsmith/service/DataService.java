@@ -5084,6 +5084,22 @@ public class DataService extends HibernateService {
 		
 	}
 	
+	public List<DeliveryTicketJobs> getDeliveryTicketJobs(boolean archive) throws Exception {
+		log.debug("** getDeliveryTicketJobs called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		List<DeliveryTicketJobs> ticketJobsList = new ArrayList<DeliveryTicketJobs>();
+		try {
+			String queryString = "select job from DeliveryTicketJobs as job inner join job.parentDeliveryTicket as ticket where ticket.archive="+archive;
+			Query query = em.createQuery(queryString);
+			ticketJobsList = query.getResultList();
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return ticketJobsList;
+	}
+	
 	/**
 	 * 
 	 * @param deliveryTicketId
