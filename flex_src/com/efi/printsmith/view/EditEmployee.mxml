@@ -3,7 +3,14 @@
 width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" showCloseButton="true" close="{closeWindow()}" 
 creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" name="Employee Editor" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*" xmlns:components="com.efi.printsmith.common.components.*"
 implements="com.efi.mdi.IMDIWindowAware">
-
+<mx:Metadata>
+		[Protected(permissions="Employee_Employees_Settings",notInPermissionAction="invisible",componentId="canvasSettings")]
+	 	[Protected(permissions="Employee_Employees_Settings",notInPermissionAction="visible",componentId="accessSettings")]
+	 	[Protected(permissions="Employee_Employees_Personal",notInPermissionAction="invisible",componentId="canvasPersonal")]
+	 	[Protected(permissions="Employee_Employees_Personal",notInPermissionAction="visible",componentId="accessPersonal")]
+	 	[Protected(permissions="Employee_Employees_Production",notInPermissionAction="invisible",componentId="canvasProduction")]
+	 	[Protected(permissions="Employee_Employees_Production",notInPermissionAction="visible",componentId="accessProduction")]
+</mx:Metadata>
 <mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="getEmployee" fault="handleFault(event)" result="handleLoadEmployee(event)"/>
@@ -1024,217 +1031,232 @@ implements="com.efi.mdi.IMDIWindowAware">
 		<mx:Label x="483" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
 		<mx:Label x="263" y="46" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38" textAlign="center"/>
 		<mx:TabNavigator x="0" y="80" width="100%" height="100%" creationPolicy="all">
-			<mx:Canvas id="canvasSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Settings')}" width="100%" height="100%">	
-				<mx:Label x="51" y="19" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.IDNumber')}" width="71" textAlign="right"/>
-				<mx:Text x="143" y="19" id="employeeID" text="{employee.employeeId}" width="106" />
-				<mx:Label x="47" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.First')}" textAlign="right"/>
-				<mx:Label x="47" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Last')}" textAlign="right"/>
-				<mx:TextInput x="124" y="78" id="firstName_edit" text="{employee.firstName}" width="205"/>
-				<mx:TextInput x="124" y="104" id="lastName_edit" text="{employee.lastName}" width="205"/>
-				<mx:Label x="73" y="136" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Phone')}" textAlign="right"/>
-				<mx:Label x="73" y="164" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Mobile')}" textAlign="right"/>
-				<mx:Label x="79" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EMail')}" textAlign="right"/>
-				<mx:Label x="88" y="216" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.SSN')}" textAlign="right"/>
-				<mx:Label x="41" y="246" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.ExportCode')}" />
-				<mx:TextInput x="127" y="134" id="phone_edit"/>
-				<mx:TextInput x="127" y="162" id="mobile_edit"/>
-				<mx:TextInput x="127" y="188" id="email_edit"/>
-				<mx:TextInput x="127" y="214" id="ssn_edit" text="{employee.socialSecurity}"/>
-				<mx:TextInput x="127" y="244" id="export_code_edit" text="{employee.exportCode}" />
-				<ns1:AddressEditor x="381" y="78" openedFromEmployee="true" id="address_editor" height="157" width="325"/>
+	
+	
+			<mx:Canvas id="outerSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Settings')}" >
+				<mx:Label x="184" y="40" visible="false" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Sorryaccesstothisite')}" id="accessSettings" />
+
+		
+				<mx:Canvas id="canvasSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Settings')}" width="100%" height="100%">	
+					<mx:Label x="51" y="19" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.IDNumber')}" width="71" textAlign="right"/>
+					<mx:Text x="143" y="19" id="employeeID" text="{employee.employeeId}" width="106" />
+					<mx:Label x="47" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.First')}" textAlign="right"/>
+					<mx:Label x="47" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Last')}" textAlign="right"/>
+					<mx:TextInput x="124" y="78" id="firstName_edit" text="{employee.firstName}" width="205"/>
+					<mx:TextInput x="124" y="104" id="lastName_edit" text="{employee.lastName}" width="205"/>
+					<mx:Label x="73" y="136" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Phone')}" textAlign="right"/>
+					<mx:Label x="73" y="164" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Mobile')}" textAlign="right"/>
+					<mx:Label x="79" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EMail')}" textAlign="right"/>
+					<mx:Label x="88" y="216" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.SSN')}" textAlign="right"/>
+					<mx:Label x="41" y="246" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.ExportCode')}" />
+					<mx:TextInput x="127" y="134" id="phone_edit"/>
+					<mx:TextInput x="127" y="162" id="mobile_edit"/>
+					<mx:TextInput x="127" y="188" id="email_edit"/>
+					<mx:TextInput x="127" y="214" id="ssn_edit" text="{employee.socialSecurity}"/>
+					<mx:TextInput x="127" y="244" id="export_code_edit" text="{employee.exportCode}" />
+					<ns1:AddressEditor x="381" y="78" openedFromEmployee="true" id="address_editor" height="157" width="325"/>
+				</mx:Canvas>
 			</mx:Canvas>
-			<mx:Canvas id="canvasPersonal" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Personal')}" width="100%" height="100%">	
-				<mx:Label x="10" y="42" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Rate')}"/>
-				<mx:Panel x="10" y="68" width="295" height="133" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Status')}">
-					<mx:RadioButtonGroup  id="employee_status" selectedValue="{employeeStatus}"/>
-					<mx:RadioButton x="10" y="19" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Active')}" groupName="employee_status" width="78" value="Active"/>
-					<mx:RadioButton x="10" y="45" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Inactive')}" groupName="employee_status" value="InActive"/>
-				</mx:Panel>
-				<mx:Panel x="368" y="68" width="349" height="133" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PINSettings')}">
-					<components:CustomCheckBoxComponent x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.RequirePIN')}" width="282"
-						dataHolder="{employee}" variableName="pinRequired" customText="{employee.pinRequired}"
-						selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-					<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PIN')}"/>
-					<components:CustomStringTextInputComponent x="47" y="38" restrict="0-9" displayAsPassword="true" maxChars="9"
-						dataHolder="{employee}" variableName="pin" customText="{employee.pin}" enabled="{employee.pinRequired}"/>
-				</mx:Panel>
-				<components:CustomNumericTextInputComponent x="54" y="40"
-					dataHolder="{employee}" variableName="rate" customText="{employee.rate}"
-					precision="2" rounding="nearest"/>
-				<!--<mx:TextInput  restrict="0-9\." x="54" y="40" id="rate_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(employee.rate)}"/>-->
-				<mx:Panel x="10" y="224" width="295" height="290" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EditableProductionOp')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Allowedtooverridecos')}" id="override_cost_check" selected="{employee.allowOverrideCost}"/>
-					<mx:CheckBox x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Hidecostingamounts')}" id="hide_cost_amount_check" selected="{employee.costingAmounts}"/>
-					<mx:CheckBox x="10" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Hideitemsnotreleased')}" id="hide_non_production_items" selected="{employee.hideNonReleaseProduction}"/>
-					<mx:CheckBox x="10" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.HideestimatedtimeinT')}" id="hide_est_time_tracker" selected="{employee.hideEstimateTimeTracker}"/>
-					<mx:CheckBox x="10" y="130" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Allowtomodifyproduct')}" id="modify_production_settings" selected="{employee.productionSettings}"/>
-					<mx:CheckBox x="10" y="160" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.AllowTrackerNEXTloca')}" id="tracker_next_location" selected="{employee.trackerNextLocation}"/>
-					<mx:CheckBox x="10" y="190" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.AutoshowTrackerConso')}" id="show_tracker_console" selected="{employee.trackerClockIn}"/>
-					<mx:CheckBox x="10" y="218" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.AutoshowMyWorkCenter')}" id="show_work_center" selected="{employee.showWorkCenter}"/>
-				</mx:Panel>
-				<mx:Panel x="368" y="255" width="349" height="86" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.MagneticCardReaderAu')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Allowauthenticationw')}" id="allow_mag_reader" selected="{employee.magCardReader}"/>
-				</mx:Panel>
-				<mx:Panel x="368" y="405" width="349" height="109" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.AutoOut')}">
-					<mx:Label x="22" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Hour')}" textAlign="right"/>
-					<mx:Label x="11" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Minute')}" textAlign="right"/>
-					<mx:TextInput x="66" y="8" width="79" id="hour_edit" focusOut="doShowTime();" change="validateForm(event);" text="{employee.autoHour}"/>
-					<mx:TextInput x="66" y="37" width="79" id="minute_edit" text="{employee.autoMin}" focusOut="doShowTime();" change="validateForm(event);"/>
-					<mx:Text x="180" y="23" width="105" height="20" id="real_time" enabled="false"/>
-				</mx:Panel>
-				<!--<mx:Panel x="10" y="522" width="796" height="173" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Message')}" >
-					<mx:TextInput x="10" y="10" width="746" height="79" id="message" text="{employee.message}"/>
-					<mx:CheckBox x="10" y="97" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.ShowmessageatclockIN')}" id="show_message_clockIn" selected="{employee.showMessageClockin}"/>
-					<mx:CheckBox x="239" y="97" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.ShowmessageatclockOU')}" id="show_message_clockOut" selected="{employee.showMessageClockout}"/>
-				</mx:Panel>-->
+			<mx:Canvas id="outerPersonal" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Personal')}" >
+				<mx:Label x="184" y="40" visible="false" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Sorryaccesstothisite')}" id="accessPersonal" />
+
+				<mx:Canvas id="canvasPersonal" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Personal')}" width="100%" height="100%">	
+					<mx:Label x="10" y="42" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Rate')}"/>
+					<mx:Panel x="10" y="68" width="295" height="133" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Status')}">
+						<mx:RadioButtonGroup  id="employee_status" selectedValue="{employeeStatus}"/>
+						<mx:RadioButton x="10" y="19" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Active')}" groupName="employee_status" width="78" value="Active"/>
+						<mx:RadioButton x="10" y="45" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Inactive')}" groupName="employee_status" value="InActive"/>
+					</mx:Panel>
+					<mx:Panel x="368" y="68" width="349" height="133" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PINSettings')}">
+						<components:CustomCheckBoxComponent x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.RequirePIN')}" width="282"
+							dataHolder="{employee}" variableName="pinRequired" customText="{employee.pinRequired}"
+							selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+						<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.PIN')}"/>
+						<components:CustomStringTextInputComponent x="47" y="38" restrict="0-9" displayAsPassword="true" maxChars="9"
+							dataHolder="{employee}" variableName="pin" customText="{employee.pin}" enabled="{employee.pinRequired}"/>
+					</mx:Panel>
+					<components:CustomNumericTextInputComponent x="54" y="40"
+						dataHolder="{employee}" variableName="rate" customText="{employee.rate}"
+						precision="2" rounding="nearest"/>
+					<!--<mx:TextInput  restrict="0-9\." x="54" y="40" id="rate_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(employee.rate)}"/>-->
+					<mx:Panel x="10" y="224" width="295" height="290" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EditableProductionOp')}">
+						<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Allowedtooverridecos')}" id="override_cost_check" selected="{employee.allowOverrideCost}"/>
+						<mx:CheckBox x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Hidecostingamounts')}" id="hide_cost_amount_check" selected="{employee.costingAmounts}"/>
+						<mx:CheckBox x="10" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Hideitemsnotreleased')}" id="hide_non_production_items" selected="{employee.hideNonReleaseProduction}"/>
+						<mx:CheckBox x="10" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.HideestimatedtimeinT')}" id="hide_est_time_tracker" selected="{employee.hideEstimateTimeTracker}"/>
+						<mx:CheckBox x="10" y="130" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Allowtomodifyproduct')}" id="modify_production_settings" selected="{employee.productionSettings}"/>
+						<mx:CheckBox x="10" y="160" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.AllowTrackerNEXTloca')}" id="tracker_next_location" selected="{employee.trackerNextLocation}"/>
+						<mx:CheckBox x="10" y="190" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.AutoshowTrackerConso')}" id="show_tracker_console" selected="{employee.trackerClockIn}"/>
+						<mx:CheckBox x="10" y="218" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.AutoshowMyWorkCenter')}" id="show_work_center" selected="{employee.showWorkCenter}"/>
+					</mx:Panel>
+					<mx:Panel x="368" y="255" width="349" height="86" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.MagneticCardReaderAu')}">
+						<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Allowauthenticationw')}" id="allow_mag_reader" selected="{employee.magCardReader}"/>
+					</mx:Panel>
+					<mx:Panel x="368" y="405" width="349" height="109" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.AutoOut')}">
+						<mx:Label x="22" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Hour')}" textAlign="right"/>
+						<mx:Label x="11" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Minute')}" textAlign="right"/>
+						<mx:TextInput x="66" y="8" width="79" id="hour_edit" focusOut="doShowTime();" change="validateForm(event);" text="{employee.autoHour}"/>
+						<mx:TextInput x="66" y="37" width="79" id="minute_edit" text="{employee.autoMin}" focusOut="doShowTime();" change="validateForm(event);"/>
+						<mx:Text x="180" y="23" width="105" height="20" id="real_time" enabled="false"/>
+					</mx:Panel>
+					<!--<mx:Panel x="10" y="522" width="796" height="173" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.Message')}" >
+						<mx:TextInput x="10" y="10" width="746" height="79" id="message" text="{employee.message}"/>
+						<mx:CheckBox x="10" y="97" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.ShowmessageatclockIN')}" id="show_message_clockIn" selected="{employee.showMessageClockin}"/>
+						<mx:CheckBox x="239" y="97" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeEmpClockOptionsCmd.ShowmessageatclockOU')}" id="show_message_clockOut" selected="{employee.showMessageClockout}"/>
+					</mx:Panel>-->
+				</mx:Canvas>
 			</mx:Canvas>
-			<mx:Canvas id="canvasProduction" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.ProductionFilter')}" width="100%" height="100%">	
-				<mx:Panel x="10" y="30" width="280" height="233"  layout="absolute" title="Include">
-					<components:CustomCheckBoxComponent x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Invoices')}" 
-						dataHolder="{employee}" variableName="includeInvoice" customText="{employee.includeInvoice}" 
-						selectedValue="true" deSelectedValue="false" defaultValue="false" width="196"/>
-					<components:CustomCheckBoxComponent x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimates')}" 
-						dataHolder="{employee}" variableName="includeEstimate" customText="{employee.includeEstimate}" 
-						selectedValue="true" deSelectedValue="false" defaultValue="false" width="212"/>
-					<components:CustomCheckBoxComponent x="31" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Jobs')}" 
-						dataHolder="{employee}" variableName="includeJobs" customText="{employee.includeJobs}" 
-						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee.includeInvoice || employee.includeEstimate}"/>
-					<components:CustomCheckBoxComponent x="66" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Charges')}" 
-						dataHolder="{employee}" variableName="includeJobCharges" customText="{employee.includeJobCharges}" 
-						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{(employee.includeInvoice || employee.includeEstimate) &amp;&amp; employee.includeJobs}"/>
-					<components:CustomCheckBoxComponent x="10" y="143" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.InvoiceLevelCharges')}" 
-						dataHolder="{employee}" variableName="includeInvoiceCharges" customText="{employee.includeInvoiceCharges}" 
-						selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee.includeInvoice || employee.includeEstimate}"/>
-				</mx:Panel>
-				<mx:Panel x="309" y="30" width="227" height="255" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.CustomerWantedBy')}">
-					<mx:RadioButtonGroup id="Due" selectedValue="{customerWantType}"/>
-					<mx:RadioButton x="10" y="20" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DueToday')}" groupName="Due" id="dueToday" value="Due_Today"/>
-					<mx:RadioButton x="10" y="46" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DueTomorrow')}" groupName="Due" id="dueTomorrow" value="Due_Tomorrow"/>
-					<mx:RadioButton x="10" y="76" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DueThisWeek')}" groupName="Due" height="18" id="duethisweek" value="Due_This_Week"/>
-					<mx:RadioButton x="10" y="98" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DueNext7Days')}" groupName="Due" id="duenextweek" value="Due_Next"/>
-					<mx:RadioButton x="10" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DueAnytime')}" groupName="Due" id="dueanytime" value="Due_Any_Time"/>
-					<mx:CheckBox x="10" y="154" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.AnyPastDue')}" id="any_past_due" selected="{employee.anyPastDue}"/>
-				</mx:Panel>
-				<mx:Panel x="556" y="30" width="316" height="255" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionParents')}">
-					<!--<mx:List x="10" y="35" id="production_parents" width="100%" dataProvider="{productionLocation}" focusOut="doParent();" labelField="name" allowMultipleSelection="true"></mx:List>-->
-					<mx:DataGrid x="10" y="35" width="100%" height="110" dataProvider="{productionLocation}">
-						<mx:columns>
-							<mx:DataGridColumn headerText=" " sortable="false" width="200">
-								<!--<mx:headerRenderer>
-									<mx:Component>
-										<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled"/>
-									</mx:Component>
-								</mx:headerRenderer>-->
-								<mx:itemRenderer>
-									<mx:Component>
-										<components:CustomCheckBoxComponent 
-											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
-											selectedValue="true" deSelectedValue="false" defaultValue="false"/>
-									</mx:Component>
-								</mx:itemRenderer>
-							</mx:DataGridColumn>
-							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ProductionParents')}" dataField="name" width="800"/>
-						</mx:columns>
-					</mx:DataGrid> 
-					<mx:CheckBox x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.OnlyshowcheckedProdu')}" id="show_check_production" selected="{employee.onlyShowProductionParents}"/>
-				</mx:Panel>
-				<mx:Panel x="10" y="321" width="323" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.PricingMethods')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPricingMethods')}" id="all_pricing" click="{clearSelectedPricings(event)}" selected="{employee.allPricingMethods}"/>
-					<mx:DataGrid x="10" y="40" width="283"  height="110" dataProvider="{pricemethods}">
-						<mx:columns>
-							<mx:DataGridColumn headerText=" " sortable="false" width="200">
-								<!--<mx:headerRenderer>
-									<mx:Component>
-										<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allPricingMethods=false}"/>
-									</mx:Component>
-								</mx:headerRenderer>-->
-								<mx:itemRenderer>
-									<mx:Component>
-										<components:CustomCheckBoxComponent 
-											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
-											selectedValue="true" deSelectedValue="false" defaultValue="false"
-											click="{outerDocument.employee.allPricingMethods=false}"/>
-									</mx:Component>
-								</mx:itemRenderer>
-							</mx:DataGridColumn>
-							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.PricingMethods')}" dataField="title" width="800"/>
-						</mx:columns>
-					</mx:DataGrid> 
-					<!--<mx:List x="10" y="40" focusOut="doPricingMethod()" width="283"  height="110" id="pricing_methods" dataProvider="{pricemethods}" labelField="title" allowMultipleSelection="true" itemClick="{employee.allPricingMethods=false}"></mx:List>-->
-				</mx:Panel>
-				<mx:Panel x="365" y="321" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ChargeType')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallChargeTypes')}" id="all_charge_types" click="{clearSelectedCharges(event)}" selected="{employee.allChargeTypes}"/>
-					<mx:DataGrid x="10" y="40" width="318" height="110" dataProvider="{charges}">
-						<mx:columns>
-							<mx:DataGridColumn headerText=" " sortable="false" width="200">
-								<!--<mx:headerRenderer>
-									<mx:Component>
-										<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allChargeTypes=false}"/>
-									</mx:Component>
-								</mx:headerRenderer>-->
-								<mx:itemRenderer>
-									<mx:Component>
-										<components:CustomCheckBoxComponent 
-											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
-											selectedValue="true" deSelectedValue="false" defaultValue="false"
-											click="{outerDocument.employee.allChargeTypes=false}"/>
-									</mx:Component>
-								</mx:itemRenderer>
-							</mx:DataGridColumn>
-							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ChargeType')}" dataField="name" width="800"/>
-						</mx:columns>
-					</mx:DataGrid> 
-					<!--<mx:List x="10" y="40" width="318" height="110" id="charge_types" dataProvider="{charges}" labelField="name" allowMultipleSelection="true" focusOut="doCharge();" itemClick="{employee.allChargeTypes=false}"></mx:List>-->
-				</mx:Panel>
-				<mx:Panel x="10" y="553" width="323" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Press')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPresses')}" id="all_presses" click="{clearSelectedPresses(event)}" selected="{employee.allPresses}"/>
-					<mx:DataGrid x="10" y="40" width="283" height="110" dataProvider="{presses}">
-						<mx:columns>
-							<mx:DataGridColumn headerText=" " sortable="false" width="200">
-								<!--<mx:headerRenderer>
-									<mx:Component>
-										<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allPresses=false}"/>
-									</mx:Component>
-								</mx:headerRenderer>-->
-								<mx:itemRenderer>
-									<mx:Component>
-										<components:CustomCheckBoxComponent 
-											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
-											selectedValue="true" deSelectedValue="false" defaultValue="false"
-											click="{outerDocument.employee.allPresses=false}"/>
-									</mx:Component>
-								</mx:itemRenderer>
-							</mx:DataGridColumn>
-							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Press')}" dataField="name" width="800"/>
-						</mx:columns>
-					</mx:DataGrid> 
-					<!--<mx:List x="10" y="40" width="283" height="110" id="press_list" dataProvider="{presses}" labelField="name" allowMultipleSelection="true" focusOut="doPress();" itemClick="{employee.allPresses=false}"> </mx:List>-->
-				</mx:Panel>
-				<mx:Panel x="365" y="553" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Copier')}">
-					<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallCopiers')}" id="all_copiers" click="{clearSelectedCopiers(event)}" selected="{employee.allCopiers}"/>
-					<mx:DataGrid x="10" y="40" width="318" height="110" dataProvider="{copiers}">
-						<mx:columns>
-							<mx:DataGridColumn headerText=" " sortable="false" width="200">
-								<!--<mx:headerRenderer>
-									<mx:Component>
-										<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allCopiers=false}"/>
-									</mx:Component>
-								</mx:headerRenderer>-->
-								<mx:itemRenderer>
-									<mx:Component>
-										<components:CustomCheckBoxComponent 
-											datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
-											selectedValue="true" deSelectedValue="false" defaultValue="false"
-											click="{outerDocument.employee.allCopiers=false}"/>
-									</mx:Component>
-								</mx:itemRenderer>
-							</mx:DataGridColumn>
-							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Copier')}" dataField="name" width="800"/>
-						</mx:columns>
-					</mx:DataGrid> 
-					<!--<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name" focusOut="doCopier();" allowMultipleSelection="true" itemClick="{employee.allCopiers=false}"></mx:List>-->
-				</mx:Panel>
-			</mx:Canvas>	
+			<mx:Canvas id="outerProduction" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.ProductionFilter')}" >
+				<mx:Label x="184" y="40" visible="false" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Sorryaccesstothisite')}" id="accessProduction" />
+
+				<mx:Canvas id="canvasProduction" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.ProductionFilter')}" width="100%" height="100%">	
+					<mx:Panel x="10" y="30" width="280" height="233"  layout="absolute" title="Include">
+						<components:CustomCheckBoxComponent x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Invoices')}" 
+							dataHolder="{employee}" variableName="includeInvoice" customText="{employee.includeInvoice}" 
+							selectedValue="true" deSelectedValue="false" defaultValue="false" width="196"/>
+						<components:CustomCheckBoxComponent x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Estimates')}" 
+							dataHolder="{employee}" variableName="includeEstimate" customText="{employee.includeEstimate}" 
+							selectedValue="true" deSelectedValue="false" defaultValue="false" width="212"/>
+						<components:CustomCheckBoxComponent x="31" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Jobs')}" 
+							dataHolder="{employee}" variableName="includeJobs" customText="{employee.includeJobs}" 
+							selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee.includeInvoice || employee.includeEstimate}"/>
+						<components:CustomCheckBoxComponent x="66" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Charges')}" 
+							dataHolder="{employee}" variableName="includeJobCharges" customText="{employee.includeJobCharges}" 
+							selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{(employee.includeInvoice || employee.includeEstimate) &amp;&amp; employee.includeJobs}"/>
+						<components:CustomCheckBoxComponent x="10" y="143" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.InvoiceLevelCharges')}" 
+							dataHolder="{employee}" variableName="includeInvoiceCharges" customText="{employee.includeInvoiceCharges}" 
+							selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{employee.includeInvoice || employee.includeEstimate}"/>
+					</mx:Panel>
+					<mx:Panel x="309" y="30" width="227" height="255" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.CustomerWantedBy')}">
+						<mx:RadioButtonGroup id="Due" selectedValue="{customerWantType}"/>
+						<mx:RadioButton x="10" y="20" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DueToday')}" groupName="Due" id="dueToday" value="Due_Today"/>
+						<mx:RadioButton x="10" y="46" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DueTomorrow')}" groupName="Due" id="dueTomorrow" value="Due_Tomorrow"/>
+						<mx:RadioButton x="10" y="76" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DueThisWeek')}" groupName="Due" height="18" id="duethisweek" value="Due_This_Week"/>
+						<mx:RadioButton x="10" y="98" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DueNext7Days')}" groupName="Due" id="duenextweek" value="Due_Next"/>
+						<mx:RadioButton x="10" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.DueAnytime')}" groupName="Due" id="dueanytime" value="Due_Any_Time"/>
+						<mx:CheckBox x="10" y="154" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.AnyPastDue')}" id="any_past_due" selected="{employee.anyPastDue}"/>
+					</mx:Panel>
+					<mx:Panel x="556" y="30" width="316" height="255" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ProductionParents')}">
+						<!--<mx:List x="10" y="35" id="production_parents" width="100%" dataProvider="{productionLocation}" focusOut="doParent();" labelField="name" allowMultipleSelection="true"></mx:List>-->
+						<mx:DataGrid x="10" y="35" width="100%" height="110" dataProvider="{productionLocation}">
+							<mx:columns>
+								<mx:DataGridColumn headerText=" " sortable="false" width="200">
+									<!--<mx:headerRenderer>
+										<mx:Component>
+											<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled"/>
+										</mx:Component>
+									</mx:headerRenderer>-->
+									<mx:itemRenderer>
+										<mx:Component>
+											<components:CustomCheckBoxComponent 
+												datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+												selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+										</mx:Component>
+									</mx:itemRenderer>
+								</mx:DataGridColumn>
+								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ProductionParents')}" dataField="name" width="800"/>
+							</mx:columns>
+						</mx:DataGrid> 
+						<mx:CheckBox x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.OnlyshowcheckedProdu')}" id="show_check_production" selected="{employee.onlyShowProductionParents}"/>
+					</mx:Panel>
+					<mx:Panel x="10" y="321" width="323" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.PricingMethods')}">
+						<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPricingMethods')}" id="all_pricing" click="{clearSelectedPricings(event)}" selected="{employee.allPricingMethods}"/>
+						<mx:DataGrid x="10" y="40" width="283"  height="110" dataProvider="{pricemethods}">
+							<mx:columns>
+								<mx:DataGridColumn headerText=" " sortable="false" width="200">
+									<!--<mx:headerRenderer>
+										<mx:Component>
+											<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allPricingMethods=false}"/>
+										</mx:Component>
+									</mx:headerRenderer>-->
+									<mx:itemRenderer>
+										<mx:Component>
+											<components:CustomCheckBoxComponent 
+												datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+												selectedValue="true" deSelectedValue="false" defaultValue="false"
+												click="{outerDocument.employee.allPricingMethods=false}"/>
+										</mx:Component>
+									</mx:itemRenderer>
+								</mx:DataGridColumn>
+								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.PricingMethods')}" dataField="title" width="800"/>
+							</mx:columns>
+						</mx:DataGrid> 
+						<!--<mx:List x="10" y="40" focusOut="doPricingMethod()" width="283"  height="110" id="pricing_methods" dataProvider="{pricemethods}" labelField="title" allowMultipleSelection="true" itemClick="{employee.allPricingMethods=false}"></mx:List>-->
+					</mx:Panel>
+					<mx:Panel x="365" y="321" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.ChargeType')}">
+						<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallChargeTypes')}" id="all_charge_types" click="{clearSelectedCharges(event)}" selected="{employee.allChargeTypes}"/>
+						<mx:DataGrid x="10" y="40" width="318" height="110" dataProvider="{charges}">
+							<mx:columns>
+								<mx:DataGridColumn headerText=" " sortable="false" width="200">
+									<!--<mx:headerRenderer>
+										<mx:Component>
+											<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allChargeTypes=false}"/>
+										</mx:Component>
+									</mx:headerRenderer>-->
+									<mx:itemRenderer>
+										<mx:Component>
+											<components:CustomCheckBoxComponent 
+												datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+												selectedValue="true" deSelectedValue="false" defaultValue="false"
+												click="{outerDocument.employee.allChargeTypes=false}"/>
+										</mx:Component>
+									</mx:itemRenderer>
+								</mx:DataGridColumn>
+								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.ChargeType')}" dataField="name" width="800"/>
+							</mx:columns>
+						</mx:DataGrid> 
+						<!--<mx:List x="10" y="40" width="318" height="110" id="charge_types" dataProvider="{charges}" labelField="name" allowMultipleSelection="true" focusOut="doCharge();" itemClick="{employee.allChargeTypes=false}"></mx:List>-->
+					</mx:Panel>
+					<mx:Panel x="10" y="553" width="323" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Press')}">
+						<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallPresses')}" id="all_presses" click="{clearSelectedPresses(event)}" selected="{employee.allPresses}"/>
+						<mx:DataGrid x="10" y="40" width="283" height="110" dataProvider="{presses}">
+							<mx:columns>
+								<mx:DataGridColumn headerText=" " sortable="false" width="200">
+									<!--<mx:headerRenderer>
+										<mx:Component>
+											<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allPresses=false}"/>
+										</mx:Component>
+									</mx:headerRenderer>-->
+									<mx:itemRenderer>
+										<mx:Component>
+											<components:CustomCheckBoxComponent 
+												datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+												selectedValue="true" deSelectedValue="false" defaultValue="false"
+												click="{outerDocument.employee.allPresses=false}"/>
+										</mx:Component>
+									</mx:itemRenderer>
+								</mx:DataGridColumn>
+								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Press')}" dataField="name" width="800"/>
+							</mx:columns>
+						</mx:DataGrid> 
+						<!--<mx:List x="10" y="40" width="283" height="110" id="press_list" dataProvider="{presses}" labelField="name" allowMultipleSelection="true" focusOut="doPress();" itemClick="{employee.allPresses=false}"> </mx:List>-->
+					</mx:Panel>
+					<mx:Panel x="365" y="553" width="368" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.Copier')}">
+						<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowCmd.UseallCopiers')}" id="all_copiers" click="{clearSelectedCopiers(event)}" selected="{employee.allCopiers}"/>
+						<mx:DataGrid x="10" y="40" width="318" height="110" dataProvider="{copiers}">
+							<mx:columns>
+								<mx:DataGridColumn headerText=" " sortable="false" width="200">
+									<!--<mx:headerRenderer>
+										<mx:Component>
+											<components:CheckBoxHeaderRenderer unCheckDisabledField="isDisabled" click="{outerDocument.employee.allCopiers=false}"/>
+										</mx:Component>
+									</mx:headerRenderer>-->
+									<mx:itemRenderer>
+										<mx:Component>
+											<components:CustomCheckBoxComponent 
+												datagridControl="true" variableName="isSelected" customText="{data.isSelected}"
+												selectedValue="true" deSelectedValue="false" defaultValue="false"
+												click="{outerDocument.employee.allCopiers=false}"/>
+										</mx:Component>
+									</mx:itemRenderer>
+								</mx:DataGridColumn>
+								<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.Copier')}" dataField="name" width="800"/>
+							</mx:columns>
+						</mx:DataGrid> 
+						<!--<mx:List x="10" y="40" width="318" height="110" id="copier_list" dataProvider="{copiers}" labelField="name" focusOut="doCopier();" allowMultipleSelection="true" itemClick="{employee.allCopiers=false}"></mx:List>-->
+					</mx:Panel>
+				</mx:Canvas>	
+			</mx:Canvas>
 		</mx:TabNavigator>
 		
 	</mx:Canvas>
