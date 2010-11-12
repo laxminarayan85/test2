@@ -75,7 +75,27 @@ public class CuttingCharge extends Charge {
   }
 
 
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Boolean overrideCuts;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getOverrideCuts(){
+    return overrideCuts; 
+  }
 
+	
+	/**
+	 * @generated
+	 */	
+	public void setOverrideCuts(Boolean newVal) {
+    this.overrideCuts = newVal;
+  }
+	
 	/**
 	 * @generated
 	 */	

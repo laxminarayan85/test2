@@ -15,14 +15,23 @@ public class ChargeUtilities {
 		if (chargeDefinition.getMethod().equals(ChargeMethod.SquareArea.name())) {
 			charge = new SquareAreaCharge();
 			((SquareAreaCharge)charge).setOverrideArea(false);
+			((SquareAreaCharge)charge).setArea(chargeDefinition.getArea());
 		} else if (chargeDefinition.getMethod().equals(ChargeMethod.Cut.name())) {
 			charge = new CuttingCharge();
 			((CuttingCharge)charge).setCuts(chargeDefinition.getPresetCuts());
 		} else if (chargeDefinition.getMethod().equals(ChargeMethod.Ink.name())) {
 			charge = new InkCharge();
-			((InkCharge)charge).setCoverage((double)chargeDefinition.getPresetCoverage());
+			if (chargeDefinition.getPresetCoverage() != null) {
+				((InkCharge)charge).setCoverage((double)chargeDefinition.getPresetCoverage());
+			} else {
+				((InkCharge)charge).setCoverage(0.0);
+			}
 			((InkCharge)charge).setInkWeight(0.0);
-			((InkCharge)charge).setCoverPerPound((double)chargeDefinition.getPresetCoverPerPound());
+			if (chargeDefinition.getPresetCoverPerPound() != null) {
+				((InkCharge)charge).setCoverPerPound((double)chargeDefinition.getPresetCoverPerPound());
+			} else {
+				((InkCharge)charge).setCoverPerPound(0.0);
+			}
 			((InkCharge)charge).setPricePerPound(chargeDefinition.getPresetPricePerPound());
 			((InkCharge)charge).setPoundsOfInk(chargeDefinition.getPresetPoundsofInk());
 		} else if (chargeDefinition.getMethod().equals(ChargeMethod.Shipping.name())) {
@@ -58,12 +67,13 @@ public class ChargeUtilities {
 		charge.setHidden(chargeDefinition.getHideChargeInPrintouts());
 		charge.setHidePrice(chargeDefinition.getHidePrice());
 		
-		if (chargeDefinition.getOverridePrice()) {
+		if (chargeDefinition.getOverridePrice() != null && chargeDefinition.getOverridePrice() != false) {
 			charge.setPrice(chargeDefinition.getPresetPrice());
+			charge.setOverridePrice(true);
 		} else {
 			charge.setPrice(0.0);
+			charge.setOverridePrice(false);
 		}
-		charge.setOverridePrice(chargeDefinition.getOverridePrice());
 
 		charge.setMaterialQty(chargeDefinition.getPresetMaterialQuantity());
 		charge.setOverrideMaterialQuantity(chargeDefinition.getOverrideMaterialQty());

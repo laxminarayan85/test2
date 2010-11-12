@@ -32,6 +32,7 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 		long qty = 0;
 		double inches = 0.0;
 		double pounds = 0.0;
+		double rateSetCount = 1.0;
 		BigDecimal price = new BigDecimal(0.0);
 		BigDecimal costingSetup = new BigDecimal(0.0);
 		BigDecimal costingMaterialPrice = new BigDecimal(0.0);
@@ -55,7 +56,7 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 				log.error(e);
 			}			
 		}
-		if (chargeDefinition.getRateSetCount() == 0) {
+		if (chargeDefinition.getRateSetCount() != null && chargeDefinition.getRateSetCount() == 0) {
 			price = new BigDecimal(0.0);
 		} else {
 			if (chargeDefinition.getUseColors()) {
@@ -126,7 +127,10 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 //				}
 //				localCharge.setOverrideMaterialQuantity(false);
 //			} else {
-				pounds = (inches * localCharge.getCoverage())/chargeDefinition.getRateSetCount();
+			if (chargeDefinition.getRateSetCount() != null) {
+				rateSetCount = chargeDefinition.getRateSetCount();
+			}
+				pounds = (inches * localCharge.getCoverage())/rateSetCount;
 //			}
 			
 			pounds *= colors;

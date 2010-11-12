@@ -14,6 +14,7 @@
 				horizontalScrollPolicy="off"
 				verticalScrollPolicy="auto"
 				xmlns:ns1="com.adobe.flex.extras.controls.*"
+				xmlns:comcomp="com.efi.printsmith.common.components.*"
 				fontSize="9"
 				titleIcon="@Embed(source='../../../../assets/new_job.png')"
 				defaultButton="{done_button}"
@@ -67,6 +68,8 @@
 			import mx.validators.CurrencyValidator;
 			import com.efi.printsmith.common.components.filter.FilterSearchBy;
 			import com.efi.printsmith.common.components.filter.FilterProperty;
+			import com.efi.printsmith.common.components.ChargeRenderer;
+			
 			import com.efi.printsmith.data.ShippingCharge;
 			import com.efi.printsmith.data.InkCharge;
 			import com.efi.printsmith.data.CuttingCharge;
@@ -455,7 +458,7 @@
 						charge.endHours = parseInt(stopTimeString.substr(0,colonPosition));
 						charge.endMinutes = parseInt(stopTimeString.substr(colonPosition+1));
 					} else {
-						charge.endMinutes = parseInt(stopTimeString);
+						charge.startHours = parseInt(startTimeString);
 					}
 				}
 				if (this.charge is InkCharge) {
@@ -515,6 +518,9 @@
 				} else if (this.charge is CuttingCharge) {
 					(charge as CuttingCharge).cuts = (localCharge as CuttingCharge).cuts;
 					this.cuts_edit.text = (charge as CuttingCharge).cuts.toString();
+				} else if (this.charge is SquareAreaCharge) {
+					(charge as SquareAreaCharge).area = (localCharge as SquareAreaCharge).area;
+					this.area_text.text = (charge as SquareAreaCharge).area.toString();
 				}
 				if (addCharge) {
 					addCharge = false;
@@ -580,6 +586,32 @@
 	    		}
 	  		}	
 
+			private function updateCuts():void {
+				if (this.cuts_edit.text == "") {
+					(this.charge as CuttingCharge).cuts = chargeDefinition.presetCuts;
+					(this.charge as CuttingCharge).overrideCuts = false;
+				} else {
+					(this.charge as CuttingCharge).cuts = parseInt(this.cuts_edit.text);
+					(this.charge as CuttingCharge).overrideCuts = true;
+				}
+			}
+			
+			private function updateRateSets():void {
+				if (this.in_sets_of_text.text == "") {
+					this.charge.sets = chargeDefinition.rateSetCount;
+				} else {
+					this.charge.sets = parseInt(this.in_sets_of_text.text);
+				}
+			}
+			
+			private function updateMaterialRateSets():void {
+				if (this.material_sets_of_text.text == "") {
+					this.charge.materialSets = chargeDefinition.materialSetCount;
+				} else {
+					this.charge.materialSets = parseInt(this.material_sets_of_text.text);
+				}				
+			}
+			
 			private function updatePriceEdit():void {
 	  			if (this.price_edit.text == "") {
 	    			this.charge.overridePrice = false;
@@ -973,7 +1005,7 @@
 						drawLinearPageImage();		
 					}
 				} else if (this.chargeDefinition.method == ChargeMethod.Markup) {
-						quantity_box.includeInLayout = quantity_box.visible = true;
+						quantity_box.includeInLayout = quantity_box.visible = false;
 						material_quantity_box.includeInLayout = material_quantity_box.visible = false;
 						material_rate_box.includeInLayout = material_rate_box.visible = false;
 						in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets && chargeDefinition.adjustableSets;
@@ -1119,6 +1151,11 @@
 			private function formatChargePrice(item:Object, column:DataGridColumn):String {
 				return numFormatter.format(item[column.dataField]);
 			}
+			
+			private function onRenderDescription (evt:Event):void {
+				var text_label:Text = evt.target as Text;
+				text_label.setStyle("textDecoration", "underline");
+			}
 	]]>
 
 	</mx:Script>
@@ -1191,11 +1228,12 @@
 										 change="gridSelectionChanged()">
 								<mx:columns>
 									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCmd.DocumentCharges')}"
-													   dataField="description"/>
+													   dataField="description" itemRenderer="com.efi.printsmith.common.components.ChargeRenderer"/>
 									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Price')}"
 													   width="90"
 													   dataField="price"
 													   labelFunction="formatChargePrice"
+													   itemRenderer="com.efi.printsmith.common.components.ChargeRenderer"
 													   textAlign="right"/>
 								</mx:columns>
 							</mx:DataGrid>
@@ -1230,7 +1268,7 @@
 											 fontSize="9"
 											 selected="{charge.hidden}" width="64"/>
 								<mx:CheckBox
-											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Hidden')}"
+											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.HidePrice')}"
 											 id="hidePrice_check"
 											 fontSize="9"
 											 selected="{charge.hidePrice}" width="64"/>
@@ -1302,7 +1340,7 @@
 									<mx:HBox width="100%" id="cuts_box" visible="false">
 										<mx:Spacer width="8"/>
 										<mx:Text text="{chargeDefinition.presetCutsLabel}" width="50%" id="cuts_label_text" textAlign="right"/>
-										<mx:TextInput text="{(charge as CuttingCharge).cuts}" width="50%" id="cuts_edit" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:TextInput text="{(charge as CuttingCharge).cuts}" width="50%" id="cuts_edit" textAlign="right" change="this.updateCuts()" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>
 									<mx:HBox width="100%" id="number_of_colors_box" visible="false">
@@ -1360,7 +1398,7 @@
 									</mx:HBox>
 									<mx:HBox width="100%" id="in_sets_of_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetInSetsOfLabel}" width="50%" id="in_sets_of_label_text" textAlign="right"/>
-										<mx:TextInput text="{chargeDefinition.rateSetCount}" width="50%" id="in_sets_of_text" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:TextInput text="{charge.sets}" width="50%" id="in_sets_of_text" textAlign="right" change="this.updateRateSets()" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
 									<mx:HBox width="100%" id="rate_box" visible="false">
@@ -1375,7 +1413,7 @@
 									</mx:HBox>
 									<mx:HBox width="100%" id="material_sets_of_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetMaterialSetsOfLabel}" width="50%" id="material_sets_of_label_text" textAlign="right"/>
-										<mx:TextInput text="{chargeDefinition.materialSetCount}" width="50%" id="material_sets_of_text" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:TextInput text="{charge.materialSets}" width="50%" id="material_sets_of_text" textAlign="right" change="this.updateMaterialRateSets()" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
 									<mx:HBox width="100%" id="quantity_per_set_box" visible="false">
@@ -1385,7 +1423,7 @@
 									</mx:HBox>
 									<mx:HBox width="100%" id="area_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetAreaLabel}" width="50%" id="area_label_text" textAlign="right"/>
-										<mx:TextInput text="{chargeDefinition.presetArea}" width="50%" id="area_text" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:TextInput text="{charge.area}" width="50%" id="area_text" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
 									<mx:HBox width="100%" id="up_box" visible="false">

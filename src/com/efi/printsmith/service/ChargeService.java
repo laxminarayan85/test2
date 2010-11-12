@@ -7,13 +7,7 @@ import org.apache.log4j.Logger;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeCost;
 import com.efi.printsmith.data.ChargeDefinition;
-import com.efi.printsmith.data.CuttingCharge;
-import com.efi.printsmith.data.InkCharge;
-import com.efi.printsmith.data.ShippingCharge;
-import com.efi.printsmith.data.SpeedTable;
-import com.efi.printsmith.data.SquareAreaCharge;
 import com.efi.printsmith.data.enums.ChargeCostMethod;
-import com.efi.printsmith.data.enums.ChargeMethod;
 import com.efi.printsmith.pricing.charge.ChargeCostingPrices;
 import com.efi.printsmith.pricing.charge.ChargeUtilities;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
@@ -27,6 +21,8 @@ public class ChargeService extends SnowmassHibernateService{
 	
 	public ChargeCostingPrices calculateChargeCostingRate(ChargeDefinition chargeDefinition, Charge charge) throws Exception {
 		ChargeCostingPrices prices = new ChargeCostingPrices();
+		prices.materialSetupPrice = new BigDecimal(0.0);
+		prices.materialUnitPrice = new BigDecimal(0.0);
 		prices.setupPrice = new BigDecimal(0.0);
 		prices.unitPrice = new BigDecimal(0.0);
 		

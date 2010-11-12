@@ -24,7 +24,7 @@ public class ChargeCutPricingMethod extends ChargePricingMethod {
 				localCharge.setQuantity(0.0);
 			}
 		} else {
-			if (!localCharge.getOverrideQuantity()) {
+			if (!localCharge.getOverrideCuts()) {
 				if (chargeDefinition.getCutsArePrePress()) {
 					localCharge.setQuantity(new Double(GetCutCount(job, localCharge, parentToRun)));
 				} else {

@@ -12,7 +12,7 @@ public class ChargeFlatRatePricingMethod extends ChargePricingMethod {
 
 	@Override
 	public Charge priceCharge(Charge charge) {
-		if (charge.getOverridePrice()) return charge;
+		if (charge.getOverridePrice() != null && charge.getOverridePrice()) return charge;
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
 		
 		if (chargeDefinition == null) {

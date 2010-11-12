@@ -19,7 +19,6 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 	@Override
 	public Charge priceCharge(Charge charge) {
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
-		BigDecimal rate = new BigDecimal(0);
 		double lookupQty = 0;
 		BigDecimal price = new BigDecimal(0);
 		BigDecimal materialPrice = new BigDecimal(0);
@@ -182,7 +181,8 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 				}
 			} else {
 				if (chargeDefinition.getUseRateSets()) {
-					setCount = chargeDefinition.getRateSetCount();
+					//setCount = chargeDefinition.getRateSetCount();
+					setCount = charge.getSets();
 				} else {
 					setCount = 1.0;
 				}
@@ -222,7 +222,8 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 			}
 			else if (chargeDefinition.getUseMaterial()) {
 				if (chargeDefinition.getUseMaterialSets()) {
-					setCount = chargeDefinition.getMaterialSetCount();
+					//setCount = chargeDefinition.getMaterialSetCount();
+					setCount = charge.getMaterialSets();
 				} else {
 					setCount = 1.0;
 				}

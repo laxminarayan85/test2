@@ -817,6 +817,11 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			if (charge.salesCategory != null) {
 				charge_sales_category_combo.selectedIndex = findItem2(charge.salesCategory.name, salesCategories);
 			}
+			
+			if (charge.foldTemplate != null) {
+				this.fold_template_combo.selectedIndex = findItem2(charge.foldTemplate.name, this.foldTemplates);
+			}
+			
 			charge_group_1.selectedValue = charge.jobQty;
 			if(charge.useColors)
 				charge_group_2.selectedValue = "Colors";
@@ -838,16 +843,14 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 				charge_group_4.selectedValue = "/Up";
 			else
 				charge_group_4.selectedValue = "NA";
-				
-		waste_chart_link.label = wasteChartLabel();	
-		price_list_link.label = priceListLabel();	
-		UpdateAdjset();
-		UpdateAdj();	
-		}
-		
 			
-		
+			waste_chart_link.label = wasteChartLabel();	
+			price_list_link.label = priceListLabel();	
+			UpdateAdjset();
+			UpdateAdj();	
+		}
 	}
+	
 	private function findItem(name:String, array:Array):int {
 		for each(var element:Object in array) {
 			if (name == element.data) {
@@ -856,6 +859,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		}
 		return -1;
 	}
+	
 	private function findItem2(name:String, array:ArrayCollection):int {
 		for each(var element:Object in array) {
 			if (name == element.name) {
@@ -864,6 +868,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		}
 		return -1;
 	}
+	
 	private function findItemInChargeTree(id:Number):ModelBase {
 		for each(var commandItem:ChargeCommand in chargeTree.dataProvider) {
 			if (id == commandItem.id) {
@@ -933,7 +938,8 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		charge.material = parseCurrencyFloat(material_edit.text);
 
 		charge.useRateSets = in_sets_check.selected;
-		charge.rateSetCount = parseInt(in_sets_edit.text);
+		//charge.rateSetCount = parseInt(in_sets_edit.text);
+		charge.rateSetCount = parseCurrencyFloat(in_sets_edit.text);
 		charge.useArea =  area_check.selected;
 		charge.area= parseCurrencyFloat(area_edit.text);
 		charge.sheet_lift_check = sheet_lift_check.selected;
@@ -943,7 +949,9 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		charge.ship_markup_check = ship_markup_check.selected;
 		charge.shipMarkup= parseCurrencyFloat(ship_markup_edit.text);
 		charge.useMaterialSets =  in_set_mat_check.selected;
-		charge.materialSetCount = parseInt(in_sets_mat_edit.text);
+		//charge.materialSetCount = parseInt(in_sets_mat_edit.text);
+		charge.materialSetCount = parseCurrencyFloat(in_sets_mat_edit.text);
+		
 		if (this.fold_template_combo.visible == true) {
 			charge.foldTemplate = this.fold_template_combo.selectedItem as FoldTemplate;
 		}

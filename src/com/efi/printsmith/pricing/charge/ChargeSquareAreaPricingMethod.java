@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.JobBase;
+import com.efi.printsmith.data.SquareAreaCharge;
 import com.efi.printsmith.data.enums.ChargeJobQuantity;
 import com.efi.printsmith.data.enums.ChargeQtyType;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
@@ -126,7 +127,7 @@ public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
 			} else {
 				charge.setMaterialSets(totalArea);
 			}
-			
+			((SquareAreaCharge)charge).setArea(totalArea);
 			price = charge.getRate().multiply(new BigDecimal(totalArea));
 		}
 		

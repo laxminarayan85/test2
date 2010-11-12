@@ -1527,7 +1527,7 @@
 			{
 				this.mapToJobData();
 				var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
-				chargePicker.charges = this.job.charges;
+				chargePicker.charges = this.charges;
 				// TODO: Restore the following line - only removed to make testing easier
 				// chargePicker.chargeCommands = chargeCommands;
 				chargePicker.job = this.job;
@@ -1821,6 +1821,7 @@
 				refresh_price_btn.visible = true;
 				refresh_price_btn.enabled = true;		
 				charges = localJob.charges;
+				this.invoice_charge_datagrid.invalidateList();
 				if (job != null) { 
 					job.pricingRecord.totalPrice = localJob.pricingRecord.totalPrice;
 					job.pricingRecord.bindPrice = localJob.pricingRecord.bindPrice;
@@ -3044,7 +3045,7 @@
 										   bottom="2" enabled="false"/>
 							<mx:DataGrid
 										 id="invoice_charge_datagrid"
-										 dataProvider="{job.charges}"
+										 dataProvider="{this.charges}"
 										 left="0"
 										 bottom="25"
 										 top="0"
