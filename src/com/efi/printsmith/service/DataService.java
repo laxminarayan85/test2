@@ -5075,6 +5075,12 @@ public class DataService extends HibernateService {
 		this.addUpdate(sequenceValues);
 	}
 	
+	/**
+	 * 
+	 * @param deliveryTicketId
+	 * @return
+	 * @throws Exception
+	 */
 	public DeliveryTicket getDeliveryTicketById(Long deliveryTicketId) throws Exception {
 		log.debug("** getDeliveryTicketById called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -5100,6 +5106,11 @@ public class DataService extends HibernateService {
 			if(object.getDeliveryJobs()!=null && !object.getDeliveryJobs().isEmpty()) {
 				for (DeliveryTicketJobs deliveryTicketJobs : object.getDeliveryJobs()) {
 					Hibernate.initialize(deliveryTicketJobs.getJobBase());
+					Hibernate.initialize(deliveryTicketJobs.getJobBase().getPricingPress());
+					Hibernate.initialize(deliveryTicketJobs.getJobBase().getCostingPress());
+					Hibernate.initialize(deliveryTicketJobs.getJobBase().getStock());
+					Hibernate.initialize(deliveryTicketJobs.getJobBase().getPricingCopier());
+					Hibernate.initialize(deliveryTicketJobs.getJobBase().getCostingCopier());
 				}
 			}
 			return object;
