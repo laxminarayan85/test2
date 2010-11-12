@@ -288,7 +288,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */
-	@ManyToOne()
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Address toAddress;
 
@@ -309,7 +309,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */
-	@ManyToOne()
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Address fromAddress;
 
@@ -370,7 +370,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */
-	@ManyToOne()
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Contact deliveryContact;
 
@@ -531,7 +531,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */
-	@ManyToOne()
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private ShippingMethod shipMode;
 
@@ -739,7 +739,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */
-	@ManyToOne()
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Driver driver;
 
@@ -1120,7 +1120,7 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */
-	@OneToMany()
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy="parentDeliveryTicket")
 	@Where(clause="isdeleted <> 'TRUE'")
 	@JoinTable( name = "deliveryticket_deliveryjobs")
 	private java.util.List<DeliveryTicketJobs> deliveryJobs;

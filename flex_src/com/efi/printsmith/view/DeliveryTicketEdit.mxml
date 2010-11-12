@@ -7,11 +7,20 @@
     <mx:Script source="../common/scripts/ComponentHelper.as"/>
     
     <mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+    	<mx:method name="getById" fault="handleFault(event)" result="handleLoadDeliveryTicketResult(event)"/>
     	<mx:method name="saveDeliveryTicket" fault="handleFault(event)" result="handleSaveResult(event)"/>
     </mx:RemoteObject>
     
     <mx:RemoteObject id="dataServiceInvoice" destination="dataService" showBusyCursor="true">
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceShippingMethod" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSMResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceDriver" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadDriverResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceAdd" destination="dataService" showBusyCursor="true">
@@ -28,6 +37,9 @@
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.data.Driver;
+		import com.efi.printsmith.data.ShippingMethod;
+		import com.efi.printsmith.data.Account;
 		import com.efi.printsmith.data.Campaigns;
 		import com.efi.printsmith.data.ComLink;
 		import mx.utils.ObjectUtil;
@@ -64,8 +76,14 @@
 		
 		[Bindable] private var addressList:ArrayCollection = new ArrayCollection();
 		
+		[Bindable] private var shippingMethodArray:Array = new Array();
+		
+		[Bindable] private var driverArray:Array = new Array();
+		
 		public function init():void{
 			PopUpManager.centerPopUp(this);
+			dataServiceShippingMethod.getAll("ShippingMethod");
+			dataServiceDriver.getAll("Driver");
 			updateAddress(deliveryTicket);
 		}
 		
@@ -78,10 +96,53 @@
 			dataServiceInvoice.getInvoice(_invoiceBase.id);
 		}
 		
+		public function setDeliveryTicket(tmpDeliveryTicket:DeliveryTicket):void {
+			dataService.getById("DeliveryTicket",tmpDeliveryTicket.id);
+		}
+		
+		private function setDefaultList():void {
+			var emptyToContact:Address = new Address();
+			emptyToContact.id=0;
+			toContactList.addItemAt(emptyToContact,0);
+			var emptyAttnContact:Contact = new Contact();
+			emptyAttnContact.id=0;
+			attnList.addItemAt(emptyAttnContact,0);
+			var emptyAddress:Address = new Address();
+			emptyAddress.id=0;
+			addressList.addItemAt(emptyAddress,0);
+		}
+		
+		private function handleLoadSMResult(event:ResultEvent):void {
+			var shippingMethodList:ArrayCollection = event.result as ArrayCollection;
+			for each(var shippingMethod:ShippingMethod in shippingMethodList) {
+				shippingMethodArray.push(shippingMethod);
+			}
+		}
+		
+		private function handleLoadDriverResult(event:ResultEvent):void {
+			var driverList:ArrayCollection = event.result as ArrayCollection;
+			for each(var driver:Driver in driverList) {
+				driverArray.push(driver);
+			}
+		}
+		
+		private function handleLoadDeliveryTicketResult(event:ResultEvent):void {
+			deliveryTicket = event.result as DeliveryTicket;
+			if(deliveryTicket.deliveryJobs!=null && deliveryTicket.deliveryJobs.length>0) {
+				for each(var deliveryTicketJobsObj:DeliveryTicketJobs in deliveryTicket.deliveryJobs){
+					copyToAddressList(deliveryTicketJobsObj.account);
+				}
+			}
+			dataServicePreferenceSystem.getSingle("PreferencesSystem");
+			setDefaultList();
+		}
+		
 		private function handleLoadPSResult(event:ResultEvent):void {
 			var preferencesSystem:PreferencesSystem = event.result as PreferencesSystem;
 			if(preferencesSystem!=null && preferencesSystem.companyAddress!=null){
-				deliveryTicket.fromAddress = preferencesSystem.companyAddress;
+				if(isNaN(deliveryTicket.id) || deliveryTicket.id==0){
+					deliveryTicket.fromAddress = preferencesSystem.companyAddress;
+				}
 				if(from_address!=null){
 					from_address.setAddress(deliveryTicket.fromAddress);
 				}
@@ -97,50 +158,70 @@
 			_invoiceBase = event.result as InvoiceBase;
 			deliveryTicket = new DeliveryTicket();
 			if(_invoiceBase!=null){
-				if(_invoiceBase.account!=null && _invoiceBase.account.shipToAddress!=null) {
-					deliveryTicket.toAddress = _invoiceBase.account.shipToAddress;
-					if(to_address!=null){
-						to_address.setAddress(deliveryTicket.toAddress);
-					}
-					toContactList.addItem(_invoiceBase.account.shipToAddress);					
-					if(_invoiceBase.account.contact!=null){
-						dataServiceContact.getContactById(_invoiceBase.account.contact.id);
-					}
-				}
+				copyToAddressList(_invoiceBase.account);
 				if(_invoiceBase.deliveryIntentDate!=null){
 					deliveryTicket.deliveryDate = _invoiceBase.deliveryIntentDate;
 				} else {
 					deliveryTicket.deliveryDate = new Date();
 				}
 			}
-			var emptyToContact:Address = new Address();
-			emptyToContact.id=0;
-			toContactList.addItemAt(emptyToContact,0);
-			var emptyAttnContact:Contact = new Contact();
-			emptyAttnContact.id=0;
-			attnList.addItemAt(emptyAttnContact,0);
-			var emptyAddress:Address = new Address();
-			emptyAddress.id=0;
-			addressList.addItemAt(emptyAddress,0);
+			setDefaultList();
 			if(_invoiceBase!=null && _invoiceBase.jobs!=null && _invoiceBase.jobs.length>0) {
 				var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
 				copyJobs(deliveryTicketJobsList,_invoiceBase,true);
-				updateTotalWeight();
 				deliveryTicket.deliveryJobs = deliveryTicketJobsList;
+				updateTotalWeight();
 			}
 			dataServicePreferenceSystem.getSingle("PreferencesSystem");
+		}
+		
+		private function copyToAddressList(accountObj:Account):void {
+			if(accountObj!=null && accountObj.shipToAddress!=null){
+				var addressPresent:Boolean = false;
+				if(isNaN(deliveryTicket.id) || deliveryTicket.id==0){
+					if(deliveryTicket.toAddress==null){
+						deliveryTicket.toAddress = accountObj.shipToAddress;
+					}
+				}
+				if(to_address!=null){
+					to_address.setAddress(deliveryTicket.toAddress);
+				}
+				if(toContactList!=null && toContactList.length>0){
+					for each(var toAddressObj:Address in toContactList) {
+						if(toAddressObj.id == accountObj.shipToAddress.id) {
+							addressPresent = true;
+							break;
+						}
+					}
+				}
+				if(!addressPresent){
+					toContactList.addItem(accountObj.shipToAddress);					
+					if(accountObj.contact!=null){
+						dataServiceContact.getContactById(accountObj.contact.id);
+					}
+				}
+			}
 		}
 		
 		private function handleLoadContactResult(event:ResultEvent):void {
 			var contact:Contact = event.result as Contact;
 			if(contact!=null){
-				deliveryTicket.deliveryContact = contact;
+				if(isNaN(deliveryTicket.id) || deliveryTicket.id==0){
+					if(deliveryTicket.deliveryContact==null){
+						deliveryTicket.deliveryContact = contact;
+					}
+				}
 				if(contact_address!=null){
 					contact_address.setContact(deliveryTicket.deliveryContact);
 				}
-				attnList.addItem(deliveryTicket.deliveryContact);
+				attnList.addItem(contact);
 				if(contact.shipToAddress!=null && contact.shipToAddress.length>0){
 					for each(var addressObj:Address in contact.shipToAddress){
+						if(!isNaN(deliveryTicket.id) && deliveryTicket.id!=0){
+							if(deliveryTicket.toAddress!=null && deliveryTicket.toAddress.id==addressObj.id) {
+								address_combo.selectedItem = addressObj;
+							}
+						}
 						addressList.addItem(addressObj);
 					}
 				}
@@ -169,7 +250,7 @@
 				deliveryTicketJobs.invoiceNumber = invoiceBaseObj.invoiceNumber;
 				deliveryTicketJobs.jobId = jobBase.id;
 				if(!isNaN(jobBase.jobIndex) && jobBase.jobIndex!=0){
-					deliveryTicketJobs.jobNumber = jobBase.jobIndex;
+					deliveryTicketJobs.jobNumber = Number(jobBase.jobNumber);
 				} else {
 					deliveryTicketJobs.jobNumber = counter;
 				}
@@ -183,6 +264,7 @@
 				if(!defaultInvoice){
 					deliveryTicketJobs.manualNonInvoiceItem = true;
 				}
+				copyToAddressList(invoiceBaseObj.account);
 				deliveryTicketJobsList.addItem(deliveryTicketJobs);
 			}
 		}
@@ -423,7 +505,7 @@
 	<mx:VBox width="100%" height="10%">
 		<mx:HBox width="100%" height="50%" horizontalGap="1">
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.TicketNumber')}:" width="20%" textAlign="right"/>
-			<mx:TextInput id="ticket_number" width="15%"/>
+			<mx:TextInput id="ticket_number" width="15%" text="{deliveryTicket.ticketNumber}"/>
 			<mx:Spacer width="30%"/>
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryDate')}:" width="20%" textAlign="right"/>
 			<mx:DateField selectedDate="{deliveryTicket.deliveryDate}" change="{setDeliveryDate(event)}" width="15%"/>
@@ -544,7 +626,7 @@
 					</mx:HBox>
 					<mx:HBox width="100%" height="10%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Address')}:"/>
-						<mx:ComboBox dataProvider="{addressList}" labelFunction="getAddressName" change="{setToAddressFromAddress(event)}"/>
+						<mx:ComboBox id="address_combo" dataProvider="{addressList}" labelFunction="getAddressName" change="{setToAddressFromAddress(event)}"/>
 					</mx:HBox>
 					<ns1:ContactInfoEditor id="contact_address" width="100%" height="70%" enableEditBtn="{deliveryTicket.attOther}"/>
 					<components:CustomCheckBoxComponent height="10%"
@@ -571,7 +653,9 @@
 					<mx:HBox width="100%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShipVia')}:" width="50%"
 							textAlign="right"/>
-						<mx:ComboBox width="50%"/>
+						<components:CustomAutoCompleteComponent width="50%"
+							labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{shippingMethodArray}"
+							dataHolder="{deliveryTicket}" variableName="shipMode" customData="{deliveryTicket.shipMode}" customText="{getCustomTextForAutocomplete(shippingMethodArray,deliveryTicket,'shipMode','id','name',true,'id')}"/>
 					</mx:HBox>
 					<mx:HBox width="100%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Cost')}:" width="50%"
@@ -589,7 +673,9 @@
 					<mx:HBox width="100%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Driver')}:" width="50%"
 							textAlign="right"/>
-						<mx:ComboBox width="50%"/>
+						<components:CustomAutoCompleteComponent width="50%"
+							labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{driverArray}"
+							dataHolder="{deliveryTicket}" variableName="driver" customData="{deliveryTicket.driver}" customText="{getCustomTextForAutocomplete(driverArray,deliveryTicket,'driver','id','name',true,'id')}"/>
 					</mx:HBox>
 					<components:CustomCheckBoxComponent
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.COD')}"

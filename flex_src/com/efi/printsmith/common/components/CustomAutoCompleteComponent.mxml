@@ -63,6 +63,9 @@
 		     				  
 		    public function set customText(displayValue:String):void {
 		    	if(changeTypedText){
+		    		if(this.dataProvider.length==0 || refreshDataProvider){
+		    			this.dataProvider = masterList; 
+		    		}
 			    	if(data != null){
 			    		if(data[columnName+"ErrorText"]==""){
 		  			 		displayValue = data[columnName+"ErrorText"];
