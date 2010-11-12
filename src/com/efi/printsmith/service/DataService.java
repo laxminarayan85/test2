@@ -5010,7 +5010,9 @@ public class DataService extends HibernateService {
 					Contact deliveryContact = (Contact) em.merge(deliveryTicket.getDeliveryContact());
 					deliveryTicket.setDeliveryContact(deliveryContact);
 				}*/
-				setDeliveryTicketId(deliveryTicket);
+				if(deliveryTicket.getId()==null && deliveryTicket.getId()==0) {
+					setDeliveryTicketId(deliveryTicket);
+				}
 				for (DeliveryTicketJobs deliveryTicketJobs : deliveryTicket.getDeliveryJobs()) {
 					deliveryTicketJobs.setParentDeliveryTicket(deliveryTicket);
 				}
@@ -5055,9 +5057,15 @@ public class DataService extends HibernateService {
 	 * @throws Exception
 	 */
 	private void setDeliveryTicketId(DeliveryTicket deliveryTicket) throws Exception {
+		ModelBase modelBase = null;
 		if (deliveryTicket.getTicketNumber() != null
-				&& deliveryTicket.getTicketNumber() != 0)
-			return;
+				&& deliveryTicket.getTicketNumber() != 0) {
+			modelBase = this.getQuery("DeliveryTicket",
+					" where ticketNumber = " + deliveryTicket.getTicketNumber());
+			if(modelBase==null) {
+				return;
+			}
+		}
 		PreferencesSequenceValues sequenceValues = getSequenceValues();
 		Long value = sequenceValues.getDeliveryTicket();
 		if(value==null)
@@ -5065,7 +5073,7 @@ public class DataService extends HibernateService {
 		boolean goodId = false;
 		while (goodId == false) {
 			value++;
-			ModelBase modelBase = this.getQuery("DeliveryTicket",
+			modelBase = this.getQuery("DeliveryTicket",
 					" where ticketNumber = " + value);
 			if (modelBase == null)
 				goodId = true;
@@ -5073,6 +5081,7 @@ public class DataService extends HibernateService {
 		deliveryTicket.setTicketNumber(Integer.parseInt(value.toString()));
 		sequenceValues.setDeliveryTicket(value);
 		this.addUpdate(sequenceValues);
+		
 	}
 	
 	/**
