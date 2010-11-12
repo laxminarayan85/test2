@@ -2011,6 +2011,8 @@
 					job.runSize.width = job.parentSize.width;
 					job_size.text = job.runSize.name;
 					job_size.selectedIndex = job_parent.selectedIndex;
+					var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheRunSizeisl");
+					Alert.show(message, "Warning", 0, null, null, null, 4); 
 				}
 	
 				if (this.currentState != "LargeFormat") {
@@ -2021,6 +2023,8 @@
 						job.finishSize.width = job.runSize.width;
 						job_finish_size.text = job.finishSize.name;
 						job_finish_size.selectedIndex = job_size.selectedIndex;
+						var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
+						Alert.show(message, "Warning", 0, null, null, null, 4); 
 					}
 				}
 				
@@ -2266,13 +2270,13 @@
 						job.finishSize.height = localSize.height;
 						job.finishSize.width = localSize.width;
 
-						if (job.finishSize.width * job.finishSize.height > job.runSize.width * job.runSize.height) {
+						/*if (job.finishSize.width * job.finishSize.height > job.runSize.width * job.runSize.height) {
 							//job.finishSize = oldDimension;
 							//job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 							message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
 							Alert.show(message, "Warning", 0, null, null, null, 4); 
 							
-						}
+						}*/
 					}
 					dimensionChange(job_finish_size);
 					break;
@@ -2318,12 +2322,12 @@
 						job.runSize.height = localSize.height;
 						job.runSize.width = localSize.width;
 
-						if (job.runSize.width * job.runSize.height > job.parentSize.width * job.parentSize.height) {
+						/*if (job.runSize.width * job.runSize.height > job.parentSize.width * job.parentSize.height) {
 							//job.runSize = oldDimension;
 							//job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
 							message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheRunSizeisl");
 							Alert.show(message, "Warning", 0, null, null, null, 4); 
-						}
+						}*/
 					}
 					
 					dimensionChange(job_size);
