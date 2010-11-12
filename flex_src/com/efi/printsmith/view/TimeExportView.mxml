@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="750" height="500"
-	showCloseButton="true" close="{closeWindow()}" creationComplete="{initExportWindow()}"
+	showCloseButton="true" close="{closeWindow()}"
+	preinitialize="preInit();"
+      implements="com.efi.printsmith.security.ISecureComponent"
 	paddingTop="20" paddingBottom="20" paddingLeft="20" paddingRight="20" xmlns:components="com.efi.printsmith.common.components.*">
 	
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
-	
+	      <mx:Script source="../security/PSSecurityInclude.as" />
 	<mx:Script>
 		<![CDATA[
+			import mx.events.FlexEvent;
+			import com.efi.printsmith.security.PSSecurityCommands;
 			import com.efi.printsmith.common.scripts.DateUtil;
 			import com.efi.printsmith.data.ComLink;
 			import flash.net.navigateToURL;
@@ -31,7 +35,11 @@
 			
 			[Bindable] public var timeCardList:ArrayCollection = new ArrayCollection();
 			
-			private function initExportWindow():void {
+			public function getSecurityCommand():String {
+		      return PSSecurityCommands.EMPLOYEE_EXPORTS;
+            }
+
+			private function init(event:FlexEvent=null):void {
 				PopUpManager.centerPopUp(this);
 				employeeTimeExportBean.format = "employee.firstName";
 				employeeTimeExportBean.rangeType = "period";

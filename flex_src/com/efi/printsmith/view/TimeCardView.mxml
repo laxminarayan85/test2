@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="675" height="575" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardsCmd.EmployeeTimeCards')}" 
-	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardsCmd.EmployeeTimeCards')}" creationComplete="init()" 
+	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardsCmd.EmployeeTimeCards')}" 
+	      preinitialize="preInit();"
+      implements="com.efi.printsmith.security.ISecureComponent"
+
 	xmlns:components="com.efi.printsmith.components.*" xmlns:common="com.efi.printsmith.common.components.*"
 	xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="PopUpManager.removePopUp(this) " >
- 
+       <mx:Script source="../security/PSSecurityInclude.as" />
  	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	</mx:RemoteObject>
@@ -28,6 +31,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import mx.controls.dataGridClasses.DataGridColumn;
 	import com.efi.printsmith.events.EditTimeCardEvent;
 	import com.efi.printsmith.data.Period;
@@ -83,7 +87,11 @@
 //	[Bindable]
 //	private var preferencesSystem:PreferencesSystem;
 
-	public function init():void {
+	public function getSecurityCommand():String {
+    	return PSSecurityCommands.EMPLOYEE_TIMECARDS;
+    }
+
+	private function init(event:FlexEvent =  null):void	{
 		/* consumer.subscribe();
 		notification_consumer.subscribe(); */
 		selectedTab = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'employeeTimeCardsCmd.ActivePeriod');

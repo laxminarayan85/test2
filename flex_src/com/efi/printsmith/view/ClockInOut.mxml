@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="638" height="538" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockInOut')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeKeeperCmd.ClockInOut')}" 
-	creationComplete="init()" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="{closeWindow()}">
+	preinitialize="preInit();"
+      implements="com.efi.printsmith.security.ISecureComponent"
+	xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*" showCloseButton="true" close="{closeWindow()}">
+	
+	<mx:Script source="../security/PSSecurityInclude.as" />
+	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getActiveEmployees" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -28,6 +33,8 @@
 	
 <mx:Script>  	
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.event.window.WindowRestoreEvent;
 	import com.efi.mdi.ContainerManager;
 	import com.efi.mdi.view.window.MDIWindow;
@@ -79,8 +86,12 @@
 	[Bindable] public var timeCardStatus:String = "";
 	
 	[Bindable] private var updatedEmployee:Employee;
+
+	public function getSecurityCommand():String {
+      return PSSecurityCommands.EMPLOYEE_CLOCKINOUT;
+    }
 		
-	public function init():void {
+	private function init(event:FlexEvent =  null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
 		PopUpManager.centerPopUp(this);

@@ -2,13 +2,16 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 	layout="vertical" width="100%" height="100%" showCloseButton="true"
 	headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ClockOptions')}"
-	close="{closeWindow()}" creationComplete="{initClockOptsWindow()}" xmlns:components="com.efi.printsmith.common.components.*"
-	implements="com.efi.mdi.IMDIWindowAware">
+	close="{closeWindow()}"       preinitialize="preInit();"
+ xmlns:components="com.efi.printsmith.common.components.*"
+	implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent">
 
 	<mx:Script source="../common/scripts/CommonUtils.as"/>
-		
+	<mx:Script source="../security/PSSecurityInclude.as" />	
 	<mx:Script>
 		<![CDATA[
+			import mx.events.FlexEvent;
+			import com.efi.printsmith.security.PSSecurityCommands;
 			import mx.utils.StringUtil;
 			import com.efi.mdi.view.window.MDIWindow;
 			import com.efi.mdi.event.window.WindowSaveSuccessEvent;
@@ -35,7 +38,11 @@
 			
 			[Bindable] public var checkCount:int=0;
 			
-			private function initClockOptsWindow():void {
+			public function getSecurityCommand():String {
+      			return PSSecurityCommands.EMPLOYEE_CLOCKOPTIONS;
+            }
+			
+			private function init(event:FlexEvent =  null):void	{
 				PopUpManager.centerPopUp(this);
 				var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 				mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ClockOptions');

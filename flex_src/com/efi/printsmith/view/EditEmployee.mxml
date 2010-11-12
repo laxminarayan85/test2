@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="com.efi.printsmith.view.*" xmlns:vo="com.efi.printsmith.vo.*" xmlns:fc="http://www.adobe.com/2006/fc" xmlns:hc="com.hillelcoren.components.*"
 width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" showCloseButton="true" close="{closeWindow()}" 
-creationComplete="init()" verticalScrollPolicy="auto" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" name="Employee Editor" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*" xmlns:components="com.efi.printsmith.common.components.*"
-implements="com.efi.mdi.IMDIWindowAware">
+      preinitialize="preInit();"
+     
+ verticalScrollPolicy="auto" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Employees')}" name="Employee Editor" xmlns:ns1="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*" xmlns:components="com.efi.printsmith.common.components.*"
+implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent">
+<mx:Script source="../security/PSSecurityInclude.as" />
 <mx:Metadata>
 		[Protected(permissions="Employee_Employees_Settings",notInPermissionAction="invisible",componentId="canvasSettings")]
 	 	[Protected(permissions="Employee_Employees_Settings",notInPermissionAction="visible",componentId="accessSettings")]
@@ -56,6 +59,8 @@ implements="com.efi.mdi.IMDIWindowAware">
 <mx:Script> 
                                   
 <![CDATA[
+	import mx.events.FlexEvent;
+	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import mx.events.CloseEvent;
 	import com.efi.mdi.event.window.WindowSaveSuccessEvent;
@@ -135,7 +140,11 @@ implements="com.efi.mdi.IMDIWindowAware">
     
     [Bindable] public var dataCount:int;
     
-	public function init():void {
+    public function getSecurityCommand():String {
+      return PSSecurityCommands.EMPLOYEE_EMPLOYEES;	
+    }
+
+	public function init(event:FlexEvent=null):void {
 		//consumer.subscribe();
 	//	notification_consumer.subscribe();  
 		PopUpManager.centerPopUp(this);
