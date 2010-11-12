@@ -5075,8 +5075,51 @@ public class DataService extends HibernateService {
 		this.addUpdate(sequenceValues);
 	}
 	
+	public DeliveryTicket getDeliveryTicketById(Long deliveryTicketId) throws Exception {
+		log.debug("** getDeliveryTicketById called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("DeliveryTicket" + ".byId");
+			query.setParameter("id", deliveryTicketId);
+			DeliveryTicket object = (DeliveryTicket) query.getSingleResult();
+			for (Field field : object.getClass().getDeclaredFields()) {
+				if (field.getType().getName().equals("java.util.List")
+						|| field.getType().getName().equals(
+								"java.util.ArrayList")) {
+					String propertyName = field.getName().substring(0, 1)
+							.toUpperCase()
+							+ field.getName().substring(1,
+									field.getName().length());
+					try {
+						Hibernate.initialize(object.getProperty(propertyName));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			if(object.getDeliveryJobs()!=null && !object.getDeliveryJobs().isEmpty()) {
+				for (DeliveryTicketJobs deliveryTicketJobs : object.getDeliveryJobs()) {
+					Hibernate.initialize(deliveryTicketJobs.getJobBase());
+				}
+			}
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * 
+	 * @param contactId
+	 * @return
+	 * @throws Exception
+	 */
 	public Contact getContactById(Long contactId) throws Exception {
-		log.debug("** getById called.");
+		log.debug("** getContactById called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			Query query = em.createNamedQuery("Contact" + ".byId");

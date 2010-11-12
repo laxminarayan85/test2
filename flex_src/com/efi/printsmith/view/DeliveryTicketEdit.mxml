@@ -2,12 +2,12 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryTicket')}"
 	layout="vertical" width="1000" height="750"  creationComplete="init()"  showCloseButton="true" close="{closeWindow()}"
-    xmlns:ns1="com.efi.printsmith.components.*" xmlns:components="com.efi.printsmith.common.components.*">
+    xmlns:ns1="com.efi.printsmith.components.*" xmlns:components="com.efi.printsmith.common.components.*" xmlns:adobe="http://www.adobe.com/2006/fc">
     
     <mx:Script source="../common/scripts/ComponentHelper.as"/>
     
     <mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
-    	<mx:method name="getById" fault="handleFault(event)" result="handleLoadDeliveryTicketResult(event)"/>
+    	<mx:method name="getDeliveryTicketById" fault="handleFault(event)" result="handleLoadDeliveryTicketResult(event)"/>
     	<mx:method name="saveDeliveryTicket" fault="handleFault(event)" result="handleSaveResult(event)"/>
     </mx:RemoteObject>
     
@@ -21,6 +21,10 @@
 	
 	<mx:RemoteObject id="dataServiceDriver" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadDriverResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceLocation" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadLocationResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceAdd" destination="dataService" showBusyCursor="true">
@@ -37,6 +41,7 @@
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.data.ProductionLocations;
 		import com.efi.printsmith.data.Driver;
 		import com.efi.printsmith.data.ShippingMethod;
 		import com.efi.printsmith.data.Account;
@@ -80,10 +85,13 @@
 		
 		[Bindable] private var driverArray:Array = new Array();
 		
+		[Bindable] private var locationsArray:Array = new Array();
+		
 		public function init():void{
 			PopUpManager.centerPopUp(this);
 			dataServiceShippingMethod.getAll("ShippingMethod");
 			dataServiceDriver.getAll("Driver");
+			dataServiceLocation.getAll("ProductionLocations");
 			updateAddress(deliveryTicket);
 		}
 		
@@ -97,7 +105,7 @@
 		}
 		
 		public function setDeliveryTicket(tmpDeliveryTicket:DeliveryTicket):void {
-			dataService.getById("DeliveryTicket",tmpDeliveryTicket.id);
+			dataService.getDeliveryTicketById(tmpDeliveryTicket.id);
 		}
 		
 		private function setDefaultList():void {
@@ -123,6 +131,13 @@
 			var driverList:ArrayCollection = event.result as ArrayCollection;
 			for each(var driver:Driver in driverList) {
 				driverArray.push(driver);
+			}
+		}
+		
+		private function handleLoadLocationResult(event:ResultEvent):void {
+			var locationsList:ArrayCollection = event.result as ArrayCollection;
+			for each(var productionLocations:ProductionLocations in locationsList) {
+				locationsArray.push(productionLocations);
 			}
 		}
 		
@@ -525,15 +540,21 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.InvJob')}" editable="false">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Label text="{data.invoiceNumber}/{data.jobNumber}"/>
+								<mx:Text text="{data.invoiceNumber}/{data.jobNumber}" color="{data.completed?0x00FF00:0x000000}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.OrderQty')}" dataField="qtyOrder" editable="false"/>
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.OrderQty')}" dataField="qtyOrder" editable="false">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Text text="{data.qtyOrder}" color="{data.completed?0x00FF00:0x000000}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.ShippedQty')}" dataField="qtyShipped">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(0,true,'nearest',data.qtyShipped)}"/>
+								<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(0,true,'nearest',data.qtyShipped)}" color="{data.completed?0x00FF00:0x000000}" fontWeight="bold"/>
 							</mx:Component>
 						</mx:itemRenderer>
 						<mx:itemEditor>
@@ -547,7 +568,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Description')}" dataField="description">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Text selectable="false" text="{data.description}"/>
+								<mx:Text selectable="false" text="{data.description}" color="{data.completed?0x00FF00:0x000000}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 						<mx:itemEditor>
@@ -560,7 +581,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Weight')}" dataField="weight">
 						<mx:itemRenderer>
 							<mx:Component>
-									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.weight)}"/>
+									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.weight)}" color="{data.completed?0x00FF00:0x000000}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 						<mx:itemEditor>
@@ -843,13 +864,27 @@
 			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.ChangeLocations')}" layout="vertical" width="90%">
 				<mx:HBox width="100%">
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Location')}:" fontWeight="bold"/>
-					<mx:ComboBox/>
+					<adobe:AutoComplete id="location_ac" dataProvider="{locationsArray}" labelField="name"/>
 				</mx:HBox>
-				<mx:DataGrid width="100%">
+				<mx:DataGrid dataProvider="{deliveryTicket.deliveryJobs}" width="100%">
 					<mx:columns>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Delivered')}" dataField="col1"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.InvJob')}" dataField="col2"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Description')}" dataField="col3"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Delivered')}">
+							<mx:itemRenderer>
+								<mx:Component>
+									<components:CustomCheckBoxComponent 
+										datagridControl="true" customText="{data.completed}" variableName="completed"
+										defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.InvJob')}">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{data.invoiceNumber}/{data.jobNumber}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Description')}" dataField="description"/>
 					</mx:columns>
 				</mx:DataGrid>
 				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Updatelocationonsele')}"/>
