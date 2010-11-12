@@ -66,10 +66,20 @@
 			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 			mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"deliveryTicketMgrCmd.DeliveryTicketManage");		
 			deliveryTickets = new ArrayCollection();
+			deliveryTicketLines.filterFunction = ticketJobFilter;
 			brokersList = new ArrayCollection();
 			dataService.getDeliveryTicketJobs(false);
 			dataServiceBroker.getAll("Broker");
 		}
+		
+		private function ticketJobFilter(item:Object):Boolean {
+			if(hideCompleted.selected){
+				if(item.completed)
+					return false;
+			}
+			return true;
+		}
+		
 		private function doDoubleClick():void{
 			if(dataGrid.selectedIndex>-1 && dataGrid.selectedItem!=null){
 				var selectedDeliveryTicketJob:DeliveryTicketJobs = dataGrid.selectedItem as DeliveryTicketJobs;

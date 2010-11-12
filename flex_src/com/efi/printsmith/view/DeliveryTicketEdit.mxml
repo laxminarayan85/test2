@@ -155,25 +155,25 @@
 			if(deliveryTicket.deliveryDate==null) {
 				deliveryTicket.deliveryDate = new Date();
 			}
+			setDefaultList();
 			if(deliveryTicket.deliveryJobs!=null && deliveryTicket.deliveryJobs.length>0) {
 				for each(var deliveryTicketJobsObj:DeliveryTicketJobs in deliveryTicket.deliveryJobs){
 					copyToAddressList(deliveryTicketJobsObj.account);
 				}
 			}
 			dataServicePreferenceSystem.getSingle("PreferencesSystem");
-			setDefaultList();
 		}
 		
 		private function handleLoadPSResult(event:ResultEvent):void {
 			var preferencesSystem:PreferencesSystem = event.result as PreferencesSystem;
 			if(preferencesSystem!=null && preferencesSystem.companyAddress!=null){
+				fromContactList.addItem(preferencesSystem.companyAddress);
 				if(isNaN(deliveryTicket.id) || deliveryTicket.id==0){
 					deliveryTicket.fromAddress = preferencesSystem.companyAddress;
 				}
 				if(from_address!=null){
 					from_address.setAddress(deliveryTicket.fromAddress);
 				}
-				fromContactList.addItem(preferencesSystem.companyAddress);
 			}
 			var emptyFromContact:Address = new Address();
 			emptyFromContact.id=0;
