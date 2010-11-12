@@ -18,6 +18,17 @@ package com.efi.printsmith.data
 		public var transactionDate:Date = new Date();
 		public var held:Boolean = false;
 		public var fund:Number = 0;
+		public var checkCount:int = 0;
+		public var cardCount:int = 0;
+		public var checkTotal:Number = 0;
+		public var cardTotal:Number = 0;
+		public var cashTotal:Number = 0;
+		public var arBalance:Number = 0;
+		public var changeFund:Number = 0;
+		public var paidOuts:Number = 0;
+		public var lastCloseOutDate:Date = new Date();
+		public var lastStartupDate:Date = new Date();
+		public var prevArBalance:Number = 0;
 	
 	}
 }
