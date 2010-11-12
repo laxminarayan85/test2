@@ -9,6 +9,7 @@
     <mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
     	<mx:method name="getDeliveryTicketById" fault="handleFault(event)" result="handleLoadDeliveryTicketResult(event)"/>
     	<mx:method name="saveDeliveryTicket" fault="handleFault(event)" result="handleSaveResult(event)"/>
+    	<mx:method name="addUpdate" fault="handleFault(event)"/>
     </mx:RemoteObject>
     
     <mx:RemoteObject id="dataServiceInvoice" destination="dataService" showBusyCursor="true">
@@ -87,6 +88,8 @@
 		
 		[Bindable] private var locationsArray:Array = new Array();
 		
+		[Bindable] private var selectedAddressObj:Address;
+		
 		public function init():void{
 			PopUpManager.centerPopUp(this);
 			dataServiceShippingMethod.getAll("ShippingMethod");
@@ -105,6 +108,9 @@
 		}
 		
 		public function setDeliveryTicket(tmpDeliveryTicket:DeliveryTicket):void {
+			if(isNaN(tmpDeliveryTicket.id)) {
+				tmpDeliveryTicket.id = 0;
+			}
 			dataService.getDeliveryTicketById(tmpDeliveryTicket.id);
 		}
 		
@@ -143,6 +149,12 @@
 		
 		private function handleLoadDeliveryTicketResult(event:ResultEvent):void {
 			deliveryTicket = event.result as DeliveryTicket;
+			if(deliveryTicket==null){
+				deliveryTicket = new DeliveryTicket();
+			}
+			if(deliveryTicket.deliveryDate==null) {
+				deliveryTicket.deliveryDate = new Date();
+			}
 			if(deliveryTicket.deliveryJobs!=null && deliveryTicket.deliveryJobs.length>0) {
 				for each(var deliveryTicketJobsObj:DeliveryTicketJobs in deliveryTicket.deliveryJobs){
 					copyToAddressList(deliveryTicketJobsObj.account);
@@ -193,14 +205,6 @@
 		private function copyToAddressList(accountObj:Account):void {
 			if(accountObj!=null && accountObj.shipToAddress!=null){
 				var addressPresent:Boolean = false;
-				if(isNaN(deliveryTicket.id) || deliveryTicket.id==0){
-					if(deliveryTicket.toAddress==null){
-						deliveryTicket.toAddress = accountObj.shipToAddress;
-					}
-				}
-				if(to_address!=null){
-					to_address.setAddress(deliveryTicket.toAddress);
-				}
 				if(toContactList!=null && toContactList.length>0){
 					for each(var toAddressObj:Address in toContactList) {
 						if(toAddressObj.id == accountObj.shipToAddress.id) {
@@ -210,7 +214,15 @@
 					}
 				}
 				if(!addressPresent){
-					toContactList.addItem(accountObj.shipToAddress);					
+					toContactList.addItem(accountObj.shipToAddress);
+					if(isNaN(deliveryTicket.id) || deliveryTicket.id==0){
+						if(deliveryTicket.toAddress==null){
+							deliveryTicket.toAddress = accountObj.shipToAddress;
+						}
+					}
+					if(to_address!=null){
+						to_address.setAddress(deliveryTicket.toAddress);
+					}					
 					if(accountObj.contact!=null){
 						dataServiceContact.getContactById(accountObj.contact.id);
 					}
@@ -221,6 +233,7 @@
 		private function handleLoadContactResult(event:ResultEvent):void {
 			var contact:Contact = event.result as Contact;
 			if(contact!=null){
+				attnList.addItem(contact);
 				if(isNaN(deliveryTicket.id) || deliveryTicket.id==0){
 					if(deliveryTicket.deliveryContact==null){
 						deliveryTicket.deliveryContact = contact;
@@ -229,12 +242,11 @@
 				if(contact_address!=null){
 					contact_address.setContact(deliveryTicket.deliveryContact);
 				}
-				attnList.addItem(contact);
 				if(contact.shipToAddress!=null && contact.shipToAddress.length>0){
 					for each(var addressObj:Address in contact.shipToAddress){
 						if(!isNaN(deliveryTicket.id) && deliveryTicket.id!=0){
 							if(deliveryTicket.toAddress!=null && deliveryTicket.toAddress.id==addressObj.id) {
-								address_combo.selectedItem = addressObj;
+								selectedAddressObj = addressObj;
 							}
 						}
 						addressList.addItem(addressObj);
@@ -247,11 +259,12 @@
 			var invoiceBaseObj:InvoiceBase = event.result as InvoiceBase;
 			if(invoiceBaseObj!=null && invoiceBaseObj.jobs!=null && invoiceBaseObj.jobs.length>0) {
 				var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
-				if(deliveryTicket.deliveryJobs!=null) {
-					deliveryTicketJobsList = deliveryTicket.deliveryJobs;
-					copyJobs(deliveryTicketJobsList,invoiceBaseObj,false);
-					updateTotalWeight();
+				if(deliveryTicket.deliveryJobs==null) {
+					deliveryTicket.deliveryJobs = new ArrayCollection();
 				}
+				deliveryTicketJobsList = deliveryTicket.deliveryJobs;
+				copyJobs(deliveryTicketJobsList,invoiceBaseObj,false);
+				updateTotalWeight();
 			}
 		}
 		
@@ -444,6 +457,9 @@
 		}
 		
 		private function doSave():void {
+			if(isNaN(deliveryTicket.id) || deliveryTicket.id==0){
+				deliveryTicket.ticketNumber = parseInt(ticket_number.text);
+			}
 			deliveryTicket.fromAddress = from_address.getAddress();
 			dataService.saveDeliveryTicket(deliveryTicket);
 		}
@@ -493,12 +509,50 @@
 			}
 			updateTotalWeight();
 		}
+		
+		private function setSelectedItem():void {
+			if(selectedAddressObj!=null){
+				address_combo.selectedItem = selectedAddressObj;
+			}
+		}
+		
+		private function updateLocations():void {
+			if(location_ac.selectedIndex>-1 && location_ac.selectedItem!=null && (location_ac.selectedItem is ProductionLocations)
+			  && location_ac.typedText!=null && location_ac.typedText!=""){
+				if(deliveryjobs_location_grid.selectedItems!=null && deliveryjobs_location_grid.selectedItems.length>0) {
+					for each(var deliveryTicketJobsObject:DeliveryTicketJobs in deliveryjobs_location_grid.selectedItems) {
+						if(deliveryTicketJobsObject.jobBase!=null){
+							deliveryTicketJobsObject.jobBase.location = location_ac.selectedItem as ProductionLocations;
+							dataService.addUpdate(deliveryTicketJobsObject.jobBase);
+						}
+					}
+				}
+			}
+		} 
+		
+		private function getTicketNumber(deliveryTicketObj:DeliveryTicket):String {
+			if(!isNaN(deliveryTicketObj.id) && deliveryTicketObj.id!=0){
+				return String(deliveryTicketObj.ticketNumber);
+			} else {
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.New');
+			}
+			return "";
+		}
+		
+		private function checkTicketNumberEnablity(deliveryTicketObj:DeliveryTicket):Boolean {
+			if(isNaN(deliveryTicketObj.id) || deliveryTicketObj.id==0){
+				return true;
+			}
+			return false;
+		}
+		
 	]]>
 	                             
 	</mx:Script>
 	
 	<mx:HBox width="100%" height="7%">	
-		<mx:Button width="10%" height="100%" click="{doSave()}">
+		<mx:Button width="10%" height="100%" click="{doSave()}"
+			enabled="{deliveryTicket.deliveryJobs!=null &amp;&amp; deliveryTicket.deliveryJobs.length>0}">
 			<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 		</mx:Button>
 		<mx:Button width="10%" click="{closeWindow()}" height="100%">
@@ -520,7 +574,8 @@
 	<mx:VBox width="100%" height="10%">
 		<mx:HBox width="100%" height="50%" horizontalGap="1">
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.TicketNumber')}:" width="20%" textAlign="right"/>
-			<mx:TextInput id="ticket_number" width="15%" text="{deliveryTicket.ticketNumber}"/>
+			<mx:TextInput id="ticket_number" width="15%" text="{getTicketNumber(deliveryTicket)}" enabled="{checkTicketNumberEnablity(deliveryTicket)}" restrict="0-9" textAlign="center"
+				disabledColor="#000000"/>
 			<mx:Spacer width="30%"/>
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryDate')}:" width="20%" textAlign="right"/>
 			<mx:DateField selectedDate="{deliveryTicket.deliveryDate}" change="{setDeliveryDate(event)}" width="15%"/>
@@ -532,7 +587,7 @@
 		</mx:HBox>
 	</mx:VBox>
 	
-	<mx:TabNavigator width="100%" height="65%">
+	<mx:TabNavigator width="100%" height="65%" creationPolicy="all">
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliverWhat')}" width="100%" height="100%">
 			<mx:DataGrid  id="dataGrid" width="100%" dataProvider="{deliveryTicket.deliveryJobs}" height="100%"
 				itemEditEnd="{processJobs(event)}" editable="true">
@@ -540,21 +595,21 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.InvJob')}" editable="false">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Text text="{data.invoiceNumber}/{data.jobNumber}" color="{data.completed?0x00FF00:0x000000}"/>
+								<mx:Label text="{data.invoiceNumber}/{data.jobNumber}" color="{data.completed?0x00FF00:0x000000}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.OrderQty')}" dataField="qtyOrder" editable="false">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Text text="{data.qtyOrder}" color="{data.completed?0x00FF00:0x000000}"/>
+								<mx:Label text="{data.qtyOrder}" color="{data.completed?0x00FF00:0x000000}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.ShippedQty')}" dataField="qtyShipped">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(0,true,'nearest',data.qtyShipped)}" color="{data.completed?0x00FF00:0x000000}" fontWeight="bold"/>
+								<mx:Label selectable="false" text="{outerDocument.formatValuesWithAppendZeros(0,true,'nearest',data.qtyShipped)}" color="{data.completed?0x00FF00:0x000000}" fontWeight="bold"/>
 							</mx:Component>
 						</mx:itemRenderer>
 						<mx:itemEditor>
@@ -568,7 +623,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Description')}" dataField="description">
 						<mx:itemRenderer>
 							<mx:Component>
-								<mx:Text selectable="false" text="{data.description}" color="{data.completed?0x00FF00:0x000000}"/>
+								<mx:Label selectable="false" text="{data.description}" color="{data.completed?0x00FF00:0x000000}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 						<mx:itemEditor>
@@ -581,7 +636,7 @@
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Weight')}" dataField="weight">
 						<mx:itemRenderer>
 							<mx:Component>
-									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.weight)}" color="{data.completed?0x00FF00:0x000000}"/>
+									<mx:Label selectable="false" text="{outerDocument.formatValuesWithAppendZeros(2,true,'nearest',data.weight)}" color="{data.completed?0x00FF00:0x000000}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 						<mx:itemEditor>
@@ -647,7 +702,8 @@
 					</mx:HBox>
 					<mx:HBox width="100%" height="10%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Address')}:"/>
-						<mx:ComboBox id="address_combo" dataProvider="{addressList}" labelFunction="getAddressName" change="{setToAddressFromAddress(event)}"/>
+						<mx:ComboBox id="address_combo" dataProvider="{addressList}" labelFunction="getAddressName" change="{setToAddressFromAddress(event)}"
+							creationComplete="{setSelectedItem()}"/>
 					</mx:HBox>
 					<ns1:ContactInfoEditor id="contact_address" width="100%" height="70%" enableEditBtn="{deliveryTicket.attOther}"/>
 					<components:CustomCheckBoxComponent height="10%"
@@ -866,7 +922,7 @@
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Location')}:" fontWeight="bold"/>
 					<adobe:AutoComplete id="location_ac" dataProvider="{locationsArray}" labelField="name"/>
 				</mx:HBox>
-				<mx:DataGrid dataProvider="{deliveryTicket.deliveryJobs}" width="100%">
+				<mx:DataGrid id="deliveryjobs_location_grid" dataProvider="{deliveryTicket.deliveryJobs}" allowMultipleSelection="true" width="100%">
 					<mx:columns>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Delivered')}">
 							<mx:itemRenderer>
@@ -887,7 +943,8 @@
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Description')}" dataField="description"/>
 					</mx:columns>
 				</mx:DataGrid>
-				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Updatelocationonsele')}"/>
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Updatelocationonsele')}"
+					click="{updateLocations()}"/>
 			</mx:Panel>
 		</mx:VBox>
 		

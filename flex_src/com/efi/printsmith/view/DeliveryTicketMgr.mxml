@@ -7,8 +7,8 @@
 	
 	<mx:Script source="../security/PSSecurityInclude.as" />
 	
-	<mx:RemoteObject id="dataService" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)" />
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getDeliveryTicketJobs" fault="handleFault(event)" result="handleLoadResult(event)" />
 		<mx:method name="addUpdate" fault="handleFault(event)"
 			result="handleSaveResult(event)" />
 		<mx:method name="deleteItem" fault="handleFault(event)"
@@ -55,6 +55,7 @@
 		
 		private function doNew():void{
 		    var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
+		    deliveryTicketEditWindow.setDeliveryTicket(new DeliveryTicket());
 			deliveryTicketEditWindow.setStyle("borderAlpha", 0.9);
 		 //	deliveryTicketEditWindow.setJob(job);
 		}
@@ -66,7 +67,7 @@
 			mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"deliveryTicketMgrCmd.DeliveryTicketManage");		
 			deliveryTickets = new ArrayCollection();
 			brokersList = new ArrayCollection();
-			dataService.getAll("DeliveryTicketJobs");
+			dataService.getDeliveryTicketJobs(false);
 			dataServiceBroker.getAll("Broker");
 		}
 		private function doDoubleClick():void{
@@ -203,25 +204,67 @@
 				<mx:columns>
 					<mx:DataGridColumn
 						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.DeliveryTicket')}"
-						labelFunction="getTicket" />
+						labelFunction="getTicket">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 					<mx:DataGridColumn
 						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.InvJob')}"
-						labelFunction="getInvJob" />
+						labelFunction="getInvJob">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 					<mx:DataGridColumn
 						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Account')}"
-						labelFunction="getAccountName" />
+						labelFunction="getAccountName">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 					<mx:DataGridColumn
 						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.ShipVia')}"
-						labelFunction="getShipVia" />
+						labelFunction="getShipVia">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 					<mx:DataGridColumn
 						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.Driver')}"
-						labelFunction="getDriver" />
+						labelFunction="getDriver">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 					<mx:DataGridColumn
 						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.Description')}"
-						dataField="description" />
+						dataField="description">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 					<mx:DataGridColumn
 						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.DeliveryDate')}"
-						labelFunction="getDeliveryDate" />
+						labelFunction="getDeliveryDate">
+						<mx:itemRenderer>
+							<mx:Component>
+								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:DataGridColumn>
 				</mx:columns>
 			</mx:DataGrid>
 			

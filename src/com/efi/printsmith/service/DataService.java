@@ -5010,7 +5010,7 @@ public class DataService extends HibernateService {
 					Contact deliveryContact = (Contact) em.merge(deliveryTicket.getDeliveryContact());
 					deliveryTicket.setDeliveryContact(deliveryContact);
 				}*/
-				if(deliveryTicket.getId()==null && deliveryTicket.getId()==0) {
+				if(deliveryTicket.getId()==null || deliveryTicket.getId()==0) {
 					setDeliveryTicketId(deliveryTicket);
 				}
 				for (DeliveryTicketJobs deliveryTicketJobs : deliveryTicket.getDeliveryJobs()) {
