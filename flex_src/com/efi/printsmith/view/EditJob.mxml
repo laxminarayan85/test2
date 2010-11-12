@@ -632,6 +632,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.events.CollectionEvent;
 			import com.efi.printsmith.pages.MultiQtyView;
 			import com.efi.printsmith.data.StockGroup;
 			import com.efi.printsmith.events.SpecialOrderStockDefEvent;
@@ -731,6 +732,12 @@
 
 			[Bindable]
 			private var copiers:ArrayCollection=new ArrayCollection();
+			
+			[Bindable]
+			private var costingCopiers:ArrayCollection=new ArrayCollection();
+			
+			[Bindable]
+			private var costingPresses:ArrayCollection=new ArrayCollection();
 			
 			[Bindable]
 			private var locations:ArrayCollection=new ArrayCollection();
@@ -1357,7 +1364,14 @@
 			
 			private function handleLoadCopierResult(ev:ResultEvent):void
 			{
-				copiers=ev.result as ArrayCollection;
+				copiers = new ArrayCollection();
+				costingCopiers = new ArrayCollection();
+				var result:ArrayCollection = ev.result as ArrayCollection;
+				for (var i:int = 0;i<result.length;i++) {
+					var item:CopierDefinition = result.getItemAt(i) as CopierDefinition;
+					copiers.addItem(item);
+					costingCopiers.addItem(item);
+				}
 				if (!isNaN(job.id)) {
 					if (job.pricingCopier != null)
 						this.job_pricing_copier.selectedIndex =findItem(job.pricingCopier.name, copiers);
@@ -1367,7 +1381,14 @@
 			}
 			private function handleLoadPressResult(ev:ResultEvent):void
 			{
-				presses=ev.result as ArrayCollection;
+				presses = new ArrayCollection();
+				costingPresses = new ArrayCollection();
+				var result:ArrayCollection = ev.result as ArrayCollection;
+				for (var i:int = 0;i<result.length;i++) {
+					var item:PressDefinition = result.getItemAt(i) as PressDefinition;
+					presses.addItem(item);
+					costingPresses.addItem(item);
+				}
 				if (!isNaN(job.id)) {
 					if ( job.pricingPress != null)
 						this.job_pricing_press.selectedIndex =findItem(job.pricingPress.name, presses);
@@ -2354,6 +2375,8 @@
 				if (pricingMethod.title == "Printing") {
 					this.currentState = "PrintMethod";
 					estimator_viewstack.selectedChild = printing_estimator_canvas;
+					costingPresses.filterFunction = filterCostingPresses;
+					costingPresses.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultSheetFedPress != null) {
 						this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, presses);
 						this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, presses);
@@ -2372,6 +2395,8 @@
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
 					copiers.filterFunction = filterBWCopiers;
 					copiers.refresh();
+					costingCopiers.filterFunction = filterCostingCopiers;
+					costingCopiers.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultBWCopier != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);	
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);
@@ -2381,6 +2406,8 @@
 					estimator_viewstack.selectedChild = copy_estimator_canvas;	
 					copiers.filterFunction = filterColorCopiers;
 					copiers.refresh();			
+					costingCopiers.filterFunction = filterCostingCopiers;
+					costingCopiers.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultColorCopier != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, copiers);	
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, copiers);
@@ -2390,6 +2417,8 @@
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
 					copiers.filterFunction = filterLFCopiers;
 					copiers.refresh();	
+					costingCopiers.filterFunction = filterCostingCopiers;
+					costingCopiers.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultLargeFormat != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);
@@ -2424,6 +2453,14 @@
 			
 			public function filterLFCopiers(item:CopierDefinition):Boolean {
 				return item.largeFormat == true;
+			}
+			
+			public function filterCostingCopiers(item:CopierDefinition):Boolean {
+				return item.costingCopy == true;
+			}
+			
+			public function filterCostingPresses(item:PressDefinition):Boolean {
+				return item.costingPress == true;
 			}
 			
 			private function updateWeight():void{
@@ -3466,7 +3503,7 @@
 													 width="241"
 													 height="20"
 													 id="job_costing_press"
-													 dataProvider="{presses}"
+													 dataProvider="{costingPresses}"
 													 labelField="name"
 													 tabIndex="17"
 													 fontSize="9"/>
@@ -3621,7 +3658,7 @@
 													 width="241"
 													 height="20"
 													 id="job_costing_copier"
-													 dataProvider="{copiers}"
+													 dataProvider="{costingCopiers}"
 													 labelField="name"
 													 tabIndex="17"
 													 fontSize="9"/>
