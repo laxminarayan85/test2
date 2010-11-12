@@ -6,7 +6,10 @@
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockPicker')}" 
     xmlns:flexlib="flexlib.containers.*"
     xmlns:text="flash.text.*" xmlns:comp="com.efi.printsmith.components.*" borderThickness="3" borderStyle="solid" fontSize="9" xmlns:components="com.efi.printsmith.common.components.*">
-   	
+<mx:Metadata>
+    [Protected(permissions="StockDefinition_Delete",notInPermissionAction="invisible",componentId="select_button0")]
+</mx:Metadata>
+
    	<mx:Script source="../common/scripts/CommonUtils.as"/>      
 	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">

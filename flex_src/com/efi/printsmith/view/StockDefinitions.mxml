@@ -7,6 +7,9 @@
 	implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent" xmlns:components="com.efi.printsmith.common.components.*">
 	
 	<mx:Script source="../common/scripts/CommonUtils.as"/>
+<mx:Metadata>
+    [Protected(permissions="StockDefinition_Delete",notInPermissionAction="disable",componentId="button_delete")]
+</mx:Metadata>
 	
 <mx:Script source="../security/PSSecurityInclude.as" />
 

@@ -97,6 +97,7 @@ rStandardMenuText.AR,rStandardMenuText.SalesPanel,Account_SalesPanel
 rStandardMenuText.AR,rStandardMenuText.LogPanel,Account_LogPanel
 rStandardMenuText.AR,rStandardMenuText.NotesPanel,Account_NotesPanel
 rStandardMenuText.AR,rStandardMenuText.MarketingPanel,Account_MarketingPanel
+rStandardMenuText.AR,rStandardMenuText.TemplatesPanel,Account_TemplatesPanel
 rStandardMenuText.AR,rStandardMenuText.WEBPanel,Account_WEBPanel
 rStandardMenuText.AR,rStandardMenuText.DeleteAccount,Account_Delete
 rStandardMenuText.AR,rStandardMenuText.Contacts,AR_Contacts,1

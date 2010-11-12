@@ -45,6 +45,7 @@
 <mx:RemoteObject id="SecuritydataService" destination="dataService">
 	<mx:method name="getByAccessGroup" fault="handleFault(event)" result="handleLoadSecurityResult(event)"/>
 	<mx:method name="getFromParent" fault="handleFault(event)" result="handleLoadSecurityResult(event)"/>
+	<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveNewSetupResult(event)"/>
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSecurityResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dataServiceSecurityCommands" destination="dataService">
@@ -113,7 +114,11 @@
 	private var _setupRecd:Boolean = false;
 	
 	public var listOfLockedCommands:ArrayCollection;		
-	public var listOfLockedAccessGroups:ArrayCollection;		
+	public var listOfLockedAccessGroups:ArrayCollection;
+	private var listOfAllowedCommands:ArrayCollection;		
+	private var scOfAllowedCommands:ArrayCollection;
+	private var listOfFirstLineCommands:ArrayCollection;
+	private var newAGcreated:Boolean = false;
 	           
 	public function getSecurityCommand():String {
 		return PSSecurityCommands.ADMIN_SECURITYSETUP;
@@ -130,20 +135,28 @@
 		dataServiceSecurityCommands.getAll("SecurityCommands");
 		
 		listOfLockedCommands = new ArrayCollection();
-		listOfLockedCommands.addItem("Help_QuickAccess");
-		listOfLockedCommands.addItem("Quit_Abort");
-		listOfLockedCommands.addItem("Quit_AutoShutdown");
-		listOfLockedCommands.addItem("Admin_ConfigureQuickAccess");
-		listOfLockedCommands.addItem("Admin_UserLogIn");
-		listOfLockedCommands.addItem("Admin_AutoLogin");
-		listOfLockedCommands.addItem("CreditCard_ReadMagneticCard");
-		listOfLockedCommands.addItem("Preferences_AutoBackupManager");
+		listOfLockedCommands.addItem(PSSecurityCommands.HELP_QUICKACCESS);
+		listOfLockedCommands.addItem(PSSecurityCommands.QUIT_ABORT);
+		listOfLockedCommands.addItem(PSSecurityCommands.QUIT_AUTOSHUTDOWN);
+		listOfLockedCommands.addItem(PSSecurityCommands.ADMIN_CONFIGUREQUICKACCESS);
+		listOfLockedCommands.addItem(PSSecurityCommands.ADMIN_USERLOGIN);
+		listOfLockedCommands.addItem(PSSecurityCommands.ADMIN_AUTOLOGIN);
+		listOfLockedCommands.addItem(PSSecurityCommands.CREDITCARD_READMAGNETICCARD);
+		listOfLockedCommands.addItem(PSSecurityCommands.PREFERENCES_AUTOBACKUPMANAGER);
 		
 		listOfLockedAccessGroups = new ArrayCollection();
 		listOfLockedAccessGroups.addItem("System Admin");
 		listOfLockedAccessGroups.addItem("Minimum");
 		
+		listOfAllowedCommands = new ArrayCollection();
+		listOfAllowedCommands.addItem(PSSecurityCommands.QUIT_ABORT);
+		listOfAllowedCommands.addItem(PSSecurityCommands.QUIT_AUTOSHUTDOWN);
+		listOfAllowedCommands.addItem(PSSecurityCommands.ADMIN_USERLOGIN);
+		listOfAllowedCommands.addItem(PSSecurityCommands.ADMIN_AUTOLOGIN);
+		listOfAllowedCommands.addItem(PSSecurityCommands.CREDITCARD_READMAGNETICCARD);
+		listOfAllowedCommands.addItem(PSSecurityCommands.PREFERENCES_AUTOBACKUPMANAGER);
 		
+		scOfAllowedCommands = new ArrayCollection();
 		
 	}                
 
@@ -172,16 +185,22 @@
 	
 	private function handleSaveResult(ev:ResultEvent):void {
 		access.id = (ev.result as AccessGroup).id;
-		
-		mapToSecurityData();
+		if (this.newAGcreated)	{
+			createDefaultNewSecurity(this.access);
+			this.newAGcreated = false;
+		}
+
+		//mapToSecurityData();
 		
 	}
 	
 	private function handleSaveSetupResult(ev:ResultEvent):void {
-		//Alert.show("Saved successfully");
-		
 	}	
+	
+	private function handleSaveNewSetupResult(ev:ResultEvent):void {
+		populateDataProvider();
 		
+	}		
 	private function handleDeleteResult(ev:ResultEvent):void{
 		//dataService.getAll("AccessGroup");
 	}
@@ -237,6 +256,15 @@
 
 	private function populateDataProvider(clearData:Boolean = false):void	{
 		
+		// setting which elements will be on the first line of each new Menu item - one time only
+		var setFirstLineCommands:Boolean = false;
+		var prevMenuItem:String = null; 
+		
+		if (listOfFirstLineCommands == null)	{
+			setFirstLineCommands = true;
+			listOfFirstLineCommands = new ArrayCollection();
+		}
+		
 		dataGrid.dataProvider = null;
 			
 		if (!clearData)	{
@@ -249,6 +277,7 @@
 						continue;
 					}
 					sc["enable"] = false;
+
 					for (var j:int=0; j <securitySetupLists.length; j++)	{
 						var ss:SecuritySetup = securitySetupLists.getItemAt(j) as SecuritySetup;
 						if (ss.securityCmd.commandId == sc.commandId)	{
@@ -256,6 +285,23 @@
 							break;
 						}
 					} 
+					
+					// set first line commands
+					if (setFirstLineCommands)	{
+						if (prevMenuItem == null || prevMenuItem != sc.menu)	{
+							listOfFirstLineCommands.addItem(sc.commandId);
+							prevMenuItem = sc.menu;
+						}
+					}					
+					// populate list of new default sec commands in case new group is created - one time only
+					if (listOfAllowedCommands.length > 0)	{
+						var k:int = listOfAllowedCommands.getItemIndex(sc.commandId)
+						if (k > -1)	{							
+							scOfAllowedCommands.addItem(sc);
+							listOfAllowedCommands.removeItemAt(k);
+						}	
+					}
+					
 				}
 			}
 			
@@ -299,6 +345,8 @@
 
 	private function mapToAccessGroup():void{
 		dataService.addUpdate(access);
+		
+		newAGcreated = true;
 	}
 
 	private function addCommands():void{
@@ -383,12 +431,27 @@
 		this.access.name = txtNewItem.text;
 		this.access.orderby = 100;
 		this.currentState = "";
+		
 		this.mapToAccessGroup();
+		
 		if (this.rename == false)
 			addAccessGroupToList(access);
 		this.rename = false;
 		checkForLockedAccessGroup(access);
 		
+	}
+	
+	private function createDefaultNewSecurity(acc:AccessGroup):void	{
+		var addList:ArrayCollection = new ArrayCollection();
+		
+		for (var i:int=0; i<scOfAllowedCommands.length; i++)	{
+			var ss:SecuritySetup = new SecuritySetup();
+			ss.accessGroup = acc;
+			ss.securityCmd = scOfAllowedCommands.getItemAt(i) as SecurityCommands;
+			addList.addItem(ss);
+		}
+		SecuritydataService.addUpdateDeleteList(addList, null);
+		securitySetupLists = addList;
 	}
 	
 	private function addAccessGroupToList(acc:AccessGroup):void	{
@@ -474,7 +537,7 @@
 		var returnvalue:String = "";
 		if (tmpItem != null) {
 			returnvalue = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpItem.commandName.toString())
-			if(returnvalue == null){ 
+			if((returnvalue == null) || (!tmpItem.menuItemFlag)){ 
 				returnvalue = "\t"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE, StringUtil.trim(tmpItem.commandName.toString()))
 			}
 		} else {
@@ -486,10 +549,14 @@
 		var tmpItem:SecurityCommands = item as SecurityCommands;
 		var returnvalue:String = "";
 		if (tmpItem != null) {
-			returnvalue = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpItem.menu.toString())
-			if(returnvalue == null){
-				"\t"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE, StringUtil.trim(tmpItem.menu.toString()))
+			if (listOfFirstLineCommands.contains(tmpItem.commandId))	{
+				returnvalue = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, tmpItem.menu.toString())
+				if(returnvalue == null){
+					"\t"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE, StringUtil.trim(tmpItem.menu.toString()))
+				}
 			}
+			else
+				return "";
 		} else {
 			returnvalue="Item Not Found"
 		}
@@ -590,6 +657,7 @@
 					      </mx:Component>						
 					   </mx:itemRenderer> 
 					</mx:DataGridColumn>
+
 
 					      			
 						<mx:DataGridColumn  sortable="false" width="300" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'mensecCmd.Menu')}" labelFunction="gridDisplayLabelMenu"  editable="false"/>
