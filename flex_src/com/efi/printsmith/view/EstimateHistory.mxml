@@ -64,6 +64,8 @@
 		    
 		    [Bindable] private var estimate:Estimate;
 		    
+		    [Bindable] private var statusList:ArrayCollection = new ArrayCollection();
+		    
 		    private var estimateNotes:String = "";
 		    
 		    private var pageStatus:String = "";
@@ -73,6 +75,9 @@
 			}
 			
 			public function init(event:FlexEvent = null):void {
+				statusList.addItem("Won");
+				statusList.addItem("Lost");
+				statusList.addItem("Neutral");
 				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 				var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 				mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory');
@@ -162,8 +167,11 @@
 					var estimateHistoryProperties:EstimateHistoryProperties = PopUpManager.createPopUp(this,EstimateHistoryProperties,true) as EstimateHistoryProperties;
 					estimateHistoryProperties.estimate = estimate;
 					estimateHistoryProperties.addEventListener(EstimateHistorySaveEvent.ESTIMATES_SAVE_EVENT,saveEstimates,false,0,true);
-				} else {
+				} else if(pageStatus=="openEstimate"){
+					pageStatus = "";
 					doEditEstimate(estimate);
+				} else {
+					status_combo.selectedItem = estimate.status;
 				}
 			}
 			
@@ -176,6 +184,7 @@
 			
 			private function doDoubleClick():void {
 				if(estimate_grid.selectedIndex>-1 && estimate_grid.selectedItem!=null){
+					pageStatus = "openEstimate";
 					var invoiceBase:InvoiceBase = estimate_grid.selectedItem as InvoiceBase;
 					dataServiceInvoice.getInvoice(invoiceBase.id);
 				}
@@ -239,6 +248,20 @@
 				}
 				return false;
 			}
+			
+			private function itemClickHandler():void {
+				if(estimate_grid.selectedIndex>-1 && estimate_grid.selectedItem!=null){
+					var invoiceBase:InvoiceBase = estimate_grid.selectedItem as InvoiceBase;
+					dataServiceInvoice.getInvoice(invoiceBase.id);
+				}
+			}
+			
+			private function updateStatus(event:Event):void {
+				if(estimate!=null){
+					estimate.status = event.currentTarget.selectedItem;
+					dataServiceInvoice.saveInvoice(estimate);
+				}
+			}
 		]]>
 	                             
 	</mx:Script>
@@ -258,6 +281,8 @@
 		<mx:Button width="6%" height="100%" click="{showProperties()}">
 			<mx:icon>@Embed(source='../../../../assets/showCostCenter.png')</mx:icon>
 		</mx:Button>
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'estHistoryCmd.Status')}"/>
+		<mx:ComboBox id="status_combo" dataProvider="{statusList}" change="{updateStatus(event)}"/>
 	</mx:HBox>
 	
 	<mx:HBox width="100%" height="4%">
@@ -267,13 +292,14 @@
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Properties')}" width="6%" textAlign="center"/>		
 	</mx:HBox>
 	
-	<mx:DataGrid id="estimate_grid" width="100%" height="83%" dataProvider="{estimates}" doubleClick="{doDoubleClick()}" doubleClickEnabled="true">
+	<mx:DataGrid id="estimate_grid" width="100%" height="83%" dataProvider="{estimates}" 
+		itemClick="{itemClickHandler()}" doubleClick="{doDoubleClick()}" doubleClickEnabled="true">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Created')}" dataField="created" labelFunction="getFormattedDate"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Estimate')}" dataField="invoiceNumber"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Title')}" dataField="name"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Total')}" dataField="grandTotal"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Status')}" dataField="col2"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Status')}" dataField="status"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Invoice')}" dataField="convertedInvoiceNo"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.OffPending')}" dataField="offPendingDate" labelFunction="getFormattedDate"/>
 		</mx:columns>

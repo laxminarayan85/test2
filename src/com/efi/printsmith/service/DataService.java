@@ -2631,7 +2631,7 @@ public class DataService extends HibernateService {
 		List<Estimate> estimateList = new ArrayList<Estimate>();
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String columnString = "a.id,a.created,a.invoiceNumber,a.name,a.grandTotal,a.convertedInvoiceNo,a.offPendingDate,a.estimateNotes";
+			String columnString = "a.id,a.created,a.invoiceNumber,a.name,a.grandTotal,a.convertedInvoiceNo,a.status,a.offPendingDate,a.estimateNotes";
 			Session session = (Session) em.getDelegate();
 			String queryString = "select "+columnString+" from " + className
 					+ " a where a.account.id="+id+" and a.onPendingList=false order by a.created asc";
@@ -2649,8 +2649,9 @@ public class DataService extends HibernateService {
 				} else {
 					estimate.setConvertedInvoiceNo(rs.getString(5));
 				}
-				estimate.setOffPendingDate(rs.getDate(6));
-				estimate.setEstimateNotes(rs.getString(7));
+				estimate.setStatus(rs.getString(6));
+				estimate.setOffPendingDate(rs.getDate(7));
+				estimate.setEstimateNotes(rs.getString(8));
 				estimateList.add(estimate);
 			}
 		} catch (Exception e) {
