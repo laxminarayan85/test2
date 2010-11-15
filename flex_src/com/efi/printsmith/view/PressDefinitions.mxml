@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" preinitialize="preInit();" implements="com.efi.printsmith.security.ISecureComponent" headerHeight="0" xmlns:components="com.efi.printsmith.common.components.*" xmlns:vo="com.efi.printsmith.vo.*"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" preinitialize="preInit();" implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent" headerHeight="0" xmlns:components="com.efi.printsmith.common.components.*" xmlns:vo="com.efi.printsmith.vo.*"
 width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}"
  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.PressDefinitions')}" name="Press Definitions" fontSize="9">
  <mx:Script source="../security/PSSecurityInclude.as" />
@@ -57,6 +57,7 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 	import mx.events.FlexEvent;
 	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.view.window.MDIWindow;
+	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import mx.rpc.AsyncToken;
 	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import com.efi.printsmith.data.PreferencesPricingMethod;
@@ -102,6 +103,8 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
     private var rollPaperStyleAbb:String = new String;
     [Bindable]
     private var sheetPaperStyleAbb:String = new String;
+    [Bindable]                                         
+    private var originalPressDefinition:PressDefinition;
 	[Bindable]
 		private var charges:ArrayCollection=new ArrayCollection();
 
@@ -322,7 +325,11 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 		dataService.getPressDefinition(pressDefinition.id );  
 	}
 	private function doPressGridClick():void {
-	 	var  tempPress : PressDefinition;	
+		var inputArguments:Array = new Array();
+		inputArguments.push(dataGrid.selectedItem as PressDefinition);
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doSelectOperation,inputArguments);
+		dispatchEvent(mDICompareObjectEvent);	
+	 	/*var  tempPress : PressDefinition;	
 		tempPress=dataGrid.selectedItem as PressDefinition;
 		dataService.getPressDefinition(tempPress.id );   
 		/* pressDefinition = dataGrid.selectedItem as PressDefinition;
@@ -333,6 +340,14 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 	
 	
 	}
+	
+	private function doSelectOperation(pressDefObj:PressDefinition):void {
+		var  tempPress : PressDefinition;
+		tempPress=pressDefObj as PressDefinition;
+		var token:AsyncToken = dataService.getPressDefinition(tempPress.id );
+		token.operation = "getPressDefinition";	
+	}
+	
 	private function mapAccountData():void {
 		 //pressDefinition.pressDefID = PressDefID;
 		 if (Name.text == "")
@@ -855,7 +870,48 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 		if (NumberHeads.text == '0')
 			NumberHeads.text = '1';
 	}
+	public function onClose():void {
+		if(pressDefinition!=null) {
+			
+		}	
+	}
 	
+	public function onSave():void {
+		doSave();
+	}
+	
+	public function onDontSave():void {
+		
+	}
+	
+	public function onCancel():void {
+		if(pressDefinition!=null && pressDefinitionArray!=null && pressDefinitionArray.length>0){
+			var counter:int=0;
+			for each(var pressObj:PressDefinition in pressDefinitionArray) {
+				if(pressDefinition.id == pressObj.id){
+					dataGrid.selectedItem = pressDefinition;
+					dataGrid.selectedIndex = counter;
+					break;	
+				}
+				counter++;
+			}
+		}
+	}
+	public function getOriginalObject():ArrayCollection {
+		var originalList:ArrayCollection = new ArrayCollection();
+		originalList.addItem(originalPressDefinition);
+		return originalList;
+	}
+		
+	public function getUpdatedObject():ArrayCollection {
+		var updatedList:ArrayCollection = new ArrayCollection();
+		updatedList.addItem(pressDefinition);
+		return updatedList;
+	}
+	
+	public function getConfirmationText():String {
+		return "\n"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"pressDefCmd.PressDefinitions");
+	}
 ]]>
                              
 </mx:Script>	
