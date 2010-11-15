@@ -593,10 +593,22 @@
 	}
 	public function handleUIDeliverEvent(evt:ResultEvent):void {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
-			var deliveryTicketEdit:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, false));
+			var child:DeliveryTicketEdit = new DeliveryTicketEdit();
+			child.setInvoice(dgView.selectedItem as InvoiceBase);
+			child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
+			var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+			if (win == null) {
+				Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
+			}
+			else {
+				win.closeWindow();
+				Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
+			}
+			
+			/* var deliveryTicketEdit:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, false));
 			deliveryTicketEdit.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
 			deliveryTicketEdit.setInvoice(dgView.selectedItem as InvoiceBase);
-			deliveryTicketEdit.setStyle("borderAlpha", 0.9);
+			deliveryTicketEdit.setStyle("borderAlpha", 0.9); */
 		}
 	}
 	public function handleUIScheduleEvent(evt:ResultEvent):void {

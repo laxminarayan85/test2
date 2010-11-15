@@ -73,10 +73,21 @@
 	   private var newBrokerObj:Broker;
 		
 		private function doNew():void{
-		    var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
+			var child:DeliveryTicketEdit = new DeliveryTicketEdit();
+			child.setDeliveryTicket(new DeliveryTicket());
+			child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
+			var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+			if (win == null) {
+				Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
+			}
+			else {
+				win.closeWindow();
+				Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
+			}
+		   /*  var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
 		    deliveryTicketEditWindow.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
 		    deliveryTicketEditWindow.setDeliveryTicket(new DeliveryTicket());
-			deliveryTicketEditWindow.setStyle("borderAlpha", 0.9);
+			deliveryTicketEditWindow.setStyle("borderAlpha", 0.9); */
 		 //	deliveryTicketEditWindow.setJob(job);
 		}
 		public function getSecurityCommand():String {
@@ -109,10 +120,21 @@
 		private function doDoubleClick():void{
 			if(dataGrid.selectedIndex>-1 && dataGrid.selectedItem!=null){
 				var selectedDeliveryTicketJob:DeliveryTicketJobs = dataGrid.selectedItem as DeliveryTicketJobs;
-				var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
+				var child:DeliveryTicketEdit = new DeliveryTicketEdit();
+				child.setDeliveryTicket(selectedDeliveryTicketJob.parentDeliveryTicket);
+				child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
+				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+				if (win == null) {
+					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
+				}
+				else {
+					win.closeWindow();
+					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
+				}
+				/* var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
 				deliveryTicketEditWindow.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
 				deliveryTicketEditWindow.setDeliveryTicket(selectedDeliveryTicketJob.parentDeliveryTicket);
-				deliveryTicketEditWindow.setStyle("borderAlpha", 0.9);
+				deliveryTicketEditWindow.setStyle("borderAlpha", 0.9); */
 			}
 			
 		}

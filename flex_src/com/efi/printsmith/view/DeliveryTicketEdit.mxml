@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryTicket')}"
-	layout="vertical" width="1000" height="750"  creationComplete="init()"  showCloseButton="true" close="{closeWindow()}"
+	headerHeight="0" layout="vertical" width="100%" height="100%"  creationComplete="init()"  showCloseButton="true" close="{closeWindow()}"
     xmlns:ns1="com.efi.printsmith.components.*" xmlns:components="com.efi.printsmith.common.components.*" xmlns:adobe="http://www.adobe.com/2006/fc">
     
     <mx:Script source="../common/scripts/ComponentHelper.as"/>
@@ -17,6 +17,10 @@
     
     <mx:RemoteObject id="dataServiceInvoice" destination="dataService" showBusyCursor="true">
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceOpenInvoice" destination="dataService" showBusyCursor="true">
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadInvoiceOpenResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceShippingMethod" destination="dataService" showBusyCursor="true">
@@ -49,6 +53,12 @@
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.mdi.view.window.MDIWindow;
+		import com.efi.printsmith.events.ConvertToInvoiceEvent;
+		import com.efi.printsmith.events.CopyToNewEstimateEvent;
+		import com.efi.printsmith.events.CopyToNewInvoiceEvent;
+		import com.efi.printsmith.data.Estimate;
+		import com.efi.printsmith.data.Invoice;
 		import mx.utils.StringUtil;
 		import com.efi.printsmith.events.DeliveryTicketUpdateEvent;
 		import com.efi.printsmith.data.ProductionLocations;
@@ -100,7 +110,8 @@
 		[Bindable] private var selectedAddressObj:Address;
 		
 		public function init():void{
-			PopUpManager.centerPopUp(this);
+			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+			mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.DeliveryTicket');
 			dataServiceShippingMethod.getAll("ShippingMethod");
 			dataServiceDriver.getAll("Driver");
 			dataServiceLocation.getAll("ProductionLocations");
@@ -108,7 +119,8 @@
 		}
 		
 		private function closeWindow():void {
-			PopUpManager.removePopUp(this);
+			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+			mdiWin.closeWindow();
 		}
 		
 		public function setInvoice(tmpInvoiceBase:InvoiceBase):void {
@@ -324,6 +336,7 @@
 		}
 		
 		private function handleSaveResult(event:ResultEvent):void {
+			openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryTicket')));
 			dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
 			dispatchEvent(new DeliveryTicketUpdateEvent(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,true));
 			callLater(closeWindow);
@@ -578,8 +591,25 @@
 		}
 		
 		private function handleDeleteResult(event:ResultEvent):void {
+			openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.DELETE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryTicket')));
 			dispatchEvent(new DeliveryTicketUpdateEvent(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,true));
 			callLater(closeWindow);
+		}
+		
+		private function openInvoice():void {
+			if(dataGrid.selectedIndex>-1 && dataGrid.selectedItem!=null) {
+				var deliveryTicketJobObj:DeliveryTicketJobs = dataGrid.selectedItem as DeliveryTicketJobs;
+				dataServiceOpenInvoice.getInvoice(deliveryTicketJobObj.invoiceId);
+			}
+		}
+		
+		private function handleLoadInvoiceOpenResult(event:ResultEvent):void {
+			var invoice:InvoiceBase = event.result as InvoiceBase;
+			if(invoice is Invoice){
+				Snowmass.getInstance().doEditInvoice(invoice);
+			} else if(invoice is Estimate) {
+				Snowmass.getInstance().doEditEstimate(invoice);
+			}
 		}
 		
 	]]>
@@ -629,7 +659,7 @@
 	<mx:TabNavigator width="100%" height="65%" creationPolicy="all">
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliverWhat')}" width="100%" height="100%">
 			<mx:DataGrid  id="dataGrid" width="100%" dataProvider="{deliveryTicket.deliveryJobs}" height="100%"
-				itemEditEnd="{processJobs(event)}" editable="true">
+				itemEditEnd="{processJobs(event)}" editable="true" doubleClickEnabled="true" doubleClick="{openInvoice()}">
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.InvJob')}" editable="false">
 						<mx:itemRenderer>
