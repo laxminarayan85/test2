@@ -227,7 +227,9 @@
 			if(dataGrid.selectedIndices!=null && dataGrid.selectedIndices.length>0){
 				var deleteString:String = "";
 				if(dataGrid.selectedIndices.length==1) {
-					deleteString = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.TicketNumber'+": "+dataGrid.selectedItem.ticketNumber));
+					var obj:Object = dataGrid.selectedItems[0];
+					var inputString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.TicketNumber')+": "+obj.parentDeliveryTicket.ticketNumber;
+					deleteString = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0'),inputString);
 				} else {
 					deleteString = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.SelectedDeliveryTick'));
 				}
@@ -238,7 +240,22 @@
 		
 		private function confirmDeleteHandler(event:CloseEvent):void {
 			if(event.detail == Alert.YES) {
-				dataService.addUpdateDeleteList(null,dataGrid.selectedItems);
+				var deleteTicketList:ArrayCollection = new ArrayCollection();
+				for each(var obj:Object in dataGrid.selectedItems) {
+					var objectPresent:Boolean = false;
+					for each(var deliveryTicketObject:DeliveryTicket in deleteTicketList) {
+						if(deliveryTicketObject.id == obj.parentDeliveryTicket.id) {
+							objectPresent = true;
+							break;
+						}
+					}
+					if(!objectPresent){
+						var deliveryTicketObj:DeliveryTicket = new DeliveryTicket();
+						deliveryTicketObj.id = obj.parentDeliveryTicket.id;
+						deleteTicketList.addItem(deliveryTicketObj);
+					}
+				}
+				dataService.addUpdateDeleteList(null,deleteTicketList);
 			}
 		}
 		

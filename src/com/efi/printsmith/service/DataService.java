@@ -5129,6 +5129,9 @@ public class DataService extends HibernateService {
 					}
 				}
 			}
+			if(object.getDeliveryContact()!=null && object.getDeliveryContact().getComLinks()!=null) {
+				Hibernate.initialize(object.getDeliveryContact().getComLinks());
+			}
 			if(object.getDeliveryJobs()!=null && !object.getDeliveryJobs().isEmpty()) {
 				for (DeliveryTicketJobs deliveryTicketJobs : object.getDeliveryJobs()) {
 					Hibernate.initialize(deliveryTicketJobs.getJobBase());
