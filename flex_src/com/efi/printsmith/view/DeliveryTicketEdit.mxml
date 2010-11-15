@@ -160,6 +160,7 @@
 			deliveryTicket = event.result as DeliveryTicket;
 			if(deliveryTicket==null){
 				deliveryTicket = new DeliveryTicket();
+				deliveryTicket.dateType = "todayDate";
 			}
 			if(deliveryTicket.deliveryDate==null) {
 				deliveryTicket.deliveryDate = new Date();
@@ -206,6 +207,7 @@
 		private function handleLoadResult(event:ResultEvent):void {
 			_invoiceBase = event.result as InvoiceBase;
 			deliveryTicket = new DeliveryTicket();
+			deliveryTicket.dateType = "todayDate";
 			if(_invoiceBase!=null){
 				copyToAddressList(_invoiceBase.account);
 				if(_invoiceBase.deliveryIntentDate!=null){
@@ -751,7 +753,7 @@
 			</mx:HBox>
 			<mx:HBox width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Address')}:"/>
-				<components:CustomEmailTextInputComponent
+				<components:CustomEmailTextInputComponent enabled="{deliveryTicket.emailOther}" disabledColor="#000000"
 					dataHolder="{deliveryTicket}" variableName="email" customText="{deliveryTicket.email}"/>
 			</mx:HBox>
 			<components:CustomCheckBoxComponent height="10%"
@@ -774,7 +776,7 @@
 					<mx:HBox width="100%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Cost')}:" width="50%"
 							textAlign="right"/>
-						<components:CustomNumericTextInputComponent
+						<components:CustomNumericTextInputComponent textAlignStyle="left"
 							dataHolder="{deliveryTicket}" customText="{deliveryTicket.shipCost}" variableName="shipCost"
 							precision="2" rounding="nearest" width="50%"/>
 					</mx:HBox>
@@ -791,10 +793,12 @@
 							labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{driverArray}"
 							dataHolder="{deliveryTicket}" variableName="driver" customData="{deliveryTicket.driver}" customText="{getCustomTextForAutocomplete(driverArray,deliveryTicket,'driver','id','name',true,'id')}"/>
 					</mx:HBox>
-					<components:CustomCheckBoxComponent
-						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.COD')}"
-						dataHolder="{deliveryTicket}" customText="{deliveryTicket.cod}" variableName="cod"
-						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					<mx:HBox width="100%" horizontalAlign="center">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custType.COD')}"
+							dataHolder="{deliveryTicket}" customText="{deliveryTicket.cod}" variableName="cod"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:HBox>
 				</mx:Panel>
 				<mx:Panel width="40%" height="100%" layout="vertical"
 					title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Numbers')}">
@@ -809,7 +813,7 @@
 							textAlign="right"/>
 						<components:CustomNumericTextInputComponent
 							dataHolder="{deliveryTicket}" customText="{deliveryTicket.orderNumber}" variableName="orderNumber" width="50%"
-							precision="0" rounding="nearest" isInteger="true"/>
+							precision="0" rounding="nearest" isInteger="true" textAlignStyle="left"/>
 					</mx:HBox>
 					<mx:HBox width="100%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.PartNo')}:" width="50%"
@@ -864,19 +868,19 @@
 						<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Carton')}" layout="vertical" width="50%">
 							<mx:HBox width="100%">
 								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.CartonCount')}:" width="50%" textAlign="right"/>
-								<components:CustomNumericTextInputComponent
+								<components:CustomNumericTextInputComponent textAlignStyle="left"
 									dataHolder="{deliveryTicket}" customText="{deliveryTicket.cartonCount}" variableName="cartonCount"
 									precision="0" rounding="nearest" isInteger="true" width="50%"/>
 							</mx:HBox>
 							<mx:HBox width="100%">
 								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.ItemsPerCarton')}:" width="50%" textAlign="right"/>
-								<components:CustomNumericTextInputComponent
+								<components:CustomNumericTextInputComponent textAlignStyle="left"
 									dataHolder="{deliveryTicket}" customText="{deliveryTicket.itemsPerCarton}" variableName="itemsPerCarton"
 									precision="0" rounding="nearest" isInteger="true" width="50%"/>
 							</mx:HBox>
 							<mx:HBox width="100%">
 								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.TotalItems')}:" width="50%" textAlign="right"/>
-								<components:CustomNumericTextInputComponent
+								<components:CustomNumericTextInputComponent textAlignStyle="left"
 									dataHolder="{deliveryTicket}" customText="{deliveryTicket.totalItemsInCarton}" variableName="totalItemsInCarton"
 									precision="0" rounding="nearest" isInteger="true" width="50%"/>
 							</mx:HBox>
@@ -884,13 +888,13 @@
 						<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.LabelControl')}" layout="vertical" width="50%">
 							<mx:HBox width="100%">
 								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.StartNumber')}:" width="50%" textAlign="right"/>
-								<components:CustomNumericTextInputComponent
+								<components:CustomNumericTextInputComponent textAlignStyle="left"
 									dataHolder="{deliveryTicket}" customText="{deliveryTicket.labelStartCount}" variableName="labelStartCount"
 									precision="0" rounding="nearest" isInteger="true" width="50%"/>
 							</mx:HBox>
 							<mx:HBox width="100%">
 								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.SkipCount')}:" width="50%" textAlign="right"/>
-								<components:CustomNumericTextInputComponent
+								<components:CustomNumericTextInputComponent textAlignStyle="left"
 									dataHolder="{deliveryTicket}" customText="{deliveryTicket.labelSkipCount}" variableName="labelSkipCount"
 									precision="0" rounding="nearest" isInteger="true" width="50%"/>
 							</mx:HBox>
@@ -926,11 +930,17 @@
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryComments')}"
 									dataHolder="{deliveryTicket}" variableName="deliveryCommentsCheck" customText="{deliveryTicket.deliveryCommentsCheck}"
 									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
-								<mx:RadioButtonGroup id="dateOptions" selectedValue="{deliveryTicket.dateType}"/>
-								<mx:RadioButton groupName="dateOptions"
-									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.TodaysDate')}" value="todayDate"/>
-								<mx:RadioButton groupName="dateOptions"
-									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryDate')}" value="deliveryDate"/>
+								<mx:RadioButtonGroup id="dateOptions"/>
+								<components:CustomRadioButtonComponent groupName="dateOptions" value="todayDate"
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.TodaysDate')}"
+									dataHolder="{deliveryTicket}" variableName="dateType" customText="{deliveryTicket.dateType}"/>
+								<!--<mx:RadioButton groupName="dateOptions"
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.TodaysDate')}" value="todayDate"/>-->
+								<components:CustomRadioButtonComponent groupName="dateOptions" value="deliveryDate"
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryDate')}"
+									dataHolder="{deliveryTicket}" variableName="dateType" customText="{deliveryTicket.dateType}"/>
+								<!--<mx:RadioButton groupName="dateOptions"
+									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryDate')}" value="deliveryDate"/>-->
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.PONumber')}"
 									dataHolder="{deliveryTicket}" variableName="poNumberCheck" customText="{deliveryTicket.poNumberCheck}"

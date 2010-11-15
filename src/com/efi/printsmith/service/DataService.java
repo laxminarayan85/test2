@@ -5090,7 +5090,7 @@ public class DataService extends HibernateService {
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<DeliveryTicketJobs> ticketJobsList = new ArrayList<DeliveryTicketJobs>();
 		try {
-			String queryString = "select job from DeliveryTicketJobs as job inner join job.parentDeliveryTicket as ticket where ticket.archive="+archive;
+			String queryString = "select job from DeliveryTicketJobs as job inner join job.parentDeliveryTicket as ticket where ticket.archive="+archive+" order by ticket.ticketNumber asc";
 			Query query = em.createQuery(queryString);
 			ticketJobsList = query.getResultList();
 		} catch (Exception e) {
