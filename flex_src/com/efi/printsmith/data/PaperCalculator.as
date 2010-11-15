@@ -63,6 +63,7 @@ package com.efi.printsmith.data
 		public var swap:Boolean = false;
 		public var runout:int = 0;
 		public var runAndTumble:Boolean = false;
+		public var finishout:int = 0;
 	
 	}
 }

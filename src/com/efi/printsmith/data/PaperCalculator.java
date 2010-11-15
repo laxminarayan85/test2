@@ -245,6 +245,11 @@ public class PaperCalculator extends ModelBase {
   public static final String RUNANDTUMBLE = "RunAndTumble";
 
 	/**
+   * @generated
+   */
+  public static final String FINISHOUT = "Finishout";
+
+	/**
 	 * @generated
 	 */
 	public PaperCalculator() {
@@ -1394,6 +1399,28 @@ public class PaperCalculator extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer finishout;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getFinishout(){
+    return finishout; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinishout(Integer newVal) {
+    this.finishout = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -1448,6 +1475,7 @@ public class PaperCalculator extends ModelBase {
     if (SWAP.equals(propertyName)) return getSwap();
     if (RUNOUT.equals(propertyName)) return getRunout();
     if (RUNANDTUMBLE.equals(propertyName)) return getRunAndTumble();
+    if (FINISHOUT.equals(propertyName)) return getFinishout();
     return super.getProperty(propertyName);
   }
 	
@@ -1506,6 +1534,7 @@ public class PaperCalculator extends ModelBase {
     if (SWAP.equals(propertyName)) setSwap((Boolean)newValue); else
     if (RUNOUT.equals(propertyName)) setRunout((Integer)newValue); else
     if (RUNANDTUMBLE.equals(propertyName)) setRunAndTumble((Boolean)newValue); else
+    if (FINISHOUT.equals(propertyName)) setFinishout((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1613,6 +1642,8 @@ public class PaperCalculator extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (RUNANDTUMBLE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (FINISHOUT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1672,6 +1703,7 @@ public class PaperCalculator extends ModelBase {
     if (SWAP.equals(propertyName)) return PaperCalculator.class;
     if (RUNOUT.equals(propertyName)) return PaperCalculator.class;
     if (RUNANDTUMBLE.equals(propertyName)) return PaperCalculator.class;
+    if (FINISHOUT.equals(propertyName)) return PaperCalculator.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1780,6 +1812,8 @@ public class PaperCalculator extends ModelBase {
     if (! SmartEquals(getRunout(), objT.getRunout()))
       return false;
     if (! SmartEquals(getRunAndTumble(), objT.getRunAndTumble()))
+      return false;
+    if (! SmartEquals(getFinishout(), objT.getFinishout()))
       return false;
     return true;
   }			
