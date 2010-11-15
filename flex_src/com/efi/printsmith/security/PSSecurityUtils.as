@@ -17,7 +17,12 @@ package com.efi.printsmith.security
 		}
 		
 
-		
+		public function hasPermission(commandId:String):Boolean	{
+			if (Snowmass.getInstance().permissions.contains(commandId))	{
+				return true;	
+			}			
+			return false;
+		}
 
 		public function checkSecurityAccess(secureComponent:ISecureComponent = null):Boolean	{
 			var retVal:Boolean = false;
