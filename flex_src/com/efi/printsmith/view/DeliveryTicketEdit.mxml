@@ -6,10 +6,13 @@
     
     <mx:Script source="../common/scripts/ComponentHelper.as"/>
     
+    <mx:Script source="../common/scripts/CommonUtils.as"/>
+    
     <mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
     	<mx:method name="getDeliveryTicketById" fault="handleFault(event)" result="handleLoadDeliveryTicketResult(event)"/>
     	<mx:method name="saveDeliveryTicket" fault="handleFault(event)" result="handleSaveResult(event)"/>
     	<mx:method name="addUpdate" fault="handleFault(event)"/>
+    	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
     </mx:RemoteObject>
     
     <mx:RemoteObject id="dataServiceInvoice" destination="dataService" showBusyCursor="true">
@@ -42,6 +45,8 @@
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import mx.utils.StringUtil;
+		import com.efi.printsmith.events.DeliveryTicketUpdateEvent;
 		import com.efi.printsmith.data.ProductionLocations;
 		import com.efi.printsmith.data.Driver;
 		import com.efi.printsmith.data.ShippingMethod;
@@ -160,6 +165,7 @@
 				for each(var deliveryTicketJobsObj:DeliveryTicketJobs in deliveryTicket.deliveryJobs){
 					copyToAddressList(deliveryTicketJobsObj.account);
 				}
+				toAddress_combo.customText = getCustomTextData(toContactList,deliveryTicket,deliveryTicket.toAddress);
 			}
 			dataServicePreferenceSystem.getSingle("PreferencesSystem");
 		}
@@ -252,6 +258,8 @@
 						addressList.addItem(addressObj);
 					}
 				}
+				attnContact_combo.customText = getCustomTextData(attnList,deliveryTicket,deliveryTicket.deliveryContact);
+				setSelectedItem();
 			}
 		}
 		
@@ -299,6 +307,7 @@
 		
 		private function handleSaveResult(event:ResultEvent):void {
 			dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
+			dispatchEvent(new DeliveryTicketUpdateEvent(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,true));
 			callLater(closeWindow);
 		}
 		
@@ -546,6 +555,15 @@
 			return false;
 		}
 		
+		private function doDelete():void {
+			dataService.deleteItem("DeliveryTicket",deliveryTicket.id);
+		}
+		
+		private function handleDeleteResult(event:ResultEvent):void {
+			dispatchEvent(new DeliveryTicketUpdateEvent(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,true));
+			callLater(closeWindow);
+		}
+		
 	]]>
 	                             
 	</mx:Script>
@@ -559,9 +577,12 @@
 			<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 		</mx:Button>
 		<mx:Spacer width="70%"/>
-		<mx:Button width="10%" height="100%">
+		<components:CustomDeleteButtonComponent width="10%" height="100%" 
+			clickFuncName="doDelete" deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryTicket')}"
+			enabled="{!isNaN(deliveryTicket.id) &amp;&amp; deliveryTicket.id!=0}"/>
+		<!--<mx:Button width="10%" height="100%" click="{doDelete()}">
 			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
-		</mx:Button>
+		</mx:Button>-->
 	</mx:HBox>
 	
 	<mx:HBox width="100%" height="3%">
@@ -582,7 +603,7 @@
 		</mx:HBox>
 		<mx:HBox width="100%" height="50%" horizontalGap="1">
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Description')}:" width="20%" textAlign="right"/>
-			<components:CustomStringTextInputComponent
+			<components:CustomStringTextInputComponent allowSpecialCharacters="true"
 				dataHolder="{deliveryTicket}" variableName="name" customText="{deliveryTicket.name}" width="80%"/>
 		</mx:HBox>
 	</mx:VBox>
@@ -679,7 +700,7 @@
 				<mx:VBox width="33%" height="100%">
 					<mx:HBox width="100%" height="20%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.To')}:"/>
-						<components:CustomComboBoxComponent
+						<components:CustomComboBoxComponent id="toAddress_combo"
 							dataHolder="{deliveryTicket}" variableName="toAddress" updateObject="true" objectLabelFieldId="id"
 							labelFieldId="id" labelFieldName="name" masterList="{toContactList}"
 							customText="{getCustomTextData(toContactList,deliveryTicket,deliveryTicket.toAddress)}"
@@ -694,7 +715,7 @@
 				<mx:VBox width="33%" height="100%">
 					<mx:HBox width="100%" height="10%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Attn')}:"/>
-						<components:CustomComboBoxComponent
+						<components:CustomComboBoxComponent id="attnContact_combo"
 							dataHolder="{deliveryTicket}" variableName="deliveryContact" updateObject="true" objectLabelFieldId="id"
 							labelFieldId="id" labelFieldName="name" labelFunction="getDeliveryContactName" masterList="{attnList}"
 							customText="{getCustomTextData(attnList,deliveryTicket,deliveryTicket.deliveryContact)}"

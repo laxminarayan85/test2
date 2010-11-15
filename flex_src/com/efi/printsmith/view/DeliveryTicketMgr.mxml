@@ -3,16 +3,14 @@
 	width="100%" height="100%"
 	headerHeight="0" preinitialize="preInit();" creationComplete="{init()}"
 	implements="com.efi.printsmith.security.ISecureComponent" title="Delivery Ticket"
-	xmlns:ns1="com.efi.printsmith.components.*">
+	xmlns:ns1="com.efi.printsmith.components.*" xmlns:filter="com.efi.printsmith.common.components.filter.*">
 	
 	<mx:Script source="../security/PSSecurityInclude.as" />
 	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getDeliveryTicketJobs" fault="handleFault(event)" result="handleLoadResult(event)" />
-		<mx:method name="addUpdate" fault="handleFault(event)"
-			result="handleSaveResult(event)" />
-		<mx:method name="deleteItem" fault="handleFault(event)"
-			result="handleDeleteResult(event)" />
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)" />
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleDeleteResult(event)" />
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceBroker" destination="dataService">
@@ -26,6 +24,12 @@
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.common.components.filter.FilterSearchBy;
+		import com.efi.printsmith.common.components.filter.FilterProperty;
+		import com.efi.printsmith.events.DeliveryTicketUpdateEvent;
+		import mx.utils.StringUtil;
+		import mx.events.CloseEvent;
+		import mx.core.Application;
 		import mx.events.FlexEvent;
 		import com.efi.printsmith.security.PSSecurityCommands;
 		import com.efi.mdi.view.window.MDIWindow;
@@ -55,6 +59,7 @@
 		
 		private function doNew():void{
 		    var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
+		    deliveryTicketEditWindow.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
 		    deliveryTicketEditWindow.setDeliveryTicket(new DeliveryTicket());
 			deliveryTicketEditWindow.setStyle("borderAlpha", 0.9);
 		 //	deliveryTicketEditWindow.setJob(job);
@@ -66,8 +71,9 @@
 			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 			mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"deliveryTicketMgrCmd.DeliveryTicketManage");		
 			deliveryTickets = new ArrayCollection();
-			deliveryTicketLines.filterFunction = ticketJobFilter;
 			brokersList = new ArrayCollection();
+			this.throbber.visible = true;
+			this.throbber.play();
 			dataService.getDeliveryTicketJobs(false);
 			dataServiceBroker.getAll("Broker");
 		}
@@ -84,26 +90,43 @@
 			if(dataGrid.selectedIndex>-1 && dataGrid.selectedItem!=null){
 				var selectedDeliveryTicketJob:DeliveryTicketJobs = dataGrid.selectedItem as DeliveryTicketJobs;
 				var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
+				deliveryTicketEditWindow.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
 				deliveryTicketEditWindow.setDeliveryTicket(selectedDeliveryTicketJob.parentDeliveryTicket);
 				deliveryTicketEditWindow.setStyle("borderAlpha", 0.9);
 			}
 			
 		}
+		
+		private function updateDataList(event:DeliveryTicketUpdateEvent):void {
+			this.throbber.visible = true;
+			this.throbber.play();
+			dataService.getDeliveryTicketJobs(false);
+		}
+		
 		private function handleFault(ev:FaultEvent):void
 		{
 			var message:String;
 			message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
 			Alert.show(message, "Error", 0, null);
 		}
+		
 		private function handleLoadResult(ev:ResultEvent):void{
+			this.throbber.visible = false;
+			this.throbber.stop();
 			deliveryTicketLines = ev.result as ArrayCollection;
+			deliveryTicketLines.filterFunction = ticketJobFilter;
+			pickerFilter.clearFilter(deliveryTicketLines);
 		}
 		
 		private function handleSaveResult(ev:ResultEvent):void{
-			dataService.getAll("DeliveryTicketJobs");
+			this.throbber.visible = true;
+			this.throbber.play();
+			dataService.getDeliveryTicketJobs(false);
 		}
 		private function handleDeleteResult(ev:ResultEvent):void{
-			dataService.getAll("DeliveryTicketJobs");
+			this.throbber.visible = true;
+			this.throbber.play();
+			dataService.getDeliveryTicketJobs(false);
 		}
 		
 		private function handleLoadBrokersResult(ev:ResultEvent):void{
@@ -155,29 +178,96 @@
 			return dateFormatter.format(temp.parentDeliveryTicket.deliveryDate);
 		}
 		private function doDelete():void{
-			var tempdeliveryTicket:DeliveryTicket;
+			if(dataGrid.selectedIndices!=null && dataGrid.selectedIndices.length>0){
+				var deleteString:String = "";
+				if(dataGrid.selectedIndices.length==1) {
+					deleteString = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.TicketNumber'+": "+dataGrid.selectedItem.ticketNumber));
+				} else {
+					deleteString = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.SelectedDeliveryTick'));
+				}
+				Alert.show(deleteString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmDeleteHandler, null, Alert.NO);
+			}
+			
+		}
 		
-			lineItem = dataGrid.selectedItem as DeliveryTicketJobs;
-			tempdeliveryTicket = lineItem.parentDeliveryTicket as DeliveryTicket;
-			dataService.deleteItem(tempdeliveryTicket);
-			
+		private function confirmDeleteHandler(event:CloseEvent):void {
+			if(event.detail == Alert.YES) {
+				dataService.addUpdateDeleteList(null,dataGrid.selectedItems);
+			}
 		}
-		private function doSearch():void{
-			
-		}
+		
 		private function doArchive():void{
-			var tempdeliveryTicket:DeliveryTicket;
-		
-			lineItem = dataGrid.selectedItem as DeliveryTicketJobs;
-			tempdeliveryTicket = lineItem.parentDeliveryTicket as DeliveryTicket;
-			tempdeliveryTicket.archive = true;
-			dataService.addUpdate(tempdeliveryTicket);
+			if(dataGrid.selectedIndices!=null && dataGrid.selectedIndices.length>0){
+				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Doyoureallywanttoarc'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmArchiveHandler, null, Alert.NO);
+			}
 		}
+		
+		private function confirmArchiveHandler(event:CloseEvent):void {
+			if(event.detail == Alert.YES) {
+				var deliveryTicketObjects:ArrayCollection = new ArrayCollection();
+				for each(var obj:Object in dataGrid.selectedItems) {
+					obj.parentDeliveryTicket.archive = true;
+					deliveryTicketObjects.addItem(obj.parentDeliveryTicket);
+				}
+				dataService.addUpdateDeleteList(deliveryTicketObjects,null);
+			}
+		}
+		
 		private function doDeleteBroker():void{
 			var broker:Broker;
 		
 			broker = dataGrid.selectedItem as Broker;
 			dataServiceBroker.deleteItem(broker);
+		}
+		
+		private function refreshDataGrid():void {
+			dataGrid.invalidateList();
+			deliveryTicketLines.refresh();
+		}
+		
+		public function getDescription(item:Object):String {
+			if(item.completed){
+				item.description+" "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.done');
+			}
+			return item.description;
+		}
+		
+		private function getSearchBy():ArrayCollection {
+			var sc:ArrayCollection = new ArrayCollection();
+			
+			var fp:FilterProperty = new FilterProperty(new FilterProperty(null,"ticketNumber"), "parentDeliveryTicket");
+			var sc1:FilterSearchBy = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.TicketNo'), fp);
+			sc.addItem(sc1);
+			
+			fp = new FilterProperty(null, "invoiceNumber");
+			sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.InvEst'), fp);
+			sc.addItem(sc1);
+			
+			fp = new FilterProperty(null, "description");
+			sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Description'), fp);
+			sc.addItem(sc1);
+		
+			fp = new FilterProperty(new FilterProperty(null,"deliveryDate"), "parentDeliveryTicket");
+			sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Date'), fp);
+			sc1.searchFunction = dateComparison;
+			sc.addItem(sc1);
+	
+			fp = new FilterProperty(new FilterProperty(null,"title"), "account");
+			sc1 = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Account'), fp);
+			sc.addItem(sc1);
+			
+			return sc;
+	
+		}
+		
+		private function dateComparison(item:Object,typedText:String):Boolean {
+			if(item.parentDeliveryTicket.deliveryDate==null || typedText==null || StringUtil.trim(typedText)==""){
+				return true;
+			} 
+			if(dateFormatter.format(item.parentDeliveryTicket.deliveryDate).indexOf(typedText)==0){
+				return true;
+			}
+			return false;
 		}
 	
 	]]>
@@ -189,98 +279,110 @@
 		<mx:VBox width="100%" height="100%"
 			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.History')}">
 			
-			<mx:HBox width="100%">
-				<mx:Button height="38" width="38" click="doNew();">
+			<mx:HBox width="100%" height="10%">
+				<mx:Button height="100%" width="6%" click="{doNew()}">
 					<mx:icon>@Embed(source='../../../../assets/new.png')
 					</mx:icon>
 				</mx:Button>
-				<mx:Button height="38" width="38" click="doDelete()">
+				<mx:Button height="100%" width="6%" click="{doDelete()}">
 					<mx:icon>@Embed(source='../../../../assets/delete.png')
 					</mx:icon>
 				</mx:Button>
-				<mx:Button height="38" width="38" click="doArchive()">
+				<mx:Button height="100%" width="6%" click="{doArchive()}">
 					<mx:icon>@Embed(source='../../../../assets/archive_icons.png')
-					</mx:icon>
-				</mx:Button>
-				<mx:Button height="38" width="38" click="doSearch()">
-					<mx:icon>@Embed(source='../../../../assets/find.png')
 					</mx:icon>
 				</mx:Button>
 			</mx:HBox>
 			
-			<mx:DataGrid id="dataGrid" width="100%"
-				dataProvider="{deliveryTicketLines}" doubleClickEnabled="true" doubleClick="doDoubleClick()"
-				height="263">
-				<mx:columns>
-					<mx:DataGridColumn
-						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.DeliveryTicket')}"
-						labelFunction="getTicket">
-						<mx:itemRenderer>
-							<mx:Component>
-								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
-							</mx:Component>
-						</mx:itemRenderer>
-					</mx:DataGridColumn>
-					<mx:DataGridColumn
-						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.InvJob')}"
-						labelFunction="getInvJob">
-						<mx:itemRenderer>
-							<mx:Component>
-								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
-							</mx:Component>
-						</mx:itemRenderer>
-					</mx:DataGridColumn>
-					<mx:DataGridColumn
-						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Account')}"
-						labelFunction="getAccountName">
-						<mx:itemRenderer>
-							<mx:Component>
-								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
-							</mx:Component>
-						</mx:itemRenderer>
-					</mx:DataGridColumn>
-					<mx:DataGridColumn
-						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.ShipVia')}"
-						labelFunction="getShipVia">
-						<mx:itemRenderer>
-							<mx:Component>
-								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
-							</mx:Component>
-						</mx:itemRenderer>
-					</mx:DataGridColumn>
-					<mx:DataGridColumn
-						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.Driver')}"
-						labelFunction="getDriver">
-						<mx:itemRenderer>
-							<mx:Component>
-								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
-							</mx:Component>
-						</mx:itemRenderer>
-					</mx:DataGridColumn>
-					<mx:DataGridColumn
-						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.Description')}"
-						dataField="description">
-						<mx:itemRenderer>
-							<mx:Component>
-								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
-							</mx:Component>
-						</mx:itemRenderer>
-					</mx:DataGridColumn>
-					<mx:DataGridColumn
-						headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.DeliveryDate')}"
-						labelFunction="getDeliveryDate">
-						<mx:itemRenderer>
-							<mx:Component>
-								<mx:Label color="{data.parentDeliveryTicket.completed?0x00FF00:0x000000}"/>
-							</mx:Component>
-						</mx:itemRenderer>
-					</mx:DataGridColumn>
-				</mx:columns>
-			</mx:DataGrid>
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.NewTicket')}"
+					textAlign="center" width="6%"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Delete')}"
+					textAlign="center" width="6%"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Archive')}"
+					textAlign="center" width="6%"/>
+			</mx:HBox>
+			
+			
+			<mx:Canvas width="100%" height="100%">
+				<mx:DataGrid id="dataGrid" width="100%"
+					dataProvider="{deliveryTicketLines}" doubleClickEnabled="true" doubleClick="{doDoubleClick()}"
+					height="100%" allowMultipleSelection="true">
+					<mx:columns>
+						<mx:DataGridColumn
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.DeliveryTicket')}"
+							labelFunction="getTicket">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label color="{data.completed?0x00FF00:0x000000}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.InvJob')}"
+							labelFunction="getInvJob">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label color="{data.completed?0x00FF00:0x000000}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Account')}"
+							labelFunction="getAccountName">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label color="{data.completed?0x00FF00:0x000000}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.ShipVia')}"
+							labelFunction="getShipVia">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label color="{data.completed?0x00FF00:0x000000}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.Driver')}"
+							labelFunction="getDriver">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label color="{data.completed?0x00FF00:0x000000}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.Description')}"
+							dataField="description">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{outerDocument.getDescription(data)}" color="{data.completed?0x00FF00:0x000000}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn
+							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.DeliveryDate')}"
+							labelFunction="getDeliveryDate">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label color="{data.completed?0x00FF00:0x000000}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<ns1:SmallThrobber id="throbber" height="20" width="20" visible="false" horizontalCenter="0" verticalCenter="0"/>
+			</mx:Canvas>
 			
 			<mx:CheckBox
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Hidecompleteddeliver')}x"
-				id="hideCompleted" />
+				id="hideCompleted" click="{refreshDataGrid()}"/>
+				
+			<filter:PickerFilter id="pickerFilter" width="100%" height="5%" showExtendedSearch="false"
+				searchComponent="{dataGrid}" listData="{deliveryTicketLines}" searchCriteria="{getSearchBy()}" />
 		</mx:VBox>
 		<mx:Canvas label="Form Preferences" width="100%" height="100%">
 			<mx:DataGrid x="10" y="91" width="540" height="130">
@@ -306,34 +408,41 @@
 				</mx:icon>
 			</mx:Button>
 		</mx:Canvas>
-		<mx:Canvas label="Brokers" width="100%" height="100%">
-			<mx:Button id="cmdNewForm0" height="38" width="38" click=""
-				x="10" y="10">
-				<mx:icon>@Embed(source='../../../../assets/new.png')
-				</mx:icon>
-			</mx:Button>
-			<mx:Button id="cmdDeleteForm0" height="38" width="38"
-				click="" x="102" y="10">
-				<mx:icon>@Embed(source='../../../../assets/get.png')
-				</mx:icon>
-			</mx:Button>
-			<mx:Button id="cmdDeleteForm1" height="38" width="38"
-				click="doDeleteBroker" x="56" y="10">
-				<mx:icon>@Embed(source='../../../../assets/delete.png')
-				</mx:icon>
-			</mx:Button>
-			<mx:DataGrid x="10" y="89" width="540" height="81"
-				dataProvider="{brokersList}">
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Brokers')}" width="100%" height="100%">
+			<mx:HBox width="100%" height="10%">
+				<mx:Button width="6%" height="100%">
+					<mx:icon>@Embed(source='../../../../assets/new.png')
+					</mx:icon>
+				</mx:Button>
+				<mx:Button width="6%" height="100%">
+					<mx:icon>@Embed(source='../../../../assets/get.png')
+					</mx:icon>
+				</mx:Button>
+				<mx:Button width="6%" height="100%">
+					<mx:icon>@Embed(source='../../../../assets/delete.png')
+					</mx:icon>
+				</mx:Button>
+			</mx:HBox>
+			<mx:HBox width="100%" height="5%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Add')}"
+					width="6%" textAlign="center"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.FromCustomer')}"
+					width="6%" textAlign="center"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Delete')}"
+					width="6%" textAlign="center"/>
+			</mx:HBox>
+			<mx:DataGrid width="100%" height="55%" dataProvider="{brokersList}">
 				<mx:columns>
-					<mx:DataGridColumn headerText="Brokers"
-						dataField="firstName" />
+					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Brokers')}"
+						dataField="name" />
 				</mx:columns>
 			</mx:DataGrid>
-			<ns1:AddressEditor x="10" y="179"
-				id="ship_to_address_editor" addressLabel="Address" height="157"
-				width="325" />
-			<ns1:ContactInfoEditor x="343" y="178" height="157"
-				width="325" id="ship_to_contact_editor" contactLabel="Contact" />
-		</mx:Canvas>
+			<mx:HBox width="100%" height="30%">
+				<ns1:AddressEditor 
+					id="ship_to_address_editor" addressLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Address')}" width="30%" height="100%"/>
+				<ns1:ContactInfoEditor 
+					id="ship_to_contact_editor" contactLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Contact')}" width="30%" height="100%"/>
+			</mx:HBox>
+		</mx:VBox>
 	</mx:TabNavigator>
 </mx:Panel>
