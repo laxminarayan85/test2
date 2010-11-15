@@ -1799,7 +1799,22 @@
 				var copierDefinition:CopierDefinition = job_pricing_copier.selectedItem as CopierDefinition;
 				jobService.assignPricingCopierToJob(this.job, copierDefinition);
 				this.checkCopierSize();
+				var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
+				this.job_costing_copier.selectedIndex = findItemById(copier.id,costingCopiers);
+				if (this.job_costing_copier.selectedIndex == -1) {
+					copier.costingCopy = true;
+					this.job_costing_copier.selectedIndex = findItemById(copier.id,costingCopiers);
+				}
 				this.updatePrice();			
+			}
+			
+			private function changePricingPress():void {
+				var press:PressDefinition = this.job_pricing_press.selectedItem as PressDefinition;
+				this.job_costing_press.selectedIndex = findItemById(press.id,costingPresses);
+				if (this.job_costing_press.selectedIndex == -1) {
+					press.costingPress = true;
+					this.job_costing_press.selectedIndex = findItemById(press.id,costingPresses);
+				}
 			}
 			
 			private function updatePrice():void
@@ -2380,7 +2395,12 @@
 					costingPresses.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultSheetFedPress != null) {
 						this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, presses);
-						this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, presses);
+						this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, costingPresses);
+						if (this.job_costing_press.selectedIndex == -1) {
+							var press:PressDefinition = this.job_pricing_press.selectedItem as PressDefinition;
+							press.costingPress = true;
+							this.job_costing_press.selectedIndex = findItemById(press.id, costingPresses);
+						}
 					}
 				} else if (pricingMethod.title == "Roll-Fed") {
 					this.currentState = "LargeFormat";
@@ -2400,7 +2420,12 @@
 					costingCopiers.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultBWCopier != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);	
-						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);
+						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, costingCopiers);
+						if (this.job_costing_copier.selectedIndex == -1) {
+							var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
+							copier.costingCopy = true;
+							this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
+						}
 					}			
 				} else if (pricingMethod.title == "Color") {
 					this.currentState = "CopyMethod";
@@ -2411,7 +2436,12 @@
 					costingCopiers.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultColorCopier != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, copiers);	
-						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, copiers);
+						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, costingCopiers);
+						if (this.job_costing_copier.selectedIndex == -1) {
+							var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
+							copier.costingCopy = true;
+							this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
+						}
 					}	
 				} else if (pricingMethod.title == "Large Format") {
 					this.currentState = "LargeFormat";
@@ -2422,7 +2452,12 @@
 					costingCopiers.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultLargeFormat != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);
-						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);
+						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, costingCopiers);
+						if (this.job_costing_copier.selectedIndex == -1) {
+							var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
+							copier.costingCopy = true;
+							this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
+						}
 					}				
 				} else if (pricingMethod.title == "Charges Only") {
 					this.currentState = "ChargesOnly";
@@ -3494,7 +3529,7 @@
 													 dataProvider="{presses}"
 													 labelField="name"
 													 tabIndex="16"
-													 fontSize="9"/>
+													 fontSize="9" change="changePricingPress()"/>
 									<mx:Label x="10"
 											  y="7"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PricingPress')}"
