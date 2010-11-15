@@ -59,6 +59,7 @@
 			public function saveAddressHandler(evt:SaveAddressEvent):void {
 				this.address = evt.address;
 				updateDisplayAddress();
+				dispatchEvent(evt);
 			}
 			
 			public function getAddress():Address

@@ -5186,5 +5186,26 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+	
+	public List<Broker> getBrokers() throws Exception {
+		log.debug("** getBrokers called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		List<Broker> resultList = new ArrayList<Broker>();
+		try {
+
+			Query findAllQuery = em.createQuery("from Broker fetch all properties order by orderby,id");
+			resultList = findAllQuery.getResultList();
+			for (Broker broker : resultList) {
+				Hibernate.initialize(broker.getComLinks());
+			}
+			if (resultList != null)
+				log.debug("** Found " + resultList.size() + "records:");
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			em.close();
+		}
+		return resultList;
+	}
 
 }

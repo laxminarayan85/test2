@@ -43,6 +43,10 @@
 		<mx:method name="getContactById" fault="handleFault(event)" result="handleLoadContactResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServiceBroker" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadBrokerResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script>                                   
 	<![CDATA[
 		import mx.utils.StringUtil;
@@ -172,6 +176,9 @@
 		
 		private function handleLoadPSResult(event:ResultEvent):void {
 			var preferencesSystem:PreferencesSystem = event.result as PreferencesSystem;
+			var emptyFromContact:Address = new Address();
+			emptyFromContact.id=0;
+			fromContactList.addItemAt(emptyFromContact,0);
 			if(preferencesSystem!=null && preferencesSystem.companyAddress!=null){
 				fromContactList.addItem(preferencesSystem.companyAddress);
 				if(isNaN(deliveryTicket.id) || deliveryTicket.id==0){
@@ -181,10 +188,19 @@
 					from_address.setAddress(deliveryTicket.fromAddress);
 				}
 			}
-			var emptyFromContact:Address = new Address();
-			emptyFromContact.id=0;
-			fromContactList.addItemAt(emptyFromContact,0);
-			
+			dataServiceBroker.getAll("Broker");	
+		}
+		
+		private function handleLoadBrokerResult(event:ResultEvent):void {
+			var brokerList:ArrayCollection = event.result as ArrayCollection;
+			if(brokerList!=null && brokerList.length>0){
+				for each(var broker:Broker in brokerList) {
+					if(broker.address!=null) {
+						fromContactList.addItem(broker.address);
+					}
+				}
+				fromAddress_combo.customText = getCustomTextData(fromContactList,deliveryTicket,deliveryTicket.fromAddress);
+			}
 		}
 		
 		private function handleLoadResult(event:ResultEvent):void {
@@ -685,7 +701,7 @@
 				<mx:VBox width="33%" height="100%">
 					<mx:HBox width="100%" height="20%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.From')}:"/>
-						<components:CustomComboBoxComponent
+						<components:CustomComboBoxComponent id="fromAddress_combo"
 							dataHolder="{deliveryTicket}" variableName="fromAddress" updateObject="true" objectLabelFieldId="id"
 							labelFieldId="id" labelFieldName="name" masterList="{fromContactList}"
 							customText="{getCustomTextData(fromContactList,deliveryTicket,deliveryTicket.fromAddress)}"

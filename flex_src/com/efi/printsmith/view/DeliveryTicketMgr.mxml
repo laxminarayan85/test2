@@ -9,21 +9,29 @@
 	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getDeliveryTicketJobs" fault="handleFault(event)" result="handleLoadResult(event)" />
+		<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountsResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)" />
 		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleDeleteResult(event)" />
 	</mx:RemoteObject>
 	
-	<mx:RemoteObject id="dataServiceBroker" destination="dataService">
-		<mx:method name="getAll" fault="handleFault(event)"
-			result="handleLoadBrokersResult(event)" />
-		<mx:method name="addUpdate" fault="handleFault(event)"
-			result="handleSaveBrokerResult(event)" />
-		<mx:method name="deleteItem" fault="handleFault(event)"
-			result="handleDeleteBrokerResult(event)" />
+	<mx:RemoteObject id="dataServiceBroker" destination="dataService" showBusyCursor="true">
+		<mx:method name="getBrokers" fault="handleFault(event)" result="handleLoadBrokersResult(event)" />
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveBrokerResult(event)" />
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteBrokerResult(event)" />
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceContact" destination="dataService" showBusyCursor="true">
+		<mx:method name="getContactById" fault="handleFault(event)" result="handleLoadContactResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.data.ComLink;
+		import com.efi.printsmith.events.AccountPickerSelectEvent;
+		import com.efi.printsmith.events.SaveAddressEvent;
+		import com.efi.printsmith.events.SaveContactEvent;
+		import com.efi.printsmith.data.Contact;
+		import com.efi.printsmith.data.Address;
 		import com.efi.printsmith.common.components.filter.FilterSearchBy;
 		import com.efi.printsmith.common.components.filter.FilterProperty;
 		import com.efi.printsmith.events.DeliveryTicketUpdateEvent;
@@ -54,8 +62,15 @@
 		[Bindable]
 		private var deliveryTickets:ArrayCollection=new ArrayCollection();
 		
-	   [Bindable]
-		private var lineItem:DeliveryTicketJobs;	
+	   [Bindable] private var lineItem:DeliveryTicketJobs;
+	   
+	   [Bindable] private var broker:Broker;	
+	   
+	   [Bindable] private var accounts:ArrayCollection = new ArrayCollection();
+	   
+	   private var savedBrokerId:int;
+	   
+	   private var newBrokerObj:Broker;
 		
 		private function doNew():void{
 		    var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
@@ -74,8 +89,13 @@
 			brokersList = new ArrayCollection();
 			this.throbber.visible = true;
 			this.throbber.play();
+			this.throbber_broker.visible = true;
+			this.throbber_broker.play();
+			ship_to_contact_editor.addEventListener("SaveContactEvent",saveContactToBrokerHandler,false,0,true);
+			ship_to_address_editor.addEventListener("SaveAddressEvent",saveAddressToBrokerHandler,false,0,true);
+			dataService.getAccountPicker();
 			dataService.getDeliveryTicketJobs(false);
-			dataServiceBroker.getAll("Broker");
+			dataServiceBroker.getBrokers();
 		}
 		
 		private function ticketJobFilter(item:Object):Boolean {
@@ -130,13 +150,39 @@
 		}
 		
 		private function handleLoadBrokersResult(ev:ResultEvent):void{
+			this.throbber_broker.visible = false;
+			this.throbber_broker.stop();
 			brokersList = ev.result as ArrayCollection;
+			if(savedBrokerId!=0){
+				var counter:int=0;
+				for each(var brokerObj:Broker in brokersList){
+					if(brokerObj.id == savedBrokerId){
+						brokerGrid.selectedIndex = counter;
+						broker = brokerObj;
+						ship_to_address_editor.setAddress(broker.address);
+						ship_to_contact_editor.setContact(copyBrokerToContact(broker));
+					}
+					counter++;
+				}
+				savedBrokerId=0;
+			}
 		}
 		private function handleDeleteBrokerResult(ev:ResultEvent):void{
-			dataServiceBroker.getAll("Broker");
+			broker = null;
+			ship_to_address_editor.setAddress(null);
+			ship_to_contact_editor.setContact(null);
+			this.throbber_broker.visible = true;
+			this.throbber_broker.play();
+			dataServiceBroker.getBrokers();
 		}
 		private function handleSaveBrokerResult(ev:ResultEvent):void{
-			dataServiceBroker.getAll("Broker");
+			broker = null;
+			ship_to_address_editor.setAddress(null);
+			ship_to_contact_editor.setContact(null);
+			this.throbber_broker.visible = true;
+			this.throbber_broker.play();
+			savedBrokerId = ev.result.id;
+			dataServiceBroker.getBrokers();
 		}
 	
 		private function getTicket(item:Object, column:DataGridColumn):String{
@@ -214,10 +260,16 @@
 		}
 		
 		private function doDeleteBroker():void{
-			var broker:Broker;
+			if(broker!=null && broker.address!=null){
+				var deleteString:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0'),broker.address.name); 
+				Alert.show(deleteString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmDeleteBrokerHandler, null, Alert.NO);
+			}
+		}
 		
-			broker = dataGrid.selectedItem as Broker;
-			dataServiceBroker.deleteItem(broker);
+		private function confirmDeleteBrokerHandler(event:CloseEvent):void {
+			if(event.detail == Alert.YES){
+				dataServiceBroker.deleteItem("Broker",broker.id);
+			}
 		}
 		
 		private function refreshDataGrid():void {
@@ -269,13 +321,112 @@
 			}
 			return false;
 		}
+		
+		private function doNewBroker():void {
+			var newBroker:Broker = new Broker();
+			var address:Address = new Address();
+			address.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd._BrokerName_');
+			newBroker.address = address;
+			dataServiceBroker.addUpdate(newBroker);
+		}
+		
+		private function brokerItemClickHandler(event:Event):void {
+			if(event.currentTarget.selectedIndex>-1 && event.currentTarget.selectedItem!=null){ 
+				broker = event.currentTarget.selectedItem as Broker;
+				ship_to_address_editor.setAddress(broker.address);
+				ship_to_contact_editor.setContact(copyBrokerToContact(broker));
+			}
+		}
+		
+		private function copyBrokerToContact(brokerObj:Broker):Contact {
+			var contactObj:Contact = new Contact();
+			if(brokerObj!=null){
+				contactObj.prefix = brokerObj.prefix;
+				contactObj.suffix = brokerObj.suffix;
+				contactObj.salutation = brokerObj.salutation;
+				contactObj.jobTitle = brokerObj.jobTitle;
+				contactObj.lastName = brokerObj.lastName;
+				contactObj.firstName = brokerObj.firstName;
+				contactObj.comLinks = brokerObj.comLinks;
+			}
+			return contactObj;
+		} 
+		
+		private function copyContactToBroker(contactObj:Contact, brokerObj:Broker):void {
+			if(brokerObj!=null && contactObj!=null){
+				brokerObj.prefix = contactObj.prefix;
+				brokerObj.suffix = contactObj.suffix;
+				brokerObj.salutation = contactObj.salutation;
+				brokerObj.jobTitle = contactObj.jobTitle;
+				brokerObj.lastName = contactObj.lastName;
+				brokerObj.firstName = contactObj.firstName;
+				brokerObj.comLinks = contactObj.comLinks;
+			}
+		} 
+		
+		private function saveContactToBrokerHandler(event:SaveContactEvent):void {
+			if(broker!=null){
+				copyContactToBroker(event.contact,broker);
+				dataServiceBroker.addUpdate(broker);
+			}
+		}
+		
+		private function saveAddressToBrokerHandler(event:SaveAddressEvent):void {
+			if(broker!=null){
+				broker.address = event.address;
+				dataServiceBroker.addUpdate(broker);
+			}
+		}
+		
+		private function handleLoadAccountsResult(ev:ResultEvent):void {
+			accounts = ev.result as ArrayCollection;
+		}
+		
+		private function doGetAccount():void {
+			var accountPickerWindow:AccountPicker=AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+			accountPickerWindow.setStyle("borderAlpha", 0.9);
+			accountPickerWindow.setAccounts(accounts);
+			accountPickerWindow.showCustomersButton = false;
+			accountPickerWindow.showProspectButton = false;
+			accountPickerWindow.showContactButton = false;
+			accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect, false, 0, true);
+		} 
+		
+		private function handleAccountPickerSelect(event:AccountPickerSelectEvent):void {
+			if(event.account!=null){
+				newBrokerObj = new Broker();
+				if(event.account.shipToAddress!=null){
+					newBrokerObj.address = event.account.shipToAddress;
+				} else {
+					newBrokerObj.address = new Address();
+				}
+				if(event.account.contact!=null){
+					dataServiceContact.getContactById(event.account.contact.id);
+				}
+			}
+		}
+		
+		private function handleLoadContactResult(event:ResultEvent):void {
+			if(newBrokerObj!=null){
+				var contactObj:Contact = event.result as Contact;
+				copyContactToBroker(contactObj,newBrokerObj);
+				if(newBrokerObj.comLinks!=null){
+					for each(var comLink:ComLink in newBrokerObj.comLinks){
+						comLink.id = 0;
+						comLink.created = null;
+						comLink.modified = null;
+					}
+				}
+				dataServiceBroker.addUpdate(newBrokerObj);
+			}
+		}
 	
 	]]>
 	</mx:Script>
 	
 	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY"/>
 	
-	<mx:TabNavigator width="100%" height="100%">
+	<mx:TabNavigator width="100%" height="100%" creationPolicy="all">
 		<mx:VBox width="100%" height="100%"
 			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.History')}">
 			
@@ -410,15 +561,15 @@
 		</mx:Canvas>
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Brokers')}" width="100%" height="100%">
 			<mx:HBox width="100%" height="10%">
-				<mx:Button width="6%" height="100%">
+				<mx:Button width="6%" height="100%" click="{doNewBroker()}">
 					<mx:icon>@Embed(source='../../../../assets/new.png')
 					</mx:icon>
 				</mx:Button>
-				<mx:Button width="6%" height="100%">
+				<mx:Button width="6%" height="100%" click="{doGetAccount()}">
 					<mx:icon>@Embed(source='../../../../assets/get.png')
 					</mx:icon>
 				</mx:Button>
-				<mx:Button width="6%" height="100%">
+				<mx:Button width="6%" height="100%" click="{doDeleteBroker()}">
 					<mx:icon>@Embed(source='../../../../assets/delete.png')
 					</mx:icon>
 				</mx:Button>
@@ -431,16 +582,24 @@
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Delete')}"
 					width="6%" textAlign="center"/>
 			</mx:HBox>
-			<mx:DataGrid width="100%" height="55%" dataProvider="{brokersList}">
-				<mx:columns>
-					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Brokers')}"
-						dataField="name" />
-				</mx:columns>
-			</mx:DataGrid>
+			<mx:Canvas width="100%" height="55%">
+				<mx:DataGrid id="brokerGrid" width="100%" height="100%" dataProvider="{brokersList}" itemClick="{brokerItemClickHandler(event)}">
+					<mx:columns>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Brokers')}">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{data.address.name}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<ns1:SmallThrobber id="throbber_broker" height="20" width="20" visible="false" horizontalCenter="0" verticalCenter="0"/>
+			</mx:Canvas>
 			<mx:HBox width="100%" height="30%">
-				<ns1:AddressEditor 
+				<ns1:AddressEditor enableEditBtn="{broker!=null}"
 					id="ship_to_address_editor" addressLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Address')}" width="30%" height="100%"/>
-				<ns1:ContactInfoEditor 
+				<ns1:ContactInfoEditor enableEditBtn="{broker!=null}"
 					id="ship_to_contact_editor" contactLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Contact')}" width="30%" height="100%"/>
 			</mx:HBox>
 		</mx:VBox>
