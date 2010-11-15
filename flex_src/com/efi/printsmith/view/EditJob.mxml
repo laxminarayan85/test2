@@ -1955,12 +1955,12 @@
 					}
 					
 					intValue = results.getItemAt(14) as Number;		// finishOut
-			//		job.pa finishOut = intValue;
+			    	job.paperCal.finishOut = intValue;
 					if (job.orUp == 0)
 						job.numUp = intValue;
 					
-					job.paperCal.runout = job.numUp;		// TEMP
-					job.paperCal.sheetsOut = job.paperCal.runout;
+					//job.paperCal.runout = job.numUp;		// TEMP
+					job.paperCal.sheetsOut = job.numUp;
 					
 					// cut counts, the override logic is handled in JAVA
 					intValue = results.getItemAt(1) as Number;
