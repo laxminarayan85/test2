@@ -680,13 +680,13 @@
 			}
 		}
 		this.matrix.elements.filterFunction = filterMatrix;
-		if (newMatrix == false) {
+		/*if (newMatrix == false) {
 			var sortField:SortField = new SortField("qty");
 			sortField.numeric = true;
 			var sort:Sort = new Sort();
 			sort.fields = [sortField];
 			this.matrix.elements.sort = sort;
-		}
+		}*/
 		this.matrix.elements.refresh();
 	}   
 	
