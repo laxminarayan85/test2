@@ -1,20 +1,32 @@
 package com.efi.printsmith.pricing.utilities;
 
-import java.text.ParseException;
-import java.util.List;
-
+import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.Job;
-import com.efi.printsmith.data.JobBase;
-import com.efi.printsmith.data.PriceList;
-import com.efi.printsmith.data.PriceListBase;
-import com.efi.printsmith.data.PriceListElement;
-import com.efi.printsmith.data.SpeedTable;
-import com.efi.printsmith.data.Dimension;
-import com.efi.printsmith.data.StockDefinition;
+import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.data.enums.RunMethod;
-import com.efi.printsmith.migration.Utilities;
 
 public class JobUtilities {
+	static public void calculateBinderyWaste(Job job) {
+		long binderyWaste = 0;
+		
+		if (!job.getBinderyWasteOverride()) {
+			if (job.getCharges() != null) {
+				for (int i=0; i < job.getCharges().size(); i++) {
+					Charge charge = job.getCharges().get(i);
+					
+					if (charge.getChargeDefinition() != null && charge.getChargeDefinition().getWasteChart() != null) {
+						WasteChart wasteChart = charge.getChargeDefinition().getWasteChart();
+						
+						double wastePercentage = PriceListUtilities.getWastePercentage(wasteChart, job.getPressQty());
+						
+						binderyWaste = (long)(wastePercentage * job.getPressQty());
+					}
+				}
+			}
+		}
+		job.setBinderyWaste(binderyWaste);
+	}
+	
 	static public void calculateSignatures(Job job) {
 		double runs;
 		long iup, ion, iorigs, ordered, press, xpress, xorig, xup;

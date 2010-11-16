@@ -40,7 +40,8 @@ public class PricingService extends SnowmassHibernateService {
 		 PriceJobEngine.priceJob(job);
 		}	
 		PricingRecord pricingRecord = job.getPricingRecord();
-		
+		JobUtilities.calculateBinderyWaste(job);
+
 		if (job.getCharges() != null) {
 			for (int i=0; i < job.getCharges().size(); i++) {
 				Charge charge = job.getCharges().get(i);

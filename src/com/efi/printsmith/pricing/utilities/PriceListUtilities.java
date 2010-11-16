@@ -39,6 +39,16 @@ public class PriceListUtilities {
 		return retVal;
 	}
 
+	static public double getWastePercentage(PriceListBase priceList, long runLength) {
+		double retVal = 0.0;
+		
+		if (priceList == null) return retVal;
+		
+		retVal = PriceListUtilities.lookupPrice(priceList, runLength);
+		
+		return retVal;
+	}
+	
 	static public double lookupPaperPrice(PriceListBase priceList, long copies,
 		long colors, long side) {
 		double retVal = 0.0;
@@ -169,8 +179,8 @@ public class PriceListUtilities {
 				qty = lookupQty - elements.get(base).getQuantity();
 
 				if (qty != 0) {
-					long qtyRange = elements.get(base).getQuantity()
-							- elements.get(last).getQuantity();
+					long qtyRange = elements.get(last).getQuantity()
+							- elements.get(base).getQuantity();
 					long lookupRange = qty - elements.get(last).getQuantity();
 					double priceRange = elements.get(last).getAmount()
 							.doubleValue()
