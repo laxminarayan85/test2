@@ -183,7 +183,7 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 				else
 					markup = matrixElement.getPrice1().doubleValue();
 				pricePerCopy = copierDefinition.getMachineCostPerCopy().doubleValue() * markup;
-				pricePerCopy *= copierDefinition.getCopyMarkup2();
+				pricePerCopy *= copierDefinition.getCopyMarkup();
 				
 				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 				if (job.getDoubleSided()) {
