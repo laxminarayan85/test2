@@ -13,9 +13,9 @@ package com.efi.printsmith.data
 			remoteObjectName = "com.efi.printsmith.data.CuttingCharge";
 		}
 		public override var isDeleted:Boolean=false;
-			
-		public var overrideCuts:Boolean = false;	
+				
 		public var cuts:int = 0;
-		
+		public var overrideCuts:Boolean = false;
+	
 	}
 }

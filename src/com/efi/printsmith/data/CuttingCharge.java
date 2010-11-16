@@ -52,6 +52,11 @@ public class CuttingCharge extends Charge {
 	public static final String CUTS = "Cuts";
 
 	/**
+   * @generated
+   */
+  public static final String OVERRIDECUTS = "OverrideCuts";
+
+	/**
 	 * @generated
 	 */
 	public CuttingCharge() {
@@ -75,27 +80,7 @@ public class CuttingCharge extends Charge {
   }
 
 
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Boolean overrideCuts;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getOverrideCuts(){
-    return overrideCuts; 
-  }
 
-	
-	/**
-	 * @generated
-	 */	
-	public void setOverrideCuts(Boolean newVal) {
-    this.overrideCuts = newVal;
-  }
-	
 	/**
 	 * @generated
 	 */	
@@ -118,12 +103,35 @@ public class CuttingCharge extends Charge {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean overrideCuts;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getOverrideCuts(){
+    return overrideCuts; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOverrideCuts(Boolean newVal) {
+    this.overrideCuts = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (CUTS.equals(propertyName)) return getCuts();
+    if (OVERRIDECUTS.equals(propertyName)) return getOverrideCuts();
     return super.getProperty(propertyName);
   }
 	
@@ -134,6 +142,7 @@ public class CuttingCharge extends Charge {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (CUTS.equals(propertyName)) setCuts((Integer)newValue); else
+    if (OVERRIDECUTS.equals(propertyName)) setOverrideCuts((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -145,6 +154,8 @@ public class CuttingCharge extends Charge {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (CUTS.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
+    if (OVERRIDECUTS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -156,6 +167,7 @@ public class CuttingCharge extends Charge {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (CUTS.equals(propertyName)) return CuttingCharge.class;
+    if (OVERRIDECUTS.equals(propertyName)) return CuttingCharge.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -168,6 +180,8 @@ public class CuttingCharge extends Charge {
       return false;
     CuttingCharge objT = (CuttingCharge)obj;
     if (! SmartEquals(getCuts(), objT.getCuts()))
+      return false;
+    if (! SmartEquals(getOverrideCuts(), objT.getOverrideCuts()))
       return false;
     return true;
   }			
