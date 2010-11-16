@@ -4,16 +4,16 @@
 		
 		<mx:Text x="0" y="23.35" text="Number of Copies" width="63" height="38.666668" textAlign="center" fontWeight="bold"/>
 		<mx:Text x="71" y="14" text="Number of Originals" width="593" height="21" textAlign="center" fontWeight="bold"/>
-		<mx:TextInput id="header1" x="63" y="43" width="62" height="20" text="{matrix.header1}"/>
-		<mx:TextInput id="header2" x="124" y="43" width="62" height="20" text="{matrix.header2}"/>
-		<mx:TextInput id="header3" x="185" y="43" width="62" height="20" text="{matrix.header3}"/>
-		<mx:TextInput id="header4" x="246" y="43" width="62" height="20" text="{matrix.header4}"/>
-		<mx:TextInput id="header5" x="307" y="43" width="62" height="20" text="{matrix.header5}"/>
-		<mx:TextInput id="header6" x="367" y="43" width="62" height="20" text="{matrix.header6}"/>
-		<mx:TextInput id="header7" x="428" y="43" width="62" height="20" text="{matrix.header7}"/>
-		<mx:TextInput id="header8" x="489" y="43" width="62" height="20" text="{matrix.header8}"/>
-		<mx:TextInput id="header9" x="549" y="43" width="62" height="20" text="{matrix.header9}"/>
-		<mx:TextInput id="header10" x="610" y="43" width="63" height="20" text="{matrix.header10}"/>
+		<mx:TextInput id="header1" x="63" y="43" width="62" height="20" text="{matrix.header1}" focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header2" x="124" y="43" width="62" height="20" text="{matrix.header2}" focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header3" x="185" y="43" width="62" height="20" text="{matrix.header3}" focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header4" x="246" y="43" width="62" height="20" text="{matrix.header4}" focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header5" x="307" y="43" width="62" height="20" text="{matrix.header5}" focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header6" x="367" y="43" width="62" height="20" text="{matrix.header6}" focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header7" x="428" y="43" width="62" height="20" text="{matrix.header7}" focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header8" x="489" y="43" width="62" height="20" text="{matrix.header8}" focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header9" x="549" y="43" width="62" height="20" text="{matrix.header9}" focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header10" x="610" y="43" width="63" height="20" text="{matrix.header10}" focusOut="checkNaN(event)"/>
 		<mx:DataGrid 
 			width="674" dataProvider="{matrix.elements}" 
 					showHeaders="false" borderStyle="solid" borderThickness="3" x="0" 
@@ -53,6 +53,61 @@
 					matrix.header8 = parseInt(this.header8.text);
 					matrix.header9 = parseInt(this.header9.text);
 					matrix.header10 = parseInt(this.header10.text);
+				}
+				private function checkNaN(evt:FocusEvent) {
+					var value:Number = 0;
+					switch(evt.currentTarget) {
+						case this.header1:
+							value = parseFloat(this.header1.text);
+							if (isNaN(value))
+								this.header1.text = "0";
+							break;
+						case this.header2:
+							value = parseFloat(this.header2.text);
+							if (isNaN(value))
+								this.header2.text = "0";
+							break;
+						case this.header3:
+							value = parseFloat(this.header3.text);
+							if (isNaN(value))
+								this.header3.text = "0";
+							break;
+						case this.header4:
+							value = parseFloat(this.header4.text);
+							if (isNaN(value))
+								this.header4.text = "0";
+							break;
+						case this.header5:
+							value = parseFloat(this.header5.text);
+							if (isNaN(value))
+								this.header5.text = "0";
+							break;
+						case this.header6:
+							value = parseFloat(this.header6.text);
+							if (isNaN(value))
+								this.header6.text = "0";
+							break;
+						case this.header7:
+							value = parseFloat(this.header7.text);
+							if (isNaN(value))
+								this.header7.text = "0";
+							break;
+						case this.header8:
+							value = parseFloat(this.header8.text);
+							if (isNaN(value))
+								this.header8.text = "0";
+							break;
+						case this.header9:
+							value = parseFloat(this.header9.text);
+							if (isNaN(value))
+								this.header9.text = "0";
+							break;
+						case this.header10:
+							value = parseFloat(this.header10.text);
+							if (isNaN(value))
+								this.header10.text = "0";
+							break;
+					}
 				}
 				private function formatData(event:DataGridEvent) {
 					// Check the reason for the event.

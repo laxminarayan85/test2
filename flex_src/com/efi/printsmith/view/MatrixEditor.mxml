@@ -541,6 +541,112 @@
 
 		parentContainer = Snowmass.getInstance().containerManager.getActiveWindowContent(); //.mainNavigator.selectedChild;
 	}
+	
+	private function checkNaN(evt:FocusEvent):void {
+		var value:Number = 0;
+		switch (evt.currentTarget) {
+			case this.price1:
+				value = parseFloat(this.price1.text);
+				if (isNaN(value))
+					this.price1.text = "0";
+				break;
+			case this.price2:
+				value = parseFloat(this.price2.text);
+				if (isNaN(value))
+					this.price2.text = "0";
+				break;
+			case this.price3:
+				value = parseFloat(this.price3.text);
+				if (isNaN(value))
+					this.price3.text = "0";
+				break;
+			case this.price4:
+				value = parseFloat(this.price4.text);
+				if (isNaN(value))
+					this.price4.text = "0";
+				break;
+			case this.price5:
+				value = parseFloat(this.price5.text);
+				if (isNaN(value))
+					this.price5.text = "0";
+				break;
+			case this.price6:
+				value = parseFloat(this.price6.text);
+				if (isNaN(value))
+					this.price6.text = "0";
+				break;
+			case this.price7:
+				value = parseFloat(this.price7.text);
+				if (isNaN(value))
+					this.price7.text = "0";
+				break;
+			case this.price8:
+				value = parseFloat(this.price8.text);
+				if (isNaN(value))
+					this.price8.text = "0";
+				break;
+			case this.price9:
+				value = parseFloat(this.price9.text);
+				if (isNaN(value))
+					this.price9.text = "0";
+				break;
+			case this.price10:
+				value = parseFloat(this.price10.text);
+				if (isNaN(value))
+					this.price10.text = "0";
+				break;
+			case this.price11:
+				value = parseFloat(this.price11.text);
+				if (isNaN(value))
+					this.price11.text = "0";
+				break;
+			case this.price12:
+				value = parseFloat(this.price12.text);
+				if (isNaN(value))
+					this.price12.text = "0";
+				break;
+			case this.price13:
+				value = parseFloat(this.price13.text);
+				if (isNaN(value))
+					this.price13.text = "0";
+				break;
+			case this.price14:
+				value = parseFloat(this.price14.text);
+				if (isNaN(value))
+					this.price14.text = "0";
+				break;
+			case this.price15:
+				value = parseFloat(this.price15.text);
+				if (isNaN(value))
+					this.price15.text = "0";
+				break;
+			case this.price16:
+				value = parseFloat(this.price16.text);
+				if (isNaN(value))
+					this.price16.text = "0";
+				break;
+			case this.price17:
+				value = parseFloat(this.price17.text);
+				if (isNaN(value))
+					this.price17.text = "0";
+				break;
+			case this.price18:
+				value = parseFloat(this.price18.text);
+				if (isNaN(value))
+					this.price18.text = "0";
+				break;
+			case this.price19:
+				value = parseFloat(this.price19.text);
+				if (isNaN(value))
+					this.price19.text = "0";
+				break;
+			case this.price20:
+				value = parseFloat(this.price20.text);
+				if (isNaN(value))
+					this.price20.text = "0";
+				break;
+		}
+	}
 
 	public function setMatrix(matrix:com.efi.printsmith.data.Matrix):void {
 		if (matrix == null) return;
@@ -760,26 +866,26 @@
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" y="373" right="112" bottom="5"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" right="2" bottom="5"/>
 		<mx:Label x="0" y="315" text="Over Quantity" id="label1"/>
-		<mx:TextInput x="110" y="313" width="100" id="price1" tabIndex="0"/>
-		<mx:TextInput x="110" y="269" width="100" id="price20" tabIndex="19"/>
-		<mx:TextInput x="110" y="239" width="100" id="price19" tabIndex="18"/>
-		<mx:TextInput x="110" y="209" width="100" id="price18" tabIndex="17"/>
-		<mx:TextInput x="110" y="179" width="100" id="price17" tabIndex="16"/>
-		<mx:TextInput x="110" y="149" width="100" id="price16" tabIndex="15"/>
-		<mx:TextInput x="110" y="119" width="100" id="price15" tabIndex="14"/>
-		<mx:TextInput x="110" y="89" width="100" id="price14" tabIndex="13"/>
-		<mx:TextInput x="29" y="78" width="100" id="price13" tabIndex="12"/>
-		<mx:TextInput x="75" y="59" width="100" id="price12" tabIndex="11"/>
-		<mx:TextInput x="10" y="239" width="100" id="price11" tabIndex="10"/>
-		<mx:TextInput x="10" y="209" width="100" id="price10" tabIndex="9"/>
-		<mx:TextInput x="10" y="179" width="100" id="price9" tabIndex="8"/>
-		<mx:TextInput x="10" y="149" width="100" id="price8" tabIndex="7"/>
-		<mx:TextInput x="10" y="119" width="100" id="price7" tabIndex="6"/>
-		<mx:TextInput x="10" y="89" width="100" id="price6" tabIndex="5"/>
-		<mx:TextInput x="10" y="59" width="100" id="price5" tabIndex="4"/>
-		<mx:TextInput x="45" y="78" width="100" id="price4" tabIndex="3"/>
-		<mx:TextInput x="110" y="29" width="100" id="price3" tabIndex="2"/>
-		<mx:TextInput x="45" y="48" width="100" id="price2" tabIndex="1"/>
+		<mx:TextInput x="110" y="313" width="100" id="price1" tabIndex="0" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="269" width="100" id="price20" tabIndex="19" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="239" width="100" id="price19" tabIndex="18" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="209" width="100" id="price18" tabIndex="17" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="179" width="100" id="price17" tabIndex="16" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="149" width="100" id="price16" tabIndex="15" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="119" width="100" id="price15" tabIndex="14" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="89" width="100" id="price14" tabIndex="13" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="29" y="78" width="100" id="price13" tabIndex="12" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="75" y="59" width="100" id="price12" tabIndex="11" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="239" width="100" id="price11" tabIndex="10" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="209" width="100" id="price10" tabIndex="9" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="179" width="100" id="price9" tabIndex="8" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="149" width="100" id="price8" tabIndex="7" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="119" width="100" id="price7" tabIndex="6" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="89" width="100" id="price6" tabIndex="5" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="59" width="100" id="price5" tabIndex="4" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="45" y="78" width="100" id="price4" tabIndex="3" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="29" width="100" id="price3" tabIndex="2" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="45" y="48" width="100" id="price2" tabIndex="1" focusOut="checkNaN(event)"/>
 
 	</mx:Canvas>
 </mx:TitleWindow>
