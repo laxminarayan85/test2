@@ -433,7 +433,7 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 	 	CostCenter.text="";
 	 	handleClearSpeedTable(null);
 	 	handleClearWasteChart(null);
-	 	
+	 	this.Name.setFocus();
 	 	
 	}
 	
@@ -919,7 +919,7 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 
 	<mx:Label x="10" y="127" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Name')}" width="113" textAlign="right"/>
 	<mx:Label x="10" y="156" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineName')}" textAlign="right" width="113"/>
-	<mx:DataGrid y="0" id="dataGrid" dataProvider="{pressDefinitionArray}" verticalScrollPolicy="on"  horizontalScrollPolicy="on" height="116" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" itemClick="doPressGridClick()" verticalGridLines="false" left="0" right="10">
+	<mx:DataGrid y="0" id="dataGrid" tabIndex="24" dataProvider="{pressDefinitionArray}" verticalScrollPolicy="on"  horizontalScrollPolicy="on" height="116" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" itemClick="doPressGridClick()" verticalGridLines="false" left="0" right="10">
 		<mx:columns>
 			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="sheetFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
 			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="rollFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
@@ -950,9 +950,9 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 	<mx:Label x="13" y="384" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SetupAddlRun')}" textAlign="right" id="label3" width="110"/>
 	<mx:Label x="26" y="406" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.SetupAddlSignatures')}" textAlign="right" width="153"/>
 	<mx:Label x="10" y="428" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.WorkAndTurn2ndSideSe')}" textAlign="right" id="label4" width="169"/>
-	<mx:TextInput x="131" y="272" id="MaxPaperSize" text="{pressDefinition.maxPaperSize}" height="20" width="171" focusOut="fieldChanged(event)"/>
+	<mx:TextInput x="131" y="272" id="MaxPaperSize" text="{pressDefinition.maxPaperSize}" tabIndex="6" height="20" width="171" focusOut="fieldChanged(event)"/>
 	<mx:TextInput x="131" y="272" id="MaxRollWidth" text="{pressDefinition.maxRollWidth}" tabIndex="6" height="20" width="171"/>
-	<mx:TextInput x="131" y="294" id="MinPaperSize" text="{pressDefinition.minPaperSize}" height="20" focusOut="fieldChanged(event)"/>
+	<mx:TextInput x="131" y="294" id="MinPaperSize" text="{pressDefinition.minPaperSize}" tabIndex="7" height="20" focusOut="fieldChanged(event)"/>
 	<mx:TextInput x="131" y="294" id="MinRollWidth" tabIndex="8" text="{pressDefinition.minRollWidth}" height="20"/>
 	<mx:TextInput   restrict="0-9\." x="131" y="316" width="76" tabIndex="10" id="LaborRate" text="{Snowmass.getCurrencyFormatter(false,2).format(pressDefinition.laborRate)}" height="20"/>
 	<mx:TextInput   restrict="0-9\." x="131" y="338" width="92" id="MinLabor" tabIndex="11" text="{pressDefinition.minLabor}" height="20" focusOut="doRound(event);"/>
