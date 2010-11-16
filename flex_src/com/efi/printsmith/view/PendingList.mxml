@@ -551,8 +551,18 @@
 	}	
 
 	public function handleUIPickupEvent(evt:ResultEvent):void {
-		var cashRegisterPopup:CashRegisterEdit = CashRegisterEdit(PopUpManager.createPopUp(this, CashRegisterEdit, false));
-		cashRegisterPopup.setStyle("borderAlpha", 0.9);
+		var inv:InvoiceBase = dgView.selectedItem as InvoiceBase;
+		var cashRegister:CashRegisterEdit = new CashRegisterEdit();
+		var child:TitleWindow = cashRegister as TitleWindow;
+		var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+		if (win == null)	{
+			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
+		}
+		else	{
+			win.bringWindowToFront();	
+		}
+		win = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+		cashRegister.CashRegisterInvPickup(inv);
 	}
 
 	public function handleUIStatusEvent(evt:ResultEvent):void {
@@ -798,6 +808,8 @@
 				handleUIDueDateEvent(null);
 			} else if(pendingOptions.selectedValue==Constants.PENDING_DELIVER) {
 				handleUIDeliverEvent(null);
+			} else if (pendingOptions.selectedValue == Constants.PENDING_PICK_UP) {
+				handleUIPickupEvent(null);
 			}
 		}
 	}
@@ -1196,7 +1208,8 @@
 		<mx:RadioButtonGroup id="pendingOptions"/>
 		<mx:HBox width="100%" id="pickup_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_PICK_UP}" click="{savePendingOption()}" width="10%"/>
-			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp')}" width="90%"/>
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp')}" width="90%"
+				click = "{handleUIPickupEvent(null)}"/>
 		</mx:HBox>	
 		<mx:HBox width="100%" id="status_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_STATUS}" click="{savePendingOption()}" width="10%"/>

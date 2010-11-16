@@ -211,6 +211,13 @@
 <!--	<mx:RemoteObject id="dataServiceUnPurchase" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveUnPurchaseResult(event)"/>
 	</mx:RemoteObject>-->
+	
+	<mx:RemoteObject id="invoiceRepositoryService" destination="invoiceRepositoryService">
+		<mx:method name="getItemList"
+					fault="handleFault(event)"
+					result="handleLoadInvoiceTemplates(event)"/>		
+	</mx:RemoteObject>
+
 	<mx:RemoteObject id="dataServiceCashDrawer" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashDrawerResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCashDrawerResult(event)"/>
@@ -373,8 +380,9 @@
 //Tree view XML table
 	
 	public function CashRegisterInvPickup(inv:InvoiceBase):void {
-		
-		
+		if (inv != null) {
+			invoice = inv;
+		}
 	}
 	
 	private function handleLoadTaxTableResult(ev:ResultEvent):void {
@@ -403,6 +411,20 @@
 		this.throbber.stop();
 	}
 	
+	public function handleLoadInvoiceTemplates(evt:ResultEvent):void {
+		if (evt.result != null) {
+			FormatArray = evt.result as ArrayCollection;
+		}
+
+		dataService.getAccountPicker();
+		
+		// invoice came in with the window OPEN, like a pending list pickup request
+		if (invoice != null) {
+			doInvoice();
+			handlePickupInvoice(invoice);
+		}
+	}
+
 	// call back AFTER the credit card charge is complete
 	private function handleCreditCardTransWrite(ev:CreditCardTransEvent):void 
 	{
@@ -567,18 +589,16 @@
 		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
 		dataServiceCashDrawer.getAll("CashDrawer");
 		dataServiceTape.getCurrentTapeBatch();
-		dataService.getAccountPicker();
 		
 		InitSaleRecord();			// setup for the first sale transaction
 		
-		//openTree();
-		setup();
-	}
-	
-	private function setup():void{
-		dataServiceTaxCodes.getAll("TaxCodes")	
-		dataServiceTaxTable.getCurrentTaxTables("TaxTable")
-		fillDefaultDocumentsArray(FormatArray);
+		dataServiceTaxCodes.getAll("TaxCodes")	;
+		dataServiceTaxTable.getCurrentTaxTables("TaxTable");
+		
+		// perform the account load in the background, the button will come alive when list is loaded
+		invoiceRepositoryService.getItemList();
+		btnCustAcct.enabled = false;
+		
 		this.addEventListener(mx.events.StateChangeEvent.CURRENT_STATE_CHANGE, paymentStateHandler);
 	}
 	
@@ -618,6 +638,8 @@
 //	}
 	private function handleLoadAccountsResult(ev:ResultEvent):void {
 		accounts = ev.result as ArrayCollection;
+		
+		btnCustAcct.enabled = true;
 	}
 // Data Save Handlers
 	private function handleSaveResult(ev:ResultEvent):void {
@@ -756,8 +778,14 @@
 			activeSale.quantity = 1;
 			activeSale.unitPrice = target.job.pricingRecord.unitPrice;
 			activeSale.subTotal = target.job.pricingRecord.totalPrice;
-				
 			activeSale.department = target.job.description;
+			if (activeSale.department.length == 0)
+				activeSale.department = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'tapeCmd.QuickEst');
+
+			txtSaleDescription.text = activeSale.department;
+			txtSaleQuantity.text = activeSale.quantity.toString();
+			txtSaleUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.unitPrice);
+			txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.subTotal);
 
 			doAccept();
 		}
@@ -977,7 +1005,6 @@
 			sessionBatch.accumTotal = sessionBatch.accumTotal + activeSale.total;
 			sessionBatch.accumTaxTotal = sessionBatch.accumTaxTotal + activeSale.taxAmount;
 			sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal;
-			
 			sessionBatch.transactionsList.addItem(activeSale);			
 			
 			InitSaleRecord();		// setup for another sale
@@ -1102,6 +1129,22 @@
 		if (refund > 0) {		// change amount still due to give back
 			totalPay = totalPay - refund;
 		}
+
+		//
+		// assign position index to each record, so order can be known later
+		//
+		for(i = 0; i< sessionBatch.transactionsList.length; i++)
+		{
+			temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+			if (temp is TapePaymentRecord) {
+				tempPayment = temp as TapePaymentRecord;
+				tempPayment.index = i + 1;
+			} else if (temp is TapeSaleRecord) {
+				tempSale = temp as TapeSaleRecord;
+				tempSale.index = i + 1;
+			}
+		}
+
 
 		// make a local list of just the payments
 		for(i = 0; i< sessionBatch.transactionsList.length; i++)
@@ -1360,6 +1403,8 @@
 		var totalCash:Number;
 		var message:String;
 		var format:String;
+		var printList:ArrayCollection = new ArrayCollection();
+		var i:int = 0;
 		
 		//
 		// no left open transactions
@@ -1433,7 +1478,7 @@
 			
 			cashDrawer.fund -= sessionBatch.accumChange;
 			
-			for( var i:int = 0; i< sessionBatch.transactionsList.length; i++)
+			for(i = 0; i< sessionBatch.transactionsList.length; i++)
 			{
 				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
 				
@@ -1528,6 +1573,7 @@
 								}
 							}
 							
+							
 							dataService.addUpdate(arRecord);
 							
 							tempSale.accountHistoryData = arRecord;			// record AR history record into tape
@@ -1545,8 +1591,10 @@
 						
 					}
 					
-					
-					// TODO build invoice print list
+					// build print list
+					if (chkPrintInvoice.selected == true) {
+						printList.addItem(tempPayment.invoice);
+					}
 				}
 			}
 			
@@ -1559,6 +1607,23 @@
 			}
 			
 			dataServiceCashDrawer.addupdate(cashDrawer);
+			
+			//
+			// print the invoice any that have been pick-up
+			//
+			if (printList != null && printList.length > 0) {
+				var reportName:String = cboFormat.selectedItem as String;
+				
+				for(i = 0; i< printList.length; i++) {
+					invoice = printList.getItemAt(i) as InvoiceBase;
+					if (invoice != null) {
+						var urlRequest:URLRequest = new URLRequest("http://localhost:8080/Snowmass/reportservlet?invoiceName="+reportName +"&reportParameter="+invoice.id);
+               		 	navigateToURL(urlRequest, "_blank");
+     				}
+  				 }
+			}
+			
+			printList.removeAll();
 		}
 	}
 	
@@ -1568,14 +1633,15 @@
 		
 		InitSaleRecord();		// setup for another sale
 		InitPaymentRecord();
-		
+		invoice = null;
+		customerAccount = new Account();
 		this.currentState = "";
 		txtSaleDescription.text = "";
 		openTree();
 		
 		UpdateBatchNumbers();		
 	}
-	
+	/*
 	private function fillDefaultDocumentsArray(fillArray:ArrayCollection):void{
 		var setting:Object = new Object();
 		setting.name="No default specified";
@@ -1631,7 +1697,8 @@
 		setting = new Object();
 		setting.name="[en]+TaxName +Remarks";
 		fillArray.addItem(setting);
-	}
+	}		*/
+	
 	private function dotreelabel(item:Object):String{
 		var tmpItem:PreferencesCashRegister ;
 		tmpItem = item as PreferencesCashRegister;
@@ -1678,10 +1745,9 @@
 		}
 	}
 	
-	private function handleLoadInvoice(evt:ResultEvent):void {
-		var invoiceTmp:InvoiceBase = evt.result as InvoiceBase;
-		var message:String;       
-		
+	private function handlePickupInvoice(invoiceTmp:InvoiceBase):void {
+		var message:String;   
+
 		if (invoiceTmp != null) {
 			var goodPickup:Boolean = true;
 			
@@ -1722,6 +1788,10 @@
 				activeSale.total = invoice.amountDue;
 				activeSale.taxAmount = invoice.tax;
 				activeSale.department = invoice.name;
+				
+				if (activeSale.department.length == 0)
+					activeSale.department = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp');
+				
 				activeSale.noTax = invoice.notTaxable;
 				
 				if (invoice.taxTable != null) {
@@ -1729,14 +1799,26 @@
 					pickTaxCode.selectedIndex = findItem(invoice.taxCode.name, TaxCodesArray)
 				}
 				
+				txtSaleDescription.text = activeSale.department;
+				txtSaleQuantity.text = activeSale.quantity.toString();
+				txtSaleUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.unitPrice);
+				txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.subTotal);
+
+
 				// TODO: capture invoice ID, Invoice Number, Previous deposits
 				
 			}			
 		}
+	}
+	
+
+	private function handleLoadInvoice(evt:ResultEvent):void {
+		var invoiceTmp:InvoiceBase = evt.result as InvoiceBase;
+		    
+		handlePickupInvoice(invoiceTmp);
 		
 		this.throbber.visible = false;
 		this.throbber.stop();
-
 	}
 ]]>
                              
@@ -1769,7 +1851,7 @@
 	</mx:Button>
 
 	<mx:Canvas x="130" y="80" width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
-		<mx:Button x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CustAcct')}" click="doAccount();"/>
+		<mx:Button x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CustAcct')}" id="btnCustAcct" click="doAccount();"/>
 		<mx:TextInput x="161" y="6" text="{customerAccount.title}" width="304" fontSize="9" fontWeight="bold" height="20"/>
 		<mx:TextInput x="161" y="25" text="{customerAccount.type}" width="304" fontSize="9" fontWeight="normal" height="20"/>
 		<mx:TextInput x="468" y="25" text="{customerAccount.status}" width="58" fontSize="9" fontWeight="normal" height="20"/>
