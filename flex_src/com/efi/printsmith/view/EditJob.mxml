@@ -1856,6 +1856,7 @@
 					job.numUp = localJob.numUp;
 					job.numOn = localJob.numOn;
 					job.qtyOrdered = localJob.qtyOrdered;
+					job.numCopiesOverride = localJob.numCopiesOverride;
 					if (job.pricingRecord != null) {
 						overs_total_price.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice.toString());
 						job_price.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice));

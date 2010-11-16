@@ -52,7 +52,7 @@ public abstract class CopierPricingMethod {
 		divisor = iup / ion;
 		
 		if (job.getNumCopiesOverride()) {
-			job.setQtyOrdered(job.getNumCopies());
+			job.setQtyOrdered(job.getNumCopies() * job.getNumUp());
 			job.setNumCopiesOverride(false);
 		}
 		
