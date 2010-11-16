@@ -37,8 +37,13 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 		int runout = job.getPaperCal().getRunout();
 		if (runout == 0)
 			runout = 1;
-		price = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies()) + (stockPrice * (job.getTotalCopies() / runout)) + wastePrice;
-		
+		if (job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
+			stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();
+		}
+		if (job.getDoubleSided())
+			price = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies()) + (stockPrice * ((job.getTotalCopies()/2) / runout)) + wastePrice;
+		else
+			price = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies()) + (stockPrice * (job.getTotalCopies() / runout)) + wastePrice;
 		pricingRecord.setTotalPrice(price);
 		if (price == 0)
 			pricingRecord.setUnitPrice(0);
