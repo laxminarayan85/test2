@@ -228,13 +228,13 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("amount due".equals(currentFieldToken)) {
 				invoice.setAmountDue(Utilities.tokenToDouble(currentImportToken));
 			} else if ("total cost".equals(currentFieldToken)) {
-				/* TODO */invoice.setTotalCost(Utilities.tokenToDouble(currentImportToken));
+				invoice.setTotalCost(Utilities.tokenToDouble(currentImportToken));
 			} else if ("checkno".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("date".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("amount".equals(currentFieldToken)) {
-				invoice.setAmountDue(Utilities.tokenToDouble(currentImportToken));
+				/* TODO */
 			} else if ("type".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("costed".equals(currentFieldToken)) {
