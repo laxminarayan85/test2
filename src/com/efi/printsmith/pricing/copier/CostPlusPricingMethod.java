@@ -42,7 +42,7 @@ public class CostPlusPricingMethod extends CopierPricingMethod {
 				pricePerSecondSide = (pricePerCopy + stockPrice);
 				pricingRecord.setUnitPrice(pricePerSecondSide / 2);
 				if (!pricingRecord.getTotalPriceOverride()) {
-					pricingRecord.setTotalPrice((pricePerSecondSide * (job.getTotalCopies()/runout / 2)));
+					pricingRecord.setTotalPrice((pricePerSecondSide * (job.getTotalCopies() / 2)));
 				}
 			} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
 				pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*(job.getTotalCopies()/runout / 2));					
