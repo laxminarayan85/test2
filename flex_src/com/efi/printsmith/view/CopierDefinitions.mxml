@@ -305,6 +305,7 @@
 				}
 				tempmachineCost= tempmachineCost +laborCopy+tonerCopy+developerCopy+ click;
        			 machineCostperCopy.text = Snowmass.getCurrencyFormatter(false,4).format(tempmachineCost);
+       			 copierDefinition.machineCostPerCopy = tempmachineCost;
 			}
 		}
 	}
@@ -511,7 +512,7 @@
 		copierDefinition.developerCopy = parseFloat(developerCopy.text.replace(",",""));
 		copierDefinition.hourCostRate = parseFloat(hourlyCostingRate.text.replace(",",""));
 		copierDefinition.hoursOpen = parseFloat(openhours.text);
-		copierDefinition.machineCostPerCopy = parseFloat(machineCostperCopy.text.replace(",",""));
+		//copierDefinition.machineCostPerCopy = parseFloat(machineCostperCopy.text.replace(",",""));
 		if (pricing_method_combo.selectedItem != null)
 			copierDefinition.method = pricing_method_combo.selectedItem.data;
 		if (stock_Price_is_combo.selectedItem != null)
