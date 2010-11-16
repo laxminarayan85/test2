@@ -6,6 +6,7 @@ import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.data.WasteChart;
+import com.efi.printsmith.pricing.utilities.JobUtilities;
 import java.math.BigDecimal;
 
 public class PrintPricingMethod {
@@ -13,7 +14,8 @@ public class PrintPricingMethod {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		
-		calculatePressQty(job);
+		//calculatePressQty(job);
+		JobUtilities.calculateSignatures(job);
 		calculateImpressionsPerRun(job);
 		calculateTotalImpressions(job);
 		

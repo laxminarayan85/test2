@@ -1890,7 +1890,7 @@
 //					}
 				}
 				
-				paperCalculatorService.CalcOut(job, job.paperCal.whichStartSize);
+				//paperCalculatorService.CalcOut(job, job.paperCal.whichStartSize);
 			}
 			
 			private function handlePriceJobFault(ev:FaultEvent):void
@@ -1992,6 +1992,7 @@
 					// the values are back, now request the image to be generated
 					//
 					paperCalculatorService.GeneratePaperCalculatorImage(job, job.paperCal.whichStartSize, cutDiagram.width-15, cutDiagram.height-15);
+					this.updatePrice();
 				}
 			}
 
@@ -2507,7 +2508,7 @@
 				var basic:Number;
 				var localSize:Dimension;
 				
-				if ( job.parentSize != null) {
+				if ( job.parentSize != null && localSize != null) {
 					//job.parentSize = job_parent.selectedItem as Dimension;
 					localSize = job_parent.selectedItem as Dimension;
 					job.parentSize.name = localSize.name;
