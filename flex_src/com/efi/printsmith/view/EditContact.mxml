@@ -499,7 +499,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 				registerClassAlias("com.efi.printsmith.data.Contact",Contact);
 				originalContact = ObjectUtil.copy(this.contact) as Contact;
 			}
-			if (contact.firstName != "" && contact.lastName != "") {
+			if (contact.firstName != "" || contact.lastName != "") {
 				this.enableSave = true;
 			} else {
 				this.enableSave = false;
@@ -1241,7 +1241,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 		formIsValid = formIsValid && currentControlIsValid;
 		
 		var contactNameIsValid:Boolean = false;
-		if (contact_editor.contact != null && contact_editor.contact.firstName != "" &&
+		if (contact_editor.contact != null && contact_editor.contact.firstName != "" ||
 			contact_editor.contact.lastName != "") {
 			contactNameIsValid = true;
 		}
