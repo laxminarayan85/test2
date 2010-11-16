@@ -65,13 +65,25 @@ width="100%" height="100%"  creationComplete="init()"
 	private var currencyValidator:CurrencyValidator = Snowmass.getCurrencyValidator();
 	private var numberHandEntered:Boolean = false;
 	
+	// passed in from external calls
+	private var argAmount:Number = 0;	
+	private var argTax:Number = 0;				
+	private var argZipCode:String = "";
+	private var argAddress1:String = "";
+	// passed in from external calls
+	
     public function init():void{		
    		application= Snowmass.getInstance();
      	Snowmass.getInstance().addEventListener(CreditCardTrackReadEvent.BRICKREAD, handleBrickRead);
   	   	localTransation = new CreditCardTransactions;
    		localTransation.creditCard = new CreditCard;
    		localTransation.verbalAuthDate = null;			// dont have any date
- 		
+   		
+   		localTransation.amount = argAmount;
+ 		localTransation.tax = argTax;			
+		localTransation.creditCard.zipCode = argZipCode;
+		localTransation.creditCard.address1 = argAddress1;
+
  		this.throbber.visible = false;
 		this.throbber.stop();
 
@@ -80,21 +92,51 @@ width="100%" height="100%"  creationComplete="init()"
  		
   		dataService.getAll("PreferencesCreditCard");
 		
-		if (application.currentUser.robustPassword == false) {
-			cardnumber.editable = false;
-			cardnumber.alpha = .5;
-			cardholder.editable = false;
-			cardholder.alpha = .5;
+	//	if (application.currentUser.robustPassword == false) {
+	//		cardnumber.editable = false;
+	//		cardnumber.alpha = .5;
+	//		cardholder.editable = false;
+	//		cardholder.alpha = .5;
+	//	}
+	}
+	
+	public function setAmount(txt: String) : void {
+		if (txt != null) {
+			argAmount = parseCurrencyFloat(txt);
 		}
 	}
 	
+	public function setTax(txt: String) : void {
+		if (txt != null) {
+			argTax = parseCurrencyFloat(txt);
+		}
+	}
+	
+	public function setAddress1(txt: String) : void {
+		if (txt != null) {
+			argZipCode = txt;
+		}
+	}
+	
+	public function setZip(txt: String) : void {
+		if (txt != null) {
+			argZipCode = txt;
+		}
+	}
+
+
 	private function handleSendCardTransResult(ev:ResultEvent):void
 	{
 		if (ev.result != null) {
-			var results:Number = ev.result as Number;
+			var temp:CreditCardTransactions = ev.result as CreditCardTransactions;
 			var selectEvent:CreditCardTransEvent;
 			
-			if (results == localTransation.id) {
+			if (temp != null && temp.id == localTransation.id) {
+				//
+				// update the local memory record
+				//
+				localTransation = temp;
+				
 				//
 				// update other open windows
 				//

@@ -58,6 +58,9 @@ import com.efi.printsmith.properties.PropertiesHelper;
 import com.efi.printsmith.query.RemoteCriterion;
 import com.efi.printsmith.query.RemoteRestriction;
 import com.efi.printsmith.data.ProductionLocations;
+import com.efi.printsmith.data.TapeBatch;
+import com.efi.printsmith.data.Tape;
+
 
 public class DataService extends HibernateService {
 
@@ -5190,6 +5193,7 @@ public class DataService extends HibernateService {
 		return null;
 	}
 	
+	
 	public List<Broker> getBrokers() throws Exception {
 		log.debug("** getBrokers called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -5210,5 +5214,47 @@ public class DataService extends HibernateService {
 		}
 		return resultList;
 	}
+	
+	public TapeBatch getCurrentTapeBatch() throws Exception {
+		TapeBatch object = null;
+		
+		log.debug("** getCurrentTapeBatch called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			/*
+			 * 
+			 */
+			String queryString = "from TapeBatch where closed = false";
+			Query query = em.createQuery(queryString);
+			object = (TapeBatch) query.getSingleResult();
+			return object;
+		} catch (Exception e) {
+			log.error(e);
+			//
+			// no current tape batch, so create one
+			//
+			Tape tape = new Tape();
+			
+			List<TapeSessionBatch> resultList  = new ArrayList<TapeSessionBatch>();
+			
+			TapeBatch tapebatch = new TapeBatch();
+			tapebatch.setAppVersion("v00.00.00");
+			tapebatch.setOpenDate(new Date());
+			tapebatch.setClosed(false);
+			
+			tapebatch.setSessionBatchs(resultList);
+			// 
+			tape.addBatches(tapebatch);
+			
+			this.addUpdate(tapebatch);
+			this.addUpdate(tape);
+			
+			object = tapebatch;
+		} finally {
+			em.close();
+		}
+		
+		return object;
+		}
 
 }

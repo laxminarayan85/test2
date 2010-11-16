@@ -82,7 +82,7 @@
  	 	 	 	<mx:TextInput  restrict="0-9\."  x="105" y="33" width="75" id="txtSaleUnitPrice" focusOut="UpdateCashRegister()" textAlign="right"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild">
- 	 	 	 	<mx:TextInput restrict="0-9\."  x="105" y="58" width="75" id="txtSaleTotal" textAlign="right"/>
+ 	 	 	 	<mx:TextInput restrict="0-9\."  x="105" y="58" width="75" id="txtSaleTotal" textAlign="right" focusOut="doChangeTotalPrice()"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild">
  	 	 	 	<mx:Label x="10" y="86" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Description')}" id="label4"/>
@@ -90,16 +90,9 @@
  	 	 	<mx:SetProperty target="{chkNonTax}" name="enabled" value="true"/>
  	 	 	<mx:SetProperty target="{cashReg_grid}" name="x" value="10"/>
  	 	 	<mx:SetProperty target="{label5}" name="width" value="92"/>
- 	 	 	<mx:SetProperty target="{label5}" name="x" value="10"/>
- 	 	 	<mx:SetProperty target="{label6}" name="x" value="10"/>
- 	 	 	<mx:SetProperty target="{label6}" name="y" value="114"/>
+ 	 	 	<mx:SetProperty target="{label6}" name="x" value="45"/>
  	 	 	<mx:SetProperty target="{label6}" name="width" value="92"/>
- 	 	 	<mx:SetProperty target="{label7}" name="x" value="10"/>
- 	 	 	<mx:SetProperty target="{label7}" name="y" value="62"/>
- 	 	 	<mx:SetProperty target="{label8}" name="x" value="10"/>
- 	 	 	<mx:SetProperty target="{label8}" name="y" value="36"/>
- 	 	 	<mx:SetProperty target="{label9}" name="x" value="10"/>
- 	 	 	<mx:SetProperty target="{label9}" name="y" value="10"/>
+ 	 	 	<mx:SetProperty target="{label8}" name="x" value="45"/>
  	 	 	<mx:SetProperty target="{label9}" name="width" value="92"/>
  	 	 	<mx:SetProperty target="{label8}" name="width" value="92"/>
  	 	 	<mx:SetProperty target="{label7}" name="width" value="92"/>
@@ -130,6 +123,8 @@
  	 	 	 	<mx:TextInput  restrict="0-9\." x="121" y="152" width="75" id="payment_cash_edit" change="UpdateBatchNumbers()" textAlign="right"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:RemoveChild target="{txtSaleDescription}"/>
+ 	 	 	<mx:SetProperty target="{tax_canvas1}" name="height" value="278"/>
+ 	 	 	<mx:SetProperty target="{tax_canvas3}" name="height" value="157"/>
  	 	</mx:State>
  	 	<mx:State name="paymentCash" basedOn="paymentPaymentMethod">
  	 	 	<mx:SetProperty target="{button1}" name="y" value="547"/>
@@ -152,9 +147,14 @@
  	 	 	 	<mx:ComboBox x="76" y="88" width="171"  labelField="cardType" dataProvider="{creditCardPreferencesArray}" id="card_type"></mx:ComboBox>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
- 	 	 	 	<mx:TextInput x="121" y="114" width="75"  id="card_ref"/>
+ 	 	 	 	<mx:TextInput x="121" y="114" width="75"  id="card_ref" focusOut="UpdateCashRegister()"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:SetProperty target="{cashReg_grid}" name="x" value="0"/>
+ 	 <!-- 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
+ 	 	 	 	<mx:Button x="204" y="115" width="19" height="19" click="doCreditCardManualApproval()" enabled="{enableCCApproval}" id="btnCCmanualApprove0">
+ 	 	 	 		<mx:icon>@Embed(source='../../../../assets/CreditCardManualApproval.png')</mx:icon>
+ 	 	 	 	</mx:Button>
+ 	 	 	</mx:AddChild>	-->
  	 	 	<!--<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild" target="{checkbox1}"/>
  	 	 	<mx:SetProperty target="{checkbox1}" name="x" value="267"/>
  	 	 	<mx:SetProperty target="{checkbox1}" name="y" value="230"/>-->
@@ -183,6 +183,11 @@
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:TextInput x="121" y="114" width="75"/>
  	 	 	</mx:AddChild>
+ 	 	<!-- 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
+ 	 	 	 	<mx:Button x="204" y="115" width="19" height="19" click="doCreditCardManualApproval()" enabled="{enableCCApproval}" id="btnCCmanualApprove">
+ 	 	 	 		<mx:icon>@Embed(source='../../../../assets/CreditCardManualApproval.png')</mx:icon>
+ 	 	 	 	</mx:Button>
+ 	 	 	</mx:AddChild>	-->
  	 	</mx:State>
  	 	<mx:State name="invoiceCheck" basedOn="invoicePaymentMethod">
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
@@ -198,7 +203,7 @@
  
  	<mx:RemoteObject id="dataService" destination="dataService">
  		<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountsResult(event)"/>
-		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<!--	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>-->
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="getAccount" fault="handleFault(event)" result="handleGetResult(event)"/>
 		<mx:method name="getInvoiceByInvoiceNumber" fault="handleFault(event)" result="handleLoadInvoice(event)"/>
@@ -210,8 +215,12 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashDrawerResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCashDrawerResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceCCT" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleCCTSaveResult(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServiceTape" destination="dataService">
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTapeResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTapeBatchResult(event)"/>
+		<mx:method name="getCurrentTapeBatch" fault="handleFault(event)" result="handleLoadCurrentTapeBatch(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServiceCashRegisterBatch" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleBatchSaveResult(event)"/>
@@ -256,14 +265,21 @@
 	import com.efi.printsmith.data.PreferencesCashRegister;
 	import mx.events.StateChangeEvent;
 	import mx.controls.Text;
+	import mx.utils.StringUtil;
 	import mx.managers.FocusManager;
+	import com.efi.printsmith.security.PSSecurityCommands;
+	import com.efi.printsmith.security.PSSecurityUtils;
 
 	import com.efi.printsmith.data.TaxTable;
 	import com.efi.printsmith.data.TaxCodes;
 	
+	import com.efi.printsmith.data.TapeBatch;
 	import com.efi.printsmith.data.TapeSessionBatch;
 	import com.efi.printsmith.data.TapePaymentRecord;
 	import com.efi.printsmith.data.TapeSaleRecord;
+	import com.efi.printsmith.data.AccountHistoryData;
+	import com.efi.printsmith.data.CreditCardTransactions;
+	import com.efi.printsmith.data.CreditCard;
 	
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
@@ -272,6 +288,9 @@
 //	import com.efi.printsmith.data.UnpurchasedMerchandise;
 
 	import com.efi.printsmith.events.JobEditCompleteEvent;
+	import com.efi.printsmith.events.CreditCardTrackReadEvent;
+	import com.efi.printsmith.events.CreditCardTransEvent;
+	import com.efi.printsmith.Constants;
 
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -285,6 +304,8 @@
 
 	[Bindable]
 	private var enableSave:Boolean = true;
+	[Bindable]
+	private var enableCCApproval:Boolean = true;
 
 	[Bindable]                                         
     private var systemPreferences:PreferencesSystem;
@@ -293,8 +314,8 @@
 	[Bindable]                                
 	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
 
-	[Bindable]
-	private var cashRegisterTransacations:ArrayCollection = new ArrayCollection();
+//	[Bindable]
+//	private var cashRegisterTransacations:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var systemCashPreferencesArray:ArrayCollection = new ArrayCollection();
 	
@@ -324,12 +345,12 @@
 	private var AustrailianRounding:Boolean;
 //	[Bindable]
 //	private	var unPurchase:UnpurchasedMerchandise;
-	[Bindable]
-	private var posTransactions:ArrayCollection;
+//	[Bindable]
+//	private var posTransactions:ArrayCollection;
 	
 //Data field arrays
-	[Bindable]
-	private var CashRegisterArray:ArrayCollection = new ArrayCollection();
+//	[Bindable]
+//	private var CashRegisterArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var TaxTableArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
@@ -342,14 +363,19 @@
 	private var cashDrawer:CashDrawer;
 //Data view variables
 	[Bindable]
-	private var batch:TapeSessionBatch;
+	private var sessionBatch:TapeSessionBatch;
 	[Bindable]
-	private var tape:Tape;
+	private var tapeBatch:TapeBatch;
 	[Bindable]
 	private var activeSale:TapeSaleRecord;
 	[Bindable]
 	private var activePayment:TapePaymentRecord;
 //Tree view XML table
+	
+	public function CashRegisterInvPickup(inv:InvoiceBase):void {
+		
+		
+	}
 	
 	private function handleLoadTaxTableResult(ev:ResultEvent):void {
 	     TaxTableArray = ev.result as ArrayCollection;
@@ -359,7 +385,14 @@
 	}
 	private function handleLoadCashDrawerResult(ev:ResultEvent):void {
 	     cashDrawer = ev.result as CashDrawer;
+	     
+	     // does not exist, create one
+	     if (cashDrawer == null) {
+	     	cashDrawer = new CashDrawer();
+	     	dataServiceCashDrawer.addUpdate(cashDrawer);
+	     }
 	}
+	
 	private function handleSaveCashDrawerResult(ev:ResultEvent):void {
 		cashDrawer = ev.result as CashDrawer;
 	}
@@ -369,6 +402,20 @@
 		this.throbber.visible = false;
 		this.throbber.stop();
 	}
+	
+	// call back AFTER the credit card charge is complete
+	private function handleCreditCardTransWrite(ev:CreditCardTransEvent):void 
+	{
+		var temp:CreditCardTransactions = ev.theData as CreditCardTransactions;
+		
+		if (temp != null) {
+			activePayment.cct = temp;
+			card_ref.text = activePayment.cct.approvalCode;
+		}
+		
+		UpdateCashRegister();
+	}
+
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 		systemPreferencesArray = ev.result as ArrayCollection;
 		if (systemPreferencesArray.length > 0)
@@ -385,39 +432,24 @@
 	//	var tempString:String;
 	
 		activeSale.taxAmount = ev.result as Number;
-		activeSale.total = activeSale.subTotal + activeSale.taxAmount;
 		
-		//tempString = numberFormatter.format(activeSale.subtotal + activeSale.taxamount);
-		//activeSale.totalprice = parseFloat(tempString.replace(",",""));
-		
-	//	batch.subTotal = batch.subTotal+ activeSale.subtotal;
-	//	batch.totalPrice= batch.totalPrice+ activeSale.totalprice;
-	//	batch.taxAmount = batch.taxAmount + activeSale.taxamount;
-	//	batch.change = batch.tendered - batch.totalPrice;
+		if (activeSale.opPrice == false)
+			activeSale.total = activeSale.subTotal + activeSale.taxAmount;
 			
 		UpdateBatchNumbers();
 	}
 	
 	private function UpdateBatchNumbers():void {
-		
-	//	if (payment_cash_edit != null && payment_cash_edit.text != null) {
-	//		activePayment.total = parseFloat(payment_cash_edit.text.replace(",",""));
-	//	} else
-	//		activePayment.total = 0;
-			
-			//activePayment.subtotal = parseFloat(payment_cash_edit.text);
-		//	batch.tendered = batch.tendered+ activePayment.paymentAmount;
-		//	batch.change = batch.tendered - batch.totalPrice;
-		
-		batch.accumChange = (batch.accumTendered + activePayment.total) - batch.accumTotal;
+				
+		sessionBatch.accumChange = (sessionBatch.accumTendered + activePayment.total) - sessionBatch.accumTotal;
 		
 		// update the batch numbers with the current SALE and Payment transactions (before any accept)
 		//
-		subtotal_edit.text = Snowmass.getCurrencyFormatter(false,2).format(batch.accumSubTotal + activeSale.subTotal);
-		tax_edit.text = Snowmass.getCurrencyFormatter(false,2).format(batch.accumTaxTotal + activeSale.taxAmount);
-		total_edit.text = Snowmass.getCurrencyFormatter(false,2).format(batch.accumTotal + activeSale.total);
-		tender_edit.text = Snowmass.getCurrencyFormatter(false,2).format(batch.accumTendered + activePayment.total);
-		change_edit.text = Snowmass.getCurrencyFormatter(false,2).format(batch.accumChange);
+		subtotal_edit.text = Snowmass.getCurrencyFormatter(false,2).format(sessionBatch.accumSubTotal + activeSale.subTotal);
+		tax_edit.text = Snowmass.getCurrencyFormatter(false,2).format(sessionBatch.accumTaxTotal + activeSale.taxAmount);
+		total_edit.text = Snowmass.getCurrencyFormatter(false,2).format(sessionBatch.accumTotal + activeSale.total);
+		tender_edit.text = Snowmass.getCurrencyFormatter(false,2).format(sessionBatch.accumTendered + activePayment.total);
+		change_edit.text = Snowmass.getCurrencyFormatter(false,2).format(sessionBatch.accumChange);
 	}	
 	
 	public function getSecurityCommand():String {
@@ -442,7 +474,7 @@
 		var curKeyCode:int;
 		var goodKeyEquiv:Boolean;
 		
-		// ONLY WHEN ALT IS DOWN
+		// ONLY WHEN command and shift keys are down
 		//
 		if( event.altKey == false && event.ctrlKey == true && event.shiftKey == true){
 			curKeyCode = event.keyCode;
@@ -485,12 +517,28 @@
 					
 					if (txtSaleQuantity != null && txtSaleQuantity.enabled)
 						txtSaleQuantity.setFocus();
+					
+					event.stopImmediatePropagation();
 				}
 			}
 		}
 	}
 
-  
+  	//
+	// this is used to change the font in the active field to show a override state
+	//
+	private function setOverrideForField(field:TextInput, overrideActive:Boolean):void
+	{
+		if (overrideActive)
+		{
+			field.setStyle("fontStyle","italic");
+			field.setStyle("textDecoration","underline");
+		} else {
+			field.setStyle("fontStyle","normal");
+			field.setStyle("textDecoration","none");
+		}
+	}
+
 	public function init(event:FlexEvent = null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();
@@ -503,17 +551,22 @@
 		
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, myKeyDownHandler);
 		
-		batch = new TapeSessionBatch();
-		batch.transactions = new ArrayCollection();
+		// these will be appeaded to the open tape
+		tapeBatch = new TapeBatch();
+		tapeBatch.sessionBatch = new ArrayCollection();
+
+		sessionBatch = new TapeSessionBatch();
+		sessionBatch.transactionsList = new ArrayCollection();
 		
-		tape = new Tape();
-//		unPurchase = new UnpurchasedMerchandise();
+		sessionBatch.user = Snowmass.getInstance().currentUser;
+		
 		cashDrawer = new CashDrawer();
 
 		dataServiceSystemPreferences.getAll("PreferencesSystem");
 		dataServiceCashPreferences.getAll("PreferencesCashRegister");
 		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
 		dataServiceCashDrawer.getAll("CashDrawer");
+		dataServiceTape.getCurrentTapeBatch();
 		dataService.getAccountPicker();
 		
 		InitSaleRecord();			// setup for the first sale transaction
@@ -560,9 +613,9 @@
 
 
 // Data Load Handlers
-	private function handleLoadResult(ev:ResultEvent):void {
-		CashRegisterArray = ev.result as ArrayCollection;
-	}
+//	private function handleLoadResult(ev:ResultEvent):void {
+//		CashRegisterArray = ev.result as ArrayCollection;
+//	}
 	private function handleLoadAccountsResult(ev:ResultEvent):void {
 		accounts = ev.result as ArrayCollection;
 	}
@@ -573,12 +626,14 @@
 //	private function handleSaveUnPurchaseResult(ev:ResultEvent):void{
 //		unPurchase = new UnpurchasedMerchandise();
 //	}
-	private function handleSaveTapeResult(ev:ResultEvent):void{
-		tape = ev.result as Tape;
+
+	private function handleSaveTapeBatchResult(ev:ResultEvent):void{
+		tapeBatch = ev.result as TapeBatch;
 	}
+	
 	private function handleBatchSaveResult(ev:ResultEvent):void{
-		batch = new TapeSessionBatch();
-		batch.transactions = new ArrayCollection();
+		sessionBatch = new TapeSessionBatch();
+		sessionBatch.transactionsList = new ArrayCollection();
 		
 		UpdateBatchNumbers();
 	}
@@ -618,6 +673,11 @@
 		}
 		else
 			taxCalculatorService.calculateTax(activeSale.taxTable, activeSale.subTotal);
+			
+		if (card_ref != null && card_ref.text.length == 0 && btPayment != null)
+			btPayment.enabled = false;
+		else
+			btPayment.enabled = true;
 	}
 		
 	private function openTree():void {
@@ -646,7 +706,8 @@
 		InitSaleRecord();
 		
 		activeSale.cashRegisterDept = treeItem;
-
+		activeSale.department = activeSale.cashRegisterDept.title;
+		
 		if (treeItem.taxTable != null)
 			pickTaxTable.selectedIndex = findItem(treeItem.taxTable.name, TaxTableArray);
 		if (treeItem.taxCodes != null)
@@ -670,33 +731,48 @@
 	
 	private function doAddJob():void {
 		var editJobWindow:EditJob= new EditJob();
-		var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this).windowID;
-		Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobCmd.NewJob'),editJobWindow, -1,-1,-1,-1, parentId);
+		var parentId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this, true).windowID;
 		editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);
+		Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobCmd.NewJob'),editJobWindow, -1,-1,-1,-1, parentId);
+	}
+	
+	private function doAddCharge():void {
+	
+	}
+	
+	private function doCreditCardManualApproval():void {
+		var creditCardManualApproveWindow:CreditCardDataEntry = CreditCardDataEntry(PopUpManager.createPopUp(this, CreditCardDataEntry, true));
+		creditCardManualApproveWindow.setStyle("borderAlpha", 0.9);
+		creditCardManualApproveWindow.addEventListener(CreditCardTransEvent.COMPLETE, handleCreditCardTransWrite);
+		creditCardManualApproveWindow.setAmount(payment_cash_edit.text);
+		creditCardManualApproveWindow.setTax(activePayment.taxAmount.toString());
 	}
 
 	private function addNewJob(event:Event):void
 	{
 		var target:EditJob=event.target as EditJob;
-
-		paymentMethodStateString = "";
 		
 		if (target.job != null) {
 			activeSale.quantity = 1;
 			activeSale.unitPrice = target.job.pricingRecord.unitPrice;
 			activeSale.subTotal = target.job.pricingRecord.totalPrice;
 				
+			activeSale.department = target.job.description;
+
 			doAccept();
 		}
 	}
 	
-	private var paymentMethodStateString:String = "";
 	private function paymentMethodChanged(event:Event):void {
 		var rbvalue:String = event.currentTarget.selectedValue;
 	//	activePayment = new CashRegister();
 						
 		this.currentState = "";
-		paymentMethodStateString = "";
+		
+		//
+		// reverse any external values that could have already been completed, ie.. a Credit Card charge
+		//
+		doCancelPayment(activePayment);
 		
 		if (rbvalue == "Cash")
 		{	
@@ -761,7 +837,7 @@
 		//
 		// how much is left to pay
 		//
-		payment_cash_edit.text = Snowmass.getCurrencyFormatter(false,2).format((batch.accumTotal - batch.accumTendered));
+		payment_cash_edit.text = Snowmass.getCurrencyFormatter(false,2).format((sessionBatch.accumTotal - sessionBatch.accumTendered));
 		
 		this.focusManager.setFocus(btPayment);
 		this.focusManager.defaultButton = btPayment;
@@ -780,9 +856,8 @@
 			
 		}else{
 			 activePayment.total = parseFloat(payment_cash_edit.text.replace(",",""));	
-			//activePayment.subtotal = parseFloat(payment_cash_edit.text);
-			batch.accumTendered = batch.accumTendered+ activePayment.total;
-			batch.accumChange = batch.accumTendered - batch.accumTotal; 
+			sessionBatch.accumTendered = sessionBatch.accumTendered+ activePayment.total;
+			sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal; 
 			if (activePayment.paymentMethod=="Check"){
 				activePayment.checkNumber = check_num.text;
 			}
@@ -791,18 +866,9 @@
 				activePayment.refNumber = card_ref.text;
 			}
 			if (activePayment.paymentMethod=="Charge"){
-			//	unPurchase.account = customerAccount
-			//	unPurchase.amount =unPurchase.amount + activePayment.paymentAmount;
-			//	unPurchase.tax =  unPurchase.tax + activeSale.taxamount;
-			//	unPurchase.taxCode = activeSale.taxCode;
-			//	unPurchase.taxTable = activeSale.taxTable;
-			//	unPurchase.subtotal = activeSale.subtotal;
-				
-				/* customerAccount.balance=  customerAccount.balance+ activePayment.paymentAmount;
-				dataService.addUpdate(customerAccount); */
 				activePayment.customerAccount = customerAccount;				
 			}
-			batch.transactions.addItem(activePayment);
+			sessionBatch.transactionsList.addItem(activePayment);
 			
 			InitPaymentRecord();
 		}
@@ -886,29 +952,36 @@
 		} else if (item is TapeSaleRecord) {
 			var tempSale:TapeSaleRecord = item as TapeSaleRecord;
 			
-			if (activeSale.isPickup == false)		// && tempSale.cashRegisterDept.title != resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.POS')
-				tempString = tempSale.cashRegisterDept.title + " " + tempSale.quantity.toString() + "x"+ tempSale.unitPrice.toString();
+			if (activeSale.isPickup == false)
+				tempString = tempSale.department + " " + tempSale.quantity.toString() + "x"+ tempSale.unitPrice.toString();
 			else
-				tempString = tempSale.cashRegisterDept.title;
+				tempString = tempSale.department;
 		}
 		
 		return tempString;
 	}
 	
 	private function doAccept():void{
-	
-		activeSale.quantity = parseInt(txtSaleQuantity.text);
-		activeSale.unitPrice = parseFloat(txtSaleUnitPrice.text.replace(",",""));
-		activeSale.subTotal = parseFloat(txtSaleTotal.text.replace(",",""));
 		
-		batch.accumSubTotal = batch.accumSubTotal + activeSale.subTotal;
-		batch.accumTotal = batch.accumTotal + activeSale.total;
-		batch.accumTaxTotal = batch.accumTaxTotal + activeSale.taxAmount;
-		batch.accumChange = batch.accumTendered - batch.accumTotal;
-
-		batch.transactions.addItem(activeSale);			
-		
-		InitSaleRecord();		// setup for another sale
+		if (this.currentState != "") {
+			if (txtSaleDescription != null)
+				activeSale.department = txtSaleDescription.text;
+			if (txtSaleQuantity != null)
+				activeSale.quantity = parseInt(txtSaleQuantity.text);
+			if (txtSaleUnitPrice != null)
+				activeSale.unitPrice = parseFloat(txtSaleUnitPrice.text.replace(",",""));
+			if (txtSaleTotal != null)	
+				activeSale.subTotal = parseFloat(txtSaleTotal.text.replace(",",""));
+			
+			sessionBatch.accumSubTotal = sessionBatch.accumSubTotal + activeSale.subTotal;
+			sessionBatch.accumTotal = sessionBatch.accumTotal + activeSale.total;
+			sessionBatch.accumTaxTotal = sessionBatch.accumTaxTotal + activeSale.taxAmount;
+			sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal;
+			
+			sessionBatch.transactionsList.addItem(activeSale);			
+			
+			InitSaleRecord();		// setup for another sale
+		}
 		
 		this.currentState = "";
 		txtSaleDescription.text = "";
@@ -917,6 +990,51 @@
 		UpdateBatchNumbers();
 	}
 	
+	
+	private function handleCCTSaveResult(ev:ResultEvent):void{
+		// nothing to do, the record has been initilized already
+		
+		this.throbber.visible = false;
+		this.throbber.stop();
+	}
+	
+	private function doCancelPayment(tempPayment:TapePaymentRecord) :void {
+		var temp:CreditCardTransactions = new CreditCardTransactions;
+		
+		//
+		// for credit card payments, the sale must be reveresed
+		//
+		if (activePayment.paymentMethod == "Credit Card") {
+			if (tempPayment.cct != null && tempPayment.cct.transactionType == Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypePurchase &&
+				tempPayment.cct.transactionResults == Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsApproved) {
+				
+				temp.accountNumber = tempPayment.cct.accountNumber;
+				temp.creditCard = tempPayment.cct.creditCard;
+				temp.isCurrentTransaction = 1;
+				temp.orderNumber = tempPayment.cct.orderNumber;
+				temp.orderName = tempPayment.cct.orderName;
+				temp.referenceNumber = tempPayment.cct.referenceNumber;
+				temp.firstNumberPrefix = tempPayment.cct.firstNumberPrefix;
+				temp.tax = tempPayment.cct.tax;
+				temp.amount = tempPayment.cct.amount;
+				temp.transactionType = Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypeReversal;
+				temp.transactionStatus = Constants.CREDIT_CARD_TRANSACTION_STATUS_kTransactionStatusWaiting;
+				if (Snowmass.getInstance().currentUser != null) {
+					temp.userName = Snowmass.getInstance().currentUser.name;
+				}
+				// save data
+				// see "handleCCTSaveResult" for next processing step
+				//
+				dataServiceCCT.addUpdate(temp);
+				
+				this.throbber.visible = true;
+				this.throbber.play();
+				
+				card_ref.text = "";
+			}
+		}
+	}
+
 	private function doVoid():void{
 		var temp :Object;
 		var index:int;
@@ -925,22 +1043,25 @@
 		temp  = cashReg_grid.selectedItem as Object;
 		
 		if ( temp != null){
-			index= batch.transactions.getItemIndex(temp);
+			index= sessionBatch.transactionsList.getItemIndex(temp);
 			
 			if (temp is TapePaymentRecord) {
 				var tempPayment:TapePaymentRecord;
 				tempPayment = temp as TapePaymentRecord;				
-				batch.accumTendered = batch.accumTendered - tempPayment.total;
-				batch.accumChange = batch.accumTendered - batch.accumTotal; 
+				sessionBatch.accumTendered = sessionBatch.accumTendered - tempPayment.total;
+				sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal; 
+				
+				// reverse any external actions that the payment may have performed
+				doCancelPayment(tempPayment);
 			} else if (temp is TapeSaleRecord) {
 				var tempSale:TapeSaleRecord = temp as TapeSaleRecord;
-				batch.accumSubTotal = batch.accumSubTotal - tempSale.subTotal;
-				batch.accumTotal = batch.accumTotal - tempSale.total;
-				batch.accumTaxTotal = batch.accumTaxTotal - tempSale.taxAmount;
-				batch.accumChange = batch.accumTendered - batch.accumTotal;
+				sessionBatch.accumSubTotal = sessionBatch.accumSubTotal - tempSale.subTotal;
+				sessionBatch.accumTotal = sessionBatch.accumTotal - tempSale.total;
+				sessionBatch.accumTaxTotal = sessionBatch.accumTaxTotal - tempSale.taxAmount;
+				sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal;
 			}
 			
-			batch.transactions.removeItemAt(index);
+			sessionBatch.transactionsList.removeItemAt(index);
 			
 			UpdateBatchNumbers();
 		}
@@ -957,7 +1078,8 @@
 	     
 	}
 	
-	private function doApplyPayments():Boolean {
+	private function doApplyPayments(isPaidOut:Boolean):Boolean {
+		var results:Boolean = true;
 		var unApplied:Number = 0;
 		var i:int = 0;
 		var currentPaymentIndex:int = 0;
@@ -969,21 +1091,22 @@
 		var refund:Number = 0;
 		var payAmount:Number = 0;
 		var diff:Number = 0;
+		var tempSale:TapeSaleRecord;
 		var tempPayment:TapePaymentRecord = new TapePaymentRecord();
 		var paymentList:ArrayCollection = new ArrayCollection();
 		var message:String;
 		
-		totalPay = batch.accumTendered;
-		refund = batch.accumChange;
+		totalPay = sessionBatch.accumTendered;
+		refund = sessionBatch.accumChange;
 		
 		if (refund > 0) {		// change amount still due to give back
 			totalPay = totalPay - refund;
 		}
 
 		// make a local list of just the payments
-		for(i = 0; i< batch.transactions.length; i++)
+		for(i = 0; i< sessionBatch.transactionsList.length; i++)
 		{
-			temp  = batch.transactions.getItemAt(i) as Object;
+			temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
 			if (temp is TapePaymentRecord) {
 				paymentList.addItem(temp);
 			}	
@@ -1009,14 +1132,14 @@
 			
 			totalApplied += payAmount;
 			
-			for(i = 0; i < batch.transactions.length && tempPayment != null; i++)
+			for(i = 0; i < sessionBatch.transactionsList.length && tempPayment != null; i++)
 			{
-				temp  = batch.transactions.getItemAt(i) as Object;
+				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
 				
 				if (temp is TapePaymentRecord) {
 					// ignore while appling to sales
 				} else if (temp is TapeSaleRecord) {
-					var tempSale:TapeSaleRecord = temp as TapeSaleRecord;
+					tempSale = temp as TapeSaleRecord;
 											
 					unApplied = tempSale.total - tempSale.amountPaid;
 					
@@ -1024,7 +1147,7 @@
 					// record invoice data into the payment record
 					if (tempSale.isPickup == true) {
 						tempPayment.invoice = tempSale.invoice;
-					//	tempPayment.postAR = true;
+						tempPayment.postAR = true;
 					}
 					
 					//
@@ -1137,93 +1260,311 @@
 			//
 			//totalTransactionPay += roundAmount;
 			
-			//
-			// un-balanced amount of sales .vs. payments
-			//
-			if (totalTransactionPay != totalApplied) {
-				message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
-				Alert.show(message, "Warning", 0, null, null, null, 4); 
-				return(false);
-			}
 		} else {
 			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
 			Alert.show(message, "Warning", 0, null, null, null, 4); 
-			return(false);
+			results = false;
 		}
 		
-		return(true);
+		// roll back any payments and sales changes from above
+		if (results == false) {
+			for(i = 0; i< sessionBatch.transactionsList.length; i++)
+			{
+				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+				if (temp is TapePaymentRecord) {
+					tempPayment = temp as TapePaymentRecord;
+					tempPayment.invoice = null;
+				} else if (temp is TapeSaleRecord) {
+					tempSale = temp as TapeSaleRecord;
+					tempSale.amountPaid = 0;
+					tempSale.checkNumber = "";
+					tempSale.cct = null;
+					tempSale.refNumber = "";
+				}
+			}
+		} 
+		// continue with posting
+		else {
+			if (totalTransactionPay != totalApplied) {
+				//msg_WARNINGThistransacti=WARNING: This transaction did not balance!r	Total Payments: ${0}r	Total Transactions: ${1}rPlease review the transaction and contact your PrintSmith support center and report it in detail. r	OK to post transaction?
+				//
+				// un-balanced amount of sales .vs. payments
+				//
+				if (totalTransactionPay != totalApplied) {
+					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
+					message = StringUtil.substitute(message,numberFormatter.format(totalTransactionPay),numberFormatter.format(totalApplied)); 
+					Alert.show(message, "Warning", 0, null, null, null, 4); 
+					if (Alert.NO)
+						results = false;
+					else if (isPaidOut == true) {
+						// TODO - ask for description
+					}
+				}
+			}
+		}
+
+		return(results);
 	}
 	
-	private function doPostBatch():void{
-		var temp : Object;
+	private function calculateTotalChargesInBatch():Number {
+		var tempPayment:TapePaymentRecord;
+		var temp:Object;
+		var results:Number = 0;
+		var i:int;
 		
+		if (sessionBatch != null && sessionBatch.transactionsList != null) {
+			for(i = 0; i< sessionBatch.transactionsList.length; i++)
+			{
+				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+				if (temp is TapePaymentRecord) {
+					tempPayment = temp as TapePaymentRecord;
+					if (tempPayment.paymentMethod == "Charge") {
+						results += tempPayment.total;
+					}
+				}	
+			}
+		}
+		return(results);
+	}	
+
+	private function calculateTotalCashInBatch():Number {
+		var tempPayment:TapePaymentRecord;
+		var temp:Object;
+		var results:Number = 0;
+		var i:int;
+		
+		if (sessionBatch != null && sessionBatch.transactionsList != null) {
+			for(i = 0; i< sessionBatch.transactionsList.length; i++)
+			{
+				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+				if (temp is TapePaymentRecord) {
+					tempPayment = temp as TapePaymentRecord;
+					if (tempPayment.paymentMethod != "Charge") {
+						results += tempPayment.total;
+					}
+				}	
+			}
+		}
+		return(results);
+	}	
+	
+	private function doPostBatch():void{
+		var goodBatch:Boolean = true;
+		var accountChanged:Boolean = false;
+		var temp : Object;
+		var tempSale:TapeSaleRecord;
+		var tempPayment:TapePaymentRecord;
+		var arRecord:AccountHistoryData;
+		var isPaidOut:Boolean = false;
+		var totalCharges:Number;
+		var totalCash:Number;
+		var message:String;
+		var format:String;
+		
+		//
+		// no left open transactions
+		//
+		doAccept();
+		
+		//
+		// the cash register is used as a PAID OUT as well, like a cash back method
+		// The current user must be allowed this security feature.
+		//
+		if (sessionBatch.transactionsList.length == 1 && sessionBatch.accumTendered < 0) {
+			tempPayment  = sessionBatch.transactionsList.getItemAt(0) as TapePaymentRecord;
+			if (tempPayment != null && tempPayment.paymentMethod == "Cash") {
+				if (sessionBatch.user != null && sessionBatch.user.noCashReturn == false)
+					isPaidOut = true;
+			}
+		}
+					
+		totalCharges = calculateTotalChargesInBatch();
+		totalCash = calculateTotalCashInBatch();
+		
+		// more charged than total can cover
+		if (totalCharges > sessionBatch.accumTotal) {
+			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Sorrybutyouaretrying");
+			Alert.show(message, "Warning", 0, null, null, null, 4); 
+			goodBatch = false;
+		}
+		
+		// does not balance - negative change
+		if (goodBatch && !isPaidOut && sessionBatch.accumTendered < sessionBatch.accumTotal) {
+			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Thistransactiondoesn");
+			Alert.show(message, "Warning", 0, null, null, null, 4); 
+			goodBatch = false;
+		}
+		
+		//
+		// can the exccess refund be returned as CHECK
+		if (goodBatch && totalCash < sessionBatch.accumChange) {	/* excess change */
+			if (sessionBatch.user != null && sessionBatch.user.noCashReturn) {	// TODO (*currUser)->noCashChecks
+				message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"rUtilText.Sorryyouarenotallowe");
+				Alert.show(message, "Warning", 0, null, null, null, 4); 
+				goodBatch = false;
+			} else {
+				//msg_WarningThereis0incas=Warning: There is {0} in cash in this transaction and the amount of change given is {1}.rrThe rest of the change ({2}) will be taken from the cash drawer.rr	Ok to continue?
+				format = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningThereis0incas");
+				format = StringUtil.substitute(format,numberFormatter.format(totalCash),numberFormatter.format(sessionBatch.accumChange),numberFormatter.format((totalCash - sessionBatch.accumChange))); 
+				Alert.show(format, "Warning", 0, null, null, null, 4); 
+				if (Alert.NO) {
+					goodBatch = false;
+				}
+			}
+		}
+		
+		// user not allowed to charge this to an account
+		//AR_POSTPOSCHARGES
+		//POS_POSTCHARGES
+		if (PSSecurityUtils.getInstance().hasPermission(PSSecurityCommands.POS_POSTCHARGES) == false) {
+			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"rUtilText.Sorryyouarenotallowe");
+			Alert.show(message, "Warning", 0, null, null, null, 4); 
+			goodBatch = false;
+		}
+
 		// make sure the payments balance with the sales
 		//
-		if (doApplyPayments() == true) {
+		if (goodBatch && doApplyPayments(isPaidOut) == true) {
 		
-			batch.posted = true;
-			batch.postedDate = new Date();
+			//
+			// Write transactions out to current tape batch and post any invoices to history.
+			// Then perform any printing of receipts or invoice forms
+			//
 			
-			for( var i:int = 0; i< batch.transactions.length; i++)
+			cashDrawer.fund -= sessionBatch.accumChange;
+			
+			for( var i:int = 0; i< sessionBatch.transactionsList.length; i++)
 			{
-				temp  = batch.transactions.getItemAt(i) as Object;
-				tape.aR = false
-				tape.pOS = true;
-				tape.transactionDate = new Date();
-				tape.user = Snowmass.getInstance().currentUser;
+				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
 				
 				if (temp is TapePaymentRecord) {
-					var tempPayment:TapePaymentRecord;
 					tempPayment = temp as TapePaymentRecord;
-									
-					switch (tempPayment.paymentMethod){
-						case "Cash":{
-							tape.ar = false
-							tape.pos = true;
-							tape.type = "Cash";
-						}
-						case "Credit Card":{
-							tape.ar = false
-							tape.pos = true;
-							tape.ref = tempPayment.refNumber;
-							tape.type = "Credit"
-						}
-						case "Check":{
-							tape.ar= false
-							tape.pos = true;
-							tape.checkNum = tempPayment.checkNumber;
-							tape.type = "Check"
-						}
-						case "Charge":{
-							tape.ar = true
-							tape.pos = false;
-							tape.type = "Charge"
-						}
+					
+					tempPayment.changeAmount = sessionBatch.accumChange;		// track how much was given back
+					
+					// post the invoice (payment record to the account history
+					//
+					if (tempPayment.postAR == true) {
+						arRecord = new AccountHistoryData();
+						arRecord.account = sessionBatch.account;
+						arRecord.created = new Date();
+						arRecord.invoice = tempPayment.invoice;
+						arRecord.name = tempPayment.invoice.name;
+						arRecord.payments = tempPayment;
+						dataService.addUpdate(arRecord);
+						
+						tempSale.accountHistoryData = arRecord;			// record AR history record into tape
 					}
-					tape.paymentAmount = tempPayment.paymentAmount;
-					tape.subTotal = tempPayment.subTotal;
-					tape.taxAmount = tempPayment.taxAmount;
-					tape.taxCode = tempPayment.taxCode;
-					tape.taxTable = tempPayment.taxTable;
-					tape.total = tempPayment.total;
+					
+					//
+					// put payment in the cash drawer 
+					//
+					switch(tempPayment.paymentMethod)
+					{
+						case "Cash":
+							cashDrawer.cashTotal += tempPayment.total;
+							break;
+							
+						case "Check":
+						case "Draft":	// i.e., check
+							cashDrawer.checkCount++;
+							cashDrawer.checkTotal += tempPayment.total;
+							break;
+							
+						case "Credit Card":
+							cashDrawer.cardCount++;
+							cashDrawer.cardTotal += tempPayment.total;
+							break;
+							
+						case "Charge":
+							cashDrawer.arBalance += tempPayment.total;
+							
+							if (sessionBatch.account != null) {
+								sessionBatch.account.balance += tempPayment.total;
+								accountChanged = true;
+							}
+							break;
+					}
 
 				} else if (temp is TapeSaleRecord) {
-					var tempSale:TapeSaleRecord = temp as TapeSaleRecord;
+					tempSale = temp as TapeSaleRecord;
 					
+					// invoice pickup
+					//
+					if (tempSale.isPickup) {
+						if (tempSale.invoice != null) {
+							tempSale.invoice.pickupDate = new Date();
+							tempSale.invoice.offPendingDate = tempSale.invoice.pickupDate;
+							tempSale.invoice.onPendingList = false;
+							tempSale.invoice.locked = true;
+							dataService.addUpdate(tempSale.invoice);
+							
+							// TODO - costing the invoice is needed
+							
+							// TODO - Consume stock if needed
+							
+							// make entry on tape for all deposits
+							
+							//
+							// make entry on tape for invoice pickup and amount due
+							//
+							arRecord = new AccountHistoryData();
+							arRecord.account = sessionBatch.account;
+							arRecord.created = new Date();
+							arRecord.invoice = tempPayment.invoice;
+							arRecord.name = tempPayment.invoice.name;
+							arRecord.total = tempPayment.invoice.amountDue;
+							arRecord.subTotalPosted = tempPayment.invoice.grandTotal;
+							arRecord.balance = tempSale.total - tempSale.amountPaid;
+							if (tempSale.paymode != "") {	// some payment applied
+								// still has outstanding balance
+								if (arRecord.balance > 0) {
+									// classic tracks partial pay in static way
+									// the payment records are now a sub tree off of arRecord
+								} 
+								// all paid for
+								else {
+									arRecord.finalPaymentDate = new Date();
+								}
+							}
+							
+							dataService.addUpdate(arRecord);
+							
+							tempSale.accountHistoryData = arRecord;			// record AR history record into tape
+							
+							if (sessionBatch.account.firstInvoiceDate == null) {
+								sessionBatch.account.firstInvoiceDate = new Date();
+								
+								accountChanged = true;
+							}
+						}
+					} else {
+						
+						// TODO - if charge to account, post to POS charge log
+						
+						
+					}
+					
+					
+					// TODO build invoice print list
 				}
-			
-			
-			//	dataServiceTape.addUpdate(tape);
 			}
 			
-		//	dataServiceCashRegisterBatch.addUpdate(batch);
-		//	dataServiceUnPurchase.addUpdate(unPurchase);
+			tapeBatch.sessionBatch.addItem(sessionBatch);
+			dataService.addUpdate(tapeBatch);
+			
+			// some stastic changed in the account record
+			if (accountChanged == true) {
+				dataService.addUpdate(sessionBatch.account);
+			}
+			
+			dataServiceCashDrawer.addupdate(cashDrawer);
 		}
 	}
 	
 	private function doRevert():void{
-		batch = new TapeSessionBatch();
-		batch.transactions = new ArrayCollection();
+		sessionBatch = new TapeSessionBatch();
+		sessionBatch.transactionsList = new ArrayCollection();
 		
 		InitSaleRecord();		// setup for another sale
 		InitPaymentRecord();
@@ -1305,11 +1646,36 @@
 		button1.enabled = true;
 	} 
 	
+	//
+	// call back function when the user changes the value in the total price field
+	// 
+	private function doChangeTotalPrice():void
+	{				
+		// current value is EMPTY string, remove override
+		if (txtSaleTotal.text == "")
+			activeSale.opPrice = false;
+		else
+			activeSale.opPrice = true;
+		
+		// update the field font state to match
+		setOverrideForField(txtSaleTotal, activeSale.opPrice);
+		
+		UpdateCashRegister();
+	}
+	
 	private function doGetInvoice():void {	
 		this.throbber.visible = true;
 		this.throbber.play();
 	
 		dataService.getInvoiceByInvoiceNumber(txtInvoiceNumber.text,"I");
+	}
+	
+	private function handleLoadCurrentTapeBatch(evt:ResultEvent):void {		
+		tapeBatch = evt.result as TapeBatch;
+		
+		if (tapeBatch.sessionBatch == null) {
+			tapeBatch.sessionBatch = new ArrayCollection();
+		}
 	}
 	
 	private function handleLoadInvoice(evt:ResultEvent):void {
@@ -1355,7 +1721,7 @@
 				activeSale.subTotal = invoice.subTotal;
 				activeSale.total = invoice.amountDue;
 				activeSale.taxAmount = invoice.tax;
-				activeSale.cashRegisterDept.title = invoice.name;
+				activeSale.department = invoice.name;
 				activeSale.noTax = invoice.notTaxable;
 				
 				if (invoice.taxTable != null) {
@@ -1378,7 +1744,7 @@
 
 	
 
-	<mx:Label x="0" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.DEPARTMENT')}" textAlign="center"/>	
+	<mx:Label x="0" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.DEPARTMENT')}" width="130" textAlign="center"/>	
 	<mx:Tree x="0" y="80" width="130"  
 		id="tvItems" 
 		dataProvider="{systemCashPreferencesArray}"
@@ -1389,20 +1755,25 @@
 	<mx:Button x="150" y="10" width="38" height="38" click="doPostBatch();" enabled="{enableSave}" id="btnSave">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="196" y="10" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
+	<mx:Button x="214" y="10" width="38" height="38" click="doRevert();" enabled="{enableSave}" id="btnRevert">
 		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="242" y="10" width="38" height="38" click="doInvoice();" enabled="{enableSave}" id="btnInvoice">
+	<mx:Button x="280" y="10" width="38" height="38" click="doInvoice();" enabled="{enableSave}" id="btnInvoice">
 		<mx:icon>@Embed(source='../../../../assets/InvoiceWONotes.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="288" y="10" width="38" height="38" click="doAddJob();" enabled="{enableSave}" id="btnAddJob">
+	<mx:Button x="345" y="10" width="38" height="38" click="doAddJob();" enabled="{enableSave}" id="btnAddJob">
+		<mx:icon>@Embed(source='../../../../assets/new_job.png')</mx:icon>
+	</mx:Button>
+	<mx:Button x="413" y="10" width="38" height="38" click="doAddCharge();" enabled="{enableSave}" id="btnAddCharge">
 		<mx:icon>@Embed(source='../../../../assets/new_job.png')</mx:icon>
 	</mx:Button>
 
 	<mx:Canvas x="130" y="80" width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
-		<mx:Button x="19" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CustAcct')}" click="doAccount();"/>
-		<mx:TextInput x="158" y="10" text="{customerAccount.title}" width="252"/>
-		<mx:Canvas x="0" y="40" width="200" height="95" id="tax_canvas" borderStyle="inset">
+		<mx:Button x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CustAcct')}" click="doAccount();"/>
+		<mx:TextInput x="161" y="6" text="{customerAccount.title}" width="304" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:TextInput x="161" y="25" text="{customerAccount.type}" width="304" fontSize="9" fontWeight="normal" height="20"/>
+		<mx:TextInput x="468" y="25" text="{customerAccount.status}" width="58" fontSize="9" fontWeight="normal" height="20"/>
+		<mx:Canvas x="0" y="50" width="200" height="95" id="tax_canvas" borderStyle="inset">
 			<mx:Label x="5" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxTable')}" width="64" textAlign="right"/>
 			<mx:Label x="5" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxCode')}" width="64" textAlign="right"/>
 
@@ -1410,18 +1781,18 @@
 		    <mx:ComboBox x="77" y="33" change="UpdateCashRegister()" id="pickTaxCode" width="100" dataProvider="{TaxCodesArray}" labelField="name" selectedItem="{data.name}"/>
 		    <mx:CheckBox x="77" y="63" label="Non-Tax" id="chkNonTax" />
 		</mx:Canvas>
-		<mx:Canvas x="198" y="40" width="210" height="95" id="tax_canvas0" hideEffect="effect" showEffect="effect" borderStyle="inset">
+		<mx:Canvas x="198" y="50" width="210" height="95" id="tax_canvas0" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="0" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'labelCmd.Format')}" width="59" textAlign="right"/>
 			<mx:ComboBox x="67" y="10" id="cboFormat"  dataProvider="{FormatArray}" labelField="name" width="128"/>
 			<mx:CheckBox x="10" y="35" id="chkPrintInvoice" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintInvoice')}"/>
 				
 		</mx:Canvas>
-		<mx:Canvas x="0" y="133" width="408" height="279" id="tax_canvas1" hideEffect="effect" showEffect="effect" borderStyle="inset">
+		<mx:Canvas x="0" y="143" width="408" height="278" id="tax_canvas1" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Button x="10" y="200" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Accept')}" click="doAccept();" width="176" enabled="false" id="accept_button"/>
 			<mx:CheckBox x="10" y="243" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintReceipt')}" id="checkbox1"/>
 			<mx:TextArea x="384" y="244" width="10" height="8" id="txtSaleDescription" enabled="true"/>
 		</mx:Canvas>
-		<mx:Canvas x="407" y="40" width="261" height="216" id="tax_canvas2" hideEffect="effect" showEffect="effect" borderStyle="inset">
+		<mx:Canvas x="407" y="50" width="261" height="215" id="tax_canvas2" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="50" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PAYMENTMETHOD')}"/>
 			<mx:Button x="10" y="180" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Payment')}" width="186" id="btPayment" click="doPayment();" enabled="false"/>
 			<mx:RadioButtonGroup id="rgPaymentMethod" change="paymentMethodChanged(event)"/>
@@ -1431,20 +1802,20 @@
 			<mx:RadioButton x="131" y="60" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CHARGE')}" id="rbCharge" groupName="rgPaymentMethod" value="Charge"/>
 
 		</mx:Canvas>
-		<mx:Canvas x="407" y="252" width="261" height="160" id="tax_canvas3" hideEffect="effect" showEffect="effect" borderStyle="inset">
-			<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.SubTotal')}" id="label9" width="92" textAlign="right"/>
-			<mx:Label x="11" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Tax')}" id="label8" width="91" textAlign="right"/>
-			<mx:Label x="10" y="62" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Total')}" id="label7" width="92" textAlign="right"/>
-			<mx:Label x="10" y="88" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Tendered')}" id="label5" width="92" textAlign="right"/>
-			<mx:Label x="9" y="114" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Change')}" id="label6" width="93" textAlign="right"/>
-			<mx:Text id="subtotal_edit" x="110" y="10" width="86"  textAlign="right"/>
-			<mx:Text id="tax_edit" x="110" y="36" width="86" textAlign="right"/>
-			<mx:Text id="total_edit" x="110" y="62" width="86" textAlign="right"/>
-			<mx:Text id="tender_edit" x="110" y="88" width="86" textAlign="right"/>
-			<mx:Text id="change_edit" x="110" y="114" width="86" textAlign="right"/>
+		<mx:Canvas x="407" y="264" width="261" height="157" id="tax_canvas3" hideEffect="effect" showEffect="effect" borderStyle="inset">
+			<mx:Label x="45" y="22" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.SubTotal')}" id="label9" width="92" textAlign="right"/>
+			<mx:Label x="46" y="48" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Tax')}" id="label8" width="91" textAlign="right"/>
+			<mx:Label x="45" y="74" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Total')}" id="label7" width="92" textAlign="right"/>
+			<mx:Label x="45" y="100" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Tendered')}" id="label5" width="92" textAlign="right"/>
+			<mx:Label x="44" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Change')}" id="label6" width="93" textAlign="right"/>
+			<mx:Text id="subtotal_edit" x="145" y="22" width="86"  textAlign="right"/>
+			<mx:Text id="tax_edit" x="145" y="48" width="86" textAlign="right"/>
+			<mx:Text id="total_edit" x="145" y="74" width="86" textAlign="right"/>
+			<mx:Text id="tender_edit" x="145" y="100" width="86" textAlign="right"/>
+			<mx:Text id="change_edit" x="145" y="126" width="86" textAlign="right"/>
 
 		</mx:Canvas>
-		<mx:DataGrid x="0" y="420" width="666" id="cashReg_grid" dataProvider="{batch.transactions}" height="119" itemClick="doTransactionGrid();">
+		<mx:DataGrid x="0" y="420" width="666" id="cashReg_grid" dataProvider="{sessionBatch.transactionsList}" height="119" itemClick="doTransactionGrid();">
 			<mx:columns>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Description')}" labelFunction="doDescript"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Subtotal')}" labelFunction="doSubtotalPrice"/>
@@ -1454,8 +1825,9 @@
 		<mx:Button x="10" y="558" click="doVoid();" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'tapeCmd.VoidTransaction')}" width="154"  enabled="false" id="button1"/>
 		
 	</mx:Canvas>
-	<mx:Label x="150" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Post')}"/>
-	<mx:Label x="199" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Cancel')}"/>
-	<mx:Label x="242" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'barcodeCmd.Invoice')}"/>
-	<mx:Label x="288" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.NewJob')}"/>
+	<mx:Label x="110" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Post')}" width="114" textAlign="center"/>
+	<mx:Label x="175" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Cancel')}" width="115" textAlign="center"/>
+	<mx:Label x="242" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'barcodeCmd.Invoice')}" width="119" textAlign="center"/>
+	<mx:Label x="300" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.NewJob')}"  width="130" textAlign="center"/>
+	<mx:Label x="369" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Addcharges')}"  width="130" textAlign="center"/>
 </mx:TitleWindow>

@@ -138,12 +138,13 @@ public class CreditCardService extends SnowmassHibernateService {
 	// Given a credit card transaction database record, read the data and send to appropriate processing
 	//
 	//
-	public Long sendCardTransaction(Long id) throws Exception {
+	public CreditCardTransactions sendCardTransaction(Long id) throws Exception {
 		DataService dataService = new DataService();
 		String serialNum, devNum;
+		CreditCardTransactions ccTransaction = null;
 		
 		try {
-			CreditCardTransactions ccTransaction = (CreditCardTransactions)dataService.getById("CreditCardTransactions", id);
+			ccTransaction = (CreditCardTransactions)dataService.getById("CreditCardTransactions", id);
 			
 			PreferencesAccounting preferencesAccounting = (PreferencesAccounting)dataService.getSingle("PreferencesAccounting");
 			
@@ -247,7 +248,7 @@ public class CreditCardService extends SnowmassHibernateService {
 			e.printStackTrace();
 		}
 		
-		return(id);
+		return(ccTransaction);
 	}
 	
 	// Given a OLD order number from a previous transaction, perform a lookup and read

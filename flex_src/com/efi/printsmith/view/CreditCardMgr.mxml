@@ -139,7 +139,7 @@ width="100%" height="100%" preinitialize="preInit();"
 	private function handleSendCardTransResult(ev:ResultEvent):void
 	{
 		if (ev.result != null) {
-			var results:Number = ev.result as Number;
+			var temp:CreditCardTransactions = ev.result as CreditCardTransactions;
 			var selectEvent:CreditCardTransEvent;
 			
 			selectEvent = new CreditCardTransEvent(CreditCardTransEvent.COMPLETE, localTransation);
