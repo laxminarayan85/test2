@@ -59,6 +59,10 @@ public class UnpurchasedMerchandise extends ModelBase {
    */
   public static final String SALERECORD = "SaleRecord";
 	/**
+   * @generated
+   */
+  public static final String AMOUNTDUE = "AmountDue";
+	/**
 	 * @generated
 	 */
 	public UnpurchasedMerchandise() {
@@ -155,6 +159,35 @@ public class UnpurchasedMerchandise extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal amountDue;
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getAmountDue(){
+    return amountDue; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAmountDue(BigDecimal newVal) {
+    this.amountDue = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setAmountDue(double newVal) {
+    this.amountDue = BigDecimal.valueOf(newVal);
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -163,6 +196,7 @@ public class UnpurchasedMerchandise extends ModelBase {
     if (ACCOUNT.equals(propertyName)) return getAccount();
     if (TRANSACTIONDATE.equals(propertyName)) return getTransactionDate();
     if (SALERECORD.equals(propertyName)) return getSaleRecord();
+    if (AMOUNTDUE.equals(propertyName)) return getAmountDue();
     return super.getProperty(propertyName);
   }
 	
@@ -175,6 +209,7 @@ public class UnpurchasedMerchandise extends ModelBase {
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     if (TRANSACTIONDATE.equals(propertyName)) setTransactionDate((Date)newValue); else
     if (SALERECORD.equals(propertyName)) setSaleRecord((TapeSaleRecord)newValue); else
+    if (AMOUNTDUE.equals(propertyName)) setAmountDue((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -190,6 +225,8 @@ public class UnpurchasedMerchandise extends ModelBase {
       return new Class<?>[] {Date.class};		
     if (SALERECORD.equals(propertyName)) 
       return new Class<?>[] {TapeSaleRecord.class};		
+    if (AMOUNTDUE.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -203,6 +240,7 @@ public class UnpurchasedMerchandise extends ModelBase {
     if (ACCOUNT.equals(propertyName)) return UnpurchasedMerchandise.class;
     if (TRANSACTIONDATE.equals(propertyName)) return UnpurchasedMerchandise.class;
     if (SALERECORD.equals(propertyName)) return UnpurchasedMerchandise.class;
+    if (AMOUNTDUE.equals(propertyName)) return UnpurchasedMerchandise.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -219,6 +257,8 @@ public class UnpurchasedMerchandise extends ModelBase {
     if (! SmartEquals(getTransactionDate(), objT.getTransactionDate()))
       return false;
     if (! SmartEquals(getSaleRecord(), objT.getSaleRecord()))
+      return false;
+    if (! SmartEquals(getAmountDue(), objT.getAmountDue()))
       return false;
     return true;
   }			

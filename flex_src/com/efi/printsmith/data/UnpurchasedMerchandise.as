@@ -17,6 +17,7 @@ package com.efi.printsmith.data
 		public var account:Account;
 		public var transactionDate:Date = new Date();
 		public var saleRecord:TapeSaleRecord;
+		public var amountDue:Number = 0;
 	
 	}
 }
