@@ -65,20 +65,7 @@ public class AccountHistoryData extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String PAYMENTS = "Payments";
-	/**
-	 * @generated
-	 */
 	public static final String FINANCECHARGE = "FinanceCharge";
-	/**
-	 * @generated
-	 */
-	public static final String DEPOSITTAKEN = "DepositTaken";
-	/**
-	 * @generated
-	 */
-	public static final String DEPOSITREFUND = "DepositRefund";
-
 	/**
    * @generated
    */
@@ -111,6 +98,51 @@ public class AccountHistoryData extends ModelBase {
    * @generated
    */
   public static final String BALANCE = "Balance";
+
+	/**
+   * @generated
+   */
+  public static final String RECORDTYPE = "RecordType";
+	/**
+   * @generated
+   */
+  public static final String PARTIALPAY = "PartialPay";
+	/**
+   * @generated
+   */
+  public static final String PARTIALPAYCNT = "PartialPayCnt";
+	/**
+   * @generated
+   */
+  public static final String PARTIALPAYTOTAL = "PartialPayTotal";
+	/**
+   * @generated
+   */
+  public static final String FINALPAY = "FinalPay";
+	/**
+   * @generated
+   */
+  public static final String TAXDETAIL = "TaxDetail";
+	/**
+   * @generated
+   */
+  public static final String WEBREFERENCEID = "WebReferenceID";
+	/**
+   * @generated
+   */
+  public static final String STORENUM = "StoreNum";
+	/**
+   * @generated
+   */
+  public static final String CUSTPO = "CustPO";
+	/**
+   * @generated
+   */
+  public static final String SALESREP = "SalesRep";
+	/**
+   * @generated
+   */
+  public static final String ORDERNODISPLAY = "OrderNoDisplay";
 
 	/**
 	 * @generated
@@ -235,29 +267,6 @@ public class AccountHistoryData extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-	private TapePaymentRecord payments;
-	
-	/**
-	 * @generated
- 	 */
-	public TapePaymentRecord getPayments(){
-    return payments; 
-  }
-
-	
-	/**
-   * @generated
-   */	
-  public void setPayments(TapePaymentRecord newVal) {
-    this.payments = newVal;
-  }
-
-
-	/**
-	 * @generated
-	 */	
  	@Basic
 	private Integer financeCharge;
 	
@@ -277,50 +286,6 @@ public class AccountHistoryData extends ModelBase {
   }
 	
  	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Integer depositTaken;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getDepositTaken(){
-    return depositTaken; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setDepositTaken(Integer newVal) {
-    this.depositTaken = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private Integer depositRefund;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getDepositRefund(){
-    return depositRefund; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setDepositRefund(Integer newVal) {
-    this.depositRefund = newVal;
-  }
 	
 	/**
    * @generated
@@ -550,6 +515,285 @@ public class AccountHistoryData extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String recordType;
+
+	/**
+   * @generated
+ 	 */
+  public String getRecordType(){
+    return recordType; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setRecordType(String newVal) {
+    this.recordType = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private TapePaymentRecord partialPay;
+
+	/**
+   * @generated
+ 	 */
+  public TapePaymentRecord getPartialPay(){
+    return partialPay; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialPay(TapePaymentRecord newVal) {
+    this.partialPay = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal partialPayCnt;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getPartialPayCnt(){
+    return partialPayCnt; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialPayCnt(BigDecimal newVal) {
+    this.partialPayCnt = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialPayCnt(double newVal) {
+    this.partialPayCnt = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal partialPayTotal;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getPartialPayTotal(){
+    return partialPayTotal; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialPayTotal(BigDecimal newVal) {
+    this.partialPayTotal = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialPayTotal(double newVal) {
+    this.partialPayTotal = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal finalPay;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getFinalPay(){
+    return finalPay; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinalPay(BigDecimal newVal) {
+    this.finalPay = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinalPay(double newVal) {
+    this.finalPay = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private TaxTable taxDetail;
+
+	/**
+   * @generated
+ 	 */
+  public TaxTable getTaxDetail(){
+    return taxDetail; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setTaxDetail(TaxTable newVal) {
+    this.taxDetail = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long webReferenceID;
+
+	/**
+   * @generated
+ 	 */
+  public Long getWebReferenceID(){
+    return webReferenceID; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setWebReferenceID(Long newVal) {
+    this.webReferenceID = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String storeNum;
+
+	/**
+   * @generated
+ 	 */
+  public String getStoreNum(){
+    return storeNum; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setStoreNum(String newVal) {
+    this.storeNum = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String custPO;
+
+	/**
+   * @generated
+ 	 */
+  public String getCustPO(){
+    return custPO; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setCustPO(String newVal) {
+    this.custPO = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private SalesRep salesRep;
+
+	/**
+   * @generated
+ 	 */
+  public SalesRep getSalesRep(){
+    return salesRep; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setSalesRep(SalesRep newVal) {
+    this.salesRep = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String orderNoDisplay;
+
+	/**
+   * @generated
+ 	 */
+  public String getOrderNoDisplay(){
+    return orderNoDisplay; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setOrderNoDisplay(String newVal) {
+    this.orderNoDisplay = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -559,10 +803,7 @@ public class AccountHistoryData extends ModelBase {
     if (ACCOUNT.equals(propertyName)) return getAccount();
     if (JOURNAL.equals(propertyName)) return getJournal();
     if (INVOICE.equals(propertyName)) return getInvoice();
-    if (PAYMENTS.equals(propertyName)) return getPayments();
     if (FINANCECHARGE.equals(propertyName)) return getFinanceCharge();
-    if (DEPOSITTAKEN.equals(propertyName)) return getDepositTaken();
-    if (DEPOSITREFUND.equals(propertyName)) return getDepositRefund();
     if (STORENUMBER.equals(propertyName)) return getStoreNumber();
     if (POSTEDDATE.equals(propertyName)) return getPostedDate();
     if (PAYMENTDUEDATE.equals(propertyName)) return getPaymentDueDate();
@@ -571,6 +812,17 @@ public class AccountHistoryData extends ModelBase {
     if (TOTAL.equals(propertyName)) return getTotal();
     if (REFUNDTOTAL.equals(propertyName)) return getRefundTotal();
     if (BALANCE.equals(propertyName)) return getBalance();
+    if (RECORDTYPE.equals(propertyName)) return getRecordType();
+    if (PARTIALPAY.equals(propertyName)) return getPartialPay();
+    if (PARTIALPAYCNT.equals(propertyName)) return getPartialPayCnt();
+    if (PARTIALPAYTOTAL.equals(propertyName)) return getPartialPayTotal();
+    if (FINALPAY.equals(propertyName)) return getFinalPay();
+    if (TAXDETAIL.equals(propertyName)) return getTaxDetail();
+    if (WEBREFERENCEID.equals(propertyName)) return getWebReferenceID();
+    if (STORENUM.equals(propertyName)) return getStoreNum();
+    if (CUSTPO.equals(propertyName)) return getCustPO();
+    if (SALESREP.equals(propertyName)) return getSalesRep();
+    if (ORDERNODISPLAY.equals(propertyName)) return getOrderNoDisplay();
     return super.getProperty(propertyName);
   }
 	
@@ -584,10 +836,7 @@ public class AccountHistoryData extends ModelBase {
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     if (JOURNAL.equals(propertyName)) setJournal((Journal)newValue); else
     if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
-    if (PAYMENTS.equals(propertyName)) setPayments((TapePaymentRecord)newValue); else
     if (FINANCECHARGE.equals(propertyName)) setFinanceCharge((Integer)newValue); else
-    if (DEPOSITTAKEN.equals(propertyName)) setDepositTaken((Integer)newValue); else
-    if (DEPOSITREFUND.equals(propertyName)) setDepositRefund((Integer)newValue); else
     if (STORENUMBER.equals(propertyName)) setStoreNumber((String)newValue); else
     if (POSTEDDATE.equals(propertyName)) setPostedDate((Date)newValue); else
     if (PAYMENTDUEDATE.equals(propertyName)) setPaymentDueDate((Date)newValue); else
@@ -596,6 +845,17 @@ public class AccountHistoryData extends ModelBase {
     if (TOTAL.equals(propertyName)) setTotal((BigDecimal)newValue); else
     if (REFUNDTOTAL.equals(propertyName)) setRefundTotal((BigDecimal)newValue); else
     if (BALANCE.equals(propertyName)) setBalance((BigDecimal)newValue); else
+    if (RECORDTYPE.equals(propertyName)) setRecordType((String)newValue); else
+    if (PARTIALPAY.equals(propertyName)) setPartialPay((TapePaymentRecord)newValue); else
+    if (PARTIALPAYCNT.equals(propertyName)) setPartialPayCnt((BigDecimal)newValue); else
+    if (PARTIALPAYTOTAL.equals(propertyName)) setPartialPayTotal((BigDecimal)newValue); else
+    if (FINALPAY.equals(propertyName)) setFinalPay((BigDecimal)newValue); else
+    if (TAXDETAIL.equals(propertyName)) setTaxDetail((TaxTable)newValue); else
+    if (WEBREFERENCEID.equals(propertyName)) setWebReferenceID((Long)newValue); else
+    if (STORENUM.equals(propertyName)) setStoreNum((String)newValue); else
+    if (CUSTPO.equals(propertyName)) setCustPO((String)newValue); else
+    if (SALESREP.equals(propertyName)) setSalesRep((SalesRep)newValue); else
+    if (ORDERNODISPLAY.equals(propertyName)) setOrderNoDisplay((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -613,13 +873,7 @@ public class AccountHistoryData extends ModelBase {
       return new Class<?>[] {Journal.class};		
     if (INVOICE.equals(propertyName)) 
       return new Class<?>[] {Invoice.class};		
-    if (PAYMENTS.equals(propertyName)) 
-      return new Class<?>[] {TapePaymentRecord.class};		
     if (FINANCECHARGE.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
-    if (DEPOSITTAKEN.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
-    if (DEPOSITREFUND.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (STORENUMBER.equals(propertyName)) 
       return new Class<?>[] {String.class};		
@@ -637,6 +891,28 @@ public class AccountHistoryData extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (BALANCE.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
+    if (RECORDTYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PARTIALPAY.equals(propertyName)) 
+      return new Class<?>[] {TapePaymentRecord.class};		
+    if (PARTIALPAYCNT.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (PARTIALPAYTOTAL.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (FINALPAY.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (TAXDETAIL.equals(propertyName)) 
+      return new Class<?>[] {TaxTable.class};		
+    if (WEBREFERENCEID.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (STORENUM.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CUSTPO.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SALESREP.equals(propertyName)) 
+      return new Class<?>[] {SalesRep.class};		
+    if (ORDERNODISPLAY.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -651,10 +927,7 @@ public class AccountHistoryData extends ModelBase {
     if (ACCOUNT.equals(propertyName)) return AccountHistoryData.class;
     if (JOURNAL.equals(propertyName)) return AccountHistoryData.class;
     if (INVOICE.equals(propertyName)) return AccountHistoryData.class;
-    if (PAYMENTS.equals(propertyName)) return AccountHistoryData.class;
     if (FINANCECHARGE.equals(propertyName)) return AccountHistoryData.class;
-    if (DEPOSITTAKEN.equals(propertyName)) return AccountHistoryData.class;
-    if (DEPOSITREFUND.equals(propertyName)) return AccountHistoryData.class;
     if (STORENUMBER.equals(propertyName)) return AccountHistoryData.class;
     if (POSTEDDATE.equals(propertyName)) return AccountHistoryData.class;
     if (PAYMENTDUEDATE.equals(propertyName)) return AccountHistoryData.class;
@@ -663,6 +936,17 @@ public class AccountHistoryData extends ModelBase {
     if (TOTAL.equals(propertyName)) return AccountHistoryData.class;
     if (REFUNDTOTAL.equals(propertyName)) return AccountHistoryData.class;
     if (BALANCE.equals(propertyName)) return AccountHistoryData.class;
+    if (RECORDTYPE.equals(propertyName)) return AccountHistoryData.class;
+    if (PARTIALPAY.equals(propertyName)) return AccountHistoryData.class;
+    if (PARTIALPAYCNT.equals(propertyName)) return AccountHistoryData.class;
+    if (PARTIALPAYTOTAL.equals(propertyName)) return AccountHistoryData.class;
+    if (FINALPAY.equals(propertyName)) return AccountHistoryData.class;
+    if (TAXDETAIL.equals(propertyName)) return AccountHistoryData.class;
+    if (WEBREFERENCEID.equals(propertyName)) return AccountHistoryData.class;
+    if (STORENUM.equals(propertyName)) return AccountHistoryData.class;
+    if (CUSTPO.equals(propertyName)) return AccountHistoryData.class;
+    if (SALESREP.equals(propertyName)) return AccountHistoryData.class;
+    if (ORDERNODISPLAY.equals(propertyName)) return AccountHistoryData.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -682,13 +966,7 @@ public class AccountHistoryData extends ModelBase {
       return false;
     if (! SmartEquals(getInvoice(), objT.getInvoice()))
       return false;
-    if (! SmartEquals(getPayments(), objT.getPayments()))
-      return false;
     if (! SmartEquals(getFinanceCharge(), objT.getFinanceCharge()))
-      return false;
-    if (! SmartEquals(getDepositTaken(), objT.getDepositTaken()))
-      return false;
-    if (! SmartEquals(getDepositRefund(), objT.getDepositRefund()))
       return false;
     if (! SmartEquals(getStoreNumber(), objT.getStoreNumber()))
       return false;
@@ -705,6 +983,28 @@ public class AccountHistoryData extends ModelBase {
     if (! SmartEquals(getRefundTotal(), objT.getRefundTotal()))
       return false;
     if (! SmartEquals(getBalance(), objT.getBalance()))
+      return false;
+    if (! SmartEquals(getRecordType(), objT.getRecordType()))
+      return false;
+    if (! SmartEquals(getPartialPay(), objT.getPartialPay()))
+      return false;
+    if (! SmartEquals(getPartialPayCnt(), objT.getPartialPayCnt()))
+      return false;
+    if (! SmartEquals(getPartialPayTotal(), objT.getPartialPayTotal()))
+      return false;
+    if (! SmartEquals(getFinalPay(), objT.getFinalPay()))
+      return false;
+    if (! SmartEquals(getTaxDetail(), objT.getTaxDetail()))
+      return false;
+    if (! SmartEquals(getWebReferenceID(), objT.getWebReferenceID()))
+      return false;
+    if (! SmartEquals(getStoreNum(), objT.getStoreNum()))
+      return false;
+    if (! SmartEquals(getCustPO(), objT.getCustPO()))
+      return false;
+    if (! SmartEquals(getSalesRep(), objT.getSalesRep()))
+      return false;
+    if (! SmartEquals(getOrderNoDisplay(), objT.getOrderNoDisplay()))
       return false;
     return true;
   }			

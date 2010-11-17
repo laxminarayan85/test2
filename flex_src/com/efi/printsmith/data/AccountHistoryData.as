@@ -18,10 +18,7 @@ package com.efi.printsmith.data
 		public var account:Account;
 		public var journal:Journal;
 		public var invoice:Invoice;
-		public var payments:TapePaymentRecord;
 		public var financeCharge:int = 0;
-		public var depositTaken:int = 0;
-		public var depositRefund:int = 0;
 		public var storeNumber:String = "";
 		public var postedDate:Date = new Date();
 		public var paymentDueDate:Date = new Date();
@@ -30,6 +27,17 @@ package com.efi.printsmith.data
 		public var total:Number = 0;
 		public var refundTotal:Number = 0;
 		public var balance:Number = 0;
+		public var recordType:String = "";
+		public var partialPay:TapePaymentRecord;
+		public var partialPayCnt:Number = 0;
+		public var partialPayTotal:Number = 0;
+		public var finalPay:Number = 0;
+		public var taxDetail:TaxTable;
+		public var webReferenceID:Number = 0;
+		public var storeNum:String = "";
+		public var custPO:String = "";
+		public var salesRep:SalesRep;
+		public var orderNoDisplay:String = "";
 	
 	}
 }
