@@ -53,28 +53,11 @@ public class UnpurchasedMerchandise extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String AMOUNT = "Amount";
-	/**
-	 * @generated
-	 */
 	public static final String TRANSACTIONDATE = "TransactionDate";
 	/**
-	 * @generated
-	 */
-	public static final String TAXTABLE = "TaxTable";
-	/**
-	 * @generated
-	 */
-	public static final String TAXCODE = "TaxCode";
-	/**
-	 * @generated
-	 */
-	public static final String TAX = "Tax";
-	/**
-	 * @generated
-	 */
-	public static final String SUBTOTAL = "Subtotal";
-
+   * @generated
+   */
+  public static final String SALERECORD = "SaleRecord";
 	/**
 	 * @generated
 	 */
@@ -128,35 +111,6 @@ public class UnpurchasedMerchandise extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private BigDecimal amount;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getAmount(){
-    return amount; 
-  }
-
-	
-	/**
-	 * @generated
-	 */	
-	public void setAmount(BigDecimal newVal) {
-    this.amount = newVal;
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setAmount(double newVal) {
-    this.amount = BigDecimal.valueOf(newVal);
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
 	private Date transactionDate;
 	
 	/**
@@ -177,109 +131,29 @@ public class UnpurchasedMerchandise extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-	private TaxTable taxTable;
-	
+    @Where(clause="isdeleted <> 'TRUE'")
+  private TapeSaleRecord saleRecord;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public TaxTable getTaxTable(){
-    return taxTable; 
+  public TapeSaleRecord getSaleRecord(){
+    return saleRecord; 
   }
 
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setTaxTable(TaxTable newVal) {
-    this.taxTable = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
-    @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
-	private TaxCodes taxCode;
-	
-	/**
-	 * @generated
- 	 */
-	public TaxCodes getTaxCode(){
-    return taxCode; 
+   * @generated
+   */	
+  public void setSaleRecord(TapeSaleRecord newVal) {
+    this.saleRecord = newVal;
   }
 
-	
-	/**
-	 * @generated
-	 */	
-	public void setTaxCode(TaxCodes newVal) {
-    this.taxCode = newVal;
-  }
-	
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal tax;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getTax(){
-    return tax; 
-  }
 
-	
-	/**
-	 * @generated
-	 */	
-	public void setTax(BigDecimal newVal) {
-    this.tax = newVal;
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setTax(double newVal) {
-    this.tax = BigDecimal.valueOf(newVal);
-  }
- 	
-	
-	/**
-	 * @generated
-	 */	
- 	@Basic
-	private BigDecimal subtotal;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getSubtotal(){
-    return subtotal; 
-  }
 
-	
-	/**
-	 * @generated
-	 */	
-	public void setSubtotal(BigDecimal newVal) {
-    this.subtotal = newVal;
-  }
-	
-	/**
-	 * @generated
-	 */	
-	public void setSubtotal(double newVal) {
-    this.subtotal = BigDecimal.valueOf(newVal);
-  }
 	/**
 	 * @generated
 	 */		
@@ -287,12 +161,8 @@ public class UnpurchasedMerchandise extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (ACCOUNT.equals(propertyName)) return getAccount();
-    if (AMOUNT.equals(propertyName)) return getAmount();
     if (TRANSACTIONDATE.equals(propertyName)) return getTransactionDate();
-    if (TAXTABLE.equals(propertyName)) return getTaxTable();
-    if (TAXCODE.equals(propertyName)) return getTaxCode();
-    if (TAX.equals(propertyName)) return getTax();
-    if (SUBTOTAL.equals(propertyName)) return getSubtotal();
+    if (SALERECORD.equals(propertyName)) return getSaleRecord();
     return super.getProperty(propertyName);
   }
 	
@@ -303,12 +173,8 @@ public class UnpurchasedMerchandise extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
-    if (AMOUNT.equals(propertyName)) setAmount((BigDecimal)newValue); else
     if (TRANSACTIONDATE.equals(propertyName)) setTransactionDate((Date)newValue); else
-    if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
-    if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
-    if (TAX.equals(propertyName)) setTax((BigDecimal)newValue); else
-    if (SUBTOTAL.equals(propertyName)) setSubtotal((BigDecimal)newValue); else
+    if (SALERECORD.equals(propertyName)) setSaleRecord((TapeSaleRecord)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -320,18 +186,10 @@ public class UnpurchasedMerchandise extends ModelBase {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (ACCOUNT.equals(propertyName)) 
       return new Class<?>[] {Account.class};		
-    if (AMOUNT.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
     if (TRANSACTIONDATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
-    if (TAXTABLE.equals(propertyName)) 
-      return new Class<?>[] {TaxTable.class};		
-    if (TAXCODE.equals(propertyName)) 
-      return new Class<?>[] {TaxCodes.class};		
-    if (TAX.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
-    if (SUBTOTAL.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
+    if (SALERECORD.equals(propertyName)) 
+      return new Class<?>[] {TapeSaleRecord.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -343,12 +201,8 @@ public class UnpurchasedMerchandise extends ModelBase {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (ACCOUNT.equals(propertyName)) return UnpurchasedMerchandise.class;
-    if (AMOUNT.equals(propertyName)) return UnpurchasedMerchandise.class;
     if (TRANSACTIONDATE.equals(propertyName)) return UnpurchasedMerchandise.class;
-    if (TAXTABLE.equals(propertyName)) return UnpurchasedMerchandise.class;
-    if (TAXCODE.equals(propertyName)) return UnpurchasedMerchandise.class;
-    if (TAX.equals(propertyName)) return UnpurchasedMerchandise.class;
-    if (SUBTOTAL.equals(propertyName)) return UnpurchasedMerchandise.class;
+    if (SALERECORD.equals(propertyName)) return UnpurchasedMerchandise.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -362,17 +216,9 @@ public class UnpurchasedMerchandise extends ModelBase {
     UnpurchasedMerchandise objT = (UnpurchasedMerchandise)obj;
     if (! SmartEquals(getAccount(), objT.getAccount()))
       return false;
-    if (! SmartEquals(getAmount(), objT.getAmount()))
-      return false;
     if (! SmartEquals(getTransactionDate(), objT.getTransactionDate()))
       return false;
-    if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
-      return false;
-    if (! SmartEquals(getTaxCode(), objT.getTaxCode()))
-      return false;
-    if (! SmartEquals(getTax(), objT.getTax()))
-      return false;
-    if (! SmartEquals(getSubtotal(), objT.getSubtotal()))
+    if (! SmartEquals(getSaleRecord(), objT.getSaleRecord()))
       return false;
     return true;
   }			
