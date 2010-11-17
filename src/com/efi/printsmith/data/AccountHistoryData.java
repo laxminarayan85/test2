@@ -626,13 +626,15 @@ public class AccountHistoryData extends ModelBase {
 	/**
    * @generated
    */	
- 	@Basic
-  private BigDecimal finalPay;
+ 	@ManyToOne()
+@Where(clause="isdeleted <> 'TRUE'")
+	@Basic
+  private TapePaymentRecord finalPay;
 
 	/**
    * @generated
  	 */
-  public BigDecimal getFinalPay(){
+  public TapePaymentRecord getFinalPay(){
     return finalPay; 
   }
 
@@ -640,18 +642,9 @@ public class AccountHistoryData extends ModelBase {
 	/**
    * @generated
    */	
-  public void setFinalPay(BigDecimal newVal) {
+  public void setFinalPay(TapePaymentRecord newVal) {
     this.finalPay = newVal;
   }
-
-
-	/**
-   * @generated
-   */	
-  public void setFinalPay(double newVal) {
-    this.finalPay = BigDecimal.valueOf(newVal);
-  }
-
 
 
 	/**
@@ -849,7 +842,7 @@ public class AccountHistoryData extends ModelBase {
     if (PARTIALPAY.equals(propertyName)) setPartialPay((TapePaymentRecord)newValue); else
     if (PARTIALPAYCNT.equals(propertyName)) setPartialPayCnt((BigDecimal)newValue); else
     if (PARTIALPAYTOTAL.equals(propertyName)) setPartialPayTotal((BigDecimal)newValue); else
-    if (FINALPAY.equals(propertyName)) setFinalPay((BigDecimal)newValue); else
+    if (FINALPAY.equals(propertyName)) setFinalPay((TapePaymentRecord)newValue); else
     if (TAXDETAIL.equals(propertyName)) setTaxDetail((TaxTable)newValue); else
     if (WEBREFERENCEID.equals(propertyName)) setWebReferenceID((Long)newValue); else
     if (STORENUM.equals(propertyName)) setStoreNum((String)newValue); else
@@ -900,7 +893,7 @@ public class AccountHistoryData extends ModelBase {
     if (PARTIALPAYTOTAL.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
     if (FINALPAY.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
+      return new Class<?>[] {TapePaymentRecord.class};		
     if (TAXDETAIL.equals(propertyName)) 
       return new Class<?>[] {TaxTable.class};		
     if (WEBREFERENCEID.equals(propertyName)) 

@@ -31,7 +31,7 @@ package com.efi.printsmith.data
 		public var partialPay:TapePaymentRecord;
 		public var partialPayCnt:Number = 0;
 		public var partialPayTotal:Number = 0;
-		public var finalPay:Number = 0;
+		public var finalPay:TapePaymentRecord;
 		public var taxDetail:TaxTable;
 		public var webReferenceID:Number = 0;
 		public var storeNum:String = "";
