@@ -110,7 +110,8 @@
 			import mx.collections.ICollectionView;
 			import mx.rpc.Responder;
 		    import mx.utils.GraphicsUtil;    
-
+			import mx.utils.ObjectUtil;
+			
 			[Bindable]                                         
 		    private var systemPreferences:PreferencesSystem;
 		
@@ -353,7 +354,7 @@
 				if (chargeDefinition != null)
 				{
 					chargeService.createChargeFromChargeDefinition(chargeDefinition);
-					// TODO: Following 2 lines are a hack and need to be fixed/localized
+
 					this.editingCharge = false;
 					this.add_button.label = "Add";
 					var hourStr:String = (chargeDefinition.presetTimeStartHour < 10?"0":"") + chargeDefinition.presetTimeStartHour;
@@ -374,7 +375,8 @@
 
 			private function gridSelectionChanged():void
 			{
-				charge = invoice_charge_datagrid.selectedItem as Charge;
+				charge = ObjectUtil.copy(invoice_charge_datagrid.selectedItem) as Charge;
+				//invoice_charge_datagrid.selectedItem as Charge;
 				chargeDefinition = charge.chargeDefinition;
 				this.editingCharge = true;
 				this.add_button.label = "Save";
@@ -412,14 +414,20 @@
 				{
 					charges = new ArrayCollection;
 				}
-				
-				charges.addItem(this.charge);
+				if (!editingCharge) {
+					charges.addItem(this.charge);
+				} else {
+					charges.setItemAt(this.charge, this.invoice_charge_datagrid.selectedIndex);
+				}
 				
 				chargeTree.selectedItem = null;
 				invoice_charge_datagrid.selectedItem = null;
 				invoice_charge_datagrid.invalidateList();
 				currentState = "";
-				this.charge = new Charge();
+				this.charge = null;
+				this.chargeDefinition = null;
+				editingCharge = false;
+				updateFieldVisibility();
 			}
 			
 			private function mapToChargeData():void {
@@ -442,21 +450,25 @@
 				this.charge.linearX2 = this.linear_top.selected;
 				this.charge.linearY1 = this.linear_right.selected;
 				this.charge.linearY2 = this.linear_left.selected;
-				var colonPosition:int = startTimeString.indexOf(":");
 				if (time_start_edit != null) {
 					if (startTimeString.indexOf(":") != -1) {
-						charge.startHours = parseInt(startTimeString.substr(0,colonPosition));
-						charge.startMinutes = parseInt(startTimeString.substr(colonPosition+1));
+						charge.startHours = parseInt(startTimeString.substr(0,startTimeString.indexOf(":")));
+						charge.startMinutes = parseInt(startTimeString.substr(startTimeString.indexOf(":")+1));
+					} if (startTimeString.indexOf(".") != -1) {
+						charge.startHours = parseInt(startTimeString.substr(0,startTimeString.indexOf(".")));
+						charge.startMinutes = parseInt(startTimeString.substr(startTimeString.indexOf(".")+1));
 					} else {
 						charge.startHours = parseInt(startTimeString);
 					}
 				}
 						
 				if (time_stop_edit != null) {
-					colonPosition = stopTimeString.indexOf(":");
 					if (stopTimeString.indexOf(":") != -1) {
-						charge.endHours = parseInt(stopTimeString.substr(0,colonPosition));
-						charge.endMinutes = parseInt(stopTimeString.substr(colonPosition+1));
+						charge.endHours = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(":")));
+						charge.endMinutes = parseInt(stopTimeString.substr(stopTimeString.indexOf(":")+1));
+					} if (startTimeString.indexOf(".") != -1) {
+						charge.endHours = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(".")));
+						charge.endMinutes = parseInt(stopTimeString.substr(stopTimeString.indexOf(".")+1));
 					} else {
 						charge.startHours = parseInt(startTimeString);
 					}
