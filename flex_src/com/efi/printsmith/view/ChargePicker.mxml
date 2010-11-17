@@ -1258,17 +1258,17 @@
 											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
 											 id="finished_check"
 											 fontSize="9"
-											 selected="{charge.finished}" width="75"/>
+											 selected="{charge.finished}"/>
 								<mx:CheckBox
 											    label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
 											 id="taxable_check"
 											 fontSize="9"
-											 selected="{charge.taxable}" width="65"/>
+											 selected="{charge.taxable}"/>
 								<mx:CheckBox
 											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Brokered')}"
 											 id="brokered_check"
 											 fontSize="9"
-											 selected="{charge.brokered}" width="70"/>
+											 selected="{charge.brokered}"/>
 								<mx:CheckBox
 											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.DisplayQuantity')}"
 											 id="displayQty_check"
@@ -1278,12 +1278,12 @@
 											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Hidden')}"
 											 id="hidden_check"
 											 fontSize="9"
-											 selected="{charge.hidden}" width="64"/>
+											 selected="{charge.hidden}"/>
 								<mx:CheckBox
 											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.HidePrice')}"
 											 id="hidePrice_check"
 											 fontSize="9"
-											 selected="{charge.hidePrice}" width="64"/>
+											 selected="{charge.hidePrice}"/>
 							</mx:HBox>
 							<mx:HBox width="100%" id="description_box">
 								<mx:Spacer width="8"/>
