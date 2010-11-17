@@ -54,23 +54,22 @@ package com.efi.printsmith
 		static public const CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsTimeOut:Number = 7;
 		
 		static public const PENDING_PICK_UP:String = "pickup";
-		
 		static public const PENDING_STATUS:String = "status";
-		
 		static public const PENDING_LOCATION:String = "location";
-		
 		static public const PENDING_OPEN:String = "open";
-		
 		static public const PENDING_NOTIFY:String = "notify";
-		
 		static public const PENDING_DUEDATE:String = "duedate";
-		
 		static public const PENDING_DELIVER:String = "deliver";
-		
 		static public const PENDING_SCHEDULE:String = "schedule";
-		
 		static public const PENDING_TRACKER:String = "tracker";
 		
+		static public const ACCOUNT_HISTORY_TYPE_INVPICKUP = "Invoice Pickup";
+		static public const ACCOUNT_HISTORY_TYPE_PAYMENT = "Payment to Account";
+		static public const ACCOUNT_HISTORY_TYPE_JOURNALENTRY = "Journal Entry";
+		static public const ACCOUNT_HISTORY_TYPE_FINANCECHARGE = "Finance Charge";
+		static public const ACCOUNT_HISTORY_TYPE_TRANSFER = "Transfer";
+		static public const ACCOUNT_HISTORY_TYPE_DEPOSITTAKEN = "Deposit Taken";
+		static public const ACCOUNT_HISTORY_TYPE_DEPOSITRETURN = "Deposit Returned";
 
 		public function Constants()
 		{
