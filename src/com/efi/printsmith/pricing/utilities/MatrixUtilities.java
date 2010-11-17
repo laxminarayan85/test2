@@ -18,7 +18,7 @@ public class MatrixUtilities {
 		int i = 0;
 		
 		for (i = 0; i < elements.size(); i++) {
-			if (elements.get(i).getQty() > 0 && elements.get(i).getQty() >= lookup) {
+			if (elements.get(i).getLastLine() == false && elements.get(i).getQty() > 0 && elements.get(i).getQty() >= lookup) {
 				break;
 			}
 		}
@@ -38,12 +38,14 @@ public class MatrixUtilities {
 		long prevQty = 0;
 		for (i = 0; i < elements.size(); i++) {
 			MatrixElement element = elements.get(i);
-			if (element.getQty() < qty) {
-				runningTotal += (element.getQty()-prevQty) * element.getPrice1().doubleValue();
-				prevQty = element.getQty();
-			} else {
-				runningTotal += (qty-prevQty) * element.getPrice1().doubleValue();
-				break;
+			if (element.getLastLine() == false) {
+				if (element.getQty() <= qty) {
+					runningTotal += (element.getQty()-prevQty) * element.getPrice1().doubleValue();
+					prevQty = element.getQty();
+				} else {
+					runningTotal += (qty-prevQty) * element.getPrice1().doubleValue();
+					break;
+				}
 			}
 		}
 		return (runningTotal/qty);
@@ -59,12 +61,14 @@ public class MatrixUtilities {
 		long prevQty = 0;
 		for (i = 0; i < elements.size(); i++) {
 			MatrixElement element = elements.get(i);
-			if (element.getQty() < qty) {
-				runningTotal += (element.getQty()-prevQty) * element.getPrice1().doubleValue();
-				prevQty = element.getQty();
-			} else {
-				runningTotal += (qty-prevQty) * element.getPrice1().doubleValue();
-				break;
+			if (element.getLastLine() == false) {
+				if (element.getQty() <= qty) {
+					runningTotal += (element.getQty()-prevQty) * element.getPrice1().doubleValue();
+					prevQty = element.getQty();
+				} else {
+					runningTotal += (qty-prevQty) * element.getPrice1().doubleValue();
+					break;
+				}
 			}
 		}
 		return (runningTotal/qty);

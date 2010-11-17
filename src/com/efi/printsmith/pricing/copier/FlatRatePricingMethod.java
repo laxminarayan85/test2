@@ -7,6 +7,7 @@ import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PriceLogEntry;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.enums.Price2Side;
+import com.efi.printsmith.data.enums.StockPriceMethod;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
 import com.efi.printsmith.pricing.utilities.PriceLogUtilities;
 
@@ -34,9 +35,9 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 		if (job.getStock() != null)
 			stockPrice = priceStockEngine.priceStock(job);
 		double wastePrice = ((job.getBinderyWaste().doubleValue() + job.getEstWaste().doubleValue()) * pricingRecord.getUnitPrice().doubleValue()) * job.getSheets();
-		int runout = job.getPaperCal().getRunout();
-		if (runout == 0)
-			runout = 1;
+		int runout = 1;
+		if (job.getPricingCopier().getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name()) == false && job.getPricingCopier().getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name()) == false && job.getPricingCopier().getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name()) == false)
+			runout = job.getPaperCal().getRunout();
 		if (job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 			stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();
 		}

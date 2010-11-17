@@ -35,7 +35,13 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 
 		double pricePerCopy = 0.0;
 		double pricePerSecondSide = 0.0;	
-		
+		double wastePrice = 0.0;
+		int runout = 1;
+		if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name()) == false && copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name()) == false && copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name()) == false)
+			runout = job.getPaperCal().getRunout();
+		if (copierDefinition.getMatrixType().equals("MarkupTable") == false && job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
+			stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();
+		}
 		if (!pricingRecord.getTotalPriceOverride()) {
 			if (copierDefinition.getMatrixType().equals("CopyCost")) {
 				if (copierDefinition.getInterpolateMatrix() == true)
@@ -43,29 +49,20 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 				else
 					pricePerCopy = matrixElement.getPrice1().doubleValue();
 				pricePerCopy *= copierDefinition.getCopyMarkup2();
-				
-				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
+				wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
-						pricePerSecondSide = (pricePerCopy + stockPrice) / 2;
-						pricingRecord.setUnitPrice(pricePerSecondSide);
-						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies() / 2)) + (stockPrice*(job.getTotalCopies() / 2)));
-					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*(job.getTotalCopies() / 2));					
-						pricingRecord.setUnitPrice(pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies());
-					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
-						pricePerSecondSide = matrixElement.getPrice2().doubleValue() * copierDefinition.getCopyMarkup2();
-						pricingRecord.setUnitPrice(pricePerSecondSide);
-						pricingRecord.setTotalPrice((pricePerSecondSide * job.getTotalCopies())+ stockPrice*job.getTotalCopies());					
+						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies() / 2)) + (stockPrice*((job.getTotalCopies()/2)/runout)));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
-						pricePerSecondSide = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
-						pricingRecord.setTotalPrice((pricePerSecondSide * job.getTotalCopies())+ stockPrice*copierDefinition.getSideTwoFactor()*(job.getTotalCopies() / 2));					
-						pricingRecord.setUnitPrice(pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies());
-					} else {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*job.getTotalCopies()) / 2);
-					}
+						pricePerCopy = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
+						pricePerCopy = matrixElement.getPrice2().doubleValue() * copierDefinition.getCopyMarkup2();
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+					} else
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
 				} else {
-					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
+					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + ((stockPrice*job.getTotalCopies()/runout)) + wastePrice);				
 				}
 			} else if (copierDefinition.getMatrixType().equals("DiscountTable")) {
 				double discountPct = 0.0;
@@ -75,29 +72,23 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 					discountPct = matrixElement.getPrice1().doubleValue();
 				pricePerCopy = copierDefinition.getBaseRate().doubleValue() * discountPct;
 				pricePerCopy *= copierDefinition.getCopyMarkup2();
-				
-				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
+				double discountedStockPrice = stockPrice * discountPct;
+				wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
-						pricePerSecondSide = (pricePerCopy + stockPrice) / 2;
-						pricingRecord.setUnitPrice(pricePerSecondSide);
-						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies())) + (stockPrice*(job.getTotalCopies() / 2)));
-					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*(job.getTotalCopies() / 2));					
-						pricingRecord.setUnitPrice(pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies());
-					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
-						pricePerSecondSide = matrixElement.getPrice2().doubleValue() * copierDefinition.getCopyMarkup2();
-						pricingRecord.setUnitPrice(pricePerSecondSide);
-						pricingRecord.setTotalPrice((pricePerSecondSide * job.getTotalCopies())+ stockPrice*job.getTotalCopies());					
+						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies() / 2)) + (discountedStockPrice*((job.getTotalCopies()/2)/runout)));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
-						pricePerSecondSide = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
-						pricingRecord.setTotalPrice((pricePerSecondSide * job.getTotalCopies())+ stockPrice*copierDefinition.getSideTwoFactor()*(job.getTotalCopies() / 2));					
-						pricingRecord.setUnitPrice(pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies());
-					} else {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*job.getTotalCopies()) / 2);
-					}
+						pricePerCopy = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (discountedStockPrice*((job.getTotalCopies()/2)/runout)));
+					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
+						discountPct = matrixElement.getPrice2().doubleValue();
+						pricePerCopy = copierDefinition.getBaseRate().doubleValue() * discountPct * copierDefinition.getCopyMarkup2();
+						discountedStockPrice = stockPrice * discountPct;
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (discountedStockPrice*((job.getTotalCopies()/2)/runout)));
+					} else
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (discountedStockPrice*((job.getTotalCopies()/2)/runout)));
 				} else {
-					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
+					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + ((discountedStockPrice*job.getTotalCopies()/runout)) + wastePrice);				
 				}
 			} else if (copierDefinition.getMatrixType().equals("StepTable")) {
 				if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
@@ -105,28 +96,24 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 				} else {
 					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(copierDefinition.getCopierMatrix(), job.getPressQty());
 				}
-				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
+				wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
-						pricePerSecondSide = (pricePerCopy + stockPrice) / 2;
-						pricingRecord.setUnitPrice(pricePerSecondSide);
-						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies())) + (stockPrice*(job.getTotalCopies() / 2)));
-					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*(job.getTotalCopies() / 2));					
-						pricingRecord.setUnitPrice(pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies());
-					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
-						pricePerSecondSide = matrixElement.getPrice2().doubleValue();
-						pricingRecord.setUnitPrice(pricePerSecondSide);
-						pricingRecord.setTotalPrice((pricePerSecondSide * job.getTotalCopies())+ stockPrice*job.getTotalCopies());					
+						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies() / 2)) + (stockPrice*((job.getTotalCopies()/2)/runout)));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
-						pricePerSecondSide = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
-						pricingRecord.setTotalPrice((pricePerSecondSide * job.getTotalCopies())+ stockPrice*copierDefinition.getSideTwoFactor()*(job.getTotalCopies() / 2));					
-						pricingRecord.setUnitPrice(pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies());
-					} else {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*job.getTotalCopies()) / 2);
-					}
+						pricePerCopy = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
+						if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
+							pricePerCopy = MatrixUtilities.calculateStepPriceSideTwo(copierDefinition.getCopierMatrix(), job.getPressQty()*2);
+						} else {
+							pricePerCopy = MatrixUtilities.calculateStepPriceSideTwo(copierDefinition.getCopierMatrix(), job.getPressQty());
+						}
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+					} else
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
 				} else {
-					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
+					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + ((stockPrice*job.getTotalCopies()/runout)) + wastePrice);				
 				}
 			} else if (copierDefinition.getMatrixType().equals("MarkupTable")) {
 				double markup = 0.0;
@@ -135,34 +122,28 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 				else
 					markup = matrixElement.getPrice1().doubleValue();
 				pricePerCopy = copierDefinition.getMachineCostPerCopy().doubleValue() * markup;
-				
-				pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
+				wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
-						pricePerSecondSide = (pricePerCopy + stockPrice) / 2;
-						pricingRecord.setUnitPrice(pricePerSecondSide);
-						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies())) + (stockPrice*(job.getTotalCopies() / 2)));
-					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingFirstSideRate.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*(job.getTotalCopies() / 2));					
-						pricingRecord.setUnitPrice(pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies());
-					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
-						pricePerSecondSide = matrixElement.getPrice2().doubleValue();
-						pricingRecord.setUnitPrice(pricePerSecondSide);
-						pricingRecord.setTotalPrice((pricePerSecondSide * job.getTotalCopies())+ stockPrice*job.getTotalCopies());					
+						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies() / 2)) + (stockPrice*((job.getTotalCopies()/2)/runout)));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
-						pricePerSecondSide = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
-						pricingRecord.setTotalPrice((pricePerSecondSide * job.getTotalCopies())+ stockPrice*copierDefinition.getSideTwoFactor()*(job.getTotalCopies() / 2));					
-						pricingRecord.setUnitPrice(pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies());
-					} else {
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*job.getTotalCopies()) / 2);
-					}
+						pricePerCopy = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
+						markup = matrixElement.getPrice2().doubleValue();
+						pricePerCopy = copierDefinition.getMachineCostPerCopy().doubleValue() * markup * copierDefinition.getCopyMarkup2();
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+					} else
+						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
 				} else {
-					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + stockPrice*job.getTotalCopies());				
+					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + ((stockPrice*job.getTotalCopies()/runout)) + wastePrice);				
 				}
 			}
 		}
 		if (pricingRecord.getTotalPrice().doubleValue() == 0)
 			pricingRecord.setUnitPrice(0.0);
+		else
+			pricingRecord.setUnitPrice(pricingRecord.getTotalPrice().doubleValue() / job.getTotalCopies());
 		return job;
 	}
 }
