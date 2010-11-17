@@ -178,7 +178,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 				double pricePerCopy = unitPrice;
 				double wastePrice = 0.0;
 				int runout = 1;
-				if (pricingCopier.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name()) == false && pricingCopier.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name()) == false && pricingCopier.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name()) == false)
+				if (pricingCopier.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name()) == false && pricingCopier.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name()) == false && pricingCopier.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name()) == false && job.getPaperCal().getRunout() > 0)
 					runout = job.getPaperCal().getRunout();
 				if (job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 					stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();

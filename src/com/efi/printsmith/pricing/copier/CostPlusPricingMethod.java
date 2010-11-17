@@ -35,7 +35,7 @@ public class CostPlusPricingMethod extends CopierPricingMethod {
 		double pricePerCopy = machineCost*copierDefinition.getCopyMarkup();
 		double pricePerSecondSide = 0.0;
 		int runout = 1;
-		if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name()) == false && copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name()) == false && copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name()) == false)
+		if (job.getPaperCal().getRunout() > 0)
 			runout = job.getPaperCal().getRunout();
 		if (job.getDoubleSided()) {
 			pricingRecord.setUnitPrice(pricePerCopy + stockPrice);

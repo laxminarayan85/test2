@@ -36,7 +36,7 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 			stockPrice = priceStockEngine.priceStock(job);
 		double wastePrice = ((job.getBinderyWaste().doubleValue() + job.getEstWaste().doubleValue()) * pricingRecord.getUnitPrice().doubleValue()) * job.getSheets();
 		int runout = 1;
-		if (job.getPricingCopier().getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name()) == false && job.getPricingCopier().getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name()) == false && job.getPricingCopier().getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name()) == false)
+		if (job.getPricingCopier().getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name()) == false && job.getPricingCopier().getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name()) == false && job.getPricingCopier().getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name()) == false && job.getPaperCal().getRunout() > 0)
 			runout = job.getPaperCal().getRunout();
 		if (job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 			stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();

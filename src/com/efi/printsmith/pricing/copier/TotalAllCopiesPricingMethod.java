@@ -37,7 +37,7 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 		double pricePerSecondSide = 0.0;	
 		double wastePrice = 0.0;
 		int runout = 1;
-		if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name()) == false && copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name()) == false && copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name()) == false)
+		if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name()) == false && copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name()) == false && copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name()) == false && job.getPaperCal().getRunout() > 0)
 			runout = job.getPaperCal().getRunout();
 		if (copierDefinition.getMatrixType().equals("MarkupTable") == false && job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 			stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();
