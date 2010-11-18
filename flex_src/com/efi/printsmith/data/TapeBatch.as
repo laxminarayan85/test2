@@ -18,7 +18,7 @@ package com.efi.printsmith.data
 		public var openDate:Date = new Date();
 		public var appVersion:String = "";
 		public var closed:Boolean = false;
-		public var sessionBatch:ArrayCollection;
+		public var sessionBatches:ArrayCollection;
 	
 	}
 }

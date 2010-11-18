@@ -15,6 +15,8 @@ package com.efi.printsmith.data
 		public override var isDeleted:Boolean=false;
 				
 		public var brokerId:String = "";
+		public var name:String = "";
+		public var contact:Contact;
 	
 	}
 }

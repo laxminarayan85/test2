@@ -5242,7 +5242,7 @@ public class DataService extends HibernateService {
 			tapebatch.setOpenDate(new Date());
 			tapebatch.setClosed(false);
 			
-			tapebatch.setSessionBatchs(resultList);
+			tapebatch.setSessionBatches(resultList);
 			// 
 			tape.addBatches(tapebatch);
 			

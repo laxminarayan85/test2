@@ -65,10 +65,9 @@ public class TapeBatch extends ModelBase {
 	 */
 	public static final String CLOSED = "Closed";
 	/**
-	 * @generated
-	 */
-	public static final String SESSIONBATCH = "SessionBatch";
-
+   * @generated
+   */
+  public static final String SESSIONBATCHES = "SessionBatches";
 	/**
 	 * @generated
 	 */
@@ -183,37 +182,37 @@ public class TapeBatch extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
     @OneToMany(  cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
-    @JoinTable( name = "tapebatch_sessionbatchs")
-	private java.util.List<TapeSessionBatch> sessionBatchs;
-	
+    @JoinTable( name = "tapebatch_sessionbatches")
+  private java.util.List<TapeSessionBatch> sessionBatches;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public java.util.List<TapeSessionBatch> getSessionBatchs(){
-    return sessionBatchs; 
+  public java.util.List<TapeSessionBatch> getSessionBatches(){
+    return sessionBatches; 
   }
 
 	/**
-	 * @generated
-	 */	
-	public void addSessionBatchs(TapeSessionBatch obj) {
-    if (sessionBatchs == null) {
-      sessionBatchs = new java.util.ArrayList<TapeSessionBatch>();
+   * @generated
+   */	
+  public void addSessionBatches(TapeSessionBatch obj) {
+    if (sessionBatches == null) {
+      sessionBatches = new java.util.ArrayList<TapeSessionBatch>();
     }
-    sessionBatchs.add(obj);
+    sessionBatches.add(obj);
   }
-	
+
 	/**
-	 * @generated
-	 */	
-	public void setSessionBatchs(java.util.List<TapeSessionBatch> newVal) {
-    this.sessionBatchs = newVal;
+   * @generated
+   */	
+  public void setSessionBatches(java.util.List<TapeSessionBatch> newVal) {
+    this.sessionBatches = newVal;
   }
-	
+
 	/**
 	 * @generated
 	 */		
@@ -224,7 +223,7 @@ public class TapeBatch extends ModelBase {
     if (OPENDATE.equals(propertyName)) return getOpenDate();
     if (APPVERSION.equals(propertyName)) return getAppVersion();
     if (CLOSED.equals(propertyName)) return getClosed();
-    if (SESSIONBATCH.equals(propertyName)) return getSessionBatchs();
+    if (SESSIONBATCHES.equals(propertyName)) return getSessionBatches();
     return super.getProperty(propertyName);
   }
 	
@@ -238,7 +237,7 @@ public class TapeBatch extends ModelBase {
     if (OPENDATE.equals(propertyName)) setOpenDate((Date)newValue); else
     if (APPVERSION.equals(propertyName)) setAppVersion((String)newValue); else
     if (CLOSED.equals(propertyName)) setClosed((Boolean)newValue); else
-    if (SESSIONBATCH.equals(propertyName)) setSessionBatchs((java.util.List<TapeSessionBatch>)newValue); else
+    if (SESSIONBATCHES.equals(propertyName)) setSessionBatches((java.util.List<TapeSessionBatch>)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -256,7 +255,7 @@ public class TapeBatch extends ModelBase {
       return new Class<?>[] {String.class};		
     if (CLOSED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
-    if (SESSIONBATCH.equals(propertyName)) 
+    if (SESSIONBATCHES.equals(propertyName)) 
       return new Class<?>[] {java.util.List.class, TapeSessionBatch.class};		
     return super.getPropertyClass(propertyName);
   }
@@ -272,7 +271,7 @@ public class TapeBatch extends ModelBase {
     if (OPENDATE.equals(propertyName)) return TapeBatch.class;
     if (APPVERSION.equals(propertyName)) return TapeBatch.class;
     if (CLOSED.equals(propertyName)) return TapeBatch.class;
-    if (SESSIONBATCH.equals(propertyName)) return TapeBatch.class;
+    if (SESSIONBATCHES.equals(propertyName)) return TapeBatch.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -292,7 +291,7 @@ public class TapeBatch extends ModelBase {
       return false;
     if (! SmartEquals(getClosed(), objT.getClosed()))
       return false;
-    if (! SmartEquals(getSessionBatchs(), objT.getSessionBatchs()))
+    if (! SmartEquals(getSessionBatches(), objT.getSessionBatches()))
       return false;
     return true;
   }			

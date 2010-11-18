@@ -52,6 +52,15 @@ public class Broker extends Party {
 	public static final String BROKERID = "BrokerId";
 
 	/**
+   * @generated
+   */
+  public static final String NAME = "Name";
+	/**
+   * @generated
+   */
+  public static final String CONTACT = "Contact";
+
+	/**
 	 * @generated
 	 */
 	public Broker() {
@@ -98,12 +107,60 @@ public class Broker extends Party {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String name;
+
+	/**
+   * @generated
+ 	 */
+  public String getName(){
+    return name; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setName(String newVal) {
+    this.name = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private Contact contact;
+
+	/**
+   * @generated
+ 	 */
+  public Contact getContact(){
+    return contact; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setContact(Contact newVal) {
+    this.contact = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (BROKERID.equals(propertyName)) return getBrokerId();
+    if (NAME.equals(propertyName)) return getName();
+    if (CONTACT.equals(propertyName)) return getContact();
     return super.getProperty(propertyName);
   }
 	
@@ -114,6 +171,8 @@ public class Broker extends Party {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (BROKERID.equals(propertyName)) setBrokerId((String)newValue); else
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -125,6 +184,10 @@ public class Broker extends Party {
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (BROKERID.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (CONTACT.equals(propertyName)) 
+      return new Class<?>[] {Contact.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -136,6 +199,8 @@ public class Broker extends Party {
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (BROKERID.equals(propertyName)) return Broker.class;
+    if (NAME.equals(propertyName)) return Broker.class;
+    if (CONTACT.equals(propertyName)) return Broker.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -148,6 +213,10 @@ public class Broker extends Party {
       return false;
     Broker objT = (Broker)obj;
     if (! SmartEquals(getBrokerId(), objT.getBrokerId()))
+      return false;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getContact(), objT.getContact()))
       return false;
     return true;
   }			
