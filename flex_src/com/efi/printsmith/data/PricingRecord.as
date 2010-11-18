@@ -29,6 +29,10 @@ package com.efi.printsmith.data
 		public var stockTotalPrice:Number = 0;
 		public var stockTotalPriceOverride:Boolean = false;
 		public var stockMarkup:Number = 0;
+		public var productionPrice:Number = 0;
+		public var productionPriceOverride:Boolean = false;
+		public var stockCost:Number = 0;
+		public var laborCost:Number = 0;
 	
 	}
 }

@@ -639,6 +639,23 @@ public class JobBase extends ModelBase {
   public static final String MULTIQUANTITY3 = "MultiQuantity3";
 
 	/**
+   * @generated
+   */
+  public static final String COPYMINUTES = "CopyMinutes";
+	/**
+   * @generated
+   */
+  public static final String COPYMINUTESOVERRIDE = "CopyMinutesOverride";
+	/**
+   * @generated
+   */
+  public static final String PARENTSTOCKCOST = "ParentStockCost";
+	/**
+   * @generated
+   */
+  public static final String PARENTSTOCKCOSTOVERRIDE = "ParentStockCostOverride";
+
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -1400,7 +1417,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
 	private StockDefinition stock;
 	
@@ -4008,6 +4025,93 @@ public class JobBase extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double copyMinutes;
+
+	/**
+   * @generated
+ 	 */
+  public Double getCopyMinutes(){
+    return copyMinutes; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setCopyMinutes(Double newVal) {
+    this.copyMinutes = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean copyMinutesOverride;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getCopyMinutesOverride(){
+    return copyMinutesOverride; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setCopyMinutesOverride(Boolean newVal) {
+    this.copyMinutesOverride = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal parentStockCost;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getParentStockCost(){
+    return parentStockCost; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setParentStockCost(BigDecimal newVal) {
+    this.parentStockCost = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+  public void setParentStockCost(double newVal) {
+    this.parentStockCost = BigDecimal.valueOf(newVal);
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean parentStockCostOverride;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getParentStockCostOverride(){
+    return parentStockCostOverride; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setParentStockCostOverride(Boolean newVal) {
+    this.parentStockCostOverride = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -4156,6 +4260,10 @@ public class JobBase extends ModelBase {
     if (MULTIQUANTITY1.equals(propertyName)) return getMultiQuantity1();
     if (MULTIQUANTITY2.equals(propertyName)) return getMultiQuantity2();
     if (MULTIQUANTITY3.equals(propertyName)) return getMultiQuantity3();
+    if (COPYMINUTES.equals(propertyName)) return getCopyMinutes();
+    if (COPYMINUTESOVERRIDE.equals(propertyName)) return getCopyMinutesOverride();
+    if (PARENTSTOCKCOST.equals(propertyName)) return getParentStockCost();
+    if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) return getParentStockCostOverride();
     return super.getProperty(propertyName);
   }
 	
@@ -4308,6 +4416,10 @@ public class JobBase extends ModelBase {
     if (MULTIQUANTITY1.equals(propertyName)) setMultiQuantity1((Long)newValue); else
     if (MULTIQUANTITY2.equals(propertyName)) setMultiQuantity2((Long)newValue); else
     if (MULTIQUANTITY3.equals(propertyName)) setMultiQuantity3((Long)newValue); else
+    if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Double)newValue); else
+    if (COPYMINUTESOVERRIDE.equals(propertyName)) setCopyMinutesOverride((Boolean)newValue); else
+    if (PARENTSTOCKCOST.equals(propertyName)) setParentStockCost((BigDecimal)newValue); else
+    if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) setParentStockCostOverride((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -4603,6 +4715,14 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Long.class};		
     if (MULTIQUANTITY3.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
+    if (COPYMINUTES.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COPYMINUTESOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PARENTSTOCKCOST.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -4756,6 +4876,10 @@ public class JobBase extends ModelBase {
     if (MULTIQUANTITY1.equals(propertyName)) return JobBase.class;
     if (MULTIQUANTITY2.equals(propertyName)) return JobBase.class;
     if (MULTIQUANTITY3.equals(propertyName)) return JobBase.class;
+    if (COPYMINUTES.equals(propertyName)) return JobBase.class;
+    if (COPYMINUTESOVERRIDE.equals(propertyName)) return JobBase.class;
+    if (PARENTSTOCKCOST.equals(propertyName)) return JobBase.class;
+    if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -5052,6 +5176,14 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getMultiQuantity2(), objT.getMultiQuantity2()))
       return false;
     if (! SmartEquals(getMultiQuantity3(), objT.getMultiQuantity3()))
+      return false;
+    if (! SmartEquals(getCopyMinutes(), objT.getCopyMinutes()))
+      return false;
+    if (! SmartEquals(getCopyMinutesOverride(), objT.getCopyMinutesOverride()))
+      return false;
+    if (! SmartEquals(getParentStockCost(), objT.getParentStockCost()))
+      return false;
+    if (! SmartEquals(getParentStockCostOverride(), objT.getParentStockCostOverride()))
       return false;
     return true;
   }			

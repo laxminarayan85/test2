@@ -157,6 +157,10 @@ package com.efi.printsmith.data
 		public var multiQuantity1:Number = 0;
 		public var multiQuantity2:Number = 0;
 		public var multiQuantity3:Number = 0;
+		public var copyMinutes:Number = 0;
+		public var copyMinutesOverride:Boolean = false;
+		public var parentStockCost:Number = 0;
+		public var parentStockCostOverride:Boolean = false;
 	
 	}
 }

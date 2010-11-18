@@ -108,6 +108,23 @@ public class PricingRecord extends ModelBase {
 	public static final String STOCKMARKUP = "StockMarkup";
 
 	/**
+   * @generated
+   */
+  public static final String PRODUCTIONPRICE = "ProductionPrice";
+	/**
+   * @generated
+   */
+  public static final String PRODUCTIONPRICEOVERRIDE = "ProductionPriceOverride";
+	/**
+   * @generated
+   */
+  public static final String STOCKCOST = "StockCost";
+	/**
+   * @generated
+   */
+  public static final String LABORCOST = "LaborCost";
+
+	/**
 	 * @generated
 	 */
 	public PricingRecord() {
@@ -531,6 +548,121 @@ public class PricingRecord extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal productionPrice;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getProductionPrice(){
+    return productionPrice; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setProductionPrice(BigDecimal newVal) {
+    this.productionPrice = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setProductionPrice(double newVal) {
+    this.productionPrice = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean productionPriceOverride;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getProductionPriceOverride(){
+    return productionPriceOverride; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setProductionPriceOverride(Boolean newVal) {
+    this.productionPriceOverride = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal stockCost;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getStockCost(){
+    return stockCost; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setStockCost(BigDecimal newVal) {
+    this.stockCost = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setStockCost(double newVal) {
+    this.stockCost = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal laborCost;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getLaborCost(){
+    return laborCost; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborCost(BigDecimal newVal) {
+    this.laborCost = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborCost(double newVal) {
+    this.laborCost = BigDecimal.valueOf(newVal);
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -551,6 +683,10 @@ public class PricingRecord extends ModelBase {
     if (STOCKTOTALPRICE.equals(propertyName)) return getStockTotalPrice();
     if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) return getStockTotalPriceOverride();
     if (STOCKMARKUP.equals(propertyName)) return getStockMarkup();
+    if (PRODUCTIONPRICE.equals(propertyName)) return getProductionPrice();
+    if (PRODUCTIONPRICEOVERRIDE.equals(propertyName)) return getProductionPriceOverride();
+    if (STOCKCOST.equals(propertyName)) return getStockCost();
+    if (LABORCOST.equals(propertyName)) return getLaborCost();
     return super.getProperty(propertyName);
   }
 	
@@ -575,6 +711,10 @@ public class PricingRecord extends ModelBase {
     if (STOCKTOTALPRICE.equals(propertyName)) setStockTotalPrice((BigDecimal)newValue); else
     if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) setStockTotalPriceOverride((Boolean)newValue); else
     if (STOCKMARKUP.equals(propertyName)) setStockMarkup((Double)newValue); else
+    if (PRODUCTIONPRICE.equals(propertyName)) setProductionPrice((BigDecimal)newValue); else
+    if (PRODUCTIONPRICEOVERRIDE.equals(propertyName)) setProductionPriceOverride((Boolean)newValue); else
+    if (STOCKCOST.equals(propertyName)) setStockCost((BigDecimal)newValue); else
+    if (LABORCOST.equals(propertyName)) setLaborCost((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -614,6 +754,14 @@ public class PricingRecord extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (STOCKMARKUP.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
+    if (PRODUCTIONPRICE.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (PRODUCTIONPRICEOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (STOCKCOST.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (LABORCOST.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -639,6 +787,10 @@ public class PricingRecord extends ModelBase {
     if (STOCKTOTALPRICE.equals(propertyName)) return PricingRecord.class;
     if (STOCKTOTALPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
     if (STOCKMARKUP.equals(propertyName)) return PricingRecord.class;
+    if (PRODUCTIONPRICE.equals(propertyName)) return PricingRecord.class;
+    if (PRODUCTIONPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
+    if (STOCKCOST.equals(propertyName)) return PricingRecord.class;
+    if (LABORCOST.equals(propertyName)) return PricingRecord.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -679,6 +831,14 @@ public class PricingRecord extends ModelBase {
     if (! SmartEquals(getStockTotalPriceOverride(), objT.getStockTotalPriceOverride()))
       return false;
     if (! SmartEquals(getStockMarkup(), objT.getStockMarkup()))
+      return false;
+    if (! SmartEquals(getProductionPrice(), objT.getProductionPrice()))
+      return false;
+    if (! SmartEquals(getProductionPriceOverride(), objT.getProductionPriceOverride()))
+      return false;
+    if (! SmartEquals(getStockCost(), objT.getStockCost()))
+      return false;
+    if (! SmartEquals(getLaborCost(), objT.getLaborCost()))
       return false;
     return true;
   }			
