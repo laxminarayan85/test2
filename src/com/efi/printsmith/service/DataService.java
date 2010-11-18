@@ -5246,7 +5246,7 @@ public class DataService extends HibernateService {
 			// 
 			tape.addBatches(tapebatch);
 			
-			this.addUpdate(tapebatch);
+		//	this.addUpdate(tapebatch);
 			this.addUpdate(tape);
 			
 			object = tapebatch;
