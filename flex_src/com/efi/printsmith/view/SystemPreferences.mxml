@@ -17,7 +17,42 @@
 	name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
 	xmlns:ns1="com.efi.printsmith.components.*"
 	>
-	
+
+<mx:Metadata>
+ 	[Protected(permissions="Preferences_Behavior",notInPermissionAction="disable",componentId="behavior_canvas")]
+ 	[Protected(permissions="Preferences_Company",notInPermissionAction="disable",componentId="company_canvas")]
+ 	[Protected(permissions="Preferences_BusinessCalendar",notInPermissionAction="disable",componentId="calendar_canvas")]
+ 	[Protected(permissions="Preferences_Numbers",notInPermissionAction="disable",componentId="numbers_canvas")]
+ 	[Protected(permissions="Preferences_AlternateCurrency",notInPermissionAction="disable",componentId="alternatecurrency_canvas")]
+ 	[Protected(permissions="Preferences_International",notInPermissionAction="disable",componentId="international_canvas")]
+ 	[Protected(permissions="Preferences_AddressFormatting",notInPermissionAction="disable",componentId="addressformatting_canvas")]
+ 	
+ 	[Protected(permissions="Preferences_Receipt",notInPermissionAction="disable",componentId="receipt_canvas")]
+ 	[Protected(permissions="Preferences_CashDrawer",notInPermissionAction="disable",componentId="cashdrawer_canvas")]
+ 	[Protected(permissions="Preferences_CashRegister",notInPermissionAction="disable",componentId="cashregister_canvas")]
+ 	[Protected(permissions="Preferences_PendingList",notInPermissionAction="disable",componentId="pendinglist_canvas")]
+
+ 	[Protected(permissions="Preferences_EstimatorBehavior",notInPermissionAction="disable",componentId="estimatorbehavior_canvas")]
+ 	[Protected(permissions="Preferences_EstimatorPrinting",notInPermissionAction="disable",componentId="estimatorprinting_canvas")]
+ 	[Protected(permissions="Preferences_PaperCalculator",notInPermissionAction="disable",componentId="papercalculator_canvas")]
+ 	[Protected(permissions="Preferences_JobTicket",notInPermissionAction="disable",componentId="jobticket_canvas")]
+ 	[Protected(permissions="Preferences_QuantityBreaks",notInPermissionAction="disable",componentId="quantitybreaks_canvas")]
+ 	[Protected(permissions="Preferences_Markups",notInPermissionAction="disable",componentId="markups_canvas")]
+ 	[Protected(permissions="Preferences_StocksandSizes",notInPermissionAction="disable",componentId="stocksizes_canvas")]
+ 	[Protected(permissions="Preferences_StockDefinitions",notInPermissionAction="disable",componentId="stockdefinitions_canvas")]
+ 	[Protected(permissions="Preferences_PricingMethod",notInPermissionAction="disable",componentId="pricingmethod_canvas")]
+ 	 	
+ 	[Protected(permissions="Preferences_CreditDefaults",notInPermissionAction="disable",componentId="creditdefaults_canvas")]
+ 	[Protected(permissions="Preferences_AgingPeriods",notInPermissionAction="disable",componentId="agingperiods_canvas")]
+ 	[Protected(permissions="Preferences_SalesCategories",notInPermissionAction="disable",componentId="salescategories_canvas")]
+ 	[Protected(permissions="Preferences_GLProfiles",notInPermissionAction="disable",componentId="glprofiles_canvas")]
+ 	[Protected(permissions="Preferences_CreditCardInfo",notInPermissionAction="disable",componentId="creditcards_canvas")]
+ 	[Protected(permissions="Preferences_OrderNumFormat",notInPermissionAction="disable",componentId="ordernumberformat_canvas")]
+ 	[Protected(permissions="Preferences_JournalEntries",notInPermissionAction="disable",componentId="journalentries_canvas")]
+
+ 	[Protected(permissions="Preferences_Integration",notInPermissionAction="disable",componentId="fiery_canvas")]
+ 	 	
+</mx:Metadata>	
 	<mx:Script source="../common/scripts/Validation.as"/>
 	<mx:Script source="../common/scripts/CommonUtils.as"/>
  <mx:Script source="../security/PSSecurityInclude.as" />
@@ -127,6 +162,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>-->
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.security.PSSecurityUtils;
 	import mx.utils.StringUtil;
 	import mx.events.FlexEvent;
 	import com.efi.printsmith.security.PSSecurityCommands;
@@ -402,48 +438,48 @@
 	private var dollar:String = "$"; 
 	private var yen:String = "¥";
 	private var euro:String = "€";
-
+	
 //Tree view XML table
 	[Bindable]
 	private var treeData:XML =
     	<root>
-			<node label="genericPrefCmd.System" isBranch="true" command="CMD_Preferences_System">
-				<node label="genericPrefCmd.Behavior" isBranch="false" tag="0" command="CMD_Preferences_Behavior"/>
-				<node label="genericPrefCmd.Company" isBranch="false" tag="1" command="CMD_Preferences_Company"/>
-				<node label="genericPrefCmd.BusinessCalendar" isBranch="false" tag="2" command="CMD_Preferences_BusinessCalendar"/>
-				<node label="genericPrefCmd.Numbers" isBranch="false" tag="3" command="CMD_Preferences_Numbers"/>
-				<node label="genericPrefCmd.AlternateCurrency" isBranch="false" tag="4" command="CMD_Preferences_AlternateCurrency"/>
-				<node label="genericPrefCmd.International" isBranch="false" tag="5" command="CMD_Preferences_International"/>
-				<node label="genericPrefCmd.AddressFormatting" isBranch="false" tag="6" command="CMD_Preferences_AddressFormatting"/>
+			<node label="genericPrefCmd.System" isBranch="true" command="Preferences_System" >
+				<node label="genericPrefCmd.Behavior" isBranch="false" tag="0" command="Preferences_Behavior" />
+				<node label="genericPrefCmd.Company" isBranch="false" tag="1" command="Preferences_Company"/>
+				<node label="genericPrefCmd.BusinessCalendar" isBranch="false" tag="2" command="Preferences_BusinessCalendar"/>
+				<node label="genericPrefCmd.Numbers" isBranch="false" tag="3" command="Preferences_Numbers"/>
+				<node label="genericPrefCmd.AlternateCurrency" isBranch="false" tag="4" command="Preferences_AlternateCurrency"/>
+				<node label="genericPrefCmd.International" isBranch="false" tag="5" command="Preferences_International"/>
+				<node label="genericPrefCmd.AddressFormatting" isBranch="false" tag="6" command="Preferences_AddressFormatting"/>
 			</node>
-			<node label="genericPrefCmd.POS" isBranch="true" command="CMD_Preferences_POS">
-				<node label="genericPrefCmd.Receipt" isBranch="false" tag="7" command="CMD_Preferences_Receipt"/>
-				<node label="genericPrefCmd.CashDrawer" isBranch="false" tag="8" command="CMD_Preferences_CashDrawer"/>
-				<node label="genericPrefCmd.CashRegister" isBranch="false" tag="9" command="CMD_Preferences_CashRegister"/>
-				<node label="genericPrefCmd.PendingList" isBranch="false" tag="10" command="CMD_Preferences_PendingList"/>
+			<node label="genericPrefCmd.POS" isBranch="true" command="Preferences_POS">
+				<node label="genericPrefCmd.Receipt" isBranch="false" tag="7" command="Preferences_Receipt"/>
+				<node label="genericPrefCmd.CashDrawer" isBranch="false" tag="8" command="Preferences_CashDrawer"/>
+				<node label="genericPrefCmd.CashRegister" isBranch="false" tag="9" command="Preferences_CashRegister"/>
+				<node label="genericPrefCmd.PendingList" isBranch="false" tag="10" command="Preferences_PendingList"/>
 			</node>
-			<node label="genericPrefCmd.Estimator" isBranch="true" command="CMD_Preferences_Estimator">
-				<node label="genericPrefCmd.EstimatorBehavior" isBranch="false" tag="11" command="CMD_Preferences_EstimatorBehavior"/>
-				<node label="genericPrefCmd.EstimatorPrinting" isBranch="false" tag="12" command="CMD_Preferences_EstimatorPrinting"/>
-				<node label="genericPrefCmd.PaperCalculator" isBranch="false" tag="13" command="CMD_Preferences_PaperCalculator"/>
-				<node label="genericPrefCmd.JobTicket" isBranch="false" tag="14" command="CMD_Preferences_JobTicket"/>
-				<node label="genericPrefCmd.QuantityBreaks" isBranch="false" tag="15" command="CMD_Preferences_QuantityBreaks"/>
-				<node label="genericPrefCmd.Markups" isBranch="false" tag="16" command="CMD_Preferences_Markups"/>
-				<node label="genericPrefCmd.StocksandSizes" isBranch="false" tag="17" command="CMD_Preferences_StocksandSizes"/>
-				<node label="genericPrefCmd.StockDefinitions" isBranch="false" tag="18" command="CMD_Preferences_StockDefinitions"/>
-				<node label="genericPrefCmd.PricingMethod" isBranch="false" tag="19" command="CMD_Preferences_PricingMethod"/>
+			<node label="genericPrefCmd.Estimator" isBranch="true" command="Preferences_Estimator">
+				<node label="genericPrefCmd.EstimatorBehavior" isBranch="false" tag="11" command="Preferences_EstimatorBehavior"/>
+				<node label="genericPrefCmd.EstimatorPrinting" isBranch="false" tag="12" command="Preferences_EstimatorPrinting"/>
+				<node label="genericPrefCmd.PaperCalculator" isBranch="false" tag="13" command="Preferences_PaperCalculator"/>
+				<node label="genericPrefCmd.JobTicket" isBranch="false" tag="14" command="Preferences_JobTicket"/>
+				<node label="genericPrefCmd.QuantityBreaks" isBranch="false" tag="15" command="Preferences_QuantityBreaks"/>
+				<node label="genericPrefCmd.Markups" isBranch="false" tag="16" command="Preferences_Markups"/>
+				<node label="genericPrefCmd.StocksandSizes" isBranch="false" tag="17" command="Preferences_StocksandSizes"/>
+				<node label="genericPrefCmd.StockDefinitions" isBranch="false" tag="18" command="Preferences_StockDefinitions"/>
+				<node label="genericPrefCmd.PricingMethod" isBranch="false" tag="19" command="Preferences_PricingMethod"/>
 			</node>			
-			<node label="genericPrefCmd.Accounting" isBranch="true" command="CMD_Preferences_Accounting">
-				<node label="genericPrefCmd.CreditDefaults" isBranch="false" tag="20" command="CMD_Preferences_CreditDefaults"/>
-				<node label="genericPrefCmd.AgingPeriods" isBranch="false" tag="21" command="CMD_Preferences_AgingPeriods"/>
-				<node label="genericPrefCmd.SalesCategories" isBranch="false" tag="22" command="CMD_Preferences_SalesCategories"/>
-				<node label="genericPrefCmd.GLProfiles" isBranch="false" tag="23" command="CMD_Preferences_GLProfiles"/>
-				<node label="genericPrefCmd.CreditCardInfo" isBranch="false" tag="24" command="CMD_Preferences_CreditCardInfo"/>
-				<node label="genericPrefCmd.OrderNumberFormat" isBranch="false" tag="25" command=""/>
-				<node label="genericPrefCmd.JournalEntries" isBranch="false" tag="26" command="CMD_Preferences_JournalEntries"/>
+			<node label="genericPrefCmd.Accounting" isBranch="true" command="Preferences_Accounting">
+				<node label="genericPrefCmd.CreditDefaults" isBranch="false" tag="20" command="Preferences_CreditDefaults"/>
+				<node label="genericPrefCmd.AgingPeriods" isBranch="false" tag="21" command="Preferences_AgingPeriods"/>
+				<node label="genericPrefCmd.SalesCategories" isBranch="false" tag="22" command="Preferences_SalesCategories"/>
+				<node label="genericPrefCmd.GLProfiles" isBranch="false" tag="23" command="Preferences_GLProfiles"/>
+				<node label="genericPrefCmd.CreditCardInfo" isBranch="false" tag="24" command="Preferences_CreditCardInfo"/>
+				<node label="genericPrefCmd.OrderNumberFormat" isBranch="false" tag="25" command="Preferences_OrderNumFormat"/>
+				<node label="genericPrefCmd.JournalEntries" isBranch="false" tag="26" command="Preferences_JournalEntries"/>
 			</node>
-			<node label="genericPrefCmd.Integration" isBranch="true" command="CMD_Preferences_Integration">
-				<node label="genericPrefCmd.Integration" isBranch="false" tag="27" command="CMD_Preferences_Fiery"/>
+			<node label="genericPrefCmd.Integration" isBranch="true" command="Preferences_Integration">
+				<node label="genericPrefCmd.Integration" isBranch="false" tag="27" command="Preferences_Integration"/>
 			</node>
 		</root>;
 	
@@ -1901,13 +1937,21 @@
 		var nodeList:XMLListCollection = 
 			tvPreference.dataProvider as XMLListCollection;
 		var node:XMLList = nodeList.source;
+		var firstCommand:String = null;
+		
 		for(var i:int=0; i < node.length(); i++) {
 			var n:XML = node[i];
 			if( n.children() != null ) {
 				tvPreference.expandItem(n,true,false);
+				if (firstCommand == null)	{
+					var ch:XMLList = n.children();
+					firstCommand = ch[0].@command;
+				}
 			}
 		}
 		tvPreference.selectedIndex = 1;
+		checkForTreeSelection(firstCommand);
+		
 		preferences_stack.selectedIndex = 0;
 		for(var j:int=0; j <=0; j++) {
 			var nodeVal:XML = node[j];
@@ -1921,7 +1965,17 @@
 		selectedIndexSelection = 1;
 		  
 	}
-
+	
+	private function checkForTreeSelection(commandId:String):void	{
+		if (PSSecurityUtils.getInstance().hasPermission(commandId))	{
+			btnSave.enabled = true;
+			btnRevert.enabled = true;
+		}
+		else	{
+			btnSave.enabled = false;
+			btnRevert.enabled = false;
+		}	
+	}
 	private function treeSelect(event:Event):void {
 		var isObjEqual:Boolean = true;
 		this.currentState = "";
@@ -1933,6 +1987,8 @@
 		if( node.@label == "genericPrefCmd.Estimator" ) return;
 		if( node.@label == "genericPrefCmd.Accounting" ) return;
 		if( node.@label == "genericPrefCmd.Integration" && node.@isBranch == "true") return;
+		
+		checkForTreeSelection(node.@command);
 		
 		if(!validate(preferences_stack.selectedChild)) {
 			tvPreference.selectedIndex = selectedIndexSelection;
@@ -2627,10 +2683,10 @@
 			<mx:Tree  
 				id="tvPreference"
 				width="100%" height="100%" 
-				dataProvider="{treeData.node}"
-				change="treeSelect(event);" labelFunction="TreeDisplayLabel"
-				defaultLeafIcon="{null}" folderClosedIcon="{null}" folderOpenIcon="{null}"/>
-			
+				dataProvider="{treeData.node}" 
+				change="treeSelect(event);" labelFunction="TreeDisplayLabel" itemRenderer="com.efi.printsmith.itemRenderers.StyledTreeRenderer"
+				defaultLeafIcon="{null}" folderClosedIcon="{null}" folderOpenIcon="{null}"
+				/>			
 		</mx:VBox>
 		
 		<mx:VBox width="80%" height="100%">
