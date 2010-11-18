@@ -423,7 +423,6 @@
 		invoice = null;
 		customerAccount = new Account();
 		this.currentState = "";
-		txtSaleDescription.text = "";
 		openTree();
 		UpdateBatchNumbers();		
 	}
@@ -504,6 +503,13 @@
     
     private function InitPaymentRecord():void {    	
     	activePayment = new TapePaymentRecord();
+    	
+    	if (payment_cash_edit != null)
+    		payment_cash_edit.text = "";
+    	if (check_num != null)
+    		check_num.text = "";
+    	if (card_ref != null)
+    		card_ref.text = "";
     }
     
     private function InitSaleRecord():void {
@@ -513,6 +519,15 @@
  		activeSale.cashRegisterDept = new PreferencesCashRegister();
 		activeSale.customerAccount = new Account();
 		creditLimit = 0;
+		
+		if (txtSaleDescription != null)
+			txtSaleDescription.text = "";
+		if (txtSaleQuantity != null)
+			txtSaleQuantity.text = "";
+		if (txtSaleUnitPrice != null)
+			txtSaleUnitPrice.text = "";
+		if (txtSaleTotal != null)	
+			txtSaleTotal.text = "";
    }
    
    private function InitSessionBatch():void {
@@ -627,7 +642,7 @@
 		dataServiceCashPreferences.getAll("PreferencesCashRegister");
 		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
 		dataServiceCashDrawer.getAll("CashDrawer");
-		dataServiceTape.getall("Tape");
+	//	dataServiceTape.getall("Tape");
 		dataServiceTapeBatch.getCurrentTapeBatch();
 		
 		InitSaleRecord();			// setup for the first sale transaction
@@ -758,14 +773,12 @@
 		this.currentState = "";
 		
 		this.currentState = "departmentState";
+		
+		InitSaleRecord();
+		
 		treeStateString = this.currentState;
 		txtSaleUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(treeItem.rate);
 		txtSaleDescription.text = treeItem.title;
-		txtSaleQuantity.text ="";
-		txtSaleTotal.text = "";
-	//	activeSale = new TapeSaleRecord;
-		
-		InitSaleRecord();
 		
 		activeSale.cashRegisterDept = treeItem;
 		activeSale.department = activeSale.cashRegisterDept.title;
@@ -983,7 +996,6 @@
 		openTree();
 		rgPaymentMethod.selection = null;
 		btPayment.enabled= false;
-		payment_cash_edit.text ="";
 		UpdateBatchNumbers();
 	}	
 	
@@ -1090,9 +1102,7 @@
 		}
 		
 		this.currentState = "";
-		txtSaleDescription.text = "";
 		openTree();
-		
 		UpdateBatchNumbers();
 	}
 	
@@ -1822,9 +1832,7 @@
 		invoice = null;
 		customerAccount = new Account();
 		this.currentState = "";
-		txtSaleDescription.text = "";
 		openTree();
-		
 		UpdateBatchNumbers();		
 	}
 	
