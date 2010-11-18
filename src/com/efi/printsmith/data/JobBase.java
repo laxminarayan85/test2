@@ -656,6 +656,15 @@ public class JobBase extends ModelBase {
   public static final String PARENTSTOCKCOSTOVERRIDE = "ParentStockCostOverride";
 
 	/**
+   * @generated
+   */
+  public static final String COSTUNITS = "CostUnits";
+	/**
+   * @generated
+   */
+  public static final String COSTUNITSOVERRIDE = "CostUnitsOverride";
+
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -4112,6 +4121,46 @@ public class JobBase extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer costUnits;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getCostUnits(){
+    return costUnits; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setCostUnits(Integer newVal) {
+    this.costUnits = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean costUnitsOverride;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getCostUnitsOverride(){
+    return costUnitsOverride; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setCostUnitsOverride(Boolean newVal) {
+    this.costUnitsOverride = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -4264,6 +4313,8 @@ public class JobBase extends ModelBase {
     if (COPYMINUTESOVERRIDE.equals(propertyName)) return getCopyMinutesOverride();
     if (PARENTSTOCKCOST.equals(propertyName)) return getParentStockCost();
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) return getParentStockCostOverride();
+    if (COSTUNITS.equals(propertyName)) return getCostUnits();
+    if (COSTUNITSOVERRIDE.equals(propertyName)) return getCostUnitsOverride();
     return super.getProperty(propertyName);
   }
 	
@@ -4420,6 +4471,8 @@ public class JobBase extends ModelBase {
     if (COPYMINUTESOVERRIDE.equals(propertyName)) setCopyMinutesOverride((Boolean)newValue); else
     if (PARENTSTOCKCOST.equals(propertyName)) setParentStockCost((BigDecimal)newValue); else
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) setParentStockCostOverride((Boolean)newValue); else
+    if (COSTUNITS.equals(propertyName)) setCostUnits((Integer)newValue); else
+    if (COSTUNITSOVERRIDE.equals(propertyName)) setCostUnitsOverride((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -4723,6 +4776,10 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (COSTUNITS.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (COSTUNITSOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -4880,6 +4937,8 @@ public class JobBase extends ModelBase {
     if (COPYMINUTESOVERRIDE.equals(propertyName)) return JobBase.class;
     if (PARENTSTOCKCOST.equals(propertyName)) return JobBase.class;
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) return JobBase.class;
+    if (COSTUNITS.equals(propertyName)) return JobBase.class;
+    if (COSTUNITSOVERRIDE.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -5184,6 +5243,10 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getParentStockCost(), objT.getParentStockCost()))
       return false;
     if (! SmartEquals(getParentStockCostOverride(), objT.getParentStockCostOverride()))
+      return false;
+    if (! SmartEquals(getCostUnits(), objT.getCostUnits()))
+      return false;
+    if (! SmartEquals(getCostUnitsOverride(), objT.getCostUnitsOverride()))
       return false;
     return true;
   }			

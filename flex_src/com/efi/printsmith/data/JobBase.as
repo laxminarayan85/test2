@@ -161,6 +161,8 @@ package com.efi.printsmith.data
 		public var copyMinutesOverride:Boolean = false;
 		public var parentStockCost:Number = 0;
 		public var parentStockCostOverride:Boolean = false;
+		public var costUnits:int = 0;
+		public var costUnitsOverride:Boolean = false;
 	
 	}
 }
