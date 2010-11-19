@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.TapeSaleRecord")]
 	[Managed]
 	
-	public dynamic class TapeSaleRecord extends Transactions
+	public dynamic class TapeSaleRecord extends Transaction
 	{
 
 		public function TapeSaleRecord() {

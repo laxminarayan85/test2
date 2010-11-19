@@ -14,7 +14,7 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var transactionsList:ArrayCollection;
+		public var transactions:ArrayCollection;
 		public var name:String = "";
 		public var accumSubTotal:Number = 0;
 		public var accumTotal:Number = 0;

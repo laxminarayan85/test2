@@ -51,7 +51,7 @@ public class TapeSessionBatch extends ModelBase {
 	/**
    * @generated
    */
-  public static final String TRANSACTIONSLIST = "TransactionsList";
+  public static final String TRANSACTIONS = "Transactions";
 	/**
 	 * @generated
 	 */
@@ -123,31 +123,30 @@ public class TapeSessionBatch extends ModelBase {
    */	
     @OneToMany(  cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
-    @JoinTable( name = "tapesessionbatch_transactionslists")
-  private java.util.List<Transactions> transactionsLists;
-
+    @JoinTable( name = "tapesessionbatch_transactions")
+  private java.util.List<Transaction> transactions;
 	/**
    * @generated
  	 */
-  public java.util.List<Transactions> getTransactionsLists(){
-    return transactionsLists; 
+  public java.util.List<Transaction> getTransactions(){
+    return transactions; 
   }
 
 	/**
    * @generated
    */	
-  public void addTransactionsLists(Transactions obj) {
-    if (transactionsLists == null) {
-      transactionsLists = new java.util.ArrayList<Transactions>();
+  public void addTransactions(Transaction obj) {
+    if (transactions == null) {
+      transactions = new java.util.ArrayList<Transaction>();
     }
-    transactionsLists.add(obj);
+    transactions.add(obj);
   }
 
 	/**
    * @generated
    */	
-  public void setTransactionsLists(java.util.List<Transactions> newVal) {
-    this.transactionsLists = newVal;
+  public void setTransactions(java.util.List<Transaction> newVal) {
+    this.transactions = newVal;
   }
 
 	/**
@@ -434,7 +433,7 @@ public class TapeSessionBatch extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (TRANSACTIONSLIST.equals(propertyName)) return getTransactionsLists();
+    if (TRANSACTIONS.equals(propertyName)) return getTransactions();
     if (NAME.equals(propertyName)) return getName();
     if (ACCUMSUBTOTAL.equals(propertyName)) return getAccumSubTotal();
     if (ACCUMTOTAL.equals(propertyName)) return getAccumTotal();
@@ -455,7 +454,7 @@ public class TapeSessionBatch extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (TRANSACTIONSLIST.equals(propertyName)) setTransactionsLists((java.util.List<Transactions>)newValue); else
+    if (TRANSACTIONS.equals(propertyName)) setTransactions((java.util.List<Transaction>)newValue); else
     if (NAME.equals(propertyName)) setName((String)newValue); else
     if (ACCUMSUBTOTAL.equals(propertyName)) setAccumSubTotal((BigDecimal)newValue); else
     if (ACCUMTOTAL.equals(propertyName)) setAccumTotal((BigDecimal)newValue); else
@@ -476,8 +475,8 @@ public class TapeSessionBatch extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (TRANSACTIONSLIST.equals(propertyName)) 
-      return new Class<?>[] {java.util.List.class, Transactions.class};		
+    if (TRANSACTIONS.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, Transaction.class};		
     if (NAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (ACCUMSUBTOTAL.equals(propertyName)) 
@@ -510,7 +509,7 @@ public class TapeSessionBatch extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (TRANSACTIONSLIST.equals(propertyName)) return TapeSessionBatch.class;
+    if (TRANSACTIONS.equals(propertyName)) return TapeSessionBatch.class;
     if (NAME.equals(propertyName)) return TapeSessionBatch.class;
     if (ACCUMSUBTOTAL.equals(propertyName)) return TapeSessionBatch.class;
     if (ACCUMTOTAL.equals(propertyName)) return TapeSessionBatch.class;
@@ -533,7 +532,7 @@ public class TapeSessionBatch extends ModelBase {
     if (! super.deepEquals(obj))
       return false;
     TapeSessionBatch objT = (TapeSessionBatch)obj;
-    if (! SmartEquals(getTransactionsLists(), objT.getTransactionsLists()))
+    if (! SmartEquals(getTransactions(), objT.getTransactions()))
       return false;
     if (! SmartEquals(getName(), objT.getName()))
       return false;

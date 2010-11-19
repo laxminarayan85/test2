@@ -565,7 +565,7 @@
    		//
    		// array of Transactions, could be Sale or Payments
    		//
-		sessionBatch.transactionsList = new ArrayCollection();
+		sessionBatch.transactions = new ArrayCollection();
 		
 		// the user was logged in during the session
 		sessionBatch.user = Snowmass.getInstance().currentUser;
@@ -1061,7 +1061,7 @@
 			}
 			
 			if (payOK == true) {
-				sessionBatch.transactionsList.addItem(activePayment);
+				sessionBatch.transactions.addItem(activePayment);
 				InitPaymentRecord();
 			}
 		}
@@ -1169,7 +1169,7 @@
 			sessionBatch.accumTotal = sessionBatch.accumTotal + activeSale.total;
 			sessionBatch.accumTaxTotal = sessionBatch.accumTaxTotal + activeSale.taxAmount;
 			sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal;
-			sessionBatch.transactionsList.addItem(activeSale);			
+			sessionBatch.transactions.addItem(activeSale);			
 			
 			InitSaleRecord();		// setup for another sale
 		}
@@ -1232,7 +1232,7 @@
 		temp  = cashReg_grid.selectedItem as Object;
 		
 		if ( temp != null){
-			index= sessionBatch.transactionsList.getItemIndex(temp);
+			index= sessionBatch.transactions.getItemIndex(temp);
 			
 			if (temp is TapePaymentRecord) {
 				var tempPayment:TapePaymentRecord;
@@ -1250,7 +1250,7 @@
 				sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal;
 			}
 			
-			sessionBatch.transactionsList.removeItemAt(index);
+			sessionBatch.transactions.removeItemAt(index);
 			
 			UpdateBatchNumbers();
 		}
@@ -1311,9 +1311,9 @@
 		//
 		// assign position index to each record, so order can be known later
 		//
-		for(i = 0; i< sessionBatch.transactionsList.length; i++)
+		for(i = 0; i< sessionBatch.transactions.length; i++)
 		{
-			temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+			temp  = sessionBatch.transactions.getItemAt(i) as Object;
 			if (temp is TapePaymentRecord) {
 				tempPayment = temp as TapePaymentRecord;
 				tempPayment.index = i + 1;
@@ -1325,9 +1325,9 @@
 
 
 		// make a local list of just the payments
-		for(i = 0; i< sessionBatch.transactionsList.length; i++)
+		for(i = 0; i< sessionBatch.transactions.length; i++)
 		{
-			temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+			temp  = sessionBatch.transactions.getItemAt(i) as Object;
 			if (temp is TapePaymentRecord) {
 				paymentList.addItem(temp);
 			}	
@@ -1353,9 +1353,9 @@
 			
 			totalApplied += payAmount;
 			
-			for(i = 0; i < sessionBatch.transactionsList.length && tempPayment != null; i++)
+			for(i = 0; i < sessionBatch.transactions.length && tempPayment != null; i++)
 			{
-				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+				temp  = sessionBatch.transactions.getItemAt(i) as Object;
 				
 				if (temp is TapePaymentRecord) {
 					// ignore while appling to sales
@@ -1489,9 +1489,9 @@
 		
 		// roll back any payments and sales changes from above
 		if (results == false) {
-			for(i = 0; i< sessionBatch.transactionsList.length; i++)
+			for(i = 0; i< sessionBatch.transactions.length; i++)
 			{
-				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+				temp  = sessionBatch.transactions.getItemAt(i) as Object;
 				if (temp is TapePaymentRecord) {
 					tempPayment = temp as TapePaymentRecord;
 					tempPayment.invoice = null;
@@ -1533,10 +1533,10 @@
 		var results:Number = 0;
 		var i:int;
 		
-		if (sessionBatch != null && sessionBatch.transactionsList != null) {
-			for(i = 0; i< sessionBatch.transactionsList.length; i++)
+		if (sessionBatch != null && sessionBatch.transactions != null) {
+			for(i = 0; i< sessionBatch.transactions.length; i++)
 			{
-				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+				temp  = sessionBatch.transactions.getItemAt(i) as Object;
 				if (temp is TapePaymentRecord) {
 					tempPayment = temp as TapePaymentRecord;
 					if (tempPayment.paymentMethod == "Charge") {
@@ -1554,10 +1554,10 @@
 		var results:Number = 0;
 		var i:int;
 		
-		if (sessionBatch != null && sessionBatch.transactionsList != null) {
-			for(i = 0; i< sessionBatch.transactionsList.length; i++)
+		if (sessionBatch != null && sessionBatch.transactions != null) {
+			for(i = 0; i< sessionBatch.transactions.length; i++)
 			{
-				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+				temp  = sessionBatch.transactions.getItemAt(i) as Object;
 				if (temp is TapePaymentRecord) {
 					tempPayment = temp as TapePaymentRecord;
 					if (tempPayment.paymentMethod != "Charge") {
@@ -1593,8 +1593,8 @@
 		// the cash register is used as a PAID OUT as well, like a cash back method
 		// The current user must be allowed this security feature.
 		//
-		if (sessionBatch.transactionsList.length == 1 && sessionBatch.accumTendered < 0) {
-			tempPayment  = sessionBatch.transactionsList.getItemAt(0) as TapePaymentRecord;
+		if (sessionBatch.transactions.length == 1 && sessionBatch.accumTendered < 0) {
+			tempPayment  = sessionBatch.transactions.getItemAt(0) as TapePaymentRecord;
 			if (tempPayment != null && tempPayment.paymentMethod == "Cash") {
 				if (sessionBatch.user != null && sessionBatch.user.noCashReturn == false)
 					isPaidOut = true;
@@ -1656,9 +1656,9 @@
 			
 			cashDrawer.fund -= sessionBatch.accumChange;
 			
-			for(i = 0; i< sessionBatch.transactionsList.length; i++)
+			for(i = 0; i< sessionBatch.transactions.length; i++)
 			{
-				temp  = sessionBatch.transactionsList.getItemAt(i) as Object;
+				temp  = sessionBatch.transactions.getItemAt(i) as Object;
 				
 				if (temp is TapePaymentRecord) {
 					tempPayment = temp as TapePaymentRecord;
@@ -2132,7 +2132,7 @@
 			<mx:Text id="change_edit" x="145" y="126" width="86" textAlign="right"/>
 
 		</mx:Canvas>
-		<mx:DataGrid x="0" y="420" width="666" id="cashReg_grid" dataProvider="{sessionBatch.transactionsList}" height="119" itemClick="doTransactionGrid();">
+		<mx:DataGrid x="0" y="420" width="666" id="cashReg_grid" dataProvider="{sessionBatch.transactions}" height="119" itemClick="doTransactionGrid();">
 			<mx:columns>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Description')}" labelFunction="doDescript"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Subtotal')}" labelFunction="doSubtotalPrice"/>

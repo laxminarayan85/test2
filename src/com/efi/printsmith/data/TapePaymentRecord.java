@@ -47,7 +47,7 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql="update tapepaymentrecord set isdeleted='TRUE' where id=?")
 //Filter added to retrieve only records that have not been soft deleted.
 @Where(clause="isdeleted <> 'TRUE'")
-public class TapePaymentRecord extends Transactions {
+public class TapePaymentRecord extends Transaction {
 	/**
 	 * @generated
 	 */
