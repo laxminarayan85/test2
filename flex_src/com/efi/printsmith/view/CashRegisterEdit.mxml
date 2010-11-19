@@ -76,13 +76,13 @@
  	 	 	 	<mx:Label x="10" y="60" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Total')}" id="label3" width="87" textAlign="right"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild">
- 	 	 	 	<mx:TextInput  restrict="0-9\." x="105" y="8" width="75" id="txtSaleQuantity" focusOut="UpdateCashRegister()" textAlign="right"/>
+ 	 	 	 	<mx:TextInput  restrict="0-9\." x="105" y="8" width="75" id="txtSaleQuantity" tabIndex="1" focusOut="UpdateCashRegister()" textAlign="right"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild">
- 	 	 	 	<mx:TextInput  restrict="0-9\."  x="105" y="33" width="75" id="txtSaleUnitPrice" focusOut="UpdateCashRegister()" textAlign="right"/>
+ 	 	 	 	<mx:TextInput  restrict="0-9\."  x="105" y="33" width="75" id="txtSaleUnitPrice" tabIndex="2" focusOut="UpdateCashRegister()" textAlign="right"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild">
- 	 	 	 	<mx:TextInput restrict="0-9\."  x="105" y="58" width="75" id="txtSaleTotal" textAlign="right" focusOut="doChangeTotalPrice()"/>
+ 	 	 	 	<mx:TextInput restrict="0-9\."  x="105" y="58" width="75" id="txtSaleTotal" textAlign="right" tabIndex="3" focusOut="doChangeTotalPrice()"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild">
  	 	 	 	<mx:Label x="10" y="86" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Description')}" id="label4"/>
@@ -228,9 +228,9 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTapeBatchResult(event)"/>
 		<mx:method name="getCurrentTapeBatch" fault="handleFault(event)" result="handleLoadCurrentTapeBatch(event)"/>
 	</mx:RemoteObject>
-	<mx:RemoteObject id="dataServiceCashRegisterBatch" destination="dataService">
+<!--	<mx:RemoteObject id="dataServiceCashRegisterBatch" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleBatchSaveResult(event)"/>
-	</mx:RemoteObject>
+	</mx:RemoteObject>-->
  	<mx:RemoteObject id="dataServiceTaxCodes" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTaxCodesResult(event)"/>
 	</mx:RemoteObject>
@@ -316,6 +316,8 @@
 	private var enableSave:Boolean = true;
 	[Bindable]
 	private var enableCCApproval:Boolean = true;
+	[Bindable]
+	private var waitOnNewCashDrawer:Boolean = false;
 
 	[Bindable]                                         
     private var systemPreferences:PreferencesSystem;
@@ -407,31 +409,57 @@
 	     TaxCodesArray = ev.result as ArrayCollection;
 	}
 	private function handleLoadCashDrawerResult(ev:ResultEvent):void {
-	     cashDrawer = ev.result as CashDrawer;
-	     
-	     // does not exist, create one
-	     if (cashDrawer == null) {
+	    var cashDrawerArray:ArrayCollection = ev.result as ArrayCollection;
+	    
+	    //
+	    // should never be more than one cash drawer in the current design
+	    //
+		if (cashDrawerArray.length > 0)
+		{
+			cashDrawer = cashDrawerArray.getItemAt(0) as CashDrawer;
+		} else {
+			waitOnNewCashDrawer = true;
 	     	cashDrawer = new CashDrawer();
 	     	dataServiceCashDrawer.addUpdate(cashDrawer);
-	     }
+		}
 	}
 	
 	private function handleSaveCashDrawerResult(ev:ResultEvent):void {
 		cashDrawer = ev.result as CashDrawer;
 		
-		InitSaleRecord();		// setup for another sale
-		invoice = null;
-		customerAccount = new Account();
-		this.currentState = "";
-		openTree();
-		UpdateBatchNumbers();		
+		//
+		// first time startup, no cash drawer exist.
+		//
+		if (waitOnNewCashDrawer == true) {
+			waitOnNewCashDrawer = false;
+			this.throbber.visible = false;
+			this.throbber.stop();
+		} 
+		//
+		// normal SAVE of the cash drawer after a session is POST'ed
+		//
+		else {
+			InitSessionBatch();		// new session
+			InitSaleRecord();		// setup for another sale
+			invoice = null;
+			customerAccount = null;
+			this.currentState = "";
+			openTree();
+			UpdateBatchNumbers();	
+		}	
 	}
 	
 	private function handleLoadCashRegPreferencesResult(ev:ResultEvent):void{
 		systemCashPreferencesArray = ev.result as ArrayCollection;
 		
-		this.throbber.visible = false;
-		this.throbber.stop();
+		//
+		// in a normal startup, this is the last record to wait on, but if a new cash drawer is built
+		//	then we must wait on it as well.
+		//
+		if (waitOnNewCashDrawer == false) {
+			this.throbber.visible = false;
+			this.throbber.stop();
+		}
 	}
 	
 	public function handleLoadInvoiceTemplates(evt:ResultEvent):void {
@@ -526,8 +554,10 @@
 			txtSaleQuantity.text = "";
 		if (txtSaleUnitPrice != null)
 			txtSaleUnitPrice.text = "";
-		if (txtSaleTotal != null)	
+		if (txtSaleTotal != null) {
 			txtSaleTotal.text = "";
+			setOverrideForField(txtSaleTotal, activeSale.opPrice);
+		}
    }
    
    private function InitSessionBatch():void {
@@ -628,7 +658,7 @@
 		
 		// these will be appeaded to the open tape
 		tapeBatch = new TapeBatch();
-		tapeBatch.sessionBatch = new ArrayCollection();
+		tapeBatch.sessionBatches = new ArrayCollection();
 		
 		//
 		// this is the session that is appeaded to the open tape batch
@@ -637,18 +667,18 @@
 		
 		// current monies held in the cash drawer
 		cashDrawer = new CashDrawer();
-
-		dataServiceSystemPreferences.getAll("PreferencesSystem");
-		dataServiceCashPreferences.getAll("PreferencesCashRegister");
-		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
+		
 		dataServiceCashDrawer.getAll("CashDrawer");
+		dataServiceSystemPreferences.getAll("PreferencesSystem");
+		dataServiceCreditCardPreferences.getAll("PreferencesCreditCard");
+		dataServiceTaxCodes.getAll("TaxCodes")	;
+		dataServiceTaxTable.getCurrentTaxTables("TaxTable");
+		dataServiceCashPreferences.getAll("PreferencesCashRegister");
+		
 	//	dataServiceTape.getall("Tape");
 		dataServiceTapeBatch.getCurrentTapeBatch();
 		
 		InitSaleRecord();			// setup for the first sale transaction
-		
-		dataServiceTaxCodes.getAll("TaxCodes")	;
-		dataServiceTaxTable.getCurrentTaxTables("TaxTable");
 		
 		// perform the account load in the background, the button will come alive when list is loaded
 		invoiceRepositoryService.getItemList();
@@ -707,12 +737,16 @@
 
 	private function handleSaveTapeBatchResult(ev:ResultEvent):void{
 		tapeBatch = ev.result as TapeBatch;
+		
+		//
+		// good save of Tape batch and all session layers
+		//
+		this.throbber.visible = false;
+		this.throbber.stop();
 	}
 	
-	private function handleBatchSaveResult(ev:ResultEvent):void{
-		InitSessionBatch();
-		UpdateBatchNumbers();
-	}
+//	private function handleBatchSaveResult(ev:ResultEvent):void{
+//	}
 	
 	private function UpdateCashRegister():void{
 		var temp:Number;
@@ -731,6 +765,7 @@
 		
 		if ( tempQuantity > 0) {
 			accept_button.enabled =  true;
+			accept_button.tabIndex = 5;
 			this.focusManager.defaultButton = accept_button;
 		}	
 		else {
@@ -738,7 +773,10 @@
 			this.focusManager.defaultButton = null;
 		}
 		
-		txtSaleTotal.text = numberFormatter.format(temp) ;
+		// total price can be overridden
+		if (activeSale != null && activeSale.opPrice == false)
+			txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(temp)
+		
 		activeSale.subTotal = temp;		// no tax at this point
 
 		activeSale.taxTable = pickTaxTable.selectedItem as TaxTable;
@@ -790,6 +828,15 @@
 		
 		if (txtSaleQuantity != null && txtSaleQuantity.enabled)
 			txtSaleQuantity.setFocus();
+		
+		txtSaleQuantity.tabIndex = 1;
+		txtSaleUnitPrice.tabIndex = 2;
+		txtSaleTotal.tabIndex = 3;
+		txtSaleDescription.tabIndex = 4;
+		accept_button.tabIndex = 5;
+		
+		btnSave.tabIndex = -1;
+		btPayment.tabIndex = -1;
 	}
 	
 	private function findItem(name:String, array:ArrayCollection):int {
@@ -869,6 +916,9 @@
 			}
 			btPayment.enabled = true;
 			payment_cash_edit.setFocus();
+			payment_cash_edit.tabIndex = 1;
+			btPayment.tabIndex = 2;
+			btnSave.tabIndex = 3;
 		}
 		if (rbvalue == "Credit Card")
 		{
@@ -883,6 +933,10 @@
 			}
 			btPayment.enabled = true;
 			card_ref.setFocus();
+			card_ref.tabIndex = 1;
+			payment_cash_edit.tabIndex = 2;
+			btPayment.tabIndex = 3;
+			btnSave.tabIndex = 4;
 		}
 		if (rbvalue == "Check")
 		{
@@ -897,6 +951,10 @@
 			}
 			btPayment.enabled = true;
 			check_num.setFocus();
+			check_num.tabIndex = 1;
+			payment_cash_edit.tabIndex = 2;
+			btPayment.tabIndex = 3;
+			btnSave.tabIndex = 4;
 		}
 		if (rbvalue == "Charge")
 		{
@@ -915,13 +973,19 @@
 			{
 				this.currentState = "paymentCharge";
 			}
+			payment_cash_edit.setFocus();
+			payment_cash_edit.tabIndex = 1;
+			btPayment.tabIndex = 2;
+			btnSave.tabIndex = 3;
 		}
+		
+		accept_button.tabIndex = -1;
 		//
 		// how much is left to pay
 		//
 		payment_cash_edit.text = Snowmass.getCurrencyFormatter(false,2).format((sessionBatch.accumTotal - sessionBatch.accumTendered));
 		
-		this.focusManager.setFocus(btPayment);
+	//	this.focusManager.setFocus(btPayment);
 		this.focusManager.defaultButton = btPayment;
 	}
 	
@@ -939,17 +1003,24 @@
 		
 		if ((this.currentState = "invoiceCash") && (AustrailianRounding == true)) {
 			
-		}else{
-			 activePayment.total = parseFloat(payment_cash_edit.text.replace(",",""));	
-			sessionBatch.accumTendered = sessionBatch.accumTendered+ activePayment.total;
+		} else {
+			// ensure that variable content is the same as formatted screen content
+			var temp:Number = parseFloat(payment_cash_edit.text.replace(",",""));
+			var tempStr:String = Snowmass.getCurrencyFormatter(false,2).format(temp);
+			activePayment.total = parseFloat(tempStr);	
+			
+			sessionBatch.accumTendered = sessionBatch.accumTendered + activePayment.total;
 			sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal; 
+			
 			if (activePayment.paymentMethod=="Check"){
 				activePayment.checkNumber = check_num.text;
 				
-				if (customerAccount.type == "cash_only" || customerAccount.type == "full_deposit") {
-					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Onlycashisacceptedas");
-					Alert.show(message, "Warning", 0, null, null, null, 4); 
-					payOK = false;
+				if (customerAccount != null) {
+					if (customerAccount.type == "cash_only" || customerAccount.type == "full_deposit") {
+						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Onlycashisacceptedas");
+						Alert.show(message, "Warning", 0, null, null, null, 4); 
+						payOK = false;
+					}
 				}
 			}
 			if (activePayment.paymentMethod=="Credit Card"){
@@ -959,16 +1030,18 @@
 			if (activePayment.paymentMethod=="Charge") {
 				activePayment.customerAccount = customerAccount;	
 				
-				if (customerAccount.status == "CustomerStatusFrozen") {
-					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_CustomeraccountisFRO");
-					Alert.show(message, "Warning", 0, null, null, null, 4); 
-					payOK = false;
-				} else if (customerAccount.type != "charge_acct") {
-					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Onlycashisacceptedas");
-					Alert.show(message, "Warning", 0, null, null, null, 4); 
-					payOK = false;
+				if (customerAccount != null) {
+					if (customerAccount.status == "CustomerStatusFrozen") {
+						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_CustomeraccountisFRO");
+						Alert.show(message, "Warning", 0, null, null, null, 4); 
+						payOK = false;
+					} else if (customerAccount.type != "charge_acct") {
+						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Onlycashisacceptedas");
+						Alert.show(message, "Warning", 0, null, null, null, 4); 
+						payOK = false;
+					}
 				}
-
+				
 				if (payOK) {
 					if ((creditLimit > 0 && (creditLimit - activePayment.total)) < 0 || creditLimit < 0) {
 						//TODO - some users can override credit limit
@@ -1202,8 +1275,10 @@
 			creditLimit = 0;
 		}
 		
-		pickTaxTable.selectedIndex = findItem(customerAccount.taxTable.name, TaxTableArray);
-		pickTaxCode.selectedIndex = findItem(customerAccount.taxCodes.name, TaxCodesArray);
+		if (customerAccount.taxTable != null)
+			pickTaxTable.selectedIndex = findItem(customerAccount.taxTable.name, TaxTableArray);
+		if (customerAccount.taxCode != null)
+			pickTaxCode.selectedIndex = findItem(customerAccount.taxCode.name, TaxCodesArray);
 		
 		// TODO - assign default invoice format from account
 	}
@@ -1571,7 +1646,9 @@
 		// make sure the payments balance with the sales
 		//
 		if (goodBatch && doApplyPayments(isPaidOut) == true) {
-		
+			this.throbber.visible = true;
+			this.throbber.play();
+
 			//
 			// Write transactions out to current tape batch and post any invoices to history.
 			// Then perform any printing of receipts or invoice forms
@@ -1784,14 +1861,14 @@
 			//
 			// appead this session to the current batch session list
 			//
-			tapeBatch.sessionBatch.addItem(sessionBatch);
+			tapeBatch.sessionBatches.addItem(sessionBatch);
 			
 			//
 			// write out the Tape Batch and all of its sub records, session, sales, payments, account history 
 			//
 			//dataServiceTape.addUpdate(tape);
 		
-			dataService.addUpdate(tapeBatch);
+			dataServiceTapeBatch.addUpdate(tapeBatch);
 			
 			// some changed in the account record
 			if (accountChanged == true) {
@@ -1830,7 +1907,7 @@
 		InitSaleRecord();		// setup for another sale
 		
 		invoice = null;
-		customerAccount = new Account();
+		customerAccount = null;
 		this.currentState = "";
 		openTree();
 		UpdateBatchNumbers();		
@@ -1858,8 +1935,19 @@
 		// current value is EMPTY string, remove override
 		if (txtSaleTotal.text == "")
 			activeSale.opPrice = false;
-		else
-			activeSale.opPrice = true;
+		else {
+			// price override format as currency
+			var temp:Number = parseFloat(txtSaleTotal.text.replace(",",""))
+			var tempStr:String = Snowmass.getCurrencyFormatter(false,2).format(temp);
+			
+			// data is different than calculated version
+			if (tempStr != txtSaleTotal.text) {
+				activeSale.opPrice = true;
+			} else {
+				activeSale.total = temp;
+			}
+			txtSaleTotal.text = tempStr;
+		}
 		
 		// update the field font state to match
 		setOverrideForField(txtSaleTotal, activeSale.opPrice);
@@ -1877,8 +1965,8 @@
 	private function handleLoadCurrentTapeBatch(evt:ResultEvent):void {		
 		tapeBatch = evt.result as TapeBatch;
 		
-		if (tapeBatch.sessionBatch == null) {
-			tapeBatch.sessionBatch = new ArrayCollection();
+		if (tapeBatch.sessionBatches == null) {
+			tapeBatch.sessionBatches = new ArrayCollection();
 		}
 	}
 	
@@ -1910,10 +1998,15 @@
 			
 			// TODO: test for delayed payment from PSS
 			
-			if (goodPickup && customerAccount != null && invoice.account != null && customerAccount.id != invoice.account.id) {
-				message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Transactionalreadyin");
-				Alert.show(message, "Warning", 0, null, null, null, 4); 
-				goodPickup = false;
+			//
+			// attempting to pickup invoice from a different account
+			//
+			if (goodPickup && customerAccount != null) {
+				if (invoice.account != null && customerAccount.id != invoice.account.id) {
+					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Transactionalreadyin");
+					Alert.show(message, "Warning", 0, null, null, null, 4); 
+					goodPickup = false;
+				}
 			}
 			
 			if (goodPickup) {
@@ -1956,6 +2049,11 @@
 		
 		this.throbber.visible = false;
 		this.throbber.stop();
+	}
+	
+	private function doDescriptionActivate():void {
+		txtSaleDescription.setFocus();
+		txtSaleDescription.setSelection(0, txtSaleDescription.length);
 	}
 ]]>
                              
@@ -2009,7 +2107,7 @@
 		<mx:Canvas x="0" y="143" width="408" height="278" id="tax_canvas1" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Button x="10" y="200" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Accept')}" click="doAccept();" width="176" enabled="false" id="accept_button"/>
 			<mx:CheckBox x="10" y="243" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintReceipt')}" id="checkbox1"/>
-			<mx:TextArea x="384" y="244" width="10" height="8" id="txtSaleDescription" enabled="true"/>
+			<mx:TextArea x="396" y="266" width="4.799999" height="4.8" focusIn="doDescriptionActivate()" id="txtSaleDescription" tabIndex="4" enabled="true"/>
 		</mx:Canvas>
 		<mx:Canvas x="407" y="50" width="261" height="215" id="tax_canvas2" hideEffect="effect" showEffect="effect" borderStyle="inset">
 			<mx:Label x="50" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PAYMENTMETHOD')}"/>
