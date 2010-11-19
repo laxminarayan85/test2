@@ -1726,12 +1726,14 @@
 							job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
 							job.costingCopier = stockDefinitionObj.defaultBWCopier;
 							job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers);
+							job.copyMinutes = job.pricingCopier.copyMinutes;
 						}
 						if (this.job_type.text == "Color" && stockDefinitionObj.defaultColorCopier != null) {
 							job.pricingCopier = stockDefinitionObj.defaultColorCopier;
 							job_pricing_copier.selectedIndex=findItem(job.pricingCopier.name, copiers);
 							job.costingCopier = stockDefinitionObj.defaultColorCopier;
 							job_costing_copier.selectedIndex=findItem(job.costingCopier.name, copiers);
+							job.copyMinutes = job.pricingCopier.copyMinutes;
 						}
 						job.inSetsOf = stockDefinitionObj.sheetsPerSet;
 					}
@@ -1756,7 +1758,7 @@
 					}
 					
 					dimensionChangePropagate();
-					
+					job.costUnits = stockDefinitionObj.costunits;
 					this.mapToJobData();
 					jobService.assignStockToJob(this.job, stockDefinitionObj);
 //					var i:int;
@@ -1804,6 +1806,7 @@
 				if (this.job_costing_copier.selectedIndex == -1) {
 					copier.costingCopy = true;
 					this.job_costing_copier.selectedIndex = findItemById(copier.id,costingCopiers);
+					job.copyMinutes = copier.copyMinutes;
 				}
 				this.updatePrice();			
 			}
@@ -1857,6 +1860,9 @@
 					job.numOn = localJob.numOn;
 					job.qtyOrdered = localJob.qtyOrdered;
 					job.numCopiesOverride = localJob.numCopiesOverride;
+					job.parentStockCost = localJob.parentStockCost;
+					job.copyMinutes = localJob.copyMinutes;
+					job.runTime = localJob.runTime;
 					if (job.pricingRecord != null) {
 						overs_total_price.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice.toString());
 						job_price.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice));

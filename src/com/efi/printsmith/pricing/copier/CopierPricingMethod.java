@@ -11,17 +11,26 @@ import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.data.Charge;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.service.DataService;
+import com.efi.printsmith.pricing.stock.StockCostEngine;
 
 public abstract class CopierPricingMethod {
 	public Job priceCopierJob(Job job) throws Exception {
 		DataService dataService = new DataService();
+		StockCostEngine stockCost = new StockCostEngine();
 		if (job.getPricingCopier() != null)  // Ensure we have the latest copier data.
 			job.setPricingCopier(dataService.getCopierDefinition(job.getPricingCopier().getId()));
 		calculateTotalCopies(job);
 		calculateStockQty(job);
-//		JobUtilities.calculateSignatures(job);
-//		calculateCopierJobWeight(job);
+		calculateLaborCost(job);
+		calculateCopierRuntime(job);
+		job = stockCost.calculateStockCost(job);
+		if (job.getCopyMinutesOverride() == false)
+			job.setCopyMinutes(job.getPricingCopier().getCopyMinutes());
 		return job;
+	}
+	
+	private void calculateLaborCost(Job job) throws Exception {
+		job.getPricingRecord().setLaborCost(job.getTotalCopies().doubleValue() * job.getPricingCopier().getMachineCostPerCopy().doubleValue());
 	}
 	
 	private void calculateTotalCopies(Job job) {
@@ -148,12 +157,8 @@ public abstract class CopierPricingMethod {
 		CopierDefinition copierDefinition = job.getPricingCopier();
 		
 		if (copierDefinition == null) return;
-		
-		double runTime = 0.0;
-
-		if (job.getDoubleSided()) {
-			
-		}
+		if (copierDefinition != null && job.getOrRuntime() == false)
+			job.setRunTime(new Double(job.getTotalCopies().doubleValue() / copierDefinition.getCopyMinutes()).longValue());
 	}
 	
 }

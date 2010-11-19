@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Estmate History" name="Estmate History"
-width="726" height="431"  creationComplete="init()"  
+width="888" height="507"  creationComplete="init()"  
      title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ProductionData')}" xmlns:text="flash.text.*" fontSize="9">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -78,28 +78,32 @@ width="726" height="431"  creationComplete="init()"
 	public function setJob(job2:JobBase):void
 	{
 		this.job = job2;
+		dimensionDataService.getAll("Dimension");
+		setProductionData();
+	}			
+	
+	private function setProductionData():void {
 		this.parent_size.text = job.parentSize.name;
 		this.run_size.text = job.runSize.name;
 		this.production_run.text = job.pressQty.toString();
 		this.requires.text = job.sheets.toString();
 		this.sheets_purchased.text = job.qtyOrdered.toString();
 		this.area.text = (job.parentSize.height * job.parentSize.width).toString();
-		this.per.text = "1,000";
-		this.markup.text = job.markup.toString();
+		this.per.text = job.costUnits.toString();
+		this.markup.text = job.pricingRecord.stockMarkup.toString();
 		this.labor_cost.text = job.pricingRecord.laborTotalPrice.toString();
-		this.number_out.text = job.numOn.toString();
-		this.stock_cost.text = job.pricingRecord.stockTotalPrice.toString();
-		this.stock_markup.text = job.pricingRecord.stockMarkup.toString();
-		this.stock_price.text = job.pricingRecord.stockTotalPrice.toString();
-		this.labor_cost.text = job.pricingRecord.laborTotalPrice.toString();
-		this.labor_price.text = job.pricingRecord.laborTotalPrice.toString();
+		this.number_out.text = job.paperCal.runout.toString();
 		this.job_price.text = job.pricingRecord.totalPrice.toString();
 		this.itemized_markups.text = "0.00";
 		this.other_charges.text = job.pricingRecord.otherChargePrice.toString();
-		this.production.text = "0.00";
-		
-		dimensionDataService.getAll("Dimension");
-		
+		this.production.text = job.pricingRecord.productionPrice.toString();
+		this.stock_cost.text = job.pricingRecord.stockCost.toFixed(2);
+		this.stock_price.text = job.pricingRecord.stockTotalPrice.toFixed(2);
+		this.stock_markup.text = (job.pricingRecord.stockTotalPrice - job.pricingRecord.stockCost).toFixed(2);
+		this.labor_cost.text = job.pricingRecord.laborCost.toFixed(2);
+		this.labor_price.text = job.pricingRecord.laborTotalPrice.toFixed(2);
+		this.labor_markup.text = (job.pricingRecord.laborTotalPrice - job.pricingRecord.laborCost).toFixed(2);
+		this.parent_costs.text = job.parentStockCost.toFixed(2);
 		if (job.pricingMethod.title == "Printing") {
 			this.copier.text = job.pricingPress.name;
 			this.copier_speed.text = job.pricingPress.avgImpressPerHour.toString();
@@ -119,14 +123,32 @@ width="726" height="431"  creationComplete="init()"
 			this.total_time.text = (parseInt(setupHours) + parseInt(runHours)).toString() + ":" + (setupMinutes + runMinutes).toFixed(0);
 		} else {
 			this.copier.text = job.pricingCopier.name;
-			this.copier_speed.text = job.pricingCopier.copyMinutes.toString();
+			this.copier_speed.text = job.copyMinutes.toString();
 			this.copier_label.visible = true;
 			this.copier_speed_label.visible = true;
 			this.press_label.visible = false;
 			this.press_speed_label.visible = false;
-			
+			var runHours:String = (this.job.runTime / 60).toFixed(0);
+			runHours = runHours.replace(".","");
+			var runMinutes:Number = this.job.runTime - (parseInt(runHours) * 60);
+			if (runMinutes < 10)
+				this.run_time.text = runHours + ":0" + runMinutes.toFixed(0);
+			else
+				this.run_time.text = runHours + ":" + runMinutes.toFixed(0);
+			var totalTime:Number = job.runTime + job.setupTime + job.washupTime;
+			var totalHours:String = (totalTime / 60).toFixed(0);
+			totalHours = totalHours.replace(".","");
+			var totalMinutes:Number = totalTime - (parseInt(totalHours) * 60);
+			if (totalMinutes < 10)
+				this.total_time.text = totalHours + ":0" + totalMinutes.toFixed(0);
+			else
+				this.total_time.text = totalHours + ":" + totalMinutes.toFixed(0);
+			this.production_run.text = job.numCopies.toString();
+			this.requires.text = (job.totalCopies / job.paperCal.runout).toString();
+			this.sheets_purchased.text = (job.totalCopies / job.paperCal.runout).toString();
 		}
-	}			
+	}
+	
 	private function handleLoadResult(ev:ResultEvent):void {
 		estimates = ev.result as ArrayCollection;
 	
@@ -172,37 +194,37 @@ width="726" height="431"  creationComplete="init()"
 ]]>
                              
 </mx:Script>
-<mx:Canvas width="707" height="378" dropShadowEnabled="false" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Canvas width="842" height="453" dropShadowEnabled="false" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ParentSize')}" width="120" textAlign="right"/>
-	<mx:Label x="230" y="29" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Area')}" width="101" textAlign="right"/>
-	<mx:Text x="339" y="29" text="" width="60" textAlign="right" id="area"/>
-	<mx:Label x="231" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Out')}" width="100" textAlign="right"/>
-	<mx:Label x="519" y="19" text="Proof Back:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="40" text="Blueline:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="61" text="Blueline Back:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="-2" text="Type Setting:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="147" text="Copied:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="168" text="Bindery:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="249" text="Mailing:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="189" text="Cut:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="231" text="Finished:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="270" text="Outside Service:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="126" text="Printed:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="291" text="Other:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="312" text="Delivered:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="82" text="Stock Cut:" width="100" textAlign="right"/>
-	<mx:Label x="519" y="103" text="At Press:" width="100" textAlign="right"/>
-	<mx:Label x="231" y="52" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Per')}" width="100" textAlign="right"/>
-	<mx:TextInput x="339" y="8" text="" width="60" textAlign="right" height="20" id="number_out"/>
-	<mx:TextInput x="339" y="50" width="61" textAlign="right" height="20" id="per"/>
-	<mx:Label x="231" y="73" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Markup')}" width="100" textAlign="right"/>
-	<mx:TextInput x="339" y="71" width="61" textAlign="right" height="20" id="markup"/>
+	<mx:Label x="379" y="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Area')}" width="101" textAlign="right"/>
+	<mx:Text x="488" y="31" text="" width="60" textAlign="right" id="area"/>
+	<mx:Label x="380" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Out')}" width="100" textAlign="right"/>
+	<mx:Label x="633" y="23" text="Proof Back:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="44" text="Blueline:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="65" text="Blueline Back:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="2" text="Type Setting:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="151" text="Copied:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="172" text="Bindery:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="253" text="Mailing:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="193" text="Cut:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="235" text="Finished:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="274" text="Outside Service:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="130" text="Printed:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="295" text="Other:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="316" text="Delivered:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="86" text="Stock Cut:" width="100" textAlign="right"/>
+	<mx:Label x="633" y="107" text="At Press:" width="100" textAlign="right"/>
+	<mx:Label x="380" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.per')}" width="100" textAlign="right"/>
+	<mx:TextInput x="488" y="10" text="" width="60" textAlign="right" height="20" id="number_out"/>
+	<mx:TextInput x="488" y="52" width="61" textAlign="right" height="20" id="per"/>
+	<mx:Label x="380" y="75" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Markup')}" width="100" textAlign="right"/>
+	<mx:TextInput x="488" y="73" width="61" textAlign="right" height="20" id="markup"/>
 	<mx:Text x="138" y="69" width="84" textAlign="right" id="production_run"/>
 	<mx:Label x="10" y="69" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ProductionRun')}" width="120" textAlign="right"/>
 	<mx:Text x="138" y="90" width="84" textAlign="right" id="requires"/>
 	<mx:Text x="230" y="91" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.parentsheets')}" width="101" textAlign="right" fontWeight="bold" height="17"/>
 	<mx:Text x="138" y="111" width="84" textAlign="right" id="sheets_purchased"/>
-	<mx:Text x="138" y="132" width="124" textAlign="right" id="copier"/>
+	<mx:Text x="138" y="132" width="262" textAlign="right" id="copier"/>
 	<mx:Label x="10" y="132" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Copier')}" width="120" textAlign="right" id="copier_label"/>
 	<mx:Label x="10" y="132" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Press')}" width="120" textAlign="right" id="press_label"/>
 	<mx:Label x="10" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Requires')}" width="120" textAlign="right"/>
@@ -213,21 +235,21 @@ width="726" height="431"  creationComplete="init()"
 	<mx:Label x="10" y="153" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.CopierSpeed')}" width="120" textAlign="right" id="copier_speed_label"/>
 	<mx:Label x="10" y="153" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.PressSpeed')}" width="120" textAlign="right" id="press_speed_label"/>
 	<mx:TextInput x="138" y="153" height="20" fontSize="9" width="84" textAlign="right" id="copier_speed"/>
-	<mx:Panel x="260" y="112" width="293" height="199" layout="absolute" borderStyle="solid" dropShadowEnabled="false" headerHeight="0" borderThickness="2" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-		<mx:Text x="59" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Cost')}" fontWeight="bold" textDecoration="underline" width="70" textAlign="center" height="17"/>
+	<mx:Panel x="256" y="157" width="293" height="199" layout="absolute" borderStyle="solid" dropShadowEnabled="false" headerHeight="0" borderThickness="2" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+		<mx:Text x="59" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Cost')}" fontWeight="bold" textDecoration="underline" width="70" textAlign="right" height="17"/>
 		<mx:Text x="0" y="22" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Stock')}" fontWeight="bold" width="51" textAlign="right" height="29"/>
 		<mx:Text x="0" y="44" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Labor')}" fontWeight="bold" width="51" textAlign="right" height="19"/>
 		<mx:Text x="93" y="66" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ItemizedMarkups')}" fontWeight="bold" width="101" textAlign="right" height="18"/>
 		<mx:Text x="93" y="87" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.OtherCharges')}" fontWeight="bold" width="101" textAlign="right" height="18"/>
 		<mx:Text x="93" y="108" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Production')}" fontWeight="bold" height="18" width="101" textAlign="right"/>
 		<mx:Text x="93" y="129" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.TargetAdjust')}" fontWeight="bold" height="18" width="101" textAlign="right"/>
-		<mx:Text x="131" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Markup')}" fontWeight="bold" textDecoration="underline" width="70" textAlign="center" height="17"/>
-		<mx:Text x="202" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Price')}" fontWeight="bold" height="17" textDecoration="underline" width="68" textAlign="center"/>
+		<mx:Text x="131" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Markup')}" fontWeight="bold" textDecoration="underline" width="70" textAlign="right" height="17"/>
+		<mx:Text x="202" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Price')}" fontWeight="bold" height="17" textDecoration="underline" width="68" textAlign="right"/>
 		<mx:Text x="59" y="22" height="20" fontSize="9" width="70" textAlign="right" id="stock_cost" text="0.00"/>
 		<mx:Text x="131" y="22" height="20" fontSize="9" width="70" textAlign="right" id="stock_markup" text="0.00"/>
 		<mx:Text x="202" y="22" height="20" fontSize="9" width="70" textAlign="right" id="stock_price" text="0.00"/>
 		<mx:Text x="59" y="43" height="20" fontSize="9" width="70" textAlign="right" id="labor_cost" text="0.00"/>
-		<mx:Text x="131" y="43" height="20" fontSize="9" width="70" textAlign="right" id="markup_cost" text="0.00"/>
+		<mx:Text x="131" y="43" height="20" fontSize="9" width="70" textAlign="right" id="labor_markup" text="0.00"/>
 		<mx:Text x="202" y="43" height="20" fontSize="9" width="70" textAlign="right" id="labor_price" text="0.00"/>
 		<mx:Text x="202" y="64" height="20" fontSize="9" width="70" textAlign="right" id="itemized_markups" text="0.00"/>
 		<mx:Text x="202" y="85" height="20" fontSize="9" width="70" textAlign="right" id="other_charges" text="0.00"/>
@@ -238,9 +260,9 @@ width="726" height="431"  creationComplete="init()"
 		<mx:HRule x="197" y="154" width="82" height="1" strokeWidth="1"/>
 		<mx:HRule x="197" y="152" width="82" height="1" strokeWidth="1"/>
 	</mx:Panel>
-	<mx:Button x="607" y="350" label="Cancel" id="cancel_btn" width="90" click="this.doCancel();"/>
-	<mx:Button x="503" y="350" label="OK" width="90" id="ok_btn" click="this.doOK();"/>
-	<mx:Button x="10" y="350" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ShowCutout')}" id="show_cutout_btn" width="90"/>
+	<mx:Button x="10" y="407" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" id="cancel_btn" width="90" click="this.doCancel();"/>
+	<mx:Button x="10" y="367" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="90" id="ok_btn" click="this.doOK();"/>
+	<mx:Button x="132" y="407" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ShowCutout')}" id="show_cutout_btn" width="90"/>
 	<mx:Panel width="212" height="125" layout="absolute" borderStyle="solid" dropShadowEnabled="false" headerHeight="0" borderThickness="2" x="10" y="177">
 		<mx:Label x="-4" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.SetupTime')}" width="96" textAlign="right"/>
 		<mx:TextInput x="100" y="10" height="20" width="84" textAlign="right" id="setup_time" text="0:00"/>
@@ -253,24 +275,24 @@ width="726" height="431"  creationComplete="init()"
 		<mx:HRule x="95" y="79" width="93" height="1" strokeWidth="1"/>
 		<mx:HRule x="95" y="77" width="93" height="1" strokeWidth="1"/>
 	</mx:Panel>
-	<mx:ComboBox x="138" y="8" width="84" id="parent_size" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="" height="20"></mx:ComboBox>
+	<mx:ComboBox x="138" y="8" width="84" id="parent_size" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="" height="20" enabled="false"></mx:ComboBox>
 	<mx:ComboBox x="138" y="30" width="84" id="run_size" labelField="name" dataProvider="{dimensionsArray}" editable="true" height="20"></mx:ComboBox>
-	<mx:DateField x="627" y="-4" id="type_setting"/>
-	<mx:DateField x="627" y="267"/>
-	<mx:DateField x="627" y="287"/>
-	<mx:DateField x="627" y="308"/>
-	<mx:DateField x="627" y="246"/>
-	<mx:DateField x="627" y="17" id="proof_back"/>
-	<mx:DateField x="627" y="38" id="blueline"/>
-	<mx:DateField x="627" y="59" id="blueline_back"/>
-	<mx:DateField x="627" y="80"/>
-	<mx:DateField x="627" y="101"/>
-	<mx:DateField x="627" y="122"/>
-	<mx:DateField x="627" y="143"/>
-	<mx:DateField x="627" y="164"/>
-	<mx:DateField x="627" y="185"/>
-	<mx:DateField x="627" y="206"/>
-	<mx:DateField x="627" y="227"/>
+	<mx:DateField x="741" y="0" id="type_setting"/>
+	<mx:DateField x="741" y="271"/>
+	<mx:DateField x="741" y="291"/>
+	<mx:DateField x="741" y="312"/>
+	<mx:DateField x="741" y="250"/>
+	<mx:DateField x="741" y="21" id="proof_back"/>
+	<mx:DateField x="741" y="42" id="blueline"/>
+	<mx:DateField x="741" y="63" id="blueline_back"/>
+	<mx:DateField x="741" y="84"/>
+	<mx:DateField x="741" y="105"/>
+	<mx:DateField x="741" y="126"/>
+	<mx:DateField x="741" y="147"/>
+	<mx:DateField x="741" y="168"/>
+	<mx:DateField x="741" y="189"/>
+	<mx:DateField x="741" y="210"/>
+	<mx:DateField x="741" y="231"/>
 </mx:Canvas>
 
 </mx:Panel>

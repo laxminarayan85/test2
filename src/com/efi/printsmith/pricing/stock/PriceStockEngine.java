@@ -201,8 +201,6 @@ public class PriceStockEngine {
 				if (job.getPaperCal().getRunout() > 0)
 					qty = qty / job.getPaperCal().getRunout();
 			}
-			//if (qty < stockDefinition.getMinorder())
-				//qty = stockDefinition.getMinorder();
 			double markup = 0.0;
 			double stockCost = 0.0;
 			if (qty > 0) {
