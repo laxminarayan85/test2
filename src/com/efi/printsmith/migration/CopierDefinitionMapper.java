@@ -55,6 +55,27 @@ public class CopierDefinitionMapper extends ImportMapper {
 		// First loop 15 times and just do matrix
 		for (int x = 1; x <= 15; x++) {
 			matrixElement = new MatrixElement();
+			matrixElement.setLastLine(false);
+			matrixElement.setPrice1(0.0);
+			matrixElement.setPrice2(0.0);
+			matrixElement.setPrice3(0.0);
+			matrixElement.setPrice4(0.0);
+			matrixElement.setPrice5(0.0);
+			matrixElement.setPrice6(0.0);
+			matrixElement.setPrice7(0.0);
+			matrixElement.setPrice8(0.0);
+			matrixElement.setPrice9(0.0);
+			matrixElement.setPrice10(0.0);
+			matrixElement.setPrice11(0.0);
+			matrixElement.setPrice12(0.0);
+			matrixElement.setPrice13(0.0);
+			matrixElement.setPrice14(0.0);
+			matrixElement.setPrice15(0.0);
+			matrixElement.setPrice16(0.0);
+			matrixElement.setPrice17(0.0);
+			matrixElement.setPrice18(0.0);
+			matrixElement.setPrice19(0.0);
+			matrixElement.setPrice20(0.0);
 			for (int i = 0; i < fieldTokens.length; i++) {
 				String currentImportToken = importTokens[i];
 				String currentFieldToken = fieldTokens[i];
