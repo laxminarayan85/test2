@@ -889,6 +889,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	private function handleDeleteContact(event:CloseEvent):void {
 		if (event.detail == Alert.OK) {
 			dataService2.deleteItem("Contact", contact.id);
+			removeFromContactList(contact);
 		}
 	}
 	
@@ -1005,7 +1006,21 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 		}
 		                                    		
 	}   
-
+	
+	private function addToContactList(cont:Contact):void	{
+		contacts.addItem(cont);	
+	}
+	
+	private function removeFromContactList(cont:Contact):void	{
+		for (var i:int=0; i<contacts.length; i++)	{
+			if ((contacts.getItemAt(i) as Contact).id == cont.id)	{
+				contacts.removeItemAt(i);
+				return;		
+			}	
+		}
+			
+	}
+	
 	private function doZipCredit(): void{                             
 		var zip:Zip;
 		var result:Boolean;
@@ -1072,6 +1087,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 		originalContact = ObjectUtil.copy(contact) as Contact; */
 		
 		if (_mode == CT_FROM_PICKER)	{
+			addToContactList(ev.result as Contact);
 			openContactPicker();
 			doNewOperation();
 		}
