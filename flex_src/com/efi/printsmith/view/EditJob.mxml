@@ -857,7 +857,7 @@
 			{
 				thisInstance = this;
 				this.height = parent.height - 80;
-				PopUpManager.centerPopUp(this);
+//				PopUpManager.centerPopUp(this);
 				this.job_description.setFocus();
 				
 				pricingMethodDataService.getAll("PreferencesPricingMethod");
@@ -890,7 +890,7 @@
 //				if (isNaN(job.id)) {
 //					this.enabled=false;
 //				}
-				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+//				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 				multiQtyCombo.selectedItem = null;
 				multiQtyCombo.selectedIndex = -1;
 			}
