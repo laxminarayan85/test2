@@ -507,8 +507,12 @@
 		var itemp:int;
 		var temp: Account;
 		//itemp = accounts.getItemIndex(account);
-		 itemp =	findItemID(account.id, accounts); 
-		itemp++;
+		if (account == null)
+			itemp = 0;
+		else	{
+		 	itemp =	findItemID(account.id, accounts); 
+			itemp++;
+		}
 		if (itemp == accounts.length){
 			itemp = accounts.length - 1;
 		}

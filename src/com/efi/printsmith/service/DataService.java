@@ -300,7 +300,7 @@ public class DataService extends HibernateService {
 			// null order by title";
 			String queryString = "select new Account( "
 					+ columnStr
-					+ ") from Account a left outer join a.contact order by a.title ";
+					+ ") from Account a left outer join a.contact order by a.prospect, a.title ";
 
 			Query query = em.createQuery(queryString);
 
