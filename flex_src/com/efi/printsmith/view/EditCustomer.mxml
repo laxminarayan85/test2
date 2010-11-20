@@ -636,6 +636,7 @@
 		else
 			account.billToContact = account.contact
 	
+		account.prospect = prospect.selected;
 		
 		if (account.marketing != null){
 			
@@ -665,7 +666,7 @@
 			account.marketing.user9 = user9Tag.text; 
 			account.marketing.annualRev = parseInt(annualRev.text);
 			account.marketing.customer = customer.selected;
-			account.marketing.prospect = prospect.selected
+			account.marketing.prospect = prospect.selected;
 			account.marketing.noMail = noMail.selected;
 			account.marketing.personalAcct = personalAccount.selected;
 			account.marketing.numberofEmployees= parseInt(numberofEmployees.text);
@@ -799,7 +800,8 @@
 		
 		if (account.marketing != null){
 			
-		
+			account.marketing.prospect  = account.prospect;
+			account.marketing.customer = !account.prospect;
 			if (account.marketing.businessType != null)
 				business_type_combo.selectedItem = account.marketing.businessType;
 				//business_type_combo.selectedIndex = findItem(account.marketing.businessType.name, businessTypes);
@@ -1884,8 +1886,8 @@
 
 				<mx:Canvas id="canvasMarketing" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Marketing')}" width="100%" height="100%" >
 					<mx:RadioButtonGroup id="cust_prospect_radio_group"/>
-					<mx:RadioButton x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}" groupName="cust_prospect_radio_group" id="customer" selected="{account.marketing.customer}"/>
-					<mx:RadioButton x="10" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Prospect')}" groupName="cust_prospect_radio_group" id="prospect" selected="{account.marketing.prospect}"/>
+					<mx:RadioButton x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Customer')}" groupName="cust_prospect_radio_group" id="customer" selected="{!account.prospect}"/>
+					<mx:RadioButton x="10" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Prospect')}" groupName="cust_prospect_radio_group" id="prospect" selected="{account.prospect}"/>
 					<mx:CheckBox x="123" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.PersonalAccount')}" id="personalAccount" selected="{account.marketing.personalAcct}"/>
 					<mx:CheckBox x="123" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Donotmail')}" id="noMail" selected="{account.marketing.noMail}"/>
 					<mx:Panel x="10" y="66" width="301" height="134" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Company')}" dropShadowEnabled="false">
