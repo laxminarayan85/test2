@@ -93,8 +93,11 @@ public abstract class CopierPricingMethod {
 		calculateEstWaste(job);
 		calculateBinderyWaste(job);
 		long wasteSheets = job.getBinderyWaste() + job.getEstWaste();
-		wasteSheets *= job.getSheets();	
-		job.setTotalCopies((ordered / (iup / ion) * iruns) + ((wasteSheets * (iup / ion)) * iruns) + oddRunQty);
+		wasteSheets *= job.getSheets();
+		if ((ordered / (iup / ion)) < 1)
+			job.setTotalCopies(iruns + ((wasteSheets * (iup / ion)) * iruns) + oddRunQty);
+		else
+			job.setTotalCopies((ordered / (iup / ion) * iruns) + ((wasteSheets * (iup / ion)) * iruns) + oddRunQty);
 		//if (oddRunQty == 0 && iorigs > iup)
 			//job.setTotalCopies(job.getTotalCopies() * (iorigs / iup));
 		if (job.getDoubleSided()) {
