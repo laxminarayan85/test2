@@ -734,7 +734,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
     @Where(clause="isdeleted <> 'TRUE'")
 	private SalesCategory salesCategory;
 	
@@ -1196,7 +1196,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
     @Where(clause="isdeleted <> 'TRUE'")
 	private PressDefinition press;
 	
@@ -1426,7 +1426,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+  	@ManyToOne(fetch=FetchType.LAZY)
     @Where(clause="isdeleted <> 'TRUE'")
 	private StockDefinition stock;
 	
@@ -3887,8 +3887,7 @@ public class JobBase extends ModelBase {
 
    */	
 
-    @ManyToOne()
-
+  @ManyToOne(fetch=FetchType.LAZY)
     @Where(clause="isdeleted <> 'TRUE'")
 
   private TaxTable taxTable;
