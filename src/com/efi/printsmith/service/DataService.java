@@ -1329,6 +1329,10 @@ public class DataService extends HibernateService {
 		account.setAccountId(value.toString());
 		sequenceValues.setAccount(value);
 		this.addUpdate(sequenceValues);
+		
+		// since this is a new account, need to assign contact ids as well
+		this.setContactId(account.getContact());
+		this.setContactId(account.getBillToContact());
 	}
 
 	private void setEmployeeId(Employee employee) throws Exception {
