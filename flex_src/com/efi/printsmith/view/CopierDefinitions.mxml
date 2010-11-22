@@ -484,7 +484,7 @@
 		//copierDefinition.copyDefID = CopierDefID;
 		copierDefinition.name = Name.text;
 		if (copierDefinition.name == "")
-			copierDefinition.name = "Untitled";
+			copierDefinition.name = "Untitled Copier";
 		if (productionCopiers.selectedItem != null && productionCopiers.selectedItem.name != null) {
 			copierDefinition.machineName = productionCopiers.selectedItem.name as String;
 		}
