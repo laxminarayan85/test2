@@ -32,6 +32,8 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 
 		calculateUnitPrice(job);
 		double stockPrice = 0.0;
+		double stockTotalPrice = 0.0;
+		double laborTotalPrice = 0.0;
 		if (job.getStock() != null)
 			stockPrice = priceStockEngine.priceStock(job);
 		double wastePrice = ((job.getBinderyWaste().doubleValue() + job.getEstWaste().doubleValue()) * pricingRecord.getUnitPrice().doubleValue()) * job.getSheets();
@@ -41,11 +43,18 @@ public class FlatRatePricingMethod extends CopierPricingMethod {
 		if (job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 			stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();
 		}
-		if (job.getDoubleSided())
-			price = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies()) + (stockPrice * ((job.getTotalCopies()/2) / runout)) + wastePrice;
-		else
-			price = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies()) + (stockPrice * (job.getTotalCopies() / runout)) + wastePrice;
+		if (job.getDoubleSided()) {
+			stockTotalPrice = (stockPrice * ((job.getTotalCopies()/2) / runout));
+			laborTotalPrice = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies());
+		}
+		else {
+			stockTotalPrice = (stockPrice * (job.getTotalCopies() / runout));
+			laborTotalPrice = (pricingRecord.getUnitPrice().doubleValue() * job.getTotalCopies());
+		}
+		price = laborTotalPrice + stockTotalPrice + wastePrice;
 		pricingRecord.setTotalPrice(price);
+		pricingRecord.setStockTotalPrice(stockTotalPrice);
+		pricingRecord.setLaborTotalPrice(laborTotalPrice);
 		if (price == 0)
 			pricingRecord.setUnitPrice(0);
 		else
