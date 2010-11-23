@@ -319,7 +319,8 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 		tempPress.id = 0;
 		tempPress.name = tempPress.name + ' '+ resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Copy')
 		tempPress.prevId = null;
-		dataService.addUpdate(tempPress);   		   
+		dataService.addUpdate(tempPress);   	
+		this.Name.setFocus();	   
 	}
 	private function doRevert():void{
 		dataService.getPressDefinition(pressDefinition.id );  
