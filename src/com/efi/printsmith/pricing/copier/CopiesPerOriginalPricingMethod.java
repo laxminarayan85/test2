@@ -147,7 +147,6 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 				else
 					markup = matrixElement.getPrice1().doubleValue();
 				pricePerCopy = copierDefinition.getMachineCostPerCopy().doubleValue() * markup;
-				pricePerCopy *= copierDefinition.getCopyMarkup();
 				
 				wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 				if (job.getDoubleSided()) {
