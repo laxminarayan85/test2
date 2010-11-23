@@ -2424,7 +2424,7 @@
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
 					copiers.filterFunction = filterBWCopiers;
 					copiers.refresh();
-					costingCopiers.filterFunction = filterCostingCopiers;
+					costingCopiers.filterFunction = filterBWCostingCopiers;
 					costingCopiers.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultBWCopier != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, copiers);	
@@ -2440,7 +2440,7 @@
 					estimator_viewstack.selectedChild = copy_estimator_canvas;	
 					copiers.filterFunction = filterColorCopiers;
 					copiers.refresh();			
-					costingCopiers.filterFunction = filterCostingCopiers;
+					costingCopiers.filterFunction = filterColorCostingCopiers;
 					costingCopiers.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultColorCopier != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, copiers);	
@@ -2456,7 +2456,7 @@
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
 					copiers.filterFunction = filterLFCopiers;
 					copiers.refresh();	
-					costingCopiers.filterFunction = filterCostingCopiers;
+					costingCopiers.filterFunction = filterLFCostingCopiers;
 					costingCopiers.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultLargeFormat != null) {
 						this.job_pricing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, copiers);
@@ -2499,8 +2499,16 @@
 				return item.largeFormat == true;
 			}
 			
-			public function filterCostingCopiers(item:CopierDefinition):Boolean {
-				return item.costingCopy == true;
+			public function filterColorCostingCopiers(item:CopierDefinition):Boolean {
+				return item.color == true && item.costingCopy == true;
+			}
+			
+			public function filterBWCostingCopiers(item:CopierDefinition):Boolean {
+				return item.blackwhite == true && item.costingCopy == true;
+			}
+			
+			public function filterLFCostingCopiers(item:CopierDefinition):Boolean {
+				return item.largeFormat == true && item.costingCopy == true;
 			}
 			
 			public function filterCostingPresses(item:PressDefinition):Boolean {
