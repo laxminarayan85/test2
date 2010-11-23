@@ -225,6 +225,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 							laborTotalPrice = (pricePerCopy * job.getTotalCopies());			
 						}
 					} else if (pricingCopier.getMatrixType().equals("StepTable")) {
+						pricePerCopy *= pricingCopier.getCopyMarkup2();
 						wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 						if (job.getDoubleSided()) {
 							if (pricingCopier.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
