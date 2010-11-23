@@ -18,6 +18,7 @@ width="888" height="507"  creationComplete="init()"
 	</mx:RemoteObject>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.Job;
 	import com.efi.printsmith.data.JobBase;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
@@ -35,10 +36,15 @@ width="888" height="507"  creationComplete="init()"
     import mx.events.ValidationResultEvent;    
 	import com.efi.printsmith.data.Account; 
 	import com.efi.printsmith.data.Invoice;         
-	import com.efi.printsmith.events.AccountPickerSelectEvent;	     
+	import com.efi.printsmith.events.AccountPickerSelectEvent;	  
+	import com.efi.printsmith.events.PriceJobEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.IResponder;   
+	import com.efi.printsmith.pages.ShowCutOut;
 	
 	[Bindable]                                         
-	private var job:JobBase;
+	private var job:Job;
 	
 	[Bindable]
 	private var dimensionsArray:ArrayCollection=new ArrayCollection();
@@ -53,6 +59,12 @@ width="888" height="507"  creationComplete="init()"
 	private function doGet():void {
 		
 	}  
+	
+	private function doPaperCal():void{
+		var showCutOutWindow:ShowCutOut = ShowCutOut(PopUpManager.createPopUp(this, ShowCutOut, true));
+		showCutOutWindow.setStyle("borderAlpha", 0.9);
+	 	showCutOutWindow.setJob(job);
+	 }
 	
 	private function handleLoadDimensionResult(ev:ResultEvent):void
 	{
@@ -77,7 +89,7 @@ width="888" height="507"  creationComplete="init()"
 	
 	public function setJob(job2:JobBase):void
 	{
-		this.job = job2;
+		this.job = job2 as Job;
 		dimensionDataService.getAll("Dimension");
 		setProductionData();
 	}			
@@ -128,7 +140,7 @@ width="888" height="507"  creationComplete="init()"
 			this.copier_speed_label.visible = true;
 			this.press_label.visible = false;
 			this.press_speed_label.visible = false;
-			var runHours:String = (this.job.runTime / 60).toFixed(0);
+			var runHours:String = Math.floor((this.job.runTime / 60)).toFixed(0);
 			runHours = runHours.replace(".","");
 			var runMinutes:Number = this.job.runTime - (parseInt(runHours) * 60);
 			if (runMinutes < 10)
@@ -136,7 +148,7 @@ width="888" height="507"  creationComplete="init()"
 			else
 				this.run_time.text = runHours + ":" + runMinutes.toFixed(0);
 			var totalTime:Number = job.runTime + job.setupTime + job.washupTime;
-			var totalHours:String = (totalTime / 60).toFixed(0);
+			var totalHours:String = Math.floor((totalTime / 60)).toFixed(0);
 			totalHours = totalHours.replace(".","");
 			var totalMinutes:Number = totalTime - (parseInt(totalHours) * 60);
 			if (totalMinutes < 10)
@@ -180,7 +192,150 @@ width="888" height="507"  creationComplete="init()"
 		  		
 			}
 		}
-	}		
+	}	
+	
+	private function doNumOutChange():void {
+		if (this.number_out.text == "" || isNaN(parseInt(this.number_out.text)))
+			job.orRunOut = false;
+		else
+			job.orRunOut = true;
+	}
+	
+	private function doProductionPriceChange():void {
+		if (this.production.text == "" || isNaN(parseInt(this.production.text)))
+			job.pricingRecord.productionPriceOverride = false;
+		else
+			job.pricingRecord.productionPriceOverride = true;
+	}
+	
+	private function doCopierSpeedChange():void {
+		if (this.copier_speed.text == "" || isNaN(parseInt(this.copier_speed.text)))
+			job.copyMinutesOverride = false;
+		else
+			job.copyMinutesOverride = true;
+	}
+	
+	private function doParentCostChange():void {
+		if (this.parent_costs.text == "" || isNaN(parseInt(this.copier_speed.text)))
+			job.parentStockCostOverride = false;
+		else
+			job.parentStockCostOverride = true;
+	}
+	
+	private function doPerChange():void {
+		if (this.per.text == "" || isNaN(parseInt(this.per.text)))
+			job.costUnitsOverride = false;
+		else
+			job.costUnitsOverride = true;
+	}
+	
+	private function doMarkupChange():void {
+		if (this.markup.text == "" || isNaN(parseInt(this.markup.text)))
+			job.orStockMarkup = false;
+		else
+			job.orStockMarkup = true;
+	}
+	
+	private function fieldChanged(evt:FocusEvent):void
+	{	
+		var doUpdatePrice:Boolean = false;
+		
+		switch (evt.currentTarget) {
+			case this.number_out:
+				job.paperCal.runout = parseInt(this.number_out.text);
+				doUpdatePrice = true;
+				break;
+			case this.parent_costs:
+				job.parentStockCost = parseFloat(this.parent_costs.text);
+				doUpdatePrice = true;
+				break;
+			case this.per:
+				job.costUnits = parseInt(this.per.text);
+				doUpdatePrice = true;
+				break;
+			case this.copier_speed:
+				job.copyMinutes = parseFloat(this.copier_speed.text);
+				break;
+			case this.markup:
+				job.pricingRecord.stockMarkup = parseFloat(this.markup.text);
+				doUpdatePrice = true;
+				break;
+			case this.production:
+				job.pricingRecord.productionPrice = parseFloat(this.production.text);
+				doUpdatePrice = true;
+				break;
+			case this.setup_time:
+				var hours:Number = 0;
+				var minutes:Number = 0;
+				if (this.setup_time.text.indexOf(":") != -1) {
+					hours = parseInt(this.setup_time.text.substr(0,this.setup_time.text.indexOf(":")));
+					minutes = parseInt(this.setup_time.text.substr(this.setup_time.text.indexOf(":")+1));
+				} if (this.setup_time.text.indexOf(".") != -1) {
+					hours = parseInt(this.setup_time.text.substr(0,this.setup_time.text.indexOf(".")));
+					minutes = parseInt(this.setup_time.text.substr(this.setup_time.text.indexOf(".")+1));
+				} else {
+					hours = parseInt(this.setup_time.text);
+				}
+				job.setupTime = (hours * 60) + minutes;
+				this.setProductionData();
+				break;
+			case this.run_time:
+				var hours:Number = 0;
+				var minutes:Number = 0;
+				if (this.run_time.text.indexOf(":") != -1) {
+					hours = parseInt(this.run_time.text.substr(0,this.run_time.text.indexOf(":")));
+					minutes = parseInt(this.run_time.text.substr(this.run_time.text.indexOf(":")+1));
+				} if (this.run_time.text.indexOf(".") != -1) {
+					hours = parseInt(this.run_time.text.substr(0,this.run_time.text.indexOf(".")));
+					minutes = parseInt(this.run_time.text.substr(this.run_time.text.indexOf(".")+1));
+				} else {
+					hours = parseInt(this.run_time.text);
+				}
+				job.runTime = (hours * 60) + minutes;
+				this.setProductionData();
+				break;
+			case this.washup_time:
+				var hours:Number = 0;
+				var minutes:Number = 0;
+				if (this.washup_time.text.indexOf(":") != -1) {
+					hours = parseInt(this.washup_time.text.substr(0,this.washup_time.text.indexOf(":")));
+					minutes = parseInt(this.washup_time.text.substr(this.washup_time.text.indexOf(":")+1));
+				} if (this.washup_time.text.indexOf(".") != -1) {
+					hours = parseInt(this.washup_time.text.substr(0,this.washup_time.text.indexOf(".")));
+					minutes = parseInt(this.washup_time.text.substr(this.washup_time.text.indexOf(".")+1));
+				} else {
+					hours = parseInt(this.washup_time.text);
+				}
+				job.washupTime = (hours * 60) + minutes;
+				this.setProductionData();
+				break;
+		}
+		
+		if (doUpdatePrice)
+			this.updatePrice();
+		
+	}
+	
+	private function updatePrice():void
+	{
+		var priceJobEvent:PriceJobEvent = new PriceJobEvent(this.job, new mx.rpc.Responder(handlePriceJobComplete, handlePriceJobFault));
+		priceJobEvent.dispatch();
+	}
+	
+	private function handlePriceJobComplete(ev:ResultEvent):void
+	{
+		this.job = ev.result as Job;
+		this.setProductionData();
+	}
+	
+	private function handlePriceJobFault(ev:FaultEvent):void
+	{
+		if (ev != null && ev.fault != null && ev.fault.faultString != null) {				
+			Alert.show(ev.fault.faultString, "Error in Pricing", 0, null);
+		} else {
+			Alert.show("Unknown error when pricing job", "Error in Pricing", 0, null);
+		}
+	}
 	
 	private function doOK():void
 	{
@@ -215,10 +370,10 @@ width="888" height="507"  creationComplete="init()"
 	<mx:Label x="633" y="86" text="Stock Cut:" width="100" textAlign="right"/>
 	<mx:Label x="633" y="107" text="At Press:" width="100" textAlign="right"/>
 	<mx:Label x="380" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.per')}" width="100" textAlign="right"/>
-	<mx:TextInput x="488" y="10" text="" width="60" textAlign="right" height="20" id="number_out"/>
-	<mx:TextInput x="488" y="52" width="61" textAlign="right" height="20" id="per"/>
+	<mx:TextInput x="488" y="10" text="" width="60" textAlign="right" height="20" id="number_out" change="doNumOutChange()" focusOut="fieldChanged(event)"/>
+	<mx:TextInput x="488" y="52" width="61" textAlign="right" height="20" id="per" change="doPerChange()" focusOut="fieldChanged(event)"/>
 	<mx:Label x="380" y="75" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Markup')}" width="100" textAlign="right"/>
-	<mx:TextInput x="488" y="73" width="61" textAlign="right" height="20" id="markup"/>
+	<mx:TextInput x="488" y="73" width="61" textAlign="right" height="20" id="markup" change="doMarkupChange()" focusOut="fieldChanged(event)"/>
 	<mx:Text x="138" y="69" width="84" textAlign="right" id="production_run"/>
 	<mx:Label x="10" y="69" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ProductionRun')}" width="120" textAlign="right"/>
 	<mx:Text x="138" y="90" width="84" textAlign="right" id="requires"/>
@@ -231,10 +386,10 @@ width="888" height="507"  creationComplete="init()"
 	<mx:Label x="10" y="111" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.SheetsPurchased')}" width="120" textAlign="right"/>
 	<mx:Label x="10" y="29" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.PressRunSize')}" width="120" textAlign="right"/>
 	<mx:Label x="10" y="50" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ParentCosts')}" width="120" textAlign="right"/>
-	<mx:TextInput x="138" y="48" height="20" width="84" textAlign="right" id="parent_costs"/>
+	<mx:TextInput x="138" y="48" height="20" width="84" textAlign="right" id="parent_costs" change="doParentCostChange()" focusOut="fieldChanged(event)"/>
 	<mx:Label x="10" y="153" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.CopierSpeed')}" width="120" textAlign="right" id="copier_speed_label"/>
 	<mx:Label x="10" y="153" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.PressSpeed')}" width="120" textAlign="right" id="press_speed_label"/>
-	<mx:TextInput x="138" y="153" height="20" fontSize="9" width="84" textAlign="right" id="copier_speed"/>
+	<mx:TextInput x="138" y="153" height="20" fontSize="9" width="84" textAlign="right" id="copier_speed" change="doCopierSpeedChange()" focusOut="fieldChanged(event)"/>
 	<mx:Panel x="256" y="157" width="293" height="199" layout="absolute" borderStyle="solid" dropShadowEnabled="false" headerHeight="0" borderThickness="2" verticalScrollPolicy="off" horizontalScrollPolicy="off">
 		<mx:Text x="59" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Cost')}" fontWeight="bold" textDecoration="underline" width="70" textAlign="right" height="17"/>
 		<mx:Text x="0" y="22" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Stock')}" fontWeight="bold" width="51" textAlign="right" height="29"/>
@@ -256,22 +411,22 @@ width="888" height="507"  creationComplete="init()"
 		<mx:Text x="202" y="127" height="20" fontSize="9" width="70" textAlign="right" id="target_adjust" text="0.00"/>
 		<mx:Text x="93" y="159" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.JobPrice')}" fontWeight="bold" height="18" width="101" textAlign="right"/>
 		<mx:Text x="202" y="159" height="20" fontSize="9" width="70" textAlign="right" id="job_price" text="0.00"/>
-		<mx:TextInput x="202" y="106" height="20" fontSize="9" width="70" textAlign="right" id="production" text="0.00"/>
+		<mx:TextInput x="202" y="106" height="20" fontSize="9" width="70" textAlign="right" id="production" text="0.00" change="doProductionPriceChange()" focusOut="fieldChanged(event)"/>
 		<mx:HRule x="197" y="154" width="82" height="1" strokeWidth="1"/>
 		<mx:HRule x="197" y="152" width="82" height="1" strokeWidth="1"/>
 	</mx:Panel>
 	<mx:Button x="10" y="407" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" id="cancel_btn" width="90" click="this.doCancel();"/>
 	<mx:Button x="10" y="367" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="90" id="ok_btn" click="this.doOK();"/>
-	<mx:Button x="132" y="407" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ShowCutout')}" id="show_cutout_btn" width="90"/>
+	<mx:Button x="132" y="407" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ShowCutout')}" id="show_cutout_btn" width="90" click="doPaperCal()"/>
 	<mx:Panel width="212" height="125" layout="absolute" borderStyle="solid" dropShadowEnabled="false" headerHeight="0" borderThickness="2" x="10" y="177">
 		<mx:Label x="-4" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.SetupTime')}" width="96" textAlign="right"/>
-		<mx:TextInput x="100" y="10" height="20" width="84" textAlign="right" id="setup_time" text="0:00"/>
+		<mx:TextInput x="100" y="10" height="20" width="84" textAlign="right" id="setup_time" text="0:00" focusOut="fieldChanged(event)"/>
 		<mx:Label x="-4" y="33" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.RunTime')}" width="96" textAlign="right"/>
-		<mx:TextInput x="100" y="31" height="20" width="84" textAlign="right" id="run_time" text="0:00"/>
+		<mx:TextInput x="100" y="31" height="20" width="84" textAlign="right" id="run_time" text="0:00" focusOut="fieldChanged(event)"/>
 		<mx:Label x="-4" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.WashupTime')}" width="96" textAlign="right"/>
-		<mx:TextInput x="100" y="52" height="20" width="84" textAlign="right" id="washup_time" text="0:00"/>
+		<mx:TextInput x="100" y="52" height="20" width="84" textAlign="right" id="washup_time" text="0:00" focusOut="fieldChanged(event)"/>
 		<mx:Label x="-5" y="87" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.TotalTime')}" width="96" textAlign="right"/>
-		<mx:TextInput x="100" y="85" height="20" width="84" textAlign="right" id="total_time" text="0:00"/>
+		<mx:TextInput x="100" y="85" height="20" width="84" textAlign="right" id="total_time" text="0:00" focusOut="fieldChanged(event)" editable="false" enabled="false"/>
 		<mx:HRule x="95" y="79" width="93" height="1" strokeWidth="1"/>
 		<mx:HRule x="95" y="77" width="93" height="1" strokeWidth="1"/>
 	</mx:Panel>

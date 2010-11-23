@@ -233,7 +233,15 @@ public class PriceStockEngine {
 				if (copierDefinition.getUseCopierStockMarkup()) {
 					markup = copierDefinition.getStockMarkup();
 				}
-				double temp = qty / stockDefinition.getCostunits().doubleValue();
+				
+				if (job.getCostUnitsOverride() == false)
+					job.setCostUnits(stockDefinition.getCostunits());
+				if (job.getParentStockCostOverride())
+					stockCost = job.getParentStockCost().doubleValue();
+				if (job.getOrStockMarkup())
+					markup = job.getPricingRecord().getStockMarkup().doubleValue();
+				
+				double temp = qty / job.getCostUnits().doubleValue();
 				retVal = (stockCost * temp * markup) / qty;
 			}
 			//retVal = stockCost/stockDefinition.getCostunits() * markup;

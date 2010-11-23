@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				width="518"
+				height="644"
+				creationComplete="init();"
+				showCloseButton="true"
+				close="PopUpManager.removePopUp(this);" fontSize="9">
+				
+	<mx:RemoteObject id="dataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:RemoteObject id="paperCalculatorService"
+					 destination="paperCalculatorService">
+		<mx:method name="GeneratePaperCalculatorImage"
+					fault="handleFault(event)"
+					result="handleGenerateImage(event)"/>		
+	</mx:RemoteObject>
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.controls.Image;
+			import mx.utils.ObjectUtil;
+			import mx.managers.PopUpManager;
+			import com.efi.mdi.view.window.MDIWindow;
+			import mx.containers.TitleWindow;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.messaging.messages.AsyncMessage;
+			import mx.messaging.messages.IMessage;
+			import mx.printing.FlexPrintJob;
+			import mx.printing.PrintAdvancedDataGrid;
+			import mx.printing.PrintDataGrid;
+			import mx.core.Application;
+			import mx.validators.Validator;
+			import mx.events.ValidationResultEvent;
+			import com.efi.printsmith.data.JobBase;
+			import com.efi.printsmith.data.Dimension;
+			import com.efi.printsmith.Constants;
+			import com.efi.printsmith.events.JobEditCompleteEvent;
+			import com.efi.printsmith.data.Job;
+			import com.efi.printsmith.view.PaperCalculatorTemplate;
+            import mx.events.DragEvent;
+            import mx.managers.DragManager;
+            import mx.core.DragSource;
+            import mx.collections.IList;
+            import mx.collections.ArrayCollection;
+            			
+			[Bindable]
+			private var job:Job;
+			[Bindable]
+			private var originalJob:Job;
+			
+			[Bindable]
+			private var parentBoolean:Boolean;
+			[Bindable]
+			private var runBoolean:Boolean;
+			[Bindable]
+			private var finishBoolean:Boolean;
+			[Bindable]
+			private var showWarning:Boolean = true;
+			
+			[Bindable]
+			private var dimensionTarget:Object=new Object();
+			
+			[Bindable]
+			private var dimensions:ArrayCollection;
+			[Bindable]
+			private var gripLocationRadioValue:String = new String;
+			[Bindable]
+			private var folioLocationRadioValue:String = new String;
+			[Bindable]
+			private var RunToFinishGrainArray:ArrayCollection=new ArrayCollection();
+
+			private function init():void
+			{
+				
+			}
+
+			private function handleGenerateImage(evt:ResultEvent):void {
+				var imageByteArray:ByteArray = evt.result as ByteArray;
+				
+				var loader:Loader = new Loader();
+				loader.loadBytes(imageByteArray);				 
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loaderCompleteHandler);
+			}
+			
+			private function loaderCompleteHandler(evt:Event):void {
+				var loader:LoaderInfo = evt.target as LoaderInfo;
+				var bmp:Bitmap = Bitmap(loader.content);
+				
+				var myImage:Image = new Image();
+				myImage.source = bmp;
+				this.cutDiagram.removeAllChildren();
+				this.cutDiagram.addChild(myImage);
+			}
+
+			private function handleLoadResult(ev:ResultEvent):void
+			{
+
+			}
+
+			private function handleDeleteResult(ev:ResultEvent):void
+			{
+			}
+
+			private function handleFault(ev:FaultEvent):void
+			{
+				var message:String;
+
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null);
+			}
+
+
+			public function setJob(job2:Job):void
+			{
+				job=job2;
+				paperCalculatorService.GeneratePaperCalculatorImage(job, job.paperCal.whichStartSize, this.cutDiagram.width-15, this.cutDiagram.height-15);
+			}
+
+			private function findItem(name:String, array:ArrayCollection):int
+			{
+				for each (var element:Object in array)
+				{
+					if (name == element.name)
+					{
+						return array.getItemIndex(element);
+					}
+				}
+				return -1;
+			}
+
+            public function onClose():void {
+
+			}
+			
+			public function onSave():void {
+				
+			}
+			
+			public function onDontSave():void {
+				
+			}
+			
+			public function onCancel():void {
+
+			}
+
+]]>
+
+	</mx:Script>
+	<mx:Canvas width="498"
+			   height="489"
+			   id="papercalculator_canvas"
+			   hideEffect="effect"
+			   showEffect="effect"
+			   y="0">
+
+		<mx:Canvas x="10"
+				   y="20"
+				   width="479"
+				   height="459"
+				   borderStyle="inset"
+				   id="cutDiagram">
+		</mx:Canvas>
+		<mx:RadioButtonGroup id="calc_order_radio_group" selectedValue="{job.paperCal.whichStartSize}"/>
+
+	</mx:Canvas>
+</mx:TitleWindow>
