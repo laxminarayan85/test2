@@ -39,7 +39,7 @@ public class MatrixUtilities {
 		for (i = 0; i < elements.size(); i++) {
 			MatrixElement element = elements.get(i);
 			if (element.getLastLine() == false) {
-				if (element.getQty() <= qty) {
+				if (element.getQty() < qty) {
 					runningTotal += (element.getQty()-prevQty) * element.getPrice1().doubleValue();
 					prevQty = element.getQty();
 				} else {
@@ -62,7 +62,7 @@ public class MatrixUtilities {
 		for (i = 0; i < elements.size(); i++) {
 			MatrixElement element = elements.get(i);
 			if (element.getLastLine() == false) {
-				if (element.getQty() <= qty) {
+				if (element.getQty() < qty) {
 					runningTotal += (element.getQty()-prevQty) * element.getPrice1().doubleValue();
 					prevQty = element.getQty();
 				} else {
