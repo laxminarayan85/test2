@@ -156,8 +156,14 @@ width="888" height="507"  creationComplete="init()"
 			else
 				this.total_time.text = totalHours + ":" + totalMinutes.toFixed(0);
 			this.production_run.text = job.numCopies.toString();
-			this.requires.text = (job.totalCopies / job.paperCal.runout).toString();
-			this.sheets_purchased.text = (job.totalCopies / job.paperCal.runout).toString();
+			if (job.doubleSided) {
+				this.requires.text = (job.totalCopies / 2 / job.paperCal.runout).toString();
+				this.sheets_purchased.text = (job.totalCopies / 2 / job.paperCal.runout).toString();
+			}
+			else {
+				this.requires.text = (job.totalCopies / job.paperCal.runout).toString();
+				this.sheets_purchased.text = (job.totalCopies / job.paperCal.runout).toString();
+			}
 		}
 	}
 	
