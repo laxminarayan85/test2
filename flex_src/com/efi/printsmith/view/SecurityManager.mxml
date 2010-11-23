@@ -8,7 +8,7 @@
 	implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
 	xmlns:ns2="flexlib.controls.*"  xmlns:val="com.efi.printsmith.validators.*"
 	 >
-	<val:DuplicateFieldValidator id="dupval" required="true" source="{txtNewItem}" property="text" propName="name" propId="id" existingItems="{accessGroupLists}" />
+	<val:DuplicateFieldValidator id="dupval" invalid="isNotValid(event);" valid="isValid(event);" required="true" source="{txtNewItem}" property="text" propName="name" propId="id" existingItems="{accessGroupLists}" />
 	<mx:Script source="../common/scripts/CommonUtils.as" />
 	<mx:states>
 		<mx:State name="newItem">
@@ -27,7 +27,7 @@
 			<mx:RemoveChild target="{button4}"/>
 			<mx:RemoveChild target="{label4}"/>
 			<mx:AddChild position="lastChild">
-				<mx:Button x="502" y="24" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOKNewGroup();"/>
+				<mx:Button x="502" y="24" id="btnOk" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOKNewGroup();"/>
 			</mx:AddChild>
 			<mx:AddChild position="lastChild">
 				<mx:Button x="626" y="24" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancelNewGroup();"/>
@@ -60,6 +60,7 @@
 
 <mx:Script>  	
 <![CDATA[
+	import mx.events.ValidationResultEvent;
 	import mx.controls.Alert;
 	import mx.events.ListEvent;
 	import mx.events.TreeEvent;
@@ -166,7 +167,13 @@
 		+ "Detail: " + ev.fault.faultDetail + " \n "                              
 		+ "Message: " + ev.fault.faultString;                                    
 	}
-
+	
+	private function isNotValid(evt:Event):void	{
+		btnOk.enabled = false;
+	}
+	private function isValid(evt:Event):void	{
+		btnOk.enabled = true;
+	}
 	private function handleLoadResult(ev:ResultEvent):void {
 		accessGroupLists = ev.result as ArrayCollection;
 		if (access == null){
@@ -425,6 +432,7 @@
 	
 	public function doOKNewGroup():void {
 //		doAccessGroupEdit();
+		
 		if (this.rename == false)	{
 			this.access = new AccessGroup();
 		}
