@@ -44,6 +44,8 @@
 	<mx:method name="getAccount" fault="handleFault(event)" result="handleGetResult(event)"/>
 	<mx:method name="getByIdMaster" fault="handleFault(event)" result="handleGetMasterResult(event)"/>
 	<mx:method name="getByAccountId" fault="handleFault(event)" result="handleGetaccountIDResult(event)"/>
+	<mx:method name="getAllQuery" fault="handleFault(event)" result="handleInvoicesResult(event)"/>
+	
 </mx:RemoteObject>
 <mx:RemoteObject id="contactdataService" destination="dataService">
 		<mx:method name="getContactsByAccountId" fault="handleFault(event)"  result="handleLoadContacts(event)"/>
@@ -274,6 +276,15 @@
 	private function handleUIPanelFault(ev:FaultEvent):void {  
 	}
 	
+	private function handleInvoicesResult(event:ResultEvent):void	{
+		var ac:ArrayCollection = event.result as ArrayCollection;
+		if (ac.length > 0)	{
+			cust_prospect_radio_group.enabled = false;
+		}
+		else	{
+			cust_prospect_radio_group.enabled = true; 
+		}
+	}
 	private function doDelete():void {
 		var event:DeleteAccountEvent = new DeleteAccountEvent(account, new mx.rpc.Responder(handleUIEvent, handleFault));
 		event.dispatch();
@@ -354,6 +365,7 @@
 		this.setAccount(ev.result as Account);
 		this.formIsValid = true;
 		contactdataService.getContactsByAccountId("Contact", account.id);
+
 		setMarketing();
 		mapFromAccountData();
 		setOriginalAccount();
@@ -580,6 +592,8 @@
 		mapFromAccountData();
 		ship_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress'));
 		bill_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.StatementAddress'));
+		
+		dataService.getAllQuery("Invoice", " where account.id=" + account.id);
 		
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 		if ( account.prospect)
