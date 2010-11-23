@@ -39,8 +39,8 @@
 		<mx:SetProperty target="{colSide}" name="visible" value="false"/>
 		<mx:SetProperty target="{colColor}" name="visible" value="false"/>
 		<mx:SetProperty target="{chkProductionDiscount}" name="x" value="344"/>
-		<mx:SetProperty target="{chkProductionDiscount}" name="y" value="155"/>
-		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="y" value="184"/>
+		<mx:SetProperty target="{chkProductionDiscount}" name="y" value="182"/>
+		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="y" value="211"/>
 		<mx:SetProperty target="{add_pricelistelement_button}" name="x" value="203.5"/>
 		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="171.5"/>
 		<mx:SetProperty target="{canvas1}" name="height" value="403"/>
@@ -53,6 +53,10 @@
 		</mx:AddChild>
 		<mx:SetProperty target="{radiobutton2}" name="selected" value="{priceList.isDollar}"/>
 		<mx:SetProperty target="{radiobutton1}" name="selected" value="{priceList.isPercentage}"/>
+		<mx:SetProperty target="{chkUseAsRateList}" name="y" value="153"/>
+		<mx:AddChild relativeTo="{chkProductionDiscount}" position="before">
+			<mx:CheckBox x="309" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Lastlineisaddlqty')}" selected="{priceList.lastItemIsPriceAdditionalQty}" id="chkLastLineAddlnQty" change="refreshCheckBoxes()"/>
+		</mx:AddChild>
 	</mx:State>
 	<mx:State name="Speed Table" basedOn="Price List">
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="enabled" value="false"/>
@@ -110,6 +114,7 @@
 		<mx:SetProperty target="{canvas1}" name="height" value="391"/>
 		<mx:RemoveChild target="{label0}"/>
 		<mx:RemoveChild target="{over_quantity}"/>
+		<mx:RemoveChild target="{chkLastLineAddlnQty}"/>
 		
 	</mx:State>
 	<mx:State name="Waste Chart" basedOn="Price List">
@@ -190,6 +195,7 @@
 		<mx:SetProperty target="{title_edit}" name="width" value="207"/>
 		<mx:RemoveChild target="{label0}"/>
 		<mx:RemoveChild target="{over_quantity}"/>
+		<mx:RemoveChild target="{chkLastLineAddlnQty}"/>
 
 	</mx:State>
 	<mx:State name="Paper Price" basedOn="Price List">
@@ -222,6 +228,7 @@
 		<mx:RemoveChild target="{label0}"/>
 		<mx:RemoveChild target="{over_quantity}"/>
 		<mx:SetStyle target="{dataGrid}" name="bottom" value="32"/>
+		<mx:RemoveChild target="{chkLastLineAddlnQty}"/>
 	</mx:State>
 	<mx:State name="CopierMatrix" basedOn="Price List">
 		<mx:RemoveChild target="{label1}"/>
@@ -419,6 +426,19 @@
 		dataService.getPriceList(priceList.id);
 		updateTitle(priceList.name);
 	}   
+	
+	private function refreshCheckBoxes():void {
+		if (this.chkUseAsRateList != null && this.chkLastLineAddlnQty != null) {
+			if (this.chkLastLineAddlnQty.selected)
+				this.chkUseAsRateList.enabled = false;
+			else
+				this.chkUseAsRateList.enabled = true;
+			if (this.chkUseAsRateList.selected)
+				this.chkLastLineAddlnQty.enabled = false;
+			else
+				this.chkLastLineAddlnQty.enabled = true;
+		}
+	}
 
 	private function validate(validator:Validator):Boolean
 	{                
@@ -597,7 +617,7 @@
 				}
 			}
 		}
-		
+		refreshCheckBoxes();
 		if (copyFLag)
 			priceList.name = priceList.name+' '+ resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Copy')
 	}
@@ -755,7 +775,7 @@
 		<mx:CheckBox x="309" y="176" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignoreglobalpricecha')}" selected="{priceList.ignorePriceAdjustments}" id="chkIgnoreGlobalPriceChange"/>
 		<mx:CheckBox x="309" y="96" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Interpolate')}" selected="{priceList.interpolate}" id="chkInterpolate"/>
 		<mx:CheckBox x="332" y="147" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.ProductionDiscount')}" selected="{priceList.isDiscount}" id="chkProductionDiscount"/>
-		<mx:CheckBox x="309" y="126" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.UseasRateList')}" selected="{priceList.isRate}" id="chkUseAsRateList"/>
+		<mx:CheckBox x="309" y="126" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.UseasRateList')}" selected="{priceList.isRate}" id="chkUseAsRateList" change="refreshCheckBoxes()"/>
 
 		<mx:LinkButton x="94"
 					   id="remove_pricelistelement_button"
