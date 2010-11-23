@@ -47,9 +47,9 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 //				if (j > 0) j--;
 				long originals = 0;
 				if (job.getDoubleSided() && pricingCopier.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
-					originals = job.getSheets() * 2;
+					originals = job.getSignatures() * 2;
 				} else {
-					originals = job.getSheets();
+					originals = job.getSignatures();
 				}
 				if (pricingMatrix.getHeader1() >= originals) j = 0;
 				else if (pricingMatrix.getHeader2() >= originals) j = 1;
