@@ -21,6 +21,7 @@ import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.Dimension;
 import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.data.Vendor;
+import com.efi.printsmith.data.enums.RunMethod;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.Constants;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
@@ -55,7 +56,9 @@ public class JobMapper extends ImportMapper {
 		Boolean Copy = false;
 		Long qtyPress = null;
 		Long totalQty= null;
+		Boolean newWorkAndTurn = false;
 		boolean addSalesCategory = false;
+		
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -391,7 +394,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("isWeb".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("workNturn".equals(currentFieldToken)) {
-				/* TODO */
+				tempPaper.setWorkandTurn(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("dutch".equals(currentFieldToken)) {
 				dutch = Utilities.tokenToBooleanValue(currentImportToken);
 				
@@ -848,6 +851,7 @@ public class JobMapper extends ImportMapper {
 				/* TODO */
 			} else if ("work & turn new".equals(currentFieldToken)) {
 				tempPaper.setWorkandTurn(Utilities.tokenToBooleanValue(currentImportToken));
+				newWorkAndTurn = true;
 			} else if ("override washup time".equals(currentFieldToken)) {
 				job.setOrWashupTime(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("production release".equals(currentFieldToken)) {
@@ -1216,6 +1220,19 @@ public class JobMapper extends ImportMapper {
 		} else {
 			job.setSingleSided(true);
 			job.setDoubleSided(false);
+		}
+		if (newWorkAndTurn && tempPaper.getRunAndTumble() != null && !tempPaper.getRunAndTumble()) {
+			job.setRunMethod("WorkAndTurn");
+		} else if (newWorkAndTurn && tempPaper.getRunAndTumble() != null && tempPaper.getRunAndTumble()) {
+			job.setRunMethod("WorkAndTumble");
+		} else if (tempPaper.getWorkandTurn() != null && tempPaper.getWorkandTurn() && tempPaper.getRunAndTumble() != null && !tempPaper.getRunAndTumble()) {
+			job.setRunMethod("WorkAndTurn");
+		} else if (tempPaper.getWorkandTurn() != null && tempPaper.getWorkandTurn() && tempPaper.getRunAndTumble() != null && tempPaper.getRunAndTumble()) {
+			job.setRunMethod("WorkAndTumble");		
+		} else if (tempPaper.getWorkandTurn() != null && !tempPaper.getWorkandTurn() && tempPaper.getRunAndTumble() != null && tempPaper.getRunAndTumble()) {
+			job.setRunMethod("WorkAndTumble");		
+		} else {
+			job.setRunMethod("Sheetwise");
 		}
 		job.setReleasedToProduction(false);
 		job = (Job)dataService.addUpdate(job);
