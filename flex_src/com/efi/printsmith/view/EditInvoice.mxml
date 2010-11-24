@@ -106,6 +106,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.ModelBase;
 			import com.efi.printsmith.security.PSSecurityUtils;
 			import com.efi.printsmith.security.PSSecurity;
 			import com.efi.printsmith.security.PSSecurityCommands;
@@ -853,13 +854,13 @@
 				invoice.account=accountItem;
 				invoice.shipToAddress=accountItem.shipToAddress;
 				invoice.billToAddress=accountItem.shipToAddress;
-				//accountDataService.getContactsByAccountId("Contact", invoice.account.id);
-				this.accountcontacts.removeAll();
-				if (accountItem.contact != null)
-					this.accountcontacts.addItem(accountItem.contact);
-				if (accountItem.billToContact != null && accountItem.billToContact != accountItem.contact)
-					this.accountcontacts.addItem(accountItem.billToContact);
-				contact_list.selectedItem=invoice.account.contact as Contact;
+				accountDataService.getContactsByAccountId("Contact", invoice.account.id);
+//				this.accountcontacts.removeAll();
+//				if (accountItem.contact != null)
+//					this.accountcontacts.addItem(accountItem.contact);
+//				if (accountItem.billToContact != null && accountItem.billToContact != accountItem.contact)
+//					this.accountcontacts.addItem(accountItem.billToContact);
+//				contact_list.selectedItem=invoice.account.contact as Contact;
 				bill_to_address_editor.setAddress(invoice.billToAddress);
 				this.delivery_intent_address_editor.setAddress(invoice.shipToAddress);
 				UpdateCustomerStatus();
@@ -970,7 +971,16 @@
 			private function handleLoadContacts(ev:ResultEvent):void
 			{
 				accountcontacts=ev.result as ArrayCollection;
-				contact_list.selectedItem=invoice.account.contact as Contact;
+				contact_list.selectedIndex = findItemIndex(accountcontacts,invoice.account.contact); 
+			}
+			private function findItemIndex(array:ArrayCollection, item:ModelBase):int	{
+				for (var i:int=0;i<array.length;i++)	{
+					var obj:ModelBase = array.getItemAt(i) as ModelBase;
+					if (obj.id == item.id)	{
+						return i;	
+					}
+				}
+				return -1;
 			}
 			private function handleGetInvoiceResult(ev:ResultEvent):void{
 				invoice = ev.result as InvoiceBase;
