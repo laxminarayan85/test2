@@ -1,11 +1,14 @@
 package com.efi.printsmith.pricing.copier;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.comparator.MatrixElementComparator;
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.Matrix;
+import com.efi.printsmith.data.MatrixElement;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.enums.Price2Side;
 import com.efi.printsmith.data.enums.StockPriceMethod;
@@ -225,9 +228,104 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 							laborTotalPrice = (pricePerCopy * job.getTotalCopies());			
 						}
 					} else if (pricingCopier.getMatrixType().equals("StepTable")) {
+						List<MatrixElement> elements = pricingMatrix.getElements();
+						Collections.sort(elements, new MatrixElementComparator());
+						double runningTotal = 0.0;
+						long prevQty = 0;
+						for (i = 0; i < elements.size(); i++) {
+							MatrixElement element = elements.get(i);
+							if (element.getLastLine() == false) {
+								switch (j) {
+								case (0):
+									unitPrice = element.getPrice1().doubleValue();
+									break;
+								case (1):
+									unitPrice = element.getPrice2().doubleValue();
+									break;
+								case (2):
+									unitPrice = element.getPrice3().doubleValue();
+									break;
+								case (3):
+									unitPrice = element.getPrice4().doubleValue();
+									break;
+								case (4):
+									unitPrice = element.getPrice5().doubleValue();
+									break;
+								case (5):
+									unitPrice = element.getPrice6().doubleValue();
+									break;
+								case (6):
+									unitPrice = element.getPrice7().doubleValue();
+									break;
+								case (7):
+									unitPrice = element.getPrice8().doubleValue();
+									break;
+								case (8):
+									unitPrice = element.getPrice9().doubleValue();
+									break;
+								case (9):
+									unitPrice = element.getPrice10().doubleValue();
+									break;
+								}
+								if (element.getQty() < job.getNumCopies()) {
+									runningTotal += (element.getQty()-prevQty) * unitPrice;
+									prevQty = element.getQty();
+								} else {
+									runningTotal += (job.getNumCopies()-prevQty) * unitPrice;
+									break;
+								}
+							}
+						}
+						pricePerCopy = (runningTotal/job.getNumCopies());
 						pricePerCopy *= pricingCopier.getCopyMarkup2();
 						wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 						if (job.getDoubleSided()) {
+							for (i = 0; i < elements.size(); i++) {
+								MatrixElement element = elements.get(i);
+								if (element.getLastLine() == false) {
+									switch (j) {
+									case (0):
+										unitPrice = element.getPrice11().doubleValue();
+										break;
+									case (1):
+										unitPrice = element.getPrice12().doubleValue();
+										break;
+									case (2):
+										unitPrice = element.getPrice13().doubleValue();
+										break;
+									case (3):
+										unitPrice = element.getPrice14().doubleValue();
+										break;
+									case (4):
+										unitPrice = element.getPrice15().doubleValue();
+										break;
+									case (5):
+										unitPrice = element.getPrice16().doubleValue();
+										break;
+									case (6):
+										unitPrice = element.getPrice17().doubleValue();
+										break;
+									case (7):
+										unitPrice = element.getPrice18().doubleValue();
+										break;
+									case (8):
+										unitPrice = element.getPrice19().doubleValue();
+										break;
+									case (9):
+										unitPrice = element.getPrice20().doubleValue();
+										break;
+									}
+									if (element.getQty() < job.getNumCopies()) {
+										runningTotal += (element.getQty()-prevQty) * unitPrice;
+										prevQty = element.getQty();
+									} else {
+										runningTotal += (job.getNumCopies()-prevQty) * unitPrice;
+										break;
+									}
+								}
+							}
+							pricePerCopy = (runningTotal/job.getNumCopies());
+							pricePerCopy *= pricingCopier.getCopyMarkup2();
 							if (pricingCopier.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
 								stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
 								laborTotalPrice = (pricePerCopy * (job.getTotalCopies() / 2));
