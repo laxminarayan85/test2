@@ -13,6 +13,16 @@
 			
 			private var _optional:Boolean;
 			
+			private var _alwaysAddNewItem:Boolean = false; // cannot modify old items
+			private var _neverAddNewItem:Boolean = false; // cannot add new items
+			
+			public function set neverAddNewItem(val:Boolean):void	{
+				_neverAddNewItem = val;
+			}
+			
+			public function set alwaysAddNewItem(val:Boolean):void	{
+				_alwaysAddNewItem = val;
+			}
 			public function set optional(val:Boolean):void	{
 				_optional = val;
 			}
@@ -46,13 +56,19 @@
 				super.selectedIndex = value;
 				
 				if (editable)	{
-					if (value >= 0)
-						_lastSelectedObj = selectedItem;
+					if (value >= 0)	{
+						if (_alwaysAddNewItem)	{
+							_lastSelectedObj = "";
+						}
+						else	{
+							_lastSelectedObj = selectedItem;
+						}
+					}
 					else	{
 						if (_lastSelectedObj == "")	{
-	//						_newRecord = true;
 							(dataProvider as ArrayCollection).addItem("");
 						}
+						
 					}
 				}	
 //				else	{

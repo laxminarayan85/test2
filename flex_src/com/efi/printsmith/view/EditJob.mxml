@@ -4,6 +4,7 @@
 				xmlns:vo="com.efi.printsmith.vo.*"
 				xmlns:fc="http://www.adobe.com/2006/fc"
 				xmlns:comp="com.efi.printsmith.components.*"
+				xmlns:common="com.efi.printsmith.common.components.*"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Jobs')}"
 				creationComplete="init()"
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Jobs')}"
@@ -561,6 +562,10 @@
 		<mx:method name="getAll"
 				   fault="handleFault(event)"
 				   result="handleLoadProductResult(event)"/>
+		<mx:method name="addUpdate"
+				   fault="handleFault(event)"
+				   result="handleSaveProductResult(event)"/>
+				   
 	</mx:RemoteObject>
 	<mx:RemoteObject id="chargeDataService"
 					 destination="dataService">
@@ -632,6 +637,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.messaging.Producer;
 			import mx.events.CollectionEvent;
 			import com.efi.printsmith.pages.MultiQtyView;
 			import com.efi.printsmith.data.StockGroup;
@@ -1096,7 +1102,9 @@
 				job.pricingPress=job_pricing_press.selectedItem as PressDefinition;
 				job.pricingCopier=job_pricing_copier.selectedItem as CopierDefinition;
 				job.costingCopier=job_costing_copier.selectedItem as CopierDefinition;
-				job.productCode=product.selectedItem as ProductCode;
+				
+				if (job.productCode == null)
+					job.productCode=product.selectedItem as ProductCode;
 				job.pricingMethod = job_type.selectedItem as PreferencesPricingMethod;
 				
 				if (job_description.text != "") {
@@ -2794,6 +2802,31 @@
 				}
 			}
 			
+			private function handleSaveProductResult(ev:ResultEvent):void	{
+				productDataService.getAll("ProductCode");
+			}
+			private function doProduct():void	{
+				var tmpProduct:ProductCode;
+				var result:Boolean;
+				
+				if (product.text != null 
+						&& product.text != "" 
+						&& product.selectedIndex == -1
+						&& product.doesDuplicateExist() == null) {
+							
+					var item:Object = product.lastSelectedObj; //findItem(cbostockClass.text, stockClass);
+					if ((item == null) || (item == "")) {
+						tmpProduct = new ProductCode();
+					}
+					else {
+						tmpProduct = item as ProductCode;
+					}
+					tmpProduct.name = product.text;
+					productDataService.addUpdate(tmpProduct);					
+					job.productCode= tmpProduct; //product.selectedItem as ProductCode;
+				}
+				
+			}
 			private function updateJob(event:JobEditCompleteEvent):void
 			{
 				var updatedJobList:ArrayCollection = new ArrayCollection();
@@ -3006,12 +3039,16 @@
 						 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
 						 id="checked_finished"
 						 selected="{job.finished}" width="87"/>
-			<fc:AutoComplete x="525.5"
+			<common:EditableComboBox x="525.5"
 							 y="68"
 							 width="75.5"
 							 id="product"
 							 dataProvider="{productCodes}"
 							 labelField="name"
+							 editable="true"
+							 alwaysAddNewItem="true"
+							 optional="true"
+							 focusOut="doProduct();"
 							 tabIndex="27"
 							 height="20"/>
 			<mx:TextInput
@@ -3025,13 +3062,15 @@
 			<mx:Label x="10"
 					  y="96"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Comment')}" textAlign="right" width="98"/>
-			<fc:AutoComplete x="673"
+			<common:EditableComboBox x="673"
 							 y="68"
 							 width="75"
 							 id="job_location"
 							 dataProvider="{locations}"
 							 labelField="name"
 							 tabIndex="28"
+							 editable="false"
+							 optional="true"
 							 height="20"/>
 			<mx:Label x="465.5"
 					  y="70"
