@@ -198,6 +198,8 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
     private var _mode:int = -1;
     private var _contactFromParent:Contact = null;
     
+    private var _roReturnCount:int = 0;
+    
     public static const CT_FROM_PICKER:int = -1;
     public static const CT_NEW:int = 0;
     public static const CT_EDIT:int = 1;
@@ -276,14 +278,6 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	    	if (_mode == CT_NEW)	{
 	    		doNewOperation();
 	    	}
-	    	if (_mode == CT_EDIT || _mode==CT_DELETE)	{
-				contact = _contactFromParent;
-				this.setContact(contact);
-				contact_editor.setContact(contact);
-				if (contact.parentAccount)
-				setAccount(contact.parentAccount);
-
-	    	}
 	
 		}
 		
@@ -291,7 +285,22 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 						    
 	}  
 	
-    
+	private function get roReturnCount():int{
+		return _roReturnCount;
+	}
+    private function set roReturnCount(val:int):void	{
+    	_roReturnCount = val;
+    	if (roReturnCount == 5)	{
+			if (_mode == CT_EDIT || _mode==CT_DELETE)	{
+				contact = _contactFromParent;
+				this.setContact(contact);
+				contact_editor.setContact(contact);
+				if (contact.parentAccount)
+				setAccount(contact.parentAccount);
+	
+	    	}
+    	}
+    } 
 	private function handleBrickRead(ev:CreditCardTrackReadEvent):void 
 	{
 		var valid:Boolean;
@@ -404,7 +413,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	
 	private function handleLoadGradeResult(ev:ResultEvent):void {
 		gradesarray = ev.result as ArrayCollection; 
-		
+		roReturnCount++;
 	}
 	public function handleUIPanelEvent(evt:ResultEvent):void {
 		evt.result.panel.enabled = evt.result.enabled;
@@ -569,6 +578,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	
 	private function handleLoadCreditCardPreferencesResult(ev:ResultEvent):void {
 		creditCardPreferencesArray = ev.result as ArrayCollection;
+		roReturnCount++;
 	}	                                                          
 	
 	private function checkDelBtnEnablity(contactObj:Contact, parentAccountObj:Account):Boolean {
@@ -1134,6 +1144,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	
 	private function handleLoadCampaigns(ev:ResultEvent):void {
 		compaigns = ev.result as ArrayCollection;
+		roReturnCount++;
 	}
 	private function containsBlank(ac:ArrayCollection, field:String):Boolean	{
 	 	for (var i:int = 0; i<ac.length; i++)	{
@@ -1156,6 +1167,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 			salesReps.addItemAt(salesRep, 0);
 		}
 		sales_rep_combo.selectedItem = selectedItem;
+		roReturnCount++;
 	}
 	private function handleLoadCity(ev:ResultEvent):void {
 	 	citys = ev.result as ArrayCollection;
@@ -1176,6 +1188,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 		zips = ev.result as ArrayCollection;
 		
 		cardzip.selectedItem = selectedItem2;
+		roReturnCount++;
 	}                                 
 
 
