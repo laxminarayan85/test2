@@ -27,7 +27,7 @@
 			<mx:RemoveChild target="{button4}"/>
 			<mx:RemoveChild target="{label4}"/>
 			<mx:AddChild position="lastChild">
-				<mx:Button x="502" y="24" id="btnOk" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOKNewGroup();"/>
+				<mx:Button x="502" y="24" id="btnOk" enabled="false" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOKNewGroup();"/>
 			</mx:AddChild>
 			<mx:AddChild position="lastChild">
 				<mx:Button x="626" y="24" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancelNewGroup();"/>
