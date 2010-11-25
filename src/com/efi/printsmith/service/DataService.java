@@ -307,9 +307,20 @@ public class DataService extends HibernateService {
 			resultList = query.getResultList();
 			if (resultList != null) {
 				for (int i = 0; i < resultList.size(); i++) {
-					Contact c = ((Account) (resultList.get(i))).getContact();
+					Account account = ((Account) (resultList.get(i)));
+					
+					Contact c = account.getContact();
 					if (c != null)
 						Hibernate.initialize(c.getComLinks());
+					
+					if (account.getMasterAcct() != null)	{
+						if (account.getMasterAcct() == 0)
+							account.setMasterAcct(null);
+						else	{
+							Account masterAcc = (Account) (getQuery("Account", " where id=" + account.getMasterAcct()));
+							account.setMasterAcct(Long.parseLong(masterAcc.getAccountId()));
+						}
+					}
 				}
 			}
 			if (resultList != null)
@@ -322,6 +333,7 @@ public class DataService extends HibernateService {
 		}
 		return null;
 	}
+	
 
 	@SuppressWarnings("unchecked")
 	public List<?> getTracker(String className) throws Exception {
@@ -2244,6 +2256,7 @@ public class DataService extends HibernateService {
 						log.error("null charge found");
 					}
 				}
+				
 			}
 		} catch (Exception e) {
 			log.error(e);
