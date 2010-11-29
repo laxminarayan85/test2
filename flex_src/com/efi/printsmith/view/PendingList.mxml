@@ -1171,7 +1171,7 @@
 		return "";
 	}
 	
-	private function getJobComments(item:Object, column:DataGridColumn):String {
+	public function getJobComments(item:Object, column:DataGridColumn):String {
 		var comments:String = "";
 		if(item.jobs!=null) {
 			for each(var jobBase:JobBase in item.jobs){
@@ -1379,7 +1379,7 @@
 						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
-								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}" toolTip="{outerDocument.getJobComments(data,null)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
