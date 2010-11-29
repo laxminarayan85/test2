@@ -88,16 +88,21 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 						laborTotalPrice = (pricePerCopy * (job.getTotalCopies() / 2));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 						pricePerCopy = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (discountedStockPrice*((job.getTotalCopies()/2)/runout)));
+						stockTotalPrice = (discountedStockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
 						discountPct = matrixElement.getPrice2().doubleValue();
 						pricePerCopy = copierDefinition.getBaseRate().doubleValue() * discountPct * copierDefinition.getCopyMarkup2();
 						discountedStockPrice = stockPrice * discountPct;
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (discountedStockPrice*((job.getTotalCopies()/2)/runout)));
-					} else
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (discountedStockPrice*((job.getTotalCopies()/2)/runout)));
+						stockTotalPrice = (discountedStockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
+					} else {
+						stockTotalPrice = (discountedStockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
+					}
 				} else {
-					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + ((discountedStockPrice*job.getTotalCopies()/runout)) + wastePrice);				
+					stockTotalPrice = ((discountedStockPrice*job.getTotalCopies()/runout));
+					laborTotalPrice = (pricePerCopy * job.getTotalCopies());
 				}
 			} else if (copierDefinition.getMatrixType().equals("StepTable")) {
 				if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
@@ -109,21 +114,27 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 				pricePerCopy *= copierDefinition.getCopyMarkup2();
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies() / 2)) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * (job.getTotalCopies() / 2));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 						pricePerCopy = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
 						if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
 							pricePerCopy = MatrixUtilities.calculateStepPriceSideTwo(copierDefinition.getCopierMatrix(), job.getPressQty()*2);
 						} else {
 							pricePerCopy = MatrixUtilities.calculateStepPriceSideTwo(copierDefinition.getCopierMatrix(), job.getPressQty());
 						}
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
-					} else
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
+					} else {
+						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
+					}
 				} else {
-					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + ((stockPrice*job.getTotalCopies()/runout)) + wastePrice);				
+					stockTotalPrice = ((stockPrice*job.getTotalCopies()/runout));
+					laborTotalPrice = (pricePerCopy * job.getTotalCopies());				
 				}
 			} else if (copierDefinition.getMatrixType().equals("MarkupTable")) {
 				double markup = 0.0;
@@ -135,18 +146,24 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 				wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
-						pricingRecord.setTotalPrice((pricePerCopy * (job.getTotalCopies() / 2)) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * (job.getTotalCopies() / 2));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 						pricePerCopy = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
 						markup = matrixElement.getPrice2().doubleValue();
 						pricePerCopy = copierDefinition.getMachineCostPerCopy().doubleValue() * markup * copierDefinition.getCopyMarkup2();
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
-					} else
-						pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + (stockPrice*((job.getTotalCopies()/2)/runout)));
+						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
+					} else {
+						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
+						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
+					}
 				} else {
-					pricingRecord.setTotalPrice((pricePerCopy * job.getTotalCopies()) + ((stockPrice*job.getTotalCopies()/runout)) + wastePrice);				
+					stockTotalPrice = ((stockPrice*job.getTotalCopies()/runout));
+					laborTotalPrice = (pricePerCopy * job.getTotalCopies());			
 				}
 			}
 		}
