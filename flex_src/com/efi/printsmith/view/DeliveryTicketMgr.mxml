@@ -68,6 +68,8 @@
 	   
 	   [Bindable] private var accounts:ArrayCollection = new ArrayCollection();
 	   
+	   private var newBrokerFlag:Boolean = false;
+	   
 	   private var savedBrokerId:int;
 	   
 	   private var newBrokerObj:Broker;
@@ -182,6 +184,10 @@
 						brokerGrid.selectedIndex = counter;
 						broker = brokerObj;
 						ship_to_address_editor.setAddress(broker.address);
+						if(newBrokerFlag){
+							newBrokerFlag = false;
+							ship_to_address_editor.doEditAddress();
+						}
 						ship_to_contact_editor.setContact(copyBrokerToContact(broker));
 					}
 					counter++;
@@ -366,6 +372,7 @@
 			var address:Address = new Address();
 			address.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd._BrokerName_');
 			newBroker.address = address;
+			newBrokerFlag = true;
 			dataServiceBroker.addUpdate(newBroker);
 		}
 		
@@ -456,6 +463,7 @@
 						comLink.modified = null;
 					}
 				}
+				newBrokerFlag = true;
 				dataServiceBroker.addUpdate(newBrokerObj);
 			}
 		}
@@ -568,7 +576,7 @@
 			</mx:Canvas>
 			
 			<mx:CheckBox
-				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Hidecompleteddeliver')}x"
+				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.Hidecompleteddeliver')}"
 				id="hideCompleted" click="{refreshDataGrid()}"/>
 				
 			<filter:PickerFilter id="pickerFilter" width="100%" height="5%" showExtendedSearch="false"
