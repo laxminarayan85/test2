@@ -129,7 +129,7 @@
 				updateDisplayAddress();
 			}
 
-			private function doEditAddress():void
+			public function doEditAddress():void
 			{
 				/* if ( address == null){
 					address = new Address();
