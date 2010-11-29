@@ -49,12 +49,16 @@
 </mx:RemoteObject>
 <mx:RemoteObject id="dimensionDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadDimensionResult(event)"/>
-	</mx:RemoteObject>
-	<mx:RemoteObject id="jobService" destination="jobService">
-		<mx:method name="createJob" fault="handleFault(event)" result="handleCreateJobResult(event)"/>
-	</mx:RemoteObject>
+</mx:RemoteObject>
+<mx:RemoteObject id="jobService" destination="jobService">
+	<mx:method name="createJob" fault="handleFault(event)" result="handleCreateJobResult(event)"/>
+</mx:RemoteObject>
+<mx:RemoteObject id="preferencesSystemService" destination="dataService">
+	<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
+</mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.data.PreferencesSystem;
 		import com.efi.printsmith.data.Estimate;
 		import com.efi.printsmith.data.Invoice;
 		import com.efi.printsmith.events.ReviewDocUpdateEvent;
@@ -189,6 +193,10 @@
         private static var thisInstance:Snowmass = null;  
 		
 		private var _permissions:ArrayCollection;
+		
+		private var preferencesSystem:PreferencesSystem;
+		
+		private var autoLogOutTimer:Timer;
 				
 		[Bindable]
 		private var locales:Array = ["de_DE", "en_AU", "en_GB", "en_US", "es_CL", "es_CO", "es_ES", "es_MX", "fr_CA", "fr_FR", "ja_JP", "lv_LV", "nl_NL", "pt_PT", "ru_RU"];
@@ -813,6 +821,50 @@
 //			this.updateTitle();
        	}
        	
+       	private function handleLoadSystemResult(event:ResultEvent):void {
+       		preferencesSystem = event.result as PreferencesSystem;
+       		if(preferencesSystem!=null){
+       			if(preferencesSystem.enableAutoLogOut && preferencesSystem.secondsOfInactivity){
+       				if(preferencesSystem.autoLogOutSeconds!=0) {
+       					doAutoLogout(preferencesSystem.autoLogOutSeconds);
+       				} else if(preferencesSystem.autoLogOutSeconds==0) {
+       					stopAutoLogoutTimer();
+       				}
+       			} else {
+       				stopAutoLogoutTimer();
+       			}
+       		}
+       	}
+       	
+       	public function doAutoLogout(secondsValue:Number):void {
+       		stopAutoLogoutTimer();
+       		autoLogOutTimer = new Timer(secondsValue*1000);
+       		autoLogOutTimer.addEventListener(TimerEvent.TIMER,function(event:TimerEvent):void {
+       			stopAutoLogoutTimer();
+       			doLogout();
+       		},false,0,true);
+			autoLogOutTimer.start();
+       	}
+       	
+       	public function stopAutoLogoutTimer():void {
+       		if(autoLogOutTimer!=null && autoLogOutTimer.running){
+   				autoLogOutTimer.reset();
+				autoLogOutTimer.stop();
+   			}
+       	}
+       	
+       	private function mouseMoveHandlerFunction(event:MouseEvent):void {
+       		if(autoLogOutTimer!=null && autoLogOutTimer.running){
+       			autoLogOutTimer.reset();
+       			autoLogOutTimer.stop();
+       			autoLogOutTimer.addEventListener(TimerEvent.TIMER,function(event:TimerEvent):void {
+	       			stopAutoLogoutTimer();
+	       			doLogout();
+	       		},false,0,true);
+       			autoLogOutTimer.start();
+       		}
+       	}
+       	
 //		private function addUniqueTab(tab:Panel):void {
 //			var tabFound:Boolean = false;
 //			
@@ -904,8 +956,7 @@
 			container.addToHeader(ApplicationHeader.LEFT, languageComboBox);
 			container.addToHeader(ApplicationHeader.CENTER, debug_button);
 			container.addToHeader(ApplicationHeader.RIGHT, logout_button);
-			
-		
+			this.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandlerFunction,false,0,true);
 		}
 		
 		override protected function createChildren():void	{
@@ -1468,6 +1519,7 @@
         	switch(reasonCode) {
         		case Constants.USER_EVENT_LOGIN:
         			localEvent.eventString = resourceManager.getString(RESOURCE_BUNDLE, 'kUserEventLogCmd.Userlogin');
+        			preferencesSystemService.getSingle("PreferencesSystem");
         			break;
         		case Constants.USER_EVENT_LOGOUT:
         			localEvent.eventString = resourceManager.getString(RESOURCE_BUNDLE, 'kUserEventLogCmd.Userlogin');

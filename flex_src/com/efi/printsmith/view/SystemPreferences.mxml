@@ -1852,6 +1852,18 @@
 		dataServiceIntegration.getAll("PreferencesIntegration");
 	}
 	private function handleSaveSystemResult(ev:ResultEvent):void {
+		var preferencesSystemObject:PreferencesSystem = ev.result as PreferencesSystem;
+   		if(preferencesSystemObject!=null){
+   			if(preferencesSystemObject.enableAutoLogOut && preferencesSystemObject.secondsOfInactivity){
+   				if(preferencesSystemObject.autoLogOutSeconds!=0) {
+   					Snowmass.getInstance().doAutoLogout(preferencesSystemObject.autoLogOutSeconds);
+   				} else if(preferencesSystemObject.autoLogOutSeconds==0) {
+   					Snowmass.getInstance().stopAutoLogoutTimer();
+   				}
+   			} else {
+   				Snowmass.getInstance().stopAutoLogoutTimer();
+   			}
+   		}
     	dataServiceSystem.getAll("PreferencesSystem");
 	}
 	private function handleSavePOSResult(ev:ResultEvent):void {
