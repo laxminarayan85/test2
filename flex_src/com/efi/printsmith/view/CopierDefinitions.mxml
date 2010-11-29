@@ -410,6 +410,19 @@
 			if (pricing_method_combo.selectedItem != null) {
 				copierDefinition.method = pricing_method_combo.selectedItem.data;
 			}
+			if(copierDefinition.squareAreaType != null){
+				matrixAreaRadioBtn.selectedValue = copierDefinition.squareAreaType;
+				squarefinishsize.selected = false;
+				squarerunsize.selected = false;
+				if(matrixAreaRadioBtn.selectedValue!=null){
+					if(matrixAreaRadioBtn.selectedValue=="AreaRunSize"){
+						squarerunsize.selected = true;
+					}
+					if(matrixAreaRadioBtn.selectedValue=="AreaFinishSize"){
+						squarefinishsize.selected = true;
+					}
+				}
+			}
 			setOriginalCopierDefinition();
 		} else if (ev.token.operation == "getPricingMatrix") {
 			var matrix:com.efi.printsmith.data.Matrix = ev.result as com.efi.printsmith.data.Matrix;
@@ -485,6 +498,8 @@
 		copierDefinition.name = Name.text;
 		if (copierDefinition.name == "")
 			copierDefinition.name = "Untitled Copier";
+		if(originalCopierDefinition.name == null || originalCopierDefinition.name=="")
+			originalCopierDefinition.name = "Untitled Copier";
 		if (productionCopiers.selectedItem != null && productionCopiers.selectedItem.name != null) {
 			copierDefinition.machineName = productionCopiers.selectedItem.name as String;
 		}
@@ -543,8 +558,8 @@
 		copierDefinition.useCopierStockMarkup = copierDigitalStockmarkup.selected;
 		if( matrixSetup.selectedValue != null)
 			copierDefinition.matrixType = matrixSetup.selectedValue.toString();
-		if ( matrixArea.selectedValue != null)
-			copierDefinition.squareAreaType = matrixArea.selectedValue.toString();
+		if ( matrixAreaRadioBtn.selectedValue != null)
+			copierDefinition.squareAreaType = matrixAreaRadioBtn.selectedValue.toString();
 		copierDefinition.interpolateMatrix = interpolatematrix.selected;
 	//	copierDefinition.charges = charges;
 		doCheckDefaultLargeFormat();
@@ -660,6 +675,21 @@
 	 	if(stock_Price_is_combo.selectedItem!=null){
 	 		copierDefinition.stockPriceMethod = stock_Price_is_combo.selectedItem.data;
 	 	}
+	 	if (productionCopiers.selectedItem != null && productionCopiers.selectedItem.name != null) {
+			copierDefinition.machineName = productionCopiers.selectedItem.name as String;
+		}
+		if (ProductionLocation.selectedItem != null && ProductionLocation.selectedItem.name != null) {
+			copierDefinition.productionLocation = ProductionLocation.selectedItem.name as String;
+		}
+		if (CostCenter.selectedItem != null && CostCenter.selectedItem.name != null) {
+			copierDefinition.costCenter = CostCenter.selectedItem.name as String;
+		}
+		if( matrixSetup.selectedValue != null)
+			copierDefinition.matrixType = matrixSetup.selectedValue.toString();
+		if ( matrixAreaRadioBtn.selectedValue != null)
+			copierDefinition.squareAreaType = matrixAreaRadioBtn.selectedValue.toString();
+		if(charge_sales_category_combo.selectedItem!=null)
+		copierDefinition.salesCat = charge_sales_category_combo.selectedItem as SalesCategory;
 	 	setOriginalCopierDefinition();
 	}
 	
@@ -1403,12 +1433,12 @@
 		<mx:ComboBox x="349" y="648" height="22" id="price_2_side" dataProvider="{Price2Side.toArray()}"  width="217"></mx:ComboBox>
 		<mx:Button x="5" y="505" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.EditMatrix')}" id="Matrix_button" click="doCopierMatrix();"/>
 		<mx:RadioButtonGroup id="matrixSetup" selectedValue="{copierDefinition.matrixType}" change="MatrixSetup();"/>
-		<mx:RadioButtonGroup id="matrixArea" selectedValue="{copierDefinition.squareAreaType}" change="MatrixArea();"/>
+		<mx:RadioButtonGroup id="matrixAreaRadioBtn" change="MatrixArea();"/>
 		<mx:RadioButton x="134" y="505" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsCopyCost')}" id="matrixcopycost" groupName="matrixSetup" value="CopyCost"/>
 		<mx:RadioButton x="134" y="524" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsDiscountTabl')}" id="matrixdiscount" groupName="matrixSetup" value="DiscountTable"/>
 		<mx:RadioButton x="134" y="544" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MatrixIsStepTable')}" id="matrixstep"  groupName="matrixSetup" value="StepTable" />
-		<mx:RadioButton x="344" y="505" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SquareAreaFromRunSiz')}" id="squarerunsize" groupName="matrixArea"  value="AreaRunSize"/>
-		<mx:RadioButton x="344" y="524" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SquareAreaFromFinish')}" id="squarefinishsize" groupName="matrixArea" value="AreaFinishSize"/>
+		<mx:RadioButton x="344" y="505" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SquareAreaFromRunSiz')}" id="squarerunsize" groupName="matrixAreaRadioBtn"  value="AreaRunSize"/>
+		<mx:RadioButton x="344" y="524" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.SquareAreaFromFinish')}" id="squarefinishsize" groupName="matrixAreaRadioBtn" value="AreaFinishSize"/>
 		<mx:CheckBox x="344" y="544" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.InterpolateMatrixVal')}" id="interpolatematrix" selected="{copierDefinition.interpolateMatrix}"/>
 		<mx:HRule y="595" height="2" left="5" right="5"/>
 		<mx:LinkButton x="630" y="206.5" label="{WasteListLabel()}" width="141" id="wasteName" height="20" click="doclickwaste(event);"/>
