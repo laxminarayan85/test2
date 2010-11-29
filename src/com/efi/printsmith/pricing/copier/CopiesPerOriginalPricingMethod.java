@@ -32,7 +32,7 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 		//if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
 		//	lookupQty = (job.getQtyOrdered() * job.getInSetsOf())*2;
 		//} else {
-			lookupQty = (job.getQtyOrdered() * job.getInSetsOf());
+			lookupQty = job.getNumCopies();
 		//}
 		calcQty = lookupQty * job.getSheets();
 		matrixElement = MatrixUtilities.lookupMatrixElement(job.getPricingCopier().getCopierMatrix(), lookupQty);
