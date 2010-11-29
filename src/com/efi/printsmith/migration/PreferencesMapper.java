@@ -38,6 +38,7 @@ public class PreferencesMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(InvoiceMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
 		try {
+			DataService dataService = new DataService();
 			deletePricingMethods();
 			deleteCreditCards();
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -77,6 +78,16 @@ public class PreferencesMapper extends ImportMapper {
 						this.importField(groupTitleNode.getNodeValue(), keyValue, titleValue, valueValue);
 					}
 				}
+			}
+			List<PreferencesPricingMethod> preferencesPricingMethodList = (List<PreferencesPricingMethod>) dataService.getAll("PreferencesPricingMethod");
+			int orderByCounter = 1;
+			for (PreferencesPricingMethod preferencesPricingMethod : preferencesPricingMethodList) {
+				if(preferencesPricingMethod.getTitle().equalsIgnoreCase("Multi-part Job")) {
+					preferencesPricingMethod.setOrderby(1);
+				} else {
+					preferencesPricingMethod.setOrderby(++orderByCounter);
+				}
+				dataService.addUpdate(preferencesPricingMethod);
 			}
 		} catch (Exception e) {
 			log.error(e);
