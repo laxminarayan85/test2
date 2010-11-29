@@ -634,11 +634,11 @@
 		return -1;
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
-		var selectedIndex:int = new int(dataGrid.selectedIndex);
-		var verticalScrollPosition:int = new int(dataGrid.verticalScrollPosition);
+		/* var selectedIndex:int = new int(dataGrid.selectedIndex);
+		var verticalScrollPosition:int = new int(dataGrid.verticalScrollPosition); */
 		copierDefinitionArray = ev.result as ArrayCollection;
-		dataGrid.selectedIndex = selectedIndex;
-		dataGrid.verticalScrollPosition = verticalScrollPosition;
+		/* dataGrid.selectedIndex = selectedIndex;
+		dataGrid.verticalScrollPosition = verticalScrollPosition; */
 		if (selectedCopierId != -1) {
 			selectDataGridItem(selectedCopierId);
 		} else {
@@ -653,6 +653,7 @@
 		var i:int;
 		for (i = 0; i < copierDefinitionArray.length; i++) {
 			if ((copierDefinitionArray.getItemAt(i) as CopierDefinition).id == id) {
+				dataGrid.selectedItem = copierDefinitionArray.getItemAt(i);
 				dataGrid.selectedIndex = i;
 				dataGrid.scrollToIndex(i);
 				var token:AsyncToken = dataService.getCopierDefinition((copierDefinitionArray.getItemAt(i) as CopierDefinition).id);  
