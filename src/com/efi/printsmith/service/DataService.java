@@ -318,7 +318,10 @@ public class DataService extends HibernateService {
 							account.setMasterAcct(null);
 						else	{
 							Account masterAcc = (Account) (getQuery("Account", " where id=" + account.getMasterAcct()));
-							account.setMasterAcct(Long.parseLong(masterAcc.getAccountId()));
+							if (masterAcc != null)
+								account.setMasterAcct(Long.parseLong(masterAcc.getAccountId()));
+							else
+								account.setMasterAcct(null);
 						}
 					}
 				}
