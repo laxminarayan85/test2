@@ -2041,11 +2041,11 @@
 				var runSize:Dimension = this.job_size.selectedItem as Dimension;
 				var message:String = "";
 				if (runSize != null) {
-					if (runSize.width * runSize.height < minSizeWidth * minSizeLength) {
+					if (minSize.Name != "" && (runSize.width * runSize.height) < (minSizeWidth * minSizeLength)) {
 						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeisless");
 						Alert.show(message, "Warning", 0, null, null, null, 4); 
 					}
-					if (runSize.width * runSize.height > maxSizeWidth * maxSizeLength) {
+					if (maxSize.Name != "" && (runSize.width * runSize.height) > (maxSizeWidth * maxSizeLength)) {
 						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeexceed");
 						Alert.show(message, "Warning", 0, null, null, null, 4); 
 					}
