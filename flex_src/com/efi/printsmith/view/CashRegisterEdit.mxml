@@ -905,7 +905,7 @@
 		
 		if (rbvalue == "Cash")
 		{	
-			activePayment.paymentMethod= "Cash"
+			activePayment.paymentMethod = Constants.POS_CASH_REGISTER_PAYMODE_CASH;
 			if (treeStateString == "invoiceState")
 			{
 				this.currentState = "invoiceCash";
@@ -922,7 +922,7 @@
 		}
 		if (rbvalue == "Credit Card")
 		{
-			activePayment.paymentMethod = "Credit Card";
+			activePayment.paymentMethod = Constants.POS_CASH_REGISTER_PAYMODE_CREDITCARD;
 			if (treeStateString == "invoiceState")
 			{
 				this.currentState = "invoiceCreditCard";
@@ -940,7 +940,7 @@
 		}
 		if (rbvalue == "Check")
 		{
-			activePayment.paymentMethod= "Check"
+			activePayment.paymentMethod = Constants.POS_CASH_REGISTER_PAYMODE_CHECK;
 			if (treeStateString == "invoiceState")
 			{
 				this.currentState = "invoiceCheck";
@@ -964,7 +964,7 @@
 			} else
 				btPayment.enabled = true;
 			
-			activePayment.paymentMethod= "Charge"
+			activePayment.paymentMethod = Constants.POS_CASH_REGISTER_PAYMODE_CHARGE;
 			if (treeStateString == "invoiceState")
 			{
 				this.currentState = "invoiceCharge";
@@ -1012,7 +1012,7 @@
 			sessionBatch.accumTendered = sessionBatch.accumTendered + activePayment.total;
 			sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal; 
 			
-			if (activePayment.paymentMethod=="Check"){
+			if (activePayment.paymentMethod==Constants.POS_CASH_REGISTER_PAYMODE_CHECK){
 				activePayment.checkNumber = check_num.text;
 				
 				if (customerAccount != null) {
@@ -1023,11 +1023,11 @@
 					}
 				}
 			}
-			if (activePayment.paymentMethod=="Credit Card"){
+			if (activePayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CREDITCARD){
 				activePayment.creditCard = card_type.selectedItem as PreferencesCreditCard;
 				activePayment.refNumber = card_ref.text;
 			}
-			if (activePayment.paymentMethod=="Charge") {
+			if (activePayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 				activePayment.customerAccount = customerAccount;	
 				
 				if (customerAccount != null) {
@@ -1192,7 +1192,7 @@
 		//
 		// for credit card payments, the sale must be reveresed
 		//
-		if (activePayment != null && activePayment.paymentMethod == "Credit Card") {
+		if (activePayment != null && activePayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CREDITCARD) {
 			if (tempPayment.cct != null && tempPayment.cct.transactionType == Constants.CREDIT_CARD_TRANSACTION_TYPE_kTransactionTypePurchase &&
 				tempPayment.cct.transactionResults == Constants.CREDIT_CARD_TRANSACTION_RESULTS_kTransactionResultsApproved) {
 				
@@ -1341,7 +1341,7 @@
 			//
 			// balance out any refund amount that would go back to payee
 			//
-			if (refund > 0 && tempPayment.paymentMethod != "Charge") {
+			if (refund > 0 && tempPayment.paymentMethod != Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 				if (payAmount >= refund) {
 					payAmount -= refund;
 					refund = 0;
@@ -1390,7 +1390,7 @@
 						else if (unApplied <= payAmount) {
 						
 							// charge to account
-							if (tempPayment.paymentMethod == "Charge") {
+							if (tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 								if (tempPayment != null) {
 									totalCharge += payAmount;
 									payAmount = 0;
@@ -1413,7 +1413,7 @@
 						//
 						else {
 							// charge to account
-							if (tempPayment.paymentMethod == "Charge") {
+							if (tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 								if (tempPayment != null) {
 									totalCharge += payAmount;
 									payAmount = 0;
@@ -1437,7 +1437,7 @@
 						//
 						if (tempSale.paymode == "") {
 							tempSale.paymode = tempPayment.paymentMethod;
-							if (tempPayment.paymentMethod != "Charge") {
+							if (tempPayment.paymentMethod != Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 								tempSale.checkNumber = tempPayment.checkNumber;
 								tempSale.cct = tempPayment.cct;
 								tempSale.refNumber = tempPayment.refNumber;		// cct
@@ -1462,7 +1462,7 @@
 					//
 					// balance out any refund amount that would go back to payee
 					//
-					if (refund > 0 && tempPayment.paymentMethod != "Charge") {
+					if (refund > 0 && tempPayment.paymentMethod != Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 						if (payAmount >= refund) {
 							payAmount -= refund;
 							refund = 0;
@@ -1539,7 +1539,7 @@
 				temp  = sessionBatch.transactions.getItemAt(i) as Object;
 				if (temp is TapePaymentRecord) {
 					tempPayment = temp as TapePaymentRecord;
-					if (tempPayment.paymentMethod == "Charge") {
+					if (tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 						results += tempPayment.total;
 					}
 				}	
@@ -1560,7 +1560,7 @@
 				temp  = sessionBatch.transactions.getItemAt(i) as Object;
 				if (temp is TapePaymentRecord) {
 					tempPayment = temp as TapePaymentRecord;
-					if (tempPayment.paymentMethod != "Charge") {
+					if (tempPayment.paymentMethod != Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 						results += tempPayment.total;
 					}
 				}	
@@ -1595,7 +1595,7 @@
 		//
 		if (sessionBatch.transactions.length == 1 && sessionBatch.accumTendered < 0) {
 			tempPayment  = sessionBatch.transactions.getItemAt(0) as TapePaymentRecord;
-			if (tempPayment != null && tempPayment.paymentMethod == "Cash") {
+			if (tempPayment != null && tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CASH) {
 				if (sessionBatch.user != null && sessionBatch.user.noCashReturn == false)
 					isPaidOut = true;
 			}
@@ -1711,22 +1711,22 @@
 					//
 					switch(tempPayment.paymentMethod)
 					{
-						case "Cash":
+						case Constants.POS_CASH_REGISTER_PAYMODE_CASH:
 							cashDrawer.cashTotal += tempPayment.total;
 							break;
 							
-						case "Check":
-						case "Draft":	// i.e., check
+						case Constants.POS_CASH_REGISTER_PAYMODE_CHECK:
+						case Constants.POS_CASH_REGISTER_PAYMODE_DRAFT:	// i.e., check
 							cashDrawer.checkCount++;
 							cashDrawer.checkTotal += tempPayment.total;
 							break;
 							
-						case "Credit Card":
+						case Constants.POS_CASH_REGISTER_PAYMODE_CREDITCARD:
 							cashDrawer.cardCount++;
 							cashDrawer.cardTotal += tempPayment.total;
 							break;
 							
-						case "Charge":
+						case Constants.POS_CASH_REGISTER_PAYMODE_CHARGE:
 							cashDrawer.arBalance += tempPayment.total;
 							
 							if (sessionBatch.account != null) {
@@ -1807,7 +1807,7 @@
 							else if (arRecord.balance == 0) {
 								arRecord.finalPaymentDate = new Date();
 								arRecord.finalPay = new TapePaymentRecord();
-								arRecord.finalPay.paymentMethod = "Deposit";
+								arRecord.finalPay.paymentMethod = Constants.POS_CASH_REGISTER_PAYMODE_DEPOSIT;
 								arRecord.finalPay.checkNumber = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"depositCmd.Deposit");
 							}
 							
@@ -1835,7 +1835,7 @@
 					// are there any merchandise charges that need to be logged
 					//
 					else {
-						if (tempSale.paymode == "Charge") {
+						if (tempSale.paymode == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 							// not compleletly paid for
 							if (tempSale.amountPaid == 0 || tempSale.total > tempSale.amountPaid) {
 								unPurchase = new UnpurchasedMerchandise();

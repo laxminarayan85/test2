@@ -63,14 +63,22 @@ package com.efi.printsmith
 		static public const PENDING_SCHEDULE:String = "schedule";
 		static public const PENDING_TRACKER:String = "tracker";
 		
-		static public const ACCOUNT_HISTORY_TYPE_INVPICKUP = "Invoice Pickup";
-		static public const ACCOUNT_HISTORY_TYPE_PAYMENT = "Payment to Account";
-		static public const ACCOUNT_HISTORY_TYPE_JOURNALENTRY = "Journal Entry";
-		static public const ACCOUNT_HISTORY_TYPE_FINANCECHARGE = "Finance Charge";
-		static public const ACCOUNT_HISTORY_TYPE_TRANSFER = "Transfer";
-		static public const ACCOUNT_HISTORY_TYPE_DEPOSITTAKEN = "Deposit Taken";
-		static public const ACCOUNT_HISTORY_TYPE_DEPOSITRETURN = "Deposit Returned";
+		static public const ACCOUNT_HISTORY_TYPE_INVPICKUP:String = "Invoice Pickup";
+		static public const ACCOUNT_HISTORY_TYPE_PAYMENT:String = "Payment to Account";
+		static public const ACCOUNT_HISTORY_TYPE_JOURNALENTRY:String = "Journal Entry";
+		static public const ACCOUNT_HISTORY_TYPE_FINANCECHARGE:String = "Finance Charge";
+		static public const ACCOUNT_HISTORY_TYPE_TRANSFER:String = "Transfer";
+		static public const ACCOUNT_HISTORY_TYPE_DEPOSITTAKEN:String = "Deposit Taken";
+		static public const ACCOUNT_HISTORY_TYPE_DEPOSITRETURN:String = "Deposit Returned";
 
+		static public const POS_CASH_REGISTER_PAYMODE_CASH:String = "Cash";
+		static public const POS_CASH_REGISTER_PAYMODE_CREDITCARD:String = "Credit Card";
+		static public const POS_CASH_REGISTER_PAYMODE_CHECK:String = "Check";
+		static public const POS_CASH_REGISTER_PAYMODE_CHARGE:String = "Charge";
+		static public const POS_CASH_REGISTER_PAYMODE_DRAFT:String = "Draft";
+		static public const POS_CASH_REGISTER_PAYMODE_DEPOSIT:String = "Deposit";
+		
+		
 		public function Constants()
 		{
 		}
