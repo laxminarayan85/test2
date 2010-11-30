@@ -96,11 +96,15 @@ public abstract class CopierPricingMethod {
 		wasteSheets *= job.getSheets();
 		double dup = new Double(iup);
 		double don = new Double(ion);
+		double dondup = dup / don;
 		long lonlup = (long)Math.ceil(dup / don);
 		if ((ordered / (iup / ion)) < 1)
 			job.setTotalCopies(iruns + ((wasteSheets * (iup / ion)) * iruns) + oddRunQty);
-		else
-			job.setTotalCopies((ordered / lonlup * iruns) + ((wasteSheets * lonlup * iruns)) + oddRunQty);
+		else {
+			double dOrdered = new Double(ordered);
+			double dWasteSheets = new Double(wasteSheets);
+			job.setTotalCopies((long)Math.ceil((dOrdered / dondup * iruns) + ((dWasteSheets * dondup * iruns)) + oddRunQty));
+		}
 		//if (oddRunQty == 0 && iorigs > iup)
 			//job.setTotalCopies(job.getTotalCopies() * (iorigs / iup));
 		if (job.getDoubleSided()) {
