@@ -2239,12 +2239,6 @@
 					updateWeight();
 					break;
 				case this.job_sheets:
-					if (isNaN(job.sheets) || job.sheets == 0)
-						job.sheets = 1;
-					if (job.sheets < job.numUp)
-						job.numOn = job.sheets;
-					else
-						job.numOn = job.numUp;
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					updateWeight();
@@ -2778,7 +2772,12 @@
 			}
 			
 			private function doUpdateNumberOn():void {
-				job.numOn = job.sheets;
+				if (isNaN(job.sheets) || job.sheets == 0)
+					job.sheets = 1;
+				if (job.sheets < job.numUp)
+					job.numOn = job.sheets;
+				else
+					job.numOn = job.numUp;
 			}
 			
 			private function openEditMultiQtyJobWindow():void {
