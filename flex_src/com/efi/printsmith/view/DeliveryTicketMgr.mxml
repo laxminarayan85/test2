@@ -24,8 +24,14 @@
 		<mx:method name="getContactById" fault="handleFault(event)" result="handleLoadContactResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="formPreferencesService" destination="formPreferencesService" showBusyCursor="true">
+		<mx:method name="createNewFormPreferences" fault="handleFault(event)" result="handleNewFormPreferencesResult(event)"/>
+	</mx:RemoteObject>
+		
+	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.data.FormPreferences;
 		import com.efi.printsmith.data.ComLink;
 		import com.efi.printsmith.events.AccountPickerSelectEvent;
 		import com.efi.printsmith.events.SaveAddressEvent;
@@ -467,6 +473,24 @@
 				dataServiceBroker.addUpdate(newBrokerObj);
 			}
 		}
+		
+		private function doNewFormPreferences():void {
+			var formPreferences:FormPreferences = new FormPreferences();
+			formPreferences.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd._FormName_');
+			formPreferencesService.createNewFormPreferences(formPreferences);
+		}
+		
+		private function handleNewFormPreferencesResult(event:ResultEvent):void {
+			var child:DeliveryTicketLayout = new DeliveryTicketLayout();
+			child.formPreferences = event.result as FormPreferences;
+			var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+			if (win == null)	{
+				Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
+			}
+			else {
+				win.bringWindowToFront();	
+			}
+		}
 	
 	]]>
 	</mx:Script>
@@ -582,30 +606,40 @@
 			<filter:PickerFilter id="pickerFilter" width="100%" height="5%" showExtendedSearch="false"
 				searchComponent="{dataGrid}" listData="{deliveryTicketLines}" searchCriteria="{getSearchBy()}" />
 		</mx:VBox>
-		<mx:Canvas label="Form Preferences" width="100%" height="100%">
-			<mx:DataGrid x="10" y="91" width="540" height="130">
-				<mx:columns>
-					<mx:DataGridColumn headerText="Default"
-						dataField="col1" />
-					<mx:DataGridColumn headerText="Title" dataField="col2" />
-				</mx:columns>
-			</mx:DataGrid>
-			<mx:Button id="cmdNewForm" height="38" width="38" click=""
-				x="10" y="10">
-				<mx:icon>@Embed(source='../../../../assets/new.png')
-				</mx:icon>
-			</mx:Button>
-			<mx:Button id="cmdEditForm" height="38" width="38" click=""
-				x="65" y="10">
-				<mx:icon>@Embed(source='../../../../assets/edit.png')
-				</mx:icon>
-			</mx:Button>
-			<mx:Button id="cmdDeleteForm" height="38" width="38" click=""
-				x="124" y="10">
-				<mx:icon>@Embed(source='../../../../assets/delete.png')
-				</mx:icon>
-			</mx:Button>
-		</mx:Canvas>
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.FormPreferences')}" width="100%" height="100%">
+			<mx:HBox width="100%" height="10%">
+				<mx:Button width="6%" height="100%" click="{doNewFormPreferences()}">
+					<mx:icon>@Embed(source='../../../../assets/new.png')
+					</mx:icon>
+				</mx:Button>
+				<mx:Button width="6%" height="100%">
+					<mx:icon>@Embed(source='../../../../assets/edit.png')
+					</mx:icon>
+				</mx:Button>
+				<mx:Button width="6%" height="100%">
+					<mx:icon>@Embed(source='../../../../assets/delete.png')
+					</mx:icon>
+				</mx:Button>
+			</mx:HBox>
+			<mx:HBox width="100%" height="5%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Add')}"
+					width="6%" textAlign="center"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Change')}"
+					width="6%" textAlign="center"/>
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Delete')}"
+					width="6%" textAlign="center"/>
+			</mx:HBox>
+			<mx:Canvas width="100%" height="55%">
+				<mx:DataGrid id="formPreferencesGrid" width="100%" height="100%">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Default"
+							dataField="col1" />
+						<mx:DataGridColumn headerText="Title" dataField="col2" />
+					</mx:columns>
+				</mx:DataGrid>
+				<ns1:SmallThrobber id="throbber_formpreferences" height="20" width="20" visible="false" horizontalCenter="0" verticalCenter="0"/>
+			</mx:Canvas>
+		</mx:VBox>
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd.Brokers')}" width="100%" height="100%">
 			<mx:HBox width="100%" height="10%">
 				<mx:Button width="6%" height="100%" click="{doNewBroker()}">

@@ -1,0 +1,1092 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.DeliveryTicketLayout')}" 
+	headerHeight="0" width="100%" height="100%" xmlns:components="com.efi.printsmith.common.components.*"
+	creationComplete="{init()}">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.FontDefinition;
+			import com.efi.printsmith.common.components.CustomFontComponent;
+			import mx.managers.PopUpManager;
+			import com.efi.mdi.view.window.MDIWindow;
+			import com.efi.printsmith.data.FormPreferences;
+			
+			[Bindable] public var formPreferences:FormPreferences;
+			
+			private function init():void {
+				var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+				mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.DeliveryTicketLayout');
+				updateFontLabels();
+			} 
+			
+			public function updateFontLabels():void{
+				var addressInputArguments:Array = new Array();
+				var dateInputArguments:Array = new Array();
+				var bodyTextInputArguments:Array = new Array();
+				var formInputArguments:Array = new Array();
+				addressInputArguments.push(addressFont);
+				addressInputArguments.push(formPreferences);
+				addressInputArguments.push('addressFontBean');	
+				callLater(updateFontTextStyles,addressInputArguments);
+				dateInputArguments.push(dateFont);
+				dateInputArguments.push(formPreferences);
+				dateInputArguments.push('dateFontBean');	
+				callLater(updateFontTextStyles,dateInputArguments);
+				bodyTextInputArguments.push(bodyTextFont);
+				bodyTextInputArguments.push(formPreferences);
+				bodyTextInputArguments.push('bodyTextFontBean');	
+				callLater(updateFontTextStyles,bodyTextInputArguments);
+				formInputArguments.push(formFont);
+				formInputArguments.push(formPreferences);
+				formInputArguments.push('formFontBean');	
+				callLater(updateFontTextStyles,formInputArguments);
+			}
+			
+			private function openFontComponent(valueStr:String):void{
+				var fontComponent:CustomFontComponent = PopUpManager.createPopUp(this,CustomFontComponent,true) as CustomFontComponent;
+				fontComponent.dataHolder = formPreferences;
+				if(valueStr=="address"){
+					fontComponent.variableName = "addressFontBean";
+					fontComponent.customText = formPreferences.addressFontBean;
+				} else if(valueStr=="date"){
+					fontComponent.variableName = "dateFontBean";
+					fontComponent.customText = formPreferences.dateFontBean;
+				} else if(valueStr=="bodyText"){
+					fontComponent.variableName = "bodyTextFontBean";
+					fontComponent.customText = formPreferences.bodyTextFontBean;
+				} else if(valueStr=="form"){
+					fontComponent.variableName = "formFontBean";
+					fontComponent.customText = formPreferences.formFontBean;
+				}
+				fontComponent.addEventListener("fontBeanUpdated",function(event:Event):void{
+					var inputArguments:Array = new Array();
+					if(valueStr=="address"){
+						inputArguments.push(addressFont);
+						inputArguments.push(formPreferences);
+						inputArguments.push('addressFontBean');	
+						callLater(updateFontTextStyles,inputArguments);
+					} else if(valueStr=="date"){
+						inputArguments.push(dateFont);
+						inputArguments.push(formPreferences);
+						inputArguments.push('dateFontBean');	
+						callLater(updateFontTextStyles,inputArguments);
+					} else if(valueStr=="bodyText"){
+						inputArguments.push(bodyTextFont);
+						inputArguments.push(formPreferences);
+						inputArguments.push('bodyTextFontBean');	
+						callLater(updateFontTextStyles,inputArguments);
+					} else if(valueStr=="form"){
+						inputArguments.push(formFont);
+						inputArguments.push(formPreferences);
+						inputArguments.push('formFontBean');	
+						callLater(updateFontTextStyles,inputArguments);
+					}
+				},false,0,true);
+				PopUpManager.centerPopUp(fontComponent);
+			}
+			
+			private function updateFontTextStyles(labelComponent:Label, dataHolder:Object, variableName:String):void{
+				if(dataHolder!=null){
+					labelComponent.text = constructString(dataHolder[variableName]);
+					setFontStyling(labelComponent,dataHolder[variableName]);
+				}
+			}
+			
+			private function constructString(fontDefinitionObj:FontDefinition):String {
+				var strVal:String = "";
+				if(fontDefinitionObj!=null) {
+					if(fontDefinitionObj.fontName!=null){
+						strVal = strVal+fontDefinitionObj.fontName;
+					}
+					if(fontDefinitionObj.size!=0){
+						if(strVal!=""){
+							strVal = strVal+", "+fontDefinitionObj.size;
+						} else {
+							strVal = strVal+fontDefinitionObj.size+" point";
+						}
+					}
+					if(fontDefinitionObj.isBold){
+						strVal = strVal+", "+"Bold";
+					}
+					if(fontDefinitionObj.isItalic){
+						strVal = strVal+", "+"Italic";
+					}
+					if(fontDefinitionObj.isUnderline){
+						strVal = strVal+", "+"Underline";
+					}
+					if(fontDefinitionObj.isOutline){
+						strVal = strVal+", "+"Outline";
+					}
+					if(fontDefinitionObj.isShadow){
+						strVal = strVal+", "+"Shadow";
+					}
+					if(fontDefinitionObj.isCondensed){
+						strVal = strVal+", "+"Condensed";
+					}
+					if(fontDefinitionObj.extended){
+						strVal = strVal+", "+"Extended";
+					}
+				}
+				return strVal;
+			}
+			
+			private function setFontStyling(labelComponent:Label, fontDefinitionObj:FontDefinition):void{
+				if(fontDefinitionObj!=null) {
+					if(fontDefinitionObj.fontName!=null){
+						labelComponent.setStyle("fontFamily",fontDefinitionObj.fontName);	
+					}
+					if(fontDefinitionObj.size!=0) { 
+						labelComponent.setStyle("fontSize",fontDefinitionObj.size);
+					}
+					if(fontDefinitionObj.isBold){
+						labelComponent.setStyle("fontWeight","bold");
+					} else {
+						labelComponent.setStyle("fontWeight","normal");
+					}
+					if(fontDefinitionObj.isItalic){
+						labelComponent.setStyle("fontStyle","italic");
+					} else {
+						labelComponent.setStyle("fontStyle","normal");
+					}
+					if(fontDefinitionObj.isUnderline){
+						labelComponent.setStyle("textDecoration","underline");
+					} else {
+						labelComponent.setStyle("textDecoration","none");
+					}
+					if(fontDefinitionObj.isShadow){
+						var dropShadowFilter:DropShadowFilter = new DropShadowFilter(5,30,0x000000,.8);
+			            var filtersArray:Array = new Array();
+			            filtersArray.push(dropShadowFilter);
+			            labelComponent.filters = filtersArray;
+					} else {
+						labelComponent.filters = null;
+					} 
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:HBox width="100%" height="10%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Title')}:"
+			width="20%" textAlign="right"/>
+		<components:CustomStringTextInputComponent
+			dataHolder="{formPreferences}" variableName="title" customText="{formPreferences.title}" allowSpecialCharacters="true"/>
+	</mx:HBox>
+	
+	<mx:TabNavigator creationPolicy="all" width="100%" height="75%" paddingLeft="5" paddingBottom="5" paddingRight="5" paddingTop="5">
+		
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Show')}" width="100%" height="100%">
+		
+			<mx:Panel width="40%" height="30%" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Style')}"
+				layout="vertical">
+				
+				<mx:RadioButtonGroup id="styleOptions"/>
+				
+				<components:CustomRadioButtonComponent groupName="styleOptions" value="UsePrePrintedForm"
+					dataHolder="{formPreferences}" variableName="styleOption" customText="{formPreferences.styleOption}"
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.UsePrePrintedForm')}"/>
+					
+				<components:CustomRadioButtonComponent groupName="styleOptions" value="PrintCustomFormImage"
+					dataHolder="{formPreferences}" variableName="styleOption" customText="{formPreferences.styleOption}"
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.PrintCustomFormImage')}"/>
+					
+				<components:CustomRadioButtonComponent groupName="styleOptions" value="GenerateFormImage"
+					dataHolder="{formPreferences}" variableName="styleOption" customText="{formPreferences.styleOption}"
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.GenerateFormImage')}"/>
+					
+			</mx:Panel>
+			
+			<mx:HBox width="100%" height="70%">
+				
+				<mx:VBox width="40%" height="100%">
+					
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowFromAddress')}"
+						dataHolder="{formPreferences}" variableName="showFromAddress" customText="{formPreferences.showFromAddress}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowToAddress')}"
+						dataHolder="{formPreferences}" variableName="showToAddress" customText="{formPreferences.showToAddress}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowAttn')}"
+						dataHolder="{formPreferences}" variableName="showAttn" customText="{formPreferences.showAttn}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowShipVia')}"
+						dataHolder="{formPreferences}" variableName="showShipVia" customText="{formPreferences.showShipVia}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowDeliveryDate')}"
+						dataHolder="{formPreferences}" variableName="showDeliveryDate" customText="{formPreferences.showDeliveryDate}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowCustomerPO')}"
+						dataHolder="{formPreferences}" variableName="showCustomPO" customText="{formPreferences.showCustomPO}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowOrderNumber')}"
+						dataHolder="{formPreferences}" variableName="showOrderNumber" customText="{formPreferences.showOrderNumber}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowPartNumber')}"
+						dataHolder="{formPreferences}" variableName="showPartNumber" customText="{formPreferences.showPartNumber}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTrackingNumber')}"
+						dataHolder="{formPreferences}" variableName="showTrackingNumber" customText="{formPreferences.showTrackingNumber}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+				</mx:VBox>
+				
+				<mx:VBox width="40%" height="100%">
+					
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowReference')}"
+						dataHolder="{formPreferences}" variableName="showReference" customText="{formPreferences.showReference}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowDescription')}"
+						dataHolder="{formPreferences}" variableName="showDescription" customText="{formPreferences.showDescription}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowComment')}"
+						dataHolder="{formPreferences}" variableName="showComment" customText="{formPreferences.showComment}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowSignatureLine')}"
+						dataHolder="{formPreferences}" variableName="showSignature" customText="{formPreferences.showSignature}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowBarcodes')}"
+						dataHolder="{formPreferences}" variableName="showBarCodes" customText="{formPreferences.showBarCodes}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowLogo')}"
+						dataHolder="{formPreferences}" variableName="showLogo" customText="{formPreferences.showLogo}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowDeliveryNumber')}"
+						dataHolder="{formPreferences}" variableName="showDeliveryNumber" customText="{formPreferences.showDeliveryNumber}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowDriver')}"
+						dataHolder="{formPreferences}" variableName="showDriver" customText="{formPreferences.showDriver}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+					<components:CustomCheckBoxComponent
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowCartonCount')}"
+						dataHolder="{formPreferences}" variableName="showCartonCount" customText="{formPreferences.showCartonCount}"
+						defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+						
+				</mx:VBox>
+			</mx:HBox>
+		</mx:VBox>
+		
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.FormLayout')}" width="100%" height="100%">
+			
+			<mx:Grid width="100%" height="100%">
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%"/> 
+					<mx:GridItem width="30%" colSpan="2" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Position')}"
+							fontWeight="bold" textAlign="center"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Width')}"
+							fontWeight="bold" textAlign="center"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%"/> 
+					<mx:GridItem width="15%" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Left')}"
+							fontWeight="bold" textAlign="center"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Top')}"
+							fontWeight="bold" textAlign="center"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Across')}"
+							fontWeight="bold" textAlign="center"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Down')}"
+							fontWeight="bold" textAlign="center"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Logo')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="logoLeftPosition" customText="{formPreferences.logoLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="logoTopPosition" customText="{formPreferences.logoTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="logoAcrossWidth" customText="{formPreferences.logoAcrossWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="logoDownWidth" customText="{formPreferences.logoDownWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.FromAddress')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="fromAddressLeftPosition" customText="{formPreferences.fromAddressLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="fromAddressTopPosition" customText="{formPreferences.fromAddressTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="fromAddressAcrossWidth" customText="{formPreferences.fromAddressAcrossWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="fromAddressDownWidth" customText="{formPreferences.fromAddressDownWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ToAddress')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="toAddressLeftPosition" customText="{formPreferences.toAddressLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="toAddressTopPosition" customText="{formPreferences.toAddressTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="toAddressAcrossWidth" customText="{formPreferences.toAddressAcrossWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="toAddressDownWidth" customText="{formPreferences.toAddressDownWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.AttnBlock')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="attnLeftPosition" customText="{formPreferences.attnLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="attnTopPosition" customText="{formPreferences.attnTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="attnAcrossWidth" customText="{formPreferences.attnAcrossWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="attnDownWidth" customText="{formPreferences.attnDownWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.LineItems')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="lineLeftPosition" customText="{formPreferences.lineLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="lineTopPosition" customText="{formPreferences.lineTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="lineAcrossWidth" customText="{formPreferences.lineAcrossWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="lineDownWidth" customText="{formPreferences.lineDownWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.CommentBlock')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="commentLeftPosition" customText="{formPreferences.commentLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="commentTopPosition" customText="{formPreferences.commentTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="commentAcrossWidth" customText="{formPreferences.commentAcrossWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="commentDownWidth" customText="{formPreferences.commentDownWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.DeliveryDate')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="deliveryDateLeftPosition" customText="{formPreferences.deliveryDateLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="deliveryDateTopPosition" customText="{formPreferences.deliveryDateTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTitle')}"
+							dataHolder="{formPreferences}" variableName="showDeliveryDateTitle" customText="{formPreferences.showDeliveryDateTitle}"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Reference')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="referenceLeftPosition" customText="{formPreferences.referenceLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="referenceTopPosition" customText="{formPreferences.referenceTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTitle')}"
+							dataHolder="{formPreferences}" variableName="showReferenceTitle" customText="{formPreferences.showReferenceTitle}"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShipVia')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="shipViaLeftPosition" customText="{formPreferences.shipViaLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="shipViaTopPosition" customText="{formPreferences.shipViaTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTitle')}"
+							dataHolder="{formPreferences}" variableName="showShipViaTitle" customText="{formPreferences.showShipViaTitle}"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.CustomerPO')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="customerPOLeftPosition" customText="{formPreferences.customerPOLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="customerPOTopPosition" customText="{formPreferences.customerPOTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTitle')}"
+							dataHolder="{formPreferences}" variableName="showCustomerPOTitle" customText="{formPreferences.showCustomerPOTitle}"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.OrderNumber')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="orderNumberLeftPosition" customText="{formPreferences.orderNumberLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="orderNumberTopPosition" customText="{formPreferences.orderNumberTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTitle')}"
+							dataHolder="{formPreferences}" variableName="showOrderNumberTitle" customText="{formPreferences.showOrderNumberTitle}"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.PartNumber')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="partNumberLeftPosition" customText="{formPreferences.partNumberLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="partNumberTopPosition" customText="{formPreferences.partNumberTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTitle')}"
+							dataHolder="{formPreferences}" variableName="showPartNumberTitle" customText="{formPreferences.showPartNumberTitle}"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.TrackingNumber')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="trackingNumberLeftPosition" customText="{formPreferences.trackingNumberLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="trackingNumberTopPosition" customText="{formPreferences.trackingNumberTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTitle')}"
+							dataHolder="{formPreferences}" variableName="showTrackingNumberTitle" customText="{formPreferences.showTrackingNumberTitle}"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.DeliveryNumber')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="deliveryNumberLeftPosition" customText="{formPreferences.deliveryNumberLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="deliveryNumberTopPosition" customText="{formPreferences.deliveryNumberTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTitle')}"
+							dataHolder="{formPreferences}" variableName="showDeliveryNumberTitle" customText="{formPreferences.showDeliveryNumberTitle}"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Driver')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="driverLeftPosition" customText="{formPreferences.driverLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="driverTopPosition" customText="{formPreferences.driverTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTitle')}"
+							dataHolder="{formPreferences}" variableName="showDriverTitle" customText="{formPreferences.showDriverTitle}"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.CartonCount')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="cartonCountLeftPosition" customText="{formPreferences.cartonCountLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="cartonCountTopPosition" customText="{formPreferences.cartonCountTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2">
+						<components:CustomCheckBoxComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShowTitle')}"
+							dataHolder="{formPreferences}" variableName="showCartonCountTitle" customText="{formPreferences.showCartonCountTitle}"
+							defaultValue="false" selectedValue="true" deSelectedValue="false"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.COD')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="codLeftPosition" customText="{formPreferences.codLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="codTopPosition" customText="{formPreferences.codTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2"/>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Description')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="descriptionLeftPosition" customText="{formPreferences.descriptionLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="descriptionTopPosition" customText="{formPreferences.descriptionTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2"/>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Signature')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem> 
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="signatureLeftPosition" customText="{formPreferences.signatureLeftPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="signatureTopPosition" customText="{formPreferences.signatureTopPosition}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%" colSpan="2"/>
+				</mx:GridRow>
+				
+			</mx:Grid>
+			
+		</mx:VBox>
+		
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.LineItems')}" width="100%" height="100%">
+		
+			<mx:Grid width="100%" height="100%">
+			
+				<mx:GridRow width="100%">
+				
+					<mx:GridItem width="40%"/>	
+					<mx:GridItem width="15%" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Margin')}:"
+							fontWeight="bold"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Width')}:"
+							fontWeight="bold"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%"/>	
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+				
+					<mx:GridItem width="40%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.InvJobNumber')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem>	
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="invoiceNumberMargin" customText="{formPreferences.invoiceNumberMargin}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="invoiceNumberWidth" customText="{formPreferences.invoiceNumberWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%"/>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+				
+					<mx:GridItem width="40%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.OrderedQty')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem>	
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="orderedQtyMargin" customText="{formPreferences.orderedQtyMargin}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="orderedQtyWidth" customText="{formPreferences.orderedQtyWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%"/>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+				
+					<mx:GridItem width="40%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShippedQty')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem>	
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="shippedQtyMargin" customText="{formPreferences.shippedQtyMargin}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="shippedQtyWidth" customText="{formPreferences.shippedQtyWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%"/>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+				
+					<mx:GridItem width="40%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Description')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem>	
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="descriptionMargin" customText="{formPreferences.descriptionMargin}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="descriptionWidth" customText="{formPreferences.descriptionWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%"/>
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+				
+					<mx:GridItem width="40%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Weight')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem>	
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="weightMargin" customText="{formPreferences.weightMargin}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="weightWidth" customText="{formPreferences.weightWidth}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%"/>
+				</mx:GridRow>
+				
+			</mx:Grid>
+				
+			<mx:Grid width="100%" height="100%">
+				
+				<mx:GridRow width="100%">
+				
+					<mx:GridItem width="55%" colSpan="2" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Widthofallitems')}:"
+							fontWeight="bold" textAlign="right"/>
+					</mx:GridItem>
+					
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="widthOfAllItems" customText="{formPreferences.widthOfAllItems}"
+							precision="2" viewablePrecision="1" rounding="nearest" editable="false"/>
+					</mx:GridItem>
+					<mx:GridItem width="30%"/>
+				</mx:GridRow>
+				
+			</mx:Grid>
+			
+		</mx:VBox>
+		
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Fonts')}" width="100%" height="100%">
+		
+			<mx:HBox width="100%">
+			
+				<mx:Button
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Address')}"
+					click="{openFontComponent('address')}" width="170" />
+							
+				<mx:Label id="addressFont" width="400"/>
+			
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+			
+				<mx:Button
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Date')}"
+					click="{openFontComponent('date')}" width="170" />
+							
+				<mx:Label id="dateFont" width="400"/>
+			
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+			
+				<mx:Button
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stateFontCmd.BodyText')}"
+					click="{openFontComponent('bodyText')}" width="170" />
+							
+				<mx:Label id="bodyTextFont" width="400"/>
+			
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+			
+				<mx:Button
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stateFontCmd.Form')}"
+					click="{openFontComponent('form')}" width="170" />
+							
+				<mx:Label id="formFont" width="400"/>
+			
+			</mx:HBox>
+			
+		</mx:VBox>
+		
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Images')}" width="100%" height="100%">
+			
+			<mx:HBox width="100%" height="100%">
+			
+				<mx:VBox width="50%" height="100%">
+				
+					<mx:Panel width="100%" height="20%" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.FormImageSource')}"
+						layout="vertical" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
+						
+						<mx:RadioButtonGroup id="formImageOptions"/>
+						<components:CustomRadioButtonComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.SharedImage')}" value="SharedImage"
+							dataHolder="{formPreferences}" variableName="formImageSource" customText="{formPreferences.formImageSource}"/>
+						<components:CustomRadioButtonComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.ResourceFile')}" value="ResourceFile"
+							dataHolder="{formPreferences}" variableName="formImageSource" customText="{formPreferences.formImageSource}"/>
+						
+					</mx:Panel>
+					
+					<mx:Button width="100%" height="10%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.Browse')}"/>
+					
+					<mx:Canvas borderStyle="solid" width="100%" height="70%" backgroundColor="#ffffff"/> 
+					
+				</mx:VBox>
+				
+				<mx:VBox width="50%" height="100%">
+				
+					<mx:Panel width="100%" height="20%" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.LogoImageSource')}"
+						layout="vertical" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
+						
+						<mx:RadioButtonGroup id="logoImageOptions"/>
+						<components:CustomRadioButtonComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.SharedImage')}" value="SharedImage"
+							dataHolder="{formPreferences}" variableName="logoImageSource" customText="{formPreferences.logoImageSource}"/>
+						<components:CustomRadioButtonComponent
+							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.ResourceFile')}" value="ResourceFile"
+							dataHolder="{formPreferences}" variableName="logoImageSource" customText="{formPreferences.logoImageSource}"/>
+						
+					</mx:Panel>
+					
+					<mx:Button width="100%" height="10%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.Browse')}"/>
+					
+					<mx:Canvas borderStyle="solid" width="100%" height="70%" backgroundColor="#ffffff"/>
+					
+				</mx:VBox>
+				
+			</mx:HBox>
+			
+		</mx:VBox>
+		
+		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.FormAdjust')}" width="100%" height="100%">
+		
+			<mx:Grid width="100%" height="100%">
+				
+				<mx:GridRow width="100%">
+				
+					<mx:GridItem width="30%"/>
+						
+					<mx:GridItem width="15%" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.LeftRight')}"/>
+					</mx:GridItem>
+					
+					<mx:GridItem width="10%"/>
+					
+					<mx:GridItem width="15%" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.DownUp')}"/>
+					</mx:GridItem>
+					
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+				
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'adjStateCmd.DataOffset')}:"/>
+					</mx:GridItem>
+					
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="dataOffsetLeftRight" customText="{formPreferences.dataOffsetLeftRight}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					
+					<mx:GridItem width="10%"/>
+					
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="dataOffsetDownUp" customText="{formPreferences.dataOffsetDownUp}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					
+				</mx:GridRow>
+				
+				<mx:GridRow width="100%">
+				
+					<mx:GridItem width="30%" horizontalAlign="right">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'adjStateCmd.ImageOffset')}:"/>
+					</mx:GridItem>
+					
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="imageOffsetLeftRight" customText="{formPreferences.imageOffsetLeftRight}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					
+					<mx:GridItem width="10%"/>
+					
+					<mx:GridItem width="15%">
+						<components:CustomNumericTextInputComponent
+							dataHolder="{formPreferences}" variableName="imageOffsetDownUp" customText="{formPreferences.imageOffsetDownUp}"
+							precision="2" viewablePrecision="1" rounding="nearest"/>
+					</mx:GridItem>
+					
+				</mx:GridRow>
+				
+			</mx:Grid>
+			
+		</mx:VBox>
+		
+	</mx:TabNavigator>
+
+	<mx:HBox width="100%" height="15%" horizontalAlign="center">
+		
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'popMeasureMode.Measurementsin')}:" fontWeight="bold"/>
+		<mx:ComboBox/>
+		
+	</mx:HBox>
+	
+</mx:Panel>
