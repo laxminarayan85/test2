@@ -108,6 +108,8 @@ public abstract class CopierPricingMethod {
 		}
 		if (job.getTotalCopies() < 1 && job.getQtyOrdered() > 0)
 			job.setTotalCopies(new Long(1));
+		if (job.getQtyOrdered() == 0)
+			job.setTotalCopies(new Long(0));
 	}
 	
 	private void calculateEstWaste(Job job) {
