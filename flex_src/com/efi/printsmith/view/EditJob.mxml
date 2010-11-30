@@ -2041,11 +2041,11 @@
 				var runSize:Dimension = this.job_size.selectedItem as Dimension;
 				var message:String = "";
 				if (runSize != null) {
-					if (minSize.Name != "" && (runSize.width * runSize.height) < (minSizeWidth * minSizeLength)) {
+					if (minSize.name != "" && (runSize.width * runSize.height) < (minSizeWidth * minSizeLength)) {
 						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeisless");
 						Alert.show(message, "Warning", 0, null, null, null, 4); 
 					}
-					if (maxSize.Name != "" && (runSize.width * runSize.height) > (maxSizeWidth * maxSizeLength)) {
+					if (maxSize.name != "" && (runSize.width * runSize.height) > (maxSizeWidth * maxSizeLength)) {
 						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeexceed");
 						Alert.show(message, "Warning", 0, null, null, null, 4); 
 					}
@@ -2070,14 +2070,19 @@
 	
 				if (this.currentState != "LargeFormat") {
 					if ((job.finishSize != null && job.runSize != null) && (job.finishSize.width == 0 || job.finishSize.height == 0 || job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height)) {
+						var warn:Boolean = true;
+						if (job.finishSize.width == 0 || job.finishSize.height == 0)
+							warn = false;
 						job.finishSize.name = job.runSize.name;
 						job.finishSize.type = job.runSize.type;
 						job.finishSize.height = job.runSize.height;
 						job.finishSize.width = job.runSize.width;
 						job_finish_size.text = job.finishSize.name;
 						job_finish_size.selectedIndex = job_size.selectedIndex;
-						var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
-						Alert.show(message, "Warning", 0, null, null, null, 4); 
+						if (warn == true) {
+							var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
+							Alert.show(message, "Warning", 0, null, null, null, 4); 
+						}
 					}
 				}
 				
