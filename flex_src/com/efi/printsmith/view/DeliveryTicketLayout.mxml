@@ -39,6 +39,7 @@
 				}
 				updateFontLabels();
 				loadMeasurements();
+				measurement_combo.customText = getCustomTextData(measurementList,formPreferences,formPreferences.measurement);
 				var inputArgs:Array = new Array();
 				inputArgs.push(this);
 				callLater(setPrecisonValue,inputArgs);
@@ -1230,7 +1231,7 @@
 	<mx:HBox width="100%" height="7%" horizontalAlign="center">
 		
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'popMeasureMode.Measurementsin')}:" fontWeight="bold"/>
-		<components:CustomComboBoxComponent
+		<components:CustomComboBoxComponent id="measurement_combo"
 			masterList="{measurementList}" labelFieldId="key" labelFieldName="value"
 			dataHolder="{formPreferences}" variableName="measurement" customText="{getCustomTextData(measurementList,formPreferences,formPreferences.measurement)}"
 			change="{updateNumericFields()}"/>
