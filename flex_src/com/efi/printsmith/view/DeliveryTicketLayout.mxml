@@ -12,6 +12,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.common.components.CustomNumericTextInputComponent;
+			import mx.core.Container;
 			import mx.collections.ArrayCollection;
 			import mx.rpc.events.FaultEvent;
 			import com.efi.printsmith.events.FormPreferencesUpdateEvent;
@@ -37,6 +39,9 @@
 				}
 				updateFontLabels();
 				loadMeasurements();
+				var inputArgs:Array = new Array();
+				inputArgs.push(this);
+				callLater(setPrecisonValue,inputArgs);
 			}
 			
 			private function loadMeasurements():void {
@@ -234,9 +239,75 @@
 			
 			private function updateNumericFields():void {
 				if(measurementValue!=null && measurementValue!=""){
-					
+					var conversionFactor:Number = 0;
+					if(measurementValue=="Pixels" && formPreferences.measurement=="Inches") {
+						conversionFactor = 0.01389;
+					} else if(measurementValue=="Pixels" && formPreferences.measurement=="Centimeters") {
+						conversionFactor = 0.035;
+					} else if(measurementValue=="Pixels" && formPreferences.measurement=="Millimeters") {
+						conversionFactor = 0.35;
+					} else if(measurementValue=="Inches" && formPreferences.measurement=="Pixels") {
+						conversionFactor = 72;
+					} else if(measurementValue=="Inches" && formPreferences.measurement=="Centimeters") {
+						conversionFactor = 2.54;
+					} else if(measurementValue=="Inches" && formPreferences.measurement=="Millimeters") {
+						conversionFactor = 25.4;
+					} else if(measurementValue=="Millimeters" && formPreferences.measurement=="Pixels") {
+						conversionFactor = 2.8571;
+					} else if(measurementValue=="Millimeters" && formPreferences.measurement=="Inches") {
+						conversionFactor = 0.03937;
+					} else if(measurementValue=="Millimeters" && formPreferences.measurement=="Centimeters") {
+						conversionFactor = 0.1;
+					} else if(measurementValue=="Centimeters" && formPreferences.measurement=="Pixels") {
+						conversionFactor = 28.571;
+					} else if(measurementValue=="Centimeters" && formPreferences.measurement=="Inches") {
+						conversionFactor = 0.3937;
+					} else if(measurementValue=="Centimeters" && formPreferences.measurement=="Millimeters") {
+						conversionFactor = 10;
+					}
+					convertNumericFields(conversionFactor,this);
 				}
+				updateTotalWidth();
 				measurementValue = formPreferences.measurement;
+				var inputArgs:Array = new Array();
+				inputArgs.push(this);
+				callLater(setPrecisonValue,inputArgs);
+			}
+			
+			private function convertNumericFields(conversionFactor:Number,object:Object):void {
+				if(object is Container){
+					for(var i:int=0;i<object.getChildren().length;i++){
+						if(object.getChildren()[i] is CustomNumericTextInputComponent){
+							var numericTextInputComponent:CustomNumericTextInputComponent = object.getChildren()[i] as CustomNumericTextInputComponent;
+							if(numericTextInputComponent.editable) {
+								numericTextInputComponent.dataHolder[numericTextInputComponent.variableName] = numericTextInputComponent.dataHolder[numericTextInputComponent.variableName]*conversionFactor; 
+							}
+						}
+						convertNumericFields(conversionFactor,object.getChildren()[i]);
+					}
+				}
+			}
+			
+			private function setPrecisonValue(object:Object):void {
+				if(object is Container){
+					for(var i:int=0;i<object.getChildren().length;i++){
+						if(object.getChildren()[i] is CustomNumericTextInputComponent){
+							var numericTextInputComponent:CustomNumericTextInputComponent = object.getChildren()[i] as CustomNumericTextInputComponent;
+							if(measurementValue=="Pixels"){
+								numericTextInputComponent.precision = 0;
+								numericTextInputComponent.viewablePrecision = 0;
+								numericTextInputComponent.isInteger = true;
+								numericTextInputComponent.updatePrecison();
+							} else {
+								numericTextInputComponent.precision = 2;
+								numericTextInputComponent.viewablePrecision = 1;
+								numericTextInputComponent.isInteger = false;
+								numericTextInputComponent.updatePrecison();
+							}
+						}
+						setPrecisonValue(object.getChildren()[i]);
+					}
+				}
 			}
 			
 		]]>
