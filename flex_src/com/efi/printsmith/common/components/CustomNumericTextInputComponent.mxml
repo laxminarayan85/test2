@@ -55,6 +55,7 @@
 			public var variableName:String;
 			[Bindable] public var textAlignStyle:String;
 			
+			
 			/*
 			 *This method helps to display the tooltip.
 			 */ 
@@ -184,6 +185,11 @@
 		      	} else {
 		      		setStyle('textAlign','right');
 		      	}
+		    }
+		    
+		    public function updatePrecison():void {
+		    	initializeProperties();
+		    	customText = dataHolder[variableName];
 		    }
 			
 			/*
