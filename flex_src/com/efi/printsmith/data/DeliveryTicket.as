@@ -59,6 +59,7 @@ package com.efi.printsmith.data
 		public var dateType:String = "";
 		public var deliveryJobs:ArrayCollection;
 		public var totalWeightUpdated:Boolean = false;
+		public var formPreferences:FormPreferences;
 	
 	}
 }

@@ -32,8 +32,8 @@ import org.hibernate.annotations.Where;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "FormPreferences.findall", query = "from FormPreferences"),
-	@NamedQuery(name = "FormPreferences.byId", query = "select a from FormPreferences a where a.id= :id")
+  @NamedQuery(name = "FormPreferences.findall", query = "from FormPreferences"),
+  @NamedQuery(name = "FormPreferences.byId", query = "select a from FormPreferences a where a.id= :id")
 })
 
 
@@ -473,10 +473,10 @@ public class FormPreferences extends ModelBase {
 	 * @generated
 	 */
 	public FormPreferences() {
-		this.created = new Date();
-		this.modified = new Date();
-		this.isDeleted = false;
-	}
+    this.created = new Date();
+    this.modified = new Date();
+    this.isDeleted = false;
+  }
 
 	@Basic
 	private Boolean isDeleted = false;
@@ -500,16 +500,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public String getTitle(){
-		return title; 
-	}
+    return title; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTitle(String newVal) {
-		this.title = newVal;
-	}
+    this.title = newVal;
+  }
 	
  	
 	
@@ -523,16 +523,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public String getStyleOption(){
-		return styleOption; 
-	}
+    return styleOption; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setStyleOption(String newVal) {
-		this.styleOption = newVal;
-	}
+    this.styleOption = newVal;
+  }
 	
  	
 	
@@ -546,16 +546,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowFromAddress(){
-		return showFromAddress; 
-	}
+    return showFromAddress; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowFromAddress(Boolean newVal) {
-		this.showFromAddress = newVal;
-	}
+    this.showFromAddress = newVal;
+  }
 	
  	
 	
@@ -569,16 +569,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowToAddress(){
-		return showToAddress; 
-	}
+    return showToAddress; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowToAddress(Boolean newVal) {
-		this.showToAddress = newVal;
-	}
+    this.showToAddress = newVal;
+  }
 	
  	
 	
@@ -592,16 +592,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowAttn(){
-		return showAttn; 
-	}
+    return showAttn; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowAttn(Boolean newVal) {
-		this.showAttn = newVal;
-	}
+    this.showAttn = newVal;
+  }
 	
  	
 	
@@ -615,16 +615,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowShipVia(){
-		return showShipVia; 
-	}
+    return showShipVia; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowShipVia(Boolean newVal) {
-		this.showShipVia = newVal;
-	}
+    this.showShipVia = newVal;
+  }
 	
  	
 	
@@ -638,16 +638,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowDeliveryDate(){
-		return showDeliveryDate; 
-	}
+    return showDeliveryDate; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowDeliveryDate(Boolean newVal) {
-		this.showDeliveryDate = newVal;
-	}
+    this.showDeliveryDate = newVal;
+  }
 	
  	
 	
@@ -661,16 +661,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowCustomPO(){
-		return showCustomPO; 
-	}
+    return showCustomPO; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowCustomPO(Boolean newVal) {
-		this.showCustomPO = newVal;
-	}
+    this.showCustomPO = newVal;
+  }
 	
  	
 	
@@ -684,16 +684,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowOrderNumber(){
-		return showOrderNumber; 
-	}
+    return showOrderNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowOrderNumber(Boolean newVal) {
-		this.showOrderNumber = newVal;
-	}
+    this.showOrderNumber = newVal;
+  }
 	
  	
 	
@@ -707,16 +707,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowPartNumber(){
-		return showPartNumber; 
-	}
+    return showPartNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowPartNumber(Boolean newVal) {
-		this.showPartNumber = newVal;
-	}
+    this.showPartNumber = newVal;
+  }
 	
  	
 	
@@ -730,16 +730,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowTrackingNumber(){
-		return showTrackingNumber; 
-	}
+    return showTrackingNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowTrackingNumber(Boolean newVal) {
-		this.showTrackingNumber = newVal;
-	}
+    this.showTrackingNumber = newVal;
+  }
 	
  	
 	
@@ -753,16 +753,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowReference(){
-		return showReference; 
-	}
+    return showReference; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowReference(Boolean newVal) {
-		this.showReference = newVal;
-	}
+    this.showReference = newVal;
+  }
 	
  	
 	
@@ -776,16 +776,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowDescription(){
-		return showDescription; 
-	}
+    return showDescription; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowDescription(Boolean newVal) {
-		this.showDescription = newVal;
-	}
+    this.showDescription = newVal;
+  }
 	
  	
 	
@@ -799,16 +799,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowComment(){
-		return showComment; 
-	}
+    return showComment; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowComment(Boolean newVal) {
-		this.showComment = newVal;
-	}
+    this.showComment = newVal;
+  }
 	
  	
 	
@@ -822,16 +822,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowSignature(){
-		return showSignature; 
-	}
+    return showSignature; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowSignature(Boolean newVal) {
-		this.showSignature = newVal;
-	}
+    this.showSignature = newVal;
+  }
 	
  	
 	
@@ -845,16 +845,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowBarCodes(){
-		return showBarCodes; 
-	}
+    return showBarCodes; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowBarCodes(Boolean newVal) {
-		this.showBarCodes = newVal;
-	}
+    this.showBarCodes = newVal;
+  }
 	
  	
 	
@@ -868,16 +868,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowLogo(){
-		return showLogo; 
-	}
+    return showLogo; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowLogo(Boolean newVal) {
-		this.showLogo = newVal;
-	}
+    this.showLogo = newVal;
+  }
 	
  	
 	
@@ -891,16 +891,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowDeliveryNumber(){
-		return showDeliveryNumber; 
-	}
+    return showDeliveryNumber; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowDeliveryNumber(Boolean newVal) {
-		this.showDeliveryNumber = newVal;
-	}
+    this.showDeliveryNumber = newVal;
+  }
 	
  	
 	
@@ -914,16 +914,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowDriver(){
-		return showDriver; 
-	}
+    return showDriver; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowDriver(Boolean newVal) {
-		this.showDriver = newVal;
-	}
+    this.showDriver = newVal;
+  }
 	
  	
 	
@@ -937,16 +937,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowCartonCount(){
-		return showCartonCount; 
-	}
+    return showCartonCount; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowCartonCount(Boolean newVal) {
-		this.showCartonCount = newVal;
-	}
+    this.showCartonCount = newVal;
+  }
 	
  	
 	
@@ -954,1152 +954,1052 @@ public class FormPreferences extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Long logoLeftPosition;
+	private Double logoLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getLogoLeftPosition(){
-		return logoLeftPosition; 
-	}
+	public Double getLogoLeftPosition(){
+    return logoLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLogoLeftPosition(Long newVal) {
-		this.logoLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setLogoLeftPosition(Double newVal) {
+    this.logoLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long logoTopPosition;
+	private Double logoTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getLogoTopPosition(){
-		return logoTopPosition; 
-	}
+	public Double getLogoTopPosition(){
+    return logoTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLogoTopPosition(Long newVal) {
-		this.logoTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setLogoTopPosition(Double newVal) {
+    this.logoTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long logoAcrossWidth;
+	private Double logoAcrossWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getLogoAcrossWidth(){
-		return logoAcrossWidth; 
-	}
+	public Double getLogoAcrossWidth(){
+    return logoAcrossWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLogoAcrossWidth(Long newVal) {
-		this.logoAcrossWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setLogoAcrossWidth(Double newVal) {
+    this.logoAcrossWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long logoDownWidth;
+	private Double logoDownWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getLogoDownWidth(){
-		return logoDownWidth; 
-	}
+	public Double getLogoDownWidth(){
+    return logoDownWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLogoDownWidth(Long newVal) {
-		this.logoDownWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setLogoDownWidth(Double newVal) {
+    this.logoDownWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long fromAddressLeftPosition;
+	private Double fromAddressLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getFromAddressLeftPosition(){
-		return fromAddressLeftPosition; 
-	}
+	public Double getFromAddressLeftPosition(){
+    return fromAddressLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFromAddressLeftPosition(Long newVal) {
-		this.fromAddressLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setFromAddressLeftPosition(Double newVal) {
+    this.fromAddressLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long fromAddressTopPosition;
+	private Double fromAddressTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getFromAddressTopPosition(){
-		return fromAddressTopPosition; 
-	}
+	public Double getFromAddressTopPosition(){
+    return fromAddressTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFromAddressTopPosition(Long newVal) {
-		this.fromAddressTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setFromAddressTopPosition(Double newVal) {
+    this.fromAddressTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long fromAddressAcrossWidth;
+	private Double fromAddressAcrossWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getFromAddressAcrossWidth(){
-		return fromAddressAcrossWidth; 
-	}
+	public Double getFromAddressAcrossWidth(){
+    return fromAddressAcrossWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFromAddressAcrossWidth(Long newVal) {
-		this.fromAddressAcrossWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setFromAddressAcrossWidth(Double newVal) {
+    this.fromAddressAcrossWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long fromAddressDownWidth;
+	private Double fromAddressDownWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getFromAddressDownWidth(){
-		return fromAddressDownWidth; 
-	}
+	public Double getFromAddressDownWidth(){
+    return fromAddressDownWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFromAddressDownWidth(Long newVal) {
-		this.fromAddressDownWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setFromAddressDownWidth(Double newVal) {
+    this.fromAddressDownWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long toAddressLeftPosition;
+	private Double toAddressLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getToAddressLeftPosition(){
-		return toAddressLeftPosition; 
-	}
+	public Double getToAddressLeftPosition(){
+    return toAddressLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setToAddressLeftPosition(Long newVal) {
-		this.toAddressLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setToAddressLeftPosition(Double newVal) {
+    this.toAddressLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long toAddressTopPosition;
+	private Double toAddressTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getToAddressTopPosition(){
-		return toAddressTopPosition; 
-	}
+	public Double getToAddressTopPosition(){
+    return toAddressTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setToAddressTopPosition(Long newVal) {
-		this.toAddressTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setToAddressTopPosition(Double newVal) {
+    this.toAddressTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long toAddressAcrossWidth;
+	private Double toAddressAcrossWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getToAddressAcrossWidth(){
-		return toAddressAcrossWidth; 
-	}
+	public Double getToAddressAcrossWidth(){
+    return toAddressAcrossWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setToAddressAcrossWidth(Long newVal) {
-		this.toAddressAcrossWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setToAddressAcrossWidth(Double newVal) {
+    this.toAddressAcrossWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long toAddressDownWidth;
+	private Double toAddressDownWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getToAddressDownWidth(){
-		return toAddressDownWidth; 
-	}
+	public Double getToAddressDownWidth(){
+    return toAddressDownWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setToAddressDownWidth(Long newVal) {
-		this.toAddressDownWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setToAddressDownWidth(Double newVal) {
+    this.toAddressDownWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long attnLeftPosition;
+	private Double attnLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getAttnLeftPosition(){
-		return attnLeftPosition; 
-	}
+	public Double getAttnLeftPosition(){
+    return attnLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAttnLeftPosition(Long newVal) {
-		this.attnLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setAttnLeftPosition(Double newVal) {
+    this.attnLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long attnTopPosition;
+	private Double attnTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getAttnTopPosition(){
-		return attnTopPosition; 
-	}
+	public Double getAttnTopPosition(){
+    return attnTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAttnTopPosition(Long newVal) {
-		this.attnTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setAttnTopPosition(Double newVal) {
+    this.attnTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long attnAcrossWidth;
+	private Double attnAcrossWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getAttnAcrossWidth(){
-		return attnAcrossWidth; 
-	}
+	public Double getAttnAcrossWidth(){
+    return attnAcrossWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAttnAcrossWidth(Long newVal) {
-		this.attnAcrossWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setAttnAcrossWidth(Double newVal) {
+    this.attnAcrossWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long attnDownWidth;
+	private Double attnDownWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getAttnDownWidth(){
-		return attnDownWidth; 
-	}
+	public Double getAttnDownWidth(){
+    return attnDownWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAttnDownWidth(Long newVal) {
-		this.attnDownWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setAttnDownWidth(Double newVal) {
+    this.attnDownWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long lineLeftPosition;
+	private Double lineLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getLineLeftPosition(){
-		return lineLeftPosition; 
-	}
+	public Double getLineLeftPosition(){
+    return lineLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLineLeftPosition(Long newVal) {
-		this.lineLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setLineLeftPosition(Double newVal) {
+    this.lineLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long lineTopPosition;
+	private Double lineTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getLineTopPosition(){
-		return lineTopPosition; 
-	}
+	public Double getLineTopPosition(){
+    return lineTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLineTopPosition(Long newVal) {
-		this.lineTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setLineTopPosition(Double newVal) {
+    this.lineTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long lineAcrossWidth;
+	private Double lineAcrossWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getLineAcrossWidth(){
-		return lineAcrossWidth; 
-	}
+	public Double getLineAcrossWidth(){
+    return lineAcrossWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLineAcrossWidth(Long newVal) {
-		this.lineAcrossWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setLineAcrossWidth(Double newVal) {
+    this.lineAcrossWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long lineDownWidth;
+	private Double lineDownWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getLineDownWidth(){
-		return lineDownWidth; 
-	}
+	public Double getLineDownWidth(){
+    return lineDownWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLineDownWidth(Long newVal) {
-		this.lineDownWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setLineDownWidth(Double newVal) {
+    this.lineDownWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long commentLeftPosition;
+	private Double commentLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getCommentLeftPosition(){
-		return commentLeftPosition; 
-	}
+	public Double getCommentLeftPosition(){
+    return commentLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCommentLeftPosition(Long newVal) {
-		this.commentLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setCommentLeftPosition(Double newVal) {
+    this.commentLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long commentTopPosition;
+	private Double commentTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getCommentTopPosition(){
-		return commentTopPosition; 
-	}
+	public Double getCommentTopPosition(){
+    return commentTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCommentTopPosition(Long newVal) {
-		this.commentTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setCommentTopPosition(Double newVal) {
+    this.commentTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long commentAcrossWidth;
+	private Double commentAcrossWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getCommentAcrossWidth(){
-		return commentAcrossWidth; 
-	}
+	public Double getCommentAcrossWidth(){
+    return commentAcrossWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCommentAcrossWidth(Long newVal) {
-		this.commentAcrossWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setCommentAcrossWidth(Double newVal) {
+    this.commentAcrossWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long commentDownWidth;
+	private Double commentDownWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getCommentDownWidth(){
-		return commentDownWidth; 
-	}
+	public Double getCommentDownWidth(){
+    return commentDownWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCommentDownWidth(Long newVal) {
-		this.commentDownWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setCommentDownWidth(Double newVal) {
+    this.commentDownWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long deliveryDateLeftPosition;
+	private Double deliveryDateLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDeliveryDateLeftPosition(){
-		return deliveryDateLeftPosition; 
-	}
+	public Double getDeliveryDateLeftPosition(){
+    return deliveryDateLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDeliveryDateLeftPosition(Long newVal) {
-		this.deliveryDateLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDeliveryDateLeftPosition(Double newVal) {
+    this.deliveryDateLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long deliveryDateTopPosition;
+	private Double deliveryDateTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDeliveryDateTopPosition(){
-		return deliveryDateTopPosition; 
-	}
+	public Double getDeliveryDateTopPosition(){
+    return deliveryDateTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDeliveryDateTopPosition(Long newVal) {
-		this.deliveryDateTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDeliveryDateTopPosition(Double newVal) {
+    this.deliveryDateTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long referenceLeftPosition;
+	private Double referenceLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getReferenceLeftPosition(){
-		return referenceLeftPosition; 
-	}
+	public Double getReferenceLeftPosition(){
+    return referenceLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setReferenceLeftPosition(Long newVal) {
-		this.referenceLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setReferenceLeftPosition(Double newVal) {
+    this.referenceLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long referenceTopPosition;
+	private Double referenceTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getReferenceTopPosition(){
-		return referenceTopPosition; 
-	}
+	public Double getReferenceTopPosition(){
+    return referenceTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setReferenceTopPosition(Long newVal) {
-		this.referenceTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setReferenceTopPosition(Double newVal) {
+    this.referenceTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long shipViaLeftPosition;
+	private Double shipViaLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getShipViaLeftPosition(){
-		return shipViaLeftPosition; 
-	}
+	public Double getShipViaLeftPosition(){
+    return shipViaLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setShipViaLeftPosition(Long newVal) {
-		this.shipViaLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setShipViaLeftPosition(Double newVal) {
+    this.shipViaLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long shipViaTopPosition;
+	private Double shipViaTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getShipViaTopPosition(){
-		return shipViaTopPosition; 
-	}
+	public Double getShipViaTopPosition(){
+    return shipViaTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setShipViaTopPosition(Long newVal) {
-		this.shipViaTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setShipViaTopPosition(Double newVal) {
+    this.shipViaTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long customerPOLeftPosition;
+	private Double customerPOLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getCustomerPOLeftPosition(){
-		return customerPOLeftPosition; 
-	}
+	public Double getCustomerPOLeftPosition(){
+    return customerPOLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCustomerPOLeftPosition(Long newVal) {
-		this.customerPOLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setCustomerPOLeftPosition(Double newVal) {
+    this.customerPOLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long customerPOTopPosition;
+	private Double customerPOTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getCustomerPOTopPosition(){
-		return customerPOTopPosition; 
-	}
+	public Double getCustomerPOTopPosition(){
+    return customerPOTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCustomerPOTopPosition(Long newVal) {
-		this.customerPOTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setCustomerPOTopPosition(Double newVal) {
+    this.customerPOTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long orderNumberLeftPosition;
+	private Double orderNumberLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getOrderNumberLeftPosition(){
-		return orderNumberLeftPosition; 
-	}
+	public Double getOrderNumberLeftPosition(){
+    return orderNumberLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setOrderNumberLeftPosition(Long newVal) {
-		this.orderNumberLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setOrderNumberLeftPosition(Double newVal) {
+    this.orderNumberLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long orderNumberTopPosition;
+	private Double orderNumberTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getOrderNumberTopPosition(){
-		return orderNumberTopPosition; 
-	}
+	public Double getOrderNumberTopPosition(){
+    return orderNumberTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setOrderNumberTopPosition(Long newVal) {
-		this.orderNumberTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setOrderNumberTopPosition(Double newVal) {
+    this.orderNumberTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long partNumberLeftPosition;
+	private Double partNumberLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getPartNumberLeftPosition(){
-		return partNumberLeftPosition; 
-	}
+	public Double getPartNumberLeftPosition(){
+    return partNumberLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPartNumberLeftPosition(Long newVal) {
-		this.partNumberLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setPartNumberLeftPosition(Double newVal) {
+    this.partNumberLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long partNumberTopPosition;
+	private Double partNumberTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getPartNumberTopPosition(){
-		return partNumberTopPosition; 
-	}
+	public Double getPartNumberTopPosition(){
+    return partNumberTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setPartNumberTopPosition(Long newVal) {
-		this.partNumberTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setPartNumberTopPosition(Double newVal) {
+    this.partNumberTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long trackingNumberLeftPosition;
+	private Double trackingNumberLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getTrackingNumberLeftPosition(){
-		return trackingNumberLeftPosition; 
-	}
+	public Double getTrackingNumberLeftPosition(){
+    return trackingNumberLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTrackingNumberLeftPosition(Long newVal) {
-		this.trackingNumberLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setTrackingNumberLeftPosition(Double newVal) {
+    this.trackingNumberLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long trackingNumberTopPosition;
+	private Double trackingNumberTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getTrackingNumberTopPosition(){
-		return trackingNumberTopPosition; 
-	}
+	public Double getTrackingNumberTopPosition(){
+    return trackingNumberTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setTrackingNumberTopPosition(Long newVal) {
-		this.trackingNumberTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setTrackingNumberTopPosition(Double newVal) {
+    this.trackingNumberTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long deliveryNumberLeftPosition;
+	private Double deliveryNumberLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDeliveryNumberLeftPosition(){
-		return deliveryNumberLeftPosition; 
-	}
+	public Double getDeliveryNumberLeftPosition(){
+    return deliveryNumberLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDeliveryNumberLeftPosition(Long newVal) {
-		this.deliveryNumberLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDeliveryNumberLeftPosition(Double newVal) {
+    this.deliveryNumberLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long deliveryNumberTopPosition;
+	private Double deliveryNumberTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDeliveryNumberTopPosition(){
-		return deliveryNumberTopPosition; 
-	}
+	public Double getDeliveryNumberTopPosition(){
+    return deliveryNumberTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDeliveryNumberTopPosition(Long newVal) {
-		this.deliveryNumberTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDeliveryNumberTopPosition(Double newVal) {
+    this.deliveryNumberTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long driverLeftPosition;
+	private Double driverLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDriverLeftPosition(){
-		return driverLeftPosition; 
-	}
+	public Double getDriverLeftPosition(){
+    return driverLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDriverLeftPosition(Long newVal) {
-		this.driverLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDriverLeftPosition(Double newVal) {
+    this.driverLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long driverTopPosition;
+	private Double driverTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDriverTopPosition(){
-		return driverTopPosition; 
-	}
+	public Double getDriverTopPosition(){
+    return driverTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDriverTopPosition(Long newVal) {
-		this.driverTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDriverTopPosition(Double newVal) {
+    this.driverTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long cartonCountLeftPosition;
+	private Double cartonCountLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getCartonCountLeftPosition(){
-		return cartonCountLeftPosition; 
-	}
+	public Double getCartonCountLeftPosition(){
+    return cartonCountLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCartonCountLeftPosition(Long newVal) {
-		this.cartonCountLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setCartonCountLeftPosition(Double newVal) {
+    this.cartonCountLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long cartonCountTopPosition;
+	private Double cartonCountTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getCartonCountTopPosition(){
-		return cartonCountTopPosition; 
-	}
+	public Double getCartonCountTopPosition(){
+    return cartonCountTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCartonCountTopPosition(Long newVal) {
-		this.cartonCountTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setCartonCountTopPosition(Double newVal) {
+    this.cartonCountTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long codLeftPosition;
+	private Double codLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getCodLeftPosition(){
-		return codLeftPosition; 
-	}
+	public Double getCodLeftPosition(){
+    return codLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCodLeftPosition(Long newVal) {
-		this.codLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setCodLeftPosition(Double newVal) {
+    this.codLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long codTopPosition;
+	private Double codTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getCodTopPosition(){
-		return codTopPosition; 
-	}
+	public Double getCodTopPosition(){
+    return codTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setCodTopPosition(Long newVal) {
-		this.codTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setCodTopPosition(Double newVal) {
+    this.codTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long descriptionLeftPosition;
+	private Double descriptionLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDescriptionLeftPosition(){
-		return descriptionLeftPosition; 
-	}
+	public Double getDescriptionLeftPosition(){
+    return descriptionLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDescriptionLeftPosition(Long newVal) {
-		this.descriptionLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDescriptionLeftPosition(Double newVal) {
+    this.descriptionLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long descriptionTopPosition;
+	private Double descriptionTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDescriptionTopPosition(){
-		return descriptionTopPosition; 
-	}
+	public Double getDescriptionTopPosition(){
+    return descriptionTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDescriptionTopPosition(Long newVal) {
-		this.descriptionTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDescriptionTopPosition(Double newVal) {
+    this.descriptionTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long signatureLeftPosition;
+	private Double signatureLeftPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getSignatureLeftPosition(){
-		return signatureLeftPosition; 
-	}
+	public Double getSignatureLeftPosition(){
+    return signatureLeftPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSignatureLeftPosition(Long newVal) {
-		this.signatureLeftPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setSignatureLeftPosition(Double newVal) {
+    this.signatureLeftPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long signatureTopPosition;
+	private Double signatureTopPosition;
 	
 	/**
 	 * @generated
  	 */
-	public Long getSignatureTopPosition(){
-		return signatureTopPosition; 
-	}
+	public Double getSignatureTopPosition(){
+    return signatureTopPosition; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setSignatureTopPosition(Long newVal) {
-		this.signatureTopPosition = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setSignatureTopPosition(Double newVal) {
+    this.signatureTopPosition = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -2110,16 +2010,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowDeliveryDateTitle(){
-		return showDeliveryDateTitle; 
-	}
+    return showDeliveryDateTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowDeliveryDateTitle(Boolean newVal) {
-		this.showDeliveryDateTitle = newVal;
-	}
+    this.showDeliveryDateTitle = newVal;
+  }
 	
  	
 	
@@ -2133,16 +2033,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowReferenceTitle(){
-		return showReferenceTitle; 
-	}
+    return showReferenceTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowReferenceTitle(Boolean newVal) {
-		this.showReferenceTitle = newVal;
-	}
+    this.showReferenceTitle = newVal;
+  }
 	
  	
 	
@@ -2156,16 +2056,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowShipViaTitle(){
-		return showShipViaTitle; 
-	}
+    return showShipViaTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowShipViaTitle(Boolean newVal) {
-		this.showShipViaTitle = newVal;
-	}
+    this.showShipViaTitle = newVal;
+  }
 	
  	
 	
@@ -2179,16 +2079,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowCustomerPOTitle(){
-		return showCustomerPOTitle; 
-	}
+    return showCustomerPOTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowCustomerPOTitle(Boolean newVal) {
-		this.showCustomerPOTitle = newVal;
-	}
+    this.showCustomerPOTitle = newVal;
+  }
 	
  	
 	
@@ -2202,16 +2102,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowOrderNumberTitle(){
-		return showOrderNumberTitle; 
-	}
+    return showOrderNumberTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowOrderNumberTitle(Boolean newVal) {
-		this.showOrderNumberTitle = newVal;
-	}
+    this.showOrderNumberTitle = newVal;
+  }
 	
  	
 	
@@ -2225,16 +2125,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowPartNumberTitle(){
-		return showPartNumberTitle; 
-	}
+    return showPartNumberTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowPartNumberTitle(Boolean newVal) {
-		this.showPartNumberTitle = newVal;
-	}
+    this.showPartNumberTitle = newVal;
+  }
 	
  	
 	
@@ -2248,16 +2148,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowTrackingNumberTitle(){
-		return showTrackingNumberTitle; 
-	}
+    return showTrackingNumberTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowTrackingNumberTitle(Boolean newVal) {
-		this.showTrackingNumberTitle = newVal;
-	}
+    this.showTrackingNumberTitle = newVal;
+  }
 	
  	
 	
@@ -2271,16 +2171,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowDeliveryNumberTitle(){
-		return showDeliveryNumberTitle; 
-	}
+    return showDeliveryNumberTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowDeliveryNumberTitle(Boolean newVal) {
-		this.showDeliveryNumberTitle = newVal;
-	}
+    this.showDeliveryNumberTitle = newVal;
+  }
 	
  	
 	
@@ -2294,16 +2194,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowDriverTitle(){
-		return showDriverTitle; 
-	}
+    return showDriverTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowDriverTitle(Boolean newVal) {
-		this.showDriverTitle = newVal;
-	}
+    this.showDriverTitle = newVal;
+  }
 	
  	
 	
@@ -2317,16 +2217,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowCartonCountTitle(){
-		return showCartonCountTitle; 
-	}
+    return showCartonCountTitle; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowCartonCountTitle(Boolean newVal) {
-		this.showCartonCountTitle = newVal;
-	}
+    this.showCartonCountTitle = newVal;
+  }
 	
  	
 	
@@ -2334,255 +2234,233 @@ public class FormPreferences extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Long invoiceNumberMargin;
+	private Double invoiceNumberMargin;
 	
 	/**
 	 * @generated
  	 */
-	public Long getInvoiceNumberMargin(){
-		return invoiceNumberMargin; 
-	}
+	public Double getInvoiceNumberMargin(){
+    return invoiceNumberMargin; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setInvoiceNumberMargin(Long newVal) {
-		this.invoiceNumberMargin = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setInvoiceNumberMargin(Double newVal) {
+    this.invoiceNumberMargin = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long orderedQtyMargin;
+	private Double orderedQtyMargin;
 	
 	/**
 	 * @generated
  	 */
-	public Long getOrderedQtyMargin(){
-		return orderedQtyMargin; 
-	}
+	public Double getOrderedQtyMargin(){
+    return orderedQtyMargin; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setOrderedQtyMargin(Long newVal) {
-		this.orderedQtyMargin = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setOrderedQtyMargin(Double newVal) {
+    this.orderedQtyMargin = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long shippedQtyMargin;
+	private Double shippedQtyMargin;
 	
 	/**
 	 * @generated
  	 */
-	public Long getShippedQtyMargin(){
-		return shippedQtyMargin; 
-	}
+	public Double getShippedQtyMargin(){
+    return shippedQtyMargin; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setShippedQtyMargin(Long newVal) {
-		this.shippedQtyMargin = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setShippedQtyMargin(Double newVal) {
+    this.shippedQtyMargin = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long descriptionMargin;
+	private Double descriptionMargin;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDescriptionMargin(){
-		return descriptionMargin; 
-	}
+	public Double getDescriptionMargin(){
+    return descriptionMargin; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDescriptionMargin(Long newVal) {
-		this.descriptionMargin = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDescriptionMargin(Double newVal) {
+    this.descriptionMargin = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long weightMargin;
+	private Double weightMargin;
 	
 	/**
 	 * @generated
  	 */
-	public Long getWeightMargin(){
-		return weightMargin; 
-	}
+	public Double getWeightMargin(){
+    return weightMargin; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setWeightMargin(Long newVal) {
-		this.weightMargin = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setWeightMargin(Double newVal) {
+    this.weightMargin = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long invoiceNumberWidth;
+	private Double invoiceNumberWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getInvoiceNumberWidth(){
-		return invoiceNumberWidth; 
-	}
+	public Double getInvoiceNumberWidth(){
+    return invoiceNumberWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setInvoiceNumberWidth(Long newVal) {
-		this.invoiceNumberWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setInvoiceNumberWidth(Double newVal) {
+    this.invoiceNumberWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long orderedQtyWidth;
+	private Double orderedQtyWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getOrderedQtyWidth(){
-		return orderedQtyWidth; 
-	}
+	public Double getOrderedQtyWidth(){
+    return orderedQtyWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setOrderedQtyWidth(Long newVal) {
-		this.orderedQtyWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setOrderedQtyWidth(Double newVal) {
+    this.orderedQtyWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long shippedQtyWidth;
+	private Double shippedQtyWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getShippedQtyWidth(){
-		return shippedQtyWidth; 
-	}
+	public Double getShippedQtyWidth(){
+    return shippedQtyWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setShippedQtyWidth(Long newVal) {
-		this.shippedQtyWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setShippedQtyWidth(Double newVal) {
+    this.shippedQtyWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long descriptionWidth;
+	private Double descriptionWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDescriptionWidth(){
-		return descriptionWidth; 
-	}
+	public Double getDescriptionWidth(){
+    return descriptionWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDescriptionWidth(Long newVal) {
-		this.descriptionWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDescriptionWidth(Double newVal) {
+    this.descriptionWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long weightWidth;
+	private Double weightWidth;
 	
 	/**
 	 * @generated
  	 */
-	public Long getWeightWidth(){
-		return weightWidth; 
-	}
+	public Double getWeightWidth(){
+    return weightWidth; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setWeightWidth(Long newVal) {
-		this.weightWidth = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setWeightWidth(Double newVal) {
+    this.weightWidth = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long widthOfAllItems;
+	private Double widthOfAllItems;
 	
 	/**
 	 * @generated
  	 */
-	public Long getWidthOfAllItems(){
-		return widthOfAllItems; 
-	}
+	public Double getWidthOfAllItems(){
+    return widthOfAllItems; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setWidthOfAllItems(Long newVal) {
-		this.widthOfAllItems = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setWidthOfAllItems(Double newVal) {
+    this.widthOfAllItems = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -2594,23 +2472,23 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public FontDefinition getAddressFontBean(){
-		return addressFontBean; 
-	}
+    return addressFontBean; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAddressFontBean(FontDefinition newVal) {
-		this.addressFontBean = newVal;
-	}
+    this.addressFontBean = newVal;
+  }
 	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.ALL)
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition dateFontBean;
 	
@@ -2618,23 +2496,23 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public FontDefinition getDateFontBean(){
-		return dateFontBean; 
-	}
+    return dateFontBean; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDateFontBean(FontDefinition newVal) {
-		this.dateFontBean = newVal;
-	}
+    this.dateFontBean = newVal;
+  }
 	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.ALL)
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition bodyTextFontBean;
 	
@@ -2642,23 +2520,23 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public FontDefinition getBodyTextFontBean(){
-		return bodyTextFontBean; 
-	}
+    return bodyTextFontBean; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setBodyTextFontBean(FontDefinition newVal) {
-		this.bodyTextFontBean = newVal;
-	}
+    this.bodyTextFontBean = newVal;
+  }
 	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.ALL)
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition formFontBean;
 	
@@ -2666,16 +2544,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public FontDefinition getFormFontBean(){
-		return formFontBean; 
-	}
+    return formFontBean; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFormFontBean(FontDefinition newVal) {
-		this.formFontBean = newVal;
-	}
+    this.formFontBean = newVal;
+  }
 	
  	
 	
@@ -2689,16 +2567,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public String getFormImageSource(){
-		return formImageSource; 
-	}
+    return formImageSource; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFormImageSource(String newVal) {
-		this.formImageSource = newVal;
-	}
+    this.formImageSource = newVal;
+  }
 	
  	
 	
@@ -2712,16 +2590,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public String getFormImagePath(){
-		return formImagePath; 
-	}
+    return formImagePath; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFormImagePath(String newVal) {
-		this.formImagePath = newVal;
-	}
+    this.formImagePath = newVal;
+  }
 	
  	
 	
@@ -2735,16 +2613,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public String getLogoImageSource(){
-		return logoImageSource; 
-	}
+    return logoImageSource; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLogoImageSource(String newVal) {
-		this.logoImageSource = newVal;
-	}
+    this.logoImageSource = newVal;
+  }
 	
  	
 	
@@ -2758,16 +2636,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public String getLogoImagePath(){
-		return logoImagePath; 
-	}
+    return logoImagePath; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLogoImagePath(String newVal) {
-		this.logoImagePath = newVal;
-	}
+    this.logoImagePath = newVal;
+  }
 	
  	
 	
@@ -2775,94 +2653,86 @@ public class FormPreferences extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Long dataOffsetLeftRight;
+	private Double dataOffsetLeftRight;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDataOffsetLeftRight(){
-		return dataOffsetLeftRight; 
-	}
+	public Double getDataOffsetLeftRight(){
+    return dataOffsetLeftRight; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDataOffsetLeftRight(Long newVal) {
-		this.dataOffsetLeftRight = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDataOffsetLeftRight(Double newVal) {
+    this.dataOffsetLeftRight = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long dataOffsetDownUp;
+	private Double dataOffsetDownUp;
 	
 	/**
 	 * @generated
  	 */
-	public Long getDataOffsetDownUp(){
-		return dataOffsetDownUp; 
-	}
+	public Double getDataOffsetDownUp(){
+    return dataOffsetDownUp; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setDataOffsetDownUp(Long newVal) {
-		this.dataOffsetDownUp = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setDataOffsetDownUp(Double newVal) {
+    this.dataOffsetDownUp = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long imageOffsetLeftRight;
+	private Double imageOffsetLeftRight;
 	
 	/**
 	 * @generated
  	 */
-	public Long getImageOffsetLeftRight(){
-		return imageOffsetLeftRight; 
-	}
+	public Double getImageOffsetLeftRight(){
+    return imageOffsetLeftRight; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setImageOffsetLeftRight(Long newVal) {
-		this.imageOffsetLeftRight = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setImageOffsetLeftRight(Double newVal) {
+    this.imageOffsetLeftRight = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
  	@Basic
-	private Long imageOffsetDownUp;
+	private Double imageOffsetDownUp;
 	
 	/**
 	 * @generated
  	 */
-	public Long getImageOffsetDownUp(){
-		return imageOffsetDownUp; 
-	}
+	public Double getImageOffsetDownUp(){
+    return imageOffsetDownUp; 
+  }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setImageOffsetDownUp(Long newVal) {
-		this.imageOffsetDownUp = newVal;
-	}
-	
- 	
-	
+   * @generated
+   */	
+  public void setImageOffsetDownUp(Double newVal) {
+    this.imageOffsetDownUp = newVal;
+  }
+
 	/**
 	 * @generated
 	 */	
@@ -2873,16 +2743,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public String getMeasurement(){
-		return measurement; 
-	}
+    return measurement; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMeasurement(String newVal) {
-		this.measurement = newVal;
-	}
+    this.measurement = newVal;
+  }
 	
  	
 	
@@ -2896,16 +2766,16 @@ public class FormPreferences extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getDefaultFlag(){
-		return defaultFlag; 
-	}
+    return defaultFlag; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDefaultFlag(Boolean newVal) {
-		this.defaultFlag = newVal;
-	}
+    this.defaultFlag = newVal;
+  }
 	
 	/**
 	 * @generated
@@ -2913,113 +2783,113 @@ public class FormPreferences extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (TITLE.equals(propertyName)) return getTitle();
-		if (STYLEOPTION.equals(propertyName)) return getStyleOption();
-		if (SHOWFROMADDRESS.equals(propertyName)) return getShowFromAddress();
-		if (SHOWTOADDRESS.equals(propertyName)) return getShowToAddress();
-		if (SHOWATTN.equals(propertyName)) return getShowAttn();
-		if (SHOWSHIPVIA.equals(propertyName)) return getShowShipVia();
-		if (SHOWDELIVERYDATE.equals(propertyName)) return getShowDeliveryDate();
-		if (SHOWCUSTOMPO.equals(propertyName)) return getShowCustomPO();
-		if (SHOWORDERNUMBER.equals(propertyName)) return getShowOrderNumber();
-		if (SHOWPARTNUMBER.equals(propertyName)) return getShowPartNumber();
-		if (SHOWTRACKINGNUMBER.equals(propertyName)) return getShowTrackingNumber();
-		if (SHOWREFERENCE.equals(propertyName)) return getShowReference();
-		if (SHOWDESCRIPTION.equals(propertyName)) return getShowDescription();
-		if (SHOWCOMMENT.equals(propertyName)) return getShowComment();
-		if (SHOWSIGNATURE.equals(propertyName)) return getShowSignature();
-		if (SHOWBARCODES.equals(propertyName)) return getShowBarCodes();
-		if (SHOWLOGO.equals(propertyName)) return getShowLogo();
-		if (SHOWDELIVERYNUMBER.equals(propertyName)) return getShowDeliveryNumber();
-		if (SHOWDRIVER.equals(propertyName)) return getShowDriver();
-		if (SHOWCARTONCOUNT.equals(propertyName)) return getShowCartonCount();
-		if (LOGOLEFTPOSITION.equals(propertyName)) return getLogoLeftPosition();
-		if (LOGOTOPPOSITION.equals(propertyName)) return getLogoTopPosition();
-		if (LOGOACROSSWIDTH.equals(propertyName)) return getLogoAcrossWidth();
-		if (LOGODOWNWIDTH.equals(propertyName)) return getLogoDownWidth();
-		if (FROMADDRESSLEFTPOSITION.equals(propertyName)) return getFromAddressLeftPosition();
-		if (FROMADDRESSTOPPOSITION.equals(propertyName)) return getFromAddressTopPosition();
-		if (FROMADDRESSACROSSWIDTH.equals(propertyName)) return getFromAddressAcrossWidth();
-		if (FROMADDRESSDOWNWIDTH.equals(propertyName)) return getFromAddressDownWidth();
-		if (TOADDRESSLEFTPOSITION.equals(propertyName)) return getToAddressLeftPosition();
-		if (TOADDRESSTOPPOSITION.equals(propertyName)) return getToAddressTopPosition();
-		if (TOADDRESSACROSSWIDTH.equals(propertyName)) return getToAddressAcrossWidth();
-		if (TOADDRESSDOWNWIDTH.equals(propertyName)) return getToAddressDownWidth();
-		if (ATTNLEFTPOSITION.equals(propertyName)) return getAttnLeftPosition();
-		if (ATTNTOPPOSITION.equals(propertyName)) return getAttnTopPosition();
-		if (ATTNACROSSWIDTH.equals(propertyName)) return getAttnAcrossWidth();
-		if (ATTNDOWNWIDTH.equals(propertyName)) return getAttnDownWidth();
-		if (LINELEFTPOSITION.equals(propertyName)) return getLineLeftPosition();
-		if (LINETOPPOSITION.equals(propertyName)) return getLineTopPosition();
-		if (LINEACROSSWIDTH.equals(propertyName)) return getLineAcrossWidth();
-		if (LINEDOWNWIDTH.equals(propertyName)) return getLineDownWidth();
-		if (COMMENTLEFTPOSITION.equals(propertyName)) return getCommentLeftPosition();
-		if (COMMENTTOPPOSITION.equals(propertyName)) return getCommentTopPosition();
-		if (COMMENTACROSSWIDTH.equals(propertyName)) return getCommentAcrossWidth();
-		if (COMMENTDOWNWIDTH.equals(propertyName)) return getCommentDownWidth();
-		if (DELIVERYDATELEFTPOSITION.equals(propertyName)) return getDeliveryDateLeftPosition();
-		if (DELIVERYDATETOPPOSITION.equals(propertyName)) return getDeliveryDateTopPosition();
-		if (REFERENCELEFTPOSITION.equals(propertyName)) return getReferenceLeftPosition();
-		if (REFERENCETOPPOSITION.equals(propertyName)) return getReferenceTopPosition();
-		if (SHIPVIALEFTPOSITION.equals(propertyName)) return getShipViaLeftPosition();
-		if (SHIPVIATOPPOSITION.equals(propertyName)) return getShipViaTopPosition();
-		if (CUSTOMERPOLEFTPOSITION.equals(propertyName)) return getCustomerPOLeftPosition();
-		if (CUSTOMERPOTOPPOSITION.equals(propertyName)) return getCustomerPOTopPosition();
-		if (ORDERNUMBERLEFTPOSITION.equals(propertyName)) return getOrderNumberLeftPosition();
-		if (ORDERNUMBERTOPPOSITION.equals(propertyName)) return getOrderNumberTopPosition();
-		if (PARTNUMBERLEFTPOSITION.equals(propertyName)) return getPartNumberLeftPosition();
-		if (PARTNUMBERTOPPOSITION.equals(propertyName)) return getPartNumberTopPosition();
-		if (TRACKINGNUMBERLEFTPOSITION.equals(propertyName)) return getTrackingNumberLeftPosition();
-		if (TRACKINGNUMBERTOPPOSITION.equals(propertyName)) return getTrackingNumberTopPosition();
-		if (DELIVERYNUMBERLEFTPOSITION.equals(propertyName)) return getDeliveryNumberLeftPosition();
-		if (DELIVERYNUMBERTOPPOSITION.equals(propertyName)) return getDeliveryNumberTopPosition();
-		if (DRIVERLEFTPOSITION.equals(propertyName)) return getDriverLeftPosition();
-		if (DRIVERTOPPOSITION.equals(propertyName)) return getDriverTopPosition();
-		if (CARTONCOUNTLEFTPOSITION.equals(propertyName)) return getCartonCountLeftPosition();
-		if (CARTONCOUNTTOPPOSITION.equals(propertyName)) return getCartonCountTopPosition();
-		if (CODLEFTPOSITION.equals(propertyName)) return getCodLeftPosition();
-		if (CODTOPPOSITION.equals(propertyName)) return getCodTopPosition();
-		if (DESCRIPTIONLEFTPOSITION.equals(propertyName)) return getDescriptionLeftPosition();
-		if (DESCRIPTIONTOPPOSITION.equals(propertyName)) return getDescriptionTopPosition();
-		if (SIGNATURELEFTPOSITION.equals(propertyName)) return getSignatureLeftPosition();
-		if (SIGNATURETOPPOSITION.equals(propertyName)) return getSignatureTopPosition();
-		if (SHOWDELIVERYDATETITLE.equals(propertyName)) return getShowDeliveryDateTitle();
-		if (SHOWREFERENCETITLE.equals(propertyName)) return getShowReferenceTitle();
-		if (SHOWSHIPVIATITLE.equals(propertyName)) return getShowShipViaTitle();
-		if (SHOWCUSTOMERPOTITLE.equals(propertyName)) return getShowCustomerPOTitle();
-		if (SHOWORDERNUMBERTITLE.equals(propertyName)) return getShowOrderNumberTitle();
-		if (SHOWPARTNUMBERTITLE.equals(propertyName)) return getShowPartNumberTitle();
-		if (SHOWTRACKINGNUMBERTITLE.equals(propertyName)) return getShowTrackingNumberTitle();
-		if (SHOWDELIVERYNUMBERTITLE.equals(propertyName)) return getShowDeliveryNumberTitle();
-		if (SHOWDRIVERTITLE.equals(propertyName)) return getShowDriverTitle();
-		if (SHOWCARTONCOUNTTITLE.equals(propertyName)) return getShowCartonCountTitle();
-		if (INVOICENUMBERMARGIN.equals(propertyName)) return getInvoiceNumberMargin();
-		if (ORDEREDQTYMARGIN.equals(propertyName)) return getOrderedQtyMargin();
-		if (SHIPPEDQTYMARGIN.equals(propertyName)) return getShippedQtyMargin();
-		if (DESCRIPTIONMARGIN.equals(propertyName)) return getDescriptionMargin();
-		if (WEIGHTMARGIN.equals(propertyName)) return getWeightMargin();
-		if (INVOICENUMBERWIDTH.equals(propertyName)) return getInvoiceNumberWidth();
-		if (ORDEREDQTYWIDTH.equals(propertyName)) return getOrderedQtyWidth();
-		if (SHIPPEDQTYWIDTH.equals(propertyName)) return getShippedQtyWidth();
-		if (DESCRIPTIONWIDTH.equals(propertyName)) return getDescriptionWidth();
-		if (WEIGHTWIDTH.equals(propertyName)) return getWeightWidth();
-		if (WIDTHOFALLITEMS.equals(propertyName)) return getWidthOfAllItems();
-		if (ADDRESSFONTBEAN.equals(propertyName)) return getAddressFontBean();
-		if (DATEFONTBEAN.equals(propertyName)) return getDateFontBean();
-		if (BODYTEXTFONTBEAN.equals(propertyName)) return getBodyTextFontBean();
-		if (FORMFONTBEAN.equals(propertyName)) return getFormFontBean();
-		if (FORMIMAGESOURCE.equals(propertyName)) return getFormImageSource();
-		if (FORMIMAGEPATH.equals(propertyName)) return getFormImagePath();
-		if (LOGOIMAGESOURCE.equals(propertyName)) return getLogoImageSource();
-		if (LOGOIMAGEPATH.equals(propertyName)) return getLogoImagePath();
-		if (DATAOFFSETLEFTRIGHT.equals(propertyName)) return getDataOffsetLeftRight();
-		if (DATAOFFSETDOWNUP.equals(propertyName)) return getDataOffsetDownUp();
-		if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) return getImageOffsetLeftRight();
-		if (IMAGEOFFSETDOWNUP.equals(propertyName)) return getImageOffsetDownUp();
-		if (MEASUREMENT.equals(propertyName)) return getMeasurement();
-		if (DEFAULTFLAG.equals(propertyName)) return getDefaultFlag();
-		return super.getProperty(propertyName);
-	}
+    if (TITLE.equals(propertyName)) return getTitle();
+    if (STYLEOPTION.equals(propertyName)) return getStyleOption();
+    if (SHOWFROMADDRESS.equals(propertyName)) return getShowFromAddress();
+    if (SHOWTOADDRESS.equals(propertyName)) return getShowToAddress();
+    if (SHOWATTN.equals(propertyName)) return getShowAttn();
+    if (SHOWSHIPVIA.equals(propertyName)) return getShowShipVia();
+    if (SHOWDELIVERYDATE.equals(propertyName)) return getShowDeliveryDate();
+    if (SHOWCUSTOMPO.equals(propertyName)) return getShowCustomPO();
+    if (SHOWORDERNUMBER.equals(propertyName)) return getShowOrderNumber();
+    if (SHOWPARTNUMBER.equals(propertyName)) return getShowPartNumber();
+    if (SHOWTRACKINGNUMBER.equals(propertyName)) return getShowTrackingNumber();
+    if (SHOWREFERENCE.equals(propertyName)) return getShowReference();
+    if (SHOWDESCRIPTION.equals(propertyName)) return getShowDescription();
+    if (SHOWCOMMENT.equals(propertyName)) return getShowComment();
+    if (SHOWSIGNATURE.equals(propertyName)) return getShowSignature();
+    if (SHOWBARCODES.equals(propertyName)) return getShowBarCodes();
+    if (SHOWLOGO.equals(propertyName)) return getShowLogo();
+    if (SHOWDELIVERYNUMBER.equals(propertyName)) return getShowDeliveryNumber();
+    if (SHOWDRIVER.equals(propertyName)) return getShowDriver();
+    if (SHOWCARTONCOUNT.equals(propertyName)) return getShowCartonCount();
+    if (LOGOLEFTPOSITION.equals(propertyName)) return getLogoLeftPosition();
+    if (LOGOTOPPOSITION.equals(propertyName)) return getLogoTopPosition();
+    if (LOGOACROSSWIDTH.equals(propertyName)) return getLogoAcrossWidth();
+    if (LOGODOWNWIDTH.equals(propertyName)) return getLogoDownWidth();
+    if (FROMADDRESSLEFTPOSITION.equals(propertyName)) return getFromAddressLeftPosition();
+    if (FROMADDRESSTOPPOSITION.equals(propertyName)) return getFromAddressTopPosition();
+    if (FROMADDRESSACROSSWIDTH.equals(propertyName)) return getFromAddressAcrossWidth();
+    if (FROMADDRESSDOWNWIDTH.equals(propertyName)) return getFromAddressDownWidth();
+    if (TOADDRESSLEFTPOSITION.equals(propertyName)) return getToAddressLeftPosition();
+    if (TOADDRESSTOPPOSITION.equals(propertyName)) return getToAddressTopPosition();
+    if (TOADDRESSACROSSWIDTH.equals(propertyName)) return getToAddressAcrossWidth();
+    if (TOADDRESSDOWNWIDTH.equals(propertyName)) return getToAddressDownWidth();
+    if (ATTNLEFTPOSITION.equals(propertyName)) return getAttnLeftPosition();
+    if (ATTNTOPPOSITION.equals(propertyName)) return getAttnTopPosition();
+    if (ATTNACROSSWIDTH.equals(propertyName)) return getAttnAcrossWidth();
+    if (ATTNDOWNWIDTH.equals(propertyName)) return getAttnDownWidth();
+    if (LINELEFTPOSITION.equals(propertyName)) return getLineLeftPosition();
+    if (LINETOPPOSITION.equals(propertyName)) return getLineTopPosition();
+    if (LINEACROSSWIDTH.equals(propertyName)) return getLineAcrossWidth();
+    if (LINEDOWNWIDTH.equals(propertyName)) return getLineDownWidth();
+    if (COMMENTLEFTPOSITION.equals(propertyName)) return getCommentLeftPosition();
+    if (COMMENTTOPPOSITION.equals(propertyName)) return getCommentTopPosition();
+    if (COMMENTACROSSWIDTH.equals(propertyName)) return getCommentAcrossWidth();
+    if (COMMENTDOWNWIDTH.equals(propertyName)) return getCommentDownWidth();
+    if (DELIVERYDATELEFTPOSITION.equals(propertyName)) return getDeliveryDateLeftPosition();
+    if (DELIVERYDATETOPPOSITION.equals(propertyName)) return getDeliveryDateTopPosition();
+    if (REFERENCELEFTPOSITION.equals(propertyName)) return getReferenceLeftPosition();
+    if (REFERENCETOPPOSITION.equals(propertyName)) return getReferenceTopPosition();
+    if (SHIPVIALEFTPOSITION.equals(propertyName)) return getShipViaLeftPosition();
+    if (SHIPVIATOPPOSITION.equals(propertyName)) return getShipViaTopPosition();
+    if (CUSTOMERPOLEFTPOSITION.equals(propertyName)) return getCustomerPOLeftPosition();
+    if (CUSTOMERPOTOPPOSITION.equals(propertyName)) return getCustomerPOTopPosition();
+    if (ORDERNUMBERLEFTPOSITION.equals(propertyName)) return getOrderNumberLeftPosition();
+    if (ORDERNUMBERTOPPOSITION.equals(propertyName)) return getOrderNumberTopPosition();
+    if (PARTNUMBERLEFTPOSITION.equals(propertyName)) return getPartNumberLeftPosition();
+    if (PARTNUMBERTOPPOSITION.equals(propertyName)) return getPartNumberTopPosition();
+    if (TRACKINGNUMBERLEFTPOSITION.equals(propertyName)) return getTrackingNumberLeftPosition();
+    if (TRACKINGNUMBERTOPPOSITION.equals(propertyName)) return getTrackingNumberTopPosition();
+    if (DELIVERYNUMBERLEFTPOSITION.equals(propertyName)) return getDeliveryNumberLeftPosition();
+    if (DELIVERYNUMBERTOPPOSITION.equals(propertyName)) return getDeliveryNumberTopPosition();
+    if (DRIVERLEFTPOSITION.equals(propertyName)) return getDriverLeftPosition();
+    if (DRIVERTOPPOSITION.equals(propertyName)) return getDriverTopPosition();
+    if (CARTONCOUNTLEFTPOSITION.equals(propertyName)) return getCartonCountLeftPosition();
+    if (CARTONCOUNTTOPPOSITION.equals(propertyName)) return getCartonCountTopPosition();
+    if (CODLEFTPOSITION.equals(propertyName)) return getCodLeftPosition();
+    if (CODTOPPOSITION.equals(propertyName)) return getCodTopPosition();
+    if (DESCRIPTIONLEFTPOSITION.equals(propertyName)) return getDescriptionLeftPosition();
+    if (DESCRIPTIONTOPPOSITION.equals(propertyName)) return getDescriptionTopPosition();
+    if (SIGNATURELEFTPOSITION.equals(propertyName)) return getSignatureLeftPosition();
+    if (SIGNATURETOPPOSITION.equals(propertyName)) return getSignatureTopPosition();
+    if (SHOWDELIVERYDATETITLE.equals(propertyName)) return getShowDeliveryDateTitle();
+    if (SHOWREFERENCETITLE.equals(propertyName)) return getShowReferenceTitle();
+    if (SHOWSHIPVIATITLE.equals(propertyName)) return getShowShipViaTitle();
+    if (SHOWCUSTOMERPOTITLE.equals(propertyName)) return getShowCustomerPOTitle();
+    if (SHOWORDERNUMBERTITLE.equals(propertyName)) return getShowOrderNumberTitle();
+    if (SHOWPARTNUMBERTITLE.equals(propertyName)) return getShowPartNumberTitle();
+    if (SHOWTRACKINGNUMBERTITLE.equals(propertyName)) return getShowTrackingNumberTitle();
+    if (SHOWDELIVERYNUMBERTITLE.equals(propertyName)) return getShowDeliveryNumberTitle();
+    if (SHOWDRIVERTITLE.equals(propertyName)) return getShowDriverTitle();
+    if (SHOWCARTONCOUNTTITLE.equals(propertyName)) return getShowCartonCountTitle();
+    if (INVOICENUMBERMARGIN.equals(propertyName)) return getInvoiceNumberMargin();
+    if (ORDEREDQTYMARGIN.equals(propertyName)) return getOrderedQtyMargin();
+    if (SHIPPEDQTYMARGIN.equals(propertyName)) return getShippedQtyMargin();
+    if (DESCRIPTIONMARGIN.equals(propertyName)) return getDescriptionMargin();
+    if (WEIGHTMARGIN.equals(propertyName)) return getWeightMargin();
+    if (INVOICENUMBERWIDTH.equals(propertyName)) return getInvoiceNumberWidth();
+    if (ORDEREDQTYWIDTH.equals(propertyName)) return getOrderedQtyWidth();
+    if (SHIPPEDQTYWIDTH.equals(propertyName)) return getShippedQtyWidth();
+    if (DESCRIPTIONWIDTH.equals(propertyName)) return getDescriptionWidth();
+    if (WEIGHTWIDTH.equals(propertyName)) return getWeightWidth();
+    if (WIDTHOFALLITEMS.equals(propertyName)) return getWidthOfAllItems();
+    if (ADDRESSFONTBEAN.equals(propertyName)) return getAddressFontBean();
+    if (DATEFONTBEAN.equals(propertyName)) return getDateFontBean();
+    if (BODYTEXTFONTBEAN.equals(propertyName)) return getBodyTextFontBean();
+    if (FORMFONTBEAN.equals(propertyName)) return getFormFontBean();
+    if (FORMIMAGESOURCE.equals(propertyName)) return getFormImageSource();
+    if (FORMIMAGEPATH.equals(propertyName)) return getFormImagePath();
+    if (LOGOIMAGESOURCE.equals(propertyName)) return getLogoImageSource();
+    if (LOGOIMAGEPATH.equals(propertyName)) return getLogoImagePath();
+    if (DATAOFFSETLEFTRIGHT.equals(propertyName)) return getDataOffsetLeftRight();
+    if (DATAOFFSETDOWNUP.equals(propertyName)) return getDataOffsetDownUp();
+    if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) return getImageOffsetLeftRight();
+    if (IMAGEOFFSETDOWNUP.equals(propertyName)) return getImageOffsetDownUp();
+    if (MEASUREMENT.equals(propertyName)) return getMeasurement();
+    if (DEFAULTFLAG.equals(propertyName)) return getDefaultFlag();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -3027,113 +2897,113 @@ public class FormPreferences extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (TITLE.equals(propertyName)) setTitle((String)newValue); else
-		if (STYLEOPTION.equals(propertyName)) setStyleOption((String)newValue); else
-		if (SHOWFROMADDRESS.equals(propertyName)) setShowFromAddress((Boolean)newValue); else
-		if (SHOWTOADDRESS.equals(propertyName)) setShowToAddress((Boolean)newValue); else
-		if (SHOWATTN.equals(propertyName)) setShowAttn((Boolean)newValue); else
-		if (SHOWSHIPVIA.equals(propertyName)) setShowShipVia((Boolean)newValue); else
-		if (SHOWDELIVERYDATE.equals(propertyName)) setShowDeliveryDate((Boolean)newValue); else
-		if (SHOWCUSTOMPO.equals(propertyName)) setShowCustomPO((Boolean)newValue); else
-		if (SHOWORDERNUMBER.equals(propertyName)) setShowOrderNumber((Boolean)newValue); else
-		if (SHOWPARTNUMBER.equals(propertyName)) setShowPartNumber((Boolean)newValue); else
-		if (SHOWTRACKINGNUMBER.equals(propertyName)) setShowTrackingNumber((Boolean)newValue); else
-		if (SHOWREFERENCE.equals(propertyName)) setShowReference((Boolean)newValue); else
-		if (SHOWDESCRIPTION.equals(propertyName)) setShowDescription((Boolean)newValue); else
-		if (SHOWCOMMENT.equals(propertyName)) setShowComment((Boolean)newValue); else
-		if (SHOWSIGNATURE.equals(propertyName)) setShowSignature((Boolean)newValue); else
-		if (SHOWBARCODES.equals(propertyName)) setShowBarCodes((Boolean)newValue); else
-		if (SHOWLOGO.equals(propertyName)) setShowLogo((Boolean)newValue); else
-		if (SHOWDELIVERYNUMBER.equals(propertyName)) setShowDeliveryNumber((Boolean)newValue); else
-		if (SHOWDRIVER.equals(propertyName)) setShowDriver((Boolean)newValue); else
-		if (SHOWCARTONCOUNT.equals(propertyName)) setShowCartonCount((Boolean)newValue); else
-		if (LOGOLEFTPOSITION.equals(propertyName)) setLogoLeftPosition((Long)newValue); else
-		if (LOGOTOPPOSITION.equals(propertyName)) setLogoTopPosition((Long)newValue); else
-		if (LOGOACROSSWIDTH.equals(propertyName)) setLogoAcrossWidth((Long)newValue); else
-		if (LOGODOWNWIDTH.equals(propertyName)) setLogoDownWidth((Long)newValue); else
-		if (FROMADDRESSLEFTPOSITION.equals(propertyName)) setFromAddressLeftPosition((Long)newValue); else
-		if (FROMADDRESSTOPPOSITION.equals(propertyName)) setFromAddressTopPosition((Long)newValue); else
-		if (FROMADDRESSACROSSWIDTH.equals(propertyName)) setFromAddressAcrossWidth((Long)newValue); else
-		if (FROMADDRESSDOWNWIDTH.equals(propertyName)) setFromAddressDownWidth((Long)newValue); else
-		if (TOADDRESSLEFTPOSITION.equals(propertyName)) setToAddressLeftPosition((Long)newValue); else
-		if (TOADDRESSTOPPOSITION.equals(propertyName)) setToAddressTopPosition((Long)newValue); else
-		if (TOADDRESSACROSSWIDTH.equals(propertyName)) setToAddressAcrossWidth((Long)newValue); else
-		if (TOADDRESSDOWNWIDTH.equals(propertyName)) setToAddressDownWidth((Long)newValue); else
-		if (ATTNLEFTPOSITION.equals(propertyName)) setAttnLeftPosition((Long)newValue); else
-		if (ATTNTOPPOSITION.equals(propertyName)) setAttnTopPosition((Long)newValue); else
-		if (ATTNACROSSWIDTH.equals(propertyName)) setAttnAcrossWidth((Long)newValue); else
-		if (ATTNDOWNWIDTH.equals(propertyName)) setAttnDownWidth((Long)newValue); else
-		if (LINELEFTPOSITION.equals(propertyName)) setLineLeftPosition((Long)newValue); else
-		if (LINETOPPOSITION.equals(propertyName)) setLineTopPosition((Long)newValue); else
-		if (LINEACROSSWIDTH.equals(propertyName)) setLineAcrossWidth((Long)newValue); else
-		if (LINEDOWNWIDTH.equals(propertyName)) setLineDownWidth((Long)newValue); else
-		if (COMMENTLEFTPOSITION.equals(propertyName)) setCommentLeftPosition((Long)newValue); else
-		if (COMMENTTOPPOSITION.equals(propertyName)) setCommentTopPosition((Long)newValue); else
-		if (COMMENTACROSSWIDTH.equals(propertyName)) setCommentAcrossWidth((Long)newValue); else
-		if (COMMENTDOWNWIDTH.equals(propertyName)) setCommentDownWidth((Long)newValue); else
-		if (DELIVERYDATELEFTPOSITION.equals(propertyName)) setDeliveryDateLeftPosition((Long)newValue); else
-		if (DELIVERYDATETOPPOSITION.equals(propertyName)) setDeliveryDateTopPosition((Long)newValue); else
-		if (REFERENCELEFTPOSITION.equals(propertyName)) setReferenceLeftPosition((Long)newValue); else
-		if (REFERENCETOPPOSITION.equals(propertyName)) setReferenceTopPosition((Long)newValue); else
-		if (SHIPVIALEFTPOSITION.equals(propertyName)) setShipViaLeftPosition((Long)newValue); else
-		if (SHIPVIATOPPOSITION.equals(propertyName)) setShipViaTopPosition((Long)newValue); else
-		if (CUSTOMERPOLEFTPOSITION.equals(propertyName)) setCustomerPOLeftPosition((Long)newValue); else
-		if (CUSTOMERPOTOPPOSITION.equals(propertyName)) setCustomerPOTopPosition((Long)newValue); else
-		if (ORDERNUMBERLEFTPOSITION.equals(propertyName)) setOrderNumberLeftPosition((Long)newValue); else
-		if (ORDERNUMBERTOPPOSITION.equals(propertyName)) setOrderNumberTopPosition((Long)newValue); else
-		if (PARTNUMBERLEFTPOSITION.equals(propertyName)) setPartNumberLeftPosition((Long)newValue); else
-		if (PARTNUMBERTOPPOSITION.equals(propertyName)) setPartNumberTopPosition((Long)newValue); else
-		if (TRACKINGNUMBERLEFTPOSITION.equals(propertyName)) setTrackingNumberLeftPosition((Long)newValue); else
-		if (TRACKINGNUMBERTOPPOSITION.equals(propertyName)) setTrackingNumberTopPosition((Long)newValue); else
-		if (DELIVERYNUMBERLEFTPOSITION.equals(propertyName)) setDeliveryNumberLeftPosition((Long)newValue); else
-		if (DELIVERYNUMBERTOPPOSITION.equals(propertyName)) setDeliveryNumberTopPosition((Long)newValue); else
-		if (DRIVERLEFTPOSITION.equals(propertyName)) setDriverLeftPosition((Long)newValue); else
-		if (DRIVERTOPPOSITION.equals(propertyName)) setDriverTopPosition((Long)newValue); else
-		if (CARTONCOUNTLEFTPOSITION.equals(propertyName)) setCartonCountLeftPosition((Long)newValue); else
-		if (CARTONCOUNTTOPPOSITION.equals(propertyName)) setCartonCountTopPosition((Long)newValue); else
-		if (CODLEFTPOSITION.equals(propertyName)) setCodLeftPosition((Long)newValue); else
-		if (CODTOPPOSITION.equals(propertyName)) setCodTopPosition((Long)newValue); else
-		if (DESCRIPTIONLEFTPOSITION.equals(propertyName)) setDescriptionLeftPosition((Long)newValue); else
-		if (DESCRIPTIONTOPPOSITION.equals(propertyName)) setDescriptionTopPosition((Long)newValue); else
-		if (SIGNATURELEFTPOSITION.equals(propertyName)) setSignatureLeftPosition((Long)newValue); else
-		if (SIGNATURETOPPOSITION.equals(propertyName)) setSignatureTopPosition((Long)newValue); else
-		if (SHOWDELIVERYDATETITLE.equals(propertyName)) setShowDeliveryDateTitle((Boolean)newValue); else
-		if (SHOWREFERENCETITLE.equals(propertyName)) setShowReferenceTitle((Boolean)newValue); else
-		if (SHOWSHIPVIATITLE.equals(propertyName)) setShowShipViaTitle((Boolean)newValue); else
-		if (SHOWCUSTOMERPOTITLE.equals(propertyName)) setShowCustomerPOTitle((Boolean)newValue); else
-		if (SHOWORDERNUMBERTITLE.equals(propertyName)) setShowOrderNumberTitle((Boolean)newValue); else
-		if (SHOWPARTNUMBERTITLE.equals(propertyName)) setShowPartNumberTitle((Boolean)newValue); else
-		if (SHOWTRACKINGNUMBERTITLE.equals(propertyName)) setShowTrackingNumberTitle((Boolean)newValue); else
-		if (SHOWDELIVERYNUMBERTITLE.equals(propertyName)) setShowDeliveryNumberTitle((Boolean)newValue); else
-		if (SHOWDRIVERTITLE.equals(propertyName)) setShowDriverTitle((Boolean)newValue); else
-		if (SHOWCARTONCOUNTTITLE.equals(propertyName)) setShowCartonCountTitle((Boolean)newValue); else
-		if (INVOICENUMBERMARGIN.equals(propertyName)) setInvoiceNumberMargin((Long)newValue); else
-		if (ORDEREDQTYMARGIN.equals(propertyName)) setOrderedQtyMargin((Long)newValue); else
-		if (SHIPPEDQTYMARGIN.equals(propertyName)) setShippedQtyMargin((Long)newValue); else
-		if (DESCRIPTIONMARGIN.equals(propertyName)) setDescriptionMargin((Long)newValue); else
-		if (WEIGHTMARGIN.equals(propertyName)) setWeightMargin((Long)newValue); else
-		if (INVOICENUMBERWIDTH.equals(propertyName)) setInvoiceNumberWidth((Long)newValue); else
-		if (ORDEREDQTYWIDTH.equals(propertyName)) setOrderedQtyWidth((Long)newValue); else
-		if (SHIPPEDQTYWIDTH.equals(propertyName)) setShippedQtyWidth((Long)newValue); else
-		if (DESCRIPTIONWIDTH.equals(propertyName)) setDescriptionWidth((Long)newValue); else
-		if (WEIGHTWIDTH.equals(propertyName)) setWeightWidth((Long)newValue); else
-		if (WIDTHOFALLITEMS.equals(propertyName)) setWidthOfAllItems((Long)newValue); else
-		if (ADDRESSFONTBEAN.equals(propertyName)) setAddressFontBean((FontDefinition)newValue); else
-		if (DATEFONTBEAN.equals(propertyName)) setDateFontBean((FontDefinition)newValue); else
-		if (BODYTEXTFONTBEAN.equals(propertyName)) setBodyTextFontBean((FontDefinition)newValue); else
-		if (FORMFONTBEAN.equals(propertyName)) setFormFontBean((FontDefinition)newValue); else
-		if (FORMIMAGESOURCE.equals(propertyName)) setFormImageSource((String)newValue); else
-		if (FORMIMAGEPATH.equals(propertyName)) setFormImagePath((String)newValue); else
-		if (LOGOIMAGESOURCE.equals(propertyName)) setLogoImageSource((String)newValue); else
-		if (LOGOIMAGEPATH.equals(propertyName)) setLogoImagePath((String)newValue); else
-		if (DATAOFFSETLEFTRIGHT.equals(propertyName)) setDataOffsetLeftRight((Long)newValue); else
-		if (DATAOFFSETDOWNUP.equals(propertyName)) setDataOffsetDownUp((Long)newValue); else
-		if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) setImageOffsetLeftRight((Long)newValue); else
-		if (IMAGEOFFSETDOWNUP.equals(propertyName)) setImageOffsetDownUp((Long)newValue); else
-		if (MEASUREMENT.equals(propertyName)) setMeasurement((String)newValue); else
-		if (DEFAULTFLAG.equals(propertyName)) setDefaultFlag((Boolean)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (TITLE.equals(propertyName)) setTitle((String)newValue); else
+    if (STYLEOPTION.equals(propertyName)) setStyleOption((String)newValue); else
+    if (SHOWFROMADDRESS.equals(propertyName)) setShowFromAddress((Boolean)newValue); else
+    if (SHOWTOADDRESS.equals(propertyName)) setShowToAddress((Boolean)newValue); else
+    if (SHOWATTN.equals(propertyName)) setShowAttn((Boolean)newValue); else
+    if (SHOWSHIPVIA.equals(propertyName)) setShowShipVia((Boolean)newValue); else
+    if (SHOWDELIVERYDATE.equals(propertyName)) setShowDeliveryDate((Boolean)newValue); else
+    if (SHOWCUSTOMPO.equals(propertyName)) setShowCustomPO((Boolean)newValue); else
+    if (SHOWORDERNUMBER.equals(propertyName)) setShowOrderNumber((Boolean)newValue); else
+    if (SHOWPARTNUMBER.equals(propertyName)) setShowPartNumber((Boolean)newValue); else
+    if (SHOWTRACKINGNUMBER.equals(propertyName)) setShowTrackingNumber((Boolean)newValue); else
+    if (SHOWREFERENCE.equals(propertyName)) setShowReference((Boolean)newValue); else
+    if (SHOWDESCRIPTION.equals(propertyName)) setShowDescription((Boolean)newValue); else
+    if (SHOWCOMMENT.equals(propertyName)) setShowComment((Boolean)newValue); else
+    if (SHOWSIGNATURE.equals(propertyName)) setShowSignature((Boolean)newValue); else
+    if (SHOWBARCODES.equals(propertyName)) setShowBarCodes((Boolean)newValue); else
+    if (SHOWLOGO.equals(propertyName)) setShowLogo((Boolean)newValue); else
+    if (SHOWDELIVERYNUMBER.equals(propertyName)) setShowDeliveryNumber((Boolean)newValue); else
+    if (SHOWDRIVER.equals(propertyName)) setShowDriver((Boolean)newValue); else
+    if (SHOWCARTONCOUNT.equals(propertyName)) setShowCartonCount((Boolean)newValue); else
+    if (LOGOLEFTPOSITION.equals(propertyName)) setLogoLeftPosition((Double)newValue); else
+    if (LOGOTOPPOSITION.equals(propertyName)) setLogoTopPosition((Double)newValue); else
+    if (LOGOACROSSWIDTH.equals(propertyName)) setLogoAcrossWidth((Double)newValue); else
+    if (LOGODOWNWIDTH.equals(propertyName)) setLogoDownWidth((Double)newValue); else
+    if (FROMADDRESSLEFTPOSITION.equals(propertyName)) setFromAddressLeftPosition((Double)newValue); else
+    if (FROMADDRESSTOPPOSITION.equals(propertyName)) setFromAddressTopPosition((Double)newValue); else
+    if (FROMADDRESSACROSSWIDTH.equals(propertyName)) setFromAddressAcrossWidth((Double)newValue); else
+    if (FROMADDRESSDOWNWIDTH.equals(propertyName)) setFromAddressDownWidth((Double)newValue); else
+    if (TOADDRESSLEFTPOSITION.equals(propertyName)) setToAddressLeftPosition((Double)newValue); else
+    if (TOADDRESSTOPPOSITION.equals(propertyName)) setToAddressTopPosition((Double)newValue); else
+    if (TOADDRESSACROSSWIDTH.equals(propertyName)) setToAddressAcrossWidth((Double)newValue); else
+    if (TOADDRESSDOWNWIDTH.equals(propertyName)) setToAddressDownWidth((Double)newValue); else
+    if (ATTNLEFTPOSITION.equals(propertyName)) setAttnLeftPosition((Double)newValue); else
+    if (ATTNTOPPOSITION.equals(propertyName)) setAttnTopPosition((Double)newValue); else
+    if (ATTNACROSSWIDTH.equals(propertyName)) setAttnAcrossWidth((Double)newValue); else
+    if (ATTNDOWNWIDTH.equals(propertyName)) setAttnDownWidth((Double)newValue); else
+    if (LINELEFTPOSITION.equals(propertyName)) setLineLeftPosition((Double)newValue); else
+    if (LINETOPPOSITION.equals(propertyName)) setLineTopPosition((Double)newValue); else
+    if (LINEACROSSWIDTH.equals(propertyName)) setLineAcrossWidth((Double)newValue); else
+    if (LINEDOWNWIDTH.equals(propertyName)) setLineDownWidth((Double)newValue); else
+    if (COMMENTLEFTPOSITION.equals(propertyName)) setCommentLeftPosition((Double)newValue); else
+    if (COMMENTTOPPOSITION.equals(propertyName)) setCommentTopPosition((Double)newValue); else
+    if (COMMENTACROSSWIDTH.equals(propertyName)) setCommentAcrossWidth((Double)newValue); else
+    if (COMMENTDOWNWIDTH.equals(propertyName)) setCommentDownWidth((Double)newValue); else
+    if (DELIVERYDATELEFTPOSITION.equals(propertyName)) setDeliveryDateLeftPosition((Double)newValue); else
+    if (DELIVERYDATETOPPOSITION.equals(propertyName)) setDeliveryDateTopPosition((Double)newValue); else
+    if (REFERENCELEFTPOSITION.equals(propertyName)) setReferenceLeftPosition((Double)newValue); else
+    if (REFERENCETOPPOSITION.equals(propertyName)) setReferenceTopPosition((Double)newValue); else
+    if (SHIPVIALEFTPOSITION.equals(propertyName)) setShipViaLeftPosition((Double)newValue); else
+    if (SHIPVIATOPPOSITION.equals(propertyName)) setShipViaTopPosition((Double)newValue); else
+    if (CUSTOMERPOLEFTPOSITION.equals(propertyName)) setCustomerPOLeftPosition((Double)newValue); else
+    if (CUSTOMERPOTOPPOSITION.equals(propertyName)) setCustomerPOTopPosition((Double)newValue); else
+    if (ORDERNUMBERLEFTPOSITION.equals(propertyName)) setOrderNumberLeftPosition((Double)newValue); else
+    if (ORDERNUMBERTOPPOSITION.equals(propertyName)) setOrderNumberTopPosition((Double)newValue); else
+    if (PARTNUMBERLEFTPOSITION.equals(propertyName)) setPartNumberLeftPosition((Double)newValue); else
+    if (PARTNUMBERTOPPOSITION.equals(propertyName)) setPartNumberTopPosition((Double)newValue); else
+    if (TRACKINGNUMBERLEFTPOSITION.equals(propertyName)) setTrackingNumberLeftPosition((Double)newValue); else
+    if (TRACKINGNUMBERTOPPOSITION.equals(propertyName)) setTrackingNumberTopPosition((Double)newValue); else
+    if (DELIVERYNUMBERLEFTPOSITION.equals(propertyName)) setDeliveryNumberLeftPosition((Double)newValue); else
+    if (DELIVERYNUMBERTOPPOSITION.equals(propertyName)) setDeliveryNumberTopPosition((Double)newValue); else
+    if (DRIVERLEFTPOSITION.equals(propertyName)) setDriverLeftPosition((Double)newValue); else
+    if (DRIVERTOPPOSITION.equals(propertyName)) setDriverTopPosition((Double)newValue); else
+    if (CARTONCOUNTLEFTPOSITION.equals(propertyName)) setCartonCountLeftPosition((Double)newValue); else
+    if (CARTONCOUNTTOPPOSITION.equals(propertyName)) setCartonCountTopPosition((Double)newValue); else
+    if (CODLEFTPOSITION.equals(propertyName)) setCodLeftPosition((Double)newValue); else
+    if (CODTOPPOSITION.equals(propertyName)) setCodTopPosition((Double)newValue); else
+    if (DESCRIPTIONLEFTPOSITION.equals(propertyName)) setDescriptionLeftPosition((Double)newValue); else
+    if (DESCRIPTIONTOPPOSITION.equals(propertyName)) setDescriptionTopPosition((Double)newValue); else
+    if (SIGNATURELEFTPOSITION.equals(propertyName)) setSignatureLeftPosition((Double)newValue); else
+    if (SIGNATURETOPPOSITION.equals(propertyName)) setSignatureTopPosition((Double)newValue); else
+    if (SHOWDELIVERYDATETITLE.equals(propertyName)) setShowDeliveryDateTitle((Boolean)newValue); else
+    if (SHOWREFERENCETITLE.equals(propertyName)) setShowReferenceTitle((Boolean)newValue); else
+    if (SHOWSHIPVIATITLE.equals(propertyName)) setShowShipViaTitle((Boolean)newValue); else
+    if (SHOWCUSTOMERPOTITLE.equals(propertyName)) setShowCustomerPOTitle((Boolean)newValue); else
+    if (SHOWORDERNUMBERTITLE.equals(propertyName)) setShowOrderNumberTitle((Boolean)newValue); else
+    if (SHOWPARTNUMBERTITLE.equals(propertyName)) setShowPartNumberTitle((Boolean)newValue); else
+    if (SHOWTRACKINGNUMBERTITLE.equals(propertyName)) setShowTrackingNumberTitle((Boolean)newValue); else
+    if (SHOWDELIVERYNUMBERTITLE.equals(propertyName)) setShowDeliveryNumberTitle((Boolean)newValue); else
+    if (SHOWDRIVERTITLE.equals(propertyName)) setShowDriverTitle((Boolean)newValue); else
+    if (SHOWCARTONCOUNTTITLE.equals(propertyName)) setShowCartonCountTitle((Boolean)newValue); else
+    if (INVOICENUMBERMARGIN.equals(propertyName)) setInvoiceNumberMargin((Double)newValue); else
+    if (ORDEREDQTYMARGIN.equals(propertyName)) setOrderedQtyMargin((Double)newValue); else
+    if (SHIPPEDQTYMARGIN.equals(propertyName)) setShippedQtyMargin((Double)newValue); else
+    if (DESCRIPTIONMARGIN.equals(propertyName)) setDescriptionMargin((Double)newValue); else
+    if (WEIGHTMARGIN.equals(propertyName)) setWeightMargin((Double)newValue); else
+    if (INVOICENUMBERWIDTH.equals(propertyName)) setInvoiceNumberWidth((Double)newValue); else
+    if (ORDEREDQTYWIDTH.equals(propertyName)) setOrderedQtyWidth((Double)newValue); else
+    if (SHIPPEDQTYWIDTH.equals(propertyName)) setShippedQtyWidth((Double)newValue); else
+    if (DESCRIPTIONWIDTH.equals(propertyName)) setDescriptionWidth((Double)newValue); else
+    if (WEIGHTWIDTH.equals(propertyName)) setWeightWidth((Double)newValue); else
+    if (WIDTHOFALLITEMS.equals(propertyName)) setWidthOfAllItems((Double)newValue); else
+    if (ADDRESSFONTBEAN.equals(propertyName)) setAddressFontBean((FontDefinition)newValue); else
+    if (DATEFONTBEAN.equals(propertyName)) setDateFontBean((FontDefinition)newValue); else
+    if (BODYTEXTFONTBEAN.equals(propertyName)) setBodyTextFontBean((FontDefinition)newValue); else
+    if (FORMFONTBEAN.equals(propertyName)) setFormFontBean((FontDefinition)newValue); else
+    if (FORMIMAGESOURCE.equals(propertyName)) setFormImageSource((String)newValue); else
+    if (FORMIMAGEPATH.equals(propertyName)) setFormImagePath((String)newValue); else
+    if (LOGOIMAGESOURCE.equals(propertyName)) setLogoImageSource((String)newValue); else
+    if (LOGOIMAGEPATH.equals(propertyName)) setLogoImagePath((String)newValue); else
+    if (DATAOFFSETLEFTRIGHT.equals(propertyName)) setDataOffsetLeftRight((Double)newValue); else
+    if (DATAOFFSETDOWNUP.equals(propertyName)) setDataOffsetDownUp((Double)newValue); else
+    if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) setImageOffsetLeftRight((Double)newValue); else
+    if (IMAGEOFFSETDOWNUP.equals(propertyName)) setImageOffsetDownUp((Double)newValue); else
+    if (MEASUREMENT.equals(propertyName)) setMeasurement((String)newValue); else
+    if (DEFAULTFLAG.equals(propertyName)) setDefaultFlag((Boolean)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -3141,218 +3011,218 @@ public class FormPreferences extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (TITLE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (STYLEOPTION.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (SHOWFROMADDRESS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWTOADDRESS.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWATTN.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWSHIPVIA.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWDELIVERYDATE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWCUSTOMPO.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWORDERNUMBER.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWPARTNUMBER.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWTRACKINGNUMBER.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWREFERENCE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWDESCRIPTION.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWCOMMENT.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWSIGNATURE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWBARCODES.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWLOGO.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWDELIVERYNUMBER.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWDRIVER.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWCARTONCOUNT.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (LOGOLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (LOGOTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (LOGOACROSSWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (LOGODOWNWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (FROMADDRESSLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (FROMADDRESSTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (FROMADDRESSACROSSWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (FROMADDRESSDOWNWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (TOADDRESSLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (TOADDRESSTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (TOADDRESSACROSSWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (TOADDRESSDOWNWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ATTNLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ATTNTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ATTNACROSSWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ATTNDOWNWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (LINELEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (LINETOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (LINEACROSSWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (LINEDOWNWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (COMMENTLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (COMMENTTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (COMMENTACROSSWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (COMMENTDOWNWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DELIVERYDATELEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DELIVERYDATETOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (REFERENCELEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (REFERENCETOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SHIPVIALEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SHIPVIATOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (CUSTOMERPOLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (CUSTOMERPOTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ORDERNUMBERLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ORDERNUMBERTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (PARTNUMBERLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (PARTNUMBERTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (TRACKINGNUMBERLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (TRACKINGNUMBERTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DELIVERYNUMBERLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DELIVERYNUMBERTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DRIVERLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DRIVERTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (CARTONCOUNTLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (CARTONCOUNTTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (CODLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (CODTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DESCRIPTIONLEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DESCRIPTIONTOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SIGNATURELEFTPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SIGNATURETOPPOSITION.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SHOWDELIVERYDATETITLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWREFERENCETITLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWSHIPVIATITLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWCUSTOMERPOTITLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWORDERNUMBERTITLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWPARTNUMBERTITLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWTRACKINGNUMBERTITLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWDELIVERYNUMBERTITLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWDRIVERTITLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (SHOWCARTONCOUNTTITLE.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		if (INVOICENUMBERMARGIN.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ORDEREDQTYMARGIN.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SHIPPEDQTYMARGIN.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DESCRIPTIONMARGIN.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (WEIGHTMARGIN.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (INVOICENUMBERWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ORDEREDQTYWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (SHIPPEDQTYWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DESCRIPTIONWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (WEIGHTWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (WIDTHOFALLITEMS.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (ADDRESSFONTBEAN.equals(propertyName)) 
-			return new Class<?>[] {FontDefinition.class};		
-		if (DATEFONTBEAN.equals(propertyName)) 
-			return new Class<?>[] {FontDefinition.class};		
-		if (BODYTEXTFONTBEAN.equals(propertyName)) 
-			return new Class<?>[] {FontDefinition.class};		
-		if (FORMFONTBEAN.equals(propertyName)) 
-			return new Class<?>[] {FontDefinition.class};		
-		if (FORMIMAGESOURCE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (FORMIMAGEPATH.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (LOGOIMAGESOURCE.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (LOGOIMAGEPATH.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DATAOFFSETLEFTRIGHT.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (DATAOFFSETDOWNUP.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (IMAGEOFFSETDOWNUP.equals(propertyName)) 
-			return new Class<?>[] {Long.class};		
-		if (MEASUREMENT.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (DEFAULTFLAG.equals(propertyName)) 
-			return new Class<?>[] {Boolean.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (TITLE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (STYLEOPTION.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SHOWFROMADDRESS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWTOADDRESS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWATTN.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWSHIPVIA.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWDELIVERYDATE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWCUSTOMPO.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWORDERNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWPARTNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWTRACKINGNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWREFERENCE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWDESCRIPTION.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWCOMMENT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWSIGNATURE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWBARCODES.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWLOGO.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWDELIVERYNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWDRIVER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWCARTONCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LOGOLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LOGOTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LOGOACROSSWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LOGODOWNWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (FROMADDRESSLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (FROMADDRESSTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (FROMADDRESSACROSSWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (FROMADDRESSDOWNWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOADDRESSLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOADDRESSTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOADDRESSACROSSWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOADDRESSDOWNWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ATTNLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ATTNTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ATTNACROSSWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ATTNDOWNWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LINELEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LINETOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LINEACROSSWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LINEDOWNWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COMMENTLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COMMENTTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COMMENTACROSSWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (COMMENTDOWNWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DELIVERYDATELEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DELIVERYDATETOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (REFERENCELEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (REFERENCETOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SHIPVIALEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SHIPVIATOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CUSTOMERPOLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CUSTOMERPOTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ORDERNUMBERLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ORDERNUMBERTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PARTNUMBERLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (PARTNUMBERTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TRACKINGNUMBERLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TRACKINGNUMBERTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DELIVERYNUMBERLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DELIVERYNUMBERTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DRIVERLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DRIVERTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CARTONCOUNTLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CARTONCOUNTTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CODLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (CODTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DESCRIPTIONLEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DESCRIPTIONTOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SIGNATURELEFTPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SIGNATURETOPPOSITION.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SHOWDELIVERYDATETITLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWREFERENCETITLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWSHIPVIATITLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWCUSTOMERPOTITLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWORDERNUMBERTITLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWPARTNUMBERTITLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWTRACKINGNUMBERTITLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWDELIVERYNUMBERTITLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWDRIVERTITLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWCARTONCOUNTTITLE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (INVOICENUMBERMARGIN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ORDEREDQTYMARGIN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SHIPPEDQTYMARGIN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DESCRIPTIONMARGIN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (WEIGHTMARGIN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (INVOICENUMBERWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ORDEREDQTYWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SHIPPEDQTYWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DESCRIPTIONWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (WEIGHTWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (WIDTHOFALLITEMS.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (ADDRESSFONTBEAN.equals(propertyName)) 
+      return new Class<?>[] {FontDefinition.class};		
+    if (DATEFONTBEAN.equals(propertyName)) 
+      return new Class<?>[] {FontDefinition.class};		
+    if (BODYTEXTFONTBEAN.equals(propertyName)) 
+      return new Class<?>[] {FontDefinition.class};		
+    if (FORMFONTBEAN.equals(propertyName)) 
+      return new Class<?>[] {FontDefinition.class};		
+    if (FORMIMAGESOURCE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FORMIMAGEPATH.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (LOGOIMAGESOURCE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (LOGOIMAGEPATH.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DATAOFFSETLEFTRIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (DATAOFFSETDOWNUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (IMAGEOFFSETDOWNUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MEASUREMENT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DEFAULTFLAG.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -3361,332 +3231,332 @@ public class FormPreferences extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (TITLE.equals(propertyName)) return FormPreferences.class;
-		if (STYLEOPTION.equals(propertyName)) return FormPreferences.class;
-		if (SHOWFROMADDRESS.equals(propertyName)) return FormPreferences.class;
-		if (SHOWTOADDRESS.equals(propertyName)) return FormPreferences.class;
-		if (SHOWATTN.equals(propertyName)) return FormPreferences.class;
-		if (SHOWSHIPVIA.equals(propertyName)) return FormPreferences.class;
-		if (SHOWDELIVERYDATE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWCUSTOMPO.equals(propertyName)) return FormPreferences.class;
-		if (SHOWORDERNUMBER.equals(propertyName)) return FormPreferences.class;
-		if (SHOWPARTNUMBER.equals(propertyName)) return FormPreferences.class;
-		if (SHOWTRACKINGNUMBER.equals(propertyName)) return FormPreferences.class;
-		if (SHOWREFERENCE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWDESCRIPTION.equals(propertyName)) return FormPreferences.class;
-		if (SHOWCOMMENT.equals(propertyName)) return FormPreferences.class;
-		if (SHOWSIGNATURE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWBARCODES.equals(propertyName)) return FormPreferences.class;
-		if (SHOWLOGO.equals(propertyName)) return FormPreferences.class;
-		if (SHOWDELIVERYNUMBER.equals(propertyName)) return FormPreferences.class;
-		if (SHOWDRIVER.equals(propertyName)) return FormPreferences.class;
-		if (SHOWCARTONCOUNT.equals(propertyName)) return FormPreferences.class;
-		if (LOGOLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (LOGOTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (LOGOACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (LOGODOWNWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (FROMADDRESSLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (FROMADDRESSTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (FROMADDRESSACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (FROMADDRESSDOWNWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (TOADDRESSLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (TOADDRESSTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (TOADDRESSACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (TOADDRESSDOWNWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (ATTNLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (ATTNTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (ATTNACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (ATTNDOWNWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (LINELEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (LINETOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (LINEACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (LINEDOWNWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (COMMENTLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (COMMENTTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (COMMENTACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (COMMENTDOWNWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (DELIVERYDATELEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (DELIVERYDATETOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (REFERENCELEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (REFERENCETOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (SHIPVIALEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (SHIPVIATOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (CUSTOMERPOLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (CUSTOMERPOTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (ORDERNUMBERLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (ORDERNUMBERTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (PARTNUMBERLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (PARTNUMBERTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (TRACKINGNUMBERLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (TRACKINGNUMBERTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (DELIVERYNUMBERLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (DELIVERYNUMBERTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (DRIVERLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (DRIVERTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (CARTONCOUNTLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (CARTONCOUNTTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (CODLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (CODTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (DESCRIPTIONLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (DESCRIPTIONTOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (SIGNATURELEFTPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (SIGNATURETOPPOSITION.equals(propertyName)) return FormPreferences.class;
-		if (SHOWDELIVERYDATETITLE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWREFERENCETITLE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWSHIPVIATITLE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWCUSTOMERPOTITLE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWORDERNUMBERTITLE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWPARTNUMBERTITLE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWTRACKINGNUMBERTITLE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWDELIVERYNUMBERTITLE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWDRIVERTITLE.equals(propertyName)) return FormPreferences.class;
-		if (SHOWCARTONCOUNTTITLE.equals(propertyName)) return FormPreferences.class;
-		if (INVOICENUMBERMARGIN.equals(propertyName)) return FormPreferences.class;
-		if (ORDEREDQTYMARGIN.equals(propertyName)) return FormPreferences.class;
-		if (SHIPPEDQTYMARGIN.equals(propertyName)) return FormPreferences.class;
-		if (DESCRIPTIONMARGIN.equals(propertyName)) return FormPreferences.class;
-		if (WEIGHTMARGIN.equals(propertyName)) return FormPreferences.class;
-		if (INVOICENUMBERWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (ORDEREDQTYWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (SHIPPEDQTYWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (DESCRIPTIONWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (WEIGHTWIDTH.equals(propertyName)) return FormPreferences.class;
-		if (WIDTHOFALLITEMS.equals(propertyName)) return FormPreferences.class;
-		if (ADDRESSFONTBEAN.equals(propertyName)) return FormPreferences.class;
-		if (DATEFONTBEAN.equals(propertyName)) return FormPreferences.class;
-		if (BODYTEXTFONTBEAN.equals(propertyName)) return FormPreferences.class;
-		if (FORMFONTBEAN.equals(propertyName)) return FormPreferences.class;
-		if (FORMIMAGESOURCE.equals(propertyName)) return FormPreferences.class;
-		if (FORMIMAGEPATH.equals(propertyName)) return FormPreferences.class;
-		if (LOGOIMAGESOURCE.equals(propertyName)) return FormPreferences.class;
-		if (LOGOIMAGEPATH.equals(propertyName)) return FormPreferences.class;
-		if (DATAOFFSETLEFTRIGHT.equals(propertyName)) return FormPreferences.class;
-		if (DATAOFFSETDOWNUP.equals(propertyName)) return FormPreferences.class;
-		if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) return FormPreferences.class;
-		if (IMAGEOFFSETDOWNUP.equals(propertyName)) return FormPreferences.class;
-		if (MEASUREMENT.equals(propertyName)) return FormPreferences.class;
-		if (DEFAULTFLAG.equals(propertyName)) return FormPreferences.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (TITLE.equals(propertyName)) return FormPreferences.class;
+    if (STYLEOPTION.equals(propertyName)) return FormPreferences.class;
+    if (SHOWFROMADDRESS.equals(propertyName)) return FormPreferences.class;
+    if (SHOWTOADDRESS.equals(propertyName)) return FormPreferences.class;
+    if (SHOWATTN.equals(propertyName)) return FormPreferences.class;
+    if (SHOWSHIPVIA.equals(propertyName)) return FormPreferences.class;
+    if (SHOWDELIVERYDATE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWCUSTOMPO.equals(propertyName)) return FormPreferences.class;
+    if (SHOWORDERNUMBER.equals(propertyName)) return FormPreferences.class;
+    if (SHOWPARTNUMBER.equals(propertyName)) return FormPreferences.class;
+    if (SHOWTRACKINGNUMBER.equals(propertyName)) return FormPreferences.class;
+    if (SHOWREFERENCE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWDESCRIPTION.equals(propertyName)) return FormPreferences.class;
+    if (SHOWCOMMENT.equals(propertyName)) return FormPreferences.class;
+    if (SHOWSIGNATURE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWBARCODES.equals(propertyName)) return FormPreferences.class;
+    if (SHOWLOGO.equals(propertyName)) return FormPreferences.class;
+    if (SHOWDELIVERYNUMBER.equals(propertyName)) return FormPreferences.class;
+    if (SHOWDRIVER.equals(propertyName)) return FormPreferences.class;
+    if (SHOWCARTONCOUNT.equals(propertyName)) return FormPreferences.class;
+    if (LOGOLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (LOGOTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (LOGOACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (LOGODOWNWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (FROMADDRESSLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (FROMADDRESSTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (FROMADDRESSACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (FROMADDRESSDOWNWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (TOADDRESSLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (TOADDRESSTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (TOADDRESSACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (TOADDRESSDOWNWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (ATTNLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (ATTNTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (ATTNACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (ATTNDOWNWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (LINELEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (LINETOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (LINEACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (LINEDOWNWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (COMMENTLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (COMMENTTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (COMMENTACROSSWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (COMMENTDOWNWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (DELIVERYDATELEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (DELIVERYDATETOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (REFERENCELEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (REFERENCETOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (SHIPVIALEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (SHIPVIATOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (CUSTOMERPOLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (CUSTOMERPOTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (ORDERNUMBERLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (ORDERNUMBERTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (PARTNUMBERLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (PARTNUMBERTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (TRACKINGNUMBERLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (TRACKINGNUMBERTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (DELIVERYNUMBERLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (DELIVERYNUMBERTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (DRIVERLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (DRIVERTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (CARTONCOUNTLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (CARTONCOUNTTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (CODLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (CODTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (DESCRIPTIONLEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (DESCRIPTIONTOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (SIGNATURELEFTPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (SIGNATURETOPPOSITION.equals(propertyName)) return FormPreferences.class;
+    if (SHOWDELIVERYDATETITLE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWREFERENCETITLE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWSHIPVIATITLE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWCUSTOMERPOTITLE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWORDERNUMBERTITLE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWPARTNUMBERTITLE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWTRACKINGNUMBERTITLE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWDELIVERYNUMBERTITLE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWDRIVERTITLE.equals(propertyName)) return FormPreferences.class;
+    if (SHOWCARTONCOUNTTITLE.equals(propertyName)) return FormPreferences.class;
+    if (INVOICENUMBERMARGIN.equals(propertyName)) return FormPreferences.class;
+    if (ORDEREDQTYMARGIN.equals(propertyName)) return FormPreferences.class;
+    if (SHIPPEDQTYMARGIN.equals(propertyName)) return FormPreferences.class;
+    if (DESCRIPTIONMARGIN.equals(propertyName)) return FormPreferences.class;
+    if (WEIGHTMARGIN.equals(propertyName)) return FormPreferences.class;
+    if (INVOICENUMBERWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (ORDEREDQTYWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (SHIPPEDQTYWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (DESCRIPTIONWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (WEIGHTWIDTH.equals(propertyName)) return FormPreferences.class;
+    if (WIDTHOFALLITEMS.equals(propertyName)) return FormPreferences.class;
+    if (ADDRESSFONTBEAN.equals(propertyName)) return FormPreferences.class;
+    if (DATEFONTBEAN.equals(propertyName)) return FormPreferences.class;
+    if (BODYTEXTFONTBEAN.equals(propertyName)) return FormPreferences.class;
+    if (FORMFONTBEAN.equals(propertyName)) return FormPreferences.class;
+    if (FORMIMAGESOURCE.equals(propertyName)) return FormPreferences.class;
+    if (FORMIMAGEPATH.equals(propertyName)) return FormPreferences.class;
+    if (LOGOIMAGESOURCE.equals(propertyName)) return FormPreferences.class;
+    if (LOGOIMAGEPATH.equals(propertyName)) return FormPreferences.class;
+    if (DATAOFFSETLEFTRIGHT.equals(propertyName)) return FormPreferences.class;
+    if (DATAOFFSETDOWNUP.equals(propertyName)) return FormPreferences.class;
+    if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) return FormPreferences.class;
+    if (IMAGEOFFSETDOWNUP.equals(propertyName)) return FormPreferences.class;
+    if (MEASUREMENT.equals(propertyName)) return FormPreferences.class;
+    if (DEFAULTFLAG.equals(propertyName)) return FormPreferences.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		FormPreferences objT = (FormPreferences)obj;
-		if (! SmartEquals(getTitle(), objT.getTitle()))
-			return false;
-		if (! SmartEquals(getStyleOption(), objT.getStyleOption()))
-			return false;
-		if (! SmartEquals(getShowFromAddress(), objT.getShowFromAddress()))
-			return false;
-		if (! SmartEquals(getShowToAddress(), objT.getShowToAddress()))
-			return false;
-		if (! SmartEquals(getShowAttn(), objT.getShowAttn()))
-			return false;
-		if (! SmartEquals(getShowShipVia(), objT.getShowShipVia()))
-			return false;
-		if (! SmartEquals(getShowDeliveryDate(), objT.getShowDeliveryDate()))
-			return false;
-		if (! SmartEquals(getShowCustomPO(), objT.getShowCustomPO()))
-			return false;
-		if (! SmartEquals(getShowOrderNumber(), objT.getShowOrderNumber()))
-			return false;
-		if (! SmartEquals(getShowPartNumber(), objT.getShowPartNumber()))
-			return false;
-		if (! SmartEquals(getShowTrackingNumber(), objT.getShowTrackingNumber()))
-			return false;
-		if (! SmartEquals(getShowReference(), objT.getShowReference()))
-			return false;
-		if (! SmartEquals(getShowDescription(), objT.getShowDescription()))
-			return false;
-		if (! SmartEquals(getShowComment(), objT.getShowComment()))
-			return false;
-		if (! SmartEquals(getShowSignature(), objT.getShowSignature()))
-			return false;
-		if (! SmartEquals(getShowBarCodes(), objT.getShowBarCodes()))
-			return false;
-		if (! SmartEquals(getShowLogo(), objT.getShowLogo()))
-			return false;
-		if (! SmartEquals(getShowDeliveryNumber(), objT.getShowDeliveryNumber()))
-			return false;
-		if (! SmartEquals(getShowDriver(), objT.getShowDriver()))
-			return false;
-		if (! SmartEquals(getShowCartonCount(), objT.getShowCartonCount()))
-			return false;
-		if (! SmartEquals(getLogoLeftPosition(), objT.getLogoLeftPosition()))
-			return false;
-		if (! SmartEquals(getLogoTopPosition(), objT.getLogoTopPosition()))
-			return false;
-		if (! SmartEquals(getLogoAcrossWidth(), objT.getLogoAcrossWidth()))
-			return false;
-		if (! SmartEquals(getLogoDownWidth(), objT.getLogoDownWidth()))
-			return false;
-		if (! SmartEquals(getFromAddressLeftPosition(), objT.getFromAddressLeftPosition()))
-			return false;
-		if (! SmartEquals(getFromAddressTopPosition(), objT.getFromAddressTopPosition()))
-			return false;
-		if (! SmartEquals(getFromAddressAcrossWidth(), objT.getFromAddressAcrossWidth()))
-			return false;
-		if (! SmartEquals(getFromAddressDownWidth(), objT.getFromAddressDownWidth()))
-			return false;
-		if (! SmartEquals(getToAddressLeftPosition(), objT.getToAddressLeftPosition()))
-			return false;
-		if (! SmartEquals(getToAddressTopPosition(), objT.getToAddressTopPosition()))
-			return false;
-		if (! SmartEquals(getToAddressAcrossWidth(), objT.getToAddressAcrossWidth()))
-			return false;
-		if (! SmartEquals(getToAddressDownWidth(), objT.getToAddressDownWidth()))
-			return false;
-		if (! SmartEquals(getAttnLeftPosition(), objT.getAttnLeftPosition()))
-			return false;
-		if (! SmartEquals(getAttnTopPosition(), objT.getAttnTopPosition()))
-			return false;
-		if (! SmartEquals(getAttnAcrossWidth(), objT.getAttnAcrossWidth()))
-			return false;
-		if (! SmartEquals(getAttnDownWidth(), objT.getAttnDownWidth()))
-			return false;
-		if (! SmartEquals(getLineLeftPosition(), objT.getLineLeftPosition()))
-			return false;
-		if (! SmartEquals(getLineTopPosition(), objT.getLineTopPosition()))
-			return false;
-		if (! SmartEquals(getLineAcrossWidth(), objT.getLineAcrossWidth()))
-			return false;
-		if (! SmartEquals(getLineDownWidth(), objT.getLineDownWidth()))
-			return false;
-		if (! SmartEquals(getCommentLeftPosition(), objT.getCommentLeftPosition()))
-			return false;
-		if (! SmartEquals(getCommentTopPosition(), objT.getCommentTopPosition()))
-			return false;
-		if (! SmartEquals(getCommentAcrossWidth(), objT.getCommentAcrossWidth()))
-			return false;
-		if (! SmartEquals(getCommentDownWidth(), objT.getCommentDownWidth()))
-			return false;
-		if (! SmartEquals(getDeliveryDateLeftPosition(), objT.getDeliveryDateLeftPosition()))
-			return false;
-		if (! SmartEquals(getDeliveryDateTopPosition(), objT.getDeliveryDateTopPosition()))
-			return false;
-		if (! SmartEquals(getReferenceLeftPosition(), objT.getReferenceLeftPosition()))
-			return false;
-		if (! SmartEquals(getReferenceTopPosition(), objT.getReferenceTopPosition()))
-			return false;
-		if (! SmartEquals(getShipViaLeftPosition(), objT.getShipViaLeftPosition()))
-			return false;
-		if (! SmartEquals(getShipViaTopPosition(), objT.getShipViaTopPosition()))
-			return false;
-		if (! SmartEquals(getCustomerPOLeftPosition(), objT.getCustomerPOLeftPosition()))
-			return false;
-		if (! SmartEquals(getCustomerPOTopPosition(), objT.getCustomerPOTopPosition()))
-			return false;
-		if (! SmartEquals(getOrderNumberLeftPosition(), objT.getOrderNumberLeftPosition()))
-			return false;
-		if (! SmartEquals(getOrderNumberTopPosition(), objT.getOrderNumberTopPosition()))
-			return false;
-		if (! SmartEquals(getPartNumberLeftPosition(), objT.getPartNumberLeftPosition()))
-			return false;
-		if (! SmartEquals(getPartNumberTopPosition(), objT.getPartNumberTopPosition()))
-			return false;
-		if (! SmartEquals(getTrackingNumberLeftPosition(), objT.getTrackingNumberLeftPosition()))
-			return false;
-		if (! SmartEquals(getTrackingNumberTopPosition(), objT.getTrackingNumberTopPosition()))
-			return false;
-		if (! SmartEquals(getDeliveryNumberLeftPosition(), objT.getDeliveryNumberLeftPosition()))
-			return false;
-		if (! SmartEquals(getDeliveryNumberTopPosition(), objT.getDeliveryNumberTopPosition()))
-			return false;
-		if (! SmartEquals(getDriverLeftPosition(), objT.getDriverLeftPosition()))
-			return false;
-		if (! SmartEquals(getDriverTopPosition(), objT.getDriverTopPosition()))
-			return false;
-		if (! SmartEquals(getCartonCountLeftPosition(), objT.getCartonCountLeftPosition()))
-			return false;
-		if (! SmartEquals(getCartonCountTopPosition(), objT.getCartonCountTopPosition()))
-			return false;
-		if (! SmartEquals(getCodLeftPosition(), objT.getCodLeftPosition()))
-			return false;
-		if (! SmartEquals(getCodTopPosition(), objT.getCodTopPosition()))
-			return false;
-		if (! SmartEquals(getDescriptionLeftPosition(), objT.getDescriptionLeftPosition()))
-			return false;
-		if (! SmartEquals(getDescriptionTopPosition(), objT.getDescriptionTopPosition()))
-			return false;
-		if (! SmartEquals(getSignatureLeftPosition(), objT.getSignatureLeftPosition()))
-			return false;
-		if (! SmartEquals(getSignatureTopPosition(), objT.getSignatureTopPosition()))
-			return false;
-		if (! SmartEquals(getShowDeliveryDateTitle(), objT.getShowDeliveryDateTitle()))
-			return false;
-		if (! SmartEquals(getShowReferenceTitle(), objT.getShowReferenceTitle()))
-			return false;
-		if (! SmartEquals(getShowShipViaTitle(), objT.getShowShipViaTitle()))
-			return false;
-		if (! SmartEquals(getShowCustomerPOTitle(), objT.getShowCustomerPOTitle()))
-			return false;
-		if (! SmartEquals(getShowOrderNumberTitle(), objT.getShowOrderNumberTitle()))
-			return false;
-		if (! SmartEquals(getShowPartNumberTitle(), objT.getShowPartNumberTitle()))
-			return false;
-		if (! SmartEquals(getShowTrackingNumberTitle(), objT.getShowTrackingNumberTitle()))
-			return false;
-		if (! SmartEquals(getShowDeliveryNumberTitle(), objT.getShowDeliveryNumberTitle()))
-			return false;
-		if (! SmartEquals(getShowDriverTitle(), objT.getShowDriverTitle()))
-			return false;
-		if (! SmartEquals(getShowCartonCountTitle(), objT.getShowCartonCountTitle()))
-			return false;
-		if (! SmartEquals(getInvoiceNumberMargin(), objT.getInvoiceNumberMargin()))
-			return false;
-		if (! SmartEquals(getOrderedQtyMargin(), objT.getOrderedQtyMargin()))
-			return false;
-		if (! SmartEquals(getShippedQtyMargin(), objT.getShippedQtyMargin()))
-			return false;
-		if (! SmartEquals(getDescriptionMargin(), objT.getDescriptionMargin()))
-			return false;
-		if (! SmartEquals(getWeightMargin(), objT.getWeightMargin()))
-			return false;
-		if (! SmartEquals(getInvoiceNumberWidth(), objT.getInvoiceNumberWidth()))
-			return false;
-		if (! SmartEquals(getOrderedQtyWidth(), objT.getOrderedQtyWidth()))
-			return false;
-		if (! SmartEquals(getShippedQtyWidth(), objT.getShippedQtyWidth()))
-			return false;
-		if (! SmartEquals(getDescriptionWidth(), objT.getDescriptionWidth()))
-			return false;
-		if (! SmartEquals(getWeightWidth(), objT.getWeightWidth()))
-			return false;
-		if (! SmartEquals(getWidthOfAllItems(), objT.getWidthOfAllItems()))
-			return false;
-		if (! SmartEquals(getAddressFontBean(), objT.getAddressFontBean()))
-			return false;
-		if (! SmartEquals(getDateFontBean(), objT.getDateFontBean()))
-			return false;
-		if (! SmartEquals(getBodyTextFontBean(), objT.getBodyTextFontBean()))
-			return false;
-		if (! SmartEquals(getFormFontBean(), objT.getFormFontBean()))
-			return false;
-		if (! SmartEquals(getFormImageSource(), objT.getFormImageSource()))
-			return false;
-		if (! SmartEquals(getFormImagePath(), objT.getFormImagePath()))
-			return false;
-		if (! SmartEquals(getLogoImageSource(), objT.getLogoImageSource()))
-			return false;
-		if (! SmartEquals(getLogoImagePath(), objT.getLogoImagePath()))
-			return false;
-		if (! SmartEquals(getDataOffsetLeftRight(), objT.getDataOffsetLeftRight()))
-			return false;
-		if (! SmartEquals(getDataOffsetDownUp(), objT.getDataOffsetDownUp()))
-			return false;
-		if (! SmartEquals(getImageOffsetLeftRight(), objT.getImageOffsetLeftRight()))
-			return false;
-		if (! SmartEquals(getImageOffsetDownUp(), objT.getImageOffsetDownUp()))
-			return false;
-		if (! SmartEquals(getMeasurement(), objT.getMeasurement()))
-			return false;
-		if (! SmartEquals(getDefaultFlag(), objT.getDefaultFlag()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    FormPreferences objT = (FormPreferences)obj;
+    if (! SmartEquals(getTitle(), objT.getTitle()))
+      return false;
+    if (! SmartEquals(getStyleOption(), objT.getStyleOption()))
+      return false;
+    if (! SmartEquals(getShowFromAddress(), objT.getShowFromAddress()))
+      return false;
+    if (! SmartEquals(getShowToAddress(), objT.getShowToAddress()))
+      return false;
+    if (! SmartEquals(getShowAttn(), objT.getShowAttn()))
+      return false;
+    if (! SmartEquals(getShowShipVia(), objT.getShowShipVia()))
+      return false;
+    if (! SmartEquals(getShowDeliveryDate(), objT.getShowDeliveryDate()))
+      return false;
+    if (! SmartEquals(getShowCustomPO(), objT.getShowCustomPO()))
+      return false;
+    if (! SmartEquals(getShowOrderNumber(), objT.getShowOrderNumber()))
+      return false;
+    if (! SmartEquals(getShowPartNumber(), objT.getShowPartNumber()))
+      return false;
+    if (! SmartEquals(getShowTrackingNumber(), objT.getShowTrackingNumber()))
+      return false;
+    if (! SmartEquals(getShowReference(), objT.getShowReference()))
+      return false;
+    if (! SmartEquals(getShowDescription(), objT.getShowDescription()))
+      return false;
+    if (! SmartEquals(getShowComment(), objT.getShowComment()))
+      return false;
+    if (! SmartEquals(getShowSignature(), objT.getShowSignature()))
+      return false;
+    if (! SmartEquals(getShowBarCodes(), objT.getShowBarCodes()))
+      return false;
+    if (! SmartEquals(getShowLogo(), objT.getShowLogo()))
+      return false;
+    if (! SmartEquals(getShowDeliveryNumber(), objT.getShowDeliveryNumber()))
+      return false;
+    if (! SmartEquals(getShowDriver(), objT.getShowDriver()))
+      return false;
+    if (! SmartEquals(getShowCartonCount(), objT.getShowCartonCount()))
+      return false;
+    if (! SmartEquals(getLogoLeftPosition(), objT.getLogoLeftPosition()))
+      return false;
+    if (! SmartEquals(getLogoTopPosition(), objT.getLogoTopPosition()))
+      return false;
+    if (! SmartEquals(getLogoAcrossWidth(), objT.getLogoAcrossWidth()))
+      return false;
+    if (! SmartEquals(getLogoDownWidth(), objT.getLogoDownWidth()))
+      return false;
+    if (! SmartEquals(getFromAddressLeftPosition(), objT.getFromAddressLeftPosition()))
+      return false;
+    if (! SmartEquals(getFromAddressTopPosition(), objT.getFromAddressTopPosition()))
+      return false;
+    if (! SmartEquals(getFromAddressAcrossWidth(), objT.getFromAddressAcrossWidth()))
+      return false;
+    if (! SmartEquals(getFromAddressDownWidth(), objT.getFromAddressDownWidth()))
+      return false;
+    if (! SmartEquals(getToAddressLeftPosition(), objT.getToAddressLeftPosition()))
+      return false;
+    if (! SmartEquals(getToAddressTopPosition(), objT.getToAddressTopPosition()))
+      return false;
+    if (! SmartEquals(getToAddressAcrossWidth(), objT.getToAddressAcrossWidth()))
+      return false;
+    if (! SmartEquals(getToAddressDownWidth(), objT.getToAddressDownWidth()))
+      return false;
+    if (! SmartEquals(getAttnLeftPosition(), objT.getAttnLeftPosition()))
+      return false;
+    if (! SmartEquals(getAttnTopPosition(), objT.getAttnTopPosition()))
+      return false;
+    if (! SmartEquals(getAttnAcrossWidth(), objT.getAttnAcrossWidth()))
+      return false;
+    if (! SmartEquals(getAttnDownWidth(), objT.getAttnDownWidth()))
+      return false;
+    if (! SmartEquals(getLineLeftPosition(), objT.getLineLeftPosition()))
+      return false;
+    if (! SmartEquals(getLineTopPosition(), objT.getLineTopPosition()))
+      return false;
+    if (! SmartEquals(getLineAcrossWidth(), objT.getLineAcrossWidth()))
+      return false;
+    if (! SmartEquals(getLineDownWidth(), objT.getLineDownWidth()))
+      return false;
+    if (! SmartEquals(getCommentLeftPosition(), objT.getCommentLeftPosition()))
+      return false;
+    if (! SmartEquals(getCommentTopPosition(), objT.getCommentTopPosition()))
+      return false;
+    if (! SmartEquals(getCommentAcrossWidth(), objT.getCommentAcrossWidth()))
+      return false;
+    if (! SmartEquals(getCommentDownWidth(), objT.getCommentDownWidth()))
+      return false;
+    if (! SmartEquals(getDeliveryDateLeftPosition(), objT.getDeliveryDateLeftPosition()))
+      return false;
+    if (! SmartEquals(getDeliveryDateTopPosition(), objT.getDeliveryDateTopPosition()))
+      return false;
+    if (! SmartEquals(getReferenceLeftPosition(), objT.getReferenceLeftPosition()))
+      return false;
+    if (! SmartEquals(getReferenceTopPosition(), objT.getReferenceTopPosition()))
+      return false;
+    if (! SmartEquals(getShipViaLeftPosition(), objT.getShipViaLeftPosition()))
+      return false;
+    if (! SmartEquals(getShipViaTopPosition(), objT.getShipViaTopPosition()))
+      return false;
+    if (! SmartEquals(getCustomerPOLeftPosition(), objT.getCustomerPOLeftPosition()))
+      return false;
+    if (! SmartEquals(getCustomerPOTopPosition(), objT.getCustomerPOTopPosition()))
+      return false;
+    if (! SmartEquals(getOrderNumberLeftPosition(), objT.getOrderNumberLeftPosition()))
+      return false;
+    if (! SmartEquals(getOrderNumberTopPosition(), objT.getOrderNumberTopPosition()))
+      return false;
+    if (! SmartEquals(getPartNumberLeftPosition(), objT.getPartNumberLeftPosition()))
+      return false;
+    if (! SmartEquals(getPartNumberTopPosition(), objT.getPartNumberTopPosition()))
+      return false;
+    if (! SmartEquals(getTrackingNumberLeftPosition(), objT.getTrackingNumberLeftPosition()))
+      return false;
+    if (! SmartEquals(getTrackingNumberTopPosition(), objT.getTrackingNumberTopPosition()))
+      return false;
+    if (! SmartEquals(getDeliveryNumberLeftPosition(), objT.getDeliveryNumberLeftPosition()))
+      return false;
+    if (! SmartEquals(getDeliveryNumberTopPosition(), objT.getDeliveryNumberTopPosition()))
+      return false;
+    if (! SmartEquals(getDriverLeftPosition(), objT.getDriverLeftPosition()))
+      return false;
+    if (! SmartEquals(getDriverTopPosition(), objT.getDriverTopPosition()))
+      return false;
+    if (! SmartEquals(getCartonCountLeftPosition(), objT.getCartonCountLeftPosition()))
+      return false;
+    if (! SmartEquals(getCartonCountTopPosition(), objT.getCartonCountTopPosition()))
+      return false;
+    if (! SmartEquals(getCodLeftPosition(), objT.getCodLeftPosition()))
+      return false;
+    if (! SmartEquals(getCodTopPosition(), objT.getCodTopPosition()))
+      return false;
+    if (! SmartEquals(getDescriptionLeftPosition(), objT.getDescriptionLeftPosition()))
+      return false;
+    if (! SmartEquals(getDescriptionTopPosition(), objT.getDescriptionTopPosition()))
+      return false;
+    if (! SmartEquals(getSignatureLeftPosition(), objT.getSignatureLeftPosition()))
+      return false;
+    if (! SmartEquals(getSignatureTopPosition(), objT.getSignatureTopPosition()))
+      return false;
+    if (! SmartEquals(getShowDeliveryDateTitle(), objT.getShowDeliveryDateTitle()))
+      return false;
+    if (! SmartEquals(getShowReferenceTitle(), objT.getShowReferenceTitle()))
+      return false;
+    if (! SmartEquals(getShowShipViaTitle(), objT.getShowShipViaTitle()))
+      return false;
+    if (! SmartEquals(getShowCustomerPOTitle(), objT.getShowCustomerPOTitle()))
+      return false;
+    if (! SmartEquals(getShowOrderNumberTitle(), objT.getShowOrderNumberTitle()))
+      return false;
+    if (! SmartEquals(getShowPartNumberTitle(), objT.getShowPartNumberTitle()))
+      return false;
+    if (! SmartEquals(getShowTrackingNumberTitle(), objT.getShowTrackingNumberTitle()))
+      return false;
+    if (! SmartEquals(getShowDeliveryNumberTitle(), objT.getShowDeliveryNumberTitle()))
+      return false;
+    if (! SmartEquals(getShowDriverTitle(), objT.getShowDriverTitle()))
+      return false;
+    if (! SmartEquals(getShowCartonCountTitle(), objT.getShowCartonCountTitle()))
+      return false;
+    if (! SmartEquals(getInvoiceNumberMargin(), objT.getInvoiceNumberMargin()))
+      return false;
+    if (! SmartEquals(getOrderedQtyMargin(), objT.getOrderedQtyMargin()))
+      return false;
+    if (! SmartEquals(getShippedQtyMargin(), objT.getShippedQtyMargin()))
+      return false;
+    if (! SmartEquals(getDescriptionMargin(), objT.getDescriptionMargin()))
+      return false;
+    if (! SmartEquals(getWeightMargin(), objT.getWeightMargin()))
+      return false;
+    if (! SmartEquals(getInvoiceNumberWidth(), objT.getInvoiceNumberWidth()))
+      return false;
+    if (! SmartEquals(getOrderedQtyWidth(), objT.getOrderedQtyWidth()))
+      return false;
+    if (! SmartEquals(getShippedQtyWidth(), objT.getShippedQtyWidth()))
+      return false;
+    if (! SmartEquals(getDescriptionWidth(), objT.getDescriptionWidth()))
+      return false;
+    if (! SmartEquals(getWeightWidth(), objT.getWeightWidth()))
+      return false;
+    if (! SmartEquals(getWidthOfAllItems(), objT.getWidthOfAllItems()))
+      return false;
+    if (! SmartEquals(getAddressFontBean(), objT.getAddressFontBean()))
+      return false;
+    if (! SmartEquals(getDateFontBean(), objT.getDateFontBean()))
+      return false;
+    if (! SmartEquals(getBodyTextFontBean(), objT.getBodyTextFontBean()))
+      return false;
+    if (! SmartEquals(getFormFontBean(), objT.getFormFontBean()))
+      return false;
+    if (! SmartEquals(getFormImageSource(), objT.getFormImageSource()))
+      return false;
+    if (! SmartEquals(getFormImagePath(), objT.getFormImagePath()))
+      return false;
+    if (! SmartEquals(getLogoImageSource(), objT.getLogoImageSource()))
+      return false;
+    if (! SmartEquals(getLogoImagePath(), objT.getLogoImagePath()))
+      return false;
+    if (! SmartEquals(getDataOffsetLeftRight(), objT.getDataOffsetLeftRight()))
+      return false;
+    if (! SmartEquals(getDataOffsetDownUp(), objT.getDataOffsetDownUp()))
+      return false;
+    if (! SmartEquals(getImageOffsetLeftRight(), objT.getImageOffsetLeftRight()))
+      return false;
+    if (! SmartEquals(getImageOffsetDownUp(), objT.getImageOffsetDownUp()))
+      return false;
+    if (! SmartEquals(getMeasurement(), objT.getMeasurement()))
+      return false;
+    if (! SmartEquals(getDefaultFlag(), objT.getDefaultFlag()))
+      return false;
+    return true;
+  }			
 }
