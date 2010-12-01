@@ -37,6 +37,8 @@
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import mx.utils.ObjectUtil;
+		import flash.net.registerClassAlias;
 		import com.efi.printsmith.events.FormPreferencesUpdateEvent;
 		import com.efi.printsmith.data.FormPreferences;
 		import com.efi.printsmith.data.ComLink;
@@ -512,7 +514,8 @@
 			this.throbber_formpreferences.play();
 			dataServiceFormPreferences.getAll("FormPreferences");
 			var child:DeliveryTicketLayout = new DeliveryTicketLayout();
-			child.formPreferences = event.result as FormPreferences;
+			registerClassAlias("com.efi.printsmith.data.FormPreferences",FormPreferences);
+			child.formPreferences = ObjectUtil.copy(event.result) as FormPreferences;
 			child.addEventListener(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,updateFormPreferencesList,false,0,true);
 			var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
 			if (win == null)	{
@@ -534,7 +537,8 @@
 		private function editFormPreferences():void {
 			if(formPreferencesGrid.selectedIndex>-1 && formPreferencesGrid.selectedItem!=null) {
 				var child:DeliveryTicketLayout = new DeliveryTicketLayout();
-				child.formPreferences = formPreferencesGrid.selectedItem as FormPreferences;
+				registerClassAlias("com.efi.printsmith.data.FormPreferences",FormPreferences);
+				child.formPreferences = ObjectUtil.copy(formPreferencesGrid.selectedItem) as FormPreferences;
 				child.addEventListener(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,updateFormPreferencesList,false,0,true);
 				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
 				if (win == null)	{

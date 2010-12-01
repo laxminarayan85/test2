@@ -190,6 +190,7 @@
 		    public function updatePrecison():void {
 		    	initializeProperties();
 		    	customText = dataHolder[variableName];
+		    	focusOutEvent(null);
 		    }
 			
 			/*
@@ -309,14 +310,14 @@
 							dataFromControl = dataFromControl.replace(symbolString,"");
 						}
 					}    								 																 	
-					 validateNumber.source=event.currentTarget;
-					 validateNumber.listener=event.currentTarget;
+					 validateNumber.source=this;
+					 validateNumber.listener=this;
 					 validateNumber.property="text";
 					 var validateEvent:ValidationResultEvent  = validateNumber.validate(dataFromControl);
 					 
 		  			 if(validateEvent.type  == mx.events.ValidationResultEvent.INVALID ) {
 		  			 	if(data != null){
-		  			 		data[variableName+"ErrorText"] = event.currentTarget.text;
+		  			 		data[variableName+"ErrorText"] = this.text;
 		  			 	}
 		  			 	return;
 		  			 }
@@ -329,7 +330,7 @@
 		  				}
 		  				else {
 		  					if(repeaterElement){
-		  						event.currentTarget.getRepeaterItem()[variableName] = removeCommas(numbFormatter.format(dataFromControl)); 	
+		  						this.getRepeaterItem()[variableName] = removeCommas(numbFormatter.format(dataFromControl)); 	
 		  					}
 		  					else {
 		  						dataHolder[variableName] = removeCommas(numbFormatter.format(dataFromControl)); 	
