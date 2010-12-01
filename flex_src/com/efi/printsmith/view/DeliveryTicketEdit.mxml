@@ -119,7 +119,6 @@
 		public function init():void{
 			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 			mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.DeliveryTicket');
-			dataServiceFormPreference.getAll("FormPreferences");
 			dataServiceShippingMethod.getAll("ShippingMethod");
 			dataServiceDriver.getAll("Driver");
 			dataServiceLocation.getAll("ProductionLocations");
@@ -192,6 +191,7 @@
 				}
 				toAddress_combo.customText = getCustomTextData(toContactList,deliveryTicket,deliveryTicket.toAddress);
 			}
+			dataServiceFormPreference.getAll("FormPreferences");
 			dataServicePreferenceSystem.getSingle("PreferencesSystem");
 		}
 		
@@ -906,7 +906,7 @@
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Format')}:"/>
 				<components:CustomComboBoxComponent id="format_combo"
 					masterList="{formPreferencesList}" labelFieldId="id" labelFieldName="title" updateObject="true" objectLabelFieldId="id"
-					updateFirstElement="true" dataHolder="{deliveryTicket}" variableName="formPreferences" customText="{getCustomTextData(formPreferencesList,deliveryTicket,deliveryTicket.formPreferences)}"/>
+					dataHolder="{deliveryTicket}" variableName="formPreferences" customText="{getCustomTextData(formPreferencesList,deliveryTicket,deliveryTicket.formPreferences)}"/>
 			</mx:HBox>
 			<mx:HRule width="100%"/>
 			<mx:HBox width="100%" height="90%">
