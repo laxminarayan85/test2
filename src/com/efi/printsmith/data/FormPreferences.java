@@ -464,6 +464,10 @@ public class FormPreferences extends ModelBase {
 	 * @generated
 	 */
 	public static final String MEASUREMENT = "Measurement";
+	/**
+	 * @generated
+	 */
+	public static final String DEFAULTFLAG = "DefaultFlag";
 
 	/**
 	 * @generated
@@ -2582,7 +2586,7 @@ public class FormPreferences extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(cascade=CascadeType.ALL)
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition addressFontBean;
 	
@@ -2606,7 +2610,7 @@ public class FormPreferences extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(cascade=CascadeType.ALL)
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition dateFontBean;
 	
@@ -2630,7 +2634,7 @@ public class FormPreferences extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(cascade=CascadeType.ALL)
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition bodyTextFontBean;
 	
@@ -2654,7 +2658,7 @@ public class FormPreferences extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(cascade=CascadeType.ALL)
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition formFontBean;
 	
@@ -2880,6 +2884,29 @@ public class FormPreferences extends ModelBase {
 		this.measurement = newVal;
 	}
 	
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
+	private Boolean defaultFlag;
+	
+	/**
+	 * @generated
+ 	 */
+	public Boolean getDefaultFlag(){
+		return defaultFlag; 
+	}
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setDefaultFlag(Boolean newVal) {
+		this.defaultFlag = newVal;
+	}
+	
 	/**
 	 * @generated
 	 */		
@@ -2990,6 +3017,7 @@ public class FormPreferences extends ModelBase {
 		if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) return getImageOffsetLeftRight();
 		if (IMAGEOFFSETDOWNUP.equals(propertyName)) return getImageOffsetDownUp();
 		if (MEASUREMENT.equals(propertyName)) return getMeasurement();
+		if (DEFAULTFLAG.equals(propertyName)) return getDefaultFlag();
 		return super.getProperty(propertyName);
 	}
 	
@@ -3103,6 +3131,7 @@ public class FormPreferences extends ModelBase {
 		if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) setImageOffsetLeftRight((Long)newValue); else
 		if (IMAGEOFFSETDOWNUP.equals(propertyName)) setImageOffsetDownUp((Long)newValue); else
 		if (MEASUREMENT.equals(propertyName)) setMeasurement((String)newValue); else
+		if (DEFAULTFLAG.equals(propertyName)) setDefaultFlag((Boolean)newValue); else
 		super.setProperty(propertyName, newValue);
 	}
 	
@@ -3320,6 +3349,8 @@ public class FormPreferences extends ModelBase {
 			return new Class<?>[] {Long.class};		
 		if (MEASUREMENT.equals(propertyName)) 
 			return new Class<?>[] {String.class};		
+		if (DEFAULTFLAG.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
 		return super.getPropertyClass(propertyName);
 	}
 	
@@ -3434,6 +3465,7 @@ public class FormPreferences extends ModelBase {
 		if (IMAGEOFFSETLEFTRIGHT.equals(propertyName)) return FormPreferences.class;
 		if (IMAGEOFFSETDOWNUP.equals(propertyName)) return FormPreferences.class;
 		if (MEASUREMENT.equals(propertyName)) return FormPreferences.class;
+		if (DEFAULTFLAG.equals(propertyName)) return FormPreferences.class;
 		return super.getPropertyOwner(propertyName);
 	}
 	
@@ -3652,6 +3684,8 @@ public class FormPreferences extends ModelBase {
 		if (! SmartEquals(getImageOffsetDownUp(), objT.getImageOffsetDownUp()))
 			return false;
 		if (! SmartEquals(getMeasurement(), objT.getMeasurement()))
+			return false;
+		if (! SmartEquals(getDefaultFlag(), objT.getDefaultFlag()))
 			return false;
 		return true;
 	}			

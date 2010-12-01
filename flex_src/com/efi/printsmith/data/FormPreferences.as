@@ -118,6 +118,7 @@ package com.efi.printsmith.data
 		public var imageOffsetLeftRight:Number = 0;
 		public var imageOffsetDownUp:Number = 0;
 		public var measurement:String = "";
+		public var defaultFlag:Boolean = false;
 	
 	}
 }

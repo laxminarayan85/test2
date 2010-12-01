@@ -3,7 +3,7 @@
 	width="100%" height="100%"
 	headerHeight="0" preinitialize="preInit();" creationComplete="{init()}"
 	implements="com.efi.printsmith.security.ISecureComponent" title="Delivery Ticket"
-	xmlns:ns1="com.efi.printsmith.components.*" xmlns:filter="com.efi.printsmith.common.components.filter.*">
+	xmlns:ns1="com.efi.printsmith.components.*" xmlns:filter="com.efi.printsmith.common.components.filter.*" xmlns:components="com.efi.printsmith.common.components.*">
 	
 	<mx:Script source="../security/PSSecurityInclude.as" />
 	
@@ -24,6 +24,12 @@
 		<mx:method name="getContactById" fault="handleFault(event)" result="handleLoadContactResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServiceFormPreferences" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadFormPreferencesResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteFormResult(event)" />
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleSaveFormResult(event)" />
+	</mx:RemoteObject>
+	
 	<mx:RemoteObject id="formPreferencesService" destination="formPreferencesService" showBusyCursor="true">
 		<mx:method name="createNewFormPreferences" fault="handleFault(event)" result="handleNewFormPreferencesResult(event)"/>
 	</mx:RemoteObject>
@@ -31,6 +37,7 @@
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.events.FormPreferencesUpdateEvent;
 		import com.efi.printsmith.data.FormPreferences;
 		import com.efi.printsmith.data.ComLink;
 		import com.efi.printsmith.events.AccountPickerSelectEvent;
@@ -74,6 +81,8 @@
 	   
 	   [Bindable] private var accounts:ArrayCollection = new ArrayCollection();
 	   
+	   [Bindable] private var formPreferencesList:ArrayCollection = new ArrayCollection();
+	   
 	   private var newBrokerFlag:Boolean = false;
 	   
 	   private var savedBrokerId:int;
@@ -110,11 +119,15 @@
 			this.throbber.play();
 			this.throbber_broker.visible = true;
 			this.throbber_broker.play();
+			this.throbber_formpreferences.visible = true;
+			this.throbber_formpreferences.play();
 			ship_to_contact_editor.addEventListener("SaveContactEvent",saveContactToBrokerHandler,false,0,true);
 			ship_to_address_editor.addEventListener("SaveAddressEvent",saveAddressToBrokerHandler,false,0,true);
 			dataService.getAccountPicker();
 			dataService.getDeliveryTicketJobs(false);
+			dataServiceFormPreferences.getAll("FormPreferences");
 			dataServiceBroker.getBrokers();
+			
 		}
 		
 		private function ticketJobFilter(item:Object):Boolean {
@@ -480,9 +493,27 @@
 			formPreferencesService.createNewFormPreferences(formPreferences);
 		}
 		
+		public function setDefaultFlag(item:Object):void {
+			for each(var formPreferencesObj:FormPreferences in formPreferencesList) {
+				formPreferencesObj.defaultFlag = false;
+			}
+			item.defaultFlag = true;
+			dataServiceFormPreferences.addUpdateDeleteList(formPreferencesList,null);
+		}
+		
+		private function handleLoadFormPreferencesResult(event:ResultEvent):void {
+			throbber_formpreferences.visible = false;
+			throbber_formpreferences.stop();
+			formPreferencesList = event.result as ArrayCollection;
+		}
+		
 		private function handleNewFormPreferencesResult(event:ResultEvent):void {
+			this.throbber_formpreferences.visible = true;
+			this.throbber_formpreferences.play();
+			dataServiceFormPreferences.getAll("FormPreferences");
 			var child:DeliveryTicketLayout = new DeliveryTicketLayout();
 			child.formPreferences = event.result as FormPreferences;
+			child.addEventListener(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,updateFormPreferencesList,false,0,true);
 			var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
 			if (win == null)	{
 				Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
@@ -490,6 +521,53 @@
 			else {
 				win.bringWindowToFront();	
 			}
+		}
+		
+		private function updateFormPreferencesList(event:FormPreferencesUpdateEvent):void {
+			if(event.isSaved) {
+				this.throbber_formpreferences.visible = true;
+				this.throbber_formpreferences.play();
+				dataServiceFormPreferences.getAll("FormPreferences");
+			}
+		}
+		
+		private function editFormPreferences():void {
+			if(formPreferencesGrid.selectedIndex>-1 && formPreferencesGrid.selectedItem!=null) {
+				var child:DeliveryTicketLayout = new DeliveryTicketLayout();
+				child.formPreferences = formPreferencesGrid.selectedItem as FormPreferences;
+				child.addEventListener(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,updateFormPreferencesList,false,0,true);
+				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+				if (win == null)	{
+					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
+				}
+				else {
+					win.bringWindowToFront();	
+				}
+			}
+		}
+		
+		private function deleteFormPreferences():void {
+			if(formPreferencesGrid.selectedIndex>-1 && formPreferencesGrid.selectedItem!=null) {
+				var inputString:String = formPreferencesGrid.selectedItem.title;
+				var deleteString:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0'),inputString);
+				Alert.show(deleteString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, function(event:CloseEvent):void {
+					if(event.detail==Alert.YES) {
+						dataServiceFormPreferences.deleteItem("FormPreferences",formPreferencesGrid.selectedItem.id);
+					}
+				}, null, Alert.NO);
+			}
+		}
+		
+		private function handleDeleteFormResult(event:ResultEvent):void {
+			this.throbber_formpreferences.visible = true;
+			this.throbber_formpreferences.play();
+			dataServiceFormPreferences.getAll("FormPreferences");
+		} 
+		
+		private function handleSaveFormResult(event:ResultEvent):void {
+			this.throbber_formpreferences.visible = true;
+			this.throbber_formpreferences.play();
+			dataServiceFormPreferences.getAll("FormPreferences");
 		}
 	
 	]]>
@@ -612,11 +690,11 @@
 					<mx:icon>@Embed(source='../../../../assets/new.png')
 					</mx:icon>
 				</mx:Button>
-				<mx:Button width="6%" height="100%">
+				<mx:Button width="6%" height="100%" click="{editFormPreferences()}">
 					<mx:icon>@Embed(source='../../../../assets/edit.png')
 					</mx:icon>
 				</mx:Button>
-				<mx:Button width="6%" height="100%">
+				<mx:Button width="6%" height="100%" click="{deleteFormPreferences()}">
 					<mx:icon>@Embed(source='../../../../assets/delete.png')
 					</mx:icon>
 				</mx:Button>
@@ -630,11 +708,19 @@
 					width="6%" textAlign="center"/>
 			</mx:HBox>
 			<mx:Canvas width="100%" height="55%">
-				<mx:DataGrid id="formPreferencesGrid" width="100%" height="100%">
+				<mx:DataGrid id="formPreferencesGrid" dataProvider="{formPreferencesList}" width="100%" height="100%"
+					doubleClickEnabled="true" doubleClick="{editFormPreferences()}">
 					<mx:columns>
-						<mx:DataGridColumn headerText="Default"
-							dataField="col1" />
-						<mx:DataGridColumn headerText="Title" dataField="col2" />
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'taxCmd.Default')}">
+							<mx:itemRenderer>
+								<mx:Component>
+									<components:CustomCheckBoxComponent
+										datagridControl="true" variableName="defaultFlag" customText="{data.defaultFlag}"
+										defaultValue="false" selectedValue="true" deSelectedValue="false" click="{outerDocument.setDefaultFlag(data)}"/> 
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'otherPrefCmd.Title')}" dataField="title" />
 					</mx:columns>
 				</mx:DataGrid>
 				<ns1:SmallThrobber id="throbber_formpreferences" height="20" width="20" visible="false" horizontalCenter="0" verticalCenter="0"/>

@@ -4,8 +4,19 @@
 	headerHeight="0" width="100%" height="100%" xmlns:components="com.efi.printsmith.common.components.*"
 	creationComplete="{init()}">
 	
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
+	
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.FaultEvent;
+			import com.efi.printsmith.events.FormPreferencesUpdateEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.controls.Alert;
 			import com.efi.printsmith.data.FontDefinition;
 			import com.efi.printsmith.common.components.CustomFontComponent;
 			import mx.managers.PopUpManager;
@@ -14,10 +25,37 @@
 			
 			[Bindable] public var formPreferences:FormPreferences;
 			
+			[Bindable] private var measurementList:ArrayCollection = new ArrayCollection();
+			
+			private var measurementValue:String = "";
+			
 			private function init():void {
 				var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 				mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketFormEditCmd.DeliveryTicketLayout');
+				if(formPreferences!=null){
+					measurementValue = formPreferences.measurement;
+				}
 				updateFontLabels();
+				loadMeasurements();
+			}
+			
+			private function loadMeasurements():void {
+				var measurementObj:Object = new Object();
+				measurementObj.key = "Pixels";
+				measurementObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_298.Pixels');
+				measurementList.addItem(measurementObj);
+				measurementObj = new Object();
+				measurementObj.key = "Inches";
+				measurementObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_298.Inches');
+				measurementList.addItem(measurementObj);
+				measurementObj = new Object();
+				measurementObj.key = "Millimeters";
+				measurementObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_298.Millimeters');
+				measurementList.addItem(measurementObj);
+				measurementObj = new Object();
+				measurementObj.key = "Centimeters";
+				measurementObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_298.Centimeters');
+				measurementList.addItem(measurementObj);
 			} 
 			
 			public function updateFontLabels():void{
@@ -163,6 +201,42 @@
 						labelComponent.filters = null;
 					} 
 				}
+			}
+			
+			private function handleFault(ev:FaultEvent):void
+			{
+				var message:String;
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null);
+			}
+			
+			private function updateFormPreferences():void {
+				if(formPreferences!=null) {
+					dataService.addUpdate(formPreferences);
+				}	
+			}
+			
+			private function handleSaveResult(event:ResultEvent):void {
+				dispatchEvent(new FormPreferencesUpdateEvent(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,true));
+				callLater(closeWindow);
+			}
+			
+			private function closeWindow():void {
+				Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
+			}
+			
+			private function updateTotalWidth():void {
+				var totalWidth:Number = formPreferences.invoiceNumberMargin+formPreferences.invoiceNumberWidth+formPreferences.orderedQtyMargin
+				+formPreferences.orderedQtyWidth+formPreferences.shippedQtyMargin+formPreferences.shippedQtyWidth+formPreferences.descriptionMargin
+				+formPreferences.descriptionWidth+formPreferences.weightMargin+formPreferences.weightWidth;
+				formPreferences.widthOfAllItems = totalWidth;
+			}
+			
+			private function updateNumericFields():void {
+				if(measurementValue!=null && measurementValue!=""){
+					
+				}
+				measurementValue = formPreferences.measurement;
 			}
 			
 		]]>
@@ -809,12 +883,12 @@
 					<mx:GridItem width="15%">
 						<components:CustomNumericTextInputComponent
 							dataHolder="{formPreferences}" variableName="invoiceNumberMargin" customText="{formPreferences.invoiceNumberMargin}"
-							precision="2" viewablePrecision="1" rounding="nearest"/>
+							precision="2" viewablePrecision="1" rounding="nearest" focusOut="{updateTotalWidth()}"/>
 					</mx:GridItem>
 					<mx:GridItem width="15%">
 						<components:CustomNumericTextInputComponent
 							dataHolder="{formPreferences}" variableName="invoiceNumberWidth" customText="{formPreferences.invoiceNumberWidth}"
-							precision="2" viewablePrecision="1" rounding="nearest"/>
+							precision="2" viewablePrecision="1" rounding="nearest" focusOut="{updateTotalWidth()}"/>
 					</mx:GridItem>
 					<mx:GridItem width="30%"/>
 				</mx:GridRow>
@@ -828,12 +902,12 @@
 					<mx:GridItem width="15%">
 						<components:CustomNumericTextInputComponent
 							dataHolder="{formPreferences}" variableName="orderedQtyMargin" customText="{formPreferences.orderedQtyMargin}"
-							precision="2" viewablePrecision="1" rounding="nearest"/>
+							precision="2" viewablePrecision="1" rounding="nearest" focusOut="{updateTotalWidth()}"/>
 					</mx:GridItem>
 					<mx:GridItem width="15%">
 						<components:CustomNumericTextInputComponent
 							dataHolder="{formPreferences}" variableName="orderedQtyWidth" customText="{formPreferences.orderedQtyWidth}"
-							precision="2" viewablePrecision="1" rounding="nearest"/>
+							precision="2" viewablePrecision="1" rounding="nearest" focusOut="{updateTotalWidth()}"/>
 					</mx:GridItem>
 					<mx:GridItem width="30%"/>
 				</mx:GridRow>
@@ -847,12 +921,12 @@
 					<mx:GridItem width="15%">
 						<components:CustomNumericTextInputComponent
 							dataHolder="{formPreferences}" variableName="shippedQtyMargin" customText="{formPreferences.shippedQtyMargin}"
-							precision="2" viewablePrecision="1" rounding="nearest"/>
+							precision="2" viewablePrecision="1" rounding="nearest" focusOut="{updateTotalWidth()}"/>
 					</mx:GridItem>
 					<mx:GridItem width="15%">
 						<components:CustomNumericTextInputComponent
 							dataHolder="{formPreferences}" variableName="shippedQtyWidth" customText="{formPreferences.shippedQtyWidth}"
-							precision="2" viewablePrecision="1" rounding="nearest"/>
+							precision="2" viewablePrecision="1" rounding="nearest" focusOut="{updateTotalWidth()}"/>
 					</mx:GridItem>
 					<mx:GridItem width="30%"/>
 				</mx:GridRow>
@@ -866,12 +940,12 @@
 					<mx:GridItem width="15%">
 						<components:CustomNumericTextInputComponent
 							dataHolder="{formPreferences}" variableName="descriptionMargin" customText="{formPreferences.descriptionMargin}"
-							precision="2" viewablePrecision="1" rounding="nearest"/>
+							precision="2" viewablePrecision="1" rounding="nearest" focusOut="{updateTotalWidth()}"/>
 					</mx:GridItem>
 					<mx:GridItem width="15%">
 						<components:CustomNumericTextInputComponent
 							dataHolder="{formPreferences}" variableName="descriptionWidth" customText="{formPreferences.descriptionWidth}"
-							precision="2" viewablePrecision="1" rounding="nearest"/>
+							precision="2" viewablePrecision="1" rounding="nearest" focusOut="{updateTotalWidth()}"/>
 					</mx:GridItem>
 					<mx:GridItem width="30%"/>
 				</mx:GridRow>
@@ -885,12 +959,12 @@
 					<mx:GridItem width="15%">
 						<components:CustomNumericTextInputComponent
 							dataHolder="{formPreferences}" variableName="weightMargin" customText="{formPreferences.weightMargin}"
-							precision="2" viewablePrecision="1" rounding="nearest"/>
+							precision="2" viewablePrecision="1" rounding="nearest" focusOut="{updateTotalWidth()}"/>
 					</mx:GridItem>
 					<mx:GridItem width="15%">
 						<components:CustomNumericTextInputComponent
 							dataHolder="{formPreferences}" variableName="weightWidth" customText="{formPreferences.weightWidth}"
-							precision="2" viewablePrecision="1" rounding="nearest"/>
+							precision="2" viewablePrecision="1" rounding="nearest" focusOut="{updateTotalWidth()}"/>
 					</mx:GridItem>
 					<mx:GridItem width="30%"/>
 				</mx:GridRow>
@@ -972,10 +1046,10 @@
 						layout="vertical" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
 						
 						<mx:RadioButtonGroup id="formImageOptions"/>
-						<components:CustomRadioButtonComponent
+						<components:CustomRadioButtonComponent groupName="formImageOptions"
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.SharedImage')}" value="SharedImage"
 							dataHolder="{formPreferences}" variableName="formImageSource" customText="{formPreferences.formImageSource}"/>
-						<components:CustomRadioButtonComponent
+						<components:CustomRadioButtonComponent groupName="formImageOptions"
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.ResourceFile')}" value="ResourceFile"
 							dataHolder="{formPreferences}" variableName="formImageSource" customText="{formPreferences.formImageSource}"/>
 						
@@ -993,10 +1067,10 @@
 						layout="vertical" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
 						
 						<mx:RadioButtonGroup id="logoImageOptions"/>
-						<components:CustomRadioButtonComponent
+						<components:CustomRadioButtonComponent groupName="logoImageOptions"
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.SharedImage')}" value="SharedImage"
 							dataHolder="{formPreferences}" variableName="logoImageSource" customText="{formPreferences.logoImageSource}"/>
-						<components:CustomRadioButtonComponent
+						<components:CustomRadioButtonComponent groupName="logoImageOptions"
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invPrefCmd.ResourceFile')}" value="ResourceFile"
 							dataHolder="{formPreferences}" variableName="logoImageSource" customText="{formPreferences.logoImageSource}"/>
 						
@@ -1082,11 +1156,26 @@
 		
 	</mx:TabNavigator>
 
-	<mx:HBox width="100%" height="15%" horizontalAlign="center">
+	<mx:HBox width="100%" height="7%" horizontalAlign="center">
 		
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'popMeasureMode.Measurementsin')}:" fontWeight="bold"/>
-		<mx:ComboBox/>
+		<components:CustomComboBoxComponent
+			masterList="{measurementList}" labelFieldId="key" labelFieldName="value"
+			dataHolder="{formPreferences}" variableName="measurement" customText="{getCustomTextData(measurementList,formPreferences,formPreferences.measurement)}"
+			change="{updateNumericFields()}"/>
 		
+	</mx:HBox>
+	
+	<mx:HBox width="100%" height="8%">
+		<mx:HBox width="100%" horizontalAlign="left">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{updateFormPreferences()}"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="center">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.PrintSample')}"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="right">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{closeWindow()}"/>
+		</mx:HBox>
 	</mx:HBox>
 	
 </mx:Panel>
