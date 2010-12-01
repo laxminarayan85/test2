@@ -882,11 +882,15 @@
 			activeSale.department = target.job.description;
 			if (activeSale.department.length == 0)
 				activeSale.department = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'tapeCmd.QuickEst');
-
-			txtSaleDescription.text = activeSale.department;
-			txtSaleQuantity.text = activeSale.quantity.toString();
-			txtSaleUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.unitPrice);
-			txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.subTotal);
+			
+			if (txtSaleDescription != null)
+				txtSaleDescription.text = activeSale.department;
+			if (txtSaleQuantity != null)
+				txtSaleQuantity.text = activeSale.quantity.toString();
+			if (txtSaleUnitPrice != null)
+				txtSaleUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.unitPrice);
+			if (txtSaleTotal != null)
+				txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.subTotal);
 
 			doAccept();
 		}
