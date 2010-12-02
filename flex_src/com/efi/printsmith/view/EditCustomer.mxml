@@ -593,7 +593,7 @@
 		ship_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress'));
 		bill_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.StatementAddress'));
 		
-		dataService.getAllQuery("Invoice", " where account.id=" + account.id);
+		dataService.getAllQuery("Invoice", " where account.id=" + account.id + " and onPendingList='t'");
 		
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 		if ( account.prospect)

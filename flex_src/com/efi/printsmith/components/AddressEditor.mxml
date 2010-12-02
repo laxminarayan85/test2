@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
 		   width="100%"
 		   height="100%"
 		   xmlns:fc="http://www.adobe.com/2006/fc"
-		   creationComplete="init()">
+		   creationComplete="init()"
+		   title="{addressLabel}"
+			  dropShadowEnabled="false"
+		   >
 	<!--	<mx:LinkButton x="252" y="93" label="Edit" id="edit_button" click="doEditAddress()"/>
 	-->
 	<mx:Script>
@@ -83,7 +86,7 @@
 					
 					if (address.name != null && address.name != "")
 					{
-						displayAddress+=address.name + "\n";
+						displayAddress+=address.name + " \n";
 					}
 	
 					if (address.street1 != null && address.street1 != "")
@@ -116,6 +119,7 @@
 						displayAddress+= address.country;
 					}
 				}
+				
 			}
 
 			private function activateEditAddress():void
@@ -151,32 +155,28 @@
 				titleWindow.addEventListener(CloseEvent.CLOSE, popupClose, false, 1);
 				titleWindow.addEventListener("SaveAddressEvent", saveAddressHandler, false, 1);
 				
-				var pos:Point=new Point(address_panel.x, address_panel.y);
-				pos=address_panel.localToGlobal(pos);
+				var pos:Point=new Point(this.x, this.y);
+				pos=this.localToGlobal(pos);
 				titleWindow.x=pos.x;
 				titleWindow.y=pos.y;
 			}
 		]]>
 	</mx:Script>
-	<mx:Panel x="0"
-			  y="0"
-			  width="100%"
+	<mx:VBox width="100%"
 			  height="100%"
-			  layout="absolute"
-			  title="{addressLabel}"
-			  id="address_panel"
-			  dropShadowEnabled="false">
-		<mx:Text x="13"
-				 y="10"
-				 width="281"
-				 id="company_text"
-				 text="{displayAddress}&#xd;"
-				 height="75"/>
-		<mx:LinkButton x="249"
-					   y="93"
-					   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
+			  >
+		<mx:Text height="90%" width="100%"  
+				id="company_text"
+				 text="{displayAddress}"
+				 />
+		<mx:HBox height="10%" width="100%">
+			<mx:Spacer width="90%" height="100%"/>
+			<mx:LinkButton height="100%" width="10%"
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
 					   id="edit_address_button"
-					   enabled="{enableEditBtn}"
+					   enabled="{enableEditBtn}" 
 					   click="doEditAddress();"/>
-	</mx:Panel>
-</mx:Canvas>
+			
+		</mx:HBox>
+	</mx:VBox>
+</mx:Panel>
