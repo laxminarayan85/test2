@@ -431,7 +431,13 @@
 					&& (ss.commandName.indexOf("rStandardMenuText.ReviewAnyDocument") > -1 ))	{
 						doReviewDoc();				
 					}		
-						
+				
+				//Menu for Register Tape
+				if ((ss.menu == "rStandardMenuText.POS")
+					&& (ss.commandName.indexOf("rStandardMenuText.OpenTape") > -1 ))	{
+						doOpenTape();				
+					}		
+					
 			}
 			if (event.menuItem is WindowApplicationMenuItem)	{
 				var winItem:WindowApplicationMenuItem = event.menuItem as WindowApplicationMenuItem;
@@ -449,6 +455,11 @@
 			var reviewDocWindow:ReviewDocumentView = PopUpManager.createPopUp(this,ReviewDocumentView,false) as ReviewDocumentView;
 			reviewDocWindow.addEventListener(ReviewDocUpdateEvent.REVIEW_DOC_UPDATE,handleReviewDocument,false,0,true);
 		}
+		
+		private function doOpenTape():void {
+			var event:EditTapeEvent = new EditTapeEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}		
 		
 		private function handleReviewDocument(event:ReviewDocUpdateEvent):void {
 			if(event.invoice!=null){
