@@ -501,15 +501,22 @@
 
 	}	                                 
 	private function handleTaxResult(ev:ResultEvent):void{
-		var tax:Number;
-	//	var tempString:String;
-	
-		activeSale.taxAmount = ev.result as Number;
 		
-		if (activeSale.opPrice == false)
-			activeSale.total = activeSale.subTotal + activeSale.taxAmount;
+		this.throbber.visible = false;
+		this.throbber.stop();
+		
+		if (ev.result != null) {
+			var results:ArrayCollection = ev.result as ArrayCollection;
+		    var taxStr:String;
+		    
+		    taxStr = results.getItemAt(0) as String;		// tax amount calculated
+		    activeSale.taxAmount = parseFloat(taxStr);
 			
-		UpdateBatchNumbers();
+			if (activeSale.opPrice == false)
+				activeSale.total = activeSale.subTotal + activeSale.taxAmount;
+				
+			UpdateBatchNumbers();
+		}
 	}
 	
 	private function UpdateBatchNumbers():void {
@@ -786,9 +793,12 @@
 			activeSale.taxAmount = 0;
 			UpdateBatchNumbers();
 		}
-		else
+		else {
+			this.throbber.visible = true;
+			this.throbber.play();
 			taxCalculatorService.calculateTax(activeSale.taxTable, activeSale.subTotal);
-			
+		}
+		
 		if (card_ref != null && card_ref.text.length == 0 && btPayment != null)
 			btPayment.enabled = false;
 		else
@@ -879,6 +889,7 @@
 			activeSale.opPrice = true;
 			activeSale.unitPrice = target.job.pricingRecord.unitPrice;
 			activeSale.subTotal = target.job.pricingRecord.totalPrice;
+			activeSale.total = activeSale.subTotal;
 			activeSale.department = target.job.description;
 			if (activeSale.department.length == 0)
 				activeSale.department = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'tapeCmd.QuickEst');
@@ -2069,6 +2080,7 @@
 	<mx:Tree x="0" y="80" width="130"  
 		id="tvItems" 
 		dataProvider="{systemCashPreferencesArray}"
+		defaultLeafIcon="{null}"
 		labelFunction="dotreelabel" height="100%" change="treeSelect(event);"></mx:Tree>
 	
 	<comp:Throbber id="throbber" height="40" width="40" visible="true" horizontalCenter="0" verticalCenter="0"/>
