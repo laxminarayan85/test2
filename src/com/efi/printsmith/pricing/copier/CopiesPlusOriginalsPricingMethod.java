@@ -36,18 +36,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 			PriceStockEngine priceStockEngine = new PriceStockEngine();
 			double stockPrice = priceStockEngine.priceStock(job);
 			if (pricingMatrix != null) {
-				int i;
-				for (i = 0; i < pricingMatrix.getElements().size(); i++) {
-					if (pricingMatrix.getElements().get(i).getLastLine() == false && pricingMatrix.getElements().get(i).getQty() >= job.getNumCopies()) break;
-				}
-				//if (i > 0) i--; /* Use the price in the matrix prior to qty > qtyordered */
-				if (i >= pricingMatrix.getElements().size())
-					i = i - 1;
 				int j = 0;
-//				for (j = 0; j < pricingMatrix.getHeaderValues().length; j++) {
-//					if (pricingMatrix.getHeaderValues()[j] > job.getSheets()) break;
-//				}
-//				if (j > 0) j--;
 				long originals = 0;
 				if (job.getDoubleSided() && pricingCopier.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
 					originals = job.getSignatures() * 2;
@@ -65,6 +54,88 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 				else if (pricingMatrix.getHeader9() >= originals) j = 8;
 				else if (pricingMatrix.getHeader10() >= originals) j = 9;
 				else j = 9;
+				int i;
+				long lastQty = 0;
+				double lastPrice = 0;
+				for (i = 0; i < pricingMatrix.getElements().size(); i++) {
+					if (i > 0) {
+						lastQty = pricingMatrix.getElements().get(i-1).getQty();
+						if (job.getDoubleSided() && side2PricingMethod.equals(Price2Side.UsingSecondSideRate.name())) {
+							switch (j) {
+							case (0):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice11().doubleValue();
+								break;
+							case (1):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice12().doubleValue();
+								break;
+							case (2):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice13().doubleValue();
+								break;
+							case (3):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice14().doubleValue();
+								break;
+							case (4):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice15().doubleValue();
+								break;
+							case (5):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice16().doubleValue();
+								break;
+							case (6):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice17().doubleValue();
+								break;
+							case (7):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice18().doubleValue();
+								break;
+							case (8):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice19().doubleValue();
+								break;
+							case (9):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice20().doubleValue();
+								break;
+							}
+						} else {
+							switch (j) {
+							case (0):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice1().doubleValue();
+								break;
+							case (1):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice2().doubleValue();
+								break;
+							case (2):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice3().doubleValue();
+								break;
+							case (3):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice4().doubleValue();
+								break;
+							case (4):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice5().doubleValue();
+								break;
+							case (5):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice6().doubleValue();
+								break;
+							case (6):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice7().doubleValue();
+								break;
+							case (7):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice8().doubleValue();
+								break;
+							case (8):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice9().doubleValue();
+								break;
+							case (9):
+								lastPrice = pricingMatrix.getElements().get(i).getPrice10().doubleValue();
+								break;
+							}
+						}
+					} else {
+						lastQty = 0;
+						lastPrice = 0.0;
+					}
+					if (pricingMatrix.getElements().get(i).getLastLine() == false && pricingMatrix.getElements().get(i).getQty() >= job.getNumCopies()) break;
+				}
+
+				if (i >= pricingMatrix.getElements().size())
+					i = i - 1;
 
 				double unitPrice = 0.0;
 				switch (j) {
@@ -182,11 +253,21 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 				}
 				double pricePerCopy = unitPrice;
 				double wastePrice = 0.0;
+				
+				if (pricingCopier.getInterpolateMatrix()) {
+					if (i >= pricingMatrix.getElements().size()) i = i - 1;
+					if (lastQty > 0 && i > 0 && pricingMatrix.getElements().get(i).getLastLine() != null && pricingMatrix.getElements().get(i).getLastLine() == false) {
+						long qtyRange = pricingMatrix.getElements().get(i).getQty() - lastQty;
+						long lookupRange = job.getNumCopies() - lastQty;
+						double priceRange = (pricingMatrix.getElements().get(i).getPrice1().doubleValue() - lastPrice);
+						pricePerCopy = ((lookupRange * priceRange) / qtyRange) + lastPrice;
+					}
+				}
 
 				int runout = 1;
 				if (pricingCopier.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name()) == false && pricingCopier.getStockPriceMethod().equals(StockPriceMethod.FromCopier2InStockDefinition.name()) == false && pricingCopier.getStockPriceMethod().equals(StockPriceMethod.FromCopier3InStockDefinition.name()) == false && job.getPaperCal().getRunout() > 0)
 					runout = job.getPaperCal().getRunout();
-				if (job.getDoubleSided() && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
+				if (job.getDoubleSided() && pricingCopier.getMatrixType().equals("DiscountTable") == false && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 					stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();
 				}
 				if (!pricingRecord.getTotalPriceOverride()) {
@@ -219,10 +300,13 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 							if (pricingCopier.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
 								stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
 								laborTotalPrice = (pricePerCopy * (job.getTotalCopies() / 2));
+							} else if (side2PricingMethod.equals(Price2Side.UsingSideFactor.name())) {
+								stockTotalPrice = (stockPrice*((job.getTotalCopies())/runout));
+								laborTotalPrice = (pricePerCopy * job.getTotalCopies());
 							} else {
 								stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
 								laborTotalPrice = (pricePerCopy * job.getTotalCopies());
-							}	
+							}
 						} else {
 							stockTotalPrice = ((stockPrice*job.getTotalCopies()/runout));
 							laborTotalPrice = (pricePerCopy * job.getTotalCopies());			
@@ -279,54 +363,62 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						pricePerCopy = (runningTotal/job.getNumCopies());
 						pricePerCopy *= pricingCopier.getCopyMarkup2();
 						wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
+						prevQty = 0;
+						runningTotal = 0;
 						if (job.getDoubleSided()) {
-							for (i = 0; i < elements.size(); i++) {
-								MatrixElement element = elements.get(i);
-								if (element.getLastLine() == false) {
-									switch (j) {
-									case (0):
-										unitPrice = element.getPrice11().doubleValue();
-										break;
-									case (1):
-										unitPrice = element.getPrice12().doubleValue();
-										break;
-									case (2):
-										unitPrice = element.getPrice13().doubleValue();
-										break;
-									case (3):
-										unitPrice = element.getPrice14().doubleValue();
-										break;
-									case (4):
-										unitPrice = element.getPrice15().doubleValue();
-										break;
-									case (5):
-										unitPrice = element.getPrice16().doubleValue();
-										break;
-									case (6):
-										unitPrice = element.getPrice17().doubleValue();
-										break;
-									case (7):
-										unitPrice = element.getPrice18().doubleValue();
-										break;
-									case (8):
-										unitPrice = element.getPrice19().doubleValue();
-										break;
-									case (9):
-										unitPrice = element.getPrice20().doubleValue();
-										break;
-									}
-									if (element.getQty() < job.getNumCopies()) {
-										runningTotal += (element.getQty()-prevQty) * unitPrice;
-										prevQty = element.getQty();
-									} else {
-										runningTotal += (job.getNumCopies()-prevQty) * unitPrice;
-										break;
+							if (side2PricingMethod.equals(Price2Side.UsingSecondSideRate.name())) {
+								for (i = 0; i < elements.size(); i++) {
+									MatrixElement element = elements.get(i);
+									if (element.getLastLine() == false) {
+										switch (j) {
+										case (0):
+											unitPrice = element.getPrice11().doubleValue();
+											break;
+										case (1):
+											unitPrice = element.getPrice12().doubleValue();
+											break;
+										case (2):
+											unitPrice = element.getPrice13().doubleValue();
+											break;
+										case (3):
+											unitPrice = element.getPrice14().doubleValue();
+											break;
+										case (4):
+											unitPrice = element.getPrice15().doubleValue();
+											break;
+										case (5):
+											unitPrice = element.getPrice16().doubleValue();
+											break;
+										case (6):
+											unitPrice = element.getPrice17().doubleValue();
+											break;
+										case (7):
+											unitPrice = element.getPrice18().doubleValue();
+											break;
+										case (8):
+											unitPrice = element.getPrice19().doubleValue();
+											break;
+										case (9):
+											unitPrice = element.getPrice20().doubleValue();
+											break;
+										}
+										if (element.getQty() < job.getNumCopies()) {
+											runningTotal += (element.getQty()-prevQty) * unitPrice;
+											prevQty = element.getQty();
+										} else {
+											runningTotal += (job.getNumCopies()-prevQty) * unitPrice;
+											break;
+										}
 									}
 								}
+								pricePerCopy = (runningTotal/job.getNumCopies());
+								pricePerCopy *= pricingCopier.getCopyMarkup2();
 							}
-							pricePerCopy = (runningTotal/job.getNumCopies());
-							pricePerCopy *= pricingCopier.getCopyMarkup2();
-							if (pricingCopier.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
+							if (side2PricingMethod.equals(Price2Side.UsingSideFactor.name())) {
+								pricePerCopy = (pricePerCopy * pricingCopier.getSideTwoFactor()) / 2;
+								stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
+								laborTotalPrice = (pricePerCopy * (job.getTotalCopies()));
+							} else if (pricingCopier.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
 								stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
 								laborTotalPrice = (pricePerCopy * (job.getTotalCopies() / 2));
 							} else{

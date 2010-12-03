@@ -63,7 +63,7 @@ public class MatrixUtilities {
 			MatrixElement element = elements.get(i);
 			if (element.getLastLine() == false) {
 				if (element.getQty() < qty) {
-					runningTotal += (element.getQty()-prevQty) * element.getPrice1().doubleValue();
+					runningTotal += (element.getQty()-prevQty) * element.getPrice2().doubleValue();
 					prevQty = element.getQty();
 				} else {
 					runningTotal += (qty-prevQty) * element.getPrice1().doubleValue();
