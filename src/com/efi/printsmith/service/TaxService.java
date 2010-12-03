@@ -1,6 +1,7 @@
 package com.efi.printsmith.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,16 +41,21 @@ public class TaxService extends SnowmassHibernateService {
 
 	}
 	
-	public BigDecimal calculateTax(TaxTable taxTable, BigDecimal subAmount) {
+	public List calculateTax(TaxTable taxTable, BigDecimal subAmount) {
+		ArrayList 		returnList = new ArrayList();
 		BigDecimal tax= new BigDecimal(0) ;
+		BigDecimal minAmount= new BigDecimal(taxTable.getMinAmount().doubleValue()) ;
 		
-		if ( taxTable.getMinAmount().compareTo(subAmount) < 0) {
+		if (minAmount.doubleValue() > 0 && minAmount.compareTo(subAmount) < 0) {
 			//
 		}
 		else{
 			tax = subAmount.multiply(taxTable.getEffectiveTaxRate());
 		}
-
-		return tax;
+		
+		returnList.add(tax);
+		returnList.add(minAmount);
+		returnList.add(taxTable.getEffectiveTaxRate());
+		return(returnList);
 	}
 }
