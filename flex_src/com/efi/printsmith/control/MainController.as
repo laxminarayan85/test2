@@ -59,6 +59,7 @@ package com.efi.printsmith.control
 			this.addCommand(EditSystemPreferencesEvent.COMMANDID, EditSystemPreferencesCommand);
 			this.addCommand(EditUserEvent.COMMANDID, EditUserCommand);
 			this.addCommand(EditCashRegisterEvent.COMMANDID, EditCashRegisterCommand);
+			this.addCommand(EditTapeEvent.COMMANDID, EditTapeCommand);
 			this.addCommand(EditAccountHistoryEvent.COMMANDID, EditAccountHistoryCommand);
 			this.addCommand(EditEstimateHistoryEvent.COMMANDID, EditEstimateHistoryCommand);
 			this.addCommand(EditPendingListEvent.COMMANDID, EditPendingListCommand);
