@@ -294,11 +294,11 @@
 		if (isNaN(parseFloat(this.clickCost.text)))
 			this.clickCost.text = "0";
 	
-	 	var tempmachineCost: Number;
-	 	var temp :Number;
-	 	var temp2 : Number;
+	 	var tempmachineCost: Number = 0;
+	 	var temp :Number = 0;
+	 	var temp2 : Number = 0;
 	 	var percentvalue:String;
-	 	var index:int;
+	 	var index:int = 0;
 	 	
 	 	var tempPercent:Number;
 		var tmonthlyMaintenance:Number = parseFloat(monthlyMaintenance.text.replace(",",""));
@@ -327,11 +327,11 @@
 				if (copierDefinition.largeFormat == true  || largeformatCheck.selected) {
 					tempmachineCost = tempmachineCost / parseFloat(this.maxWidthsize.text);
 				}
-				tempmachineCost= tempmachineCost +laborCopy+tonerCopy+developerCopy+ click;
-       			 machineCostperCopy.text = Snowmass.getCurrencyFormatter(false,4).format(tempmachineCost);
-       			 copierDefinition.machineCostPerCopy = tempmachineCost;
 			}
 		}
+		tempmachineCost= tempmachineCost +laborCopy+tonerCopy+developerCopy+ click;
+   		machineCostperCopy.text = Snowmass.getCurrencyFormatter(false,4).format(tempmachineCost);
+   		copierDefinition.machineCostPerCopy = tempmachineCost;
 	}
 	
 	private function doRevert():void{
