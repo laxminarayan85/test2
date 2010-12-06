@@ -230,6 +230,10 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public static final String FORMPREFERENCES = "FormPreferences";
+	/**
+	 * @generated
+	 */
+	public static final String LABELFORMAT = "LabelFormat";
 
 	/**
 	 * @generated
@@ -1199,6 +1203,27 @@ public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
 	 */
+	@ManyToOne(cascade = { CascadeType.MERGE })
+	@Where(clause = "isdeleted <> 'TRUE'")
+	private LabelFormat labelFormat;
+
+	/**
+	 * @generated
+	 */
+	public LabelFormat getLabelFormat() {
+		return labelFormat;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setLabelFormat(LabelFormat newVal) {
+		this.labelFormat = newVal;
+	}
+
+	/**
+	 * @generated
+	 */
 	@Transient
 	@Override
 	public Object getProperty(String propertyName)
@@ -1295,6 +1320,8 @@ public class DeliveryTicket extends ModelBase {
 			return getTotalWeightUpdated();
 		if (FORMPREFERENCES.equals(propertyName))
 			return getFormPreferences();
+		if (LABELFORMAT.equals(propertyName))
+			return getLabelFormat();
 		return super.getProperty(propertyName);
 	}
 
@@ -1397,6 +1424,8 @@ public class DeliveryTicket extends ModelBase {
 			setTotalWeightUpdated((Boolean) newValue);
 		else if (FORMPREFERENCES.equals(propertyName))
 			setFormPreferences((FormPreferences) newValue);
+		if (LABELFORMAT.equals(propertyName))
+			setLabelFormat((LabelFormat) newValue);
 		else
 			super.setProperty(propertyName, newValue);
 	}
@@ -1501,6 +1530,8 @@ public class DeliveryTicket extends ModelBase {
 			return new Class<?>[] { Boolean.class };
 		if (FORMPREFERENCES.equals(propertyName))
 			return new Class<?>[] { FormPreferences.class };
+		if (LABELFORMAT.equals(propertyName))
+			return new Class<?>[] { LabelFormat.class };
 		return super.getPropertyClass(propertyName);
 	}
 
@@ -1602,6 +1633,8 @@ public class DeliveryTicket extends ModelBase {
 		if (TOTALWEIGHTUPDATED.equals(propertyName))
 			return DeliveryTicket.class;
 		if (FORMPREFERENCES.equals(propertyName))
+			return DeliveryTicket.class;
+		if (LABELFORMAT.equals(propertyName))
 			return DeliveryTicket.class;
 		return super.getPropertyOwner(propertyName);
 	}
@@ -1706,6 +1739,8 @@ public class DeliveryTicket extends ModelBase {
 		if (!SmartEquals(getTotalWeightUpdated(), objT.getTotalWeightUpdated()))
 			return false;
 		if (!SmartEquals(getFormPreferences(), objT.getFormPreferences()))
+			return false;
+		if (!SmartEquals(getLabelFormat(), objT.getLabelFormat()))
 			return false;
 		return true;
 	}

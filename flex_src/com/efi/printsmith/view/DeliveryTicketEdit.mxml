@@ -13,6 +13,7 @@
     	<mx:method name="saveDeliveryTicket" fault="handleFault(event)" result="handleSaveResult(event)"/>
     	<mx:method name="addUpdate" fault="handleFault(event)"/>
     	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+    	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadLabelFormatResult(event)"/>
     </mx:RemoteObject>
     
     <mx:RemoteObject id="dataServiceInvoice" destination="dataService" showBusyCursor="true">
@@ -57,6 +58,8 @@
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.events.LabelFormatUpdateEvent;
+		import com.efi.printsmith.pages.DefineLabelFormat;
 		import com.efi.printsmith.data.FormPreferences;
 		import com.efi.mdi.view.window.MDIWindow;
 		import com.efi.printsmith.events.ConvertToInvoiceEvent;
@@ -115,6 +118,8 @@
 		[Bindable] private var selectedAddressObj:Address;
 		
 		[Bindable] private var formPreferencesList:ArrayCollection = new ArrayCollection();
+		
+		[Bindable] private var labelFormatList:ArrayCollection = new ArrayCollection();
 		
 		public function init():void{
 			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
@@ -192,6 +197,7 @@
 				toAddress_combo.customText = getCustomTextData(toContactList,deliveryTicket,deliveryTicket.toAddress);
 			}
 			dataServiceFormPreference.getAll("FormPreferences");
+			dataService.getAll("LabelFormat");
 			dataServicePreferenceSystem.getSingle("PreferencesSystem");
 		}
 		
@@ -642,6 +648,22 @@
 			}
 		}
 		
+		private function handleLoadLabelFormatResult(event:ResultEvent):void {
+			labelFormatList = event.result as ArrayCollection;
+			labelformat_combo.customText = getCustomTextData(labelFormatList,deliveryTicket,deliveryTicket.labelFormat);
+		}
+		
+		private function openLabelFormat():void {
+			var defineLabelFormat:DefineLabelFormat = PopUpManager.createPopUp(this,DefineLabelFormat,false) as DefineLabelFormat;
+			defineLabelFormat.addEventListener(LabelFormatUpdateEvent.LABELFORMAT_UPDATE_EVENT,labelFormatEventHandler,false,0,true);
+		}
+		
+		private function labelFormatEventHandler(event:LabelFormatUpdateEvent):void {
+			if(event.isSaved) {
+				dataService.getAll("LabelFormat");
+			}
+		}
+		
 	]]>
 	                             
 	</mx:Script>
@@ -923,8 +945,10 @@
 				<mx:VBox width="80%" height="100%">
 					<mx:HBox width="100%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.LabelFormat')}" fontWeight="bold"/>
-						<mx:ComboBox/>
-						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.DefineLabelFormat')}"/>
+						<components:CustomComboBoxComponent id="labelformat_combo"
+							masterList="{labelFormatList}" labelFieldId="id" labelFieldName="name" updateObject="true" objectLabelFieldId="id"
+							dataHolder="{deliveryTicket}" variableName="labelFormat" customText="{getCustomTextData(labelFormatList,deliveryTicket,deliveryTicket.labelFormat)}"/>
+						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.DefineLabelFormat')}" click="{openLabelFormat()}"/>
 					</mx:HBox>
 					<mx:HBox width="100%">
 						<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Carton')}" layout="vertical" width="50%">

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.DefineLabelFormat')}" showCloseButton="true" close="{closeWindow()}" creationComplete="{init()}"
+	paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.events.LabelFormatUpdateEvent;
+			import mx.core.Application;
+			import mx.utils.StringUtil;
+			import mx.events.CloseEvent;
+			import com.efi.printsmith.common.components.CustomFontComponent;
+			import mx.core.Container;
+			import mx.utils.ObjectUtil;
+			import flash.net.registerClassAlias;
+			import com.efi.printsmith.data.FontDefinition;
+			import mx.rpc.events.FaultEvent;
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			import com.efi.printsmith.data.LabelFormat;
+			import mx.managers.PopUpManager;
+			
+			[Bindable] private var labelFormat:LabelFormat;
+			
+			[Bindable] private var labelFormatList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] private var measurementList:ArrayCollection = new ArrayCollection();
+			
+			private var measurementValue:String = "";
+			
+			private function init():void {
+				PopUpManager.centerPopUp(this);
+				loadMeasurements();
+				dataService.getAll("LabelFormat");
+			}
+			
+			private function loadMeasurements():void {
+				var measurementObj:Object = new Object();
+				measurementObj.key = "Pixels";
+				measurementObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_298.Pixels');
+				measurementList.addItem(measurementObj);
+				measurementObj = new Object();
+				measurementObj.key = "Inches";
+				measurementObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_298.Inches');
+				measurementList.addItem(measurementObj);
+				measurementObj = new Object();
+				measurementObj.key = "Millimeters";
+				measurementObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_298.Millimeters');
+				measurementList.addItem(measurementObj);
+				measurementObj = new Object();
+				measurementObj.key = "Centimeters";
+				measurementObj.value = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_298.Centimeters');
+				measurementList.addItem(measurementObj);
+			} 
+			
+			private function handleLoadResult(event:ResultEvent):void {
+				labelFormatList = event.result as ArrayCollection;
+				if(labelFormatList==null){
+					labelFormatList = new ArrayCollection();
+				}
+				var newComboOption:LabelFormat = new LabelFormat();
+				newComboOption.id=0;
+				newComboOption.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_10083.newformat');
+				var fontDefinitionObj:FontDefinition = new FontDefinition();
+				fontDefinitionObj.fontName = "Arial";
+				fontDefinitionObj.size = 12;
+				newComboOption.fontDefinition = fontDefinitionObj;
+				newComboOption.noOfLabelsAcross = 1;
+				newComboOption.noOfLabelsDown = 1;
+				newComboOption.measurements = "Pixels";
+				labelFormatList.addItemAt(newComboOption,0);
+				registerClassAlias("com.efi.printsmith.data.LabelFormat",LabelFormat);
+				labelFormat = ObjectUtil.copy(newComboOption) as LabelFormat;
+				labelFormat.name = "";
+				labelformat_combo.selectedIndex = 0;
+				measurementValue = labelFormat.measurements;
+				setPrecisonValue(this);
+			}
+			
+			private function updateNumericFields():void {
+				if(measurementValue!=null && measurementValue!=""){
+					var conversionFactor:Number = 0;
+					if(measurementValue=="Pixels" && labelFormat.measurements=="Inches") {
+						conversionFactor = 0.01389;
+					} else if(measurementValue=="Pixels" && labelFormat.measurements=="Centimeters") {
+						conversionFactor = 0.035;
+					} else if(measurementValue=="Pixels" && labelFormat.measurements=="Millimeters") {
+						conversionFactor = 0.35;
+					} else if(measurementValue=="Inches" && labelFormat.measurements=="Pixels") {
+						conversionFactor = 72;
+					} else if(measurementValue=="Inches" && labelFormat.measurements=="Centimeters") {
+						conversionFactor = 2.54;
+					} else if(measurementValue=="Inches" && labelFormat.measurements=="Millimeters") {
+						conversionFactor = 25.4;
+					} else if(measurementValue=="Millimeters" && labelFormat.measurements=="Pixels") {
+						conversionFactor = 2.8571;
+					} else if(measurementValue=="Millimeters" && labelFormat.measurements=="Inches") {
+						conversionFactor = 0.03937;
+					} else if(measurementValue=="Millimeters" && labelFormat.measurements=="Centimeters") {
+						conversionFactor = 0.1;
+					} else if(measurementValue=="Centimeters" && labelFormat.measurements=="Pixels") {
+						conversionFactor = 28.571;
+					} else if(measurementValue=="Centimeters" && labelFormat.measurements=="Inches") {
+						conversionFactor = 0.3937;
+					} else if(measurementValue=="Centimeters" && labelFormat.measurements=="Millimeters") {
+						conversionFactor = 10;
+					}
+					convertNumericFields(conversionFactor,this);
+				}
+				measurementValue = labelFormat.measurements;
+				var inputArgs:Array = new Array();
+				inputArgs.push(this);
+				callLater(setPrecisonValue,inputArgs);
+			}
+			
+			private function convertNumericFields(conversionFactor:Number,object:Object):void {
+				if(object is Container){
+					for(var i:int=0;i<object.getChildren().length;i++){
+						if(object.getChildren()[i] is CustomNumericTextInputComponent){
+							var numericTextInputComponent:CustomNumericTextInputComponent = object.getChildren()[i] as CustomNumericTextInputComponent;
+							if(numericTextInputComponent.editable && numericTextInputComponent.id.indexOf("PRECISON_NOCHECK")==-1) {
+								numericTextInputComponent.dataHolder[numericTextInputComponent.variableName] = numericTextInputComponent.dataHolder[numericTextInputComponent.variableName]*conversionFactor; 
+							}
+						}
+						convertNumericFields(conversionFactor,object.getChildren()[i]);
+					}
+				}
+			}
+			
+			private function setPrecisonValue(object:Object):void {
+				if(object is Container){
+					for(var i:int=0;i<object.getChildren().length;i++){
+						if(object.getChildren()[i] is CustomNumericTextInputComponent){
+							var numericTextInputComponent:CustomNumericTextInputComponent = object.getChildren()[i] as CustomNumericTextInputComponent;
+							if(numericTextInputComponent.id.indexOf("PRECISON_NOCHECK")==-1) {
+								if(measurementValue=="Pixels"){
+									numericTextInputComponent.precision = 0;
+									numericTextInputComponent.viewablePrecision = 0;
+									numericTextInputComponent.isInteger = true;
+									numericTextInputComponent.updatePrecison();
+								} else {
+									numericTextInputComponent.precision = 2;
+									numericTextInputComponent.viewablePrecision = 1;
+									numericTextInputComponent.isInteger = false;
+									numericTextInputComponent.updatePrecison();
+								}
+							}
+						}
+						setPrecisonValue(object.getChildren()[i]);
+					}
+				}
+			}
+			
+			private function setLabelFormat(event:Event):void {
+				registerClassAlias("com.efi.printsmith.data.LabelFormat",LabelFormat);
+				labelFormat = ObjectUtil.copy(event.currentTarget.selectedItem) as LabelFormat;
+				measurementValue = labelFormat.measurements;
+				setPrecisonValue(this);
+			}
+			
+			private function saveLabelFormat():void {
+				if(labelFormat!=null && labelFormat.name!=null && labelFormat.name!="") {
+					dataService.addUpdate(labelFormat);
+				} 
+			}
+			
+			private function doDelete():void {
+				if(labelFormat!=null && !(isNaN(labelFormat.id)) && labelFormat.id!=0){
+					var deleteString:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0'),labelFormat.name);
+					Alert.show(deleteString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmDeleteHandler, null, Alert.NO);
+				}
+			}
+			
+			private function confirmDeleteHandler(event:CloseEvent):void {
+				if(event.detail == Alert.YES) {
+					dataService.deleteItem("LabelFormat",labelFormat.id);
+				}	
+			}
+			
+			private function handleDeleteResult(event:ResultEvent):void {
+				dataService.getAll("LabelFormat");
+			}
+			
+			private function openFontComponent():void{
+				var fontComponent:CustomFontComponent = PopUpManager.createPopUp(this,CustomFontComponent,true) as CustomFontComponent;
+				fontComponent.dataHolder = labelFormat;
+				fontComponent.variableName = "fontDefinition";
+				fontComponent.customText = labelFormat.fontDefinition;
+				PopUpManager.centerPopUp(fontComponent);
+			}
+			
+			private function handleSaveResult(event:ResultEvent):void {
+				dispatchEvent(new LabelFormatUpdateEvent(LabelFormatUpdateEvent.LABELFORMAT_UPDATE_EVENT,true));
+				callLater(closeWindow);
+			}
+			
+			private function handleFault(ev:FaultEvent):void
+			{
+				var message:String;
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null);
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.ExistingFormats')}:" textAlign="right"/>
+		<mx:ComboBox id="labelformat_combo" dataProvider="{labelFormatList}" labelField="name" width="30%" change="{setLabelFormat(event)}"/>
+		<mx:Button width="30%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.SetFont')}"
+			click="{openFontComponent()}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="40%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.FormatName')}:" textAlign="right"/>
+		<components:CustomStringTextInputComponent
+			dataHolder="{labelFormat}" variableName="name" customText="{labelFormat.name}" allowSpecialCharacters="true" width="60%"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.LabelsAcross')}:" textAlign="right"/>
+		<components:CustomNumericTextInputComponent id="PRECISON_NOCHECK1" width="20%"
+			dataHolder="{labelFormat}" variableName="noOfLabelsAcross" customText="{labelFormat.noOfLabelsAcross}"
+			precision="0" rounding="nearest" isInteger="true"/>
+		<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.LabelsDown')}:" textAlign="right"/>
+		<components:CustomNumericTextInputComponent id="PRECISON_NOCHECK2" width="20%"
+			dataHolder="{labelFormat}" variableName="noOfLabelsDown" customText="{labelFormat.noOfLabelsDown}"
+			precision="0" rounding="nearest" isInteger="true"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.LabelWidth')}:" textAlign="right"/>
+		<components:CustomNumericTextInputComponent width="20%"
+			dataHolder="{labelFormat}" variableName="labelWidth" customText="{labelFormat.labelWidth}"
+			precision="2" viewablePrecision="1" rounding="nearest"/>
+		<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.LabelHeight')}:" textAlign="right"/>
+		<components:CustomNumericTextInputComponent width="20%"
+			dataHolder="{labelFormat}" variableName="labelHeight" customText="{labelFormat.labelHeight}"
+			precision="2" viewablePrecision="1" rounding="nearest"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.LeftMargin')}:" textAlign="right"/>
+		<components:CustomNumericTextInputComponent width="20%"
+			dataHolder="{labelFormat}" variableName="leftMargin" customText="{labelFormat.leftMargin}"
+			precision="2" viewablePrecision="1" rounding="nearest"/>
+		<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.TopMargin')}:" textAlign="right"/>
+		<components:CustomNumericTextInputComponent width="20%"
+			dataHolder="{labelFormat}" variableName="topMargin" customText="{labelFormat.topMargin}"
+			precision="2" viewablePrecision="1" rounding="nearest"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.Spaceonright')}:" textAlign="right"/>
+		<components:CustomNumericTextInputComponent width="20%"
+			dataHolder="{labelFormat}" variableName="spaceOnRight" customText="{labelFormat.spaceOnRight}"
+			precision="2" viewablePrecision="1" rounding="nearest"/>
+		<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.Spaceonbottom')}:" textAlign="right"/>
+		<components:CustomNumericTextInputComponent width="20%"
+			dataHolder="{labelFormat}" variableName="spaceOnBottom" customText="{labelFormat.spaceOnBottom}"
+			precision="2" viewablePrecision="1" rounding="nearest"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Label width="30%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'popMeasureMode.Measurementsin')}:" textAlign="right" fontWeight="bold"/>
+		<components:CustomComboBoxComponent width="30%"
+			masterList="{measurementList}" labelFieldId="key" labelFieldName="value"
+			dataHolder="{labelFormat}" variableName="measurements" customText="{getCustomTextData(measurementList,labelFormat,labelFormat.measurements)}"
+			change="{updateNumericFields()}"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'labelFormCmd.PrintSample')}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:HBox width="100%" horizontalAlign="left">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{saveLabelFormat()}"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="center">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Delete')}" click="{doDelete()}"/>
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="right">
+			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{closeWindow()}"/>
+		</mx:HBox>
+	</mx:HBox>
+	
+</mx:TitleWindow>

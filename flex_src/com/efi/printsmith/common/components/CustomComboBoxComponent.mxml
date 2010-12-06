@@ -102,7 +102,7 @@
 		       		for(var index:int = 0; index < dataProvider.length; index++){
 		       			if(displayValue.getItemAt(objDataGridData) != null) {
 		       				if(updateObject){
-		       					if((dataProvider[index])[labelFieldId] == displayValue.getItemAt(objDataGridData)[variableName][objectLabelFieldId]){
+		       					if(displayValue.getItemAt(objDataGridData)[variableName]!=null && (dataProvider[index])[labelFieldId] == displayValue.getItemAt(objDataGridData)[variableName][objectLabelFieldId]){
 					       		 	this.selectedIndex = index;
 					      		 	break;
 				  		 		}
