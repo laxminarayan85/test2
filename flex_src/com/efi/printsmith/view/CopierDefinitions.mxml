@@ -318,7 +318,11 @@
 			index = percentageUse.text.indexOf('%',0);
 		}
 	 	percentvalue = percentageUse.text.substr(0,index);
-	 	tempPercent = parseFloat(percentvalue) * .01;
+	 	if (isNaN(parseFloat(percentvalue))) {
+	 		this.percentageUse.text = "0%";
+	 		tempPercent = 0;
+	 	} else
+	 		tempPercent = parseFloat(percentvalue) * .01;
 	 	
 		if (copyMinutes > 0) {
 			tempmachineCost = (daysOpen * hoursOpen * tempPercent * 60 * copyMinutes) / 12.0;
