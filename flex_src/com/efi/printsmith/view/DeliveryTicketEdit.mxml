@@ -993,30 +993,30 @@
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.AttentionName')}"
 									dataHolder="{deliveryTicket}" variableName="attNameCheck" customText="{deliveryTicket.attNameCheck}"
-									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+									defaultValue="false" selectedValue="true" deSelectedValue="false"/>
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.CustomerName')}"
 									dataHolder="{deliveryTicket}" variableName="customerNameCheck" customText="{deliveryTicket.customerNameCheck}"
-									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+									defaultValue="false" selectedValue="true" deSelectedValue="false"/>
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.Address')}"
 									dataHolder="{deliveryTicket}" variableName="addressCheck" customText="{deliveryTicket.addressCheck}"
-									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+									defaultValue="false" selectedValue="true" deSelectedValue="false"/>
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.OrderNumber')}"
 									dataHolder="{deliveryTicket}" variableName="orderNumberCheck" customText="{deliveryTicket.orderNumberCheck}"
-									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+									defaultValue="false" selectedValue="true" deSelectedValue="false"/>
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryDescription')}"
 									dataHolder="{deliveryTicket}" variableName="deliveryDescCheck" customText="{deliveryTicket.deliveryDescCheck}"
-									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+									defaultValue="false" selectedValue="true" deSelectedValue="false"/>
 							</mx:VBox>
 							
 							<mx:VBox width="50%">
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliveryComments')}"
 									dataHolder="{deliveryTicket}" variableName="deliveryCommentsCheck" customText="{deliveryTicket.deliveryCommentsCheck}"
-									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+									defaultValue="false" selectedValue="true" deSelectedValue="false"/>
 								<mx:RadioButtonGroup id="dateOptions"/>
 								<components:CustomRadioButtonComponent groupName="dateOptions" value="todayDate"
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.TodaysDate')}"
@@ -1031,11 +1031,11 @@
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.PONumber')}"
 									dataHolder="{deliveryTicket}" variableName="poNumberCheck" customText="{deliveryTicket.poNumberCheck}"
-									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+									defaultValue="false" selectedValue="true" deSelectedValue="false"/>
 								<components:CustomCheckBoxComponent
 									label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.EstimatedWeight')}"
 									dataHolder="{deliveryTicket}" variableName="estWeightCheck" customText="{deliveryTicket.estWeightCheck}"
-									defaultValue="false" selectedValue="false" deSelectedValue="false"/>
+									defaultValue="false" selectedValue="true" deSelectedValue="false"/>
 							</mx:VBox>
 						</mx:HBox>
 					</mx:Panel>
