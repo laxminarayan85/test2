@@ -1390,7 +1390,7 @@
 		<mx:Button x="10" y="689"  click="doNew();" width="38" height="38">
 			<mx:icon>@Embed(source='../../../../assets/new.png')</mx:icon>
 		</mx:Button>
-		<common:CustomDeleteButtonComponent x="194" y="689" width="38" height="38"
+		<common:CustomDeleteButtonComponent x="194" y="689" width="38" height="38" enabled="{this.dataGrid.selectedIndex > -1}"
 			clickFuncName="doDelete" deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}"/>
 		<!--<mx:Button x="194" y="689"  click="doDelete();" width="38" height="38">
 			<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
@@ -1476,7 +1476,7 @@
 			<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="148" y="731" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="38"/>
-		<mx:Button x="102" y="689" width="38" height="38" click="doDuplicate();">
+		<mx:Button x="102" y="689" width="38" height="38" click="doDuplicate();" enabled="{this.dataGrid.selectedIndex > -1}">
 			<mx:icon>@Embed(source='../../../../assets/duplicate.png')</mx:icon>
 		</mx:Button>
 		<mx:Label x="102" y="731" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="38"/>
