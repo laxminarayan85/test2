@@ -215,6 +215,7 @@
 					from_address.setAddress(deliveryTicket.fromAddress);
 				}
 			}
+			fromAddress_combo.customText = getCustomTextData(fromContactList,deliveryTicket,deliveryTicket.fromAddress);
 			dataServiceBroker.getAll("Broker");	
 		}
 		
