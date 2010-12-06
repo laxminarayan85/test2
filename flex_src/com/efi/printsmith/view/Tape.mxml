@@ -56,6 +56,8 @@
 	private var sessionBatch:TapeSessionBatch;
 	[Bindable]
 	private var tapeBatch:TapeBatch;
+	[Bindable]
+	private var tapeTreeData:XMLListCollection;
 	
 	public function getSecurityCommand():String {
     	return PSSecurityCommands.POS_OPENTAPE;
@@ -69,14 +71,28 @@
 	//	this.throbber.visible = true;
 	//	this.throbber.play();
 		
+		tapeBatch = new TapeBatch();
+		tapeTreeData = new XMLListCollection();
+		
 		dataServiceTapeBatch.getCurrentTapeBatch();
 	}
 	
 	private function handleLoadCurrentTapeBatch(evt:ResultEvent):void {		
+		var i:int = 0;
+		var batchList:XMLList = new XMLList;
+		
 		tapeBatch = evt.result as TapeBatch;
 		
 		if (tapeBatch.sessionBatches == null) {
 			tapeBatch.sessionBatches = new ArrayCollection();
+		}
+		
+	//	tapeTreeData = new XMLListCollection();
+		
+//		batchList. = tapeBatch.
+		
+		for (i = 0; i < tapeBatch.sessionBatches.length; i++) {
+			
 		}
 		
 		openTree();
