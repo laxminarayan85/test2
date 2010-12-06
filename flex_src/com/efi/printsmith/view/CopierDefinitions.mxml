@@ -323,6 +323,16 @@
 	 		tempPercent = 0;
 	 	} else
 	 		tempPercent = parseFloat(percentvalue) * .01;
+	 		
+	 	if (tempPercent > 1) {
+	 		tempPercent = 1;
+	 		this.percentageUse.text = "100%";
+	 	}
+	 	
+	 	if (hoursOpen > 24) {
+	 		hoursOpen = 24;
+	 		this.openhours.text = "24";
+	 	}
 	 	
 		if (copyMinutes > 0) {
 			tempmachineCost = (daysOpen * hoursOpen * tempPercent * 60 * copyMinutes) / 12.0;
