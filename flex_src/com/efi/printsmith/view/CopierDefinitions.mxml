@@ -270,6 +270,30 @@
 	
 	private function doMachineCost():void{
 	
+		// Fix up any blank text fields
+		if (isNaN(parseFloat(this.monthlyMaintenance.text)))
+			this.monthlyMaintenance.text = "0";
+		if (isNaN(parseFloat(this.monthlyBurdenRate.text)))
+			this.monthlyBurdenRate.text = "0";
+		if (isNaN(parseFloat(this.monthlyPayment.text)))
+			this.monthlyPayment.text = "0";
+		if (isNaN(parseFloat(this.monthlyLabor.text)))
+			this.monthlyLabor.text = "0";
+		if (isNaN(parseFloat(this.copyMinutes.text)))
+			this.copyMinutes.text = "0";
+		if (isNaN(parseFloat(this.tonerCopy.text)))
+			this.tonerCopy.text = "0";
+		if (isNaN(parseFloat(this.laborCopy.text)))
+			this.laborCopy.text = "0";
+		if (isNaN(parseFloat(this.openDays.text)))
+			this.openDays.text = "0";
+		if (isNaN(parseFloat(this.developerCopy.text)))
+			this.developerCopy.text = "0";
+		if (isNaN(parseFloat(this.openhours.text)))
+			this.openhours.text = "0";
+		if (isNaN(parseFloat(this.clickCost.text)))
+			this.clickCost.text = "0";
+	
 	 	var tempmachineCost: Number;
 	 	var temp :Number;
 	 	var temp2 : Number;
