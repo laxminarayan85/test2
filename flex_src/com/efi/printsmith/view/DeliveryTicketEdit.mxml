@@ -384,11 +384,13 @@
 		
 		private function addJobs():void {
 			var pendingListPicker:PendingListPicker = PopUpManager.createPopUp(this,PendingListPicker,false) as PendingListPicker;
-			pendingListPicker.addEventListener(PendingListPickerEvent.PENDINGLIST_PICKER_SELECT_EVENT,function(event:PendingListPickerEvent):void {
-				if(event.invoiceBase!=null){
-					dataServiceAdd.getInvoice(event.invoiceBase.id);
-				}
-			},false,0,true);
+			pendingListPicker.addEventListener(PendingListPickerEvent.PENDINGLIST_PICKER_SELECT_EVENT,pendingListPickerSelectHandler,false,0,true);
+		}
+		
+		private function pendingListPickerSelectHandler(event:PendingListPickerEvent):void {
+			if(event.invoiceBase!=null){
+				dataServiceAdd.getInvoice(event.invoiceBase.id);
+			}
 		}
 		
 		private function updateAddress(deliveryTicketObj:DeliveryTicket):void {
