@@ -22,7 +22,14 @@ public class MatrixUtilities {
 				break;
 			}
 		}
-		if (i >= elements.size()) i = i - 1;
+		//if (i >= elements.size()) i = i - 1;
+		// Get last line element if nothing found
+		if (i >= elements.size()) {
+			for (i = 0; i < elements.size(); i++) {
+				if (elements.get(i).getLastLine())
+					break;
+			}
+		}
 		
 		return elements.get(i);
 	}

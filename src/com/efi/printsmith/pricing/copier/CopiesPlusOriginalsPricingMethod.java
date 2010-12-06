@@ -55,9 +55,12 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 				else if (pricingMatrix.getHeader10() >= originals) j = 9;
 				else j = 9;
 				int i;
+				int lastLineIndex = -1;
 				long lastQty = 0;
 				double lastPrice = 0;
 				for (i = 0; i < pricingMatrix.getElements().size(); i++) {
+					if (pricingMatrix.getElements().get(i).getLastLine())
+						lastLineIndex = i;
 					if (i > 0) {
 						lastQty = pricingMatrix.getElements().get(i-1).getQty();
 						if (job.getDoubleSided() && side2PricingMethod.equals(Price2Side.UsingSecondSideRate.name())) {
@@ -135,7 +138,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 				}
 
 				if (i >= pricingMatrix.getElements().size())
-					i = i - 1;
+					i = lastLineIndex;
 
 				double unitPrice = 0.0;
 				switch (j) {
