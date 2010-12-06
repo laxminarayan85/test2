@@ -1,5 +1,7 @@
 package com.efi.printsmith.service;
 
+import a.jo;
+
 import com.efi.printsmith.comparator.InvoiceBaseComparator;
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.defaultdata.*;
@@ -97,7 +99,7 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (PersistenceException e) {
-			log.error(e);
+			log.error(e); 			
 			log.error(e.getCause().getMessage());
 			System.out.println("Exception caught when creating DataService");
 			System.out.println(e.getMessage());
@@ -113,14 +115,25 @@ public class DataService extends HibernateService {
 	private boolean checkStaticData() {
 		log.debug("** checkStaticData called.");
 		boolean retVal = false;
-		List<DataManager> dataManagerList = (List<DataManager>) this
-				.getAll("DataManager");
-
-		log.debug("** Found " + dataManagerList.size() + "records:");
-
-		if (dataManagerList.size() > 0) {
-			DataManager dataManager = dataManagerList.get(0);
-			if (dataManager.getDataloaded() == false) {
+		try {
+			List<DataManager> dataManagerList = (List<DataManager>) this
+					.getAll("DataManager");
+	
+			log.debug("** Found " + dataManagerList.size() + "records:");
+	
+			if (dataManagerList.size() > 0) {
+				DataManager dataManager = dataManagerList.get(0);
+				if (dataManager.getDataloaded() == false) {
+					dataManager.setDataloaded(true);
+					try {
+						this.addUpdate(dataManager);
+					} catch (Exception e) {
+						log.debug("** Exception: " + e.getMessage());
+					}
+					retVal = true;
+				}
+			} else {
+				DataManager dataManager = new DataManager();
 				dataManager.setDataloaded(true);
 				try {
 					this.addUpdate(dataManager);
@@ -129,20 +142,14 @@ public class DataService extends HibernateService {
 				}
 				retVal = true;
 			}
-		} else {
-			DataManager dataManager = new DataManager();
-			dataManager.setDataloaded(true);
-			try {
-				this.addUpdate(dataManager);
-			} catch (Exception e) {
-				log.debug("** Exception: " + e.getMessage());
-			}
-			retVal = true;
+		}
+		catch (Exception e) {
+			log.error(e);
 		}
 		return retVal;
 	}
 
-	public List<?> getAll(String className) {
+	public List<?> getAll(String className) throws Exception {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
@@ -155,13 +162,14 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
 			log.error(e);
+			throw e; 
 		} finally {
 			em.close();
 		}
 		return resultList;
 	}
 
-	public List<?> getUsers(String className) {
+	public List<?> getUsers(String className) throws Exception {
 		log.debug("** getUsers called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
@@ -172,14 +180,15 @@ public class DataService extends HibernateService {
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
 		return resultList;
 	}
 
-	public List<?> getCurrentTaxTables(String className) {
+	public List<?> getCurrentTaxTables(String className) throws Exception {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
@@ -191,13 +200,14 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
 			log.error(e);
+			throw e; 
 		} finally {
 			em.close();
 		}
 		return resultList;
 	}
 
-	public List<?> getAllOrderBy(String className, String orderBy) {
+	public List<?> getAllOrderBy(String className, String orderBy) throws Exception {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
@@ -208,14 +218,15 @@ public class DataService extends HibernateService {
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
 		return resultList;
 	}
 
-	public List<?> getAllOrderByDescending(String className, String orderBy) {
+	public List<?> getAllOrderByDescending(String className, String orderBy) throws Exception {
 		log.debug("** getAll called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
@@ -226,7 +237,8 @@ public class DataService extends HibernateService {
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 		
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -247,11 +259,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public List<?> getStockPicker() throws Exception {
@@ -278,12 +290,12 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 			System.out.println(System.currentTimeMillis());
 		}
-		return null;
 	}
 
 	public List<?> getAccountPicker() throws Exception {
@@ -330,11 +342,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 	
 
@@ -371,10 +383,10 @@ public class DataService extends HibernateService {
 			return invoiceList;
 		} catch (Exception e) {
 			log.error(e);
+			throw e;
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -533,11 +545,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public List<?> getPressPicker() throws Exception {
@@ -557,11 +569,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public List<?> getCopierPicker() throws Exception {
@@ -582,14 +594,14 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 			return resultList;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public ModelBase getSingle(String className) {
+	public ModelBase getSingle(String className) throws Exception {
 		log.debug("** getSingle called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -612,14 +624,14 @@ public class DataService extends HibernateService {
 			}
 			return result;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public ModelBase getQuery(String className, String where) {
+	public ModelBase getQuery(String className, String where)  throws Exception {
 		log.debug("** getQuery called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -627,14 +639,14 @@ public class DataService extends HibernateService {
 			ModelBase result = (ModelBase) findQuery.getSingleResult();
 			return result;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public List<?> getAllQuery(String className, String where) {
+	public List<?> getAllQuery(String className, String where)  throws Exception {
 		log.debug("** getQuery called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		List<?> resultList = new ArrayList<Object>();
@@ -643,14 +655,14 @@ public class DataService extends HibernateService {
 			resultList = findQuery.getResultList();
 			return resultList;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
-
-	public ModelBase getByPrevId(String className, String prevId) {
+	
+	public ModelBase getByPrevId(String className, String prevId) throws Exception {
 		log.debug("** getByPrevId called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -660,14 +672,14 @@ public class DataService extends HibernateService {
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public StockDefinition getByStockId(String stockId) {
+	public StockDefinition getByStockId(String stockId) throws Exception {
 		log.debug("** getByStockId called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -677,14 +689,14 @@ public class DataService extends HibernateService {
 			StockDefinition object = (StockDefinition) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public StockDefinition getByStockNumber(String stockNumber) {
+	public StockDefinition getByStockNumber(String stockNumber)  throws Exception {
 		log.debug("** getByStockNumber called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -694,14 +706,14 @@ public class DataService extends HibernateService {
 			StockDefinition object = (StockDefinition) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public StockType getByStockTypeID(String stocktypeId) {
+	public StockType getByStockTypeID(String stocktypeId)  throws Exception {
 		log.debug("** getByStocktypeId called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -711,14 +723,14 @@ public class DataService extends HibernateService {
 			StockType object = (StockType) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public PressDefinition getByPressId(String pressId) {
+	public PressDefinition getByPressId(String pressId)  throws Exception {
 		log.debug("** getByPressId called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -728,14 +740,14 @@ public class DataService extends HibernateService {
 			PressDefinition object = (PressDefinition) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public Account getByAccountId(String accountId) {
+	public Account getByAccountId(String accountId)  throws Exception {
 		log.debug("** getByAccountId called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -745,14 +757,14 @@ public class DataService extends HibernateService {
 			Account object = (Account) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public AccountHistoryData getAccountHistoryByAccountId(Long Id) {
+	public AccountHistoryData getAccountHistoryByAccountId(Long Id) throws Exception {
 		log.debug("** AccountHistoryData called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -764,14 +776,14 @@ public class DataService extends HibernateService {
 					.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public List<?> getAccountCustomerLogByAccountId(Long Id) {
+	public List<?> getAccountCustomerLogByAccountId(Long Id)  throws Exception {
 		log.debug("** CustomerLogB called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -784,14 +796,14 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + list.size() + "records:");
 			return list;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public UnpurchasedMerchandise getUnPurchaseByAccountId(Long Id) {
+	public UnpurchasedMerchandise getUnPurchaseByAccountId(Long Id)  throws Exception {
 		log.debug("** getBypurchasesAccountId called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -803,14 +815,14 @@ public class DataService extends HibernateService {
 					.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public ModelBase getByName(String className, String name) {
+	public ModelBase getByName(String className, String name)  throws Exception {
 		log.debug("** getByName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -820,14 +832,14 @@ public class DataService extends HibernateService {
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
-	public Dimension getByDimensionName(String className, String name) {
+	public Dimension getByDimensionName(String className, String name)  throws Exception {
 		log.debug("** getByName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -837,15 +849,15 @@ public class DataService extends HibernateService {
 			Dimension object = (Dimension) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public ModelBase getByLastFirstName(String className, String namelast,
-			String namefirst, long id) {
+			String namefirst, long id) throws Exception {
 		log.debug("** getByName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -856,11 +868,11 @@ public class DataService extends HibernateService {
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public List<?> getFromParent(String className, String parentName, Long id)
@@ -879,11 +891,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + list.size() + "records:");
 			return list;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public StockColors getByStockColorName(String name) throws Exception {
@@ -895,11 +907,11 @@ public class DataService extends HibernateService {
 			StockColors object = (StockColors) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public StockClass getByStockClassName(String name) throws Exception {
@@ -911,11 +923,11 @@ public class DataService extends HibernateService {
 			StockClass object = (StockClass) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public SalesCategory getBySalesCategoryName(String name) throws Exception {
@@ -928,11 +940,11 @@ public class DataService extends HibernateService {
 			SalesCategory object = (SalesCategory) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public StockFinish getByStockFinishName(String name) throws Exception {
@@ -944,11 +956,11 @@ public class DataService extends HibernateService {
 			StockFinish object = (StockFinish) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public StockGroup getByStockGroupName(String name) throws Exception {
@@ -960,11 +972,11 @@ public class DataService extends HibernateService {
 			StockGroup object = (StockGroup) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 		
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public StockForest getByStockForestName(String name) throws Exception {
@@ -976,11 +988,11 @@ public class DataService extends HibernateService {
 			StockForest object = (StockForest) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public GenericColors getByGenericColorsName(String name) throws Exception {
@@ -993,11 +1005,11 @@ public class DataService extends HibernateService {
 			GenericColors object = (GenericColors) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public StockGrade getByStockGradeName(String name) throws Exception {
@@ -1009,11 +1021,11 @@ public class DataService extends HibernateService {
 			StockGrade object = (StockGrade) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public CostCenter getByCostCenterName(String name) throws Exception {
@@ -1025,11 +1037,11 @@ public class DataService extends HibernateService {
 			CostCenter object = (CostCenter) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public ProductionLocations getByLocationName(String name) throws Exception {
@@ -1043,11 +1055,11 @@ public class DataService extends HibernateService {
 					.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public PriceList getByPriceListName(String name) throws Exception {
@@ -1059,11 +1071,11 @@ public class DataService extends HibernateService {
 			PriceList object = (PriceList) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public ShippingMethod getByShippingMethodName(String name) throws Exception {
@@ -1076,11 +1088,11 @@ public class DataService extends HibernateService {
 			ShippingMethod object = (ShippingMethod) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public Substrate getBySubstrateName(String name) throws Exception {
@@ -1092,11 +1104,11 @@ public class DataService extends HibernateService {
 			Substrate object = (Substrate) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public TaxTable getByTaxTableName(String name) throws Exception {
@@ -1108,11 +1120,11 @@ public class DataService extends HibernateService {
 			TaxTable object = (TaxTable) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public PreferencesPricingMethod getByMethodType(String name)
@@ -1127,11 +1139,11 @@ public class DataService extends HibernateService {
 					.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public WasteChart getByWasteChartName(String name) throws Exception {
@@ -1143,11 +1155,11 @@ public class DataService extends HibernateService {
 			WasteChart object = (WasteChart) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public ChargeCommand getByChargeCommandName(String name) throws Exception {
@@ -1168,11 +1180,11 @@ public class DataService extends HibernateService {
 			}
 			return chargeCommand;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public ChargeCategory getByChargeCategoryName(String name) throws Exception {
@@ -1194,11 +1206,11 @@ public class DataService extends HibernateService {
 			}
 			return chargeCategory;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public ChargeCategory getByChargeCategoryPrevId(String prevId)
@@ -1221,11 +1233,11 @@ public class DataService extends HibernateService {
 			}
 			return chargeCategory;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1243,11 +1255,11 @@ public class DataService extends HibernateService {
 
 			return accounts;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return new ArrayList<Account>();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1267,11 +1279,11 @@ public class DataService extends HibernateService {
 
 			return employees;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return new ArrayList<Employee>();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1290,11 +1302,11 @@ public class DataService extends HibernateService {
 
 			return contacts;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return new ArrayList<Contact>();
 	}
 
 	// The following Id generation code is a temporary placeholder for the real
@@ -1854,7 +1866,7 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + resultList.size() + "records:");
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -1909,10 +1921,23 @@ public class DataService extends HibernateService {
 					job.setStock((StockDefinition) this.getById(
 							"StockDefinition", tmpId));
 				}
+				if (job.getSalesCategory() != null) {
+					tmpId = job.getSalesCategory().getId();
+					job.setSalesCategory((SalesCategory) this.getById("SalesCategory", tmpId));
+				}
+				
+				if (job.getTaxTable() != null ) {
+					tmpId = job.getTaxTable().getId();
+					job.setTaxTable((TaxTable) this.getById("TaxTable", tmpId));
+				}
+				if (job.getPress() != null) {
+					tmpId = job.getPress().getId();
+					job.setPress((PressDefinition) this.getById("PressDefinition", tmpId));
+				}
 
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -1951,11 +1976,13 @@ public class DataService extends HibernateService {
 				Hibernate.initialize(invoice.getCharges());
 			}
 		} catch (GenericJDBCException e) {
-			log.error(e);
+			log.error(e); 			
 			log.error(e.getSQL());
 			System.out.println(e.getSQL());
+			throw e; 
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2163,7 +2190,7 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2188,7 +2215,7 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2214,7 +2241,7 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2262,7 +2289,7 @@ public class DataService extends HibernateService {
 				
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2299,7 +2326,7 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2330,7 +2357,7 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2355,7 +2382,7 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2411,7 +2438,7 @@ public class DataService extends HibernateService {
 			System.out.println(e);
 			System.out.println(e.getSQL());
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2442,11 +2469,11 @@ public class DataService extends HibernateService {
 			}
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public ModelBase getPriceList(Long id) throws Exception {
@@ -2468,11 +2495,11 @@ public class DataService extends HibernateService {
 			}
 			return priceList;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public ModelBase getEmployee(Long id) throws Exception {
@@ -2544,11 +2571,11 @@ public class DataService extends HibernateService {
 
 			return employee;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public ModelBase getMatrix(Long id) throws Exception {
@@ -2570,11 +2597,11 @@ public class DataService extends HibernateService {
 			}
 			return matrix;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public ModelBase getByIdMaster(String className, Long id) throws Exception {
@@ -2586,11 +2613,11 @@ public class DataService extends HibernateService {
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2608,11 +2635,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + invoicelist.size() + "records:");
 			return invoicelist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2640,11 +2667,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + invoicelist.size() + "records:");
 			return invoicelist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2678,7 +2705,8 @@ public class DataService extends HibernateService {
 				estimateList.add(estimate);
 			}
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2709,11 +2737,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + contactlist.size() + "records:");
 			return contactlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2743,11 +2771,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + timecardlist.size() + "records:");
 			return timecardlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2770,11 +2798,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + timecardlist.size() + "records:");
 			return timecardlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2801,11 +2829,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + timecardlist.size() + "records:");
 			return timecardlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	/**
@@ -2835,11 +2863,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + timecardlist.size() + "records:");
 			return timecardlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	/**
@@ -2869,11 +2897,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + timecardlist.size() + "records:");
 			return timecardlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	/**
@@ -2902,11 +2930,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + timecardlist.size() + "records:");
 			return timecardlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	/**
@@ -2935,11 +2963,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + timecardlist.size() + "records:");
 			return timecardlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2955,11 +2983,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + periodlist.size() + "records:");
 			return periodlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	/**
@@ -2983,7 +3011,8 @@ public class DataService extends HibernateService {
 				maxPeriod = rs.getInteger(0).intValue();
 			}
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -3010,11 +3039,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + periodlist.size() + "records:");
 			return periodlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	/**
@@ -3037,11 +3066,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + periodlist.size() + "records:");
 			return periodlist;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	/**
@@ -3090,11 +3119,11 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + timeCardList.size() + "records:");
 			return timeCardList;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -3113,11 +3142,11 @@ public class DataService extends HibernateService {
 			return securitySetups;
 
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	public long getMaxDisplayId(String className) throws Exception {
@@ -3133,7 +3162,8 @@ public class DataService extends HibernateService {
 				maxDisplayId = rs.getLong(0).longValue();
 			}
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -3157,7 +3187,8 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + activeEmployees.size() + "records:");
 
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -3183,7 +3214,7 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + clockedInEmployees.size() + "records:");
 
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4226,7 +4257,7 @@ public class DataService extends HibernateService {
 			if (jobChargesList != null)
 				log.debug("** Found " + jobChargesList.size() + "records:");
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4316,7 +4347,7 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4358,7 +4389,7 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + trackerConsoleJobList.size()
 						+ "records:");
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4396,7 +4427,7 @@ public class DataService extends HibernateService {
 				log.debug("** Found TrackerConsoleJJob for Id :"
 						+ trackerConsoleJobs.getId());
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4462,7 +4493,7 @@ public class DataService extends HibernateService {
 			if (jobsList != null)
 				log.debug("** Found " + jobsList.size() + "records:");
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4507,7 +4538,7 @@ public class DataService extends HibernateService {
 			if (jobsList != null)
 				log.debug("** Found " + jobsList.size() + "records:");
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4535,7 +4566,7 @@ public class DataService extends HibernateService {
 				routeStepSetUpCount = rs.getLong(0);
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4576,7 +4607,7 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + routingStepSetUpList.size()
 						+ "records:");
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4638,7 +4669,7 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + trackerConsoleJobsList.size()
 						+ "records:");
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4726,7 +4757,7 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4734,7 +4765,7 @@ public class DataService extends HibernateService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void deleteItem(String className, Long id) {
+	public void deleteItem(String className, Long id) throws Exception {
 		log.debug("** deleteObject called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
@@ -4756,7 +4787,8 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			log.info("** Closing Entity Manager.");
 			em.close();
@@ -4764,7 +4796,7 @@ public class DataService extends HibernateService {
 	}
 
 	public List<?> criteriaQuery(String entityName,
-			List<RemoteCriterion> criteria) {
+			List<RemoteCriterion> criteria) throws Exception {
 		log.debug("** criteriaQuery called.");
 		List<?> resultList = new ArrayList<Object>();
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -4817,9 +4849,11 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (HibernateException e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4985,11 +5019,11 @@ public class DataService extends HibernateService {
 					.getSingleResult();
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -5003,7 +5037,7 @@ public class DataService extends HibernateService {
 					Restrictions.ilike("name", localWildName)).list();		// no-case sensitivity
 			return objects;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 
 			throw e;
 		} finally {
 			em.close();
@@ -5117,7 +5151,7 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			ticketJobsList = query.getResultList();
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -5167,11 +5201,11 @@ public class DataService extends HibernateService {
 			}
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 	
 	
@@ -5206,11 +5240,11 @@ public class DataService extends HibernateService {
 			Hibernate.initialize(object.getComLinks());
 			return object;
 		} catch (Exception e) {
-			log.error(e);
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 	
 	
@@ -5228,7 +5262,7 @@ public class DataService extends HibernateService {
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
-			log.error(e);
+						log.error(e); 			throw e; 
 		} finally {
 			em.close();
 		}
@@ -5270,11 +5304,9 @@ public class DataService extends HibernateService {
 			this.addUpdate(tape);
 			
 			object = tapebatch;
-		} finally {
+ 			throw e; 
+ 		} finally {
 			em.close();
 		}
-		
-		return object;
-		}
-
+	}
 }

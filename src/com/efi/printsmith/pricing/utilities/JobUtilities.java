@@ -14,17 +14,22 @@ public class JobUtilities {
 				for (int i=0; i < job.getCharges().size(); i++) {
 					Charge charge = job.getCharges().get(i);
 					
-					if (charge.getChargeDefinition() != null && charge.getChargeDefinition().getWasteChart() != null) {
-						WasteChart wasteChart = charge.getChargeDefinition().getWasteChart();
+					if (charge.getChargeDefinition() != null)
+						if (charge.getChargeDefinition().getWasteChart() != null) {
+							WasteChart wasteChart = charge.getChargeDefinition().getWasteChart();
+							
+							double wastePercentage = PriceListUtilities.getWastePercentage(wasteChart, job.getPressQty());
+							
+							binderyWaste += (long)(wastePercentage * job.getPressQty());
+						}
 						
-						double wastePercentage = PriceListUtilities.getWastePercentage(wasteChart, job.getPressQty());
-						
-						binderyWaste = (long)(wastePercentage * job.getPressQty());
-					}
+						if (charge.getChargeDefinition().getFixedWaste() != null) {
+							binderyWaste += charge.getChargeDefinition().getFixedWaste();
+						}
 				}
 			}
+			job.setBinderyWaste(binderyWaste);
 		}
-		job.setBinderyWaste(binderyWaste);
 	}
 	
 	static public void calculateSignatures(Job job) {

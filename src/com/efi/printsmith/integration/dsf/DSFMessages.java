@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DSFMessages {
 	@SuppressWarnings("unchecked")
-	public static Document generateMediaResponse() throws ParserConfigurationException {
+	public static Document generateMediaResponse() throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		DOMImplementation impl = builder.getDOMImplementation();
@@ -68,7 +68,7 @@ public class DSFMessages {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static Document generateCustomerListResponse() throws ParserConfigurationException {
+	public static Document generateCustomerListResponse() throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		DOMImplementation impl = builder.getDOMImplementation();

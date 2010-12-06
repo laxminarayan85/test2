@@ -9,7 +9,7 @@ import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.PreferencesPricingMethod;
 
 public class MailingPricingMethod {
-	public Job priceMailingJob(Job job) {
+	public Job priceMailingJob(Job job) throws Exception {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		
@@ -24,7 +24,7 @@ public class MailingPricingMethod {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private double getMarkup(double cost, PreferencesPricingMethod pricingMethod) {
+	private double getMarkup(double cost, PreferencesPricingMethod pricingMethod) throws Exception {
 		double retVal = 1.0;
 		DataService dataService = new DataService();
 		List <PreferencesMarkups> markups = null;

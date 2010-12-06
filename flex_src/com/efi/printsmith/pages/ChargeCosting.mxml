@@ -162,8 +162,9 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	     validate(fixedMaterialsValidator);                 
 	     validate(unitMaterialsValidator);      
 	     validate(laborRateValidator);                 
-	     validate(setupMinutesValidator);   
-		}
+	     validate(setupMinutesValidator);
+	     this.MaptoChargeCost();
+	}
 	    
 	public function textFocusOut(event:Event):void {
 		if (event != null) {

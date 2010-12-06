@@ -183,7 +183,7 @@ public class TableEditorMapper extends ImportMapper {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void deleteAll(ModelBase modelBase) {
+	private void deleteAll(ModelBase modelBase) throws Exception {
 		DataService dataService = new DataService();
 		String className = modelBase.getClass().getName();
 		if (className.lastIndexOf(".") > -1)

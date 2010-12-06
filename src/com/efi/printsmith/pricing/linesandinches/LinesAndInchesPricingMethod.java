@@ -7,7 +7,7 @@ import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.StampSchedule;
 
 public class LinesAndInchesPricingMethod {
-	public Job priceLinesAndInchesJob(Job job) {
+	public Job priceLinesAndInchesJob(Job job) throws Exception{
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		DataService dataService = new DataService();

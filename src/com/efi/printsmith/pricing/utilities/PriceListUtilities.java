@@ -50,7 +50,7 @@ public class PriceListUtilities {
 	}
 	
 	static public double lookupPaperPrice(PriceListBase priceList, long copies,
-		long colors, long side) {
+		long colors, long side) throws Exception {
 		double retVal = 0.0;
 
 		// If stock has no paper price schedule, use the default (first) schedule

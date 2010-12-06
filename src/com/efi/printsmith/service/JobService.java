@@ -28,7 +28,7 @@ public class JobService extends SnowmassHibernateService {
 		
 	}
 	
-	public Job createJob(InvoiceBase parentInvoice, PreferencesPricingMethod pricingMethod) {
+	public Job createJob(InvoiceBase parentInvoice, PreferencesPricingMethod pricingMethod) throws Exception {
 		Job job = new Job();
 		
 		//Commented by Madhu as it was creating a blank object which doesn't have reference in DB 

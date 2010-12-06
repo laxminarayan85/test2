@@ -53,7 +53,7 @@ public class PriceListService extends SnowmassHibernateService {
 		super();
 	}
 	@SuppressWarnings("unchecked")
-	public List getCopierPriceList(CopierDefinition copierDefinition) {
+	public List getCopierPriceList(CopierDefinition copierDefinition) throws Exception {
 		DataService dataService = new DataService();
 		List returnList = new ArrayList();
 		List qtyList = new ArrayList();
@@ -199,7 +199,7 @@ public class PriceListService extends SnowmassHibernateService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<?> getPressPriceList(PressDefinition pressDefinition) {
+	public List<?> getPressPriceList(PressDefinition pressDefinition) throws Exception {
 		DataService dataService = new DataService();
 		List returnList = new ArrayList();
 		List qtyList = new ArrayList();
@@ -238,7 +238,7 @@ public class PriceListService extends SnowmassHibernateService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<?> getStockPriceList(StockDefinition stockDefinition, CopierDefinition copierDefinition) {
+	public List<?> getStockPriceList(StockDefinition stockDefinition, CopierDefinition copierDefinition) throws Exception{
 		DataService dataService = new DataService();
 		List returnList = new ArrayList();
 		List qtyList = new ArrayList();
@@ -335,7 +335,7 @@ public class PriceListService extends SnowmassHibernateService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<?> getStockPriceList(StockDefinition stockDefinition, PressDefinition pressDefinition) {
+	public List<?> getStockPriceList(StockDefinition stockDefinition, PressDefinition pressDefinition) throws Exception{
 		DataService dataService = new DataService();
 		List returnList = new ArrayList();
 		List qtyList = new ArrayList();

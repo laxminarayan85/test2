@@ -94,7 +94,7 @@ public class PreferencesMapper extends ImportMapper {
 		}
 	}
 	@SuppressWarnings({"unchecked"})
-	private void deletePricingMethods() {
+	private void deletePricingMethods() throws Exception {
 		DataService dataService = new DataService();
 		List<PreferencesPricingMethod> pricingMethods = (List<PreferencesPricingMethod>)dataService.getAll("PreferencesPricingMethod");
 		for (int i=0;i<pricingMethods.size();i++) {
@@ -103,7 +103,7 @@ public class PreferencesMapper extends ImportMapper {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void deleteCreditCards() {
+	private void deleteCreditCards() throws Exception {
 		DataService dataService = new DataService();
 		List<PreferencesCreditCard> creditCards = (List<PreferencesCreditCard>)dataService.getAll("PreferencesCreditCard");
 		for (int i=0;i<creditCards.size();i++) {

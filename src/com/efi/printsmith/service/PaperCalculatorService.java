@@ -1947,7 +1947,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 		return imageBytes;
 	}
 	
-	public List getPaperCalculatorTemplates(int whichToStart, int width, int height) {
+	public List getPaperCalculatorTemplates(int whichToStart, int width, int height) throws Exception {
 		List returnList = new ArrayList();
 		List<JobBase> templateList = new ArrayList<JobBase>();
 		List<byte[]> imageList = new ArrayList<byte[]>();

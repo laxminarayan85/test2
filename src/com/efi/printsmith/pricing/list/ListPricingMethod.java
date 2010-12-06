@@ -5,7 +5,7 @@ import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
 public class ListPricingMethod {
-	public Job priceListJob(Job job) {
+	public Job priceListJob(Job job) throws Exception {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		

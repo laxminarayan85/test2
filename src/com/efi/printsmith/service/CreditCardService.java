@@ -112,9 +112,14 @@ public class CreditCardService extends SnowmassHibernateService {
 		Long		idNumber = cct.getId();
 		String		formattedNumber;
 		int			zeroCnt = 0;
+		PreferencesSystem preferences = null;
 		
-		PreferencesSystem preferences = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
-		
+		try {
+			preferences = (PreferencesSystem) dataService.getSingle("PreferencesSystem");
+		} catch (Exception e) {
+			log.error(e);
+		}
+			
 		if (preferences == null) {
 			preferences = new PreferencesSystem();
 		}

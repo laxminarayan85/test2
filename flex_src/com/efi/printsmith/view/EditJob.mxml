@@ -524,7 +524,9 @@
 		<mx:method name="getDimensionByWildcardName"
 				   fault="handleFault(event)"
 				   result="handleDimesionByNameResult(event)"/>
-
+		<mx:method name="getJob"
+				   fault="handleFault(event)"
+				   result="handleLoadJobResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="copierDataService"
 					 destination="dataService">
@@ -914,6 +916,9 @@
 			
 			private function loadData():void {
 				throbber.play();
+				if (this.job != null) {
+					
+				}
 				pressDataService.getAll("PressDefinition");
 				copierDataService.getAll("CopierDefinition");
 				locationDataService.getAll("ProductionLocations");
@@ -2148,6 +2153,14 @@
 				}
 			}
 	
+			private function handleLoadJobResult(ev:ResultEvent):void
+			{
+				var localJob = ev.result as Job;
+				if (localJob != null) {
+					this.job = localJob;
+				}
+			}
+			
 			private function handleDimesionByNameResult(ev:ResultEvent):void
 			{
 				var matchingDimensions:ArrayCollection=new ArrayCollection();
@@ -2582,6 +2595,16 @@
 	    		} else {
 	    			job.pricingRecord.unitPriceOverride = true;
 	    			job.pricingRecord.unitPrice = parseFloat(job_unitPrice.text); 
+	    		}
+	    	}
+	    	
+	    	private function editBinderyWaste(evt:Event):void {
+	    		if (this.bindery_waste.text == "") {
+	    			job.binderyWasteOverride = false;
+	    			job.binderyWaste = 0;
+	    		} else {
+	    			job.binderyWasteOverride = true;
+	    			job.binderyWaste = parseInt(bindery_waste.text);
 	    		}
 	    	}
 	    	
@@ -3347,7 +3370,7 @@
 										  text="{job.binderyWaste}"
 										  height="20"
 										  tabIndex="7"
-										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
+										  width="98" mouseDown="textInputClick(event)" textAlign="right" change="editBinderyWaste(event)" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="496"
 										  y="184"
 										  id="est_waste"

@@ -61,7 +61,7 @@ public class PricingService extends SnowmassHibernateService {
 					}
 					
 				}
-				job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice().doubleValue() + job.getCharges().get(i).getPrice().doubleValue());
+				//job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice().doubleValue() + job.getCharges().get(i).getPrice().doubleValue());
 			}
 		}
 		
