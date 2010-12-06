@@ -448,6 +448,7 @@
 				}
 			}
 			setOriginalCopierDefinition();
+			this.Name.setFocus();
 		} else if (ev.token.operation == "getPricingMatrix") {
 			var matrix:com.efi.printsmith.data.Matrix = ev.result as com.efi.printsmith.data.Matrix;
 			if (matrix != null) {
