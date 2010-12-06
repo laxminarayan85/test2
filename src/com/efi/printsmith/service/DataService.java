@@ -33,6 +33,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NamedQuery;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -623,6 +624,12 @@ public class DataService extends HibernateService {
 				}
 			}
 			return result;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -638,7 +645,13 @@ public class DataService extends HibernateService {
 			Query findQuery = em.createQuery("from " + className + where);
 			ModelBase result = (ModelBase) findQuery.getSingleResult();
 			return result;
-		} catch (Exception e) {
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		}catch (Exception e) {
 			log.error(e); 			
 			throw e; 
 		} finally {
@@ -671,6 +684,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 
 			throw e; 
@@ -688,6 +707,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			StockDefinition object = (StockDefinition) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -705,6 +730,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			StockDefinition object = (StockDefinition) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -722,6 +753,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			StockType object = (StockType) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -739,6 +776,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			PressDefinition object = (PressDefinition) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -756,6 +799,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			Account object = (Account) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -775,6 +824,12 @@ public class DataService extends HibernateService {
 			AccountHistoryData object = (AccountHistoryData) query
 					.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -814,6 +869,12 @@ public class DataService extends HibernateService {
 			UnpurchasedMerchandise object = (UnpurchasedMerchandise) query
 					.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getUnPurchaseByAccountId " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getUnPurchaseByAccountId " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -831,6 +892,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -848,6 +915,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			Dimension object = (Dimension) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByDimensionName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByDimensionName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -858,7 +931,7 @@ public class DataService extends HibernateService {
 
 	public ModelBase getByLastFirstName(String className, String namelast,
 			String namefirst, long id) throws Exception {
-		log.debug("** getByName called.");
+		log.debug("** getByLastFirstName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
 			String queryString = "from " + className + " where lastName = '"
@@ -867,6 +940,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByLastFirstName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByLastFirstName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -906,6 +985,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			StockColors object = (StockColors) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByStockColorName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByStockColorName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -922,6 +1007,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			StockClass object = (StockClass) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByStockClassName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByStockClassName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -939,6 +1030,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			SalesCategory object = (SalesCategory) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getBySalesCategoryName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getBySalesCategoryName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -955,6 +1052,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			StockFinish object = (StockFinish) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByStockFinishName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByStockFinishName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -971,6 +1074,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			StockGroup object = (StockGroup) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByStockGroupName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByStockGroupName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 		
 			throw e; 
@@ -987,6 +1096,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			StockForest object = (StockForest) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByStockForestName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByStockForestName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1004,6 +1119,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			GenericColors object = (GenericColors) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByGenericColorsName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByGenericColorsName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1020,6 +1141,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			StockGrade object = (StockGrade) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByStockGradeName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByStockGradeName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1036,6 +1163,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			CostCenter object = (CostCenter) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByCostCenterName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByCostCenterName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1054,6 +1187,12 @@ public class DataService extends HibernateService {
 			ProductionLocations object = (ProductionLocations) query
 					.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByLocationName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByLocationName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1070,6 +1209,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			PriceList object = (PriceList) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByPriceListName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByPriceListName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1087,6 +1232,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			ShippingMethod object = (ShippingMethod) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByShippingMethodName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("Too many results found for getByShippingMethodName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1103,6 +1254,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			Substrate object = (Substrate) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getBySubstrateName" + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getBySubstrateName" + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1119,6 +1276,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			TaxTable object = (TaxTable) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1138,6 +1301,12 @@ public class DataService extends HibernateService {
 			PreferencesPricingMethod object = (PreferencesPricingMethod) query
 					.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByMethodType " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByMethodType " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1154,6 +1323,12 @@ public class DataService extends HibernateService {
 			Query query = em.createQuery(queryString);
 			WasteChart object = (WasteChart) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByWasteChartName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByWasteChartName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1179,6 +1354,12 @@ public class DataService extends HibernateService {
 				}
 			}
 			return chargeCommand;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByChargeCommandName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByChargeCommandName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1205,6 +1386,12 @@ public class DataService extends HibernateService {
 				}
 			}
 			return chargeCategory;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByChargeCategoryName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByChargeCategoryName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1232,6 +1419,12 @@ public class DataService extends HibernateService {
 				}
 			}
 			return chargeCategory;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByChargeCategoryPrevId " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByChargeCategoryPrevId " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -1936,8 +2129,15 @@ public class DataService extends HibernateService {
 				}
 
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getJob " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getJob " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -1975,6 +2175,12 @@ public class DataService extends HibernateService {
 				}
 				Hibernate.initialize(invoice.getCharges());
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getInvoice " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getInvoice " + e);
+			return null;
 		} catch (GenericJDBCException e) {
 			log.error(e); 			
 			log.error(e.getSQL());
@@ -2189,8 +2395,15 @@ public class DataService extends HibernateService {
 					}
 				}
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getStockDefinition " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getStockDefinition " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2214,8 +2427,15 @@ public class DataService extends HibernateService {
 					}
 				}
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getGrade " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getGrade " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2240,8 +2460,15 @@ public class DataService extends HibernateService {
 					}
 				}
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getPressDefinition " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getPressDefinition " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2288,8 +2515,15 @@ public class DataService extends HibernateService {
 				}
 				
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getAccount " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getAccount " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2325,8 +2559,15 @@ public class DataService extends HibernateService {
 					}
 				}
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getCopierDefinition " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getCopierDefinition " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2356,8 +2597,15 @@ public class DataService extends HibernateService {
 					}
 				}
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getContact " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getContact " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2381,8 +2629,15 @@ public class DataService extends HibernateService {
 					}
 				}
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getTaxTable " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getTaxTable " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2434,11 +2689,18 @@ public class DataService extends HibernateService {
 					invoice.setCharges(new ArrayList<Charge>());
 				}
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getInvoiceByInvoiceNumber " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getInvoiceByInvoiceNumber " + e);
+			return null;
 		} catch (GenericJDBCException e) {
 			System.out.println(e);
 			System.out.println(e.getSQL());
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -2468,6 +2730,12 @@ public class DataService extends HibernateService {
 				}
 			}
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getById " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getById " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -2494,6 +2762,12 @@ public class DataService extends HibernateService {
 				}
 			}
 			return priceList;
+		} catch (NoResultException e) {
+			log.warn("No result found for getPriceList " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getPriceList " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -2520,6 +2794,12 @@ public class DataService extends HibernateService {
 				}
 			}
 			return priceList;
+		} catch (NoResultException e) {
+			log.warn("No result found for getWasteChart " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getWasteChart " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -2596,6 +2876,12 @@ public class DataService extends HibernateService {
 			}
 
 			return employee;
+		} catch (NoResultException e) {
+			log.warn("No result found for getEmployee " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getEmployee " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -2622,6 +2908,12 @@ public class DataService extends HibernateService {
 				}
 			}
 			return matrix;
+		} catch (NoResultException e) {
+			log.warn("No result found for getMatrix " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getMatrix " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -2638,6 +2930,12 @@ public class DataService extends HibernateService {
 			query.setParameter("id", id);
 			ModelBase object = (ModelBase) query.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByIdMaster " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByIdMaster " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -4283,7 +4581,8 @@ public class DataService extends HibernateService {
 			if (jobChargesList != null)
 				log.debug("** Found " + jobChargesList.size() + "records:");
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4372,8 +4671,15 @@ public class DataService extends HibernateService {
 								+ "records:");
 				}
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4415,7 +4721,8 @@ public class DataService extends HibernateService {
 				log.debug("** Found " + trackerConsoleJobList.size()
 						+ "records:");
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4452,8 +4759,15 @@ public class DataService extends HibernateService {
 			if (trackerConsoleJobs != null)
 				log.debug("** Found TrackerConsoleJJob for Id :"
 						+ trackerConsoleJobs.getId());
+		} catch (NoResultException e) {
+			log.warn("No result found for getTrackerConsoleJobsById " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getTrackerConsoleJobsById " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4518,8 +4832,15 @@ public class DataService extends HibernateService {
 			}
 			if (jobsList != null)
 				log.debug("** Found " + jobsList.size() + "records:");
+		} catch (NoResultException e) {
+			log.warn("No result found for getActiveJobsForTrackerMgr " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getActiveJobsForTrackerMgr " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4564,7 +4885,8 @@ public class DataService extends HibernateService {
 			if (jobsList != null)
 				log.debug("** Found " + jobsList.size() + "records:");
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4592,7 +4914,8 @@ public class DataService extends HibernateService {
 				routeStepSetUpCount = rs.getLong(0);
 			}
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -4782,8 +5105,15 @@ public class DataService extends HibernateService {
 					}
 				}
 			}
+		} catch (NoResultException e) {
+			log.warn("No result found for getTotalEstimatedTimeForInvoice " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getTotalEstimatedTimeForInvoice " + e);
+			return null;
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 			
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -5044,6 +5374,12 @@ public class DataService extends HibernateService {
 			CreditCardTransactions object = (CreditCardTransactions) query
 					.getSingleResult();
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -5226,6 +5562,12 @@ public class DataService extends HibernateService {
 				}
 			}
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -5265,6 +5607,12 @@ public class DataService extends HibernateService {
 			}
 			Hibernate.initialize(object.getComLinks());
 			return object;
+		} catch (NoResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
 		} catch (Exception e) {
 			log.error(e); 			
 			throw e; 
@@ -5288,7 +5636,8 @@ public class DataService extends HibernateService {
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
 		} catch (Exception e) {
-						log.error(e); 			throw e; 
+			log.error(e); 		
+			throw e; 
 		} finally {
 			em.close();
 		}
@@ -5307,9 +5656,7 @@ public class DataService extends HibernateService {
 			String queryString = "from TapeBatch where closed = false";
 			Query query = em.createQuery(queryString);
 			object = (TapeBatch) query.getSingleResult();
-			return object;
-		} catch (Exception e) {
-			log.error(e);
+		} catch (NoResultException e) {
 			//
 			// no current tape batch, so create one
 			//
@@ -5330,9 +5677,16 @@ public class DataService extends HibernateService {
 			this.addUpdate(tape);
 			
 			object = tapebatch;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getByTaxTableName " + e);
+			return null;
+		} catch (Exception e) {
+			log.error(e);
+
  			throw e; 
  		} finally {
 			em.close();
 		}
+		return object;
 	}
 }
