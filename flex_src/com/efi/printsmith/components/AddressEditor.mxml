@@ -52,11 +52,19 @@
 			[Bindable] public var openedFromEmployee:Boolean = false;
 			
 			[Bindable] public var enableEditBtn:Boolean = true;
-
+			
+			private var _editable:Boolean = true;
+			
+			public function set editable(val:Boolean):void	{
+				_editable = val;
+			}
+			
 			public function init():void
 			{ 
 				addressLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Address');
-				
+				if (!_editable)	{
+					edit_address_button.visible = false;
+				}
 			}
 
 			public function saveAddressHandler(evt:SaveAddressEvent):void {

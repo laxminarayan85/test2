@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
 		   width="100%"
 		   height="100%"
+		   title="{contactLabel}"
 		   xmlns:fc="http://www.adobe.com/2006/fc"
 		   creationComplete="init()">
 	<!--	<mx:LinkButton x="252" y="93" label="Edit" id="edit_button" click="doEditContact()"/>
@@ -231,33 +232,28 @@
 				titleWindow.addEventListener(CloseEvent.CLOSE, popupClose, false, 1);
 				titleWindow.addEventListener("SaveContactEvent", saveContactHandler, false, 1);
 				
-				var pos:Point=new Point(contact_panel.x, contact_panel.y);
-				pos=contact_panel.localToGlobal(pos);
+				var pos:Point=new Point(this.x, this.y);
+				pos=this.localToGlobal(pos);
 				titleWindow.x=pos.x;
 				titleWindow.y=pos.y;
 			}
 		]]>
 	</mx:Script>
-	<mx:Panel x="0"
-			  y="0"
-			  width="100%"
+	<mx:VBox  width="100%"
 			  height="100%"
-			  layout="absolute"
-			  title="{contactLabel}"
-			  id="contact_panel"
 			  dropShadowEnabled="false">
-		<mx:Text x="10"
-				 y="10"
-				 
-				 width="281"
+		<mx:Text width="100%"
 				 id="company_text"
 				 text="{displayContact}"
-				 height="114"/>
-		<mx:LinkButton x="249"
-					   y="121"
+				 height="90%"/>
+		<mx:HBox width="100%" height="10%">
+			<mx:Spacer width="90%" height="100%" />
+			<mx:LinkButton width="10%" height="100%"
 					   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
 					   id="edit_contact_button"
 					   enabled="{enableEditBtn}"
 					   click="doEditContact();"/>
-	</mx:Panel>
-</mx:Canvas>
+			
+		</mx:HBox>
+	</mx:VBox>
+</mx:Panel>

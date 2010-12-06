@@ -94,6 +94,10 @@
 					result="handleLoadInvoiceTemplates(event)"/>		
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="contactDataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="saveContactResult(event)" />
+	</mx:RemoteObject>
+	
 	<mx:RemoteObject id="dataServiceEstimate" destination="dataService" showBusyCursor="true">
 		<mx:method name="getInvoice"
 					fault="handleFault(event)"
@@ -108,6 +112,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.components.ContactInfoPopup;
+			import com.efi.printsmith.events.SaveContactEvent;
 			import flexlib.controls.Fire;
 			import mx.controls.RadioButtonGroup;
 			import com.efi.printsmith.common.components.ToolbarButton;
@@ -248,7 +254,8 @@
 			private var preferencesEstimating:PreferencesEstimating;
 			
 			private var onPendingList:Boolean= false;
-			
+			private var newContact:Boolean = false;
+						
 			public function getSecurityCommand():String {
 				if ((invoice != null) && (invoice is Estimate))
 					return PSSecurityCommands.INVOICE_CREATEESTIMATE;
@@ -352,6 +359,25 @@
 				job_costing_stack.selectedChild = account_info_canvas;
 				bottomrightstack.selectedChild = blankarea;
 				
+				contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);
+				
+			}
+			
+			private function saveContactHandler(evt:SaveContactEvent):void	{
+				//if (contact != null)	{
+					// editing existing contact
+					evt.contact.id = NaN;
+					contactDataService.addUpdate(evt.contact);
+					
+				//}	
+			}
+			
+			private function saveContactResult(evt:ResultEvent):void	{
+				//var  tempContact:Contact = evt.result as Contact;
+				
+				(contact_list.dataProvider as ArrayCollection).addItem(evt.result);
+				contact_list.selectedItem = evt.result;
+	
 			}
 			
 			private function createToolbarButtons():void	{
@@ -734,7 +760,7 @@
 				invoice.resaleId = inv_resale_number.text;
 				invoice.expenseCode = inv_expense_code.text;
 				invoice.firmWantedByDate = inv_firm_wanted.selected;
-				 
+				
 				//invoice.salesCode =
 				if (inv_sales_rep != null && inv_sales_rep.selectedItem != null)
 					invoice.salesRep=inv_sales_rep.selectedItem as SalesRep;
@@ -743,6 +769,7 @@
 				invoice.specialInstructions=special_instructions_edit.text as SpecialInstructions
 				invoice.billToAddress=bill_to_address_editor.getAddress();
 				invoice.shipToAddress=this.delivery_intent_address_editor.getAddress();
+				invoice.contact = contact_editor.getContact();
 				invoice.takenBy = taken_by.text;
 			}
 
@@ -767,6 +794,12 @@
 				//this.parent.removeChild(this);
 				Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 			}
+
+			private function onNewContact():void	{
+				newContact = true;
+				contact_editor.setContact(new Contact()); 
+				contact_editor.edit_contact_button.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+			}			
 
 			private function doNewJob(ev:MouseEvent=null):void
 			{
@@ -1092,9 +1125,19 @@
 			}
 			private function handleLoadContacts(ev:ResultEvent):void
 			{
-				accountcontacts=ev.result as ArrayCollection;
-				contact_list.selectedIndex = findItemIndex(accountcontacts,invoice.account.contact);
-				contact_address_editor.setAddress(invoice.account.contact.address); 
+				var ac:ArrayCollection =ev.result as ArrayCollection;
+				accountcontacts =  ac;
+				var contact:Contact = null;
+				if (invoice.contact == null)	{
+					contact = invoice.account.billToContact;
+				}
+				else	{
+					contact = invoice.contact;
+				}
+				
+				contact_list.selectedIndex = findItemIndex(accountcontacts, contact);
+				contact_editor.setContact(contact);
+				 
 			}
 			private function findItemIndex(array:ArrayCollection, item:ModelBase):int	{
 				for (var i:int=0;i<array.length;i++)	{
@@ -1262,10 +1305,10 @@
 			private function doContactChange():void{
 				var temp:Contact= new Contact();
 				temp = contact_list.selectedItem as Contact;
-				contact_address_editor.setAddress(temp.address); 
+				contact_editor.setContact(temp); 
 				if( temp.useContactAddress) {
 					bill_to_address_editor.setAddress(temp.address);
-					this.delivery_intent_address_editor.setAddress(temp.address);
+					//this.delivery_intent_address_editor.setAddress(temp.address);
 				}
 			}
 			
@@ -1336,6 +1379,9 @@
 			
 			private function contactLabel(item:Object):String {
 				var tempItem:Contact = item as Contact;
+				if (tempItem["isTemp"] == true)	{
+					return "Temporary Contact";
+				}
 				var returnString:String = tempItem.lastName + ", " + tempItem.firstName;
 				return returnString;
 			}
@@ -1431,7 +1477,7 @@
 					<mx:VBox height="70%" width="100%">
 							<ns1:AddressEditor height="30%" width="100%"
 										   id="bill_to_address_editor" 
-										   address="{invoice.billToAddress}"
+										   address="{invoice.billToAddress}" editable="false"
 										   addressLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress')}"/>
 										   <!--title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.DeliveryIntent')}"-->
 							<mx:VBox height="70%" width="100%" 
@@ -1474,10 +1520,7 @@
 						</mx:FormItem>					
 					</mx:Form>
 					
-					<ns1:AddressEditor height="70%" width="100%"
-										   id="contact_address_editor" addressLabel="Contact"
-										   
-									/>
+					<ns1:ContactInfoEditor height="70%" width="100%" id="contact_editor" contactLabel="Contact" />
 									
 					<mx:HBox height="10%" width="100%">
 						<mx:Label height="100%" width="20%"
@@ -1485,7 +1528,7 @@
 						<mx:ComboBox height="100%" width="40%"
 									 dataProvider="{accountcontacts}"
 									 id="contact_list" labelFunction="contactLabel" change="doContactChange()"/>
-						<mx:Button id="btnContactNew" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" />
+						<mx:Button id="btnContactNew" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" click="onNewContact();" />
 					</mx:HBox>
 					
 					<mx:Form height="40%" width="100%">
