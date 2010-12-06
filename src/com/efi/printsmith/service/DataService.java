@@ -2502,6 +2502,32 @@ public class DataService extends HibernateService {
 		}
 	}
 
+	public ModelBase getWasteChart(Long id) throws Exception {
+		log.debug("** getWasteChart called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("WasteChart.byId");
+			query.setParameter("id", id);
+			WasteChart priceList = (WasteChart) query.getSingleResult();
+
+			if (priceList.getElements() != null) {
+				for (int i = 0; i < priceList.getElements().size(); i++) {
+					PriceListElement element = priceList.getElements().get(i);
+
+					if (element == null) {
+						log.error("Null priceList element found");
+					}
+				}
+			}
+			return priceList;
+		} catch (Exception e) {
+			log.error(e); 			
+			throw e; 
+		} finally {
+			em.close();
+		}
+	}
+
 	public ModelBase getEmployee(Long id) throws Exception {
 		log.debug("** getEmployee called.");
 		EntityManager em = entityManagerFactory.createEntityManager();

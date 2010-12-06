@@ -223,7 +223,7 @@ public class PriceListMapper extends ImportMapper {
 								.tokenToDouble(currentImportToken));
 					}
 				} else if ("doAddl".equals(currentFieldToken)) {
-					/* TODO */
+					priceList.setLastItemIsPriceAdditionalQty(Utilities.tokenToBooleanValue(currentImportToken));
 				} else if ("is Pct".equals(currentFieldToken) && x == 1) {
 					if (rType.equals("W"))
 						wasteChart.setIsPercentage(Utilities

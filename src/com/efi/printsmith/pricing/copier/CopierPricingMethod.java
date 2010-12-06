@@ -122,12 +122,19 @@ public abstract class CopierPricingMethod {
 		CopierDefinition copierDefinition = job.getPricingCopier();
 		if (copierDefinition != null) {
 			double estWaste = 0.0;
+			DataService dataService = new DataService();
 			WasteChart wasteChart = copierDefinition.getWasteChart();
-			if (wasteChart != null) {
-				double wastePct = PriceListUtilities.lookupPrice(wasteChart, job.getNumCopies());
-				estWaste = (job.getNumCopies() * wastePct);
+			try {
+				wasteChart = (WasteChart)dataService.getWasteChart(wasteChart.getId());
+				if (wasteChart != null) {
+					double wastePct = PriceListUtilities.lookupPrice(wasteChart, job.getNumCopies());
+					estWaste = (job.getNumCopies() * wastePct);
+				}
+				job.setEstWaste(new Double(estWaste).longValue());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			job.setEstWaste(new Double(estWaste).longValue());
 		}
 	}
 	

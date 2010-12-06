@@ -88,9 +88,13 @@ public class PriceListUtilities {
 		if (priceList == null)
 			return retVal;
 		
-		boolean doAdditional = priceList.getLastItemIsPriceAdditionalQty();
+		boolean doAdditional = false;
+		
+		if (priceList.getLastItemIsPriceAdditionalQty() != null) {
+			doAdditional = priceList.getLastItemIsPriceAdditionalQty();
+		}
 
-		if (priceList.getIsRate()) {
+		if (priceList.getIsRate() != null && priceList.getIsRate()) {
 			doAdditional = false;
 		}
 
