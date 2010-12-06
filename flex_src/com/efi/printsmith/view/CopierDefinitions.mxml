@@ -617,6 +617,7 @@
 		pricing_method_combo.text = "";
 		this.charges_button.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.AddCharges')
 		copierService.newCopier();
+		this.currentState = "";
 	}       
 
 	private function doDelete():void {
