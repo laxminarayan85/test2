@@ -57,7 +57,7 @@
 	[Bindable]
 	private var tapeBatch:TapeBatch;
 	[Bindable]
-	private var tapeTreeData:XMLListCollection;
+	private var tapeTreeData:Array;
 	
 	public function getSecurityCommand():String {
     	return PSSecurityCommands.POS_OPENTAPE;
@@ -68,34 +68,49 @@
 	//	var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 	//	mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'tapeCmd.Tape');	
 		
-	//	this.throbber.visible = true;
-	//	this.throbber.play();
+		this.throbber.visible = true;
+		this.throbber.play();
 		
 		tapeBatch = new TapeBatch();
-		tapeTreeData = new XMLListCollection();
 		
 		dataServiceTapeBatch.getCurrentTapeBatch();
 	}
 	
 	private function handleLoadCurrentTapeBatch(evt:ResultEvent):void {		
 		var i:int = 0;
-		var batchList:XMLList = new XMLList;
-		
+		var j:int = 0;
+		var subArray:Array;
+		var item:Object;
+		var tapeSessionBatch:TapeSessionBatch;
+				
 		tapeBatch = evt.result as TapeBatch;
 		
 		if (tapeBatch.sessionBatches == null) {
 			tapeBatch.sessionBatches = new ArrayCollection();
 		}
 		
-	//	tapeTreeData = new XMLListCollection();
-		
-//		batchList. = tapeBatch.
+		tapeTreeData = new Array();
+		tapeTreeData = tapeTreeData.concat(tapeBatch);
 		
 		for (i = 0; i < tapeBatch.sessionBatches.length; i++) {
+			item = tapeBatch.sessionBatches.getItemAt(i);
+			tapeTreeData = tapeTreeData.concat(item);
 			
+			subArray = new Array();
+			tapeSessionBatch = item as TapeSessionBatch;
+			if (tapeSessionBatch != null) {
+				for (j = 0; j < tapeSessionBatch.transactions.length; j++) {
+					item = tapeSessionBatch.transactions.getItemAt(j);
+					subArray = subArray.concat(item);
+				}
+			}
+			tapeTreeData = tapeTreeData.concat(subArray);
 		}
 		
 		openTree();
+		
+		this.throbber.visible = false;
+		this.throbber.stop();
 	}
 	
 	private function handleSaveTapeBatchResult(ev:ResultEvent):void{
@@ -104,8 +119,8 @@
 		//
 		// good save of Tape batch and all session layers
 		//
-	//	this.throbber.visible = false;
-	//	this.throbber.stop();
+		this.throbber.visible = false;
+		this.throbber.stop();
 	}
 	
 	private function handleFault(ev:FaultEvent):void
@@ -174,14 +189,21 @@
  	private function dotreelabel(item:Object):String{
 		var tempSale:TapeSaleRecord;
 		var tempPayment:TapePaymentRecord;
-	//	var baseTransation:Transaction;
+		var tempBatch:TapeBatch;
+		var tempSession:TapeSessionBatch;
 		
-		if (item is TapePaymentRecord) {
+		if (item is TapeBatch) {
+			tempBatch = item as TapeBatch;
+			return(tempBatch.appVersion);
+		} else if (item is TapePaymentRecord) {
 			tempPayment = item as TapePaymentRecord;
 			return tempPayment.paymentMethod;
 		} else if (item is TapeSaleRecord) {
 			tempSale = item as TapeSaleRecord;
 			return tempSale.department;
+		} else if (item is TapeSessionBatch) {
+			tempSession = item as TapeSessionBatch;
+			return ("Session Start");
 		}
 		
 		return "";
@@ -216,10 +238,12 @@
 		
 		<mx:Tree x="0" y="135" width="100%"  
 			id="tvItems" 
-			dataProvider="{tapeBatch}"
+			dataProvider="{tapeTreeData}"
 			defaultLeafIcon="{null}"
 			labelFunction="dotreelabel" height="460" change="treeSelect(event);">
 		</mx:Tree>
+		
+		<comp:Throbber id="throbber" height="40" width="40" visible="true" horizontalCenter="0" verticalCenter="0"/>
 	</mx:Canvas>
 	
 </mx:TitleWindow>
