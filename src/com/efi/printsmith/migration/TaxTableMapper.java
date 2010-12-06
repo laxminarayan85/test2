@@ -25,6 +25,7 @@ public class TaxTableMapper extends ImportMapper {
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		log.info("Entering TaxTableMapper->importTokens");
 		TaxTable taxTable = new TaxTable();
+		taxTable.setTaxTableIsCurrent(true);
 		TaxElement taxElement = null;
 		TaxElement taxElement2 = null;
 		TaxElement taxElement3 = null;

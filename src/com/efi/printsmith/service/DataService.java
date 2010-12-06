@@ -5656,6 +5656,24 @@ public class DataService extends HibernateService {
 			String queryString = "from TapeBatch where closed = false";
 			Query query = em.createQuery(queryString);
 			object = (TapeBatch) query.getSingleResult();
+			
+			List<TapeSessionBatch> batches = object.getSessionBatches();
+			
+			if (batches != null) {
+				for (int i = 0; i < batches.size(); i++) {
+					TapeSessionBatch batch = batches.get(i);
+					
+					if (batch != null) {
+						List<com.efi.printsmith.data.Transaction> transactions = batch.getTransactions();
+						for (int j = 0; j < transactions.size(); j++) {
+							com.efi.printsmith.data.Transaction transaction = transactions.get(j);
+							if (transaction == null) {
+								log.error("null Transaction found");
+							}
+						}
+					}
+				}
+			}
 		} catch (NoResultException e) {
 			//
 			// no current tape batch, so create one
