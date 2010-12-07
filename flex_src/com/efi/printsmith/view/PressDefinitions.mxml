@@ -564,6 +564,7 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 			selectedWasteChart.label = WasteListLabel();
 		}
 	    doWashUpPerFountain(); 
+	    this.Name.setFocus();
 	}
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 		systemPreferencesArray = ev.result as ArrayCollection;
