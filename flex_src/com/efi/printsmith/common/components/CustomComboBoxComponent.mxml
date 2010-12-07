@@ -32,6 +32,7 @@
 			[Bindable] public var objectLabelFieldId:String;
 			[Bindable] public var defaultVariableName:String;
 			[Bindable] public var nameDefaulting:Boolean=false;
+			[Bindable] public var updateChangedValue:Boolean=true;
 			
 			/**
 			 * This method helps to perform some opreration onload of component.
@@ -263,7 +264,14 @@
 							}
 						else {
 							if(updateObject) {
-								dataHolder[variableName] = event.currentTarget.selectedItem;
+								if(updateChangedValue){
+									dataHolder[variableName] = event.currentTarget.selectedItem;
+								} else {
+									if(event.currentTarget.selectedItem[labelFieldId]!=-1){
+										dataHolder[variableName] = event.currentTarget.selectedItem;
+									}
+								}
+								
 							} else {
 								if(event.currentTarget.selectedItem[labelFieldId]==0){
 									dataHolder["nullUpdated"] = true;

@@ -37,6 +37,7 @@
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.events.BrokerUpdateEvent;
 		import mx.utils.ObjectUtil;
 		import flash.net.registerClassAlias;
 		import com.efi.printsmith.events.FormPreferencesUpdateEvent;
@@ -90,6 +91,8 @@
 	   private var savedBrokerId:int;
 	   
 	   private var newBrokerObj:Broker;
+	   
+	   public var tabNavigatorSelectedIndex:int=-1
 		
 		private function doNew():void{
 			var child:DeliveryTicketEdit = new DeliveryTicketEdit();
@@ -113,6 +116,9 @@
 	    	return PSSecurityCommands.ADMIN_DELIVERYTICKETMANAGER;
 	    }	
 		public function init(event:FlexEvent = null):void{
+			if(tabNavigatorSelectedIndex!=-1){
+				tab_navigator.selectedIndex=tabNavigatorSelectedIndex;
+			}
 			var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 			mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"deliveryTicketMgrCmd.DeliveryTicketManage");		
 			deliveryTickets = new ArrayCollection();
@@ -217,6 +223,7 @@
 			}
 		}
 		private function handleDeleteBrokerResult(ev:ResultEvent):void{
+			dispatchEvent(new BrokerUpdateEvent(BrokerUpdateEvent.BROKER_UPDATE_EVENT,true));
 			broker = null;
 			ship_to_address_editor.setAddress(null);
 			ship_to_contact_editor.setContact(null);
@@ -225,6 +232,7 @@
 			dataServiceBroker.getBrokers();
 		}
 		private function handleSaveBrokerResult(ev:ResultEvent):void{
+			dispatchEvent(new BrokerUpdateEvent(BrokerUpdateEvent.BROKER_UPDATE_EVENT,true));
 			broker = null;
 			ship_to_address_editor.setAddress(null);
 			ship_to_contact_editor.setContact(null);
@@ -510,6 +518,7 @@
 		}
 		
 		private function handleNewFormPreferencesResult(event:ResultEvent):void {
+			dispatchEvent(new FormPreferencesUpdateEvent(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,true));
 			this.throbber_formpreferences.visible = true;
 			this.throbber_formpreferences.play();
 			dataServiceFormPreferences.getAll("FormPreferences");
@@ -528,6 +537,7 @@
 		
 		private function updateFormPreferencesList(event:FormPreferencesUpdateEvent):void {
 			if(event.isSaved) {
+				dispatchEvent(new FormPreferencesUpdateEvent(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,true));
 				this.throbber_formpreferences.visible = true;
 				this.throbber_formpreferences.play();
 				dataServiceFormPreferences.getAll("FormPreferences");
@@ -563,12 +573,14 @@
 		}
 		
 		private function handleDeleteFormResult(event:ResultEvent):void {
+			dispatchEvent(new FormPreferencesUpdateEvent(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,true));
 			this.throbber_formpreferences.visible = true;
 			this.throbber_formpreferences.play();
 			dataServiceFormPreferences.getAll("FormPreferences");
 		} 
 		
 		private function handleSaveFormResult(event:ResultEvent):void {
+			dispatchEvent(new FormPreferencesUpdateEvent(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,true));
 			this.throbber_formpreferences.visible = true;
 			this.throbber_formpreferences.play();
 			dataServiceFormPreferences.getAll("FormPreferences");
@@ -579,7 +591,7 @@
 	
 	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY"/>
 	
-	<mx:TabNavigator width="100%" height="100%" creationPolicy="all">
+	<mx:TabNavigator id="tab_navigator" width="100%" height="100%" creationPolicy="all">
 		<mx:VBox width="100%" height="100%"
 			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'deliveryTicketMgrCmd.History')}">
 			
