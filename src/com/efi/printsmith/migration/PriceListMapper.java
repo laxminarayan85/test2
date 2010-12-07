@@ -223,7 +223,12 @@ public class PriceListMapper extends ImportMapper {
 								.tokenToDouble(currentImportToken));
 					}
 				} else if ("doAddl".equals(currentFieldToken)) {
-					priceList.setLastItemIsPriceAdditionalQty(Utilities.tokenToBooleanValue(currentImportToken));
+					if (rType.equals("W"))
+						wasteChart.setLastItemIsPriceAdditionalQty(Utilities.tokenToBooleanValue(currentImportToken));
+					else if (rType.equals("S"))
+						speedTable.setLastItemIsPriceAdditionalQty(Utilities.tokenToBooleanValue(currentImportToken));
+					else if (rType.equals("P"))
+						priceList.setLastItemIsPriceAdditionalQty(Utilities.tokenToBooleanValue(currentImportToken));
 				} else if ("is Pct".equals(currentFieldToken) && x == 1) {
 					if (rType.equals("W"))
 						wasteChart.setIsPercentage(Utilities
