@@ -3244,7 +3244,7 @@
 										  tabEnabled="false"
 										  dataHolder="{job.pricingRecord}" variableName="oversUnitPrice"
 										  customText="{job.pricingRecord.oversUnitPrice}"
-										  precision="4" rounding="nearest" allowSymbol="false"
+										  precision="4" rounding="nearest" allowSymbol="true" symbolString="$"
 										  text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.oversUnitPrice)}"
 										  mouseDown="textInputClick(event)" textAlign="right"/>
 							<commoncomponents:CustomNumericTextInputComponent x="496"
@@ -3255,7 +3255,7 @@
 										  tabEnabled="false"
 										  dataHolder="{job.pricingRecord}" variableName="oversTotalPrice"
 										  customText="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice)}"
-										  precision="2" rounding="nearest" allowSymbol="false" 
+										  precision="2" rounding="nearest" allowSymbol="true" symbolString="$"
 										  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice)}"
 										  mouseDown="textInputClick(event)" textAlign="right"/>
 							<mx:Label x="385"
@@ -3325,7 +3325,7 @@
 										  width="98" 
 										  dataHolder="{job.pricingRecord}" variableName="totalPrice"
 										  customText="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice)}"
-										  precision="2" rounding="nearest" allowSymbol="false"
+										  precision="2" rounding="nearest" allowSymbol="true" symbolString="$"
 										  mouseDown="textInputClick(event)" 
 										  textAlign="right" 
 										  tabEnabled="false"
