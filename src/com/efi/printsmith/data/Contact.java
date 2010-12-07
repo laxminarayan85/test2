@@ -128,6 +128,11 @@ public class Contact extends Party {
 	public static final String CCIMPORTREC = "CcImportRec";
 
 	/**
+   * @generated
+   */
+  public static final String TEMPFLAG = "TempFlag";
+
+	/**
 	 * @generated
 	 */
 	public Contact() {
@@ -643,6 +648,26 @@ public class Contact extends Party {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean tempFlag;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getTempFlag(){
+    return tempFlag; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setTempFlag(Boolean newVal) {
+    this.tempFlag = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -668,6 +693,7 @@ public class Contact extends Party {
     if (WEBCATALOG.equals(propertyName)) return getWebCatalog();
     if (WEBSTATUS.equals(propertyName)) return getWebStatus();
     if (CCIMPORTREC.equals(propertyName)) return getCcImportRec();
+    if (TEMPFLAG.equals(propertyName)) return getTempFlag();
     return super.getProperty(propertyName);
   }
 	
@@ -697,6 +723,7 @@ public class Contact extends Party {
     if (WEBCATALOG.equals(propertyName)) setWebCatalog((WebCatalogs)newValue); else
     if (WEBSTATUS.equals(propertyName)) setWebStatus((WebStatus)newValue); else
     if (CCIMPORTREC.equals(propertyName)) setCcImportRec((String)newValue); else
+    if (TEMPFLAG.equals(propertyName)) setTempFlag((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -746,6 +773,8 @@ public class Contact extends Party {
       return new Class<?>[] {WebStatus.class};		
     if (CCIMPORTREC.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (TEMPFLAG.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -776,6 +805,7 @@ public class Contact extends Party {
     if (WEBCATALOG.equals(propertyName)) return Contact.class;
     if (WEBSTATUS.equals(propertyName)) return Contact.class;
     if (CCIMPORTREC.equals(propertyName)) return Contact.class;
+    if (TEMPFLAG.equals(propertyName)) return Contact.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -826,6 +856,8 @@ public class Contact extends Party {
     if (! SmartEquals(getWebStatus(), objT.getWebStatus()))
       return false;
     if (! SmartEquals(getCcImportRec(), objT.getCcImportRec()))
+      return false;
+    if (! SmartEquals(getTempFlag(), objT.getTempFlag()))
       return false;
     return true;
   }			

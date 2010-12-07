@@ -34,6 +34,7 @@ package com.efi.printsmith.data
 		public var webCatalog:WebCatalogs;
 		public var webStatus:WebStatus;
 		public var ccImportRec:String = "";
+		public var tempFlag:Boolean = false;
 	
 	}
 }

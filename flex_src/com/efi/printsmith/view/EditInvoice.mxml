@@ -364,12 +364,14 @@
 			}
 			
 			private function saveContactHandler(evt:SaveContactEvent):void	{
-				//if (contact != null)	{
-					// editing existing contact
-					evt.contact.id = NaN;
-					contactDataService.addUpdate(evt.contact);
-					
-				//}	
+				if (evt.contact.id == NaN)	{
+					// editing existing contact					
+					evt.contact.tempFlag = false;					
+				}	
+				else	{
+					evt.contact.tempFlag = true;
+				}
+				contactDataService.addUpdate(evt.contact);
 			}
 			
 			private function saveContactResult(evt:ResultEvent):void	{
@@ -1379,8 +1381,8 @@
 			
 			private function contactLabel(item:Object):String {
 				var tempItem:Contact = item as Contact;
-				if (tempItem["isTemp"] == true)	{
-					return "Temporary Contact";
+				if ((tempItem.tempFlag != null) && (tempItem.tempFlag == true))	{
+					return "*** Temporary Contact ***";
 				}
 				var returnString:String = tempItem.lastName + ", " + tempItem.firstName;
 				return returnString;
