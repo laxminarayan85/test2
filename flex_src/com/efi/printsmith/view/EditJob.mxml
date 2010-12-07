@@ -2257,18 +2257,24 @@
 					updateWeight();
 					break;
 				case this.job_up:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					break;
 				case this.job_on:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					break;
 				case this.job_press:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					break;
 				case this.bindery_waste:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					break;
 				case this.est_waste:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					break;
 				case this.front_colors_text:
@@ -2280,6 +2286,7 @@
 					doUpdatePrice = true;
 					break;	
 				case this.job_unitCost:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					break;
 				case this.job_markup:
@@ -2291,6 +2298,7 @@
 				case this.job_number_of_lines:
 					break;
 				case this.num_copies:
+					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
 					break;
 				case this.job_parent:
@@ -2409,6 +2417,7 @@
 					this.job.singleSided = false;
 					this.job.doubleSided = true;
 				}
+				job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 				updatePrice();
 			}
 			
