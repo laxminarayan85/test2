@@ -1324,7 +1324,7 @@
 		public function doDeliveryTicket():void{
 			var child:DeliveryTicketMgr = new DeliveryTicketMgr();
 			if (child.checkSecurityAccess())
-				containerManager.openNewMDIWindow("Delivery Ticket Manager", child);
+				containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"deliveryTicketMgrCmd.DeliveryTicketManage"), child);
 		}		
 		
 		/**
