@@ -224,6 +224,9 @@
 	<mx:RemoteObject id="dataServiceCCT" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleCCTSaveResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceAccount" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleAccountSaveResult(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServiceTapeBatch" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTapeBatchResult(event)"/>
 		<mx:method name="getCurrentTapeBatch" fault="handleFault(event)" result="handleLoadCurrentTapeBatch(event)"/>
@@ -442,12 +445,18 @@
 			InitSessionBatch();		// new session
 			InitSaleRecord();		// setup for another sale
 			invoice = null;
-			customerAccount = null;
+	//		customerAccount = null;
 			this.currentState = "";
 			openTree();
 			UpdateBatchNumbers();	
 		}	
 	}
+	
+	private function handleAccountSaveResult(ev:ResultEvent):void {
+		customerAccount = null;		// no longer needed after a POST
+	}
+	
+	
 	
 	private function handleLoadCashRegPreferencesResult(ev:ResultEvent):void{
 		systemCashPreferencesArray = ev.result as ArrayCollection;
@@ -568,7 +577,7 @@
    }
    
    private function InitSessionBatch():void {
-   		sessionBatch = new TapeSessionBatch();
+   		sessionBatch = new TapeSessionBatch();   		
    		//
    		// array of Transactions, could be Sale or Payments
    		//
@@ -576,6 +585,9 @@
 		
 		// the user was logged in during the session
 		sessionBatch.user = Snowmass.getInstance().currentUser;
+		
+		// date that appears in register tape UI
+		sessionBatch.created = new Date();
    }
    
  	//
@@ -1295,6 +1307,8 @@
 		if (customerAccount.taxCode != null)
 			pickTaxCode.selectedIndex = findItem(customerAccount.taxCode.name, TaxCodesArray);
 		
+		sessionBatch.account = customerAccount;
+		
 		// TODO - assign default invoice format from account
 	}
 	
@@ -1501,6 +1515,25 @@
 			Alert.show(message, "Warning", 0, null, null, null, 4); 
 			results = false;
 		}
+
+		if (results == true) {
+			if ((totalTransactionPay + totalCharge) != totalApplied) {
+				//msg_WARNINGThistransacti=WARNING: This transaction did not balance!r	Total Payments: ${0}r	Total Transactions: ${1}rPlease review the transaction and contact your PrintSmith support center and report it in detail. r	OK to post transaction?
+				//
+				// un-balanced amount of sales .vs. payments
+				//
+				if ((totalTransactionPay + totalCharge) != totalApplied) {
+					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
+					message = StringUtil.substitute(message,numberFormatter.format((totalTransactionPay + totalCharge)),numberFormatter.format(totalApplied)); 
+					Alert.show(message, "Warning", 0, null, null, null, 4); 
+					if (Alert.NO)
+						results = false;
+					else if (isPaidOut == true) {
+						// TODO - ask for description
+					}
+				}
+			}
+		}
 		
 		// roll back any payments and sales changes from above
 		if (results == false) {
@@ -1519,25 +1552,6 @@
 				}
 			}
 		} 
-		// continue with posting
-		else {
-			if (totalTransactionPay != totalApplied) {
-				//msg_WARNINGThistransacti=WARNING: This transaction did not balance!r	Total Payments: ${0}r	Total Transactions: ${1}rPlease review the transaction and contact your PrintSmith support center and report it in detail. r	OK to post transaction?
-				//
-				// un-balanced amount of sales .vs. payments
-				//
-				if (totalTransactionPay != totalApplied) {
-					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
-					message = StringUtil.substitute(message,numberFormatter.format(totalTransactionPay),numberFormatter.format(totalApplied)); 
-					Alert.show(message, "Warning", 0, null, null, null, 4); 
-					if (Alert.NO)
-						results = false;
-					else if (isPaidOut == true) {
-						// TODO - ask for description
-					}
-				}
-			}
-		}
 
 		return(results);
 	}
@@ -1603,6 +1617,11 @@
 		// no left open transactions
 		//
 		doAccept();
+		
+		//
+		// make sure the session batch has the current account picked in the UI
+		//
+		sessionBatch.account = customerAccount;	
 		
 		//
 		// the cash register is used as a PAID OUT as well, like a cash back method
@@ -1887,7 +1906,7 @@
 			
 			// some changed in the account record
 			if (accountChanged == true) {
-				dataService.addUpdate(sessionBatch.account);
+				dataServiceAccount.addUpdate(customerAccount);
 			}
 			
 			//

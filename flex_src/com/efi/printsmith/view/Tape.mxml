@@ -15,6 +15,9 @@
 	xmlns:vo="com.efi.printsmith.vo.*">
 
 <mx:Script source="../security/PSSecurityInclude.as" />
+	<mx:CurrencyFormatter precision="2" id="currencyFormatter"/>
+	<mx:NumberFormatter precision="2" id="numberFormatter"/>
+	<mx:NumberFormatter precision="0" id="quantityFormatter"/>
 
 	<mx:RemoteObject id="dataServiceTapeBatch" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTapeBatchResult(event)"/>
@@ -59,6 +62,8 @@
 	[Bindable]
 	private var tapeTreeData:Array;
 	
+	private var tapeEntryCount:int = 0;
+	
 	public function getSecurityCommand():String {
     	return PSSecurityCommands.POS_OPENTAPE;
     }	
@@ -82,7 +87,8 @@
 		var subArray:Array;
 		var item:Object;
 		var tapeSessionBatch:TapeSessionBatch;
-				
+			
+		tapeEntryCount = 0;
 		tapeBatch = evt.result as TapeBatch;
 		
 		if (tapeBatch.sessionBatches == null) {
@@ -98,17 +104,17 @@
 			
 			subArray = new Array();
 			tapeSessionBatch = item as TapeSessionBatch;
+			++tapeEntryCount;
 			if (tapeSessionBatch != null) {
 				for (j = 0; j < tapeSessionBatch.transactions.length; j++) {
 					item = tapeSessionBatch.transactions.getItemAt(j);
 					subArray = subArray.concat(item);
+					++tapeEntryCount;
 				}
 			}
 			tapeTreeData = tapeTreeData.concat(subArray);
 		}
-		
-		openTree();
-		
+				
 		this.throbber.visible = false;
 		this.throbber.stop();
 	}
@@ -153,7 +159,7 @@
 	
 			// Set the data provider of the FormPrintView component's data grid
 			// to be the data provider of the displayed data grid.
-			myPrintDataGrid.dataProvider = tvItems.dataProvider;
+			myPrintDataGrid.dataProvider = tapeList.dataProvider;
 		//	myPrintDataGrid.columns = 
 			myPrintDataGrid.visible = false;
 			myPrintDataGrid.includeInLayout = false;
@@ -186,7 +192,9 @@
 	 	}
  	}
  	
- 	private function dotreelabel(item:Object):String{
+ 	private function showDescription(item:Object, column:DataGridColumn):String{
+		var description:String;
+		var temp:String;
 		var tempSale:TapeSaleRecord;
 		var tempPayment:TapePaymentRecord;
 		var tempBatch:TapeBatch;
@@ -194,33 +202,103 @@
 		
 		if (item is TapeBatch) {
 			tempBatch = item as TapeBatch;
-			return(tempBatch.appVersion);
+			description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.Tapeopenedonatldentr");
+			description = StringUtil.substitute(description,tapeEntryCount.toString(), tempBatch.appVersion,tempBatch.openDate.toDateString(), tempBatch.openDate.toTimeString()); 
+			return(description);
 		} else if (item is TapePaymentRecord) {
 			tempPayment = item as TapePaymentRecord;
-			return tempPayment.paymentMethod;
+			description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.Payment");
+			description = description + " " + tempPayment.paymentMethod;
+			return (description);
 		} else if (item is TapeSaleRecord) {
 			tempSale = item as TapeSaleRecord;
-			return tempSale.department;
+			
+			// department sale
+			//
+			if (tempSale.cashRegisterDept != null) {
+				description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.Dept");
+				description = StringUtil.substitute(description,tempSale.cashRegisterDept.title, tempSale.department + " " + tempSale.quantity.toString() + "x"+ tempSale.unitPrice.toString()); 
+			} 
+			//
+			// a quick estimate / not a department sale
+			//
+			else {
+				description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.QuickEstld");
+				description = StringUtil.substitute(description,"", tempSale.quantity.toString(), tempSale.department); 
+			}
+			
+			
+			return (description);
 		} else if (item is TapeSessionBatch) {
 			tempSession = item as TapeSessionBatch;
-			return ("Session Start");
+			description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.by");
+			description = StringUtil.substitute(description,tempSession.user.name); 
+			if (tempSession.account != null) {
+				temp = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.Acct");
+				temp = StringUtil.substitute(temp,tempSession.account.title); 
+				description = description+ "  " + temp;
+			}
+			return (description);
+		}
+		
+		return "";
+	}
+	 
+ 	private function showPrice(item:Object,  column:DataGridColumn):String{
+		var tempSale:TapeSaleRecord;
+		var tempPayment:TapePaymentRecord;
+		var tempBatch:TapeBatch;
+		var tempSession:TapeSessionBatch;
+		
+		if (item is TapeBatch) {
+			tempBatch = item as TapeBatch;
+			return("");
+		} else if (item is TapePaymentRecord) {
+			tempPayment = item as TapePaymentRecord;
+			return numberFormatter.format(tempPayment.total);
+		} else if (item is TapeSaleRecord) {
+			tempSale = item as TapeSaleRecord;
+			return numberFormatter.format(tempSale.total);
+		} else if (item is TapeSessionBatch) {
+			tempSession = item as TapeSessionBatch;
+			return numberFormatter.format(tempSession.accumTotal);
 		}
 		
 		return "";
 	} 
 	
-	private function treeSelect(event:Event):void {
-	//	var treeItem:PreferencesCashRegister = tvItems.selectedItem as PreferencesCashRegister;
+	private function showDate(item:Object, column:DataGridColumn):String{
+		var description:String = new String;
+		var tempSale:TapeSaleRecord;
+		var tempPayment:TapePaymentRecord;
+		var tempBatch:TapeBatch;
+		var tempSession:TapeSessionBatch;
+		
+		if (item is TapeBatch) {
+			
+		} else if (item is TapePaymentRecord) {
+			tempPayment = item as TapePaymentRecord;
+			if (tempPayment.created != null) {
+				description = tempPayment.created.toDateString();
+				description = description + " " + tempPayment.created.toTimeString();
+			}
+		} else if (item is TapeSaleRecord) {
+			tempSale = item as TapeSaleRecord;
+			if (tempSale.created != null) {
+				description = tempSale.created.toDateString();
+				description = description + " " + tempSale.created.toTimeString();
+			}
+		} else if (item is TapeSessionBatch) {
+			tempSession = item as TapeSessionBatch;
+			if (tempSession.created != null) {
+				description = tempSession.created.toDateString();
+				description = description + " " + tempSession.created.toTimeString();
+			}
+		}
+		
+		return (description);
+	}	
 	
-	}
-	
-	private function openTree():void {
-		var nodeList:XMLListCollection = 
-			tvItems.dataProvider as XMLListCollection;
-		tvItems.selectedIndex = -1;
-
-		var node:XML = XML(tvItems.selectedItem);
-	}
 
 ]]>
                              
@@ -236,12 +314,14 @@
 			<mx:icon>@Embed(source='../../../../assets/Delete.png')</mx:icon>
 			</mx:Button>
 		
-		<mx:Tree x="0" y="135" width="100%"  
-			id="tvItems" 
-			dataProvider="{tapeTreeData}"
-			defaultLeafIcon="{null}"
-			labelFunction="dotreelabel" height="460" change="treeSelect(event);">
-		</mx:Tree>
+		<mx:DataGrid x="0" y="103" width="95%" height="474" id="tapeList" dataProvider="{tapeTreeData}" itemClick="">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Date" labelFunction="showDate" width="120"/>
+				<mx:DataGridColumn headerText="Transaction" labelFunction="showDescription"/>
+				<mx:DataGridColumn headerText="Price" textAlign="right" width="120" labelFunction="showPrice"/>
+			</mx:columns>
+		</mx:DataGrid>
+
 		
 		<comp:Throbber id="throbber" height="40" width="40" visible="true" horizontalCenter="0" verticalCenter="0"/>
 	</mx:Canvas>
