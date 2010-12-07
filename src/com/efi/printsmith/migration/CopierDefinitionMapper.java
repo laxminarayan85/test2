@@ -54,74 +54,97 @@ public class CopierDefinitionMapper extends ImportMapper {
 		String machineNameId = "";
 		// First loop 15 times and just do matrix
 		for (int x = 1; x <= 15; x++) {
-			matrixElement = new MatrixElement();
-			matrixElement.setLastLine(false);
-			matrixElement.setPrice1(0.0);
-			matrixElement.setPrice2(0.0);
-			matrixElement.setPrice3(0.0);
-			matrixElement.setPrice4(0.0);
-			matrixElement.setPrice5(0.0);
-			matrixElement.setPrice6(0.0);
-			matrixElement.setPrice7(0.0);
-			matrixElement.setPrice8(0.0);
-			matrixElement.setPrice9(0.0);
-			matrixElement.setPrice10(0.0);
-			matrixElement.setPrice11(0.0);
-			matrixElement.setPrice12(0.0);
-			matrixElement.setPrice13(0.0);
-			matrixElement.setPrice14(0.0);
-			matrixElement.setPrice15(0.0);
-			matrixElement.setPrice16(0.0);
-			matrixElement.setPrice17(0.0);
-			matrixElement.setPrice18(0.0);
-			matrixElement.setPrice19(0.0);
-			matrixElement.setPrice20(0.0);
+			matrixElement = null;
+			
 			for (int i = 0; i < fieldTokens.length; i++) {
 				String currentImportToken = importTokens[i];
 				String currentFieldToken = fieldTokens[i];
 				if ("chart qty[1]".equals(currentFieldToken) && x == 1) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[2]".equals(currentFieldToken) && x == 2) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[3]".equals(currentFieldToken) && x == 3) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[4]".equals(currentFieldToken) && x == 4) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[5]".equals(currentFieldToken) && x == 5) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[6]".equals(currentFieldToken) && x == 6) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[7]".equals(currentFieldToken) && x == 7) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[8]".equals(currentFieldToken) && x == 8) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[9]".equals(currentFieldToken) && x == 9) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[10]".equals(currentFieldToken) && x == 10) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[11]".equals(currentFieldToken) && x == 11) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[12]".equals(currentFieldToken) && x == 12) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[13]".equals(currentFieldToken) && x == 13) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[14]".equals(currentFieldToken) && x == 14) {
-					matrixElement.setQty(Utilities
-							.tokenToInt(currentImportToken));
+					if (Utilities.tokenToInt(currentImportToken) > 0) {
+						matrixElement = newMatrixElement();
+						matrixElement.setQty(Utilities
+								.tokenToInt(currentImportToken));
+					}
 				} else if ("chart qty[15]".equals(currentFieldToken) && x == 15) {
+					matrixElement = newMatrixElement();
 					matrixElement.setQty(Utilities
 							.tokenToInt(currentImportToken));
 				} else if ("chart original[1]".equals(currentFieldToken)) {
@@ -146,60 +169,74 @@ public class CopierDefinitionMapper extends ImportMapper {
 					/* TODO */
 				} else if ("chart factor[1]".equals(currentFieldToken)
 						&& x == 1) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[2]".equals(currentFieldToken)
 						&& x == 2) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[3]".equals(currentFieldToken)
 						&& x == 3) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[4]".equals(currentFieldToken)
 						&& x == 4) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[5]".equals(currentFieldToken)
 						&& x == 5) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[6]".equals(currentFieldToken)
 						&& x == 6) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[7]".equals(currentFieldToken)
 						&& x == 7) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[8]".equals(currentFieldToken)
 						&& x == 8) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[9]".equals(currentFieldToken)
 						&& x == 9) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[10]".equals(currentFieldToken)
 						&& x == 10) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[11]".equals(currentFieldToken)
 						&& x == 11) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[12]".equals(currentFieldToken)
 						&& x == 12) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[13]".equals(currentFieldToken)
 						&& x == 13) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[14]".equals(currentFieldToken)
 						&& x == 14) {
-					matrixElement.setPrice1(Utilities
-							.tokenToDouble(currentImportToken));
+					if (matrixElement != null)
+						matrixElement.setPrice1(Utilities
+								.tokenToDouble(currentImportToken));
 				} else if ("chart factor[15]".equals(currentFieldToken)
 						&& x == 15) {
 					matrixElement.setPrice1(Utilities
@@ -777,7 +814,8 @@ public class CopierDefinitionMapper extends ImportMapper {
 					/* TODO */
 				}
 			}
-			matrix.addElements(matrixElement);
+			if (matrixElement != null)
+				matrix.addElements(matrixElement);
 		}
 
 		boolean addSalesCategory = false;
@@ -1296,5 +1334,32 @@ public class CopierDefinitionMapper extends ImportMapper {
 		}
 		log.info("Leaving CopierDefinitionMapper->importTokens");
 		return null;
+	}
+	
+	private MatrixElement newMatrixElement() {
+		MatrixElement matrixElement = new MatrixElement();
+		matrixElement.setLastLine(false);
+		matrixElement.setPrice1(0.0);
+		matrixElement.setPrice2(0.0);
+		matrixElement.setPrice3(0.0);
+		matrixElement.setPrice4(0.0);
+		matrixElement.setPrice5(0.0);
+		matrixElement.setPrice6(0.0);
+		matrixElement.setPrice7(0.0);
+		matrixElement.setPrice8(0.0);
+		matrixElement.setPrice9(0.0);
+		matrixElement.setPrice10(0.0);
+		matrixElement.setPrice11(0.0);
+		matrixElement.setPrice12(0.0);
+		matrixElement.setPrice13(0.0);
+		matrixElement.setPrice14(0.0);
+		matrixElement.setPrice15(0.0);
+		matrixElement.setPrice16(0.0);
+		matrixElement.setPrice17(0.0);
+		matrixElement.setPrice18(0.0);
+		matrixElement.setPrice19(0.0);
+		matrixElement.setPrice20(0.0);
+		
+		return matrixElement;
 	}
 }
