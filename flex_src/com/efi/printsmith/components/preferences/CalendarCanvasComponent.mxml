@@ -46,7 +46,7 @@
 						textAlign="right" width="162" />
 						
 					<mx:TextInput id="txtCurrentRange"
-						width="260" enabled="false" />
+						width="260" enabled="false" disabledColor="#000000"/>
 					
 				</mx:HBox>
 					
