@@ -212,22 +212,22 @@
                              
 </mx:Script>		
 	<mx:Button x="24" y="25" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.SelectAll')}"/>
-	<mx:Button x="196" y="25"  width="50" enabled="{stockSelected}" height="50"  id="delete_button" icon="@Embed(source='../../../../assets/delete48.png')" click="doDelete();"/>
-	<mx:Button x="278" y="25" width="50" enabled="{stockSelected}" height="50" id="placed_button" icon="@Embed(source='../../../../assets/order.png')" click="doPlaced();"/>
-	<mx:Button x="361" y="25" width="50" height="50" id="submit_button" icon="@Embed(source='../../../../assets/WebStatus.png')" click="doSubmit();" enabled="{webWorthy}"/>
-	<mx:Button x="447" y="25" width="50"  enabled="{stockSelected}"  height="50" id="receiced_button" click="doRecieved()">
+	<mx:Button x="171" y="25"  width="50" enabled="{stockSelected}" height="50"  id="delete_button" icon="@Embed(source='../../../../assets/delete48.png')" click="doDelete();"/>
+	<mx:Button x="259" y="25" width="50" enabled="{stockSelected}" height="50" id="placed_button" icon="@Embed(source='../../../../assets/order.png')" click="doPlaced();"/>
+	<mx:Button x="353" y="25" width="50" height="50" id="submit_button" icon="@Embed(source='../../../../assets/WebStatus.png')" click="doSubmit();" enabled="{webWorthy}"/>
+	<mx:Button x="478" y="25" width="50"  enabled="{stockSelected}"  height="50" id="receiced_button" click="doRecieved()">
 		<mx:icon>@Embed(source='../../../../assets/orderreceived.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="571" y="25" width="50" height="50" enabled="{stockSelected}" id="partial_button" click="doPartial();">
+	<mx:Button x="593" y="25" width="50" height="50" enabled="{stockSelected}" id="partial_button" click="doPartial();">
 		<mx:icon>@Embed(source='../../../../assets/partialorderreceived.png')</mx:icon>
 	</mx:Button>
 	<mx:CheckBox x="676" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Printseparatepagefor')}" id="vendor_check"/>
 	<mx:CheckBox x="676" y="39" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Hidepreviouslyordere')}" id="hide_previous"/>
-	<mx:Label x="196" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="50"/>
-	<mx:Label x="278" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.OrderPlaced')}" width="50"/>
-	<mx:Label x="361" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.SubmitOrder')}" width="50"/>
-	<mx:Label x="431" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OrderReceived')}" width="106"/>
-	<mx:Label x="545" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PartialOrderReceived')}"/>
+	<mx:Label x="171" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="63"/>
+	<mx:Label x="242" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.OrderPlaced')}" width="98"/>
+	<mx:Label x="337" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.SubmitOrder')}" width="95"/>
+	<mx:Label x="447" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OrderReceived')}" width="106"/>
+	<mx:Label x="558" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PartialOrderReceived')}"/>
 	<mx:DataGrid x="16.5" y="140" height="231" width="837" dataProvider="{stockOrders}" itemClick="doStockGridClick()" id="dataGrid">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Date')}" dataField="enterDate"/>

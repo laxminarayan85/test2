@@ -268,7 +268,8 @@
 			}
 			private function RemoveCharge():void
 			{
-				charges.removeItemAt(selectedChargeDefintions.selectedIndex);
+				if ( selectedChargeDefintions.selectedIndex > -1)
+					charges.removeItemAt(selectedChargeDefintions.selectedIndex);
 			}
 			private function updateDataProvider():void
 			{
@@ -440,7 +441,7 @@
 					<mx:List x="22" y="22" width="172" height="244" id="selectedChargeDefintions" dataProvider="{charges}" 
 						labelField="name"
 						 doubleClick="RemoveCharge();"></mx:List>
-					<mx:Button x="22" y="295" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.Remove')}" click="RemoveCharge();" id="remove"/>
+					<mx:Button x="22" y="295" enabled="{charges.length > 0}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.Remove')}" click="RemoveCharge();" id="remove"/>
 					<mx:Text x="22" y="3" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeListCmd.SelectedCharges')}" fontWeight="bold"/>
 				</mx:Canvas>
 			</mx:HDividedBox>

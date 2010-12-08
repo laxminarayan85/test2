@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="504" height="798"
-	 close="PopUpManager.removePopUp(this);" showCloseButton="true" creationComplete="init();"
+	 close="PopUpManager.removePopUp(this);" creationComplete="init();"
 	 xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*"  verticalScrollPolicy="auto"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SalesTax')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SalesTax')}" name="Sales Tax">
 	
@@ -188,12 +188,21 @@
 		var deleteItem:TaxElement = elementGrid.selectedItem as TaxElement;
 		taxElementsArray.removeItemAt(taxElementsArray.getItemIndex(deleteItem)); 
 	}
+	private function doRevert():void{
+		taxTable=tableGrid.selectedItem as TaxTable;
+		dataService.getTaxTable(taxTable.id)
+	}
+	private function doNew():void{
+		taxTable = new TaxTable();
+		tempTaxTable = new TaxTable;
+		taxElementsArray = new ArrayCollection();
+	}
 ]]>
                              
 </mx:Script>		
 	<mx:Button  enabled="{taxTable.taxTableIsCurrent}" x="10" y="10" width="38" height="38"  id="save_button" icon="@Embed(source='../../../../assets/save.png')" click="doSave()"/>
-	<mx:Button x="97" y="10" width="38" height="38" id="new_button" icon="@Embed(source='../../../../assets/new.png')"/>
-	<mx:Button x="195" y="10" width="38" height="38"  id="revert_button" icon="@Embed(source='../../../../assets/revert.png')"/>
+	<mx:Button x="97" y="10" width="38" height="38"  click="doNew();" id="new_button" icon="@Embed(source='../../../../assets/new.png')"/>
+	<mx:Button x="195" y="10" width="38" height="38" click="doRevert();" id="revert_button" icon="@Embed(source='../../../../assets/revert.png')"/>
 	<mx:Label x="10" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="49"/>
 	<mx:Label x="100" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="35"/>
 	<mx:Label x="195" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="57"/>

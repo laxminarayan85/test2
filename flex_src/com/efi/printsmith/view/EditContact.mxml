@@ -215,7 +215,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	public function init(event:FlexEvent=null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();  
-		
+		this.enabled = false;
 		pickerLoaded = false;
 //		account= new Account();
 		

@@ -579,7 +579,8 @@
 		}
 		
 		if( account.contact.lastName == null || account.contact.lastName == "")
-			account.contact.lastName = account.title;
+			if ( account.contact.firstName == "")
+				account.contact.lastName = account.title;
 			
 		if (account.contact != null) {
 			account.contact.parentAccount = account;
@@ -643,7 +644,8 @@
 			account.contact.lastName = account.title;
 		}
 		if( account.contact.lastName == null || account.contact.lastName == "")
-			account.contact.lastName = account.title;
+			if (account.contact.firstName == "")
+				account.contact.lastName = account.title;
 		account.billToContact = bill_to_contact_editor.getContact();
 		if (account.contact != null) {
 			account.contact.parentAccount = account;

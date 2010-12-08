@@ -81,7 +81,7 @@
 	    
 	}
 	public function docancel():void{
-		PopUpManager.removePopUp(this);
+		Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 	}
 	public function loadStockVendor():void {   
 	    vendorDataService.getAll("Vendor");
@@ -287,6 +287,7 @@
 		color_edit.enabled = false;
 		cost_edit.editable = false
 		per_edit.editable = false;
+		stockUnit.enabled = false;
 		
 		if (stockDefinitions.vendor.name == "xpedx" || stockDefinitions.vendor.name == "Xpedx")
 			webWorthy = true;
@@ -385,9 +386,9 @@
 	<mx:Button x="305" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/get.png')" click=" doGet();"/>
 	<mx:Button x="392" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/print.png')" click="doReport()">
 	</mx:Button>
-	<mx:Button x="489" y="10"  click="docancel();" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/cancel.png')" />
+	<mx:Button x="489" y="10"  click="docancel()" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/cancel.png')" />
 	<mx:Label x="32" y="56" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Order')}"/>
-	<mx:Label x="177" y="56" textAlign="right"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.AutoOrder')}"/>
+	<mx:Label x="163" y="56" textAlign="right"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.AutoOrder')}"/>
 	<mx:Label x="284" y="56"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.SelectStock')}"/>
 	<mx:Label x="392" y="56"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Report')}"/>
 	<mx:Label x="489" y="56"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Cancel')}"/>
