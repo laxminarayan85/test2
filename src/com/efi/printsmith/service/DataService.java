@@ -483,10 +483,10 @@ public class DataService extends HibernateService {
 				}
 			}
 			
-			String columnString = "a.id,a.comment,a.location";
+			String columnString = "a.id,a.comment,a.location,a.parentInvoice";
 			for (InvoiceBase invoiceBase : invoices) {
 				List<JobBase> jobsList = new ArrayList<JobBase>();
-				String queryString = "select "+columnString+" from JobBase" + " a where a.parentInvoice.id="+invoiceBase.getId();
+				String queryString = "select "+columnString+" from JobBase" + " a inner join a.parentInvoice invoice left join a.location location where invoice.id="+invoiceBase.getId();
 				org.hibernate.Query query = session.createQuery(queryString);
 				ScrollableResults rs = query.scroll();
 				while (rs.next()) {
