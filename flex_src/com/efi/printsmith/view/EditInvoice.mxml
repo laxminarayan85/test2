@@ -11,7 +11,7 @@
 		  width="100%"
 		  height="100%"
 		  headerHeight="0"
-		  title="Edit Invoice"
+		  title="Edit Invoice" 
 		  implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
 		  name="Invoice Editor"
 		  fontSize="9" xmlns:components="com.efi.printsmith.common.components.*">
@@ -112,6 +112,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.ComLink;
 			import com.efi.printsmith.components.ContactInfoPopup;
 			import com.efi.printsmith.events.SaveContactEvent;
 			import flexlib.controls.Fire;
@@ -360,18 +361,43 @@
 				bottomrightstack.selectedChild = blankarea;
 				
 				contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);
+				contact_editor.addEventListener(CloseEvent.CLOSE, onContactEditorClose,false,1);
 				
 			}
 			
+			private function onContactEditorClose(evt:CloseEvent):void	{
+				if (newContact)
+					newContact = false;
+			}
 			private function saveContactHandler(evt:SaveContactEvent):void	{
-				if (evt.contact.id == NaN)	{
-					// editing existing contact					
-					evt.contact.tempFlag = false;					
-				}	
-				else	{
-					evt.contact.tempFlag = true;
+				var c:Contact = null;
+				
+				if (evt.contact.id != NaN)	{
+					var c:Contact = new Contact();
+					c.firstName = evt.contact.firstName;
+					c.lastName = evt.contact.lastName;
+					c.prefix = evt.contact.prefix;
+					c.suffix = evt.contact.suffix;
+					c.comLinks = new ArrayCollection();
+					for (var i:int=0; i<evt.contact.comLinks.length;i++)	{
+						var coml:ComLink = evt.contact.comLinks.getItemAt(i) as ComLink;
+						var newcoml:ComLink = new ComLink();
+						newcoml.type = coml.type;
+						newcoml.value = coml.value;
+						c.comLinks.addItem(newcoml);
+					}
+					c.jobTitle = evt.contact.jobTitle;
+					c.salutation = evt.contact.salutation;
+					c.parentAccount = evt.contact.parentAccount;
+					if (!newContact)	{
+						c.tempFlag = true;
+						newContact = false;
+					}					
 				}
-				contactDataService.addUpdate(evt.contact);
+				else	{
+					c = evt.contact;
+				}
+				contactDataService.addUpdate(c);
 			}
 			
 			private function saveContactResult(evt:ResultEvent):void	{

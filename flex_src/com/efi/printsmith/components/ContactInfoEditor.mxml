@@ -58,7 +58,7 @@
 			private var titleWindow:ContactInfoPopup=null;
 			
 			[Bindable] public var enableEditBtn:Boolean = true;
-
+			
 			public function init():void
 			{ 
 				dataService.getAll("JobTitle");
@@ -215,6 +215,7 @@
 			{
 //				contact=titleWindow.getContact();
 //				updateDisplayContact();
+				dispatchEvent(event);
 			}
 
 			private function doEditContact():void
