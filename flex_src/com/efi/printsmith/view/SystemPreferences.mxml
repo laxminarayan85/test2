@@ -1870,7 +1870,7 @@
     	dataServicePOS.getAll("PreferencesPOS");
 	}
 	private function handleSaveEstimatorResult(ev:ResultEvent):void {
-    	dataServiceEstimator.getAll("preferencesEstimating");
+    	dataServiceEstimator.getAll("PreferencesEstimating");
 	}
 	private function handleSaveAccountingResult(ev:ResultEvent):void {
     	dataServiceAccounting.getAll("PreferencesAccounting");
