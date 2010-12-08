@@ -90,12 +90,16 @@
 						continue;
 						
 					if (labelField != null)	{
-						if (str.toLowerCase() == (obj[labelField] as String).toLowerCase())
+						if (str.toLowerCase() == (obj[labelField] as String).toLowerCase()) {
+							this.selectedIndex = i;
 							return obj;
+						}
 					}
 					else if (labelFunction != null)	{
-						if (str.toLowerCase() == (labelFunction.call(this,obj) as String).toLowerCase())
+						if (str.toLowerCase() == (labelFunction.call(this,obj) as String).toLowerCase()) {
+							this.selectedIndex = i;
 							return obj;
+						}
 					}
 					else
 						return null;

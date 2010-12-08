@@ -639,6 +639,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.events.CloseEvent;
 			import mx.messaging.Producer;
 			import mx.events.CollectionEvent;
 			import com.efi.printsmith.pages.MultiQtyView;
@@ -2839,6 +2840,9 @@
 			}
 			
 			private function handleSaveProductResult(ev:ResultEvent):void	{
+				if(job!=null){
+					job.productCode= ev.result as ProductCode;
+				}
 				productDataService.getAll("ProductCode");
 			}
 			private function doProduct():void	{
@@ -2857,9 +2861,19 @@
 					else {
 						tmpProduct = item as ProductCode;
 					}
-					tmpProduct.name = product.text;
-					productDataService.addUpdate(tmpProduct);					
-					job.productCode= tmpProduct; //product.selectedItem as ProductCode;
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'Warning.NotInTable'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, 
+					function(event:CloseEvent):void {
+						if(event.detail == Alert.YES) {
+							tmpProduct.name = product.text;
+							productDataService.addUpdate(tmpProduct);	
+						} else if(event.detail == Alert.NO) {
+							product.selectedIndex = -1;
+							if(job!=null){
+								job.productCode = null;
+							}
+						}
+					}, null, Alert.NO);					
+					 //product.selectedItem as ProductCode;
 				}
 				
 			}
@@ -3075,9 +3089,9 @@
 						 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
 						 id="checked_finished"
 						 selected="{job.finished}" width="87"/>
-			<common:EditableComboBox x="525.5"
+			<common:EditableComboBox x="510.5"
 							 y="68"
-							 width="75.5"
+							 width="100"
 							 id="product"
 							 dataProvider="{productCodes}"
 							 labelField="name"
@@ -3098,9 +3112,9 @@
 			<mx:Label x="10"
 					  y="96"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Comment')}" textAlign="right" width="98"/>
-			<common:EditableComboBox x="673"
+			<common:EditableComboBox x="668"
 							 y="68"
-							 width="75"
+							 width="100"
 							 id="job_location"
 							 dataProvider="{locations}"
 							 labelField="name"
@@ -3108,10 +3122,10 @@
 							 editable="false"
 							 optional="true"
 							 height="20"/>
-			<mx:Label x="465.5"
+			<mx:Label x="450.5"
 					  y="70"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Product')}" textAlign="right" width="52"/>
-			<mx:Label x="609"
+			<mx:Label x="604"
 					  y="70"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Location')}" textAlign="right" width="56"/>
 			<mx:Label x="756"
