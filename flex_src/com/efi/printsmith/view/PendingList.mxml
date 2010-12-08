@@ -1249,14 +1249,14 @@
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_TRACKER}" click="{savePendingOption()}" width="10%"/>
 			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Tracker')}" width="90%"/>
 		</mx:HBox>
-		<mx:HBox width="100%" horizontalAlign="right"  id="view_option">
+		<!--<mx:HBox width="100%" horizontalAlign="right"  id="view_option">
 			<components:MultiLineLabelButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.View')}" labelPlacement="bottom" width="80%" height="75"
 				icon="@Embed(source='../../../../assets/view.png')"/>
 		</mx:HBox>		
 		<mx:HBox width="100%" horizontalAlign="right"  id="print_option">
 			<components:MultiLineLabelButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Print')}" labelPlacement="bottom" width="80%" height="75"
 				icon="@Embed(source='../../../../assets/reportWritersmall.png')"/>
-		</mx:HBox>		
+		</mx:HBox>-->		
 	</mx:VBox>
 
 	<mx:VBox bottom="124" top="0" left="140" right="0">
