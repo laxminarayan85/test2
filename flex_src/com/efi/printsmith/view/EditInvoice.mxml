@@ -388,11 +388,12 @@
 					}
 					c.jobTitle = evt.contact.jobTitle;
 					c.salutation = evt.contact.salutation;
-					c.parentAccount = evt.contact.parentAccount;
+					c.parentAccount = invoice.account;
 					if (!newContact)	{
 						c.tempFlag = true;
-						newContact = false;
-					}					
+					}
+					else
+						newContact = false;					
 				}
 				else	{
 					c = evt.contact;
