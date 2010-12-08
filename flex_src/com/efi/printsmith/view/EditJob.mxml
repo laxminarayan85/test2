@@ -1108,7 +1108,7 @@
 				job.pricingCopier=job_pricing_copier.selectedItem as CopierDefinition;
 				job.costingCopier=job_costing_copier.selectedItem as CopierDefinition;
 				
-				if (job.productCode == null)
+				//if (job.productCode == null)
 					job.productCode=product.selectedItem as ProductCode;
 				job.pricingMethod = job_type.selectedItem as PreferencesPricingMethod;
 				
