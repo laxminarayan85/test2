@@ -1613,6 +1613,7 @@
 		var message:String;
 		var format:String;
 		var printList:ArrayCollection = new ArrayCollection();
+		var chargeLog:ArrayCollection = new ArrayCollection();	
 		var i:int = 0;
 		
 		//
@@ -1876,10 +1877,14 @@
 							if (tempSale.amountPaid == 0 || tempSale.total > tempSale.amountPaid) {
 								unPurchase = new UnpurchasedMerchandise();
 								unPurchase.account = sessionBatch.account;
-							//	unPurchase.saleRecord = tempSale;		// not valid at this point
+								unPurchase.saleRecord = tempSale;		// not valid at this point, need to wait until after save
 								unPurchase.transactionDate = new Date();
 								unPurchase.amountDue = (tempSale.total - tempSale.amountPaid);
-								dataServiceUnPurchase.addupdate(unPurchase);
+								
+								// create a list of records to save later
+								//
+								chargeLog.addItem(unPurchase);
+							//	dataServiceUnPurchase.addupdate(unPurchase);
 								
 								sessionBatch.account.onAccount += unPurchase.amountDue;
 								accountChanged = true;
@@ -1917,6 +1922,16 @@
 			//
 			dataServiceCashDrawer.addUpdate(cashDrawer);
 			
+			//
+			// these are all saved after the Tape so the TapeSaleRecord is valid
+			//
+			if (chargeLog != null && chargeLog.length > 0) {
+				for(i = 0; i< chargeLog.length; i++) {
+					unPurchase = chargeLog.getItemAt(i) as UnpurchasedMerchandise;
+					dataServiceUnPurchase.addupdate(unPurchase);
+				}
+			}
+
 			//
 			// print the invoices that have been pick-up WHILE the print option was turn ON
 			//
