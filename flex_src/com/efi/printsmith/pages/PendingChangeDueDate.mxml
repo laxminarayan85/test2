@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
-	layout="vertical" width="412" height="196"
+	layout="vertical" width="425" height="196"
 	showCloseButton="true" creationComplete="{init()}" close="{closeWindow()}"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posDueCmd.ChangeDueDate')}"
     paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" xmlns:components="com.efi.printsmith.common.components.*">
@@ -62,10 +62,14 @@
 		
 		private function setWantedDate(event:Event):void {
 			var dateObj:Date = event.currentTarget.selectedDate as Date;
-			if(_invoiceBase.wantedDate!=null){
-				_invoiceBase.wantedDate.date = dateObj.date;
-				_invoiceBase.wantedDate.month = dateObj.month;
-				_invoiceBase.wantedDate.fullYear = dateObj.fullYear;
+			if(dateObj!=null){
+				if(_invoiceBase.wantedDate!=null){
+					_invoiceBase.wantedDate.date = dateObj.date;
+					_invoiceBase.wantedDate.month = dateObj.month;
+					_invoiceBase.wantedDate.fullYear = dateObj.fullYear;
+				} else {
+					_invoiceBase.wantedDate = dateObj;
+				}
 			} else {
 				_invoiceBase.wantedDate = dateObj;
 			}
@@ -99,7 +103,8 @@
 	
 	<mx:HBox width="100%">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Wantedby')}: "/>
-		<mx:DateField id="wantedByDate" selectedDate="{_invoiceBase.wantedDate}" change="{setWantedDate(event)}" formatString="MM/DD/YYYY" height="25"/>
+		<components:CustomDateFieldComponent id="wantedByDate" selectedDate="{_invoiceBase.wantedDate}" change="{setWantedDate(event)}" formatString="MM/DD/YYYY" height="25"
+			width="150"/>
 		<components:CustomTimeEntryDateComponent
 			dataHolder="{_invoiceBase}" variableName="wantedDate" customText="{_invoiceBase.wantedDate}" is24Hour="false" height="25"/>
 		<mx:Label id="week_label" text="{getWeekName(_invoiceBase.wantedDate)}"/>
