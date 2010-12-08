@@ -531,7 +531,7 @@ public class DataService extends HibernateService {
 			// + columnstring + ") from " + className + " a";
 			// String queryString = " from " + className;
 			String queryString = "select new Contact( " + columnStr
-					+ ") from Contact a left outer join a.parentAccount";
+					+ ") from Contact a left outer join a.parentAccount where (a.tempFlag = false or a.tempFlag = null) ";
 			Query query = em.createQuery(queryString);
 
 			resultList = query.getResultList();
@@ -3046,7 +3046,7 @@ public class DataService extends HibernateService {
 			log.debug("** getByaccountid Id called.");
 
 			String queryString = "select a from " + className
-					+ " a where a.parentAccount.id = :id  order by lastName";
+					+ " a where a.parentAccount.id = :id and (a.tempFlag = false or a.tempFlag = null) order by lastName";
 
 			Query query = em.createQuery(queryString);
 			query.setParameter("id", id);

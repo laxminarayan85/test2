@@ -798,7 +798,7 @@
 				invoice.specialInstructions=special_instructions_edit.text as SpecialInstructions
 				invoice.billToAddress=bill_to_address_editor.getAddress();
 				invoice.shipToAddress=this.delivery_intent_address_editor.getAddress();
-				invoice.contact = contact_editor.getContact();
+				//invoice.contact = contact_editor.getContact();
 				invoice.takenBy = taken_by.text;
 			}
 
@@ -1155,14 +1155,19 @@
 			private function handleLoadContacts(ev:ResultEvent):void
 			{
 				var ac:ArrayCollection =ev.result as ArrayCollection;
-				accountcontacts =  ac;
+				
 				var contact:Contact = null;
 				if (invoice.contact == null)	{
 					contact = invoice.account.billToContact;
 				}
 				else	{
-					contact = invoice.contact;
+					if (invoice.contact.tempFlag)	{
+						ac.addItem(invoice.contact);
+					}
+					contact = invoice.contact;						
 				}
+				
+				accountcontacts =  ac;
 				
 				contact_list.selectedIndex = findItemIndex(accountcontacts, contact);
 				contact_editor.setContact(contact);
