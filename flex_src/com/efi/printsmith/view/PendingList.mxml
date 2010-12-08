@@ -842,6 +842,18 @@
 		}
 	}
 	
+	public function getInvoiceNumber(item:Object, preferencesPOSObj:PreferencesPOS):String {
+		if(item!=null && (item is Invoice || item is Estimate)){
+			if(preferencesPOSObj!=null && preferencesPOSObj.showDocumentType){
+				if(item is Estimate) {
+					return "E#"+item.invoiceNumber;
+				}
+			}
+			return item.invoiceNumber;
+		}
+		return "";
+	}
+	
 	private function sortAccount(obj1:Object, obj2:Object):int 	{
 		var con1:InvoiceBase = obj1 as InvoiceBase;
 		var con2:InvoiceBase = obj2 as InvoiceBase;
@@ -1332,7 +1344,7 @@
 						</mx:headerRenderer>
 						<mx:itemRenderer>
 							<mx:Component>
-								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}"/>
+								<pendinglist:PendingListLabelComponent listFont="{outerDocument.preferencesPOS.listFontBean}" fontColorValue="{outerDocument.getColorFromPOS(data,outerDocument.preferencesPOS)}" text="{outerDocument.getInvoiceNumber(data,outerDocument.preferencesPOS)}"/>
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
