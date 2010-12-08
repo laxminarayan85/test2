@@ -363,6 +363,8 @@
 	private var AustrailianRounding:Boolean;
 	[Bindable]
 	private	var unPurchase:UnpurchasedMerchandise;
+	
+	private var needHistory
 //	[Bindable]
 //	private var posTransactions:ArrayCollection;
 	
@@ -1874,7 +1876,7 @@
 							if (tempSale.amountPaid == 0 || tempSale.total > tempSale.amountPaid) {
 								unPurchase = new UnpurchasedMerchandise();
 								unPurchase.account = sessionBatch.account;
-								unPurchase.saleRecord = tempSale;
+							//	unPurchase.saleRecord = tempSale;		// not valid at this point
 								unPurchase.transactionDate = new Date();
 								unPurchase.amountDue = (tempSale.total - tempSale.amountPaid);
 								dataServiceUnPurchase.addupdate(unPurchase);
