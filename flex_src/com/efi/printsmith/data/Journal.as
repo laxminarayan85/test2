@@ -15,7 +15,7 @@ package com.efi.printsmith.data
 		public var isDeleted:Boolean=false;
 				
 		public var account:Account;
-		public var invoice:Invoice;
+		public var invoice:InvoiceBase;
 		public var salesCat:SalesCategory;
 		public var name:String = "";
 		public var status:String = "";

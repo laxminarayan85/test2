@@ -17,7 +17,7 @@ package com.efi.printsmith.data
 		public var name:String = "";
 		public var account:Account;
 		public var journal:Journal;
-		public var invoice:Invoice;
+		public var invoice:InvoiceBase;
 		public var financeCharge:int = 0;
 		public var storeNumber:String = "";
 		public var postedDate:Date = new Date();

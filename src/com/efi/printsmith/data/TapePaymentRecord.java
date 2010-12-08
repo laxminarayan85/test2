@@ -135,25 +135,23 @@ public class TapePaymentRecord extends Transaction {
 	 */	
     @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
-	private Invoice invoice;
+	private InvoiceBase invoice;
 	
 	/**
 	 * @generated
  	 */
-	public Invoice getInvoice(){
+	public InvoiceBase getInvoice(){
     return invoice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setInvoice(Invoice newVal) {
+   * @generated
+   */	
+  public void setInvoice(InvoiceBase newVal) {
     this.invoice = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -335,7 +333,7 @@ public class TapePaymentRecord extends Transaction {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (PAYMENTMETHOD.equals(propertyName)) setPaymentMethod((String)newValue); else
-    if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
+    if (INVOICE.equals(propertyName)) setInvoice((InvoiceBase)newValue); else
     if (TOTAL.equals(propertyName)) setTotal((Double)newValue); else
     if (ORRATE.equals(propertyName)) setOrRate((Boolean)newValue); else
     if (OPPRICE.equals(propertyName)) setOpPrice((Boolean)newValue); else
@@ -355,7 +353,7 @@ public class TapePaymentRecord extends Transaction {
     if (PAYMENTMETHOD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (INVOICE.equals(propertyName)) 
-      return new Class<?>[] {Invoice.class};		
+      return new Class<?>[] {InvoiceBase.class};		
     if (TOTAL.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (ORRATE.equals(propertyName)) 

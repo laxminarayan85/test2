@@ -165,25 +165,24 @@ public class Journal extends ModelBase {
 	 */	
     @ManyToOne()
 	@Where(clause="isdeleted <> 'TRUE'")
-	private Invoice invoice;
+	private InvoiceBase invoice;
 	
 	/**
 	 * @generated
  	 */
-	public Invoice getInvoice(){
+	public InvoiceBase getInvoice(){
     return invoice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setInvoice(Invoice newVal) {
+   * @generated
+   */	
+  public void setInvoice(InvoiceBase newVal) {
     this.invoice = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -562,7 +561,7 @@ public class Journal extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
-    if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
+    if (INVOICE.equals(propertyName)) setInvoice((InvoiceBase)newValue); else
     if (SALESCAT.equals(propertyName)) setSalesCat((SalesCategory)newValue); else
     if (NAME.equals(propertyName)) setName((String)newValue); else
     if (STATUS.equals(propertyName)) setStatus((String)newValue); else
@@ -589,7 +588,7 @@ public class Journal extends ModelBase {
     if (ACCOUNT.equals(propertyName)) 
       return new Class<?>[] {Account.class};		
     if (INVOICE.equals(propertyName)) 
-      return new Class<?>[] {Invoice.class};		
+      return new Class<?>[] {InvoiceBase.class};		
     if (SALESCAT.equals(propertyName)) 
       return new Class<?>[] {SalesCategory.class};		
     if (NAME.equals(propertyName)) 

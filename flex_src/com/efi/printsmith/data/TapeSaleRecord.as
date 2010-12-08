@@ -22,10 +22,10 @@ package com.efi.printsmith.data
 		public var total:Number = 0;
 		public var amountPaid:Number = 0;
 		public var quantity:Number = 0;
-		public var department:String = "";
+		public var description:String = "";
 		public var paymode:String = "";
 		public var salesCategory:SalesCategory;
-		public var invoice:Invoice;
+		public var invoice:InvoiceBase;
 		public var contact:Contact;
 	
 	}

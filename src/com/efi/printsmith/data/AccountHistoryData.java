@@ -245,25 +245,24 @@ public class AccountHistoryData extends ModelBase {
 	 */	
     @ManyToOne()
 	@Where(clause="isdeleted <> 'TRUE'")
-	private Invoice invoice;
+	private InvoiceBase invoice;
 	
 	/**
 	 * @generated
  	 */
-	public Invoice getInvoice(){
+	public InvoiceBase getInvoice(){
     return invoice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setInvoice(Invoice newVal) {
+   * @generated
+   */	
+  public void setInvoice(InvoiceBase newVal) {
     this.invoice = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -828,7 +827,7 @@ public class AccountHistoryData extends ModelBase {
     if (NAME.equals(propertyName)) setName((String)newValue); else
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     if (JOURNAL.equals(propertyName)) setJournal((Journal)newValue); else
-    if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
+    if (INVOICE.equals(propertyName)) setInvoice((InvoiceBase)newValue); else
     if (FINANCECHARGE.equals(propertyName)) setFinanceCharge((Integer)newValue); else
     if (STORENUMBER.equals(propertyName)) setStoreNumber((String)newValue); else
     if (POSTEDDATE.equals(propertyName)) setPostedDate((Date)newValue); else
@@ -865,7 +864,7 @@ public class AccountHistoryData extends ModelBase {
     if (JOURNAL.equals(propertyName)) 
       return new Class<?>[] {Journal.class};		
     if (INVOICE.equals(propertyName)) 
-      return new Class<?>[] {Invoice.class};		
+      return new Class<?>[] {InvoiceBase.class};		
     if (FINANCECHARGE.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (STORENUMBER.equals(propertyName)) 

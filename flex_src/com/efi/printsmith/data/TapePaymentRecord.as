@@ -15,7 +15,7 @@ package com.efi.printsmith.data
 		public override var isDeleted:Boolean=false;
 				
 		public var paymentMethod:String = "";
-		public var invoice:Invoice;
+		public var invoice:InvoiceBase;
 		public var total:Number = 0;
 		public var orRate:Boolean = false;
 		public var opPrice:Boolean = false;

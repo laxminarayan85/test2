@@ -81,9 +81,9 @@ public class TapeSaleRecord extends Transaction {
 	 */
 	public static final String QUANTITY = "Quantity";
 	/**
-	 * @generated
-	 */
-	public static final String DEPARTMENT = "Department";
+   * @generated
+   */
+  public static final String DESCRIPTION = "Description";
 	/**
 	 * @generated
 	 */
@@ -309,28 +309,25 @@ public class TapeSaleRecord extends Transaction {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private String department;
-	
+  private String description;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public String getDepartment(){
-    return department; 
+  public String getDescription(){
+    return description; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setDepartment(String newVal) {
-    this.department = newVal;
+   * @generated
+   */	
+  public void setDescription(String newVal) {
+    this.description = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -383,23 +380,23 @@ public class TapeSaleRecord extends Transaction {
 	 */	
     @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
-	private Invoice invoice;
+	private InvoiceBase invoice;
 	
 	/**
 	 * @generated
  	 */
-	public Invoice getInvoice(){
+	public InvoiceBase getInvoice(){
     return invoice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setInvoice(Invoice newVal) {
+   * @generated
+   */	
+  public void setInvoice(InvoiceBase newVal) {
     this.invoice = newVal;
   }
-	
+
 	/**
    * @generated
    */	
@@ -435,7 +432,7 @@ public class TapeSaleRecord extends Transaction {
     if (TOTAL.equals(propertyName)) return getTotal();
     if (AMOUNTPAID.equals(propertyName)) return getAmountPaid();
     if (QUANTITY.equals(propertyName)) return getQuantity();
-    if (DEPARTMENT.equals(propertyName)) return getDepartment();
+    if (DESCRIPTION.equals(propertyName)) return getDescription();
     if (PAYMODE.equals(propertyName)) return getPaymode();
     if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
     if (INVOICE.equals(propertyName)) return getInvoice();
@@ -457,10 +454,10 @@ public class TapeSaleRecord extends Transaction {
     if (TOTAL.equals(propertyName)) setTotal((Double)newValue); else
     if (AMOUNTPAID.equals(propertyName)) setAmountPaid((Double)newValue); else
     if (QUANTITY.equals(propertyName)) setQuantity((Double)newValue); else
-    if (DEPARTMENT.equals(propertyName)) setDepartment((String)newValue); else
+    if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
     if (PAYMODE.equals(propertyName)) setPaymode((String)newValue); else
     if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
-    if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
+    if (INVOICE.equals(propertyName)) setInvoice((InvoiceBase)newValue); else
     if (CONTACT.equals(propertyName)) setContact((Contact)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -487,14 +484,14 @@ public class TapeSaleRecord extends Transaction {
       return new Class<?>[] {Double.class};		
     if (QUANTITY.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
-    if (DEPARTMENT.equals(propertyName)) 
+    if (DESCRIPTION.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PAYMODE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (SALESCATEGORY.equals(propertyName)) 
       return new Class<?>[] {SalesCategory.class};		
     if (INVOICE.equals(propertyName)) 
-      return new Class<?>[] {Invoice.class};		
+      return new Class<?>[] {InvoiceBase.class};		
     if (CONTACT.equals(propertyName)) 
       return new Class<?>[] {Contact.class};		
     return super.getPropertyClass(propertyName);
@@ -515,7 +512,7 @@ public class TapeSaleRecord extends Transaction {
     if (TOTAL.equals(propertyName)) return TapeSaleRecord.class;
     if (AMOUNTPAID.equals(propertyName)) return TapeSaleRecord.class;
     if (QUANTITY.equals(propertyName)) return TapeSaleRecord.class;
-    if (DEPARTMENT.equals(propertyName)) return TapeSaleRecord.class;
+    if (DESCRIPTION.equals(propertyName)) return TapeSaleRecord.class;
     if (PAYMODE.equals(propertyName)) return TapeSaleRecord.class;
     if (SALESCATEGORY.equals(propertyName)) return TapeSaleRecord.class;
     if (INVOICE.equals(propertyName)) return TapeSaleRecord.class;
@@ -547,7 +544,7 @@ public class TapeSaleRecord extends Transaction {
       return false;
     if (! SmartEquals(getQuantity(), objT.getQuantity()))
       return false;
-    if (! SmartEquals(getDepartment(), objT.getDepartment()))
+    if (! SmartEquals(getDescription(), objT.getDescription()))
       return false;
     if (! SmartEquals(getPaymode(), objT.getPaymode()))
       return false;
