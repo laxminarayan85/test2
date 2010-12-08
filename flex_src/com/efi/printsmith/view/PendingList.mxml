@@ -57,6 +57,11 @@
 		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPreferencesPOSResult(event)"/>		
 		<mx:method name="addUpdate" fault="handleFault(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceEstimate" destination="dataService" showBusyCursor="true">
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleEstimateLoadResult(event)"/>
+		<mx:method name="saveInvoice" fault="handleFault(event)" result="handleEstimateSaveResult(event)"/>
+	</mx:RemoteObject>
 
 	<mx:Producer id="producer" destination="invoicebase"/>
 	<mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
@@ -65,6 +70,8 @@
 	<mx:Script source="../security/PSSecurityInclude.as" />
 <mx:Script> 
 <![CDATA[
+	import mx.events.CloseEvent;
+	import mx.core.Application;
 	import com.efi.printsmith.data.DeliveryTicket;
 	import com.efi.printsmith.security.PSSecurityCommands;
 	import mx.events.FlexEvent;
@@ -551,18 +558,30 @@
 	}	
 
 	public function handleUIPickupEvent(evt:ResultEvent):void {
-		var inv:InvoiceBase = dgView.selectedItem as InvoiceBase;
-		var cashRegister:CashRegisterEdit = new CashRegisterEdit();
-		var child:TitleWindow = cashRegister as TitleWindow;
-		var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
-		if (win == null)	{
-			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
+		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
+			if(dgView.selectedItem is Invoice) {
+				var inv:InvoiceBase = dgView.selectedItem as InvoiceBase;
+				var cashRegister:CashRegisterEdit = new CashRegisterEdit();
+				var child:TitleWindow = cashRegister as TitleWindow;
+				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+				if (win == null) {
+					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
+				}
+				else {
+					win.bringWindowToFront();	
+				}
+				win = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+				cashRegister.CashRegisterInvPickup(inv);
+			} else if(dgView.selectedItem is Estimate) {
+				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.DoyoureallywanttoArc'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmArchiveHandler, null, Alert.NO);
+			}
 		}
-		else	{
-			win.bringWindowToFront();	
-		}
-		win = Snowmass.getInstance().containerManager.getWindowWithChild(child);
-		cashRegister.CashRegisterInvPickup(inv);
+	}
+	
+	private function confirmArchiveHandler(event:CloseEvent):void {
+		if(event.detail == Alert.YES) {
+			dataServiceEstimate.getInvoice(dgView.selectedItem.id);
+		}	
 	}
 
 	public function handleUIStatusEvent(evt:ResultEvent):void {
@@ -790,7 +809,6 @@
 				doEditInvoice(invoiceBase);
 			} else if (invoiceBase is Estimate) {
 				doEditEstimate(invoiceBase);
-			
 			}
 		}
 	}
@@ -1190,6 +1208,30 @@
 		return "";
 	}
 	
+	private function doItemSelect(event:Event):void {
+		if(event.currentTarget.selectedIndex>-1 && event.currentTarget.selectedItem!=null){
+			if(event.currentTarget.selectedItem is Invoice){
+				pickup_archive_btn.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp');
+			} else if(event.currentTarget.selectedItem is Estimate){
+				pickup_archive_btn.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Archive');
+			}
+		}
+	}
+	
+	private function handleEstimateLoadResult(event:ResultEvent):void {
+		var estimateObj:InvoiceBase = event.result as InvoiceBase;
+		estimateObj.onPendingList = false;
+		estimateObj.offPendingDate = new Date();
+		dataServiceEstimate.saveInvoice(estimateObj);
+	}
+			
+	private function handleEstimateSaveResult(event:ResultEvent):void {
+		this.throbber.visible = true;
+		this.throbber.play();
+		updatePendingListValue = true;
+		dataService.getPending();
+	}
+		
 	
 ]]>        
 </mx:Script>
@@ -1208,7 +1250,7 @@
 		<mx:RadioButtonGroup id="pendingOptions"/>
 		<mx:HBox width="100%" id="pickup_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_PICK_UP}" click="{savePendingOption()}" width="10%"/>
-			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp')}" width="90%"
+			<mx:Button id="pickup_archive_btn" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp')}" width="90%"
 				click = "{handleUIPickupEvent(null)}"/>
 		</mx:HBox>	
 		<mx:HBox width="100%" id="status_option">
@@ -1261,7 +1303,8 @@
 
 	<mx:VBox bottom="124" top="0" left="140" right="0">
 		<mx:Canvas width="100%" height="100%">
-			<mx:DataGrid width="100%" horizontalScrollPolicy="auto" right="0" left="0" top="0" id="dgView" bottom="0"  dataProvider="{invoiceBaseArray}" doubleClickEnabled="true" doubleClick="doDoubleClick()" draggableColumns="false">
+			<mx:DataGrid width="100%" horizontalScrollPolicy="auto" right="0" left="0" top="0" id="dgView" bottom="0"  dataProvider="{invoiceBaseArray}" doubleClickEnabled="true" doubleClick="doDoubleClick()" draggableColumns="false"
+				itemClick="{doItemSelect(event)}">
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Account')}" labelFunction="getAccountLabel" sortCompareFunction="sortAccount">
 						<mx:headerRenderer>
