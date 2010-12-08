@@ -1261,7 +1261,7 @@
 
 	<mx:VBox bottom="124" top="0" left="140" right="0">
 		<mx:Canvas width="100%" height="100%">
-			<mx:DataGrid right="0" left="0" top="0" id="dgView" bottom="0"  dataProvider="{invoiceBaseArray}" doubleClickEnabled="true" doubleClick="doDoubleClick()" draggableColumns="false">
+			<mx:DataGrid width="100%" horizontalScrollPolicy="auto" right="0" left="0" top="0" id="dgView" bottom="0"  dataProvider="{invoiceBaseArray}" doubleClickEnabled="true" doubleClick="doDoubleClick()" draggableColumns="false">
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Account')}" labelFunction="getAccountLabel" sortCompareFunction="sortAccount">
 						<mx:headerRenderer>
