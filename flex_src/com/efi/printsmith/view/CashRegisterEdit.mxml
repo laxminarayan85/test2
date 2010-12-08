@@ -364,7 +364,6 @@
 	[Bindable]
 	private	var unPurchase:UnpurchasedMerchandise;
 	
-	private var needHistory
 //	[Bindable]
 //	private var posTransactions:ArrayCollection;
 	
@@ -521,7 +520,7 @@
 		    var taxStr:String;
 		    
 		    taxStr = results.getItemAt(0) as String;		// tax amount calculated
-		    activeSale.taxAmount = parseFloat(taxStr);
+		    activeSale.taxAmount = parseFloat(taxStr.replace(",",""));
 			
 			if (activeSale.opPrice == false)
 				activeSale.total = activeSale.subTotal + activeSale.taxAmount;
@@ -532,7 +531,7 @@
 	
 	private function UpdateBatchNumbers():void {
 				
-		sessionBatch.accumChange = (sessionBatch.accumTendered + activePayment.total) - sessionBatch.accumTotal;
+		sessionBatch.accumChange = roundToCurrency(((sessionBatch.accumTendered + activePayment.total) - sessionBatch.accumTotal));
 		
 		// update the batch numbers with the current SALE and Payment transactions (before any accept)
 		//
@@ -1036,10 +1035,10 @@
 			// ensure that variable content is the same as formatted screen content
 			var temp:Number = parseFloat(payment_cash_edit.text.replace(",",""));
 			var tempStr:String = Snowmass.getCurrencyFormatter(false,2).format(temp);
-			activePayment.total = parseFloat(tempStr);	
+			activePayment.total = parseFloat(tempStr.replace(",",""));	
 			
-			sessionBatch.accumTendered = sessionBatch.accumTendered + activePayment.total;
-			sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal; 
+			sessionBatch.accumTendered = roundToCurrency((sessionBatch.accumTendered + activePayment.total));
+			sessionBatch.accumChange = roundToCurrency((sessionBatch.accumTendered - sessionBatch.accumTotal)); 
 			
 			if (activePayment.paymentMethod==Constants.POS_CASH_REGISTER_PAYMODE_CHECK){
 				activePayment.checkNumber = check_num.text;
@@ -1194,10 +1193,10 @@
 			if (txtSaleTotal != null)	
 				activeSale.subTotal = parseFloat(txtSaleTotal.text.replace(",",""));
 			
-			sessionBatch.accumSubTotal = sessionBatch.accumSubTotal + activeSale.subTotal;
-			sessionBatch.accumTotal = sessionBatch.accumTotal + activeSale.total;
-			sessionBatch.accumTaxTotal = sessionBatch.accumTaxTotal + activeSale.taxAmount;
-			sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal;
+			sessionBatch.accumSubTotal = roundToCurrency((sessionBatch.accumSubTotal + activeSale.subTotal));
+			sessionBatch.accumTotal = roundToCurrency((sessionBatch.accumTotal + activeSale.total));
+			sessionBatch.accumTaxTotal = roundToCurrency((sessionBatch.accumTaxTotal + activeSale.taxAmount));
+			sessionBatch.accumChange = roundToCurrency((sessionBatch.accumTendered - sessionBatch.accumTotal));
 			sessionBatch.transactions.addItem(activeSale);			
 			
 			InitSaleRecord();		// setup for another sale
@@ -1266,17 +1265,17 @@
 			if (temp is TapePaymentRecord) {
 				var tempPayment:TapePaymentRecord;
 				tempPayment = temp as TapePaymentRecord;				
-				sessionBatch.accumTendered = sessionBatch.accumTendered - tempPayment.total;
-				sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal; 
+				sessionBatch.accumTendered = roundToCurrency((sessionBatch.accumTendered - tempPayment.total));
+				sessionBatch.accumChange = roundToCurrency((sessionBatch.accumTendered - sessionBatch.accumTotal)); 
 				
 				// reverse any external actions that the payment may have performed
 				doCancelPayment(tempPayment);
 			} else if (temp is TapeSaleRecord) {
 				var tempSale:TapeSaleRecord = temp as TapeSaleRecord;
-				sessionBatch.accumSubTotal = sessionBatch.accumSubTotal - tempSale.subTotal;
-				sessionBatch.accumTotal = sessionBatch.accumTotal - tempSale.total;
-				sessionBatch.accumTaxTotal = sessionBatch.accumTaxTotal - tempSale.taxAmount;
-				sessionBatch.accumChange = sessionBatch.accumTendered - sessionBatch.accumTotal;
+				sessionBatch.accumSubTotal = roundToCurrency((sessionBatch.accumSubTotal - tempSale.subTotal));
+				sessionBatch.accumTotal = roundToCurrency((sessionBatch.accumTotal - tempSale.total));
+				sessionBatch.accumTaxTotal = roundToCurrency((sessionBatch.accumTaxTotal - tempSale.taxAmount));
+				sessionBatch.accumChange = roundToCurrency((sessionBatch.accumTendered - sessionBatch.accumTotal));
 			}
 			
 			sessionBatch.transactions.removeItemAt(index);
@@ -2106,6 +2105,14 @@
 		txtSaleDescription.setFocus();
 		txtSaleDescription.setSelection(0, txtSaleDescription.length);
 	}
+	
+	private function roundToCurrency(temp:Number):Number {
+		var tempStr:String = Snowmass.getCurrencyFormatter(false,2).format(temp);
+		var results:Number = parseFloat(tempStr.replace(",",""))
+		return(results);
+	}
+		
+	
 ]]>
                              
 </mx:Script>
