@@ -1322,16 +1322,16 @@
 			tmpCols.contact = 100;
 			tmpCols.wantedDate = 100;
 			tmpCols.holdState = 100;
-			tmpCols.phone = 100;
-			tmpCols.location = 100;
-			tmpCols.type = 100;
+			tmpCols.customerPO = 100;
+			tmpCols.expenseCode = 100;
+			tmpCols.webPaymentType = 100;
 			tmpCols.name = 100;
-			tmpCols.comments = 100;
+			tmpCols.openNotesOnOpen = 100;
 			tmpCols.proofDate = 100;
 			tmpCols.takenBy = 100;
 			tmpCols.salesRep = 100;
-			tmpCols.webRef = 100;
-			tmpCols.jobCount = 100;
+			tmpCols.webPaymentAmount = 100;
+			tmpCols.printCount = 100;
 		}
 		colWidths = tmpCols;
 	}
@@ -1474,7 +1474,7 @@
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn width="{colWidths.phone}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Phone')}" dataField="phone" labelFunction="getContactPhone" sortCompareFunction="sortPhone">
+					<mx:DataGridColumn width="{colWidths.customerPO}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Phone')}" dataField="customerPO" labelFunction="getContactPhone" sortCompareFunction="sortPhone">
 						<mx:headerRenderer>
 							<mx:Component>
 								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
@@ -1486,7 +1486,7 @@
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn width="{colWidths.location}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Location')}" dataField="location" labelFunction="getLocationLabel" sortCompareFunction="sortLocation">
+					<mx:DataGridColumn width="{colWidths.expenseCode}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Location')}" dataField="expenseCode" labelFunction="getLocationLabel" sortCompareFunction="sortLocation">
 						<mx:headerRenderer>
 							<mx:Component>
 								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
@@ -1498,7 +1498,7 @@
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn width="{colWidths.type}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Type')}" dataField="type" labelFunction="getTypeLabel" sortCompareFunction="sortType">
+					<mx:DataGridColumn width="{colWidths.webPaymentType}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.Type')}" dataField="webPaymentType" labelFunction="getTypeLabel" sortCompareFunction="sortType">
 						<mx:headerRenderer>
 							<mx:Component>
 								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
@@ -1522,7 +1522,7 @@
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn width="{colWidths.comments}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobComment')}" dataField="comments" labelFunction="getJobComments">
+					<mx:DataGridColumn width="{colWidths.openNotesOnOpen}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobComment')}" dataField="openNotesOnOpen" labelFunction="getJobComments">
 						<mx:headerRenderer>
 							<mx:Component>
 								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
@@ -1570,7 +1570,7 @@
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn width="{colWidths.webRef}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.WebReference')}" dataField="webRef" labelFunction="getWebReferenceLabel" sortCompareFunction="sortWeb">
+					<mx:DataGridColumn width="{colWidths.webPaymentAmount}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.WebReference')}" dataField="webPaymentAmount" labelFunction="getWebReferenceLabel" sortCompareFunction="sortWeb">
 						<mx:headerRenderer>
 							<mx:Component>
 								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
@@ -1582,7 +1582,7 @@
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn width="{colWidths.jobCount}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobCount')}" dataField="jobCount" labelFunction="getJobCountLabel" sortCompareFunction="sortJobCount">
+					<mx:DataGridColumn width="{colWidths.printCount}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobCount')}" dataField="printCount" labelFunction="getJobCountLabel" sortCompareFunction="sortJobCount">
 						<mx:headerRenderer>
 							<mx:Component>
 								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
