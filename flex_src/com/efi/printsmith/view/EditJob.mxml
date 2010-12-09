@@ -2048,14 +2048,32 @@
 				var message:String = "";
 				if (runSize != null) {
 					if (minSize.name != "" && (runSize.width * runSize.height) < (minSizeWidth * minSizeLength)) {
-						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeisless");
-						Alert.show(message, "Warning", 0, null, null, null, 4); 
+						 callLater(runSizeSmallerThanMinSize);
 					}
 					if (maxSize.name != "" && (runSize.width * runSize.height) > (maxSizeWidth * maxSizeLength)) {
-						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeexceed");
-						Alert.show(message, "Warning", 0, null, null, null, 4); 
+						 callLater(runSizeBiggerThanMaxSize);
 					}
 				}
+			}
+			
+			private function runSizeBiggerThanMaxSize():void {
+				var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeexceed");
+				Alert.show(message, "Warning", 0, null, null, null, 4);
+			}
+			
+			private function runSizeSmallerThanMinSize():void {
+				var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningRunSizeisless");
+				Alert.show(message, "Warning", 0, null, null, null, 4);
+			}
+			
+			private function runSizeToBig():void {
+				var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheRunSizeisl");
+				Alert.show(message, "Warning", 0, null, null, null, 4);
+			}
+			
+			private function finishSizeToBig():void {
+				var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
+				Alert.show(message, "Warning", 0, null, null, null, 4);
 			}
 
 			private function dimensionChangePropagate():void
@@ -2070,8 +2088,7 @@
 					job.runSize.width = job.parentSize.width;
 					job_size.text = job.runSize.name;
 					job_size.selectedIndex = job_parent.selectedIndex;
-					var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheRunSizeisl");
-					Alert.show(message, "Warning", 0, null, null, null, 4); 
+					callLater(runSizeToBig);
 				}
 	
 				if (this.currentState != "LargeFormat") {
@@ -2086,8 +2103,7 @@
 						job_finish_size.text = job.finishSize.name;
 						job_finish_size.selectedIndex = job_size.selectedIndex;
 						if (warn == true) {
-							var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
-							Alert.show(message, "Warning", 0, null, null, null, 4); 
+							callLater(finishSizeToBig);
 						}
 					}
 				}
