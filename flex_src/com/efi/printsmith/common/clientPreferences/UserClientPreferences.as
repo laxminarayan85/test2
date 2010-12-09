@@ -19,6 +19,8 @@ package com.efi.printsmith.common.clientPreferences
 		
 		public static const REVIEWDOC_VALUE:String = "ReviewDocValue";
 		
+		public static const PENDINGLIST_GRID_WIDTHS:String = "PendingListGridWidths";
+		
 		
 		public static function getInstance():UserClientPreferences	{
 			if (_instance == null)	{
