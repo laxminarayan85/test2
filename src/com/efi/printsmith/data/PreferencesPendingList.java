@@ -273,7 +273,7 @@ public class PreferencesPendingList extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne( cascade = {CascadeType.ALL})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition listFont;
 	
@@ -297,7 +297,7 @@ public class PreferencesPendingList extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne( cascade = {CascadeType.ALL})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition headerFont;
 	

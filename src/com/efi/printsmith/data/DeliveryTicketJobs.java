@@ -138,7 +138,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	/**
 	 * @generated
 	 */
-	@ManyToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne( cascade = {CascadeType.MERGE})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Account account;
 
@@ -440,7 +440,7 @@ public class DeliveryTicketJobs extends ModelBase {
 	/**
 	 * @generated
 	 */
-	@ManyToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne( cascade = {CascadeType.MERGE})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private JobBase jobBase;
 

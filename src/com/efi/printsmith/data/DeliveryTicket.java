@@ -29,20 +29,17 @@ import org.hibernate.annotations.Where;
 /**
  * @generated
  */
-@NamedQueries( {
-		@NamedQuery(name = "DeliveryTicket.findall", query = "from DeliveryTicket"),
-		@NamedQuery(name = "DeliveryTicket.byId", query = "select a from DeliveryTicket a where a.id= :id") })
+@NamedQueries({
+  @NamedQuery(name = "DeliveryTicket.findall", query = "from DeliveryTicket"),
+  @NamedQuery(name = "DeliveryTicket.byId", query = "select a from DeliveryTicket a where a.id= :id")
+})
 /*
  * @generated
  */
 @Entity
 @Table(name = "deliveryticket")
-// @SQLDelete(sql=
-// "update modelbase set isdeleted='TRUE' from deliveryticket where modelbase.id=?"
-// )
-@SQLDelete(sql = "update deliveryticket set isdeleted='TRUE' where id=?")
-// Filter added to retrieve only records that have not been soft deleted.
-@Where(clause = "isdeleted <> 'TRUE'")
+@SQLDelete(sql="update deliveryticket set isdeleted='TRUE' where id=?")
+@Where(clause="isdeleted <> 'TRUE'")
 public class DeliveryTicket extends ModelBase {
 	/**
 	 * @generated
@@ -239,10 +236,10 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public DeliveryTicket() {
-		this.created = new Date();
-		this.modified = new Date();
-		this.isDeleted = false;
-	}
+    this.created = new Date();
+    this.modified = new Date();
+    this.isDeleted = false;
+  }
 
 	@Basic
 	private Boolean isDeleted = false;
@@ -265,15 +262,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public String getName() {
-		return name;
-	}
+    return name; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
 
 	/**
 	 * @generated
@@ -285,57 +282,57 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Integer getTicketNumber() {
-		return ticketNumber;
-	}
+    return ticketNumber; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setTicketNumber(Integer newVal) {
-		this.ticketNumber = newVal;
-	}
+    this.ticketNumber = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE })
-	@Where(clause = "isdeleted <> 'TRUE'")
+	@ManyToOne( cascade = {CascadeType.MERGE})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Address toAddress;
 
 	/**
 	 * @generated
 	 */
 	public Address getToAddress() {
-		return toAddress;
-	}
+    return toAddress; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setToAddress(Address newVal) {
-		this.toAddress = newVal;
-	}
+    this.toAddress = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE })
-	@Where(clause = "isdeleted <> 'TRUE'")
+	@ManyToOne( cascade = {CascadeType.MERGE})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Address fromAddress;
 
 	/**
 	 * @generated
 	 */
 	public Address getFromAddress() {
-		return fromAddress;
-	}
+    return fromAddress; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setFromAddress(Address newVal) {
-		this.fromAddress = newVal;
-	}
+    this.fromAddress = newVal;
+  }
 
 	/**
 	 * @generated
@@ -347,15 +344,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Long getToAddressID() {
-		return toAddressID;
-	}
+    return toAddressID; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setToAddressID(Long newVal) {
-		this.toAddressID = newVal;
-	}
+    this.toAddressID = newVal;
+  }
 
 	/**
 	 * @generated
@@ -367,36 +364,36 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Long getFromAddressID() {
-		return fromAddressID;
-	}
+    return fromAddressID; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setFromAddressID(Long newVal) {
-		this.fromAddressID = newVal;
-	}
+    this.fromAddressID = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE })
-	@Where(clause = "isdeleted <> 'TRUE'")
+	@ManyToOne( cascade = {CascadeType.MERGE})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Contact deliveryContact;
 
 	/**
 	 * @generated
 	 */
 	public Contact getDeliveryContact() {
-		return deliveryContact;
-	}
+    return deliveryContact; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setDeliveryContact(Contact newVal) {
-		this.deliveryContact = newVal;
-	}
+    this.deliveryContact = newVal;
+  }
 
 	/**
 	 * @generated
@@ -408,15 +405,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public String getTakenBy() {
-		return takenBy;
-	}
+    return takenBy; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setTakenBy(String newVal) {
-		this.takenBy = newVal;
-	}
+    this.takenBy = newVal;
+  }
 
 	/**
 	 * @generated
@@ -428,15 +425,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Date getDeliveryDate() {
-		return deliveryDate;
-	}
+    return deliveryDate; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setDeliveryDate(Date newVal) {
-		this.deliveryDate = newVal;
-	}
+    this.deliveryDate = newVal;
+  }
 
 	/**
 	 * @generated
@@ -448,15 +445,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public String getCustomerPO() {
-		return customerPO;
-	}
+    return customerPO; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setCustomerPO(String newVal) {
-		this.customerPO = newVal;
-	}
+    this.customerPO = newVal;
+  }
 
 	/**
 	 * @generated
@@ -468,15 +465,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Integer getOrderNumber() {
-		return orderNumber;
-	}
+    return orderNumber; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setOrderNumber(Integer newVal) {
-		this.orderNumber = newVal;
-	}
+    this.orderNumber = newVal;
+  }
 
 	/**
 	 * @generated
@@ -488,15 +485,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public String getTrackingNumber() {
-		return trackingNumber;
-	}
+    return trackingNumber; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setTrackingNumber(String newVal) {
-		this.trackingNumber = newVal;
-	}
+    this.trackingNumber = newVal;
+  }
 
 	/**
 	 * @generated
@@ -508,15 +505,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public String getPartNumber() {
-		return partNumber;
-	}
+    return partNumber; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setPartNumber(String newVal) {
-		this.partNumber = newVal;
-	}
+    this.partNumber = newVal;
+  }
 
 	/**
 	 * @generated
@@ -528,36 +525,36 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public String getReference() {
-		return reference;
-	}
+    return reference; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setReference(String newVal) {
-		this.reference = newVal;
-	}
+    this.reference = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE })
-	@Where(clause = "isdeleted <> 'TRUE'")
+	@ManyToOne( cascade = {CascadeType.MERGE})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private ShippingMethod shipMode;
 
 	/**
 	 * @generated
 	 */
 	public ShippingMethod getShipMode() {
-		return shipMode;
-	}
+    return shipMode; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setShipMode(ShippingMethod newVal) {
-		this.shipMode = newVal;
-	}
+    this.shipMode = newVal;
+  }
 
 	/**
 	 * @generated
@@ -569,22 +566,22 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public BigDecimal getShipCost() {
-		return shipCost;
-	}
+    return shipCost; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setShipCost(BigDecimal newVal) {
-		this.shipCost = newVal;
-	}
+    this.shipCost = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setShipCost(double newVal) {
-		this.shipCost = BigDecimal.valueOf(newVal);
-	}
+    this.shipCost = BigDecimal.valueOf(newVal);
+  }
 
 	/**
 	 * @generated
@@ -596,15 +593,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Float getTotalWeight() {
-		return totalWeight;
-	}
+    return totalWeight; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setTotalWeight(Float newVal) {
-		this.totalWeight = newVal;
-	}
+    this.totalWeight = newVal;
+  }
 
 	/**
 	 * @generated
@@ -616,15 +613,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Integer getCartonCount() {
-		return cartonCount;
-	}
+    return cartonCount; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setCartonCount(Integer newVal) {
-		this.cartonCount = newVal;
-	}
+    this.cartonCount = newVal;
+  }
 
 	/**
 	 * @generated
@@ -636,15 +633,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Integer getItemsPerCarton() {
-		return itemsPerCarton;
-	}
+    return itemsPerCarton; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setItemsPerCarton(Integer newVal) {
-		this.itemsPerCarton = newVal;
-	}
+    this.itemsPerCarton = newVal;
+  }
 
 	/**
 	 * @generated
@@ -656,15 +653,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Integer getTotalItemsInCarton() {
-		return totalItemsInCarton;
-	}
+    return totalItemsInCarton; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setTotalItemsInCarton(Integer newVal) {
-		this.totalItemsInCarton = newVal;
-	}
+    this.totalItemsInCarton = newVal;
+  }
 
 	/**
 	 * @generated
@@ -676,15 +673,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Integer getLabelSkipCount() {
-		return labelSkipCount;
-	}
+    return labelSkipCount; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setLabelSkipCount(Integer newVal) {
-		this.labelSkipCount = newVal;
-	}
+    this.labelSkipCount = newVal;
+  }
 
 	/**
 	 * @generated
@@ -696,15 +693,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public String getPreComment() {
-		return preComment;
-	}
+    return preComment; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setPreComment(String newVal) {
-		this.preComment = newVal;
-	}
+    this.preComment = newVal;
+  }
 
 	/**
 	 * @generated
@@ -716,15 +713,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public String getPostComment() {
-		return postComment;
-	}
+    return postComment; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setPostComment(String newVal) {
-		this.postComment = newVal;
-	}
+    this.postComment = newVal;
+  }
 
 	/**
 	 * @generated
@@ -736,36 +733,36 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Integer getLabelStartCount() {
-		return labelStartCount;
-	}
+    return labelStartCount; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setLabelStartCount(Integer newVal) {
-		this.labelStartCount = newVal;
-	}
+    this.labelStartCount = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE })
-	@Where(clause = "isdeleted <> 'TRUE'")
+	@ManyToOne( cascade = {CascadeType.MERGE})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Driver driver;
 
 	/**
 	 * @generated
 	 */
 	public Driver getDriver() {
-		return driver;
-	}
+    return driver; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setDriver(Driver newVal) {
-		this.driver = newVal;
-	}
+    this.driver = newVal;
+  }
 
 	/**
 	 * @generated
@@ -777,15 +774,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Long getWebOrderShippingID() {
-		return webOrderShippingID;
-	}
+    return webOrderShippingID; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setWebOrderShippingID(Long newVal) {
-		this.webOrderShippingID = newVal;
-	}
+    this.webOrderShippingID = newVal;
+  }
 
 	/**
 	 * @generated
@@ -797,15 +794,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getFromOther() {
-		return fromOther;
-	}
+    return fromOther; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setFromOther(Boolean newVal) {
-		this.fromOther = newVal;
-	}
+    this.fromOther = newVal;
+  }
 
 	/**
 	 * @generated
@@ -817,15 +814,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getToOther() {
-		return toOther;
-	}
+    return toOther; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setToOther(Boolean newVal) {
-		this.toOther = newVal;
-	}
+    this.toOther = newVal;
+  }
 
 	/**
 	 * @generated
@@ -837,15 +834,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getAttOther() {
-		return attOther;
-	}
+    return attOther; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setAttOther(Boolean newVal) {
-		this.attOther = newVal;
-	}
+    this.attOther = newVal;
+  }
 
 	/**
 	 * @generated
@@ -857,15 +854,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getOWeight() {
-		return oWeight;
-	}
+    return oWeight; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setOWeight(Boolean newVal) {
-		this.oWeight = newVal;
-	}
+    this.oWeight = newVal;
+  }
 
 	/**
 	 * @generated
@@ -877,15 +874,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getCod() {
-		return cod;
-	}
+    return cod; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setCod(Boolean newVal) {
-		this.cod = newVal;
-	}
+    this.cod = newVal;
+  }
 
 	/**
 	 * @generated
@@ -897,15 +894,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getEmailOther() {
-		return emailOther;
-	}
+    return emailOther; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setEmailOther(Boolean newVal) {
-		this.emailOther = newVal;
-	}
+    this.emailOther = newVal;
+  }
 
 	/**
 	 * @generated
@@ -917,15 +914,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public String getEmail() {
-		return email;
-	}
+    return email; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setEmail(String newVal) {
-		this.email = newVal;
-	}
+    this.email = newVal;
+  }
 
 	/**
 	 * @generated
@@ -937,15 +934,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getArchive() {
-		return archive;
-	}
+    return archive; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setArchive(Boolean newVal) {
-		this.archive = newVal;
-	}
+    this.archive = newVal;
+  }
 
 	/**
 	 * @generated
@@ -957,15 +954,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getAttNameCheck() {
-		return attNameCheck;
-	}
+    return attNameCheck; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setAttNameCheck(Boolean newVal) {
-		this.attNameCheck = newVal;
-	}
+    this.attNameCheck = newVal;
+  }
 
 	/**
 	 * @generated
@@ -977,15 +974,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getCustomerNameCheck() {
-		return customerNameCheck;
-	}
+    return customerNameCheck; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setCustomerNameCheck(Boolean newVal) {
-		this.customerNameCheck = newVal;
-	}
+    this.customerNameCheck = newVal;
+  }
 
 	/**
 	 * @generated
@@ -997,15 +994,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getAddressCheck() {
-		return addressCheck;
-	}
+    return addressCheck; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setAddressCheck(Boolean newVal) {
-		this.addressCheck = newVal;
-	}
+    this.addressCheck = newVal;
+  }
 
 	/**
 	 * @generated
@@ -1017,15 +1014,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getOrderNumberCheck() {
-		return orderNumberCheck;
-	}
+    return orderNumberCheck; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setOrderNumberCheck(Boolean newVal) {
-		this.orderNumberCheck = newVal;
-	}
+    this.orderNumberCheck = newVal;
+  }
 
 	/**
 	 * @generated
@@ -1037,15 +1034,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getDeliveryDescCheck() {
-		return deliveryDescCheck;
-	}
+    return deliveryDescCheck; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setDeliveryDescCheck(Boolean newVal) {
-		this.deliveryDescCheck = newVal;
-	}
+    this.deliveryDescCheck = newVal;
+  }
 
 	/**
 	 * @generated
@@ -1057,15 +1054,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getDeliveryCommentsCheck() {
-		return deliveryCommentsCheck;
-	}
+    return deliveryCommentsCheck; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setDeliveryCommentsCheck(Boolean newVal) {
-		this.deliveryCommentsCheck = newVal;
-	}
+    this.deliveryCommentsCheck = newVal;
+  }
 
 	/**
 	 * @generated
@@ -1077,15 +1074,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getPoNumberCheck() {
-		return poNumberCheck;
-	}
+    return poNumberCheck; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setPoNumberCheck(Boolean newVal) {
-		this.poNumberCheck = newVal;
-	}
+    this.poNumberCheck = newVal;
+  }
 
 	/**
 	 * @generated
@@ -1097,15 +1094,15 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getEstWeightCheck() {
-		return estWeightCheck;
-	}
+    return estWeightCheck; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setEstWeightCheck(Boolean newVal) {
-		this.estWeightCheck = newVal;
-	}
+    this.estWeightCheck = newVal;
+  }
 
 	/**
 	 * @generated
@@ -1117,47 +1114,47 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public String getDateType() {
-		return dateType;
-	}
+    return dateType; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setDateType(String newVal) {
-		this.dateType = newVal;
-	}
+    this.dateType = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
-	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "parentDeliveryTicket")
-	@Where(clause = "isdeleted <> 'TRUE'")
-	@JoinTable(name = "deliveryticket_deliveryjobs")
+	@OneToMany(  cascade = {CascadeType.ALL}, mappedBy="parentDeliveryTicket")
+	@Where(clause="isdeleted <> 'TRUE'")
+	@JoinTable( name = "deliveryticket_deliveryjobs")
 	private java.util.List<DeliveryTicketJobs> deliveryJobs;
 
 	/**
 	 * @generated
 	 */
 	public java.util.List<DeliveryTicketJobs> getDeliveryJobs() {
-		return deliveryJobs;
-	}
+    return deliveryJobs; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void addDeliveryJobs(DeliveryTicketJobs obj) {
-		if (deliveryJobs == null) {
-			deliveryJobs = new java.util.ArrayList<DeliveryTicketJobs>();
-		}
-		deliveryJobs.add(obj);
-	}
+    if (deliveryJobs == null) {
+      deliveryJobs = new java.util.ArrayList<DeliveryTicketJobs>();
+    }
+    deliveryJobs.add(obj);
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setDeliveryJobs(java.util.List<DeliveryTicketJobs> newVal) {
-		this.deliveryJobs = newVal;
-	}
+    this.deliveryJobs = newVal;
+  }
 
 	/**
 	 * @generated
@@ -1169,57 +1166,57 @@ public class DeliveryTicket extends ModelBase {
 	 * @generated
 	 */
 	public Boolean getTotalWeightUpdated() {
-		return totalWeightUpdated;
-	}
+    return totalWeightUpdated; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setTotalWeightUpdated(Boolean newVal) {
-		this.totalWeightUpdated = newVal;
-	}
+    this.totalWeightUpdated = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE })
-	@Where(clause = "isdeleted <> 'TRUE'")
+	@ManyToOne( cascade = {CascadeType.MERGE})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private FormPreferences formPreferences;
 
 	/**
 	 * @generated
 	 */
 	public FormPreferences getFormPreferences() {
-		return formPreferences;
-	}
+    return formPreferences; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setFormPreferences(FormPreferences newVal) {
-		this.formPreferences = newVal;
-	}
+    this.formPreferences = newVal;
+  }
 
 	/**
 	 * @generated
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE })
-	@Where(clause = "isdeleted <> 'TRUE'")
+	@ManyToOne( cascade = {CascadeType.MERGE})
+	@Where(clause="isdeleted <> 'TRUE'")
 	private LabelFormat labelFormat;
 
 	/**
 	 * @generated
 	 */
 	public LabelFormat getLabelFormat() {
-		return labelFormat;
-	}
+    return labelFormat; 
+  }
 
 	/**
 	 * @generated
 	 */
 	public void setLabelFormat(LabelFormat newVal) {
-		this.labelFormat = newVal;
-	}
+    this.labelFormat = newVal;
+  }
 
 	/**
 	 * @generated
@@ -1228,102 +1225,55 @@ public class DeliveryTicket extends ModelBase {
 	@Override
 	public Object getProperty(String propertyName)
 			throws UnknownPropertyException {
-		if (NAME.equals(propertyName))
-			return getName();
-		if (TICKETNUMBER.equals(propertyName))
-			return getTicketNumber();
-		if (TOADDRESS.equals(propertyName))
-			return getToAddress();
-		if (FROMADDRESS.equals(propertyName))
-			return getFromAddress();
-		if (TOADDRESSID.equals(propertyName))
-			return getToAddressID();
-		if (FROMADDRESSID.equals(propertyName))
-			return getFromAddressID();
-		if (DELIVERYCONTACT.equals(propertyName))
-			return getDeliveryContact();
-		if (TAKENBY.equals(propertyName))
-			return getTakenBy();
-		if (DELIVERYDATE.equals(propertyName))
-			return getDeliveryDate();
-		if (CUSTOMERPO.equals(propertyName))
-			return getCustomerPO();
-		if (ORDERNUMBER.equals(propertyName))
-			return getOrderNumber();
-		if (TRACKINGNUMBER.equals(propertyName))
-			return getTrackingNumber();
-		if (PARTNUMBER.equals(propertyName))
-			return getPartNumber();
-		if (REFERENCE.equals(propertyName))
-			return getReference();
-		if (SHIPMODE.equals(propertyName))
-			return getShipMode();
-		if (SHIPCOST.equals(propertyName))
-			return getShipCost();
-		if (TOTALWEIGHT.equals(propertyName))
-			return getTotalWeight();
-		if (CARTONCOUNT.equals(propertyName))
-			return getCartonCount();
-		if (ITEMSPERCARTON.equals(propertyName))
-			return getItemsPerCarton();
-		if (TOTALITEMSINCARTON.equals(propertyName))
-			return getTotalItemsInCarton();
-		if (LABELSKIPCOUNT.equals(propertyName))
-			return getLabelSkipCount();
-		if (PRECOMMENT.equals(propertyName))
-			return getPreComment();
-		if (POSTCOMMENT.equals(propertyName))
-			return getPostComment();
-		if (LABELSTARTCOUNT.equals(propertyName))
-			return getLabelStartCount();
-		if (DRIVER.equals(propertyName))
-			return getDriver();
-		if (WEBORDERSHIPPINGID.equals(propertyName))
-			return getWebOrderShippingID();
-		if (FROMOTHER.equals(propertyName))
-			return getFromOther();
-		if (TOOTHER.equals(propertyName))
-			return getToOther();
-		if (ATTOTHER.equals(propertyName))
-			return getAttOther();
-		if (OWEIGHT.equals(propertyName))
-			return getOWeight();
-		if (COD.equals(propertyName))
-			return getCod();
-		if (EMAILOTHER.equals(propertyName))
-			return getEmailOther();
-		if (EMAIL.equals(propertyName))
-			return getEmail();
-		if (ARCHIVE.equals(propertyName))
-			return getArchive();
-		if (ATTNAMECHECK.equals(propertyName))
-			return getAttNameCheck();
-		if (CUSTOMERNAMECHECK.equals(propertyName))
-			return getCustomerNameCheck();
-		if (ADDRESSCHECK.equals(propertyName))
-			return getAddressCheck();
-		if (ORDERNUMBERCHECK.equals(propertyName))
-			return getOrderNumberCheck();
-		if (DELIVERYDESCCHECK.equals(propertyName))
-			return getDeliveryDescCheck();
-		if (DELIVERYCOMMENTSCHECK.equals(propertyName))
-			return getDeliveryCommentsCheck();
-		if (PONUMBERCHECK.equals(propertyName))
-			return getPoNumberCheck();
-		if (ESTWEIGHTCHECK.equals(propertyName))
-			return getEstWeightCheck();
-		if (DATETYPE.equals(propertyName))
-			return getDateType();
-		if (DELIVERYJOBS.equals(propertyName))
-			return getDeliveryJobs();
-		if (TOTALWEIGHTUPDATED.equals(propertyName))
-			return getTotalWeightUpdated();
-		if (FORMPREFERENCES.equals(propertyName))
-			return getFormPreferences();
-		if (LABELFORMAT.equals(propertyName))
-			return getLabelFormat();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (TICKETNUMBER.equals(propertyName)) return getTicketNumber();
+    if (TOADDRESS.equals(propertyName)) return getToAddress();
+    if (FROMADDRESS.equals(propertyName)) return getFromAddress();
+    if (TOADDRESSID.equals(propertyName)) return getToAddressID();
+    if (FROMADDRESSID.equals(propertyName)) return getFromAddressID();
+    if (DELIVERYCONTACT.equals(propertyName)) return getDeliveryContact();
+    if (TAKENBY.equals(propertyName)) return getTakenBy();
+    if (DELIVERYDATE.equals(propertyName)) return getDeliveryDate();
+    if (CUSTOMERPO.equals(propertyName)) return getCustomerPO();
+    if (ORDERNUMBER.equals(propertyName)) return getOrderNumber();
+    if (TRACKINGNUMBER.equals(propertyName)) return getTrackingNumber();
+    if (PARTNUMBER.equals(propertyName)) return getPartNumber();
+    if (REFERENCE.equals(propertyName)) return getReference();
+    if (SHIPMODE.equals(propertyName)) return getShipMode();
+    if (SHIPCOST.equals(propertyName)) return getShipCost();
+    if (TOTALWEIGHT.equals(propertyName)) return getTotalWeight();
+    if (CARTONCOUNT.equals(propertyName)) return getCartonCount();
+    if (ITEMSPERCARTON.equals(propertyName)) return getItemsPerCarton();
+    if (TOTALITEMSINCARTON.equals(propertyName)) return getTotalItemsInCarton();
+    if (LABELSKIPCOUNT.equals(propertyName)) return getLabelSkipCount();
+    if (PRECOMMENT.equals(propertyName)) return getPreComment();
+    if (POSTCOMMENT.equals(propertyName)) return getPostComment();
+    if (LABELSTARTCOUNT.equals(propertyName)) return getLabelStartCount();
+    if (DRIVER.equals(propertyName)) return getDriver();
+    if (WEBORDERSHIPPINGID.equals(propertyName)) return getWebOrderShippingID();
+    if (FROMOTHER.equals(propertyName)) return getFromOther();
+    if (TOOTHER.equals(propertyName)) return getToOther();
+    if (ATTOTHER.equals(propertyName)) return getAttOther();
+    if (OWEIGHT.equals(propertyName)) return getOWeight();
+    if (COD.equals(propertyName)) return getCod();
+    if (EMAILOTHER.equals(propertyName)) return getEmailOther();
+    if (EMAIL.equals(propertyName)) return getEmail();
+    if (ARCHIVE.equals(propertyName)) return getArchive();
+    if (ATTNAMECHECK.equals(propertyName)) return getAttNameCheck();
+    if (CUSTOMERNAMECHECK.equals(propertyName)) return getCustomerNameCheck();
+    if (ADDRESSCHECK.equals(propertyName)) return getAddressCheck();
+    if (ORDERNUMBERCHECK.equals(propertyName)) return getOrderNumberCheck();
+    if (DELIVERYDESCCHECK.equals(propertyName)) return getDeliveryDescCheck();
+    if (DELIVERYCOMMENTSCHECK.equals(propertyName)) return getDeliveryCommentsCheck();
+    if (PONUMBERCHECK.equals(propertyName)) return getPoNumberCheck();
+    if (ESTWEIGHTCHECK.equals(propertyName)) return getEstWeightCheck();
+    if (DATETYPE.equals(propertyName)) return getDateType();
+    if (DELIVERYJOBS.equals(propertyName)) return getDeliveryJobs();
+    if (TOTALWEIGHTUPDATED.equals(propertyName)) return getTotalWeightUpdated();
+    if (FORMPREFERENCES.equals(propertyName)) return getFormPreferences();
+    if (LABELFORMAT.equals(propertyName)) return getLabelFormat();
+    return super.getProperty(propertyName);
+  }
 
 	/**
 	 * @generated
@@ -1332,103 +1282,55 @@ public class DeliveryTicket extends ModelBase {
 	@Override
 	public void setProperty(String propertyName, Object newValue)
 			throws PropertyException {
-		if (NAME.equals(propertyName))
-			setName((String) newValue);
-		else if (TICKETNUMBER.equals(propertyName))
-			setTicketNumber((Integer) newValue);
-		else if (TOADDRESS.equals(propertyName))
-			setToAddress((Address) newValue);
-		else if (FROMADDRESS.equals(propertyName))
-			setFromAddress((Address) newValue);
-		else if (TOADDRESSID.equals(propertyName))
-			setToAddressID((Long) newValue);
-		else if (FROMADDRESSID.equals(propertyName))
-			setFromAddressID((Long) newValue);
-		else if (DELIVERYCONTACT.equals(propertyName))
-			setDeliveryContact((Contact) newValue);
-		else if (TAKENBY.equals(propertyName))
-			setTakenBy((String) newValue);
-		else if (DELIVERYDATE.equals(propertyName))
-			setDeliveryDate((Date) newValue);
-		else if (CUSTOMERPO.equals(propertyName))
-			setCustomerPO((String) newValue);
-		else if (ORDERNUMBER.equals(propertyName))
-			setOrderNumber((Integer) newValue);
-		else if (TRACKINGNUMBER.equals(propertyName))
-			setTrackingNumber((String) newValue);
-		else if (PARTNUMBER.equals(propertyName))
-			setPartNumber((String) newValue);
-		else if (REFERENCE.equals(propertyName))
-			setReference((String) newValue);
-		else if (SHIPMODE.equals(propertyName))
-			setShipMode((ShippingMethod) newValue);
-		else if (SHIPCOST.equals(propertyName))
-			setShipCost((BigDecimal) newValue);
-		else if (TOTALWEIGHT.equals(propertyName))
-			setTotalWeight((Float) newValue);
-		else if (CARTONCOUNT.equals(propertyName))
-			setCartonCount((Integer) newValue);
-		else if (ITEMSPERCARTON.equals(propertyName))
-			setItemsPerCarton((Integer) newValue);
-		else if (TOTALITEMSINCARTON.equals(propertyName))
-			setTotalItemsInCarton((Integer) newValue);
-		else if (LABELSKIPCOUNT.equals(propertyName))
-			setLabelSkipCount((Integer) newValue);
-		else if (PRECOMMENT.equals(propertyName))
-			setPreComment((String) newValue);
-		else if (POSTCOMMENT.equals(propertyName))
-			setPostComment((String) newValue);
-		else if (LABELSTARTCOUNT.equals(propertyName))
-			setLabelStartCount((Integer) newValue);
-		else if (DRIVER.equals(propertyName))
-			setDriver((Driver) newValue);
-		else if (WEBORDERSHIPPINGID.equals(propertyName))
-			setWebOrderShippingID((Long) newValue);
-		else if (FROMOTHER.equals(propertyName))
-			setFromOther((Boolean) newValue);
-		else if (TOOTHER.equals(propertyName))
-			setToOther((Boolean) newValue);
-		else if (ATTOTHER.equals(propertyName))
-			setAttOther((Boolean) newValue);
-		else if (OWEIGHT.equals(propertyName))
-			setOWeight((Boolean) newValue);
-		else if (COD.equals(propertyName))
-			setCod((Boolean) newValue);
-		else if (EMAILOTHER.equals(propertyName))
-			setEmailOther((Boolean) newValue);
-		else if (EMAIL.equals(propertyName))
-			setEmail((String) newValue);
-		else if (ARCHIVE.equals(propertyName))
-			setArchive((Boolean) newValue);
-		else if (ATTNAMECHECK.equals(propertyName))
-			setAttNameCheck((Boolean) newValue);
-		else if (CUSTOMERNAMECHECK.equals(propertyName))
-			setCustomerNameCheck((Boolean) newValue);
-		else if (ADDRESSCHECK.equals(propertyName))
-			setAddressCheck((Boolean) newValue);
-		else if (ORDERNUMBERCHECK.equals(propertyName))
-			setOrderNumberCheck((Boolean) newValue);
-		else if (DELIVERYDESCCHECK.equals(propertyName))
-			setDeliveryDescCheck((Boolean) newValue);
-		else if (DELIVERYCOMMENTSCHECK.equals(propertyName))
-			setDeliveryCommentsCheck((Boolean) newValue);
-		else if (PONUMBERCHECK.equals(propertyName))
-			setPoNumberCheck((Boolean) newValue);
-		else if (ESTWEIGHTCHECK.equals(propertyName))
-			setEstWeightCheck((Boolean) newValue);
-		else if (DATETYPE.equals(propertyName))
-			setDateType((String) newValue);
-		else if (DELIVERYJOBS.equals(propertyName))
-			setDeliveryJobs((java.util.List<DeliveryTicketJobs>) newValue);
-		else if (TOTALWEIGHTUPDATED.equals(propertyName))
-			setTotalWeightUpdated((Boolean) newValue);
-		else if (FORMPREFERENCES.equals(propertyName))
-			setFormPreferences((FormPreferences) newValue);
-		if (LABELFORMAT.equals(propertyName))
-			setLabelFormat((LabelFormat) newValue);
-		else
-			super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (TICKETNUMBER.equals(propertyName)) setTicketNumber((Integer)newValue); else
+    if (TOADDRESS.equals(propertyName)) setToAddress((Address)newValue); else
+    if (FROMADDRESS.equals(propertyName)) setFromAddress((Address)newValue); else
+    if (TOADDRESSID.equals(propertyName)) setToAddressID((Long)newValue); else
+    if (FROMADDRESSID.equals(propertyName)) setFromAddressID((Long)newValue); else
+    if (DELIVERYCONTACT.equals(propertyName)) setDeliveryContact((Contact)newValue); else
+    if (TAKENBY.equals(propertyName)) setTakenBy((String)newValue); else
+    if (DELIVERYDATE.equals(propertyName)) setDeliveryDate((Date)newValue); else
+    if (CUSTOMERPO.equals(propertyName)) setCustomerPO((String)newValue); else
+    if (ORDERNUMBER.equals(propertyName)) setOrderNumber((Integer)newValue); else
+    if (TRACKINGNUMBER.equals(propertyName)) setTrackingNumber((String)newValue); else
+    if (PARTNUMBER.equals(propertyName)) setPartNumber((String)newValue); else
+    if (REFERENCE.equals(propertyName)) setReference((String)newValue); else
+    if (SHIPMODE.equals(propertyName)) setShipMode((ShippingMethod)newValue); else
+    if (SHIPCOST.equals(propertyName)) setShipCost((BigDecimal)newValue); else
+    if (TOTALWEIGHT.equals(propertyName)) setTotalWeight((Float)newValue); else
+    if (CARTONCOUNT.equals(propertyName)) setCartonCount((Integer)newValue); else
+    if (ITEMSPERCARTON.equals(propertyName)) setItemsPerCarton((Integer)newValue); else
+    if (TOTALITEMSINCARTON.equals(propertyName)) setTotalItemsInCarton((Integer)newValue); else
+    if (LABELSKIPCOUNT.equals(propertyName)) setLabelSkipCount((Integer)newValue); else
+    if (PRECOMMENT.equals(propertyName)) setPreComment((String)newValue); else
+    if (POSTCOMMENT.equals(propertyName)) setPostComment((String)newValue); else
+    if (LABELSTARTCOUNT.equals(propertyName)) setLabelStartCount((Integer)newValue); else
+    if (DRIVER.equals(propertyName)) setDriver((Driver)newValue); else
+    if (WEBORDERSHIPPINGID.equals(propertyName)) setWebOrderShippingID((Long)newValue); else
+    if (FROMOTHER.equals(propertyName)) setFromOther((Boolean)newValue); else
+    if (TOOTHER.equals(propertyName)) setToOther((Boolean)newValue); else
+    if (ATTOTHER.equals(propertyName)) setAttOther((Boolean)newValue); else
+    if (OWEIGHT.equals(propertyName)) setOWeight((Boolean)newValue); else
+    if (COD.equals(propertyName)) setCod((Boolean)newValue); else
+    if (EMAILOTHER.equals(propertyName)) setEmailOther((Boolean)newValue); else
+    if (EMAIL.equals(propertyName)) setEmail((String)newValue); else
+    if (ARCHIVE.equals(propertyName)) setArchive((Boolean)newValue); else
+    if (ATTNAMECHECK.equals(propertyName)) setAttNameCheck((Boolean)newValue); else
+    if (CUSTOMERNAMECHECK.equals(propertyName)) setCustomerNameCheck((Boolean)newValue); else
+    if (ADDRESSCHECK.equals(propertyName)) setAddressCheck((Boolean)newValue); else
+    if (ORDERNUMBERCHECK.equals(propertyName)) setOrderNumberCheck((Boolean)newValue); else
+    if (DELIVERYDESCCHECK.equals(propertyName)) setDeliveryDescCheck((Boolean)newValue); else
+    if (DELIVERYCOMMENTSCHECK.equals(propertyName)) setDeliveryCommentsCheck((Boolean)newValue); else
+    if (PONUMBERCHECK.equals(propertyName)) setPoNumberCheck((Boolean)newValue); else
+    if (ESTWEIGHTCHECK.equals(propertyName)) setEstWeightCheck((Boolean)newValue); else
+    if (DATETYPE.equals(propertyName)) setDateType((String)newValue); else
+    if (DELIVERYJOBS.equals(propertyName)) setDeliveryJobs((java.util.List<DeliveryTicketJobs>)newValue); else
+    if (TOTALWEIGHTUPDATED.equals(propertyName)) setTotalWeightUpdated((Boolean)newValue); else
+    if (FORMPREFERENCES.equals(propertyName)) setFormPreferences((FormPreferences)newValue); else
+    if (LABELFORMAT.equals(propertyName)) setLabelFormat((LabelFormat)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 
 	/**
 	 * @generated
@@ -1436,104 +1338,103 @@ public class DeliveryTicket extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName)
-			throws UnknownPropertyException {
-		if (NAME.equals(propertyName))
-			return new Class<?>[] { String.class };
-		if (TICKETNUMBER.equals(propertyName))
-			return new Class<?>[] { Integer.class };
-		if (TOADDRESS.equals(propertyName))
-			return new Class<?>[] { Address.class };
-		if (FROMADDRESS.equals(propertyName))
-			return new Class<?>[] { Address.class };
-		if (TOADDRESSID.equals(propertyName))
-			return new Class<?>[] { Long.class };
-		if (FROMADDRESSID.equals(propertyName))
-			return new Class<?>[] { Long.class };
-		if (DELIVERYCONTACT.equals(propertyName))
-			return new Class<?>[] { Contact.class };
-		if (TAKENBY.equals(propertyName))
-			return new Class<?>[] { String.class };
-		if (DELIVERYDATE.equals(propertyName))
-			return new Class<?>[] { Date.class };
-		if (CUSTOMERPO.equals(propertyName))
-			return new Class<?>[] { String.class };
-		if (ORDERNUMBER.equals(propertyName))
-			return new Class<?>[] { Integer.class };
-		if (TRACKINGNUMBER.equals(propertyName))
-			return new Class<?>[] { String.class };
-		if (PARTNUMBER.equals(propertyName))
-			return new Class<?>[] { String.class };
-		if (REFERENCE.equals(propertyName))
-			return new Class<?>[] { String.class };
-		if (SHIPMODE.equals(propertyName))
-			return new Class<?>[] { ShippingMethod.class };
-		if (SHIPCOST.equals(propertyName))
-			return new Class<?>[] { BigDecimal.class };
-		if (TOTALWEIGHT.equals(propertyName))
-			return new Class<?>[] { Float.class };
-		if (CARTONCOUNT.equals(propertyName))
-			return new Class<?>[] { Integer.class };
-		if (ITEMSPERCARTON.equals(propertyName))
-			return new Class<?>[] { Integer.class };
-		if (TOTALITEMSINCARTON.equals(propertyName))
-			return new Class<?>[] { Integer.class };
-		if (LABELSKIPCOUNT.equals(propertyName))
-			return new Class<?>[] { Integer.class };
-		if (PRECOMMENT.equals(propertyName))
-			return new Class<?>[] { String.class };
-		if (POSTCOMMENT.equals(propertyName))
-			return new Class<?>[] { String.class };
-		if (LABELSTARTCOUNT.equals(propertyName))
-			return new Class<?>[] { Integer.class };
-		if (DRIVER.equals(propertyName))
-			return new Class<?>[] { Driver.class };
-		if (WEBORDERSHIPPINGID.equals(propertyName))
-			return new Class<?>[] { Long.class };
-		if (FROMOTHER.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (TOOTHER.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (ATTOTHER.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (OWEIGHT.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (COD.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (EMAILOTHER.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (EMAIL.equals(propertyName))
-			return new Class<?>[] { String.class };
-		if (ARCHIVE.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (ATTNAMECHECK.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (CUSTOMERNAMECHECK.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (ADDRESSCHECK.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (ORDERNUMBERCHECK.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (DELIVERYDESCCHECK.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (DELIVERYCOMMENTSCHECK.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (PONUMBERCHECK.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (ESTWEIGHTCHECK.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (DATETYPE.equals(propertyName))
-			return new Class<?>[] { String.class };
-		if (DELIVERYJOBS.equals(propertyName))
-			return new Class<?>[] { java.util.List.class,
-					DeliveryTicketJobs.class };
-		if (TOTALWEIGHTUPDATED.equals(propertyName))
-			return new Class<?>[] { Boolean.class };
-		if (FORMPREFERENCES.equals(propertyName))
-			return new Class<?>[] { FormPreferences.class };
-		if (LABELFORMAT.equals(propertyName))
-			return new Class<?>[] { LabelFormat.class };
-		return super.getPropertyClass(propertyName);
-	}
+			throws UnknownPropertyException {	
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (TICKETNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (TOADDRESS.equals(propertyName)) 
+      return new Class<?>[] {Address.class};		
+    if (FROMADDRESS.equals(propertyName)) 
+      return new Class<?>[] {Address.class};		
+    if (TOADDRESSID.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (FROMADDRESSID.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (DELIVERYCONTACT.equals(propertyName)) 
+      return new Class<?>[] {Contact.class};		
+    if (TAKENBY.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DELIVERYDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (CUSTOMERPO.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ORDERNUMBER.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (TRACKINGNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PARTNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (REFERENCE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (SHIPMODE.equals(propertyName)) 
+      return new Class<?>[] {ShippingMethod.class};		
+    if (SHIPCOST.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (TOTALWEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Float.class};		
+    if (CARTONCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (ITEMSPERCARTON.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (TOTALITEMSINCARTON.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (LABELSKIPCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (PRECOMMENT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (POSTCOMMENT.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (LABELSTARTCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
+    if (DRIVER.equals(propertyName)) 
+      return new Class<?>[] {Driver.class};		
+    if (WEBORDERSHIPPINGID.equals(propertyName)) 
+      return new Class<?>[] {Long.class};		
+    if (FROMOTHER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (TOOTHER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ATTOTHER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (OWEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (COD.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (EMAILOTHER.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (EMAIL.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (ARCHIVE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ATTNAMECHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (CUSTOMERNAMECHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ADDRESSCHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ORDERNUMBERCHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DELIVERYDESCCHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DELIVERYCOMMENTSCHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (PONUMBERCHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (ESTWEIGHTCHECK.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (DATETYPE.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (DELIVERYJOBS.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, DeliveryTicketJobs.class};		
+    if (TOTALWEIGHTUPDATED.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (FORMPREFERENCES.equals(propertyName)) 
+      return new Class<?>[] {FormPreferences.class};		
+    if (LABELFORMAT.equals(propertyName)) 
+      return new Class<?>[] {LabelFormat.class};		
+    return super.getPropertyClass(propertyName);
+  }
 
 	/**
 	 * @generated
@@ -1541,207 +1442,159 @@ public class DeliveryTicket extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName)
-			throws UnknownPropertyException {
-		if (NAME.equals(propertyName))
-			return DeliveryTicket.class;
-		if (TICKETNUMBER.equals(propertyName))
-			return DeliveryTicket.class;
-		if (TOADDRESS.equals(propertyName))
-			return DeliveryTicket.class;
-		if (FROMADDRESS.equals(propertyName))
-			return DeliveryTicket.class;
-		if (TOADDRESSID.equals(propertyName))
-			return DeliveryTicket.class;
-		if (FROMADDRESSID.equals(propertyName))
-			return DeliveryTicket.class;
-		if (DELIVERYCONTACT.equals(propertyName))
-			return DeliveryTicket.class;
-		if (TAKENBY.equals(propertyName))
-			return DeliveryTicket.class;
-		if (DELIVERYDATE.equals(propertyName))
-			return DeliveryTicket.class;
-		if (CUSTOMERPO.equals(propertyName))
-			return DeliveryTicket.class;
-		if (ORDERNUMBER.equals(propertyName))
-			return DeliveryTicket.class;
-		if (TRACKINGNUMBER.equals(propertyName))
-			return DeliveryTicket.class;
-		if (PARTNUMBER.equals(propertyName))
-			return DeliveryTicket.class;
-		if (REFERENCE.equals(propertyName))
-			return DeliveryTicket.class;
-		if (SHIPMODE.equals(propertyName))
-			return DeliveryTicket.class;
-		if (SHIPCOST.equals(propertyName))
-			return DeliveryTicket.class;
-		if (TOTALWEIGHT.equals(propertyName))
-			return DeliveryTicket.class;
-		if (CARTONCOUNT.equals(propertyName))
-			return DeliveryTicket.class;
-		if (ITEMSPERCARTON.equals(propertyName))
-			return DeliveryTicket.class;
-		if (TOTALITEMSINCARTON.equals(propertyName))
-			return DeliveryTicket.class;
-		if (LABELSKIPCOUNT.equals(propertyName))
-			return DeliveryTicket.class;
-		if (PRECOMMENT.equals(propertyName))
-			return DeliveryTicket.class;
-		if (POSTCOMMENT.equals(propertyName))
-			return DeliveryTicket.class;
-		if (LABELSTARTCOUNT.equals(propertyName))
-			return DeliveryTicket.class;
-		if (DRIVER.equals(propertyName))
-			return DeliveryTicket.class;
-		if (WEBORDERSHIPPINGID.equals(propertyName))
-			return DeliveryTicket.class;
-		if (FROMOTHER.equals(propertyName))
-			return DeliveryTicket.class;
-		if (TOOTHER.equals(propertyName))
-			return DeliveryTicket.class;
-		if (ATTOTHER.equals(propertyName))
-			return DeliveryTicket.class;
-		if (OWEIGHT.equals(propertyName))
-			return DeliveryTicket.class;
-		if (COD.equals(propertyName))
-			return DeliveryTicket.class;
-		if (EMAILOTHER.equals(propertyName))
-			return DeliveryTicket.class;
-		if (EMAIL.equals(propertyName))
-			return DeliveryTicket.class;
-		if (ARCHIVE.equals(propertyName))
-			return DeliveryTicket.class;
-		if (ATTNAMECHECK.equals(propertyName))
-			return DeliveryTicket.class;
-		if (CUSTOMERNAMECHECK.equals(propertyName))
-			return DeliveryTicket.class;
-		if (ADDRESSCHECK.equals(propertyName))
-			return DeliveryTicket.class;
-		if (ORDERNUMBERCHECK.equals(propertyName))
-			return DeliveryTicket.class;
-		if (DELIVERYDESCCHECK.equals(propertyName))
-			return DeliveryTicket.class;
-		if (DELIVERYCOMMENTSCHECK.equals(propertyName))
-			return DeliveryTicket.class;
-		if (PONUMBERCHECK.equals(propertyName))
-			return DeliveryTicket.class;
-		if (ESTWEIGHTCHECK.equals(propertyName))
-			return DeliveryTicket.class;
-		if (DATETYPE.equals(propertyName))
-			return DeliveryTicket.class;
-		if (DELIVERYJOBS.equals(propertyName))
-			return DeliveryTicket.class;
-		if (TOTALWEIGHTUPDATED.equals(propertyName))
-			return DeliveryTicket.class;
-		if (FORMPREFERENCES.equals(propertyName))
-			return DeliveryTicket.class;
-		if (LABELFORMAT.equals(propertyName))
-			return DeliveryTicket.class;
-		return super.getPropertyOwner(propertyName);
-	}
+			throws UnknownPropertyException {	
+    if (NAME.equals(propertyName)) return DeliveryTicket.class;
+    if (TICKETNUMBER.equals(propertyName)) return DeliveryTicket.class;
+    if (TOADDRESS.equals(propertyName)) return DeliveryTicket.class;
+    if (FROMADDRESS.equals(propertyName)) return DeliveryTicket.class;
+    if (TOADDRESSID.equals(propertyName)) return DeliveryTicket.class;
+    if (FROMADDRESSID.equals(propertyName)) return DeliveryTicket.class;
+    if (DELIVERYCONTACT.equals(propertyName)) return DeliveryTicket.class;
+    if (TAKENBY.equals(propertyName)) return DeliveryTicket.class;
+    if (DELIVERYDATE.equals(propertyName)) return DeliveryTicket.class;
+    if (CUSTOMERPO.equals(propertyName)) return DeliveryTicket.class;
+    if (ORDERNUMBER.equals(propertyName)) return DeliveryTicket.class;
+    if (TRACKINGNUMBER.equals(propertyName)) return DeliveryTicket.class;
+    if (PARTNUMBER.equals(propertyName)) return DeliveryTicket.class;
+    if (REFERENCE.equals(propertyName)) return DeliveryTicket.class;
+    if (SHIPMODE.equals(propertyName)) return DeliveryTicket.class;
+    if (SHIPCOST.equals(propertyName)) return DeliveryTicket.class;
+    if (TOTALWEIGHT.equals(propertyName)) return DeliveryTicket.class;
+    if (CARTONCOUNT.equals(propertyName)) return DeliveryTicket.class;
+    if (ITEMSPERCARTON.equals(propertyName)) return DeliveryTicket.class;
+    if (TOTALITEMSINCARTON.equals(propertyName)) return DeliveryTicket.class;
+    if (LABELSKIPCOUNT.equals(propertyName)) return DeliveryTicket.class;
+    if (PRECOMMENT.equals(propertyName)) return DeliveryTicket.class;
+    if (POSTCOMMENT.equals(propertyName)) return DeliveryTicket.class;
+    if (LABELSTARTCOUNT.equals(propertyName)) return DeliveryTicket.class;
+    if (DRIVER.equals(propertyName)) return DeliveryTicket.class;
+    if (WEBORDERSHIPPINGID.equals(propertyName)) return DeliveryTicket.class;
+    if (FROMOTHER.equals(propertyName)) return DeliveryTicket.class;
+    if (TOOTHER.equals(propertyName)) return DeliveryTicket.class;
+    if (ATTOTHER.equals(propertyName)) return DeliveryTicket.class;
+    if (OWEIGHT.equals(propertyName)) return DeliveryTicket.class;
+    if (COD.equals(propertyName)) return DeliveryTicket.class;
+    if (EMAILOTHER.equals(propertyName)) return DeliveryTicket.class;
+    if (EMAIL.equals(propertyName)) return DeliveryTicket.class;
+    if (ARCHIVE.equals(propertyName)) return DeliveryTicket.class;
+    if (ATTNAMECHECK.equals(propertyName)) return DeliveryTicket.class;
+    if (CUSTOMERNAMECHECK.equals(propertyName)) return DeliveryTicket.class;
+    if (ADDRESSCHECK.equals(propertyName)) return DeliveryTicket.class;
+    if (ORDERNUMBERCHECK.equals(propertyName)) return DeliveryTicket.class;
+    if (DELIVERYDESCCHECK.equals(propertyName)) return DeliveryTicket.class;
+    if (DELIVERYCOMMENTSCHECK.equals(propertyName)) return DeliveryTicket.class;
+    if (PONUMBERCHECK.equals(propertyName)) return DeliveryTicket.class;
+    if (ESTWEIGHTCHECK.equals(propertyName)) return DeliveryTicket.class;
+    if (DATETYPE.equals(propertyName)) return DeliveryTicket.class;
+    if (DELIVERYJOBS.equals(propertyName)) return DeliveryTicket.class;
+    if (TOTALWEIGHTUPDATED.equals(propertyName)) return DeliveryTicket.class;
+    if (FORMPREFERENCES.equals(propertyName)) return DeliveryTicket.class;
+    if (LABELFORMAT.equals(propertyName)) return DeliveryTicket.class;
+    return super.getPropertyOwner(propertyName);
+  }
 
 	/**
 	 * @generated
 	 */
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (!super.deepEquals(obj))
-			return false;
-		DeliveryTicket objT = (DeliveryTicket) obj;
-		if (!SmartEquals(getName(), objT.getName()))
-			return false;
-		if (!SmartEquals(getTicketNumber(), objT.getTicketNumber()))
-			return false;
-		if (!SmartEquals(getToAddress(), objT.getToAddress()))
-			return false;
-		if (!SmartEquals(getFromAddress(), objT.getFromAddress()))
-			return false;
-		if (!SmartEquals(getToAddressID(), objT.getToAddressID()))
-			return false;
-		if (!SmartEquals(getFromAddressID(), objT.getFromAddressID()))
-			return false;
-		if (!SmartEquals(getDeliveryContact(), objT.getDeliveryContact()))
-			return false;
-		if (!SmartEquals(getTakenBy(), objT.getTakenBy()))
-			return false;
-		if (!SmartEquals(getDeliveryDate(), objT.getDeliveryDate()))
-			return false;
-		if (!SmartEquals(getCustomerPO(), objT.getCustomerPO()))
-			return false;
-		if (!SmartEquals(getOrderNumber(), objT.getOrderNumber()))
-			return false;
-		if (!SmartEquals(getTrackingNumber(), objT.getTrackingNumber()))
-			return false;
-		if (!SmartEquals(getPartNumber(), objT.getPartNumber()))
-			return false;
-		if (!SmartEquals(getReference(), objT.getReference()))
-			return false;
-		if (!SmartEquals(getShipMode(), objT.getShipMode()))
-			return false;
-		if (!SmartEquals(getShipCost(), objT.getShipCost()))
-			return false;
-		if (!SmartEquals(getTotalWeight(), objT.getTotalWeight()))
-			return false;
-		if (!SmartEquals(getCartonCount(), objT.getCartonCount()))
-			return false;
-		if (!SmartEquals(getItemsPerCarton(), objT.getItemsPerCarton()))
-			return false;
-		if (!SmartEquals(getTotalItemsInCarton(), objT.getTotalItemsInCarton()))
-			return false;
-		if (!SmartEquals(getLabelSkipCount(), objT.getLabelSkipCount()))
-			return false;
-		if (!SmartEquals(getPreComment(), objT.getPreComment()))
-			return false;
-		if (!SmartEquals(getPostComment(), objT.getPostComment()))
-			return false;
-		if (!SmartEquals(getLabelStartCount(), objT.getLabelStartCount()))
-			return false;
-		if (!SmartEquals(getDriver(), objT.getDriver()))
-			return false;
-		if (!SmartEquals(getWebOrderShippingID(), objT.getWebOrderShippingID()))
-			return false;
-		if (!SmartEquals(getFromOther(), objT.getFromOther()))
-			return false;
-		if (!SmartEquals(getToOther(), objT.getToOther()))
-			return false;
-		if (!SmartEquals(getAttOther(), objT.getAttOther()))
-			return false;
-		if (!SmartEquals(getOWeight(), objT.getOWeight()))
-			return false;
-		if (!SmartEquals(getCod(), objT.getCod()))
-			return false;
-		if (!SmartEquals(getEmailOther(), objT.getEmailOther()))
-			return false;
-		if (!SmartEquals(getEmail(), objT.getEmail()))
-			return false;
-		if (!SmartEquals(getArchive(), objT.getArchive()))
-			return false;
-		if (!SmartEquals(getAttNameCheck(), objT.getAttNameCheck()))
-			return false;
-		if (!SmartEquals(getCustomerNameCheck(), objT.getCustomerNameCheck()))
-			return false;
-		if (!SmartEquals(getAddressCheck(), objT.getAddressCheck()))
-			return false;
-		if (!SmartEquals(getOrderNumberCheck(), objT.getOrderNumberCheck()))
-			return false;
-		if (!SmartEquals(getDeliveryDescCheck(), objT.getDeliveryDescCheck()))
-			return false;
-		if (!SmartEquals(getDeliveryCommentsCheck(), objT
-				.getDeliveryCommentsCheck()))
-			return false;
-		if (!SmartEquals(getPoNumberCheck(), objT.getPoNumberCheck()))
-			return false;
-		if (!SmartEquals(getEstWeightCheck(), objT.getEstWeightCheck()))
-			return false;
-		if (!SmartEquals(getDateType(), objT.getDateType()))
-			return false;
-		if (!SmartEquals(getDeliveryJobs(), objT.getDeliveryJobs()))
-			return false;
-		if (!SmartEquals(getTotalWeightUpdated(), objT.getTotalWeightUpdated()))
-			return false;
-		if (!SmartEquals(getFormPreferences(), objT.getFormPreferences()))
-			return false;
-		if (!SmartEquals(getLabelFormat(), objT.getLabelFormat()))
-			return false;
-		return true;
-	}
+    if (! super.deepEquals(obj))
+      return false;
+    DeliveryTicket objT = (DeliveryTicket)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getTicketNumber(), objT.getTicketNumber()))
+      return false;
+    if (! SmartEquals(getToAddress(), objT.getToAddress()))
+      return false;
+    if (! SmartEquals(getFromAddress(), objT.getFromAddress()))
+      return false;
+    if (! SmartEquals(getToAddressID(), objT.getToAddressID()))
+      return false;
+    if (! SmartEquals(getFromAddressID(), objT.getFromAddressID()))
+      return false;
+    if (! SmartEquals(getDeliveryContact(), objT.getDeliveryContact()))
+      return false;
+    if (! SmartEquals(getTakenBy(), objT.getTakenBy()))
+      return false;
+    if (! SmartEquals(getDeliveryDate(), objT.getDeliveryDate()))
+      return false;
+    if (! SmartEquals(getCustomerPO(), objT.getCustomerPO()))
+      return false;
+    if (! SmartEquals(getOrderNumber(), objT.getOrderNumber()))
+      return false;
+    if (! SmartEquals(getTrackingNumber(), objT.getTrackingNumber()))
+      return false;
+    if (! SmartEquals(getPartNumber(), objT.getPartNumber()))
+      return false;
+    if (! SmartEquals(getReference(), objT.getReference()))
+      return false;
+    if (! SmartEquals(getShipMode(), objT.getShipMode()))
+      return false;
+    if (! SmartEquals(getShipCost(), objT.getShipCost()))
+      return false;
+    if (! SmartEquals(getTotalWeight(), objT.getTotalWeight()))
+      return false;
+    if (! SmartEquals(getCartonCount(), objT.getCartonCount()))
+      return false;
+    if (! SmartEquals(getItemsPerCarton(), objT.getItemsPerCarton()))
+      return false;
+    if (! SmartEquals(getTotalItemsInCarton(), objT.getTotalItemsInCarton()))
+      return false;
+    if (! SmartEquals(getLabelSkipCount(), objT.getLabelSkipCount()))
+      return false;
+    if (! SmartEquals(getPreComment(), objT.getPreComment()))
+      return false;
+    if (! SmartEquals(getPostComment(), objT.getPostComment()))
+      return false;
+    if (! SmartEquals(getLabelStartCount(), objT.getLabelStartCount()))
+      return false;
+    if (! SmartEquals(getDriver(), objT.getDriver()))
+      return false;
+    if (! SmartEquals(getWebOrderShippingID(), objT.getWebOrderShippingID()))
+      return false;
+    if (! SmartEquals(getFromOther(), objT.getFromOther()))
+      return false;
+    if (! SmartEquals(getToOther(), objT.getToOther()))
+      return false;
+    if (! SmartEquals(getAttOther(), objT.getAttOther()))
+      return false;
+    if (! SmartEquals(getOWeight(), objT.getOWeight()))
+      return false;
+    if (! SmartEquals(getCod(), objT.getCod()))
+      return false;
+    if (! SmartEquals(getEmailOther(), objT.getEmailOther()))
+      return false;
+    if (! SmartEquals(getEmail(), objT.getEmail()))
+      return false;
+    if (! SmartEquals(getArchive(), objT.getArchive()))
+      return false;
+    if (! SmartEquals(getAttNameCheck(), objT.getAttNameCheck()))
+      return false;
+    if (! SmartEquals(getCustomerNameCheck(), objT.getCustomerNameCheck()))
+      return false;
+    if (! SmartEquals(getAddressCheck(), objT.getAddressCheck()))
+      return false;
+    if (! SmartEquals(getOrderNumberCheck(), objT.getOrderNumberCheck()))
+      return false;
+    if (! SmartEquals(getDeliveryDescCheck(), objT.getDeliveryDescCheck()))
+      return false;
+    if (! SmartEquals(getDeliveryCommentsCheck(), objT.getDeliveryCommentsCheck()))
+      return false;
+    if (! SmartEquals(getPoNumberCheck(), objT.getPoNumberCheck()))
+      return false;
+    if (! SmartEquals(getEstWeightCheck(), objT.getEstWeightCheck()))
+      return false;
+    if (! SmartEquals(getDateType(), objT.getDateType()))
+      return false;
+    if (! SmartEquals(getDeliveryJobs(), objT.getDeliveryJobs()))
+      return false;
+    if (! SmartEquals(getTotalWeightUpdated(), objT.getTotalWeightUpdated()))
+      return false;
+    if (! SmartEquals(getFormPreferences(), objT.getFormPreferences()))
+      return false;
+    if (! SmartEquals(getLabelFormat(), objT.getLabelFormat()))
+      return false;
+    return true;
+  }
 }

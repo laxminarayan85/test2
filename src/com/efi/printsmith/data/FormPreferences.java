@@ -2464,7 +2464,7 @@ public class FormPreferences extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition addressFontBean;
 	
@@ -2488,7 +2488,7 @@ public class FormPreferences extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition dateFontBean;
 	
@@ -2512,7 +2512,7 @@ public class FormPreferences extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition bodyTextFontBean;
 	
@@ -2536,7 +2536,7 @@ public class FormPreferences extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition formFontBean;
 	

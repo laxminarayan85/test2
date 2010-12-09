@@ -32,8 +32,8 @@ import org.hibernate.annotations.Where;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "LabelFormat.findall", query = "from LabelFormat"),
-	@NamedQuery(name = "LabelFormat.byId", query = "select a from LabelFormat a where a.id= :id")
+  @NamedQuery(name = "LabelFormat.findall", query = "from LabelFormat"),
+  @NamedQuery(name = "LabelFormat.byId", query = "select a from LabelFormat a where a.id= :id")
 })
 
 
@@ -97,10 +97,10 @@ public class LabelFormat extends ModelBase {
 	 * @generated
 	 */
 	public LabelFormat() {
-		this.created = new Date();
-		this.modified = new Date();
-		this.isDeleted = false;
-	}
+    this.created = new Date();
+    this.modified = new Date();
+    this.isDeleted = false;
+  }
 
 	@Basic
 	private Boolean isDeleted = false;
@@ -124,23 +124,23 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-		return name; 
-	}
+    return name; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-		this.name = newVal;
-	}
+    this.name = newVal;
+  }
 	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition fontDefinition;
 	
@@ -148,16 +148,16 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public FontDefinition getFontDefinition(){
-		return fontDefinition; 
-	}
+    return fontDefinition; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setFontDefinition(FontDefinition newVal) {
-		this.fontDefinition = newVal;
-	}
+    this.fontDefinition = newVal;
+  }
 	
  	
 	
@@ -171,16 +171,16 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public Double getNoOfLabelsAcross(){
-		return noOfLabelsAcross; 
-	}
+    return noOfLabelsAcross; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNoOfLabelsAcross(Double newVal) {
-		this.noOfLabelsAcross = newVal;
-	}
+    this.noOfLabelsAcross = newVal;
+  }
 	
  	
 	
@@ -194,16 +194,16 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public Double getNoOfLabelsDown(){
-		return noOfLabelsDown; 
-	}
+    return noOfLabelsDown; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNoOfLabelsDown(Double newVal) {
-		this.noOfLabelsDown = newVal;
-	}
+    this.noOfLabelsDown = newVal;
+  }
 	
  	
 	
@@ -217,16 +217,16 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public Double getLabelWidth(){
-		return labelWidth; 
-	}
+    return labelWidth; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLabelWidth(Double newVal) {
-		this.labelWidth = newVal;
-	}
+    this.labelWidth = newVal;
+  }
 	
  	
 	
@@ -240,16 +240,16 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public Double getLabelHeight(){
-		return labelHeight; 
-	}
+    return labelHeight; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLabelHeight(Double newVal) {
-		this.labelHeight = newVal;
-	}
+    this.labelHeight = newVal;
+  }
 	
  	
 	
@@ -263,16 +263,16 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public Double getLeftMargin(){
-		return leftMargin; 
-	}
+    return leftMargin; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLeftMargin(Double newVal) {
-		this.leftMargin = newVal;
-	}
+    this.leftMargin = newVal;
+  }
 	
  	
 	
@@ -286,16 +286,16 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public Double getTopMargin(){
-		return topMargin; 
-	}
+    return topMargin; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTopMargin(Double newVal) {
-		this.topMargin = newVal;
-	}
+    this.topMargin = newVal;
+  }
 	
  	
 	
@@ -309,16 +309,16 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public Double getSpaceOnRight(){
-		return spaceOnRight; 
-	}
+    return spaceOnRight; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSpaceOnRight(Double newVal) {
-		this.spaceOnRight = newVal;
-	}
+    this.spaceOnRight = newVal;
+  }
 	
  	
 	
@@ -332,16 +332,16 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public Double getSpaceOnBottom(){
-		return spaceOnBottom; 
-	}
+    return spaceOnBottom; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setSpaceOnBottom(Double newVal) {
-		this.spaceOnBottom = newVal;
-	}
+    this.spaceOnBottom = newVal;
+  }
 	
  	
 	
@@ -355,16 +355,16 @@ public class LabelFormat extends ModelBase {
 	 * @generated
  	 */
 	public String getMeasurements(){
-		return measurements; 
-	}
+    return measurements; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setMeasurements(String newVal) {
-		this.measurements = newVal;
-	}
+    this.measurements = newVal;
+  }
 	
 	/**
 	 * @generated
@@ -372,19 +372,19 @@ public class LabelFormat extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (NAME.equals(propertyName)) return getName();
-		if (FONTDEFINITION.equals(propertyName)) return getFontDefinition();
-		if (NOOFLABELSACROSS.equals(propertyName)) return getNoOfLabelsAcross();
-		if (NOOFLABELSDOWN.equals(propertyName)) return getNoOfLabelsDown();
-		if (LABELWIDTH.equals(propertyName)) return getLabelWidth();
-		if (LABELHEIGHT.equals(propertyName)) return getLabelHeight();
-		if (LEFTMARGIN.equals(propertyName)) return getLeftMargin();
-		if (TOPMARGIN.equals(propertyName)) return getTopMargin();
-		if (SPACEONRIGHT.equals(propertyName)) return getSpaceOnRight();
-		if (SPACEONBOTTOM.equals(propertyName)) return getSpaceOnBottom();
-		if (MEASUREMENTS.equals(propertyName)) return getMeasurements();
-		return super.getProperty(propertyName);
-	}
+    if (NAME.equals(propertyName)) return getName();
+    if (FONTDEFINITION.equals(propertyName)) return getFontDefinition();
+    if (NOOFLABELSACROSS.equals(propertyName)) return getNoOfLabelsAcross();
+    if (NOOFLABELSDOWN.equals(propertyName)) return getNoOfLabelsDown();
+    if (LABELWIDTH.equals(propertyName)) return getLabelWidth();
+    if (LABELHEIGHT.equals(propertyName)) return getLabelHeight();
+    if (LEFTMARGIN.equals(propertyName)) return getLeftMargin();
+    if (TOPMARGIN.equals(propertyName)) return getTopMargin();
+    if (SPACEONRIGHT.equals(propertyName)) return getSpaceOnRight();
+    if (SPACEONBOTTOM.equals(propertyName)) return getSpaceOnBottom();
+    if (MEASUREMENTS.equals(propertyName)) return getMeasurements();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -392,19 +392,19 @@ public class LabelFormat extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (NAME.equals(propertyName)) setName((String)newValue); else
-		if (FONTDEFINITION.equals(propertyName)) setFontDefinition((FontDefinition)newValue); else
-		if (NOOFLABELSACROSS.equals(propertyName)) setNoOfLabelsAcross((Double)newValue); else
-		if (NOOFLABELSDOWN.equals(propertyName)) setNoOfLabelsDown((Double)newValue); else
-		if (LABELWIDTH.equals(propertyName)) setLabelWidth((Double)newValue); else
-		if (LABELHEIGHT.equals(propertyName)) setLabelHeight((Double)newValue); else
-		if (LEFTMARGIN.equals(propertyName)) setLeftMargin((Double)newValue); else
-		if (TOPMARGIN.equals(propertyName)) setTopMargin((Double)newValue); else
-		if (SPACEONRIGHT.equals(propertyName)) setSpaceOnRight((Double)newValue); else
-		if (SPACEONBOTTOM.equals(propertyName)) setSpaceOnBottom((Double)newValue); else
-		if (MEASUREMENTS.equals(propertyName)) setMeasurements((String)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (NAME.equals(propertyName)) setName((String)newValue); else
+    if (FONTDEFINITION.equals(propertyName)) setFontDefinition((FontDefinition)newValue); else
+    if (NOOFLABELSACROSS.equals(propertyName)) setNoOfLabelsAcross((Double)newValue); else
+    if (NOOFLABELSDOWN.equals(propertyName)) setNoOfLabelsDown((Double)newValue); else
+    if (LABELWIDTH.equals(propertyName)) setLabelWidth((Double)newValue); else
+    if (LABELHEIGHT.equals(propertyName)) setLabelHeight((Double)newValue); else
+    if (LEFTMARGIN.equals(propertyName)) setLeftMargin((Double)newValue); else
+    if (TOPMARGIN.equals(propertyName)) setTopMargin((Double)newValue); else
+    if (SPACEONRIGHT.equals(propertyName)) setSpaceOnRight((Double)newValue); else
+    if (SPACEONBOTTOM.equals(propertyName)) setSpaceOnBottom((Double)newValue); else
+    if (MEASUREMENTS.equals(propertyName)) setMeasurements((String)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -412,30 +412,30 @@ public class LabelFormat extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		if (FONTDEFINITION.equals(propertyName)) 
-			return new Class<?>[] {FontDefinition.class};		
-		if (NOOFLABELSACROSS.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (NOOFLABELSDOWN.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (LABELWIDTH.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (LABELHEIGHT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (LEFTMARGIN.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (TOPMARGIN.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SPACEONRIGHT.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (SPACEONBOTTOM.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (MEASUREMENTS.equals(propertyName)) 
-			return new Class<?>[] {String.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (NAME.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FONTDEFINITION.equals(propertyName)) 
+      return new Class<?>[] {FontDefinition.class};		
+    if (NOOFLABELSACROSS.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (NOOFLABELSDOWN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LABELWIDTH.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LABELHEIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LEFTMARGIN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (TOPMARGIN.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SPACEONRIGHT.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (SPACEONBOTTOM.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (MEASUREMENTS.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -444,50 +444,50 @@ public class LabelFormat extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (NAME.equals(propertyName)) return LabelFormat.class;
-		if (FONTDEFINITION.equals(propertyName)) return LabelFormat.class;
-		if (NOOFLABELSACROSS.equals(propertyName)) return LabelFormat.class;
-		if (NOOFLABELSDOWN.equals(propertyName)) return LabelFormat.class;
-		if (LABELWIDTH.equals(propertyName)) return LabelFormat.class;
-		if (LABELHEIGHT.equals(propertyName)) return LabelFormat.class;
-		if (LEFTMARGIN.equals(propertyName)) return LabelFormat.class;
-		if (TOPMARGIN.equals(propertyName)) return LabelFormat.class;
-		if (SPACEONRIGHT.equals(propertyName)) return LabelFormat.class;
-		if (SPACEONBOTTOM.equals(propertyName)) return LabelFormat.class;
-		if (MEASUREMENTS.equals(propertyName)) return LabelFormat.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (NAME.equals(propertyName)) return LabelFormat.class;
+    if (FONTDEFINITION.equals(propertyName)) return LabelFormat.class;
+    if (NOOFLABELSACROSS.equals(propertyName)) return LabelFormat.class;
+    if (NOOFLABELSDOWN.equals(propertyName)) return LabelFormat.class;
+    if (LABELWIDTH.equals(propertyName)) return LabelFormat.class;
+    if (LABELHEIGHT.equals(propertyName)) return LabelFormat.class;
+    if (LEFTMARGIN.equals(propertyName)) return LabelFormat.class;
+    if (TOPMARGIN.equals(propertyName)) return LabelFormat.class;
+    if (SPACEONRIGHT.equals(propertyName)) return LabelFormat.class;
+    if (SPACEONBOTTOM.equals(propertyName)) return LabelFormat.class;
+    if (MEASUREMENTS.equals(propertyName)) return LabelFormat.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		LabelFormat objT = (LabelFormat)obj;
-		if (! SmartEquals(getName(), objT.getName()))
-			return false;
-		if (! SmartEquals(getFontDefinition(), objT.getFontDefinition()))
-			return false;
-		if (! SmartEquals(getNoOfLabelsAcross(), objT.getNoOfLabelsAcross()))
-			return false;
-		if (! SmartEquals(getNoOfLabelsDown(), objT.getNoOfLabelsDown()))
-			return false;
-		if (! SmartEquals(getLabelWidth(), objT.getLabelWidth()))
-			return false;
-		if (! SmartEquals(getLabelHeight(), objT.getLabelHeight()))
-			return false;
-		if (! SmartEquals(getLeftMargin(), objT.getLeftMargin()))
-			return false;
-		if (! SmartEquals(getTopMargin(), objT.getTopMargin()))
-			return false;
-		if (! SmartEquals(getSpaceOnRight(), objT.getSpaceOnRight()))
-			return false;
-		if (! SmartEquals(getSpaceOnBottom(), objT.getSpaceOnBottom()))
-			return false;
-		if (! SmartEquals(getMeasurements(), objT.getMeasurements()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    LabelFormat objT = (LabelFormat)obj;
+    if (! SmartEquals(getName(), objT.getName()))
+      return false;
+    if (! SmartEquals(getFontDefinition(), objT.getFontDefinition()))
+      return false;
+    if (! SmartEquals(getNoOfLabelsAcross(), objT.getNoOfLabelsAcross()))
+      return false;
+    if (! SmartEquals(getNoOfLabelsDown(), objT.getNoOfLabelsDown()))
+      return false;
+    if (! SmartEquals(getLabelWidth(), objT.getLabelWidth()))
+      return false;
+    if (! SmartEquals(getLabelHeight(), objT.getLabelHeight()))
+      return false;
+    if (! SmartEquals(getLeftMargin(), objT.getLeftMargin()))
+      return false;
+    if (! SmartEquals(getTopMargin(), objT.getTopMargin()))
+      return false;
+    if (! SmartEquals(getSpaceOnRight(), objT.getSpaceOnRight()))
+      return false;
+    if (! SmartEquals(getSpaceOnBottom(), objT.getSpaceOnBottom()))
+      return false;
+    if (! SmartEquals(getMeasurements(), objT.getMeasurements()))
+      return false;
+    return true;
+  }			
 }
