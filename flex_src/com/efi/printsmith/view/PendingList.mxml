@@ -436,65 +436,117 @@
 					showItem = true;
 					break;
 				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.Ready"):
-					if ((item as InvoiceBase).completed || (item as InvoiceBase).readyToPickup
-						|| (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
+					if ((item as InvoiceBase).completed || (item as InvoiceBase).readyToPickup)
+						showItem = true;
+						
+					if (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
 						&& (inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (inv.wantedDate.time < today.time)))
-						showItem = true;
+						&& (inv.wantedDate.time < today.time)) {
+						if(inv.wantedDate.hours==0 && inv.wantedDate.minutes==0) {
+							if(dateFormatterObj.format(inv.wantedDate) != dateFormatterObj.format(today)) {
+								showItem = true;
+							}
+						} else {
+							showItem = true;
+						}	
+					}
 					break;
 				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.Late"):
 					if ((inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (inv.wantedDate.time < today.time))
-						showItem = true;
+						&& (inv.wantedDate.time < today.time)) {
+							if(inv.wantedDate.hours==0 && inv.wantedDate.minutes==0) {
+								if(dateFormatterObj.format(inv.wantedDate) != dateFormatterObj.format(today)) {
+									showItem = true;
+								}
+							} else {
+								showItem = true;
+							}
+					}
 						
 					break;
 				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueToday"):
 					if (((inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (dateFormatterObj.format(inv.wantedDate) == dateFormatterObj.format(today)))
-						|| (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
+						&& (dateFormatterObj.format(inv.wantedDate) == dateFormatterObj.format(today)))) {
+						showItem = true;
+					}
+					if (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
 						&& (inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (inv.wantedDate.time < today.time)))
-						showItem = true;
+						&& (inv.wantedDate.time < today.time)) {
+						if(inv.wantedDate.hours==0 && inv.wantedDate.minutes==0) {
+							if(dateFormatterObj.format(inv.wantedDate) != dateFormatterObj.format(today)) {
+								showItem = true;
+							}
+						} else {
+							showItem = true;
+						}	
+					}
 						
 					break;
 				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueTomorrow"):
 					var tomorrowDate:Date = DateUtil.addDays(new Date(),1);
 					if (((inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (dateFormatterObj.format(inv.wantedDate) == dateFormatterObj.format(tomorrowDate)))
-						|| (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
+						&& (dateFormatterObj.format(inv.wantedDate) == dateFormatterObj.format(tomorrowDate))))
+						showItem = true;
+						
+					if (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
 						&& (inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (inv.wantedDate.time < today.time)))
-						showItem = true;
+						&& (inv.wantedDate.time < today.time)) {
+						if(inv.wantedDate.hours==0 && inv.wantedDate.minutes==0) {
+							if(dateFormatterObj.format(inv.wantedDate) != dateFormatterObj.format(today)) {
+								showItem = true;
+							}
+						} else {
+							showItem = true;
+						}	
+					}
 						
 					break;
 				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueNextWeek"):
 					var nextWeekNumber:int = DateUtil.getWeek(DateUtil.addDays(new Date(),7));
 					if (((inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (DateUtil.getWeek(inv.wantedDate) == nextWeekNumber))
-						|| (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
+						&& (DateUtil.getWeek(inv.wantedDate) == nextWeekNumber)))
+						showItem = true;
+						
+					if (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
 						&& (inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (inv.wantedDate.time < today.time)))
-						showItem = true;
+						&& (inv.wantedDate.time < today.time)) {
+						if(inv.wantedDate.hours==0 && inv.wantedDate.minutes==0) {
+							if(dateFormatterObj.format(inv.wantedDate) != dateFormatterObj.format(today)) {
+								showItem = true;
+							}
+						} else {
+							showItem = true;
+						}	
+					}
 						
 					break;
 				case resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posPendCmd.DueThisWeek"):
 					var thisWeekNumber:int = DateUtil.getWeek(new Date());
 					if (((inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (DateUtil.getWeek(inv.wantedDate) == thisWeekNumber))
-						|| (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
+						&& (DateUtil.getWeek(inv.wantedDate) == thisWeekNumber)))
+						showItem = true;
+						
+					if (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
 						&& (inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (inv.wantedDate.time < today.time)))
-						showItem = true;
+						&& (inv.wantedDate.time < today.time)) {
+						if(inv.wantedDate.hours==0 && inv.wantedDate.minutes==0) {
+							if(dateFormatterObj.format(inv.wantedDate) != dateFormatterObj.format(today)) {
+								showItem = true;
+							}
+						} else {
+							showItem = true;
+						}	
+					}
 						
 					break;
 			}
@@ -1173,16 +1225,22 @@
 			if(preferencesPOSObj!=null && preferencesPOSObj.pickupColor!=null && preferencesPOSObj.pickupColor!=""){
 				return uint(parseInt(preferencesPOSObj.pickupColor));
 			}
-		} else if ((item.completed == false && item.readyToPickup == false)
+		} if ((item.completed == false && item.readyToPickup == false)
 						&& (item.wantedDate != null)  
 						&& (item.wantedDate.time < todayDate.time) && preferencesPOSObj!=null && preferencesPOSObj.colorPastDueEntries
 						&& preferencesPOSObj.pastDueColor!=null && preferencesPOSObj.pastDueColor!="") {
-			return uint(parseInt(preferencesPOSObj.pastDueColor));				
-		} else if(item is Invoice) {
+			if(item.wantedDate.hours==0 && item.wantedDate.minutes==0) {
+				if(dateFormatterObj.format(item.wantedDate) != dateFormatterObj.format(todayDate)) {
+					return uint(parseInt(preferencesPOSObj.pastDueColor));
+				}
+			} else {
+				return uint(parseInt(preferencesPOSObj.pastDueColor));
+			}	
+		} if(item is Invoice) {
 			if(preferencesPOSObj!=null && preferencesPOSObj.invoiceColor!=null && preferencesPOSObj.invoiceColor!=""){
 				return uint(parseInt(preferencesPOSObj.invoiceColor));
 			}
-		} else if(item is Estimate) {
+		} if(item is Estimate) {
 			if(preferencesPOSObj!=null && preferencesPOSObj.estimateColor!=null && preferencesPOSObj.estimateColor!=""){
 				return uint(parseInt(preferencesPOSObj.estimateColor));
 			}
