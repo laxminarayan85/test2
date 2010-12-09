@@ -11,6 +11,7 @@
     
     <mx:Script>
     	<![CDATA[
+    		import com.efi.printsmith.data.HoldState;
     		import com.efi.printsmith.events.PendingListUpdateEvent;
     		import com.efi.printsmith.data.Estimate;
     		import com.efi.printsmith.data.Invoice;
@@ -60,6 +61,11 @@
 			
 			private function handleLoadResult(event:ResultEvent):void {
 				_invoiceBase = event.result as InvoiceBase;
+				if(_invoiceBase!=null && _invoiceBase.holdState!=null){
+					holdstate_combo.selectedIndex = findItem(_invoiceBase.holdState.id,holdStateList);
+				} else {
+					holdstate_combo.selectedIndex = findItem(-1,holdStateList);
+				}
 				getDocumentLocation();
 				jobsList = new ArrayCollection();
 				if(_invoiceBase.jobs!=null) {
@@ -73,6 +79,11 @@
 					job_combo.selectedIndex = 1;
 					var jobBaseObj:JobBase = jobsList.getItemAt(1) as JobBase;
 					selectedJobBase = jobBaseObj;
+					if(selectedJobBase.location!=null){
+						location_combo.selectedIndex = findItem(selectedJobBase.location.id,productionLocationsList);
+					} else {
+						location_combo.selectedIndex = findItem(-1,productionLocationsList);
+					}
 					/* if(jobBaseObj.location!=null){
 						job_location.selectedIndex = findItem(jobBaseObj.location.id,masterProductionLocationsList);
 					} else {
@@ -91,6 +102,10 @@
 						productionLocationsList.push(obj);
 					}
 				}
+				var emptyObj:ProductionLocations = new ProductionLocations();
+				emptyObj.id = -1;
+				emptyObj.name = "";
+				productionLocationsList.push(emptyObj);
 				dataService.getInvoice(_invoiceBase.id);
 			}
 			
@@ -101,6 +116,15 @@
 					for each(var obj:Object in arrayList){
 						holdStateList.push(obj);
 					}
+				}
+				var emptyObj:HoldState = new HoldState();
+				emptyObj.id = -1;
+				emptyObj.name = "";
+				holdStateList.push(emptyObj);
+				if(_invoiceBase!=null && _invoiceBase.holdState!=null){
+					holdstate_combo.selectedIndex = findItem(_invoiceBase.holdState.id,holdStateList);
+				} else {
+					holdstate_combo.selectedIndex = findItem(-1,holdStateList);
 				}
 			}
 			
@@ -187,6 +211,11 @@
 					enabledValue = true;
 				}
 				selectedJobBase = jobBaseObj;
+				if(selectedJobBase.location!=null){
+					location_combo.selectedIndex = findItem(selectedJobBase.location.id,productionLocationsList);
+				} else {
+					location_combo.selectedIndex = findItem(-1,productionLocationsList);
+				}
 			}
 			
 			private function checkStateValue():void {
@@ -194,6 +223,35 @@
 					_invoiceBase.readyToPickup = false;
 				}
 			}
+			
+			private function setProductionLocation():void {
+				if(selectedJobBase!=null) {
+					if(location_combo.selectedItem!=null){
+						if(location_combo.selectedItem.id==-1) {
+							selectedJobBase.location = null;
+						} else {
+							selectedJobBase.location = location_combo.selectedItem as ProductionLocations;
+						}
+					} else {
+						selectedJobBase.location = null;
+					}
+				}
+			}
+			
+			private function setHoldState():void {
+				if(_invoiceBase!=null) {
+					if(holdstate_combo.selectedItem!=null){
+						if(holdstate_combo.selectedItem.id==-1) {
+							_invoiceBase.holdState = null;
+						} else {
+							_invoiceBase.holdState = holdstate_combo.selectedItem as HoldState;
+						}
+					} else {
+						_invoiceBase.holdState = null;
+					}
+				}
+			}
+				
 			
 			private function doSave():void {
 				if(_invoiceBase!=null) {
@@ -237,9 +295,11 @@
 	
 	<mx:HBox width="100%" horizontalAlign="right">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.JobLocation')}:" width="30%" textAlign="right"/>
-		<components:CustomAutoCompleteComponent enabled="{enabledValue}"
+		<components:EditableComboBox id="location_combo" enabled="{enabledValue}" change="{setProductionLocation()}"
+			dataProvider="{productionLocationsList}" labelField="name" editable="false" optional="true"/>
+		<!--<components:CustomAutoCompleteComponent enabled="{enabledValue}"
 			labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{productionLocationsList}"
-			dataHolder="{selectedJobBase}" variableName="location" customData="{selectedJobBase.location}" customText="{getCustomTextForAutocomplete(productionLocationsList,selectedJobBase,'location','id','name',true,'id')}"/>
+			dataHolder="{selectedJobBase}" variableName="location" customData="{selectedJobBase.location}" customText="{getCustomTextForAutocomplete(productionLocationsList,selectedJobBase,'location','id','name',true,'id')}"/>-->
 		<!--<fc:AutoComplete id="job_location" dataProvider="{productionLocationsList}" lookAhead="true" labelField="name" width="60%" focusOut="{updateJobLocation(event)}"/>-->
 	</mx:HBox>
 	
@@ -254,9 +314,11 @@
 	
 	<mx:HBox width="100%" horizontalAlign="right">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.HoldState')}:" width="30%" textAlign="right"/>
-		<components:CustomAutoCompleteComponent focusOut="{checkStateValue()}"
+		<components:EditableComboBox id="holdstate_combo" change="{setHoldState()}" focusOut="{checkStateValue()}"
+			dataProvider="{holdStateList}" labelField="name" editable="false" optional="true"/>
+		<!--<components:CustomAutoCompleteComponent focusOut="{checkStateValue()}"
 			labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{holdStateList}"
-			dataHolder="{_invoiceBase}" variableName="holdState" customData="{_invoiceBase.holdState}" customText="{getCustomTextForAutocomplete(holdStateList,_invoiceBase,'holdState','id','name',true,'id')}"/>
+			dataHolder="{_invoiceBase}" variableName="holdState" customData="{_invoiceBase.holdState}" customText="{getCustomTextForAutocomplete(holdStateList,_invoiceBase,'holdState','id','name',true,'id')}"/>-->
 	</mx:HBox>
 	
 	<mx:HBox width="100%" horizontalAlign="right">
