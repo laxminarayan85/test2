@@ -217,14 +217,14 @@
 			//
 			if (tempSale.cashRegisterDept != null) {
 				description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.Dept");
-				description = StringUtil.substitute(description,tempSale.cashRegisterDept.title, tempSale.department + " " + tempSale.quantity.toString() + "x"+ tempSale.unitPrice.toString()); 
+				description = StringUtil.substitute(description,tempSale.cashRegisterDept.title, tempSale.description + " " + tempSale.quantity.toString() + "x"+ tempSale.unitPrice.toString()); 
 			} 
 			//
 			// a quick estimate / not a department sale
 			//
 			else {
 				description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.QuickEstld");
-				description = StringUtil.substitute(description,"", tempSale.quantity.toString(), tempSale.department); 
+				description = StringUtil.substitute(description,"", tempSale.quantity.toString(), tempSale.description); 
 			}
 			
 			
