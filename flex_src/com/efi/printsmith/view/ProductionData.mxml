@@ -156,13 +156,22 @@ width="888" height="507"  creationComplete="init()"
 			else
 				this.total_time.text = totalHours + ":" + totalMinutes.toFixed(0);
 			this.production_run.text = job.numCopies.toString();
-			if (job.doubleSided) {
-				this.requires.text = (job.totalCopies / 2 / job.paperCal.runout).toString();
-				this.sheets_purchased.text = (job.totalCopies / 2 / job.paperCal.runout).toString();
+			if (job.pricingMethod.method != "Large Format") {
+				this.parent_size_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RollWidth');
+				this.requires.visible = true;
+				this.sheets_purchased.visible = true;
+				if (job.doubleSided) {
+					this.requires.text = (job.totalCopies / 2 / job.paperCal.runout).toString();
+					this.sheets_purchased.text = (job.totalCopies / 2 / job.paperCal.runout).toString();
+				}
+				else {
+					this.requires.text = (job.totalCopies / job.paperCal.runout).toString();
+					this.sheets_purchased.text = (job.totalCopies / job.paperCal.runout).toString();
+				}
 			}
 			else {
-				this.requires.text = (job.totalCopies / job.paperCal.runout).toString();
-				this.sheets_purchased.text = (job.totalCopies / job.paperCal.runout).toString();
+				this.requires.visible = false;
+				this.sheets_purchased.visible = false;
 			}
 		}
 	}
@@ -356,7 +365,7 @@ width="888" height="507"  creationComplete="init()"
                              
 </mx:Script>
 <mx:Canvas width="868" height="459" dropShadowEnabled="false" horizontalScrollPolicy="off" verticalScrollPolicy="off">
-	<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ParentSize')}" width="120" textAlign="right"/>
+	<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ParentSize')}" width="120" textAlign="right" id="parent_size_label"/>
 	<mx:Label x="379" y="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Area')}" width="101" textAlign="right"/>
 	<mx:Text x="488" y="31" text="" width="60" textAlign="right" id="area"/>
 	<mx:Label x="380" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Out')}" width="100" textAlign="right"/>
