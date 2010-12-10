@@ -157,7 +157,6 @@ width="888" height="507"  creationComplete="init()"
 				this.total_time.text = totalHours + ":" + totalMinutes.toFixed(0);
 			this.production_run.text = job.numCopies.toString();
 			if (job.pricingMethod.method != "Large Format") {
-				this.parent_size_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RollWidth');
 				this.requires.visible = true;
 				this.sheets_purchased.visible = true;
 				if (job.doubleSided) {
@@ -170,8 +169,17 @@ width="888" height="507"  creationComplete="init()"
 				}
 			}
 			else {
+				this.parent_size_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RollWidth');
 				this.requires.visible = false;
 				this.sheets_purchased.visible = false;
+				this.requires_label.visible = false;
+				this.sheets_purchased_label.visible = false;
+				this.run_size.selectedIndex = -1;
+				this.run_size.text = job.rollWidth + " x " + job.cutOff;
+				if (job.pricingCopier.squareAreaType == "AreaFinishSize")
+					this.area.text = (job.finishSize.height * job.finishSize.width).toFixed(0);
+				else
+					this.area.text = (job.rollWidth * job.cutOff).toFixed(0);
 			}
 		}
 	}
@@ -398,8 +406,8 @@ width="888" height="507"  creationComplete="init()"
 	<mx:Text x="138" y="132" width="262" textAlign="right" id="copier"/>
 	<mx:Label x="10" y="132" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Copier')}" width="120" textAlign="right" id="copier_label"/>
 	<mx:Label x="10" y="132" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Press')}" width="120" textAlign="right" id="press_label"/>
-	<mx:Label x="10" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Requires')}" width="120" textAlign="right"/>
-	<mx:Label x="10" y="111" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.SheetsPurchased')}" width="120" textAlign="right"/>
+	<mx:Label x="10" y="90" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Requires')}" width="120" textAlign="right" id="requires_label"/>
+	<mx:Label x="10" y="111" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.SheetsPurchased')}" width="120" textAlign="right" id="sheets_purchased_label"/>
 	<mx:Label x="10" y="29" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.PressRunSize')}" width="120" textAlign="right"/>
 	<mx:Label x="10" y="50" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ParentCosts')}" width="120" textAlign="right"/>
 	<mx:TextInput x="138" y="48" height="20" width="84" textAlign="right" id="parent_costs" change="doParentCostChange()" focusOut="fieldChanged(event)"/>
