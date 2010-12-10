@@ -37,7 +37,7 @@
 				<mx:TextInput x="105" y="8" width="75" text="{invoice.invoiceNumber}" id="txtInvoiceNumber" focusOut="doGetInvoice()"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas1}" position="lastChild">
- 	 	 	 	<mx:Text x="105" y="33" width="75" text="{invoice.totalCost}" id="txtInvoiceTotalDue"/>
+ 	 	 	 	<mx:Text x="105" y="33" width="75" id="txtInvoiceTotalDue"/>
  	 	 	</mx:AddChild>
 
 
@@ -773,43 +773,49 @@
 		var tempString:String;
 		var tempQuantity:Number;
 		
-		if (txtSaleQuantity.text != "")
+		if (txtSaleQuantity != null && txtSaleQuantity.text != "")
 			tempQuantity = parseInt(txtSaleQuantity.text.replace(",",""));
 		else
 			tempQuantity = 0;
 			
-		if (txtSaleUnitPrice.text != "")
+		if (txtSaleUnitPrice != null && txtSaleUnitPrice.text != "")
 			temp = parseFloat(txtSaleUnitPrice.text.replace(",","")) * tempQuantity;
 		else
 			temp = 0;
 		
-		if ( tempQuantity > 0) {
+		if (this.currentState == "invoiceState") {
 			accept_button.enabled =  true;
-			accept_button.tabIndex = 5;
 			this.focusManager.defaultButton = accept_button;
-		}	
-		else {
-			accept_button.enabled = false;
-			this.focusManager.defaultButton = null;
-		}
-		
-		// total price can be overridden
-		if (activeSale != null && activeSale.opPrice == false)
-			txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(temp)
-		
-		activeSale.subTotal = temp;		// no tax at this point
-
-		activeSale.taxTable = pickTaxTable.selectedItem as TaxTable;
-		activeSale.taxCode = pickTaxCode.selectedItem as TaxCodes;
-		
-		if (chkNonTax.selected){
-			activeSale.taxAmount = 0;
 			UpdateBatchNumbers();
-		}
-		else {
-			this.throbber.visible = true;
-			this.throbber.play();
-			taxCalculatorService.calculateTax(activeSale.taxTable, activeSale.subTotal);
+		} else {
+			if ( tempQuantity > 0) {
+				accept_button.enabled =  true;
+				accept_button.tabIndex = 5;
+				this.focusManager.defaultButton = accept_button;
+			}	
+			else {
+				accept_button.enabled = false;
+				this.focusManager.defaultButton = null;
+			}
+		
+			// total price can be overridden
+			if (activeSale != null && activeSale.opPrice == false && txtSaleTotal != null)
+				txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(temp)
+			
+			activeSale.subTotal = temp;		// no tax at this point
+	
+			activeSale.taxTable = pickTaxTable.selectedItem as TaxTable;
+			activeSale.taxCode = pickTaxCode.selectedItem as TaxCodes;
+		
+			if (chkNonTax.selected){
+				activeSale.taxAmount = 0;
+				UpdateBatchNumbers();
+			}
+			else {
+				this.throbber.visible = true;
+				this.throbber.play();
+				taxCalculatorService.calculateTax(activeSale.taxTable, activeSale.subTotal);
+			}
 		}
 		
 		if (card_ref != null && card_ref.text.length == 0 && btPayment != null)
@@ -1613,6 +1619,7 @@
 		var format:String;
 		var printList:ArrayCollection = new ArrayCollection();
 		var chargeLog:ArrayCollection = new ArrayCollection();	
+		var arHistoryList:ArrayCollection = new ArrayCollection();	
 		var i:int = 0;
 		
 		//
@@ -1734,6 +1741,7 @@
 						// TODO
 						//arRecord.storeNumber = 
 						
+						arHistoryList.addItem(arRecord);
 						//dataService.addUpdate(arRecord);
 						
 						if (sessionBatch.account != null) {
@@ -1848,6 +1856,8 @@
 							}
 							
 							tempSale.accountHistoryData = arRecord;			// record AR history record into tape
+							
+							arHistoryList.addItem(arRecord);
 							//dataService.addUpdate(arRecord);
 							
 							if (sessionBatch.account != null) {
@@ -1862,7 +1872,7 @@
 								sessionBatch.account.salesMonth += amountForThisPosting;
 								sessionBatch.account.salesYear += amountForThisPosting;
 								sessionBatch.account.termsDiscount += amountForThisPosting;
-							//	sessionBatch.account.lastPostingDate = new Date();
+							//	sessionBatch.account.lastPostingDate = new Date();		// TODO (wrong type right now)
 								accountChanged = true;
 							}
 						}
@@ -1899,6 +1909,18 @@
 			}
 			
 			//
+			// any account history records that need to be created.
+			//		these are reference in the TapeSaleRecord, so they
+			//		must be saved first.
+			//
+			if (arHistoryList != null && arHistoryList.length > 0) {
+				for(i = 0; i< arHistoryList.length; i++) {
+					arRecord = arHistoryList.getItemAt(i) as AccountHistoryData;
+					dataService.addUpdate(arRecord);
+				}
+			}
+			
+			//
 			// appead this session to the current batch session list
 			//
 			tapeBatch.sessionBatches.addItem(sessionBatch);
@@ -1906,8 +1928,6 @@
 			//
 			// write out the Tape Batch and all of its sub records, session, sales, payments, account history 
 			//
-			//dataServiceTape.addUpdate(tape);
-		
 			dataServiceTapeBatch.addUpdate(tapeBatch);
 			
 			// some changed in the account record
@@ -2062,12 +2082,16 @@
 			if (goodPickup) {
 				customerAccount = invoice.account;			// active account for charging
 				activeSale.isPickup = true;
+				activeSale.invoice = invoice;				//TODO - the types do not match right now
 				activeSale.taxTable = invoice.taxTable
 			//	activeSale.taxCode = invoice.
 				activeSale.subTotal = invoice.subTotal;
 				activeSale.total = invoice.amountDue;
+				if (activeSale.total == 0)
+					activeSale.total = invoice.priceTotal;		// TEMP  TODO - remove this (amount due is currently not imported properly)
+					
 				activeSale.taxAmount = invoice.tax;
-				activeSale.department = invoice.name;
+				activeSale.description = invoice.name;
 				
 				if (activeSale.department.length == 0)
 					activeSale.department = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp');
@@ -2079,14 +2103,25 @@
 					pickTaxCode.selectedIndex = findItem(invoice.taxCode.name, TaxCodesArray)
 				}
 				
-				txtSaleDescription.text = activeSale.department;
-				txtSaleQuantity.text = activeSale.quantity.toString();
-				txtSaleUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.unitPrice);
-				txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.subTotal);
+				if (txtSaleDescription != null)
+					txtSaleDescription.text = activeSale.department;
+				if (txtSaleQuantity != null)
+					txtSaleQuantity.text = activeSale.quantity.toString();
+				if (txtSaleUnitPrice != null) 
+					txtSaleUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.unitPrice);
+				if (txtSaleTotal != null)
+					txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.subTotal);
 
-
+				if (txtInvoiceTotalDue != null)
+					txtInvoiceTotalDue.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.total);
+					
 				// TODO: capture invoice ID, Invoice Number, Previous deposits
 				
+				// make sure total areas are updated
+				UpdateCashRegister();
+				
+				// except this sale transaction
+				//doAccept();
 			}			
 		}
 	}
