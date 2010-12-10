@@ -140,7 +140,7 @@
 	
 	public function setLargeFormatOnly() {
 		this.chkShowLargeFormatStock.selected = true;
-		this.chkShowRigidSubstrate.selected = true;
+		this.chkShowRigidSubstrate.selected = false;
 		this.chkShowLargeFormatStock.enabled = false;
 		this.chkShowRigidSubstrate.enabled = false;
 		this.chkShowRollStock.enabled = false;
