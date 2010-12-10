@@ -1584,7 +1584,7 @@
 										 lookAhead="true"
 										/>
 						</mx:FormItem>
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.ShipVia')}" >
+						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipVia')}" >
 							
 							<fc:AutoComplete id="ship_via_combo"
 											 dataProvider="{shippingMethods}"

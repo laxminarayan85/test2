@@ -2493,6 +2493,7 @@ public class DataService extends HibernateService {
 						log.error("null charge found");
 					}
 				}
+				
 				for (int i = 0; i < account.getJobCharges().size(); i++) {
 					ChargeDefinition chargeDefinition = account.getJobCharges()
 							.get(i);
@@ -2500,18 +2501,22 @@ public class DataService extends HibernateService {
 						log.error("null charge found");
 					}
 				}
-				for (int i = 0; i < account.getContact().getComLinks().size(); i++) {
-					ComLink link = account.getContact().getComLinks().get(i);
-					if (link == null) {
-						log.error("null charge found");
+				if ( account.getContact() != null){
+					for (int i = 0; i < account.getContact().getComLinks().size(); i++) {
+						ComLink link = account.getContact().getComLinks().get(i);
+						if (link == null) {
+							log.error("null charge found");
+						}
 					}
 				}
-				for (int i = 0; i < account.getBillToContact().getComLinks()
-						.size(); i++) {
-					ComLink link = account.getBillToContact().getComLinks()
-							.get(i);
-					if (link == null) {
-						log.error("null charge found");
+				if ( account.getBillToContact() != null){
+					for (int i = 0; i < account.getBillToContact().getComLinks()
+							.size(); i++) {
+						ComLink link = account.getBillToContact().getComLinks()
+								.get(i);
+						if (link == null) {
+							log.error("null charge found");
+						}
 					}
 				}
 				

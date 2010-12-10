@@ -879,18 +879,37 @@
 		var sales:SalesRep;
 		var result:Boolean;
 		
-		if (sales_rep_combo.text != null && sales_rep_combo.text != "" && sales_rep_combo.selectedIndex == -1) {
 			var item:int = findItem(sales_rep_combo.text, salesReps);
 			if (item == -1) {
 				sales = new SalesRep();
 				sales.name = sales_rep_combo.text;
 				salesRepDataService.addUpdate(sales);
 				account.salesRep = sales
+				sales_rep_combo2.text=sales_rep_combo.text;
 			}
 			else {
-				sales_rep_combo.selectedItem = item;
+				sales_rep_combo.selectedIndex = item;
+				sales_rep_combo2.selectedIndex = item;
 			}
-		}
+	
+	}
+	private function doSaleRep2(): void{                             
+		var sales:SalesRep;
+		var result:Boolean;
+		
+			var item:int = findItem(sales_rep_combo2.text, salesReps);
+			if (item == -1) {
+				sales = new SalesRep();
+				sales.name = sales_rep_combo2.text;
+				salesRepDataService.addUpdate(sales);
+				account.salesRep = sales
+				sales_rep_combo.text=sales_rep_combo2.text;
+			}
+			else {
+				sales_rep_combo.selectedIndex = item;
+				sales_rep_combo2.selectedIndex = item;
+			}
+	
 	}
 	private function doTaxTable(): void{                             
 		var taxtable:TaxTable;
@@ -905,7 +924,7 @@
 				account.taxTable = taxtable;
 			}
 			else {
-				tax_table_combo.selectedItem = item;
+				tax_table_combo.selectedIndex = item;
 			}
 		}
 	}
@@ -922,7 +941,7 @@
 				account.taxCode = taxcode;
 			}
 			else {
-				tax_table_combo.selectedItem = item;
+				tax_table_combo.selectedIndex = item;
 			}
 		}
 	}
@@ -939,7 +958,7 @@
 				account.shippingMode = shipv;
 			}
 			else {
-				ship_via_combo.selectedItem = item;
+				ship_via_combo.selectedIndex = item;
 			}
 		}
 	}
@@ -956,7 +975,7 @@
 				account.marketing.businessType= business;
 			}
 			else {
-				business_type_combo.selectedItem = item;
+				business_type_combo.selectedIndex = item;
 			}
 		}
 	}
@@ -1831,7 +1850,7 @@
 					<mx:Label x="39" y="181" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRanking')}"/>
 					<mx:Label x="63" y="207" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.SalesRep')}"/>
 					<!--<mx:Text x="137" y="207" width="64" id="sales_rep_text" text="{account.salesRep.name}"/>-->
-					<mx:ComboBox id="sales_rep_combo2" x="137" y="207" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep();" />
+					<mx:ComboBox id="sales_rep_combo2" x="137" y="207" width="160" dataProvider="{salesReps}"  labelField="name" focusOut="doSaleRep2();" />
 					<mx:Text x="137" y="181" width="64" id="sales_ranking_text"/>
 					<mx:Panel x="10" y="233" width="377" height="191" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowInvHistoryCmd.History')}" dropShadowEnabled="false">
 						<mx:Label x="56" y="29" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Sales')}" textAlign="right"/>

@@ -67,7 +67,7 @@ public class Invoice extends InvoiceBase {
     this.isDeleted = isDeleted;
   }
 
-	public Invoice(long id, String Name, String invoiceNumber, double grandTotal, String customerPO) {
+	public Invoice(long id, String Name, String invoiceNumber, BigDecimal grandTotal, String customerPO) {
 		this.id = id;
 		this.setName(Name);
 		this.setInvoiceNumber(invoiceNumber);

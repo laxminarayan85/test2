@@ -8,6 +8,7 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
 	<mx:method name="getByAccountId" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="getInvoiceByAccountId" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadPickerResult(event)"/>
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="invoicebase"/>
@@ -22,6 +23,7 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
 	import mx.events.FlexEvent;
 	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.printsmith.security.PSSecurityUtils;
+	import com.efi.printsmith.common.components.CommonLoadComponent;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                  
@@ -42,10 +44,10 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
 	
 	[Bindable]                                         
 	private var account:Account;
-	
+	 private var accounts:ArrayCollection = new ArrayCollection();
 	[Bindable]
     private var invoices:ArrayCollection = new ArrayCollection(); 
-	
+	[Bindable] private var loadComponent:CommonLoadComponent;
 	
 	
 	public function init(event:FlexEvent=null):void {
@@ -62,14 +64,33 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
 
 	
 	private function doAccount():void {
-		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+		
+		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
+		
+		dataService.getAccountPicker()
+		
+		}
+ private function doGet():void{
+ 	 var   accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);
 	    accountPickerWindow.formIsEmpty = true;
+	    accountPickerWindow.prospect_boolean = false;
+	    accountPickerWindow.setAccounts(accounts);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
-	}
+	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);
+	 //   accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTUNASSIGNEDCONTACT, handleAccountPickerUnassigned);		
 
+ 
+ }
+ 	
+private function handleLoadPickerResult(ev:ResultEvent):void {
+		accounts = ev.result as ArrayCollection;
+		this.doGet();
+		if(loadComponent) {
+			loadComponent.close();
+		}	
+	}
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 		this.setAccount(new Account());
 	}
@@ -87,15 +108,6 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
 		this.account = new Account();
 	}
 
-
-	private function doGet():void {
-		var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
-	    accountPickerWindow.setStyle("borderAlpha", 0.9);
-	    accountPickerWindow.formIsEmpty = true;
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
-	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);		
-	}  
 	
 	private function setAccount(account2:Account):void
 	{
