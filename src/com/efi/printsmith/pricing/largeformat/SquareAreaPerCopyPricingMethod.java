@@ -10,12 +10,12 @@ import com.efi.printsmith.pricing.stock.PriceStockEngine;
 import com.efi.printsmith.pricing.utilities.MatrixUtilities;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 
-public class SquareAreaPerCopyPricingMethod extends
-		LargeFormatPricingMethod {
+public class SquareAreaPerCopyPricingMethod extends LargeFormatPricingMethod {
 	@Override
-	public Job priceLargeFormatJob (Job job) throws Exception {
+	public Job priceLargeFormatJob(Job job) throws Exception {
 		PricingRecord pricingRecord = job.getPricingRecord();
-		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
+		if (pricingRecord.getTotalPriceOverride())
+			return job; /* User overrode price - leave it alone */
 		super.priceLargeFormatJob(job);
 		CopierDefinition copierDefinition = job.getPricingCopier();
 		PriceStockEngine priceStockEngine = new PriceStockEngine();
@@ -23,14 +23,17 @@ public class SquareAreaPerCopyPricingMethod extends
 		long area = 0;
 		try {
 			if (copierDefinition.getSquareAreaType() == "AreaFinishSize")
-				area = PriceListUtilities.getAreaFromSizeString(job.getFinishSize());
+				area = PriceListUtilities.getAreaFromSizeString(job
+						.getFinishSize());
 			else
-				area = new Double(Double.parseDouble(job.getParentSize().getName()) * job.getCutOff()).longValue();
+				area = new Double(Double.parseDouble(job.getParentSize()
+						.getName())
+						* job.getCutOff()).longValue();
+		} catch (Exception e) {
+
 		}
-		catch (Exception e) {
-			
-		}
-		MatrixElement matrixElement = MatrixUtilities.lookupMatrixElement(job.getPricingCopier().getCopierMatrix(), job.getTotalCopies());
+		MatrixElement matrixElement = MatrixUtilities.lookupMatrixElement(job
+				.getPricingCopier().getCopierMatrix(), job.getTotalCopies());
 		double pricePerCopy = 0.0;
 		double pricePerSecondSide = 0.0;
 		double unitPrice = 0.0;
@@ -51,181 +54,170 @@ public class SquareAreaPerCopyPricingMethod extends
 				&& job.getPricingCopier().getPriceTwoSide().equals(
 						Price2Side.UsingSideFactor.name())) {
 			stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();
-			if (!pricingRecord.getTotalPriceOverride()) {
-				if (copierDefinition.getMatrixType().equals("CopyCost")) {
-					if (copierDefinition.getInterpolateMatrix() == true)
-						pricePerCopy = MatrixUtilities.calculateInterpolation(
-								job.getPricingCopier().getCopierMatrix(), area);
-					else
-						pricePerCopy = matrixElement.getPrice1().doubleValue();
-					pricePerCopy *= copierDefinition.getCopyMarkup2();
-					pricingRecord.setUnitPrice(pricePerCopy);
-					if (job.getDoubleSided()) {
-						if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.NotChangingPrice.name())) {
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * (area / 2));
-						} else if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.UsingSideFactor.name())) {
-							pricePerCopy = new Double(Math
-									.round(((pricePerCopy * copierDefinition
-											.getSideTwoFactor()) / 2) * 10000)) / 10000;
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
-						} else if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.UsingSecondSideRate.name())) {
-							pricePerCopy = matrixElement.getPrice2()
-									.doubleValue()
-									* copierDefinition.getCopyMarkup2();
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
-						} else {
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
-						}
+		}
+		if (!pricingRecord.getTotalPriceOverride()) {
+			if (copierDefinition.getMatrixType().equals("CopyCost")) {
+				if (copierDefinition.getInterpolateMatrix() == true)
+					pricePerCopy = MatrixUtilities.calculateInterpolation(job
+							.getPricingCopier().getCopierMatrix(), area);
+				else
+					pricePerCopy = matrixElement.getPrice1().doubleValue();
+				pricePerCopy *= copierDefinition.getCopyMarkup2();
+				pricingRecord.setUnitPrice(pricePerCopy);
+				if (job.getDoubleSided()) {
+					if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.NotChangingPrice.name())) {
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * (area / 2));
+					} else if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.UsingSideFactor.name())) {
+						pricePerCopy = new Double(Math
+								.round(((pricePerCopy * copierDefinition
+										.getSideTwoFactor()) / 2) * 10000)) / 10000;
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * area);
+					} else if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.UsingSecondSideRate.name())) {
+						pricePerCopy = matrixElement.getPrice2().doubleValue()
+								* copierDefinition.getCopyMarkup2();
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * area);
 					} else {
-						stockTotalPrice = ((stockPrice * area / runout));
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
 						laborTotalPrice = (pricePerCopy * area);
 					}
-				} else if (copierDefinition.getMatrixType().equals(
-						"DiscountTable")) {
-					double discountPct = 0.0;
-					if (copierDefinition.getInterpolateMatrix() == true)
-						discountPct = MatrixUtilities.calculateInterpolation(
-								job.getPricingCopier().getCopierMatrix(), area);
-					else
-						discountPct = matrixElement.getPrice1().doubleValue();
-					pricePerCopy = copierDefinition.getBaseRate().doubleValue()
-							* discountPct;
-					pricePerCopy *= copierDefinition.getCopyMarkup2();
-					pricingRecord.setUnitPrice(pricePerCopy);
-					double discountedStockPrice = stockPrice * discountPct;
+				} else {
+					stockTotalPrice = ((stockPrice * area / runout));
+					laborTotalPrice = (pricePerCopy * area);
+				}
+			} else if (copierDefinition.getMatrixType().equals("DiscountTable")) {
+				double discountPct = 0.0;
+				if (copierDefinition.getInterpolateMatrix() == true)
+					discountPct = MatrixUtilities.calculateInterpolation(job
+							.getPricingCopier().getCopierMatrix(), area);
+				else
+					discountPct = matrixElement.getPrice1().doubleValue();
+				pricePerCopy = copierDefinition.getBaseRate().doubleValue()
+						* discountPct;
+				pricePerCopy *= copierDefinition.getCopyMarkup2();
+				pricingRecord.setUnitPrice(pricePerCopy);
+				double discountedStockPrice = stockPrice * discountPct;
 
-					if (job.getDoubleSided()) {
-						if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.NotChangingPrice.name())) {
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * (area / 2));
-						} else if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.UsingSideFactor.name())) {
-							pricePerCopy = new Double(Math
-									.round(((pricePerCopy * copierDefinition
-											.getSideTwoFactor()) / 2) * 10000)) / 10000;
-							stockTotalPrice = (discountedStockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
-						} else if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.UsingSecondSideRate.name())) {
-							discountPct = matrixElement.getPrice2()
-									.doubleValue();
-							pricePerCopy = copierDefinition.getBaseRate()
-									.doubleValue()
-									* discountPct
-									* copierDefinition.getCopyMarkup2();
-							discountedStockPrice = stockPrice * discountPct;
-							stockTotalPrice = (discountedStockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
-						} else {
-							stockTotalPrice = (discountedStockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
-						}
+				if (job.getDoubleSided()) {
+					if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.NotChangingPrice.name())) {
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * (area / 2));
+					} else if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.UsingSideFactor.name())) {
+						pricePerCopy = new Double(Math
+								.round(((pricePerCopy * copierDefinition
+										.getSideTwoFactor()) / 2) * 10000)) / 10000;
+						stockTotalPrice = (discountedStockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * area);
+					} else if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.UsingSecondSideRate.name())) {
+						discountPct = matrixElement.getPrice2().doubleValue();
+						pricePerCopy = copierDefinition.getBaseRate()
+								.doubleValue()
+								* discountPct
+								* copierDefinition.getCopyMarkup2();
+						discountedStockPrice = stockPrice * discountPct;
+						stockTotalPrice = (discountedStockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * area);
 					} else {
-						stockTotalPrice = ((discountedStockPrice * area / runout));
+						stockTotalPrice = (discountedStockPrice * ((area / 2) / runout));
 						laborTotalPrice = (pricePerCopy * area);
 					}
-				} else if (copierDefinition.getMatrixType().equals("StepTable")) {
-					if (job.getDoubleSided()
-							&& copierDefinition.getPriceTwoSide().equals(
-									Price2Side.CountingAsMoreOriginals.name())) {
-						pricePerCopy = MatrixUtilities
-								.calculateStepPriceSideOne(copierDefinition
-										.getCopierMatrix(), area * 2);
-					} else {
-						pricePerCopy = MatrixUtilities
-								.calculateStepPriceSideOne(copierDefinition
-										.getCopierMatrix(), area);
-					}
-					if (job.getDoubleSided()) {
-						if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.NotChangingPrice.name())) {
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * (area / 2));
-						} else if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.UsingSideFactor.name())) {
-							pricePerCopy = new Double(Math
-									.round(((pricePerCopy * copierDefinition
-											.getSideTwoFactor()) / 2) * 10000)) / 10000;
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
-						} else if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.UsingSecondSideRate.name())) {
-							if (job.getDoubleSided()
-									&& copierDefinition
-											.getPriceTwoSide()
-											.equals(
-													Price2Side.CountingAsMoreOriginals
-															.name())) {
-								pricePerCopy = MatrixUtilities
-										.calculateStepPriceSideTwo(
-												copierDefinition
-														.getCopierMatrix(), job
-														.getPressQty() * 2);
-							} else {
-								pricePerCopy = MatrixUtilities
-										.calculateStepPriceSideTwo(
-												copierDefinition
-														.getCopierMatrix(), job
-														.getPressQty());
-							}
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
+				} else {
+					stockTotalPrice = ((discountedStockPrice * area / runout));
+					laborTotalPrice = (pricePerCopy * area);
+				}
+			} else if (copierDefinition.getMatrixType().equals("StepTable")) {
+				if (job.getDoubleSided()
+						&& copierDefinition.getPriceTwoSide().equals(
+								Price2Side.CountingAsMoreOriginals.name())) {
+					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(
+							copierDefinition.getCopierMatrix(), area * 2);
+				} else {
+					pricePerCopy = MatrixUtilities.calculateStepPriceSideOne(
+							copierDefinition.getCopierMatrix(), area);
+				}
+				if (job.getDoubleSided()) {
+					if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.NotChangingPrice.name())) {
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * (area / 2));
+					} else if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.UsingSideFactor.name())) {
+						pricePerCopy = new Double(Math
+								.round(((pricePerCopy * copierDefinition
+										.getSideTwoFactor()) / 2) * 10000)) / 10000;
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * area);
+					} else if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.UsingSecondSideRate.name())) {
+						if (job.getDoubleSided()
+								&& copierDefinition.getPriceTwoSide().equals(
+										Price2Side.CountingAsMoreOriginals
+												.name())) {
+							pricePerCopy = MatrixUtilities
+									.calculateStepPriceSideTwo(copierDefinition
+											.getCopierMatrix(), job
+											.getPressQty() * 2);
 						} else {
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
+							pricePerCopy = MatrixUtilities
+									.calculateStepPriceSideTwo(copierDefinition
+											.getCopierMatrix(), job
+											.getPressQty());
 						}
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * area);
 					} else {
-						stockTotalPrice = ((stockPrice * area / runout));
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
 						laborTotalPrice = (pricePerCopy * area);
 					}
-				} else if (copierDefinition.getMatrixType().equals(
-						"MarkupTable")) {
-					double markup = 0.0;
-					if (copierDefinition.getInterpolateMatrix() == true)
-						markup = MatrixUtilities.calculateInterpolation(job
-								.getPricingCopier().getCopierMatrix(), area);
-					else
-						markup = matrixElement.getPrice1().doubleValue();
-					pricePerCopy = copierDefinition.getBaseRate().doubleValue()
-							* markup;
+				} else {
+					stockTotalPrice = ((stockPrice * area / runout));
+					laborTotalPrice = (pricePerCopy * area);
+				}
+			} else if (copierDefinition.getMatrixType().equals("MarkupTable")) {
+				double markup = 0.0;
+				if (copierDefinition.getInterpolateMatrix() == true)
+					markup = MatrixUtilities.calculateInterpolation(job
+							.getPricingCopier().getCopierMatrix(), area);
+				else
+					markup = matrixElement.getPrice1().doubleValue();
+				pricePerCopy = copierDefinition.getBaseRate().doubleValue()
+						* markup;
 
-					if (job.getDoubleSided()) {
-						if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.NotChangingPrice.name())) {
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * (area / 2));
-						} else if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.UsingSideFactor.name())) {
-							pricePerCopy = new Double(Math
-									.round(((pricePerCopy * copierDefinition
-											.getSideTwoFactor()) / 2) * 10000)) / 10000;
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
-						} else if (copierDefinition.getPriceTwoSide().equals(
-								Price2Side.UsingSecondSideRate.name())) {
-							markup = matrixElement.getPrice2().doubleValue();
-							pricePerCopy = copierDefinition
-									.getMachineCostPerCopy().doubleValue()
-									* markup
-									* copierDefinition.getCopyMarkup2();
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
-						} else {
-							stockTotalPrice = (stockPrice * ((area / 2) / runout));
-							laborTotalPrice = (pricePerCopy * area);
-						}
+				if (job.getDoubleSided()) {
+					if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.NotChangingPrice.name())) {
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * (area / 2));
+					} else if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.UsingSideFactor.name())) {
+						pricePerCopy = new Double(Math
+								.round(((pricePerCopy * copierDefinition
+										.getSideTwoFactor()) / 2) * 10000)) / 10000;
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * area);
+					} else if (copierDefinition.getPriceTwoSide().equals(
+							Price2Side.UsingSecondSideRate.name())) {
+						markup = matrixElement.getPrice2().doubleValue();
+						pricePerCopy = copierDefinition.getMachineCostPerCopy()
+								.doubleValue()
+								* markup * copierDefinition.getCopyMarkup2();
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						laborTotalPrice = (pricePerCopy * area);
 					} else {
-						stockTotalPrice = ((stockPrice * area / runout));
+						stockTotalPrice = (stockPrice * ((area / 2) / runout));
 						laborTotalPrice = (pricePerCopy * area);
 					}
+				} else {
+					stockTotalPrice = ((stockPrice * area / runout));
+					laborTotalPrice = (pricePerCopy * area);
 				}
 			}
 		}
