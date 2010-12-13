@@ -126,9 +126,9 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSecondSideRate.name())) {
 						if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(Price2Side.CountingAsMoreOriginals.name())) {
-							pricePerCopy = MatrixUtilities.calculateStepPriceSideTwo(copierDefinition.getCopierMatrix(), job.getPressQty()*2);
+							pricePerCopy = MatrixUtilities.calculateStepPriceSideTwo(copierDefinition.getCopierMatrix(), lookupQty);
 						} else {
-							pricePerCopy = MatrixUtilities.calculateStepPriceSideTwo(copierDefinition.getCopierMatrix(), job.getPressQty());
+							pricePerCopy = MatrixUtilities.calculateStepPriceSideTwo(copierDefinition.getCopierMatrix(), lookupQty);
 						}
 						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
 						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
