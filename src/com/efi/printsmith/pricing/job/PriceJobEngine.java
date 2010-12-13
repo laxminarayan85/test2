@@ -19,13 +19,14 @@ import com.efi.printsmith.pricing.linesandinches.LinesAndInchesPricingMethod;
 import com.efi.printsmith.pricing.linesandinches.LinesAndInchesPricingMethodFactory;
 import com.efi.printsmith.pricing.list.ListPricingMethod;
 import com.efi.printsmith.pricing.list.ListPricingMethodFactory;
+import com.efi.printsmith.service.DataService;
 
 public class PriceJobEngine {
 	protected static Logger log = Logger.getLogger(PriceJobEngine.class);
 
 	static public Job priceJob(Job job) throws Exception {
 		PreferencesPricingMethod pricingMethod = job.getPricingMethod();
-
+		DataService dataService = new DataService();
 		clearPricingRecord(job.getPricingRecord());
 		/*
 		 * TODO: Estimator types should be hard-coded in the system, not a table
@@ -66,6 +67,7 @@ public class PriceJobEngine {
 		//			
 		// }
 		if (pricingMethod.getMethod().equals("B&W")) {
+			job.setPricingCopier(dataService.getCopierDefinition(job.getPricingCopier().getId()));
 			CopierPricingMethod copierPricingMethod = CopierPricingMethodFactory
 					.createCopierPricingMethod(job.getPricingCopier()
 							.getMethod());
@@ -75,6 +77,7 @@ public class PriceJobEngine {
 				copierPricingMethod.priceCopierJob(job);
 			}
 		} else if (pricingMethod.getMethod().equals("Color")) {
+			job.setPricingCopier(dataService.getCopierDefinition(job.getPricingCopier().getId()));
 			CopierPricingMethod copierPricingMethod = CopierPricingMethodFactory
 					.createCopierPricingMethod(job.getPricingCopier()
 							.getMethod());
