@@ -79,7 +79,7 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 				else
 					discountPct = matrixElement.getPrice1().doubleValue();
 				pricePerCopy = copierDefinition.getBaseRate().doubleValue() * discountPct;
-				pricePerCopy *= copierDefinition.getCopyMarkup2();
+				//pricePerCopy *= copierDefinition.getCopyMarkup2();
 				double discountedStockPrice = stockPrice * discountPct;
 				wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 				if (job.getDoubleSided()) {

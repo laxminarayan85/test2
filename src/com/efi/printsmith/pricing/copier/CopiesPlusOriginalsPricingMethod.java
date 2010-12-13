@@ -294,7 +294,7 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						double discountPct = unitPrice;
 						
 						pricePerCopy = pricingCopier.getBaseRate().doubleValue() * discountPct;
-						pricePerCopy *= pricingCopier.getCopyMarkup2();
+						//pricePerCopy *= pricingCopier.getCopyMarkup2();
 						
 						pricingRecord.setUnitPrice(pricePerCopy + stockPrice);
 						stockPrice *= discountPct;
