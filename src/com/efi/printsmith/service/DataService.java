@@ -3488,8 +3488,10 @@ public class DataService extends HibernateService {
 			String queryString = "select max(displayId) from " + className;
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
-			if (rs.next()) {
-				maxDisplayId = rs.getLong(0).longValue();
+			if (rs != null && rs.next()) {
+				if (rs.getLong(0) != null) {
+					maxDisplayId = rs.getLong(0).longValue();
+				}
 			}
 		} catch (Exception e) {
 			log.error(e); 			
