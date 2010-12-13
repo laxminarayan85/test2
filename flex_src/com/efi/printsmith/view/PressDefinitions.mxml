@@ -55,6 +55,7 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 <mx:Script>                                   
 <![CDATA[
 	import mx.events.FlexEvent;
+	import mx.utils.ObjectUtil;
 	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.mdi.event.compare.MDICompareObjectEvent;
@@ -563,7 +564,8 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 		if (pressDefinition.wasteChart != null){
 			selectedWasteChart.label = WasteListLabel();
 		}
-	    doWashUpPerFountain(); 
+	    doWashUpPerFountain();
+	    originalPressDefinition = ObjectUtil.copy(pressDefinition) as com.efi.printsmith.data.PressDefinition;
 	    this.Name.setFocus();
 	}
 	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
