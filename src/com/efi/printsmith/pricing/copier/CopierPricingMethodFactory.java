@@ -10,7 +10,7 @@ public class CopierPricingMethodFactory {
 		if (method.equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesAndOriginals.name())) {
 			log.info("Creating CopiesPlusOriginalsPricingMethod");
 			return new CopiesPlusOriginalsPricingMethod();
-		} else if (method.equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginals.name())) {
+		} else if (method.equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginal.name())) {
 			log.info("Creating CopiesPerOriginalPricingMethod");
 			return new CopiesPerOriginalPricingMethod();
 		} else if (method.equals(com.efi.printsmith.data.enums.CopierPricingMethod.CostPlus.name())) {

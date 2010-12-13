@@ -96,7 +96,7 @@ public class PriceListService extends SnowmassHibernateService {
 					price = getCostPlusPrice(copierDefinition,qty,true);
 					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
 					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginals.name())) {
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginal.name())) {
 					price = getCopiesPerOriginalPrice(copierDefinition,qty,false);
 					sideOneList.add(new Double(Math.round(price * 100)) / 100);
 					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
@@ -281,7 +281,7 @@ public class PriceListService extends SnowmassHibernateService {
 					price = getCostPlusPrice(copierDefinition,qty,true);
 					sideTwoList.add(new Double(Math.round(price * 100)) / 100);
 					sideTwoPerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
-				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginals.name())) {
+				} else if (copierDefinition.getMethod().equals(com.efi.printsmith.data.enums.CopierPricingMethod.CopiesPerOriginal.name())) {
 					price = getCopiesPerOriginalPrice(copierDefinition,qty,false);
 					sideOneList.add(new Double(Math.round(price * 100)) / 100);
 					sideOnePerList.add(new Double(Math.round((price / qty) * 1000)) / 1000);
