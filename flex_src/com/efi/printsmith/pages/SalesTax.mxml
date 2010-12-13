@@ -73,6 +73,14 @@
 			return("*");
 		return ("");
 	}
+	private function dorate(item:Object, column:DataGridColumn):String{
+		var tmpItem:TaxElement ;
+		var tmpString:String;
+		tmpItem = item as TaxElement;
+		
+		tmpString = Snowmass.getCurrencyFormatter(false,2).format(tmpItem.rate * 100) + "%";
+		return tmpString;
+	}
 	private function doTaxName(item:Object, column:DataGridColumn):String{
 		var tmpItem:TaxElement ;
 		tmpItem = item as TaxElement;
@@ -86,6 +94,13 @@
 		if (tmpItem.defaultTable)
 			return("*");
 		return ("");
+	}
+	private function  doeffectiveTaxRate(item:Object, column:DataGridColumn):String{
+		var tmpItem:TaxTable ;
+		var tmpString:String;
+		tmpItem = item as TaxTable;
+		tmpString = Snowmass.getCurrencyFormatter(false,2).format(tmpItem.effectiveTaxRate * 100) + "%";
+		return tmpString;
 	}
 	private function doSelectTaxTable():void{
 		taxElementsArray = new ArrayCollection();
@@ -210,12 +225,12 @@
 	<mx:Label x="17" y="114" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Abbreviation')}" width="67"/>
 	<mx:TextInput x="92" y="82" id="name_edit" text="{taxTable.name}"/>
 	<mx:TextInput x="92" y="112" id="Abbr_edit" text="{taxTable.abbr}"/>
-	<mx:DataGrid x="17" y="140" width="450" height="273"  editable="true" change="updatetax()" dataProvider="{taxElementsArray}"  id="elementGrid">
+	<mx:DataGrid x="17" y="140" width="450" height="273"  editable="true" itemFocusOut="updatetax()" change="updatetax()" dataProvider="{taxElementsArray}"  id="elementGrid">
 		<mx:columns>
 			<mx:DataGridColumn editorDataField="selectedItem" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Description')}" labelFunction="doTaxName"
 			itemEditor="com.efi.printsmith.itemRenderers.TaxElementsEditor" editable="true" dataField="tax"  >
 		</mx:DataGridColumn>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" dataField="rate"/>
+			<mx:DataGridColumn  headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="dorate" />
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Ship')}"  labelFunction="doshiptax"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Show')}" dataField="showTax"/>
 		</mx:columns>
@@ -234,18 +249,18 @@
 				   bottom="317"/>
 	<mx:Label x="184" y="451"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.EffectiveTaxRate')}"/>
 	<mx:Label id="min_edit" x="92" y="475" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.MinimumTaxableAmount')}" width="212.5"/>
-	<mx:CheckBox x="6" y="504" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxShipping')}" selected="{taxTable.taxShipping}" id="tax_shipping_check"/>
-	<mx:CheckBox x="151" y="504" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SeparateShipping')}" selected="{taxTable.separateShipping}" id="seperate_shipping_check"/>
-	<mx:CheckBox x="293" y="504" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxonTax')}" selected="{taxTable.taxOnTax}" id="tax_on_tax_check"/>
-	<mx:CheckBox x="151" y="534" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Buildtaxinprice')}" selected="{taxTable.taxInPrice}" id="tax_inPrice_check"/>
-	<mx:CheckBox x="6" y="534" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}" selected="{taxTable.roundTaxUp}" width="144" id="round_tax_check"/>
-	<mx:TextInput x="315" y="449" restrict="0-9/." id="effect_rate" text="{taxTable.effectiveTaxRate}" editable="false"/>
+	<mx:CheckBox x="19" y="504" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxShipping')}" selected="{taxTable.taxShipping}" id="tax_shipping_check"/>
+	<mx:CheckBox x="184" y="504" enabled="{tax_shipping_check.selected}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SeparateShipping')}" selected="{taxTable.separateShipping}" id="seperate_shipping_check"/>
+	<mx:CheckBox x="19" y="535" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxonTax')}" selected="{taxTable.taxOnTax}" id="tax_on_tax_check"/>
+	<mx:CheckBox x="19" y="565" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Buildtaxinprice')}" selected="{taxTable.taxInPrice}" id="tax_inPrice_check"/>
+	<mx:CheckBox x="18.5" y="595" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}" selected="{taxTable.roundTaxUp}" width="144" id="round_tax_check"/>
+	<mx:TextInput x="315" y="449" restrict="0-9/." id="effect_rate" text="{Snowmass.getCurrencyFormatter(false,2).format(taxTable.effectiveTaxRate * 100)}" editable="false"/>
 	<mx:TextInput x="312.5" y="473"  restrict="0-9/." id="min_tax" text="{Snowmass.getCurrencyFormatter(false ,2).format(taxTable.minAmount)}" width="116" height="21"/>
-	<mx:DataGrid x="-1" y="564" width="286"  id="tableGrid" dataProvider="{taxTables}" itemClick="doSelectTaxTable()" height="141">
+	<mx:DataGrid x="18.5" y="625" width="435"  id="tableGrid" dataProvider="{taxTables}" itemClick="doSelectTaxTable()" height="111">
 		<mx:columns>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Default')}" labelFunction="doDefault" width="50"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Default')}" labelFunction="doDefault" width="60"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" dataField="name"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" dataField="effectiveTaxRate"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="doeffectiveTaxRate"/>
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:CheckBox x="304" y="82" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.Disable')}" id="disable_check"/>

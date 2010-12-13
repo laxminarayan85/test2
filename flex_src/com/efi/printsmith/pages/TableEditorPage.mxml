@@ -235,6 +235,8 @@ import com.efi.printsmith.data.*;
 		var tempObject: Object;
 		tempClass = setClassType();
 		tempObject = new tempClass();
+		if( tempClass == TaxTable)
+			tempObject.taxTableIsCurrent = true;
 		tempObject.id = 0;
 		tempObject.displayId = this.displayId;
 		this.displayId = this.displayId + 1;
