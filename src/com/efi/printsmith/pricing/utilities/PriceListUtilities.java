@@ -178,7 +178,7 @@ public class PriceListUtilities {
 										.doubleValue());
 					}
 				}
-			} else if (priceList.getInterpolate()) {
+			} else if (priceList.getInterpolate() && last != base) {
 				retVal = elements.get(base).getAmount().doubleValue();
 				long qtyRange = elements.get(last).getQuantity() - elements.get(base).getQuantity();
 				long lookupRange = lookupQty - elements.get(base).getQuantity();
