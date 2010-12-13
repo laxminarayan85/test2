@@ -404,6 +404,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	   
 		setDefaultContact();
 		use_contact_check.enabled = true;
+		this.enabled = true;
 	 	
 	}  
 	

@@ -51,10 +51,10 @@ showCloseButton="true" creationComplete="init();"
 </mx:Script>
 	<mx:HBox width="100%" height="100%">
 		<mx:Canvas width="100%" height="154">
-			<mx:Button x="69" y="72" width="67" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOK();"/>
-			<mx:Button x="159.5" y="72" width="65" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();"/>
-			<mx:Label x="34" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.QuantityReceived')}" width="102"/>
-			<mx:TextInput x="144" y="30" id="quantity_edit"/>
+			<mx:Button x="115" y="72" width="67" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOK();"/>
+			<mx:Button x="190" y="72" width="65" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();"/>
+			<mx:Label x="10" y="32"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.QuantityReceived')}" width="172"/>
+			<mx:TextInput x="190" y="30" id="quantity_edit"/>
 		</mx:Canvas>
 	</mx:HBox>
                             
