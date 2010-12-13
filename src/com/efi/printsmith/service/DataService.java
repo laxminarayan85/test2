@@ -5683,26 +5683,26 @@ public class DataService extends HibernateService {
 				}
 			}
 		} catch (NoResultException e) {
+			ModelBase savedObject;
 			//
 			// no current tape batch, so create one
 			//
-			Tape tape = new Tape();
+		//	Tape tape = new Tape();
 			
-			List<TapeSessionBatch> resultList  = new ArrayList<TapeSessionBatch>();
+		//	List<TapeSessionBatch> resultList  = new ArrayList<TapeSessionBatch>();
 			
 			TapeBatch tapebatch = new TapeBatch();
 			tapebatch.setAppVersion("v00.00.00");
 			tapebatch.setOpenDate(new Date());
 			tapebatch.setClosed(false);
 			
-			tapebatch.setSessionBatches(resultList);
-			// 
-			tape.addBatches(tapebatch);
+		//	tapebatch.setSessionBatches(resultList);
+		//	tape.addBatches(tapebatch);
 			
-		//	this.addUpdate(tapebatch);
-			this.addUpdate(tape);
+			savedObject = this.addUpdate(tapebatch);
+		//	this.addUpdate(tape);
 			
-			object = tapebatch;
+			object = (TapeBatch) savedObject;
 		} catch (NonUniqueResultException e) {
 			log.warn("No result found for getCurrentTapeBatch " + e);
 			return null;
