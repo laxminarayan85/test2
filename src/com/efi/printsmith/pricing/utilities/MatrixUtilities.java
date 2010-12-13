@@ -41,6 +41,8 @@ public class MatrixUtilities {
 		List<MatrixElement> elements = matrix.getElements();
 		Collections.sort(elements, new MatrixElementComparator());
 		int i = 0;
+		int lastLineIndex = 0;
+		boolean found = false;
 		double runningTotal = 0.0;
 		long prevQty = 0;
 		for (i = 0; i < elements.size(); i++) {
@@ -51,10 +53,14 @@ public class MatrixUtilities {
 					prevQty = element.getQty();
 				} else {
 					runningTotal += (qty-prevQty) * element.getPrice1().doubleValue();
+					found = true;
 					break;
 				}
-			}
+			} else
+				lastLineIndex = i;
 		}
+		if (!found)
+			runningTotal += (qty-prevQty) * elements.get(lastLineIndex).getPrice1().doubleValue();
 		return (runningTotal/qty);
 	}
 	
@@ -64,6 +70,8 @@ public class MatrixUtilities {
 		List<MatrixElement> elements = matrix.getElements();
 		Collections.sort(elements, new MatrixElementComparator());
 		int i = 0;
+		int lastLineIndex = 0;
+		boolean found = false;
 		double runningTotal = 0.0;
 		long prevQty = 0;
 		for (i = 0; i < elements.size(); i++) {
@@ -74,10 +82,14 @@ public class MatrixUtilities {
 					prevQty = element.getQty();
 				} else {
 					runningTotal += (qty-prevQty) * element.getPrice1().doubleValue();
+					found = true;
 					break;
 				}
-			}
+			} else
+				lastLineIndex = i;
 		}
+		if (!found)
+			runningTotal += (qty-prevQty) * elements.get(lastLineIndex).getPrice2().doubleValue();
 		return (runningTotal/qty);
 	}
 	
