@@ -100,7 +100,7 @@ width="888" height="507"  creationComplete="init()"
 		this.production_run.text = job.pressQty.toString();
 		this.requires.text = job.sheets.toString();
 		this.sheets_purchased.text = job.qtyOrdered.toString();
-		this.area.text = (job.parentSize.height * job.parentSize.width).toString();
+		this.area.text = (job.runSize.height * job.runSize.width).toString();
 		this.per.text = job.costUnits.toString();
 		this.markup.text = job.pricingRecord.stockMarkup.toString();
 		this.labor_cost.text = job.pricingRecord.laborTotalPrice.toString();
