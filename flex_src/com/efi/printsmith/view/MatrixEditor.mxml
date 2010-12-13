@@ -13,6 +13,7 @@
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+	<mx:method name="getMatrix" fault="handleFault(event)" result="handleGetMatrixResult(event)"/>
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="pricelist"/>
@@ -512,6 +513,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import mx.utils.ObjectUtil;	
 	import mx.collections.Sort;
 	import mx.collections.SortField;
 	import com.efi.printsmith.data.enums.CopierPricingMethod;
@@ -537,7 +539,6 @@
 	    
 	[Bindable]                                
 	public var matrix:com.efi.printsmith.data.Matrix;
-	
 	public var doubleSided:Boolean = false;
 	public var pricingType:String = CopierPricingMethod.CopiesAndOriginals;
 	
@@ -669,7 +670,7 @@
 
 	public function setMatrix(matrix:com.efi.printsmith.data.Matrix):void {
 		if (matrix == null) return;
-		this.matrix = matrix;
+		this.matrix = ObjectUtil.copy(matrix) as com.efi.printsmith.data.Matrix;
 		var newMatrix:Boolean = true;
 		for (var i:int=0;i<this.matrix.elements.length;i++) {
 			var element:com.efi.printsmith.data.MatrixElement = this.matrix.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
@@ -805,6 +806,11 @@
 
 	private function doClear():void {
 		PopUpManager.removePopUp(this);
+	}
+	
+	private function handleGetMatrixResult(ev:ResultEvent):void {
+		matrix = ev.result as com.efi.printsmith.data.Matrix;
+		var editPage:Container = parentContainer;
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {

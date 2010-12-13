@@ -24,6 +24,9 @@
 	<mx:method name="getCopierDefinition" fault="handleFault(event)" result="handleGetResult(event)"/>
 	<mx:method name="getMatrix" fault="handleFault(event)" result="handleGetResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="matrixEditorDataService" destination="dataService">
+	<mx:method name="getMatrix" fault="handleFault(event)" result="handleMatrixEditorResult(event)"/>
+</mx:RemoteObject>
 <mx:RemoteObject id="dataServiceProductionCopiers" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionCopiersResult(event)"/>
 	<mx:method name="getByName" fault="handleFault(event)" result="handleGetProductionCopiersByName(event)"/>
@@ -822,7 +825,8 @@
 	}
 
 	private function doCopierMatrix():void {
-		this.openEditMatrixWindow();
+		matrixEditorDataService.getMatrix(copierDefinition.copierMatrix.id);
+		
 //		/* Read in the copierMatrix - the handler for this call will actually open the EditMatrix window */
 //		if (copierDefinition != null && copierDefinition.copierMatrix != null) {
 //			var token:AsyncToken = dataService.getMatrix(copierDefinition.copierMatrix.id);
@@ -831,6 +835,11 @@
 //			copierDefinition.copierMatrix = createCopierMatrix();
 //			this.openEditMatrixWindow();			
 //		}
+	}
+	
+	private function handleMatrixEditorResult(evt:ResultEvent):void {
+		copierDefinition.copierMatrix = evt.result as com.efi.printsmith.data.Matrix;
+		this.openEditMatrixWindow();
 	}
 	
 	private function createCopierMatrix():com.efi.printsmith.data.Matrix {
