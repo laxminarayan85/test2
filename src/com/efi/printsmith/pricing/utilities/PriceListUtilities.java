@@ -180,18 +180,10 @@ public class PriceListUtilities {
 				}
 			} else if (priceList.getInterpolate()) {
 				retVal = elements.get(base).getAmount().doubleValue();
-				qty = lookupQty - elements.get(base).getQuantity();
-
-				if (qty != 0) {
-					long qtyRange = elements.get(last).getQuantity()
-							- elements.get(base).getQuantity();
-					long lookupRange = qty - elements.get(last).getQuantity();
-					double priceRange = elements.get(last).getAmount()
-							.doubleValue()
-							- retVal;
-					retVal = ((lookupRange * priceRange) / qtyRange)
-							+ elements.get(last).getAmount().doubleValue();
-				}
+				long qtyRange = elements.get(last).getQuantity() - elements.get(base).getQuantity();
+				long lookupRange = lookupQty - elements.get(base).getQuantity();
+				double priceRange = (elements.get(last)).getAmount().doubleValue() - retVal;
+				retVal = ((lookupRange * priceRange) / qtyRange) + retVal;
 			} else {
 				retVal = elements.get(last).getAmount().doubleValue();
 			}
