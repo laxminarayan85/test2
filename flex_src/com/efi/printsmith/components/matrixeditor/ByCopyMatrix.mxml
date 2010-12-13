@@ -122,6 +122,8 @@
 			        if(newData != "") {
 		            	if (isNaN(parsedValue)) {
 		            		TextInput(matrix_grid.itemEditorInstance).text="0";
+		            	} else {
+		            		TextInput(matrix_grid.itemEditorInstance).text=parsedValue.toString();
 		            	}
 			        }
 				}
