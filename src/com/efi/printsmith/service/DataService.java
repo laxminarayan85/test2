@@ -5689,14 +5689,14 @@ public class DataService extends HibernateService {
 			//
 		//	Tape tape = new Tape();
 			
-		//	List<TapeSessionBatch> resultList  = new ArrayList<TapeSessionBatch>();
+			List<TapeSessionBatch> resultList  = new ArrayList<TapeSessionBatch>();
 			
 			TapeBatch tapebatch = new TapeBatch();
 			tapebatch.setAppVersion("v00.00.00");
 			tapebatch.setOpenDate(new Date());
 			tapebatch.setClosed(false);
 			
-		//	tapebatch.setSessionBatches(resultList);
+			tapebatch.setSessionBatches(resultList);
 		//	tape.addBatches(tapebatch);
 			
 			savedObject = this.addUpdate(tapebatch);
