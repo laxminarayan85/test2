@@ -9,10 +9,10 @@ public enum CopierPricingMethod {
 	 CostPlus,
 	 FlatRate,
 	 CopiesAndOriginals,
-	 CopiesPerOriginals,
+	 CopiesPerOriginal,
 	 TotalOfAllCopies,
-	 SquareAreaOfOriginals,
-	 TotalSquareArea,
+	 SquareAreaAndOriginals,
+	 TotalOfSquareArea,
 	 SquareAreaAndCopies,
 	 SquareAreaPerCopy;
 	public String getLocalizedValue(java.util.Locale locale) {

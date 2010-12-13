@@ -5,7 +5,7 @@ package com.efi.printsmith.data.enums
 [RemoteClass(alias="com.efi.printsmith.data.StockPriceMethod")]
 	public class StockPriceMethod
 	{
-	 	public static const IncludeInRate:String = "IncludeInRate";
+	 	public static const IncludedInRate:String = "IncludedInRate";
 	 	public static const MarkedUpStockCost:String = "MarkedUpStockCost";
 	 	public static const FromCopier1InStockDefinition:String = "FromCopier1InStockDefinition";
 	 	public static const FromCopier2InStockDefinition:String = "FromCopier2InStockDefinition";
@@ -21,8 +21,8 @@ package com.efi.printsmith.data.enums
 	 		var returnArray:Array = new Array();
 			var object:Object;
 			object = new Object();
-			object.label = getString(IncludeInRate);
-			object.data = IncludeInRate;
+			object.label = getString(IncludedInRate);
+			object.data = IncludedInRate;
 			returnArray.push(object);
 			object = new Object();
 			object.label = getString(MarkedUpStockCost);

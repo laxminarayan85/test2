@@ -6,7 +6,7 @@ import javax.persistence.Table;
 /**
  */
 public enum StockPriceMethod {
-	 IncludeInRate,
+	 IncludedInRate,
 	 MarkedUpStockCost,
 	 FromCopier1InStockDefinition,
 	 FromCopier2InStockDefinition,
