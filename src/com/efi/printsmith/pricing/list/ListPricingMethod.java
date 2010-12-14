@@ -16,6 +16,11 @@ public class ListPricingMethod {
 		if (job.getBackColors() > 0)
 			price += PriceListUtilities.lookupPaperPrice(job.getStock().getDefaultPriceList(), job.getQtyOrdered(), job.getFrontColors(), 2);
 		job.getPricingRecord().setTotalPrice(price);
+		job.getPricingRecord().setLaborTotalPrice(price);
+		if (job.getPricingRecord().getTotalPrice().doubleValue() > 0)
+			job.getPricingRecord().setUnitPrice(price / job.getTotalImpressions());
+		else
+			job.getPricingRecord().setUnitPrice(0.0);
 		return job;
 	}
 }

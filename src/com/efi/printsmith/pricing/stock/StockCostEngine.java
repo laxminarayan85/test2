@@ -15,10 +15,13 @@ public class StockCostEngine {
 		if (job != null) {
 			PreferencesPricingMethod pricingMethod = job.getPricingMethod();
 			long qty = 0;
-			if (pricingMethod.getTitle().equals("Printing")) {
-				
+			if (pricingMethod.getTitle().equals("Printing") || pricingMethod.getTitle().equals("List")) {
+				if (job.getPaperCal().getRunout() == 0)
+					qty = job.getTotalImpressions();
+				else
+					qty = job.getTotalImpressions() / job.getPaperCal().getRunout();
 			} else { if (pricingMethod.getTitle().equals("Blank")) {
-				
+				qty = job.getQtyOrdered();
 			} else
 				if (job.getPaperCal().getRunout() == 0)
 					qty = job.getTotalCopies();
