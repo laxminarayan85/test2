@@ -2110,7 +2110,7 @@
 				if (this.currentState != "LargeFormat") {
 					if ((job.finishSize != null && job.runSize != null) && (job.finishSize.width == 0 || job.finishSize.height == 0 || job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height)) {
 						var warn:Boolean = true;
-						if (job.finishSize.width == 0 || job.finishSize.height == 0)
+						if (job.finishSize.width == 0 || job.finishSize.height == 0 || this.dimensionJobTarget == this.job_size)
 							warn = false;
 						job.finishSize.name = job.runSize.name;
 						job.finishSize.type = job.runSize.type;
