@@ -137,7 +137,7 @@ public class PriceStockEngine {
 		if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.MarkedUpStockCost.name())) {
 			sheetPrice = getSheetPrice(job, priceLogEntry);
 			priceLogEntry.setValue(sheetPrice);
-		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.IncludedInRate.name())) {
+		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.IncludeInRate.name())) {
 			sheetPrice = 0.0; /* By definition the stock price is already included in the copier rate */
 			priceLogEntry.setDescription("Stock price included in rate");
 		} else if (copierDefinition.getStockPriceMethod().equals(StockPriceMethod.FromCopier1InStockDefinition.name())) {

@@ -837,7 +837,7 @@
 				this.price20.enabled = false;
 			}
 			break;
-		case CopierPricingMethod.CopiesPerOriginal:
+		case CopierPricingMethod.CopiesPerOriginals:
 			if (doubleSidedPricing) {
 				this.currentState = "COPIESPERORIGINALSTWOSIDES";
 			} else {
@@ -851,7 +851,7 @@
 				this.currentState = "SQUAREAREAANDCOPIES";
 			}
 			break;
-		case CopierPricingMethod.SquareAreaAndOriginals:
+		case CopierPricingMethod.SquareAreaOfOriginals:
 			if (doubleSidedPricing) {
 				this.currentState = "SQUAREAREAOFORIGINALSTWOSIDES";
 			} else {
@@ -874,7 +874,7 @@
 				this.currentState = "TOTALOFALLCOPIES";
 			}
 			break;
-		case CopierPricingMethod.TotalOfSquareArea:
+		case CopierPricingMethod.TotalSquareArea:
 			if (doubleSidedPricing) {
 				this.currentState = "TOTALSQUAREAREATWOSIDES";
 			} else {

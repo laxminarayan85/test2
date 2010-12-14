@@ -949,7 +949,7 @@
 			return false;
 		else if (item.data == CopierPricingMethod.CopiesAndOriginals.toString())
 			return false;
-		else if (item.data == CopierPricingMethod.CopiesPerOriginal.toString())
+		else if (item.data == CopierPricingMethod.CopiesPerOriginals.toString())
 			return false;
 		else if (item.data == CopierPricingMethod.TotalOfAllCopies.toString())
 			return false;
@@ -958,9 +958,9 @@
 	}
 	
 	private function filterDigitalMethod(item:*, index:int, arr:Array):Boolean {
-		if (item.data == CopierPricingMethod.TotalOfSquareArea.toString())
+		if (item.data == CopierPricingMethod.TotalSquareArea.toString())
 			return false;
-		else if (item.data == CopierPricingMethod.SquareAreaAndOriginals.toString())
+		else if (item.data == CopierPricingMethod.SquareAreaOfOriginals.toString())
 			return false;
 		else if (item.data == CopierPricingMethod.SquareAreaAndCopies.toString())
 			return false;
@@ -1131,7 +1131,7 @@
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
-			case CopierPricingMethod.CopiesPerOriginal:
+			case CopierPricingMethod.CopiesPerOriginals:
 				Matrix_button.visible = true;
 				matrixcopycost.visible= true;
 				matrixdiscount.visible= true;
@@ -1174,7 +1174,7 @@
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
-			case CopierPricingMethod.SquareAreaAndOriginals:
+			case CopierPricingMethod.SquareAreaOfOriginals:
 				Matrix_button.visible = true;
 				matrixcopycost.visible= true;
 				matrixdiscount.visible= true;
@@ -1195,7 +1195,7 @@
 				price_2_side.selectedIndex = findItemArray(copierDefinition.priceTwoSide, Price2Side.toArray());
 				break;
 
-			case CopierPricingMethod.TotalOfSquareArea:
+			case CopierPricingMethod.TotalSquareArea:
 				Matrix_button.visible = true;
 				matrixcopycost.visible= true;
 				matrixdiscount.visible= true;
@@ -1308,7 +1308,7 @@
 					 copierDigitalStockmarkup.enabled = false;
 					 stockMarkup.enabled = false;
 					 break;
-				case StockPriceMethod.IncludedInRate:
+				case StockPriceMethod.IncludeInRate:
 					copierDigitalStockmarkup.enabled = false;
 					stockMarkup.enabled = false;
 			}
