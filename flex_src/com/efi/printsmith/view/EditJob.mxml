@@ -1013,7 +1013,7 @@
 					job.paperCal.bleedRight = estimatingPreferences.bleedRight;
 					job.paperCal.bleedTop = estimatingPreferences.bleedTop;
 					job.paperCal.backTrimParent = estimatingPreferences.backTrimParent;
-					job.paperCal.trimFourSides = estimatingPreferences.trimFourSides;
+					job.paperCal.backTrimRun = estimatingPreferences.backTrimRun;
 					job.paperCal.workandTumble = estimatingPreferences.workandTumble;
 					job.paperCal.runToFinishGrain =  estimatingPreferences.runToFinishGrain;
 					job.paperCal.printParentToFinishSection = estimatingPreferences.printParentToFinishSection;
