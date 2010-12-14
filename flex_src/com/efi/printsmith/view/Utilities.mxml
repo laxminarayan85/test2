@@ -10,6 +10,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import mx.events.CollectionEvent;
 	import mx.events.FlexEvent;
 	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.mdi.view.window.MDIWindow;
@@ -304,6 +305,7 @@
 		fileTypeArray.addItem("DL Press Definitions Data");
 		fileTypeArray.addItem("DL Copier Definitions Data");
 		fileTypeArray.addItem("DL Stock Definitions Data");
+		fileTypeArray.addItem("DL Stock Inventory Log Data");
 		fileTypeArray.addItem("DL Invoice Data");
 		fileTypeArray.addItem("DL Job Data");
 		fileTypeArray.addItem("DL Charges Data");
@@ -423,6 +425,15 @@
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
 					handleSelectStockDefinitionsFile(evt);
+				}
+			}
+		}
+		if (fileName == "DL Stock Inventory Log Data") {
+			index = fileNameArray.getItemIndex("DL Stock Inventory Log Data");
+			if (index.valueOf() > -1) {
+				fileReference = fileArray.getItemAt(index) as FileReference;
+				if (fileReference != null) {
+					handleSelectStockChangesFile(evt);
 				}
 			}
 		}
