@@ -3059,8 +3059,10 @@ public class DataService extends HibernateService {
 			if (contactlist != null) {
 				for (int i = 0; i < contactlist.size(); i++) {
 					Contact c = (Contact) contactlist.get(i);
-					if (c != null)
+					if (c != null)	{
 						Hibernate.initialize(c.getComLinks());
+						Hibernate.initialize(c.getShipToAddress());
+					}
 				}
 			}
 			if (contactlist != null)

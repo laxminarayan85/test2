@@ -112,6 +112,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.rpc.mxml.Concurrency;
 			import com.efi.printsmith.data.ComLink;
 			import com.efi.printsmith.components.ContactInfoPopup;
 			import com.efi.printsmith.events.SaveContactEvent;
@@ -373,7 +374,22 @@
 				var c:Contact = null;
 				
 				if (evt.contact.id != NaN)	{
-					var c:Contact = new Contact();
+					var c:Contact = null;
+					
+					if (newContact)	{
+						newContact = false;
+						c = new Contact();
+					}
+					else	{
+						var tempCon:Contact = findFirstItemByCondition(contact_list.dataProvider as ArrayCollection, "tempFlag", true) as Contact;
+						if (tempCon != null)	{
+							c = tempCon;
+						}
+						else	{
+							c = new Contact();
+							c.tempFlag = true;
+						}
+					}
 					c.firstName = evt.contact.firstName;
 					c.lastName = evt.contact.lastName;
 					c.prefix = evt.contact.prefix;
@@ -389,11 +405,7 @@
 					c.jobTitle = evt.contact.jobTitle;
 					c.salutation = evt.contact.salutation;
 					c.parentAccount = invoice.account;
-					if (!newContact)	{
-						c.tempFlag = true;
-					}
-					else
-						newContact = false;					
+								
 				}
 				else	{
 					c = evt.contact;
@@ -401,12 +413,27 @@
 				contactDataService.addUpdate(c);
 			}
 			
+			private function findFirstItemByCondition(ac:ArrayCollection, propName:String, propValue:Object):Object	{
+				for (var i:int=0; i<ac.length; i++)	{
+					var obj:Object = ac.getItemAt(i);
+					if (obj[propName] == propValue)	{
+						return obj;
+					}
+				}
+				return null;
+			}
+			
 			private function saveContactResult(evt:ResultEvent):void	{
 				//var  tempContact:Contact = evt.result as Contact;
 				
-				(contact_list.dataProvider as ArrayCollection).addItem(evt.result);
-				contact_list.selectedItem = evt.result;
-	
+				var obj:Object = findFirstItemByCondition(contact_list.dataProvider as ArrayCollection, "id", (evt.result as Contact).id);
+				if (obj == null)	{
+					(contact_list.dataProvider as ArrayCollection).addItem(evt.result);
+					contact_list.selectedItem = evt.result;
+				}
+				else	
+					contact_list.selectedItem = obj;				
+				
 			}
 			
 			private function createToolbarButtons():void	{
@@ -1171,7 +1198,11 @@
 				
 				contact_list.selectedIndex = findItemIndex(accountcontacts, contact);
 				contact_editor.setContact(contact);
-				 
+				contact_ship_address.dataProvider = contact.shipToAddress;
+				if (contact.shipToAddress == null || contact.shipToAddress.length == 0)
+					rdoContactAddress.enabled = false;
+				else
+					rdoContactAddress.enabled = true;					 
 			}
 			private function findItemIndex(array:ArrayCollection, item:ModelBase):int	{
 				for (var i:int=0;i<array.length;i++)	{
@@ -1339,7 +1370,15 @@
 			private function doContactChange():void{
 				var temp:Contact= new Contact();
 				temp = contact_list.selectedItem as Contact;
-				contact_editor.setContact(temp); 
+				contact_editor.setContact(temp);
+				contact_ship_address.dataProvider = temp.shipToAddress;
+				if (temp.shipToAddress == null || temp.shipToAddress.length == 0)	{
+					rdoInvAddress.selected = true;
+					rdoContactAddress.enabled = false;					 
+				}
+				else	{
+					rdoContactAddress.enabled = true;
+				}
 				if( temp.useContactAddress) {
 					bill_to_address_editor.setAddress(temp.address);
 					//this.delivery_intent_address_editor.setAddress(temp.address);
@@ -1411,6 +1450,10 @@
 				return null;
 			}
 			
+			private function getContactShipToLabel(item:Object):String	{
+				var temp:Address = item as Address;
+				return temp.name + " " + temp.street1 + "," + temp.street2;
+			}
 			private function contactLabel(item:Object):String {
 				var tempItem:Contact = item as Contact;
 				if ((tempItem.tempFlag != null) && (tempItem.tempFlag == true))	{
@@ -1522,11 +1565,16 @@
 								<mx:Label fontWeight="bold" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.DeliveryIntent')}" height="2%" width="100%" />
 								<mx:RadioButtonGroup id="delivery_intent_radio_group"/>
 								<mx:RadioButton
-												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.InvoiceAddress')}"
+												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.InvoiceAddress')}" id="rdoInvAddress"
 												groupName="delivery_intent_radio_group" selected="true" click="disableDeliveryIntentAddress();"/>
-								<mx:RadioButton 
+								<mx:HBox width="100%" >
+									<mx:RadioButton id="rdoContactAddress" enabled="false"
 												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.ContactShipAddress')}"
-												groupName="delivery_intent_radio_group" enabled="{contact_list.selectedIndex&gt;0}"/>
+												groupName="delivery_intent_radio_group" />
+									<mx:ComboBox id="contact_ship_address" labelFunction="getContactShipToLabel" enabled="{rdoContactAddress.selected}"/>
+									
+								</mx:HBox>
+
 								<mx:RadioButton 
 												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.OtherAddress')}"
 												groupName="delivery_intent_radio_group" click="enableDeliveryIntentAddress();"/>
