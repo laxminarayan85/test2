@@ -1246,8 +1246,11 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setActivateUserEventLogging(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("autosignon_active"))
 			preferencesSystem.setEnableAutoLogOut(Utilities.tokenToBooleanValue(value));
-		else if (name.equals("autosign_seconds"))
+		else if (name.equals("autosign_seconds")) {
 			preferencesSystem.setAutoLogOutSeconds(Utilities.tokenToInt(value));
+			if (Utilities.tokenToInt(value) > 0)
+				preferencesSystem.setSecondsOfInactivity(true);
+		}
 		else if (name.equals("PendingList_restrict_pickup_to_ready_items"))
 			preferencesSystem.setOnlyPostMarkedReadyInvoices(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("App_autoAppQuit"))
