@@ -428,7 +428,7 @@
 	}   
 	
 	private function refreshCheckBoxes():void {
-		if (this.chkUseAsRateList != null && this.chkLastLineAddlnQty != null) {
+		if (this.chkUseAsRateList != null && this.chkLastLineAddlnQty != null && this.itemType != "WasteChart") {
 			if (this.chkLastLineAddlnQty.selected)
 				this.chkUseAsRateList.enabled = false;
 			else
