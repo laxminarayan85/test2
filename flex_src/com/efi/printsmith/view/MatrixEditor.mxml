@@ -856,6 +856,7 @@
 				this.currentState = "SQUAREAREAOFORIGINALSTWOSIDES";
 			} else {
 				this.currentState = "SQUAREAREAOFORIGINALS";
+				matrixeditor.header1 = "Total Square Area";
 			}
 			break;
 		case CopierPricingMethod.SquareAreaPerCopy:
@@ -863,6 +864,7 @@
 				this.currentState = "SQUAREAREAPERCOPYTWOSIDES";
 			} else {
 				this.currentState = "SQUAREAREAPERCOPY";
+				matrixeditor.header1 = "Total Square Area";
 			}
 			break;
 		case CopierPricingMethod.TotalOfAllCopies:
@@ -877,6 +879,7 @@
 				this.currentState = "TOTALSQUAREAREATWOSIDES";
 			} else {
 				this.currentState = "TOTALSQUAREAREA";
+				matrixeditor.header1 = "Total Square Area";
 			}
 			break;
 		}
