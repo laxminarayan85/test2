@@ -1383,6 +1383,9 @@
 					bill_to_address_editor.setAddress(temp.address);
 					//this.delivery_intent_address_editor.setAddress(temp.address);
 				}
+				else	{
+					bill_to_address_editor.setAddress(invoice.billToAddress);
+				}
 			}
 			
 			private function getJobList(jobList:ArrayCollection):ArrayCollection {
