@@ -84,7 +84,7 @@ public class TotalAllCopiesPricingMethod extends CopierPricingMethod {
 				wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
-						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
+						stockTotalPrice = (discountedStockPrice*((job.getTotalCopies() / 2)/runout));
 						laborTotalPrice = (pricePerCopy * (job.getTotalCopies() / 2));
 					} else if (copierDefinition.getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 						pricePerCopy = new Double(Math.round(((pricePerCopy*copierDefinition.getSideTwoFactor()) / 2) * 10000)) / 10000;
