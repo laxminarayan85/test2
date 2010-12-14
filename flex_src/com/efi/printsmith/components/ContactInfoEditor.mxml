@@ -235,8 +235,11 @@
 				
 				var pos:Point=new Point(this.x, this.y);
 				pos=this.localToGlobal(pos);
-				titleWindow.x=pos.x;
-				titleWindow.y=pos.y;
+				
+				var winpos:Point = new Point(Snowmass.getInstance().containerManager.getActiveWindow().x,Snowmass.getInstance().containerManager.getActiveWindow().y); 
+
+				titleWindow.x=this.x + this.parent.x + winpos.x;
+				titleWindow.y=this.y + this.parent.y + winpos.y;
 			}
 		]]>
 	</mx:Script>

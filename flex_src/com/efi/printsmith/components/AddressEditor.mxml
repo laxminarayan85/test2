@@ -150,6 +150,11 @@
 					address.country = new Country();
 					address.zip = new Zip();
 				} */
+				var pos:Point=new Point(this.x, this.y);
+				
+				pos=this.localToGlobal(pos);
+				var winpos:Point = new Point(Snowmass.getInstance().containerManager.getActiveWindow().x,Snowmass.getInstance().containerManager.getActiveWindow().y); 
+				 
 				titleWindow=AddressEditorPopup(PopUpManager.createPopUp(this, AddressEditorPopup, true));
 				titleWindow.openedFromEmployee = openedFromEmployee;
 				titleWindow.setAddress(address);
@@ -163,10 +168,8 @@
 				titleWindow.addEventListener(CloseEvent.CLOSE, popupClose, false, 1);
 				titleWindow.addEventListener("SaveAddressEvent", saveAddressHandler, false, 1);
 				
-				var pos:Point=new Point(this.x, this.y);
-				pos=this.localToGlobal(pos);
-				titleWindow.x=pos.x;
-				titleWindow.y=pos.y;
+				titleWindow.x=this.x + this.parent.x + winpos.x;
+				titleWindow.y=this.y + this.parent.y + winpos.y;
 			}
 		]]>
 	</mx:Script>

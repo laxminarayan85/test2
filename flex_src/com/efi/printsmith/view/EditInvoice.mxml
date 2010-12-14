@@ -1452,7 +1452,7 @@
 			
 			private function getContactShipToLabel(item:Object):String	{
 				var temp:Address = item as Address;
-				return temp.name + " " + temp.street1 + "," + temp.street2;
+				return temp.name + ":" + temp.street1 + "," + temp.street2;
 			}
 			private function contactLabel(item:Object):String {
 				var tempItem:Contact = item as Contact;
