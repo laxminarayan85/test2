@@ -199,15 +199,28 @@
 		if (matchingDimensions.length > 0) {
 			var dim:Dimension = matchingDimensions.getItemAt(0) as Dimension;
 			
-			if (dim != null) {
-				switch(dimensionTarget) {
-				case minSize:
+			switch(dimensionTarget) {
+			case minSize:
+				if (dim != null)
 					minSize.text = dim.name;
-					break;
-				case MaxSize:
+				else
+					minSize.text = "";
+				break;
+			case MaxSize:
+				if (dim != null)
 					MaxSize.text = dim.name;
-					break;
-				}
+				else
+					MaxSize.text = "";
+				break;
+			}
+		} else {
+			switch(dimensionTarget) {
+			case minSize:
+				minSize.text = "";
+				break;
+			case MaxSize:
+				MaxSize.text = "";
+				break;
 			}
 		}
 	}
