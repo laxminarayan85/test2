@@ -2072,7 +2072,7 @@
 				var minSizeLength:Number = Snowmass.getLengthFromSizeString(minSize);
 				var maxSizeWidth:Number = Snowmass.getWidthFromSizeString(maxSize);
 				var maxSizeLength:Number = Snowmass.getLengthFromSizeString(maxSize);
-				var runSize:Dimension = this.job_size.selectedItem as Dimension;
+				var runSize:Dimension = job.runSize;
 				var message:String = "";
 				if (runSize != null) {
 					if (minSize.name != "" && (runSize.width * runSize.height) < (minSizeWidth * minSizeLength)) {
