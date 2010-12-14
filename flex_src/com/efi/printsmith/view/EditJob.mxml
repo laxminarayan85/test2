@@ -807,7 +807,7 @@
 			private static var thisInstance:EditJob = null;
 			
 			[Bindable] private var stockGroups:ArrayCollection = new ArrayCollection();  
-			
+			private var costingCopierIsUsePress:Boolean = false;
 
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
@@ -1812,10 +1812,26 @@
 			
 			private function changePricingCopier():void
 			{
+				var pricingMethod:PreferencesPricingMethod = job_type.selectedItem as PreferencesPricingMethod;
 				var copierDefinition:CopierDefinition = job_pricing_copier.selectedItem as CopierDefinition;
 				jobService.assignPricingCopierToJob(this.job, copierDefinition);
 				this.checkCopierSize();
 				var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
+				var currentCostingCopier:CopierDefinition = this.job_costing_copier.selectedItem as CopierDefinition;
+				if (costingCopierIsUsePress)
+					currentCostingCopier.costingCopy = false;
+				costingCopiers = new ArrayCollection();
+				for (var i:int = 0;i<copiers.length;i++) {
+					var item:CopierDefinition = copiers.getItemAt(i) as CopierDefinition;
+					costingCopiers.addItem(item);
+				}
+				if (pricingMethod.title == "B&W")
+					costingCopiers.filterFunction = filterBWCostingCopiers;
+				else if (pricingMethod.title == "Color")
+					costingCopiers.filterFunction = filterColorCostingCopiers;
+				else costingCopiers.filterFunction = filterLFCostingCopiers;
+				costingCopiers.refresh();
+				
 				this.job_costing_copier.selectedIndex = findItemById(copier.id,costingCopiers);
 				if (this.job_costing_copier.selectedIndex == -1) {
 					copier.costingCopy = true;
@@ -2478,6 +2494,7 @@
 						if (this.job_costing_copier.selectedIndex == -1) {
 							var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
 							copier.costingCopy = true;
+							costingCopierIsUsePress = true;
 							this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
 						}
 					}			
@@ -2494,6 +2511,7 @@
 						if (this.job_costing_copier.selectedIndex == -1) {
 							var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
 							copier.costingCopy = true;
+							costingCopierIsUsePress = true;
 							this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
 						}
 					}	
@@ -2510,6 +2528,7 @@
 						if (this.job_costing_copier.selectedIndex == -1) {
 							var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
 							copier.costingCopy = true;
+							costingCopierIsUsePress
 							this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
 						}
 					}				
