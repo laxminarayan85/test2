@@ -2,8 +2,9 @@
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="504" height="798"
 	 close="PopUpManager.removePopUp(this);" creationComplete="init();"
 	 xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*"  verticalScrollPolicy="auto"
+	 xmlns:components="com.efi.printsmith.common.components.*"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SalesTax')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SalesTax')}" name="Sales Tax">
-	
+	<mx:Script source="../common/scripts/ComponentHelper.as"/>
 	
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -17,6 +18,7 @@
 <![CDATA[
 	import com.efi.printsmith.data.TaxElement;
 	import com.efi.printsmith.data.TaxTable;
+	import com.efi.printsmith.common.components.CustomNumericTextInputComponent;
 	import mx.controls.DateField;                               
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -46,8 +48,12 @@
 		private var defaultTable:Boolean = false;
 	[Bindable]
 		private var tempRate:Number;	
+	[Bindable]                                
+		private var newTable:Boolean = true;
 	public function init():void{
 		taxTable = new TaxTable();
+		taxTable.taxTableIsCurrent = true;
+		newTable = true;
 		tempTaxTable = new TaxTable;
 		dataService.getAll("TaxTable");
 	}
@@ -65,11 +71,12 @@
 	}
 	private function handleLoadResult(ev:ResultEvent):void{
 		taxTables = ev.result as ArrayCollection;
+		doNew();
 	}
 	private function doshiptax(item:Object, column:DataGridColumn):String{
 		var tmpItem:TaxElement ;
-	//	tmpItem = item as TaxElement;
-		if (taxTable.taxShipping )
+		tmpItem = item as TaxElement;
+		if (tmpItem.userForSeparateShippingTax)
 			return("*");
 		return ("");
 	}
@@ -77,7 +84,6 @@
 		var tmpItem:TaxElement ;
 		var tmpString:String;
 		tmpItem = item as TaxElement;
-		
 		tmpString = Snowmass.getCurrencyFormatter(false,2).format(tmpItem.rate * 100) + "%";
 		return tmpString;
 	}
@@ -105,6 +111,7 @@
 	private function doSelectTaxTable():void{
 		taxElementsArray = new ArrayCollection();
 		taxTable=tableGrid.selectedItem as TaxTable;
+		newTable=false;
 		dataService.getTaxTable(taxTable.id)
 		
 		 
@@ -113,6 +120,8 @@
 	private function handleGetResult(ev:ResultEvent):void{
 		var tempTax:TaxElement;
 		taxTable = ev.result as TaxTable;
+		name_edit.text= taxTable.name;
+		Abbr_edit.text = taxTable.abbr;
 		taxElementsArray = new ArrayCollection();
 		for( var i:int = 0;i < taxTable.taxElements.length;i++){
 			tempTax = new TaxElement();
@@ -133,10 +142,8 @@
 		tempTaxTable.separateShipping = seperate_shipping_check.selected;
 		tempTaxTable.taxShipping = tax_shipping_check.selected;
 		tempTaxTable.taxInPrice = tax_inPrice_check.selected;
-		tempTaxTable.effectiveTaxRate = tempRate;
+		tempTaxTable.effectiveTaxRate = tempRate *.01 ;
 		tempTaxTable.minAmount = parseFloat(min_edit.text);
-		tempTaxTable.abbr = Abbr_edit.text;
-		tempTaxTable.name = name_edit.text;
 		tempTaxTable.taxElements = new ArrayCollection();
 		for( var i:int = 0;i < taxElementsArray.length;i++){
 			tempTax = new TaxElement();
@@ -162,17 +169,21 @@
 			tempTax = taxElementsArray.getItemAt(i) as TaxElement;
 			temp = temp + tempTax.rate;
 		}
+		
 		effect_rate.text = temp.toString();
 	}	
 	private function doSave():void{
 		
 		tempRate = parseFloat(effect_rate.text);
-		if ( tempRate != taxTable.effectiveTaxRate){
+		if ( tempRate != taxTable.effectiveTaxRate && !newTable){
 			taxTable.taxTableIsCurrent = false;
+			tempTaxTable.name = name_edit.text;
+			tempTaxTable.abbr = Abbr_edit.text;
 			if (taxTable.defaultTable){
 				defaultTable = true;
 				taxTable.defaultTable = false;
 			}
+		
 			dataService.addUpdate(taxTable);
 			
 			
@@ -181,7 +192,7 @@
 		taxTable.separateShipping = seperate_shipping_check.selected;
 		taxTable.taxShipping = tax_shipping_check.selected;
 		taxTable.taxInPrice = tax_inPrice_check.selected;
-		taxTable.effectiveTaxRate = parseFloat(effect_rate.text);
+		taxTable.effectiveTaxRate = parseFloat(effect_rate.text) * .01;
 		taxTable.minAmount = parseFloat(min_tax.text);
 		taxTable.abbr = Abbr_edit.text;
 		taxTable.name = name_edit.text;
@@ -202,6 +213,7 @@
 	private function doRemoveTaxElement():void {
 		var deleteItem:TaxElement = elementGrid.selectedItem as TaxElement;
 		taxElementsArray.removeItemAt(taxElementsArray.getItemIndex(deleteItem)); 
+		updatetax();
 	}
 	private function doRevert():void{
 		taxTable=tableGrid.selectedItem as TaxTable;
@@ -209,8 +221,19 @@
 	}
 	private function doNew():void{
 		taxTable = new TaxTable();
+		taxTable.taxTableIsCurrent = true;
+		newTable=  true;
 		tempTaxTable = new TaxTable;
 		taxElementsArray = new ArrayCollection();
+	}
+	
+	private function ShippingTax():void{
+		var tempTax:TaxElement;
+		for( var i:int = 0;i < taxTable.taxElements.length;i++){
+			tempTax = taxTable.taxElements.getItemAt(i) as TaxElement;
+			tempTax.userForSeparateShippingTax = true;
+		}
+		
 	}
 ]]>
                              
@@ -230,7 +253,20 @@
 			<mx:DataGridColumn editorDataField="selectedItem" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Description')}" labelFunction="doTaxName"
 			itemEditor="com.efi.printsmith.itemRenderers.TaxElementsEditor" editable="true" dataField="tax"  >
 		</mx:DataGridColumn>
-			<mx:DataGridColumn  headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="dorate" />
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="dorate" >
+				<mx:itemRenderer>
+								<mx:Component>
+									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,2,true,'nearest',data.rate)}" textAlign="right"/>
+								</mx:Component>
+				</mx:itemRenderer>
+				<mx:itemEditor>
+								<mx:Component>
+									<components:CustomNumericTextInputComponent datagridControl="true"
+										variableName="rate" customText="{data.rate}"
+										precision="4" rounding="nearest" viewablePrecision="2"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Ship')}"  labelFunction="doshiptax"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Show')}" dataField="showTax"/>
 		</mx:columns>
@@ -249,12 +285,12 @@
 				   bottom="317"/>
 	<mx:Label x="184" y="451"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.EffectiveTaxRate')}"/>
 	<mx:Label id="min_edit" x="92" y="475" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.MinimumTaxableAmount')}" width="212.5"/>
-	<mx:CheckBox x="19" y="504" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxShipping')}" selected="{taxTable.taxShipping}" id="tax_shipping_check"/>
+	<mx:CheckBox x="19" y="504" click="ShippingTax()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxShipping')}" selected="{taxTable.taxShipping}" id="tax_shipping_check"/>
 	<mx:CheckBox x="184" y="504" enabled="{tax_shipping_check.selected}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SeparateShipping')}" selected="{taxTable.separateShipping}" id="seperate_shipping_check"/>
 	<mx:CheckBox x="19" y="535" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxonTax')}" selected="{taxTable.taxOnTax}" id="tax_on_tax_check"/>
 	<mx:CheckBox x="19" y="565" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Buildtaxinprice')}" selected="{taxTable.taxInPrice}" id="tax_inPrice_check"/>
 	<mx:CheckBox x="18.5" y="595" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}" selected="{taxTable.roundTaxUp}" width="144" id="round_tax_check"/>
-	<mx:TextInput x="315" y="449" restrict="0-9/." id="effect_rate" text="{Snowmass.getCurrencyFormatter(false,2).format(taxTable.effectiveTaxRate * 100)}" editable="false"/>
+	<mx:TextInput x="315" y="449" restrict="0-9/." id="effect_rate" text="{Snowmass.getCurrencyFormatter(false,2).format(taxTable.effectiveTaxRate*100)}" editable="false"/>
 	<mx:TextInput x="312.5" y="473"  restrict="0-9/." id="min_tax" text="{Snowmass.getCurrencyFormatter(false ,2).format(taxTable.minAmount)}" width="116" height="21"/>
 	<mx:DataGrid x="18.5" y="625" width="435"  id="tableGrid" dataProvider="{taxTables}" itemClick="doSelectTaxTable()" height="111">
 		<mx:columns>

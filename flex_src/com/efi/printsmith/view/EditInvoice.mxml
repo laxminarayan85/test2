@@ -3,7 +3,7 @@
 		  xmlns:view="com.efi.printsmith.view.*"
 		  xmlns:ns1="com.efi.printsmith.components.*"
 		  xmlns:ns2="com.efi.printsmith.common.components.*"
-		  
+		  xmlns:common="com.efi.printsmith.common.components.*"
 		  xmlns:vo="com.efi.printsmith.vo.*"
 		  xmlns:fc="http://www.adobe.com/2006/fc"
 		  xmlns:hc="com.hillelcoren.components.*"
@@ -1149,9 +1149,9 @@
 				var shipv:ShippingMethod;
 				var result:Boolean;
 
-				if (ship_via_combo.typedText != null && ship_via_combo.typedText != "" && ship_via_combo.selectedIndex == -1)
+				if (ship_via_combo.text != null && ship_via_combo.text != "" && ship_via_combo.selectedIndex == -1)
 				{
-					var item:int=findItem(ship_via_combo.typedText, shippingMethods);
+					var item:int=findItem(ship_via_combo.text, shippingMethods);
 					if (item == -1)
 					{
 						shipv=new ShippingMethod();
@@ -1161,7 +1161,7 @@
 					}
 					else
 					{
-						ship_via_combo.selectedItem=item;
+						ship_via_combo.selectedIndex=item;
 					}
 				}
 			}
@@ -1637,11 +1637,11 @@
 						</mx:FormItem>
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipVia')}" >
 							
-							<fc:AutoComplete id="ship_via_combo"
+							<common:EditableComboBox id="ship_via_combo"
 											 dataProvider="{shippingMethods}"
 											 labelField="name"
 											 focusOut="doShipVia()"
-											 lookAhead="true"
+											 
 											 />
 						</mx:FormItem>
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleJobEditCmd.Hold')}" >
