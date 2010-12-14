@@ -10,7 +10,9 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="getTaxTable" fault="handleFault(event)" result="handleGetResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-		
+	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 	</mx:RemoteObject>
 	
 	
@@ -19,6 +21,7 @@
 	import com.efi.printsmith.data.TaxElement;
 	import com.efi.printsmith.data.TaxTable;
 	import com.efi.printsmith.common.components.CustomNumericTextInputComponent;
+	import com.efi.printsmith.data.PreferencesSystem;
 	import mx.controls.DateField;                               
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -34,6 +37,10 @@
     import mx.printing.PrintAdvancedDataGrid;
     import mx.printing.PrintDataGrid;
     import mx.core.Application;
+    [Bindable]                                
+	private var systemPreferencesArray:ArrayCollection = new ArrayCollection();
+	[Bindable]                                         
+    private var systemPreferences:PreferencesSystem;
     [Bindable]                                
     private var taxTables:ArrayCollection = new ArrayCollection();   
      [Bindable]                                
@@ -56,8 +63,23 @@
 		newTable = true;
 		tempTaxTable = new TaxTable;
 		dataService.getAll("TaxTable");
+		dataServiceSystemPreferences.getAll("PreferencesSystem");
 	}
-	
+	private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
+		systemPreferencesArray = ev.result as ArrayCollection;
+		if (systemPreferencesArray.length > 0)
+		{
+			systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
+			round_tax_check.selected = systemPreferences.roundTaxUp;
+			if ( systemPreferences.roundTaxUp)
+				round_tax_check.enabled = false;
+			else
+				round_tax_check.enabled = true;
+		}else{
+			round_tax_check.selected = false;
+			round_tax_check.enabled = true;
+		}
+	}	                            
 
 	
 	private function handleFault(ev:FaultEvent):void {  
@@ -128,6 +150,24 @@
 			tempTax = taxTable.taxElements.getItemAt(i) as TaxElement;
 			taxElementsArray.addItem(tempTax)
 		}
+		if( systemPreferences.roundTaxUp)
+		{
+			round_tax_check.selected = true;
+			round_tax_check.enabled = false;
+		}else{
+			if ( taxTable.roundTaxUp)
+				{
+					round_tax_check.selected = true;
+					round_tax_check.enabled = true;
+				}else{
+					round_tax_check.selected = false;
+					round_tax_check.enabled = true;
+				}
+			
+		}
+		
+		
+			
 		
 	}
 	private function handleSaveResult(ev:ResultEvent):void{
@@ -137,27 +177,7 @@
 		dataService.getAll("TaxTable");
 	}
 	private function SaveNewTax():void{
-	 var tempTax:TaxElement;
-	 
-		tempTaxTable.separateShipping = seperate_shipping_check.selected;
-		tempTaxTable.taxShipping = tax_shipping_check.selected;
-		tempTaxTable.taxInPrice = tax_inPrice_check.selected;
-		tempTaxTable.effectiveTaxRate = tempRate *.01 ;
-		tempTaxTable.minAmount = parseFloat(min_edit.text);
-		tempTaxTable.taxElements = new ArrayCollection();
-		for( var i:int = 0;i < taxElementsArray.length;i++){
-			tempTax = new TaxElement();
-			tempTax = taxElementsArray.getItemAt(i) as TaxElement;
-			tempTax.id = 0;
-			tempTaxTable.taxElements.addItem(tempTax)
-		}
-		
-		tempTaxTable.taxTableIsCurrent= true;
-		//tempTax.tableCreateDateTime = 
-		tempTaxTable.defaultTable = defaultTable
-		tempTaxTable.disableTable = false
-		tempTaxTable.roundTaxUp = round_tax_check.selected;
-		tempTaxTable.taxOnTax = tax_on_tax_check.selected;
+	
 		dataService.addUpdate(tempTaxTable);
 		
 	}	
@@ -173,12 +193,31 @@
 		effect_rate.text = temp.toString();
 	}	
 	private function doSave():void{
-		
+		var tempTax:TaxElement;
 		tempRate = parseFloat(effect_rate.text);
 		if ( tempRate != taxTable.effectiveTaxRate && !newTable){
 			taxTable.taxTableIsCurrent = false;
 			tempTaxTable.name = name_edit.text;
 			tempTaxTable.abbr = Abbr_edit.text;
+			tempTaxTable.separateShipping = seperate_shipping_check.selected;
+			tempTaxTable.taxShipping = tax_shipping_check.selected;
+			tempTaxTable.taxInPrice = tax_inPrice_check.selected;
+			tempTaxTable.effectiveTaxRate = tempRate *.01 ;
+			tempTaxTable.minAmount = parseFloat(min_edit.text);
+			tempTaxTable.taxElements = new ArrayCollection();
+			for( var i:int = 0;i < taxElementsArray.length;i++){
+				tempTax = new TaxElement();
+				tempTax = taxElementsArray.getItemAt(i) as TaxElement;
+				tempTax.id = 0;
+				tempTaxTable.taxElements.addItem(tempTax)
+			}
+		
+			tempTaxTable.taxTableIsCurrent= true;
+			//tempTax.tableCreateDateTime = 
+			tempTaxTable.defaultTable = defaultTable
+			tempTaxTable.disableTable = false
+			tempTaxTable.roundTaxUp = round_tax_check.selected;
+			tempTaxTable.taxOnTax = tax_on_tax_check.selected;
 			if (taxTable.defaultTable){
 				defaultTable = true;
 				taxTable.defaultTable = false;
