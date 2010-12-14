@@ -23,6 +23,9 @@
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	<mx:method name="getCopierDefinition" fault="handleFault(event)" result="handleGetResult(event)"/>
 	<mx:method name="getMatrix" fault="handleFault(event)" result="handleGetResult(event)"/>
+	<mx:method name="getDimensionByWildcardName"
+				   fault="handleFault(event)"
+				   result="handleDimesionByNameResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="matrixEditorDataService" destination="dataService">
 	<mx:method name="getMatrix" fault="handleFault(event)" result="handleMatrixEditorResult(event)"/>
@@ -76,7 +79,7 @@
 	import com.efi.printsmith.data.MatrixElement;
 	import com.efi.printsmith.data.Charge;
 	import com.efi.printsmith.pages.DefaultCopierPicker;
-	
+	import com.efi.printsmith.data.Dimension;
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.data.ProductionCopiers;
 	import com.efi.printsmith.data.PriceListBase;
@@ -158,7 +161,8 @@
 	private var productionCopiersArray:ArrayCollection = new ArrayCollection();
 	[Bindable]
 	private var price2SideArray:Array = new Array;
-	
+	[Bindable]
+	var dimensionTarget:Object=new Object();
 	private var selectedCopierId:Number = -1;
 	[Bindable] private var loadComponent:CommonLoadComponent;
 
@@ -185,6 +189,27 @@
 		doNew();
 		stockDefinitions = new StockDefinition;
 		
+	}
+	
+	private function handleDimesionByNameResult(ev:ResultEvent):void
+	{
+		var matchingDimensions:ArrayCollection=new ArrayCollection();
+
+		matchingDimensions = ev.result as ArrayCollection;
+		if (matchingDimensions.length > 0) {
+			var dim:Dimension = matchingDimensions.getItemAt(0) as Dimension;
+			
+			if (dim != null) {
+				switch(dimensionTarget) {
+				case minSize:
+					minSize.text = dim.name;
+					break;
+				case MaxSize:
+					MaxSize.text = dim.name;
+					break;
+				}
+			}
+		}
 	}
 	
 	public function loadStockDefinitions():void {
@@ -1305,14 +1330,21 @@
 	}
 	private function fieldChanged(evt:FocusEvent):void
 	{	
+		this.dimensionTarget = evt.currentTarget;
 		switch (evt.currentTarget) {
 			case this.MaxSize:
 				var text:String = Snowmass.formatSizeString(this.MaxSize.text);
-				this.MaxSize.text = text;
+				if (text.indexOf("x") + 2 == text.length)
+					dataService.getDimensionByWildcardName(text);
+				else
+					this.MaxSize.text = text;
 				break;
 			case this.minSize:
 				var text:String = Snowmass.formatSizeString(this.minSize.text);
-				this.minSize.text = text;
+				if (text.indexOf("x") + 2 == text.length)
+					dataService.getDimensionByWildcardName(text);
+				else	
+					this.minSize.text = text;
 				break;
 		}
 	}
