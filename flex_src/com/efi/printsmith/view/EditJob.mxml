@@ -3638,8 +3638,8 @@
 											   click="changeStockDefinition()" width="62"/>
 									<mx:ComboBox x="108" y="79" width="99" id="job_parent" tabIndex="10" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
 									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" tabIndex="11" focusIn="runSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" tabIndex="12" focusIn="foldedSizeGotFocus()" focusIn="finishSizeGotFocus" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" tabIndex="13" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" tabIndex="12" focusIn="finishSizeGotFocus" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" tabIndex="13" focusIn="foldedSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
 								</mx:Canvas>
 								<mx:Canvas label="merchandise_canvas"
 										   width="100%"
