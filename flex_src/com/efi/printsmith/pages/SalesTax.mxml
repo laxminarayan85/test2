@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="504" height="798"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="602" height="984"
 	 close="PopUpManager.removePopUp(this);" creationComplete="init();"
 	 xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*"  verticalScrollPolicy="auto"
 	 xmlns:components="com.efi.printsmith.common.components.*"
@@ -10,7 +10,7 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="getTaxTable" fault="handleFault(event)" result="handleGetResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-	</mx:RemoteObject>
+		</mx:RemoteObject>
 	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
 	</mx:RemoteObject>
@@ -18,6 +18,7 @@
 	
 <mx:Script>                                   
 <![CDATA[
+	import mx.events.DataGridEvent;
 	import com.efi.printsmith.data.TaxElement;
 	import com.efi.printsmith.data.TaxTable;
 	import com.efi.printsmith.common.components.CustomNumericTextInputComponent;
@@ -44,6 +45,8 @@
     [Bindable]                                
     private var taxTables:ArrayCollection = new ArrayCollection();   
      [Bindable]                                
+    private var historytaxTables:ArrayCollection = new ArrayCollection();   
+     [Bindable]                                
     private var taxTable:TaxTable;
    [Bindable]                                
     private var tempTaxTable:TaxTable;
@@ -57,6 +60,13 @@
 		private var tempRate:Number;	
 	[Bindable]                                
 		private var newTable:Boolean = true;
+	[Bindable]                                
+		private var taxontax:Boolean;
+	[Bindable]                                
+		private var history:Boolean;
+	[Bindable]                                
+		private var saveNoRate:Boolean;
+			
 	public function init():void{
 		taxTable = new TaxTable();
 		taxTable.taxTableIsCurrent = true;
@@ -92,7 +102,21 @@
 		Alert.show(message, "Error");                                 
 	}
 	private function handleLoadResult(ev:ResultEvent):void{
-		taxTables = ev.result as ArrayCollection;
+		var tmp:ArrayCollection;
+		var tmpTable:TaxTable = new TaxTable();
+		tmp = new ArrayCollection();
+		tmp = ev.result as ArrayCollection;
+		taxTables = new ArrayCollection();
+		historytaxTables = new ArrayCollection();
+		for( var i:int = 0;i < tmp.length;i++){
+		 tmpTable = tmp.getItemAt(i) as TaxTable;
+		 if (tmpTable.taxTableIsCurrent)
+		 	taxTables.addItem(tmpTable)
+		 else
+		 	historytaxTables.addItem(tmpTable);
+		}
+		
+			
 		doNew();
 	}
 	private function doshiptax(item:Object, column:DataGridColumn):String{
@@ -130,15 +154,35 @@
 		tmpString = Snowmass.getCurrencyFormatter(false,2).format(tmpItem.effectiveTaxRate * 100) + "%";
 		return tmpString;
 	}
-	private function doSelectTaxTable():void{
+	private function doSelectTaxTable(data:Object):void{
 		taxElementsArray = new ArrayCollection();
 		taxTable=tableGrid.selectedItem as TaxTable;
 		newTable=false;
-		dataService.getTaxTable(taxTable.id)
+		dataService.getTaxTable(taxTable.id);
+		
+		history = false;
 		
 		 
 	}
-	
+	private function doSelectHistoryTaxTable():void{
+		taxElementsArray = new ArrayCollection();
+		taxTable=tableGrid0.selectedItem as TaxTable;
+		newTable=false;
+		dataService.getTaxTable(taxTable.id)
+		history = true;
+	}
+	private function setEnable(status:Boolean):void{
+		round_tax_check.enabled = status;
+		tax_shipping_check.enabled = status;
+		tax_on_tax_check.enabled = status;
+		name_edit.enabled = status;
+		Abbr_edit.enabled = status;
+		disable_check.enabled = status;
+		elementGrid.enabled = status;
+		min_tax.enabled = status;
+		tax_inPrice_check.enabled = status;
+		round_tax_check.enabled = status;
+	}
 	private function handleGetResult(ev:ResultEvent):void{
 		var tempTax:TaxElement;
 		taxTable = ev.result as TaxTable;
@@ -150,31 +194,51 @@
 			tempTax = taxTable.taxElements.getItemAt(i) as TaxElement;
 			taxElementsArray.addItem(tempTax)
 		}
-		if( systemPreferences.roundTaxUp)
-		{
-			round_tax_check.selected = true;
-			round_tax_check.enabled = false;
+		if ( taxTable.taxOnTax)
+			taxontax= true;
+		else
+			taxontax = false;
+		
+		if (history){
+			setEnable(false);
 		}else{
-			if ( taxTable.roundTaxUp)
-				{
+			setEnable(true);
+			if( systemPreferences.roundTaxUp)
+			{
+				round_tax_check.selected = true;
+				round_tax_check.enabled = false;
+			}else{
+				if ( taxTable.roundTaxUp)
+					{
 					round_tax_check.selected = true;
 					round_tax_check.enabled = true;
 				}else{
 					round_tax_check.selected = false;
 					round_tax_check.enabled = true;
-				}
+					}
+			
+			}
 			
 		}
+		
+		
+		
+		
 		
 		
 			
 		
 	}
+
 	private function handleSaveResult(ev:ResultEvent):void{
-		taxTable = ev.result as TaxTable;
-		if ( taxTable.taxTableIsCurrent == false)
-			SaveNewTax();
-		dataService.getAll("TaxTable");
+		if(! saveNoRate)
+		{
+			taxTable = ev.result as TaxTable;
+			if ( taxTable.taxTableIsCurrent == false)
+				SaveNewTax();
+			dataService.getAll("TaxTable");
+			
+		}
 	}
 	private function SaveNewTax():void{
 	
@@ -187,13 +251,17 @@
 
 		for( var i:int = 0;i < taxElementsArray.length;i++){
 			tempTax = taxElementsArray.getItemAt(i) as TaxElement;
-			temp = temp + tempTax.rate;
+			if (taxontax)
+				temp = temp+ (temp*(tempTax.rate *.01))+tempTax.rate;
+			else
+				temp = temp + tempTax.rate;
 		}
 		
 		effect_rate.text = temp.toString();
 	}	
 	private function doSave():void{
 		var tempTax:TaxElement;
+		saveNoRate= false;
 		tempRate = parseFloat(effect_rate.text);
 		if ( tempRate != taxTable.effectiveTaxRate && !newTable){
 			taxTable.taxTableIsCurrent = false;
@@ -264,6 +332,7 @@
 		newTable=  true;
 		tempTaxTable = new TaxTable;
 		taxElementsArray = new ArrayCollection();
+		setEnable(true);
 	}
 	
 	private function ShippingTax():void{
@@ -274,6 +343,33 @@
 		}
 		
 	}
+	private function TaxonTax():void{
+		if (tax_on_tax_check.selected)
+			 taxontax = true;
+		else
+			taxontax= false;
+		updatetax();
+	}
+	private function doDefaultclick():void{
+		updatetax();
+	
+	}
+	public function processGridData(item:Object):void {
+		var tempTable:TaxTable;
+		var tempTable1:TaxTable;
+		 	tempTable = item as TaxTable;
+		 	saveNoRate= true;
+		 	 dataService.addUpdate(tempTable);
+		 	for( var i:int = 0;i < taxTables.length;i++){
+		 		tempTable1 = taxTables.getItemAt(i) as TaxTable;
+		 		if ( tempTable1.id != tempTable.id)
+		 			if ( tempTable1.defaultTable){
+		 				tempTable1.defaultTable = false;
+		 				dataService.addUpdate(tempTable1)
+		 			}
+		 	 	}
+		 	
+		}
 ]]>
                              
 </mx:Script>		
@@ -310,33 +406,53 @@
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Show')}" dataField="showTax"/>
 		</mx:columns>
 	</mx:DataGrid>
-	<mx:LinkButton x="411"
+	<mx:LinkButton x="404.5"
 				   id="remove_pricelistelement_button"
 				   click="doRemoveTaxElement()"
 				   icon="@Embed(source='../../../../assets/delete16.png')"
 				   width="24"
-				   bottom="317"/>
+				   bottom="503"/>
 	<mx:LinkButton x="443"
 				   id="add_pricelistelement_button"
 				   click="doNewTaxElement()"
 				   icon="@Embed(source='../../../../assets/add16.png')"
 				   width="24"
-				   bottom="317"/>
+				   bottom="503"/>
 	<mx:Label x="184" y="451"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.EffectiveTaxRate')}"/>
 	<mx:Label id="min_edit" x="92" y="475" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.MinimumTaxableAmount')}" width="212.5"/>
 	<mx:CheckBox x="19" y="504" click="ShippingTax()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxShipping')}" selected="{taxTable.taxShipping}" id="tax_shipping_check"/>
 	<mx:CheckBox x="184" y="504" enabled="{tax_shipping_check.selected}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SeparateShipping')}" selected="{taxTable.separateShipping}" id="seperate_shipping_check"/>
-	<mx:CheckBox x="19" y="535" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxonTax')}" selected="{taxTable.taxOnTax}" id="tax_on_tax_check"/>
+	<mx:CheckBox x="19" y="535"  click="TaxonTax()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxonTax')}" selected="{taxTable.taxOnTax}" id="tax_on_tax_check"/>
 	<mx:CheckBox x="19" y="565" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Buildtaxinprice')}" selected="{taxTable.taxInPrice}" id="tax_inPrice_check"/>
 	<mx:CheckBox x="18.5" y="595" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}" selected="{taxTable.roundTaxUp}" width="144" id="round_tax_check"/>
 	<mx:TextInput x="315" y="449" restrict="0-9/." id="effect_rate" text="{Snowmass.getCurrencyFormatter(false,2).format(taxTable.effectiveTaxRate*100)}" editable="false"/>
 	<mx:TextInput x="312.5" y="473"  restrict="0-9/." id="min_tax" text="{Snowmass.getCurrencyFormatter(false ,2).format(taxTable.minAmount)}" width="116" height="21"/>
-	<mx:DataGrid x="18.5" y="625" width="435"  id="tableGrid" dataProvider="{taxTables}" itemClick="doSelectTaxTable()" height="111">
+	<mx:DataGrid x="18.5" y="657" width="435"  id="tableGrid" dataProvider="{taxTables}" itemClick="doSelectTaxTable(data)" height="111">
 		<mx:columns>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Default')}" labelFunction="doDefault" width="60"/>
+			<mx:DataGridColumn   dataField="defaultTable" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Default')}"  id="defaultcheck" width="60">
+						<mx:itemRenderer>
+								<mx:Component> 
+										<components:CustomCheckBoxComponent 
+											datagridControl="true"  click="{outerDocument.processGridData(data)}" variableName="defaultTable" customText="{data.defaultTable}"
+											selectedValue="true" deSelectedValue="false" />
+								</mx:Component>
+								
+							</mx:itemRenderer>
+				
+				
+				</mx:DataGridColumn>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" dataField="name"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="doeffectiveTaxRate"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="doeffectiveTaxRate" width="100"/>
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:CheckBox x="304" y="82" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.Disable')}" id="disable_check"/>
+	<mx:DataGrid x="18.5" y="813" width="435"  id="tableGrid0" dataProvider="{historytaxTables}" itemClick="doSelectHistoryTaxTable()" height="111">
+		<mx:columns>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.LastChange')}" dataField="modified" width="150"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" dataField="name"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="doeffectiveTaxRate" width="100"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:Label x="18" y="631" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Current')}"/>
+	<mx:Label x="18" y="787" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'creditCardTransMgrCmd.Historic')}"/>
 </mx:TitleWindow>
