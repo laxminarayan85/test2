@@ -242,576 +242,861 @@ public class CopierDefinitionMapper extends ImportMapper {
 					matrixElement.setPrice1(Utilities
 							.tokenToDouble(currentImportToken));
 					matrixElement.setLastLine(true);
-				} else if ("chart factor[16]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[17]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[18]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[19]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[20]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[21]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[22]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[23]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[24]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[25]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[26]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[27]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[28]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[29]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[30]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[31]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[32]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[33]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[34]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[35]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[36]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[37]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[38]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[39]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[40]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[41]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[42]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[43]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[44]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[45]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[46]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[47]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[48]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[49]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[50]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[51]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[52]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[53]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[54]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[55]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[56]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[57]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[58]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[59]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[60]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[61]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[62]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[63]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[64]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[65]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[66]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[67]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[68]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[69]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[70]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[71]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[72]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[73]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[74]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[75]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[76]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[77]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[78]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[79]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[80]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[81]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[82]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[83]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[84]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[85]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[86]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[87]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[88]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[89]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[90]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[91]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[92]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[93]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[94]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[95]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[96]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[97]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[98]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[99]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[100]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[101]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[102]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[103]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[104]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[105]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[106]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[107]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[108]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[109]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[110]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[111]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[112]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[113]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[114]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[115]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[116]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[117]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[118]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[119]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[120]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[121]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[122]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[123]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[124]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[125]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[126]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[127]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[128]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[129]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[130]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[131]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[132]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[133]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[134]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[135]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[136]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[137]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[138]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[139]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[140]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[141]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[142]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[143]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[144]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[145]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[146]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[147]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[148]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[149]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor[150]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[1]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[2]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[3]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[4]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[5]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[6]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[7]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[8]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[9]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[10]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[11]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[12]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[13]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[14]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[15]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[16]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[17]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[18]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[19]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[20]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[21]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[22]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[23]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[24]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[25]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[26]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[27]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[28]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[29]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[30]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[31]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[32]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[33]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[34]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[35]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[36]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[37]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[38]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[39]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[40]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[41]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[42]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[43]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[44]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[45]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[46]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[47]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[48]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[49]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[50]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[51]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[52]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[53]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[54]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[55]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[56]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[57]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[58]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[59]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[60]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[61]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[62]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[63]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[64]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[65]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[66]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[67]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[68]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[69]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[70]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[71]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[72]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[73]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[74]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[75]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[76]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[77]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[78]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[79]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[80]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[81]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[82]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[83]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[84]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[85]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[86]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[87]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[88]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[89]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[90]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[91]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[92]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[93]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[94]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[95]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[96]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[97]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[98]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[99]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[100]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[101]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[102]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[103]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[104]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[105]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[106]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[107]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[108]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[109]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[110]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[111]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[112]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[113]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[114]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[115]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[116]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[117]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[118]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[119]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[120]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[121]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[122]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[123]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[124]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[125]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[126]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[127]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[128]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[129]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[130]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[131]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[132]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[133]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[134]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[135]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[136]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[137]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[138]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[139]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[140]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[141]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[142]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[143]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[144]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[145]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[146]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[147]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[148]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[149]".equals(currentFieldToken)) {
-					/* TODO */
-				} else if ("chart factor2[150]".equals(currentFieldToken)) {
-					/* TODO */
+				} else if ("chart factor[16]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[17]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[18]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[19]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[20]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[21]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[22]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[23]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[24]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[25]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[26]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[27]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[28]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[29]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[30]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice2(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[31]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[32]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[33]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[34]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[35]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[36]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[37]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[38]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[39]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[40]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[41]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[42]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[43]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[44]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[45]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice3(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[46]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[47]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[48]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[49]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[50]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[51]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[52]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[53]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[54]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[55]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[56]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[57]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[58]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[59]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[60]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice4(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[61]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[62]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[63]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[64]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[65]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[66]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[67]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[68]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[69]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[70]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[71]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[72]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[73]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[74]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[75]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice5(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[76]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[77]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[78]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[79]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[80]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[81]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[82]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[83]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[84]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[85]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[86]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[87]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[88]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[89]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[90]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice6(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[91]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[92]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[93]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[94]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[95]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[96]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[97]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[98]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[99]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[100]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[101]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[102]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[103]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[104]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[105]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice7(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[106]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[107]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[108]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[109]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[110]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[111]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[112]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[113]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[114]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[115]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[116]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[117]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[118]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[119]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[120]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice8(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[121]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[122]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[123]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[124]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[125]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[126]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[127]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[128]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[129]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[130]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[131]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[132]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[133]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[134]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[135]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice9(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[136]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[137]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[138]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[139]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[140]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[141]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[142]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[143]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[144]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[145]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[146]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[147]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[148]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[149]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor[150]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice10(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[1]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[2]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[3]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[4]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[5]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[6]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[7]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[8]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[9]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[10]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[11]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[12]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[13]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[14]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[15]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice11(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[16]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[17]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[18]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[19]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[20]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[21]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[22]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[23]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[24]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[25]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[26]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[27]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[28]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[29]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[30]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice12(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[31]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[32]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[33]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[34]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[35]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[36]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[37]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[38]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[39]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[40]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[41]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[42]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[43]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[44]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[45]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice13(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[46]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[47]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[48]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[49]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[50]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[51]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[52]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[53]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[54]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[55]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[56]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[57]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[58]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[59]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[60]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice14(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[61]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[62]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[63]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[64]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[65]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[66]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[67]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[68]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[69]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[70]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[71]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[72]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[73]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[74]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[75]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice15(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[76]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[77]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[78]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[79]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[80]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[81]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[82]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[83]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[84]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[85]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[86]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[87]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[88]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[89]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[90]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice16(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[91]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[92]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[93]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[94]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[95]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[96]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[97]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[98]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[99]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[100]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[101]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[102]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[103]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[104]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[105]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice17(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[106]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[107]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[108]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[109]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[110]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[111]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[112]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[113]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[114]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[115]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[116]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[117]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[118]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[119]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[120]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice18(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[121]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[122]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[123]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[124]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[125]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[126]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[127]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[128]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[129]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[130]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[131]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[132]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[133]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[134]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[135]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice19(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[136]".equals(currentFieldToken) && x == 1) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[137]".equals(currentFieldToken) && x == 2) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[138]".equals(currentFieldToken) && x == 3) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[139]".equals(currentFieldToken) && x == 4) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[140]".equals(currentFieldToken) && x == 5) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[141]".equals(currentFieldToken) && x == 6) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[142]".equals(currentFieldToken) && x == 7) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[143]".equals(currentFieldToken) && x == 8) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[144]".equals(currentFieldToken) && x == 9) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[145]".equals(currentFieldToken) && x == 10) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[146]".equals(currentFieldToken) && x == 11) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[147]".equals(currentFieldToken) && x == 12) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[148]".equals(currentFieldToken) && x == 13) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[149]".equals(currentFieldToken) && x == 14) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
+				} else if ("chart factor2[150]".equals(currentFieldToken) && x == 15) {
+					if (matrixElement != null)
+						matrixElement.setPrice20(Utilities.tokenToDouble(currentImportToken));
 				}
 			}
 			if (matrixElement != null)
