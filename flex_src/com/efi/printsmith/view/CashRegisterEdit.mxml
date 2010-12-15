@@ -224,6 +224,9 @@
 	<mx:RemoteObject id="dataServiceCCT" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleCCTSaveResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceSessionBatch" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveSessionBatchResult(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServiceAccount" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleAccountSaveResult(event)"/>
 	</mx:RemoteObject>
@@ -257,9 +260,9 @@
 	<mx:RemoteObject id="taxCalculatorService" destination="taxService">
 		<mx:method name="calculateTax" fault="handleFault(event)" result="handleTaxResult(event)"/>
 	</mx:RemoteObject>
-<mx:RemoteObject id="dataServiceCreditCardPreferences" destination="dataService">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCreditCardPreferencesResult(event)"/>
-</mx:RemoteObject>
+	<mx:RemoteObject id="dataServiceCreditCardPreferences" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCreditCardPreferencesResult(event)"/>
+	</mx:RemoteObject>
 <!--	<mx:RemoteObject id="dataServiceInvoice" destination="InvoiceService">
 	<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadInvoice(event)"/>
 </mx:RemoteObject>-->
@@ -810,21 +813,59 @@
 
 	}
 
-	private function handleSaveTapeBatchResult(ev:ResultEvent):void{
+	private function handleSaveSessionBatchResult(ev:ResultEvent):void {
+		var sessionBatch:TapeSessionBatch = ev.result as TapeSessionBatch;
 		var i:int = 0;
-		tapeBatch = ev.result as TapeBatch;
+		var temp:Object = null;
+		var tempSale:TapeSaleRecord = null;
 		
-		
-		//
-		// these are all saved after the Tape so the TapeSaleRecord is valid
-		//
-		if (chargeLog != null && chargeLog.length > 0) {
-			for(i = 0; i< chargeLog.length; i++) {
-				unPurchase = chargeLog.getItemAt(i) as UnpurchasedMerchandise;
-				dataServiceUnPurchase.addupdate(unPurchase);
+		if (sessionBatch != null && sessionBatch.transactions!= null) {
+			for(i = 0; i< sessionBatch.transactions.length; i++) {
+				temp  = sessionBatch.transactions.getItemAt(i) as Object;
+				
+				if (temp is TapeSaleRecord) {
+					tempSale = temp as TapeSaleRecord;
+					
+					//
+					// are there any merchandise charges that need to be logged
+					//
+
+					if (!tempSale.isPickup) {
+						if (tempSale.paymode == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
+							// not compleletly paid for
+							if (tempSale.amountPaid == 0 || tempSale.total > tempSale.amountPaid) {
+								unPurchase = new UnpurchasedMerchandise();
+								unPurchase.account = sessionBatch.account;
+								unPurchase.saleRecord = tempSale;		// not valid at this point, need to wait until after save
+								unPurchase.transactionDate = new Date();
+								unPurchase.amountDue = (tempSale.total - tempSale.amountPaid);
+								
+								dataServiceUnPurchase.addupdate(unPurchase);
+							}
+						}
+					}
+				}
 			}
-		}
-		
+			tapeBatch.sessionBatches.addItem(sessionBatch);
+			dataServiceTapeBatch.addUpdate(tapeBatch);
+		}		
+	}
+	
+	private function handleSaveTapeBatchResult(ev:ResultEvent):void{
+//		var i:int = 0;
+//		tapeBatch = ev.result as TapeBatch;
+//		
+//		
+//		//
+//		// these are all saved after the Tape so the TapeSaleRecord is valid
+//		//
+//		if (chargeLog != null && chargeLog.length > 0) {
+//			for(i = 0; i< chargeLog.length; i++) {
+//				unPurchase = chargeLog.getItemAt(i) as UnpurchasedMerchandise;
+//				dataServiceUnPurchase.addupdate(unPurchase);
+//			}
+//		}
+//		
 		//
 		// save the cash drawer, when complete the register will be reset back to inital state
 		// see "handleSaveCashDrawerResult"
@@ -1983,7 +2024,7 @@
 			//
 			// appead this session to the current batch session list
 			//
-			tapeBatch.sessionBatches.addItem(sessionBatch);
+			//tapeBatch.sessionBatches.addItem(sessionBatch);
 
 			//
 			// any account history records that need to be created.
@@ -2000,7 +2041,8 @@
 				//
 				// write out the Tape Batch and all of its sub records, session, sales, payments, account history 
 				//
-				dataServiceTapeBatch.addUpdate(tapeBatch);
+				dataServiceSessionBatch.addUpdate(sessionBatch);
+//				dataServiceTapeBatch.addUpdate(tapeBatch);
 			}			
 		}
 	}
