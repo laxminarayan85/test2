@@ -36,6 +36,9 @@
 				   fault="handleFault(event)"
 				   result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="shippingMethodDataService" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethods(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="locationDataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -132,7 +135,9 @@
 			[Bindable] private var chargeDefinition:ChargeDefinition = new ChargeDefinition();
 			[Bindable] private var startTimeString:String = "00:00";
 			[Bindable] private var stopTimeString:String = "00:00";
-
+    		[Bindable] private var shippingMethods:ArrayCollection = new ArrayCollection();                
+			[Bindable] private var shipToArray:ArrayCollection = new ArrayCollection();
+			
 			private var addCharge:Boolean = false;
 			
 			private var focussedFormControl:DisplayObject;
@@ -159,7 +164,27 @@
 				PopUpManager.centerPopUp(this);
 				chargeCommandDataService.getChargeList();
 				dataServiceSystemPreferences.getAll("PreferencesSystem");
+			    shippingMethodDataService.getAll("ShippingMethod");
+			    buildShipToArray();
 				updateFieldVisibility();			
+			}
+			
+			private function buildShipToArray():void {
+				if (shipToArray == null) {
+					shipToArray = new ArrayCollection();
+				}
+				var menuItem:Object = new Object();
+				
+				menuItem.name = "Invoice Address";
+				shipToArray.addItem(menuItem);
+				
+				menuItem = new Object();
+				menuItem.name = "Delivery Intent";
+				shipToArray.addItem(menuItem);
+				
+				if (this.job.parentInvoice != null &&
+					this.job.parentInvoice.contact != null) {
+				}
 			}
 
 			private function findItem(name:String, array:ArrayCollection):int
@@ -172,6 +197,10 @@
 					}
 				}
 				return -1;
+			}
+			
+			private function handleLoadShippingMethods(ev:ResultEvent):void {
+				shippingMethods = ev.result as ArrayCollection;
 			}
 
 			private function handleLoadPressResult(ev:ResultEvent):void
@@ -1338,6 +1367,12 @@
 										<mx:Image width="85" height="82" id="fold_image"/>
 										<mx:Text text="" id="fold_description" width="100%" height="83"/>
 									</mx:HBox>
+								</mx:HBox>
+								<mx:HBox label="shipping" width="100%" height="100%" id="shipping" creationPolicy="all" horizontalAlign="center">
+									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipVia')}" textAlign="right"/>
+									<mx:ComboBox id="ship_via_combo" width="160" dataProvider="{shippingMethods}" labelField="name" textAlign="right"/>
+									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipTo')}" textAlign="right"/>
+									<mx:ComboBox id="ship_to_combo" width="160" dataProvider="{shipToArray}" labelField="name" textAlign="right"/>									
 								</mx:HBox>
 							</mx:ViewStack>
 

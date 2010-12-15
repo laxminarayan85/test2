@@ -51,8 +51,8 @@
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
 			<mx:TextInput x="114" y="344" width="113.5" id="over_quantity"/>
 		</mx:AddChild>
-		<mx:SetProperty target="{radiobutton2}" name="selected" value="{priceList.isDollar}"/>
-		<mx:SetProperty target="{radiobutton1}" name="selected" value="{priceList.isPercentage}"/>
+		<mx:SetProperty target="{amt_is_currency}" name="selected" value="{priceList.isDollar}"/>
+		<mx:SetProperty target="{amt_is_percent}" name="selected" value="{priceList.isPercentage}"/>
 		<mx:SetProperty target="{chkUseAsRateList}" name="y" value="153"/>
 		<mx:AddChild relativeTo="{chkProductionDiscount}" position="before">
 			<mx:CheckBox x="309" y="124" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Lastlineisaddlqty')}" selected="{priceList.lastItemIsPriceAdditionalQty}" id="chkLastLineAddlnQty" change="refreshCheckBoxes()"/>
@@ -62,15 +62,15 @@
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="enabled" value="false"/>
 		<mx:SetProperty target="{chkProductionDiscount}" name="enabled" value="false"/>
 		<mx:SetProperty target="{chkUseAsRateList}" name="enabled" value="false"/>
-		<mx:SetProperty target="{radiobutton1}" name="enabled" value="false"/>
-		<mx:SetProperty target="{radiobutton2}" name="enabled" value="false"/>
+		<mx:SetProperty target="{amt_is_currency}" name="enabled" value="false"/>
+		<mx:SetProperty target="{amt_is_percent}" name="enabled" value="false"/>
 		<mx:SetProperty name="title" value="Edit Speed Table {priceList.name}"/>
 		<mx:SetProperty target="{chkIgnoreGlobalPriceChange}" name="visible" value="false"/>
 		<mx:SetProperty target="{chkProductionDiscount}" name="visible" value="false"/>
 		<mx:SetProperty target="{chkUseAsRateList}" name="visible" value="false"/>
 		<mx:SetProperty target="{radio_box}" name="visible" value="false"/>
-		<mx:SetProperty target="{radiobutton2}" name="visible" value="false"/>
-		<mx:SetProperty target="{radiobutton1}" name="visible" value="false"/>
+		<mx:SetProperty target="{amt_is_percent}" name="visible" value="false"/>
+		<mx:SetProperty target="{amt_is_currency}" name="visible" value="false"/>
 		<mx:SetProperty target="{chkInterpolate}" name="y" value="38"/>
 		<mx:SetProperty name="width" value="894"/>
 		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="506"/>
@@ -184,8 +184,8 @@
 		<mx:SetProperty target="{label1}" name="width" value="61.5"/>
 		<mx:SetProperty target="{radio_box}" name="width" value="207"/>
 		<mx:SetProperty target="{radio_box}" name="height" value="56"/>
-		<mx:RemoveChild target="{radiobutton2}"/>
-		<mx:RemoveChild target="{radiobutton1}"/>
+		<mx:RemoveChild target="{amt_is_percent}"/>
+		<mx:RemoveChild target="{amt_is_currency}"/>
 		<mx:AddChild relativeTo="{radio_box}" position="lastChild">
 			<mx:RadioButton x="10" y="6" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisCurrency')}" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton0" enabled="false" visible="true" selected="{priceList.isDollar}"/>
 		</mx:AddChild>
@@ -438,6 +438,17 @@
 			else
 				this.chkLastLineAddlnQty.enabled = true;
 		}
+		
+		if (this.priceList.isDollar) {
+			this.amt_is_currency.selected = true;
+			this.amt_is_percent.selected = false;
+		} else if (this.priceList.isPercentage) {
+			this.amt_is_currency.selected = false;
+			this.amt_is_percent.selected = true;
+		} else {
+			this.amt_is_currency.selected = false;
+			this.amt_is_percent.selected = false;
+		}
 	}
 
 	private function validate(validator:Validator):Boolean
@@ -500,6 +511,8 @@
 		priceList.isRate = chkUseAsRateList.selected;
 		priceList.isDiscount = chkProductionDiscount.selected;
 		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
+		priceList.isPercentage = this.amt_is_percent.selected;
+		priceList.isDollar = this.amt_is_currency.selected;
 		if (copyFLag){
 			priceList.id = 0;
 			for (var t:int = 0;t < priceList.elements.length;t++) {
@@ -790,8 +803,8 @@
 					   width="24"
 					   bottom="3"/>
 		<mx:Panel id="radio_box" x="309.5" y="40" width="210.5" height="48" layout="absolute" borderStyle="solid" dropShadowEnabled="false" borderThickness="1" headerHeight="0" borderThicknessBottom="0" borderThicknessLeft="0" borderThicknessRight="0" borderThicknessTop="0">
-			<mx:RadioButton x="20" y="3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisCurrency')}" groupName="amount_radio_group" value="amtiscurrency" id="radiobutton2"/>
-			<mx:RadioButton x="20" y="22" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisPercent')}" groupName="amount_radio_group" value="amtispercent" id="radiobutton1"/>
+			<mx:RadioButton x="20" y="3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisCurrency')}" groupName="amount_radio_group" id="amt_is_currency"/>
+			<mx:RadioButton x="20" y="22" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisPercent')}" groupName="amount_radio_group" id="amt_is_percent"/>
 		</mx:Panel>
 	</mx:Canvas>
 <mx:Spacer height="10" />        

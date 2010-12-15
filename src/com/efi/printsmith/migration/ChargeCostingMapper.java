@@ -96,10 +96,10 @@ public class ChargeCostingMapper extends ImportMapper {
 							chargeCost.setSpeedTable(speedTable);
 					}
 				} else if ("avg impressions".equals(currentFieldToken)) {
-						chargeCost.setPiecesPerHour(Utilities.tokenToDouble(currentImportToken));
+					chargeCost.setPiecesPerHour(Utilities.tokenToDouble(currentImportToken));
 				} else if ("created date".equals(currentFieldToken)) {
 					if (currentImportToken.equals("") == false)
-					 chargeCost.setCreated(Utilities.tokenToDate(currentImportToken));
+						 chargeCost.setCreated(Utilities.tokenToDate(currentImportToken));
 				} else if ("updated date".equals(currentFieldToken)) {
 					
 				} else if ("disabled date".equals(currentFieldToken)) {

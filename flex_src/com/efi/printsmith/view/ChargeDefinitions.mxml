@@ -365,7 +365,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			
 			if (prices.setupPrice != 0) {
 				costPricingString = Number(pricingNumberFormatter.format(prices.unitPrice)).toFixed(2) + " + " +
-									Number(pricingNumberFormatter.format(prices.setupPrice)).toFixed(2);
+									Number(pricingNumberFormatter.format(prices.setupPrice + prices.materialSetupPrice)).toFixed(2);
 			} else {
 				costPricingString = Number(pricingNumberFormatter.format(prices.unitPrice)).toFixed(2);
 			}

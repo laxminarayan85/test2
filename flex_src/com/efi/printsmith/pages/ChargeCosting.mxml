@@ -16,9 +16,12 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     import com.efi.printsmith.data.enums.ChargeCostMethod;
     import com.efi.printsmith.events.ChargeCostingEvent;
     import com.efi.printsmith.events.PriceListPickerSelectEvent;    
+	import com.efi.printsmith.events.SavePriceListEvent;
     import com.efi.printsmith.view.PriceListPicker;   
+    import com.efi.printsmith.view.PriceListEditor;
     import com.efi.printsmith.data.SpeedTable;
     import com.efi.printsmith.data.PriceList;                     
+	import com.efi.printsmith.data.PriceListBase;
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
 	import mx.containers.Canvas;                                
@@ -87,7 +90,9 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     	if (chargeCost.costingMethod == ChargeCostMethod.TimeAndMaterial && chargeCost.speedTable == null) {
     		chargeCost.piecesPerHour = parseFloat(pieces_per_hour_edit.text);    	
     	} else {
-    		chargeCost.piecesPerHour = .01;
+    		if (isNaN(parseFloat(pieces_per_hour_edit.text)) || parseFloat(pieces_per_hour_edit.text) == 0.0) {
+	    		chargeCost.piecesPerHour = .01;
+	    	}
     	}
     //	chargeCost.rateTable
     	chargeCost.setupCost = parseFloat(setup_cost_edit.text);
@@ -107,8 +112,8 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     	textFocusOut(event);
     	if (chargeCost.costingMethod == ChargeCostMethod.TimeAndMaterial && chargeCost.speedTable == null) {
 	    	totalCost = parseFloat(labor_rate_edit.text)/parseFloat(pieces_per_hour_edit.text);
-	    	totalCost = totalCost + parseFloat(fixed_materials_edit.text)+ parseFloat(unit_materials_edit.text);
-	    	totalSetup = ((parseInt(setup_minutes_edit.text)/60) * parseFloat(labor_rate_edit.text))
+	    	totalCost = totalCost + parseFloat(unit_materials_edit.text);
+	    	totalSetup = ((parseInt(setup_minutes_edit.text)/60) * parseFloat(labor_rate_edit.text)) + parseFloat(fixed_materials_edit.text);
 	    	if (totalSetup >0)
 	    		total_cost_text.text = Snowmass.getCurrencyFormatter(false,2).format(totalCost)+ " + " + Snowmass.getCurrencyFormatter(false, 2).format(totalSetup)
 	    	else
@@ -121,8 +126,8 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     		total_cost_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable');
     		pieces_per_hour_edit.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.variable'); 
     	}
-	    	
     }
+    
 	private function creationCompleteHandler():void { 
 		costing_method_combo.selectedIndex = findItem(chargeCost.costingMethod,ChargeCostMethod.toArray());
 //		costing_method_combo.selectedItem = chargeCost.costingMethod;
@@ -146,9 +151,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	}
 	     
 	// Validate the form
-	                                         
-	public function validateForm(event:Event):void  {
-		focusedFormControl = event.target as DisplayObject;
+	public function doValidate():void {
 	    formIsValid = true;
 	
 	     // Check if form is empty          
@@ -163,7 +166,12 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	     validate(unitMaterialsValidator);      
 	     validate(laborRateValidator);                 
 	     validate(setupMinutesValidator);
-	     this.MaptoChargeCost();
+	     this.MaptoChargeCost();		
+	}   
+	                                 
+	public function validateForm(event:Event):void  {
+		focusedFormControl = event.target as DisplayObject;
+		doValidate();
 	}
 	    
 	public function textFocusOut(event:Event):void {
@@ -259,7 +267,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		rate_table_link.label = priceListLabel();
 		unit_cost_edit.enabled = true;
 		unit_cost_edit.text = Snowmass.getCurrencyFormatter(false,4).format(chargeCost.unitCost);
-		
+		doValidate();		
     }
     
     private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
@@ -272,6 +280,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 			chargeCost.rateTable = null;
 			Alert.show("Price List Picker returned a null price list", "Error");
 		}     	
+		doValidate();
     }
     
     private function priceListLabel():String {
@@ -323,6 +332,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		pieces_per_hour_edit.text = Snowmass.getCurrencyFormatter(false,4).format(chargeCost.piecesPerHour);
 		total_cost_text.enabled = true;
 		total_cost_text.text = Snowmass.getCurrencyFormatter(false,4).format(chargeCost.totalUnitCost);
+		doValidate();
     }
     
     private function handleSelectSpeedTable(evt:PriceListPickerSelectEvent):void {
@@ -342,7 +352,9 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 			total_cost_text.enabled = true;
 			total_cost_text.text = Snowmass.getCurrencyFormatter(false,4).format(chargeCost.totalUnitCost);
 		}  
+		doValidate();
     }                         
+
 	private function clearFormHandler():void {
 		// Clear all input fields.
 		updateDates();
@@ -367,7 +379,36 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 			createdString = "";
 			modifiedString = "";
 		} 
-	}      
+	} 
+	
+	private function doEditSpeedTable():void {
+		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPriceList(chargeCost.speedTable as PriceListBase);
+	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSaveSpeedTable);
+	}
+
+	private function handleSaveSpeedTable(ev:SavePriceListEvent):void
+	{
+		chargeCost.speedTable = ev.priceList as SpeedTable;
+		speed_table_link.label = speedTableLabel();
+		doValidate();
+	}
+	
+	private function doEditPriceList():void {
+		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(this, PriceListEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPriceList(chargeCost.rateTable as PriceListBase);
+	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSaveSpeedTable);
+	}
+
+	private function handleSavePriceList(ev:SavePriceListEvent):void
+	{
+		chargeCost.rateTable = ev.priceList as PriceList;
+		rate_table_link.label = priceListLabel();
+		doValidate();
+	}
+
 ]]>        
 </mx:Script>
                              
@@ -398,9 +439,9 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 		<mx:TextInput x="144" y="243" width="226" id="pieces_per_hour_edit" text="{chargeCost.piecesPerHour}" change="validateForm(event);"  textAlign="right" height="20" focusOut="calculateTotalUnit(event)" enabled="false"/>
 		<mx:Label x="10" y="267" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Totalunitcost')}" textAlign="right" width="126"/>
 		<mx:Button x="12" y="90" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Rate')}" width="106" click="doPriceList();" id="rate_button"  enabled="false"/>
-		<mx:LinkButton x="144" y="91" id="rate_table_link" width="226" enabled="{enableRateList}"/>
+		<mx:LinkButton x="144" y="91" id="rate_table_link" width="226" enabled="{enableRateList}" click="doEditPriceList()"/>
 		<mx:Button x="12" y="291" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.Speed')}" width="93" click="doSpeedTable();" id="speed_button" enabled="false"/>
-		<mx:LinkButton x="144" y="292" id="speed_table_link" width="226" enabled="{enableSpeedTable}"/>
+		<mx:LinkButton x="144" y="292" id="speed_table_link" width="226" enabled="{enableSpeedTable}" click="doEditSpeedTable()"/>
 		<mx:HRule x="0" y="130" width="339" height="0"/>
 		<mx:HRule x="0" y="130" width="370" height="9"/>
 		<mx:HRule x="0" y="320" width="370" height="9"/>

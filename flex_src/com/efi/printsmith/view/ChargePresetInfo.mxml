@@ -294,7 +294,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
 			}
 		} else if (this.chargeDefinition.method == ChargeMethod.Cut) {
-			quantity_box.includeInLayout = quantity_box.visible = true;
+			quantity_box.includeInLayout = quantity_box.visible = false;
 			material_quantity_box.includeInLayout = material_quantity_box.visible = chargeDefinition.useMaterial
 			material_rate_box.includeInLayout = material_rate_box.visible = chargeDefinition.useMaterial && chargeDefinition.adjustableMaterial;
 			in_sets_of_box.includeInLayout = in_sets_of_box.visible = chargeDefinition.useRateSets;
