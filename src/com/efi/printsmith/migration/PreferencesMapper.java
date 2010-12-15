@@ -1289,6 +1289,47 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setRoundTaxUp(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("roundDown"))
 			preferencesSystem.setAlwaysRoundDown(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("fiscalYearStartMonth")) {
+			int month = Utilities.tokenToInt(value);
+			switch (month) {
+			case 1:
+				preferencesSystem.setFiscalYearStartMonth("January");
+				break;
+			case 2:
+				preferencesSystem.setFiscalYearStartMonth("Feburary");
+				break;
+			case 3:
+				preferencesSystem.setFiscalYearStartMonth("March");
+				break;
+			case 4:
+				preferencesSystem.setFiscalYearStartMonth("April");
+				break;
+			case 5:
+				preferencesSystem.setFiscalYearStartMonth("May");
+				break;
+			case 6:
+				preferencesSystem.setFiscalYearStartMonth("June");
+				break;
+			case 7:
+				preferencesSystem.setFiscalYearStartMonth("July");
+				break;
+			case 8:
+				preferencesSystem.setFiscalYearStartMonth("August");
+				break;
+			case 9:
+				preferencesSystem.setFiscalYearStartMonth("September");
+				break;
+			case 10:
+				preferencesSystem.setFiscalYearStartMonth("October");
+				break;
+			case 11:
+				preferencesSystem.setFiscalYearStartMonth("November");
+				break;
+			case 12:
+				preferencesSystem.setFiscalYearStartMonth("December");
+				break;
+			}
+		}
 		if (address != null)
 			preferencesSystem.setCompanyAddress(address);
 		dataService.addUpdate(preferencesSystem);
