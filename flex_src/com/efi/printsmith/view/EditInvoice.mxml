@@ -257,6 +257,7 @@
 			
 			private var onPendingList:Boolean= false;
 			private var newContact:Boolean = false;
+			private var tempContactId:Number = -1;
 						
 			public function getSecurityCommand():String {
 				if ((invoice != null) && (invoice is Estimate))
@@ -347,6 +348,10 @@
 				if(!invoice.onPendingList){
 					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisdocumentislocked'));
 				}
+				
+				if (invoice.contact != null && invoice.contact.tempFlag)
+					tempContactId = invoice.contact.id;
+					
 				this.createInvoice.visible = false;		
 				salesRepDataService.getAll("SalesRep");
 				shippingMethodDataService.getAll("ShippingMethod");
@@ -389,6 +394,7 @@
 							c = new Contact();
 							c.tempFlag = true;
 						}
+						
 					}
 					c.firstName = evt.contact.firstName;
 					c.lastName = evt.contact.lastName;
@@ -434,6 +440,8 @@
 				else	
 					contact_list.selectedItem = obj;				
 				
+				if ((contact_list.selectedItem as Contact).tempFlag)
+					tempContactId = (contact_list.selectedItem as Contact).id;
 			}
 			
 			private function createToolbarButtons():void	{
@@ -832,6 +840,9 @@
 			public function doSave(ev:MouseEvent=null):void
 			{
 				mapToInvoiceData();
+				if (!((contact_list.selectedItem as Contact).tempFlag) && tempContactId != -1)	{
+					dataService.deleteItem("Contact", tempContactId);
+				}	
 				dataService.saveInvoice(invoice);
 			}
 
@@ -1370,6 +1381,7 @@
 			private function doContactChange():void{
 				var temp:Contact= new Contact();
 				temp = contact_list.selectedItem as Contact;
+				
 				contact_editor.setContact(temp);
 				contact_ship_address.dataProvider = temp.shipToAddress;
 				if (temp.shipToAddress == null || temp.shipToAddress.length == 0)	{
