@@ -1285,6 +1285,10 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setEnablePricingSystem(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("roundto"))
 			preferencesSystem.setNumbersRoundto(Utilities.tokenToInt(value));
+		else if (name.equals("roundTaxUp"))
+			preferencesSystem.setRoundTaxUp(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("roundDown"))
+			preferencesSystem.setAlwaysRoundDown(Utilities.tokenToBooleanValue(value));
 		if (address != null)
 			preferencesSystem.setCompanyAddress(address);
 		dataService.addUpdate(preferencesSystem);
