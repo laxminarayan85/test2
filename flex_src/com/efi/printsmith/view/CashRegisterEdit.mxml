@@ -271,6 +271,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import com.efi.printsmith.data.Charge;
 	import mx.events.ListEvent;
 	import mx.events.TreeEvent;
 	import mx.events.FlexEvent;
@@ -299,6 +300,7 @@
 	import com.efi.printsmith.data.AccountHistoryData;
 	import com.efi.printsmith.data.CreditCardTransactions;
 	import com.efi.printsmith.data.CreditCard;
+	import com.efi.printsmith.data.Charge;
 	
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
@@ -309,6 +311,7 @@
 	import com.efi.printsmith.events.JobEditCompleteEvent;
 	import com.efi.printsmith.events.CreditCardTrackReadEvent;
 	import com.efi.printsmith.events.CreditCardTransEvent;
+	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 	import com.efi.printsmith.Constants;
 
 	import mx.controls.Alert;                                         
@@ -341,9 +344,9 @@
 	private var systemCashPreferencesArray:ArrayCollection = new ArrayCollection();
 	
 	// used during POST to save cascading records
-	var printList:ArrayCollection = new ArrayCollection();
-	var chargeLog:ArrayCollection = new ArrayCollection();	
-	var arHistoryList:ArrayCollection = new ArrayCollection();	
+	private var printList:ArrayCollection = new ArrayCollection();
+//	private var chargeLog:ArrayCollection = new ArrayCollection();	
+	private var arHistoryList:ArrayCollection = new ArrayCollection();	
 	
 	
 [Bindable]
@@ -374,6 +377,8 @@
 	private var AustrailianRounding:Boolean;
 	[Bindable]
 	private	var unPurchase:UnpurchasedMerchandise;
+	[Bindable]
+	private var charges:ArrayCollection=new ArrayCollection();
 	
 //	[Bindable]
 //	private var posTransactions:ArrayCollection;
@@ -459,6 +464,7 @@
 	//		customerAccount = null;
 			this.currentState = "";
 			openTree();
+			charges = new ArrayCollection();
 			UpdateBatchNumbers();	
 			
 			//
@@ -957,7 +963,7 @@
 		txtSaleDescription.text = treeItem.title;
 		
 		activeSale.cashRegisterDept = treeItem;
-		activeSale.department = activeSale.cashRegisterDept.title;
+		activeSale.description = activeSale.cashRegisterDept.title;
 		
 		if (treeItem.taxTable != null)
 			pickTaxTable.selectedIndex = findItem(treeItem.taxTable.name, TaxTableArray);
@@ -997,7 +1003,11 @@
 	}
 	
 	private function doAddCharge():void {
-	
+		var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
+		chargePicker.charges = this.charges;
+		chargePicker.job = null;
+		chargePicker.setStyle("borderAlpha", 0.9);
+		chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete);
 	}
 	
 	private function doCreditCardManualApproval():void {
@@ -1006,6 +1016,58 @@
 		creditCardManualApproveWindow.addEventListener(CreditCardTransEvent.COMPLETE, handleCreditCardTransWrite);
 		creditCardManualApproveWindow.setAmount(payment_cash_edit.text);
 		creditCardManualApproveWindow.setTax(activePayment.taxAmount.toString());
+	}
+	
+	private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
+	{
+		var localCharge:Charge;
+		var i:int;
+		this.charges = evt.chargeArray;
+		
+		if (this.charges != null && activeSale != null) {
+			
+			// create a Sale Record for each charge the user assigned
+			//
+			for (i = 0; i < this.charges.length; ++i) {
+				localCharge = this.charges.getItemAt(i) as Charge;
+				if (localCharge != null) {
+					activeSale.subTotal = localCharge.price;
+					activeSale.total = activeSale.subTotal;
+					activeSale.quantity = localCharge.quantity;
+					activeSale.opPrice = true;
+					activeSale.unitPrice = 0;
+					activeSale.description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'tapeCmd.QuickEst') + " " + localCharge.description;
+					
+					if (txtSaleDescription != null)
+						txtSaleDescription.text = activeSale.description;
+					if (txtSaleQuantity != null)
+						txtSaleQuantity.text = activeSale.quantity.toString();
+					if (txtSaleUnitPrice != null)
+						txtSaleUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.unitPrice);
+					if (txtSaleTotal != null)
+						txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.subTotal);
+		
+					activeSale.taxTable = pickTaxTable.selectedItem as TaxTable;
+					activeSale.taxCode = pickTaxCode.selectedItem as TaxCodes;
+		
+					if (chkNonTax.selected || activeSale.taxTable != null){
+						activeSale.taxAmount = 0;
+					}
+					else {
+						// cannot wait on Tax service here, in a loop adding each charge
+						//
+						if (activeSale.taxTable.minAmount > 0 && activeSale.subTotal < activeSale.taxTable.minAmount) {
+							activeSale.taxAmount = 0;
+						}
+						else{
+							activeSale.taxAmount = (activeSale.taxTable.effectiveTaxRate * activeSale.subTotal);
+						}
+					}
+
+					doAccept();	
+				}
+			}
+		}
 	}
 
 	private function addNewJob(event:Event):void
@@ -1018,12 +1080,12 @@
 			activeSale.unitPrice = target.job.pricingRecord.unitPrice;
 			activeSale.subTotal = target.job.pricingRecord.totalPrice;
 			activeSale.total = activeSale.subTotal;
-			activeSale.department = target.job.description;
-			if (activeSale.department.length == 0)
-				activeSale.department = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'tapeCmd.QuickEst');
+			activeSale.description = target.job.description;
+			if (activeSale.description.length == 0)
+				activeSale.description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'tapeCmd.QuickEst');
 			
 			if (txtSaleDescription != null)
-				txtSaleDescription.text = activeSale.department;
+				txtSaleDescription.text = activeSale.description;
 			if (txtSaleQuantity != null)
 				txtSaleQuantity.text = activeSale.quantity.toString();
 			if (txtSaleUnitPrice != null)
@@ -1288,9 +1350,9 @@
 			var tempSale:TapeSaleRecord = item as TapeSaleRecord;
 			
 			if (activeSale.isPickup == false)
-				tempString = tempSale.department + " " + tempSale.quantity.toString() + "x"+ tempSale.unitPrice.toString();
+				tempString = tempSale.description + " " + tempSale.quantity.toString() + "x"+ tempSale.unitPrice.toString();
 			else
-				tempString = tempSale.department;
+				tempString = tempSale.description;
 		}
 		
 		return tempString;
@@ -1300,7 +1362,7 @@
 		
 		if (this.currentState != "") {
 			if (txtSaleDescription != null)
-				activeSale.department = txtSaleDescription.text;
+				activeSale.description = txtSaleDescription.text;
 			if (txtSaleQuantity != null)
 				activeSale.quantity = parseInt(txtSaleQuantity.text);
 			if (txtSaleUnitPrice != null)
@@ -1537,8 +1599,8 @@
 							// charge to account
 							if (tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 								if (tempPayment != null) {
-									totalCharge += payAmount;
-									payAmount = 0;
+									totalCharge += unApplied;
+									payAmount -= unApplied;
 								} else {
 									totalTransactionPay += unApplied;
 									totalCharge -= unApplied;
@@ -1559,18 +1621,18 @@
 						else {
 							// charge to account
 							if (tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
-								if (tempPayment != null) {
-									totalCharge += payAmount;
+							//	if (tempPayment != null) {
+									totalCharge += unApplied;
 									payAmount = 0;
-								} else {
-									totalTransactionPay += unApplied;
-									totalCharge -= unApplied;
-									unApplied = 0;
-								}
+							//	} 
+							//	else {
+							//		totalTransactionPay += unApplied;
+							//		totalCharge -= unApplied;
+							//		unApplied = 0;
+							//	}
 							} 
 							// cash, check or credit card
 							else {
-
 								tempSale.amountPaid += payAmount;
 								totalTransactionPay += payAmount;
 								unApplied -= payAmount;
@@ -1799,7 +1861,7 @@
 			this.throbber.play();
 			
 			printList.removeAll();
-			chargeLog.removeAll();	
+//			chargeLog.removeAll();	
 			arHistoryList.removeAll();
 
 			//
@@ -1993,17 +2055,17 @@
 						if (tempSale.paymode == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 							// not compleletly paid for
 							if (tempSale.amountPaid == 0 || tempSale.total > tempSale.amountPaid) {
-								unPurchase = new UnpurchasedMerchandise();
-								unPurchase.account = sessionBatch.account;
-								unPurchase.saleRecord = tempSale;		// not valid at this point, need to wait until after save
-								unPurchase.transactionDate = new Date();
-								unPurchase.amountDue = (tempSale.total - tempSale.amountPaid);
+							//	unPurchase = new UnpurchasedMerchandise();
+							//	unPurchase.account = sessionBatch.account;
+							//	unPurchase.saleRecord = tempSale;		// not valid at this point, need to wait until after save
+							//	unPurchase.transactionDate = new Date();
+							//	unPurchase.amountDue = (tempSale.total - tempSale.amountPaid);
 								
 								// create a list of records to save later
 								//
-								chargeLog.addItem(unPurchase);
+							//	chargeLog.addItem(unPurchase);
 								
-								sessionBatch.account.onAccount += unPurchase.amountDue;
+								sessionBatch.account.onAccount += (tempSale.total - tempSale.amountPaid);
 								accountChanged = true;
 							}
 						}
@@ -2170,8 +2232,8 @@
 				activeSale.taxAmount = invoice.tax;
 				activeSale.description = invoice.name;
 				
-				if (activeSale.department.length == 0)
-					activeSale.department = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp');
+				if (activeSale.description.length == 0)
+					activeSale.description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp');
 				
 				activeSale.noTax = invoice.notTaxable;
 				
@@ -2181,7 +2243,7 @@
 				}
 				
 				if (txtSaleDescription != null)
-					txtSaleDescription.text = activeSale.department;
+					txtSaleDescription.text = activeSale.description;
 				if (txtSaleQuantity != null)
 					txtSaleQuantity.text = activeSale.quantity.toString();
 				if (txtSaleUnitPrice != null) 
