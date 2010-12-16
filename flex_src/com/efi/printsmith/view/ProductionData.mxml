@@ -164,13 +164,19 @@ width="938" height="507"  creationComplete="init()"
 			if (job.pricingMethod.method != "Large Format") {
 				this.requires.visible = true;
 				this.sheets_purchased.visible = true;
+				var requires:Number = 0;
+				var purchased:Number = 0;
 				if (job.doubleSided) {
-					this.requires.text = (job.totalCopies / 2 / job.paperCal.runout).toString();
-					this.sheets_purchased.text = (job.totalCopies / 2 / job.paperCal.runout).toString();
+					requires = Math.round((job.totalCopies / 2 / job.paperCal.runout));
+					this.requires.text = requires.toFixed(0);
+					purchased = Math.round((job.totalCopies / 2 / job.paperCal.runout));
+					this.sheets_purchased.text = purchased.toFixed(0);
 				}
 				else {
-					this.requires.text = (job.totalCopies / job.paperCal.runout).toString();
-					this.sheets_purchased.text = (job.totalCopies / job.paperCal.runout).toString();
+					requires = Math.round((job.totalCopies / job.paperCal.runout));
+					this.requires.text = requires.toFixed(0);
+					purchased = Math.round((job.totalCopies / job.paperCal.runout));
+					this.sheets_purchased.text = purchased.toFixed(0);
 				}
 			}
 			else {
