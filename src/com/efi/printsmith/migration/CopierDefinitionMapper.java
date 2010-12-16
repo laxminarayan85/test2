@@ -148,25 +148,35 @@ public class CopierDefinitionMapper extends ImportMapper {
 					matrixElement.setQty(Utilities
 							.tokenToInt(currentImportToken));
 				} else if ("chart original[1]".equals(currentFieldToken)) {
-					/* TODO */
+					if (Utilities.tokenToLong(currentImportToken) > 0)
+						matrix.setHeader1(Utilities.tokenToLong(currentImportToken));
 				} else if ("chart original[2]".equals(currentFieldToken)) {
-					/* TODO */
+					if (Utilities.tokenToLong(currentImportToken) > 0)
+						matrix.setHeader2(Utilities.tokenToLong(currentImportToken));
 				} else if ("chart original[3]".equals(currentFieldToken)) {
-					/* TODO */
+					if (Utilities.tokenToLong(currentImportToken) > 0)
+						matrix.setHeader3(Utilities.tokenToLong(currentImportToken));
 				} else if ("chart original[4]".equals(currentFieldToken)) {
-					/* TODO */
+					if (Utilities.tokenToLong(currentImportToken) > 0)
+						matrix.setHeader4(Utilities.tokenToLong(currentImportToken));
 				} else if ("chart original[5]".equals(currentFieldToken)) {
-					/* TODO */
+					if (Utilities.tokenToLong(currentImportToken) > 0)
+						matrix.setHeader5(Utilities.tokenToLong(currentImportToken));
 				} else if ("chart original[6]".equals(currentFieldToken)) {
-					/* TODO */
+					if (Utilities.tokenToLong(currentImportToken) > 0)
+						matrix.setHeader6(Utilities.tokenToLong(currentImportToken));
 				} else if ("chart original[7]".equals(currentFieldToken)) {
-					/* TODO */
+					if (Utilities.tokenToLong(currentImportToken) > 0)
+						matrix.setHeader7(Utilities.tokenToLong(currentImportToken));
 				} else if ("chart original[8]".equals(currentFieldToken)) {
-					/* TODO */
+					if (Utilities.tokenToLong(currentImportToken) > 0)
+						matrix.setHeader8(Utilities.tokenToLong(currentImportToken));
 				} else if ("chart original[9]".equals(currentFieldToken)) {
-					/* TODO */
+					if (Utilities.tokenToLong(currentImportToken) > 0)
+						matrix.setHeader9(Utilities.tokenToLong(currentImportToken));
 				} else if ("chart original[10]".equals(currentFieldToken)) {
-					/* TODO */
+					if (Utilities.tokenToLong(currentImportToken) > 0)
+						matrix.setHeader10(Utilities.tokenToLong(currentImportToken));
 				} else if ("chart factor[1]".equals(currentFieldToken)
 						&& x == 1) {
 					if (matrixElement != null)
