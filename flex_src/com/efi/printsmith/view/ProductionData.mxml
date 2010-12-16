@@ -229,7 +229,13 @@ width="938" height="507"  creationComplete="init()"
 		  		
 			}
 		}
-	}	
+	}
+	
+	private function runSizeLostFocus():void {
+		job.runSize = this.run_size.selectedItem as com.efi.printsmith.data.Dimension;
+		if (job.runSize != null)
+			this.area.text = (job.runSize.height * job.runSize.width).toString();
+	}
 	
 	private function doNumOutChange():void {
 		if (this.number_out.text == "" || isNaN(parseInt(this.number_out.text)))
@@ -469,7 +475,7 @@ width="938" height="507"  creationComplete="init()"
 		<mx:HRule x="95" y="77" width="93" height="1" strokeWidth="1"/>
 	</mx:Panel>
 	<mx:ComboBox x="138" y="8" width="84" id="parent_size" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="" height="20" enabled="false"></mx:ComboBox>
-	<mx:ComboBox x="138" y="30" width="84" id="run_size" labelField="name" dataProvider="{dimensionsArray}" editable="true" height="20"></mx:ComboBox>
+	<mx:ComboBox x="138" y="30" width="84" id="run_size" labelField="name" focusOut="runSizeLostFocus()" dataProvider="{dimensionsArray}" editable="true" height="20"></mx:ComboBox>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="0" height="23" showSeconds="false" dataHolder="{job}" variableName="typeSettingDate" customText="{job.typeSettingDate}" is24Hour="false"  disabledColor="#000000" id="typeSettingTime">
 	</ns1:CustomTimeEntryDateComponent>
 	<mx:DateField x="700" y="0" width="100" id="typeSettingDate" dataProvider="{job.typeSettingDate}"/>
