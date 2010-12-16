@@ -49,7 +49,7 @@
      [Bindable]                                
     private var historytaxTables:ArrayCollection = new ArrayCollection();   
      [Bindable]                                
-    private var taxTable:TaxTable;
+    public var taxTable:TaxTable;
    [Bindable]                                
     private var tempTaxTable:TaxTable;
     [Bindable]                                
@@ -388,14 +388,15 @@
 			taxTable.disableTable = disable_check.selected;
 			dataService.addUpdate(taxTable);
 		}
-		private function doSeperate():void{
-			var temo:ClassFactory;
-			temo = shipColumn.itemRenderer as ClassFactory;
-			if (seperate_shipping_check.selected)
-				shipColumn.editable = false
-				//tableGrid
-			else
-				shipColumn.editable = false;
+		private function doSeperate():void {
+			this.taxTable.separateShipping = seperate_shipping_check.selected;
+//			var temo:ClassFactory;
+//			temo = shipColumn.itemRenderer as ClassFactory;
+//			if (seperate_shipping_check.selected)
+//				shipColumn.editable = false
+//				//tableGrid
+//			else
+//				shipColumn.editable = false;
 		}	
 ]]>
                              
@@ -433,7 +434,7 @@
 				<mx:itemRenderer>  
 								<mx:Component>  
 										<components:CustomCheckBoxComponent 
-											datagridControl="true"  enabled="false" click="{}" variableName="userForSeparateShippingTax" customText="{data.userForSeparateShippingTax}"
+											datagridControl="true"  enabled="{outerDocument.taxTable.separateShipping}" click="{}" variableName="userForSeparateShippingTax" customText="{data.userForSeparateShippingTax}"
 											selectedValue="true" deSelectedValue="false" />
 								</mx:Component>
 								
