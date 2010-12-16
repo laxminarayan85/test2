@@ -876,7 +876,10 @@
 	}
 	
 	private function handleMatrixEditorResult(evt:ResultEvent):void {
-		copierDefinition.copierMatrix = evt.result as com.efi.printsmith.data.Matrix;
+		if (evt.result == null)
+			copierDefinition.copierMatrix = createCopierMatrix();
+		else
+			copierDefinition.copierMatrix = evt.result as com.efi.printsmith.data.Matrix;
 		this.openEditMatrixWindow();
 	}
 	
