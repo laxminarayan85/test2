@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.vo.*" label="Estmate History" name="Estmate History"
-width="888" height="507"  creationComplete="init()"  
+width="938" height="507"  creationComplete="init()"  
      title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ProductionData')}" xmlns:text="flash.text.*" fontSize="9" xmlns:ns1="com.efi.printsmith.common.components.*">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -377,27 +377,27 @@ width="888" height="507"  creationComplete="init()"
 ]]>
                              
 </mx:Script>
-<mx:Canvas width="868" height="459" dropShadowEnabled="false" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Canvas width="914" height="459" dropShadowEnabled="false" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Label x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.ParentSize')}" width="120" textAlign="right" id="parent_size_label"/>
 	<mx:Label x="379" y="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Area')}" width="101" textAlign="right"/>
 	<mx:Text x="488" y="31" text="" width="60" textAlign="right" id="area"/>
 	<mx:Label x="380" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Out')}" width="100" textAlign="right"/>
-	<mx:Label x="595" y="23" text="Proof Back:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="44" text="Blueline:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="65" text="Blueline Back:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="2" text="Type Setting:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="151" text="Copied:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="172" text="Bindery:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="253" text="Mailing:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="193" text="Cut:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="235" text="Finished:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="213" text="Folded:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="274" text="Outside Service:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="130" text="Printed:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="296" text="Other:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="319" text="Delivered:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="86" text="Stock Cut:" width="70" textAlign="right"/>
-	<mx:Label x="595" y="107" text="At Press:" width="70" textAlign="right"/>
+	<mx:Label x="595" y="23" text="Proof Back:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="44" text="Blueline:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="65" text="Blueline Back:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="2" text="Type Setting:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="151" text="Copied:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="172" text="Bindery:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="253" text="Mailing:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="193" text="Cut:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="235" text="Finished:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="213" text="Folded:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="274" text="Outside Service:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="130" text="Printed:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="296" text="Other:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="319" text="Delivered:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="86" text="Stock Cut:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="107" text="At Press:" width="97" textAlign="right"/>
 	<mx:Label x="380" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.per')}" width="100" textAlign="right"/>
 	<mx:TextInput x="488" y="10" text="" width="60" textAlign="right" height="20" id="number_out" change="doNumOutChange()" focusOut="fieldChanged(event)"/>
 	<mx:TextInput x="488" y="52" width="61" textAlign="right" height="20" id="per" change="doPerChange()" focusOut="fieldChanged(event)"/>
@@ -461,54 +461,54 @@ width="888" height="507"  creationComplete="init()"
 	</mx:Panel>
 	<mx:ComboBox x="138" y="8" width="84" id="parent_size" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="" height="20" enabled="false"></mx:ComboBox>
 	<mx:ComboBox x="138" y="30" width="84" id="run_size" labelField="name" dataProvider="{dimensionsArray}" editable="true" height="20"></mx:ComboBox>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="0" height="23" showSeconds="false" dataHolder="{job}" variableName="typeSettingDate" customText="{job.typeSettingDate}" is24Hour="false"  disabledColor="#000000" id="typeSettingTime">
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="0" height="23" showSeconds="false" dataHolder="{job}" variableName="typeSettingDate" customText="{job.typeSettingDate}" is24Hour="false"  disabledColor="#000000" id="typeSettingTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="0" width="80" id="typeSettingDate" dataProvider="{job.typeSettingDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="20" height="23" showSeconds="false" dataHolder="{job}" variableName="proofBackDate" customText="{job.proofBackDate}" is24Hour="false"  disabledColor="#000000" id="proofBackTime">
+	<mx:DateField x="700" y="0" width="100" id="typeSettingDate" dataProvider="{job.typeSettingDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="20" height="23" showSeconds="false" dataHolder="{job}" variableName="proofBackDate" customText="{job.proofBackDate}" is24Hour="false"  disabledColor="#000000" id="proofBackTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="20" width="80" id="proofBackDate" dataProvider="{job.proofBackDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="40" height="23" showSeconds="false" dataHolder="{job}" variableName="bluelineDate" customText="{job.bluelineDate}" is24Hour="false"  disabledColor="#000000" id="bluelineTime">
+	<mx:DateField x="700" y="20" width="100" id="proofBackDate" dataProvider="{job.proofBackDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="40" height="23" showSeconds="false" dataHolder="{job}" variableName="bluelineDate" customText="{job.bluelineDate}" is24Hour="false"  disabledColor="#000000" id="bluelineTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="40" width="80" id="bluelineDate" dataProvider="{job.bluelineDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="60" height="23" showSeconds="false" dataHolder="{job}" variableName="bluelineBackDate" customText="{job.bluelineBackDate}" is24Hour="false"  disabledColor="#000000" id="bluelineBackTime">
+	<mx:DateField x="700" y="40" width="100" id="bluelineDate" dataProvider="{job.bluelineDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="60" height="23" showSeconds="false" dataHolder="{job}" variableName="bluelineBackDate" customText="{job.bluelineBackDate}" is24Hour="false"  disabledColor="#000000" id="bluelineBackTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="60" width="80" id="bluelineBackDate" dataProvider="{job.bluelineBackDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="81" height="23" showSeconds="false" dataHolder="{job}" variableName="stockCutDate" customText="{job.stockCutDate}" is24Hour="false"  disabledColor="#000000" id="stockCutTime">
+	<mx:DateField x="700" y="60" width="100" id="bluelineBackDate" dataProvider="{job.bluelineBackDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="81" height="23" showSeconds="false" dataHolder="{job}" variableName="stockCutDate" customText="{job.stockCutDate}" is24Hour="false"  disabledColor="#000000" id="stockCutTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="81" width="80" id="stockCutDate" dataProvider="{job.stockCutDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="102" height="23" showSeconds="false" dataHolder="{job}" variableName="atPressDate" customText="{job.atPressDate}" is24Hour="false"  disabledColor="#000000" id="atPressTime">
+	<mx:DateField x="700" y="81" width="100" id="stockCutDate" dataProvider="{job.stockCutDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="102" height="23" showSeconds="false" dataHolder="{job}" variableName="atPressDate" customText="{job.atPressDate}" is24Hour="false"  disabledColor="#000000" id="atPressTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="102" width="80" id="atPressDate" dataProvider="{job.atPressDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="125" height="23" showSeconds="false" dataHolder="{job}" variableName="printedDate" customText="{job.printedDate}" is24Hour="false"  disabledColor="#000000" id="printedTime">
+	<mx:DateField x="700" y="102" width="100" id="atPressDate" dataProvider="{job.atPressDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="125" height="23" showSeconds="false" dataHolder="{job}" variableName="printedDate" customText="{job.printedDate}" is24Hour="false"  disabledColor="#000000" id="printedTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="125" width="80" id="printedDate" dataProvider="{job.printedDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="146" height="23" showSeconds="false" dataHolder="{job}" variableName="copiedDate" customText="{job.copiedDate}" is24Hour="false"  disabledColor="#000000" id="copiedTime">
+	<mx:DateField x="700" y="125" width="100" id="printedDate" dataProvider="{job.printedDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="146" height="23" showSeconds="false" dataHolder="{job}" variableName="copiedDate" customText="{job.copiedDate}" is24Hour="false"  disabledColor="#000000" id="copiedTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="146" width="80" id="copiedDate" dataProvider="{job.copiedDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="166" height="23" showSeconds="false" dataHolder="{job}" variableName="binderyDate" customText="{job.binderyDate}" is24Hour="false"  disabledColor="#000000" id="binderyTime">
+	<mx:DateField x="700" y="146" width="100" id="copiedDate" dataProvider="{job.copiedDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="166" height="23" showSeconds="false" dataHolder="{job}" variableName="binderyDate" customText="{job.binderyDate}" is24Hour="false"  disabledColor="#000000" id="binderyTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="166" width="80" id="binderyDate" dataProvider="{job.binderyDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="188" height="23" showSeconds="false" dataHolder="{job}" variableName="cutDate" customText="{job.cutDate}" is24Hour="false"  disabledColor="#000000" id="cutTime">
+	<mx:DateField x="700" y="166" width="100" id="binderyDate" dataProvider="{job.binderyDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="188" height="23" showSeconds="false" dataHolder="{job}" variableName="cutDate" customText="{job.cutDate}" is24Hour="false"  disabledColor="#000000" id="cutTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="188" width="80" id="cutDate" dataProvider="{job.cutDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="210" height="23" showSeconds="false" dataHolder="{job}" variableName="foldedDate" customText="{job.foldedDate}" is24Hour="false"  disabledColor="#000000" id="foldedTime">
+	<mx:DateField x="700" y="188" width="100" id="cutDate" dataProvider="{job.cutDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="210" height="23" showSeconds="false" dataHolder="{job}" variableName="foldedDate" customText="{job.foldedDate}" is24Hour="false"  disabledColor="#000000" id="foldedTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="210" width="80" id="foldedDate" dataProvider="{job.foldedDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="230" height="23" showSeconds="false" dataHolder="{job}" variableName="finishedDate" customText="{job.finishedDate}" is24Hour="false"  disabledColor="#000000" id="finishedTime">
+	<mx:DateField x="700" y="210" width="100" id="foldedDate" dataProvider="{job.foldedDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="230" height="23" showSeconds="false" dataHolder="{job}" variableName="finishedDate" customText="{job.finishedDate}" is24Hour="false"  disabledColor="#000000" id="finishedTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="230" width="80" id="finishedDate" dataProvider="{job.finishedDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="252" height="23" showSeconds="false" dataHolder="{job}" variableName="mailingDate" customText="{job.mailingDate}" is24Hour="false"  disabledColor="#000000" id="mailingTime">
+	<mx:DateField x="700" y="230" width="100" id="finishedDate" dataProvider="{job.finishedDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="252" height="23" showSeconds="false" dataHolder="{job}" variableName="mailingDate" customText="{job.mailingDate}" is24Hour="false"  disabledColor="#000000" id="mailingTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="252" width="80" id="mailingDate" dataProvider="{job.mailingDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="274" height="23" showSeconds="false" dataHolder="{job}" variableName="outsideServiceDate" customText="{job.outsideServiceDate}" is24Hour="false"  disabledColor="#000000" id="outsideServiceTime">
+	<mx:DateField x="700" y="252" width="100" id="mailingDate" dataProvider="{job.mailingDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="274" height="23" showSeconds="false" dataHolder="{job}" variableName="outsideServiceDate" customText="{job.outsideServiceDate}" is24Hour="false"  disabledColor="#000000" id="outsideServiceTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="274" width="80" id="outsideServiceDate" dataProvider="{job.outsideServiceDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="295" height="23" showSeconds="false" dataHolder="{job}" variableName="otherDate" customText="{job.otherDate}" is24Hour="false"  disabledColor="#000000" id="otherTime">
+	<mx:DateField x="700" y="274" width="100" id="outsideServiceDate" dataProvider="{job.outsideServiceDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="295" height="23" showSeconds="false" dataHolder="{job}" variableName="otherDate" customText="{job.otherDate}" is24Hour="false"  disabledColor="#000000" id="otherTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="295" width="80" id="otherDate" dataProvider="{job.otherDate}"/>
-	<ns1:CustomTimeEntryDateComponent width="103" x="755" y="317" height="23" showSeconds="false" dataHolder="{job}" variableName="deliveredDate" customText="{job.deliveredDate}" is24Hour="false"  disabledColor="#000000" id="deliveredTime">
+	<mx:DateField x="700" y="295" width="100" id="otherDate" dataProvider="{job.otherDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="317" height="23" showSeconds="false" dataHolder="{job}" variableName="deliveredDate" customText="{job.deliveredDate}" is24Hour="false"  disabledColor="#000000" id="deliveredTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="670" y="317" width="80" id="deliveredDate" dataProvider="{job.deliveredDate}"/>
+	<mx:DateField x="700" y="317" width="100" id="deliveredDate" dataProvider="{job.deliveredDate}"/>
 </mx:Canvas>
 
 </mx:Panel>
