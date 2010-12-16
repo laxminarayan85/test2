@@ -30,6 +30,9 @@
 <mx:RemoteObject id="matrixEditorDataService" destination="dataService">
 	<mx:method name="getMatrix" fault="handleFault(event)" result="handleMatrixEditorResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="saveMatrixDataService" destination="dataService">
+	<mx:method name="getMatrix" fault="handleFault(event)" result="handleSaveMatrixResult(event)"/>
+</mx:RemoteObject>
 <mx:RemoteObject id="dataServiceProductionCopiers" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionCopiersResult(event)"/>
 	<mx:method name="getByName" fault="handleFault(event)" result="handleGetProductionCopiersByName(event)"/>
@@ -647,9 +650,8 @@
 	}
 	
 	private function doSave():void {
-	 
 		mapCopierData()
-		dataService.addUpdate(copierDefinition);
+		saveMatrixDataService.getMatrix(copierDefinition.copierMatrix.id);
 	}       
 
 	private function doNew():void {
@@ -664,6 +666,11 @@
 	private function doDelete():void {
 		copierDefinitionArray.removeItemAt(dataGrid.selectedIndex);
 		dataService.deleteItem("CopierDefinition",copierDefinition.id);
+	}
+
+	private function handleSaveMatrixResult(ev:ResultEvent):void {
+		copierDefinition.copierMatrix = ev.result as com.efi.printsmith.data.Matrix;
+		dataService.addUpdate(copierDefinition);
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
