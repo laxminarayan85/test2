@@ -54,6 +54,7 @@ width="888" height="507"  creationComplete="init()"
 	
 	public function init():void {
 		consumer.subscribe();
+		dimensionDataService.getAll("Dimension");
 	}  
 	
 	private function doGet():void {
@@ -71,8 +72,12 @@ width="888" height="507"  creationComplete="init()"
 		dimensionsArray=ev.result as ArrayCollection;
 		if (job.parentSize != null)
 			this.parent_size.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
+		if (this.parent_size.selectedIndex == -1)
+			this.parent_size.text = job.parentSize.name;
 		if (job.runSize != null)
 			this.run_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
+		if (this.run_size.selectedIndex == -1)
+			this.run_size.text = job.runSize.name;
 	}
 	
 	private function findItem(name:String, array:ArrayCollection):int
@@ -95,8 +100,8 @@ width="888" height="507"  creationComplete="init()"
 	}			
 	
 	private function setProductionData():void {
-		this.parent_size.text = job.parentSize.name;
-		this.run_size.text = job.runSize.name;
+		this.parent_size.selectedIndex = findItem(job.parentSize.name,this.dimensionsArray);
+		this.run_size.selectedIndex = findItem(job.runSize.name,this.dimensionsArray);
 		this.production_run.text = job.pressQty.toString();
 		this.requires.text = job.sheets.toString();
 		this.sheets_purchased.text = job.qtyOrdered.toString();
