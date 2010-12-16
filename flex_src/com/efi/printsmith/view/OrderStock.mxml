@@ -81,7 +81,9 @@
 	    
 	}
 	public function docancel():void{
+		allow_mod.enabled = false;
 		Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
+		
 	}
 	public function loadStockVendor():void {   
 	    vendorDataService.getAll("Vendor");
@@ -117,6 +119,7 @@
 		Invoice_Edit.text = "";
 		job_edit.text= "";
 		cboVendor.selectedItem as Vendor;
+		
 		stockUnit.selectedValue = 0;
 		stock_number_edit.text= "";
 		name_edit.text= "";
@@ -128,7 +131,7 @@
 		per_edit.text= "";
 		rollweight_edit.text= "";
 		rollwidth_edit.text= "";
-		order_quantity_edit.text= "";
+		order_quantity_edit.text= "0";
 		stock_ordernumber_edit.text= "";
 		delivery_date.text = "";
 		allow_mod.selected= false;
@@ -165,13 +168,15 @@
 		 stockFinish = ev.result as ArrayCollection;
 		  if ( stockDefinitions.finish != null){
 		 	finish_edit.selectedIndex = findItem(stockDefinitions.finish.name, stockFinish);
-		 }
+		 }else
+		 	finish_edit.selectedIndex = -1;
 	}
 	private function handleLoadStockColor(ev:ResultEvent):void {
 		 stockColor = ev.result as ArrayCollection;
 		 if ( stockDefinitions.color != null){
 		 	color_edit.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
-		 }
+		 }else
+		 	color_edit.selectedIndex = -1;
 		 
 	}
 
@@ -241,6 +246,7 @@
 	private function handleStockPickerSelect(evt:StockPickerSelectEvent):void {
 		if (evt.stockDefinition != null) {
 			setStockDefinition(evt.stockDefinition)
+			allow_mod.enabled = true;
 				     
 		} else {
 			this.stockDefinitions = new StockDefinition();
@@ -251,6 +257,7 @@
 	}  
 	private function handleLoadVendor(ev:ResultEvent):void {
 		 stockVendor = ev.result as ArrayCollection;
+		 cboVendor.selectedIndex = -1;
 		 
 	}
     private function setStockDefinition(stockDefinition:StockDefinition):void
@@ -374,11 +381,23 @@
 		var importWindow : StockOrderReport = StockOrderReport(PopUpManager.createPopUp(this, StockOrderReport, true));
 		PopUpManager.centerPopUp(importWindow);
 	}
+	private function UpdateOrderStock():void{
+		var cost:Number;
+		var per:Number;
+		var quant:Number;
+		var stockcost:Number
+		
+		cost = parseFloat(cost_edit.text);
+		per = parseFloat(per_edit.text);
+		quant = parseInt(order_quantity_edit.text);
+		stockcost = (quant/per)*cost;
+		stock_cost_edit.text = Snowmass.getCurrencyFormatter(false,2).format(stockcost);
+	}
 ]]>
                              
 </mx:Script>	
 
-	<mx:Button x="32" y="10" width="50" height="38" label="Button" click="doOrder();" icon="@Embed(source='../../../../assets/order.png')">
+	<mx:Button x="32" y="10" width="50" height="38" label="Button" enabled="{name_edit.text.length >0}" click="doOrder();" icon="@Embed(source='../../../../assets/order.png')">
 	</mx:Button>
 	<mx:Button x="177" y="10" width="50" height="38" label="Button">
 		<mx:icon>@Embed(source='../../../../assets/auto_order.png')</mx:icon>
@@ -410,7 +429,7 @@
 	<mx:TextInput x="136" y="222"  id="sheet_edit" width="71"/>
 	<mx:TextInput  x="136" y="248"  id="rollwidth_edit" width="85"/>
 	<mx:TextInput x="136" y="274" text="{stockDefinitions.rollWeight}" id="rollweight_edit"/>
-	<mx:TextInput x="403" y="248" text="{stockDefinitions.cost1}" id="cost_edit" width="133" />
+	<mx:TextInput x="403" y="248" text="{Snowmass.getCurrencyFormatter(false,2).format(stockDefinitions.cost1)}" id="cost_edit" width="133" />
 	<mx:Label x="323" y="248" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Cost')}" width="72" fontWeight="bold"/>
 	<mx:Label x="544" y="248" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.per')}" width="45" fontWeight="bold"/>
 	<mx:TextInput x="597" y="248" text="{stockDefinitions.costunits}" id="per_edit" width="91"/>
@@ -431,7 +450,7 @@
 	<mx:Label x="84" y="343" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.StockOrderNumber')}"  id="order_number_edit" fontWeight="bold"/>
 	<mx:Label x="87" y="369" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.DeliveryDate')}"  fontWeight="bold" width="127"/>
 	<mx:Label x="436" y="317" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.CostofStock')}"  fontWeight="bold"/>
-	<mx:TextInput x="222" y="317" id="order_quantity_edit" width="71"/>
+	<mx:TextInput x="222" y="317" id="order_quantity_edit" width="71" focusOut="UpdateOrderStock()"/>
 	<mx:TextInput x="222" y="343" width="71" id="stock_ordernumber_edit"/>
 	<mx:Text x="558" y="317" id="stock_cost_edit"/>
 	<mx:DateField x="222" y="367" id="delivery_date"/>
@@ -441,7 +460,7 @@
 	<mx:Text x="215" y="438" text="{stockDefinitions.onHand}" id="onhand_edit"/>
 	<mx:Text x="558" y="438" text="{stockDefinitions.committed}" id="commit_edit"/>
 	<mx:HRule x="0" y="479" width="860" height="3"/>
-	<mx:CheckBox x="32" y="490" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Allowmodificationtos')}" id="allow_mod"/>
+	<mx:CheckBox x="32" y="490"  enabled="false" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Allowmodificationtos')}" id="allow_mod"/>
 	<mx:Label x="321" y="139"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Stock')}" width="74" fontWeight="bold"/>
 	<mx:TextInput x="397" y="139" text="{stockDefinitions.stocknumber}" id="stock_number_edit"/>
 	<mx:Button x="531" y="278" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="145" id="status_button" click="doStatus()"/>
