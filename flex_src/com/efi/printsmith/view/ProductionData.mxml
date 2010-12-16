@@ -116,7 +116,10 @@ width="938" height="507"  creationComplete="init()"
 		this.production.text = job.pricingRecord.productionPrice.toString();
 		this.stock_cost.text = job.pricingRecord.stockCost.toFixed(2);
 		this.stock_price.text = job.pricingRecord.stockTotalPrice.toFixed(2);
-		this.stock_markup.text = (job.pricingRecord.stockTotalPrice - job.pricingRecord.stockCost).toFixed(2);
+		if (job.pricingRecord.stockTotalPrice > 0)
+			this.stock_markup.text = (job.pricingRecord.stockTotalPrice - job.pricingRecord.stockCost).toFixed(2);
+		else
+			this.stock_markup.text = "0.00";
 		this.labor_cost.text = job.pricingRecord.laborCost.toFixed(2);
 		this.labor_price.text = job.pricingRecord.laborTotalPrice.toFixed(2);
 		this.labor_markup.text = (job.pricingRecord.laborTotalPrice - job.pricingRecord.laborCost).toFixed(2);
