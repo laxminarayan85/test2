@@ -110,7 +110,7 @@ width="888" height="507"  creationComplete="init()"
 		this.markup.text = job.pricingRecord.stockMarkup.toString();
 		this.labor_cost.text = job.pricingRecord.laborTotalPrice.toString();
 		this.number_out.text = job.paperCal.runout.toString();
-		this.job_price.text = job.pricingRecord.totalPrice.toString();
+		this.job_price.text = job.pricingRecord.totalPrice.toFixed(2);
 		this.itemized_markups.text = "0.00";
 		this.other_charges.text = job.pricingRecord.otherChargePrice.toString();
 		this.production.text = job.pricingRecord.productionPrice.toString();
@@ -455,7 +455,7 @@ width="888" height="507"  creationComplete="init()"
 		<mx:Label x="-4" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.WashupTime')}" width="96" textAlign="right"/>
 		<mx:TextInput x="100" y="52" height="20" width="84" textAlign="right" id="washup_time" text="0:00" focusOut="fieldChanged(event)"/>
 		<mx:Label x="-5" y="87" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.TotalTime')}" width="96" textAlign="right"/>
-		<mx:TextInput x="100" y="85" height="20" width="84" textAlign="right" id="total_time" text="0:00" focusOut="fieldChanged(event)" editable="false" enabled="false"/>
+		<mx:TextInput x="100" y="85" height="20" width="84" textAlign="right" id="total_time" text="0:00" focusOut="fieldChanged(event)" editable="false" enabled="true"/>
 		<mx:HRule x="95" y="79" width="93" height="1" strokeWidth="1"/>
 		<mx:HRule x="95" y="77" width="93" height="1" strokeWidth="1"/>
 	</mx:Panel>
