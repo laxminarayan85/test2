@@ -323,6 +323,7 @@
 	import mx.messaging.messages.AsyncMessage;
 	import mx.messaging.messages.IMessage;
 	import mx.collections.XMLListCollection;
+	import mx.formatters.NumberBaseRoundType;
 
 	[Bindable]
 	private var enableSave:Boolean = true;
@@ -584,10 +585,12 @@
 		    
 		    taxStr = results.getItemAt(0) as String;		// tax amount calculated
 		    activeSale.taxAmount = parseFloat(taxStr.replace(",",""));
+			activeSale.taxAmount = roundToCurrency(activeSale.taxAmount);
 			
-			if (activeSale.opPrice == false)
+			if (activeSale.opPrice == false) {
 				activeSale.total = activeSale.subTotal + activeSale.taxAmount;
-				
+				activeSale.total = roundToCurrency(activeSale.total);
+			}
 			UpdateBatchNumbers();
 		}
 	}
@@ -917,12 +920,14 @@
 			if (activeSale != null && activeSale.opPrice == false && txtSaleTotal != null)
 				txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(temp)
 			
-			activeSale.subTotal = temp;		// no tax at this point
-	
+			if (activeSale.opPrice == false) {
+				activeSale.subTotal = temp;		// no tax at this point
+			}
+			
 			activeSale.taxTable = pickTaxTable.selectedItem as TaxTable;
 			activeSale.taxCode = pickTaxCode.selectedItem as TaxCodes;
 		
-			if (chkNonTax.selected){
+			if (chkNonTax.selected || activeSale.taxTable == null){
 				activeSale.taxAmount = 0;
 				UpdateBatchNumbers();
 			}
@@ -1653,6 +1658,15 @@
 					}
 				}
 				
+				// math above will cause the number of decimal positions to increase
+				//	this will force it back to currency rounded numbers
+				//
+				totalTransactionPay = roundToCurrency(totalTransactionPay);
+				totalCharge = roundToCurrency(totalCharge);
+				payAmount = roundToCurrency(payAmount);
+				
+				// is there any more money to play with
+				//
 				if (payAmount <= .01) {
 					currentPaymentIndex += 1;
 					if (currentPaymentIndex < paymentList.length) {
@@ -2152,8 +2166,9 @@
 			// data is different than calculated version
 			if (tempStr != txtSaleTotal.text) {
 				activeSale.opPrice = true;
+				activeSale.subTotal = activeSale.total = temp;
 			} else {
-				activeSale.total = temp;
+				activeSale.subTotal = activeSale.total = 0;			// WILL be computed by tax calculation
 			}
 			txtSaleTotal.text = tempStr;
 		}
@@ -2281,8 +2296,16 @@
 	}
 	
 	private function roundToCurrency(temp:Number):Number {
-		var tempStr:String = Snowmass.getCurrencyFormatter(false,2).format(temp);
-		var results:Number = parseFloat(tempStr.replace(",",""))
+		var tempStr:String;
+		var results:Number;
+		
+		// round direction
+		numberFormatter.rounding = NumberBaseRoundType.NEAREST;
+		// keep 4 places so round has something to work with
+        tempStr = numberFormatter.format(temp.toFixed(4));
+        // number formatter will come back with (2) places after decimal
+        // turn back into a floating point number
+		results = parseFloat(tempStr);
 		return(results);
 	}
 		
