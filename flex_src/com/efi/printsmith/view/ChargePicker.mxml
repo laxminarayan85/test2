@@ -525,6 +525,8 @@
 			{
 				pricing_throbber.stop();
 				pricing_throbber.visible = false;
+				if (charge == null) return;
+				
 				var localCharge:Charge = ev.result as Charge;
 				refresh_price_btn.visible = true;
 				refresh_price_btn.enabled = true;		
@@ -1197,6 +1199,11 @@
 				var text_label:Text = evt.target as Text;
 				text_label.setStyle("textDecoration", "underline");
 			}
+			
+			private function doDoubleClick(evt:Event):void {
+				this.updatePrice();
+				addCharge = true;
+			}
 	]]>
 
 	</mx:Script>
@@ -1232,6 +1239,8 @@
 							 dataChange="treeSelectionChanged(event)"
 							 change="treeSelectionChanged(event);"
 							 itemOpening="chargeTreeOpening(event)" 
+							 doubleClick="doDoubleClick(event);"
+							 doubleClickEnabled="true"
 							 bottom="30"
 							 top="19">
 					</mx:Tree>
