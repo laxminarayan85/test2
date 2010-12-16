@@ -5708,6 +5708,11 @@ public class DataService extends HibernateService {
 		} catch (NonUniqueResultException e) {
 			log.warn("No result found for getCurrentTapeBatch " + e);
 			return null;
+		} catch (GenericJDBCException e) {
+			log.error(e); 			
+			log.error(e.getSQL());
+			System.out.println(e.getSQL());
+			throw e; 			
 		} catch (Exception e) {
 			log.error(e);
 
