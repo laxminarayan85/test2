@@ -133,7 +133,7 @@ public class TapePaymentRecord extends Transaction {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
     @Where(clause="isdeleted <> 'TRUE'")
 	private InvoiceBase invoice;
 	
