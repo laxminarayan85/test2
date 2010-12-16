@@ -18,7 +18,9 @@
 	
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.common.components.CustomCheckBoxComponent;
 	import mx.events.DataGridEvent;
+	import mx.core.ClassFactory;
 	import com.efi.printsmith.data.TaxElement;
 	import com.efi.printsmith.data.TaxTable;
 	import com.efi.printsmith.common.components.CustomNumericTextInputComponent;
@@ -177,7 +179,10 @@
 		tax_on_tax_check.enabled = status;
 		name_edit.enabled = status;
 		Abbr_edit.enabled = status;
-		disable_check.enabled = status;
+		if ( taxTable.defaultTable)
+			disable_check.enabled = false;
+		else
+			disable_check.enabled = status;
 		elementGrid.enabled = status;
 		min_tax.enabled = status;
 		tax_inPrice_check.enabled = status;
@@ -188,6 +193,9 @@
 		taxTable = ev.result as TaxTable;
 		name_edit.text= taxTable.name;
 		Abbr_edit.text = taxTable.abbr;
+		if( taxTable.defaultTable)
+			disable_check.enabled= false;
+		disable_check.selected = taxTable.disableTable;
 		taxElementsArray = new ArrayCollection();
 		for( var i:int = 0;i < taxTable.taxElements.length;i++){
 			tempTax = new TaxElement();
@@ -337,9 +345,14 @@
 	
 	private function ShippingTax():void{
 		var tempTax:TaxElement;
+		var status:Boolean;
+		if( tax_shipping_check.selected)
+				status = true;
+		else
+				status = false;
 		for( var i:int = 0;i < taxTable.taxElements.length;i++){
 			tempTax = taxTable.taxElements.getItemAt(i) as TaxElement;
-			tempTax.userForSeparateShippingTax = true;
+			tempTax.userForSeparateShippingTax = status;
 		}
 		
 	}
@@ -370,6 +383,20 @@
 		 	 	}
 		 	
 		}
+		private function doDisable():void{
+			saveNoRate= true;
+			taxTable.disableTable = disable_check.selected;
+			dataService.addUpdate(taxTable);
+		}
+		private function doSeperate():void{
+			var temo:ClassFactory;
+			temo = shipColumn.itemRenderer as ClassFactory;
+			if (seperate_shipping_check.selected)
+				shipColumn.editable = false
+				//tableGrid
+			else
+				shipColumn.editable = false;
+		}	
 ]]>
                              
 </mx:Script>		
@@ -391,19 +418,41 @@
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="dorate" >
 				<mx:itemRenderer>
 								<mx:Component>
-									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,2,true,'nearest',data.rate)}" textAlign="right"/>
+									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,2,true,'nearest',data.rate)}%" textAlign="right"/>
 								</mx:Component>
 				</mx:itemRenderer>
-				<mx:itemEditor>
+				<mx:itemEditor> 
 								<mx:Component>
 									<components:CustomNumericTextInputComponent datagridControl="true"
-										variableName="rate" customText="{data.rate}"
+										variableName="rate" customText="{data.rate}" 
 										precision="4" rounding="nearest" viewablePrecision="2"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Ship')}"  labelFunction="doshiptax"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Show')}" dataField="showTax"/>
+			<mx:DataGridColumn   id="shipColumn" editable="false" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Ship')}" >
+				<mx:itemRenderer>  
+								<mx:Component>  
+										<components:CustomCheckBoxComponent 
+											datagridControl="true"  enabled="false" click="{}" variableName="userForSeparateShippingTax" customText="{data.userForSeparateShippingTax}"
+											selectedValue="true" deSelectedValue="false" />
+								</mx:Component>
+								
+					</mx:itemRenderer>
+				
+				
+				</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Show')}" dataField="showTax">
+			<mx:itemRenderer>  
+								<mx:Component>  
+										<components:CustomCheckBoxComponent 
+											datagridControl="true"  enabled="true" click="{}" variableName="showTax" customText="{data.showTax}"
+											selectedValue="true" deSelectedValue="false" />
+								</mx:Component>
+								
+					</mx:itemRenderer>
+				
+				
+				</mx:DataGridColumn>
 		</mx:columns>
 	</mx:DataGrid>
 	<mx:LinkButton x="404.5"
@@ -421,11 +470,11 @@
 	<mx:Label x="184" y="451"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.EffectiveTaxRate')}"/>
 	<mx:Label id="min_edit" x="92" y="475" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.MinimumTaxableAmount')}" width="212.5"/>
 	<mx:CheckBox x="19" y="504" click="ShippingTax()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxShipping')}" selected="{taxTable.taxShipping}" id="tax_shipping_check"/>
-	<mx:CheckBox x="184" y="504" enabled="{tax_shipping_check.selected}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SeparateShipping')}" selected="{taxTable.separateShipping}" id="seperate_shipping_check"/>
+	<mx:CheckBox x="184" y="504" enabled="{tax_shipping_check.selected}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SeparateShipping')}" selected="{taxTable.separateShipping}" id="seperate_shipping_check" click="doSeperate()"/>
 	<mx:CheckBox x="19" y="535"  click="TaxonTax()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxonTax')}" selected="{taxTable.taxOnTax}" id="tax_on_tax_check"/>
 	<mx:CheckBox x="19" y="565" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Buildtaxinprice')}" selected="{taxTable.taxInPrice}" id="tax_inPrice_check"/>
 	<mx:CheckBox x="18.5" y="595" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Roundtaxup')}" selected="{taxTable.roundTaxUp}" width="144" id="round_tax_check"/>
-	<mx:TextInput x="315" y="449" restrict="0-9/." id="effect_rate" text="{Snowmass.getCurrencyFormatter(false,2).format(taxTable.effectiveTaxRate*100)}" editable="false"/>
+	<mx:TextInput x="315" y="449" restrict="0-9/." id="effect_rate" text="{Snowmass.getCurrencyFormatter(false,2).format(taxTable.effectiveTaxRate*100)} %" editable="false"/>
 	<mx:TextInput x="312.5" y="473"  restrict="0-9/." id="min_tax" text="{Snowmass.getCurrencyFormatter(false ,2).format(taxTable.minAmount)}" width="116" height="21"/>
 	<mx:DataGrid x="18.5" y="657" width="435"  id="tableGrid" dataProvider="{taxTables}" itemClick="doSelectTaxTable(data)" height="111">
 		<mx:columns>
@@ -433,7 +482,7 @@
 						<mx:itemRenderer>
 								<mx:Component> 
 										<components:CustomCheckBoxComponent 
-											datagridControl="true"  click="{outerDocument.processGridData(data)}" variableName="defaultTable" customText="{data.defaultTable}"
+											datagridControl="true" click="{outerDocument.processGridData(data)}" variableName="defaultTable" customText="{data.defaultTable}"
 											selectedValue="true" deSelectedValue="false" />
 								</mx:Component>
 								
@@ -445,7 +494,7 @@
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="doeffectiveTaxRate" width="100"/>
 		</mx:columns>
 	</mx:DataGrid>
-	<mx:CheckBox x="304" y="82" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.Disable')}" id="disable_check"/>
+	<mx:CheckBox x="304" y="82" click="doDisable()"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.Disable')}" id="disable_check"/>
 	<mx:DataGrid x="18.5" y="813" width="435"  id="tableGrid0" dataProvider="{historytaxTables}" itemClick="doSelectHistoryTaxTable()" height="111">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.LastChange')}" dataField="modified" width="150"/>

@@ -196,7 +196,7 @@ public class DataService extends HibernateService {
 		List<?> resultList = new ArrayList<Object>();
 		try {
 			Query findAllQuery = em.createQuery("from " + className
-					+ " where taxTableIsCurrent = 'TRUE' ");
+					+ " where taxTableIsCurrent = 'TRUE' and disableTable = 'FALSE' ");
 			resultList = findAllQuery.getResultList();
 			if (resultList != null)
 				log.debug("** Found " + resultList.size() + "records:");
