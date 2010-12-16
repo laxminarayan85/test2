@@ -1512,7 +1512,7 @@
 		refund = sessionBatch.accumChange;
 		
 		if (refund > 0) {		// change amount still due to give back
-			totalPay = performRoundedSubtract(totalPay,refund);
+			totalPay = totalPay - refund;
 		}
 
 		//
@@ -1550,16 +1550,16 @@
 			//
 			if (refund > 0 && tempPayment.paymentMethod != Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 				if (payAmount >= refund) {
-					payAmount = performRoundedSubtract(payAmount,refund);
+					payAmount -= refund;
 					refund = 0;
 				} else {
-					refund = performRoundedSubtract(refund,payAmount);
+					refund -= payAmount;
 					payAmount = 0;
 				}
 			}
 			
-			totalApplied = performRoundedAdd(totalApplied, payAmount);
-						
+			totalApplied += payAmount;
+			
 			for(i = 0; i < sessionBatch.transactions.length && tempPayment != null; i++)
 			{
 				temp  = sessionBatch.transactions.getItemAt(i) as Object;
@@ -1569,7 +1569,7 @@
 				} else if (temp is TapeSaleRecord) {
 					tempSale = temp as TapeSaleRecord;
 											
-					unApplied = performRoundedSubtract(tempSale.total,tempSale.amountPaid);
+					unApplied = tempSale.total - tempSale.amountPaid;
 					
 					// is sale a invoice pickup
 					// record invoice data into the payment record
@@ -1587,8 +1587,8 @@
 						// any left over charge to account value, whe no payments are left
 						//
 						if (tempSale.isPickup == true && tempPayment == null && totalCharge > 0.01) {
-							totalTransactionPay = performRoundedAdd(totalTransactionPay,unApplied);
-							totalCharge = performRoundedSubtract(totalCharge, unApplied);
+							totalTransactionPay += unApplied;
+							totalCharge -= unApplied;
 							unApplied = 0;
 						} 
 						// 
@@ -1599,19 +1599,19 @@
 							// charge to account
 							if (tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 								if (tempPayment != null) {
-									totalCharge = performRoundedAdd(totalCharge,unApplied);
-									payAmount = performRoundedSubtract(payAmount,unApplied);
+									totalCharge += unApplied;
+									payAmount -= unApplied;
 								} else {
-									totalTransactionPay = performRoundedAdd(totalTransactionPay,unApplied);
-									totalCharge = performRoundedSubtract(totalCharge,unApplied);
+									totalTransactionPay += unApplied;
+									totalCharge -= unApplied;
 									unApplied = 0;
 								}
 							} 
 							// cash, check or credit card
 							else {
-								tempSale.amountPaid = performRoundedAdd(tempSale.amountPaid,unApplied);
-								totalTransactionPay = performRoundedAdd(totalTransactionPay,unApplied);
-								payAmount = performRoundedSubtract(payAmount,unApplied);
+								tempSale.amountPaid += unApplied;
+								totalTransactionPay += unApplied;
+								payAmount -= unApplied;
 								unApplied = 0;
 							}
 						}
@@ -1622,7 +1622,7 @@
 							// charge to account
 							if (tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 							//	if (tempPayment != null) {
-									totalCharge = performRoundedAdd(totalCharge,unApplied);
+									totalCharge += unApplied;
 									payAmount = 0;
 							//	} 
 							//	else {
@@ -1633,9 +1633,9 @@
 							} 
 							// cash, check or credit card
 							else {
-								tempSale.amountPaid = performRoundedAdd(tempSale.amountPaid,payAmount);
-								totalTransactionPay = performRoundedAdd(totalTransactionPay,payAmount);
-								unApplied = performRoundedSubtract(unApplied,payAmount);
+								tempSale.amountPaid += payAmount;
+								totalTransactionPay += payAmount;
+								unApplied -= payAmount;
 								payAmount = 0;
 							}
 						}
@@ -1671,15 +1671,15 @@
 					//
 					if (refund > 0 && tempPayment.paymentMethod != Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 						if (payAmount >= refund) {
-							payAmount = performRoundedSubtract(payAmount,refund);
+							payAmount -= refund;
 							refund = 0;
 						} else {
-							refund = performRoundedSubtract(refund,payAmount);
+							refund -= payAmount;
 							payAmount = 0;
 						}
 					}
 				
-					totalApplied = performRoundedAdd(totalApplied,payAmount);
+					totalApplied += payAmount;
 				}
 			}
 			
@@ -1695,18 +1695,20 @@
 		}
 
 		if (results == true) {
-			if (performRoundedAdd(totalTransactionPay,totalCharge) != totalApplied) {
+			if ((totalTransactionPay + totalCharge) != totalApplied) {
 				//msg_WARNINGThistransacti=WARNING: This transaction did not balance!r	Total Payments: ${0}r	Total Transactions: ${1}rPlease review the transaction and contact your PrintSmith support center and report it in detail. r	OK to post transaction?
 				//
 				// un-balanced amount of sales .vs. payments
 				//
-				message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
-				message = StringUtil.substitute(message,numberFormatter.format(performRoundedAdd(totalTransactionPay,totalCharge)),numberFormatter.format(totalApplied)); 
-				Alert.show(message, "Warning", 0, null, null, null, 4); 
-				if (Alert.NO)
-					results = false;
-				else if (isPaidOut == true) {
-					// TODO - ask for description
+				if ((totalTransactionPay + totalCharge) != totalApplied) {
+					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
+					message = StringUtil.substitute(message,numberFormatter.format((totalTransactionPay + totalCharge)),numberFormatter.format(totalApplied)); 
+					Alert.show(message, "Warning", 0, null, null, null, 4); 
+					if (Alert.NO)
+						results = false;
+					else if (isPaidOut == true) {
+						// TODO - ask for description
+					}
 				}
 			}
 		}
@@ -1867,7 +1869,7 @@
 			// Then perform any printing of receipts or invoice forms
 			//
 			
-			cashDrawer.fund = performRoundedSubtract(cashDrawer.fund,sessionBatch.accumChange);
+			cashDrawer.fund -= sessionBatch.accumChange;
 			
 			for(i = 0; i< sessionBatch.transactions.length; i++)
 			{
@@ -1926,25 +1928,25 @@
 					switch(tempPayment.paymentMethod)
 					{
 						case Constants.POS_CASH_REGISTER_PAYMODE_CASH:
-							cashDrawer.cashTotal = performRoundedAdd(cashDrawer.cashTotal,tempPayment.total);
+							cashDrawer.cashTotal += tempPayment.total;
 							break;
 							
 						case Constants.POS_CASH_REGISTER_PAYMODE_CHECK:
 						case Constants.POS_CASH_REGISTER_PAYMODE_DRAFT:	// i.e., check
 							cashDrawer.checkCount++;
-							cashDrawer.checkTotal = performRoundedAdd(cashDrawer.checkTotal,tempPayment.total);
+							cashDrawer.checkTotal += tempPayment.total;
 							break;
 							
 						case Constants.POS_CASH_REGISTER_PAYMODE_CREDITCARD:
 							cashDrawer.cardCount++;
-							cashDrawer.cardTotal = performRoundedAdd(cashDrawer.cardTotal,tempPayment.total);
+							cashDrawer.cardTotal += tempPayment.total;
 							break;
 							
 						case Constants.POS_CASH_REGISTER_PAYMODE_CHARGE:
-							cashDrawer.arBalance = performRoundedAdd(cashDrawer.arBalance,tempPayment.total);
+							cashDrawer.arBalance += tempPayment.total;
 							
 							if (sessionBatch.account != null) {
-								sessionBatch.account.balance = performRoundedAdd(sessionBatch.account.balance,tempPayment.total);
+								sessionBatch.account.balance += tempPayment.total;
 								accountChanged = true;
 							}
 							break;
@@ -1983,7 +1985,7 @@
 							
 							arRecord.total = tempSale.invoice.amountDue;
 							arRecord.subTotalPosted = tempSale.invoice.grandTotal;
-							arRecord.balance = performRoundedSubtract(tempSale.total,tempSale.amountPaid);
+							arRecord.balance = tempSale.total - tempSale.amountPaid;
 							if (tempSale.paymode != "") {	// some payment applied
 								// still has outstanding balance
 								if (arRecord.balance > 0) {
@@ -2030,7 +2032,7 @@
 							arHistoryList.addItem(arRecord);
 							
 							if (sessionBatch.account != null) {
-								var amountForThisPosting:Number = performRoundedSubtract(tempSale.subTotal,tempSale.taxAmount);
+								var amountForThisPosting:Number = (tempSale.subTotal - tempSale.taxAmount);
 								
 								if (sessionBatch.account.firstInvoiceDate == null) {
 									sessionBatch.account.firstInvoiceDate = new Date();
@@ -2038,9 +2040,9 @@
 								sessionBatch.account.ordersMonth += 1;
 								sessionBatch.account.ordersYear += 1;
 								sessionBatch.account.ordersTotal += 1;
-								sessionBatch.account.salesMonth = performRoundedAdd(sessionBatch.account.salesMonth,amountForThisPosting);
-								sessionBatch.account.salesYear = performRoundedAdd(sessionBatch.account.salesYear,amountForThisPosting);
-								sessionBatch.account.termsDiscount = performRoundedAdd(sessionBatch.account.termsDiscount,amountForThisPosting);
+								sessionBatch.account.salesMonth += amountForThisPosting;
+								sessionBatch.account.salesYear += amountForThisPosting;
+								sessionBatch.account.termsDiscount += amountForThisPosting;
 							//	sessionBatch.account.lastPostingDate = new Date();		// TODO (wrong type right now)
 								accountChanged = true;
 							}
@@ -2063,7 +2065,7 @@
 								//
 							//	chargeLog.addItem(unPurchase);
 								
-								sessionBatch.account.onAccount = performRoundedAdd(sessionBatch.account.onAccount,(tempSale.total - tempSale.amountPaid));
+								sessionBatch.account.onAccount += (tempSale.total - tempSale.amountPaid);
 								accountChanged = true;
 							}
 						}
@@ -2284,19 +2286,6 @@
 		return(results);
 	}
 		
-	private function performRoundedAdd(first:Number, second:Number):Number {
-		var results:Number;
-		
-		results = (parseFloat(first.toFixed(2)) + parseFloat(second.toFixed(2)));
-		return(parseFloat(results.toFixed(2)));
-	}	
-	
-	private function performRoundedSubtract(first:Number, second:Number):Number {
-		var results:Number;
-		
-		results = (parseFloat(first.toFixed(2)) - parseFloat(second.toFixed(2)));
-		return(parseFloat(results.toFixed(2)));
-	}	
 	
 ]]>
                              
