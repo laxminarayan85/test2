@@ -120,6 +120,7 @@ public class PriceListElement extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
+	@Column(name="amount", precision=19, scale=4)
 	private BigDecimal amount;
 	
 	/**
@@ -135,6 +136,7 @@ public class PriceListElement extends ModelBase {
 	 */	
 	public void setAmount(BigDecimal newVal) {
     this.amount = newVal;
+    this.amount.setScale(4, RoundingMode.HALF_UP);
   }
 	
 	/**
@@ -142,6 +144,7 @@ public class PriceListElement extends ModelBase {
 	 */	
 	public void setAmount(double newVal) {
     this.amount = BigDecimal.valueOf(newVal);
+    this.amount.setScale(4, RoundingMode.HALF_UP);
   }
  	
 	
