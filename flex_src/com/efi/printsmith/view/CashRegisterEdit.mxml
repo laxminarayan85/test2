@@ -847,7 +847,7 @@
 								unPurchase.account = sessionBatch.account;
 								unPurchase.saleRecord = tempSale;		// not valid at this point, need to wait until after save
 								unPurchase.transactionDate = new Date();
-								unPurchase.amountDue = (tempSale.total - tempSale.amountPaid);
+								unPurchase.amountDue = roundToCurrency(tempSale.total - tempSale.amountPaid);
 								
 								dataServiceUnPurchase.addupdate(unPurchase);
 							}
@@ -906,7 +906,7 @@
 			this.focusManager.defaultButton = accept_button;
 			UpdateBatchNumbers();
 		} else {
-			if ( tempQuantity > 0) {
+			if (this.currentState == "departmentState" && tempQuantity > 0) {
 				accept_button.enabled =  true;
 				accept_button.tabIndex = 5;
 				this.focusManager.defaultButton = accept_button;
@@ -1193,7 +1193,7 @@
 		//
 		// how much is left to pay
 		//
-		payment_cash_edit.text = Snowmass.getCurrencyFormatter(false,2).format((sessionBatch.accumTotal - sessionBatch.accumTendered));
+		payment_cash_edit.text = Snowmass.getCurrencyFormatter(false,2).format(roundToCurrency(sessionBatch.accumTotal - sessionBatch.accumTendered));
 		
 	//	this.focusManager.setFocus(btPayment);
 		this.focusManager.defaultButton = btPayment;
@@ -1326,10 +1326,7 @@
 		if (item is TapePaymentRecord) {
 			var tempPayment:TapePaymentRecord;
 			tempPayment = item as TapePaymentRecord;
-			if (tempPayment != null){
-				tempString = numberFormatter.format(tempPayment.subTotal);
-			} else
-				tempString = "";
+			tempString = "";
 		} else if (item is TapeSaleRecord) {
 			var tempSale:TapeSaleRecord = item as TapeSaleRecord;
 			
@@ -1341,6 +1338,26 @@
 		
 		return tempString;
 	}
+	
+	private function doTaxPrice(item:Object,column:DataGridColumn):String{
+		var tempString:String;
+		
+		if (item is TapePaymentRecord) {
+			var tempPayment:TapePaymentRecord;
+			tempPayment = item as TapePaymentRecord;
+			tempString = "";
+		} else if (item is TapeSaleRecord) {
+			var tempSale:TapeSaleRecord = item as TapeSaleRecord;
+			
+			if (tempSale != null){
+				tempString = numberFormatter.format(tempSale.taxAmount);
+			} else
+				tempString = "";
+		}
+		
+		return tempString;
+	}	
+	
 	private function doDescript(item:Object, column:DataGridColumn):String{
 		var tempString:String;
 		
@@ -1387,6 +1404,7 @@
 		this.currentState = "";
 		openTree();
 		UpdateBatchNumbers();
+		UpdateCashRegister();
 	}
 	
 	
@@ -1517,7 +1535,7 @@
 		refund = sessionBatch.accumChange;
 		
 		if (refund > 0) {		// change amount still due to give back
-			totalPay = totalPay - refund;
+			totalPay = roundToCurrency(totalPay - refund);
 		}
 
 		//
@@ -1574,7 +1592,7 @@
 				} else if (temp is TapeSaleRecord) {
 					tempSale = temp as TapeSaleRecord;
 											
-					unApplied = tempSale.total - tempSale.amountPaid;
+					unApplied = roundToCurrency(tempSale.total - tempSale.amountPaid);
 					
 					// is sale a invoice pickup
 					// record invoice data into the payment record
@@ -1641,8 +1659,11 @@
 								tempSale.amountPaid += payAmount;
 								totalTransactionPay += payAmount;
 								unApplied -= payAmount;
+								unApplied = roundToCurrency(unApplied);
 								payAmount = 0;
 							}
+							
+							--i;		// stay on the same sale record, not finished paying off
 						}
 						
 						// assign the payment type to the sale record
@@ -1691,9 +1712,13 @@
 							refund -= payAmount;
 							payAmount = 0;
 						}
+						refund = roundToCurrency(refund);
 					}
+					
+					payAmount = roundToCurrency(payAmount);
 				
 					totalApplied += payAmount;
+					totalApplied = roundToCurrency(totalApplied);
 				}
 			}
 			
@@ -1867,7 +1892,12 @@
 			Alert.show(message, "Warning", 0, null, null, null, 4); 
 			goodBatch = false;
 		}
-
+		
+		// no tranbsactions to process
+		if (sessionBatch.transactions.length == 0) {
+			goodBatch = false;
+		}
+		
 		// make sure the payments balance with the sales
 		//
 		if (goodBatch && doApplyPayments(isPaidOut) == true) {
@@ -1898,7 +1928,7 @@
 					//
 					if (tempPayment.postAR == true) {
 						arRecord = new AccountHistoryData();
-						tempSale.accountHistoryData = arRecord;			// record AR history record into tape
+						tempPayment.accountHistoryData = arRecord;			// record AR history record into tape
 						
 						arRecord.recordType = Constants.ACCOUNT_HISTORY_TYPE_PAYMENT;
 						arRecord.account = sessionBatch.account;
@@ -1999,7 +2029,7 @@
 							
 							arRecord.total = tempSale.invoice.amountDue;
 							arRecord.subTotalPosted = tempSale.invoice.grandTotal;
-							arRecord.balance = tempSale.total - tempSale.amountPaid;
+							arRecord.balance = roundToCurrency(tempSale.total - tempSale.amountPaid);
 							if (tempSale.paymode != "") {	// some payment applied
 								// still has outstanding balance
 								if (arRecord.balance > 0) {
@@ -2046,7 +2076,7 @@
 							arHistoryList.addItem(arRecord);
 							
 							if (sessionBatch.account != null) {
-								var amountForThisPosting:Number = (tempSale.subTotal - tempSale.taxAmount);
+								var amountForThisPosting:Number = roundToCurrency(tempSale.subTotal - tempSale.taxAmount);
 								
 								if (sessionBatch.account.firstInvoiceDate == null) {
 									sessionBatch.account.firstInvoiceDate = new Date();
@@ -2079,7 +2109,7 @@
 								//
 							//	chargeLog.addItem(unPurchase);
 								
-								sessionBatch.account.onAccount += (tempSale.total - tempSale.amountPaid);
+								sessionBatch.account.onAccount += roundToCurrency(tempSale.total - tempSale.amountPaid);
 								accountChanged = true;
 							}
 						}
@@ -2133,7 +2163,7 @@
 		customerAccount = null;
 		this.currentState = "";
 		openTree();
-		UpdateBatchNumbers();		
+		UpdateBatchNumbers();					
 	}
 	
 	private function dotreelabel(item:Object):String{
@@ -2392,6 +2422,7 @@
 			<mx:columns>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Description')}" labelFunction="doDescript"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Subtotal')}" labelFunction="doSubtotalPrice"/>
+				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.SalesTax')}" labelFunction="doTaxPrice"/>
 				<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Total')}"  labelFunction="doTotalPrice" />
 			</mx:columns>
 		</mx:DataGrid>
