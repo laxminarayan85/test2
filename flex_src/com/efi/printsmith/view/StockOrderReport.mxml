@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="890" height="430" creationComplete="init()" 
- close="PopUpManager.removePopUp(this);" showCloseButton="true"
+ close="PopUpManager.removePopUp(this);"
 	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.StockOrder')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.StockOrder')}" 
@@ -45,7 +45,12 @@
     import com.efi.printsmith.events.StockOrderCommentsEvent;
     
 	[Bindable]                                
-    private var stockOrders:ArrayCollection = new ArrayCollection();   
+    private var stockOrders:ArrayCollection = new ArrayCollection();
+    [Bindable]                                
+    private var stockOrdersDisplay:ArrayCollection = new ArrayCollection();
+    
+    [Bindable]                                
+    private var stockOrdersNonHistory:ArrayCollection = new ArrayCollection();      
     [Bindable]
     private var stockOrder:StockOrder;
     [Bindable]                                
@@ -59,6 +64,33 @@
 		stockSelected = false;   
 		webWorthy = false; 
 	}
+
+
+	public function getDateField(item:Object, column:DataGridColumn):String{
+		var tmpItem:Date ;
+		tmpItem = item.enterDate as Date;
+		
+		if (tmpItem != null ) {
+			return Snowmass.getShortDateTimeFormatter().format(tmpItem)
+		} else {
+			return "";
+		}
+	}   
+	public function labelplaced(item:Object, column:DataGridColumn):String{
+		if (item.placed ) {
+			return "*"
+		} else {
+			return "";
+		}
+	
+	}   
+	public function labelfilled(item:Object, column:DataGridColumn):String{
+		if (item.filled ) {
+			return "*"
+		} else {
+			return "";
+		}
+	}   
    public function getVendorLabel(item:Object, column:DataGridColumn):String{
 		var tmpItem:Vendor ;
 		tmpItem = item.vendor as Vendor;
@@ -84,7 +116,16 @@
 	}
    
     private function handleLoadResult(event:ResultEvent):void {
+    	stockOrders = new ArrayCollection();
+    	stockOrdersDisplay = new ArrayCollection();
+    	stockOrdersNonHistory = new ArrayCollection();
 		stockOrders = event.result as ArrayCollection;
+		stockOrdersDisplay = stockOrders;
+		for each(var element:StockOrder in stockOrders) {
+			if ( element.placed == false)
+				stockOrdersNonHistory.addItem(element);
+		}
+		hideOrders();
 		
 		
 	}
@@ -133,10 +174,15 @@
 	 	}
  	}
 	private function doDelete():void{
-		dataService.deleteItem("StockOrder", stockOrder.id);
+	
+		for each(var element:Object in dataGrid.selectedItems) {
+			if( element != null)
+				dataService.deleteItem("StockOrder", element.id);
+		}
+		
 		stockSelected= false;
 		webWorthy = false;
-		dataGrid.selectedIndex = -1;
+		
 	}
 	
 		
@@ -161,16 +207,29 @@
 		dataService.addUpdate(stockOrder);
 	}
 	private function doRecieved():void{
-		stockOrder.receivedQuantity = stockOrder.orderQuantity;
-		stockOrder.filled = true;
+		for each(var element:StockOrder in dataGrid.selectedItems) {
+	
+			if (element != null) {
+				element.receivedQuantity = element.orderQuantity;
+				element.filled = true;
+				dataService.addUpdate(element);
+			}
+		}
+						
 		stockSelected = false;
 		webWorthy = false;
 		dataGrid.selectedIndex = -1;
-		dataService.addUpdate(stockOrder);
+		
 		
 	}
 	private function doPlaced():void{
-		stockOrder.placed = true;
+		for each(var element:StockOrder in dataGrid.selectedItems) {
+			if( element != null){
+				element.placed = true;
+				dataService.addUpdate(element);
+			}
+		}
+		
 		stockSelected = false;
 		webWorthy = false;
 		dataGrid.selectedIndex = -1;
@@ -184,10 +243,10 @@
 		xpedxIntegrationService.submitOrder(this.stockOrder);
 	}
 	private function handleSaveResult(ev:ResultEvent):void {
-    	
+    	dataService.getAll("StockOrder");
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
-	
+		dataService.getAll("StockOrder");
 	}
 	private function doStockGridClick():void {
 	 	stockOrder = new StockOrder();
@@ -197,6 +256,20 @@
 			webWorthy = true;
 		else
 			webWorthy = false;
+		if ( stockOrder.placed)
+			placed_button.enabled = false;
+		else
+			placed_button.enabled = true;
+		
+		if ( stockOrder.filled)
+		{
+			receiced_button.enabled= false;
+			partial_button.enabled = false;
+		}
+		else{
+			receiced_button.enabled= true;
+			partial_button.enabled = true;
+		}
 	}
 	
 	private function handleFault(ev:FaultEvent):void {  
@@ -206,31 +279,47 @@
 		+ ev.fault.faultCode + " - "                                  
 		+ ev.fault.faultDetail + " - "                                  
 		+ ev.fault.faultString;
-		Alert.show(message, "Error");                                 
+		Alert.show(message, "Error");   
+	}	
+		
+	private function selectAll():void{
+		var selectedIpodIndices:Array = [ ];
+		stockSelected = true;
+		for (var i:int = 0; i< dataGrid.rowCount; i++)	{
+			selectedIpodIndices.push(i);
+		}
+		dataGrid.selectedIndices =   selectedIpodIndices     
+		                     
+	}
+	private function hideOrders():void{
+		if (hide_previous.selected)
+			stockOrdersDisplay = stockOrdersNonHistory;
+		else
+			stockOrdersDisplay = stockOrders;
 	}
 ]]>
                              
 </mx:Script>		
-	<mx:Button x="24" y="25" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.SelectAll')}"/>
+	<mx:Button x="24" y="25" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.SelectAll')}" click="selectAll()"/>
 	<mx:Button x="171" y="25"  width="50" enabled="{stockSelected}" height="50"  id="delete_button" icon="@Embed(source='../../../../assets/delete48.png')" click="doDelete();"/>
-	<mx:Button x="259" y="25" width="50" enabled="{stockSelected}" height="50" id="placed_button" icon="@Embed(source='../../../../assets/order.png')" click="doPlaced();"/>
-	<mx:Button x="353" y="25" width="50" height="50" id="submit_button" icon="@Embed(source='../../../../assets/WebStatus.png')" click="doSubmit();" enabled="{webWorthy}"/>
-	<mx:Button x="478" y="25" width="50"  enabled="{stockSelected}"  height="50" id="receiced_button" click="doRecieved()">
+	<mx:Button x="242" y="25" width="50" enabled="{stockSelected}" height="50" id="placed_button" icon="@Embed(source='../../../../assets/order.png')" click="doPlaced();"/>
+	<mx:Button x="328" y="25" width="50" height="50" id="submit_button" icon="@Embed(source='../../../../assets/WebStatus.png')" click="doSubmit();" enabled="{webWorthy}"/>
+	<mx:Button x="447" y="25" width="50"  enabled="{stockSelected}"  height="50" id="receiced_button" click="doRecieved()">
 		<mx:icon>@Embed(source='../../../../assets/orderreceived.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="593" y="25" width="50" height="50" enabled="{stockSelected}" id="partial_button" click="doPartial();">
+	<mx:Button x="532" y="25" width="50" height="50" enabled="{stockSelected}" id="partial_button" click="doPartial();">
 		<mx:icon>@Embed(source='../../../../assets/partialorderreceived.png')</mx:icon>
 	</mx:Button>
-	<mx:CheckBox x="676" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Printseparatepagefor')}" id="vendor_check"/>
-	<mx:CheckBox x="676" y="39" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Hidepreviouslyordere')}" id="hide_previous"/>
+	<mx:CheckBox x="635" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Printseparatepagefor')}" id="vendor_check" width="218.5"/>
+	<mx:CheckBox x="635" y="39" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Hidepreviouslyordere')}" id="hide_previous" width="218.5" click="hideOrders()"/>
 	<mx:Label x="171" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="63"/>
-	<mx:Label x="242" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.OrderPlaced')}" width="98"/>
-	<mx:Label x="337" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.SubmitOrder')}" width="95"/>
-	<mx:Label x="447" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OrderReceived')}" width="106"/>
-	<mx:Label x="558" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PartialOrderReceived')}"/>
-	<mx:DataGrid x="16.5" y="140" height="231" width="837" dataProvider="{stockOrders}" itemClick="doStockGridClick()" id="dataGrid">
-		<mx:columns>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Date')}" dataField="enterDate"/>
+	<mx:Label x="231" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.OrderPlaced')}" width="98"/>
+	<mx:Label x="311" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.SubmitOrder')}" width="95"/>
+	<mx:Label x="428" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OrderReceived')}" width="106"/>
+	<mx:Label x="528" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PartialOrderReceived')}"/>
+	<mx:DataGrid x="16.5" y="127"  allowMultipleSelection="true" height="231" width="837" dataProvider="{stockOrdersDisplay}" itemClick="doStockGridClick()" id="dataGrid">
+		<mx:columns>  
+			<mx:DataGridColumn  width="75" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Date')}" labelFunction="getDateField"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Invoice')}" dataField="invoiceNumber"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Job')}" dataField="jobNumber"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.CustomerName')}" dataField="customerName" width="150"/>
@@ -243,8 +332,8 @@
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Weight')}" dataField="weight"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Cost')}" dataField="cost"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Received')}" dataField="receivedQuantity"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Placed')}" dataField="placed"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Filled')}" dataField="filled"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Placed')}" labelFunction = "labelplaced"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Filled')}" labelFunction = "labelfilled"/>
 			
 		</mx:columns>
 	</mx:DataGrid>
