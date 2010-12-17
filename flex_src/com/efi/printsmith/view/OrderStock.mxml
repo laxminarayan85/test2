@@ -85,6 +85,9 @@
 		Snowmass.getInstance().containerManager.getWindowWithChild(this).closeWindow();
 		
 	}
+	public function setStockOrder(stockOrder1:StockOrder):void{
+		stockOrder = stockOrder1;
+	}
 	public function loadStockVendor():void {   
 	    vendorDataService.getAll("Vendor");
 	}

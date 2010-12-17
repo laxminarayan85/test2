@@ -297,6 +297,12 @@
 		else
 			stockOrdersDisplay = stockOrders;
 	}
+	private function dostockOrder():void{
+		var importWindow:OrderStock = OrderStock(PopUpManager.createPopUp(this, OrderStock, true));
+		importWindow.setStockOrder(dataGrid.selectedItem as StockOrder);
+		PopUpManager.centerPopUp(importWindow);
+	
+	}
 ]]>
                              
 </mx:Script>		
@@ -317,7 +323,7 @@
 	<mx:Label x="311" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.SubmitOrder')}" width="95"/>
 	<mx:Label x="428" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OrderReceived')}" width="106"/>
 	<mx:Label x="528" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PartialOrderReceived')}"/>
-	<mx:DataGrid x="16.5" y="127"  allowMultipleSelection="true" height="231" width="837" dataProvider="{stockOrdersDisplay}" itemClick="doStockGridClick()" id="dataGrid">
+	<mx:DataGrid x="16.5" y="127"  allowMultipleSelection="true" doubleClick="dostockOrder()" height="231" width="837" dataProvider="{stockOrdersDisplay}" itemClick="doStockGridClick()" id="dataGrid">
 		<mx:columns>  
 			<mx:DataGridColumn  width="75" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Date')}" labelFunction="getDateField"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Invoice')}" dataField="invoiceNumber"/>
