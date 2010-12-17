@@ -6,8 +6,11 @@
 	<mx:RemoteObject id="vendorDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadVendor(event)"/>
 	</mx:RemoteObject>
+	
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getStockPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getJob" fault="handleFault(event)" result="handleLoadJobResult(event)"/>
+		<mx:method name="getInvoiceByInvoiceNumber" fault="handleFault(event)" result="handleLoadInvoice(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
@@ -23,7 +26,11 @@
 	</mx:RemoteObject>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.Invoice;
+	import com.efi.printsmith.data.InvoiceBase;
 	import com.efi.printsmith.data.StockDefinition;
+	import com.efi.printsmith.data.Job;
+	import com.efi.printsmith.data.JobBase;
 	import com.efi.printsmith.data.Vendor;
 	import com.efi.printsmith.data.Dimension;
 	import com.efi.printsmith.events.StockPickerSelectEvent;
@@ -418,6 +425,30 @@
 		else
 			orderButton.enabled = false
 	}
+	private function getStock():void{
+		Invoice_Edit.text
+		if ( job_edit.text.length <1)
+			job_edit.text = "1";
+		dataService.getInvoiceByInvoiceNumber(Invoice_Edit.text, "I");
+			
+	}
+	private function handleLoadInvoice(ev:ResultEvent):void{
+		var invoice:InvoiceBase;
+		invoice = ev.result as InvoiceBase;
+		for each( var element:Job in invoice.jobs)
+		{
+			if (element.jobNumber == job_edit.text){
+			
+			dataService.getJob(element.id);
+				break;
+			}
+		}
+	}
+	private function handleLoadJobResult(ev:ResultEvent):void{
+		var job:JobBase;
+		job = ev.result as JobBase;
+		setStockDefinition(job.stock);
+	}
 ]]>
                              
 </mx:Script>	
@@ -439,8 +470,8 @@
 	<mx:HRule x="0" y="82" width="860"/>
 	<mx:Label x="46" y="92"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Invoice')}" width="83" fontWeight="bold"/>
 	<mx:Label x="311" y="92" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Job')}" width="67" fontWeight="bold"/>
-	<mx:TextInput x="134" y="92" id="Invoice_Edit" width="93"/>
-	<mx:TextInput x="380" y="92" id="job_edit" width="93"/>
+	<mx:TextInput x="134" y="92"  restrict="0-9" id="Invoice_Edit" width="93"/>
+	<mx:TextInput x="380" y="92" restrict="0-9"  id="job_edit" width="93"/>
 	<mx:HRule x="0" y="120" width="860" height="11"/>
 	<mx:Label x="36" y="139" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Vendor')}" width="90" fontWeight="bold"/>
 	<mx:Label x="59" y="165" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.Name')}" width="69" fontWeight="bold"/>
@@ -491,5 +522,6 @@
 	<mx:Button x="531" y="278" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'consoleCmd.WebStatus')}" width="145" id="status_button" click="doStatus()"/>
 	<mx:Label x="84" y="375"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.PONumber')}" fontWeight="bold"/>
 	<mx:TextInput x="222" y="373" id="po_number_edit"/>
+	<mx:Button x="531" y="92"  enabled="{Invoice_Edit.text.length > 0}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'tapeCmd.Search')}" width="101" click="getStock()"/>
 
 </mx:TitleWindow>
