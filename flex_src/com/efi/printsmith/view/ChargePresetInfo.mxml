@@ -73,6 +73,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (time_stop_edit != null) {
 			stopTimeString = time_stop_edit.text;
 		}
+		if (this.time_start_label_text != null) {
+			chargeDefinition.presetTimeStartLabel = this.time_start_label_text.text;
+		}
+		if (this.time_end_label_text != null) {
+			chargeDefinition.presetTimeStopLabel = this.time_end_label_text.text;
+		}
 		chargeDefinition.rateLabel = rate_label_text.text;
 		chargeDefinition.presetNotesLabel = notes_label_text.text;
 		chargeDefinition.presetPriceLabel = price_label_text.text;
@@ -113,8 +119,6 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		chargeDefinition.presetInSetsOf = parseCurrencyFloat(this.in_sets_of_text.text);
 		chargeDefinition.presetInSetsOfLabel = this.in_sets_of_label_text.text;
 		chargeDefinition.rateSetCount = chargeDefinition.presetInSetsOf;
-		chargeDefinition.presetTimeStartLabel = this.time_start_label_text.text;
-		chargeDefinition.presetTimeStopLabel = this.time_end_label_text.text;
 		chargeDefinition.presetSetupLabel = this.setup_label_text.text;
 		chargeDefinition.presetPricePerPoundLabel = this.price_per_pound_label_text.text;
 		chargeDefinition.presetCoverPerPoundLabel = this.cover_per_pound_label_text.text;
@@ -138,7 +142,9 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		} else {
 			chargeDefinition.presetTaxTable = (tax_table_combo.selectedItem as TaxTable);
 		}
-		
+		if (cuts_text != null) {
+			chargeDefinition.presetCuts = parseInt(cuts_text.text);
+		}
 		var colonPosition:int = startTimeString.indexOf(":");
 		if (time_start_edit != null) {
 			if (startTimeString.indexOf(":") != -1) {
@@ -177,14 +183,22 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		this.chargeDefinition = chargeDefinition;
 		
 		this.title = this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargePresetCmd.PresetInfo') + " " + chargeDefinition.title;
+	
+		var minTime:int = chargeDefinition.useMinimumTime?chargeDefinition.minimumTime:0;
+
+		var timeStart:int = chargeDefinition.presetTimeStartHour * 60 + chargeDefinition.presetTimeStartMinute;
+		var timeStop:int = chargeDefinition.presetTimeStopHour * 60 + chargeDefinition.presetTimeStopMinute;
+		if (timeStop - timeStart < minTime) {
+			timeStop = timeStart + minTime;
+		}
 		
 		var hourStr:String = (chargeDefinition.presetTimeStartHour < 10?"0":"") + chargeDefinition.presetTimeStartHour;
 		var minStr:String = (chargeDefinition.presetTimeStartMinute < 10?"0":"") + chargeDefinition.presetTimeStartMinute;
 		startTimeString = hourStr + ":" + minStr;
 
-
-		hourStr = (chargeDefinition.presetTimeStopHour < 10?"0":"") + chargeDefinition.presetTimeStopHour;
-		minStr = (chargeDefinition.presetTimeStopMinute < 10?"0":"") + chargeDefinition.presetTimeStopMinute;
+		hourStr = ((timeStop/60) < 10?"0":"") + (int(timeStop/60));
+		timeStop = timeStop - (int(timeStop/60));
+		minStr = (timeStop < 10?"0":"") + timeStop;
 		stopTimeString = hourStr + ":" + minStr;
 
 		chargeService.createChargeFromChargeDefinition(this.chargeDefinition);

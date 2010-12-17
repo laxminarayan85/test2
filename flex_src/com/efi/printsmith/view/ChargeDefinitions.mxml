@@ -172,7 +172,22 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 	
 	[Bindable]
 	public var enableDuplicate:Boolean = false;
-	
+
+	[Bindable]
+	public var enableExport:Boolean = false;
+
+	[Bindable]
+	public var enableDelete:Boolean = false;
+
+	[Bindable]
+	public var enableRevert:Boolean = false;
+
+	[Bindable]
+	public var enablePresetInfo:Boolean = false;
+
+	[Bindable]
+	public var enableCosting:Boolean = false;
+
 	[Bindable]
 	public var qtyTypes:ArrayCollection = new ArrayCollection();
 	
@@ -193,6 +208,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
     
     [Bindable] private var deleteBtnEnabled:Boolean = false;
     [Bindable] private var inkCoverageLabel:String = "";
+    [Bindable] private var inkPriceLabel:String = "";
     
     public function getSecurityCommand():String {
     	return PSSecurityCommands.PRICING_CHARGEDEF;
@@ -216,6 +232,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		foldTemplateService.getAll("FoldTemplate");
 		
 		inkCoverageLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0');
+		inkPriceLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Price0');
 	}      
 	     
 	private function fireGetAllEvent(modelType:String, callbacks:IResponder):void {
@@ -244,8 +261,8 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			
 			tempString = systemPreferences.inkWeightSingular;
 			inkCoverageLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Cover0');
-			var poundStr:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Lb');
-			inkCoverageLabel = StringUtil.substitute(inkCoverageLabel, tempString); 
+			inkCoverageLabel = StringUtil.substitute(inkCoverageLabel, tempString);
+			inkPriceLabel = StringUtil.substitute(inkPriceLabel, tempString); 
 		}else{
 			this.btnExport.enabled = false;
 		}
@@ -640,6 +657,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			localCharge.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.untitled');
 			localCharge.method = ChargeMethod.Ask;
 			localCharge.quantityType = ChargeQtyType.Quantity;
+			localCharge.priceMethod = "PiecePrice";
 			localCharge.presetDescriptionLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Description');
 			localCharge.presetInSetsOfLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Insetsof');
 			localCharge.presetMaterialRateLabel = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.Material');
@@ -1559,11 +1577,22 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
 		}
+		if (this.charge_method_combo.selectedItem.data == ChargeMethod.Ink) {
+			this.rate_check.label = inkPriceLabel; 
+		} else {
+			this.rate_check.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Rate');
+		}
 		price_calc_stack.selectedChild = newCanvas;	
 		UpdatePriceMethod();	
 	}
 	private function changeChargeMethod(event:ListEvent):void {
 		updateControlState();
+		if (charge_method_combo.selectedItem.data == ChargeMethod.PriceList || 
+		    charge_method_combo.selectedItem.data == ChargeMethod.RateList) {
+			if (charge.priceList == null) {
+				this.doPriceList();
+			}
+		}
 		this.isDirty = true;
 	}
 	
@@ -1891,6 +1920,43 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		enableNewCategory = newCategoryEnabled();
 		enableNewCharge = newChargeEnabled();
 		enableDuplicate = duplicateChargeEnabled();
+		enableExport = exportEnabled();
+		enableDelete = deleteEnabled();
+		enableRevert = revertEnabled();
+		enablePresetInfo = presetInfoEnabled();
+		enableCosting = costingEnabled();
+	}
+	
+	private function exportEnabled():Boolean {
+		return false;
+	}
+	
+	private function deleteEnabled():Boolean {
+		if (charge == null && chargeCategory == null) {
+			return false;
+		}
+		return true;
+	}
+	
+	private function revertEnabled():Boolean {
+		if (charge != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	private function presetInfoEnabled():Boolean {
+		if (charge != null) {
+			return true;
+		}		
+		return false;
+	}
+	
+	private function costingEnabled():Boolean {
+		if (charge != null) {
+			return true;
+		}
+		return false;
 	}
 	
 	private function newCategoryEnabled():Boolean {
@@ -1992,7 +2058,14 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 	 		in_sets_edit.text = charge.rateSetCount.toString();
 	}
 	
-	private function UpdatePriceMethod(): void{
+	private function UpdatePriceMethod(): void {
+		if (charge != null && charge_method_combo.selectedItem.data == ChargeMethod.Markup) {
+			cost_plus_radio.enabled = false;						
+//			cost_plus_radio.selected = false;
+//			piece_pricing_radio.selected = true;
+			pricing_method.selectedValue = "PiecePrice";
+		}
+		
 		if (charge != null && pricing_method.selectedValue == "CostPlus") {
 			markup_edit.text = charge.markup.toString();
 			sale_price_per_unit_edit.text = costPricingString;
@@ -2136,6 +2209,14 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			}
 		}
 	}
+	
+	private function doCostPlusClick(event:Event):void {
+		if (cost_plus_radio.selected == true) {
+			if (this.charge.chargeCost == null) {
+				doCosting();
+			}
+		}
+	}
     ]]>
                              
 </mx:Script>
@@ -2191,23 +2272,23 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 				<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 			</mx:Button>
 			<mx:Label x="115" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" width="66" textAlign="center"/>
-			<mx:Button x="20" y="2" width="38" height="38" id="btnExport" enabled="false">
+			<mx:Button x="20" y="2" width="38" height="38" id="btnExport" enabled="{enableExport}">
 				<mx:icon>@Embed(source='../../../../assets/export.png')</mx:icon>
 			</mx:Button>
 			<mx:Label x="10" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Export')}" width="58" textAlign="center"/>
-			<mx:Button x="185" y="2" width="38" height="38" click="doDelete()" id="delete_button" enabled="{deleteBtnEnabled}">
+			<mx:Button x="185" y="2" width="38" height="38" click="doDelete()" id="delete_button" enabled="{enableDelete}">
 				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 			</mx:Button>
 			<mx:Label x="175" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
-			<mx:Button x="268" y="2" width="38" height="38" id="revert_button" click="doRevert()">
+			<mx:Button x="268" y="2" width="38" height="38" id="revert_button" click="doRevert()" enabled="{enableRevert}">
 				<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
 			</mx:Button>
 			<mx:Label x="258" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
-			<mx:Button x="366" y="3" width="38" height="38" id="preset_info_button" click="doPresetInfo()">
+			<mx:Button x="366" y="3" width="38" height="38" id="preset_info_button" click="doPresetInfo()" enabled="{enablePresetInfo}">
 				<mx:icon>@Embed(source='../../../../assets/presets.png')</mx:icon>
 			</mx:Button>
 			<mx:Label x="348" y="39" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.PresetInfo')}" width="68" textAlign="center"/>
-			<mx:Button x="424" y="3" width="38" height="38" click="doCosting()" id="costing_button">
+			<mx:Button x="424" y="3" width="38" height="38" click="doCosting()" id="costing_button" enabled="{enableCosting}">
 				<mx:icon>@Embed(source='../../../../assets/costing.png')</mx:icon>
 			</mx:Button>
 			<mx:Label x="412" y="39" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Costing')}" width="63" textAlign="center"/>
@@ -2259,7 +2340,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 					<mx:RadioButton x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FinishedArea')}" groupName="area_group" id="finished_area_radio" width="112" value="FinishArea" change="setDocDirty()"/>
 					<mx:CheckBox x="446" y="235" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ignorecuts')}" id="Ignorecuts_radio" width="112" change="setDocDirty()"/>
 					
-					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" groupName="pricing_method" id="cost_plus_radio" width="93" value="CostPlus"  change="setDocDirty()"/>
+					<mx:RadioButton x="4" y="280" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CostPlus')}" click="doCostPlusClick(event)" groupName="pricing_method" id="cost_plus_radio" width="93" value="CostPlus"  change="setDocDirty()"/>
 					<mx:RadioButton x="4" y="301" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.PiecePricing')}" groupName="pricing_method" id="piece_pricing_radio" width="93" value="PiecePrice"  change="setDocDirty()"/>
 					<mx:TextInput x="182" y="280" restrict="0-9\.\-\," width="124" id="markup_edit" text="{charge.markup}" enabled="{cost_plus_radio.selected}" focusOut="updateChargeCosting(event);" textAlign="right" change="setDocDirty()"/>
 					<mx:Text x="422" y="282" width="91" id="sale_price_per_unit_edit" text="{costPricingString}" height="17" textAlign="right"/>

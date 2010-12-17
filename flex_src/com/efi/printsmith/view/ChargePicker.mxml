@@ -5,6 +5,7 @@
 				xmlns:fc="http://www.adobe.com/2006/fc"
 				xmlns:hc="com.hillelcoren.components.*"
 				xmlns:comp="com.efi.printsmith.components.*"
+				xmlns:common="com.efi.printsmith.common.components.filter.*" 
 				width="1100"
 				height="700"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'workflowJobDetailsCmd.JobCharges')}"
@@ -151,7 +152,7 @@
 				if (systemPreferencesArray.length > 0)
 				{
 					systemPreferences = systemPreferencesArray.getItemAt(0) as PreferencesSystem;
-					taxable_check.visible = systemPreferences.disableNonTaxableOptions; 
+					taxable_check.visible = !systemPreferences.disableNonTaxableOptions; 
 				}else {
 					taxable_check.visible = true;
 				}
@@ -256,68 +257,68 @@
 				return true;
 			}
 
-			private function refreshData():void
-			{
-				//reset the root node to its original unfiltered data
-				var i:int;
-				for (i=0; i < chargeCommands.length; i++)
-				{
-					chargeCommands[i].children=new ArrayCollection(chargeCommands[i].children.source);
-					refreshRecursiveChildren(chargeCommands.source[i]);
-				}
-				//update the Tree after the data has been filtered
-				chargeTree.invalidateList();
-			}
-
-			private function refreshRecursiveChildren(item:Object):void
-			{
-				var classInfo:XML=describeType(item);
-
-				if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null)
-				{
-					//loop through each child and filter its children
-					for each (var chargeCategoryItem:ChargeCategory in item.children.source)
-					{
-						refreshRecursiveChildren(chargeCategoryItem);
-					}
-					item.children=new ArrayCollection(item.children.source);
-					item.children.filterFunction=filterData;
-					item.children.refresh();
-				}
-				else if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null)
-				{
-					//loop through each child and filter its children
-					for each (var chargeItem:Charge in item.children.source)
-					{
-						refreshRecursiveChildren(chargeItem);
-					}
-					item.children=new ArrayCollection(item.children.source);
-					item.children.filterFunction=filterData;
-					item.children.refresh();
-				}
-			}
-
-			public function filterData(item:Object):Boolean
-			{
-				//get the string to filter the nodes by
-				var searchString:String=tree_filter.text;
-				//if string is found in node return true.
-				//since the recursive filtering takes place from bottom up, if
-				//a collection still has children after filtering, also return true
-				if (searchString.length == 0 || item.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0)
-					return true;
-				var classInfo:XML=describeType(item);
-
-				if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null)
-				{
-					return true;
-				}
-				if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null)
-				{
-					return true;
-				}
-				return false;
-			}
+//			private function refreshData():void
+//			{
+//				//reset the root node to its original unfiltered data
+//				var i:int;
+//				for (i=0; i < chargeCommands.length; i++)
+//				{
+//					chargeCommands[i].children=new ArrayCollection(chargeCommands[i].children.source);
+//					refreshRecursiveChildren(chargeCommands.source[i]);
+//				}
+//				//update the Tree after the data has been filtered
+//				chargeTree.invalidateList();
+//			}
+//
+//			private function refreshRecursiveChildren(item:Object):void
+//			{
+//				var classInfo:XML=describeType(item);
+//
+//				if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null)
+//				{
+//					//loop through each child and filter its children
+//					for each (var chargeCategoryItem:ChargeCategory in item.children.source)
+//					{
+//						refreshRecursiveChildren(chargeCategoryItem);
+//					}
+//					item.children=new ArrayCollection(item.children.source);
+//					item.children.filterFunction=filterData;
+//					item.children.refresh();
+//				}
+//				else if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null)
+//				{
+//					//loop through each child and filter its children
+//					for each (var chargeItem:Charge in item.children.source)
+//					{
+//						refreshRecursiveChildren(chargeItem);
+//					}
+//					item.children=new ArrayCollection(item.children.source);
+//					item.children.filterFunction=filterData;
+//					item.children.refresh();
+//				}
+//			}
+//
+//			public function filterData(item:Object):Boolean
+//			{
+//				//get the string to filter the nodes by
+//				var searchString:String=tree_filter.text;
+//				//if string is found in node return true.
+//				//since the recursive filtering takes place from bottom up, if
+//				//a collection still has children after filtering, also return true
+//				if (searchString.length == 0 || item.name.toLowerCase().indexOf(searchString.toLowerCase()) >= 0)
+//					return true;
+//				var classInfo:XML=describeType(item);
+//
+//				if (classInfo.@name.toString() == "com.efi.vo::ChargeCommand" && item.children != null)
+//				{
+//					return true;
+//				}
+//				if (classInfo.@name.toString() == "com.efi.vo::ChargeCategory" && item.children != null)
+//				{
+//					return true;
+//				}
+//				return false;
+//			}
 
 			private function tree_itemClick(evt:Event):void
 			{
@@ -357,6 +358,16 @@
 					suffix=" (" + children.length + ")";
 				}
 				return item.name + suffix;
+			}
+			
+			private function getSearchBy():ArrayCollection {
+				var sc:ArrayCollection = new ArrayCollection();
+			
+				var fp:FilterProperty = new FilterProperty(null, "name");
+				var sc1:FilterSearchBy = new FilterSearchBy("", fp);
+				sc.addItem(sc1);
+				
+				return sc;
 			}
 
 			private function handleNewChargeResult(event:ResultEvent):void
@@ -1244,15 +1255,8 @@
 							 bottom="30"
 							 top="19">
 					</mx:Tree>
-					<mx:TextInput width="172"
-								  id="tree_filter"
-								  change="refreshData()"
-								  y="520"
-								  right="5"
-								  bottom="5"/>
-					<mx:Text x="0"
-							 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kPSSharedFolderCmd.Filter')}"
-							 bottom="9" width="45" height="15" textAlign="right"/>
+				<common:TreePickerFilter searchClassName="com.efi.printsmith.data::ChargeDefinition" height="22" bottom="5" showExtendedSearch="true"  searchComponent="{chargeTree}"  listData="{chargeCommands}" searchCriteria="{getSearchBy()}"  right="0" width="100%">
+				</common:TreePickerFilter>
 					<mx:Text x="3"
 							 y="3"
 							 text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.ChargeDefinitions')}"
@@ -1413,7 +1417,7 @@
 									</mx:HBox>
 									<mx:HBox width="100%" id="pounds_of_ink_box" visible="false">
 										<mx:Spacer width="8"/>
-										<mx:Text text="{chargeDefinition.presetPoundsofInkLabel}" width="50%" id="lbs_of_ink_label_text" textAlign="right"/>
+										<mx:Text text="{chargeDefinition.presetPoundsOfInkLabel}" width="50%" id="lbs_of_ink_label_text" textAlign="right"/>
 										<mx:TextInput text="{chargeDefinition.presetPoundsofInk}" width="50%" id="lbs_of_ink_edit" textAlign="right" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>

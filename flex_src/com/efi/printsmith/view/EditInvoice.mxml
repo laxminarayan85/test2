@@ -335,6 +335,10 @@
 						this.setAccount(invoice.account);
 					var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this,true);
   					mdiWin.title = this.title;
+  					
+  					if (invoice.notes != null && invoice.notes.showOnOpen) {
+  						doNotepad();
+  					}
 				}
 				
 				

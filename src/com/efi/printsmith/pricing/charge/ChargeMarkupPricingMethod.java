@@ -46,6 +46,11 @@ public class ChargeMarkupPricingMethod extends ChargePricingMethod {
 				price += lookupQty * rate;
 			}
 		}
+		
+		if (price < chargeDefinition.getMinimum().doubleValue()) {
+			price = chargeDefinition.getMinimum().doubleValue();
+		}
+		
 		charge.setPrice(price);
 		return charge;
 	}

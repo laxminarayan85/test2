@@ -49,7 +49,7 @@
 							  id="job_unitPrice"
 							  height="20"
 							  tabEnabled="false"
-							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.unitPrice)}"
+							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(false,4).format(job.pricingRecord.unitPrice)}"
 							  change="editUnitPrice(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{label7}" position="before">
@@ -103,7 +103,7 @@
 						  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Copies')}" textAlign="right" width="108"/>
 			</mx:AddChild>
 			<mx:SetProperty target="{job_price}" name="text">
-				<mx:value>{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice)}</mx:value>
+				<mx:value>{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice)}</mx:value>
 			</mx:SetProperty>
 			<mx:RemoveChild target="{label14}"/>
 			<mx:RemoveChild target="{number_lines}"/>
@@ -259,7 +259,7 @@
 							  y="306"
 							  id="job_LFUnitPrice"
 							  height="20"
-							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.unitPrice)}"
+							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(false,4).format(job.pricingRecord.unitPrice)}"
 							  change="editUnitPrice(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
@@ -488,7 +488,7 @@
 							  y="260"
 							  id="job_LFUnitPrice0"
 							  height="20"
-							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.unitPrice)}"
+							  width="98" textAlign="right" text="{Snowmass.getCurrencyFormatter(false,4).format(job.pricingRecord.unitPrice)}"
 							  change="editUnitPrice(event)" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{hrule2}" position="before">
@@ -1906,39 +1906,10 @@
 					job.copyMinutes = localJob.copyMinutes;
 					job.runTime = localJob.runTime;
 					if (job.pricingRecord != null) {
-						overs_total_price.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice.toString());
-						job_price.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice));
+						overs_total_price.text = Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.oversTotalPrice.toString());
+						job_price.text = Snowmass.getCurrencyFormatter(false,2).format((job.pricingRecord.totalPrice));
 					}
-//					num_signatures.text = job.signatures.toString();
-//					job_imp.text = job.impressionsPerRun.toString();
-//					total_imp.text = job.totalImpressions.toString();
-//					est_waste.text = job.estWaste.toString();
-//					if (this.num_signatures != null)
-//						this.num_signatures.text = job.totalCopies.toString();
-//					if (this.num_copies != null)
-//						this.num_copies.text = job.numCopies.toString();
-//					if (this.total_copies0 != null)
-//						this.total_copies0.text = job.totalCopies.toString();
-//					if (this.num_copies1 != null)
-//						this.num_copies1.text = job.numCopies.toString();
-//					if (job_totalCost != null) {
-//						job_totalCost.text = job.totalCost.toString();
-//					}
-//					if (this.num_signatures != null)
-//						num_signatures.text = job.totalCopies.toString();
-//					
-//					if (job.pricingRecord != null) {
-//						overs_unit_price.text = Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.oversUnitPrice.toString());
-//						overs_total_price.text = Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.oversTotalPrice.toString());
-//						job_prep.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.prepPrice.toString());
-//						job_bind.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.bindPrice.toString());
-//						job_other.text = Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.otherChargePrice.toString());
-//						job_total.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice).toString());
-//						job_price.text = Snowmass.getCurrencyFormatter(true,2).format((job.pricingRecord.totalPrice));
-//					}
 				}
-				
-				//paperCalculatorService.CalcOut(job, job.paperCal.whichStartSize);
 			}
 			
 			private function handlePriceJobFault(ev:FaultEvent):void
@@ -3316,8 +3287,8 @@
 										  tabEnabled="false"
 										  dataHolder="{job.pricingRecord}" variableName="oversUnitPrice"
 										  customText="{job.pricingRecord.oversUnitPrice}"
-										  precision="4" rounding="nearest" allowSymbol="true" symbolString="$"
-										  text="{Snowmass.getCurrencyFormatter(true,4).format(job.pricingRecord.oversUnitPrice)}"
+										  precision="4" rounding="nearest"
+										  text="{Snowmass.getCurrencyFormatter(false,4).format(job.pricingRecord.oversUnitPrice)}"
 										  mouseDown="textInputClick(event)" textAlign="right"/>
 							<commoncomponents:CustomNumericTextInputComponent x="496"
 										  y="346"
@@ -3327,8 +3298,8 @@
 										  tabEnabled="false"
 										  dataHolder="{job.pricingRecord}" variableName="oversTotalPrice"
 										  customText="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice)}"
-										  precision="2" rounding="nearest" allowSymbol="true" symbolString="$"
-										  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice)}"
+										  precision="2" rounding="nearest"
+										  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.oversTotalPrice)}"
 										  mouseDown="textInputClick(event)" textAlign="right"/>
 							<mx:Label x="385"
 									  y="348"
@@ -3343,19 +3314,19 @@
 									  y="368"
 									  width="98"
 									  id="job_prep"
-									  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.prepPrice)}"
+									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.prepPrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="389"
 									  width="98"
 									  id="job_bind"
-									  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.bindPrice)}"
+									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.bindPrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="410"
 									  width="98"
 									  id="job_other"
-									  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.otherChargePrice)}"
+									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.otherChargePrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="385"
 									  y="445"
@@ -3364,7 +3335,7 @@
 									  y="445"
 									  width="97.05"
 									  id="job_total"
-									  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice)}"
+									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice)}"
 									  height="20" textAlign="right"/>
 							<mx:Label x="496"
 									  y="208"
@@ -3396,12 +3367,12 @@
 										  height="20"
 										  width="98" 
 										  dataHolder="{job.pricingRecord}" variableName="totalPrice"
-										  customText="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice)}"
-										  precision="2" rounding="nearest" allowSymbol="true" symbolString="$"
+										  customText="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice)}"
+										  precision="2" rounding="nearest"
 										  mouseDown="textInputClick(event)" 
 										  textAlign="right" 
 										  tabEnabled="false"
-										  text="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.totalPrice)}"/>
+										  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice)}"/>
 							<mx:Label x="385"
 									  y="304"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label7"/>
