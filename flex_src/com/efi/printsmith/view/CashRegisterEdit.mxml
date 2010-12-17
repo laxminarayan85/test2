@@ -2335,7 +2335,7 @@
         tempStr = numberFormatter.format(temp.toFixed(4));
         // number formatter will come back with (2) places after decimal
         // turn back into a floating point number
-		results = parseFloat(tempStr);
+		results = parseFloat(tempStr.replace(",",""));
 		return(results);
 	}
 		
