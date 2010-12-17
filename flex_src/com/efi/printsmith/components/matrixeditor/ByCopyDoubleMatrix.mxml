@@ -20,7 +20,7 @@
 					editable="true" enabled="true" horizontalGridLines="true"
 					bottom="0" top="60" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
 					itemEditEnd="formatData(event);"
-					doubleClickEnabled="true" id="matrix_grid">
+					doubleClickEnabled="true" focusIn="gridGotFocus()" id="matrix_grid">
 				<mx:columns>
 				     <mx:DataGridColumn dataField="qty" headerText="" sortable="false" width="50"/>
 				     <mx:DataGridColumn dataField="price1" headerText="1 Sided" editable="true" sortable="false" width="50"/>
@@ -53,6 +53,7 @@
 				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
 				[Bindable] public var hour:Number = 0;
 				[Bindable] public var currentValue:String = "";
+				[Bindable] public var gridHasFocus:Boolean = false;
 				public function mapToMatrix():void {
 					matrix.header1 = parseInt(this.header1.text);
 					matrix.header2 = parseInt(this.header2.text);
@@ -67,6 +68,14 @@
 				}
 				private function setCurrentValue(evt:FocusEvent):void {
 					currentValue = evt.currentTarget.text;
+					gridHasFocus = false;
+				}
+				private function gridGotFocus():void {
+					if (!gridHasFocus) {
+						this.matrix_grid.invalidateDisplayList();
+						this.matrix_grid.editedItemPosition = {rowIndex:0, columnIndex:0};
+					}
+					gridHasFocus = true;
 				}
 				private function checkNaN(evt:FocusEvent) {
 					var value:Number = 0;
