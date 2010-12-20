@@ -96,6 +96,7 @@
 
 <mx:Script>                                   
 <![CDATA[
+	import mx.events.CloseEvent;
 	import mx.events.FlexEvent;
 	import com.efi.printsmith.events.ContactCreateUpdateEvent;
 	import mx.rpc.mxml.Concurrency;
@@ -1442,6 +1443,15 @@
 //		event.dispatch();
 		
 		if ((contacts != null) && (contacts.length > 1))	{
+			var nameStr:String = account.billToContact.lastName + ", " + this.account.billToContact.firstName;
+			var deleteStr:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), nameStr);
+			Alert.show(deleteStr,"Warning",Alert.YES|Alert.NO,this,handleDeleteContact,null,Alert.OK);
+			//Snowmass.getInstance().containerManager.openNewMDIWindow(contactWin.title, contactWin, -1,-1,-1,-1,myWindowId);
+		}
+	}
+	
+	private function handleDeleteContact(event:CloseEvent):void {
+		if(event.detail == Alert.YES) {
 			var contactWin:EditContact = new EditContact();
 				
 			contactWin.addEventListener(ContactCreateUpdateEvent.CONTACT_DELETE, onContactDelete);
@@ -1449,10 +1459,7 @@
 			contactWin.mode = EditContact.CT_DELETE;
 			contactWin.contactFromParent = account.billToContact;
 			contactWin.deleteContact();
-			//Snowmass.getInstance().containerManager.openNewMDIWindow(contactWin.title, contactWin, -1,-1,-1,-1,myWindowId);
 		}
-
-		
 	}
 	
 	private function onContactDelete(event:ContactCreateUpdateEvent):void	{
