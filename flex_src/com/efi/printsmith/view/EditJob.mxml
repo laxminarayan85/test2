@@ -2034,23 +2034,25 @@
 			}			
 
 			private function checkCopierSize():void {
-				var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
-				var minSize:Dimension = new Dimension();
-				minSize.name = copier.minSize;
-				var maxSize:Dimension = new Dimension();
-				maxSize.name = copier.maxSize;
-				var minSizeWidth:Number = Snowmass.getWidthFromSizeString(minSize);
-				var minSizeLength:Number = Snowmass.getLengthFromSizeString(minSize);
-				var maxSizeWidth:Number = Snowmass.getWidthFromSizeString(maxSize);
-				var maxSizeLength:Number = Snowmass.getLengthFromSizeString(maxSize);
-				var runSize:Dimension = job.runSize;
-				var message:String = "";
-				if (runSize != null) {
-					if (minSize.name != "" && (runSize.width * runSize.height) < (minSizeWidth * minSizeLength)) {
-						 callLater(runSizeSmallerThanMinSize);
-					}
-					if (maxSize.name != "" && (runSize.width * runSize.height) > (maxSizeWidth * maxSizeLength)) {
-						 callLater(runSizeBiggerThanMaxSize);
+				if (this.currentState != "LargeFormat") {
+					var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
+					var minSize:Dimension = new Dimension();
+					minSize.name = copier.minSize;
+					var maxSize:Dimension = new Dimension();
+					maxSize.name = copier.maxSize;
+					var minSizeWidth:Number = Snowmass.getWidthFromSizeString(minSize);
+					var minSizeLength:Number = Snowmass.getLengthFromSizeString(minSize);
+					var maxSizeWidth:Number = Snowmass.getWidthFromSizeString(maxSize);
+					var maxSizeLength:Number = Snowmass.getLengthFromSizeString(maxSize);
+					var runSize:Dimension = job.runSize;
+					var message:String = "";
+					if (runSize != null) {
+						if (minSize.name != "" && (runSize.width * runSize.height) < (minSizeWidth * minSizeLength)) {
+							 callLater(runSizeSmallerThanMinSize);
+						}
+						if (maxSize.name != "" && (runSize.width * runSize.height) > (maxSizeWidth * maxSizeLength)) {
+							 callLater(runSizeBiggerThanMaxSize);
+						}
 					}
 				}
 			}
@@ -2087,7 +2089,8 @@
 					job.runSize.width = job.parentSize.width;
 					job_size.text = job.runSize.name;
 					job_size.selectedIndex = job_parent.selectedIndex;
-					callLater(runSizeToBig);
+					if (this.currentState != "LargeFormat")
+						callLater(runSizeToBig);
 				}
 	
 				if (this.currentState != "LargeFormat") {
