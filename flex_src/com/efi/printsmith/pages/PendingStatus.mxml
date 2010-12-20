@@ -11,6 +11,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.Estimate;
+			import com.efi.printsmith.data.Invoice;
 			import com.efi.printsmith.data.JobBase;
 			import mx.controls.Alert;
 			import mx.rpc.events.ResultEvent;
@@ -93,6 +95,15 @@
 					}
 				}
 			}
+			
+			private function getTitle(invoiceBaseObj:InvoiceBase):String {
+				if(invoiceBaseObj is Invoice){
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.Invoice')
+				} else if(invoiceBaseObj is Estimate){
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate');
+				}
+				return "";
+			}
 		]]>
 	</mx:Script>
 	
@@ -104,7 +115,7 @@
 	
 	<mx:HBox width="100%">
 		<mx:HBox width="100%" horizontalAlign="left" horizontalGap="1">
-			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.Invoice')}: " styleName="boldstyle"/>
+			<mx:Label text="{getTitle(_invoiceBase)}: " styleName="boldstyle"/>
 			<mx:Label text="{_invoiceBase.invoiceNumber} " styleName="boldstyle"/>
 			<mx:Label text="{_invoiceBase.name}" styleName="boldstyle"/>
 		</mx:HBox>

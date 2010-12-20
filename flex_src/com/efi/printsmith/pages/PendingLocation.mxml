@@ -263,6 +263,15 @@
 					dataService.saveInvoice(_invoiceBase);
 				}
 			}
+			
+			private function getTitle(invoiceBaseObj:InvoiceBase):String {
+				if(invoiceBaseObj is Invoice){
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.Invoice')
+				} else if(invoiceBaseObj is Estimate){
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate');
+				}
+				return "";
+			}
     	]]>
     </mx:Script>
 
@@ -276,7 +285,7 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadHoldStateResult(event)"/>
 	</mx:RemoteObject>
 
-	<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.Invoice')}: {_invoiceBase.invoiceNumber} {_invoiceBase.name}"/>
+	<mx:Label text="{getTitle(_invoiceBase)}: {_invoiceBase.invoiceNumber} {_invoiceBase.name}"/>
 	
 	<mx:Label text="(#{_invoiceBase.account.accountId}) {_invoiceBase.account.title}"/>
 	
