@@ -53,6 +53,10 @@
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPendingListResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServicePrefSystem" destination="dataService">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPreferencesSystemResult(event)"/>		
+	</mx:RemoteObject>
+	
 	<mx:RemoteObject id="dataServicePrefPOS" destination="dataService">
 		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPreferencesPOSResult(event)"/>		
 		<mx:method name="addUpdate" fault="handleFault(event)"/>
@@ -70,6 +74,7 @@
 	<mx:Script source="../security/PSSecurityInclude.as" />
 <mx:Script> 
 <![CDATA[
+	import com.efi.printsmith.data.PreferencesSystem;
 	import mx.events.DataGridEvent;
 	import mx.events.CloseEvent;
 	import mx.core.Application;
@@ -151,6 +156,8 @@
     private var ReportIcon:Class;
     
     [Bindable] public var preferencesPOS:PreferencesPOS;
+    
+    [Bindable] public var preferencesSystem:PreferencesSystem;
     
     [Bindable] private var invoiceBaseArrayLength:int=0;
     
@@ -261,6 +268,7 @@
 		this.throbber.play();
 		
 		dataServicePrefPOS.getSingle("PreferencesPOS");
+		dataServicePrefSystem.getSingle("PreferencesSystem");
 		fillDocumentArray(DocumentArray);
 		fillFilterArray(FilterArray);
 		fillFindArray(FindArray);
@@ -618,6 +626,10 @@
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
 			if(dgView.selectedItem is Invoice) {
 				var inv:InvoiceBase = dgView.selectedItem as InvoiceBase;
+				if(preferencesSystem!=null && preferencesSystem.onlyPostMarkedReadyInvoices && !inv.readyToPickup) {
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oneormoreofthedocume'));
+					return;
+				}
 				var cashRegister:CashRegisterEdit = new CashRegisterEdit();
 				var child:TitleWindow = cashRegister as TitleWindow;
 				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
@@ -1213,6 +1225,10 @@
 			}
 		}
 		pendingOptions.selectedValue = preferencesPOS.pendingOption;
+	}
+	
+	private function handleLoadPreferencesSystemResult(event:ResultEvent):void {
+		preferencesSystem = event.result as PreferencesSystem;
 	}
 	
 	private function savePendingOption():void {
