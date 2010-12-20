@@ -112,7 +112,7 @@
  	 	 	 	<mx:Label x="10" y="154" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Amount')}" width="103" textAlign="right"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
- 	 	 	 	<mx:TextInput x="121" y="152" width="75" textAlign="right"/>
+ 	 	 	 	<mx:TextInput x="121" y="152" width="75" textAlign="right" id="invoice_payment"/>
  	 	 	</mx:AddChild>
  	 	</mx:State>
  	 	<mx:State name="paymentPaymentMethod">
@@ -178,10 +178,10 @@
  	 	 	 	<mx:Label x="72" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.Ref')}"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
- 	 	 	 	<mx:ComboBox x="76" y="88" width="120"></mx:ComboBox>
+ 	 	 	 	<mx:ComboBox x="76" y="88" width="120" id="invoice_card_type"></mx:ComboBox>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
- 	 	 	 	<mx:TextInput x="121" y="114" width="75"/>
+ 	 	 	 	<mx:TextInput x="121" y="114" width="75" id="invoice_card"/>
  	 	 	</mx:AddChild>
  	 	<!-- 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:Button x="204" y="115" width="19" height="19" click="doCreditCardManualApproval()" enabled="{enableCCApproval}" id="btnCCmanualApprove">
@@ -194,7 +194,7 @@
  	 	 	 	<mx:Label x="62" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'paymentsCmd.Check')}"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
- 	 	 	 	<mx:TextInput x="121" y="114" width="75"/>
+ 	 	 	 	<mx:TextInput x="121" y="114" width="75" id="invoice_check"/>
  	 	 	</mx:AddChild>
  	 	</mx:State>
  	 	<mx:State name="invoiceCharge" basedOn="invoicePaymentMethod">
@@ -998,6 +998,7 @@
 	}
 	private function doInvoice():void {
 		this.currentState = "invoiceState";
+		treeStateString = "invoiceState";
 	}
 	
 	private function doAddJob():void {
@@ -1119,14 +1120,17 @@
 			if (treeStateString == "invoiceState")
 			{
 				this.currentState = "invoiceCash";
+				invoice_payment.setFocus()
+				invoice_payment.tabIndex = 1;
 			} 
 			else 
 			{
 				this.currentState = "paymentCash";
+				payment_cash_edit.setFocus();
+				payment_cash_edit.tabIndex = 1;
 			}
 			btPayment.enabled = true;
-			payment_cash_edit.setFocus();
-			payment_cash_edit.tabIndex = 1;
+			
 			btPayment.tabIndex = 2;
 			btnSave.tabIndex = 3;
 		}
@@ -1136,15 +1140,19 @@
 			if (treeStateString == "invoiceState")
 			{
 				this.currentState = "invoiceCreditCard";
+				
+				invoice_card.setFocus()
+				invoice_card.tabIndex = 1
+				invoice_payment.tabIndex = 2
 			} 
 			else 
 			{
 				this.currentState = "paymentCreditCard";
+				card_ref.setFocus();
+				card_ref.tabIndex = 1;
+				payment_cash_edit.tabIndex = 2;
 			}
 			btPayment.enabled = true;
-			card_ref.setFocus();
-			card_ref.tabIndex = 1;
-			payment_cash_edit.tabIndex = 2;
 			btPayment.tabIndex = 3;
 			btnSave.tabIndex = 4;
 		}
@@ -1154,15 +1162,19 @@
 			if (treeStateString == "invoiceState")
 			{
 				this.currentState = "invoiceCheck";
+				invoice_check.setFocus();
+				invoice_check.tabIndex = 1;
+				invoice_payment.tabIndex = 2;
 			} 
 			else 
 			{
 				this.currentState = "paymentCheck";
+				check_num.setFocus();
+				check_num.tabIndex = 1;
+				payment_cash_edit.tabIndex = 2;
 			}
 			btPayment.enabled = true;
-			check_num.setFocus();
-			check_num.tabIndex = 1;
-			payment_cash_edit.tabIndex = 2;
+			
 			btPayment.tabIndex = 3;
 			btnSave.tabIndex = 4;
 		}
@@ -1178,22 +1190,29 @@
 			if (treeStateString == "invoiceState")
 			{
 				this.currentState = "invoiceCharge";
+				invoice_payment.setFocus();
+				invoice_payment.tabIndex;
 			} 
 			else 
 			{
 				this.currentState = "paymentCharge";
+				payment_cash_edit.setFocus();
+				payment_cash_edit.tabIndex = 1;
 			}
-			payment_cash_edit.setFocus();
-			payment_cash_edit.tabIndex = 1;
+			
 			btPayment.tabIndex = 2;
 			btnSave.tabIndex = 3;
 		}
 		
 		accept_button.tabIndex = -1;
 		//
-		// how much is left to pay
+		// how much is left to pay 	if ( treeStateString == "invoiceState")
+		
 		//
-		payment_cash_edit.text = Snowmass.getCurrencyFormatter(false,2).format(roundToCurrency(sessionBatch.accumTotal - sessionBatch.accumTendered));
+		if ( treeStateString == "invoiceState")
+			invoice_payment.text = Snowmass.getCurrencyFormatter(false,2).format(roundToCurrency(sessionBatch.accumTotal - sessionBatch.accumTendered));
+		else
+			payment_cash_edit.text = Snowmass.getCurrencyFormatter(false,2).format(roundToCurrency(sessionBatch.accumTotal - sessionBatch.accumTendered));
 		
 	//	this.focusManager.setFocus(btPayment);
 		this.focusManager.defaultButton = btPayment;
@@ -1210,12 +1229,17 @@
 	private function doPayment():void{
 		var payOK:Boolean = true;
 		var message:String;
-		
-		if ((this.currentState = "invoiceCash") && (AustrailianRounding == true)) {
+		var temp:Number;
+		if ( treeStateString == "invoiceState")
+			temp = parseFloat(invoice_payment.text.replace(",",""));
+		else
+			temp = parseFloat(payment_cash_edit.text.replace(",",""));
 			
+		if ((this.currentState = "invoiceCash") && (AustrailianRounding == true)) {
+			 
 		} else {
 			// ensure that variable content is the same as formatted screen content
-			var temp:Number = parseFloat(payment_cash_edit.text.replace(",",""));
+			
 			var tempStr:String = Snowmass.getCurrencyFormatter(false,2).format(temp);
 			activePayment.total = parseFloat(tempStr.replace(",",""));	
 			

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="890" height="430" creationComplete="init()" 
  close="PopUpManager.removePopUp(this);"
-	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
+	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*"  showCloseButton="true"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.StockOrder')}" 
 	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.StockOrder')}" 
 	name="StockOrderReport">
@@ -12,8 +12,7 @@
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="xpedxIntegrationService" destination="xpedxIntegrationService">
-		<mx:method name="submitOrder"
-					fault="handleFault(event)"
+		<mx:method name="submitOrder"					fault="handleFault(event)"
 					result="handleSubmitOrderResult(event)"/>
 	</mx:RemoteObject>
 	
@@ -120,12 +119,15 @@
     	stockOrdersDisplay = new ArrayCollection();
     	stockOrdersNonHistory = new ArrayCollection();
 		stockOrders = event.result as ArrayCollection;
-		stockOrdersDisplay = stockOrders;
-		for each(var element:StockOrder in stockOrders) {
-			if ( element.placed == false)
-				stockOrdersNonHistory.addItem(element);
+		if ( stockOrders != null)
+		{
+			stockOrdersDisplay = stockOrders;
+			for each(var element:StockOrder in stockOrders) {
+				if ( element.placed == false)
+					stockOrdersNonHistory.addItem(element);
+				}
+			hideOrders();
 		}
-		hideOrders();
 		
 		
 	}
