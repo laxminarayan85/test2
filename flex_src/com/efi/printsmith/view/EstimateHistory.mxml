@@ -262,6 +262,17 @@
 					dataServiceInvoice.saveInvoice(estimate);
 				}
 			}
+			
+			private function getStatus(item:Object, column:DataGridColumn):String {
+				var statusString:String = "";
+				if(item[column.dataField]!=null){
+					statusString = item[column.dataField];
+				}
+				if(item.estimateNotes!=null){
+					statusString = statusString + " ¶";
+				}
+				return statusString;
+			}
 		]]>
 	                             
 	</mx:Script>
@@ -299,7 +310,7 @@
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Estimate')}" dataField="invoiceNumber"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Title')}" dataField="name"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Total')}" dataField="grandTotal"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Status')}" dataField="status"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Status')}" dataField="status" labelFunction="getStatus"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.Invoice')}" dataField="convertedInvoiceNo"/>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.OffPending')}" dataField="offPendingDate" labelFunction="getFormattedDate"/>
 		</mx:columns>
