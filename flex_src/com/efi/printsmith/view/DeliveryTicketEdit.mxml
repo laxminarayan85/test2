@@ -167,12 +167,34 @@
 			for each(var shippingMethod:ShippingMethod in shippingMethodList) {
 				shippingMethodArray.push(shippingMethod);
 			}
+			var emptyObj:ShippingMethod = new ShippingMethod();
+			emptyObj.id = -1;
+			emptyObj.name = "";
+			shippingMethodArray.push(emptyObj);
+			if(deliveryTicket!=null){
+				if(deliveryTicket.shipMode!=null){
+					shipvia_combo.selectedIndex = findItem(deliveryTicket.shipMode.id,shippingMethodArray);
+				} else {
+					shipvia_combo.selectedIndex = findItem(-1,shippingMethodArray);
+				}
+			}
 		}
 		
 		private function handleLoadDriverResult(event:ResultEvent):void {
 			var driverList:ArrayCollection = event.result as ArrayCollection;
 			for each(var driver:Driver in driverList) {
 				driverArray.push(driver);
+			}
+			var emptyObj:Driver = new Driver();
+			emptyObj.id = -1;
+			emptyObj.name = "";
+			driverArray.push(emptyObj);
+			if(deliveryTicket!=null){
+				if(deliveryTicket.driver!=null){
+					driver_combo.selectedIndex = findItem(deliveryTicket.driver.id,driverArray);
+				} else {
+					driver_combo.selectedIndex = findItem(-1,driverArray);
+				}
 			}
 		}
 		
@@ -193,6 +215,16 @@
 				deliveryTicket.deliveryDate = new Date();
 			}
 			setDefaultList();
+			if(deliveryTicket.shipMode!=null){
+				shipvia_combo.selectedIndex = findItem(deliveryTicket.shipMode.id,shippingMethodArray);
+			} else {
+				shipvia_combo.selectedIndex = findItem(-1,shippingMethodArray);
+			}
+			if(deliveryTicket.driver!=null){
+				driver_combo.selectedIndex = findItem(deliveryTicket.driver.id,driverArray);
+			} else {
+				driver_combo.selectedIndex = findItem(-1,driverArray);
+			}
 			if(deliveryTicket.deliveryJobs!=null && deliveryTicket.deliveryJobs.length>0) {
 				for each(var deliveryTicketJobsObj:DeliveryTicketJobs in deliveryTicket.deliveryJobs){
 					copyToAddressList(deliveryTicketJobsObj.account);
@@ -202,6 +234,18 @@
 			dataServiceFormPreference.getAll("FormPreferences");
 			dataService.getAll("LabelFormat");
 			dataServicePreferenceSystem.getSingle("PreferencesSystem");
+		}
+		
+		private function findItem(id:int, array:Array):int
+		{
+			for each (var element:Object in array)
+			{
+				if (id == element.id)
+				{
+					return array.indexOf(element);
+				}
+			}
+			return -1;
 		}
 		
 		private function handleLoadPSResult(event:ResultEvent):void {
@@ -726,6 +770,34 @@
 			}
 		}
 		
+		private function updateShippingMethod():void {
+			if(deliveryTicket!=null) {
+				if(shipvia_combo.selectedItem!=null){
+					if(shipvia_combo.selectedItem.id==-1) {
+						deliveryTicket.shipMode = null;
+					} else {
+						deliveryTicket.shipMode = shipvia_combo.selectedItem as ShippingMethod;
+					}
+				} else {
+					deliveryTicket.shipMode = null;
+				}
+			}
+		}
+		
+		private function updateDriver():void {
+			if(deliveryTicket!=null) {
+				if(driver_combo.selectedItem!=null){
+					if(driver_combo.selectedItem.id==-1) {
+						deliveryTicket.driver = null;
+					} else {
+						deliveryTicket.driver = driver_combo.selectedItem as Driver;
+					}
+				} else {
+					deliveryTicket.driver = null;
+				}
+			}
+		}
+		
 	]]>
 	                             
 	</mx:Script>
@@ -913,9 +985,12 @@
 					<mx:HBox width="100%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.ShipVia')}:" width="50%"
 							textAlign="right"/>
-						<components:CustomAutoCompleteComponent width="50%"
+						<components:EditableComboBox id="shipvia_combo"
+							width="50%" dataProvider="{shippingMethodArray}" labelField="name" editable="false" optional="true"
+							change="{updateShippingMethod()}"/>
+						<!--<components:CustomAutoCompleteComponent width="50%"
 							labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{shippingMethodArray}"
-							dataHolder="{deliveryTicket}" variableName="shipMode" customData="{deliveryTicket.shipMode}" customText="{getCustomTextForAutocomplete(shippingMethodArray,deliveryTicket,'shipMode','id','name',true,'id')}"/>
+							dataHolder="{deliveryTicket}" variableName="shipMode" customData="{deliveryTicket.shipMode}" customText="{getCustomTextForAutocomplete(shippingMethodArray,deliveryTicket,'shipMode','id','name',true,'id')}"/>-->
 					</mx:HBox>
 					<mx:HBox width="100%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Cost')}:" width="50%"
@@ -933,9 +1008,12 @@
 					<mx:HBox width="100%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketFormEditCmd.Driver')}:" width="50%"
 							textAlign="right"/>
-						<components:CustomAutoCompleteComponent width="50%"
+						<components:EditableComboBox id="driver_combo"
+							width="50%" dataProvider="{driverArray}" labelField="name" editable="false" optional="true"
+							change="{updateDriver()}"/>
+						<!--<components:CustomAutoCompleteComponent width="50%"
 							labelFieldId="id" labelField="name" updateObject="true" objectLabelFieldId="id" masterList="{driverArray}"
-							dataHolder="{deliveryTicket}" variableName="driver" customData="{deliveryTicket.driver}" customText="{getCustomTextForAutocomplete(driverArray,deliveryTicket,'driver','id','name',true,'id')}"/>
+							dataHolder="{deliveryTicket}" variableName="driver" customData="{deliveryTicket.driver}" customText="{getCustomTextForAutocomplete(driverArray,deliveryTicket,'driver','id','name',true,'id')}"/>-->
 					</mx:HBox>
 					<mx:HBox width="100%" horizontalAlign="center">
 						<components:CustomCheckBoxComponent
