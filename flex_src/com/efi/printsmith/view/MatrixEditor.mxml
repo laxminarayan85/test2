@@ -834,6 +834,8 @@
 		case "TOTALOFALLCOPIES":
 		case "TOTALSQUAREAREA":
 		case "SQUAREAREAOFORIGINALS":
+			this.square_area_of_originals_editor.mapToMatrix();
+			matrix = this.square_area_of_originals_editor.matrix;
 		case "COPIESPERORIGINALS":
 		default:
 			matrixeditor.mapToMatrix();
