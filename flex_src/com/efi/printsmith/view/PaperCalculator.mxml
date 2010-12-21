@@ -538,6 +538,18 @@
 				dispatchEvent(selectEvent);						
 			}
 			
+			private function doCancel():void
+			{
+				var selectEvent:JobEditCompleteEvent = new JobEditCompleteEvent(JobEditCompleteEvent.CANCEL, job);
+				
+				job.parentSize = originalJob.parentSize;
+				job.runSize = originalJob.runSize;
+				job.finishSize = originalJob.finishSize;
+				job.paperCal = originalJob.paperCal;
+				
+				dispatchEvent(selectEvent);						
+			}			
+			
 			private function doTemplate():void
 			{
 				var paperTemplateWindow:PaperCalculatorTemplate = PaperCalculatorTemplate(PopUpManager.createPopUp(this, PaperCalculatorTemplate, true));
@@ -1208,6 +1220,7 @@
 				   y="21"
 				   width="38"
 				   height="38"
+				   click = "doCancel()"
 				   icon="@Embed(source='../../../../assets/cancel.png')"/>
 		<mx:HRule x="10"
 				  y="82"
