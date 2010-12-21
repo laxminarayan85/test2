@@ -120,7 +120,7 @@
  	 	 	 	<mx:Label x="10" y="154" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Amount')}" width="103" textAlign="right"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
- 	 	 	 	<mx:TextInput  restrict="0-9\." x="121" y="152" width="75" id="payment_cash_edit" change="UpdateBatchNumbers()" textAlign="right"/>
+ 	 	 	 	<mx:TextInput  restrict="0-9\.\-" x="121" y="152" width="75" id="payment_cash_edit" change="UpdateBatchNumbers()" textAlign="right"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:RemoveChild target="{txtSaleDescription}"/>
  	 	 	<mx:SetProperty target="{tax_canvas1}" name="height" value="278"/>
@@ -1499,6 +1499,13 @@
 			}
 			
 			if (payOK == true) {
+				// cash register pay out
+				//
+				if (activePayment.total < 0) {
+					activePayment.refNumber = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posRegisterCmd.POSRefund")
+					// TODO may ask for user description
+				}
+				
 				sessionBatch.transactions.addItem(activePayment);
 				InitPaymentRecord();
 			}
@@ -1594,6 +1601,8 @@
 			tempPayment = item as TapePaymentRecord;
 			if (tempPayment.paymentMethod != "" && tempPayment.total > 0){
 				tempString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Payment')+" " + tempPayment.paymentMethod;
+			} else if (tempPayment.refNumber != "") {		// could be a payout (negative amount)
+				tempString = tempPayment.refNumber;
 			} else
 				tempString = "";
 		} else if (item is TapeSaleRecord) {
@@ -1956,7 +1965,7 @@
 			//
 			//totalTransactionPay += roundAmount;
 			
-		} else {
+		} else if (isPaidOut == false) {
 			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
 			Alert.show(message, "Warning", 0, null, null, null, 4); 
 			results = false;
@@ -1969,13 +1978,14 @@
 				// un-balanced amount of sales .vs. payments
 				//
 				if ((totalTransactionPay + totalCharge) != totalApplied) {
-					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
-					message = StringUtil.substitute(message,numberFormatter.format((totalTransactionPay + totalCharge)),numberFormatter.format(totalApplied)); 
-					Alert.show(message, "Warning", 0, null, null, null, 4); 
-					if (Alert.NO)
-						results = false;
-					else if (isPaidOut == true) {
+					if (isPaidOut == true) {
 						// TODO - ask for description
+					} else {
+						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
+						message = StringUtil.substitute(message,numberFormatter.format((totalTransactionPay + totalCharge)),numberFormatter.format(totalApplied)); 
+						Alert.show(message, "Warning", 0, null, null, null, 4); 
+						if (Alert.NO)
+							results = false;
 					}
 				}
 			}
