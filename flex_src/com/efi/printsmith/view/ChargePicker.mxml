@@ -183,8 +183,12 @@
 				menuItem.name = "Delivery Intent";
 				shipToArray.addItem(menuItem);
 				
-				if (this.job.parentInvoice != null &&
-					this.job.parentInvoice.contact != null) {
+				if (this.job != null) {
+					if (this.job.parentInvoice != null) {
+						if (this.job.parentInvoice.contact != null) {
+							
+						}
+					}
 				}
 			}
 
