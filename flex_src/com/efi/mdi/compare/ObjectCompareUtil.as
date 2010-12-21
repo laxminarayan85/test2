@@ -1,5 +1,7 @@
 package com.efi.mdi.compare
 {
+	import com.efi.printsmith.data.SalesCategory;
+	
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedClassName;
@@ -16,7 +18,8 @@ package com.efi.mdi.compare
 	    
 	    private static function internalCompare(a:Object, b:Object,
                                             currentDepth:int, desiredDepth:int,
-                                            refs:Dictionary, propertyName:Object=null):int
+                                            refs:Dictionary, propertyName:Object=null, aSuperObj:Object=null,
+                                            bSuperObj:Object=null):int
 	    {
 	        if (a == null && b == null)
 	            return 0;
@@ -102,8 +105,13 @@ package com.efi.mdi.compare
 	                    	aRef = refs[aDate.time+"Date"];
 	                    	bRef = refs[bDate.time+"Date"];
 	                    } else {
-	                    	aRef = refs[a];
-	                    	bRef = refs[b];
+	                    	if(aSuperObj!=null && bSuperObj!=null){
+	                    		aRef = refs[a+aSuperObj.toString()];
+		                    	bRef = refs[b+bSuperObj.toString()];
+	                    	} else {
+		                    	aRef = refs[a];
+		                    	bRef = refs[b];
+	                    	}
 	                    }
 	                    
 	                    if (aRef && !bRef)
@@ -120,8 +128,13 @@ package com.efi.mdi.compare
 	                    	refs[aDate.time+"Date"] = true;
 	                    	refs[bDate.time+"Date"] = true;
 	                    } else {
-	                    	refs[a] = true;
-	                    	refs[b] = true;
+	                    	if(aSuperObj!=null && bSuperObj!=null){
+	                    		refs[a+aSuperObj.toString()] = true;
+	                    		refs[b+bSuperObj.toString()] = true;
+	                    	} else {
+		                    	refs[a] = true;
+		                    	refs[b] = true;
+	                    	}
 	                    }
 	                    
 	                    
@@ -216,7 +229,7 @@ package com.efi.mdi.compare
 	                            if(propName.localName=="uid"){
 	                            	continue;
 	                            }
-	                            result = internalCompare(aProp, bProp, currentDepth+1, newDepth, refs, propName);
+	                            result = internalCompare(aProp, bProp, currentDepth+1, newDepth, refs, propName, a, b);
 	                            if (result != 0)
 	                            {
 	                                i = aProps.length;
