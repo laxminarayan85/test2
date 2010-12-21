@@ -112,6 +112,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.formatters.DateFormatter;
 			import mx.rpc.mxml.Concurrency;
 			import com.efi.printsmith.data.ComLink;
 			import com.efi.printsmith.components.ContactInfoPopup;
@@ -1537,6 +1538,42 @@
 			private function isTicketGridVisible():Boolean	{
 				return true;
 			}
+			
+			private function getOrderedTime(dateObj:Date):String {
+				if(dateObj!=null){
+					var dateFormatter:DateFormatter = new DateFormatter();
+					dateFormatter.formatString = "L:NN A";
+				}
+				return "";
+			}
+			
+			private function setInvoiceDates(event:Event, propertyName:String, labelCompName:String=null):void {
+				var dateObj:Date = event.currentTarget.selectedDate as Date;
+				if(dateObj!=null){
+					if(invoice[propertyName]!=null){
+						invoice[propertyName].date = dateObj.date;
+						invoice[propertyName].month = dateObj.month;
+						invoice[propertyName].fullYear = dateObj.fullYear;
+					} else {
+						invoice[propertyName] = dateObj;
+					}
+				} else {
+					invoice[propertyName] = null;
+				}
+				if(labelCompName!=null){
+					var label:Label = this[labelCompName] as Label;
+					label.text = getWeekName(invoice[propertyName]);
+				} 
+			}
+			
+			private function getWeekName(dateObj:Date):String {
+				if(dateObj!=null){
+					var dateFormatter:DateFormatter = new DateFormatter();
+					dateFormatter.formatString = "EEE";
+					return dateFormatter.format(dateObj);
+				}
+				return "";
+			}
 		]]>
 
 	</mx:Script>
@@ -1601,6 +1638,59 @@
 										   id="delivery_intent_address_editor"
 										   address="{invoice.shipToAddress}"
 										   enabled="false"/>
+								<mx:HBox width="100%">
+									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Orderedon')}:" width="20%"
+										textAlign="right" fontWeight="bold"/>
+									<mx:DateField id="ordered_date" selectedDate="{invoice.orderedDate}" width="35%"
+										change="{setInvoiceDates(event,'orderedDate','ordered_week')}"/>
+									<mx:Label text="{getOrderedTime(invoice.orderedDate)}" width="35%"/>
+									<mx:Label id="ordered_week" text="{getWeekName(invoice.orderedDate)}" width="10%"/>
+								</mx:HBox>
+								
+								<mx:HBox width="100%">
+									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Wantedby')}:" width="20%"
+										textAlign="right" fontWeight="bold"/>
+									<components:CustomDateFieldComponent id="wanted_date" selectedDate="{invoice.wantedDate}" width="35%"
+										change="{setInvoiceDates(event,'wantedDate','wanted_week')}"/>
+									<components:CustomTimeEntryDateComponent
+										dataHolder="{invoice}" variableName="wantedDate" customText="{invoice.wantedDate}" 
+										is24Hour="false" width="35%" borderStyle="none"/>
+									<mx:Label id="wanted_week" text="{getWeekName(invoice.wantedDate)}" width="10%"/>
+								</mx:HBox>
+								
+								<mx:HBox width="100%">
+									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Deliveron')}:" width="20%"
+										textAlign="right" fontWeight="bold"/>
+									<components:CustomDateFieldComponent id="completed_date" selectedDate="{invoice.completedDate}" width="35%"
+										change="{setInvoiceDates(event,'completedDate','completed_week')}"/>
+									<components:CustomTimeEntryDateComponent
+										dataHolder="{invoice}" variableName="completedDate" customText="{invoice.completedDate}" 
+										is24Hour="false" width="35%" borderStyle="none"/>
+									<mx:Label id="completed_week" text="{getWeekName(invoice.completedDate)}" width="10%"/>
+								</mx:HBox>
+								
+								<mx:HBox width="100%">
+									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Proofby')}:" width="20%"
+										textAlign="right" fontWeight="bold"/>
+									<components:CustomDateFieldComponent id="proofby_date" selectedDate="{invoice.proofDate}" width="35%"
+										change="{setInvoiceDates(event,'proofDate','proofby_week')}"/>
+									<components:CustomTimeEntryDateComponent
+										dataHolder="{invoice}" variableName="proofDate" customText="{invoice.proofDate}" 
+										is24Hour="false" width="35%" borderStyle="none"/>
+									<mx:Label id="proofby_week" text="{getWeekName(invoice.proofDate)}" width="10%"/>
+								</mx:HBox>
+								
+								<mx:HBox width="100%">
+									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Reorder')}:" width="20%"
+										textAlign="right" fontWeight="bold"/>
+									<components:CustomDateFieldComponent id="reorder_date" selectedDate="{invoice.reorderDate}" width="35%"
+										change="{setInvoiceDates(event,'reorderDate')}"/>
+									<components:CustomCheckBoxComponent
+										label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.FileOriginals')}"
+										dataHolder="{invoice}" variableName="fileOriginals" customText="{invoice.fileOriginals}"
+										defaultValue="false" selectedValue="true" deSelectedValue="false" width="45%"/>
+								</mx:HBox>
+								
 							</mx:VBox>			   
 						
 					</mx:VBox>
