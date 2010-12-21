@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
 				layout="absolute"
-				width="920"
-				height="666"
+				width="100%" height="100%" headerHeight="0"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PaperCalculator')}"
 				creationComplete="init();"
-				showCloseButton="true"
-				close="PopUpManager.removePopUp(this);" fontSize="9">
+				showCloseButton="true" 
+				fontSize="9"
+				implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent">
+
+	<mx:Script source="../security/PSSecurityInclude.as" />
 				
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
@@ -35,9 +37,11 @@
 	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import mx.events.FlexEvent;
 			import mx.controls.Alert;
 			import mx.controls.Image;
 			import mx.utils.ObjectUtil;
+			import com.efi.printsmith.security.PSSecurityCommands;
 			import mx.managers.PopUpManager;
 			import com.efi.mdi.view.window.MDIWindow;
 			import mx.containers.TitleWindow;
@@ -56,6 +60,7 @@
 			import com.efi.printsmith.data.Dimension;
 			import com.efi.printsmith.Constants;
 			import com.efi.printsmith.events.JobEditCompleteEvent;
+			import com.efi.printsmith.events.SaveEvent;
 			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.view.PaperCalculatorTemplate;
             import mx.events.DragEvent;
@@ -100,6 +105,14 @@
 
 				refreshCalcAndImage();
 			}
+					
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+		    public function getSecurityCommand():String {
+		      return PSSecurityCommands.ADMIN_PAPERCALCULATOR;	
+		    }
 
 			private function handleCalcOutResult(ev:ResultEvent):void
 			{
@@ -789,7 +802,7 @@
 			}
 
             public function onClose():void {
-
+				mapToJobData();
 			}
 			
 			public function onSave():void {
@@ -825,9 +838,10 @@
 ]]>
 
 	</mx:Script>
+<mx:VBox width="100%" height="100%">
 	<mx:Canvas width="100%"
-			   height="622"
-			   id="papercalculator_canvas"
+			   height="100%"
+			   id="mainbox"
 			   hideEffect="effect"
 			   showEffect="effect"
 			   y="0">
@@ -1263,4 +1277,5 @@
 			labelFunction="dimensionLabelFunc"></mx:List>
 
 	</mx:Canvas>
+	</mx:VBox>
 </mx:TitleWindow>
