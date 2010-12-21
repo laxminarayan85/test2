@@ -54,6 +54,7 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 <mx:Script source="../common/scripts/CommonUtils.as"/>
 <mx:Script>                                   
 <![CDATA[
+	import flash.net.registerClassAlias;
 	import mx.events.FlexEvent;
 	import mx.utils.ObjectUtil;
 	import com.efi.printsmith.security.PSSecurityCommands;
@@ -174,9 +175,11 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 		stockDefinitions = new StockDefinition;
 		doPressType();
 		updateControlState();
-		NumberHeads.text = '1';
+		//NumberHeads.text = '1';
 		this.Name.setFocus();
 		this.addEventListener(KeyboardEvent.KEY_DOWN,keyDown);
+		registerClassAlias("com.efi.printsmith.data.PressDefinition",PressDefinition);
+	    originalPressDefinition = ObjectUtil.copy(pressDefinition) as com.efi.printsmith.data.PressDefinition;
 	}      
 	
 	 private function keyDown(evt:KeyboardEvent):void{
@@ -370,6 +373,8 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 		 	pressDefinition.name = "Untitled Press";
 		 else
 		 	pressDefinition.name = Name.text;
+		 if(originalPressDefinition.name == null || originalPressDefinition.name=="")
+			originalPressDefinition.name = "Untitled Press";
 		 if ( productionPress.selectedItem != null)
 		 	pressDefinition.machineName = productionPress.selectedItem.name as String;
 		 pressDefinition.outputDescrip = OutPutDescription.text;
@@ -401,6 +406,9 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 		 pressDefinition.gripEdge = parseFloat(GripEdge.text);
 		 pressDefinition.perfector = Perfector.selected;
 		 pressDefinition.avgImpressPerHour = parseFloat(AvgImpressPerhour.text.replace(",",""));
+		 if(isNaN(pressDefinition.avgImpressPerHour)){
+		 	pressDefinition.avgImpressPerHour = 0;
+		 }
 		 pressDefinition.setupAddRun = parseInt(SetupAddRun.text);
 		 pressDefinition.numberHeads= parseInt(NumberHeads.text);
 		 if ( charge_sales_category_combo.selectedItem != null)
@@ -479,6 +487,9 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 	}
 	private function handleLoadSalesCategoryResult(ev:ResultEvent):void {
 		salesCategories = ev.result as ArrayCollection;
+		pressDefinition.salesCat = charge_sales_category_combo.selectedItem as SalesCategory;
+	    registerClassAlias("com.efi.printsmith.data.PressDefinition",PressDefinition);
+	    originalPressDefinition = ObjectUtil.copy(pressDefinition) as com.efi.printsmith.data.PressDefinition;
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
 		var selectedIndex:int = new int(dataGrid.selectedIndex);
@@ -542,23 +553,29 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 			if (CostCenter.selectedIndex == -1)
 				CostCenter.text= "";
 		}
-		else
+		else {
 			CostCenter.text ="";
+			CostCenter.selectedIndex = -1;
+		}
 		if (pressDefinition.productionLocation != null){
 			ProductionLocation.selectedIndex = findItem(pressDefinition.productionLocation, productionLocationArray);
 			if (ProductionLocation.selectedIndex == -1)
 				ProductionLocation.text= "";
 		}
-		else
+		else {
 			ProductionLocation.text = "";
+			ProductionLocation.selectedIndex = -1;
+		}
 			
 		if (pressDefinition.machineName != ""){
 			productionPress.selectedIndex = findItem(pressDefinition.machineName, productionPressArray);
 			if (productionPress.selectedIndex == -1)
 				productionPress.text= "";
 		}
-		else
+		else {
 		 	productionPress.text = "";
+		 	productionPress.selectedIndex = -1;
+		}
 		this.charges = pressDefinition.charges;
 		if  ( this.pressDefinition.charges.length > 0){
 	     	chargeLabel.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
@@ -579,6 +596,9 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 			selectedWasteChart.label = WasteListLabel();
 		}
 	    doWashUpPerFountain();
+	    if(charge_sales_category_combo.selectedItem!=null)
+		pressDefinition.salesCat = charge_sales_category_combo.selectedItem as SalesCategory;
+	    registerClassAlias("com.efi.printsmith.data.PressDefinition",PressDefinition);
 	    originalPressDefinition = ObjectUtil.copy(pressDefinition) as com.efi.printsmith.data.PressDefinition;
 	    this.Name.setFocus();
 	}
@@ -890,7 +910,7 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 	}
 	public function onClose():void {
 		if(pressDefinition!=null) {
-			
+			mapAccountData();
 		}	
 	}
 	

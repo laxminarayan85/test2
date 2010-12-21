@@ -46,6 +46,7 @@ package com.efi.mdi.compare
 	                {
 	                    result = numericCompare(Number(a), Number(b));
 	                    if(result!=0){
+	                    	trace("Boolean comparison fails");
 							trace("OriginalObject Value=="+a);
 							trace("UpdatedObject Value=="+b);
 							if(propertyName!=null){
@@ -60,6 +61,7 @@ package com.efi.mdi.compare
 	                {
 	                    result = numericCompare(a as Number, b as Number);
 	                    if(result!=0){
+	                    	trace("Number comparison fails");
 							trace("OriginalObject Value=="+a);
 							trace("UpdatedObject Value=="+b);
 							if(propertyName!=null){
@@ -74,6 +76,7 @@ package com.efi.mdi.compare
 	                {
 	                    result = stringCompare(a as String, b as String);
 	                    if(result!=0){
+	                    	trace("String comparison fails");
 							trace("OriginalObject Value=="+a);
 							trace("UpdatedObject Value=="+b);
 							if(propertyName!=null){
@@ -149,6 +152,7 @@ package com.efi.mdi.compare
 	                    {
 	                        result = arrayCompare(a as Array, b as Array, currentDepth, desiredDepth, refs);
 	                        if(result!=0){
+	                        	trace("Array comparison fails");
 								trace("OriginalObject Value=="+a);
 								trace("UpdatedObject Value=="+b);
 								if(propertyName!=null){
@@ -161,6 +165,7 @@ package com.efi.mdi.compare
 	                    {
 	                        result = dateCompare(a as Date, b as Date);
 	                        if(result!=0){
+	                        	trace("Date comparison fails");
 								trace("OriginalObject Value=="+a);
 								trace("UpdatedObject Value=="+b);
 								if(propertyName!=null){
@@ -173,6 +178,7 @@ package com.efi.mdi.compare
 	                    {
 	                        result = listCompare(a as IList, b as IList, currentDepth, desiredDepth, refs);
 	                        if(result!=0){
+	                        	trace("List comparison fails");
 								trace("OriginalObject Value=="+a);
 								trace("UpdatedObject Value=="+b);
 								if(propertyName!=null){
@@ -185,6 +191,7 @@ package com.efi.mdi.compare
 	                    {
 	                        result = byteArrayCompare(a as ByteArray, b as ByteArray);
 	                        if(result!=0){
+	                        	trace("Byte comparison fails");
 								trace("OriginalObject Value=="+a);
 								trace("UpdatedObject Value=="+b);
 								if(propertyName!=null){
