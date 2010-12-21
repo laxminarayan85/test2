@@ -74,6 +74,7 @@
 	<mx:Script source="../security/PSSecurityInclude.as" />
 <mx:Script> 
 <![CDATA[
+	import mx.utils.ObjectUtil;
 	import com.efi.printsmith.data.PreferencesSystem;
 	import mx.events.DataGridEvent;
 	import mx.events.CloseEvent;
@@ -1283,14 +1284,60 @@
 	public function getJobComments(item:Object, column:DataGridColumn):String {
 		var comments:String = "";
 		if(item.jobs!=null) {
+			var commentCounter:int=0;
 			for each(var jobBase:JobBase in item.jobs){
 				if(jobBase.comment!=null){
-					comments = comments+jobBase.comment;
+					commentCounter++;
+					comments = comments+" "+jobBase.comment;
 				}
+			}
+			if(commentCounter>1){
+				comments = "";
+				var sortableJobs:ArrayCollection = new ArrayCollection();
+				for each(var jobBaseObj:JobBase in item.jobs){
+					if(jobBaseObj.comment!=null){
+						sortableJobs.addItem(jobBaseObj);
+					}
+				}
+				var sort:Sort = new Sort();
+				sort.compareFunction = date_sortCompareFunc;
+				sortableJobs.sort = sort;
+				for each(var jobBaseObject:JobBase in sortableJobs){
+					comments = comments+" "+jobBaseObject.comment;
+				} 
 			}
 		}
 		return comments;
 	}
+	
+	private function date_sortCompareFunc(itemA:Object, itemB:Object):int {
+        /* Date.parse() returns an int, but
+           ObjectUtil.dateCompare() expects two
+           Date objects, so convert String to
+           int to Date. */
+        var dateA:Date = new Date(Date.parse(itemA.modified));
+        var dateB:Date = new Date(Date.parse(itemB.modified));
+        if (dateA == null && dateB == null)
+            return 0;
+
+        if (dateA == null)
+          return -1;
+
+        if (dateB == null)
+           return 1;
+
+        var na:Number = dateA.getTime();
+        var nb:Number = dateB.getTime();
+        
+        if (na < nb)
+            return 1;
+
+        if (na > nb)
+            return -1;
+
+        return 0;
+    }
+
 	
 	private function getSalesRep(item:Object, column:DataGridColumn):String {
 		if(item.salesRep!=null){
