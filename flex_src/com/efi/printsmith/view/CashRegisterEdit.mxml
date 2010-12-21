@@ -501,6 +501,7 @@
 		var i:int;
 		var arRecord:AccountHistoryData;
 		var tempRecord:AccountHistoryData = ev.result as AccountHistoryData;
+	
 		dataServiceTapeBatch.addUpdate(tapeBatch);
 		if (tempRecord != null) {
 			if (arHistoryList != null && arHistoryList.length > 0) {
@@ -946,7 +947,7 @@
 							arRecord.total = tempSale.invoice.amountDue;
 							arRecord.subTotalPosted = tempSale.invoice.grandTotal;
 							arRecord.balance = roundToCurrency(tempSale.total - tempSale.amountPaid);
-							if (tempSale.paymode != "") {	// some payment applied
+							/* if (tempSale.paymode != "") {	// some payment applied
 								// still has outstanding balance
 								if (arRecord.balance > 0) {
 									// classic tracks partial pay in static way
@@ -985,7 +986,7 @@
 								arRecord.finalPay = new TapePaymentRecord();
 								arRecord.finalPay.paymentMethod = Constants.POS_CASH_REGISTER_PAYMODE_DEPOSIT;
 								arRecord.finalPay.checkNumber = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"depositCmd.Deposit");
-							}
+							} */
 							
 							tempSale.accountHistoryData = arRecord;			// record AR history record into tape
 							

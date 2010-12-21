@@ -356,7 +356,7 @@ public class Transaction extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
     @Where(clause="isdeleted <> 'TRUE'")
 	private AccountHistoryData accountHistoryData;
 	
