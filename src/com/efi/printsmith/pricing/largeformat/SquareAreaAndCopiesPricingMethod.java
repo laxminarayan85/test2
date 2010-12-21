@@ -275,7 +275,11 @@ public class SquareAreaAndCopiesPricingMethod extends
 		if (job.getDoubleSided() && copierDefinition.getMatrixType().equals("DiscountTable") == false && job.getPricingCopier().getPriceTwoSide().equals(Price2Side.UsingSideFactor.name())) {
 			stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();
 		}
-		area = area * job.getTotalCopies();
+		if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(
+				Price2Side.NotChangingPrice.name()))
+			area = area * job.getNumCopies();
+		else
+			area = area * job.getTotalCopies();
 		if (!pricingRecord.getTotalPriceOverride()) {
 			if (copierDefinition.getMatrixType().equals("CopyCost")) {
 				pricePerCopy *= copierDefinition.getCopyMarkup2();
@@ -456,6 +460,15 @@ public class SquareAreaAndCopiesPricingMethod extends
 				}
 			}
 		}
+		pricingRecord.setTotalPrice(laborTotalPrice + stockTotalPrice);
+		pricingRecord.setStockTotalPrice(stockTotalPrice);
+		pricingRecord.setLaborTotalPrice(laborTotalPrice);
+		if (pricingRecord.getTotalPrice().doubleValue() == 0)
+			pricingRecord.setUnitPrice(0.0);
+		else
+			pricingRecord.setUnitPrice(pricingRecord.getTotalPrice()
+					.doubleValue()
+					/ job.getTotalCopies());
 		return job;
 	}
 }
