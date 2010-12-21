@@ -195,7 +195,7 @@ public class TapeSaleRecord extends Transaction {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(optional=true)
     @Where(clause="isdeleted <> 'TRUE'")
 	private PreferencesCashRegister cashRegisterDept;
 	
@@ -378,7 +378,7 @@ public class TapeSaleRecord extends Transaction {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
 	private InvoiceBase invoice;
 	
