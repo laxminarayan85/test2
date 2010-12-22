@@ -155,6 +155,14 @@ public class TableEditorMapper extends ImportMapper {
 									modelBase = new StockGroup();
 								else if (title.equals("Tax Codes"))
 									modelBase = new TaxCodes();
+								else if (title.equals("Tax Tables"))
+									modelBase = new TaxTable();
+									TaxTable taxTable = (TaxTable)dataService.getByName("TaxTable", title);
+									if (taxTable == null) {
+										taxTable = new TaxTable();
+										taxTable.setName(title);
+										dataService.addUpdate(taxTable);
+									}
 								else if (title.equals("Type of Work"))
 									modelBase = new TypeofWork();
 								else if (title.equals("Vendor"))
@@ -174,6 +182,18 @@ public class TableEditorMapper extends ImportMapper {
 								modelBase = setName(modelBase,recordNodes.item(z).getTextContent());
 							} else if (nameNode.getNodeValue().equals("key")) {
 								modelBase = setKey(modelBase,recordNodes.item(z).getTextContent());
+							} else if (nameNode.getNodeValue().equals("attributes")) {
+								if (title.equals("Tax Tables")) {
+									Node disabledNode = null;
+									try {
+										nameNode = fieldAttributes.getNamedItem("disabled");
+									} catch (Exception e) {
+										disabledNode = null;
+									}
+									
+									if (disabledNode != null)
+										((TaxTable) modelBase).setDisableTable(Utilities.tokenToBooleanValue(disabledNode.getNodeValue()));
+								}
 							}
 						}
 					}
@@ -275,6 +295,8 @@ public class TableEditorMapper extends ImportMapper {
 			((StockGroup) modelBase).setName(value);
 		} else if (modelBase instanceof TaxCodes) {
 			((TaxCodes) modelBase).setName(value);
+		} else if (modelBase instanceof TaxTable) { 
+			((TaxTable) modelBase).setName(value);
 		} else if (modelBase instanceof TypeofWork) {
 			((TypeofWork) modelBase).setName(value);
 		} else if (modelBase instanceof Vendor) {

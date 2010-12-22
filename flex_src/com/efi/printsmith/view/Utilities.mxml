@@ -290,6 +290,7 @@
 		fileTypeArray.addItem("Stock Grade");
 		fileTypeArray.addItem("Stock Group");
 		fileTypeArray.addItem("Tax Codes");
+		fileTypeArray.addItem("Tax Tables");
 		fileTypeArray.addItem("Type of Work");
 		fileTypeArray.addItem("Vendor");
 		fileTypeArray.addItem("WEB Locations");
