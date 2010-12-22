@@ -338,8 +338,10 @@ public class SquareAreaAndOriginalsPricingMethod extends
 				long lookupRange = job.getNumCopies() - lastQty;
 				double priceRange = (pricingMatrix.getElements().get(i)
 						.getPrice1().doubleValue() - lastPrice);
-				pricePerCopy = ((lookupRange * priceRange) / qtyRange)
-						+ lastPrice;
+				if (qtyRange > 0)
+					pricePerCopy = ((lookupRange * priceRange) / qtyRange) + lastPrice;
+				else
+					pricePerCopy = 0.0;
 			}
 		}
 
@@ -465,7 +467,10 @@ public class SquareAreaAndOriginalsPricingMethod extends
 						}
 					}
 				}
-				pricePerCopy = (runningTotal / job.getNumCopies());
+				if (job.getNumCopies() > 0)
+					pricePerCopy = (runningTotal/job.getNumCopies());
+				else
+					pricePerCopy = 0.0;
 				pricePerCopy *= copierDefinition.getCopyMarkup2();
 				wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job
 						.getSheets())
@@ -531,7 +536,10 @@ public class SquareAreaAndOriginalsPricingMethod extends
 								}
 							}
 						}
-						pricePerCopy = (runningTotal / job.getNumCopies());
+						if (job.getNumCopies() > 0)
+							pricePerCopy = (runningTotal/job.getNumCopies());
+						else
+							pricePerCopy = 0.0;
 						pricePerCopy *= copierDefinition.getCopyMarkup2();
 					}
 					if (side2PricingMethod.equals(Price2Side.UsingSideFactor

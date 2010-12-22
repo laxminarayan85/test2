@@ -263,7 +263,10 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 						long qtyRange = pricingMatrix.getElements().get(i).getQty() - lastQty;
 						long lookupRange = job.getNumCopies() - lastQty;
 						double priceRange = (pricingMatrix.getElements().get(i).getPrice1().doubleValue() - lastPrice);
-						pricePerCopy = ((lookupRange * priceRange) / qtyRange) + lastPrice;
+						if (qtyRange > 0)
+							pricePerCopy = ((lookupRange * priceRange) / qtyRange) + lastPrice;
+						else
+							pricePerCopy = 0.0;
 					}
 				}
 
@@ -366,7 +369,10 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 								}
 							}
 						}
-						pricePerCopy = (runningTotal/job.getNumCopies());
+						if(job.getNumCopies() > 0)
+							pricePerCopy = (runningTotal/job.getNumCopies());
+						else
+							pricePerCopy = 0.0;
 						pricePerCopy *= pricingCopier.getCopyMarkup2();
 						wastePrice = ((job.getBinderyWaste() + job.getEstWaste()) * job.getSheets()) * pricePerCopy;
 						prevQty = 0;
@@ -417,7 +423,10 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 										}
 									}
 								}
-								pricePerCopy = (runningTotal/job.getNumCopies());
+								if (job.getNumCopies() > 0)
+									pricePerCopy = (runningTotal/job.getNumCopies());
+								else
+									pricePerCopy = 0.0;
 								pricePerCopy *= pricingCopier.getCopyMarkup2();
 							}
 							if (side2PricingMethod.equals(Price2Side.UsingSideFactor.name())) {
