@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Status')}"
-	creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}" width="450" height="275">
+	creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}" width="450" height="300">
 	
 	<mx:Style>
 		.boldstyle{
@@ -56,11 +56,11 @@
 				if(expandOrCollapseFlag){
 					expandOrCollapseFlag = false;
 					expandOrCollapseLabel = "+";
-					this.height = 275;
+					this.height = 300;
 				} else {
 					expandOrCollapseFlag = true;
 					expandOrCollapseLabel = "-";
-					this.height = 400;
+					this.height = 425;
 				}
 			}
 			
@@ -144,6 +144,11 @@
 	<mx:HBox width="100%" horizontalGap="1">
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rChargeLabel.ShipVia')}: " styleName="boldstyle"/>
 		<mx:Label text="{_invoiceBase.shippingMethod.name}"/>
+	</mx:HBox>
+	
+	<mx:HBox width="100%" horizontalGap="1">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.Ordered')}: " styleName="boldstyle"/>
+		<mx:Label text="{getFormattedDate(_invoiceBase.orderedDate)}"/>
 	</mx:HBox>
 	
 	<mx:HBox width="100%" horizontalGap="1">
