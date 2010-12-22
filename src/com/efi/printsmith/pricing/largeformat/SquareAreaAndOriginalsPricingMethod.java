@@ -30,7 +30,7 @@ public class SquareAreaAndOriginalsPricingMethod extends
 		double stockTotalPrice = 0.0;
 		double laborTotalPrice = 0.0;
 		try {
-			if (copierDefinition.getSquareAreaType() == "AreaFinishSize")
+			if (copierDefinition.getSquareAreaType().equals("AreaFinishSize"))
 				area = PriceListUtilities.getAreaFromSizeString(job
 						.getFinishSize());
 			else
@@ -41,6 +41,7 @@ public class SquareAreaAndOriginalsPricingMethod extends
 
 		}
 		Matrix pricingMatrix = copierDefinition.getCopierMatrix();
+		Collections.sort(pricingMatrix.getElements(), new MatrixElementComparator());
 		String side2PricingMethod = copierDefinition.getPriceTwoSide();
 		double unitPrice = 0.0;
 		int i = 0;
