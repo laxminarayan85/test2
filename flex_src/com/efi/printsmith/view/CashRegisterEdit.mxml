@@ -1029,24 +1029,11 @@
 				}
 			}
 			tapeBatch.sessionBatches.addItem(sessionBatch);
-		//	dataServiceTapeBatch.addUpdate(tapeBatch); mover
+		dataServiceTapeBatch.addUpdate(tapeBatch); 
 		}
 		if (chkPrintInvoice.selected == true) {
 						printList.addItem(tempPayment.invoice);
 					}	
-					
-		if (accountChanged == true) {
-				dataServiceAccount.addUpdate(customerAccount);
-		}	
-		if (arHistoryList != null && arHistoryList.length > 0) {
-				for(i = 0; i< arHistoryList.length; i++) {
-					arRecord = arHistoryList.getItemAt(i) as AccountHistoryData;
-					dataServiceARhistory.addUpdate(arRecord);
-				}
-		}else
-		{
-			dataServiceTapeBatch.addUpdate(tapeBatch);
-		}
 		if (sessionBatch.account != null) {
 				var amountForThisPosting2:Number = roundToCurrency(tempSale.subTotal - tempSale.taxAmount);
 								
@@ -1061,7 +1048,20 @@
 						sessionBatch.account.termsDiscount += amountForThisPosting2;
 						//	sessionBatch.account.lastPostingDate = new Date();		// TODO (wrong type right now)
 						accountChanged = true;
-			}
+			}			
+		if (accountChanged == true) {
+				dataServiceAccount.addUpdate(customerAccount);
+		}	
+	/* 	if (arHistoryList != null && arHistoryList.length > 0) {
+				for(i = 0; i< arHistoryList.length; i++) {
+					arRecord = arHistoryList.getItemAt(i) as AccountHistoryData;
+					dataServiceARhistory.addUpdate(arRecord);
+				}
+		}else
+		{
+			dataServiceTapeBatch.addUpdate(tapeBatch);
+		} */
+		
 	}
 	
 	private function handleSaveTapeBatchResult(ev:ResultEvent):void{

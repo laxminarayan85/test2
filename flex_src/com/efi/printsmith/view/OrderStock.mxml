@@ -420,7 +420,7 @@
 		OrderEnabled();
 	}
 	private function OrderEnabled():void{
-		if ((name_edit.text.length >0) && (order_quantity_edit.text.length > 0))
+		if ((name_edit.text.length >0) && (parseInt(order_quantity_edit.text) > 0) )
 			orderButton.enabled = true;
 		else
 			orderButton.enabled = false
