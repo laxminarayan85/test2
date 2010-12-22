@@ -48,6 +48,9 @@
 		<mx:method name="saveInvoice"
 				   fault="handleFault(event)"
 				   result="handleSaveResult(event)"/>
+		<mx:method name="getDeliveryTicketJobsByInvoice"
+				   fault="handleFault(event)"
+				   result="handleLoadDeliveryTicketJobsResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="invoiceService"
 					 destination="invoiceService" showBusyCursor="true">
@@ -112,6 +115,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.DeliveryTicketUpdateEvent;
+			import com.efi.printsmith.data.DeliveryTicketJobs;
 			import mx.formatters.DateFormatter;
 			import mx.rpc.mxml.Concurrency;
 			import com.efi.printsmith.data.ComLink;
@@ -259,6 +264,8 @@
 			private var onPendingList:Boolean= false;
 			private var newContact:Boolean = false;
 			private var tempContactId:Number = -1;
+			
+			[Bindable] private var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
 						
 			public function getSecurityCommand():String {
 				if ((invoice != null) && (invoice is Estimate))
@@ -315,6 +322,7 @@
 					
 					if (invoice.id > 0) {
 						dataService.getInvoice(invoice.id);
+						dataService.getDeliveryTicketJobsByInvoice(invoice.id);
 						if (editorType == EDITESTIMATE) {
 							this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')+": "+invoice.invoiceNumber;
 						} else {
@@ -613,6 +621,7 @@
 
 			private function handleLoadInvoice(event:ResultEvent):void {
 				this.invoice = event.result as InvoiceBase;
+				dataService
 				if ( invoice.account != null)
 					UpdateCustomerStatus();
 			}
@@ -1533,11 +1542,20 @@
 			}
 			
 			private function doDoubleclickTicketItem():void	{
-				
-			}
-			
-			private function isTicketGridVisible():Boolean	{
-				return true;
+				if(ticket_grid.selectedIndex>-1 && ticket_grid.selectedItem!=null){
+					var selectedDeliveryTicketJob:DeliveryTicketJobs = ticket_grid.selectedItem as DeliveryTicketJobs;
+					var child:DeliveryTicketEdit = new DeliveryTicketEdit();
+					child.setDeliveryTicket(selectedDeliveryTicketJob.parentDeliveryTicket);
+					child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDeliveryTicketJobsList,false,0,true);
+					var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+					if (win == null) {
+						Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
+					}
+					else {
+						win.closeWindow();
+						Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
+					}
+				}
 			}
 			
 			private function getOrderedTime(dateObj:Date):String {
@@ -1574,6 +1592,18 @@
 					return dateFormatter.format(dateObj);
 				}
 				return "";
+			}
+			
+			private function handleLoadDeliveryTicketJobsResult(event:ResultEvent):void {
+				deliveryTicketJobsList = event.result as ArrayCollection;
+			}
+			
+			private function updateDeliveryTicketJobsList(event:DeliveryTicketUpdateEvent):void {
+				if(event.ticketSaved) {
+					if(invoice!=null && invoice.id>0){
+						dataService.getDeliveryTicketJobsByInvoice(invoice.id);
+					}
+				}
 			}
 		]]>
 
@@ -1856,27 +1886,24 @@
 				<mx:DataGrid height="30%"
 							 width="100%" 
 							 id="ticket_grid"
-							 dataProvider="{getJobList(invoice.jobs)}"
+							 dataProvider="{deliveryTicketJobsList}"
 							 sortableColumns="false"
-							 doubleClick="doDoubleclickTicketItem()"
+							 doubleClick="{doDoubleclickTicketItem()}"
 						  	 doubleClickEnabled="true"
-						  	 visible="{isTicketGridVisible()}"
-						  	 >
+						  	 visible="{deliveryTicketJobsList!=null &amp;&amp; deliveryTicketJobsList.length>0}">
 					<mx:columns>
-						<mx:DataGridColumn>
+						<mx:DataGridColumn dataField="jobNumber"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Shipped')}"
+							dataField="qtyShipped"/>	
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
+							dataField="description"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Ticket')}">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Label text="{outerDocument.getJobIndex(data)}" textAlign="center" fontWeight="bold"/>
+									<mx:Label text="{data.parentDeliveryTicket.ticketNumber}"/>
 								</mx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Shipped')}">
-							
-						</mx:DataGridColumn>	
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
-										   />
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Ticket')}"
-										   />
 
 					</mx:columns>
 				</mx:DataGrid>

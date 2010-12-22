@@ -5514,6 +5514,12 @@ public class DataService extends HibernateService {
 		
 	}
 	
+	/**
+	 * 
+	 * @param archive
+	 * @return
+	 * @throws Exception
+	 */
 	public List<DeliveryTicketJobs> getDeliveryTicketJobs(boolean archive) throws Exception {
 		log.debug("** getDeliveryTicketJobs called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -5586,6 +5592,29 @@ public class DataService extends HibernateService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param invoiceId
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DeliveryTicketJobs> getDeliveryTicketJobsByInvoice(Long invoiceId) throws Exception {
+		log.debug("** getDeliveryTicketJobsByInvoice called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		List<DeliveryTicketJobs> ticketJobsList = new ArrayList<DeliveryTicketJobs>();
+		try {
+			String queryString = "select job from DeliveryTicketJobs as job inner join job.parentDeliveryTicket as ticket where job.invoiceId="+invoiceId+" order by job.jobNumber,ticket.ticketNumber asc";
+			Query query = em.createQuery(queryString);
+			ticketJobsList = query.getResultList();
+		} catch (Exception e) {
+			log.error(e); 			
+			throw e; 
+		} finally {
+			em.close();
+		}
+		return ticketJobsList;
+	}
+	
 	
 	/**
 	 * 
@@ -5631,7 +5660,11 @@ public class DataService extends HibernateService {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Broker> getBrokers() throws Exception {
 		log.debug("** getBrokers called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
