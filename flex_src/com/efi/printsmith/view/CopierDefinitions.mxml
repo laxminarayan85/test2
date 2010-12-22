@@ -1463,7 +1463,7 @@
 		<mx:TextInput x="126" y="261" id="OEMDeviceID" width="164" text="{copierDefinition.oemDeviceID}" height="25"/>
 		<mx:Label x="346" y="126" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.ID')}" width="89" textAlign="right"/>
 		<mx:TextInput x="443" y="124" width="83" id="copyID" focusOut="checkMachineId()" text="{copierDefinition.copyID}" editable="true" height="20"/>
-		<mx:CheckBox x="346" y="151" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CostingCopier')}" id="CostingCopier" selected="{copierDefinition.costingCopy}"/>
+		<mx:CheckBox x="346" y="151" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CostingCopier')}" id="CostingCopier" selected="{copierDefinition.costingCopy}" enabled="{productionCopiers.selectedIndex &gt; -1}"/>
 		<mx:CheckBox x="348" y="234" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.IntegratedDevice')}" id="IntegratedDevice" selected="{copierDefinition.integratedDevice}"/>
 		<mx:HRule y="304" height="13" left="0" right="10"/>
 		<mx:Label x="9" y="413" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.MaximumSize')}" id="label2" width="141" textAlign="right"/>
