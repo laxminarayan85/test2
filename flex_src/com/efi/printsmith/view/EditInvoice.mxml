@@ -655,6 +655,7 @@
 			
 			private function handleEstimateLoadResult(event:ResultEvent):void {
 				var estimateObj:InvoiceBase = event.result as InvoiceBase;
+				estimateObj.status = "Won";
 				estimateObj.onPendingList = false;
 				estimateObj.offPendingDate = new Date();
 				estimateObj.convertedInvoiceNo = this.invoice.invoiceNumber;

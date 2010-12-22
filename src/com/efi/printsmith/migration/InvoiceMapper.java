@@ -246,6 +246,9 @@ public class InvoiceMapper extends ImportMapper {
 				invoice.setReadyToPickup(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("pends".equals(currentFieldToken)) {
 				invoice.setOnPendingList(Utilities.tokenToBooleanValue(currentImportToken));
+				if(!invoice.getOnPendingList()) {
+					invoice.setStatus("Lost");
+				}
 			} else if ("locked".equals(currentFieldToken)) {
 				invoice.setLocked(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("printed invoice".equals(currentFieldToken)) {
