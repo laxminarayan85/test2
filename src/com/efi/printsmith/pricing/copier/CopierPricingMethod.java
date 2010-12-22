@@ -93,7 +93,7 @@ public abstract class CopierPricingMethod {
 		calculateEstWaste(job);
 		calculateBinderyWaste(job);
 		long wasteSheets = job.getBinderyWaste() + job.getEstWaste();
-		wasteSheets *= job.getSheets();
+		//wasteSheets *= job.getSheets();
 		double dup = new Double(iup);
 		double don = new Double(ion);
 		double dondup = dup / don;
