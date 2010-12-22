@@ -339,7 +339,7 @@ public class SquareAreaAndCopiesPricingMethod extends
 						case (2):
 							unitPrice = element.getPrice3().doubleValue();
 							break;
-						case (3):
+						case (3): 
 							unitPrice = element.getPrice4().doubleValue();
 							break;
 						case (4):
