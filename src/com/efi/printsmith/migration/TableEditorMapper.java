@@ -157,12 +157,6 @@ public class TableEditorMapper extends ImportMapper {
 									modelBase = new TaxCodes();
 								else if (title.equals("Tax Tables"))
 									modelBase = new TaxTable();
-									TaxTable taxTable = (TaxTable)dataService.getByName("TaxTable", title);
-									if (taxTable == null) {
-										taxTable = new TaxTable();
-										taxTable.setName(title);
-										dataService.addUpdate(taxTable);
-									}
 								else if (title.equals("Type of Work"))
 									modelBase = new TypeofWork();
 								else if (title.equals("Vendor"))
@@ -172,13 +166,22 @@ public class TableEditorMapper extends ImportMapper {
 								else if (title.equals("Zip"))
 									modelBase = new Zip();
 								recordNumber++;
-								if (firstRec)
+								if (firstRec && title.equals("Tax Tables") == false)
 									deleteAll(modelBase);
 								modelBase.setOrderby(recordNumber);
 								modelBase.setPrevId(recordNodes.item(z).getTextContent());
 								modelBase.setDisplayId(Utilities.tokenToLong(recordNodes.item(z).getTextContent()));
 								firstRec = false;
 							} else if (nameNode.getNodeValue().equals("name")) {
+								if (title.equals("Tax Tables")) {
+									TaxTable taxTable = (TaxTable)dataService.getByName("TaxTable", recordNodes.item(z).getTextContent());
+									if (taxTable == null) {
+										taxTable = new TaxTable();
+										taxTable.setName(recordNodes.item(z).getTextContent());
+										modelBase = dataService.addUpdate(taxTable);
+									} else
+										modelBase = taxTable;
+								}
 								modelBase = setName(modelBase,recordNodes.item(z).getTextContent());
 							} else if (nameNode.getNodeValue().equals("key")) {
 								modelBase = setKey(modelBase,recordNodes.item(z).getTextContent());
@@ -186,13 +189,14 @@ public class TableEditorMapper extends ImportMapper {
 								if (title.equals("Tax Tables")) {
 									Node disabledNode = null;
 									try {
-										nameNode = fieldAttributes.getNamedItem("disabled");
+										disabledNode = fieldAttributes.getNamedItem("disabled");
 									} catch (Exception e) {
 										disabledNode = null;
 									}
 									
 									if (disabledNode != null)
 										((TaxTable) modelBase).setDisableTable(Utilities.tokenToBooleanValue(disabledNode.getNodeValue()));
+									dataService.addUpdate(modelBase);
 								}
 							}
 						}
