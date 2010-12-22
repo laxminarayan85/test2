@@ -283,13 +283,16 @@ public class CopiesPlusOriginalsPricingMethod extends CopierPricingMethod {
 							if (pricingCopier.getPriceTwoSide().equals(Price2Side.NotChangingPrice.name())) {
 								stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
 								laborTotalPrice = (pricePerCopy * (job.getTotalCopies() / 2));
-							} else
+							} else {
 								stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
 								laborTotalPrice = (pricePerCopy * job.getTotalCopies());
-						} else {
+							}
+						}
+						else {
 							stockTotalPrice = ((stockPrice*job.getTotalCopies()/runout));
 							laborTotalPrice = (pricePerCopy * job.getTotalCopies());			
 						}
+						
 					} else if (pricingCopier.getMatrixType().equals("DiscountTable")) {
 						double discountPct = unitPrice;
 						
