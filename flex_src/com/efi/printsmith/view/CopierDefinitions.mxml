@@ -378,6 +378,11 @@
 	 		this.openhours.text = "24";
 	 	}
 	 	
+	 	if (daysOpen > 365) {
+	 		daysOpen = 365;
+	 		this.openDays.text = "365";
+	 	}
+	 	
 		if (copyMinutes > 0) {
 			tempmachineCost = (daysOpen * hoursOpen * tempPercent * 60 * copyMinutes) / 12.0;
 			if (tempmachineCost != 0.0) {
