@@ -29,6 +29,7 @@
 </mx:RemoteObject>
 <mx:RemoteObject id="matrixEditorDataService" destination="dataService">
 	<mx:method name="getMatrix" fault="handleFault(event)" result="handleMatrixEditorResult(event)"/>
+	<mx:method name="addUpdate" fault="handleFault(event)" result="handleMatrixSaveResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="saveMatrixDataService" destination="dataService">
 	<mx:method name="getMatrix" fault="handleFault(event)" result="handleSaveMatrixResult(event)"/>
@@ -1405,6 +1406,11 @@
 	}
 	
 	public function onDontSave():void {
+		var matrix:com.efi.printsmith.data.Matrix = this.originalCopierDefinition.copierMatrix;
+		matrixEditorDataService.addUpdate(matrix);
+	}
+	
+	public function handleMatrixSaveResult(ev:ResultEvent):void {
 		
 	}
 	
