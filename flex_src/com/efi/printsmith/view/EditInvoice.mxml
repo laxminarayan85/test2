@@ -1892,7 +1892,7 @@
 						  	 doubleClickEnabled="true"
 						  	 visible="{deliveryTicketJobsList!=null &amp;&amp; deliveryTicketJobsList.length>0}">
 					<mx:columns>
-						<mx:DataGridColumn dataField="jobNumber"/>
+						<mx:DataGridColumn headerText="" dataField="jobNumber"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Shipped')}"
 							dataField="qtyShipped"/>	
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
