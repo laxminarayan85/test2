@@ -31,7 +31,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadPriceList(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="chargeService" destination="dataService" showBusyCursor="true">
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCharge(event)"/>
+	<mx:method name="getAllOrderBy" fault="handleFault(event)" result="handleLoadCharge(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="locationService" destination="dataService" showBusyCursor="true">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadLocation(event)"/>
@@ -167,7 +167,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 		pressService.getAll("ProductionPress");
 		copierService.getAll("ProductionCopiers");
 		priceListService.getAll("PreferencesPricingMethod");
-		chargeService.getAll("ChargeCommand");
+		chargeService.getAllOrderBy("ChargeCommand","created");
 		locationService.getAll("ProductionLocations");
 
 		var eventPersonal:EmployeeEmployeesPersonalPanelEvent = new EmployeeEmployeesPersonalPanelEvent(canvasPersonal, new mx.rpc.Responder(handleUIPanelEvent, handleUIPanelFault));
