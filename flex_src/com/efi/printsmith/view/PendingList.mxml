@@ -639,7 +639,7 @@
 					return;
 				}
 				var cashRegister:CashRegisterEdit = new CashRegisterEdit();
-				var child:TitleWindow = cashRegister as TitleWindow;
+				var child:Panel = cashRegister as Panel;
 				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
 				if (win == null) {
 					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
