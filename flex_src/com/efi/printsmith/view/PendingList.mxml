@@ -692,16 +692,18 @@
 	}
 	public function handleUIDeliverEvent(evt:ResultEvent):void {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
-			var child:DeliveryTicketEdit = new DeliveryTicketEdit();
-			child.setInvoice(dgView.selectedItem as InvoiceBase);
-			child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
-			var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
-			if (win == null) {
-				Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
-			}
-			else {
-				win.closeWindow();
-				Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
+			if(dgView.selectedItem is Invoice) {
+				var child:DeliveryTicketEdit = new DeliveryTicketEdit();
+				child.setInvoice(dgView.selectedItem as InvoiceBase);
+				child.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
+				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+				if (win == null) {
+					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
+				}
+				else {
+					win.closeWindow();
+					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
+				}
 			}
 			
 			/* var deliveryTicketEdit:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, false));
@@ -1349,8 +1351,10 @@
 	private function doItemSelect(event:Event):void {
 		if(event.currentTarget.selectedIndex>-1 && event.currentTarget.selectedItem!=null){
 			if(event.currentTarget.selectedItem is Invoice){
+				deliver_btn.enabled = true;
 				pickup_archive_btn.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp');
 			} else if(event.currentTarget.selectedItem is Estimate){
+				deliver_btn.enabled = false;
 				pickup_archive_btn.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Archive');
 			}
 		}
@@ -1452,7 +1456,7 @@
 		</mx:HBox>	
 		<mx:HBox width="100%"  id="deliver_option">
 			<mx:RadioButton groupName="pendingOptions" value="{Constants.PENDING_DELIVER}" click="{savePendingOption()}" width="10%"/>
-			<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Deliver')}" width="90%"
+			<mx:Button id="deliver_btn" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Deliver')}" width="90%"
 				click="{handleUIDeliverEvent(null)}"/>
 		</mx:HBox>	
 		<mx:HBox width="100%"  id="schedule_option">

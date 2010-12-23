@@ -43,7 +43,14 @@
 			}
 			
 			private function handleLoadResult(event:ResultEvent):void {
-				pendingList = event.result as ArrayCollection;
+				var list:ArrayCollection = event.result as ArrayCollection;
+				var tempList:ArrayCollection = new ArrayCollection();
+				for each(var invoiceBase:InvoiceBase in list) {
+					if(invoiceBase is Invoice) {
+						tempList.addItem(invoiceBase);
+					}
+				}
+				pendingList = tempList;
 			}
 			
 			public function getAccountLabel(item:Object, column:DataGridColumn):String{
