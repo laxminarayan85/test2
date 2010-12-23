@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.efi.printsmith.common.components.*">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.efi.printsmith.common.components.*" xmlns:preferences="com.efi.printsmith.components.preferences.*">
 
 	<mx:Script source="../../common/scripts/ComponentHelper.as"/>
 
 	<mx:Script>
 		<![CDATA[
+			import mx.utils.StringUtil;
 			import mx.collections.ArrayCollection;
 			import com.efi.printsmith.data.PreferencesStocks;
 			[Bindable] public var preferencesStocks:PreferencesStocks = new PreferencesStocks();
@@ -28,6 +29,51 @@
 				}
 				return textSampleStr;
 			}
+			
+			private function getWeightFillDataProvider():ArrayCollection {
+				var list:ArrayCollection = new ArrayCollection();
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_10012.01220SampleStockLine'),"^0","^1","^2"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_10012.210LinenSampleStock2'),"^0","^1","^2"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_10012.0gsm12100gsmSampleSt'),"^0","^1","^2"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_10012.012320SampleStockLin'),"^0","^1","^2","^3"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_10012.3210ChainofCustodyLi'),"^0","^1","^2","^3"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_10012.0gsm123100gsmSampleS'),"^0","^1","^2","^3"));
+				return list;
+			}
+			
+			private function getPointsFillDataProvider():ArrayCollection {
+				var list:ArrayCollection = new ArrayCollection();
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_309.0pt1220ptSampleStock'),"^0","^1","^2"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_309.0mil1220milSampleSto'),"^0","^1","^2"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_309.0thou1220thouSampleS'),"^0","^1","^2"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_309.0pt12320ptSampleStoc'),"^0","^1","^2","^3"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_309.0mil12320milSampleSt'),"^0","^1","^2","^3"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_309.0thou12320thouSample'),"^0","^1","^2","^3"));
+				return list;
+			}
+			
+			private function getMicronsFillDataProvider():ArrayCollection {
+				var list:ArrayCollection = new ArrayCollection();
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_336.0u1220uSampleStock'),"^0","^1","^2"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_336.0u12320uSampleStockC'),"^0","^1","^2","^3"));
+				return list;
+			}
+			
+			private function getPliesFillDataProvider():ArrayCollection {
+				var list:ArrayCollection = new ArrayCollection();
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_335.0ply1220plySampleSto'),"^0","^1","^2"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_335.0ply12320plySampleSt'),"^0","^1","^2","^3"));
+				return list;
+			}
+			
+			private function getMMFillDataProvider():ArrayCollection {
+				var list:ArrayCollection = new ArrayCollection();
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_338.0mm1220mmSampleStock'),"^0","^1","^2"));
+				list.addItem(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_338.0mm12320mmSampleStoc'),"^0","^1","^2","^3"));
+				return list;
+			}
+			
+			
 		]]>
 	</mx:Script>
 
@@ -115,33 +161,47 @@
 								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockweightnameandfi')}"
 									textAlign="right" />
 									
-								<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
-									dataHolder="{preferencesStocks}" variableName="weight" customText="{preferencesStocks.weight}" width="200" />
+								<mx:HBox width="100%">	
+									<components:CustomStringTextInputComponent id="weight_text" allowSpecialCharacters="true" 
+										dataHolder="{preferencesStocks}" variableName="weight" customText="{preferencesStocks.weight}" width="200" />
+									<preferences:StockSizeFillComponent dataProviderValue="{getWeightFillDataProvider()}" textInputComponent="{weight_text}"/>
+								</mx:HBox>
 									
 								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockpointsnameandfi')}"
 									textAlign="right" />
 									
-								<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
-									dataHolder="{preferencesStocks}" variableName="points" customText="{preferencesStocks.points}" width="200" />
+								<mx:HBox width="100%">
+									<components:CustomStringTextInputComponent id="points_text" allowSpecialCharacters="true" 
+										dataHolder="{preferencesStocks}" variableName="points" customText="{preferencesStocks.points}" width="200" />
+									<preferences:StockSizeFillComponent dataProviderValue="{getPointsFillDataProvider()}" textInputComponent="{points_text}"/>
+								</mx:HBox>
 									
 								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockmicronsnameandf')}"
 									textAlign="right" />
 								
-								<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
-									dataHolder="{preferencesStocks}" variableName="microns" customText="{preferencesStocks.microns}" width="200" />
+								<mx:HBox width="100%">
+									<components:CustomStringTextInputComponent id="microns_text" allowSpecialCharacters="true" 
+										dataHolder="{preferencesStocks}" variableName="microns" customText="{preferencesStocks.microns}" width="200" />
+									<preferences:StockSizeFillComponent dataProviderValue="{getMicronsFillDataProvider()}" textInputComponent="{microns_text}"/>
+								</mx:HBox>
 									
 								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockpliesnameandfin')}"
 									textAlign="right" />
 									
-								<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
-									dataHolder="{preferencesStocks}" variableName="plies" customText="{preferencesStocks.plies}" width="200" />
+								<mx:HBox width="100%">
+									<components:CustomStringTextInputComponent id="plies_text" allowSpecialCharacters="true" 
+										dataHolder="{preferencesStocks}" variableName="plies" customText="{preferencesStocks.plies}" width="200" />
+									<preferences:StockSizeFillComponent dataProviderValue="{getPliesFillDataProvider()}" textInputComponent="{plies_text}"/>
+								</mx:HBox>
 							
 								<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Stockmillimetersname')}"
 									textAlign="right" />
 									
-								<components:CustomStringTextInputComponent allowSpecialCharacters="true" 
-									dataHolder="{preferencesStocks}" variableName="millimeters" customText="{preferencesStocks.millimeters}" width="200" />
-									
+								<mx:HBox width="100%">
+									<components:CustomStringTextInputComponent id="mm_text" allowSpecialCharacters="true" 
+										dataHolder="{preferencesStocks}" variableName="millimeters" customText="{preferencesStocks.millimeters}" width="200" />
+									<preferences:StockSizeFillComponent dataProviderValue="{getMMFillDataProvider()}" textInputComponent="{mm_text}"/>
+								</mx:HBox>
 									
 									
 							</mx:VBox>

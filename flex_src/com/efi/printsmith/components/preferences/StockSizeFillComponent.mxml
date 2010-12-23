@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="{initComponent()}" width="100" horizontalScrollPolicy="off">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.TextInput;
+			import mx.collections.ArrayCollection;
+			[Bindable] public var dataProviderValue:ArrayCollection = new ArrayCollection();
+			
+			public var textInputComponent:TextInput;
+			
+			private function initComponent():void {
+				combo_box.selectedIndex = -1;
+			}
+			
+			private function setTextValue(event:Event):void {
+				if(event.currentTarget.selectedIndex!=-1 &&  event.currentTarget.selectedItem!=null){
+					textInputComponent.text = event.currentTarget.selectedItem as String;
+					textInputComponent.setFocus();
+					textInputComponent.setSelection(textInputComponent.selectionBeginIndex,textInputComponent.selectionEndIndex);
+				}
+			}
+			
+			private function openCombo():void {
+				combo_box.open();
+				combo_box.selectedIndex = -1;
+			}
+		]]>
+	</mx:Script>
+	<mx:Image source="@Embed(source='../../../../../assets/Question.png')" height="20" width="20" click="{openCombo()}"/>
+	<mx:ComboBox id="combo_box" dataProvider="{dataProviderValue}" height="20" visible="false" close="{setTextValue(event)}"/>
+</mx:Canvas>
