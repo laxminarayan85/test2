@@ -230,9 +230,9 @@
 	<mx:RemoteObject id="dataServiceAccount" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleAccountSaveResult(event)"/>
 	</mx:RemoteObject>
-	<mx:RemoteObject id="dataServiceARhistory" destination="dataService">
+<!--	<mx:RemoteObject id="dataServiceARhistory" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleARhistorySaveResult(event)"/>
-	</mx:RemoteObject>
+	</mx:RemoteObject>	-->
 	<mx:RemoteObject id="dataServiceTapeBatch" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTapeBatchResult(event)"/>
 		<mx:method name="getCurrentTapeBatch" fault="handleFault(event)" result="handleLoadCurrentTapeBatch(event)"/>
@@ -347,7 +347,7 @@
 	// used during POST to save cascading records
 	private var printList:ArrayCollection = new ArrayCollection();
 //	private var chargeLog:ArrayCollection = new ArrayCollection();	
-	private var arHistoryList:ArrayCollection = new ArrayCollection();	
+//	private var arHistoryList:ArrayCollection = new ArrayCollection();	
 	
 	
 [Bindable]
@@ -496,7 +496,7 @@
 	private function handleAccountSaveResult(ev:ResultEvent):void {
 		customerAccount = null;		// no longer needed after a POST
 	}
-	
+/*	
 	private function handleARhistorySaveResult(ev:ResultEvent):void {
 		var i:int;
 		var arRecord:AccountHistoryData;
@@ -523,7 +523,7 @@
 			dataService.addUpdate(tapeBatch);
 		}
 	}
-	
+	*/
 	private function handleLoadCashRegPreferencesResult(ev:ResultEvent):void{
 		systemCashPreferencesArray = ev.result as ArrayCollection;
 		
@@ -859,22 +859,20 @@
 						arRecord.salesRep = tempPayment.invoice.salesRep;
 						arRecord.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posRegisterCmd.Payment");
 						
-						arRecord.finalPay = tempPayment as TapePaymentRecord;
-						/* arRecord.finalPay.created = new Date();
-						arRecord.finalPay.paymentMethod = tempPayment.paymentMethod;
-						arRecord.finalPay.cct = tempPayment.cct;
-						arRecord.finalPay.refNumber = tempPayment.refNumber;
-						arRecord.finalPay.checkNumber = tempPayment.checkNumber;
-						arRecord.finalPay.total = -(tempPayment.total);			// show as negative in history
-						arRecord.finalPay.taxTable = tempPayment.taxTable;
-						arRecord.finalPay.taxCode = tempPayment.taxCode;
-						arRecord.finalPay.taxExempt = tempPayment.taxExempt; */
+					//	arRecord.finalPay = tempPayment as TapePaymentRecord;
+						arRecord.finalPayPaydate = new Date();
+						arRecord.finalPayPayMethod = tempPayment.paymentMethod;
+						arRecord.finalPayCCT = tempPayment.cct;
+						arRecord.finalPayRefNumber = tempPayment.refNumber;
+						arRecord.finalPayCheckNumber = tempPayment.checkNumber;
+						arRecord.finalPayTotal = -(tempPayment.total);			// show as negative in history
+						arRecord.taxDetail = tempPayment.taxTable;
 						arRecord.refundTotal = tempPayment.changeAmount;
 						arRecord.balance = tempPayment.amountBalance;
 						// TODO
 						//arRecord.storeNumber = 
 						
-						arHistoryList.addItem(arRecord);
+					//	arHistoryList.addItem(arRecord);
 						//dataService.addUpdate(arRecord);
 						
 						if (sessionBatch.account != null) {
@@ -947,35 +945,27 @@
 							arRecord.total = tempSale.invoice.amountDue;
 							arRecord.subTotalPosted = tempSale.invoice.grandTotal;
 							arRecord.balance = roundToCurrency(tempSale.total - tempSale.amountPaid);
-							/* if (tempSale.paymode != "") {	// some payment applied
+							 if (tempSale.paymode != "") {	// some payment applied
 								// still has outstanding balance
 								if (arRecord.balance > 0) {
 									// classic tracks partial pay in static way
-									arRecord.partialPay = new TapePaymentRecord();
-									arRecord.partialPay.paymentMethod = tempSale.paymode;
-									arRecord.partialPay.cct = tempSale.cct;
-									arRecord.partialPay.refNumber = tempSale.refNumber;
-									arRecord.partialPay.checkNumber = tempSale.checkNumber;
-									arRecord.partialPay.total = tempSale.amountPaid;
-									arRecord.partialPay.taxTable = tempSale.taxTable;
-									arRecord.partialPay.taxCode = tempSale.taxCode;
-									arRecord.partialPay.taxExempt = tempSale.taxExempt;
-									arRecord.partialPayCnt = 1;
+									arRecord.partialPayPayMethod = tempSale.paymode;
+									arRecord.partialPayCCT = tempSale.cct;
+									arRecord.partialPayRefNumber = tempSale.refNumber;
+									arRecord.partialPayCheckNumber = tempSale.checkNumber;
 									arRecord.partialPayTotal = tempSale.amountPaid;
+									arRecord.taxDetail = tempSale.taxTable;
+									arRecord.partialPayCnt = 1;
 								} 
 								// all paid for
 								else {
 									arRecord.finalPaymentDate = new Date();
-									arRecord.finalPay = new TapePaymentRecord();
-									arRecord.finalPay.paymentMethod = tempSale.paymode;
-									arRecord.finalPay.cct = tempSale.cct;
-									arRecord.finalPay.refNumber = tempSale.refNumber;
-									arRecord.finalPay.checkNumber = tempSale.checkNumber;
-									arRecord.finalPay.total = tempSale.amountPaid;
-									arRecord.finalPay.taxTable = tempSale.taxTable;
-									arRecord.finalPay.taxCode = tempSale.taxCode;
-									arRecord.finalPay.taxExempt = tempSale.taxExempt;
-									
+									arRecord.finalPayPayMethod = tempSale.paymode;
+									arRecord.finalPayCCT = tempSale.cct;
+									arRecord.finalPayRefNumber = tempSale.refNumber;
+									arRecord.finalPayCheckNumber = tempSale.checkNumber;
+									arRecord.finalPayTotal = tempSale.amountPaid;
+									arRecord.taxDetail = tempSale.taxTable;
 								}
 							} 
 							//
@@ -983,14 +973,13 @@
 							//
 							else if (arRecord.balance == 0) {
 								arRecord.finalPaymentDate = new Date();
-								arRecord.finalPay = new TapePaymentRecord();
-								arRecord.finalPay.paymentMethod = Constants.POS_CASH_REGISTER_PAYMODE_DEPOSIT;
-								arRecord.finalPay.checkNumber = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"depositCmd.Deposit");
-							} */
+								arRecord.finalPayPayMethod = Constants.POS_CASH_REGISTER_PAYMODE_DEPOSIT;
+								arRecord.finalPayCheckNumber = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"depositCmd.Deposit");
+							} 
 							
 							tempSale.accountHistoryData = arRecord;			// record AR history record into tape
 							
-							arHistoryList.addItem(arRecord);
+					//		arHistoryList.addItem(arRecord);
 							
 							if (sessionBatch.account != null) {
 								var amountForThisPosting:Number = roundToCurrency(tempSale.subTotal - tempSale.taxAmount);
@@ -1004,7 +993,7 @@
 								sessionBatch.account.salesMonth += amountForThisPosting;
 								sessionBatch.account.salesYear += amountForThisPosting;
 								sessionBatch.account.termsDiscount += amountForThisPosting;
-							//	sessionBatch.account.lastPostingDate = new Date();		// TODO (wrong type right now)
+						//		sessionBatch.account.lastPostingDate = new Date();		// TODO (wrong type right now)
 								accountChanged = true;
 							}
 						}
@@ -1451,7 +1440,11 @@
 			sessionBatch.accumChange = roundToCurrency((sessionBatch.accumTendered - sessionBatch.accumTotal)); 
 			
 			if (activePayment.paymentMethod==Constants.POS_CASH_REGISTER_PAYMODE_CHECK){
-				activePayment.checkNumber = check_num.text;
+				if (this.currentState = "invoiceCheck") {
+					activePayment.checkNumber = invoice_check.text;
+				} else {
+					activePayment.checkNumber = check_num.text;
+				}
 				
 				if (customerAccount != null) {
 					if (customerAccount.type == "cash_only" || customerAccount.type == "full_deposit") {
@@ -1462,8 +1455,13 @@
 				}
 			}
 			if (activePayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CREDITCARD){
-				activePayment.creditCard = card_type.selectedItem as PreferencesCreditCard;
-				activePayment.refNumber = card_ref.text;
+				if (this.currentState = "invoiceCheck") {
+					activePayment.creditCard = invoice_card_type.selectedItem as PreferencesCreditCard;
+					activePayment.refNumber = invoice_card.text;
+				} else {
+					activePayment.creditCard = card_type.selectedItem as PreferencesCreditCard;
+					activePayment.refNumber = card_ref.text;
+				}
 			}
 			if (activePayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CHARGE) {
 				activePayment.customerAccount = customerAccount;	
@@ -1763,6 +1761,7 @@
 		var totalApplied:Number = 0;
 		var refund:Number = 0;
 		var payAmount:Number = 0;
+		var totalPayAndCharge = 0;
 		var diff:Number = 0;
 		var tempSale:TapeSaleRecord;
 		var tempPayment:TapePaymentRecord = new TapePaymentRecord();
@@ -1972,21 +1971,21 @@
 		}
 
 		if (results == true) {
-			if ((totalTransactionPay + totalCharge) != totalApplied) {
+			totalPayAndCharge = roundToCurrency(totalTransactionPay + totalCharge);
+			
+			if (totalPayAndCharge != totalApplied) {
 				//msg_WARNINGThistransacti=WARNING: This transaction did not balance!r	Total Payments: ${0}r	Total Transactions: ${1}rPlease review the transaction and contact your PrintSmith support center and report it in detail. r	OK to post transaction?
 				//
 				// un-balanced amount of sales .vs. payments
 				//
-				if ((totalTransactionPay + totalCharge) != totalApplied) {
-					if (isPaidOut == true) {
-						// TODO - ask for description
-					} else {
-						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
-						message = StringUtil.substitute(message,numberFormatter.format((totalTransactionPay + totalCharge)),numberFormatter.format(totalApplied)); 
-						Alert.show(message, "Warning", 0, null, null, null, 4); 
-						if (Alert.NO)
-							results = false;
-					}
+				if (isPaidOut == true) {
+					// TODO - ask for description
+				} else {
+					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
+					message = StringUtil.substitute(message,numberFormatter.format((totalTransactionPay + totalCharge)),numberFormatter.format(totalApplied)); 
+					Alert.show(message, "Warning", 0, null, null, null, 4); 
+					if (Alert.NO)
+						results = false;
 				}
 			}
 		}
@@ -2145,7 +2144,7 @@
 			
 			printList.removeAll();
 //			chargeLog.removeAll();	
-			arHistoryList.removeAll();
+//			arHistoryList.removeAll();
 
 			//
 			// Write transactions out to current tape batch and post any invoices to history.
