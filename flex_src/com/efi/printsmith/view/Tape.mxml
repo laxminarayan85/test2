@@ -219,6 +219,10 @@
 				description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.Dept");
 				description = StringUtil.substitute(description,tempSale.cashRegisterDept.title, tempSale.description + " " + tempSale.quantity.toString() + "x"+ tempSale.unitPrice.toString()); 
 			} 
+			else if (tempSale.isPickup == true) {
+				description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.PickupInvoicelu");
+				description = StringUtil.substitute(description,tempSale.invoice.invoiceNumber, tempSale.description); 
+			}
 			//
 			// a quick estimate / not a department sale
 			//
