@@ -2809,7 +2809,7 @@
 					var jobTitle:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"jobCmd.EditJob"),invoiceNumber,0,pricingMethodTitle);
 					Snowmass.getInstance().containerManager.openNewMDIWindow(jobTitle,editJobWindow, -1,-1,-1,-1, windowID);
 					editJobWindow.setJob(multiQtyJobObject);
-					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveMultiQtyJob);
+					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveMultiQtyJob, false, 0, true);
 	    		}
 	    	}
 	    	
@@ -2860,7 +2860,7 @@
 					var jobTitle:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"jobCmd.EditJob"),invoiceNumber,selectedMultiQtyJob.jobIndex,pricingMethodTitle);
 					Snowmass.getInstance().containerManager.openNewMDIWindow(jobTitle,editJobWindow, -1,-1,-1,-1, windowID);
 					editJobWindow.setJob(selectedMultiQtyJob);
-					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, updateJob);
+					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, updateJob, false, 0, true);
 					multiQtyCombo.selectedItem = null;
 					multiQtyCombo.selectedIndex = -1;
 				}
