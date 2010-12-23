@@ -23,26 +23,26 @@
 					doubleClickEnabled="true" focusIn="gridGotFocus()" id="matrix_grid">
 				<mx:columns>
 				     <mx:DataGridColumn dataField="qty" headerText="" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price1" headerText="1 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price11" headerText="2 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price2" headerText="1 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price12" headerText="2 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price3" headerText="1 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price13" headerText="2 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price4" headerText="1 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price14" headerText="2 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price5" headerText="1 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price15" headerText="2 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price6" headerText="1 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price16" headerText="2 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price7" headerText="1 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price16" headerText="2 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price8" headerText="1 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price18" headerText="2 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price9" headerText="1 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price19" headerText="2 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price10" headerText="1 Sided" editable="true" sortable="false" width="50"/>
-				     <mx:DataGridColumn dataField="price20" headerText="2 Sided" editable="true" sortable="false" width="50"/>
+				     <mx:DataGridColumn dataField="price1" headerText="1 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price11" headerText="2 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price2" headerText="1 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price12" headerText="2 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price3" headerText="1 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price13" headerText="2 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price4" headerText="1 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price14" headerText="2 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price5" headerText="1 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price15" headerText="2 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price6" headerText="1 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price16" headerText="2 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price7" headerText="1 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price16" headerText="2 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price8" headerText="1 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price18" headerText="2 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price9" headerText="1 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price19" headerText="2 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price10" headerText="1 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price20" headerText="2 Sided" editable="true" sortable="false" width="50" textAlign="right"/>
 				</mx:columns>
 		<mx:Script source="../../common/scripts/StringUtils.as"/>
 		<mx:Script>
@@ -153,6 +153,5 @@
 			]]>
 		</mx:Script>
 		</mx:DataGrid>
-		<mx:HRule x="0" y="362" width="1200" height="3"/>
 	</mx:Canvas>
 

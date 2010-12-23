@@ -1306,7 +1306,7 @@
 											 fontSize="9"
 											 selected="{charge.finished}"/>
 								<mx:CheckBox
-											    label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
+											 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
 											 id="taxable_check"
 											 fontSize="9"
 											 selected="{charge.taxable}"/>

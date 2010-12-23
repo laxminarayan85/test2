@@ -11,10 +11,15 @@ import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.ProductionLocations;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Charge;
+import com.efi.printsmith.data.CuttingCharge;
+import com.efi.printsmith.data.InkCharge;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.data.PreferencesSequenceValues;
+import com.efi.printsmith.data.ShippingCharge;
+import com.efi.printsmith.data.SquareAreaCharge;
+import com.efi.printsmith.data.enums.ChargeMethod;
 
 public class ChargeMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(ChargeMapper.class);
@@ -25,12 +30,35 @@ public class ChargeMapper extends ImportMapper {
 		return null;
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
-		log.info("Entering ChargeDefinitionMapper->importTokens");
+		log.info("Entering ChargeMapper->importTokens");
 		Charge charge = new Charge();
 		DataService dataService = new DataService();
 		String documentNumber = "";
 		String documentType = "";
 		String jobNumber = "";
+		for (int i = 0; i < fieldTokens.length; i++) { 
+			String currentImportToken = importTokens[i];
+			String currentFieldToken = fieldTokens[i];
+
+			if ("charge ID".equals(currentFieldToken)) {
+				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
+
+				if (modelBase != null) {
+					long id = modelBase.getId();
+					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
+					if (chargeDefinition.getMethod().equals(ChargeMethod.Cut.toString())) {
+						charge = new CuttingCharge();
+					} else if (chargeDefinition.getMethod().equals(ChargeMethod.Ink.toString())) {
+						charge = new InkCharge();
+					} else if (chargeDefinition.getMethod().equals(ChargeMethod.Shipping.toString())) {
+						charge = new ShippingCharge();
+					} if (chargeDefinition.getMethod().equals(ChargeMethod.SquareArea.toString())) {
+						charge = new SquareAreaCharge();
+					}
+					charge.setChargeDefinition(chargeDefinition);
+				}	
+			}
+		}
 		for (int i = 0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
@@ -74,12 +102,6 @@ public class ChargeMapper extends ImportMapper {
 			} else if ("taxable".equals(currentFieldToken)) {
 				charge.setTaxable(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("charge ID".equals(currentFieldToken)) {
-				ModelBase modelBase = dataService.getByPrevId("ChargeDefinition",currentImportToken);
-				if (modelBase != null) {
-					long id = modelBase.getId();
-					ChargeDefinition chargeDefinition = (ChargeDefinition)dataService.getById("ChargeDefinition", id);
-					charge.setChargeDefinition(chargeDefinition);
-				}
 			} else if ("production location".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false) {
 					ProductionLocations location = (ProductionLocations)dataService.getByLocationName(currentImportToken);

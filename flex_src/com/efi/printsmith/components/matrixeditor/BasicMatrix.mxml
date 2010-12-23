@@ -8,10 +8,10 @@
 					editable="true" enabled="true" horizontalGridLines="true"
 					bottom="0" top="0" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
 					itemEditEnd="formatData(event);"
-					doubleClickEnabled="true" id="matrix_grid">
+					doubleClickEnabled="true" id="matrix_grid" textAlign="center">
 				<mx:columns>
-				     <mx:DataGridColumn dataField="qty" headerText="{header1}" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price1" headerText="{header2}" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="qty" headerText="{header1}" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price1" headerText="{header2}" editable="true" sortable="false" width="60" textAlign="right"/>
 				</mx:columns>
 		<mx:Script source="../../common/scripts/StringUtils.as"/>
 		<mx:Script>
@@ -46,5 +46,4 @@
 			]]>
 		</mx:Script>
 		</mx:DataGrid>
-		<mx:HRule x="0" y="284" width="222" height="3"/>
 	</mx:Canvas>

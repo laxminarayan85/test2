@@ -8,11 +8,11 @@
 					editable="true" enabled="true" horizontalGridLines="true"
 					top="50" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
 					itemEditEnd="formatData(event);"
-					doubleClickEnabled="true" height="100%" id="matrix_grid">
+					doubleClickEnabled="true" height="100%" id="matrix_grid" textAlign="center">
 				<mx:columns>
-				     <mx:DataGridColumn dataField="qty" headerText="{header1}" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price1" headerText="{header2}" editable="true" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price2" headerText="{header3}" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="qty" headerText="{header1}" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price1" headerText="{header2}" editable="true" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price2" headerText="{header3}" editable="true" sortable="false" width="60" textAlign="right"/>
 				</mx:columns>
 		<mx:Script source="../../common/scripts/StringUtils.as"/>
 		<mx:Script>
@@ -50,7 +50,6 @@
 			]]>
 		</mx:Script>
 		</mx:DataGrid>
-		<mx:HRule x="0" y="353" width="222" height="3"/>
 		<mx:Text x="10" y="6" text="Number&#xd;of&#xd; Copies" width="55" height="42" fontWeight="bold" textAlign="center"/>
 		<mx:Text x="73" y="32" text="Price per Side" width="139" height="17" fontWeight="bold" textAlign="center"/>
 	</mx:Canvas>

@@ -4,16 +4,16 @@
 		
 		<mx:Text x="0" y="23.35" text="Number of Copies" width="63" height="38.666668" textAlign="center" fontWeight="bold"/>
 		<mx:Text x="71" y="14" text="Number of Originals" width="593" height="21" textAlign="center" fontWeight="bold"/>
-		<mx:TextInput id="header1" x="63" y="43" width="62" height="20" text="{matrix.header1}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
-		<mx:TextInput id="header2" x="124" y="43" width="62" height="20" text="{matrix.header2}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
-		<mx:TextInput id="header3" x="185" y="43" width="62" height="20" text="{matrix.header3}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
-		<mx:TextInput id="header4" x="246" y="43" width="62" height="20" text="{matrix.header4}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
-		<mx:TextInput id="header5" x="307" y="43" width="62" height="20" text="{matrix.header5}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
-		<mx:TextInput id="header6" x="367" y="43" width="62" height="20" text="{matrix.header6}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
-		<mx:TextInput id="header7" x="428" y="43" width="62" height="20" text="{matrix.header7}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
-		<mx:TextInput id="header8" x="489" y="43" width="62" height="20" text="{matrix.header8}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
-		<mx:TextInput id="header9" x="549" y="43" width="62" height="20" text="{matrix.header9}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
-		<mx:TextInput id="header10" x="610" y="43" width="63" height="20" text="{matrix.header10}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header1" x="63" y="43" width="62" height="20" text="{matrix.header1}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header2" x="124" y="43" width="62" height="20" text="{matrix.header2}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header3" x="185" y="43" width="62" height="20" text="{matrix.header3}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header4" x="246" y="43" width="62" height="20" text="{matrix.header4}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"  textAlign="center"/>
+		<mx:TextInput id="header5" x="307" y="43" width="62" height="20" text="{matrix.header5}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header6" x="367" y="43" width="62" height="20" text="{matrix.header6}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header7" x="428" y="43" width="62" height="20" text="{matrix.header7}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header8" x="489" y="43" width="62" height="20" text="{matrix.header8}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header9" x="549" y="43" width="62" height="20" text="{matrix.header9}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header10" x="610" y="43" width="63" height="20" text="{matrix.header10}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
 		<mx:DataGrid 
 			width="674" dataProvider="{matrix.elements}" 
 					showHeaders="false" borderStyle="solid" borderThickness="3" x="0" 
@@ -22,17 +22,17 @@
 					itemEditEnd="formatData(event);"
 					doubleClickEnabled="true" focusIn="gridGotFocus()" id="matrix_grid">
 				<mx:columns>
-				     <mx:DataGridColumn dataField="qty" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price1" editable="true" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price2" editable="true" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price3" editable="true" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price4" editable="true" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price5" editable="true" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price6" editable="true" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price7" editable="true" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price8" editable="true" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price9" editable="true" sortable="false" width="60"/>
-				     <mx:DataGridColumn dataField="price10" editable="true" sortable="false" width="60"/>
+				     <mx:DataGridColumn dataField="qty" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price1" editable="true" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price2" editable="true" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price3" editable="true" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price4" editable="true" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price5" editable="true" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price6" editable="true" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price7" editable="true" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price8" editable="true" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price9" editable="true" sortable="false" width="60" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price10" editable="true" sortable="false" width="60" textAlign="right"/>
 				</mx:columns>
 		<mx:Script source="../../common/scripts/StringUtils.as"/>
 		<mx:Script>
@@ -143,5 +143,4 @@
 			]]>
 		</mx:Script>
 		</mx:DataGrid>
-		<mx:HRule x="0" y="342" width="674" height="3"/>
 	</mx:Canvas>

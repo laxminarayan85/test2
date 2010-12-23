@@ -58,6 +58,9 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 		
 		if (chargeDefinition.getUseOriginals()) {
 			originals = job.getSheets();
+			if (job.getInSetsOf() != 0) {
+				originals *= job.getInSetsOf();
+			}
 		} else if (chargeDefinition.getUseSignatures()) {
 			originals = job.getSignatures();
 		} else {
@@ -192,7 +195,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 			} else {
 				rateQty = calculateChargeSets(charge.getQuantity(), runs, originals, setCount);
 			}
-			rateQty *= cuts;
+			rateQty = rateQty==0?cuts:rateQty * cuts;
 			lookupQty = rateQty;
 			charge.setQuantity(rateQty);
 			

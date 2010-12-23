@@ -27,44 +27,41 @@ public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
 		ChargeDefinition chargeDefinition = charge.getChargeDefinition();
 		JobBase job = charge.getParentJob();
 		
-		if (chargeDefinition.getArea() == 0.0) {
-			price = new BigDecimal(0.0);
+		if (job == null) {
+			colors = 1;
 		} else {
-			if (job == null) {
-				colors = 1;
-			} else {
-				if (chargeDefinition.getUseColors()) {
-					colors = job.getFrontColors() + job.getBackColors();
-					if (colors < 1)
-						colors = 1;
-				} else {
+			if (chargeDefinition.getUseColors()) {
+				colors = job.getFrontColors() + job.getBackColors();
+				if (colors < 1)
 					colors = 1;
-				}
-				
-				if (job.getPaperCal() != null) {
-					if (chargeDefinition.getUseRunArea() || chargeDefinition.getInkCoverage() == "0") {
-						if (job.getRunSize() != null) {
-							area = (job.getRunSize().getWidth() * job.getRunSize().getHeight());
-						}
-					} else {
-						if (job.getFinishSize() != null) {
-							area = (job.getFinishSize().getWidth() * job.getFinishSize().getHeight());
-						}
+			} else {
+				colors = 1;
+			}
+			
+			if (job.getPaperCal() != null) {
+				if (chargeDefinition.getUseRunArea() || chargeDefinition.getInkCoverage() == "0") {
+					if (job.getRunSize() != null) {
+						area = (job.getRunSize().getWidth() * job.getRunSize().getHeight());
 					}
 				} else {
-					area = 1;
+					if (job.getFinishSize() != null) {
+						area = (job.getFinishSize().getWidth() * job.getFinishSize().getHeight());
+					}
 				}
-				
-				if (chargeDefinition.getUseSides()) {
-					sides = 0;
-					if (job.getFrontColors() > 0) sides++;
-					if (job.getBackColors() > 0) sides++;
-				} else {
-					sides = 1;
-				}
-				
-				if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets)) {
-					// TODO: Handle sets based on this printsmith snippet:
+			} else {
+				area = 1;
+			}
+			
+			if (chargeDefinition.getUseSides()) {
+				sides = 0;
+				if (job.getFrontColors() > 0) sides++;
+				if (job.getBackColors() > 0) sides++;
+			} else {
+				sides = 1;
+			}
+			
+			if (chargeDefinition.getQuantityType().equals(ChargeQtyType.Sets)) {
+				// TODO: Handle sets based on this printsmith snippet:
 //					//
 //					// use the sets as defined by the user, the sets in this case means sides
 //					//
@@ -77,59 +74,63 @@ public class ChargeSquareAreaPricingMethod extends ChargePricingMethod {
 //							q->groupQty = sides;
 //						}
 //			
-				}
-				
-				if (chargeDefinition.getUseOriginals()) {
-					originals = job.getSheets();
-				} else if (chargeDefinition.getUseSignatures()) {
-					originals = job.getSignatures();
-				} else {
-					originals = 1;
-				}
-				
-				if (chargeDefinition.getUseMultiplyUpCount() || chargeDefinition.getUseDivideByUpCount()) {
-					ups = charge.getUp(); 
-				} else {
-					ups = 1;
-				}
-				
-				if (chargeDefinition.getJobQty().equals(ChargeJobQuantity.Press)) {
-					qty = job.getPressQty();
-				} else if (chargeDefinition.getJobQty().equals(ChargeJobQuantity.None)) {
-					qty = 1;
-				} else {
-					qty = job.getQtyOrdered();
-				}
-				
-				if (charge.getOverrideQuantity()) {
-					qty = charge.getQuantity();
-				} else {
-					charge.setQuantity(qty);
-				}
-				
-				if (chargeDefinition.getUseMultiplyUpCount()) {
-					inches = area * ((qty * sides * colors * originals) * ups);
-				} else if (chargeDefinition.getUseDivideByUpCount()) {
-					inches = area * ((qty * sides * colors * originals) / ups);
-				} else {
-					inches = area * (qty * sides * colors * originals);
-				}
-				
-				if (inches == 0) {
-					inches = 1;
-				}
-				
-				totalArea = inches/chargeDefinition.getArea();
 			}
 			
-			if (charge.getOverrideMaterialQuantity()) {
-				totalArea = charge.getMaterialSets();
+			if (chargeDefinition.getUseOriginals()) {
+				originals = job.getSheets();
+			} else if (chargeDefinition.getUseSignatures()) {
+				originals = job.getSignatures();
 			} else {
-				charge.setMaterialSets(totalArea);
+				originals = 1;
 			}
-			((SquareAreaCharge)charge).setArea(totalArea);
-			price = charge.getRate().multiply(new BigDecimal(totalArea));
+			
+			if (chargeDefinition.getUseMultiplyUpCount() || chargeDefinition.getUseDivideByUpCount()) {
+				ups = charge.getUp(); 
+			} else {
+				ups = 1;
+			}
+			
+			if (chargeDefinition.getJobQty().equals(ChargeJobQuantity.Press)) {
+				qty = job.getPressQty();
+			} else if (chargeDefinition.getJobQty().equals(ChargeJobQuantity.None)) {
+				qty = 1;
+			} else {
+				qty = job.getQtyOrdered();
+			}
+			
+			if (charge.getOverrideQuantity()) {
+				qty = charge.getQuantity();
+			} else {
+				charge.setQuantity(qty);
+			}
+			
+			if (chargeDefinition.getUseMultiplyUpCount()) {
+				inches = area * ((qty * sides * colors * originals) * ups);
+			} else if (chargeDefinition.getUseDivideByUpCount()) {
+				inches = area * ((qty * sides * colors * originals) / ups);
+			} else {
+				inches = area * (qty * sides * colors * originals);
+			}
+			
+			if (inches == 0) {
+				inches = 1;
+			}
+			
+			if (chargeDefinition.getArea() != 0) {
+				totalArea = inches/chargeDefinition.getArea();
+			} else {
+				totalArea = inches;
+			}
 		}
+		
+		if (charge.getOverrideMaterialQuantity()) {
+			totalArea = charge.getMaterialSets();
+		} else {
+			charge.setMaterialSets(totalArea);
+		}
+		((SquareAreaCharge)charge).setArea(totalArea);
+		price = charge.getRate().multiply(new BigDecimal(totalArea));
+		
 		
 		if (chargeDefinition.getUseSetup()) {
 			price = price.add(chargeDefinition.getSetupPrice());
