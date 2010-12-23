@@ -38,6 +38,17 @@ package com.efi.printsmith.data
 		public var custPO:String = "";
 		public var salesRep:SalesRep;
 		public var orderNoDisplay:String = "";
+		public var partialPayPaydate:Date = new Date();
+		public var finalPayPaydate:Date = new Date();
+		public var partialPayCheckNumber:String = "";
+		public var finalPayCheckNumber:String = "";
+		public var partialPayRefNumber:String = "";
+		public var finalPayRefNumber:String = "";
+		public var partialPayCCT:CreditCardTransactions;
+		public var finalPayCCT:CreditCardTransactions;
+		public var partialPayPayMethod:String = "";
+		public var finalPayPayMethod:String = "";
+		public var finalPayTotal:Number = 0;
 	
 	}
 }

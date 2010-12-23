@@ -145,6 +145,51 @@ public class AccountHistoryData extends ModelBase {
   public static final String ORDERNODISPLAY = "OrderNoDisplay";
 
 	/**
+   * @generated
+   */
+  public static final String PARTIALPAYPAYDATE = "PartialPayPaydate";
+	/**
+   * @generated
+   */
+  public static final String FINALPAYPAYDATE = "FinalPayPaydate";
+	/**
+   * @generated
+   */
+  public static final String PARTIALPAYCHECKNUMBER = "PartialPayCheckNumber";
+	/**
+   * @generated
+   */
+  public static final String FINALPAYCHECKNUMBER = "FinalPayCheckNumber";
+	/**
+   * @generated
+   */
+  public static final String PARTIALPAYREFNUMBER = "PartialPayRefNumber";
+	/**
+   * @generated
+   */
+  public static final String FINALPAYREFNUMBER = "FinalPayRefNumber";
+	/**
+   * @generated
+   */
+  public static final String PARTIALPAYCCT = "PartialPayCCT";
+	/**
+   * @generated
+   */
+  public static final String FINALPAYCCT = "FinalPayCCT";
+	/**
+   * @generated
+   */
+  public static final String PARTIALPAYPAYMETHOD = "PartialPayPayMethod";
+	/**
+   * @generated
+   */
+  public static final String FINALPAYPAYMETHOD = "FinalPayPayMethod";
+	/**
+   * @generated
+   */
+  public static final String FINALPAYTOTAL = "FinalPayTotal";
+
+	/**
 	 * @generated
 	 */
 	public AccountHistoryData() {
@@ -786,6 +831,268 @@ public class AccountHistoryData extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date partialPayPaydate;
+
+	/**
+   * @generated
+ 	 */
+  public Date getPartialPayPaydate(){
+    return partialPayPaydate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialPayPaydate(Date newVal) {
+    this.partialPayPaydate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date finalPayPaydate;
+
+	/**
+   * @generated
+ 	 */
+  public Date getFinalPayPaydate(){
+    return finalPayPaydate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinalPayPaydate(Date newVal) {
+    this.finalPayPaydate = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String partialPayCheckNumber;
+
+	/**
+   * @generated
+ 	 */
+  public String getPartialPayCheckNumber(){
+    return partialPayCheckNumber; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialPayCheckNumber(String newVal) {
+    this.partialPayCheckNumber = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String finalPayCheckNumber;
+
+	/**
+   * @generated
+ 	 */
+  public String getFinalPayCheckNumber(){
+    return finalPayCheckNumber; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinalPayCheckNumber(String newVal) {
+    this.finalPayCheckNumber = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String partialPayRefNumber;
+
+	/**
+   * @generated
+ 	 */
+  public String getPartialPayRefNumber(){
+    return partialPayRefNumber; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialPayRefNumber(String newVal) {
+    this.partialPayRefNumber = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String finalPayRefNumber;
+
+	/**
+   * @generated
+ 	 */
+  public String getFinalPayRefNumber(){
+    return finalPayRefNumber; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinalPayRefNumber(String newVal) {
+    this.finalPayRefNumber = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private CreditCardTransactions partialPayCCT;
+
+	/**
+   * @generated
+ 	 */
+  public CreditCardTransactions getPartialPayCCT(){
+    return partialPayCCT; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialPayCCT(CreditCardTransactions newVal) {
+    this.partialPayCCT = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private CreditCardTransactions finalPayCCT;
+
+	/**
+   * @generated
+ 	 */
+  public CreditCardTransactions getFinalPayCCT(){
+    return finalPayCCT; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinalPayCCT(CreditCardTransactions newVal) {
+    this.finalPayCCT = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String partialPayPayMethod;
+
+	/**
+   * @generated
+ 	 */
+  public String getPartialPayPayMethod(){
+    return partialPayPayMethod; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setPartialPayPayMethod(String newVal) {
+    this.partialPayPayMethod = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String finalPayPayMethod;
+
+	/**
+   * @generated
+ 	 */
+  public String getFinalPayPayMethod(){
+    return finalPayPayMethod; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinalPayPayMethod(String newVal) {
+    this.finalPayPayMethod = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal finalPayTotal;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getFinalPayTotal(){
+    return finalPayTotal; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinalPayTotal(BigDecimal newVal) {
+    this.finalPayTotal = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setFinalPayTotal(double newVal) {
+    this.finalPayTotal = BigDecimal.valueOf(newVal);
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -815,6 +1122,17 @@ public class AccountHistoryData extends ModelBase {
     if (CUSTPO.equals(propertyName)) return getCustPO();
     if (SALESREP.equals(propertyName)) return getSalesRep();
     if (ORDERNODISPLAY.equals(propertyName)) return getOrderNoDisplay();
+    if (PARTIALPAYPAYDATE.equals(propertyName)) return getPartialPayPaydate();
+    if (FINALPAYPAYDATE.equals(propertyName)) return getFinalPayPaydate();
+    if (PARTIALPAYCHECKNUMBER.equals(propertyName)) return getPartialPayCheckNumber();
+    if (FINALPAYCHECKNUMBER.equals(propertyName)) return getFinalPayCheckNumber();
+    if (PARTIALPAYREFNUMBER.equals(propertyName)) return getPartialPayRefNumber();
+    if (FINALPAYREFNUMBER.equals(propertyName)) return getFinalPayRefNumber();
+    if (PARTIALPAYCCT.equals(propertyName)) return getPartialPayCCT();
+    if (FINALPAYCCT.equals(propertyName)) return getFinalPayCCT();
+    if (PARTIALPAYPAYMETHOD.equals(propertyName)) return getPartialPayPayMethod();
+    if (FINALPAYPAYMETHOD.equals(propertyName)) return getFinalPayPayMethod();
+    if (FINALPAYTOTAL.equals(propertyName)) return getFinalPayTotal();
     return super.getProperty(propertyName);
   }
 	
@@ -848,6 +1166,17 @@ public class AccountHistoryData extends ModelBase {
     if (CUSTPO.equals(propertyName)) setCustPO((String)newValue); else
     if (SALESREP.equals(propertyName)) setSalesRep((SalesRep)newValue); else
     if (ORDERNODISPLAY.equals(propertyName)) setOrderNoDisplay((String)newValue); else
+    if (PARTIALPAYPAYDATE.equals(propertyName)) setPartialPayPaydate((Date)newValue); else
+    if (FINALPAYPAYDATE.equals(propertyName)) setFinalPayPaydate((Date)newValue); else
+    if (PARTIALPAYCHECKNUMBER.equals(propertyName)) setPartialPayCheckNumber((String)newValue); else
+    if (FINALPAYCHECKNUMBER.equals(propertyName)) setFinalPayCheckNumber((String)newValue); else
+    if (PARTIALPAYREFNUMBER.equals(propertyName)) setPartialPayRefNumber((String)newValue); else
+    if (FINALPAYREFNUMBER.equals(propertyName)) setFinalPayRefNumber((String)newValue); else
+    if (PARTIALPAYCCT.equals(propertyName)) setPartialPayCCT((CreditCardTransactions)newValue); else
+    if (FINALPAYCCT.equals(propertyName)) setFinalPayCCT((CreditCardTransactions)newValue); else
+    if (PARTIALPAYPAYMETHOD.equals(propertyName)) setPartialPayPayMethod((String)newValue); else
+    if (FINALPAYPAYMETHOD.equals(propertyName)) setFinalPayPayMethod((String)newValue); else
+    if (FINALPAYTOTAL.equals(propertyName)) setFinalPayTotal((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -905,6 +1234,28 @@ public class AccountHistoryData extends ModelBase {
       return new Class<?>[] {SalesRep.class};		
     if (ORDERNODISPLAY.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (PARTIALPAYPAYDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (FINALPAYPAYDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (PARTIALPAYCHECKNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FINALPAYCHECKNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PARTIALPAYREFNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FINALPAYREFNUMBER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (PARTIALPAYCCT.equals(propertyName)) 
+      return new Class<?>[] {CreditCardTransactions.class};		
+    if (FINALPAYCCT.equals(propertyName)) 
+      return new Class<?>[] {CreditCardTransactions.class};		
+    if (PARTIALPAYPAYMETHOD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FINALPAYPAYMETHOD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (FINALPAYTOTAL.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -939,6 +1290,17 @@ public class AccountHistoryData extends ModelBase {
     if (CUSTPO.equals(propertyName)) return AccountHistoryData.class;
     if (SALESREP.equals(propertyName)) return AccountHistoryData.class;
     if (ORDERNODISPLAY.equals(propertyName)) return AccountHistoryData.class;
+    if (PARTIALPAYPAYDATE.equals(propertyName)) return AccountHistoryData.class;
+    if (FINALPAYPAYDATE.equals(propertyName)) return AccountHistoryData.class;
+    if (PARTIALPAYCHECKNUMBER.equals(propertyName)) return AccountHistoryData.class;
+    if (FINALPAYCHECKNUMBER.equals(propertyName)) return AccountHistoryData.class;
+    if (PARTIALPAYREFNUMBER.equals(propertyName)) return AccountHistoryData.class;
+    if (FINALPAYREFNUMBER.equals(propertyName)) return AccountHistoryData.class;
+    if (PARTIALPAYCCT.equals(propertyName)) return AccountHistoryData.class;
+    if (FINALPAYCCT.equals(propertyName)) return AccountHistoryData.class;
+    if (PARTIALPAYPAYMETHOD.equals(propertyName)) return AccountHistoryData.class;
+    if (FINALPAYPAYMETHOD.equals(propertyName)) return AccountHistoryData.class;
+    if (FINALPAYTOTAL.equals(propertyName)) return AccountHistoryData.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -997,6 +1359,28 @@ public class AccountHistoryData extends ModelBase {
     if (! SmartEquals(getSalesRep(), objT.getSalesRep()))
       return false;
     if (! SmartEquals(getOrderNoDisplay(), objT.getOrderNoDisplay()))
+      return false;
+    if (! SmartEquals(getPartialPayPaydate(), objT.getPartialPayPaydate()))
+      return false;
+    if (! SmartEquals(getFinalPayPaydate(), objT.getFinalPayPaydate()))
+      return false;
+    if (! SmartEquals(getPartialPayCheckNumber(), objT.getPartialPayCheckNumber()))
+      return false;
+    if (! SmartEquals(getFinalPayCheckNumber(), objT.getFinalPayCheckNumber()))
+      return false;
+    if (! SmartEquals(getPartialPayRefNumber(), objT.getPartialPayRefNumber()))
+      return false;
+    if (! SmartEquals(getFinalPayRefNumber(), objT.getFinalPayRefNumber()))
+      return false;
+    if (! SmartEquals(getPartialPayCCT(), objT.getPartialPayCCT()))
+      return false;
+    if (! SmartEquals(getFinalPayCCT(), objT.getFinalPayCCT()))
+      return false;
+    if (! SmartEquals(getPartialPayPayMethod(), objT.getPartialPayPayMethod()))
+      return false;
+    if (! SmartEquals(getFinalPayPayMethod(), objT.getFinalPayPayMethod()))
+      return false;
+    if (! SmartEquals(getFinalPayTotal(), objT.getFinalPayTotal()))
       return false;
     return true;
   }			
