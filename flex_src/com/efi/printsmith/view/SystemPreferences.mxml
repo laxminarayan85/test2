@@ -162,6 +162,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>-->
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.compare.ObjectCompareUtil;
 	import com.efi.printsmith.security.PSSecurityUtils;
 	import mx.utils.StringUtil;
 	import mx.events.FlexEvent;
@@ -2061,7 +2062,7 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.StocksandSizes"){
-			if(!compareObject(preferencesStocks,preferencesStocksOrigObj)){
+			if(ObjectCompareUtil.compare(preferencesStocks,preferencesStocksOrigObj)!=0){
 				isObjEqual = false;
 			}
 		}
