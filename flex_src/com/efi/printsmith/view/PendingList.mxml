@@ -72,6 +72,9 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 	
 	<mx:Script source="../security/PSSecurityInclude.as" />
+	
+	<mx:Script source="../common/scripts/CommonUtils.as"/>
+	
 <mx:Script> 
 <![CDATA[
 	import mx.utils.ObjectUtil;
@@ -163,6 +166,10 @@
     [Bindable] private var invoiceBaseArrayLength:int=0;
     
     [Bindable] private var colWidths:Object;
+    
+    private var timer:Timer;
+    
+	private var searchStr:String = "";
 
 
     [Bindable]
@@ -1348,12 +1355,22 @@
 		return "";
 	}
 	
-	private function doItemSelect(event:Event):void {
-		if(event.currentTarget.selectedIndex>-1 && event.currentTarget.selectedItem!=null){
-			if(event.currentTarget.selectedItem is Invoice){
+	private function doItemSelect(event:Event,item:Object=null):void {
+		if(event!=null){
+			if(event.currentTarget.selectedIndex>-1 && event.currentTarget.selectedItem!=null){
+				if(event.currentTarget.selectedItem is Invoice){
+					deliver_btn.enabled = true;
+					pickup_archive_btn.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp');
+				} else if(event.currentTarget.selectedItem is Estimate){
+					deliver_btn.enabled = false;
+					pickup_archive_btn.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Archive');
+				}
+			} 
+		}else if(item!=null){
+			if(item is Invoice){
 				deliver_btn.enabled = true;
 				pickup_archive_btn.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp');
-			} else if(event.currentTarget.selectedItem is Estimate){
+			} else if(item is Estimate){
 				deliver_btn.enabled = false;
 				pickup_archive_btn.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.Archive');
 			}
@@ -1376,8 +1393,23 @@
 	}
 	
 	private function keyDownEnterHandler(event:KeyboardEvent):void {
+		event.stopPropagation();
 		if(event.keyCode==Keyboard.ENTER){
 			doDoubleClick();
+		} else {
+			searchStr += numToChar(event.charCode);
+			
+			setFocusOnDataItem();
+			
+			/* if (timer)	{	
+				timer.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
+				timer.stop();
+			} */
+			if(timer==null || !timer.running){
+				timer = new Timer(1000,1);
+				timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
+				timer.start();
+			}
 		}
 	}
 	
@@ -1408,6 +1440,45 @@
 		colWidths[event.dataField] = (dgView.columns[event.columnIndex] as DataGridColumn).width;
 		UserClientPreferences.getInstance().setData(UserClientPreferences.PENDINGLIST_GRID_WIDTHS, colWidths);
 	}
+	
+	private function setFocusOnDataItem():void	{
+		var initialLoopValue:int=0;
+		var checkFlag:Boolean = false;
+		if(dgView.selectedIndex==-1){
+			initialLoopValue=0;
+		} else {
+			if(dgView.dataProvider.length>0){
+				if(dgView.selectedIndex+1>=dgView.dataProvider.length){
+					initialLoopValue = 0;
+				} else {
+					initialLoopValue = dgView.selectedIndex+1;
+				}
+			}
+		}
+		for (var i:int = initialLoopValue; i<(dgView.dataProvider as ArrayCollection).length; i++)	{
+			var objData:Object = (dgView.dataProvider as ArrayCollection).getItemAt(i);
+			
+			if (objData != null && objData.account != null && objData.account.title != null && objData.account.title != "") {
+				if(objData.account.title.toLowerCase().indexOf(searchStr.toLowerCase()) == 0){
+					checkFlag = true;
+					dgView.selectedIndex = i;
+					dgView.scrollToIndex(i);
+					doItemSelect(null,dgView.selectedItem);
+					break;
+				}
+			}
+			var tempValue:int = i;
+			if((tempValue+1)==dgView.dataProvider.length && initialLoopValue!=0) {
+				i=-1;
+				initialLoopValue=0;
+			}				
+		}	
+		 
+	}
+	
+	private function onTimerComplete(event:TimerEvent):void	{
+		searchStr = "";
+	} 
 	
 ]]>        
 </mx:Script>
