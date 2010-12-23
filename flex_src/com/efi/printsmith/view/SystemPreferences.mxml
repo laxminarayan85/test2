@@ -413,6 +413,8 @@
 	
 	[Bindable] public var numberCanvasTextInput:CustomStringTextInputComponent;
 	
+	[Bindable] public var currentCursorPosition:int=-1; 
+	
 	[Bindable] public var estimatorTypesArray:ArrayCollection = new ArrayCollection();
 	
 	[Bindable] public var taxTablesArray:ArrayCollection = new ArrayCollection();
@@ -2144,8 +2146,13 @@
 	
 	public function doSignSymbol(text:String):void{
 		if(numberCanvasTextInput){
-			var text:String = numberCanvasTextInput.text+text;
-			numberCanvasTextInput.dataHolder[numberCanvasTextInput.variableName] = text; 
+			if(currentCursorPosition==-1){
+				var text:String = numberCanvasTextInput.text+text;
+			} else {
+				var len:Number = numberCanvasTextInput.text.length;
+				var text:String = numberCanvasTextInput.text.substring(0,currentCursorPosition)+text+numberCanvasTextInput.text.substring(currentCursorPosition,len);
+			}
+			numberCanvasTextInput.dataHolder[numberCanvasTextInput.variableName] = text;
 			//numberCanvasTextInput.customText = text;
 		} 
 	}

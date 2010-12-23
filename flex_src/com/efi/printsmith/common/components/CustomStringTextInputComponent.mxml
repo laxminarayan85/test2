@@ -2,6 +2,8 @@
 <mx:TextInput xmlns:mx="http://www.adobe.com/2006/mxml"  creationComplete="initializeProperties()" focusIn="focusInEvent(event)" focusOut="focusOutEvent(event)" mouseOver="displayToolTip()">
 	<mx:Script>
 		<![CDATA[
+			import mx.core.IUITextField;
+			import mx.core.UITextField;
 			import mx.validators.Validator;
 			import mx.core.Application;
 			import mx.events.ValidationResultEvent;
@@ -27,6 +29,7 @@
        		[Bindable]public var showToolTip:Boolean = false;
        		[Bindable]public var allowSpecialCharacters:Boolean = false;
        		[Bindable]public var validatorClass:Validator;
+       		[Bindable] public var textFieldObj:IUITextField;
 			public var variableName:String;
 			public var pattern:RegExp = new RegExp("[/\#%()&?*!~{}]", "i"); 
 			
@@ -45,6 +48,7 @@
        		 */
        		  
             public function initializeProperties():void {
+            	this.textFieldObj = textField;
     		 	this.editable = editable;
            		stringValidator.minLength=minValue;
         		stringValidator.maxLength=maxValue;

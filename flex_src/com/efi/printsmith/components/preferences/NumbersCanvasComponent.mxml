@@ -4,12 +4,21 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.TextInput;
+			import mx.controls.Alert;
 			import com.efi.printsmith.data.PreferencesSystem;
 			
 			[Bindable] public var preferencesSystem:PreferencesSystem = new PreferencesSystem();
-			private var dollar:String = "$"; 
-			private var yen:String = "¥";
-			private var euro:String = "€";
+			private var dollar:String = "'$'"; 
+			private var yen:String = "'¥'";
+			private var euro:String = "'€'";
+			private var pound:String = "'£'"; 
+			private var space:String = "' '"; 
+			
+			private function getCursorPos(event:Event):void {
+				var textInput:CustomStringTextInputComponent = event.currentTarget as CustomStringTextInputComponent;
+				parentDocument.currentCursorPosition = textInput.textFieldObj.caretIndex;
+			}
 		]]>
 	</mx:Script>
 	
@@ -33,9 +42,9 @@
 						text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Integers')}"
 						textAlign="right" width="146" />
 						
-					<components:CustomStringTextInputComponent width="347" name="Integers" 
+					<components:CustomStringTextInputComponent id="integers_text" width="347" name="Integers" 
 						dataHolder="{preferencesSystem}" customText="{preferencesSystem.numbersIntegers}" variableName="numbersIntegers"
-						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}"/>
+						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}" focusOut="{getCursorPos(event)}"/>
 					
 				</mx:HBox>
 				
@@ -47,7 +56,7 @@
 						
 					<components:CustomStringTextInputComponent width="347" name="Percentages" 
 						dataHolder="{preferencesSystem}" customText="{preferencesSystem.numbersPercentages}" variableName="numbersPercentages"
-						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}"/>
+						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}" focusOut="{getCursorPos(event)}"/>
 					
 				</mx:HBox>
 					
@@ -59,7 +68,7 @@
 					
 					<components:CustomStringTextInputComponent width="347" name="Amount" 
 						dataHolder="{preferencesSystem}" customText="{preferencesSystem.numbersAmount}" variableName="numbersAmount"
-						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}"/>
+						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}" focusOut="{getCursorPos(event)}"/>
 					
 				</mx:HBox>
 					
@@ -71,7 +80,7 @@
 					
 					<components:CustomStringTextInputComponent width="347" name="Tax Rate" 
 						dataHolder="{preferencesSystem}" customText="{preferencesSystem.numbersTaxRate}" variableName="numbersTaxRate"
-						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}"/>
+						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}" focusOut="{getCursorPos(event)}"/>
 				
 				</mx:HBox>
 					
@@ -83,7 +92,7 @@
 						
 					<components:CustomStringTextInputComponent width="347" name="Rate" 
 						dataHolder="{preferencesSystem}" customText="{preferencesSystem.numbersRate}" variableName="numbersRate"
-						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}"/>
+						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}" focusOut="{getCursorPos(event)}"/>
 					
 				</mx:HBox>
 					
@@ -95,7 +104,7 @@
 						
 					<components:CustomStringTextInputComponent width="347" name="Factor" 
 						dataHolder="{preferencesSystem}" customText="{preferencesSystem.numbersFactor}" variableName="numbersFactor"
-						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}"/>
+						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}" focusOut="{getCursorPos(event)}"/>
 					
 				</mx:HBox>
 					
@@ -107,7 +116,7 @@
 						
 					<components:CustomStringTextInputComponent width="347" name="Invoice" 
 						dataHolder="{preferencesSystem}" customText="{preferencesSystem.numbersInvoice}" variableName="numbersInvoice"
-						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}"/>
+						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}" focusOut="{getCursorPos(event)}"/>
 					
 				</mx:HBox>
 					
@@ -119,7 +128,7 @@
 						
 					<components:CustomStringTextInputComponent width="347" name="Short Percent" 
 						dataHolder="{preferencesSystem}" customText="{preferencesSystem.numbersShortPercent}" variableName="numbersShortPercent"
-						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}"/>
+						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}" focusOut="{getCursorPos(event)}"/>
 					
 				</mx:HBox>
 					
@@ -131,7 +140,7 @@
 						
 					<components:CustomStringTextInputComponent width="75" name="Rounded Integers" 
 						dataHolder="{preferencesSystem}" customText="{preferencesSystem.numbersRoundto}" variableName="numbersRoundto"
-						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}"/>
+						allowSpecialCharacters="true" focusIn="{parentDocument.setDisplayText(event)}" focusOut="{getCursorPos(event)}"/>
 						
 					<mx:VBox width="100%">
 					
@@ -157,7 +166,7 @@
 						
 					<mx:Button x="130" y="328"
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Pound')}"
-						width="75" click="{parentDocument.doSignSymbol('#')}" />
+						width="75" click="{parentDocument.doSignSymbol(pound)}" />
 						
 					<mx:Button x="210" y="328"
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Yen')}"
@@ -169,7 +178,7 @@
 						
 					<mx:Button x="370" y="328"
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Space')}"
-						width="75" click="{parentDocument.doSignSymbol(' ')}" />
+						width="75" click="{parentDocument.doSignSymbol(space)}" />
 				
 				</mx:HBox>
 				
