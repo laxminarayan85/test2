@@ -1031,7 +1031,6 @@
 					}
 					
 					updatedJobList.addItem(tempJobBaseObj);
-					tempJobBaseObj
 				}
 				invoice.jobs = updatedJobList;
 				if (invoice.jobs != null && invoice.jobs.length > 0) {

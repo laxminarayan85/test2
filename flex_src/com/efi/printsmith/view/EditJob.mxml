@@ -806,6 +806,8 @@
 			
 			private static var thisInstance:EditJob = null;
 			
+			[Bindable] public var jobIndex:Number = -1;
+			
 			[Bindable] private var stockGroups:ArrayCollection = new ArrayCollection();  
 			private var costingCopierIsUsePress:Boolean = false;
 			private var currentSizeName:String = "";
@@ -1250,7 +1252,7 @@
 			private function doSave():void
 			{
 				mapToJobData();
-				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.multiQtyJobList);
+				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.invoiceMultiQtyJobList, this.jobIndex);
 				dispatchEvent(jobEditCompleteEvent);
 				var mdiWindow:MDIWindow = this.parent as MDIWindow;
 				mdiWindow.closeWindow();
@@ -1324,7 +1326,7 @@
 
 				setJob(template);
 
-				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.multiQtyJobList);
+				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.invoiceMultiQtyJobList, this.jobIndex);
 				dispatchEvent(jobEditCompleteEvent);
 				var mdiWindow:MDIWindow = this.parent as MDIWindow;
 				mdiWindow.closeWindow();
@@ -2815,10 +2817,11 @@
 	    	
 	    	private function saveMultiQtyJob(event:JobEditCompleteEvent):void
 			{
-				multiQtyJobList.addItem(event.job);
+				invoiceMultiQtyJobList.addItem(event.job);
+				//invoiceMultiQtyJobList = multiQtyJobList;
 			}
 			
-			private function getMultiQtyString(tempInvoiceMultiQtyJobList:ArrayCollection):String {
+			private function getMultiQtyString(tempInvoiceMultiQtyJobList:ArrayCollection,invoiceMultiQtyJobListLength:Number):String {
 				if(tempInvoiceMultiQtyJobList==null || tempInvoiceMultiQtyJobList.length==0) {
 					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobCmd.add');
 				}
@@ -2827,6 +2830,7 @@
 			
 			private function openMultiQtyCombo(tempInvoiceMultiQtyJobList:ArrayCollection):void {
 				if(tempInvoiceMultiQtyJobList!=null && tempInvoiceMultiQtyJobList.length>0) {
+					multiQtyCombo.selectedIndex=-1;
 					multiQtyCombo.open();
 				}
 			}
@@ -2859,6 +2863,7 @@
 					}
 					var jobTitle:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"jobCmd.EditJob"),invoiceNumber,selectedMultiQtyJob.jobIndex,pricingMethodTitle);
 					Snowmass.getInstance().containerManager.openNewMDIWindow(jobTitle,editJobWindow, -1,-1,-1,-1, windowID);
+					editJobWindow.jobIndex = multiQtyCombo.selectedIndex;
 					editJobWindow.setJob(selectedMultiQtyJob);
 					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, updateJob, false, 0, true);
 					multiQtyCombo.selectedItem = null;
@@ -2915,9 +2920,16 @@
 							tempJobBaseObj = ObjectUtil.copy(event.job) as JobBase;
 						}
 					} else {
-						if(tempJobBaseObj.jobIndex == event.job.jobIndex){
-							registerClassAlias("com.efi.printsmith.data.JobBase",JobBase);
-							tempJobBaseObj = ObjectUtil.copy(event.job) as JobBase;
+						if(event.jobIndex!=-1){
+							if(i==event.jobIndex) {
+								registerClassAlias("com.efi.printsmith.data.JobBase",JobBase);
+								tempJobBaseObj = ObjectUtil.copy(event.job) as JobBase;
+							}
+						} else {
+							if(tempJobBaseObj.jobIndex == event.job.jobIndex){
+								registerClassAlias("com.efi.printsmith.data.JobBase",JobBase);
+								tempJobBaseObj = ObjectUtil.copy(event.job) as JobBase;
+							}
 						}
 					}
 					updatedJobList.addItem(tempJobBaseObj);
@@ -3473,8 +3485,8 @@
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" textAlign="right" width="108" id="label42"
 									  visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}"/>
 							<mx:ComboBox id="multiQtyCombo" dataProvider="{invoiceMultiQtyJobList}" labelField="qtyOrdered"
-								x="496" y="26" visible="false" change="{openEditMultiQtyJobWindow()}"/>
-							<mx:Label id="multiQtyLabel" x="496" y="26" text="{getMultiQtyString(invoiceMultiQtyJobList)}"
+								x="496" y="26" visible="false" close="{openEditMultiQtyJobWindow()}"/>
+							<mx:Label id="multiQtyLabel" x="496" y="26" text="{getMultiQtyString(invoiceMultiQtyJobList,invoiceMultiQtyJobList.length)}"
 								visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}" click="{openMultiQtyCombo(invoiceMultiQtyJobList)}"/>
 							<mx:Button 
 								x="555" y="24" label="+" visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}" click="{addMultiQtyJob()}" id="button1"/>
