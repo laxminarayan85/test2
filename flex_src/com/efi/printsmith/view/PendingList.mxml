@@ -1172,13 +1172,13 @@
 		var sc1:FilterSearchBy = new FilterSearchBy(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'listerCmd.Name'), fp);
 		sc.addItem(sc1); 
 
-		fp = new FilterProperty(new FilterProperty(null, "firstName"), "contact");
+		/* fp = new FilterProperty(new FilterProperty(null, "firstName"), "contact");
 		sc1 = new FilterSearchBy("First Name", fp);
 		sc.addItem(sc1); 
 		
 		fp = new FilterProperty(new FilterProperty(null, "lastName"), "contact");
 		sc1 = new FilterSearchBy("Last Name", fp);
-		sc.addItem(sc1);
+		sc.addItem(sc1); */
 		
 		fp = new FilterProperty(null, "invoiceNumber");
 		sc1 = new FilterSearchBy("Doc Number", fp);
