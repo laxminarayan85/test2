@@ -22,6 +22,12 @@
 				}
 			}
 			
+			public function checkEnability(item:Object):Boolean {
+				if(item.name=="Shipping")
+					return false;
+				return true;
+			}
+			
 		]]>
 	</mx:Script>
 	
@@ -45,7 +51,19 @@
 					
 						<mx:DataGridColumn width="100"
 							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'otherPrefCmd.Name')}"
-							dataField="name" editable="true">
+							dataField="name">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{data.name}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+							<mx:itemEditor>
+								<mx:Component>
+									<components:CustomStringTextInputComponent
+										datagridControl="true" customText="{data.name}" variableName="name"
+										enabled="{outerDocument.checkEnability(data)}" disabledColor="#000000" allowSpecialCharacters="true"/>
+								</mx:Component>
+							</mx:itemEditor>
 						</mx:DataGridColumn>
 						
 						<mx:DataGridColumn
