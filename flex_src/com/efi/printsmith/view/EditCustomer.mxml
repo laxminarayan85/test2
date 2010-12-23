@@ -854,8 +854,12 @@
 	private function doSave():void {
 		if(account!=null){
 			mapToAccountData();
-			this.enabled = false;
-			dataService.addUpdate(account);
+			if(account.title==null || account.title==""){
+				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Cantfileanaccountift'));
+			} else {
+				this.enabled = false;
+				dataService.addUpdate(account);
+			}
 		} else {
 			doNewOperation();
 		}                                        		
