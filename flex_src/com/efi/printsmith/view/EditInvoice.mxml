@@ -73,6 +73,12 @@
 				   fault="handleFault(event)"
 				   result="handleLoadSalesReps(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="holdStateDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadHoldState(event)"/>
+	</mx:RemoteObject>
 
 	<mx:RemoteObject id="shippingMethodDataService"
 					 destination="dataService">
@@ -235,6 +241,9 @@
 			[Bindable]
 			private var salesReps:ArrayCollection=new ArrayCollection();
 			[Bindable]
+			private var holdStates:ArrayCollection=new ArrayCollection();
+
+			[Bindable]
 			private var accountcontacts:ArrayCollection=new ArrayCollection();
 			
 		    [Bindable] private var loadComponent:CommonLoadComponent;
@@ -367,6 +376,7 @@
 					
 				this.createInvoice.visible = false;		
 				salesRepDataService.getAll("SalesRep");
+				holdStateDataService.getAll("HoldState");
 				shippingMethodDataService.getAll("ShippingMethod");
 				dataService.getSingle("PreferencesEstimating");
 				invoiceRepositoryService.getItemList();
@@ -835,7 +845,7 @@
 				invoice.invoiceNumber=inv_number.text;
 				invoice.contact=contact_list.selectedItem as Contact;
 				invoice.customerPO=inv_po_number.text;
-				invoice.holdState=inv_hold_state.text as HoldState;
+				invoice.holdState=inv_hold_state.selectedItem as HoldState;
 				invoice.resaleId = inv_resale_number.text;
 				invoice.expenseCode = inv_expense_code.text;
 				invoice.firmWantedByDate = inv_firm_wanted.selected;
@@ -1147,55 +1157,62 @@
 				return -1;
 			}
 
-			private function doSaleRep():void
-			{
-				var sales:SalesRep;
-				var result:Boolean;
-
-				if (inv_sales_rep.typedText != null && inv_sales_rep.typedText != "" && inv_sales_rep.selectedIndex == -1)
-				{
-					var item:int=findItem(inv_sales_rep.typedText, salesReps);
-					if (item == -1)
-					{
-						sales=new SalesRep();
-						sales.name=inv_sales_rep.text;
-						salesRepDataService.addUpdate(sales);
-						invoice.salesRep=sales
-					}
-					else
-					{
-						inv_sales_rep.selectedItem=item;
-					}
-				}
-			}
-
-			private function doShipVia():void
-			{
-				var shipv:ShippingMethod;
-				var result:Boolean;
-
-				if (ship_via_combo.text != null && ship_via_combo.text != "" && ship_via_combo.selectedIndex == -1)
-				{
-					var item:int=findItem(ship_via_combo.text, shippingMethods);
-					if (item == -1)
-					{
-						shipv=new ShippingMethod();
-						shipv.name=ship_via_combo.text;
-						shippingMethodDataService.addUpdate(shipv);
-						invoice.shippingMethod=shipv;
-					}
-					else
-					{
-						ship_via_combo.selectedIndex=item;
-					}
-				}
-			}
+//			private function doSaleRep():void
+//			{
+//				var sales:SalesRep;
+//				var result:Boolean;
+//
+//				if (inv_sales_rep.typedText != null && inv_sales_rep.typedText != "" && inv_sales_rep.selectedIndex == -1)
+//				{
+//					var item:int=findItem(inv_sales_rep.typedText, salesReps);
+//					if (item == -1)
+//					{
+//						sales=new SalesRep();
+//						sales.name=inv_sales_rep.text;
+//						salesRepDataService.addUpdate(sales);
+//						invoice.salesRep=sales
+//					}
+//					else
+//					{
+//						inv_sales_rep.selectedItem=item;
+//					}
+//				}
+//			}
+//
+//			private function doShipVia():void
+//			{
+//				var shipv:ShippingMethod;
+//				var result:Boolean;
+//
+//				if (ship_via_combo.text != null && ship_via_combo.text != "" && ship_via_combo.selectedIndex == -1)
+//				{
+//					var item:int=findItem(ship_via_combo.text, shippingMethods);
+//					if (item == -1)
+//					{
+//						shipv=new ShippingMethod();
+//						shipv.name=ship_via_combo.text;
+//						shippingMethodDataService.addUpdate(shipv);
+//						invoice.shippingMethod=shipv;
+//					}
+//					else
+//					{
+//						ship_via_combo.selectedIndex=item;
+//					}
+//				}
+//			}
 
 			private function handleLoadSalesReps(ev:ResultEvent):void
 			{
 				salesReps=ev.result as ArrayCollection;
 				if (invoice != null && invoice.salesRep != null)
 					inv_sales_rep.selectedIndex=findItem(invoice.salesRep.name, salesReps);
+			}
+
+			private function handleLoadHoldState(ev:ResultEvent):void
+			{
+				holdStates=ev.result as ArrayCollection;
+				if (invoice != null && invoice.holdState != null)
+					inv_hold_state.selectedIndex=findItem(invoice.holdState.name, holdStates);
 			}
 
 			private function handleLoadShippingMethods(ev:ResultEvent):void
@@ -1733,6 +1750,11 @@
 				</mx:VBox>	
 					
 				<mx:VBox width="50%" height="100%">
+					<mx:HBox height="1%" width="100%">
+						<mx:Text id="txtPrefix" width="30%" textAlign="right"  text="pref" />
+						<mx:TextInput id="txtInvNum" text="" width="30%" />
+						<mx:Text id="txtSuffix" width="30%" textAlign="left" text="suff" />						
+					</mx:HBox>
 					<mx:Form height="1%" width="100%">	
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice')}" textAlign="right" id="invoice_number_edit">
 							<mx:Text id="inv_number"
@@ -1764,26 +1786,25 @@
 									  text="{invoice.takenBy}"/>
 						</mx:FormItem>
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.SalesRep')}" >
-							<fc:AutoComplete id="inv_sales_rep"
+							<common:EditableComboBox id="inv_sales_rep"
 										 dataProvider="{salesReps}"
 										 labelField="name"
-										 focusOut="doSaleRep();"
-										 lookAhead="true"
-										/>
+										 />
 						</mx:FormItem>
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipVia')}" >
 							
 							<common:EditableComboBox id="ship_via_combo"
 											 dataProvider="{shippingMethods}"
 											 labelField="name"
-											 focusOut="doShipVia()"
 											 
 											 />
 						</mx:FormItem>
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleJobEditCmd.Hold')}" >
-							<mx:TextInput 
+							<common:EditableComboBox 
 									  id="inv_hold_state"
-									  text="{invoice.holdState.name}"
+									  dataProvider="{holdStates}"
+											 labelField="name"
+											 
 									  />
 						</mx:FormItem>		
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.PO')}" >
