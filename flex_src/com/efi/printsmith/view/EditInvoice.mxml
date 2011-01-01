@@ -103,10 +103,12 @@
 					result="handleLoadInvoiceTemplates(event)"/>		
 	</mx:RemoteObject>
 	
-	<mx:RemoteObject id="contactDataService" destination="dataService" showBusyCursor="true">
-		<mx:method name="addUpdate" fault="handleFault(event)" result="saveContactResult(event)" />
+	<mx:RemoteObject id="newContactDataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="saveNewContactResult(event)" />
 	</mx:RemoteObject>
-	
+	<mx:RemoteObject id="tempContactDataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="saveTempContactResult(event)" />
+	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServiceEstimate" destination="dataService" showBusyCursor="true">
 		<mx:method name="getInvoice"
 					fault="handleFault(event)"
@@ -121,6 +123,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.PreferencesCashRegister;
+			import com.efi.printsmith.data.PreferencesAccounting;
 			import com.efi.printsmith.events.DeliveryTicketUpdateEvent;
 			import com.efi.printsmith.data.DeliveryTicketJobs;
 			import mx.formatters.DateFormatter;
@@ -269,14 +273,18 @@
 			public var convertedEstimatedId:int=0;
 			
 			private var preferencesEstimating:PreferencesEstimating;
+			private var preferencesAccounting:PreferencesAccounting;
 			
-			private var onPendingList:Boolean= false;
+			
 			private var newContact:Boolean = false;
 			private var tempContactId:Number = -1;
-			
+			private var contactNew:Contact = null;
+			private var contactTemp:Contact = null;
+						
 			[Bindable] private var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
 						
 			public function getSecurityCommand():String {
+				
 				if ((invoice != null) && (invoice is Estimate))
 					return PSSecurityCommands.INVOICE_CREATEESTIMATE;
 				else 
@@ -311,7 +319,6 @@
 					
 					
 				} else {
-					onPendingList = invoice.onPendingList;
 	
 					if (invoice is Estimate)
 						editorType= EDITESTIMATE
@@ -371,14 +378,13 @@
 					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisdocumentislocked'));
 				}
 				
-				if (invoice.contact != null && invoice.contact.tempFlag)
-					tempContactId = invoice.contact.id;
 					
 				this.createInvoice.visible = false;		
 				salesRepDataService.getAll("SalesRep");
 				holdStateDataService.getAll("HoldState");
 				shippingMethodDataService.getAll("ShippingMethod");
 				dataService.getSingle("PreferencesEstimating");
+				dataService.getSingle("PreferencesAccounting");
 				invoiceRepositoryService.getItemList();
 				var eventJobs:InvoiceJobsEvent = new InvoiceJobsEvent(toolbar.getButton("new_job_button0"),new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 				eventJobs.dispatch();
@@ -400,24 +406,22 @@
 			}
 			private function saveContactHandler(evt:SaveContactEvent):void	{
 				var c:Contact = null;
-				
+					
 				if (evt.contact.id != NaN)	{
 					var c:Contact = null;
-					
-					if (newContact)	{
+					// editing new contact should not create temp, only new
+					var currentContact = contact_list.selectedItem as Contact;	
+					// remove new / temp contacts that already exist.
+					if (newContact || (currentContact["newFlag"] == true))	{
 						newContact = false;
 						c = new Contact();
+						c["newFlag"] = true;
+						removeNewContactFromList();
 					}
 					else	{
-						var tempCon:Contact = findFirstItemByCondition(contact_list.dataProvider as ArrayCollection, "tempFlag", true) as Contact;
-						if (tempCon != null)	{
-							c = tempCon;
-						}
-						else	{
-							c = new Contact();
-							c.tempFlag = true;
-						}
-						
+						c = new Contact();
+						c.tempFlag = true;
+						removeTempContactFromList();
 					}
 					c.firstName = evt.contact.firstName;
 					c.lastName = evt.contact.lastName;
@@ -434,12 +438,32 @@
 					c.jobTitle = evt.contact.jobTitle;
 					c.salutation = evt.contact.salutation;
 					c.parentAccount = invoice.account;
-								
 				}
 				else	{
 					c = evt.contact;
 				}
-				contactDataService.addUpdate(c);
+				if (c.tempFlag)	{
+					contactTemp = c;
+				}
+				else	{
+					contactNew = c;
+				}
+
+				(contact_list.dataProvider as ArrayCollection).addItem(c);
+				contact_list.selectedItem = c;
+
+
+//				contactDataService.addUpdate(c);
+			}
+
+			private function findFirstIndexByCondition(ac:ArrayCollection, propName:String, propValue:Object):int	{
+				for (var i:int=0; i<ac.length; i++)	{
+					var obj:Object = ac.getItemAt(i);
+					if (obj[propName] == propValue)	{
+						return i;
+					}
+				}
+				return -1;
 			}
 			
 			private function findFirstItemByCondition(ac:ArrayCollection, propName:String, propValue:Object):Object	{
@@ -452,21 +476,17 @@
 				return null;
 			}
 			
-			private function saveContactResult(evt:ResultEvent):void	{
-				//var  tempContact:Contact = evt.result as Contact;
-				
-				var obj:Object = findFirstItemByCondition(contact_list.dataProvider as ArrayCollection, "id", (evt.result as Contact).id);
-				if (obj == null)	{
-					(contact_list.dataProvider as ArrayCollection).addItem(evt.result);
-					contact_list.selectedItem = evt.result;
+			private function saveNewContactResult(evt:ResultEvent):void	{
+				var currentContact:Contact = contact_list.selectedItem as Contact;
+				if (currentContact["newFlag"] == true)	{
+					invoice.contact = evt.result as Contact;
+					dataService.saveInvoice(invoice);
 				}
-				else	
-					contact_list.selectedItem = obj;				
-				
-				if ((contact_list.selectedItem as Contact).tempFlag)
-					tempContactId = (contact_list.selectedItem as Contact).id;
 			}
-			
+			private function saveTempContactResult(evt:ResultEvent):void	{
+				invoice.contact = evt.result as Contact;
+				dataService.saveInvoice(invoice);
+			}
 			private function createToolbarButtons():void	{
 				var ac:ArrayCollection = new ArrayCollection();
 				
@@ -642,13 +662,111 @@
 			}
 			
 			private function handleLoadSingleResult(event:ResultEvent):void {
-				preferencesEstimating = event.result as PreferencesEstimating;
-				if (preferencesEstimating.canChangeAddress)
-					bill_to_address_editor.enabled = true;
-				else
-					bill_to_address_editor.enabled = false;
+				if (event.result is PreferencesEstimating)	{
+					preferencesEstimating = event.result as PreferencesEstimating;
+					if (preferencesEstimating.canChangeAddress)
+						bill_to_address_editor.enabled = true;
+					else
+						bill_to_address_editor.enabled = false;
+				}
+				if (event.result is PreferencesAccounting)	{
+					preferencesAccounting = event.result as PreferencesAccounting;	
+//					invoicePrefix = preferencesAccounting.invoicePrefix;
+//					invoiceSuffix = preferencesAccounting.invoiceSuffix;
+//					estimatePrefix = preferencesAccounting.estimatePrefix;
+//					estimateSuffix = preferencesAccounting.estimateSuffix;
+//					allowInvoicePrefix = preferencesAccounting.invoiceAllowPrefixMod;
+//					allowInvoiceSuffix = preferencesAccounting.invoiceAllowSuffixMod;
+//					allowEstimatePrefix = preferencesAccounting.estimateAllowPrefixMod;
+//					allowEstimateSuffix = preferencesAccounting.estimateAllowSuffixMod;
+					txtPrefix.editable = getPrefixEditable();
+					txtPrefix.visible = getPrefixVisible();
+					txtPrefix.text = getPrefixText();
+					txtSuffix.editable = getSuffixEditable();
+					txtSuffix.visible = getSuffixVisible();
+					txtSuffix.text = getSuffixText();									
+				}
 			}
-
+			
+			private function getPrefixEditable():Boolean	{
+				if (preferencesAccounting != null)	{
+					if (invoice is Invoice)	{
+						return preferencesAccounting.invoiceAllowPrefixMod;
+					}
+					else	{
+						return preferencesAccounting.estimateAllowPrefixMod;
+					}
+				}
+				return false;
+			}
+			
+			private function getSuffixEditable():Boolean	{
+				if (preferencesAccounting != null)	{
+					if (invoice is Invoice)	{
+						return preferencesAccounting.invoiceAllowSuffixMod;
+					}
+					else	{
+						return preferencesAccounting.estimateAllowSuffixMod;
+					}
+				}
+				return false;
+			}
+			private function getSuffixVisible():Boolean	{
+				if (preferencesAccounting != null)	{
+					if (invoice is Invoice)	{
+						if (preferencesAccounting.invoiceSuffix == null && !preferencesAccounting.invoiceAllowSuffixMod)	{
+							return false;
+						}
+						return true;
+					}
+					else	{
+						if (preferencesAccounting.estimateSuffix == null && !preferencesAccounting.estimateAllowSuffixMod)	{
+							return false;
+						}
+						return true;
+					}
+				}
+				return false;
+			}
+			private function getPrefixVisible():Boolean	{
+				if (preferencesAccounting != null)	{
+					if (invoice is Invoice)	{
+						if (preferencesAccounting.invoicePrefix == null && !preferencesAccounting.invoiceAllowPrefixMod)	{
+							return false;
+						}
+						return true;
+					}
+					else	{
+						if (preferencesAccounting.estimatePrefix== null && !preferencesAccounting.estimateAllowPrefixMod)	{
+							return false;
+						}
+						return true;
+					}
+				}
+				return false;
+			}
+			private function getPrefixText():String{
+				if (preferencesAccounting != null)	{
+					if (invoice is Invoice)	{
+						return preferencesAccounting.invoicePrefix;
+					}
+					else	{
+						return preferencesAccounting.estimatePrefix;
+					}
+				}
+				return null;
+			}
+			private function getSuffixText():String{
+				if (preferencesAccounting != null)	{
+					if (invoice is Invoice)	{
+						return preferencesAccounting.invoiceSuffix;
+					}
+					else	{
+						return preferencesAccounting.estimateSuffix;
+					}
+				}
+				return null;
+			}
 			private function handleSaveResult(ev:ResultEvent):void
 			{
 				var convertedEstimate:Boolean = false;
@@ -865,10 +983,21 @@
 			public function doSave(ev:MouseEvent=null):void
 			{
 				mapToInvoiceData();
-				if (!((contact_list.selectedItem as Contact).tempFlag) && tempContactId != -1)	{
-					dataService.deleteItem("Contact", tempContactId);
-				}	
-				dataService.saveInvoice(invoice);
+				var doInvoiceLater:Boolean = false;
+				
+				if (contactTemp != null && (contact_list.selectedItem as Contact).tempFlag)	{
+					tempContactDataService.addUpdate(contactTemp);
+					doInvoiceLater = true;
+				}
+				
+				if (contactNew != null)	{
+					newContactDataService.addUpdate(contactNew);
+					doInvoiceLater = true;
+				}
+				
+				if (!doInvoiceLater)
+					dataService.saveInvoice(invoice);
+				
 			}
 
 			public function doGet():void
@@ -889,7 +1018,10 @@
 
 			private function onNewContact():void	{
 				newContact = true;
-				contact_editor.setContact(new Contact()); 
+				if (contactNew == null)
+					contactNew = new Contact();
+					
+				contact_editor.setContact(contactNew);
 				contact_editor.edit_contact_button.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 			}			
 
@@ -1237,7 +1369,7 @@
 				}
 				
 				accountcontacts =  ac;
-				
+				txtNumContacts.text = "(" + ac.length + ")";
 				contact_list.selectedIndex = findItemIndex(accountcontacts, contact);
 				contact_editor.setContact(contact);
 				contact_ship_address.dataProvider = contact.shipToAddress;
@@ -1409,10 +1541,54 @@
                 	navigateToURL(urlRequest, "_blank");
 				}
 			}
+			
+			private function removeNewContactFromList():void	{
+				if (contactNew != null)	{
+					contactNew = null;
+					var i:int = findFirstIndexByCondition(contact_list.dataProvider as ArrayCollection,"newFlag",true);
+					if (i > -1)
+						(contact_list.dataProvider as ArrayCollection).removeItemAt(i);
+				}
+					
+			}
+			private function removeTempContactFromList():void	{
+				if (contactTemp != null)	{
+					contactTemp = null;
+					var i:int = findFirstIndexByCondition(contact_list.dataProvider as ArrayCollection,"tempFlag",true);
+					if (i > -1)
+						(contact_list.dataProvider as ArrayCollection).removeItemAt(i);
+				}
+
+			}
 			private function doContactChange():void{
 				var temp:Contact= new Contact();
-				temp = contact_list.selectedItem as Contact;
+				var selContact:Contact = contact_list.selectedItem as Contact;
 				
+				temp["newFlag"] = selContact["newFlag"];
+				temp.tempFlag = selContact.tempFlag;
+				temp.firstName = selContact.firstName;
+				temp.lastName = selContact.lastName;
+				temp.prefix = selContact.prefix;
+				temp.suffix = selContact.suffix;
+				temp.comLinks = new ArrayCollection();
+				for (var i:int=0; i<selContact.comLinks.length;i++)	{
+					var coml:ComLink = selContact.comLinks.getItemAt(i) as ComLink;
+					var newcoml:ComLink = new ComLink();
+					newcoml.type = coml.type;
+					newcoml.value = coml.value;
+					temp.comLinks.addItem(newcoml);
+				}
+				temp.jobTitle = selContact.jobTitle;
+				temp.salutation = selContact.salutation;
+				temp.parentAccount = invoice.account;
+				
+				if (temp["newFlag"] != true)	{
+					// remove new and temp contact if any
+					removeNewContactFromList();
+				}
+				if (!temp.tempFlag)	{
+					removeTempContactFromList();
+				}
 				contact_editor.setContact(temp);
 				contact_ship_address.dataProvider = temp.shipToAddress;
 				if (temp.shipToAddress == null || temp.shipToAddress.length == 0)	{
@@ -1505,6 +1681,10 @@
 				if ((tempItem.tempFlag != null) && (tempItem.tempFlag == true))	{
 					return "*** Temporary Contact ***";
 				}
+				if ((tempItem["newFlag"] != null) && (tempItem["newFlag"] == true))	{
+					return "*** New Contact ***";
+				}
+				
 				var returnString:String = tempItem.lastName + ", " + tempItem.firstName;
 				return returnString;
 			}
@@ -1751,9 +1931,9 @@
 					
 				<mx:VBox width="50%" height="100%">
 					<mx:HBox height="1%" width="100%">
-						<mx:Text id="txtPrefix" width="30%" textAlign="right"  text="pref" />
-						<mx:TextInput id="txtInvNum" text="" width="30%" />
-						<mx:Text id="txtSuffix" width="30%" textAlign="left" text="suff" />						
+						<mx:TextInput maxChars="6" width="10%" id="txtPrefix"  textAlign="right" />
+						<mx:TextInput editable="false" width="80%" id="txtInvNum" text="{invoice.invoiceNumber}" />
+						<mx:TextInput maxChars="6" width="10%" id="txtSuffix" textAlign="left" />						
 					</mx:HBox>
 					<mx:Form height="1%" width="100%">	
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice')}" textAlign="right" id="invoice_number_edit">
@@ -1766,8 +1946,11 @@
 					<ns1:ContactInfoEditor height="70%" width="100%" id="contact_editor" contactLabel="Contact" />
 									
 					<mx:HBox height="10%" width="100%">
-						<mx:Label height="100%" width="20%"
+						<mx:Label height="100%" width="15%"
 								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}" textAlign="right"/>
+						<mx:Text height="100%" width="5%"
+								  id="txtNumContacts" textAlign="right"/>
+								  
 						<mx:ComboBox height="100%" width="40%"
 									 dataProvider="{accountcontacts}"
 									 id="contact_list" labelFunction="contactLabel" change="doContactChange()"/>
@@ -1952,7 +2135,7 @@
 											 id="format_combo"
 										 dataProvider="{invoiceTemplates}"/>
 						</mx:HBox>
-						<mx:Text width="50%" height="5%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.OnPendingList')}" />
+						<mx:Text width="50%" height="5%" visible="{(!isNaN(invoice.id))}" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.OnPendingList')}" />
 						<mx:Button width="50%" height="5%" label="Create Invoice" id="createInvoice" click="doCreateInvoice()" enabled="true"/>				 
 					</mx:VBox>
 					<mx:VRule width="2%" height="100%"/>
