@@ -88,6 +88,8 @@ package com.efi.printsmith.data
 		public var webPaymentComplete:Boolean = false;
 		public var webPaymentApprovalCode:String = "";
 		public var webPaymentType:String = "";
+		public var invoiceNumberPrefix:String = "";
+		public var invoiceNumberSuffix:String = "";
 	
 	}
 }

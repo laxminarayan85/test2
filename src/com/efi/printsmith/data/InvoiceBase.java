@@ -349,6 +349,15 @@ public class InvoiceBase extends ModelBase {
   public static final String WEBPAYMENTTYPE = "WebPaymentType";
 
 	/**
+   * @generated
+   */
+  public static final String INVOICENUMBERPREFIX = "InvoiceNumberPrefix";
+	/**
+   * @generated
+   */
+  public static final String INVOICENUMBERSUFFIX = "InvoiceNumberSuffix";
+
+	/**
 	 * @generated
 	 */
 	public InvoiceBase() {
@@ -2141,6 +2150,46 @@ public class InvoiceBase extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String invoiceNumberPrefix;
+
+	/**
+   * @generated
+ 	 */
+  public String getInvoiceNumberPrefix(){
+    return invoiceNumberPrefix; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setInvoiceNumberPrefix(String newVal) {
+    this.invoiceNumberPrefix = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private String invoiceNumberSuffix;
+
+	/**
+   * @generated
+ 	 */
+  public String getInvoiceNumberSuffix(){
+    return invoiceNumberSuffix; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setInvoiceNumberSuffix(String newVal) {
+    this.invoiceNumberSuffix = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2220,6 +2269,8 @@ public class InvoiceBase extends ModelBase {
     if (WEBPAYMENTCOMPLETE.equals(propertyName)) return getWebPaymentComplete();
     if (WEBPAYMENTAPPROVALCODE.equals(propertyName)) return getWebPaymentApprovalCode();
     if (WEBPAYMENTTYPE.equals(propertyName)) return getWebPaymentType();
+    if (INVOICENUMBERPREFIX.equals(propertyName)) return getInvoiceNumberPrefix();
+    if (INVOICENUMBERSUFFIX.equals(propertyName)) return getInvoiceNumberSuffix();
     return super.getProperty(propertyName);
   }
 	
@@ -2303,6 +2354,8 @@ public class InvoiceBase extends ModelBase {
     if (WEBPAYMENTCOMPLETE.equals(propertyName)) setWebPaymentComplete((Boolean)newValue); else
     if (WEBPAYMENTAPPROVALCODE.equals(propertyName)) setWebPaymentApprovalCode((String)newValue); else
     if (WEBPAYMENTTYPE.equals(propertyName)) setWebPaymentType((String)newValue); else
+    if (INVOICENUMBERPREFIX.equals(propertyName)) setInvoiceNumberPrefix((String)newValue); else
+    if (INVOICENUMBERSUFFIX.equals(propertyName)) setInvoiceNumberSuffix((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2460,6 +2513,10 @@ public class InvoiceBase extends ModelBase {
       return new Class<?>[] {String.class};		
     if (WEBPAYMENTTYPE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (INVOICENUMBERPREFIX.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
+    if (INVOICENUMBERSUFFIX.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2544,6 +2601,8 @@ public class InvoiceBase extends ModelBase {
     if (WEBPAYMENTCOMPLETE.equals(propertyName)) return InvoiceBase.class;
     if (WEBPAYMENTAPPROVALCODE.equals(propertyName)) return InvoiceBase.class;
     if (WEBPAYMENTTYPE.equals(propertyName)) return InvoiceBase.class;
+    if (INVOICENUMBERPREFIX.equals(propertyName)) return InvoiceBase.class;
+    if (INVOICENUMBERSUFFIX.equals(propertyName)) return InvoiceBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2702,6 +2761,10 @@ public class InvoiceBase extends ModelBase {
     if (! SmartEquals(getWebPaymentApprovalCode(), objT.getWebPaymentApprovalCode()))
       return false;
     if (! SmartEquals(getWebPaymentType(), objT.getWebPaymentType()))
+      return false;
+    if (! SmartEquals(getInvoiceNumberPrefix(), objT.getInvoiceNumberPrefix()))
+      return false;
+    if (! SmartEquals(getInvoiceNumberSuffix(), objT.getInvoiceNumberSuffix()))
       return false;
     return true;
   }			
