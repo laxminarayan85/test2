@@ -2346,7 +2346,6 @@
 					dimensionChange(job_parent);
 					break;
 				case this.job_finish_size:
-					doUpdatePrice = true;
 					//var oldDimension:Dimension = this.job_finish_size.selectedItem as Dimension;
 					var finishSizeStr:String = Snowmass.formatSizeString(this.job_finish_size.text);
 					this.job_finish_size.selectedIndex = findItem(finishSizeStr, dimensionsArray);
@@ -2374,11 +2373,12 @@
 							
 						}*/
 					}
-					if (this.currentSizeName != job.finishSize.name)
+					if (this.currentSizeName != job.finishSize.name) {
+						doUpdatePrice = true;
 						dimensionChange(job_finish_size);
+					}
 					break;
 				case this.job_fold_size:
-					doUpdatePrice = true;
 					var foldSizeStr:String = Snowmass.formatSizeString(this.job_fold_size.text);
 					this.job_fold_size.selectedIndex = findItem(foldSizeStr, dimensionsArray);
 					if (this.job_fold_size.selectedIndex == -1) {
@@ -2396,11 +2396,12 @@
 						job.foldedSize.height = localSize.height;
 						job.foldedSize.width = localSize.width;
 					}
-					if (this.currentSizeName != job.foldedSize.name)
-						dimensionChange(job_fold_size);
+					if (this.currentSizeName != job.foldedSize.name) {
+						doUpdatePrice = true;
+						dimensionChange(job_finish_size);
+					}
 					break;
 				case this.job_size:
-					doUpdatePrice = true;
 					//var oldDimension:Dimension = this.job_size.selectedItem as Dimension;
 					var sizeStr:String = Snowmass.formatSizeString(this.job_size.text);
 					this.job_size.selectedIndex = findItem(sizeStr, dimensionsArray);
@@ -2427,8 +2428,10 @@
 							Alert.show(message, "Warning", 0, null, null, null, 4); 
 						}*/
 					}
-					if (this.currentSizeName != job.runSize.name)
-						dimensionChange(job_size);
+					if (this.currentSizeName != job.runSize.name) {
+						doUpdatePrice = true;
+						dimensionChange(job_finish_size);
+					}
 					break;
 				}
 				if (doUpdatePrice) updatePrice();
