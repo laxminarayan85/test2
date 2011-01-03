@@ -140,7 +140,7 @@
 	
 	public function setLargeFormatOnly() {
 		this.chkShowLargeFormatStock.selected = true;
-		this.chkShowRigidSubstrate.selected = false;
+		this.chkShowRigidSubstrate.selected = true;
 		this.chkShowLargeFormatStock.enabled = false;
 		this.chkShowRigidSubstrate.enabled = false;
 		this.chkShowRollStock.enabled = false;
@@ -991,13 +991,18 @@
 					if (matchMin(stock.cwt1, txtCwtMin.text) == false)	
 							continue;
 				}
-				if (chkShowRigidSubstrate.selected)	{
-					if (stock.stockunit != 4)
+				if (chkShowRigidSubstrate.selected && chkShowLargeFormatStock.selected) {
+					if (stock.stockunit != 4 && stock.stockunit != 3)
 						continue;
-				}
-				if (chkShowLargeFormatStock.selected)	{
-					if (stock.stockunit != 3)
-						continue;
+				} else {
+					if (chkShowRigidSubstrate.selected)	{
+						if (stock.stockunit != 4)
+							continue;
+					}
+					if (chkShowLargeFormatStock.selected)	{
+						if (stock.stockunit != 3)
+							continue;
+					}
 				}
 				if (chkShowRollStock.selected)	{
 					if (stock.stockunit != 2)
