@@ -680,10 +680,10 @@
 //					allowEstimatePrefix = preferencesAccounting.estimateAllowPrefixMod;
 //					allowEstimateSuffix = preferencesAccounting.estimateAllowSuffixMod;
 					txtPrefix.editable = getPrefixEditable();
-					txtPrefix.visible = getPrefixVisible();
+//					txtPrefix.visible = getPrefixVisible();
 					txtPrefix.text = getPrefixText();
 					txtSuffix.editable = getSuffixEditable();
-					txtSuffix.visible = getSuffixVisible();
+//					txtSuffix.visible = getSuffixVisible();
 					txtSuffix.text = getSuffixText();									
 				}
 			}
@@ -711,59 +711,69 @@
 				}
 				return false;
 			}
-			private function getSuffixVisible():Boolean	{
-				if (preferencesAccounting != null)	{
-					if (invoice is Invoice)	{
-						if (preferencesAccounting.invoiceSuffix == null && !preferencesAccounting.invoiceAllowSuffixMod)	{
-							return false;
-						}
-						return true;
-					}
-					else	{
-						if (preferencesAccounting.estimateSuffix == null && !preferencesAccounting.estimateAllowSuffixMod)	{
-							return false;
-						}
-						return true;
-					}
-				}
-				return false;
-			}
-			private function getPrefixVisible():Boolean	{
-				if (preferencesAccounting != null)	{
-					if (invoice is Invoice)	{
-						if (preferencesAccounting.invoicePrefix == null && !preferencesAccounting.invoiceAllowPrefixMod)	{
-							return false;
-						}
-						return true;
-					}
-					else	{
-						if (preferencesAccounting.estimatePrefix== null && !preferencesAccounting.estimateAllowPrefixMod)	{
-							return false;
-						}
-						return true;
-					}
-				}
-				return false;
-			}
+//			private function getSuffixVisible():Boolean	{
+//				if (preferencesAccounting != null)	{
+//					if (invoice is Invoice)	{
+//						if (preferencesAccounting.invoiceSuffix == null && !preferencesAccounting.invoiceAllowSuffixMod)	{
+//							return false;
+//						}
+//						return true;
+//					}
+//					else	{
+//						if (preferencesAccounting.estimateSuffix == null && !preferencesAccounting.estimateAllowSuffixMod)	{
+//							return false;
+//						}
+//						return true;
+//					}
+//				}
+//				return false;
+//			}
+//			private function getPrefixVisible():Boolean	{
+//				if (preferencesAccounting != null)	{
+//					if (invoice is Invoice)	{
+//						if (preferencesAccounting.invoicePrefix == null && !preferencesAccounting.invoiceAllowPrefixMod)	{
+//							return false;
+//						}
+//						return true;
+//					}
+//					else	{
+//						if (preferencesAccounting.estimatePrefix== null && !preferencesAccounting.estimateAllowPrefixMod)	{
+//							return false;
+//						}
+//						return true;
+//					}
+//				}
+//				return false;
+//			}
 			private function getPrefixText():String{
-				if (preferencesAccounting != null)	{
-					if (invoice is Invoice)	{
-						return preferencesAccounting.invoicePrefix;
+				if (isNaN(invoice.id))	{
+					if (preferencesAccounting != null)	{
+						if (invoice is Invoice)	{
+							return preferencesAccounting.invoicePrefix;
+						}
+						else	{
+							return preferencesAccounting.estimatePrefix;
+						}
 					}
-					else	{
-						return preferencesAccounting.estimatePrefix;
-					}
+				}
+				else	{
+					return invoice.invoiceNumberPrefix;
 				}
 				return null;
 			}
 			private function getSuffixText():String{
-				if (preferencesAccounting != null)	{
-					if (invoice is Invoice)	{
-						return preferencesAccounting.invoiceSuffix;
+				if (isNaN(invoice.id))	{
+					if (preferencesAccounting != null)	{
+						if (invoice is Invoice)	{
+							return preferencesAccounting.invoiceSuffix;
+						}
+						else	{
+							return preferencesAccounting.estimateSuffix;
+						}
 					}
-					else	{
-						return preferencesAccounting.estimateSuffix;
-					}
+				}
+				else	{
+					return invoice.invoiceNumberSuffix;
 				}
 				return null;
 			}
@@ -960,6 +970,8 @@
 			{
 
 				invoice.name=name_edit.text;
+				invoice.invoiceNumberPrefix = txtPrefix.text;
+				invoice.invoiceNumberSuffix = txtSuffix.text;
 				invoice.invoiceNumber=inv_number.text;
 				invoice.contact=contact_list.selectedItem as Contact;
 				invoice.customerPO=inv_po_number.text;
@@ -2057,9 +2069,9 @@
 					
 				<mx:VBox width="50%" height="100%">
 					<mx:HBox height="1%" width="100%">
-						<mx:TextInput maxChars="6" width="10%" id="txtPrefix"  textAlign="right" />
+						<mx:TextInput maxChars="6" width="10%" id="txtPrefix" text="{invoice.invoiceNumberPrefix}" textAlign="right" />
 						<mx:TextInput editable="false" width="80%" id="txtInvNum" text="{invoice.invoiceNumber}" />
-						<mx:TextInput maxChars="6" width="10%" id="txtSuffix" textAlign="left" />						
+						<mx:TextInput maxChars="6" width="10%" id="txtSuffix" text="{invoice.invoiceNumberSuffix}" textAlign="left" />						
 					</mx:HBox>
 					<mx:Form height="1%" width="100%">	
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice')}" textAlign="right" id="invoice_number_edit">
