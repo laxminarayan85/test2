@@ -81,7 +81,7 @@ public class MatrixUtilities {
 					runningTotal += (element.getQty()-prevQty) * element.getPrice2().doubleValue();
 					prevQty = element.getQty();
 				} else {
-					runningTotal += (qty-prevQty) * element.getPrice1().doubleValue();
+					runningTotal += (qty-prevQty) * element.getPrice2().doubleValue();
 					found = true;
 					break;
 				}
