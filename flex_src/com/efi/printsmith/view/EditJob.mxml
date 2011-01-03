@@ -2123,8 +2123,6 @@
 						job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
 					} 
 				}
-				if (this.currentState == "CopyMethod")
-					this.checkCopierSize();
 			}
 			
 			private function dimensionChange(target:Object):void
@@ -2148,6 +2146,8 @@
 							job_size.selectedItem = null;
 							dimensionChangePropagate();
 							refreshCalcAndImage();
+							if (this.currentState == "CopyMethod")
+								this.checkCopierSize();
 						} else {
 							dataService.getDimensionByWildcardName(job_size.text);
 						}
