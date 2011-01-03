@@ -973,7 +973,16 @@
 					invoice.salesRep=inv_sales_rep.selectedItem as SalesRep;
 				if (ship_via_combo != null && ship_via_combo.selectedItem != null)
 					invoice.shippingMethod=ship_via_combo.selectedItem as ShippingMethod;
-				invoice.specialInstructions=special_instructions_edit.text as SpecialInstructions
+				
+				var si:SpecialInstructions = null;
+				if (invoice.specialInstructions != null)	{
+					si = invoice.specialInstructions;					
+				}
+				else	{
+					si = new SpecialInstructions();
+				}
+				si.instructions = special_instructions_edit.text;
+				invoice.specialInstructions=si;
 				invoice.billToAddress=bill_to_address_editor.getAddress();
 				invoice.shipToAddress=this.delivery_intent_address_editor.getAddress();
 				//invoice.contact = contact_editor.getContact();

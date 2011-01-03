@@ -2213,9 +2213,13 @@ public class DataService extends HibernateService {
 			} else if (invoice instanceof Estimate) {
 				this.setEstimateId((Estimate) invoice);
 			}
+			
+			if (invoice.getSpecialInstructions() != null)	{					
+				invoice.setSpecialInstructions((SpecialInstructions) this.addUpdate(invoice.getSpecialInstructions()));
+			}
 			List<JobBase> jobs = invoice.getJobs();
 			List<Charge> charges = invoice.getCharges();
-
+			
 			if (jobs != null) {
 				Iterator<JobBase> jobIter = jobs.iterator();
 
