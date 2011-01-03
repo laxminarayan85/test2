@@ -2179,7 +2179,7 @@
 				</mx:DataGrid>
 			</mx:VBox>
 			<mx:VBox id="invoice_job_canvas">
-				<mx:DataGrid height="70%"
+				<mx:DataGrid height="100%"
 							 width="100%"
 							 id="invoice_job_grid"
 							 dataProvider="{getJobList(invoice.jobs)}"
@@ -2214,7 +2214,7 @@
 
 					</mx:columns>
 				</mx:DataGrid>
-				<mx:DataGrid height="30%"
+				<mx:DataGrid height="100%"
 							 width="100%" 
 							 id="ticket_grid"
 							 dataProvider="{deliveryTicketJobsList}"
