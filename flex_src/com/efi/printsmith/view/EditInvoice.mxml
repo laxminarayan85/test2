@@ -1522,6 +1522,56 @@
 				editJobWindow.setJob(job);
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveJob); */
 			}
+			
+			private function getEstimatedCost(item:Object, column:DataGridColumn):String {
+				var localJob:Job = item as Job;
+				var estimatedTotalCost:Number = 0;
+				if(localJob != null && localJob.pricingRecord!=null){
+					estimatedTotalCost = estimatedTotalCost + ((isNaN(localJob.pricingRecord.laborCost))?0:localJob.pricingRecord.laborCost);
+				}
+				if(localJob != null && localJob.pricingRecord!=null){
+					estimatedTotalCost = estimatedTotalCost + ((isNaN(localJob.pricingRecord.stockCost))?0:localJob.pricingRecord.stockCost);
+				}
+				return Snowmass.getCurrencyFormatter(false, 2).format(estimatedTotalCost);
+			}
+			
+			private function getActualCost(item:Object, column:DataGridColumn):String {
+				var localJob:Job = item as Job;
+				var actualTotalCost:Number = 0;
+				if(localJob != null && localJob.pricingRecord!=null){
+					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.laborCost))?0:localJob.pricingRecord.laborCost);
+				}
+				if(localJob != null && localJob.pricingRecord!=null){
+					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.stockCost))?0:localJob.pricingRecord.stockCost);
+				}
+				return Snowmass.getCurrencyFormatter(false, 2).format(actualTotalCost);
+			}
+			
+			private function getDifferenceValue(item:Object, column:DataGridColumn):String {
+				var localJob:Job = item as Job;
+				var estimatedTotalCost:Number = 0;
+				var actualTotalCost:Number = 0;
+				var diffValue:Number = 0;
+				var prcntValue:Number = 0;
+				if(localJob != null && localJob.pricingRecord!=null){
+					estimatedTotalCost = estimatedTotalCost + ((isNaN(localJob.pricingRecord.laborCost))?0:localJob.pricingRecord.laborCost);
+				}
+				if(localJob != null && localJob.pricingRecord!=null){
+					estimatedTotalCost = estimatedTotalCost + ((isNaN(localJob.pricingRecord.stockCost))?0:localJob.pricingRecord.stockCost);
+				}
+				if(localJob != null && localJob.pricingRecord!=null){
+					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.laborCost))?0:localJob.pricingRecord.laborCost);
+				}
+				if(localJob != null && localJob.pricingRecord!=null){
+					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.stockCost))?0:localJob.pricingRecord.stockCost);
+				}
+				diffValue = actualTotalCost - estimatedTotalCost;
+				if(actualTotalCost!=0){
+					prcntValue = (diffValue/actualTotalCost)*100;
+				}
+				return Snowmass.getCurrencyFormatter(false, 2).format(diffValue)+" "+ Snowmass.getCurrencyFormatter(false, 0).format(prcntValue)+"%";
+			}
+			
 			private function gridJobPrice(item:Object, column:DataGridColumn):String {
 				var localJob:Job = item as Job;
 				
@@ -1530,6 +1580,28 @@
 				} else {
 					return "";
 				}
+			}
+			
+			private function getMarginValue(item:Object, column:DataGridColumn):String {
+				var localJob:Job = item as Job;
+				var actualTotalCost:Number = 0;
+				var price:Number = 0;
+				var marginValue:Number = 0;
+				var prcntValue:Number = 0;
+				if(localJob != null && localJob.pricingRecord!=null){
+					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.laborCost))?0:localJob.pricingRecord.laborCost);
+				}
+				if(localJob != null && localJob.pricingRecord!=null){
+					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.stockCost))?0:localJob.pricingRecord.stockCost);
+				}
+				if (localJob != null && localJob.pricingRecord != null) {					
+					price = localJob.pricingRecord.totalPrice;
+				}
+				marginValue = price - actualTotalCost;
+				if(price!=0){
+					prcntValue = (marginValue/price)*100;
+				}
+				return Snowmass.getCurrencyFormatter(false, 2).format(marginValue)+" "+ Snowmass.getCurrencyFormatter(false, 0).format(prcntValue)+"%";
 			}
 			
 			private function doPrint(ev:MouseEvent = null):void {
@@ -1668,6 +1740,51 @@
 						}
 					}
 					resetJobsList = true;
+				}
+				return null;
+			}
+			
+			private function getCostingJobsList(jobList:ArrayCollection):ArrayCollection {
+				if(invoice is Invoice) {
+					var invoiceJobList:ArrayCollection = new ArrayCollection();
+					var counter:int=0;
+					for each(var jobBaseObj:JobBase in jobList){
+						counter++;
+						jobBaseObj.jobIndex = counter; 
+						invoiceJobList.addItem(jobBaseObj);
+					}
+					return jobList;
+				} else if(invoice is Estimate) {
+					if(jobList!=null && jobList.length>0){
+						var estimatesJobList:ArrayCollection = new ArrayCollection();
+						var counter:int=0;
+						for each(var jobBaseObj:JobBase in jobList){
+							jobBaseObj.hasMultiQtyJobs = false;
+							if(!jobBaseObj.multiQtyJob){
+								var checkFlag:Boolean = false;
+								for each(var estimatesJobObj:JobBase in estimatesJobList) {
+									if(estimatesJobObj.id == jobBaseObj.id && estimatesJobObj.id!=0 && jobBaseObj.id!=0) {
+										checkFlag = true;
+										break;
+									}
+								}
+								if(!checkFlag){
+									counter++;
+									jobBaseObj.jobIndex = counter;
+									estimatesJobList.addItem(jobBaseObj);
+									for each(var jobBaseObject:JobBase in jobList){
+										if(jobBaseObj.jobGroup!=0 && jobBaseObj.jobGroup==jobBaseObject.jobGroup && jobBaseObject.multiQtyJob){
+											jobBaseObj.hasMultiQtyJobs = true;
+											counter++;
+											jobBaseObject.jobIndex = counter;
+											estimatesJobList.addItem(jobBaseObject);
+										}
+									}
+								}
+							}
+						}
+						return estimatesJobList;
+					}
 				}
 				return null;
 			}
@@ -2025,28 +2142,30 @@
 			<mx:VBox id="invoice_cost_canvas">
 				<mx:DataGrid width="100%"
 							 height="100%"
-							 id="invoice_cost_grid">
+							 id="invoice_cost_grid"
+							 dataProvider="{getCostingJobsList(invoice.jobs)}">
 					<mx:columns>
 						<mx:DataGridColumn headerText=""
-										   width="30"
-										   dataField="col1"/>
+										   width="50"
+										   dataField="jobIndex"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
-										   dataField="col2"/>
+										   width="200"
+										   dataField="description"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Estimated')}"
-										   width="80"
-										   dataField="col3"/>
+										   width="150"
+										   labelFunction="getEstimatedCost"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Actual')}"
-										   width="80"
-										   dataField="col3"/>
+										   width="150"
+										   labelFunction="getActualCost"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Difference')}"
-										   width="80"
-										   dataField="col3"/>
+										   width="150"
+										   labelFunction="getDifferenceValue"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Price')}"
-										   width="80"
-										   dataField="col3"/>
+										   width="150"
+										   labelFunction="gridJobPrice"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Margin')}"
-										   width="80"
-										   dataField="col3"/>
+										   width="150"
+										   labelFunction="getMarginValue"/>
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:VBox>
@@ -2093,7 +2212,8 @@
 							 sortableColumns="false"
 							 doubleClick="{doDoubleclickTicketItem()}"
 						  	 doubleClickEnabled="true"
-						  	 visible="{deliveryTicketJobsList!=null &amp;&amp; deliveryTicketJobsList.length>0}">
+						  	 visible="{deliveryTicketJobsList!=null &amp;&amp; deliveryTicketJobsList.length>0}"
+						  	 includeInLayout="{deliveryTicketJobsList!=null &amp;&amp; deliveryTicketJobsList.length>0}">
 					<mx:columns>
 						<mx:DataGridColumn headerText="" dataField="jobNumber"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Shipped')}"
