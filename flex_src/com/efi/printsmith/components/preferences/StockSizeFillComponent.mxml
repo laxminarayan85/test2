@@ -14,7 +14,11 @@
 			
 			private function setTextValue(event:Event):void {
 				if(event.currentTarget.selectedIndex!=-1 &&  event.currentTarget.selectedItem!=null){
-					textInputComponent.text = event.currentTarget.selectedItem as String;
+					var selectedValue:String = event.currentTarget.selectedItem as String;
+					if(selectedValue.indexOf("=")!=-1) {
+						textInputComponent.text = selectedValue.split("=")[0];
+					}
+					//textInputComponent.text = event.currentTarget.selectedItem as String;
 					textInputComponent.setFocus();
 					textInputComponent.setSelection(textInputComponent.selectionBeginIndex,textInputComponent.selectionEndIndex);
 				}
