@@ -389,7 +389,8 @@ public class PreferencesMapper extends ImportMapper {
 		} else if (name.equals("buttonTaxCodeID")) {
 			TaxCodes taxCodes = (TaxCodes)dataService.getByPrevId("TaxCodes",value);
 			preferencesCashRegister.setTaxCodes(taxCodes);
-		}
+		} else if (name.equals("buttonPrefixCharacter"))
+			preferencesCashRegister.setButtonPrefixCharacter(value);
 		dataService.addUpdate(preferencesCashRegister);
 	}
 	private void importPreferencesPricingMethodField(String key, String name, String value) throws Exception {

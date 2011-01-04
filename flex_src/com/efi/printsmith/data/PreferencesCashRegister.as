@@ -20,6 +20,7 @@ package com.efi.printsmith.data
 		public var rate:Number = 0;
 		public var taxTable:TaxTable;
 		public var taxCodes:TaxCodes;
+		public var buttonPrefixCharacter:String = "";
 	
 	}
 }

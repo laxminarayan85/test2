@@ -72,6 +72,11 @@ public class PreferencesCashRegister extends ModelBase {
 	public static final String TAXCODES = "TaxCodes";
 
 	/**
+   * @generated
+   */
+  public static final String BUTTONPREFIXCHARACTER = "ButtonPrefixCharacter";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesCashRegister() {
@@ -242,6 +247,28 @@ public class PreferencesCashRegister extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String buttonPrefixCharacter;
+
+	/**
+   * @generated
+ 	 */
+  public String getButtonPrefixCharacter(){
+    return buttonPrefixCharacter; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setButtonPrefixCharacter(String newVal) {
+    this.buttonPrefixCharacter = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -253,6 +280,7 @@ public class PreferencesCashRegister extends ModelBase {
     if (RATE.equals(propertyName)) return getRate();
     if (TAXTABLE.equals(propertyName)) return getTaxTable();
     if (TAXCODES.equals(propertyName)) return getTaxCodes();
+    if (BUTTONPREFIXCHARACTER.equals(propertyName)) return getButtonPrefixCharacter();
     return super.getProperty(propertyName);
   }
 	
@@ -268,6 +296,7 @@ public class PreferencesCashRegister extends ModelBase {
     if (RATE.equals(propertyName)) setRate((BigDecimal)newValue); else
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
     if (TAXCODES.equals(propertyName)) setTaxCodes((TaxCodes)newValue); else
+    if (BUTTONPREFIXCHARACTER.equals(propertyName)) setButtonPrefixCharacter((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -289,6 +318,8 @@ public class PreferencesCashRegister extends ModelBase {
       return new Class<?>[] {TaxTable.class};		
     if (TAXCODES.equals(propertyName)) 
       return new Class<?>[] {TaxCodes.class};		
+    if (BUTTONPREFIXCHARACTER.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -305,6 +336,7 @@ public class PreferencesCashRegister extends ModelBase {
     if (RATE.equals(propertyName)) return PreferencesCashRegister.class;
     if (TAXTABLE.equals(propertyName)) return PreferencesCashRegister.class;
     if (TAXCODES.equals(propertyName)) return PreferencesCashRegister.class;
+    if (BUTTONPREFIXCHARACTER.equals(propertyName)) return PreferencesCashRegister.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -327,6 +359,8 @@ public class PreferencesCashRegister extends ModelBase {
     if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
       return false;
     if (! SmartEquals(getTaxCodes(), objT.getTaxCodes()))
+      return false;
+    if (! SmartEquals(getButtonPrefixCharacter(), objT.getButtonPrefixCharacter()))
       return false;
     return true;
   }			
