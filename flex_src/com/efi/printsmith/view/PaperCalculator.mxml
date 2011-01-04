@@ -4,7 +4,7 @@
 				width="100%" height="100%" headerHeight="0"
 				title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PaperCalculator')}"
 				creationComplete="init();"
-				showCloseButton="true" 
+				showCloseButton="false" 
 				fontSize="9"
 				implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent">
 
@@ -94,7 +94,9 @@
 			private var folioLocationRadioValue:String = new String;
 			[Bindable]
 			private var RunToFinishGrainArray:ArrayCollection=new ArrayCollection();
-
+			
+			private var gTimer:Timer = null;
+			
 			private function init():void
 			{
 			//	consumer.subscribe();
@@ -107,7 +109,9 @@
 			}
 					
 			private function closeWindow():void {
-				PopUpManager.removePopUp(this);
+			//	PopUpManager.removePopUp(this);
+				var mdiWindow:MDIWindow = this.parent as MDIWindow;
+				mdiWindow.closeWindow();
 			}
 			
 		    public function getSecurityCommand():String {
@@ -534,8 +538,9 @@
 			{
 				var selectEvent:JobEditCompleteEvent = new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, job);
 				mapToJobData();
-				dataService.addUpdate(job.paperCal);
-				dispatchEvent(selectEvent);						
+			//	dataService.addUpdate(job.paperCal);
+				dispatchEvent(selectEvent);			
+				closeWindow();
 			}
 			
 			private function doCancel():void
@@ -828,7 +833,7 @@
 			public function onCancel():void {
 
 			}
-			
+      			
 			private function getSheetOutSizeDesc():String {
 				var results:String = new String;
 				
@@ -1067,7 +1072,7 @@
 					 id="chkWorkAndTumble"
 					 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.WorkandTumble')}"
 					 click="refreshCalcAndImage()"
-					 selected="{job.paperCal.workandTumble}"/>
+					 selected="{job.paperCal.runAndTumble}"/>
 
 		<mx:Label x="241"
 				  y="565"
