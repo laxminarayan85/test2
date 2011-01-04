@@ -3414,14 +3414,14 @@
 										  text="{job.sheets}"
 										  height="20"
 										  tabIndex="3"
-										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)" change="doUpdateNumberOn();"/>
+										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
 							<mx:TextInput x="496"
 										  y="116"
 										  width="45.300003"
 										  id="job_up"
 										  text="{job.numUp}"
 										  tabIndex="4"
-										  height="20" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
+										  height="20" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)" change="doUpdateNumberOn();"/>
 							<mx:TextInput x="548.3"
 										  y="116"
 										  width="45.700005"
