@@ -76,6 +76,7 @@ width="938" height="507"  creationComplete="init()"
 	</mx:RemoteObject>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.Dimension;
 	import com.efi.printsmith.data.Job;
 	import com.efi.printsmith.data.JobBase;
 	import mx.controls.Alert;                                         
@@ -334,7 +335,24 @@ width="938" height="507"  creationComplete="init()"
 	}
 	
 	private function runSizeLostFocus():void {
-		job.runSize = this.run_size.selectedItem as com.efi.printsmith.data.Dimension;
+		var sizeStr:String = Snowmass.formatSizeString(this.run_size.text);
+		this.run_size.selectedIndex = findItem(sizeStr, dimensionsArray);
+		if (this.run_size.selectedIndex == -1) {
+			if (job.runSize == null)
+				job.runSize = new Dimension() as Dimension;
+			job.runSize.name = sizeStr;
+			job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
+			job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
+			run_size.text = job.runSize.name;
+		}
+		else if (run_size.selectedItem != null) {
+			var localSize:Dimension = run_size.selectedItem as Dimension;
+			job.runSize.name = localSize.name;
+			job.runSize.type = localSize.type;
+			job.runSize.height = localSize.height;
+			job.runSize.width = localSize.width;
+		}
+		
 		if (job.runSize != null)
 			this.area.text = (job.runSize.height * job.runSize.width).toString();
 	}
