@@ -303,16 +303,19 @@ width="938" height="507"  creationComplete="init()"
 					this.sheets_purchased.visible = true;
 					var requires:Number = 0;
 					var purchased:Number = 0;
+					var runOut:Number = job.paperCal.runout;
+					if (runOut <= 0)
+						runOut = 1;
 					if (job.doubleSided) {
-						requires = Math.round((job.totalCopies / 2 / job.paperCal.runout));
+						requires = Math.round((job.totalCopies / 2 / runOut));
 						this.requires.text = requires.toFixed(0);
-						purchased = Math.round((job.totalCopies / 2 / job.paperCal.runout));
+						purchased = Math.round((job.totalCopies / 2 / runOut));
 						this.sheets_purchased.text = purchased.toFixed(0);
 					}
 					else {
-						requires = Math.round((job.totalCopies / job.paperCal.runout));
+						requires = Math.round((job.totalCopies / runOut));
 						this.requires.text = requires.toFixed(0);
-						purchased = Math.round((job.totalCopies / job.paperCal.runout));
+						purchased = Math.round((job.totalCopies / runOut));
 						this.sheets_purchased.text = purchased.toFixed(0);
 					}
 				}
