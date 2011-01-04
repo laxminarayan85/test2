@@ -200,6 +200,10 @@
 		
 		private function handleLoadLocationResult(event:ResultEvent):void {
 			var locationsList:ArrayCollection = event.result as ArrayCollection;
+			var emptyObj:ProductionLocations = new ProductionLocations();
+			emptyObj.id = -1;
+			emptyObj.name = "";
+			locationsArray.push(emptyObj);
 			for each(var productionLocations:ProductionLocations in locationsList) {
 				locationsArray.push(productionLocations);
 			}
@@ -649,13 +653,14 @@
 		}
 		
 		private function updateLocations():void {
-			if(location_ac.selectedIndex>-1 && location_ac.selectedItem!=null && (location_ac.selectedItem is ProductionLocations)
-			  && location_ac.typedText!=null && location_ac.typedText!=""){
-				if(deliveryjobs_location_grid.selectedItems!=null && deliveryjobs_location_grid.selectedItems.length>0) {
-					for each(var deliveryTicketJobsObject:DeliveryTicketJobs in deliveryjobs_location_grid.selectedItems) {
-						if(deliveryTicketJobsObject.jobBase!=null){
-							deliveryTicketJobsObject.jobBase.location = location_ac.selectedItem as ProductionLocations;
-							dataService.addUpdate(deliveryTicketJobsObject.jobBase);
+			if(location_ac.selectedIndex>-1 && location_ac.selectedItem!=null && (location_ac.selectedItem is ProductionLocations)){
+				if(location_ac.selectedItem.id!=-1){
+					if(deliveryjobs_location_grid.selectedItems!=null && deliveryjobs_location_grid.selectedItems.length>0) {
+						for each(var deliveryTicketJobsObject:DeliveryTicketJobs in deliveryjobs_location_grid.selectedItems) {
+							if(deliveryTicketJobsObject.jobBase!=null){
+								deliveryTicketJobsObject.jobBase.location = location_ac.selectedItem as ProductionLocations;
+								dataService.addUpdate(deliveryTicketJobsObject.jobBase);
+							}
 						}
 					}
 				}
@@ -1194,7 +1199,9 @@
 			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.ChangeLocations')}" layout="vertical" width="90%">
 				<mx:HBox width="100%">
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.Location')}:" fontWeight="bold"/>
-					<adobe:AutoComplete id="location_ac" dataProvider="{locationsArray}" labelField="name"/>
+					<components:EditableComboBox id="location_ac"
+						dataProvider="{locationsArray}" labelField="name" editable="false" optional="true"/>
+					<!--<adobe:AutoComplete id="location_ac" dataProvider="{locationsArray}" labelField="name"/>-->
 				</mx:HBox>
 				<mx:DataGrid id="deliveryjobs_location_grid" dataProvider="{deliveryTicket.deliveryJobs}" allowMultipleSelection="true" width="100%">
 					<mx:columns>
