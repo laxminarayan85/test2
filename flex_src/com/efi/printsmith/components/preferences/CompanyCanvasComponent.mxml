@@ -120,7 +120,7 @@
 					
 				<mx:HBox width="520">
 					<mx:HBox width="100%" horizontalAlign="right">
-						<mx:TextArea width="400" height="63">
+						<mx:TextArea width="400" height="63" editable="false">
 							<mx:text>{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,
 								'otherPrefCmd.TheCompanyIDisprinte')}</mx:text>
 						</mx:TextArea>
