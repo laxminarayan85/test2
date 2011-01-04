@@ -187,6 +187,7 @@
 			}
 			
 			private function handleDeleteResult(event:ResultEvent):void {
+				dispatchEvent(new LabelFormatUpdateEvent(LabelFormatUpdateEvent.LABELFORMAT_UPDATE_EVENT,true));
 				dataService.getAll("LabelFormat");
 			}
 			
