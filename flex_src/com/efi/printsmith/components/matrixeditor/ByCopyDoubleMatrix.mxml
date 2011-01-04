@@ -84,51 +84,71 @@
 							value = parseFloat(this.header1.text);
 							if (isNaN(value))
 								this.header1.text = currentValue;
+							else
+								this.header1.text = value.toFixed(0);
 							break;
 						case this.header2:
 							value = parseFloat(this.header2.text);
 							if (isNaN(value))
 								this.header2.text = currentValue;
+							else
+								this.header2.text = value.toFixed(0);
 							break;
 						case this.header3:
 							value = parseFloat(this.header3.text);
 							if (isNaN(value))
 								this.header3.text = currentValue;
+							else
+								this.header3.text = value.toFixed(0);
 							break;
 						case this.header4:
 							value = parseFloat(this.header4.text);
 							if (isNaN(value))
 								this.header4.text = currentValue;
+							else
+								this.header4.text = value.toFixed(0);
 							break;
 						case this.header5:
 							value = parseFloat(this.header5.text);
 							if (isNaN(value))
 								this.header5.text = currentValue;
+							else
+								this.header5.text = value.toFixed(0);
 							break;
 						case this.header6:
 							value = parseFloat(this.header6.text);
 							if (isNaN(value))
 								this.header6.text = currentValue;
+							else
+								this.header6.text = value.toFixed(0);
 							break;
 						case this.header7:
 							value = parseFloat(this.header7.text);
 							if (isNaN(value))
 								this.header7.text = currentValue;
+							else
+								this.header7.text = value.toFixed(0);
 							break;
 						case this.header8:
 							value = parseFloat(this.header8.text);
 							if (isNaN(value))
 								this.header8.text = currentValue;
+							else
+								this.header8.text = value.toFixed(0);
 							break;
 						case this.header9:
 							value = parseFloat(this.header9.text);
 							if (isNaN(value))
 								this.header9.text = currentValue;
+							else
+								this.header9.text = value.toFixed(0);
 							break;
 						case this.header10:
 							value = parseFloat(this.header10.text);
 							if (isNaN(value))
 								this.header10.text = currentValue;
+							else
+								this.header10.text = value.toFixed(0);
 							break;
 					}
 				}
