@@ -67,9 +67,144 @@ public class DefaultDataFactory {
 			ProcessProductCodesNames();
 			ProcessDoDimension();
 			ProcessStockType();
+			ProcessLabelFormats();
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
+	}
+
+	private void ProcessLabelFormats() throws Exception {
+		List<?> labelFotmatList = (List<?>) dataservice.getAll("LabelFormat");
+
+		if (labelFotmatList.size() > 0)
+			return;
+		
+		LabelFormat labelFormat = new LabelFormat();
+		labelFormat.setName("Carton Labels");
+		labelFormat.setNoOfLabelsAcross(2.0);
+		labelFormat.setNoOfLabelsDown(3.0);
+		labelFormat.setLabelWidth(252.0);
+		labelFormat.setLabelHeight(216.0);
+		labelFormat.setLeftMargin(1.0);
+		labelFormat.setTopMargin(36.0);
+		labelFormat.setSpaceOnRight(1.0);
+		labelFormat.setSpaceOnBottom(18.0);
+		labelFormat.setMeasurements("Pixels");
+		FontDefinition fontDefinition = new FontDefinition();
+		fontDefinition.setFontName("Arial");
+		fontDefinition.setSize(12);
+		labelFormat.setFontDefinition(fontDefinition);
+		try {
+			dataservice.addUpdate(labelFormat);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
+		labelFormat = new LabelFormat();
+		labelFormat.setName("Shipping Labels");
+		labelFormat.setNoOfLabelsAcross(2.0);
+		labelFormat.setNoOfLabelsDown(4.0);
+		labelFormat.setLabelWidth(260.0);
+		labelFormat.setLabelHeight(170.0);
+		labelFormat.setLeftMargin(10.0);
+		labelFormat.setTopMargin(10.0);
+		labelFormat.setSpaceOnRight(10.0);
+		labelFormat.setSpaceOnBottom(10.0);
+		labelFormat.setMeasurements("Pixels");
+		fontDefinition = new FontDefinition();
+		fontDefinition.setFontName("Arial");
+		fontDefinition.setSize(12);
+		labelFormat.setFontDefinition(fontDefinition);
+		try {
+			dataservice.addUpdate(labelFormat);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
+		labelFormat = new LabelFormat();
+		labelFormat.setName("LaserWriter 3 x 10");
+		labelFormat.setNoOfLabelsAcross(3.0);
+		labelFormat.setNoOfLabelsDown(10.0);
+		labelFormat.setLabelWidth(185.0);
+		labelFormat.setLabelHeight(72.0);
+		labelFormat.setLeftMargin(2.0);
+		labelFormat.setTopMargin(12.0);
+		labelFormat.setSpaceOnRight(10.0);
+		labelFormat.setSpaceOnBottom(0.0);
+		labelFormat.setMeasurements("Pixels");
+		fontDefinition = new FontDefinition();
+		fontDefinition.setFontName("Arial");
+		fontDefinition.setSize(12);
+		labelFormat.setFontDefinition(fontDefinition);
+		try {
+			dataservice.addUpdate(labelFormat);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
+		labelFormat = new LabelFormat();
+		labelFormat.setName("Laser Avery 5160 3 x 10");
+		labelFormat.setNoOfLabelsAcross(3.0);
+		labelFormat.setNoOfLabelsDown(10.0);
+		labelFormat.setLabelWidth(165.0);
+		labelFormat.setLabelHeight(62.0);
+		labelFormat.setLeftMargin(2.0);
+		labelFormat.setTopMargin(18.0);
+		labelFormat.setSpaceOnRight(30.0);
+		labelFormat.setSpaceOnBottom(10.0);
+		labelFormat.setMeasurements("Pixels");
+		fontDefinition = new FontDefinition();
+		fontDefinition.setFontName("Arial");
+		fontDefinition.setSize(12);
+		labelFormat.setFontDefinition(fontDefinition);
+		try {
+			dataservice.addUpdate(labelFormat);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
+		labelFormat = new LabelFormat();
+		labelFormat.setName("ImageWriter 3 x 10");
+		labelFormat.setNoOfLabelsAcross(3.0);
+		labelFormat.setNoOfLabelsDown(10.0);
+		labelFormat.setLabelWidth(190.0);
+		labelFormat.setLabelHeight(72.0);
+		labelFormat.setLeftMargin(5.0);
+		labelFormat.setTopMargin(12.0);
+		labelFormat.setSpaceOnRight(0.0);
+		labelFormat.setSpaceOnBottom(0.0);
+		labelFormat.setMeasurements("Pixels");
+		fontDefinition = new FontDefinition();
+		fontDefinition.setFontName("Arial");
+		fontDefinition.setSize(12);
+		labelFormat.setFontDefinition(fontDefinition);
+		try {
+			dataservice.addUpdate(labelFormat);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
+		labelFormat = new LabelFormat();
+		labelFormat.setName("Laser 2 x 3");
+		labelFormat.setNoOfLabelsAcross(2.0);
+		labelFormat.setNoOfLabelsDown(3.0);
+		labelFormat.setLabelWidth(185.0);
+		labelFormat.setLabelHeight(85.0);
+		labelFormat.setLeftMargin(69.0);
+		labelFormat.setTopMargin(160.0);
+		labelFormat.setSpaceOnRight(123.0);
+		labelFormat.setSpaceOnBottom(154.0);
+		labelFormat.setMeasurements("Pixels");
+		fontDefinition = new FontDefinition();
+		fontDefinition.setFontName("Arial");
+		fontDefinition.setSize(12);
+		labelFormat.setFontDefinition(fontDefinition);
+		try {
+			dataservice.addUpdate(labelFormat);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
 	}
 
 	private void ProcessStateFile() {

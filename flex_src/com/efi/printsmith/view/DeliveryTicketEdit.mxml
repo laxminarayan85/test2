@@ -1092,7 +1092,7 @@
 					<mx:HBox width="100%">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.LabelFormat')}" fontWeight="bold"/>
 						<components:CustomComboBoxComponent id="labelformat_combo"
-							masterList="{labelFormatList}" labelFieldId="id" labelFieldName="name" updateObject="true" objectLabelFieldId="id"
+							masterList="{labelFormatList}" labelFieldId="id" labelFieldName="name" updateObject="true" objectLabelFieldId="id" updateFirstElement="true"
 							dataHolder="{deliveryTicket}" variableName="labelFormat" customText="{getCustomTextData(labelFormatList,deliveryTicket,deliveryTicket.labelFormat)}"/>
 						<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'cartonLabelCmd.DefineLabelFormat')}" click="{openLabelFormat()}"/>
 					</mx:HBox>
