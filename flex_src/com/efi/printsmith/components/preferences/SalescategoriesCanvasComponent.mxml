@@ -61,14 +61,27 @@
 								<mx:Component>
 									<components:CustomStringTextInputComponent
 										datagridControl="true" customText="{data.name}" variableName="name"
-										enabled="{outerDocument.checkEnability(data)}" disabledColor="#000000" allowSpecialCharacters="true"/>
+										enabled="{outerDocument.checkEnability(data)}" disabledColor="#000000" allowSpecialCharacters="true" maxChars="48"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>
 						
 						<mx:DataGridColumn
 							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.GLAccount')}"
-							dataField="glAccount" />
+							dataField="glAccount">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{data.glAccount}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+							<mx:itemEditor>
+								<mx:Component>
+									<components:CustomStringTextInputComponent
+										datagridControl="true" customText="{data.glAccount}" variableName="glAccount"
+										allowSpecialCharacters="true" maxChars="48"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>
 							
 					</mx:columns>
 				</mx:DataGrid>
