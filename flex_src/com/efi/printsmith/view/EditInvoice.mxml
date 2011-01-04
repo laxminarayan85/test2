@@ -2164,29 +2164,43 @@
 				<mx:DataGrid width="100%"
 							 height="100%"
 							 id="invoice_cost_grid"
-							 dataProvider="{getCostingJobsList(invoice.jobs)}">
+							 dataProvider="{getCostingJobsList(invoice.jobs)}" editable="true">
 					<mx:columns>
 						<mx:DataGridColumn headerText=""
 										   width="50"
-										   dataField="jobIndex"/>
+										   dataField="jobIndex" editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{data.jobIndex}" textAlign="center" fontWeight="bold"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>				  
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
 										   width="200"
-										   dataField="description"/>
+										   dataField="description" editable="false"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Estimated')}"
 										   width="150"
-										   labelFunction="getEstimatedCost"/>
+										   labelFunction="getEstimatedCost" editable="false"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Actual')}"
 										   width="150"
-										   labelFunction="getActualCost"/>
+										   labelFunction="getActualCost">
+							<!--<mx:itemEditor>
+								<mx:Component>
+									<components:CustomNumericTextInputComponent
+										datagridControl="true" variableName="actualCost" customText="{data.actualCost}"
+										precision="2" rounding="nearest"/>
+								</mx:Component>
+							</mx:itemEditor>-->
+						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Difference')}"
 										   width="150"
-										   labelFunction="getDifferenceValue"/>
+										   labelFunction="getDifferenceValue" editable="false"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Price')}"
 										   width="150"
 										   labelFunction="gridJobPrice"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Margin')}"
 										   width="150"
-										   labelFunction="getMarginValue"/>
+										   labelFunction="getMarginValue" editable="false"/>
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:VBox>
