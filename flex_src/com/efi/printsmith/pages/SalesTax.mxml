@@ -425,14 +425,14 @@
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="dorate" >
 				<mx:itemRenderer>
 								<mx:Component>
-									<mx:Text selectable="false" text="{outerDocument.formatValuesWithAppendZerosPrecision(4,2,true,'nearest',data.rate)}%" textAlign="right"/>
+									<mx:Text selectable="false" text="{data.rate * 100}%" textAlign="right"/>
 								</mx:Component>
 				</mx:itemRenderer>
 				<mx:itemEditor> 
 								<mx:Component>
 									<components:CustomNumericTextInputComponent datagridControl="true"
 										variableName="rate" customText="{data.rate}" 
-										precision="4" rounding="nearest" viewablePrecision="2"/>
+										precision="4"   rounding="nearest" viewablePrecision="2"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>
@@ -440,7 +440,7 @@
 				<mx:itemRenderer>  
 								<mx:Component>  
 										<components:CustomCheckBoxComponent 
-											datagridControl="true"  enabled="{outerDocument.taxTable.separateShipping}" click="{}" variableName="userForSeparateShippingTax" customText="{data.userForSeparateShippingTax}"
+											datagridControl="true"  enabled="{outerDocument.taxTable.separateShipping}" variableName="userForSeparateShippingTax" customText="{data.userForSeparateShippingTax}"
 											selectedValue="true" deSelectedValue="false" />
 								</mx:Component>
 								
@@ -448,11 +448,11 @@
 				
 				
 				</mx:DataGridColumn>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Show')}" dataField="showTax">
+			<mx:DataGridColumn editable="false" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Show')}" dataField="showTax">
 			<mx:itemRenderer>  
 								<mx:Component>  
 										<components:CustomCheckBoxComponent 
-											datagridControl="true"  enabled="true" click="{}" variableName="showTax" customText="{data.showTax}"
+											datagridControl="true"  enabled="true" variableName="showTax" customText="{data.showTax}"
 											selectedValue="true" deSelectedValue="false" />
 								</mx:Component>
 								

@@ -126,6 +126,7 @@
 		doNew();
 	}
 	private function doNew():void{
+		orderButton.enabled = false
 		Invoice_Edit.text = "";
 		job_edit.text= "";
 		cboVendor.selectedItem as Vendor;
@@ -175,6 +176,7 @@
 		
 		
 		stockOrderDataService.addUpdate(stockOrder);
+		
 	}
 	private function handleLoadStockFinish(ev:ResultEvent):void {
 		 stockFinish = ev.result as ArrayCollection;

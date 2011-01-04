@@ -533,9 +533,12 @@
 			var job:Job = new Job();
 			job = ev.result as Job;		
 						
-			var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
+		//	var paperCalWindow:PaperCalculator = PaperCalculator(PopUpManager.createPopUp(this, PaperCalculator, true));
+			
+			var paperCalWindow:PaperCalculator = new PaperCalculator();
+			Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"genericPrefCmd.PaperCalculator"), paperCalWindow);
+	    		
 			paperCalWindow.setStyle("borderAlpha", 0.9);
-
 			paperCalWindow.setdimension(dimensions)
 			job.runSize = new Dimension();
 			job.foldedSize = new Dimension();
