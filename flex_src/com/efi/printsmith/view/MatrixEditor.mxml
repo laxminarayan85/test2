@@ -987,26 +987,26 @@
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" id="select_button" enabled="true" click="doSelect();"  width="97" y="373" right="112" bottom="5"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" enabled="true" click="doClear();" id="clear_button" width="97" right="2" bottom="5"/>
 		<mx:Label x="0" y="315" text="Over Quantity" id="label1"/>
-		<mx:TextInput x="110" y="313" width="100" id="price1" tabIndex="0" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="110" y="269" width="100" id="price20" tabIndex="19" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="110" y="239" width="100" id="price19" tabIndex="18" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="110" y="209" width="100" id="price18" tabIndex="17" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="110" y="179" width="100" id="price17" tabIndex="16" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="110" y="149" width="100" id="price16" tabIndex="15" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="110" y="119" width="100" id="price15" tabIndex="14" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="110" y="89" width="100" id="price14" tabIndex="13" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="29" y="78" width="100" id="price13" tabIndex="12" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="75" y="59" width="100" id="price12" tabIndex="11" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="10" y="239" width="100" id="price11" tabIndex="10" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="10" y="209" width="100" id="price10" tabIndex="9" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="10" y="179" width="100" id="price9" tabIndex="8" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="10" y="149" width="100" id="price8" tabIndex="7" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="10" y="119" width="100" id="price7" tabIndex="6" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="10" y="89" width="100" id="price6" tabIndex="5" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="10" y="59" width="100" id="price5" tabIndex="4" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="45" y="78" width="100" id="price4" tabIndex="3" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="110" y="29" width="100" id="price3" tabIndex="2" focusOut="checkNaN(event)"/>
-		<mx:TextInput x="45" y="48" width="100" id="price2" tabIndex="1" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="313" width="100" id="price1" tabIndex="1" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="269" width="100" id="price20" tabIndex="20" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="239" width="100" id="price19" tabIndex="19" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="209" width="100" id="price18" tabIndex="18" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="179" width="100" id="price17" tabIndex="17" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="149" width="100" id="price16" tabIndex="16" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="119" width="100" id="price15" tabIndex="15" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="89" width="100" id="price14" tabIndex="14" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="29" y="78" width="100" id="price13" tabIndex="13" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="75" y="59" width="100" id="price12" tabIndex="12" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="239" width="100" id="price11" tabIndex="11" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="209" width="100" id="price10" tabIndex="10" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="179" width="100" id="price9" tabIndex="9" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="149" width="100" id="price8" tabIndex="8" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="119" width="100" id="price7" tabIndex="7" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="89" width="100" id="price6" tabIndex="6" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="10" y="59" width="100" id="price5" tabIndex="5" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="45" y="78" width="100" id="price4" tabIndex="4" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="110" y="29" width="100" id="price3" tabIndex="3" focusOut="checkNaN(event)"/>
+		<mx:TextInput x="45" y="48" width="100" id="price2" tabIndex="2" focusOut="checkNaN(event)"/>
 
 	</mx:Canvas>
 </mx:TitleWindow>
