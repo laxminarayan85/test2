@@ -639,6 +639,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.JobNotesAddedEvent;
 			import mx.events.CloseEvent;
 			import mx.messaging.Producer;
 			import mx.events.CollectionEvent;
@@ -1068,11 +1069,17 @@
 				this.job.parentInvoice = invoice as InvoiceBase;
 			}
 
-			private function doGet():void
+			private function openJobNotes():void
 			{
-
+				var jneditor:JobNotesEditor = PopUpManager.createPopUp(this, JobNotesEditor, true) as JobNotesEditor;
+				jneditor.notes = job.jobNotes;
+				jneditor.addEventListener(JobNotesAddedEvent.JOBNOTESADDED, onJobNotesAdded);
+				PopUpManager.centerPopUp(jneditor);
 			}
-
+			
+			private function onJobNotesAdded(evt:JobNotesAddedEvent):void	{
+				job.jobNotes = evt.notes;
+			}
 			public function setJob(job2:Job):void
 			{
 				this.job=job2;
@@ -1140,7 +1147,7 @@
 //					job.signatures=parseInt(num_of_sig.text);
 				job.taxable=check_taxtable.selected;
 				job.numUp=parseInt(job_up.text);
-				job.jobNotes=job_notes.text;
+				//job.jobNotes=job_notes.text;
 				job.jobTicketNotes=check_job_notes.selected;
 				job.frontColors=parseInt(this.front_colors_text.text);
 				//job.frontInks=this.front_inks_text.text;
@@ -3031,7 +3038,7 @@
 					   y="10"
 					   width="38"
 					   height="38"
-					   click="doGet();"
+					   click="openJobNotes();"
 					   id="note_pad_button">
 				<mx:icon>@Embed(source='../../../../assets/notes.png')</mx:icon>
 			</mx:LinkButton>
@@ -3640,7 +3647,7 @@
 									<mx:TextArea x="79"
 												 y="10"
 												 width="277"
-												 id="job_notes"
+												 id="job_notes" 
 												 text="{job.jobNotes}"/>
 									<mx:Label x="-36"
 											  y="11"

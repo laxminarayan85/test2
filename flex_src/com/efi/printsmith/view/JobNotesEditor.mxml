@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="300" height="200" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobNotesCmd.JobTicketNotes')}">
+<mx:Script>
+	<![CDATA[
+		import com.efi.printsmith.events.JobNotesAddedEvent;
+		import mx.managers.PopUpManager;
+		import com.efi.printsmith.data.Job;
+		
+		[Bindable] private var _notes:String;
+		
+		public function set notes (n:String):void	{
+			_notes = n;
+			txtJobNotes.setFocus();
+		}
+		
+		private function onOK():void	{
+			dispatchEvent(new JobNotesAddedEvent(JobNotesAddedEvent.JOBNOTESADDED, txtJobNotes.text));
+			closeWindow();
+		}
+		
+		private function closeWindow():void	{
+			PopUpManager.removePopUp(this);
+		}
+	]]>
+</mx:Script>
+	<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobNotesCmd.Enterspecialinstruct')}" width="100%" height="5%" />
+	<mx:TextArea id="txtJobNotes" text="{_notes}" height="75%" width="100%" />
+	<mx:HBox height="20%" width="100%">
+		<mx:Button id="btnOK" click="onOK();" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}"/>
+		<mx:Button id="btnCancel" click="closeWindow();" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"/>
+	</mx:HBox>
+</mx:TitleWindow>

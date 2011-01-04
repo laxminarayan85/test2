@@ -1817,10 +1817,10 @@
 			private function contactLabel(item:Object):String {
 				var tempItem:Contact = item as Contact;
 				if ((tempItem.tempFlag != null) && (tempItem.tempFlag == true))	{
-					return "*** Temporary Contact ***";
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "custDataCmd.TemporaryContact");
 				}
 				if ((tempItem["newFlag"] != null) && (tempItem["newFlag"] == true))	{
-					return "*** New Contact ***";
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "custDataCmd.NEWCONTACT");
 				}
 				
 				var returnString:String = tempItem.lastName + ", " + tempItem.firstName;
