@@ -64,6 +64,7 @@ width="938" height="507"  creationComplete="init()"
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="getByAccountId" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadProductionDatesResult(event)"/>
 </mx:RemoteObject>
 <mx:Producer id="producer" destination="invoicebase"/>
 	<mx:Consumer id="consumer" destination="invoicebase" message="messageHandler(event.message)"/>
@@ -76,6 +77,9 @@ width="938" height="507"  creationComplete="init()"
 	</mx:RemoteObject>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.ProductionDates;
+	import com.efi.printsmith.data.ProductionCopiers;
+	import com.efi.printsmith.data.ProductionLocations;
 	import com.efi.printsmith.data.Dimension;
 	import com.efi.printsmith.data.Job;
 	import com.efi.printsmith.data.JobBase;
@@ -110,10 +114,14 @@ width="938" height="507"  creationComplete="init()"
 	
 	[Bindable]
     private var estimates:ArrayCollection = new ArrayCollection(); 
+    
+    [Bindable]
+    private var dates:ArrayCollection = new ArrayCollection();
 	
 	public function init():void {
 		consumer.subscribe();
 		dimensionDataService.getAll("Dimension");
+		dataService.getAll("ProductionDates");
 	}  
 	
 	private function doGet():void {
@@ -125,6 +133,47 @@ width="938" height="507"  creationComplete="init()"
 		showCutOutWindow.setStyle("borderAlpha", 0.9);
 	 	showCutOutWindow.setJob(job);
 	 }
+	 
+	private function handleLoadProductionDatesResult(ev:ResultEvent):void {
+		dates = ev.result as ArrayCollection;
+		
+		for(var i:int = 0;i < dates.length && i < 16;i++) {
+			var date:com.efi.printsmith.data.ProductionDates = dates[i] as com.efi.printsmith.data.ProductionDates;
+			
+			if (i == 0)
+				prod_date_1.text = date.name;
+			else if (i == 1)
+				prod_date_2.text = date.name;
+			else if (i == 2)
+				prod_date_3.text = date.name;
+			else if (i == 3)
+				prod_date_4.text = date.name;
+			else if (i == 4)
+				prod_date_5.text = date.name;
+			else if (i == 5)
+				prod_date_6.text = date.name;
+			else if (i == 6)
+				prod_date_7.text = date.name;
+			else if (i == 7)
+				prod_date_8.text = date.name;
+			else if (i == 8)
+				prod_date_9.text = date.name;
+			else if (i == 9)
+				prod_date_10.text = date.name;
+			else if (i == 10)
+				prod_date_11.text = date.name;
+			else if (i == 11)
+				prod_date_12.text = date.name;
+			else if (i == 12)
+				prod_date_13.text = date.name;
+			else if (i == 13)
+				prod_date_14.text = date.name;
+			else if (i == 14)
+				prod_date_15.text = date.name;
+			else if (i == 15)
+				prod_date_16.text = date.name;
+		}
+	}
 	
 	private function handleLoadDimensionResult(ev:ResultEvent):void
 	{
@@ -517,22 +566,22 @@ width="938" height="507"  creationComplete="init()"
 	<mx:Label x="379" y="31" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Area')}" width="101" textAlign="right" id="label10"/>
 	<mx:Text x="488" y="31" text="" width="60" textAlign="right" id="area"/>
 	<mx:Label x="380" y="12" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.Out')}" width="100" textAlign="right" id="label11"/>
-	<mx:Label x="595" y="23" text="Proof Back:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="44" text="Blueline:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="65" text="Blueline Back:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="2" text="Type Setting:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="151" text="Copied:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="172" text="Bindery:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="253" text="Mailing:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="193" text="Cut:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="235" text="Finished:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="213" text="Folded:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="274" text="Outside Service:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="130" text="Printed:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="296" text="Other:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="319" text="Delivered:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="86" text="Stock Cut:" width="97" textAlign="right"/>
-	<mx:Label x="595" y="107" text="At Press:" width="97" textAlign="right"/>
+	<mx:Label x="595" y="23" text="Proof Back:" width="97" textAlign="right" id="prod_date_2"/>
+	<mx:Label x="595" y="44" text="Blueline:" width="97" textAlign="right" id="prod_date_3"/>
+	<mx:Label x="595" y="65" text="Blueline Back:" width="97" textAlign="right" id="prod_date_4"/>
+	<mx:Label x="595" y="2" text="Type Setting:" width="97" textAlign="right" id="prod_date_1"/>
+	<mx:Label x="595" y="151" text="Copied:" width="97" textAlign="right" id="prod_date_8"/>
+	<mx:Label x="595" y="172" text="Bindery:" width="97" textAlign="right" id="prod_date_9"/>
+	<mx:Label x="595" y="253" text="Mailing:" width="97" textAlign="right" id="prod_date_13"/>
+	<mx:Label x="595" y="193" text="Cut:" width="97" textAlign="right" id="prod_date_10"/>
+	<mx:Label x="595" y="235" text="Finished:" width="97" textAlign="right" id="prod_date_12"/>
+	<mx:Label x="595" y="213" text="Folded:" width="97" textAlign="right" id="prod_date_11"/>
+	<mx:Label x="595" y="274" text="Outside Service:" width="97" textAlign="right" id="prod_date_14"/>
+	<mx:Label x="595" y="130" text="Printed:" width="97" textAlign="right" id="prod_date_7"/>
+	<mx:Label x="595" y="296" text="Other:" width="97" textAlign="right" id="prod_date_15"/>
+	<mx:Label x="595" y="319" text="Delivered:" width="97" textAlign="right" id="prod_date_16"/>
+	<mx:Label x="595" y="86" text="Stock Cut:" width="97" textAlign="right" id="prod_date_5"/>
+	<mx:Label x="595" y="107" text="At Press:" width="97" textAlign="right" id="prod_date_6"/>
 	<mx:Label x="380" y="54" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobDataCmd.per')}" width="100" textAlign="right" id="label9"/>
 	<mx:TextInput x="488" y="10" text="" width="60" textAlign="right" height="20" id="number_out" change="doNumOutChange()" focusOut="fieldChanged(event)"/>
 	<mx:TextInput x="488" y="52" width="61" textAlign="right" height="20" id="per" change="doPerChange()" focusOut="fieldChanged(event)"/>
