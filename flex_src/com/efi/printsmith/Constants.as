@@ -71,6 +71,12 @@ package com.efi.printsmith
 		static public const ACCOUNT_HISTORY_TYPE_DEPOSITTAKEN:String = "Deposit Taken";
 		static public const ACCOUNT_HISTORY_TYPE_DEPOSITRETURN:String = "Deposit Returned";
 
+		static public const ACCOUNT_TYPE_CASH_CHECK_CREDIT:String = "cash_check_credit";
+		static public const ACCOUNT_TYPE_FULL_DEPOSIT:String = "full_deposit";
+		static public const ACCOUNT_TYPE_CASH_ONLY:String = "cash_only";
+		static public const ACCOUNT_TYPE_CHARGE:String = "charge_acct";
+		static public const ACCOUNT_TYPE_CARD_ON_FILE:String = "credit_card_on_file";
+
 		static public const POS_CASH_REGISTER_PAYMODE_CASH:String = "Cash";
 		static public const POS_CASH_REGISTER_PAYMODE_CREDITCARD:String = "Credit Card";
 		static public const POS_CASH_REGISTER_PAYMODE_CHECK:String = "Check";

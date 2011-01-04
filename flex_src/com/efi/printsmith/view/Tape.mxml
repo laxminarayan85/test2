@@ -238,9 +238,9 @@
 			description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.by");
 			description = StringUtil.substitute(description,tempSession.user.name); 
 			if (tempSession.account != null) {
-				temp = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.Acct");
-				temp = StringUtil.substitute(temp,tempSession.account.title); 
-				description = description+ "  " + temp;
+				temp = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.AcctNumAndName");
+				temp = StringUtil.substitute(temp,tempSession.account.displayId.toString(), tempSession.account.title); 
+				description = description + "  " + temp;
 			}
 			return (description);
 		}
