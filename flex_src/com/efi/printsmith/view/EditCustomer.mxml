@@ -751,6 +751,8 @@
 			account.type = acct_type.selectedValue.toString();
 		if (acct_status.selectedValue != null)
 			account.status = acct_status.selectedValue.toString();
+		if( security_level_edit.text != null)
+			account.access_level = parseInt(security_level_edit.text);
 	}
 	private function addSymbolFinance():void{
 		var index:int;
@@ -1818,7 +1820,7 @@
 						<mx:Button x="216" y="8" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="inv_estimate_charges_edit" click="doEstInvCharge();"/>
 						<mx:Button x="216" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')}" id="job_charges_edit" click="doJobCharges();"/>
 					</mx:Panel>
-					<mx:TextInput x="606" y="232" id="security_level_edit" width="50" restrict="0-9"/>
+					<mx:TextInput x="606" y="232" id="security_level_edit" width="50" restrict="0-9" maxChars="2" text="{account.access_level}"/>
 					<mx:TextInput x="254" y="10" width="91" id="masteracctId" focusOut="getAccount()" />
 				</mx:Canvas>
 			</mx:Canvas>

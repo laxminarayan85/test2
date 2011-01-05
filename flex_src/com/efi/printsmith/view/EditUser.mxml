@@ -232,7 +232,7 @@ showCloseButton="false"
 	private function setUser():void{
 		user1= new Users();  
 		user1.accessGroup = new AccessGroup();
-		user1.accessLevel = new AccessLevel();
+		
 	}       
 	private function handleLoadResult(ev:ResultEvent):void {
 		userslist = ev.result as ArrayCollection;
@@ -254,7 +254,7 @@ showCloseButton="false"
 		user1.name= nameField.text;
 	//	user1.password = passwordField.text;
 		user1.accessGroup= accessGroupList.selectedItem as AccessGroup;
-		user1.accessLevel= accessLevelList.selectedItem as AccessLevel;
+		user1.accessLevel=  parseInt(access_level.text)
 		user1.forcePasswordChange = force_password.selected;
 		user1.lockSalesRep = lock_salesrep.selected;
 		user1.noCashReturn= return_cash.selected;
@@ -295,9 +295,7 @@ showCloseButton="false"
  	if (user1 != null){ 
 		if (user1.accessGroup != null)			
 				accessGroupList.selectedIndex = findItem(user1.accessGroup.name, accessGroups);
-		if (user1.accessLevel != null)			
-				accessLevelList.selectedIndex = findItem(user1.accessLevel.name, accessLevels);
-		
+			
 		force_password.selected = user1.forcePasswordChange;
 		lock_salesrep.selected = user1.lockSalesRep;
 		return_cash.selected = user1.noCashReturn;
@@ -418,8 +416,8 @@ showCloseButton="false"
 		var tmpUser:Users ;
 		tmpUser = item as Users;
 		
-		if (tmpUser != null && tmpUser.accessLevel != null && tmpUser.accessLevel.name != null && tmpUser.accessLevel.name != "") {
-			return tmpUser.accessLevel.name;
+		if (tmpUser != null && tmpUser.accessLevel.toString() != "") {
+			return tmpUser.accessLevel.toString();
 		} else {
 			return "None";
 		}
@@ -456,7 +454,6 @@ showCloseButton="false"
 	<mx:Label x="10" y="220.5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessGroup')}" textAlign="right" width="89"/>
 	<mx:Label x="-14" y="250.5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessLevel')}" textAlign="right" visible="false"/>
 	<mx:ComboBox x="107" y="218" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList" change="AccessGroupChange();"> </mx:ComboBox>
-	<mx:ComboBox visible="false" x="107" y="249" height="21" id="accessLevelList" width="86"></mx:ComboBox>
 	<mx:Button x="103" y="473" click="deleteUser();" width="38" height="38">
 		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 	</mx:Button>
@@ -465,6 +462,8 @@ showCloseButton="false"
 	<mx:Label x="107" y="519" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}"/>
 	<mx:CheckBox x="107" y="188" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Disableusername')}" selected="{user1.disableUser}" id="disable_check"/>
 	<mx:Button x="90" y="279" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chgpassCmd.SetUsersPassword')}" width="281" click="doPassword();"/>
+	<mx:Label x="28" y="253" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessLevel')}" textAlign="right" width="99"/>
+	<mx:TextInput  restrict="0-9" x="107" y="251" width="45" maxChars="2" id="access_level" text="{user1.accessLevel}"/>
 	
 	
 </mx:Canvas>

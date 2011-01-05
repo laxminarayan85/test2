@@ -130,11 +130,6 @@ public class Users extends ModelBase {
 	/**
    * @generated
    */
-  public static final String USERACCESSLEVEL = "UserAccessLevel";
-
-	/**
-   * @generated
-   */
   public static final String PASSWORDCHANGEDDATE = "PasswordChangedDate";
 
 	/**
@@ -418,27 +413,27 @@ public class Users extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @Basic
+	@ManyToOne()
 	@Where(clause="isdeleted <> 'TRUE'")
-	private AccessLevel accessLevel;
+	private Integer accessLevel;
 	
 	/**
 	 * @generated
  	 */
-	public AccessLevel getAccessLevel(){
+	public Integer getAccessLevel(){
     return accessLevel; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setAccessLevel(AccessLevel newVal) {
+   * @generated
+   */	
+  public void setAccessLevel(Integer newVal) {
     this.accessLevel = newVal;
   }
-	
- 	
-	
+
+
 	/**
 	 * @generated
 	 */	
@@ -626,28 +621,6 @@ public class Users extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Integer userAccessLevel;
-
-	/**
-   * @generated
- 	 */
-  public Integer getUserAccessLevel(){
-    return userAccessLevel; 
-  }
-
-
-	/**
-   * @generated
-   */	
-  public void setUserAccessLevel(Integer newVal) {
-    this.userAccessLevel = newVal;
-  }
-
-
-	/**
-   * @generated
-   */	
- 	@Basic
   private Date passwordChangedDate;
 
 	/**
@@ -692,7 +665,6 @@ public class Users extends ModelBase {
     if (PREVPASSWORD4.equals(propertyName)) return getPrevPassword4();
     if (LOGINATTEMPTS.equals(propertyName)) return getLoginAttempts();
     if (LASTLOGIN.equals(propertyName)) return getLastLogin();
-    if (USERACCESSLEVEL.equals(propertyName)) return getUserAccessLevel();
     if (PASSWORDCHANGEDDATE.equals(propertyName)) return getPasswordChangedDate();
     return super.getProperty(propertyName);
   }
@@ -714,7 +686,7 @@ public class Users extends ModelBase {
     if (NOCASHRETURN.equals(propertyName)) setNoCashReturn((Boolean)newValue); else
     if (SHOWUSERNAMELOG.equals(propertyName)) setShowUserNameLog((Boolean)newValue); else
     if (QUICKACCESS.equals(propertyName)) setQuickAccess((Boolean)newValue); else
-    if (ACCESSLEVEL.equals(propertyName)) setAccessLevel((AccessLevel)newValue); else
+    if (ACCESSLEVEL.equals(propertyName)) setAccessLevel((Integer)newValue); else
     if (ACCESSGROUP.equals(propertyName)) setAccessGroup((AccessGroup)newValue); else
     if (DISABLEUSER.equals(propertyName)) setDisableUser((Boolean)newValue); else
     if (PREVPASSWORD1.equals(propertyName)) setPrevPassword1((String)newValue); else
@@ -723,7 +695,6 @@ public class Users extends ModelBase {
     if (PREVPASSWORD4.equals(propertyName)) setPrevPassword4((String)newValue); else
     if (LOGINATTEMPTS.equals(propertyName)) setLoginAttempts((Integer)newValue); else
     if (LASTLOGIN.equals(propertyName)) setLastLogin((Date)newValue); else
-    if (USERACCESSLEVEL.equals(propertyName)) setUserAccessLevel((Integer)newValue); else
     if (PASSWORDCHANGEDDATE.equals(propertyName)) setPasswordChangedDate((Date)newValue); else
     super.setProperty(propertyName, newValue);
   }
@@ -757,7 +728,7 @@ public class Users extends ModelBase {
     if (QUICKACCESS.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (ACCESSLEVEL.equals(propertyName)) 
-      return new Class<?>[] {AccessLevel.class};		
+      return new Class<?>[] {Integer.class};		
     if (ACCESSGROUP.equals(propertyName)) 
       return new Class<?>[] {AccessGroup.class};		
     if (DISABLEUSER.equals(propertyName)) 
@@ -774,8 +745,6 @@ public class Users extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (LASTLOGIN.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
-    if (USERACCESSLEVEL.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
     if (PASSWORDCHANGEDDATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
     return super.getPropertyClass(propertyName);
@@ -808,7 +777,6 @@ public class Users extends ModelBase {
     if (PREVPASSWORD4.equals(propertyName)) return Users.class;
     if (LOGINATTEMPTS.equals(propertyName)) return Users.class;
     if (LASTLOGIN.equals(propertyName)) return Users.class;
-    if (USERACCESSLEVEL.equals(propertyName)) return Users.class;
     if (PASSWORDCHANGEDDATE.equals(propertyName)) return Users.class;
     return super.getPropertyOwner(propertyName);
   }
@@ -860,8 +828,6 @@ public class Users extends ModelBase {
     if (! SmartEquals(getLoginAttempts(), objT.getLoginAttempts()))
       return false;
     if (! SmartEquals(getLastLogin(), objT.getLastLogin()))
-      return false;
-    if (! SmartEquals(getUserAccessLevel(), objT.getUserAccessLevel()))
       return false;
     if (! SmartEquals(getPasswordChangedDate(), objT.getPasswordChangedDate()))
       return false;

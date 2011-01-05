@@ -396,6 +396,11 @@ public class Account extends ModelBase {
 	public static final String WEBCATALOG = "WebCatalog";
 
 	/**
+   * @generated
+   */
+  public static final String ACCESS_LEVEL = "Access_level";
+
+	/**
 	 * @generated
 	 */
 	public Account() {
@@ -2570,6 +2575,26 @@ public class Account extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer access_level;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getAccess_level(){
+    return access_level; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setAccess_level(Integer newVal) {
+    this.access_level = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2662,6 +2687,7 @@ public class Account extends ModelBase {
     if (WEBREGISTERED.equals(propertyName)) return getWebRegistered();
     if (WEBCOMPANYID.equals(propertyName)) return getWebCompanyId();
     if (WEBCATALOG.equals(propertyName)) return getWebCatalog();
+    if (ACCESS_LEVEL.equals(propertyName)) return getAccess_level();
     return super.getProperty(propertyName);
   }
 	
@@ -2758,6 +2784,7 @@ public class Account extends ModelBase {
     if (WEBREGISTERED.equals(propertyName)) setWebRegistered((Boolean)newValue); else
     if (WEBCOMPANYID.equals(propertyName)) setWebCompanyId((WebCompany)newValue); else
     if (WEBCATALOG.equals(propertyName)) setWebCatalog((WebCatalogs)newValue); else
+    if (ACCESS_LEVEL.equals(propertyName)) setAccess_level((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2941,6 +2968,8 @@ public class Account extends ModelBase {
       return new Class<?>[] {WebCompany.class};		
     if (WEBCATALOG.equals(propertyName)) 
       return new Class<?>[] {WebCatalogs.class};		
+    if (ACCESS_LEVEL.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -3038,6 +3067,7 @@ public class Account extends ModelBase {
     if (WEBREGISTERED.equals(propertyName)) return Account.class;
     if (WEBCOMPANYID.equals(propertyName)) return Account.class;
     if (WEBCATALOG.equals(propertyName)) return Account.class;
+    if (ACCESS_LEVEL.equals(propertyName)) return Account.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -3222,6 +3252,8 @@ public class Account extends ModelBase {
     if (! SmartEquals(getWebCompanyId(), objT.getWebCompanyId()))
       return false;
     if (! SmartEquals(getWebCatalog(), objT.getWebCatalog()))
+      return false;
+    if (! SmartEquals(getAccess_level(), objT.getAccess_level()))
       return false;
     return true;
   }			

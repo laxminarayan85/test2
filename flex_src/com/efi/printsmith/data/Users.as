@@ -25,7 +25,7 @@ package com.efi.printsmith.data
 		public var noCashReturn:Boolean = false;
 		public var showUserNameLog:Boolean = false;
 		public var quickAccess:Boolean = false;
-		public var accessLevel:AccessLevel;
+		public var accessLevel:int = 0;
 		public var accessGroup:AccessGroup;
 		public var disableUser:Boolean = false;
 		public var prevPassword1:String = "";
@@ -34,7 +34,6 @@ package com.efi.printsmith.data
 		public var prevPassword4:String = "";
 		public var loginAttempts:int = 0;
 		public var lastLogin:Date = new Date();
-		public var userAccessLevel:int = 0;
 		public var passwordChangedDate:Date = new Date();
 	
 	}
