@@ -510,6 +510,12 @@
 			<mx:RemoveChild target="{button1}"/>
 		</mx:State>
 	</mx:states>
+	<mx:RemoteObject id="prefStocksDataService"
+					 destination="dataService">
+		<mx:method name="getSingle"
+		   fault="handleFault(event)"
+		   result="handleLoadPrefStocksResult(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="dataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -639,6 +645,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.PreferencesStocks;
 			import com.efi.printsmith.events.JobNotesAddedEvent;
 			import mx.events.CloseEvent;
 			import mx.messaging.Producer;
@@ -812,6 +819,9 @@
 			[Bindable] private var stockGroups:ArrayCollection = new ArrayCollection();  
 			private var costingCopierIsUsePress:Boolean = false;
 			private var currentSizeName:String = "";
+			
+			[Bindable] private var preferencesStocks:PreferencesStocks;
+			
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
 				if (systemPreferencesArray.length > 0)
@@ -905,6 +915,7 @@
 //				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 				multiQtyCombo.selectedItem = null;
 				multiQtyCombo.selectedIndex = -1;
+				prefStocksDataService.getSingle("PreferencesStocks");
 			}
 			
 			private function handleLoadGroupResult(event:ResultEvent):void {
@@ -1369,6 +1380,10 @@
 			private function handleLoadResult(ev:ResultEvent):void
 			{
 				//jobs = ev.result as ArrayCollection;
+			}
+			
+			private function handleLoadPrefStocksResult(event:ResultEvent):void {
+				preferencesStocks = event.result as PreferencesStocks;
 			}
 
 			private function handleLoadDimensionResult(ev:ResultEvent):void
@@ -3003,12 +3018,197 @@
 				multiQtyViewWindow.multiQtyJob = this.job;
 			}
 			
-			private function getStockName(stockDefObj:StockDefinition):String {
-				if(stockDefObj!=null){
-					return stockDefObj.weight+"# "+stockDefObj.name;
+			private function getStockName(stockDefObj:StockDefinition,preferencesStocksObj:PreferencesStocks):String {
+				var displayedText:String = "";
+				if(preferencesStocksObj!=null){
+					if(stockDefObj!=null){
+						if(preferencesStocksObj.weight!=null && preferencesStocksObj.weight!=""){
+							if(stockDefObj.uom!=null && stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Caliper')) {
+								displayedText = preferencesStocksObj.weight;
+								if(displayedText.indexOf("^0")!=-1) {
+									displayedText = displayedText.replace("^0",stockDefObj.weight);
+								}
+								if(displayedText.indexOf("^1")!=-1) {
+									displayedText = displayedText.replace("^1",stockDefObj.name);
+								}
+								if(displayedText.indexOf("^2")!=-1) {
+									if(stockDefObj.finish!=null) {
+										displayedText = displayedText.replace("^2",stockDefObj.finish.name);
+									} else {
+										displayedText = displayedText.replace("^2","");
+									}
+								}
+								if(displayedText.indexOf("^3")!=-1) {
+									displayedText = displayedText.replace("^3",getCertifiedText(stockDefObj,preferencesStocksObj));
+								}
+								if(displayedText==preferencesStocksObj.weight){
+									return stockDefObj.name;
+								}
+								return displayedText;
+							}
+							return stockDefObj.name;
+						} else if(preferencesStocksObj.points!=null && preferencesStocksObj.points!=""){
+							if(stockDefObj.uom!=null && (stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Points')
+								|| stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Mils')
+								|| stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Thous'))) {
+									
+								displayedText = preferencesStocksObj.points;
+								if(displayedText.indexOf("^0")!=-1) {
+									displayedText = displayedText.replace("^0",stockDefObj.weight);
+								}
+								if(displayedText.indexOf("^1")!=-1) {
+									displayedText = displayedText.replace("^1",stockDefObj.name);
+								}
+								if(displayedText.indexOf("^2")!=-1) {
+									if(stockDefObj.finish!=null) {
+										displayedText = displayedText.replace("^2",stockDefObj.finish.name);
+									} else {
+										displayedText = displayedText.replace("^2","");
+									}
+								}
+								if(displayedText.indexOf("^3")!=-1) {
+									displayedText = displayedText.replace("^3",getCertifiedText(stockDefObj,preferencesStocksObj));
+								}
+								if(displayedText==preferencesStocksObj.points){
+									return stockDefObj.name;
+								}
+								return displayedText;
+							}
+							return stockDefObj.name;
+						} else if(preferencesStocksObj.microns!=null && preferencesStocksObj.microns!=""){
+							if(stockDefObj.uom!=null && stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Microns')) {
+								displayedText = preferencesStocksObj.microns;
+								if(displayedText.indexOf("^0")!=-1) {
+									displayedText = displayedText.replace("^0",stockDefObj.weight);
+								}
+								if(displayedText.indexOf("^1")!=-1) {
+									displayedText = displayedText.replace("^1",stockDefObj.name);
+								}
+								if(displayedText.indexOf("^2")!=-1) {
+									if(stockDefObj.finish!=null) {
+										displayedText = displayedText.replace("^2",stockDefObj.finish.name);
+									} else {
+										displayedText = displayedText.replace("^2","");
+									}
+								}
+								if(displayedText.indexOf("^3")!=-1) {
+									displayedText = displayedText.replace("^3",getCertifiedText(stockDefObj,preferencesStocksObj));
+								}
+								if(displayedText==preferencesStocksObj.microns){
+									return stockDefObj.name;
+								}
+								return displayedText;
+							}
+							return stockDefObj.name;
+						} else if(preferencesStocksObj.plies!=null && preferencesStocksObj.plies!=""){
+							if(stockDefObj.uom!=null && stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Plies')) {
+								displayedText = preferencesStocksObj.plies;
+								if(displayedText.indexOf("^0")!=-1) {
+									displayedText = displayedText.replace("^0",stockDefObj.weight);
+								}
+								if(displayedText.indexOf("^1")!=-1) {
+									displayedText = displayedText.replace("^1",stockDefObj.name);
+								}
+								if(displayedText.indexOf("^2")!=-1) {
+									if(stockDefObj.finish!=null) {
+										displayedText = displayedText.replace("^2",stockDefObj.finish.name);
+									} else {
+										displayedText = displayedText.replace("^2","");
+									}
+								}
+								if(displayedText.indexOf("^3")!=-1) {
+									displayedText = displayedText.replace("^3",getCertifiedText(stockDefObj,preferencesStocksObj));
+								}
+								if(displayedText==preferencesStocksObj.plies){
+									return stockDefObj.name;
+								}
+								return displayedText;
+							}
+							return stockDefObj.name;
+						} else if(preferencesStocksObj.millimeters!=null && preferencesStocksObj.millimeters!=""){
+							if(stockDefObj.uom!=null && stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Millimeters')) {
+								displayedText = preferencesStocksObj.millimeters;
+								if(displayedText.indexOf("^0")!=-1) {
+									displayedText = displayedText.replace("^0",stockDefObj.weight);
+								}
+								if(displayedText.indexOf("^1")!=-1) {
+									displayedText = displayedText.replace("^1",stockDefObj.name);
+								}
+								if(displayedText.indexOf("^2")!=-1) {
+									if(stockDefObj.finish!=null) {
+										displayedText = displayedText.replace("^2",stockDefObj.finish.name);
+									} else {
+										displayedText = displayedText.replace("^2","");
+									}
+								}
+								if(displayedText.indexOf("^3")!=-1) {
+									displayedText = displayedText.replace("^3",getCertifiedText(stockDefObj,preferencesStocksObj));
+								}
+								if(displayedText==preferencesStocksObj.millimeters){
+									return stockDefObj.name;
+								}
+								return displayedText;
+							}
+							return stockDefObj.name;
+						}
+					}
+				} else {
+					return stockDefObj.name;
 				}
 				return "";
 			}
+			
+			private function getCertifiedText(stockDefObj:StockDefinition, preferencesStocksObj:PreferencesStocks):String {
+				var certifiedString:String = "";
+				if(preferencesStocksObj!=null && stockDefObj!=null){
+					if(preferencesStocksObj.includeCerifiedOption || preferencesStocksObj.includeManagementType || preferencesStocksObj.includeRecyclePercent) {
+						if(stockDefObj.fscCertified || stockDefObj.sfiCertified || stockDefObj.greenSealCertified){
+							if(preferencesStocksObj.open!=null && preferencesStocksObj.open!=""){
+								certifiedString = preferencesStocksObj.open;
+							} else {
+								certifiedString = "(";
+							}
+							if(preferencesStocksObj.includeCerifiedOption){
+								if(stockDefObj.fscCertified) {
+									certifiedString = certifiedString+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.FSC');
+								}
+								if(stockDefObj.sfiCertified) {
+									if(stockDefObj.fscCertified){
+										certifiedString = certifiedString+", "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.SFI');
+									} else {
+										certifiedString = certifiedString+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.SFI');
+									}
+								}
+								if(stockDefObj.greenSealCertified) {
+									if(stockDefObj.fscCertified || stockDefObj.sfiCertified){ 
+										certifiedString = certifiedString+", "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.GreenSeal');
+									} else { 
+										certifiedString = certifiedString+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.GreenSeal');
+									}
+								}
+								certifiedString = certifiedString+" "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.Certified');
+							}
+						}
+						if(preferencesStocksObj.includeManagementType){
+							if(stockDefObj.forestManagement!=null && stockDefObj.forestManagement!="") {
+								certifiedString = certifiedString+" "+stockDefObj.forestManagement;
+							}
+						}
+						if(preferencesStocksObj.includeRecyclePercent){
+							if(!(isNaN(stockDefObj.pcwRecycledPercent)) && stockDefObj.pcwRecycledPercent!=0) {
+								certifiedString = certifiedString+" "+StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.Recycled0'),stockDefObj.pcwRecycledPercent+"%");
+							} 
+						}
+						if(preferencesStocksObj.close!=null && preferencesStocksObj.close!=""){
+							certifiedString = certifiedString+preferencesStocksObj.close;
+						} else {
+							certifiedString = certifiedString+")";
+						}
+					}
+				}
+				return certifiedString;
+			}
+			
 		]]>
 
 	</mx:Script>
@@ -3583,7 +3783,7 @@
 												  height="20"
 												  id="job_stock"
 												  tabIndex="9"
-												  text="{getStockName(job.stock)}"
+												  text="{getStockName(job.stock,preferencesStocks)}"
 												  fontSize="9" mouseDown="textInputClick(event)" />
 									<mx:Label x="6"
 											  y="37"
