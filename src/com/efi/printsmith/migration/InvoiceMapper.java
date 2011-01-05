@@ -18,6 +18,7 @@ import com.efi.printsmith.data.Estimate;
 import com.efi.printsmith.data.NotePad;
 import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
+import com.efi.printsmith.data.TaxTable;
 public class InvoiceMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(InvoiceMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
@@ -117,7 +118,9 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("tax code".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("tax table".equals(currentFieldToken)) {
-				/* TODO */
+				TaxTable taxTable = dataService.getByTaxTableName(currentImportToken);
+				if (taxTable != null)
+					invoice.setTaxTable(taxTable);
 			} else if ("ship mode".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("print count".equals(currentFieldToken)) {
@@ -875,7 +878,9 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("tax code".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("tax table".equals(currentFieldToken)) {
-				/* TODO */
+				TaxTable taxTable = dataService.getByTaxTableName(currentImportToken);
+				if (taxTable != null)
+					invoice.setTaxTable(taxTable);
 			} else if ("ship mode".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("print count".equals(currentFieldToken)) {

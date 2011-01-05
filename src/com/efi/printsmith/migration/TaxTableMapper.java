@@ -62,6 +62,11 @@ public class TaxTableMapper extends ImportMapper {
 			} else if ("taxTableTableID".equals(currentFieldToken)) {
 				taxTable.setPrevId(currentImportToken);
 			} else if ("taxTableTableName".equals(currentFieldToken)) {
+				TaxTable testTable = dataService.getByTaxTableName(currentImportToken);
+				if (testTable != null) {
+					testTable.setPrevId(taxTable.getPrevId());
+					taxTable = testTable;
+				}
 				taxTable.setName(currentImportToken);
 				taxTable.setDefaultTable(false);
 			} else if ("taxTableTableKey".equals(currentFieldToken)) {
