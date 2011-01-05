@@ -325,6 +325,11 @@
 					&& (ss.commandName.indexOf("rStandardMenuText.PendingDocumentWindo") > -1 ))	{
 						doPendingList();					
 					}	
+				if ((ss.menu == "rStandardMenuText.POS")
+					&& (ss.commandName.indexOf("rStandardMenuText.CashDrawerStatus") > -1 ))	{
+						doCashDrawerStatus();					
+					}	
+
 				if ((ss.menu == "rStandardMenuText.Pricing")
 					&& (ss.commandName.indexOf("rStandardMenuText.PressDefinitions") > -1 ))	{
 						doPressDefinitions();					
@@ -458,6 +463,11 @@
 		
 		private function doOpenTape():void {
 			var event:EditTapeEvent = new EditTapeEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}		
+		
+		private function doCashDrawerStatus():void {
+			var event:TapeCashDrawerStatusEvent = new TapeCashDrawerStatusEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}		
 		
