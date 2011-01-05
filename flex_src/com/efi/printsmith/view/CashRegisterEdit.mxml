@@ -1041,6 +1041,13 @@
 				else
 					btPayment.enabled = true;
 			}	
+		}
+		
+		//
+		// window is NOT in a good state, like the current batch would not load
+		//
+		if (tapeBatch == null || tapeBatch.sessionBatches == null) {
+			btnSave.enabled = false;
 		}	
 	}
 		
