@@ -3196,7 +3196,7 @@
 						}
 						if(preferencesStocksObj.includeRecyclePercent){
 							if(!(isNaN(stockDefObj.pcwRecycledPercent)) && stockDefObj.pcwRecycledPercent!=0) {
-								certifiedString = certifiedString+" "+StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.Recycled0'),stockDefObj.pcwRecycledPercent+"%");
+								certifiedString = certifiedString+" "+StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.Recycled0'),(stockDefObj.pcwRecycledPercent*100)+"%");
 							} 
 						}
 						if(preferencesStocksObj.close!=null && preferencesStocksObj.close!=""){
