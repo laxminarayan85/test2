@@ -40,6 +40,7 @@ width="100%" height="100%"  implements="com.efi.printsmith.security.ISecureCompo
     import mx.events.ValidationResultEvent;    
 	import com.efi.printsmith.data.Account; 
 	import com.efi.printsmith.data.Invoice;  
+	import com.efi.printsmith.data.Users;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;	       
 	
 	[Bindable]                                         
@@ -96,11 +97,18 @@ private function handleLoadPickerResult(ev:ResultEvent):void {
 	}
 	
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
-		if (evt.account != null) {
-			this.setAccount(evt.account);
-		} else {
-			this.setAccount(new Account());
-			Alert.show("Account Picker returned a null account", "Error");
+		var user:Users;
+		user = Snowmass.getInstance().currentUser;
+		if ( evt.account.access_level > user.accessLevel){
+			Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'usecCmd.Sorryaccesstothisite'));
+			this.enabled = true;
+		}else{
+			if (evt.account != null) {
+				this.setAccount(evt.account);
+			} else {
+				this.setAccount(new Account());
+				Alert.show("Account Picker returned a null account", "Error");
+			}
 		}
 	}
 	

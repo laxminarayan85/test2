@@ -50,6 +50,7 @@
 		    import mx.events.ValidationResultEvent;    
 			import com.efi.printsmith.data.Account; 
 			import com.efi.printsmith.data.Invoice;         
+			import com.efi.printsmith.data.Users;
 			import com.efi.printsmith.events.AccountPickerSelectEvent;	     
 			
 			[Bindable]                                         
@@ -107,8 +108,16 @@
 			}
 			
 			private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
+				var user:Users;
+	
+			user = Snowmass.getInstance().currentUser;
+			if ( evt.account.access_level > user.accessLevel){
+				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'usecCmd.Sorryaccesstothisite'));
+				this.enabled = true;
+			}else{
 				account = evt.account;
 				dataService.getEstimateByAccountId("Estimate", this.account.id);
+			}
 			}
 					
 			private function handleLoadEstimatesResult(ev:ResultEvent):void {

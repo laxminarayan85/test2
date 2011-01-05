@@ -96,6 +96,7 @@
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.Users;
 	import mx.events.CloseEvent;
 	import mx.events.FlexEvent;
 	import com.efi.printsmith.events.ContactCreateUpdateEvent;
@@ -292,13 +293,10 @@
 	}
 	private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void {
 	
-		/* if ( account == null){
-			account = new Account();
-			setMarketing();
-			this.setAccount(account);
-		} */
-		this.enabled = true;
-
+		doNewOperation();
+		
+			
+		
 	}
 	private function handleAccountPickerMasterCancel(evt:AccountPickerSelectEvent):void {
 		
@@ -322,20 +320,29 @@
 	
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
 		
-		var inputArguments:Array = new Array();
-		inputArguments.push(evt.account);
-		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doSelectOperation,inputArguments);
-		dispatchEvent(mDICompareObjectEvent);
-		/* if (evt.account != null) {
-			this.setAccount(evt.account);
-			contactdataService.getContactsByAccountId("Contact", account.id);
-			setMarketing();
-			this.JobCharges = evt.account.jobCharges;
-			this.EstInvCharges = evt.account.invoiceEstimateCharges;
-		} else {
-			this.setAccount(new Account());
-			Alert.show("Account Picker returned a null account", "Error");
-		} */
+		var user:Users;
+	
+		user = Snowmass.getInstance().currentUser;
+		if ( evt.account.access_level > user.accessLevel){
+			Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'usecCmd.Sorryaccesstothisite'));
+			this.enabled = true;
+		}else{
+		
+			var inputArguments:Array = new Array();
+			inputArguments.push(evt.account);
+			var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doSelectOperation,inputArguments);
+			dispatchEvent(mDICompareObjectEvent);
+			/* if (evt.account != null) {
+				this.setAccount(evt.account);
+				contactdataService.getContactsByAccountId("Contact", account.id);
+				setMarketing();
+				this.JobCharges = evt.account.jobCharges;
+				this.EstInvCharges = evt.account.invoiceEstimateCharges;
+			} else {
+				this.setAccount(new Account());
+				Alert.show("Account Picker returned a null account", "Error");
+			} */
+		}
 	}
 	
 	private function doSelectOperation(accountObj:Account):void {

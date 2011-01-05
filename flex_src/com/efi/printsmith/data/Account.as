@@ -50,7 +50,7 @@ package com.efi.printsmith.data
 		public var lastBilledDate:Date = new Date();
 		public var marketing:Marketing;
 		public var lastPaymentDate:Date = new Date();
-		public var lastPostingDate:int = 0;
+		public var lastPostingDate:Date = new Date();
 		public var lastRankingDate:Date = new Date();
 		public var creditCardExpiration:Date = new Date();
 		public var creditCardInfo:String = "";

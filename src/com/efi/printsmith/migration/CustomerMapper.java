@@ -318,7 +318,7 @@ public class CustomerMapper extends ImportMapper {
 					customer.setMasterAcct(Utilities
 							.tokenToLong(currentImportToken));
 				} else if ("access level".equals(currentFieldToken)) {
-					/* TODO */
+					customer.setAccess_level(Utilities.tokenToInt(currentImportToken));
 				} else if ("external ref number".equals(currentFieldToken)) {
 					customer.setExternalRef(currentImportToken);
 				} else if ("tax exempt".equals(currentFieldToken)) {

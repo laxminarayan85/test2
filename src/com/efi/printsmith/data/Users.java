@@ -32,8 +32,8 @@ import org.hibernate.annotations.Where;
  * @generated
  */	
 @NamedQueries({
-  @NamedQuery(name = "Users.findall", query = "from Users"),
-  @NamedQuery(name = "Users.byId", query = "select a from Users a where a.id= :id")
+	@NamedQuery(name = "Users.findall", query = "from Users"),
+	@NamedQuery(name = "Users.byId", query = "select a from Users a where a.id= :id")
 })
 
 
@@ -43,7 +43,9 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "users")
+//@SQLDelete(sql="update modelbase set isdeleted='TRUE' from users where modelbase.id=?")
 @SQLDelete(sql="update users set isdeleted='TRUE' where id=?")
+//Filter added to retrieve only records that have not been soft deleted.
 @Where(clause="isdeleted <> 'TRUE'")
 public class Users extends ModelBase {
 	/**
@@ -118,45 +120,40 @@ public class Users extends ModelBase {
 	 * @generated
 	 */
 	public static final String PREVPASSWORD4 = "PrevPassword4";
-
 	/**
-   * @generated
-   */
-  public static final String LOGINATTEMPTS = "LoginAttempts";
+	 * @generated
+	 */
+	public static final String LOGINATTEMPTS = "LoginAttempts";
 	/**
-   * @generated
-   */
-  public static final String LASTLOGIN = "LastLogin";
+	 * @generated
+	 */
+	public static final String LASTLOGIN = "LastLogin";
 	/**
-   * @generated
-   */
-  public static final String PASSWORDCHANGEDDATE = "PasswordChangedDate";
+	 * @generated
+	 */
+	public static final String PASSWORDCHANGEDDATE = "PasswordChangedDate";
 
 	/**
 	 * @generated
 	 */
 	public Users() {
-    this.created = new Date();
-    this.modified = new Date();
-    this.isDeleted = false;
-  }
+		this.created = new Date();
+		this.modified = new Date();
+		this.isDeleted = false;
+	}
 
+	@Basic
+	private Boolean isDeleted = false;
+	
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+	
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
  	
 	
-	@Basic
-  private Boolean isDeleted = false;
-
-	public Boolean getIsDeleted() {
-    return isDeleted;
-  }
-
-
-	public void setIsDeleted(Boolean isDeleted) {
-    this.isDeleted = isDeleted;
-  }
-
-
-
 	/**
 	 * @generated
 	 */	
@@ -167,16 +164,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public String getName(){
-    return name; 
-  }
+		return name; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setName(String newVal) {
-    this.name = newVal;
-  }
+		this.name = newVal;
+	}
 	
  	
 	
@@ -190,16 +187,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public String getPassword(){
-    return password; 
-  }
+		return password; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPassword(String newVal) {
-    this.password = newVal;
-  }
+		this.password = newVal;
+	}
 	
  	
 	
@@ -213,16 +210,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getForcePasswordChange(){
-    return forcePasswordChange; 
-  }
+		return forcePasswordChange; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setForcePasswordChange(Boolean newVal) {
-    this.forcePasswordChange = newVal;
-  }
+		this.forcePasswordChange = newVal;
+	}
 	
  	
 	
@@ -236,16 +233,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getRobustPassword(){
-    return robustPassword; 
-  }
+		return robustPassword; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRobustPassword(Boolean newVal) {
-    this.robustPassword = newVal;
-  }
+		this.robustPassword = newVal;
+	}
 	
  	
 	
@@ -259,16 +256,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getNoOverride(){
-    return noOverride; 
-  }
+		return noOverride; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNoOverride(Boolean newVal) {
-    this.noOverride = newVal;
-  }
+		this.noOverride = newVal;
+	}
 	
  	
 	
@@ -282,16 +279,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOverrideCredit(){
-    return overrideCredit; 
-  }
+		return overrideCredit; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setOverrideCredit(Boolean newVal) {
-    this.overrideCredit = newVal;
-  }
+		this.overrideCredit = newVal;
+	}
 	
  	
 	
@@ -305,16 +302,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getLockSalesRep(){
-    return lockSalesRep; 
-  }
+		return lockSalesRep; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setLockSalesRep(Boolean newVal) {
-    this.lockSalesRep = newVal;
-  }
+		this.lockSalesRep = newVal;
+	}
 	
  	
 	
@@ -328,16 +325,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getRefundCreditCards(){
-    return refundCreditCards; 
-  }
+		return refundCreditCards; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setRefundCreditCards(Boolean newVal) {
-    this.refundCreditCards = newVal;
-  }
+		this.refundCreditCards = newVal;
+	}
 	
  	
 	
@@ -351,16 +348,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getNoCashReturn(){
-    return noCashReturn; 
-  }
+		return noCashReturn; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setNoCashReturn(Boolean newVal) {
-    this.noCashReturn = newVal;
-  }
+		this.noCashReturn = newVal;
+	}
 	
  	
 	
@@ -374,16 +371,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowUserNameLog(){
-    return showUserNameLog; 
-  }
+		return showUserNameLog; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setShowUserNameLog(Boolean newVal) {
-    this.showUserNameLog = newVal;
-  }
+		this.showUserNameLog = newVal;
+	}
 	
  	
 	
@@ -397,64 +394,63 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getQuickAccess(){
-    return quickAccess; 
-  }
+		return quickAccess; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setQuickAccess(Boolean newVal) {
-    this.quickAccess = newVal;
-  }
+		this.quickAccess = newVal;
+	}
 	
  	
 	
 	/**
 	 * @generated
 	 */	
-    @Basic
-	@ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
+ 	@Basic
 	private Integer accessLevel;
 	
 	/**
 	 * @generated
  	 */
 	public Integer getAccessLevel(){
-    return accessLevel; 
-  }
+		return accessLevel; 
+	}
 
 	
 	/**
-   * @generated
-   */	
-  public void setAccessLevel(Integer newVal) {
-    this.accessLevel = newVal;
-  }
-
-
+	 * @generated
+	 */	
+	public void setAccessLevel(Integer newVal) {
+		this.accessLevel = newVal;
+	}
+	
+ 	
+	
 	/**
 	 * @generated
 	 */	
     @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
+    @Where(clause="isdeleted <> 'TRUE'")
 	private AccessGroup accessGroup;
 	
 	/**
 	 * @generated
  	 */
 	public AccessGroup getAccessGroup(){
-    return accessGroup; 
-  }
+		return accessGroup; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAccessGroup(AccessGroup newVal) {
-    this.accessGroup = newVal;
-  }
+		this.accessGroup = newVal;
+	}
 	
  	
 	
@@ -468,16 +464,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getDisableUser(){
-    return disableUser; 
-  }
+		return disableUser; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDisableUser(Boolean newVal) {
-    this.disableUser = newVal;
-  }
+		this.disableUser = newVal;
+	}
 	
  	
 	
@@ -491,16 +487,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public String getPrevPassword1(){
-    return prevPassword1; 
-  }
+		return prevPassword1; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPrevPassword1(String newVal) {
-    this.prevPassword1 = newVal;
-  }
+		this.prevPassword1 = newVal;
+	}
 	
  	
 	
@@ -514,16 +510,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public String getPrevPassword2(){
-    return prevPassword2; 
-  }
+		return prevPassword2; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPrevPassword2(String newVal) {
-    this.prevPassword2 = newVal;
-  }
+		this.prevPassword2 = newVal;
+	}
 	
  	
 	
@@ -537,16 +533,16 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public String getPrevPassword3(){
-    return prevPassword3; 
-  }
+		return prevPassword3; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPrevPassword3(String newVal) {
-    this.prevPassword3 = newVal;
-  }
+		this.prevPassword3 = newVal;
+	}
 	
  	
 	
@@ -560,114 +556,115 @@ public class Users extends ModelBase {
 	 * @generated
  	 */
 	public String getPrevPassword4(){
-    return prevPassword4; 
-  }
+		return prevPassword4; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setPrevPassword4(String newVal) {
-    this.prevPassword4 = newVal;
-  }
+		this.prevPassword4 = newVal;
+	}
+	
+ 	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Integer loginAttempts;
-
+	private Integer loginAttempts;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Integer getLoginAttempts(){
-    return loginAttempts; 
-  }
+	public Integer getLoginAttempts(){
+		return loginAttempts; 
+	}
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setLoginAttempts(Integer newVal) {
-    this.loginAttempts = newVal;
-  }
-
-
-
+	 * @generated
+	 */	
+	public void setLoginAttempts(Integer newVal) {
+		this.loginAttempts = newVal;
+	}
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Date lastLogin;
-
+	private Date lastLogin;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Date getLastLogin(){
-    return lastLogin; 
-  }
+	public Date getLastLogin(){
+		return lastLogin; 
+	}
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setLastLogin(Date newVal) {
-    this.lastLogin = newVal;
-  }
-
-
-
+	 * @generated
+	 */	
+	public void setLastLogin(Date newVal) {
+		this.lastLogin = newVal;
+	}
+	
+ 	
+	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
  	@Basic
-  private Date passwordChangedDate;
-
+	private Date passwordChangedDate;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public Date getPasswordChangedDate(){
-    return passwordChangedDate; 
-  }
+	public Date getPasswordChangedDate(){
+		return passwordChangedDate; 
+	}
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setPasswordChangedDate(Date newVal) {
-    this.passwordChangedDate = newVal;
-  }
-
-
+	 * @generated
+	 */	
+	public void setPasswordChangedDate(Date newVal) {
+		this.passwordChangedDate = newVal;
+	}
+	
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (NAME.equals(propertyName)) return getName();
-    if (PASSWORD.equals(propertyName)) return getPassword();
-    if (FORCEPASSWORDCHANGE.equals(propertyName)) return getForcePasswordChange();
-    if (ROBUSTPASSWORD.equals(propertyName)) return getRobustPassword();
-    if (NOOVERRIDE.equals(propertyName)) return getNoOverride();
-    if (OVERRIDECREDIT.equals(propertyName)) return getOverrideCredit();
-    if (LOCKSALESREP.equals(propertyName)) return getLockSalesRep();
-    if (REFUNDCREDITCARDS.equals(propertyName)) return getRefundCreditCards();
-    if (NOCASHRETURN.equals(propertyName)) return getNoCashReturn();
-    if (SHOWUSERNAMELOG.equals(propertyName)) return getShowUserNameLog();
-    if (QUICKACCESS.equals(propertyName)) return getQuickAccess();
-    if (ACCESSLEVEL.equals(propertyName)) return getAccessLevel();
-    if (ACCESSGROUP.equals(propertyName)) return getAccessGroup();
-    if (DISABLEUSER.equals(propertyName)) return getDisableUser();
-    if (PREVPASSWORD1.equals(propertyName)) return getPrevPassword1();
-    if (PREVPASSWORD2.equals(propertyName)) return getPrevPassword2();
-    if (PREVPASSWORD3.equals(propertyName)) return getPrevPassword3();
-    if (PREVPASSWORD4.equals(propertyName)) return getPrevPassword4();
-    if (LOGINATTEMPTS.equals(propertyName)) return getLoginAttempts();
-    if (LASTLOGIN.equals(propertyName)) return getLastLogin();
-    if (PASSWORDCHANGEDDATE.equals(propertyName)) return getPasswordChangedDate();
-    return super.getProperty(propertyName);
-  }
+		if (NAME.equals(propertyName)) return getName();
+		if (PASSWORD.equals(propertyName)) return getPassword();
+		if (FORCEPASSWORDCHANGE.equals(propertyName)) return getForcePasswordChange();
+		if (ROBUSTPASSWORD.equals(propertyName)) return getRobustPassword();
+		if (NOOVERRIDE.equals(propertyName)) return getNoOverride();
+		if (OVERRIDECREDIT.equals(propertyName)) return getOverrideCredit();
+		if (LOCKSALESREP.equals(propertyName)) return getLockSalesRep();
+		if (REFUNDCREDITCARDS.equals(propertyName)) return getRefundCreditCards();
+		if (NOCASHRETURN.equals(propertyName)) return getNoCashReturn();
+		if (SHOWUSERNAMELOG.equals(propertyName)) return getShowUserNameLog();
+		if (QUICKACCESS.equals(propertyName)) return getQuickAccess();
+		if (ACCESSLEVEL.equals(propertyName)) return getAccessLevel();
+		if (ACCESSGROUP.equals(propertyName)) return getAccessGroup();
+		if (DISABLEUSER.equals(propertyName)) return getDisableUser();
+		if (PREVPASSWORD1.equals(propertyName)) return getPrevPassword1();
+		if (PREVPASSWORD2.equals(propertyName)) return getPrevPassword2();
+		if (PREVPASSWORD3.equals(propertyName)) return getPrevPassword3();
+		if (PREVPASSWORD4.equals(propertyName)) return getPrevPassword4();
+		if (LOGINATTEMPTS.equals(propertyName)) return getLoginAttempts();
+		if (LASTLOGIN.equals(propertyName)) return getLastLogin();
+		if (PASSWORDCHANGEDDATE.equals(propertyName)) return getPasswordChangedDate();
+		return super.getProperty(propertyName);
+	}
 	
 	/**
 	 * @generated
@@ -675,29 +672,29 @@ public class Users extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (NAME.equals(propertyName)) setName((String)newValue); else
-    if (PASSWORD.equals(propertyName)) setPassword((String)newValue); else
-    if (FORCEPASSWORDCHANGE.equals(propertyName)) setForcePasswordChange((Boolean)newValue); else
-    if (ROBUSTPASSWORD.equals(propertyName)) setRobustPassword((Boolean)newValue); else
-    if (NOOVERRIDE.equals(propertyName)) setNoOverride((Boolean)newValue); else
-    if (OVERRIDECREDIT.equals(propertyName)) setOverrideCredit((Boolean)newValue); else
-    if (LOCKSALESREP.equals(propertyName)) setLockSalesRep((Boolean)newValue); else
-    if (REFUNDCREDITCARDS.equals(propertyName)) setRefundCreditCards((Boolean)newValue); else
-    if (NOCASHRETURN.equals(propertyName)) setNoCashReturn((Boolean)newValue); else
-    if (SHOWUSERNAMELOG.equals(propertyName)) setShowUserNameLog((Boolean)newValue); else
-    if (QUICKACCESS.equals(propertyName)) setQuickAccess((Boolean)newValue); else
-    if (ACCESSLEVEL.equals(propertyName)) setAccessLevel((Integer)newValue); else
-    if (ACCESSGROUP.equals(propertyName)) setAccessGroup((AccessGroup)newValue); else
-    if (DISABLEUSER.equals(propertyName)) setDisableUser((Boolean)newValue); else
-    if (PREVPASSWORD1.equals(propertyName)) setPrevPassword1((String)newValue); else
-    if (PREVPASSWORD2.equals(propertyName)) setPrevPassword2((String)newValue); else
-    if (PREVPASSWORD3.equals(propertyName)) setPrevPassword3((String)newValue); else
-    if (PREVPASSWORD4.equals(propertyName)) setPrevPassword4((String)newValue); else
-    if (LOGINATTEMPTS.equals(propertyName)) setLoginAttempts((Integer)newValue); else
-    if (LASTLOGIN.equals(propertyName)) setLastLogin((Date)newValue); else
-    if (PASSWORDCHANGEDDATE.equals(propertyName)) setPasswordChangedDate((Date)newValue); else
-    super.setProperty(propertyName, newValue);
-  }
+		if (NAME.equals(propertyName)) setName((String)newValue); else
+		if (PASSWORD.equals(propertyName)) setPassword((String)newValue); else
+		if (FORCEPASSWORDCHANGE.equals(propertyName)) setForcePasswordChange((Boolean)newValue); else
+		if (ROBUSTPASSWORD.equals(propertyName)) setRobustPassword((Boolean)newValue); else
+		if (NOOVERRIDE.equals(propertyName)) setNoOverride((Boolean)newValue); else
+		if (OVERRIDECREDIT.equals(propertyName)) setOverrideCredit((Boolean)newValue); else
+		if (LOCKSALESREP.equals(propertyName)) setLockSalesRep((Boolean)newValue); else
+		if (REFUNDCREDITCARDS.equals(propertyName)) setRefundCreditCards((Boolean)newValue); else
+		if (NOCASHRETURN.equals(propertyName)) setNoCashReturn((Boolean)newValue); else
+		if (SHOWUSERNAMELOG.equals(propertyName)) setShowUserNameLog((Boolean)newValue); else
+		if (QUICKACCESS.equals(propertyName)) setQuickAccess((Boolean)newValue); else
+		if (ACCESSLEVEL.equals(propertyName)) setAccessLevel((Integer)newValue); else
+		if (ACCESSGROUP.equals(propertyName)) setAccessGroup((AccessGroup)newValue); else
+		if (DISABLEUSER.equals(propertyName)) setDisableUser((Boolean)newValue); else
+		if (PREVPASSWORD1.equals(propertyName)) setPrevPassword1((String)newValue); else
+		if (PREVPASSWORD2.equals(propertyName)) setPrevPassword2((String)newValue); else
+		if (PREVPASSWORD3.equals(propertyName)) setPrevPassword3((String)newValue); else
+		if (PREVPASSWORD4.equals(propertyName)) setPrevPassword4((String)newValue); else
+		if (LOGINATTEMPTS.equals(propertyName)) setLoginAttempts((Integer)newValue); else
+		if (LASTLOGIN.equals(propertyName)) setLastLogin((Date)newValue); else
+		if (PASSWORDCHANGEDDATE.equals(propertyName)) setPasswordChangedDate((Date)newValue); else
+		super.setProperty(propertyName, newValue);
+	}
 	
 	/**
 	 * @generated
@@ -705,50 +702,50 @@ public class Users extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (NAME.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (PASSWORD.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (FORCEPASSWORDCHANGE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (ROBUSTPASSWORD.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (NOOVERRIDE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (OVERRIDECREDIT.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (LOCKSALESREP.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (REFUNDCREDITCARDS.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (NOCASHRETURN.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (SHOWUSERNAMELOG.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (QUICKACCESS.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (ACCESSLEVEL.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
-    if (ACCESSGROUP.equals(propertyName)) 
-      return new Class<?>[] {AccessGroup.class};		
-    if (DISABLEUSER.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (PREVPASSWORD1.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (PREVPASSWORD2.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (PREVPASSWORD3.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (PREVPASSWORD4.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (LOGINATTEMPTS.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
-    if (LASTLOGIN.equals(propertyName)) 
-      return new Class<?>[] {Date.class};		
-    if (PASSWORDCHANGEDDATE.equals(propertyName)) 
-      return new Class<?>[] {Date.class};		
-    return super.getPropertyClass(propertyName);
-  }
+		if (NAME.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PASSWORD.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (FORCEPASSWORDCHANGE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (ROBUSTPASSWORD.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (NOOVERRIDE.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (OVERRIDECREDIT.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (LOCKSALESREP.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (REFUNDCREDITCARDS.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (NOCASHRETURN.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (SHOWUSERNAMELOG.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (QUICKACCESS.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (ACCESSLEVEL.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (ACCESSGROUP.equals(propertyName)) 
+			return new Class<?>[] {AccessGroup.class};		
+		if (DISABLEUSER.equals(propertyName)) 
+			return new Class<?>[] {Boolean.class};		
+		if (PREVPASSWORD1.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PREVPASSWORD2.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PREVPASSWORD3.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (PREVPASSWORD4.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (LOGINATTEMPTS.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (LASTLOGIN.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (PASSWORDCHANGEDDATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		return super.getPropertyClass(propertyName);
+	}
 	
 
 	/**
@@ -757,80 +754,80 @@ public class Users extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (NAME.equals(propertyName)) return Users.class;
-    if (PASSWORD.equals(propertyName)) return Users.class;
-    if (FORCEPASSWORDCHANGE.equals(propertyName)) return Users.class;
-    if (ROBUSTPASSWORD.equals(propertyName)) return Users.class;
-    if (NOOVERRIDE.equals(propertyName)) return Users.class;
-    if (OVERRIDECREDIT.equals(propertyName)) return Users.class;
-    if (LOCKSALESREP.equals(propertyName)) return Users.class;
-    if (REFUNDCREDITCARDS.equals(propertyName)) return Users.class;
-    if (NOCASHRETURN.equals(propertyName)) return Users.class;
-    if (SHOWUSERNAMELOG.equals(propertyName)) return Users.class;
-    if (QUICKACCESS.equals(propertyName)) return Users.class;
-    if (ACCESSLEVEL.equals(propertyName)) return Users.class;
-    if (ACCESSGROUP.equals(propertyName)) return Users.class;
-    if (DISABLEUSER.equals(propertyName)) return Users.class;
-    if (PREVPASSWORD1.equals(propertyName)) return Users.class;
-    if (PREVPASSWORD2.equals(propertyName)) return Users.class;
-    if (PREVPASSWORD3.equals(propertyName)) return Users.class;
-    if (PREVPASSWORD4.equals(propertyName)) return Users.class;
-    if (LOGINATTEMPTS.equals(propertyName)) return Users.class;
-    if (LASTLOGIN.equals(propertyName)) return Users.class;
-    if (PASSWORDCHANGEDDATE.equals(propertyName)) return Users.class;
-    return super.getPropertyOwner(propertyName);
-  }
+		if (NAME.equals(propertyName)) return Users.class;
+		if (PASSWORD.equals(propertyName)) return Users.class;
+		if (FORCEPASSWORDCHANGE.equals(propertyName)) return Users.class;
+		if (ROBUSTPASSWORD.equals(propertyName)) return Users.class;
+		if (NOOVERRIDE.equals(propertyName)) return Users.class;
+		if (OVERRIDECREDIT.equals(propertyName)) return Users.class;
+		if (LOCKSALESREP.equals(propertyName)) return Users.class;
+		if (REFUNDCREDITCARDS.equals(propertyName)) return Users.class;
+		if (NOCASHRETURN.equals(propertyName)) return Users.class;
+		if (SHOWUSERNAMELOG.equals(propertyName)) return Users.class;
+		if (QUICKACCESS.equals(propertyName)) return Users.class;
+		if (ACCESSLEVEL.equals(propertyName)) return Users.class;
+		if (ACCESSGROUP.equals(propertyName)) return Users.class;
+		if (DISABLEUSER.equals(propertyName)) return Users.class;
+		if (PREVPASSWORD1.equals(propertyName)) return Users.class;
+		if (PREVPASSWORD2.equals(propertyName)) return Users.class;
+		if (PREVPASSWORD3.equals(propertyName)) return Users.class;
+		if (PREVPASSWORD4.equals(propertyName)) return Users.class;
+		if (LOGINATTEMPTS.equals(propertyName)) return Users.class;
+		if (LASTLOGIN.equals(propertyName)) return Users.class;
+		if (PASSWORDCHANGEDDATE.equals(propertyName)) return Users.class;
+		return super.getPropertyOwner(propertyName);
+	}
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-    if (! super.deepEquals(obj))
-      return false;
-    Users objT = (Users)obj;
-    if (! SmartEquals(getName(), objT.getName()))
-      return false;
-    if (! SmartEquals(getPassword(), objT.getPassword()))
-      return false;
-    if (! SmartEquals(getForcePasswordChange(), objT.getForcePasswordChange()))
-      return false;
-    if (! SmartEquals(getRobustPassword(), objT.getRobustPassword()))
-      return false;
-    if (! SmartEquals(getNoOverride(), objT.getNoOverride()))
-      return false;
-    if (! SmartEquals(getOverrideCredit(), objT.getOverrideCredit()))
-      return false;
-    if (! SmartEquals(getLockSalesRep(), objT.getLockSalesRep()))
-      return false;
-    if (! SmartEquals(getRefundCreditCards(), objT.getRefundCreditCards()))
-      return false;
-    if (! SmartEquals(getNoCashReturn(), objT.getNoCashReturn()))
-      return false;
-    if (! SmartEquals(getShowUserNameLog(), objT.getShowUserNameLog()))
-      return false;
-    if (! SmartEquals(getQuickAccess(), objT.getQuickAccess()))
-      return false;
-    if (! SmartEquals(getAccessLevel(), objT.getAccessLevel()))
-      return false;
-    if (! SmartEquals(getAccessGroup(), objT.getAccessGroup()))
-      return false;
-    if (! SmartEquals(getDisableUser(), objT.getDisableUser()))
-      return false;
-    if (! SmartEquals(getPrevPassword1(), objT.getPrevPassword1()))
-      return false;
-    if (! SmartEquals(getPrevPassword2(), objT.getPrevPassword2()))
-      return false;
-    if (! SmartEquals(getPrevPassword3(), objT.getPrevPassword3()))
-      return false;
-    if (! SmartEquals(getPrevPassword4(), objT.getPrevPassword4()))
-      return false;
-    if (! SmartEquals(getLoginAttempts(), objT.getLoginAttempts()))
-      return false;
-    if (! SmartEquals(getLastLogin(), objT.getLastLogin()))
-      return false;
-    if (! SmartEquals(getPasswordChangedDate(), objT.getPasswordChangedDate()))
-      return false;
-    return true;
-  }			
+		if (! super.deepEquals(obj))
+			return false;
+		Users objT = (Users)obj;
+		if (! SmartEquals(getName(), objT.getName()))
+			return false;
+		if (! SmartEquals(getPassword(), objT.getPassword()))
+			return false;
+		if (! SmartEquals(getForcePasswordChange(), objT.getForcePasswordChange()))
+			return false;
+		if (! SmartEquals(getRobustPassword(), objT.getRobustPassword()))
+			return false;
+		if (! SmartEquals(getNoOverride(), objT.getNoOverride()))
+			return false;
+		if (! SmartEquals(getOverrideCredit(), objT.getOverrideCredit()))
+			return false;
+		if (! SmartEquals(getLockSalesRep(), objT.getLockSalesRep()))
+			return false;
+		if (! SmartEquals(getRefundCreditCards(), objT.getRefundCreditCards()))
+			return false;
+		if (! SmartEquals(getNoCashReturn(), objT.getNoCashReturn()))
+			return false;
+		if (! SmartEquals(getShowUserNameLog(), objT.getShowUserNameLog()))
+			return false;
+		if (! SmartEquals(getQuickAccess(), objT.getQuickAccess()))
+			return false;
+		if (! SmartEquals(getAccessLevel(), objT.getAccessLevel()))
+			return false;
+		if (! SmartEquals(getAccessGroup(), objT.getAccessGroup()))
+			return false;
+		if (! SmartEquals(getDisableUser(), objT.getDisableUser()))
+			return false;
+		if (! SmartEquals(getPrevPassword1(), objT.getPrevPassword1()))
+			return false;
+		if (! SmartEquals(getPrevPassword2(), objT.getPrevPassword2()))
+			return false;
+		if (! SmartEquals(getPrevPassword3(), objT.getPrevPassword3()))
+			return false;
+		if (! SmartEquals(getPrevPassword4(), objT.getPrevPassword4()))
+			return false;
+		if (! SmartEquals(getLoginAttempts(), objT.getLoginAttempts()))
+			return false;
+		if (! SmartEquals(getLastLogin(), objT.getLastLogin()))
+			return false;
+		if (! SmartEquals(getPasswordChangedDate(), objT.getPasswordChangedDate()))
+			return false;
+		return true;
+	}			
 }

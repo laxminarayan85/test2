@@ -32,8 +32,8 @@ import org.hibernate.annotations.Where;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "TapeDepositAppliedRecord.findall", query = "from TapeDepositAppliedRecord"),
-	@NamedQuery(name = "TapeDepositAppliedRecord.byId", query = "select a from TapeDepositAppliedRecord a where a.id= :id")
+  @NamedQuery(name = "TapeDepositAppliedRecord.findall", query = "from TapeDepositAppliedRecord"),
+  @NamedQuery(name = "TapeDepositAppliedRecord.byId", query = "select a from TapeDepositAppliedRecord a where a.id= :id")
 })
 
 
@@ -61,10 +61,10 @@ public class TapeDepositAppliedRecord extends Transaction {
 	 * @generated
 	 */
 	public TapeDepositAppliedRecord() {
-		this.created = new Date();
-		this.modified = new Date();
-		this.isDeleted = false;
-	}
+    this.created = new Date();
+    this.modified = new Date();
+    this.isDeleted = false;
+  }
 
 	@Basic
 	private Boolean isDeleted = false;
@@ -88,16 +88,16 @@ public class TapeDepositAppliedRecord extends Transaction {
 	 * @generated
  	 */
 	public Double getTotalDeposits(){
-		return totalDeposits; 
-	}
+    return totalDeposits; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setTotalDeposits(Double newVal) {
-		this.totalDeposits = newVal;
-	}
+    this.totalDeposits = newVal;
+  }
 	
  	
 	
@@ -112,16 +112,16 @@ public class TapeDepositAppliedRecord extends Transaction {
 	 * @generated
  	 */
 	public Invoice getInvoice(){
-		return invoice; 
-	}
+    return invoice; 
+  }
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setInvoice(Invoice newVal) {
-		this.invoice = newVal;
-	}
+    this.invoice = newVal;
+  }
 	
 	/**
 	 * @generated
@@ -129,10 +129,10 @@ public class TapeDepositAppliedRecord extends Transaction {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-		if (TOTALDEPOSITS.equals(propertyName)) return getTotalDeposits();
-		if (INVOICE.equals(propertyName)) return getInvoice();
-		return super.getProperty(propertyName);
-	}
+    if (TOTALDEPOSITS.equals(propertyName)) return getTotalDeposits();
+    if (INVOICE.equals(propertyName)) return getInvoice();
+    return super.getProperty(propertyName);
+  }
 	
 	/**
 	 * @generated
@@ -140,10 +140,10 @@ public class TapeDepositAppliedRecord extends Transaction {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-		if (TOTALDEPOSITS.equals(propertyName)) setTotalDeposits((Double)newValue); else
-		if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
-		super.setProperty(propertyName, newValue);
-	}
+    if (TOTALDEPOSITS.equals(propertyName)) setTotalDeposits((Double)newValue); else
+    if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
+    super.setProperty(propertyName, newValue);
+  }
 	
 	/**
 	 * @generated
@@ -151,12 +151,12 @@ public class TapeDepositAppliedRecord extends Transaction {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-		if (TOTALDEPOSITS.equals(propertyName)) 
-			return new Class<?>[] {Double.class};		
-		if (INVOICE.equals(propertyName)) 
-			return new Class<?>[] {Invoice.class};		
-		return super.getPropertyClass(propertyName);
-	}
+    if (TOTALDEPOSITS.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (INVOICE.equals(propertyName)) 
+      return new Class<?>[] {Invoice.class};		
+    return super.getPropertyClass(propertyName);
+  }
 	
 
 	/**
@@ -165,23 +165,23 @@ public class TapeDepositAppliedRecord extends Transaction {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-		if (TOTALDEPOSITS.equals(propertyName)) return TapeDepositAppliedRecord.class;
-		if (INVOICE.equals(propertyName)) return TapeDepositAppliedRecord.class;
-		return super.getPropertyOwner(propertyName);
-	}
+    if (TOTALDEPOSITS.equals(propertyName)) return TapeDepositAppliedRecord.class;
+    if (INVOICE.equals(propertyName)) return TapeDepositAppliedRecord.class;
+    return super.getPropertyOwner(propertyName);
+  }
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-		if (! super.deepEquals(obj))
-			return false;
-		TapeDepositAppliedRecord objT = (TapeDepositAppliedRecord)obj;
-		if (! SmartEquals(getTotalDeposits(), objT.getTotalDeposits()))
-			return false;
-		if (! SmartEquals(getInvoice(), objT.getInvoice()))
-			return false;
-		return true;
-	}			
+    if (! super.deepEquals(obj))
+      return false;
+    TapeDepositAppliedRecord objT = (TapeDepositAppliedRecord)obj;
+    if (! SmartEquals(getTotalDeposits(), objT.getTotalDeposits()))
+      return false;
+    if (! SmartEquals(getInvoice(), objT.getInvoice()))
+      return false;
+    return true;
+  }			
 }

@@ -47,7 +47,8 @@
     private var stockOrders:ArrayCollection = new ArrayCollection();
     [Bindable]                                
     private var stockOrdersDisplay:ArrayCollection = new ArrayCollection();
-    
+    [Bindable]
+    private var mulitple:int;
     [Bindable]                                
     private var stockOrdersNonHistory:ArrayCollection = new ArrayCollection();      
     [Bindable]
@@ -177,10 +178,14 @@
  	}
 	private function doDelete():void{
 	
+	
+		
 		for each(var element:Object in dataGrid.selectedItems) {
 			if( element != null)
 				dataService.deleteItem("StockOrder", element.id);
+			mulitple = mulitple + 1;
 		}
+		
 		
 		stockSelected= false;
 		webWorthy = false;
@@ -248,6 +253,8 @@
     	dataService.getAll("StockOrder");
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
+	 mulitple = mulitple - 1;
+	 if (mulitple == 0)
 		dataService.getAll("StockOrder");
 	}
 	private function doStockGridClick():void {

@@ -1291,25 +1291,23 @@ public class Account extends ModelBase {
 	 * @generated
 	 */	
  	@Basic
-	private Integer lastPostingDate;
+	private Date lastPostingDate;
 	
 	/**
 	 * @generated
  	 */
-	public Integer getLastPostingDate(){
+	public Date getLastPostingDate(){
     return lastPostingDate; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setLastPostingDate(Integer newVal) {
+   * @generated
+   */	
+  public void setLastPostingDate(Date newVal) {
     this.lastPostingDate = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -2733,7 +2731,7 @@ public class Account extends ModelBase {
     if (LASTBILLEDDATE.equals(propertyName)) setLastBilledDate((Date)newValue); else
     if (MARKETING.equals(propertyName)) setMarketing((Marketing)newValue); else
     if (LASTPAYMENTDATE.equals(propertyName)) setLastPaymentDate((Date)newValue); else
-    if (LASTPOSTINGDATE.equals(propertyName)) setLastPostingDate((Integer)newValue); else
+    if (LASTPOSTINGDATE.equals(propertyName)) setLastPostingDate((Date)newValue); else
     if (LASTRANKINGDATE.equals(propertyName)) setLastRankingDate((Date)newValue); else
     if (CREDITCARDEXPIRATION.equals(propertyName)) setCreditCardExpiration((Date)newValue); else
     if (CREDITCARDINFO.equals(propertyName)) setCreditCardInfo((String)newValue); else
@@ -2867,7 +2865,7 @@ public class Account extends ModelBase {
     if (LASTPAYMENTDATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
     if (LASTPOSTINGDATE.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {Date.class};		
     if (LASTRANKINGDATE.equals(propertyName)) 
       return new Class<?>[] {Date.class};		
     if (CREDITCARDEXPIRATION.equals(propertyName)) 

@@ -462,7 +462,7 @@ showCloseButton="false"
 	<mx:Label x="107" y="519" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}"/>
 	<mx:CheckBox x="107" y="188" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Disableusername')}" selected="{user1.disableUser}" id="disable_check"/>
 	<mx:Button x="90" y="279" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chgpassCmd.SetUsersPassword')}" width="281" click="doPassword();"/>
-	<mx:Label x="28" y="253" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessLevel')}" textAlign="right" width="99"/>
+	<mx:Label x="0" y="253" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessLevel')}" textAlign="right" width="99"/>
 	<mx:TextInput  restrict="0-9" x="107" y="251" width="45" maxChars="2" id="access_level" text="{user1.accessLevel}"/>
 	
 	
