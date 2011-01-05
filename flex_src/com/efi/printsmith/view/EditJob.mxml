@@ -3162,12 +3162,12 @@
 				var certifiedString:String = "";
 				if(preferencesStocksObj!=null && stockDefObj!=null){
 					if(preferencesStocksObj.includeCerifiedOption || preferencesStocksObj.includeManagementType || preferencesStocksObj.includeRecyclePercent) {
+						if(preferencesStocksObj.open!=null && preferencesStocksObj.open!=""){
+							certifiedString = preferencesStocksObj.open;
+						} else {
+							certifiedString = "(";
+						}
 						if(stockDefObj.fscCertified || stockDefObj.sfiCertified || stockDefObj.greenSealCertified){
-							if(preferencesStocksObj.open!=null && preferencesStocksObj.open!=""){
-								certifiedString = preferencesStocksObj.open;
-							} else {
-								certifiedString = "(";
-							}
 							if(preferencesStocksObj.includeCerifiedOption){
 								if(stockDefObj.fscCertified) {
 									certifiedString = certifiedString+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.FSC');
