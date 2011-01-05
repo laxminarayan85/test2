@@ -60,8 +60,8 @@
 	//	var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 	//	mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'tapeCmd.Tape');	
 		
-		this.throbber.visible = true;
-		this.throbber.play();
+	//	this.throbber.visible = true;
+	//	this.throbber.play();
 		
 		cashDrawer = new CashDrawer();
 		dataServiceCashDrawer.getAll("CashDrawer");
@@ -81,8 +81,8 @@
 	     	dataServiceCashDrawer.addUpdate(cashDrawer);
 		}
 		
-		this.throbber.visible = false;
-		this.throbber.stop();
+//		this.throbber.visible = false;
+//		this.throbber.stop();
 	}
 
 	private function handleSaveCashDrawerResult(ev:ResultEvent):void {
@@ -100,17 +100,30 @@
 ]]>
                              
 </mx:Script>
-	<mx:Canvas width="100%" height="100%">
+	<mx:Canvas width="534" height="228">
 		<mx:Button x="51" y="10" width="38" height="38" click="">
 			<mx:icon>@Embed(source='../../../../assets/Close.png')</mx:icon>
 			</mx:Button>
-		<mx:Label x="93" y="58" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.CashDrawerStatus')}" width="339" textAlign="center"/>
-		<mx:TextInput x="107" y="99" text="{cashDrawer.checkCount}" width="151" fontSize="9" fontWeight="bold" height="20"/>
-		<mx:Label x="10" y="100" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.Checks')}" width="89" textAlign="right"/>
-		<mx:TextInput x="363" y="99" text="{cashDrawer.checkTotal}" width="151" fontSize="9" fontWeight="bold" height="20"/>
-		<mx:Label x="266" y="100" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.Total')}" width="89" textAlign="right"/>
-				
-		<comp:Throbber id="throbber" height="40" width="40" visible="true" horizontalCenter="0" verticalCenter="0"/>
+		<mx:Label x="110.5" y="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.CashDrawerStatus')}" width="339" textAlign="left" fontWeight="bold"/>
+		<mx:TextInput x="107" y="68" text="{cashDrawer.checkCount}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:Label x="10" y="69" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.Checks')}" width="89" textAlign="right"/>
+		<mx:TextInput x="363" y="68" text="{cashDrawer.checkTotal}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		
+		<mx:TextInput x="107" y="95" text="{cashDrawer.cardCount}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:Label x="10" y="96" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.CreditCard')}" width="89" textAlign="right"/>
+		
+		<mx:TextInput x="363" y="95" text="{cashDrawer.cardTotal}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:TextInput x="363" y="122" text="{cashDrawer.cashTotal}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		
+		<mx:TextInput x="363" y="165" text="{cashDrawer.arBalance}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:Label x="10" y="166" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.AccountsReceivableBa')}" width="345" textAlign="right"/>
+		
+		<mx:TextInput x="363" y="192" text="{((cashDrawer.cashTotal + cashDrawer.checkTotal + cashDrawer.cardTotal) + (cashDrawer.arBalance - cashDrawer.prevArBalance - cashDrawer.changeFund))}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:Label x="10" y="193" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.TodaysApproximateSal')}" width="345" textAlign="right"/>
+		
+		<mx:Label x="266" y="123" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.CashTotal')}" width="89" textAlign="right"/>
+		<mx:Label x="266" y="96" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.Total')}" width="89" textAlign="right"/>
+		<mx:Label x="266" y="69" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.Total')}" width="89" textAlign="right"/>
 	</mx:Canvas>
 	
 </mx:TitleWindow>
