@@ -212,9 +212,9 @@ width="938" height="507"  creationComplete="init()"
 			this.currentState = "BlankStock";
 			this.parent_size.selectedIndex = findItem(job.parentSize.name,this.dimensionsArray);
 			this.run_size.selectedIndex = findItem(job.runSize.name,this.dimensionsArray);
-			this.production_run.text = job.pressQty.toString();
-			this.requires.text = job.sheets.toString();
-			this.sheets_purchased.text = job.qtyOrdered.toString();
+			this.production_run.text = job.totalImpressions.toString();
+			this.requires.text = (job.totalImpressions * job.sheets / job.numOn).toString();
+			this.sheets_purchased.text = (job.totalImpressions * job.sheets / job.numOn).toString();
 			this.area.text = (job.runSize.height * job.runSize.width).toString();
 			this.per.text = job.costUnits.toString();
 			this.labor_cost.text = job.pricingRecord.laborTotalPrice.toString();
@@ -236,9 +236,9 @@ width="938" height="507"  creationComplete="init()"
 		} else if (job.pricingMethod.title == "Printing" || job.pricingMethod.method == "Large Format" || job.pricingMethod.method == "B&W" || job.pricingMethod.method == "Color") {
 			this.parent_size.selectedIndex = findItem(job.parentSize.name,this.dimensionsArray);
 			this.run_size.selectedIndex = findItem(job.runSize.name,this.dimensionsArray);
-			this.production_run.text = job.pressQty.toString();
-			this.requires.text = job.sheets.toString();
-			this.sheets_purchased.text = job.qtyOrdered.toString();
+			this.production_run.text = job.totalImpressions.toString();
+			this.requires.text = (job.totalImpressions * job.sheets / job.numOn).toString();
+			this.sheets_purchased.text = (job.totalImpressions * job.sheets / job.numOn).toString();
 			this.area.text = (job.runSize.height * job.runSize.width).toString();
 			this.per.text = job.costUnits.toString();
 			this.markup.text = job.pricingRecord.stockMarkup.toString();
