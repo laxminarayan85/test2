@@ -58,6 +58,9 @@
 	
 	<mx:Script>                                   
 	<![CDATA[
+		import com.efi.printsmith.data.Job;
+		import mx.managers.DragManager;
+		import mx.events.DragEvent;
 		import com.efi.printsmith.events.FormPreferencesUpdateEvent;
 		import com.efi.printsmith.data.LabelFormat;
 		import com.efi.printsmith.events.BrokerUpdateEvent;
@@ -803,6 +806,57 @@
 			}
 		}
 		
+		private function dragEnterHandler(event:DragEvent):void {
+            if (event.dragSource.hasFormat('items')) {
+            	var dragObj:Array = event.dragSource.dataForFormat("items") as Array; 
+				var draggedItem:Object = dragObj[0];
+				if(draggedItem is Job){
+					var jobObj:Job = draggedItem as Job;
+					if(jobObj.parentInvoice is Invoice && !(isNaN(jobObj.id)) && jobObj.id!=0) {
+		                var dropTarget:DataGrid=DataGrid(event.currentTarget);
+		                DragManager.acceptDragDrop(dropTarget);
+	    			}
+    			}
+        	}
+        }
+        
+        private function dragDropHandler(event:DragEvent):void {
+        	event.preventDefault();
+        	var dragObj:Array = event.dragSource.dataForFormat("items") as Array;           
+            var draggedItem:Object = dragObj[0];
+            var jobObj:Job = draggedItem as Job;
+            var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
+			if(deliveryTicket.deliveryJobs==null) {
+				deliveryTicket.deliveryJobs = new ArrayCollection();
+			}
+			deliveryTicketJobsList = deliveryTicket.deliveryJobs;
+            copyJob(deliveryTicketJobsList,jobObj);
+        }  
+        
+        private function copyJob(deliveryTicketJobsList:ArrayCollection,jobObj:JobBase):void {
+			var deliveryTicketJobs:DeliveryTicketJobs = new DeliveryTicketJobs();
+			deliveryTicketJobs.account = jobObj.parentInvoice.account;
+			deliveryTicketJobs.invoiceId = jobObj.parentInvoice.id;
+			deliveryTicketJobs.invoiceNumber = jobObj.parentInvoice.invoiceNumber;
+			deliveryTicketJobs.jobId = jobObj.id;
+			if(!isNaN(jobObj.jobIndex) && jobObj.jobIndex!=0){
+				deliveryTicketJobs.jobNumber = Number(jobObj.jobNumber);
+			} else {
+				deliveryTicketJobs.jobNumber = 1;
+			}
+			deliveryTicketJobs.description = jobObj.description;
+			deliveryTicketJobs.qtyOrder = jobObj.qtyOrdered;
+			deliveryTicketJobs.qtyShipped = jobObj.qtyOrdered;
+			deliveryTicketJobs.weight = jobObj.weight;
+			deliveryTicketJobs.originalWeight = deliveryTicketJobs.weight;
+			deliveryTicketJobs.jobBase = jobObj;
+			deliveryTicketJobs.parentDeliveryTicket = deliveryTicket;
+			deliveryTicketJobs.manualNonInvoiceItem = true;
+			copyToAddressList(jobObj.parentInvoice.account);
+			deliveryTicketJobsList.addItem(deliveryTicketJobs);
+		}
+
+		
 	]]>
 	                             
 	</mx:Script>
@@ -850,7 +904,8 @@
 	<mx:TabNavigator width="100%" height="65%" creationPolicy="all">
 		<mx:VBox label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.DeliverWhat')}" width="100%" height="100%">
 			<mx:DataGrid  id="dataGrid" width="100%" dataProvider="{deliveryTicket.deliveryJobs}" height="100%"
-				itemEditEnd="{processJobs(event)}" editable="true" doubleClickEnabled="true" doubleClick="{openInvoice()}">
+				itemEditEnd="{processJobs(event)}" editable="true" doubleClickEnabled="true" doubleClick="{openInvoice()}" 
+				dragEnter="{dragEnterHandler(event)}" dragDrop="{dragDropHandler(event)}">
 				<mx:columns>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invoiceDeliveryTicketCmd.InvJob')}" editable="false">
 						<mx:itemRenderer>

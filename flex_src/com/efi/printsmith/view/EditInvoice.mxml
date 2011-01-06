@@ -123,6 +123,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.managers.DragManager;
+			import mx.core.DragSource;
 			import com.efi.printsmith.data.PreferencesCashRegister;
 			import com.efi.printsmith.data.PreferencesAccounting;
 			import com.efi.printsmith.events.DeliveryTicketUpdateEvent;
@@ -1939,6 +1941,24 @@
 					}
 				}
 			}
+			
+			private function mouseMoveHandler(event:MouseEvent):void {
+            
+	            // Get the drag initiator component from the event object.
+	            var dragInitiator:DataGrid=DataGrid(event.currentTarget);
+	            
+	            if(dragInitiator.selectedIndex>-1 && dragInitiator.selectedItem!=null) {
+		            // Create a DragSource object.
+		            var ds:DragSource = new DragSource();
+		
+		            // Add the data to the object.
+		            ds.addData(dragInitiator.selectedItem, 'draggedItem');
+		
+		            // Call the DragManager doDrag() method to start the drag. 
+		            DragManager.doDrag(dragInitiator, ds, event);
+	            }
+	        }
+
 		]]>
 
 	</mx:Script>
@@ -2211,7 +2231,8 @@
 							 dataProvider="{getJobList(invoice.jobs)}"
 							 sortableColumns="false"
 							 doubleClick="doDoubleclickInvoiceItem()"
-						  	 doubleClickEnabled="true">
+						  	 doubleClickEnabled="true"
+						  	 dragEnabled="true">
 					<mx:columns>
 						<mx:DataGridColumn>
 							<mx:itemRenderer>
