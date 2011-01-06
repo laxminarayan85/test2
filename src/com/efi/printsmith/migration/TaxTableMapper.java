@@ -52,7 +52,7 @@ public class TaxTableMapper extends ImportMapper {
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
-			
+			String prevId = "";
 			if ("recno".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("rstatus".equals(currentFieldToken)) {
@@ -61,12 +61,13 @@ public class TaxTableMapper extends ImportMapper {
 				/* TODO */
 			} else if ("taxTableTableID".equals(currentFieldToken)) {
 				taxTable.setPrevId(currentImportToken);
+				prevId = currentImportToken;
 			} else if ("taxTableTableName".equals(currentFieldToken)) {
-				TaxTable testTable = dataService.getByTaxTableName(currentImportToken);
-				if (testTable != null) {
-					testTable.setPrevId(taxTable.getPrevId());
-					taxTable = testTable;
-				}
+				//TaxTable testTable = dataService.getByTaxTableName(currentImportToken);
+				//if (testTable != null) {
+				//	taxTable = testTable;
+				//	taxTable.setPrevId(prevId);
+				//}
 				taxTable.setName(currentImportToken);
 				taxTable.setDefaultTable(false);
 			} else if ("taxTableTableKey".equals(currentFieldToken)) {
