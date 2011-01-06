@@ -113,57 +113,62 @@
 	
 	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
 	
-	<mx:HBox width="100%">
-		<mx:HBox width="100%" horizontalAlign="left" horizontalGap="1">
-			<mx:Label text="{getTitle(_invoiceBase)}: " styleName="boldstyle"/>
-			<mx:Label text="{_invoiceBase.invoiceNumber} " styleName="boldstyle"/>
-			<mx:Label text="{_invoiceBase.name}" styleName="boldstyle"/>
+	<mx:VBox id="mainBox" width="100%" height="100%">
+	
+		<mx:HBox width="100%">
+			<mx:HBox width="100%" horizontalAlign="left" horizontalGap="1">
+				<mx:Label text="{getTitle(_invoiceBase)}: " styleName="boldstyle"/>
+				<mx:Label text="{_invoiceBase.invoiceNumber} " styleName="boldstyle"/>
+				<mx:Label text="{_invoiceBase.name}" styleName="boldstyle"/>
+			</mx:HBox>
+			<mx:HBox width="100%" horizontalAlign="right" horizontalGap="1">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posStatusCmd.Loc')}:" styleName="boldstyle"/>
+				<mx:Label text="{location}" styleName="boldstyle"/>
+			</mx:HBox>
 		</mx:HBox>
-		<mx:HBox width="100%" horizontalAlign="right" horizontalGap="1">
-			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posStatusCmd.Loc')}:" styleName="boldstyle"/>
-			<mx:Label text="{location}" styleName="boldstyle"/>
+		
+		<mx:Label text="(#{_invoiceBase.account.accountId}) {_invoiceBase.account.title}" styleName="boldstyle"/>
+		
+		<mx:Label text="{StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Webreferencenumber0'),0)}" styleName="boldstyle"/>
+		
+		<mx:HBox width="100%" horizontalGap="1">
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.Wantedby')}: " styleName="boldstyle"/>
+			<mx:Label text="{getFormattedDate(_invoiceBase.wantedDate)}"/>
 		</mx:HBox>
-	</mx:HBox>
+		
+		<mx:HBox width="100%" horizontalGap="1">
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.SalesRep')}: " styleName="boldstyle"/>
+			<mx:Label text="{_invoiceBase.salesRep.name} "/>
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.TakenBy')}:	" styleName="boldstyle"/>
+			<mx:Label text="{_invoiceBase.takenBy}"/>
+		</mx:HBox>
+		
+		<mx:HBox width="100%" horizontalGap="1">
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rChargeLabel.ShipVia')}: " styleName="boldstyle"/>
+			<mx:Label text="{_invoiceBase.shippingMethod.name}"/>
+		</mx:HBox>
+		
+		<mx:HBox width="100%" horizontalGap="1">
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.Ordered')}: " styleName="boldstyle"/>
+			<mx:Label text="{getFormattedDate(_invoiceBase.orderedDate)}"/>
+		</mx:HBox>
+		
+		<mx:HBox width="100%" horizontalGap="1">
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posStatusCmd.Locationupdatedon')}: " styleName="boldstyle"/>
+			<mx:Label text="{getFormattedDate(_invoiceBase.locationChangeDate)}"/>
+		</mx:HBox>
+		
+		<mx:HBox width="100%" horizontalGap="1">
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.Total')}: " styleName="boldstyle"/>
+			<mx:Label text="{_invoiceBase.grandTotal}"/>
+		</mx:HBox>
+		
+		<mx:HBox width="100%" horizontalGap="1">
+			<mx:Label text="{expandOrCollapseLabel}" click="{expandOrCollapse()}"/>
+			<mx:List dataProvider="{_invoiceBase.jobs}" labelField="description" visible="{expandOrCollapseFlag}" includeInLayout="{expandOrCollapseFlag}"
+				width="100%"/>
+		</mx:HBox>
 	
-	<mx:Label text="(#{_invoiceBase.account.accountId}) {_invoiceBase.account.title}" styleName="boldstyle"/>
+	</mx:VBox>
 	
-	<mx:Label text="{StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Webreferencenumber0'),0)}" styleName="boldstyle"/>
-	
-	<mx:HBox width="100%" horizontalGap="1">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.Wantedby')}: " styleName="boldstyle"/>
-		<mx:Label text="{getFormattedDate(_invoiceBase.wantedDate)}"/>
-	</mx:HBox>
-	
-	<mx:HBox width="100%" horizontalGap="1">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.SalesRep')}: " styleName="boldstyle"/>
-		<mx:Label text="{_invoiceBase.salesRep.name} "/>
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.TakenBy')}:	" styleName="boldstyle"/>
-		<mx:Label text="{_invoiceBase.takenBy}"/>
-	</mx:HBox>
-	
-	<mx:HBox width="100%" horizontalGap="1">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rChargeLabel.ShipVia')}: " styleName="boldstyle"/>
-		<mx:Label text="{_invoiceBase.shippingMethod.name}"/>
-	</mx:HBox>
-	
-	<mx:HBox width="100%" horizontalGap="1">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.Ordered')}: " styleName="boldstyle"/>
-		<mx:Label text="{getFormattedDate(_invoiceBase.orderedDate)}"/>
-	</mx:HBox>
-	
-	<mx:HBox width="100%" horizontalGap="1">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posStatusCmd.Locationupdatedon')}: " styleName="boldstyle"/>
-		<mx:Label text="{getFormattedDate(_invoiceBase.locationChangeDate)}"/>
-	</mx:HBox>
-	
-	<mx:HBox width="100%" horizontalGap="1">
-		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.Total')}: " styleName="boldstyle"/>
-		<mx:Label text="{_invoiceBase.grandTotal}"/>
-	</mx:HBox>
-	
-	<mx:HBox width="100%" horizontalGap="1">
-		<mx:Label text="{expandOrCollapseLabel}" click="{expandOrCollapse()}"/>
-		<mx:List dataProvider="{_invoiceBase.jobs}" labelField="description" visible="{expandOrCollapseFlag}" includeInLayout="{expandOrCollapseFlag}"
-			width="100%"/>
-	</mx:HBox>
 </mx:TitleWindow>

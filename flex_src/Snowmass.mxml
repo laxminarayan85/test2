@@ -58,6 +58,7 @@
 </mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.pages.PendingStatus;
 		import com.efi.printsmith.data.PreferencesSystem;
 		import com.efi.printsmith.data.Estimate;
 		import com.efi.printsmith.data.Invoice;
@@ -324,6 +325,10 @@
 				if ((ss.menu == "rStandardMenuText.POS")
 					&& (ss.commandName.indexOf("rStandardMenuText.PendingDocumentWindo") > -1 ))	{
 						doPendingList();					
+					}
+				if ((ss.menu == "rStandardMenuText.POS")
+					&& (ss.commandName.indexOf("rStandardMenuText.StatusWindow") > -1 ))	{
+						doStatusWindow();			
 					}	
 				if ((ss.menu == "rStandardMenuText.POS")
 					&& (ss.commandName.indexOf("rStandardMenuText.CashDrawerStatus") > -1 ))	{
@@ -652,6 +657,23 @@
 				//retVal = '\t';
 			}
 			return retVal + resourceManager.getString(RESOURCE_BUNDLE, val);
+		}
+		
+		public function doStatusWindow():void {
+			var pendingStatus:PendingStatus = PendingStatus(PopUpManager.createPopUp(this, PendingStatus, false));
+			pendingStatus.setStyle("borderAlpha", 0.9);
+			for each(var mdiWindowObj:MDIWindow in containerManager.getAllWindows()) {
+				if(mdiWindowObj.content is PendingList) {
+					var pendingListWindow:PendingList = mdiWindowObj.content as PendingList;
+					if(pendingListWindow.dgView.selectedIndex>-1 && pendingListWindow.dgView.selectedItem!=null) { 
+						pendingStatus.invoiceBase = pendingListWindow.dgView.selectedItem as InvoiceBase;
+					} else {
+						pendingStatus.mainBox.visible = false;
+					}
+					return;
+				}
+			}
+			pendingStatus.mainBox.visible = false;
 		}
 		
 		public function doTrackerManager():void {
