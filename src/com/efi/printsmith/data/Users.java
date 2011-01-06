@@ -410,7 +410,8 @@ public class Users extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@Basic
+    @Basic
+	@Where(clause="isdeleted <> 'TRUE'")
 	private Integer accessLevel;
 	
 	/**

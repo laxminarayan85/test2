@@ -2036,7 +2036,9 @@
 										
 					// the values are back, now request the image to be generated
 					//
-					paperCalculatorService.GeneratePaperCalculatorImage(job, job.paperCal.whichStartSize, cutDiagram.width-15, cutDiagram.height-15);
+					if (this.currentState != "Blank" && this.currentState != "Mailing" && this.currentState != "LinesAndInches" && this.currentState != "ChargesOnly") {
+						paperCalculatorService.GeneratePaperCalculatorImage(job, job.paperCal.whichStartSize, cutDiagram.width-15, cutDiagram.height-15);
+					}
 					this.updatePrice();
 				}
 			}

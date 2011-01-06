@@ -900,4 +900,74 @@ public class PriceListService extends SnowmassHibernateService {
 		}
 		return price;
 	}
+	
+	public PriceList createPriceList() {
+		PriceList priceList = new PriceList();
+		
+		priceList.setIsDollar(true);
+		
+		PriceListElement element = null;
+		for (int i = 0; i < 14; i++) {
+			element = new PriceListElement();
+			element.setAmount(0.0);
+			element.setQuantity(0L);
+			
+			priceList.addElements(element);
+		}
+		return priceList;
+	}
+	
+	public WasteChart createWasteChart() {
+		WasteChart wasteChart = new WasteChart();
+		
+		wasteChart.setIsDollar(true);
+		
+		PriceListElement element = null;
+		for (int i = 0; i < 14; i++) {
+			element = new PriceListElement();
+			element.setAmount(0.0);
+			element.setQuantity(0L);
+			
+			wasteChart.addElements(element);
+		}
+		wasteChart.setInterpolate(true);
+		wasteChart.setIsPercentage(true);
+		return wasteChart;
+	}
+	
+	public SpeedTable createSpeedTable() {
+		SpeedTable speedTable = new SpeedTable();
+		
+		speedTable.setIsDollar(true);
+		
+		PriceListElement element = null;
+		for (int i = 0; i < 14; i++) {
+			element = new PriceListElement();
+			element.setAmount(0.0);
+			element.setQuantity(0L);
+			
+			speedTable.addElements(element);
+		}
+		speedTable.setInterpolate(false);
+		speedTable.setIsPercentage(false);
+		return speedTable;
+	}
+	
+	public PaperPrice createPaperPrice() {
+		PaperPrice paperPrice = new PaperPrice();
+		
+		paperPrice.setIsDollar(true);
+		
+		PriceListElement element = null;
+		for (int i = 0; i < 14; i++) {
+			element = new PriceListElement();
+			element.setAmount(0.0);
+			element.setQuantity(0L);
+			
+			paperPrice.addElements(element);
+		}
+		paperPrice.setInterpolate(false);
+		paperPrice.setIsPercentage(false);
+		return paperPrice;
+	}
 }

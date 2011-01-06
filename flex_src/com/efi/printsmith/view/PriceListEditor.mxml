@@ -379,7 +379,7 @@
 	public function setCopy(temp:Boolean):void{
 		copyFLag= temp;
 	}           
-	public function setPriceList(priceList:PriceListBase):void {
+	public function setPriceList(priceList:PriceListBase, isNew:Boolean=false):void {
 		if (priceList == null) return;
 
 //		quantity_header = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.Quantity');
@@ -423,8 +423,13 @@
 			this.currentState = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PriceList');
 			PopUpManager.centerPopUp(this);
 		}
-		dataService.getPriceList(priceList.id);
+		if (!isNew) {
+			dataService.getPriceList(priceList.id);
+		} else {
+			this.priceList = priceList;
+		}
 		updateTitle(priceList.name);
+		updateNewPriceList();
 	}   
 	
 	private function refreshCheckBoxes():void {
@@ -583,13 +588,9 @@
 		
 		var editPage:Container = parentContainer;
 	}
-		
-	private function handleLoadPriceList(ev:ResultEvent):void {
+	
+	private function updateNewPriceList():void {
 		if (itemType == "PriceList" || itemType == "PriceListBase") {
-			if (ev.result == null)
-				priceList = new PriceList();
-			else
-				priceList = ev.result as PriceList;
 			if (priceList.elements != null) {
 				for (var i:int = 0;i < priceList.elements.length;i++) {
 					 var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
@@ -600,6 +601,31 @@
 				this.priceList.elements.refresh();
 			}
 		} else if (itemType == "WasteChart") {
+			for (var i:int = 0;i < priceList.elements.length;i++) {
+				var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+				element.amount = element.amount * 100; // TODO: This is wrong - we should not be changing values for display. Create a renderer if needed.
+			}
+		} else if (itemType == "SpeedTable") {
+		} else if (itemType == "PaperPrice") {
+			if (priceList.isPercentage == true) {
+				for (var i:int = 0;i < priceList.elements.length;i++) {
+					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+					element.amount = element.amount * 100; // TODO: This is wrong - we should not be changing values for display. Create a renderer if needed.
+				}
+			}
+		}
+		refreshCheckBoxes();
+		if (copyFLag)
+			priceList.name = priceList.name+' '+ resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Copy')		
+	}
+	
+	private function handleLoadPriceList(ev:ResultEvent):void {
+		if (itemType == "PriceList" || itemType == "PriceListBase") {
+			if (ev.result == null)
+				priceList = new PriceList();
+			else
+				priceList = ev.result as PriceList;
+		} else if (itemType == "WasteChart") {
 			if (ev.result == null) {
 				priceList = new WasteChart();
 				priceList.interpolate = true;
@@ -607,10 +633,6 @@
 			}
 			else {
 				priceList = ev.result as WasteChart;
-				for (var i:int = 0;i < priceList.elements.length;i++) {
-					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-					element.amount = element.amount * 100;
-				}
 			}
 		} else if (itemType == "SpeedTable") {
 			if (ev.result == null) {
@@ -624,16 +646,8 @@
 				priceList = new PaperPrice();
 			else
 				priceList = ev.result as PaperPrice;
-			if (priceList.isPercentage == true) {
-				for (var i:int = 0;i < priceList.elements.length;i++) {
-					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-					element.amount = element.amount * 100;
-				}
-			}
 		}
-		refreshCheckBoxes();
-		if (copyFLag)
-			priceList.name = priceList.name+' '+ resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Copy')
+		updateNewPriceList();
 	}
 	
 	private function doNewPriceListElement():void {
@@ -719,7 +733,6 @@
 		} else if (itemType == "PaperPrice") {
 			this.title = "Edit Paper Price "+value
 		}
-
 	}
 	
 	public function formatData(event:DataGridEvent):void {   

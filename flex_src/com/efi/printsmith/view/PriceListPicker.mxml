@@ -14,6 +14,12 @@
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 
+<mx:RemoteObject id="priceListService" destination="priceListService">
+	<mx:method name="createPriceList" fault="handleFault(event)" result="handleCreatePriceList(event)"/>
+	<mx:method name="createWasteChart" fault="handleFault(event)" result="handleCreatePriceList(event)"/>
+	<mx:method name="createSpeedTable" fault="handleFault(event)" result="handleCreatePriceList(event)"/>
+	<mx:method name="createPaperPrice" fault="handleFault(event)" result="handleCreatePriceList(event)"/>
+</mx:RemoteObject>
 <mx:Producer id="producer" destination="pricelist"/>
 <mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
@@ -148,39 +154,54 @@
 		PopUpManager.removePopUp(this);
 	}     
 	
+	private function handleCreatePriceList(evt:ResultEvent):void {
+		var newPriceList:PriceListBase = evt.result as PriceListBase;
+		if (newPriceList == null) {
+	    	Alert.show("Unknown Price List type to create.", "Error", 0, this, null);
+	    	return;
+		}
+		newPriceList.name = "";
+		switch (this.itemType) {
+	    case "WasteChart":
+			newPriceList.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.UntitledWasteChart');
+	    	break;
+	    case "PriceList":
+			newPriceList.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.UntitledPriceList');
+	    	break;
+	    case "SpeedTable":
+			newPriceList.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.UntitledSpeedTable');
+	    	break;
+	    default:
+			newPriceList.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.UntitledPriceList');
+	    	break;
+	    } 
+		var editPage:Container = parentContainer;
+		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPriceList(newPriceList, true);
+	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSave);		
+	}
+	
 	private function doNew():void {
 	    var newPriceList:PriceListBase = null;
 	    switch (this.itemType) {
 	    case "WasteChart":
-	    	newPriceList = new WasteChart();
-	    	newPriceList.interpolate = true;
-	    	newPriceList.isPercentage = true;
+	    	priceListService.createWasteChart();
 	    	break;
 	    case "PriceList":
-	    	newPriceList = new PriceList();
+	    	priceListService.createPriceList();
 	    	break;
 	    case "SpeedTable":
-	    	newPriceList = new SpeedTable();
+	    	priceListService.createSpeedTable();
 	    	break;
 	    case "PaperPrice":
-	    	newPriceList = new PaperPrice();
+	    	priceListService.createPaperPrice();
 	    	break;
-//	    case "Matrix":
-//	    	newPriceList = new com.efi.printsmith.data.Matrix();
-//	    	break;
-	    } 
-	    if (newPriceList == null) {
+	    default:
 	    	Alert.show("Unknown Price List type to create.", "Error", 0, this, null);
-	    	return
-	    }
-		var editPage:Container = parentContainer;
-		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
-	    titleWindow.setStyle("borderAlpha", 0.9);
-	    titleWindow.setPriceList(newPriceList);
-	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSave);
-//	    doSelect();
-//		PopUpManager.removePopUp(this);
-//		dataService.getAll(this.itemType);	
+	    	return;
+	    	break;
+	    } 
 	}
 
 	private function doEdit():void {
@@ -264,7 +285,7 @@
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" click="doNew();" id="new_button" width="108" x="399" y="80"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}" click="doEdit();" id="edit_button" width="108" x="399" y="113"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Duplicate')}" click="doCopy();" id="copy_button" width="108" x="397.5" y="143"/>
-		<common:CustomDeleteButtonComponent isIcon="false" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefRpt.Speedtable')}" clickFuncName="doDelete" id="delete_button" width="108" x="399" y="173"/>
+		<common:CustomDeleteButtonComponent isIcon="false" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" deleteLabel="{this.label}" clickFuncName="doDelete" id="delete_button" width="108" x="399" y="173"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" id="cancel_button" width="108" x="397.5" y="213"/>
 		<mx:HRule x="399" y="70" width="109.5"/>
 		<mx:HRule x="397.5" y="203" width="109.5"/>
