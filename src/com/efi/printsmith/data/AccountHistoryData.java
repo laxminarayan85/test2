@@ -240,7 +240,7 @@ public class AccountHistoryData extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Account account;
 	
@@ -264,7 +264,7 @@ public class AccountHistoryData extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Journal journal;
 	
@@ -288,7 +288,7 @@ public class AccountHistoryData extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
 	@Where(clause="isdeleted <> 'TRUE'")
 	private InvoiceBase invoice;
 	

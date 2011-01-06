@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.data.FoldTemplate;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.ChargeCost;
 import com.efi.printsmith.data.CostCenter;
@@ -690,6 +691,18 @@ public class ChargeDefinitionMapper extends ImportMapper {
 								.tokenToBooleanValue(currentImportToken));
 					} else if ("new from import".equals(currentFieldToken)) {
 						/* TODO */
+					} else if ("fold templete ID".equals(currentFieldToken)) {
+						int templateId = Utilities.tokenToInt(currentImportToken);
+						try {
+							if (templateId >= 2) {
+								FoldTemplate template = dataService.getFoldTemplateByIndex(templateId-2);
+								if (template != null) {
+									chargeDefinition.setFoldTemplate(template);
+								}
+							}
+						} catch (Exception e) {
+							log.error(e);
+						}
 					}
 				}
 				if ( chargeDefinition.getPriceMethod() != "Shipping" ){
@@ -702,22 +715,21 @@ public class ChargeDefinitionMapper extends ImportMapper {
 					} else if (qtyType.equals("4")) {
 						chargeDefinition.setQuantityType("None");
 					} else if (qtyType.equals("5")) {
-					chargeDefinition.setQuantityType("SetupSets");
+						chargeDefinition.setQuantityType("SetupSets");
+					} 
+				} else {
+					if (qtyType.equals("1")) {
+						chargeDefinition.setQuantityType("TotalWeight");
+					} else if (qtyType.equals("2")) {
+						chargeDefinition.setQuantityType("ShippingQty");
+					} else if (qtyType.equals("3")) {
+						chargeDefinition.setQuantityType("Time");
+					} else if (qtyType.equals("4")) {
+						chargeDefinition.setQuantityType("None");
+					} else if (qtyType.equals("5")) {
+						chargeDefinition.setQuantityType("SetupSets");
 					} 
 				}
-				else{
-						if (qtyType.equals("1")) {
-							chargeDefinition.setQuantityType("TotalWeight");
-						} else if (qtyType.equals("2")) {
-							chargeDefinition.setQuantityType("ShippingQty");
-						} else if (qtyType.equals("3")) {
-							chargeDefinition.setQuantityType("Time");
-						} else if (qtyType.equals("4")) {
-							chargeDefinition.setQuantityType("None");
-						} else if (qtyType.equals("5")) {
-						chargeDefinition.setQuantityType("SetupSets");
-						} 
-					}
 								
 								
 				if (newCommand == false && newCategory == false) {

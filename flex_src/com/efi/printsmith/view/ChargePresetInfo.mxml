@@ -243,7 +243,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = ((chargeDefinition.quantityType == ChargeQtyType.Sets) && chargeDefinition.useSetup);
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -271,7 +271,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -293,7 +293,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets && chargeDefinition.adjustableMaterial;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -315,7 +315,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 			material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 			price_box.includeInLayout = price_box.visible = true;
-			price_text.editable = !chargeDefinition.noOverrides;
+			price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 			setup_box.includeInLayout = setup_box.visible = false;
 			number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 			pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -336,7 +336,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 			material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 			price_box.includeInLayout = price_box.visible = true;
-			price_text.editable = !chargeDefinition.noOverrides;
+			price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 			setup_box.includeInLayout = setup_box.visible = false;
 			number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 			pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -358,7 +358,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -380,7 +380,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = ((chargeDefinition.quantityType == ChargeQtyType.Sets) && chargeDefinition.useSetup);
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -409,7 +409,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = false
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = true;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = true;
@@ -431,7 +431,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = false
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = true;
@@ -455,7 +455,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = ((chargeDefinition.quantityType == ChargeQtyType.Sets) && chargeDefinition.useSetup);
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -476,7 +476,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -500,7 +500,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = ((chargeDefinition.quantityType == ChargeQtyType.Sets) && chargeDefinition.useSetup);
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -522,7 +522,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = chargeDefinition.useMaterialSets && chargeDefinition.adjustableSets;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -545,7 +545,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -567,7 +567,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -589,7 +589,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -610,7 +610,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -633,7 +633,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -654,7 +654,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				rate_box.includeInLayout = rate_box.visible = chargeDefinition.adjustableRate;
 				material_sets_of_box.includeInLayout = material_sets_of_box.visible = false;
 				price_box.includeInLayout = price_box.visible = true;
-				price_text.editable = !chargeDefinition.noOverrides;
+				price_text.enabled = price_text.editable = !chargeDefinition.noOverrides;
 				setup_box.includeInLayout = setup_box.visible = false;
 				number_of_colors_box.includeInLayout = number_of_colors_box.visible = false;
 				pounds_of_ink_box.includeInLayout = pounds_of_ink_box.visible = false;
@@ -804,6 +804,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 						<mx:TextInput text="{chargeDefinition.presetMaterialRateLabel}" width="50%" id="material_rate_label_text" textAlign="right" focusOut="this.updatePrice(event)"/>
 						<mx:TextInput text="{chargeDefinition.material}" width="50%" id="material_rate" textAlign="right" focusOut="this.updatePrice(event)"/>
 					</mx:HBox>					
+					<mx:Spacer height="3" width="100%"/>
 				</mx:VBox>
 				<mx:VBox width="50%" height="133" verticalScrollPolicy="off" verticalAlign="bottom">					
 					<mx:HBox width="100%" id="price_per_pound_box">
@@ -850,6 +851,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 						<mx:TextInput text="{chargeDefinition.presetPriceLabel}" width="50%" id="price_label_text" textAlign="right" focusOut="this.updatePrice(event)"/>
 						<mx:TextInput text="{chargeDefinition.presetPrice}" width="50%" id="price_text" textAlign="right" change="this.updatePriceEdit()" focusOut="this.updatePrice(event)"/>
 					</mx:HBox>
+					<mx:Spacer height="3" width="100%"/>
 				</mx:VBox>
 			</mx:HBox>
 		</mx:VBox>

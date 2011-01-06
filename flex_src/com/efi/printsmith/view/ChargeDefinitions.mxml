@@ -836,8 +836,10 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 				charge_sales_category_combo.selectedIndex = findItem2(charge.salesCategory.name, salesCategories);
 			}
 			
-			if (charge.foldTemplate != null) {
+			if (charge.foldTemplate != null && charge.foldTemplate.id != 0) {
 				this.fold_template_combo.selectedIndex = findItem2(charge.foldTemplate.name, this.foldTemplates);
+			} else {
+				this.fold_template_combo.selectedIndex = -1;
 			}
 			
 			charge_group_1.selectedValue = charge.jobQty;
@@ -2012,11 +2014,10 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		}
 	}
 	
-	private function doPiecePrice():void{
+	private function doPiecePrice():void {
 		if (setup_check.selected == true){
 			material_check.selected = false;
-			//material_edit.text ="";
-			material_edit.enabled= false;
+			//material_edit.text lse;
 			in_set_mat_check.selected = false;
 			in_set_mat_check.enabled = false;
 			//in_sets_mat_edit.text = "";
@@ -2025,7 +2026,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		this.isDirty = true;
 	}
 			
-	private	function doPiecePrice2():void{
+	private	function doPiecePrice2():void {
 		if (material_check.selected == true){
 			setup_check.selected = false;
 			//setup_edit.text ="";
@@ -2224,13 +2225,13 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
     <mx:Dissolve id="dissolveIn" duration="400" alphaFrom="0.0" alphaTo="1.0"/>
    	<mx:NumberValidator source="{fixed_spoilage_edit}" property="text" trigger="{fixed_spoilage_edit}" triggerEvent="focusOut" allowNegative="true"/>
    	<mx:NumberValidator source="{base_linear_quantity_edit}" property="text" trigger="{base_linear_quantity_edit}" triggerEvent="focusOut" allowNegative="true"/>
-   	<mx:NumberValidator source="{minimum_time_edit}" property="text" trigger="{minimum_time_edit}" triggerEvent="focusOut" allowNegative="true"/>
+   	<mx:NumberValidator source="{minimum_time_edit}" precision="4" property="text" trigger="{minimum_time_edit}" triggerEvent="focusOut" allowNegative="true"/>
    	<mx:NumberValidator source="{markup_edit}" property="text" trigger="{markup_edit}" triggerEvent="focusOut" allowNegative="true"/>
    	<mx:NumberValidator source="{area_edit}" property="text" trigger="{area_edit}" triggerEvent="focusOut" allowNegative="false"/>
    	<mx:NumberValidator source="{in_sets_edit}" property="text" trigger="{in_sets_edit}" triggerEvent="focusOut" allowNegative="false"/>
    	<mx:NumberValidator source="{in_sets_mat_edit}" property="text" trigger="{in_sets_mat_edit}" triggerEvent="focusOut" allowNegative="false"/>
    	<mx:NumberValidator source="{sheet_lift_edit}" property="text" trigger="{sheet_lift_edit}" triggerEvent="focusOut" allowNegative="false"/>
-   	<mx:CurrencyValidator source="{minimum_charge_edit}" property="text" trigger="{minimum_charge_edit}" triggerEvent="focusOut" allowNegative="true"/>
+   	<mx:CurrencyValidator source="{minimum_charge_edit}" precision="4" property="text" trigger="{minimum_charge_edit}" triggerEvent="focusOut" allowNegative="true"/>
    	<mx:CurrencyValidator source="{setup_edit}" property="text" trigger="{setup_edit}" triggerEvent="focusOut" allowNegative="true"/>
    	<mx:CurrencyValidator source="{rate_edit}" property="text" trigger="{rate_edit}" triggerEvent="focusOut" allowNegative="true"/>
    	<mx:CurrencyValidator source="{material_edit}" property="text" trigger="{material_edit}" triggerEvent="focusOut" allowNegative="true"/>

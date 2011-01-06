@@ -5759,4 +5759,10 @@ public class DataService extends HibernateService {
 		}
 		return object;
 	}
+	
+	public FoldTemplate getFoldTemplateByIndex(int i) throws Exception {
+		List<FoldTemplate> templates = (List<FoldTemplate>) this.getAll("FoldTemplate");
+		
+		return (templates.get(i));
+	}
 }

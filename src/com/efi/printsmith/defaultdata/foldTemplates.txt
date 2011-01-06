@@ -33,7 +33,7 @@
 "foldDiagram-F12-13.png","12 Panel Roll","",34,1,  
 "foldDiagram-F12-14.png","12 Panel Right Angle Parallel, Reverse","",35,1,  
 "foldDiagram-F12-15.png","12 Page Signature Style B","",36,1,  
-"foldDiagram-F12-16.png","12 Page Signature Style A","Fole one third Z fold length then one half right angle",37,1,  
+"foldDiagram-F12-16.png","12 Page Signature Style A","Fold one third Z fold length then one half right angle",37,1,  
 "foldDiagram-F16-1.png","16 Panel Style A","",38,0,  
 "foldDiagram-F16-2.png","16 Panel Style B","",39,0,  
 "foldDiagram-F16-3.png","16 Panel Style C","",40,0,  
