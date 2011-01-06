@@ -1881,15 +1881,15 @@
 				if(ticket_grid.selectedIndex>-1 && ticket_grid.selectedItem!=null){
 					var selectedDeliveryTicketJob:DeliveryTicketJobs = ticket_grid.selectedItem as DeliveryTicketJobs;
 					var child:DeliveryTicketEdit = new DeliveryTicketEdit();
-					child.setDeliveryTicket(selectedDeliveryTicketJob.parentDeliveryTicket);
-					child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDeliveryTicketJobsList,false,0,true);
+					child.name = "DeliveryTicket"+selectedDeliveryTicketJob.parentDeliveryTicket.id;
 					var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
 					if (win == null) {
+						child.setDeliveryTicket(selectedDeliveryTicketJob.parentDeliveryTicket);
+						child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDeliveryTicketJobsList,false,0,true);
 						Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
 					}
 					else {
-						win.closeWindow();
-						Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
+						win.bringWindowToFront();	
 					}
 				}
 			}

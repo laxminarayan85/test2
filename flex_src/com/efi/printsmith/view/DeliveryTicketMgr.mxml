@@ -96,15 +96,15 @@
 		
 		private function doNew():void{
 			var child:DeliveryTicketEdit = new DeliveryTicketEdit();
-			child.setDeliveryTicket(new DeliveryTicket());
-			child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
+			child.name = "DeliveryTicket";
 			var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
 			if (win == null) {
+				child.setDeliveryTicket(new DeliveryTicket());
+				child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
 				Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
 			}
 			else {
-				win.closeWindow();
-				Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
+				win.bringWindowToFront();	
 			}
 		   /*  var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
 		    deliveryTicketEditWindow.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
@@ -150,15 +150,15 @@
 			if(dataGrid.selectedIndex>-1 && dataGrid.selectedItem!=null){
 				var selectedDeliveryTicketJob:DeliveryTicketJobs = dataGrid.selectedItem as DeliveryTicketJobs;
 				var child:DeliveryTicketEdit = new DeliveryTicketEdit();
-				child.setDeliveryTicket(selectedDeliveryTicketJob.parentDeliveryTicket);
-				child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
+				child.name = "DeliveryTicket"+selectedDeliveryTicketJob.parentDeliveryTicket.id;
 				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
 				if (win == null) {
+					child.setDeliveryTicket(selectedDeliveryTicketJob.parentDeliveryTicket);
+					child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
 					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
 				}
 				else {
-					win.closeWindow();
-					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
+					win.bringWindowToFront();	
 				}
 				/* var deliveryTicketEditWindow:DeliveryTicketEdit = DeliveryTicketEdit(PopUpManager.createPopUp(this, DeliveryTicketEdit, true));
 				deliveryTicketEditWindow.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDataList,false,0,true);
