@@ -11,10 +11,9 @@
 	xmlns:prefcomp="com.efi.printsmith.components.preferences.*"
 	xmlns:components="com.efi.printsmith.common.components.*"
 	width="100%" height="100%" 
-	headerHeight="0"
+	headerHeight="0" name="SystemPreferences"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}"
-	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
-	name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}" 
+	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.Preferences')}"
 	xmlns:ns1="com.efi.printsmith.components.*"
 	>
 
