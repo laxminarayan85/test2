@@ -294,7 +294,7 @@
 	private function selectAll():void{
 		var selectedIpodIndices:Array = [ ];
 		stockSelected = true;
-		for (var i:int = 0; i< dataGrid.rowCount; i++)	{
+		for (var i:int = 0; i< stockOrdersDisplay.length ; i++)	{
 			selectedIpodIndices.push(i);
 		}
 		dataGrid.selectedIndices =   selectedIpodIndices     

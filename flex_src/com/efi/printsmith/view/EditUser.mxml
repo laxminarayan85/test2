@@ -7,7 +7,7 @@ showCloseButton="false"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
-	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="getAllOrderBy" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="accessGroupService" destination="dataService">
@@ -85,7 +85,7 @@ showCloseButton="false"
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 	    resetFocus();              
-		dataService.getAll("Users"); 
+		dataService.getAllOrderBy("Users", "name"); 
 		accessGroupService.getAll("AccessGroup");
 		accessLevelService.getAll("AccessLevel");  
 		setUser();
@@ -99,7 +99,7 @@ showCloseButton="false"
 		//parentApplication.listUsers.loaderService.getUsers();    
 		                         
 		PopUpManager.removePopUp(this);
-		dataService.getAll("Users");
+		dataService.getAllOrderBy("Users", "name"); 
 	
 		
 		newUser = true;
@@ -155,7 +155,7 @@ showCloseButton="false"
 	private function messageHandler(message:IMessage):void
 	{
 		var messageBody:String = message.body as String;
-  		dataService.getAll("Users");
+  		dataService.getAllOrderBy("Users", "name"); 
 	}
          
 /* 	private function creationCompleteHandler():void {   
@@ -170,17 +170,25 @@ showCloseButton="false"
 	// Validate the form
 	                                         
 	public function validateForm(event:Event):void  {
+	     var temp :int;
 	     focusedFormControl = event.target as DisplayObject;    
 	     formIsValid = true;
 	
 	     // Check if form is empty          
 	     formIsEmpty = (nameField.text == "");
+	     temp = findItem(nameField.text.toUpperCase(), userslist);
+	     if (temp != -1)
+	     {
+	     	formIsValid = false;
+	     	Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Sorrythatnameisalrea'));
+	     	
+	     }
 	     validate(nameValidator);                 
 	  //   validate(passwordValidator);      
 	}
 	 private function findItem(name:String, array:ArrayCollection):int {
 		for each(var element:Object in array) {
-			if (name == element.name) {
+			if (name == element.name.toUpperCase()) {
 				return array.getItemIndex(element);
 			}
 		}
@@ -215,7 +223,7 @@ showCloseButton="false"
 		formIsValid = false;                                
 		resetFocus();   
 		setUser();      
-		dataService.getAll("Users"); 
+		dataService.getAllOrderBy("Users", "name"); 
 		accessGroupService.getAll("AccessGroup");
 		accessLevelService.getAll("AccessLevel");  
 		force_password.selected= false;
@@ -246,7 +254,7 @@ showCloseButton="false"
 		accessLevels = ev.result as ArrayCollection;
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
-	     dataService.getAll("Users");
+	     dataService.getAllOrderBy("Users", "name"); 
 	     send();
 	     clearFormHandler();
 	}
@@ -430,8 +438,8 @@ showCloseButton="false"
  
 	<mx:DataGrid x="10" y="10" width="606" id="dataGrid" dataProvider="{userslist}" height="134" click="doUserGridClick();" >
 		<mx:columns>
-			<mx:DataGridColumn id="namerow" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserName')}" labelFunction="getNamelabel"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessGroup')}" labelFunction="getAccessgrouplabel"/>
+			<mx:DataGridColumn sortable="false" id="namerow" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserName')}" labelFunction="getNamelabel"/>
+			<mx:DataGridColumn sortable="false" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessGroup')}" labelFunction="getAccessgrouplabel"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessLevel')}" labelFunction="getAccesslevellabel"/>
 			
 		</mx:columns>
