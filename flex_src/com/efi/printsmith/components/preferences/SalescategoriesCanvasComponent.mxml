@@ -17,8 +17,10 @@
 			private function doRemoveSalesCategory():void{
 				if (salesCategoryGrid.selectedIndex > -1){
 					var newItem:SalesCategory = salesCategoryGrid.selectedItem as SalesCategory;
-					preferencesSalesCategoryDeleteArray.addItem(newItem);
-					preferencesSalesCategoryArray.removeItemAt(salesCategoryGrid.selectedIndex);
+					if(newItem.name!="Shipping"){
+						preferencesSalesCategoryDeleteArray.addItem(newItem);
+						preferencesSalesCategoryArray.removeItemAt(salesCategoryGrid.selectedIndex);
+					}
 				}
 			}
 			
