@@ -2425,8 +2425,10 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 				</mx:Canvas>
 			</mx:Canvas>
 			<mx:Canvas label="charge_category_canvas" width="100%" height="100%" id="charge_category_canvas">
-				<mx:TextInput x="125" y="3" width="430" id="charge_category_name_edit" text="{chargeCategory.name}"/>
-				<mx:Label x="9" y="5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CategoryTitle')}" textAlign="right" width="108"/>
+				<mx:TextInput x="126" y="7" width="163" id="category_command_text" text="{chargeCategory.parent.name}" change="setDocDirty()" editable="false"/>
+				<mx:Label x="30" y="9" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Command')}" textAlign="right" width="88"/>
+				<mx:TextInput x="126" y="34" width="430" id="charge_category_name_edit" text="{chargeCategory.name}"/>
+				<mx:Label x="10" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.CategoryTitle')}" textAlign="right" width="108"/>
 			</mx:Canvas>
 			<mx:Canvas label="charge_command_canvas" width="100%" height="100%" id="charge_command_canvas">
 				<mx:TextInput x="125" y="3" width="430" id="charge_command_name_edit" text="{chargeCommand.name}"/>
