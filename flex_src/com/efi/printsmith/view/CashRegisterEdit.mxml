@@ -268,12 +268,13 @@
 	import com.efi.printsmith.data.Tape;
 	import com.hillelcoren.utils.ArrayCollectionUtils;
 	import com.efi.printsmith.data.PreferencesCashRegister;
-	import mx.events.StateChangeEvent;
+    import mx.events.*;
 	import mx.controls.Text;
 	import mx.utils.StringUtil;
 	import mx.managers.FocusManager;
 	import com.efi.printsmith.security.PSSecurityCommands;
 	import com.efi.printsmith.security.PSSecurityUtils;
+	import com.efi.printsmith.components.AskUserForDescriptionPopup;
 
 	import com.efi.printsmith.data.TaxTable;
 	import com.efi.printsmith.data.TaxCodes;
@@ -297,6 +298,8 @@
 	import com.efi.printsmith.events.CreditCardTrackReadEvent;
 	import com.efi.printsmith.events.CreditCardTransEvent;
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
+	import com.efi.printsmith.events.SaveAskUserDescriptionEvent;
+	
 	import com.efi.printsmith.Constants;
 
 	import mx.controls.Alert;                                         
@@ -991,8 +994,9 @@
 			}
 		
 			// total price can be overridden
-			if (activeSale != null && activeSale.opPrice == false && txtSaleTotal != null)
-				txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(temp)
+			if (activeSale != null && activeSale.opPrice == false && txtSaleTotal != null) {
+				txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(temp);
+			}
 			
 			if (activeSale.opPrice == false) {
 				activeSale.subTotal = temp;		// no tax at this point
@@ -1314,10 +1318,14 @@
 		//
 		// how much is left to pay 	if ( treeStateString == "invoiceState")
 		//
-		if ( treeStateString == "invoiceState")
+		if ( treeStateString == "invoiceState") {
 			invoice_payment.text = Snowmass.getCurrencyFormatter(false,2).format(roundToCurrency(sessionBatch.accumTotal - sessionBatch.accumTendered));
-		else
+			invoice_payment.setSelection(0, invoice_payment.length);
+		}
+		else {
 			payment_cash_edit.text = Snowmass.getCurrencyFormatter(false,2).format(roundToCurrency(sessionBatch.accumTotal - sessionBatch.accumTendered));
+			payment_cash_edit.setSelection(0, payment_cash_edit.length);
+		}
 		
 		this.focusManager.defaultButton = btPayment;
 		
@@ -1336,6 +1344,8 @@
 		var payOK:Boolean = true;
 		var message:String;
 		var temp:Number;
+	
+
 		if ( treeStateString == "invoiceState")
 			temp = parseFloat(invoice_payment.text.replace(",",""));
 		else
@@ -1348,6 +1358,14 @@
 			
 			var tempStr:String = Snowmass.getCurrencyFormatter(false,2).format(temp);
 			activePayment.total = parseFloat(tempStr.replace(",",""));	
+
+			//
+			// cash register pay out, ask for description from user
+			//
+			if (activePayment.total < 0 && activePayment.refNumber == "") {
+				completeTransationDescription(activePayment, 1);
+				return;			// don't continue with payment
+			}
 			
 			sessionBatch.accumTendered = roundToCurrency((sessionBatch.accumTendered + activePayment.total));
 			sessionBatch.accumChange = roundToCurrency((sessionBatch.accumTendered - sessionBatch.accumTotal)); 
@@ -1409,14 +1427,7 @@
 				}
 			}
 			
-			if (payOK == true) {
-				// cash register pay out
-				//
-				if (activePayment.total < 0) {
-					activePayment.refNumber = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"posRegisterCmd.POSRefund")
-					// TODO may ask for user description
-				}
-				
+			if (payOK == true) {				
 				sessionBatch.transactions.addItem(activePayment);
 				InitPaymentRecord();
 			}
@@ -1879,7 +1890,12 @@
 				// un-balanced amount of sales .vs. payments
 				//
 				if (isPaidOut == true) {
-					// TODO - ask for description
+					// ask for description
+					tempPayment = paymentList.getItemAt(currentPaymentIndex) as TapePaymentRecord;
+					if (tempPayment.refNumber == "") {
+						completeTransationDescription(tempPayment, 2);
+						results = false;		// stop posting
+					}
 				} else {
 					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WARNINGThistransacti");
 					message = StringUtil.substitute(message,numberFormatter.format((totalTransactionPay + totalCharge)),numberFormatter.format(totalApplied)); 
@@ -1982,9 +1998,10 @@
 		// the cash register is used as a PAID OUT as well, like a cash back method
 		// The current user must be allowed this security feature.
 		//
-		if (sessionBatch.transactions.length == 1 && sessionBatch.accumTendered < 0) {
+		if (sessionBatch.transactions.length > 0 && sessionBatch.accumTendered < 0) {
 			tempPayment  = sessionBatch.transactions.getItemAt(0) as TapePaymentRecord;
-			if (tempPayment != null && tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CASH) {
+			if (tempPayment != null && (tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CASH ||
+										tempPayment.paymentMethod == Constants.POS_CASH_REGISTER_PAYMODE_CHECK)) {
 				if (sessionBatch.user != null && sessionBatch.user.noCashReturn == false)
 					isPaidOut = true;
 			}
@@ -2259,6 +2276,48 @@
 		}
 	}
 	
+	
+	private function askUserPopupClose(event:CloseEvent):void
+	{
+		titleWindow = null;
+	}
+
+	private function saveUserDescriptionHandler(evt:SaveAskUserDescriptionEvent):void {
+ 		if (evt.placeHolder is TapePaymentRecord) {
+			var tempPayment:TapePaymentRecord = evt.placeHolder as TapePaymentRecord;
+			tempPayment.refNumber = evt.description;
+		} else if (evt.placeHolder is TapeSaleRecord) {
+			var tempSale:TapeSaleRecord = evt.placeHolder as TapeSaleRecord;
+			tempSale.description = evt.description;
+		}
+		
+		//
+		// sence the prompting is not true MODAL, we had to halt any processing and ask user
+		//		this is a way to continue on with the process after SAVE of the description.
+		//
+		switch(evt.opCode) {
+		case 1:			// from a payment accept process
+			doPayment();
+			break;
+		case 2:			// from a POST process halt
+			doPostBatch();
+			break;
+		}
+	}
+	
+	private var titleWindow:AskUserForDescriptionPopup=null;
+	
+	private function completeTransationDescription(transObject:Object, functionHalted:int):void {
+
+		titleWindow = AskUserForDescriptionPopup(PopUpManager.createPopUp(this, AskUserForDescriptionPopup,true));
+		titleWindow.SetPlaceHolder(transObject);
+		titleWindow.SetOpCode(functionHalted);
+		titleWindow.SetLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posRegisterCmd.Description'));
+		titleWindow.SetDefaultDescription("");
+		titleWindow.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posRegisterCmd.Pleasedescribetransa');
+		titleWindow.addEventListener(CloseEvent.CLOSE, askUserPopupClose, false, 1);
+		titleWindow.addEventListener("SaveAskUserDescriptionEvent", saveUserDescriptionHandler, false, 1);
+	}
 
 	private function handleLoadInvoice(evt:ResultEvent):void {
 		var invoiceTmp:InvoiceBase = evt.result as InvoiceBase;

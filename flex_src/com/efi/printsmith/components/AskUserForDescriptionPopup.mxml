@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fc="http://www.adobe.com/2006/fc"
+        height="134"
+        width="564"
+        showCloseButton="true"
+        verticalScrollPolicy="off"
+        horizontalScrollPolicy="off"
+        creationComplete="init()"
+        close="doCancel()"
+        defaultButton="{ok_button}" title="">
+        
+	<mx:Metadata>
+		[Event(name="SaveAskUserDescriptionEvent", type="com.efi.events.SaveAskUserDescriptionEvent")]
+ 	</mx:Metadata>
+	
+    <mx:Canvas width="536" height="91">
+    <mx:Label id="label_prompt" x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Description')}" width="223" textAlign="right"/>
+    <mx:TextInput x="241" y="8" width="285" id="desc_edit" text="{description}"/>
+    <mx:Button x="368" y="59" id="ok_button" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" width="75" click="doOK()"/>
+    <mx:Button x="451" y="59" id="cancel_button" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" width="75" click="doCancel()"/>
+    </mx:Canvas>
+<mx:Script>
+	<![CDATA[
+	import com.efi.printsmith.events.SaveAskUserDescriptionEvent;
+	
+	import mx.collections.ArrayCollection;
+	import mx.managers.PopUpManager;                                         
+	import mx.rpc.events.ResultEvent;                                         
+	import mx.rpc.events.FaultEvent;                                         
+	import mx.controls.Alert;                                         
+
+	[Bindable]                                         
+	public var description:String;
+	
+	[Bindable]                                         
+	public var opCode:int = 0;
+	
+	[Bindable]                                         
+	public var placeHolderObj:Object = null;
+	
+	
+	private function init():void {
+		PopUpManager.centerPopUp(this);
+	}      
+	
+	public function SetLabel(promptStr:String):void{
+		label_prompt.text = promptStr;
+	}
+	
+	public function SetDefaultDescription(descStr:String):void{
+		desc_edit.text = descStr;
+	}
+	
+	public function SetPlaceHolder(obj:Object):void{
+		placeHolderObj = obj;
+	}
+	
+	public function SetOpCode(code:int):void{
+		opCode = code;
+	}
+	
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0);                                 
+	}
+	
+	private function doCancel():void {
+		PopUpManager.removePopUp(this);
+	}
+	
+	private function doOK():void {
+		description = desc_edit.text;
+		
+		var eventObj:SaveAskUserDescriptionEvent = new SaveAskUserDescriptionEvent("SaveAskUserDescriptionEvent", description, placeHolderObj, opCode);
+		dispatchEvent(eventObj);
+		
+		PopUpManager.removePopUp(this);
+	}
+
+	]]>
+</mx:Script>
+    
+</mx:TitleWindow>
