@@ -295,11 +295,21 @@
 						if(object.getChildren()[i] is CustomNumericTextInputComponent){
 							var numericTextInputComponent:CustomNumericTextInputComponent = object.getChildren()[i] as CustomNumericTextInputComponent;
 							if(measurementValue=="Pixels"){
+								numericTextInputComponent.allowSymbol = false;
 								numericTextInputComponent.precision = 0;
 								numericTextInputComponent.viewablePrecision = 0;
 								numericTextInputComponent.isInteger = true;
 								numericTextInputComponent.updatePrecison();
 							} else {
+								numericTextInputComponent.allowSymbol = true;
+								numericTextInputComponent.suffix = true;
+								if(measurementValue=="Inches"){
+									numericTextInputComponent.symbolString = "in";
+								} else if(measurementValue=="Millimeters"){
+									numericTextInputComponent.symbolString = "mm";
+								} else if(measurementValue=="Centimeters"){
+									numericTextInputComponent.symbolString = "cm";
+								}
 								numericTextInputComponent.precision = 2;
 								numericTextInputComponent.viewablePrecision = 1;
 								numericTextInputComponent.isInteger = false;

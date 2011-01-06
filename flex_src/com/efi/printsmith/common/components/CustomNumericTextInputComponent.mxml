@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TextInput xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:component="com.efi.printsmith.common.components.*"  initialize="initializeProperties()" focusIn="focusInEvent(event)" focusOut="focusOutEvent(event)" mouseOver="displayToolTip()">
+<mx:TextInput xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:component="com.efi.printsmith.common.components.*" initialize="initializeProperties()"
+	focusIn="focusInEvent(event)" focusOut="focusOutEvent(event)"
+	mouseOver="displayToolTip()">
 	<mx:Script>
 		<![CDATA[
 			import mx.rpc.events.AbstractEvent;
@@ -113,7 +116,15 @@
 					        	}
 					        }
 					        if(appendZeroes){
-					        	text = appendZeroesFunctionality(formattedString);
+						       if(allowSymbol && formattedString.indexOf(symbolString)==-1){
+							       	if(prefix){
+						        		formattedString = symbolString+appendZeroesFunctionality(formattedString);
+						        	} else if(suffix){
+						        		formattedString = appendZeroesFunctionality(formattedString)+symbolString;
+						        	}
+						       } else {
+						       		text = appendZeroesFunctionality(formattedString);
+						       }
 					        }
 					        else {
 					        	text=formatDecimals(formattedString);
@@ -144,7 +155,15 @@
 				        	}
 				        }
 					    if(appendZeroes){
-					       text = appendZeroesFunctionality(formattedString);
+					       if(allowSymbol && formattedString.indexOf(symbolString)==-1){
+						       	if(prefix){
+					        		formattedString = symbolString+appendZeroesFunctionality(formattedString);
+					        	} else if(suffix){
+					        		formattedString = appendZeroesFunctionality(formattedString)+symbolString;
+					        	}
+					       } else {
+					       		text = appendZeroesFunctionality(formattedString);
+					       }
 				        }
 				        else {
 				        	text=formatDecimals(formattedString);
@@ -348,7 +367,16 @@
 			      		}
 			        }
 		    		if(appendZeroes){
-			        	text = appendZeroesFunctionality(formattedString);	
+		    			if(allowSymbol && formattedString.indexOf(symbolString)==-1){
+		    				if(prefix){
+				        		text = symbolString+appendZeroesFunctionality(formattedString);	
+				        	} else if(suffix){
+				        		text = appendZeroesFunctionality(formattedString)+symbolString;	
+				        	}
+			        		
+			      		} else {
+			      			text = appendZeroesFunctionality(formattedString);
+			      		}	
 			        }
 			        else {
 			        	this.text=formatDecimals(formattedString);
@@ -455,6 +483,6 @@
 
 	]]>
 	</mx:Script>
-	<mx:NumberFormatter id="numbFormatter"/>
-	<component:CustomNumberValidator id="validateNumber"/>
+	<mx:NumberFormatter id="numbFormatter" />
+	<component:CustomNumberValidator id="validateNumber" />
 </mx:TextInput>
