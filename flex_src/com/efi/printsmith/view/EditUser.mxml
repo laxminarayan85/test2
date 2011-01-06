@@ -362,7 +362,7 @@ showCloseButton="false"
 		notSaveChange= true;
 		namerow.labelFunction(dataGrid.selectedItem,tempc);
 	//	getNamelabel(dataGrid.selectedItem,tempc);
-		doPassword();		// force the password change window
+		force_password.selected = true;
 	}
 	public function getNamelabel(item:Object, column:DataGridColumn):String{
 		var tmpUser:Users ;
@@ -370,18 +370,20 @@ showCloseButton="false"
 	    var tempString:String;
 		
 		if (tmpUser != null && tmpUser.name != null ) {
-			if (notSaveChange){
-				if (tmpUser.name == user1.name){
-					if (robust_password.selected ){
+				if (tmpUser.name == Snowmass.getInstance().currentUser.name){
+					tempString = "*";
+					tempString += tmpUser.name;
+				}
+					/* if (robust_password.selected ){
 						tempString = "*";
 						tempString += tmpUser.name;
 					}
 					else{
 						tempString = tmpUser.name;
 					}
-				
+				 */
 						
-				} else{
+			/* 	} else{
 					if (tmpUser.robustPassword){
 						tempString = "*";
 						tempString += tmpUser.name;
@@ -398,10 +400,10 @@ showCloseButton="false"
 				tempString = "*";
 				tempString += tmpUser.name;
 				
-			}
+			}*/
 			else{
 				tempString = tmpUser.name;
-			}
+			} 
 				
 			
 			dataGrid.invalidateList();

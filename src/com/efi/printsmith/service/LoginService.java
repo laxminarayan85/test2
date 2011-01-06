@@ -77,9 +77,11 @@ public class LoginService extends DataService {
 					} else {
 						// failed login attempts
 						user.setLoginAttempts(user.getLoginAttempts() + 1);
-						if (user.getLoginAttempts() > 4) {
+						if (user.getLoginAttempts() > 7) {
 							user.setDisableUser(true);
 							user.setLoginAttempts(0);
+							this.addUpdate(user);
+							return user;
 						}
 						this.addUpdate(user);
 					}
@@ -98,7 +100,7 @@ public class LoginService extends DataService {
 					} else {
 						// failed login attempts
 						user.setLoginAttempts(user.getLoginAttempts() + 1);
-						if (user.getLoginAttempts() > 4)
+						if (user.getLoginAttempts() > 7)
 							user.setDisableUser(true);
 						this.addUpdate(user);
 					}

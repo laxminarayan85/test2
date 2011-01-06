@@ -325,8 +325,8 @@
 	<mx:Button x="532" y="25" width="50" height="50" enabled="{stockSelected}" id="partial_button" click="doPartial();">
 		<mx:icon>@Embed(source='../../../../assets/partialorderreceived.png')</mx:icon>
 	</mx:Button>
-	<mx:CheckBox x="635" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Printseparatepagefor')}" id="vendor_check" width="218.5"/>
-	<mx:CheckBox x="635" y="39" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Hidepreviouslyordere')}" id="hide_previous" width="218.5" click="hideOrders()"/>
+	<mx:CheckBox x="610" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Printseparatepagefor')}" id="vendor_check" width="243.5"/>
+	<mx:CheckBox x="610" y="39" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.Hidepreviouslyordere')}" id="hide_previous" width="243.5" click="hideOrders()"/>
 	<mx:Label x="171" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="63"/>
 	<mx:Label x="231" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.OrderPlaced')}" width="98"/>
 	<mx:Label x="311" y="83" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockRepCmd.SubmitOrder')}" width="95"/>
