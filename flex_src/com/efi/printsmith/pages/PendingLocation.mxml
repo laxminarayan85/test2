@@ -97,30 +97,30 @@
 			private function handleLoadLocationsResult(event:ResultEvent):void {
 				var arrayList:ArrayCollection = event.result as ArrayCollection;
 				productionLocationsList = new Array();
+				var emptyObj:ProductionLocations = new ProductionLocations();
+				emptyObj.id = -1;
+				emptyObj.name = "None";
+				productionLocationsList.push(emptyObj);
 				if(arrayList!=null){
 					for each(var obj:Object in arrayList){
 						productionLocationsList.push(obj);
 					}
 				}
-				var emptyObj:ProductionLocations = new ProductionLocations();
-				emptyObj.id = -1;
-				emptyObj.name = "";
-				productionLocationsList.push(emptyObj);
 				dataService.getInvoice(_invoiceBase.id);
 			}
 			
 			private function handleLoadHoldStateResult(event:ResultEvent):void {
 				var arrayList:ArrayCollection = event.result as ArrayCollection;
 				holdStateList = new Array();
+				var emptyObj:HoldState = new HoldState();
+				emptyObj.id = -1;
+				emptyObj.name = "None";
+				holdStateList.push(emptyObj);
 				if(arrayList!=null){
 					for each(var obj:Object in arrayList){
 						holdStateList.push(obj);
 					}
 				}
-				var emptyObj:HoldState = new HoldState();
-				emptyObj.id = -1;
-				emptyObj.name = "";
-				holdStateList.push(emptyObj);
 				if(_invoiceBase!=null && _invoiceBase.holdState!=null){
 					holdstate_combo.selectedIndex = findItem(_invoiceBase.holdState.id,holdStateList);
 				} else {
