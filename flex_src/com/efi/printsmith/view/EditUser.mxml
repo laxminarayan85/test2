@@ -117,7 +117,7 @@ showCloseButton="false"
 		var temp:int;
 		mapToUserData();
 		if (newUser){
-			temp = findItem(user1.name, userslist);
+			temp = findItem(user1.name.toUpperCase(), userslist);
 			if (temp == -1){
 				dataService.addUpdate(user1);  
 				newUser = false;   
@@ -126,9 +126,10 @@ showCloseButton="false"
 				clearFormHandler(); 
 			
 		}
-		else
+		else{
 			 dataService.addUpdate(user1);  
-		notSaveChange = false;                               
+			notSaveChange = false;    
+		}                           
 	}
 	private function deleteUser():void {  
 		if (userslist.length > 1){
@@ -302,7 +303,7 @@ showCloseButton="false"
 	private function mapFromUserData():void{
  	if (user1 != null){ 
 		if (user1.accessGroup != null)			
-				accessGroupList.selectedIndex = findItem(user1.accessGroup.name, accessGroups);
+				accessGroupList.selectedIndex = findItem(user1.accessGroup.name.toUpperCase(), accessGroups);
 			
 		force_password.selected = user1.forcePasswordChange;
 		lock_salesrep.selected = user1.lockSalesRep;

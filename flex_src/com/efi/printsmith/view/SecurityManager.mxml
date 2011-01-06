@@ -42,6 +42,9 @@
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
 	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="dataServiceUsers" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadUserResult(event)"/>
+</mx:RemoteObject>
 <mx:RemoteObject id="SecuritydataService" destination="dataService">
 	<mx:method name="getByAccessGroup" fault="handleFault(event)" result="handleLoadSecurityResult(event)"/>
 	<mx:method name="getFromParent" fault="handleFault(event)" result="handleLoadSecurityResult(event)"/>
@@ -60,6 +63,7 @@
 
 <mx:Script>  	
 <![CDATA[
+	import com.efi.printsmith.data.Users;
 	import mx.events.ValidationResultEvent;
 	import mx.controls.Alert;
 	import mx.events.ListEvent;
@@ -87,6 +91,9 @@
  	
  	[Bindable]
    	private var accessGroupLists:ArrayCollection = new ArrayCollection();
+   	[Bindable]
+   	private var userLists:ArrayCollection = new ArrayCollection();
+   	
    	
    	private var securitySetupLists:ArrayCollection = new ArrayCollection();
     
@@ -133,6 +140,7 @@
 		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.SecuritySetup');
 	              
 		dataService.getAll("AccessGroup"); 
+		dataServiceUsers.getAll("Users");
 		dataServiceSecurityCommands.getAll("SecurityCommands");
 		
 		listOfLockedCommands = new ArrayCollection();
@@ -173,6 +181,9 @@
 	}
 	private function isValid(evt:Event):void	{
 		btnOk.enabled = true;
+	}
+	private function handleLoadUserResult(ev:ResultEvent):void{
+		userLists= ev.result as ArrayCollection;
 	}
 	private function handleLoadResult(ev:ResultEvent):void {
 		accessGroupLists = ev.result as ArrayCollection;
@@ -490,16 +501,31 @@
 		}
 		return -1;
 	}
-  
+  private function findItem2(idtemp:Number, array:ArrayCollection):int {
+		for each(var element:Users in array) {
+			if (idtemp == element.accessGroup.id) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
 	public function doDelete():void{
 		var index:int;
-		index = findItem(access.name, accessGroupLists);
-		var tmp:ArrayCollection = cloneAC(accessGroupLists);
-		tmp.removeItemAt(index);
-		accessGroupLists = tmp;
-//		(tvAccessGroups.dataProvider as ArrayCollection).removeItemAt(index);
-		dataService.deleteItem("AccessGroup", access.id);
-		populateDataProvider(true);
+		var index2:int;
+		
+		index2 = findItem2(access.id, userLists);
+		if ( index2 == -1){
+			index = findItem(access.name, accessGroupLists);
+			var tmp:ArrayCollection = cloneAC(accessGroupLists);
+			tmp.removeItemAt(index);
+			accessGroupLists = tmp;
+	//		(tvAccessGroups.dataProvider as ArrayCollection).removeItemAt(index);
+			dataService.deleteItem("AccessGroup", access.id);
+			populateDataProvider(true);
+		}
+		else{
+			Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Sorryaccesstothisite'));
+		}
 		
 	}
 //	private function addItem(itemName:String):void {

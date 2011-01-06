@@ -59,7 +59,8 @@
     private var stockVendor:ArrayCollection = new ArrayCollection();   
     [Bindable]                                
 	private var stockUnits:ArrayCollection = new ArrayCollection();   
-	
+	[Bindable]                                
+	private var invoice:InvoiceBase;
     [Bindable]                                         
 	private var stockDefinitions:StockDefinition;
 	[Bindable]                                         
@@ -152,7 +153,11 @@
 		if (stockOrder == null)
 			stockOrder = new StockOrder();
 		stockOrder.invoiceNumber = Invoice_Edit.text;
+		if (invoice.account != null)
+			stockOrder.customerName= invoice.account.title;
+		
 		stockOrder.jobNumber = job_edit.text;
+		
 		stockOrder.vendor = cboVendor.selectedItem as Vendor;
 		stockOrder.stockUnit = findItem(stockUnit.selectedValue.toString(),stockUnits);
 		stockOrder.vendorStockNumber = stock_number_edit.text;
@@ -428,14 +433,13 @@
 			orderButton.enabled = false
 	}
 	private function getStock():void{
-		Invoice_Edit.text
 		if ( job_edit.text.length <1)
 			job_edit.text = "1";
 		dataService.getInvoiceByInvoiceNumber(Invoice_Edit.text, "I");
 			
 	}
 	private function handleLoadInvoice(ev:ResultEvent):void{
-		var invoice:InvoiceBase;
+		
 		invoice = ev.result as InvoiceBase;
 		for each( var element:Job in invoice.jobs)
 		{
