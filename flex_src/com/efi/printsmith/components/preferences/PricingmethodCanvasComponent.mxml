@@ -171,20 +171,20 @@
 						
 						<mx:DataGridColumn width="140"
 							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.Estimator')}"
-							dataField="estimator" editable="true">
+							dataField="estimator" editable="false">
 							<mx:itemRenderer>
 			        			<mx:Component>
 			                		<mx:Text selectable="false" text="{data.estimator.name}"/>
 			        			</mx:Component>
 			    			</mx:itemRenderer>
-							<mx:itemEditor>
+							<!--<mx:itemEditor>
 								<mx:Component>
 									<components:CustomComboBoxComponent datagridControl="true" variableName="estimator"
 										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 										masterList="{outerDocument.estimatorTypesArray}" updateFirstElement="true"
 										customText="{outerDocument.getCustomTextData(outerDocument.estimatorTypesArray,data,data.estimator)}"/>
 								</mx:Component>
-							</mx:itemEditor>
+							</mx:itemEditor>-->
 						</mx:DataGridColumn>
 						
 					</mx:columns>
