@@ -4,6 +4,7 @@ import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.pricing.stock.PriceStockEngine;
+import com.efi.printsmith.pricing.stock.StockCostEngine;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.pricing.utilities.JobUtilities;
@@ -21,6 +22,8 @@ public class PrintPricingMethod {
 		
 		PressDefinition pressDefinition = job.getPricingPress();
 		PriceStockEngine priceStockEngine = new PriceStockEngine();
+		StockCostEngine stockCost = new StockCostEngine();
+		job = stockCost.calculateStockCost(job);
 		double stockPrice = priceStockEngine.priceStock(job);
 		double pressPrice = 0.0;
 		BigDecimal pressSpeed;
