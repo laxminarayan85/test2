@@ -81,7 +81,7 @@
 				statusList.addItem("Neutral");
 				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 				var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
-				mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.EstimateHistory');
+				mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.EstimateHistory');
 				dataService.getAccountPicker();		
 			}  
 			
@@ -109,15 +109,16 @@
 			
 			private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
 				var user:Users;
-	
-			user = Snowmass.getInstance().currentUser;
-			if ( evt.account.access_level > user.accessLevel){
-				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'usecCmd.Sorryaccesstothisite'));
-				this.enabled = true;
-			}else{
-				account = evt.account;
-				dataService.getEstimateByAccountId("Estimate", this.account.id);
-			}
+				user = Snowmass.getInstance().currentUser;
+				if ( evt.account.access_level > user.accessLevel){
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'usecCmd.Sorryaccesstothisite'));
+					this.enabled = true;
+				}else{
+					account = evt.account;
+					var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+					mdiWin.title = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'estHistoryCmd.EstimateHistory34'),null,null,null,account.accountId,account.title);
+					dataService.getEstimateByAccountId("Estimate", this.account.id);
+				}
 			}
 					
 			private function handleLoadEstimatesResult(ev:ResultEvent):void {
