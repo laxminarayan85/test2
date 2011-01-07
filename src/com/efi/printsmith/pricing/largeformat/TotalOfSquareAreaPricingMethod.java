@@ -26,9 +26,14 @@ public class TotalOfSquareAreaPricingMethod extends LargeFormatPricingMethod {
 			if (copierDefinition.getSquareAreaType().equals("AreaFinishSize"))
 				area = PriceListUtilities.getAreaFromSizeString(job
 						.getFinishSize());
-			else
-				area = new Double(job.getRollWidth() * job.getCutOff())
-						.longValue();
+			else {
+				if (job.getStock() != null && job.getStock().getStockunit() == 4)
+					area = PriceListUtilities.getAreaFromSizeString(job.getRunSize());
+				else
+					area = new Double(Double.parseDouble(job.getParentSize()
+							.getName())
+							* job.getCutOff()).longValue();
+			}
 		} catch (Exception e) {
 
 		}

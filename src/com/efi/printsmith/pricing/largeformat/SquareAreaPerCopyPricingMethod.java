@@ -25,10 +25,14 @@ public class SquareAreaPerCopyPricingMethod extends LargeFormatPricingMethod {
 			if (copierDefinition.getSquareAreaType() == "AreaFinishSize")
 				area = PriceListUtilities.getAreaFromSizeString(job
 						.getFinishSize());
-			else
-				area = new Double(Double.parseDouble(job.getParentSize()
-						.getName())
-						* job.getCutOff()).longValue();
+			else {
+				if (job.getStock() != null && job.getStock().getStockunit() == 4)
+					area = PriceListUtilities.getAreaFromSizeString(job.getRunSize());
+				else
+					area = new Double(Double.parseDouble(job.getParentSize()
+							.getName())
+							* job.getCutOff()).longValue();
+			}
 		} catch (Exception e) {
 
 		}
