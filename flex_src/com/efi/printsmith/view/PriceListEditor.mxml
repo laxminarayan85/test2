@@ -590,33 +590,35 @@
 	}
 	
 	private function updateNewPriceList():void {
-		if (itemType == "PriceList" || itemType == "PriceListBase") {
-			if (priceList.elements != null) {
-				for (var i:int = 0;i < priceList.elements.length;i++) {
-					 var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-					 if (element.lastLine == true)
-					 	this.over_quantity.text = element.amount.toString();
+		if (priceList != null) {
+			if (itemType == "PriceList" || itemType == "PriceListBase") {
+				if (priceList.elements != null) {
+					for (var i:int = 0;i < priceList.elements.length;i++) {
+						 var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+						 if (element.lastLine == true)
+						 	this.over_quantity.text = element.amount.toString();
+					}
+					this.priceList.elements.filterFunction = filterElements;
+					this.priceList.elements.refresh();
 				}
-				this.priceList.elements.filterFunction = filterElements;
-				this.priceList.elements.refresh();
-			}
-		} else if (itemType == "WasteChart") {
-			for (var i:int = 0;i < priceList.elements.length;i++) {
-				var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-				element.amount = element.amount * 100; // TODO: This is wrong - we should not be changing values for display. Create a renderer if needed.
-			}
-		} else if (itemType == "SpeedTable") {
-		} else if (itemType == "PaperPrice") {
-			if (priceList.isPercentage == true) {
+			} else if (itemType == "WasteChart") {
 				for (var i:int = 0;i < priceList.elements.length;i++) {
 					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
 					element.amount = element.amount * 100; // TODO: This is wrong - we should not be changing values for display. Create a renderer if needed.
 				}
+			} else if (itemType == "SpeedTable") {
+			} else if (itemType == "PaperPrice") {
+				if (priceList.isPercentage == true) {
+					for (var i:int = 0;i < priceList.elements.length;i++) {
+						var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+						element.amount = element.amount * 100; // TODO: This is wrong - we should not be changing values for display. Create a renderer if needed.
+					}
+				}
 			}
-		}
-		refreshCheckBoxes();
-		if (copyFLag)
-			priceList.name = priceList.name+' '+ resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Copy')		
+			refreshCheckBoxes();
+			if (copyFLag)
+				priceList.name = priceList.name+' '+ resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.Copy')
+		}		
 	}
 	
 	private function handleLoadPriceList(ev:ResultEvent):void {
