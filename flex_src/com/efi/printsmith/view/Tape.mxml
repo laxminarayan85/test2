@@ -207,8 +207,13 @@
 			return(description);
 		} else if (item is TapePaymentRecord) {
 			tempPayment = item as TapePaymentRecord;
-			description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.Payment");
-			description = description + " " + tempPayment.paymentMethod;
+			if (tempPayment.isPaidOut == true) {
+				description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.PAIDOUT");
+				description = description + " " + tempPayment.refNumber;
+			} else {
+				description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.Payment");
+				description = description + " " + tempPayment.paymentMethod;
+			}
 			return (description);
 		} else if (item is TapeSaleRecord) {
 			tempSale = item as TapeSaleRecord;
