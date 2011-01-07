@@ -138,6 +138,7 @@
 			[Bindable] private var stopTimeString:String = "00:00";
     		[Bindable] private var shippingMethods:ArrayCollection = new ArrayCollection();                
 			[Bindable] private var shipToArray:ArrayCollection = new ArrayCollection();
+			[Bindable] private var cutDescription:String = "";
 			
 			private var addCharge:Boolean = false;
 			
@@ -729,6 +730,7 @@
 				production_location_box.visible = true;
 				check_boxes_box.visible = true;
 				showNotes_check.visible = true;
+				cut_description_box.visible = cut_description_box.includeInLayout = false;
 				if (this.chargeDefinition == null) {
 					description_box.visible = false;
 					notes_box.visible = false;
@@ -852,6 +854,12 @@
 					cuts_box.includeInLayout = cuts_box.visible = true;
 					sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = chargeDefinition.sheet_lift_check && chargeDefinition.adjustableSets;
 					quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
+					if (charge.chargeDefinition.cutsArePrePress) {
+						cutDescription = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ParenttoRunSize');
+ 					} else {
+						cutDescription = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.RuntoFinishSize');
+ 					}
+					cut_description_box.visible = cut_description_box.includeInLayout = true;
 				} else if (this.chargeDefinition.method == ChargeMethod.FlatRate) {
 					quantity_box.includeInLayout = quantity_box.visible = false;
 					material_quantity_box.includeInLayout = material_quantity_box.visible = false
@@ -1443,7 +1451,7 @@
 										<mx:TextInput text="{chargeDefinition.material}" width="50%" id="material_rate" textAlign="right" focusOut="this.updateMaterialRate()"/>
 										<mx:Spacer width="40"/>
 									</mx:HBox>					
-								</mx:VBox>
+							</mx:VBox>
 								<mx:VBox width="50%" height="110" verticalScrollPolicy="off" verticalAlign="bottom">					
 									<mx:HBox width="100%" id="price_per_pound_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetPricePerPoundLabel}" width="50%" id="price_lb_label_text" textAlign="right"/>
@@ -1506,6 +1514,11 @@
 								</mx:VBox>
 							</mx:HBox>
 							<mx:HBox width="100%" horizontalAlign="right">
+							<mx:HBox width="100%" id="cut_description_box" visible="false">
+								<mx:Spacer width="8"/>
+								<mx:Text text="{cutDescription}" width="50%" id="cut_description_text" fontWeight="bold" textAlign="left"/>
+								<mx:Spacer width="40"/>
+							</mx:HBox>					
 							<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Done')}"
 									   click="doDone()"
 									   width="65"
