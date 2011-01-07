@@ -58,6 +58,8 @@
 </mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.events.PendingListUpdateEvent;
+		import com.efi.printsmith.pages.PendingChangeDueDate;
 		import com.efi.printsmith.pages.PendingStatus;
 		import com.efi.printsmith.data.PreferencesSystem;
 		import com.efi.printsmith.data.Estimate;
@@ -334,7 +336,11 @@
 					&& (ss.commandName.indexOf("rStandardMenuText.CashDrawerStatus") > -1 ))	{
 						doCashDrawerStatus();					
 					}	
-
+				if ((ss.menu == "rStandardMenuText.POS")
+					&& (ss.commandName.indexOf("rStandardMenuText.ChangeDueDate") > -1 ))	{
+						doChangeDueDate();			
+					}	
+					
 				if ((ss.menu == "rStandardMenuText.Pricing")
 					&& (ss.commandName.indexOf("rStandardMenuText.PressDefinitions") > -1 ))	{
 						doPressDefinitions();					
@@ -662,7 +668,8 @@
 		public function doStatusWindow():void {
 			var pendingStatus:PendingStatus = PendingStatus(PopUpManager.createPopUp(this, PendingStatus, false));
 			pendingStatus.setStyle("borderAlpha", 0.9);
-			for each(var mdiWindowObj:MDIWindow in containerManager.getAllWindows()) {
+			var mdiWindowObj:MDIWindow = containerManager.getActiveWindow();
+			if(mdiWindowObj!=null){
 				if(mdiWindowObj.content is PendingList) {
 					var pendingListWindow:PendingList = mdiWindowObj.content as PendingList;
 					if(pendingListWindow.dgView.selectedIndex>-1 && pendingListWindow.dgView.selectedItem!=null) { 
@@ -674,6 +681,18 @@
 				}
 			}
 			pendingStatus.mainBox.visible = false;
+		}
+		
+		public function doChangeDueDate():void {
+			var mdiWindowObj:MDIWindow = containerManager.getActiveWindow();
+			if(mdiWindowObj!=null){
+				if(mdiWindowObj.content is PendingList) {
+					var pendingListWindow:PendingList = mdiWindowObj.content as PendingList;
+					if(pendingListWindow.dgView.selectedIndex>-1 && pendingListWindow.dgView.selectedItem!=null) { 
+						pendingListWindow.handleUIDueDateEvent(null);
+					}
+				}
+			}
 		}
 		
 		public function doTrackerManager():void {
