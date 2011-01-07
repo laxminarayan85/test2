@@ -32,8 +32,8 @@ import org.hibernate.annotations.Where;
  * @generated
  */	
 @NamedQueries({
-  @NamedQuery(name = "DepositEntry.findall", query = "from DepositEntry"),
-  @NamedQuery(name = "DepositEntry.byId", query = "select a from DepositEntry a where a.id= :id")
+	@NamedQuery(name = "DepositEntry.findall", query = "from DepositEntry"),
+	@NamedQuery(name = "DepositEntry.byId", query = "select a from DepositEntry a where a.id= :id")
 })
 
 
@@ -43,7 +43,9 @@ import org.hibernate.annotations.Where;
  */	
 @Entity
 @Table(name = "depositentry")
+//@SQLDelete(sql="update modelbase set isdeleted='TRUE' from depositentry where modelbase.id=?")
 @SQLDelete(sql="update depositentry set isdeleted='TRUE' where id=?")
+//Filter added to retrieve only records that have not been soft deleted.
 @Where(clause="isdeleted <> 'TRUE'")
 public class DepositEntry extends ModelBase {
 	/**
@@ -66,37 +68,36 @@ public class DepositEntry extends ModelBase {
 	 * @generated
 	 */
 	public static final String CREDITCARDTYPE = "CreditCardType";
-
 	/**
-   * @generated
-   */
-  public static final String PARENTINVOICE = "ParentInvoice";
+	 * @generated
+	 */
+	public static final String PARENTINVOICE = "ParentInvoice";
+	/**
+	 * @generated
+	 */
+	public static final String CCT = "Cct";
 
 	/**
 	 * @generated
 	 */
 	public DepositEntry() {
-    this.created = new Date();
-    this.modified = new Date();
-    this.isDeleted = false;
-  }
+		this.created = new Date();
+		this.modified = new Date();
+		this.isDeleted = false;
+	}
 
+	@Basic
+	private Boolean isDeleted = false;
+	
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+	
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
  	
 	
-	@Basic
-  private Boolean isDeleted = false;
-
-	public Boolean getIsDeleted() {
-    return isDeleted;
-  }
-
-
-	public void setIsDeleted(Boolean isDeleted) {
-    this.isDeleted = isDeleted;
-  }
-
-
-
 	/**
 	 * @generated
 	 */	
@@ -107,16 +108,16 @@ public class DepositEntry extends ModelBase {
 	 * @generated
  	 */
 	public String getReferenceNumber(){
-    return referenceNumber; 
-  }
+		return referenceNumber; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setReferenceNumber(String newVal) {
-    this.referenceNumber = newVal;
-  }
+		this.referenceNumber = newVal;
+	}
 	
  	
 	
@@ -130,16 +131,16 @@ public class DepositEntry extends ModelBase {
 	 * @generated
  	 */
 	public Date getDate(){
-    return date; 
-  }
+		return date; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setDate(Date newVal) {
-    this.date = newVal;
-  }
+		this.date = newVal;
+	}
 	
  	
 	
@@ -153,46 +154,46 @@ public class DepositEntry extends ModelBase {
 	 * @generated
  	 */
 	public BigDecimal getAmount(){
-    return amount; 
-  }
+		return amount; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setAmount(BigDecimal newVal) {
-    this.amount = newVal;
-  }
+		this.amount = newVal;
+	}
 	
 	/**
 	 * @generated
 	 */	
 	public void setAmount(double newVal) {
-    this.amount = BigDecimal.valueOf(newVal);
-  }
+		this.amount = BigDecimal.valueOf(newVal);
+	}
  	
 	
 	/**
 	 * @generated
 	 */	
     @ManyToOne()
-	@Where(clause="isdeleted <> 'TRUE'")
+    @Where(clause="isdeleted <> 'TRUE'")
 	private DepositType type;
 	
 	/**
 	 * @generated
  	 */
 	public DepositType getType(){
-    return type; 
-  }
+		return type; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setType(DepositType newVal) {
-    this.type = newVal;
-  }
+		this.type = newVal;
+	}
 	
  	
 	
@@ -206,54 +207,80 @@ public class DepositEntry extends ModelBase {
 	 * @generated
  	 */
 	public Integer getCreditCardType(){
-    return creditCardType; 
-  }
+		return creditCardType; 
+	}
 
 	
 	/**
 	 * @generated
 	 */	
 	public void setCreditCardType(Integer newVal) {
-    this.creditCardType = newVal;
-  }
+		this.creditCardType = newVal;
+	}
+	
+ 	
 	
 	/**
-   * @generated
-   */	
+	 * @generated
+	 */	
     @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
-  private InvoiceBase parentInvoice;
-
+	private InvoiceBase parentInvoice;
+	
 	/**
-   * @generated
+	 * @generated
  	 */
-  public InvoiceBase getParentInvoice(){
-    return parentInvoice; 
-  }
+	public InvoiceBase getParentInvoice(){
+		return parentInvoice; 
+	}
 
-
+	
 	/**
-   * @generated
-   */	
-  public void setParentInvoice(InvoiceBase newVal) {
-    this.parentInvoice = newVal;
-  }
+	 * @generated
+	 */	
+	public void setParentInvoice(InvoiceBase newVal) {
+		this.parentInvoice = newVal;
+	}
+	
+ 	
+	
+	/**
+	 * @generated
+	 */	
+    @ManyToOne(optional=true)
+    @Where(clause="isdeleted <> 'TRUE'")
+	private CreditCardTransactions cct;
+	
+	/**
+	 * @generated
+ 	 */
+	public CreditCardTransactions getCct(){
+		return cct; 
+	}
 
-
+	
+	/**
+	 * @generated
+	 */	
+	public void setCct(CreditCardTransactions newVal) {
+		this.cct = newVal;
+	}
+	
 	/**
 	 * @generated
 	 */		
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (REFERENCENUMBER.equals(propertyName)) return getReferenceNumber();
-    if (DATE.equals(propertyName)) return getDate();
-    if (AMOUNT.equals(propertyName)) return getAmount();
-    if (TYPE.equals(propertyName)) return getType();
-    if (CREDITCARDTYPE.equals(propertyName)) return getCreditCardType();
-    if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
-    return super.getProperty(propertyName);
-  }
+		if (REFERENCENUMBER.equals(propertyName)) return getReferenceNumber();
+		if (DATE.equals(propertyName)) return getDate();
+		if (AMOUNT.equals(propertyName)) return getAmount();
+		if (TYPE.equals(propertyName)) return getType();
+		if (CREDITCARDTYPE.equals(propertyName)) return getCreditCardType();
+		if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
+		if (CCT.equals(propertyName)) return getCct();
+		return super.getProperty(propertyName);
+	}
 	
 	/**
 	 * @generated
@@ -261,14 +288,15 @@ public class DepositEntry extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (REFERENCENUMBER.equals(propertyName)) setReferenceNumber((String)newValue); else
-    if (DATE.equals(propertyName)) setDate((Date)newValue); else
-    if (AMOUNT.equals(propertyName)) setAmount((BigDecimal)newValue); else
-    if (TYPE.equals(propertyName)) setType((DepositType)newValue); else
-    if (CREDITCARDTYPE.equals(propertyName)) setCreditCardType((Integer)newValue); else
-    if (PARENTINVOICE.equals(propertyName)) setParentInvoice((InvoiceBase)newValue); else
-    super.setProperty(propertyName, newValue);
-  }
+		if (REFERENCENUMBER.equals(propertyName)) setReferenceNumber((String)newValue); else
+		if (DATE.equals(propertyName)) setDate((Date)newValue); else
+		if (AMOUNT.equals(propertyName)) setAmount((BigDecimal)newValue); else
+		if (TYPE.equals(propertyName)) setType((DepositType)newValue); else
+		if (CREDITCARDTYPE.equals(propertyName)) setCreditCardType((Integer)newValue); else
+		if (PARENTINVOICE.equals(propertyName)) setParentInvoice((InvoiceBase)newValue); else
+		if (CCT.equals(propertyName)) setCct((CreditCardTransactions)newValue); else
+		super.setProperty(propertyName, newValue);
+	}
 	
 	/**
 	 * @generated
@@ -276,20 +304,22 @@ public class DepositEntry extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (REFERENCENUMBER.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (DATE.equals(propertyName)) 
-      return new Class<?>[] {Date.class};		
-    if (AMOUNT.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
-    if (TYPE.equals(propertyName)) 
-      return new Class<?>[] {DepositType.class};		
-    if (CREDITCARDTYPE.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
-    if (PARENTINVOICE.equals(propertyName)) 
-      return new Class<?>[] {InvoiceBase.class};		
-    return super.getPropertyClass(propertyName);
-  }
+		if (REFERENCENUMBER.equals(propertyName)) 
+			return new Class<?>[] {String.class};		
+		if (DATE.equals(propertyName)) 
+			return new Class<?>[] {Date.class};		
+		if (AMOUNT.equals(propertyName)) 
+			return new Class<?>[] {BigDecimal.class};		
+		if (TYPE.equals(propertyName)) 
+			return new Class<?>[] {DepositType.class};		
+		if (CREDITCARDTYPE.equals(propertyName)) 
+			return new Class<?>[] {Integer.class};		
+		if (PARENTINVOICE.equals(propertyName)) 
+			return new Class<?>[] {InvoiceBase.class};		
+		if (CCT.equals(propertyName)) 
+			return new Class<?>[] {CreditCardTransactions.class};		
+		return super.getPropertyClass(propertyName);
+	}
 	
 
 	/**
@@ -298,35 +328,38 @@ public class DepositEntry extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (REFERENCENUMBER.equals(propertyName)) return DepositEntry.class;
-    if (DATE.equals(propertyName)) return DepositEntry.class;
-    if (AMOUNT.equals(propertyName)) return DepositEntry.class;
-    if (TYPE.equals(propertyName)) return DepositEntry.class;
-    if (CREDITCARDTYPE.equals(propertyName)) return DepositEntry.class;
-    if (PARENTINVOICE.equals(propertyName)) return DepositEntry.class;
-    return super.getPropertyOwner(propertyName);
-  }
+		if (REFERENCENUMBER.equals(propertyName)) return DepositEntry.class;
+		if (DATE.equals(propertyName)) return DepositEntry.class;
+		if (AMOUNT.equals(propertyName)) return DepositEntry.class;
+		if (TYPE.equals(propertyName)) return DepositEntry.class;
+		if (CREDITCARDTYPE.equals(propertyName)) return DepositEntry.class;
+		if (PARENTINVOICE.equals(propertyName)) return DepositEntry.class;
+		if (CCT.equals(propertyName)) return DepositEntry.class;
+		return super.getPropertyOwner(propertyName);
+	}
 	
 	/**
 	 * @generated
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-    if (! super.deepEquals(obj))
-      return false;
-    DepositEntry objT = (DepositEntry)obj;
-    if (! SmartEquals(getReferenceNumber(), objT.getReferenceNumber()))
-      return false;
-    if (! SmartEquals(getDate(), objT.getDate()))
-      return false;
-    if (! SmartEquals(getAmount(), objT.getAmount()))
-      return false;
-    if (! SmartEquals(getType(), objT.getType()))
-      return false;
-    if (! SmartEquals(getCreditCardType(), objT.getCreditCardType()))
-      return false;
-    if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
-      return false;
-    return true;
-  }			
+		if (! super.deepEquals(obj))
+			return false;
+		DepositEntry objT = (DepositEntry)obj;
+		if (! SmartEquals(getReferenceNumber(), objT.getReferenceNumber()))
+			return false;
+		if (! SmartEquals(getDate(), objT.getDate()))
+			return false;
+		if (! SmartEquals(getAmount(), objT.getAmount()))
+			return false;
+		if (! SmartEquals(getType(), objT.getType()))
+			return false;
+		if (! SmartEquals(getCreditCardType(), objT.getCreditCardType()))
+			return false;
+		if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
+			return false;
+		if (! SmartEquals(getCct(), objT.getCct()))
+			return false;
+		return true;
+	}			
 }
