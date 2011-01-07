@@ -1,12 +1,6 @@
 package com.efi.printsmith.service;
 
-import a.jo;
-
-import com.efi.printsmith.comparator.InvoiceBaseComparator;
-import com.efi.printsmith.data.*;
-import com.efi.printsmith.defaultdata.*;
-
-import java.security.InvalidParameterException;
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -14,25 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.lang.String;
-import java.lang.reflect.Field;
 
-import java.io.File;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-
-import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.NamedQuery;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
@@ -44,26 +26,95 @@ import net.digitalprimates.persistence.hibernate.utils.HibernateUtil;
 import net.digitalprimates.persistence.hibernate.utils.services.HibernateService;
 
 import org.apache.log4j.Logger;
-import org.hibernate.*;
-import org.hibernate.criterion.*;
-import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
+import org.hibernate.ScrollableResults;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.ejb.HibernateEntityManagerFactory;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.GenericJDBCException;
 
+import com.efi.printsmith.comparator.InvoiceBaseComparator;
+import com.efi.printsmith.data.AccessGroup;
+import com.efi.printsmith.data.Account;
+import com.efi.printsmith.data.AccountHistoryData;
+import com.efi.printsmith.data.Address;
+import com.efi.printsmith.data.Broker;
+import com.efi.printsmith.data.Campaigns;
+import com.efi.printsmith.data.Charge;
+import com.efi.printsmith.data.ChargeCategory;
+import com.efi.printsmith.data.ChargeCommand;
+import com.efi.printsmith.data.ChargeDefinition;
+import com.efi.printsmith.data.ComLink;
+import com.efi.printsmith.data.Contact;
+import com.efi.printsmith.data.CopierDefinition;
+import com.efi.printsmith.data.CostCenter;
+import com.efi.printsmith.data.CreditCard;
+import com.efi.printsmith.data.CreditCardTransactions;
+import com.efi.printsmith.data.DataManager;
+import com.efi.printsmith.data.DeliveryTicket;
+import com.efi.printsmith.data.DeliveryTicketJobs;
+import com.efi.printsmith.data.DigitalAsset;
+import com.efi.printsmith.data.Dimension;
+import com.efi.printsmith.data.Employee;
+import com.efi.printsmith.data.Estimate;
+import com.efi.printsmith.data.FoldTemplate;
+import com.efi.printsmith.data.GenericColors;
+import com.efi.printsmith.data.Grade;
+import com.efi.printsmith.data.Invoice;
+import com.efi.printsmith.data.InvoiceBase;
+import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.JobBase;
+import com.efi.printsmith.data.Matrix;
+import com.efi.printsmith.data.MatrixElement;
+import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.Period;
+import com.efi.printsmith.data.PickerObject;
+import com.efi.printsmith.data.PreferencesPricingMethod;
+import com.efi.printsmith.data.PreferencesSequenceValues;
+import com.efi.printsmith.data.PressDefinition;
+import com.efi.printsmith.data.PriceList;
+import com.efi.printsmith.data.PriceListBase;
+import com.efi.printsmith.data.PriceListElement;
+import com.efi.printsmith.data.PriceLogEntry;
+import com.efi.printsmith.data.ProductionCopiers;
+import com.efi.printsmith.data.ProductionLocations;
+import com.efi.printsmith.data.ProductionPress;
+import com.efi.printsmith.data.ProductionStations;
+import com.efi.printsmith.data.RoutingStepSetUp;
+import com.efi.printsmith.data.SalesCategory;
+import com.efi.printsmith.data.SecuritySetup;
+import com.efi.printsmith.data.ShippingMethod;
+import com.efi.printsmith.data.SpecialInstructions;
+import com.efi.printsmith.data.StockClass;
+import com.efi.printsmith.data.StockColors;
+import com.efi.printsmith.data.StockDefinition;
+import com.efi.printsmith.data.StockFinish;
+import com.efi.printsmith.data.StockForest;
+import com.efi.printsmith.data.StockGrade;
+import com.efi.printsmith.data.StockGroup;
+import com.efi.printsmith.data.StockOrder;
+import com.efi.printsmith.data.StockType;
+import com.efi.printsmith.data.Substrate;
+import com.efi.printsmith.data.TapeBatch;
+import com.efi.printsmith.data.TapeSessionBatch;
+import com.efi.printsmith.data.TaxElement;
+import com.efi.printsmith.data.TaxTable;
+import com.efi.printsmith.data.TimeCard;
+import com.efi.printsmith.data.TrackerConsole;
+import com.efi.printsmith.data.TrackerConsoleJobs;
+import com.efi.printsmith.data.TrackerManager;
+import com.efi.printsmith.data.UnpurchasedMerchandise;
+import com.efi.printsmith.data.WasteChart;
+import com.efi.printsmith.defaultdata.DefaultDataFactory;
 import com.efi.printsmith.messaging.MessageServiceAdapter;
 import com.efi.printsmith.messaging.MessageTypes;
-import com.efi.printsmith.properties.PropertiesHelper;
 import com.efi.printsmith.query.RemoteCriterion;
 import com.efi.printsmith.query.RemoteRestriction;
-import com.efi.printsmith.data.ProductionLocations;
-import com.efi.printsmith.data.TapeBatch;
-import com.efi.printsmith.data.Tape;
 
 
 public class DataService extends HibernateService {
@@ -5060,23 +5111,17 @@ public class DataService extends HibernateService {
 				if (invoiceBase.getJobs() != null
 						&& invoiceBase.getJobs().size() > 0) {
 					for (JobBase jobBase : invoiceBase.getJobs()) {
-						if (jobBase.getCostingRecord() != null) {
-							if (jobBase.getCostingRecord().getActualSetupTime() != null) {
-								totalEstimatedTime = totalEstimatedTime
-										+ jobBase.getCostingRecord()
-												.getActualSetupTime();
-							}
-							if (jobBase.getCostingRecord().getActualRunTime() != null) {
-								totalEstimatedTime = totalEstimatedTime
-										+ jobBase.getCostingRecord()
-												.getActualRunTime();
-							}
-							if (jobBase.getCostingRecord()
-									.getActualWashupTime() != null) {
-								totalEstimatedTime = totalEstimatedTime
-										+ jobBase.getCostingRecord()
-												.getActualWashupTime();
-							}
+						if (jobBase.getSetupTime() != null) {
+							totalEstimatedTime = totalEstimatedTime
+									+ jobBase.getSetupTime();
+						}
+						if (jobBase.getRunTime() != null) {
+							totalEstimatedTime = totalEstimatedTime
+									+ jobBase.getRunTime();
+						}
+						if (jobBase.getWashupTime() != null) {
+							totalEstimatedTime = totalEstimatedTime
+									+ jobBase.getWashupTime();
 						}
 						if (jobBase.getCharges() != null
 								&& jobBase.getCharges().size() > 0) {

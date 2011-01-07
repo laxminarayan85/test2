@@ -567,9 +567,9 @@
 		}
 		
 		public function getTotalTime(object:Object):String {
-			var actualSetUpTime:Number = 0;
-			var actualRunTime:Number = 0;
-			var actualWashTime:Number = 0;
+			var estimatedSetUpTime:Number = 0;
+			var estimatedRunTime:Number = 0;
+			var estimatedWashTime:Number = 0;
 			if(object is Job){
 				var job:Job = object as Job;
 				if(!job.releasedToProduction){
@@ -583,35 +583,30 @@
 			}
 			if(object is Job){
 				var job:Job = object as Job;
-				if(job.costingRecord!=null){
-					if(!isNaN(job.costingRecord.actualSetupTime)){
-						actualSetUpTime = (job.costingRecord.actualSetupTime*60*1000);
-					}
+				if(!isNaN(job.setupTime)){
+					estimatedSetUpTime = (job.setupTime*60*1000);
 				}
-				if(job.costingRecord!=null){
-					if(!isNaN(job.costingRecord.actualRunTime)){
-						actualRunTime = (job.costingRecord.actualRunTime*60*1000);
-					}
+				if(!isNaN(job.runTime)){
+					estimatedRunTime = (job.runTime*60*1000);
 				}
-				if(job.costingRecord!=null){
-					if(!isNaN(job.costingRecord.actualWashupTime)){
-						actualWashTime = (job.costingRecord.actualWashupTime*60*1000);
-					}
+				if(!isNaN(job.washupTime)){
+					estimatedWashTime = (job.washupTime*60*1000);
 				}
+				
 			} else if(object is Charge){
 				var charge:Charge = object as Charge;
 				if(charge.chargeCostingRecord!=null){
 					if(!isNaN(charge.chargeCostingRecord.setupTime)){
-						actualSetUpTime = (charge.chargeCostingRecord.setupTime*60*1000);
+						estimatedSetUpTime = (charge.chargeCostingRecord.setupTime*60*1000);
 					}
 				}
 				if(charge.chargeCostingRecord!=null){
 					if(!isNaN(charge.chargeCostingRecord.runTime)){
-						actualRunTime = (charge.chargeCostingRecord.runTime*60*1000);
+						estimatedRunTime = (charge.chargeCostingRecord.runTime*60*1000);
 					}
 				}
 			}
-			return convertMilliSecondsToString((actualSetUpTime+actualRunTime+actualWashTime),true);
+			return convertMilliSecondsToString((estimatedSetUpTime+estimatedRunTime+estimatedWashTime),true);
 		}
 		
 		public function getPriority(object:Object):String {
@@ -939,29 +934,23 @@
 					trackerconsole_location.customText = getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation);
 				}
 				trackerConsoleJobs.employee = employee;
-				var actualSetUpTime:Number = 0;
-				var actualRunTime:Number = 0;
-				var actualWashTime:Number = 0;
+				var estimatedSetUpTime:Number = 0;
+				var estimatedRunTime:Number = 0;
+				var estimatedWashTime:Number = 0;
 				if(selectedJob!=null){
 					trackerConsoleJobs.job = selectedJob;
-					if(selectedJob.costingRecord!=null){
-						if(!isNaN(selectedJob.costingRecord.actualSetupTime)){
-							actualSetUpTime = (selectedJob.costingRecord.actualSetupTime*60*1000);
-						}
+					if(!isNaN(selectedJob.setupTime)){
+						estimatedSetUpTime = (selectedJob.setupTime*60*1000);
 					}
-					trackerConsoleJobs.actualSetUpTime = actualSetUpTime;
-					if(selectedJob.costingRecord!=null){
-						if(!isNaN(selectedJob.costingRecord.actualRunTime)){
-							actualRunTime = (selectedJob.costingRecord.actualRunTime*60*1000);
-						}
+					trackerConsoleJobs.actualSetUpTime = estimatedSetUpTime;
+					if(!isNaN(selectedJob.runTime)){
+						estimatedRunTime = (selectedJob.runTime*60*1000);
 					}
-					trackerConsoleJobs.actualRunTime = actualRunTime;
-					if(selectedJob.costingRecord!=null){
-						if(!isNaN(selectedJob.costingRecord.actualWashupTime)){
-							actualWashTime = (selectedJob.costingRecord.actualWashupTime*60*1000);
-						}
+					trackerConsoleJobs.actualRunTime = estimatedRunTime;
+					if(!isNaN(selectedJob.washupTime)){
+						estimatedWashTime = (selectedJob.washupTime*60*1000);
 					}
-					trackerConsoleJobs.actualWashTime = actualWashTime;
+					trackerConsoleJobs.actualWashTime = estimatedWashTime;
 					trackerConsoleJobs.noOfPasses = selectedJob.frontPasses+selectedJob.backPasses;
 					if(isNaN(trackerConsoleJobs.noOfPasses) || trackerConsoleJobs.noOfPasses==0){
 						trackerConsoleJobs.noOfPasses=1;
@@ -970,17 +959,17 @@
 					trackerConsoleJobs.charge = selectedCharge;
 					if(selectedCharge.chargeCostingRecord!=null){
 						if(!isNaN(selectedCharge.chargeCostingRecord.setupTime)){
-							actualSetUpTime = (selectedCharge.chargeCostingRecord.setupTime*60*1000);
+							estimatedSetUpTime = (selectedCharge.chargeCostingRecord.setupTime*60*1000);
 						}
 					}
-					trackerConsoleJobs.actualSetUpTime = actualSetUpTime;
+					trackerConsoleJobs.actualSetUpTime = estimatedSetUpTime;
 					if(selectedCharge.chargeCostingRecord!=null){
 						if(!isNaN(selectedCharge.chargeCostingRecord.runTime)){
-							actualRunTime = (selectedCharge.chargeCostingRecord.runTime*60*1000);
+							estimatedRunTime = (selectedCharge.chargeCostingRecord.runTime*60*1000);
 						}
 					}
-					trackerConsoleJobs.actualRunTime = actualRunTime;
-					trackerConsoleJobs.actualWashTime = actualWashTime;
+					trackerConsoleJobs.actualRunTime = estimatedRunTime;
+					trackerConsoleJobs.actualWashTime = estimatedWashTime;
 					trackerConsoleJobs.noOfPasses = 1;
 				}
 				trackerConsoleJobs.currentPass = 1;
