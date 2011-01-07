@@ -68,6 +68,15 @@
 				}
 
 			}	
+			
+			public function checkEnablity(item:Object):Boolean {
+				if(item.estimator!=null){
+					if(item.estimator.name=="Press Definitions" || item.estimator.name=="Copier Definitions" || item.estimator.name=="List Price") {
+						return false;
+					}
+				}
+				return true;
+			}
 		]]>
 	</mx:Script>
 	
@@ -164,7 +173,8 @@
 									<components:CustomComboBoxComponent datagridControl="true" variableName="category"
 										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
 										masterList="{outerDocument.salesCategoryArray}" updateFirstElement="true"
-										customText="{outerDocument.getCustomTextData(outerDocument.salesCategoryArray,data,data.category)}"/>
+										customText="{outerDocument.getCustomTextData(outerDocument.salesCategoryArray,data,data.category)}"
+										enabled="{outerDocument.checkEnablity(data)}" disabledColor="#000000"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>
@@ -192,7 +202,7 @@
 				
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'pmethSetCmd.BBrokeredTTaxableFFi')}"/>
 				
-				<mx:HBox width="100%">
+				<!--<mx:HBox width="100%">
 				
 					<mx:Button width="38" height="38" click="doNewPriceMethod();">
 						<mx:icon>@Embed(source='../../../../../assets/new.png')</mx:icon>
@@ -202,7 +212,7 @@
 						clickFuncName="doRemovePriceMethod" dataGridComp="{PricingMethodGrid}" 
 						deleteLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.PricingMethod')}"/>
 					
-				</mx:HBox>
+				</mx:HBox>-->
 				
 			</mx:VBox>
 			
