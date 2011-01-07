@@ -11,7 +11,7 @@
 	>
 	<mx:Style source="/assets/styles/style.css"/>
 	
-	<mx:Script source="../../../printsmith/common/scripts/CommonUtils.as"/>
+	
 	
 	<mx:Script>
 		<![CDATA[
