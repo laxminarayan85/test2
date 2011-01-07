@@ -38,6 +38,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.data.PreferencesEstimating;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.events.SpecialOrderStockDefEvent;
 	import com.efi.printsmith.events.StockDefinitionOpenEvent;
@@ -132,6 +133,10 @@
 	[Bindable] public var editableJob:Job;
 	
 	[Bindable] public var parentWindowId:int;
+	
+	[Bindable] private var preferencesEstimating:PreferencesEstimating;
+	
+	private var twoStageClearSearchCount:int;
 	
 	private function handleLoadResult(event:ResultEvent):void {
 		stockDefinitions = event.result as ArrayCollection;
@@ -239,6 +244,9 @@
 			
 				finishes = ac;
 			}			
+		}
+		if(editableJob.stock!=null) {
+			setJobStockDefiniton(editableJob.stock);
 		}
 
 	}	
@@ -418,7 +426,11 @@
 	}
 	
 	private function clearSearch():void{
-		txtGroup.selectedIndex = 0;
+		if(editableJob==null || editableJob.stock==null || twoStageClearSearchCount!=0 || 
+		preferencesEstimating==null || !preferencesEstimating.twoStageClearSearch){
+			txtGroup.selectedIndex = 0;
+		}
+		twoStageClearSearchCount++;
 		txtName.text = "";
 		txtColor.selectedIndex = 0;
 		txtGenericColors.selectedIndex = 0;
@@ -464,7 +476,11 @@
 		
 		search();
 		
-		clear_button.enabled = false;
+		if(preferencesEstimating!=null && preferencesEstimating.twoStageClearSearch && twoStageClearSearchCount<2){
+			clear_button.enabled = true;
+		} else {
+			clear_button.enabled = false;
+		}
 		
 	}
 	private function UpdateSize():void{
@@ -1249,6 +1265,58 @@
 	private function exportData():void {
 		
 	}
+	
+	public function setPrefEstimator(prefEstimating:PreferencesEstimating):void {
+		preferencesEstimating = prefEstimating;
+	}
+	
+	public function setJobStockDefiniton(stockDefObj:StockDefinition):void {
+		if(stockDefObj!=null) {
+			if(stockDefObj.stkgroup!=null) {
+				txtGroup.text = stockDefObj.stkgroup.name;
+				if(stockGroups!=null && stockGroups.length>0){
+					txtGroup.selectedIndex = findItemID(stockDefObj.stkgroup.id,stockGroups);
+				}
+			}
+			if(stockDefObj.stktype!=null) {
+				txtStockType.text = stockDefObj.stktype.name;
+				if(stockTypes!=null && stockTypes.length>0) {
+					txtStockType.selectedIndex = findItemID(stockDefObj.stktype.id,stockTypes);
+				}
+			}
+			if(stockDefObj.finish!=null) {
+				txtFinish.text = stockDefObj.finish.name;
+				if(finishes!=null && finishes.length>0) {
+					txtFinish.selectedIndex = findItemID(stockDefObj.finish.id,finishes);
+				}
+			}
+			if(stockDefObj.coated!=null && (stockDefObj.coated=="1" || stockDefObj.coated=="2")) {
+				txtCoatedSides.text = stockDefObj.coated;
+			}
+			if(stockDefObj.genericColor!=null) {
+				txtGenericColors.text = stockDefObj.genericColor.name;
+				if(genericColors!=null && genericColors.length>0) {
+					txtGenericColors.selectedIndex = findItemID(stockDefObj.genericColor.id,genericColors);
+				}
+			}
+			if(stockDefObj.sheetsPerSet!=0) {
+				txtSheetsPerSet.text = String(stockDefObj.sheetsPerSet);
+			}
+			if(stockDefObj.parentsize!=null) {
+				txtSizeMin.text = stockDefObj.parentsize.width + " x "+stockDefObj.parentsize.height;
+			}
+			search();
+		}
+	}
+	
+	private function findItemID(id:int, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (id == element.id) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}   
 
 ]]>        
 </mx:Script> 
@@ -1306,7 +1374,7 @@
 				</mx:FormItem>				
 			</mx:Form>
 			<mx:Form id="col2" width="30%" >
-				<mx:FormItem label="Type" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Type')}" width="100%">
 					<mx:ComboBox width="100%" id="txtStockType" dataProvider="{stockTypes}" labelField="name" change="search();"/>
 				</mx:FormItem>
 				<mx:Label width="100%" height="10%" />
@@ -1329,7 +1397,7 @@
 					</mx:HBox>
 				
 				</mx:FormItem>
-				<mx:FormItem label="# Sheets/Set" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.SheetsSet')}" width="100%">
 					<mx:TextInput width="100%" id="txtSheetsPerSet" change="search();"/>
 				
 				</mx:FormItem>

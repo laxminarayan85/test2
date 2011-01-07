@@ -820,7 +820,7 @@
 			private var costingCopierIsUsePress:Boolean = false;
 			private var currentSizeName:String = "";
 			
-			[Bindable] private var preferencesStocks:PreferencesStocks;
+			[Bindable] private var preferencesStocks:PreferencesStocks; 
 			
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
@@ -1599,11 +1599,15 @@
 				var stockPickerWindow:StockPicker=StockPicker(PopUpManager.createPopUp(this, StockPicker, true));
 				stockPickerWindow.setStyle("borderAlpha", 0.9);
 			   	stockPickerWindow.setStockArray(stocks);
+			   	stockPickerWindow.setPrefEstimator(estimatingPreferences);
 			   	stockPickerWindow.setStockPref(preferencesStockDefinitions);
+			   	stockPickerWindow.editableJob = this.job;
 			   	stockPickerWindow.passStockDataFromParent = false;
 				stockPickerWindow.formIsEmpty=true;
 				stockPickerWindow.fromJobPage = true;
-				stockPickerWindow.editableJob = this.job;
+				if(job.stock!=null) {
+			   		stockPickerWindow.setJobStockDefiniton(job.stock);
+			   	}
 				if (this.currentState == "LargeFormat")
 					stockPickerWindow.setLargeFormatOnly();
 				stockPickerWindow.parentWindowId = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
