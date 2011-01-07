@@ -299,8 +299,10 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 	    var costingWindow:ChargeCosting = ChargeCosting(PopUpManager.createPopUp(this, ChargeCosting, true));
 	    costingWindow.addEventListener(ChargeCostingEvent.CHARGECOSTINGOK, handleChargeCostingComplete);
 	    if(charge != null){
-	    	if (charge.chargeCost == null) 
+	    	if (charge.chargeCost == null) {
 	    		charge.chargeCost = new ChargeCost();
+	    		charge.chargeCost.piecesPerHour = 1;
+	    	}
 	   		costingWindow.chargeCost = charge.chargeCost;
 	   		costingWindow.formIsEmpty = false;
 	   	}

@@ -82,6 +82,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 
 //		dataService.addUpdate(chargeCost);        
 	}
+	
     private function MaptoChargeCost():void{
     	chargeCost.initialized = true;
     	chargeCost.costingMethod = costing_method_combo.selectedItem.data
@@ -91,7 +92,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     		chargeCost.piecesPerHour = parseFloat(pieces_per_hour_edit.text);    	
     	} else {
     		if (isNaN(parseFloat(pieces_per_hour_edit.text)) || parseFloat(pieces_per_hour_edit.text) == 0.0) {
-	    		chargeCost.piecesPerHour = .01;
+	    		chargeCost.piecesPerHour = .001;
 	    	}
     	}
     //	chargeCost.rateTable
@@ -114,7 +115,8 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
     
     private function  calculateTotalUnit(event:Event):void{
     	textFocusOut(event);
-    	if (chargeCost.costingMethod == ChargeCostMethod.TimeAndMaterial && chargeCost.speedTable == null) {
+    	if (this.costing_method_combo != null && this.costing_method_combo.selectedItem != null && 
+    		this.costing_method_combo.selectedItem.data == ChargeCostMethod.TimeAndMaterial && chargeCost.speedTable == null) {
 	    	totalCost = parseFloat(labor_rate_edit.text)/parseFloat(pieces_per_hour_edit.text);
 	    	totalCost = totalCost + parseFloat(unit_materials_edit.text);
 	    	totalSetup = ((parseInt(setup_minutes_edit.text)/60) * parseFloat(labor_rate_edit.text)) + parseFloat(fixed_materials_edit.text);
@@ -173,7 +175,17 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 	     validate(setupMinutesValidator);
 //	     this.MaptoChargeCost();		
 	}   
-	                                 
+	       
+	private function updateChargeCostMethod(event:Event):void {
+		doValidate();
+		
+		chargeCost.costingMethod = costing_method_combo.selectedItem.data;
+		
+		if (isNaN(parseFloat(pieces_per_hour_edit.text))) { 
+			pieces_per_hour_edit.text=".001";
+		}
+	}   
+	                       
 	public function validateForm(event:Event):void  {
 		focusedFormControl = event.target as DisplayObject;
 		doValidate();
@@ -431,7 +443,7 @@ showCloseButton="true" creationComplete="creationCompleteHandler();"
 <mx:CurrencyValidator id="laborRateValidator" source="{labor_rate_edit}" required="false" property="text"/>
 <mx:NumberValidator id="setupMinutesValidator" source="{setup_minutes_edit}" required="false" property="text"/>
 	<mx:Canvas width="100%" height="100%">
-		<mx:ComboBox x="144" y="12" width="226" dataProvider="{ChargeCostMethod.toArray()}" id="costing_method_combo" change="validateForm(event);" ></mx:ComboBox>
+		<mx:ComboBox x="144" y="12" width="226" dataProvider="{ChargeCostMethod.toArray()}" id="costing_method_combo" change="updateChargeCostMethod(event);" ></mx:ComboBox>
 		<mx:Label x="10" y="15" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.CostingMethod')}" textAlign="right" width="126"/>
 		<mx:Label x="10" y="40" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.SetupCost')}" textAlign="right" width="126"/>
 		<mx:Label x="10" y="64" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.UnitCost')}" textAlign="right" width="126"/>
