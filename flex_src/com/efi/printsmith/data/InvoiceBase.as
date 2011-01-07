@@ -90,6 +90,7 @@ package com.efi.printsmith.data
 		public var webPaymentType:String = "";
 		public var invoiceNumberPrefix:String = "";
 		public var invoiceNumberSuffix:String = "";
+		public var deposits:ArrayCollection;
 	
 	}
 }

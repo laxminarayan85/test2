@@ -68,6 +68,11 @@ public class DepositEntry extends ModelBase {
 	public static final String CREDITCARDTYPE = "CreditCardType";
 
 	/**
+   * @generated
+   */
+  public static final String PARENTINVOICE = "ParentInvoice";
+
+	/**
 	 * @generated
 	 */
 	public DepositEntry() {
@@ -213,6 +218,29 @@ public class DepositEntry extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+    @ManyToOne()
+    @Where(clause="isdeleted <> 'TRUE'")
+  private InvoiceBase parentInvoice;
+
+	/**
+   * @generated
+ 	 */
+  public InvoiceBase getParentInvoice(){
+    return parentInvoice; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setParentInvoice(InvoiceBase newVal) {
+    this.parentInvoice = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -223,6 +251,7 @@ public class DepositEntry extends ModelBase {
     if (AMOUNT.equals(propertyName)) return getAmount();
     if (TYPE.equals(propertyName)) return getType();
     if (CREDITCARDTYPE.equals(propertyName)) return getCreditCardType();
+    if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
     return super.getProperty(propertyName);
   }
 	
@@ -237,6 +266,7 @@ public class DepositEntry extends ModelBase {
     if (AMOUNT.equals(propertyName)) setAmount((BigDecimal)newValue); else
     if (TYPE.equals(propertyName)) setType((DepositType)newValue); else
     if (CREDITCARDTYPE.equals(propertyName)) setCreditCardType((Integer)newValue); else
+    if (PARENTINVOICE.equals(propertyName)) setParentInvoice((InvoiceBase)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -256,6 +286,8 @@ public class DepositEntry extends ModelBase {
       return new Class<?>[] {DepositType.class};		
     if (CREDITCARDTYPE.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
+    if (PARENTINVOICE.equals(propertyName)) 
+      return new Class<?>[] {InvoiceBase.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -271,6 +303,7 @@ public class DepositEntry extends ModelBase {
     if (AMOUNT.equals(propertyName)) return DepositEntry.class;
     if (TYPE.equals(propertyName)) return DepositEntry.class;
     if (CREDITCARDTYPE.equals(propertyName)) return DepositEntry.class;
+    if (PARENTINVOICE.equals(propertyName)) return DepositEntry.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -291,6 +324,8 @@ public class DepositEntry extends ModelBase {
     if (! SmartEquals(getType(), objT.getType()))
       return false;
     if (! SmartEquals(getCreditCardType(), objT.getCreditCardType()))
+      return false;
+    if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
       return false;
     return true;
   }			

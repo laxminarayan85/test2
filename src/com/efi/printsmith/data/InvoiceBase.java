@@ -358,6 +358,11 @@ public class InvoiceBase extends ModelBase {
   public static final String INVOICENUMBERSUFFIX = "InvoiceNumberSuffix";
 
 	/**
+   * @generated
+   */
+  public static final String DEPOSITS = "Deposits";
+
+	/**
 	 * @generated
 	 */
 	public InvoiceBase() {
@@ -2190,6 +2195,38 @@ public class InvoiceBase extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+    @OneToMany(  cascade = {CascadeType.ALL}, mappedBy="parentInvoice")
+    @Where(clause="isdeleted <> 'TRUE'")
+    @JoinTable( name = "invoicebase_deposits")
+  private java.util.List<DepositEntry> deposits;
+
+	/**
+   * @generated
+ 	 */
+  public java.util.List<DepositEntry> getDeposits(){
+    return deposits; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void addDeposits(DepositEntry obj) {
+    if (deposits == null) {
+      deposits = new java.util.ArrayList<DepositEntry>();
+    }
+    deposits.add(obj);
+  }
+
+	/**
+   * @generated
+   */	
+  public void setDeposits(java.util.List<DepositEntry> newVal) {
+    this.deposits = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2271,6 +2308,7 @@ public class InvoiceBase extends ModelBase {
     if (WEBPAYMENTTYPE.equals(propertyName)) return getWebPaymentType();
     if (INVOICENUMBERPREFIX.equals(propertyName)) return getInvoiceNumberPrefix();
     if (INVOICENUMBERSUFFIX.equals(propertyName)) return getInvoiceNumberSuffix();
+    if (DEPOSITS.equals(propertyName)) return getDeposits();
     return super.getProperty(propertyName);
   }
 	
@@ -2356,6 +2394,7 @@ public class InvoiceBase extends ModelBase {
     if (WEBPAYMENTTYPE.equals(propertyName)) setWebPaymentType((String)newValue); else
     if (INVOICENUMBERPREFIX.equals(propertyName)) setInvoiceNumberPrefix((String)newValue); else
     if (INVOICENUMBERSUFFIX.equals(propertyName)) setInvoiceNumberSuffix((String)newValue); else
+    if (DEPOSITS.equals(propertyName)) setDeposits((java.util.List<DepositEntry>)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2517,6 +2556,8 @@ public class InvoiceBase extends ModelBase {
       return new Class<?>[] {String.class};		
     if (INVOICENUMBERSUFFIX.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (DEPOSITS.equals(propertyName)) 
+      return new Class<?>[] {java.util.List.class, DepositEntry.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2603,6 +2644,7 @@ public class InvoiceBase extends ModelBase {
     if (WEBPAYMENTTYPE.equals(propertyName)) return InvoiceBase.class;
     if (INVOICENUMBERPREFIX.equals(propertyName)) return InvoiceBase.class;
     if (INVOICENUMBERSUFFIX.equals(propertyName)) return InvoiceBase.class;
+    if (DEPOSITS.equals(propertyName)) return InvoiceBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2765,6 +2807,8 @@ public class InvoiceBase extends ModelBase {
     if (! SmartEquals(getInvoiceNumberPrefix(), objT.getInvoiceNumberPrefix()))
       return false;
     if (! SmartEquals(getInvoiceNumberSuffix(), objT.getInvoiceNumberSuffix()))
+      return false;
+    if (! SmartEquals(getDeposits(), objT.getDeposits()))
       return false;
     return true;
   }			
