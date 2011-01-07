@@ -1467,6 +1467,7 @@ public class DefaultDataFactory {
 		}
 	}
 	AccessGroup adminaccessgroup = new AccessGroup();
+	AccessGroup owneraccessgroup = new AccessGroup();
 
 	private HashMap<String, ArrayList<String>> createPermissionsList()	{
 		String path = new File(currentPath).getParent();
@@ -1552,7 +1553,19 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		AddSecuritySetup(accessgroup,permissionsList.get("Manager"));
+		AddSecuritySetup(accessgroup,permissionsList.get("Owner"));
+		
+		
+		owneraccessgroup.setName("Owner");
+		owneraccessgroup.setOrderby(5);
+		
+		try {
+			owneraccessgroup = (AccessGroup) dataservice.addUpdate(owneraccessgroup);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		AddSecuritySetup(owneraccessgroup, null);
+		
 	}
 
 	private void AddSecuritySetup(AccessGroup accessGroup, ArrayList<String> permissions) throws Exception {
@@ -1605,7 +1618,8 @@ public class DefaultDataFactory {
 		users.setName("admin");
 		users.setPassword("admin");
 		users.setShowUserNameLog(true);
-		users.setAccessGroup(adminaccessgroup);
+		users.setAccessLevel(99);
+		users.setAccessGroup(owneraccessgroup);
 		users.setDisableUser(false);
 		try {
 			dataservice.addUpdate(users);

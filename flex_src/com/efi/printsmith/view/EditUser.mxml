@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.data.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" name="User Editor"
 width="100%" height="619" defaultButton="{submitButton}" 
-implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
-		  
+implements="com.efi.printsmith.security.ISecureComponent" xmlns:ns1="com.efi.printsmith.components.*"
+preinitialize="preInit();" xmlns:components="com.efi.printsmith.common.components.*"
 showCloseButton="false"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" xmlns:text="flash.text.*">
 <mx:RemoteObject id="dataService" destination="dataService">
@@ -26,7 +26,7 @@ showCloseButton="false"
 <mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 
 <mx:Script source="../security/PSSecurityInclude.as" />
-
+<mx:Script source="../common/scripts/ComponentHelper.as"/>
 <mx:Script>
                                    
 <![CDATA[
@@ -68,12 +68,20 @@ showCloseButton="false"
     [Bindable]
     	private var accessGroups:ArrayCollection = new ArrayCollection();
     [Bindable]
+    	private var accessGroupsCombo:ArrayCollection = new ArrayCollection();
+    [Bindable]
     	private var accessLevels:ArrayCollection = new ArrayCollection();
     [Bindable]
-    private var user_login:String = new String;                           
+    private var user_login:Users;                         
 	// Holds a reference to the currently focussed control on the form.
 	[Bindable]
 	 private var notSaveChange:Boolean= false;
+	 [Bindable]
+	 private var ownersystem:Boolean= false;
+	 [Bindable]
+	 private var systemadmin:Boolean= false;
+	 [Bindable]                             
+	private var accessGroup:AccessGroup = new AccessGroup();  
  	
  	private var focusedFormControl:DisplayObject;                           
            
@@ -89,12 +97,18 @@ showCloseButton="false"
 		accessGroupService.getAll("AccessGroup");
 		accessLevelService.getAll("AccessLevel");  
 		setUser();
-		user_login=Snowmass.getInstance().currentUser.name;
+		user_login=Snowmass.getInstance().currentUser;
+		if ( user_login.accessGroup.name == "Owner")
+			ownersystem = true;
+			
+		if ( user_login.accessGroup.name == "System Admin")
+			systemadmin = true;
+		
 	}                      
 	private function handleSaveResult(ev:ResultEvent):void {                              
 	     clearFormHandler();
 	     validateForm(ev);
-	                                      
+	      enableform(true);                                
 		// Reload the list.                      
 		//parentApplication.listUsers.loaderService.getUsers();    
 		                         
@@ -136,7 +150,7 @@ showCloseButton="false"
 			
 			if(dataGrid.selectedItem != null) {
 			var selectedItem:Users = dataGrid.selectedItem as Users;
-			if ( user_login != selectedItem.name)
+			if ( user_login.name != selectedItem.name)
 				dataService.deleteItem("Users",selectedItem.id);                                     
      		}
 		}           
@@ -248,7 +262,14 @@ showCloseButton="false"
 		dataGrid.invalidateList();
 	}
 	private function handleLoadAccessGroupResult(ev:ResultEvent):void {
+		var index:int;
+		var index3:int;
 		accessGroups = ev.result as ArrayCollection;
+		for each(var accessObject:AccessGroup in accessGroups){
+				accessObject.enabled = true;
+				
+		}
+			
 		
 	}
 	private function handleLoadAccessLevelResult(ev:ResultEvent):void {
@@ -319,7 +340,8 @@ showCloseButton="false"
 	}
 	
 	private function AccessGroupChange():void{
-		user1.accessGroup = accessGroupList.selectedItem as AccessGroup;
+		accessGroup = accessGroupList.selectedItem as AccessGroup;
+		user1.accessGroup = accessGroup;
 	}
 	private function doNext():void {
 	 
@@ -345,16 +367,43 @@ showCloseButton="false"
 		user1 = dataGrid.selectedItem as Users;
 		if(user1 == null)
 			nameField.enabled = false;
-		else if ( user_login == user1.name)
+		else if ( user_login.name == user1.name)
 			nameField.enabled = false;
 		else
 			nameField.enabled = true;
 		mapFromUserData();
 		if (nameField.text != "")
 			formIsValid = true;
-	    validate(nameValidator);        
+	    validate(nameValidator); 
+	    if ( ownersystem)
+	    	enableform(true)
+	    else{
+	    	if (systemadmin){
+	    		if ( (user1.accessGroup.name == "System Admin") || (user1.accessGroup.name == "Owner"))
+	    			enableform(false)
+	    		else
+	    			enableform(true)
+	    	}
+	    	else{
+	    		enableform(false)
+	    	}
+	    }       
 	}    
-	
+	private function enableform(temp:Boolean):void{
+		force_password.enabled= temp;
+		lock_salesrep.enabled= temp;
+		return_cash.enabled= temp;
+		allow_override.enabled= temp;
+		override_credit_limit.enabled= temp;
+		quick_access.enabled= temp;
+		refund_credit_cards.enabled= temp;
+		robust_password.enabled= temp;
+		user_log_window.enabled= temp;
+		passwordbutton.enabled = temp;
+		accessGroupList.enabled = temp;
+		access_level.enabled = temp;
+		nameField.enabled = temp;
+	}
 	public function getAccessgrouplabel(item:Object, column:DataGridColumn):String{
 		var tmpUser:Users ;
 		tmpUser = item as Users;
@@ -379,7 +428,7 @@ showCloseButton="false"
 	    var tempString:String;
 		
 		if (tmpUser != null && tmpUser.name != null ) {
-				if (tmpUser.name == Snowmass.getInstance().currentUser.name){
+				if (tmpUser.name == user_login.name){
 					tempString = "*";
 					tempString += tmpUser.name;
 				}
@@ -464,7 +513,14 @@ showCloseButton="false"
 	<mx:CheckBox x="237" y="399" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.CaneditQuickAccessPa')}" selected="{user1.quickAccess}" id="quick_access"/>
 	<mx:Label x="10" y="220.5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessGroup')}" textAlign="right" width="89"/>
 	<mx:Label x="-14" y="250.5" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessLevel')}" textAlign="right" visible="false"/>
-	<mx:ComboBox x="107" y="218" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList" change="AccessGroupChange();"> </mx:ComboBox>
+	<!--<mx:ComboBox x="107" y="218" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList" change="AccessGroupChange();"> </mx:ComboBox>
+	-->
+	<components:DisabledComboBox x="107" y="218" height="23" id="accessGroupList" width="20%" change="{AccessGroupChange()}"
+					masterList="{accessGroups}" dataHolder="{}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+					variableName="accessGroup" customText="{getCustomTextData(accessGroups,accessGroups, accessGroup)}"/>
+		
+	
+	
 	<mx:Button x="103" y="473" click="deleteUser();" width="38" height="38">
 		<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
 	</mx:Button>
@@ -472,7 +528,7 @@ showCloseButton="false"
 	<mx:Label x="60" y="519" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}"/>
 	<mx:Label x="107" y="519" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}"/>
 	<mx:CheckBox x="107" y="188" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Disableusername')}" selected="{user1.disableUser}" id="disable_check"/>
-	<mx:Button x="90" y="279" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chgpassCmd.SetUsersPassword')}" width="281" click="doPassword();"/>
+	<mx:Button x="90" y="279" id="passwordbutton" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chgpassCmd.SetUsersPassword')}" width="281" click="doPassword();"/>
 	<mx:Label x="0" y="253" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessLevel')}" textAlign="right" width="99"/>
 	<mx:TextInput  restrict="0-9" x="107" y="251" width="45" maxChars="2" id="access_level" text="{user1.accessLevel}"/>
 	

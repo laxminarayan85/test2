@@ -156,6 +156,7 @@
 		listOfLockedAccessGroups = new ArrayCollection();
 		listOfLockedAccessGroups.addItem("System Admin");
 		listOfLockedAccessGroups.addItem("Minimum");
+		listOfLockedAccessGroups.addItem("Owner");
 		
 		listOfAllowedCommands = new ArrayCollection();
 		listOfAllowedCommands.addItem(PSSecurityCommands.QUIT_ABORT);
