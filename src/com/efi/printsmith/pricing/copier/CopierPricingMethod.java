@@ -199,10 +199,10 @@ public abstract class CopierPricingMethod {
 
 				}
 				area = area * job.getTotalCopies();
-				job.setRunTime(new Double(area / copierDefinition.getCopyMinutes()).longValue());
+				job.setRunTime(new Double(area / copierDefinition.getCopyMinutes()));
 			}
 			else
-				job.setRunTime(new Double(job.getTotalCopies().doubleValue() / copierDefinition.getCopyMinutes()).longValue());
+				job.setRunTime(new Double(job.getTotalCopies().doubleValue() / copierDefinition.getCopyMinutes()));
 		}
 	}
 	

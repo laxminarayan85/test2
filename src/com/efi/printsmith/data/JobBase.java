@@ -1407,19 +1407,19 @@ public class JobBase extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Long washupTime;
+  private Double washupTime;
 
 	/**
    * @generated
  	 */
-  public Long getWashupTime(){
+  public Double getWashupTime(){
     return washupTime; 
   }
 
 	/**
    * @generated
    */	
-  public void setWashupTime(Long newVal) {
+  public void setWashupTime(Double newVal) {
     this.washupTime = newVal;
   }
 
@@ -3825,19 +3825,19 @@ public class JobBase extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Long runTime;
+  private Double runTime;
 
 	/**
    * @generated
  	 */
-  public Long getRunTime(){
+  public Double getRunTime(){
     return runTime; 
   }
 
 	/**
    * @generated
    */	
-  public void setRunTime(Long newVal) {
+  public void setRunTime(Double newVal) {
     this.runTime = newVal;
   }
 
@@ -3845,19 +3845,19 @@ public class JobBase extends ModelBase {
    * @generated
    */	
  	@Basic
-  private Long setupTime;
+  private Double setupTime;
 
 	/**
    * @generated
  	 */
-  public Long getSetupTime(){
+  public Double getSetupTime(){
     return setupTime; 
   }
 
 	/**
    * @generated
    */	
-  public void setSetupTime(Long newVal) {
+  public void setSetupTime(Double newVal) {
     this.setupTime = newVal;
   }
 
@@ -4353,7 +4353,7 @@ public class JobBase extends ModelBase {
     if (PRICINGPRESS.equals(propertyName)) setPricingPress((PressDefinition)newValue); else
     if (COSTINGPRESS.equals(propertyName)) setCostingPress((PressDefinition)newValue); else
     if (RUNMETHOD.equals(propertyName)) setRunMethod((String)newValue); else
-    if (WASHUPTIME.equals(propertyName)) setWashupTime((Long)newValue); else
+    if (WASHUPTIME.equals(propertyName)) setWashupTime((Double)newValue); else
     if (STOCK.equals(propertyName)) setStock((StockDefinition)newValue); else
     if (PARENTSIZE.equals(propertyName)) setParentSize((Dimension)newValue); else
     if (RUNSIZE.equals(propertyName)) setRunSize((Dimension)newValue); else
@@ -4458,8 +4458,8 @@ public class JobBase extends ModelBase {
     if (FRONTCOLOR5.equals(propertyName)) setFrontColor5((String)newValue); else
     if (FRONTCOLOR6.equals(propertyName)) setFrontColor6((String)newValue); else
     if (FRONTCOLOR7.equals(propertyName)) setFrontColor7((String)newValue); else
-    if (RUNTIME.equals(propertyName)) setRunTime((Long)newValue); else
-    if (SETUPTIME.equals(propertyName)) setSetupTime((Long)newValue); else
+    if (RUNTIME.equals(propertyName)) setRunTime((Double)newValue); else
+    if (SETUPTIME.equals(propertyName)) setSetupTime((Double)newValue); else
     if (RELEASEDTOPRODUCTION.equals(propertyName)) setReleasedToProduction((Boolean)newValue); else
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
     if (SHOWMULTIQTY.equals(propertyName)) setShowMultiQty((Boolean)newValue); else
@@ -4542,7 +4542,7 @@ public class JobBase extends ModelBase {
     if (RUNMETHOD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (WASHUPTIME.equals(propertyName)) 
-      return new Class<?>[] {Long.class};		
+      return new Class<?>[] {Double.class};		
     if (STOCK.equals(propertyName)) 
       return new Class<?>[] {StockDefinition.class};		
     if (PARENTSIZE.equals(propertyName)) 
@@ -4752,9 +4752,9 @@ public class JobBase extends ModelBase {
     if (FRONTCOLOR7.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (RUNTIME.equals(propertyName)) 
-      return new Class<?>[] {Long.class};		
+      return new Class<?>[] {Double.class};		
     if (SETUPTIME.equals(propertyName)) 
-      return new Class<?>[] {Long.class};		
+      return new Class<?>[] {Double.class};		
     if (RELEASEDTOPRODUCTION.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (TAXTABLE.equals(propertyName)) 

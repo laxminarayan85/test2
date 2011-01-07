@@ -345,10 +345,10 @@ public class JobMapper extends ImportMapper {
 			} else if ("labor markup".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("setup time".equals(currentFieldToken)) {
-				job.setSetupTime(Utilities.tokenToLong(currentImportToken));
+				job.setSetupTime(Utilities.tokenToDouble(currentImportToken));
 				
 			} else if ("run time".equals(currentFieldToken)) {
-				job.setRunTime(Utilities.tokenToLong(currentImportToken));
+				job.setRunTime(Utilities.tokenToDouble(currentImportToken));
 			} else if ("labor cost".equals(currentFieldToken)) {
 				pricingRecord.setLaborCost(Utilities.tokenToDouble(currentImportToken));
 			} else if ("labor markup amt".equals(currentFieldToken)) {
@@ -780,7 +780,7 @@ public class JobMapper extends ImportMapper {
 			} else if ("parent area".equals(currentFieldToken)) {
 				tempPaper.setParentSqrArea(Utilities.tokenToDouble(currentImportToken));
 			} else if ("washup time".equals(currentFieldToken)) {
-				job.setWashupTime(Utilities.tokenToLong(currentImportToken));
+				job.setWashupTime(Utilities.tokenToDouble(currentImportToken));
 			} else if ("pick stock group".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("pick stock type".equals(currentFieldToken)) {
