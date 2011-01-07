@@ -882,8 +882,8 @@
 //				PopUpManager.centerPopUp(this);
 				this.job_description.setFocus();
 				
-				pricingMethodDataService.getAll("PreferencesPricingMethod");
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
+				pricingMethodDataService.getAll("PreferencesPricingMethod");
 				dataServicePreferencesDefaultPresses.getSingle("PreferencesDefaultPresses");
 			    taxTableDataService.getCurrentTaxTables("TaxTable");
 			    dataServiceGroup.getAll("StockGroup");
@@ -1473,6 +1473,8 @@
 		    	stocks = ev.result as ArrayCollection;
 		    	
 				this.enabled=true;
+				
+				chage_stock_button.enabled = true;
 
 				chargeCommandDataService.getChargeList();
 				if (doInitialStockPicker) initialStockPicker();
@@ -3841,6 +3843,7 @@
 											   fontSize="9"
 											   height="18"
 											   id="chage_stock_button"
+											   enabled="false"
 											   click="changeStockDefinition()" width="62"/>
 									<mx:ComboBox x="108" y="79" width="99" id="job_parent" tabIndex="10" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
 									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" tabIndex="11" focusIn="runSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
