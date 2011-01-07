@@ -4,10 +4,14 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.PreferencesEstimating;
 			import mx.collections.ArrayCollection;
 			import com.efi.printsmith.data.PreferencesStockDefinition;
 			
 			[Bindable] public var preferencesStockDefinitionArray:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] public var preferencesEstimating:PreferencesEstimating = new PreferencesEstimating();
+			
 			private function columnsnameStockDefinition(item:Object, column:DataGridColumn):String{
 				var tmpName:PreferencesStockDefinition = item as PreferencesStockDefinition;
 				if (tmpName != null && tmpName.columns != null && tmpName.columns.name != null) {
@@ -64,6 +68,11 @@
 					</mx:columns>
 					
 				</mx:DataGrid>
+				
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.TwoStageClearSearch')}"
+					dataHolder="{preferencesEstimating}" variableName="twoStageClearSearch" customText="{preferencesEstimating.twoStageClearSearch}"
+					defaultValue="false" deSelectedValue="false" selectedValue="true"/>
 				
 			</mx:VBox>
 		

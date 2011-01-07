@@ -997,7 +997,7 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.StockDefinitions"){
-			checkCount = 1;
+			checkCount = 2;
 			for each(var preferencesStockDefinition:PreferencesStockDefinition in PreferencesStockDefinitionArray){
 				if (preferencesStockDefinition.columnOrder != counter){
 					preferencesStockDefinition.columnOrder = counter;
@@ -1005,6 +1005,7 @@
 				counter = counter + 1;
 			}
 			dataServiceStockDefinition.addUpdateDeleteList(PreferencesStockDefinitionArray,null);
+			dataServiceEstimator.addUpdate(preferencesEstimating);
 		}
 		
 		if(selectedSection == "genericPrefCmd.PricingMethod"){
@@ -2067,7 +2068,7 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.StockDefinitions"){
-			if(!compareObject(PreferencesStockDefinitionArray,PreferencesStockDefinitionOrigArray)){
+			if(!compareObject(PreferencesStockDefinitionArray,PreferencesStockDefinitionOrigArray) || !compareObject(preferencesEstimating,preferencesEstimatingOrigObj)){
 				isObjEqual = false;
 			}
 		}
@@ -2446,8 +2447,9 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.StockDefinitions"){
-			checkCount = 1;
+			checkCount = 2;
 			dataServiceStockDefinition.getAllOrderBy("PreferencesStockDefinition","columnOrder");
+			dataServiceEstimator.getAll("PreferencesEstimating");
 		}
 		
 		if(selectedSection == "genericPrefCmd.PricingMethod"){
@@ -2572,6 +2574,7 @@
 		
 		if(selectedSection == "genericPrefCmd.StockDefinitions"){
 			originalList.addItem(PreferencesStockDefinitionOrigArray);
+			originalList.addItem(preferencesEstimating);
 		}
 		
 		if(selectedSection == "genericPrefCmd.PricingMethod"){
@@ -2644,6 +2647,7 @@
 		
 		if(selectedSection == "genericPrefCmd.StockDefinitions"){
 			updatedList.addItem(PreferencesStockDefinitionArray);
+			updatedList.addItem(preferencesEstimating);
 		}
 		
 		if(selectedSection == "genericPrefCmd.PricingMethod"){
@@ -2805,7 +2809,8 @@
 					sizeTableArray="{SizeTableArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:StockdefinitionsCanvasComponent id="stockdefinitions_canvas"
-					preferencesStockDefinitionArray="{PreferencesStockDefinitionArray}" width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
+					preferencesStockDefinitionArray="{PreferencesStockDefinitionArray}" preferencesEstimating="{preferencesEstimating}" 
+					width="100%" height="100%" hideEffect="effect" showEffect="effect"/>
 				
 				<prefcomp:PricingmethodCanvasComponent id="pricingmethod_canvas"
 					preferencesPricingMethodArray="{PreferencesPricingMethodArray}" salesCategoryArray="{PreferencesSalesCategoryArray}"
