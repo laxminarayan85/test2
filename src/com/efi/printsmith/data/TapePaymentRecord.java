@@ -317,19 +317,19 @@ public class TapePaymentRecord extends Transaction {
    * @generated
    */	
  	@Basic
-  private Integer isPaidOut;
+  private Boolean isPaidOut;
 
 	/**
    * @generated
  	 */
-  public Integer getIsPaidOut(){
+  public Boolean getIsPaidOut(){
     return isPaidOut; 
   }
 
 	/**
    * @generated
    */	
-  public void setIsPaidOut(Integer newVal) {
+  public void setIsPaidOut(Boolean newVal) {
     this.isPaidOut = newVal;
   }
 
@@ -367,7 +367,7 @@ public class TapePaymentRecord extends Transaction {
     if (CHANGEAMOUNT.equals(propertyName)) setChangeAmount((Double)newValue); else
     if (REFUNDAMOUNT.equals(propertyName)) setRefundAmount((Double)newValue); else
     if (POSTAR.equals(propertyName)) setPostAR((Boolean)newValue); else
-    if (ISPAIDOUT.equals(propertyName)) setIsPaidOut((Integer)newValue); else
+    if (ISPAIDOUT.equals(propertyName)) setIsPaidOut((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -396,7 +396,7 @@ public class TapePaymentRecord extends Transaction {
     if (POSTAR.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (ISPAIDOUT.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
