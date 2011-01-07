@@ -1047,17 +1047,17 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 
 		
 				<mx:Canvas id="canvasSettings" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Settings')}" width="100%" height="100%">	
-					<mx:Label x="51" y="19" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.IDNumber')}" width="71" textAlign="right"/>
-					<mx:Text x="143" y="19" id="employeeID" text="{employee.employeeId}" width="106" />
-					<mx:Label x="47" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.First')}" textAlign="right"/>
-					<mx:Label x="47" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Last')}" textAlign="right"/>
-					<mx:TextInput x="124" y="78" id="firstName_edit" text="{employee.firstName}" width="205"/>
-					<mx:TextInput x="124" y="104" id="lastName_edit" text="{employee.lastName}" width="205"/>
-					<mx:Label x="73" y="136" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Phone')}" textAlign="right"/>
-					<mx:Label x="73" y="164" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Mobile')}" textAlign="right"/>
-					<mx:Label x="79" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EMail')}" textAlign="right"/>
-					<mx:Label x="88" y="216" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.SSN')}" textAlign="right"/>
-					<mx:Label x="41" y="246" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.ExportCode')}" />
+					<mx:Label x="47" y="42" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.IDNumber')}" width="71" textAlign="right"/>
+					<mx:Text x="126" y="42" id="employeeID" text="{employee.employeeId}" width="106" />
+					<mx:Label x="10" y="80" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.First')}" textAlign="right" width="108"/>
+					<mx:Label x="23" y="106" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Last')}" textAlign="right" width="95"/>
+					<mx:TextInput x="126" y="78" id="firstName_edit" text="{employee.firstName}" width="205"/>
+					<mx:TextInput x="126" y="104" id="lastName_edit" text="{employee.lastName}" width="205"/>
+					<mx:Label x="22" y="136" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Phone')}" textAlign="right" width="97"/>
+					<mx:Label x="22" y="164" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.Mobile')}" textAlign="right" width="97"/>
+					<mx:Label x="22" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.EMail')}" textAlign="right" width="97"/>
+					<mx:Label x="22" y="216" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.SSN')}" textAlign="right" width="97"/>
+					<mx:Label x="18" y="246" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeMgrCmd.ExportCode')}" textAlign="right"  width="101"/>
 					<mx:TextInput x="127" y="134" id="phone_edit"/>
 					<mx:TextInput x="127" y="162" id="mobile_edit"/>
 					<mx:TextInput x="127" y="188" id="email_edit"/>
