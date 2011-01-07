@@ -266,7 +266,14 @@ showCloseButton="false"
 		var index3:int;
 		accessGroups = ev.result as ArrayCollection;
 		for each(var accessObject:AccessGroup in accessGroups){
+			if (ownersystem)
 				accessObject.enabled = true;
+			else{
+				if ( accessObject.name == "Owner")
+					accessObject.enabled = false;
+				if ( accessObject.name == "System Admin")
+					accessObject.enabled = false;
+			}
 				
 		}
 			
@@ -516,8 +523,8 @@ showCloseButton="false"
 	<!--<mx:ComboBox x="107" y="218" height="23"  dataProvider="{accessGroups}" labelField="name" id="accessGroupList" change="AccessGroupChange();"> </mx:ComboBox>
 	-->
 	<components:DisabledComboBox x="107" y="218" height="23" id="accessGroupList" width="20%" change="{AccessGroupChange()}"
-					masterList="{accessGroups}" dataHolder="{}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-					variableName="accessGroup" customText="{getCustomTextData(accessGroups,accessGroups, accessGroup)}"/>
+					masterList="{accessGroups}" dataHolder="{user1}" updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+					variableName="accessGroup" customText="{getCustomTextData(accessGroups,user1, user1.accessGroup)}"/>
 		
 	
 	

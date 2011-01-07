@@ -1502,7 +1502,7 @@ public class DefaultDataFactory {
 		HashMap<String, ArrayList<String>> permissionsList = createPermissionsList();
 		
 		adminaccessgroup.setName("System Admin");
-		adminaccessgroup.setOrderby(0);
+		adminaccessgroup.setOrderby(4);
 		
 		try {
 			adminaccessgroup = (AccessGroup) dataservice.addUpdate(adminaccessgroup);
@@ -1513,7 +1513,7 @@ public class DefaultDataFactory {
 
 		AccessGroup accessgroup = new AccessGroup();
 		accessgroup.setName("Minimum");
-		accessgroup.setOrderby(1);
+		accessgroup.setOrderby(0);
 		
 		try {
 			accessgroup = (AccessGroup) dataservice.addUpdate(accessgroup);
@@ -1524,7 +1524,7 @@ public class DefaultDataFactory {
 
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Production");
-		accessgroup.setOrderby(2);
+		accessgroup.setOrderby(1);
 		
 		try {
 			accessgroup = (AccessGroup) dataservice.addUpdate(accessgroup);
@@ -1535,7 +1535,7 @@ public class DefaultDataFactory {
 
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Counter");
-		accessgroup.setOrderby(3);
+		accessgroup.setOrderby(2);
 		
 		try {
 			accessgroup = (AccessGroup) dataservice.addUpdate(accessgroup);
@@ -1546,7 +1546,7 @@ public class DefaultDataFactory {
 
 		accessgroup = new AccessGroup();
 		accessgroup.setName("Manager");
-		accessgroup.setOrderby(4);
+		accessgroup.setOrderby(3);
 		
 		try {
 			accessgroup = (AccessGroup) dataservice.addUpdate(accessgroup);

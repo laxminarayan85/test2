@@ -23,6 +23,7 @@ package com.efi.printsmith.data
 		public var changeAmount:Number = 0;
 		public var refundAmount:Number = 0;
 		public var postAR:Boolean = false;
+		public var isPaidOut:int = 0;
 	
 	}
 }

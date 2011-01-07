@@ -87,6 +87,11 @@ public class TapePaymentRecord extends Transaction {
   public static final String POSTAR = "PostAR";
 
 	/**
+   * @generated
+   */
+  public static final String ISPAIDOUT = "IsPaidOut";
+
+	/**
 	 * @generated
 	 */
 	public TapePaymentRecord() {
@@ -309,6 +314,26 @@ public class TapePaymentRecord extends Transaction {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Integer isPaidOut;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getIsPaidOut(){
+    return isPaidOut; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setIsPaidOut(Integer newVal) {
+    this.isPaidOut = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -323,6 +348,7 @@ public class TapePaymentRecord extends Transaction {
     if (CHANGEAMOUNT.equals(propertyName)) return getChangeAmount();
     if (REFUNDAMOUNT.equals(propertyName)) return getRefundAmount();
     if (POSTAR.equals(propertyName)) return getPostAR();
+    if (ISPAIDOUT.equals(propertyName)) return getIsPaidOut();
     return super.getProperty(propertyName);
   }
 	
@@ -341,6 +367,7 @@ public class TapePaymentRecord extends Transaction {
     if (CHANGEAMOUNT.equals(propertyName)) setChangeAmount((Double)newValue); else
     if (REFUNDAMOUNT.equals(propertyName)) setRefundAmount((Double)newValue); else
     if (POSTAR.equals(propertyName)) setPostAR((Boolean)newValue); else
+    if (ISPAIDOUT.equals(propertyName)) setIsPaidOut((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -368,6 +395,8 @@ public class TapePaymentRecord extends Transaction {
       return new Class<?>[] {Double.class};		
     if (POSTAR.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (ISPAIDOUT.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -387,6 +416,7 @@ public class TapePaymentRecord extends Transaction {
     if (CHANGEAMOUNT.equals(propertyName)) return TapePaymentRecord.class;
     if (REFUNDAMOUNT.equals(propertyName)) return TapePaymentRecord.class;
     if (POSTAR.equals(propertyName)) return TapePaymentRecord.class;
+    if (ISPAIDOUT.equals(propertyName)) return TapePaymentRecord.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -415,6 +445,8 @@ public class TapePaymentRecord extends Transaction {
     if (! SmartEquals(getRefundAmount(), objT.getRefundAmount()))
       return false;
     if (! SmartEquals(getPostAR(), objT.getPostAR()))
+      return false;
+    if (! SmartEquals(getIsPaidOut(), objT.getIsPaidOut()))
       return false;
     return true;
   }			
