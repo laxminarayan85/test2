@@ -36,7 +36,28 @@ public function sortArray(ac:ArrayCollection, prop:String):void	{
         	else
             	return num.toString();
         }
-    }        
+    }   
+
+	public function findFirstIndexByCondition(ac:ArrayCollection, propName:String, propValue:Object):int	{
+		for (var i:int=0; i<ac.length; i++)	{
+			var obj:Object = ac.getItemAt(i);
+			if (obj[propName] == propValue)	{
+				return i;
+			}
+		}
+		return -1;
+	}
+		
+	public function findFirstItemByCondition(ac:ArrayCollection, propName:String, propValue:Object):Object	{
+		for (var i:int=0; i<ac.length; i++)	{
+			var obj:Object = ac.getItemAt(i);
+			if (obj[propName] == propValue)	{
+				return obj;
+			}
+		}
+		return null;
+	}
+			     
 public function compareObject(obj1:Object,obj2:Object):Boolean
 {
     var buffer1:ByteArray = new ByteArray();

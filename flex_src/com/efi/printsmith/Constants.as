@@ -84,7 +84,12 @@ package com.efi.printsmith
 		static public const POS_CASH_REGISTER_PAYMODE_DRAFT:String = "Draft";
 		static public const POS_CASH_REGISTER_PAYMODE_DEPOSIT:String = "Deposit";
 		
+		static public const INVOICE_DEPOSIT_TYPE_CASH:int = 1;
+		static public const INVOICE_DEPOSIT_TYPE_CHECK:int = 2;
+		static public const INVOICE_DEPOSIT_TYPE_CREDIT_CARD:int = 3;
+		static public const INVOICE_DEPOSIT_ENTRY_CREDIT_CARD_GENERIC:int = 0;
 		
+									
 		public function Constants()
 		{
 		}

@@ -51,6 +51,7 @@ public class DefaultDataFactory {
 			ProcessCountryFile();
 			ProcessUsers();
 			ProcessCreditCards();
+			ProcessDepositTypes();
 			ProcessComLinkType();
 			ProcessShippingMethod();
 			ProcessProductionLocations();
@@ -1651,7 +1652,37 @@ public class DefaultDataFactory {
 		}
 
 	}
-
+	private void ProcessDepositTypes() throws Exception	{
+		List<?> typeList = (List<?>) dataservice
+		.getAll("DepositType");
+		
+		if (typeList.size() > 0)	{
+			return;
+		}
+		
+		DepositType dt = new DepositType();
+		dt.setName("Cash");
+		try {
+			dataservice.addUpdate(dt);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		 dt= new DepositType();
+		 dt.setName("Check");
+		 try {
+				dataservice.addUpdate(dt);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+			} 
+		 dt= new DepositType();
+		 dt.setName("Credit Card");
+		 try {
+				dataservice.addUpdate(dt);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+			} 
+			
+	}
 	private void ProcessCreditCards() throws Exception {
 
 		List<?> creditcardList = (List<?>) dataservice

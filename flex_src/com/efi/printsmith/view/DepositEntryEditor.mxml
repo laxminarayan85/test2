@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"
+	name="DepositEntry" 
+	implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
+		 >
+	<mx:RemoteObject id="depTypeDataService"	 destination="dataService" showBusyCursor="true">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadDepTypeResult(event)"/>
+	</mx:RemoteObject> 
+	<mx:RemoteObject id="ccTypeDataService"
+					 destination="dataService" showBusyCursor="true">
+		<mx:method name="getAllQuery"
+				   fault="handleFault(event)"
+				   result="handleLoadCCTypeResult(event)"/>
+	</mx:RemoteObject>
+	<mx:Script source="../common/scripts/CommonUtils.as"/>
+	
+		<mx:Script source="../security/PSSecurityInclude.as" />
+	<mx:Script>
+		<![CDATA[
+			import mx.utils.StringUtil;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.FaultEvent;
+			import com.efi.printsmith.events.DepositEntryAddedEvent;
+			import mx.controls.Alert;
+			import com.efi.printsmith.Constants;
+			import com.efi.printsmith.data.DepositType;
+			import com.efi.printsmith.data.DepositEntry;
+			import com.efi.printsmith.data.PreferencesCreditCard;
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			import com.efi.printsmith.security.PSSecurityCommands;
+			
+			[Bindable] private var ccTypeList:ArrayCollection ;
+			[Bindable] private var depTypeList:ArrayCollection ;
+			
+			private var _depArray:ArrayCollection;
+			
+			public function set depArray(d:ArrayCollection):void	{
+				_depArray = d;
+				if (_depArray != null && _depArray.length == 3)	{
+					var dep1:DepositEntry = _depArray.getItemAt(0) as DepositEntry;
+					var dep2:DepositEntry = _depArray.getItemAt(1) as DepositEntry;
+					var dep3:DepositEntry = _depArray.getItemAt(2) as DepositEntry;
+					
+					if (dep1.type.name == rdoCash1.label)
+						rdoCash1.selected = true;
+					else if (dep1.type.name == rdoCheck1.label)
+						rdoCheck1.selected = true;
+					else if (dep1.type.name == rdoCC1.label)	{
+						rdoCC1.selected = true;
+						btnVoid1.visible = false;
+						frmCC1.visible = true;						
+					}
+					if (dep2.type.name == rdoCash2.label)
+						rdoCash2.selected = true;
+					else if (dep2.type.name == rdoCheck2.label)
+						rdoCheck2.selected = true;
+					else if (dep2.type.name == rdoCC2.label)	{
+						rdoCC2.selected = true;
+						btnVoid2.visible = false;
+						frmCC2.visible = true;						
+					}
+					if (dep3.type.name == rdoCash3.label)
+						rdoCash3.selected = true;
+					else if (dep3.type.name == rdoCheck3.label)
+						rdoCheck3.selected = true;
+					else if (dep3.type.name == rdoCC3.label)	{
+						rdoCC3.selected = true;
+						btnVoid3.visible = false;
+						frmCC3.visible = true;						
+					}
+					
+					txtRef1.text = dep1.referenceNumber;
+					txtRef2.text = dep2.referenceNumber;
+					txtRef3.text = dep3.referenceNumber;
+					
+					txtAmount1.text = dep1.amount + "";
+					txtAmount2.text = dep2.amount + "";
+					txtAmount3.text = dep3.amount + "";
+					
+					
+				}
+			}
+			public function getSecurityCommand():String {
+				return PSSecurityCommands.INVOICE_DEPOSITENTRY;
+			}
+			public function init(event:FlexEvent = null):void
+			{
+				depTypeDataService.getAll("DepositType");
+				ccTypeDataService.getAllQuery("PreferencesCreditCard", " where activeAccepted='t' ");
+				
+			}
+			private function handleLoadDepTypeResult(event:ResultEvent):void	{
+				depTypeList = event.result as ArrayCollection;
+			}
+			private function handleLoadCCTypeResult(event:ResultEvent):void	{
+				var ccList:ArrayCollection = event.result as ArrayCollection;
+				var genericCC:PreferencesCreditCard = new PreferencesCreditCard();
+				genericCC.abbreviation = "";
+				genericCC.id = Constants.INVOICE_DEPOSIT_ENTRY_CREDIT_CARD_GENERIC;
+				genericCC.cardType = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'balanceCmd.GenericCard');
+				ccList.addItemAt(genericCC,0);
+				ccTypeList = ccList;
+
+				if (ccTypeList != null && _depArray != null)	{	
+					var dep1:DepositEntry = _depArray.getItemAt(0) as DepositEntry;
+					var dep2:DepositEntry = _depArray.getItemAt(1) as DepositEntry;
+					var dep3:DepositEntry = _depArray.getItemAt(2) as DepositEntry;
+					
+					if (dep1.type.name == rdoCC1.label) 
+						cboCCType1.selectedItem = findFirstItemByCondition(ccTypeList, "id", dep1.creditCardType);
+					if (dep2.type.name == rdoCC2.label) 
+						cboCCType2.selectedItem = findFirstItemByCondition(ccTypeList, "id", dep2.creditCardType);
+					if (dep3.type.name == rdoCC3.label) 
+						cboCCType3.selectedItem = findFirstItemByCondition(ccTypeList, "id", dep3.creditCardType);
+				}
+					
+			}
+			private function handleFault(ev:FaultEvent):void {  
+				
+			}
+			
+			
+			private function onOK():void	{
+				
+				var a:ArrayCollection = new ArrayCollection();
+//				if (!((rdgPaymentMethod1.selectedValue == resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Cash')) && (txtRef1.text == "") && (txtAmount1.text == "0.0")))	{
+					var de:DepositEntry = new DepositEntry();
+					var dt:DepositType = findFirstItemByCondition(depTypeList, "name",rdgPaymentMethod1.selectedValue) as DepositType; 
+					de.type = dt;
+					if (isNaN(txtAmount1.text as Number) || (Number(txtAmount1.text) < 0))	{
+						Alert.show("Payment 1 not a number");
+						txtAmount1.setFocus();
+						return;
+					}
+					de.amount = Number(txtAmount1.text);
+					if (dt.name == rdoCC1.label || dt.name == rdoCheck1.label)	{
+						if (StringUtil.trim(txtRef1.text) == "")	{
+							Alert.show("Please enter Ref# 1");
+							txtRef1.setFocus();
+							return;
+						}						
+					}
+					if (dt.name == rdoCC1.label)	{
+						if (cboCCType1.selectedIndex != 0) 
+							de.creditCardType = (findFirstItemByCondition(ccTypeList, "cardType", (cboCCType1.selectedItem as PreferencesCreditCard).cardType) as PreferencesCreditCard).id;
+					} 
+					de.referenceNumber = txtRef1.text;
+					a.addItem(de);										
+//				}
+//				if (!((rdgPaymentMethod2.selectedValue == resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Cash')) && (txtRef2.text == "") && (txtAmount2.text == "0.0")))	{
+					de = new DepositEntry();
+					dt = findFirstItemByCondition(depTypeList, "name",rdgPaymentMethod2.selectedValue) as DepositType; 
+					de.type = dt;
+					if (isNaN(txtAmount2.text as Number) || (Number(txtAmount2.text) < 0))	{
+						Alert.show("Payment 2 not a number");
+						txtAmount2.setFocus();
+						return;
+					}
+					de.amount = Number(txtAmount2.text);
+					if (dt.name == rdoCC2.label || dt.name == rdoCheck2.label)	{
+						if (StringUtil.trim(txtRef2.text) == "")	{
+							Alert.show("Please enter Ref# 2");
+							txtRef2.setFocus();
+							return;
+						}						
+					}
+					if (dt.name == rdoCC2.label)	{
+						if (cboCCType2.selectedIndex != 0) 
+							de.creditCardType = (findFirstItemByCondition(ccTypeList, "cardType", (cboCCType2.selectedItem as PreferencesCreditCard).cardType) as PreferencesCreditCard).id;
+					} 
+					de.referenceNumber = txtRef2.text;
+					a.addItem(de);										
+//				}
+//				if (!((rdgPaymentMethod3.selectedValue == resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Cash')) && (txtRef3.text == "") && (txtAmount3.text == "0.0")))	{
+					de = new DepositEntry();
+					dt = findFirstItemByCondition(depTypeList, "name",rdgPaymentMethod3.selectedValue) as DepositType; 
+					de.type = dt;
+					if (isNaN(txtAmount3.text as Number) || (Number(txtAmount3.text) < 0))	{
+						Alert.show("Payment 3 not a number");
+						txtAmount3.setFocus();
+						return;
+					}
+					de.amount = Number(txtAmount3.text);
+					if (dt.name == rdoCC3.label || dt.name == rdoCheck3.label)	{
+						if (StringUtil.trim(txtRef3.text) == "")	{
+							Alert.show("Please enter Ref# 3");
+							txtRef3.setFocus();
+							return;
+						}						
+					}
+					if (dt.name == rdoCC3.label)	{
+						if (cboCCType3.selectedIndex != 0) 
+							de.creditCardType = (findFirstItemByCondition(ccTypeList, "cardType", (cboCCType3.selectedItem as PreferencesCreditCard).cardType) as PreferencesCreditCard).id;
+					} 
+					de.referenceNumber = txtRef3.text;
+					a.addItem(de);										
+//				}
+				dispatchEvent(new DepositEntryAddedEvent(DepositEntryAddedEvent.DEPOSITENTRYADDED, a));
+				closeWindow();
+			}
+			private function closeWindow():void	{
+				Snowmass.getInstance().containerManager.getWindowWithChild(this, true).closeWindow();
+			}
+			private function getCCLabel(item:Object):String	{
+				var ccType:PreferencesCreditCard = item as PreferencesCreditCard;
+				var lbl:String = ccType.cardType;
+				if (ccType.abbreviation != "")	{
+					lbl += "(" + ccType.abbreviation + ")";
+				} 
+				return lbl;
+			}
+			
+			private function onVoid1():void	{
+				txtAmount1.text = "0.0";
+			}
+			private function onVoid2():void	{
+				txtAmount2.text = "0.0";
+			}
+			private function onVoid3():void	{
+				txtAmount3.text = "0.0";
+			}
+			
+			private function paymentMethod1Selected():void	{
+				if (rdgPaymentMethod1.selectedValue == resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Cash')
+						||
+					rdgPaymentMethod1.selectedValue == resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Check')	)	{
+					btnVoid1.visible = true;
+					frmCC1.visible = false;
+				}
+				else	{
+					btnVoid1.visible = false;
+					frmCC1.visible = true;
+				}				
+			}
+			private function paymentMethod2Selected():void	{
+				if (rdgPaymentMethod2.selectedValue == resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Cash')
+						||
+					rdgPaymentMethod2.selectedValue == resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Check')	)	{
+					btnVoid2.visible = true;
+					frmCC2.visible = false;
+				}
+				else	{
+					btnVoid2.visible = false;
+					frmCC2.visible = true;
+				}				
+			}
+			private function paymentMethod3Selected():void	{
+				if (rdgPaymentMethod3.selectedValue == resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Cash')
+						||
+					rdgPaymentMethod3.selectedValue == resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Check')	)	{
+					btnVoid3.visible = true;
+					frmCC3.visible = false;
+				}
+				else	{
+					btnVoid3.visible = false;
+					frmCC3.visible = true;
+				}				
+			}
+		]]>
+	</mx:Script>
+	<mx:Panel layout="horizontal" height="30%" width="100%" id="pnlDeposit1" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit')} 1">
+		<mx:VBox width="30%" height="100%">
+			<mx:RadioButtonGroup id="rdgPaymentMethod1" />
+			<mx:RadioButton groupName="rdgPaymentMethod1" selected="true" click="paymentMethod1Selected()" id="rdoCash1" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Cash')}" />
+			<mx:RadioButton groupName="rdgPaymentMethod1" click="paymentMethod1Selected()" id="rdoCheck1" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Check')}" />
+			<mx:RadioButton groupName="rdgPaymentMethod1" click="paymentMethod1Selected()" id="rdoCC1" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.CreditCard')}" />
+		</mx:VBox>
+		<mx:VBox width="70%" height="100%">
+			<mx:HBox height="20%" width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Ref')}" width="10%" height="100%" />
+				<mx:TextInput id="txtRef1" width="30%" height="100%" />
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Amount')}" width="10%" height="100%" />
+				<mx:TextInput id="txtAmount1" text="0.0" width="10%"  height="100%" />				
+			</mx:HBox>			
+			<mx:Button height="10%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Void')}" visible="true" id="btnVoid1" click="onVoid1();"/>
+			<mx:Form   visible="false" id="frmCC1" height="30%" width=" 50%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.CardType')}">
+					<mx:ComboBox  id="cboCCType1" dataProvider="{ccTypeList}" labelFunction="getCCLabel" />
+				</mx:FormItem>
+			</mx:Form>
+		</mx:VBox>
+	</mx:Panel>
+	<mx:Panel layout="horizontal" height="30%" width="100%" id="pnlDeposit2" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit')} 2">
+		<mx:VBox width="30%" height="100%">
+			<mx:RadioButtonGroup id="rdgPaymentMethod2" />
+			<mx:RadioButton groupName="rdgPaymentMethod2" selected="true" click="paymentMethod2Selected()" id="rdoCash2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Cash')}" />
+			<mx:RadioButton groupName="rdgPaymentMethod2" click="paymentMethod2Selected()" id="rdoCheck2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Check')}" />
+			<mx:RadioButton groupName="rdgPaymentMethod2" click="paymentMethod2Selected()" id="rdoCC2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.CreditCard')}" />
+		</mx:VBox>
+		<mx:VBox width="70%" height="100%">
+			<mx:HBox height="20%" width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Ref')}" width="10%" height="100%" />
+				<mx:TextInput id="txtRef2" width="30%" height="100%" />
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Amount')}" width="10%" height="100%" />
+				<mx:TextInput id="txtAmount2" text="0.0" width="10%" height="100%" />				
+			</mx:HBox>			
+			<mx:Button height="10%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Void')}" id="btnVoid2" visible="true"  click="onVoid2();"/>
+			<mx:Form  visible="false" id="frmCC2" height="30%" width=" 50%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.CardType')}">
+					<mx:ComboBox  id="cboCCType2" dataProvider="{ccTypeList}" labelFunction="getCCLabel"/>
+				</mx:FormItem>
+			</mx:Form>
+		</mx:VBox>
+	</mx:Panel>
+	<mx:Panel layout="horizontal" height="30%" width="100%" id="pnlDeposit3" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit')} 3">
+		<mx:VBox width="30%" height="100%">
+			<mx:RadioButtonGroup id="rdgPaymentMethod3" />
+			<mx:RadioButton groupName="rdgPaymentMethod3" selected="true" click="paymentMethod3Selected()" id="rdoCash3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Cash')}" />
+			<mx:RadioButton groupName="rdgPaymentMethod3" click="paymentMethod3Selected()" id="rdoCheck3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Check')}" />
+			<mx:RadioButton groupName="rdgPaymentMethod3" click="paymentMethod3Selected()" id="rdoCC3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.CreditCard')}" />
+		</mx:VBox>
+		<mx:VBox width="70%" height="100%">
+			<mx:HBox height="20%" width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Ref')}" width="10%" height="100%" />
+				<mx:TextInput id="txtRef3" width="30%" height="100%" />
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Amount')}" width="10%" height="100%" />
+				<mx:TextInput id="txtAmount3" text="0.0" width="10%" height="100%" />				
+			</mx:HBox>			
+			<mx:Button height="10%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Void')}" id="btnVoid3" visible="true"  click="onVoid3();"/>
+			<mx:Form visible="false" id="frmCC3" height="30%" width=" 50%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.CardType')}">
+					<mx:ComboBox  id="cboCCType3" dataProvider="{ccTypeList}" labelFunction="getCCLabel" />
+				</mx:FormItem>
+			</mx:Form> 
+		</mx:VBox>
+	</mx:Panel>
+	<mx:HBox height="10%" width="100%">
+		<mx:Button id="btnOK" click="onOK();" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}"/>
+		<mx:Button id="btnCancel" click="closeWindow();" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"/>
+	</mx:HBox>
+</mx:VBox>

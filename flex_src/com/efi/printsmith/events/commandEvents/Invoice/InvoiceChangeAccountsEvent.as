@@ -1,18 +1,20 @@
 package com.efi.printsmith.events.commandEvents.Invoice
 {
-	import flash.events.Event;
 	import com.efi.printsmith.events.commandEvents.*;
-	import mx.controls.LinkButton;
+	
+	import flash.events.Event;
+	
+	import mx.controls.Button;
 	import mx.rpc.IResponder;
 
 	public class InvoiceChangeAccountsEvent extends CommandEventBase
 	{
 		public static const COMMANDID:String = "CMD_Invoice_ChangeAccounts";
 
-		public var button:LinkButton;
+		public var button:Button;
 		public var enabled:Boolean;
 
-		public function InvoiceChangeAccountsEvent(item:LinkButton, callbacks:IResponder=null)
+		public function InvoiceChangeAccountsEvent(item:Button, callbacks:IResponder=null)
 		{
 			this.button = item;
 			super(InvoiceChangeAccountsEvent.COMMANDID, callbacks);

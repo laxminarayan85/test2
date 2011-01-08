@@ -348,6 +348,7 @@ package com.efi.mdi.view.window
 				this.parent.setChildIndex(this, ContainerManager.getExistingInstance().getCanvasChildrenCount()-1);
 				ContainerManager.getExistingInstance().recalculateWindowStyles();
 			}
+			//MS:TODO if (state == MINIMIZED)
 		}
 		private function onClick(event:MouseEvent):void	{
 			bringWindowToFront();			

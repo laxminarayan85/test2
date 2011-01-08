@@ -125,6 +125,8 @@
 		<![CDATA[
 			import mx.managers.DragManager;
 			import mx.core.DragSource;
+			import com.efi.printsmith.data.DepositEntry;
+			import com.efi.printsmith.events.DepositEntryAddedEvent;
 			import com.efi.printsmith.data.PreferencesCashRegister;
 			import com.efi.printsmith.data.PreferencesAccounting;
 			import com.efi.printsmith.events.DeliveryTicketUpdateEvent;
@@ -458,25 +460,7 @@
 //				contactDataService.addUpdate(c);
 			}
 
-			private function findFirstIndexByCondition(ac:ArrayCollection, propName:String, propValue:Object):int	{
-				for (var i:int=0; i<ac.length; i++)	{
-					var obj:Object = ac.getItemAt(i);
-					if (obj[propName] == propValue)	{
-						return i;
-					}
-				}
-				return -1;
-			}
 			
-			private function findFirstItemByCondition(ac:ArrayCollection, propName:String, propValue:Object):Object	{
-				for (var i:int=0; i<ac.length; i++)	{
-					var obj:Object = ac.getItemAt(i);
-					if (obj[propName] == propValue)	{
-						return obj;
-					}
-				}
-				return null;
-			}
 			
 			private function saveNewContactResult(evt:ResultEvent):void	{
 				var currentContact:Contact = contact_list.selectedItem as Contact;
@@ -1676,7 +1660,7 @@
 				temp.jobTitle = selContact.jobTitle;
 				temp.salutation = selContact.salutation;
 				temp.parentAccount = invoice.account;
-				
+				temp.shipToAddress = selContact.shipToAddress; // doesnt matter if same reference
 				if (temp["newFlag"] != true)	{
 					// remove new and temp contact if any
 					removeNewContactFromList();
@@ -1699,6 +1683,55 @@
 				}
 				else	{
 					bill_to_address_editor.setAddress(invoice.billToAddress);
+				}
+			}
+			
+			private function openDepositEntry():void		{
+				var thisWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this, true);
+				var ac:ArrayCollection = Snowmass.getInstance().containerManager.getChildrenOfWindow(thisWin.windowID);
+				
+				if (ac != null)	{
+					for (var i:int=0; i<ac.length; i++)	{
+						var win:MDIWindow = ac.getItemAt(i) as MDIWindow;
+						if (win.content.className.indexOf("DepositEntryEditor") > -1)	{
+							win.bringWindowToFront();
+							return;
+						}  
+					}
+				}
+								
+				var de:DepositEntryEditor = new DepositEntryEditor();
+				de.addEventListener(DepositEntryAddedEvent.DEPOSITENTRYADDED, onDepEntryAdded,false, 0, true);
+				var winId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this, true).windowID;
+				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.DepositEntry'), de,-1,-1,550,500,winId);
+				de.depArray = invoice.deposits;
+				
+			}
+			
+			private function onDepEntryAdded(event:DepositEntryAddedEvent):void	{
+				var ac:ArrayCollection = event.depositsArray;
+				
+				if (ac != null && ac.length ==3)	{
+					var dep1:DepositEntry = ac.getItemAt(0) as DepositEntry;
+					if (dep1.amount != 0)	{
+						txtDep1.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 1: " + Snowmass.getCurrencyFormatter(true, 2).format(dep1.amount) + " (" + dep1.type.name + ") ";
+						if (dep1.referenceNumber != "") 
+							txtDep1.text += " (" + dep1.referenceNumber + ")";
+					}
+					var dep2:DepositEntry = ac.getItemAt(1) as DepositEntry;
+					if (dep2.amount != 0)	{
+						txtDep2.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 2: " + Snowmass.getCurrencyFormatter(true, 2).format(dep2.amount) + " (" + dep2.type.name + ") ";
+						if (dep2.referenceNumber != "") 
+							txtDep2.text += " (" + dep2.referenceNumber + ")";
+					}
+					var dep3:DepositEntry = ac.getItemAt(2) as DepositEntry;
+					if (dep3.amount != 0)	{
+						txtDep3.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 3: " + Snowmass.getCurrencyFormatter(true, 2).format(dep3.amount) + " (" + dep3.type.name + ") ";
+						if (dep3.referenceNumber != "") 
+							txtDep3.text += " (" + dep3.referenceNumber + ")";
+					}
+					invoice.deposits = ac;
+					invoice.amountDue = (dep1.amount + dep2.amount + dep3.amount) * -1;
 				}
 			}
 			
@@ -1985,7 +2018,7 @@
 							</mx:FormItem>
 					
 						</mx:Form>
-						<mx:LinkButton width="20%" height="10%" id="change_account_button"
+						<mx:Button width="20%" height="10%" id="change_account_button"
 								   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Changeacct')}"
 								   click="{accountDataService.getAccountPicker()}"
 								   />
@@ -2312,7 +2345,15 @@
 										 dataProvider="{invoiceTemplates}"/>
 						</mx:HBox>
 						<mx:Text width="50%" height="5%" visible="{(!isNaN(invoice.id))}" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.OnPendingList')}" />
-						<mx:Button width="50%" height="5%" label="Create Invoice" id="createInvoice" click="doCreateInvoice()" enabled="true"/>				 
+						<mx:Button width="50%" height="5%" label="Create Invoice" id="createInvoice" click="doCreateInvoice()" enabled="true"/>
+						<mx:VBox id="btnDepEntry"  width="250" height="150" backgroundColor="0xc0c0c0" click="openDepositEntry();" >
+							<mx:Text id="txtDep1" text="" textAlign="left" width="100%" height="10%"  />
+							<mx:Text id="txtDep2" text="" textAlign="left" width="100%" height="10%"  />
+							<mx:Text id="txtDep3" text="" textAlign="left" width="100%" height="10%"  />								
+						</mx:VBox> 
+						 
+							
+						 				 
 					</mx:VBox>
 					<mx:VRule width="2%" height="100%"/>
 					<mx:Form width="30%" height="100%">
