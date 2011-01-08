@@ -58,6 +58,7 @@ import com.efi.printsmith.data.CreditCardTransactions;
 import com.efi.printsmith.data.DataManager;
 import com.efi.printsmith.data.DeliveryTicket;
 import com.efi.printsmith.data.DeliveryTicketJobs;
+import com.efi.printsmith.data.DepositEntry;
 import com.efi.printsmith.data.DigitalAsset;
 import com.efi.printsmith.data.Dimension;
 import com.efi.printsmith.data.Employee;
@@ -2220,6 +2221,11 @@ public class DataService extends HibernateService {
 						Hibernate.initialize(job.getStock());
 						Hibernate.initialize(job.getPricingCopier());
 						Hibernate.initialize(job.getCostingCopier());
+					}
+				}
+				if (invoice.getDeposits() != null)	{
+					for (int i=0; i<invoice.getDeposits().size(); i++)	{
+						DepositEntry de = (DepositEntry) (invoice.getDeposits().get(i));						
 					}
 				}
 				if(invoice.getContact()!=null) {

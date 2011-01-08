@@ -44,41 +44,53 @@
 					var dep2:DepositEntry = _depArray.getItemAt(1) as DepositEntry;
 					var dep3:DepositEntry = _depArray.getItemAt(2) as DepositEntry;
 					
-					if (dep1.type.name == rdoCash1.label)
-						rdoCash1.selected = true;
-					else if (dep1.type.name == rdoCheck1.label)
-						rdoCheck1.selected = true;
-					else if (dep1.type.name == rdoCC1.label)	{
-						rdoCC1.selected = true;
-						btnVoid1.visible = false;
-						frmCC1.visible = true;						
+					if (dep1.type != null)	{
+						if (dep1.type.name == rdoCash1.label)
+							rdoCash1.selected = true;
+						else if (dep1.type.name == rdoCheck1.label)
+							rdoCheck1.selected = true;
+						else if (dep1.type.name == rdoCC1.label)	{
+							rdoCC1.selected = true;
+							btnVoid1.visible = false;
+							frmCC1.visible = true;						
+						}
 					}
-					if (dep2.type.name == rdoCash2.label)
-						rdoCash2.selected = true;
-					else if (dep2.type.name == rdoCheck2.label)
-						rdoCheck2.selected = true;
-					else if (dep2.type.name == rdoCC2.label)	{
-						rdoCC2.selected = true;
-						btnVoid2.visible = false;
-						frmCC2.visible = true;						
+					if (dep2.type != null)	{
+						if (dep2.type.name == rdoCash2.label)
+							rdoCash2.selected = true;
+						else if (dep2.type.name == rdoCheck2.label)
+							rdoCheck2.selected = true;
+						else if (dep2.type.name == rdoCC2.label)	{
+							rdoCC2.selected = true;
+							btnVoid2.visible = false;
+							frmCC2.visible = true;						
+						}
 					}
-					if (dep3.type.name == rdoCash3.label)
-						rdoCash3.selected = true;
-					else if (dep3.type.name == rdoCheck3.label)
-						rdoCheck3.selected = true;
-					else if (dep3.type.name == rdoCC3.label)	{
-						rdoCC3.selected = true;
-						btnVoid3.visible = false;
-						frmCC3.visible = true;						
+					if (dep3.type != null)	{
+						if (dep3.type.name == rdoCash3.label)
+							rdoCash3.selected = true;
+						else if (dep3.type.name == rdoCheck3.label)
+							rdoCheck3.selected = true;
+						else if (dep3.type.name == rdoCC3.label)	{
+							rdoCC3.selected = true;
+							btnVoid3.visible = false;
+							frmCC3.visible = true;						
+						}
 					}
 					
-					txtRef1.text = dep1.referenceNumber;
-					txtRef2.text = dep2.referenceNumber;
-					txtRef3.text = dep3.referenceNumber;
+					if (dep1.referenceNumber != null)					
+						txtRef1.text = dep1.referenceNumber;	
+					if (dep2.referenceNumber != null)
+						txtRef2.text = dep2.referenceNumber;
+					if (dep3.referenceNumber != null)
+						txtRef3.text = dep3.referenceNumber;
 					
-					txtAmount1.text = dep1.amount + "";
-					txtAmount2.text = dep2.amount + "";
-					txtAmount3.text = dep3.amount + "";
+					if (dep1.amount != 0)
+						txtAmount1.text = dep1.amount + "";
+					if (dep2.amount != 0)
+						txtAmount2.text = dep2.amount + "";
+					if (dep3.amount != 0)
+						txtAmount3.text = dep3.amount + "";
 					
 					
 				}
@@ -109,11 +121,11 @@
 					var dep2:DepositEntry = _depArray.getItemAt(1) as DepositEntry;
 					var dep3:DepositEntry = _depArray.getItemAt(2) as DepositEntry;
 					
-					if (dep1.type.name == rdoCC1.label) 
+					if (dep1.type != null && dep1.type.name == rdoCC1.label) 
 						cboCCType1.selectedItem = findFirstItemByCondition(ccTypeList, "id", dep1.creditCardType);
-					if (dep2.type.name == rdoCC2.label) 
+					if (dep2.type != null && dep2.type.name == rdoCC2.label) 
 						cboCCType2.selectedItem = findFirstItemByCondition(ccTypeList, "id", dep2.creditCardType);
-					if (dep3.type.name == rdoCC3.label) 
+					if (dep3.type != null && dep3.type.name == rdoCC3.label) 
 						cboCCType3.selectedItem = findFirstItemByCondition(ccTypeList, "id", dep3.creditCardType);
 				}
 					
@@ -130,6 +142,7 @@
 					var de:DepositEntry = new DepositEntry();
 					var dt:DepositType = findFirstItemByCondition(depTypeList, "name",rdgPaymentMethod1.selectedValue) as DepositType; 
 					de.type = dt;
+					de.depositNumber = 1;
 					if (isNaN(txtAmount1.text as Number) || (Number(txtAmount1.text) < 0))	{
 						Alert.show("Payment 1 not a number");
 						txtAmount1.setFocus();
@@ -154,6 +167,7 @@
 					de = new DepositEntry();
 					dt = findFirstItemByCondition(depTypeList, "name",rdgPaymentMethod2.selectedValue) as DepositType; 
 					de.type = dt;
+					de.depositNumber = 2;
 					if (isNaN(txtAmount2.text as Number) || (Number(txtAmount2.text) < 0))	{
 						Alert.show("Payment 2 not a number");
 						txtAmount2.setFocus();
@@ -178,6 +192,7 @@
 					de = new DepositEntry();
 					dt = findFirstItemByCondition(depTypeList, "name",rdgPaymentMethod3.selectedValue) as DepositType; 
 					de.type = dt;
+					de.depositNumber = 3;
 					if (isNaN(txtAmount3.text as Number) || (Number(txtAmount3.text) < 0))	{
 						Alert.show("Payment 3 not a number");
 						txtAmount3.setFocus();

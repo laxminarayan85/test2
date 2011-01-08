@@ -368,6 +368,11 @@
   					if (invoice.notes != null && invoice.notes.showOnOpen) {
   						doNotepad();
   					}
+  					
+  					if (invoice.deposits != null)	{
+  						doDepositLabels();
+  					}
+  					
 				}
 				
 				
@@ -1704,37 +1709,86 @@
 				de.addEventListener(DepositEntryAddedEvent.DEPOSITENTRYADDED, onDepEntryAdded,false, 0, true);
 				var winId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this, true).windowID;
 				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.DepositEntry'), de,-1,-1,550,500,winId);
-				de.depArray = invoice.deposits;
+				de.depArray = expandDepositsArray(invoice.deposits);
 				
 			}
 			
+			private function expandDepositsArray(ac:ArrayCollection):ArrayCollection	{
+				if (ac == null)
+					return null;
+					
+				var eac:ArrayCollection = new ArrayCollection();
+				
+				for (var i:int=0; i < 3; i++)	{
+					var de:DepositEntry = null;
+					for (var j:int=0; j < ac.length; j++)	{
+						var de2:DepositEntry = ac.getItemAt(j) as DepositEntry;
+						if (de2.depositNumber == (i+1))	{
+							de = de2;
+							break;
+						}
+					}
+					if (de == null)	{
+						de = new DepositEntry();												
+					}	
+					
+					eac.addItem(de);	
+				}
+				return eac;
+			}
+			private function trimDepositsArray(ac:ArrayCollection):ArrayCollection	{
+				if (ac == null)
+					return null;
+					
+				var tac:ArrayCollection = new ArrayCollection();
+				
+				for (var i:int=0; i < ac.length; i++)	{
+					var de:DepositEntry = ac.getItemAt(i) as DepositEntry;
+					if (de.amount != 0)	{
+						de.parentInvoice = invoice;
+						tac.addItem(de);
+					}	
+				}
+				return tac;
+			}
+			private function doDepositLabels():void	{
+				var ac:ArrayCollection = expandDepositsArray(invoice.deposits);
+				setDepositLabels(ac);
+				
+			}
 			private function onDepEntryAdded(event:DepositEntryAddedEvent):void	{
 				var ac:ArrayCollection = event.depositsArray;
 				
 				if (ac != null && ac.length ==3)	{
-					var dep1:DepositEntry = ac.getItemAt(0) as DepositEntry;
-					if (dep1.amount != 0)	{
-						txtDep1.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 1: " + Snowmass.getCurrencyFormatter(true, 2).format(dep1.amount) + " (" + dep1.type.name + ") ";
-						if (dep1.referenceNumber != "") 
-							txtDep1.text += " (" + dep1.referenceNumber + ")";
-					}
-					var dep2:DepositEntry = ac.getItemAt(1) as DepositEntry;
-					if (dep2.amount != 0)	{
-						txtDep2.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 2: " + Snowmass.getCurrencyFormatter(true, 2).format(dep2.amount) + " (" + dep2.type.name + ") ";
-						if (dep2.referenceNumber != "") 
-							txtDep2.text += " (" + dep2.referenceNumber + ")";
-					}
-					var dep3:DepositEntry = ac.getItemAt(2) as DepositEntry;
-					if (dep3.amount != 0)	{
-						txtDep3.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 3: " + Snowmass.getCurrencyFormatter(true, 2).format(dep3.amount) + " (" + dep3.type.name + ") ";
-						if (dep3.referenceNumber != "") 
-							txtDep3.text += " (" + dep3.referenceNumber + ")";
-					}
-					invoice.deposits = ac;
-					invoice.amountDue = (dep1.amount + dep2.amount + dep3.amount) * -1;
+					setDepositLabels(ac);
+					invoice.deposits = trimDepositsArray(ac);
+					invoice.amountDue = ((ac.getItemAt(0) as DepositEntry).amount + (ac.getItemAt(1) as DepositEntry).amount + (ac.getItemAt(2) as DepositEntry).amount) * -1;
 				}
 			}
 			
+			private function setDepositLabels(ac:ArrayCollection):void	{
+				var dep1:DepositEntry = ac.getItemAt(0) as DepositEntry;
+				txtDep1.text = "";
+				if (dep1.amount != 0)	{
+					txtDep1.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 1: " + Snowmass.getCurrencyFormatter(true, 2).format(dep1.amount) + " (" + dep1.type.name + ") ";
+					if (dep1.referenceNumber != "") 
+						txtDep1.text += " (" + dep1.referenceNumber + ")";
+				}
+				var dep2:DepositEntry = ac.getItemAt(1) as DepositEntry;
+				txtDep2.text = "";
+				if (dep2.amount != 0)	{
+					txtDep2.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 2: " + Snowmass.getCurrencyFormatter(true, 2).format(dep2.amount) + " (" + dep2.type.name + ") ";
+					if (dep2.referenceNumber != "") 
+						txtDep2.text += " (" + dep2.referenceNumber + ")";
+				}
+				var dep3:DepositEntry = ac.getItemAt(2) as DepositEntry;
+				txtDep3.text = "";
+				if (dep3.amount != 0)	{
+					txtDep3.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 3: " + Snowmass.getCurrencyFormatter(true, 2).format(dep3.amount) + " (" + dep3.type.name + ") ";
+					if (dep3.referenceNumber != "") 
+						txtDep3.text += " (" + dep3.referenceNumber + ")";
+				}
+			}
 			private function getJobList(jobList:ArrayCollection):ArrayCollection {
 				if(resetJobsList) {
 					resetJobsList = false;
