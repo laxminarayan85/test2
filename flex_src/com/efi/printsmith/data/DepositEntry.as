@@ -21,6 +21,7 @@ package com.efi.printsmith.data
 		public var creditCardType:int = 0;
 		public var parentInvoice:InvoiceBase;
 		public var cct:CreditCardTransactions;
+		public var depositNumber:int = 0;
 	
 	}
 }
