@@ -1094,17 +1094,23 @@
 			private function addNewJob(event:Event):void
 			{
 				var target:EditJob=event.target as EditJob;
+				
+				var jobsList:ArrayCollection = new ArrayCollection();
+				
+				jobsList = invoice.jobs;
 
 				if (target.job != null && !invoice.jobs.contains(target.job))
 				{
-					invoice.jobs.addItem(target.job);
+					jobsList.addItem(target.job);
 				}
 				
 				if(target.multiQtyJobList!= null && target.multiQtyJobList.length>0){
 					for each(var multiQtyJobObject:Job in target.multiQtyJobList){
-						invoice.jobs.addItem(multiQtyJobObject);
+						jobsList.addItem(multiQtyJobObject);
 					}
 				}
+				
+				invoice.jobs = jobsList;
 				
 				/* Hack code - needs to come out in favor of using the Pricing Engine asap */
 				if (invoice.jobs != null && invoice.jobs.length > 0) {
@@ -1899,8 +1905,8 @@
 								jobBaseObj.hasMultiQtyJobs = false;
 								if(!jobBaseObj.multiQtyJob){
 									var checkFlag:Boolean = false;
-									for each(var estimatesJobObj:JobBase in estimatesJobChargeList) {
-										if(estimatesJobObj.id == jobBaseObj.id && estimatesJobObj.id!=0 && jobBaseObj.id!=0) {
+									for each(var estimatesJobChargeObj:Object in estimatesJobChargeList) {
+										if((estimatesJobChargeObj is Job) && estimatesJobChargeObj.id == jobBaseObj.id && estimatesJobChargeObj.id!=0 && jobBaseObj.id!=0) {
 											checkFlag = true;
 											break;
 										}
