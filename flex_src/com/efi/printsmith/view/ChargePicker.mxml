@@ -478,51 +478,53 @@
 			private function mapToChargeData():void {
 				startTimeString = time_start_edit.text;
 				stopTimeString = time_stop_edit.text;
-				this.charge.finished=finished_check.selected;
-				this.charge.taxable=taxable_check.selected;
-				this.charge.brokered=brokered_check.selected;
-				this.charge.displayQty=displayQty_check.selected;
-				this.charge.hidden=hidden_check.selected;
-				this.charge.hidePrice=hidePrice_check.selected;
-				this.charge.description=charge_description_edit.text;
-				this.charge.notes=charge_notes_edit.text;
-				this.charge.showNotes=showNotes_check.selected;
-				this.charge.rate=parseCurrencyFloat(rate_edit.text);
-				this.charge.price=parseCurrencyFloat(price_edit.text);
-				this.charge.quantity=parseCurrencyFloat(quantity_edit.text);
-				this.charge.materialQty=parseCurrencyFloat(material_quantity_edit.text);
-				this.charge.linearX1 = this.linear_bottom.selected;
-				this.charge.linearX2 = this.linear_top.selected;
-				this.charge.linearY1 = this.linear_right.selected;
-				this.charge.linearY2 = this.linear_left.selected;
-				if (time_start_edit != null) {
-					if (startTimeString.indexOf(":") != -1) {
-						charge.startHours = parseInt(startTimeString.substr(0,startTimeString.indexOf(":")));
-						charge.startMinutes = parseInt(startTimeString.substr(startTimeString.indexOf(":")+1));
-					} if (startTimeString.indexOf(".") != -1) {
-						charge.startHours = parseInt(startTimeString.substr(0,startTimeString.indexOf(".")));
-						charge.startMinutes = parseInt(startTimeString.substr(startTimeString.indexOf(".")+1));
-					} else {
-						charge.startHours = parseInt(startTimeString);
+				if(this.charge!=null) {
+					this.charge.finished=finished_check.selected;
+					this.charge.taxable=taxable_check.selected;
+					this.charge.brokered=brokered_check.selected;
+					this.charge.displayQty=displayQty_check.selected;
+					this.charge.hidden=hidden_check.selected;
+					this.charge.hidePrice=hidePrice_check.selected;
+					this.charge.description=charge_description_edit.text;
+					this.charge.notes=charge_notes_edit.text;
+					this.charge.showNotes=showNotes_check.selected;
+					this.charge.rate=parseCurrencyFloat(rate_edit.text);
+					this.charge.price=parseCurrencyFloat(price_edit.text);
+					this.charge.quantity=parseCurrencyFloat(quantity_edit.text);
+					this.charge.materialQty=parseCurrencyFloat(material_quantity_edit.text);
+					this.charge.linearX1 = this.linear_bottom.selected;
+					this.charge.linearX2 = this.linear_top.selected;
+					this.charge.linearY1 = this.linear_right.selected;
+					this.charge.linearY2 = this.linear_left.selected;
+					if (time_start_edit != null) {
+						if (startTimeString.indexOf(":") != -1) {
+							charge.startHours = parseInt(startTimeString.substr(0,startTimeString.indexOf(":")));
+							charge.startMinutes = parseInt(startTimeString.substr(startTimeString.indexOf(":")+1));
+						} if (startTimeString.indexOf(".") != -1) {
+							charge.startHours = parseInt(startTimeString.substr(0,startTimeString.indexOf(".")));
+							charge.startMinutes = parseInt(startTimeString.substr(startTimeString.indexOf(".")+1));
+						} else {
+							charge.startHours = parseInt(startTimeString);
+						}
 					}
-				}
-						
-				if (time_stop_edit != null) {
-					if (stopTimeString.indexOf(":") != -1) {
-						charge.endHours = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(":")));
-						charge.endMinutes = parseInt(stopTimeString.substr(stopTimeString.indexOf(":")+1));
-					} if (startTimeString.indexOf(".") != -1) {
-						charge.endHours = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(".")));
-						charge.endMinutes = parseInt(stopTimeString.substr(stopTimeString.indexOf(".")+1));
-					} else {
-						charge.startHours = parseInt(startTimeString);
+							
+					if (time_stop_edit != null) {
+						if (stopTimeString.indexOf(":") != -1) {
+							charge.endHours = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(":")));
+							charge.endMinutes = parseInt(stopTimeString.substr(stopTimeString.indexOf(":")+1));
+						} if (startTimeString.indexOf(".") != -1) {
+							charge.endHours = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(".")));
+							charge.endMinutes = parseInt(stopTimeString.substr(stopTimeString.indexOf(".")+1));
+						} else {
+							charge.startHours = parseInt(startTimeString);
+						}
 					}
-				}
-				if (this.charge is InkCharge) {
-					(charge as InkCharge).coverage=parseCurrencyFloat(percent_coverage_edit.text);
-					(charge as InkCharge).poundsOfInk=parseCurrencyFloat(lbs_of_ink_edit.text);
-					(charge as InkCharge).coverPerPound=parseCurrencyFloat(cover_lb_edit.text);
-					(charge as InkCharge).pricePerPound=parseCurrencyFloat(price_lb_edit.text);
+					if (this.charge is InkCharge) {
+						(charge as InkCharge).coverage=parseCurrencyFloat(percent_coverage_edit.text);
+						(charge as InkCharge).poundsOfInk=parseCurrencyFloat(lbs_of_ink_edit.text);
+						(charge as InkCharge).coverPerPound=parseCurrencyFloat(cover_lb_edit.text);
+						(charge as InkCharge).pricePerPound=parseCurrencyFloat(price_lb_edit.text);
+					}
 				}
 			}
 			

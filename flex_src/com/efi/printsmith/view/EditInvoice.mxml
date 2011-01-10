@@ -854,6 +854,16 @@
 						for (i=0; i<convertedInvoice.jobs.length; i++) {
 							var tmpJob:Job = convertedInvoice.jobs.getItemAt(i) as Job;	
 							convertedInvoice.subTotal += tmpJob.pricingRecord.totalPrice;
+							if(tmpJob.charges!=null) {
+								for each(var chargeObj:Charge in tmpJob.charges) {
+									convertedInvoice.subTotal += chargeObj.price;
+								}
+							}
+						}
+					}
+					if(convertedInvoice.charges!=null) {
+						for each(var chargeObj:Charge in convertedInvoice.charges) {
+							convertedInvoice.subTotal += chargeObj.price;
 						}
 					}
 					convertedInvoice.grandTotal = convertedInvoice.subTotal;
@@ -880,6 +890,16 @@
 						for (i=0; i<newInvoice.jobs.length; i++) {
 							var tmpJob:Job = newInvoice.jobs.getItemAt(i) as Job;	
 							newInvoice.subTotal += tmpJob.pricingRecord.totalPrice;
+							if(tmpJob.charges!=null) {
+								for each(var chargeObj:Charge in tmpJob.charges) {
+									newInvoice.subTotal += chargeObj.price;
+								}
+							}
+						}
+					}
+					if(newInvoice.charges!=null) {
+						for each(var chargeObj:Charge in newInvoice.charges) {
+							newInvoice.subTotal += chargeObj.price;
 						}
 					}
 					newInvoice.grandTotal = newInvoice.subTotal;
@@ -906,6 +926,16 @@
 						for (i=0; i<newEstimate.jobs.length; i++) {
 							var tmpJob:Job = newEstimate.jobs.getItemAt(i) as Job;	
 							newEstimate.subTotal += tmpJob.pricingRecord.totalPrice;
+							if(tmpJob.charges!=null) {
+								for each(var chargeObj:Charge in tmpJob.charges) {
+									newEstimate.subTotal += chargeObj.price;
+								}
+							}
+						}
+					}
+					if(newEstimate.charges!=null) {
+						for each(var chargeObj:Charge in newEstimate.charges) {
+							newEstimate.subTotal += chargeObj.price;
 						}
 					}
 					newEstimate.grandTotal = newEstimate.subTotal;
@@ -1085,13 +1115,27 @@
 						if(invoice is Estimate){
 							if(tmpJob.defaultJob){
 								invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+								if(tmpJob.charges!=null) {
+									for each(var chargeObj:Charge in tmpJob.charges) {
+										invoice.subTotal += chargeObj.price;
+									}
+								}
 							}
 						} else {
 							invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+							if(tmpJob.charges!=null) {
+								for each(var chargeObj:Charge in tmpJob.charges) {
+									invoice.subTotal += chargeObj.price;
+								}
+							}
 						}
 					}
 				}
-				
+				if(invoice.charges!=null) {
+					for each(var chargeObj:Charge in invoice.charges) {
+						invoice.subTotal += chargeObj.price;
+					}
+				}
 				invoice.grandTotal = invoice.subTotal;
 				invoice.amountDue = invoice.grandTotal;
 				this.showJobs();
@@ -1195,13 +1239,27 @@
 						if(invoice is Estimate){
 							if(tmpJob.defaultJob){
 								invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+								if(tmpJob.charges!=null) {
+									for each(var chargeObj:Charge in tmpJob.charges) {
+										invoice.subTotal += chargeObj.price;
+									}
+								}
 							}
 						} else {
 							invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+							if(tmpJob.charges!=null) {
+								for each(var chargeObj:Charge in tmpJob.charges) {
+									invoice.subTotal += chargeObj.price;
+								}
+							}
 						}
 					}
 				}
-				
+				if(invoice.charges!=null) {
+					for each(var chargeObj:Charge in invoice.charges) {
+						invoice.subTotal += chargeObj.price;
+					}
+				}
 				invoice.grandTotal = invoice.subTotal;
 				invoice.amountDue = invoice.grandTotal;
 				
@@ -1478,7 +1536,7 @@
 			}
 			
 			private function doDoubleclickInvoiceItem():void {
-				if(invoice_job_grid.selectedIndex>-1 && invoice_job_grid.selectedItem!=null){
+				if(invoice_job_grid.selectedIndex>-1 && invoice_job_grid.selectedItem!=null && invoice_job_grid.selectedItem is Job){
 					var selectedJob:Job = invoice_job_grid.selectedItem as Job;
 					selectedJobIndex = selectedJob.jobIndex;
 					//Commented to not to retrieve the job from DB 
@@ -1585,13 +1643,31 @@
 			}
 			
 			private function gridJobPrice(item:Object, column:DataGridColumn):String {
-				var localJob:Job = item as Job;
-				
-				if (localJob != null && localJob.pricingRecord != null) {					
-					return Snowmass.getCurrencyFormatter(false, 2).format(localJob.pricingRecord.totalPrice.toString());
-				} else {
-					return "";
+				if(item is Job) {
+					var localJob:Job = item as Job;
+					if (localJob != null && localJob.pricingRecord != null) {					
+						return Snowmass.getCurrencyFormatter(false, 2).format(localJob.pricingRecord.totalPrice.toString());
+					} else {
+						return "";
+					}
+				} else if(item is Charge){
+					return item.price;
 				}
+				return "";
+			}
+			
+			private function getJobChargeDescription(item:Object, column:DataGridColumn):String {
+				var description:String = "";
+				if(item is Job) {
+					description = item.description;
+				} else if(item is Charge) {
+					if(item.parentInvoice!=null){
+						description = item.description;
+					} else {
+						description = "\t\t\t"+item.description;
+					}
+				}
+				return description;
 			}
 			
 			private function getMarginValue(item:Object, column:DataGridColumn):String {
@@ -1789,32 +1865,41 @@
 						txtDep3.text += " (" + dep3.referenceNumber + ")";
 				}
 			}
-			private function getJobList(jobList:ArrayCollection):ArrayCollection {
+			private function getJobChargesList(jobList:ArrayCollection,chargesList:ArrayCollection):ArrayCollection {
 				if(resetJobsList) {
 					resetJobsList = false;
 					multiQtyJobPresent = false;
 					radioButtonGroupList = new ArrayCollection();
 					if(invoice is Invoice) {
-						var invoiceJobList:ArrayCollection = new ArrayCollection();
+						var invoiceJobChargeList:ArrayCollection = new ArrayCollection();
 						var counter:int=0;
 						for each(var jobBaseObj:JobBase in jobList){
 							counter++;
 							jobBaseObj.jobIndex = counter; 
-							invoiceJobList.addItem(jobBaseObj);
+							invoiceJobChargeList.addItem(jobBaseObj);
+							if(jobBaseObj.charges!=null && jobBaseObj.charges.length>0) {
+								for each(var chargeObj:Charge in jobBaseObj.charges){
+									invoiceJobChargeList.addItem(chargeObj);
+								}
+							}
+						}
+						for each(var chargeObject:Charge in invoice.charges){
+							chargeObject.parentInvoice = invoice;
+							invoiceJobChargeList.addItem(chargeObject);
 						}
 						resetJobsList = true;
-						return jobList;
+						return invoiceJobChargeList;
 					} else if(invoice is Estimate) {
 						if(jobList!=null && jobList.length>0){
 							var tempMultiQtyJobPresent:Boolean = false;
-							var estimatesJobList:ArrayCollection = new ArrayCollection();
+							var estimatesJobChargeList:ArrayCollection = new ArrayCollection();
 							var rbCounter:int=0;
 							var counter:int=0;
 							for each(var jobBaseObj:JobBase in jobList){
 								jobBaseObj.hasMultiQtyJobs = false;
 								if(!jobBaseObj.multiQtyJob){
 									var checkFlag:Boolean = false;
-									for each(var estimatesJobObj:JobBase in estimatesJobList) {
+									for each(var estimatesJobObj:JobBase in estimatesJobChargeList) {
 										if(estimatesJobObj.id == jobBaseObj.id && estimatesJobObj.id!=0 && jobBaseObj.id!=0) {
 											checkFlag = true;
 											break;
@@ -1824,7 +1909,12 @@
 										jobBaseObj.rbIndex = rbCounter;
 										counter++;
 										jobBaseObj.jobIndex = counter;
-										estimatesJobList.addItem(jobBaseObj);
+										estimatesJobChargeList.addItem(jobBaseObj);
+										if(jobBaseObj.charges!=null && jobBaseObj.charges.length>0) {
+											for each(var chargeObj:Charge in jobBaseObj.charges){
+												estimatesJobChargeList.addItem(chargeObj);
+											}
+										}
 										for each(var jobBaseObject:JobBase in jobList){
 											if(jobBaseObj.jobGroup!=0 && jobBaseObj.jobGroup==jobBaseObject.jobGroup && jobBaseObject.multiQtyJob){
 												jobBaseObj.hasMultiQtyJobs = true;
@@ -1832,7 +1922,12 @@
 												jobBaseObject.rbIndex = jobBaseObj.rbIndex;
 												counter++;
 												jobBaseObject.jobIndex = counter;
-												estimatesJobList.addItem(jobBaseObject);
+												estimatesJobChargeList.addItem(jobBaseObject);
+												if(jobBaseObject.charges!=null && jobBaseObject.charges.length>0) {
+													for each(var chargeObj:Charge in jobBaseObject.charges){
+														estimatesJobChargeList.addItem(chargeObj);
+													}
+												}
 											}
 										}
 										/* if(jobBaseObj.hasMultiQtyJobs){ */
@@ -1846,8 +1941,14 @@
 							}
 							multiQtyJobPresent = tempMultiQtyJobPresent;
 							resetJobsList = true;
-							return estimatesJobList;
 						}
+						if(chargesList!=null && chargesList.length>0) {
+							for each(var chargeObj:Charge in chargesList){
+								chargeObj.parentInvoice = invoice;
+								estimatesJobChargeList.addItem(chargeObj);
+							}
+						}
+						return estimatesJobChargeList;
 					}
 					resetJobsList = true;
 				}
@@ -1933,10 +2034,25 @@
 						if(invoice is Estimate){
 							if(tmpJob.defaultJob){
 								invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+								if(tmpJob.charges!=null) {
+									for each(var chargeObj:Charge in tmpJob.charges) {
+										invoice.subTotal += chargeObj.price;
+									}
+								}
 							}
 						} else {
 							invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+							if(tmpJob.charges!=null) {
+								for each(var chargeObj:Charge in tmpJob.charges) {
+									invoice.subTotal += chargeObj.price;
+								}
+							}
 						}
+					}
+				}
+				if(invoice.charges!=null) {
+					for each(var chargeObj:Charge in invoice.charges) {
+						invoice.subTotal += chargeObj.price;
 					}
 				}
 				invoice.grandTotal = invoice.subTotal;
@@ -1951,17 +2067,29 @@
 			}
 			
 			public function getJobIndex(object:Object):String {
-				if(object.multiQtyJob){
-					return "+++";	
+				if(object is Job) {
+					if(object.multiQtyJob){
+						return "+++";	
+					}
+					return String(object.jobIndex);
+				} else if(object is Charge) {
+					if(object.parentInvoice!=null) {
+						return "*";
+					}
 				}
-				return String(object.jobIndex);
+				return "";
 			}
 			
 			public function getQtyOrdered(item:Object, column:DataGridColumn):String {
-				if(item.showMultiQty){
-					return item[column.dataField]+"+";
+				if(item is Job) {
+					if(item.showMultiQty){
+						return item.qtyOrdered+"+";
+					}
+					return item.qtyOrdered;
+				} else {
+					return item.quantity;
 				}
-				return item[column.dataField];
+				return "";
 			}
 			
 			private function doDoubleclickTicketItem():void	{
@@ -2315,9 +2443,9 @@
 				<mx:DataGrid height="100%"
 							 width="100%"
 							 id="invoice_job_grid"
-							 dataProvider="{getJobList(invoice.jobs)}"
+							 dataProvider="{getJobChargesList(invoice.jobs,invoice.charges)}"
 							 sortableColumns="false"
-							 doubleClick="doDoubleclickInvoiceItem()"
+							 doubleClick="{doDoubleclickInvoiceItem()}"
 						  	 doubleClickEnabled="true"
 						  	 dragEnabled="true">
 					<mx:columns>
@@ -2340,9 +2468,9 @@
 							</mx:itemRenderer>
 						</mx:DataGridColumn>	
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Qty')}"
-										   dataField="qtyOrdered" labelFunction="getQtyOrdered"/>
+										   labelFunction="getQtyOrdered"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
-										   dataField="description"/>
+										   labelFunction="getJobChargeDescription" dataField="description"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Price')}"
 										   labelFunction="gridJobPrice" textAlign="right"/>
 
