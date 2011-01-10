@@ -2406,6 +2406,7 @@
 					if (this.currentSizeName != job.finishSize.name) {
 						doUpdatePrice = true;
 						dimensionChange(job_finish_size);
+						updateWeight();
 					}
 					break;
 				case this.job_fold_size:
