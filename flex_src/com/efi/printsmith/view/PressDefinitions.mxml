@@ -957,7 +957,7 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 
 	<mx:Label x="10" y="127" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.Name')}" width="113" textAlign="right"/>
 	<mx:Label x="10" y="156" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pressDefCmd.MachineName')}" textAlign="right" width="113"/>
-	<mx:DataGrid y="0" id="dataGrid" tabIndex="25" focusOut="gridFocusOut" dataProvider="{pressDefinitionArray}" verticalScrollPolicy="on"  horizontalScrollPolicy="on" height="116" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" itemClick="doPressGridClick()" verticalGridLines="false" left="0" right="10">
+	<mx:DataGrid y="0" id="dataGrid" tabIndex="25" focusOut="gridFocusOut()" dataProvider="{pressDefinitionArray}" verticalScrollPolicy="on"  horizontalScrollPolicy="on" height="116" showHeaders="true" headerSeparatorSkin="mx.skins.ProgrammaticSkin" itemClick="doPressGridClick()" verticalGridLines="false" left="0" right="10">
 		<mx:columns>
 			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="sheetFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
 			<mx:DataGridColumn width="25" sortable="false" textAlign="center" headerText=" " dataField="rollFed" itemRenderer="com.efi.printsmith.itemRenderers.PressIconRenderer"/>
