@@ -4,7 +4,7 @@
 		   height="100%"
 		   title="{contactLabel}"
 		   xmlns:fc="http://www.adobe.com/2006/fc"
-		   creationComplete="init()">
+		   creationComplete="init()" dropShadowEnabled="false">
 	<!--	<mx:LinkButton x="252" y="93" label="Edit" id="edit_button" click="doEditContact()"/>
 	-->
 	

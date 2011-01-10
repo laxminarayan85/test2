@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
 		   width="100%"
-		   height="100%"
+		   height="150"
 		   xmlns:fc="http://www.adobe.com/2006/fc"
 		   creationComplete="init()"
 		   title="{addressLabel}"

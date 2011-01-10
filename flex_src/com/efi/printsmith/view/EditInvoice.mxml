@@ -2214,7 +2214,7 @@
 					</mx:HBox>
 						
 					<mx:VBox height="70%" width="100%">
-							<ns1:AddressEditor height="30%" width="100%"
+							<ns1:AddressEditor 
 										   id="bill_to_address_editor" 
 										   address="{invoice.billToAddress}" editable="false"
 										   addressLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress')}"/>
@@ -2240,7 +2240,7 @@
 								<mx:RadioButton 
 												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.OtherAddress')}"
 												groupName="delivery_intent_radio_group" click="enableDeliveryIntentAddress();"/>
-								<ns1:AddressEditor
+								<ns1:AddressEditor 
 										   id="delivery_intent_address_editor"
 										   address="{invoice.shipToAddress}"
 										   enabled="false"/>
