@@ -1880,6 +1880,7 @@
 				if (this.job_costing_copier.selectedIndex == -1) {
 					//copier.costingCopy = true;
 					//this.job_costing_copier.selectedIndex = findItemById(copier.id,costingCopiers);
+					this.job_costing_copier.text = "Using Pricing Copier/Press";
 					job.copyMinutes = copier.copyMinutes;
 				}
 				this.updatePrice();			
@@ -1889,8 +1890,9 @@
 				var press:PressDefinition = this.job_pricing_press.selectedItem as PressDefinition;
 				this.job_costing_press.selectedIndex = findItemById(press.id,costingPresses);
 				if (this.job_costing_press.selectedIndex == -1) {
-					press.costingPress = true;
-					this.job_costing_press.selectedIndex = findItemById(press.id,costingPresses);
+					//press.costingPress = true;
+					//this.job_costing_press.selectedIndex = findItemById(press.id,costingPresses);
+					this.job_costing_press.text = "Using Pricing Copier/Press";
 				}
 			}
 			
@@ -2494,8 +2496,9 @@
 						this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, costingPresses);
 						if (this.job_costing_press.selectedIndex == -1) {
 							var press:PressDefinition = this.job_pricing_press.selectedItem as PressDefinition;
-							press.costingPress = true;
-							this.job_costing_press.selectedIndex = findItemById(press.id, costingPresses);
+							//press.costingPress = true;
+							//this.job_costing_press.selectedIndex = findItemById(press.id, costingPresses);
+							this.job_costing_press.text = "Using Pricing Copier/Press";
 						}
 					}
 				} else if (pricingMethod.title == "Roll-Fed") {
@@ -2522,6 +2525,7 @@
 							//copier.costingCopy = true;
 							costingCopierIsUsePress = true;
 							//this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
+							this.job_costing_copier.text = "Using Pricing Copier/Press";
 						}
 					}			
 				} else if (pricingMethod.title == "Color") {
@@ -2539,6 +2543,7 @@
 							//copier.costingCopy = true;
 							costingCopierIsUsePress = true;
 							//this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
+							this.job_costing_copier.text = "Using Pricing Copier/Press";
 						}
 					}	
 				} else if (pricingMethod.title == "Large Format") {
@@ -2556,6 +2561,7 @@
 							//copier.costingCopy = true;
 							costingCopierIsUsePress
 							//this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
+							this.job_costing_copier.text = "Using Pricing Copier/Press";
 						}
 					}				
 				} else if (pricingMethod.title == "Charges Only") {
