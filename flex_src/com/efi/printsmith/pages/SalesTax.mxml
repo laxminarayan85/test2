@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="602" height="984"
-	 close="PopUpManager.removePopUp(this);" creationComplete="init();"
+	 close="PopUpManager.removePopUp(this);" creationComplete="init();" headerHeight="0"
 	 xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*"  verticalScrollPolicy="auto"
 	 xmlns:components="com.efi.printsmith.common.components.*"
-	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SalesTax')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SalesTax')}" name="Sales Tax">
+	label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SalesTax')}" name="Sales Tax">
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
 	
 	<mx:RemoteObject id="dataService" destination="dataService">
@@ -18,6 +18,7 @@
 	
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.common.components.CustomCheckBoxComponent;
 	import mx.events.DataGridEvent;
 	import mx.core.ClassFactory;
@@ -70,6 +71,10 @@
 		private var saveNoRate:Boolean;
 			
 	public function init():void{
+		
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.SalesTax');
+		
 		taxTable = new TaxTable();
 		taxTable.taxTableIsCurrent = true;
 		newTable = true;
