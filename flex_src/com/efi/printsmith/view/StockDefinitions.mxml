@@ -853,6 +853,9 @@
     	stockDefinitions.charges = new ArrayCollection;
     	stockDefinitions.stockChanges = new ArrayCollection;
     	stockDefinitions.normalRunSize = new Dimension();
+    	stockDefinitions.stockunit = 1;
+    	this.stockUnit.selectedValue = 1;
+    	this.radiobutton1.selected = true;
   	    doStockType();
   	    standardItemCheckEvent();
   	    registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
