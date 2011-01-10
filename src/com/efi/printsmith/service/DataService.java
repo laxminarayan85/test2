@@ -3401,7 +3401,11 @@ public class DataService extends HibernateService {
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
 			if (rs.next()) {
-				maxPeriod = rs.getInteger(0).intValue();
+				if(rs.getInteger(0)==null) {
+					maxPeriod = -1;
+				} else {
+					maxPeriod = rs.getInteger(0).intValue();
+				}
 			}
 		} catch (Exception e) {
 			log.error(e); 			
