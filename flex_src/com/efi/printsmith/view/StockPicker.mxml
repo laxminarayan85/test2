@@ -284,7 +284,8 @@
 					}
 					if(checkFlag){
 						stockDefinitions.removeItemAt(counter);
-						//stockDefinitions.refresh();
+						totalStocks--;
+						search();
 					}
 				}
 				deletedStockDefinitions = new ArrayCollection();
