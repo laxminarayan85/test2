@@ -657,7 +657,12 @@
 	
 	private function doSave():void {
 		mapCopierData()
-		saveMatrixDataService.getMatrix(copierDefinition.copierMatrix.id);
+		if (copierDefinition.copierMatrix != null)
+			saveMatrixDataService.getMatrix(copierDefinition.copierMatrix.id);
+		else {
+			copierDefinition.copierMatrix = this.createCopierMatrix();
+			dataService.addUpdate(copierDefinition);
+		}
 	}       
 
 	private function doNew():void {
@@ -876,7 +881,12 @@
 	}
 
 	private function doCopierMatrix():void {
-		matrixEditorDataService.getMatrix(copierDefinition.copierMatrix.id);
+		if (copierDefinition != null && copierDefinition.copierMatrix != null) {
+			matrixEditorDataService.getMatrix(copierDefinition.copierMatrix.id);
+		} else if (copierDefinition != null) {
+			copierDefinition.copierMatrix = createCopierMatrix();
+			this.openEditMatrixWindow();			
+		}
 		
 //		/* Read in the copierMatrix - the handler for this call will actually open the EditMatrix window */
 //		if (copierDefinition != null && copierDefinition.copierMatrix != null) {
