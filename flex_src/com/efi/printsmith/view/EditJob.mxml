@@ -1862,8 +1862,8 @@
 				this.checkCopierSize();
 				var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
 				var currentCostingCopier:CopierDefinition = this.job_costing_copier.selectedItem as CopierDefinition;
-				if (costingCopierIsUsePress)
-					currentCostingCopier.costingCopy = false;
+				//if (costingCopierIsUsePress)
+				//	currentCostingCopier.costingCopy = false;
 				costingCopiers = new ArrayCollection();
 				for (var i:int = 0;i<copiers.length;i++) {
 					var item:CopierDefinition = copiers.getItemAt(i) as CopierDefinition;
@@ -1878,8 +1878,8 @@
 				
 				this.job_costing_copier.selectedIndex = findItemById(copier.id,costingCopiers);
 				if (this.job_costing_copier.selectedIndex == -1) {
-					copier.costingCopy = true;
-					this.job_costing_copier.selectedIndex = findItemById(copier.id,costingCopiers);
+					//copier.costingCopy = true;
+					//this.job_costing_copier.selectedIndex = findItemById(copier.id,costingCopiers);
 					job.copyMinutes = copier.copyMinutes;
 				}
 				this.updatePrice();			
@@ -2519,9 +2519,9 @@
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultBWCopier.id, costingCopiers);
 						if (this.job_costing_copier.selectedIndex == -1) {
 							var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
-							copier.costingCopy = true;
+							//copier.costingCopy = true;
 							costingCopierIsUsePress = true;
-							this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
+							//this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
 						}
 					}			
 				} else if (pricingMethod.title == "Color") {
@@ -2536,9 +2536,9 @@
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultColorCopier.id, costingCopiers);
 						if (this.job_costing_copier.selectedIndex == -1) {
 							var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
-							copier.costingCopy = true;
+							//copier.costingCopy = true;
 							costingCopierIsUsePress = true;
-							this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
+							//this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
 						}
 					}	
 				} else if (pricingMethod.title == "Large Format") {
@@ -2553,9 +2553,9 @@
 						this.job_costing_copier.selectedIndex = findItemById(preferencesDefaultPresses.defaultLargeFormat.id, costingCopiers);
 						if (this.job_costing_copier.selectedIndex == -1) {
 							var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
-							copier.costingCopy = true;
+							//copier.costingCopy = true;
 							costingCopierIsUsePress
-							this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
+							//this.job_costing_copier.selectedIndex = findItemById(copier.id, costingCopiers);
 						}
 					}				
 				} else if (pricingMethod.title == "Charges Only") {
