@@ -26,6 +26,7 @@ public class TaxTableMapper extends ImportMapper {
 		log.info("Entering TaxTableMapper->importTokens");
 		TaxTable taxTable = new TaxTable();
 		taxTable.setTaxTableIsCurrent(true);
+		taxTable.setDisableTable(false);
 		TaxElement taxElement = null;
 		TaxElement taxElement2 = null;
 		TaxElement taxElement3 = null;
