@@ -882,7 +882,10 @@
 				this.height = parent.height - 80;
 //				PopUpManager.centerPopUp(this);
 				this.job_description.setFocus();
-				
+				this.parent_cost_label.visible = false;
+				this.parent_costs.visible = false;
+				this.per.visible = false;
+				this.per_label.visible = false;
 				dataServiceEstimatingPreferences.getAll("PreferencesEstimating");
 				pricingMethodDataService.getAll("PreferencesPricingMethod");
 				dataServicePreferencesDefaultPresses.getSingle("PreferencesDefaultPresses");
@@ -917,6 +920,27 @@
 				multiQtyCombo.selectedItem = null;
 				multiQtyCombo.selectedIndex = -1;
 				prefStocksDataService.getSingle("PreferencesStocks");
+			}
+			
+			private function enableStockCostFields():void {
+				if (estimatingPreferences != null && estimatingPreferences.stockCostInEstimator == true) {
+					if (this.customer_suppliled_stock.selected == true || this.specialOrder.selected == true) {
+						this.parent_cost_label.visible = true;
+						this.parent_costs.visible = true;
+						this.per.visible = true;
+						this.per_label.visible = true;
+					} else {
+						this.parent_cost_label.visible = false;
+						this.parent_costs.visible = false;
+						this.per.visible = false;
+						this.per_label.visible = false;
+					}
+				} else {
+					this.parent_cost_label.visible = false;
+					this.parent_costs.visible = false;
+					this.per.visible = false;
+					this.per_label.visible = false;
+				}
 			}
 			
 			private function handleLoadGroupResult(event:ResultEvent):void {
@@ -1169,6 +1193,8 @@
 				//job.backInks=this.back_inks_text;
 				job.backPasses=parseInt(this.back_passes_text.text);
 				job.backWashes=parseInt(this.back_washes_text.text);
+				job.costUnits = parseInt(this.per.text);
+				job.parentStockCost = parseFloat(this.parent_costs.text);
 				job.location=job_location.selectedItem as ProductionLocations;
 				if (run_method_radiogroup.selectedValue != null) {
 					job.runMethod=run_method_radiogroup.selectedValue.toString();
@@ -1266,6 +1292,8 @@
 				run_method_radiogroup.selectedValue=job.runMethod;
 				if (job.foldedSize == null)
 						this.job_fold_size.text = "";
+				this.per.text = job.costUnits.toFixed(0);
+				this.parent_costs.text = job.parentStockCost.toFixed(2);
 			}
 
 			private function doSave():void
@@ -2373,6 +2401,14 @@
 					break;
 				case this.num_copies:
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
+					doUpdatePrice = true;
+					break;
+				case this.per:
+					job.costUnits = parseInt(this.per.text);
+					doUpdatePrice = true;
+					break;
+				case this.parent_costs:
+					job.parentStockCost = parseFloat(this.parent_costs.text);
 					doUpdatePrice = true;
 					break;
 				case this.job_parent:
@@ -3833,12 +3869,12 @@
 												 id="customer_suppliled_stock"
 												 fontSize="9"
 												  selected="{job.customerSuppliedStock}"
-												   change="doCustomerSupplied()"/>
+												   change="doCustomerSupplied()" click="enableStockCostFields()"/>
 									<mx:CheckBox x="218"
 												 y="7"
 												 fontSize="9" id="specialOrder"
 												  selected="{job.specialOrderStock}"
-												   change="doSpecialOrder()"/>
+												   change="doSpecialOrder()" click="enableStockCostFields()"/>
 									<mx:Button x="240"
 											   y="7"
 											   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.SpecialOrder')}"
@@ -3875,6 +3911,10 @@
 									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" tabIndex="11" focusIn="runSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
 									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" tabIndex="12" focusIn="finishSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
 									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" tabIndex="13" focusIn="foldedSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:Label x="-20" y="171" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.StockCost')}" width="120" textAlign="right" id="parent_cost_label"/>
+									<mx:Label x="-20" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" width="120" textAlign="right" id="per_label"/>
+									<mx:TextInput x="108" y="169" height="20" width="99" textAlign="right" id="parent_costs" focusOut="fieldChanged(event)"/>
+									<mx:TextInput x="108" y="188" height="20" width="99" textAlign="right" id="per" focusOut="fieldChanged(event)"/>
 								</mx:Canvas>
 								<mx:Canvas label="merchandise_canvas"
 										   width="100%"
