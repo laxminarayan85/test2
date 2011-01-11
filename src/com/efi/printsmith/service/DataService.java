@@ -4823,8 +4823,13 @@ public class DataService extends HibernateService {
 			trackerConsoleJobs = (TrackerConsoleJobs) query.getSingleResult();
 			Hibernate.initialize(trackerConsoleJobs.getPassesList());
 			if (trackerConsoleJobs.getJob() != null) {
-				Hibernate.initialize(trackerConsoleJobs.getJob()
-						.getParentInvoice());
+				Hibernate.initialize(trackerConsoleJobs.getJob().getCharges());
+				Hibernate.initialize(trackerConsoleJobs.getJob().getParentInvoice());
+				Hibernate.initialize(trackerConsoleJobs.getJob().getPricingPress());
+				Hibernate.initialize(trackerConsoleJobs.getJob().getCostingPress());
+				Hibernate.initialize(trackerConsoleJobs.getJob().getStock());
+				Hibernate.initialize(trackerConsoleJobs.getJob().getPricingCopier());
+				Hibernate.initialize(trackerConsoleJobs.getJob().getCostingCopier());
 			} else if (trackerConsoleJobs.getCharge() != null) {
 				Hibernate.initialize(trackerConsoleJobs.getCharge()
 						.getParentInvoice());

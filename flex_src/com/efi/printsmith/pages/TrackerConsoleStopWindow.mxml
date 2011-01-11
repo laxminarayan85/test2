@@ -323,9 +323,9 @@
 						return "--";
 					} else {
 						if(object.job!=null){
-							if(object.job.costingRecord!=null){
-								if(!isNaN(object.job.costingRecord.stockCost)){
-									stockCost = object.job.costingRecord.stockCost;
+							if(object.job.pricingRecord!=null){
+								if(!isNaN(object.job.pricingRecord.stockCost)){
+									stockCost = object.job.pricingRecord.stockCost;
 								}
 							}
 						} else if(object.charge!=null) {
@@ -346,9 +346,9 @@
 						return "--";
 					} else {
 						if(object.job!=null){
-							if(object.job.costingRecord!=null){
-								if(!isNaN(object.job.costingRecord.acualLaborCost)){
-									laborCost = object.job.costingRecord.acualLaborCost;
+							if(object.job.pricingRecord!=null){
+								if(!isNaN(object.job.pricingRecord.laborCost)){
+									laborCost = object.job.pricingRecord.laborCost;
 								}
 							}
 						} else if(object.charge!=null) {
