@@ -229,6 +229,15 @@ width="100%" height="100%" headerHeight="0"  preinitialize="preInit();"
 		}
 	}
 	
+	public function subTotalLabel(item:Object, column:DataGridColumn):String{
+		var tmpInvoice:InvoiceBase = item as InvoiceBase;
+		
+		if (tmpInvoice != null) {
+			return Snowmass.getCurrencyFormatter(false, 2).format(tmpInvoice.subTotal);
+		}
+		return "";
+	}
+	
 	private function invoiceEstimateFilter(item:Object):Boolean {
 		var showItem:Boolean = false;
 		
@@ -534,7 +543,7 @@ width="100%" height="100%" headerHeight="0"  preinitialize="preInit();"
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Ordered')}" dataField="orderedDate"/>
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Wantedby')}" dataField="wantedDate" />
 					<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Proofby')}" dataField="proofDate" />
-					<mx:DataGridColumn id="total_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Total')}" dataField="subTotal"/>
+					<mx:DataGridColumn id="total_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Total')}" labelFunction="subTotalLabel" textAlign="right"/>
 					<mx:DataGridColumn  id="location_column" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Location')}" dataField="location"/>
 					
 				</mx:columns>
