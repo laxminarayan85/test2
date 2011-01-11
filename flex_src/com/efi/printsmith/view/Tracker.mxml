@@ -65,6 +65,7 @@
 	<mx:Script> 
 	                                  
 	<![CDATA[
+		import com.efi.printsmith.data.CostingRecord;
 		import mx.events.FlexEvent;
 		import com.efi.printsmith.security.PSSecurityCommands;
 		import com.efi.mdi.event.window.WindowCloseEvent;
@@ -1130,6 +1131,38 @@
 								selectedTrackerConsoleJob.job.jobNotes="";
 							}
 							selectedTrackerConsoleJob.job.jobNotes = selectedTrackerConsoleJob.job.jobNotes+" "+selectedTrackerConsoleJob.notes;
+							if(selectedTrackerConsoleJob.job.costingRecord==null){
+								selectedTrackerConsoleJob.job.costingRecord = new CostingRecord();
+							}
+							if(selectedTrackerConsoleJob.job.costingRecord.costEntered){
+								selectedTrackerConsoleJob.job.costingRecord.actualTotalCost = selectedTrackerConsoleJob.totalCost;
+								selectedTrackerConsoleJob.job.costingRecord.actualRunTime = selectedTrackerConsoleJob.totalRunTime;
+								selectedTrackerConsoleJob.job.costingRecord.actualSetupTime = selectedTrackerConsoleJob.totalSetUpTime;
+								selectedTrackerConsoleJob.job.costingRecord.actualWashupTime = selectedTrackerConsoleJob.totalWashTime;
+							} else {
+								var actualTotalCost:Number = 0;
+								var actualRunTime:Number = 0;
+								var actualSetupTime:Number = 0;
+								var actualWashupTime:Number = 0;
+								if(!isNaN(selectedTrackerConsoleJob.job.costingRecord.actualTotalCost)) {
+									actualTotalCost = selectedTrackerConsoleJob.job.costingRecord.actualTotalCost;
+								}
+								if(!isNaN(selectedTrackerConsoleJob.job.costingRecord.actualRunTime)) {
+									actualRunTime = selectedTrackerConsoleJob.job.costingRecord.actualRunTime;
+								}
+								if(!isNaN(selectedTrackerConsoleJob.job.costingRecord.actualSetupTime)) {
+									actualSetupTime = selectedTrackerConsoleJob.job.costingRecord.actualSetupTime;
+								}
+								if(!isNaN(selectedTrackerConsoleJob.job.costingRecord.actualWashupTime)) {
+									actualWashupTime = selectedTrackerConsoleJob.job.costingRecord.actualWashupTime;
+								}
+								selectedTrackerConsoleJob.job.costingRecord.actualTotalCost = actualTotalCost+selectedTrackerConsoleJob.totalCost;
+								selectedTrackerConsoleJob.job.costingRecord.actualRunTime = actualRunTime+selectedTrackerConsoleJob.totalRunTime;
+								selectedTrackerConsoleJob.job.costingRecord.actualSetupTime = actualSetupTime+selectedTrackerConsoleJob.totalSetUpTime;
+								selectedTrackerConsoleJob.job.costingRecord.actualWashupTime = actualWashupTime+selectedTrackerConsoleJob.totalWashTime;
+							}
+							selectedTrackerConsoleJob.job.costingRecord.costEntered = false;
+							selectedTrackerConsoleJob.job.costingRecord.dataCollected = true;
 							updateDataService.addUpdate(selectedTrackerConsoleJob.job);
 						}
 					}
@@ -1633,6 +1666,11 @@
 			} else {
 				destination.difference = 0;
 			}
+			if(!isNaN(source.totalCost)){
+				destination.totalCost = source.totalCost;
+			} else {
+				destination.totalCost = 0;
+			}
 			if(destination.treatAsNonProdStep){
 				destination.totalTime = 0;
 				destination.totalSetUpTime = 0;
@@ -1645,6 +1683,7 @@
 				destination.startSpoilage = 0;
 				destination.endSpoilage = 0;
 				destination.difference = 0;
+				destination.totalCost = 0;
 			}
 		}
 		
