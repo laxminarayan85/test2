@@ -1210,18 +1210,24 @@ public class JobMapper extends ImportMapper {
 		if(job.getPricingRecord()!=null) {
 			costingRecord.setActualLaborCost(job.getPricingRecord().getLaborCost());
 			costingRecord.setActualStockCost(job.getPricingRecord().getStockCost());
-			double totalCost = costingRecord.getActualLaborCost().doubleValue()+costingRecord.getActualStockCost().doubleValue();
+			double actualLaborCost = 0;
+			double actualStockCost = 0;
+			if(costingRecord.getActualLaborCost()!=null) {
+				actualLaborCost = costingRecord.getActualLaborCost().doubleValue();
+			}
+			if(costingRecord.getActualStockCost()!=null) {
+				actualStockCost = costingRecord.getActualStockCost().doubleValue();
+			}
+			double totalCost = actualLaborCost+actualStockCost;
 			costingRecord.setActualTotalCost(BigDecimal.valueOf(totalCost));
 		}
 		costingRecord.setActualRunTime(job.getRunTime());
 		costingRecord.setActualSetupTime(job.getSetupTime());
 		costingRecord.setActualWashupTime(job.getWashupTime());
 		
-		job.setCostingRecord(costingRecord);
-
-		/*costingRecord = (CostingRecord)dataService.addUpdate(costingRecord);
+		costingRecord = (CostingRecord)dataService.addUpdate(costingRecord);
 		costingRecord.setId(costingRecord.getId());
-		job.setCostingRecord(costingRecord);*/
+		job.setCostingRecord(costingRecord);
 
 		if (job.getFrontColors() > 0 && job.getBackColors() > 0) {
 			job.setSingleSided(false);
