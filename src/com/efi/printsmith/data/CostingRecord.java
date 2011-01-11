@@ -62,7 +62,7 @@ public class CostingRecord extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String ACUALLABORCOST = "AcualLaborCost";
+	public static final String ACUALLABORCOST = "ActualLaborCost";
 	/**
 	 * @generated
 	 */
@@ -86,11 +86,19 @@ public class CostingRecord extends ModelBase {
 	/**
 	 * @generated
 	 */
-	public static final String ACTUALCOST = "ActualCost";
+	public static final String ACTUALCOST = "ActualStockCost";
 	/**
 	 * @generated
 	 */
 	public static final String ACTUALUNITCOUNT = "ActualUnitCount";
+	/**
+	 * @generated
+	 */
+	public static final String COSTENTERED = "CostEntered";
+	/**
+	 * @generated
+	 */
+	public static final String DATACOLLECTED = "DataCollected";
 
 	/**
 	 * @generated
@@ -477,6 +485,10 @@ public class CostingRecord extends ModelBase {
     if (ACTUALCOST.equals(propertyName)) return getActualStockCost();
 
     if (ACTUALUNITCOUNT.equals(propertyName)) return getActualUnitCount();
+    
+    if(COSTENTERED.equals(propertyName)) return getCostEntered();
+    
+    if(DATACOLLECTED.equals(propertyName)) return getDataCollected();
 
     return super.getProperty(propertyName);
 
@@ -508,6 +520,10 @@ public class CostingRecord extends ModelBase {
     if (ACTUALCOST.equals(propertyName)) setActualStockCost((BigDecimal)newValue); else
 
     if (ACTUALUNITCOUNT.equals(propertyName)) setActualUnitCount((Double)newValue); else
+    	
+    if (COSTENTERED.equals(propertyName)) setCostEntered((Boolean)newValue); else
+    	
+	if (DATACOLLECTED.equals(propertyName)) setDataCollected((Boolean)newValue); else
 
     super.setProperty(propertyName, newValue);
 
@@ -558,7 +574,15 @@ public class CostingRecord extends ModelBase {
 
     if (ACTUALUNITCOUNT.equals(propertyName)) 
 
-      return new Class<?>[] {Double.class};		
+      return new Class<?>[] {Double.class};
+    
+    if (COSTENTERED.equals(propertyName)) 
+
+        return new Class<?>[] {Boolean.class};		
+    
+    if (DATACOLLECTED.equals(propertyName)) 
+
+        return new Class<?>[] {Boolean.class};		
 
     return super.getPropertyClass(propertyName);
 
@@ -591,6 +615,10 @@ public class CostingRecord extends ModelBase {
     if (ACTUALCOST.equals(propertyName)) return CostingRecord.class;
 
     if (ACTUALUNITCOUNT.equals(propertyName)) return CostingRecord.class;
+    
+    if (COSTENTERED.equals(propertyName)) return CostingRecord.class;
+    
+    if (DATACOLLECTED.equals(propertyName)) return CostingRecord.class;
 
     return super.getPropertyOwner(propertyName);
 
@@ -647,6 +675,14 @@ public class CostingRecord extends ModelBase {
     if (! SmartEquals(getActualUnitCount(), objT.getActualUnitCount()))
 
       return false;
+    
+    if (! SmartEquals(getCostEntered(), objT.getCostEntered()))
+
+        return false;
+    
+    if (! SmartEquals(getDataCollected(), objT.getDataCollected()))
+
+        return false;
 
     return true;
 
