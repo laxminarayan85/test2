@@ -645,6 +645,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.CostingRecord;
 			import com.efi.printsmith.data.PreferencesStocks;
 			import com.efi.printsmith.events.JobNotesAddedEvent;
 			import mx.events.CloseEvent;
@@ -1270,11 +1271,28 @@
 			private function doSave():void
 			{
 				mapToJobData();
+				updateCostingRecord();
 				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.invoiceMultiQtyJobList, this.jobIndex);
 				dispatchEvent(jobEditCompleteEvent);
 				var mdiWindow:MDIWindow = this.parent as MDIWindow;
 				mdiWindow.closeWindow();
 				//PopUpManager.removePopUp(this);
+			}
+			
+			private function updateCostingRecord():void {
+				if(job.costingRecord==null) {
+					job.costingRecord = new CostingRecord();
+				}
+				if(!job.costingRecord.costEntered && !job.costingRecord.dataCollected) {
+					if(job.pricingRecord!=null) {
+						job.costingRecord.actualLaborCost = job.pricingRecord.laborCost;
+						job.costingRecord.actualStockCost = job.pricingRecord.stockCost;
+						job.costingRecord.actualTotalCost = job.costingRecord.actualLaborCost+job.costingRecord.actualStockCost;
+					}
+					job.costingRecord.actualRunTime = job.runTime;
+					job.costingRecord.actualSetupTime = job.setupTime;
+					job.costingRecord.actualWashupTime = job.washupTime;
+				}
 			}
 			private function doSaveTemplate():void
 			{

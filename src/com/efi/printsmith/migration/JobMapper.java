@@ -1,10 +1,12 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
+import java.math.*;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import com.efi.printsmith.data.CostingRecord;
 import com.efi.printsmith.data.Dimension;
 import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.data.Job;
@@ -1203,6 +1205,19 @@ public class JobMapper extends ImportMapper {
 		pricingRecord = (PricingRecord)dataService.addUpdate(pricingRecord);
 		pricingRecord.setId(pricingRecord.getId());
 		job.setPricingRecord(pricingRecord);
+		
+		CostingRecord costingRecord = new CostingRecord();
+		if(job.getPricingRecord()!=null) {
+			costingRecord.setActualLaborCost(job.getPricingRecord().getLaborCost());
+			costingRecord.setActualStockCost(job.getPricingRecord().getStockCost());
+			double totalCost = costingRecord.getActualLaborCost().doubleValue()+costingRecord.getActualStockCost().doubleValue();
+			costingRecord.setActualTotalCost(BigDecimal.valueOf(totalCost));
+		}
+		costingRecord.setActualRunTime(job.getRunTime());
+		costingRecord.setActualSetupTime(job.getSetupTime());
+		costingRecord.setActualWashupTime(job.getWashupTime());
+		
+		job.setCostingRecord(costingRecord);
 
 		/*costingRecord = (CostingRecord)dataService.addUpdate(costingRecord);
 		costingRecord.setId(costingRecord.getId());

@@ -1614,11 +1614,8 @@
 			private function getActualCost(item:Object, column:DataGridColumn):String {
 				var localJob:Job = item as Job;
 				var actualTotalCost:Number = 0;
-				if(localJob != null && localJob.pricingRecord!=null){
-					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.laborCost))?0:localJob.pricingRecord.laborCost);
-				}
-				if(localJob != null && localJob.pricingRecord!=null){
-					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.stockCost))?0:localJob.pricingRecord.stockCost);
+				if(localJob != null && localJob.costingRecord!=null){
+					actualTotalCost = ((isNaN(localJob.costingRecord.actualTotalCost))?0:localJob.costingRecord.actualTotalCost);
 				}
 				return Snowmass.getCurrencyFormatter(false, 2).format(actualTotalCost);
 			}
@@ -1635,11 +1632,8 @@
 				if(localJob != null && localJob.pricingRecord!=null){
 					estimatedTotalCost = estimatedTotalCost + ((isNaN(localJob.pricingRecord.stockCost))?0:localJob.pricingRecord.stockCost);
 				}
-				if(localJob != null && localJob.pricingRecord!=null){
-					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.laborCost))?0:localJob.pricingRecord.laborCost);
-				}
-				if(localJob != null && localJob.pricingRecord!=null){
-					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.stockCost))?0:localJob.pricingRecord.stockCost);
+				if(localJob != null && localJob.costingRecord!=null){
+					actualTotalCost = ((isNaN(localJob.costingRecord.actualTotalCost))?0:localJob.costingRecord.actualTotalCost);
 				}
 				diffValue = actualTotalCost - estimatedTotalCost;
 				if(actualTotalCost!=0){
@@ -1682,11 +1676,8 @@
 				var price:Number = 0;
 				var marginValue:Number = 0;
 				var prcntValue:Number = 0;
-				if(localJob != null && localJob.pricingRecord!=null){
-					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.laborCost))?0:localJob.pricingRecord.laborCost);
-				}
-				if(localJob != null && localJob.pricingRecord!=null){
-					actualTotalCost = actualTotalCost + ((isNaN(localJob.pricingRecord.stockCost))?0:localJob.pricingRecord.stockCost);
+				if(localJob != null && localJob.costingRecord!=null){
+					actualTotalCost = ((isNaN(localJob.costingRecord.actualTotalCost))?0:localJob.costingRecord.actualTotalCost);
 				}
 				if (localJob != null && localJob.pricingRecord != null) {					
 					price = localJob.pricingRecord.totalPrice;

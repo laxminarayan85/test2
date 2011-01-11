@@ -1917,7 +1917,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne(cascade=CascadeType.ALL)
     @Where(clause="isdeleted <> 'TRUE'")
 	private CostingRecord costingRecord;
 	
