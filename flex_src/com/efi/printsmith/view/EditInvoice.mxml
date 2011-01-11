@@ -123,6 +123,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.events.DataGridEvent;
+			import mx.events.DataGridEventReason;
 			import mx.managers.DragManager;
 			import mx.core.DragSource;
 			import com.efi.printsmith.data.DepositEntry;
@@ -642,9 +644,17 @@
 
 			private function handleLoadInvoice(event:ResultEvent):void {
 				this.invoice = event.result as InvoiceBase;
-				dataService
+				
 				if ( invoice.account != null)
 					UpdateCustomerStatus();
+					
+				if(invoice.jobs!=null) {
+					for each(var jobBaseObj:JobBase in invoice.jobs) {
+						if(jobBaseObj.costingRecord!=null) {
+							jobBaseObj.costingRecord.originalTotalCost = jobBaseObj.costingRecord.actualTotalCost;
+						}
+					}
+				}
 			}
 			
 			private function handleLoadResult(event:Event):void
@@ -1479,7 +1489,6 @@
 					doAccountPicker();
 				}
 				
-				
 			}
 			private function doAccountPicker():void
 			{
@@ -2170,6 +2179,39 @@
 		            DragManager.doDrag(dragInitiator, ds, event);
 	            }
 	        }
+	        
+	        public function getCostingColor(item:Object):uint {
+	        	if(item.costingRecord!=null) {
+	        		if(item.costingRecord.costEntered) {
+	        			return 0x0000FF;
+	        		} else if(item.costingRecord.dataCollected) {
+	        			return 0xFF8040;
+	        		}
+	        	}
+	        	return 0x000000;
+	        }
+	        
+	        public function updateCostingRecord(item:Object):void {
+	        	if(item is Job) {
+		        	if(item.costingRecord!=null) {
+			        	if(item.costingRecord.actualTotalCost!=item.costingRecord.originalTotalCost) {
+			        		item.costingRecord.dataCollected = false;
+			        		item.costingRecord.costEntered = true;
+			        		item.costingRecord.originalTotalCost = item.costingRecord.actualTotalCost;
+			        		invoice.jobs.refresh();
+			        	}
+		        	}
+	        	}
+	        }
+	        
+	        private function processCostingGridData(event:DataGridEvent):void {
+		        if (event.reason == DataGridEventReason.CANCELLED){
+		            return;
+		        }           
+				event.reason = DataGridEventReason.CANCELLED;		
+				invoice_cost_grid.destroyItemEditor();
+				
+			}
 
 		]]>
 
@@ -2396,7 +2438,7 @@
 				<mx:DataGrid width="100%"
 							 height="100%"
 							 id="invoice_cost_grid"
-							 dataProvider="{getCostingJobsList(invoice.jobs)}" editable="true">
+							 dataProvider="{getCostingJobsList(invoice.jobs)}" editable="true" itemEditEnd="{processCostingGridData(event)}">
 					<mx:columns>
 						<mx:DataGridColumn headerText=""
 										   width="50"
@@ -2416,23 +2458,46 @@
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Actual')}"
 										   width="150"
 										   labelFunction="getActualCost">
-							<!--<mx:itemEditor>
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label color="{outerDocument.getCostingColor(data)}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+							<mx:itemEditor>
 								<mx:Component>
 									<components:CustomNumericTextInputComponent
-										datagridControl="true" variableName="actualCost" customText="{data.actualCost}"
-										precision="2" rounding="nearest"/>
+										dataHolder="{data.costingRecord}" variableName="actualTotalCost" customText="{data.costingRecord.actualTotalCost}"
+										precision="2" rounding="nearest" focusOut="{outerDocument.updateCostingRecord(data)}"/>
 								</mx:Component>
-							</mx:itemEditor>-->
+							</mx:itemEditor>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Difference')}"
 										   width="150"
-										   labelFunction="getDifferenceValue" editable="false"/>
+										   labelFunction="getDifferenceValue" editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label color="{outerDocument.getCostingColor(data)}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Price')}"
 										   width="150"
-										   labelFunction="gridJobPrice"/>
+										   labelFunction="gridJobPrice">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label color="{outerDocument.getCostingColor(data)}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Margin')}"
 										   width="150"
-										   labelFunction="getMarginValue" editable="false"/>
+										   labelFunction="getMarginValue" editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label color="{outerDocument.getCostingColor(data)}"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:VBox>

@@ -1288,6 +1288,7 @@
 						job.costingRecord.actualLaborCost = job.pricingRecord.laborCost;
 						job.costingRecord.actualStockCost = job.pricingRecord.stockCost;
 						job.costingRecord.actualTotalCost = job.costingRecord.actualLaborCost+job.costingRecord.actualStockCost;
+						job.costingRecord.originalTotalCost = job.costingRecord.actualTotalCost; 
 					}
 					job.costingRecord.actualRunTime = job.runTime;
 					job.costingRecord.actualSetupTime = job.setupTime;
