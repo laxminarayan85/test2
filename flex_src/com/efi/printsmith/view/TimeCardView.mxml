@@ -453,7 +453,7 @@
 			<mx:DataGrid width="100%" id="employeeGrid" dataProvider="{employeesArray}" height="95%"
 				itemClick="{doGrid(event)}">
 				<mx:columns>
-					<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.ID')}" dataField="id" />
+					<mx:DataGridColumn width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeCardsCmd.ID')}" dataField="employeeId" />
 					<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.FirstName')}" dataField="firstName" />
 					<mx:DataGridColumn width="100" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeTimeExportsCmd.LastName')}" dataField="lastName"/>
 				</mx:columns>
