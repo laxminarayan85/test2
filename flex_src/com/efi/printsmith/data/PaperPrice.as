@@ -14,6 +14,9 @@ package com.efi.printsmith.data
 		}
 		public override var isDeleted:Boolean=false;
 				
+		public var name:String = "";
+		public var type:int = 0;
+		public var method:String = "";
 	
 	}
 }
