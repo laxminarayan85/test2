@@ -2221,6 +2221,62 @@
 	        private function updateCostingDataGrid():void {
 	        	invoice_cost_grid.dataProvider = getCostingJobsList(invoice.jobs);
 	        }
+	        
+	        private function getActualTotals(jobList:ArrayCollection):String {
+	        	var totalCost:Number = 0;
+	        	for each(var jobBase:JobBase in jobList) {
+	        		if(jobBase.costingRecord!=null) {
+	        			totalCost = totalCost + (isNaN(jobBase.costingRecord.actualTotalCost)?0:(jobBase.costingRecord.actualTotalCost));
+	        		}
+	        	}
+	        	return Snowmass.getCurrencyFormatter(false, 2).format(totalCost);
+	        }
+	        
+	        private function getPriceTotals(jobList:ArrayCollection):String {
+	        	var totalPrice:Number = 0;
+	        	for each(var jobBase:JobBase in jobList) {
+	        		if(jobBase.pricingRecord!=null) {
+	        			totalPrice = totalPrice + (isNaN(jobBase.pricingRecord.totalPrice)?0:(jobBase.pricingRecord.totalPrice));
+	        		}
+	        	}
+	        	return Snowmass.getCurrencyFormatter(false, 2).format(totalPrice);
+	        }
+	        
+	        private function getMarginTotals(jobList:ArrayCollection):String {
+	        	var totalCost:Number = 0;
+	        	var totalPrice:Number = 0;
+	        	var totalMargin:Number = 0;
+	        	for each(var jobBase:JobBase in jobList) {
+	        		if(jobBase.costingRecord!=null) {
+	        			totalCost = totalCost + (isNaN(jobBase.costingRecord.actualTotalCost)?0:(jobBase.costingRecord.actualTotalCost));
+	        		}
+	        		if(jobBase.pricingRecord!=null) {
+	        			totalPrice = totalPrice + (isNaN(jobBase.pricingRecord.totalPrice)?0:(jobBase.pricingRecord.totalPrice));
+	        		}
+	        	}
+	        	totalMargin = totalPrice-totalCost;
+	        	return Snowmass.getCurrencyFormatter(false, 2).format(totalMargin);
+	        }
+	        
+	        private function getEstProfitTotals(jobList:ArrayCollection):String {
+	        	var totalCost:Number = 0;
+	        	var totalPrice:Number = 0;
+	        	var totalMargin:Number = 0;
+	        	var estProfit:Number = 0;
+	        	for each(var jobBase:JobBase in jobList) {
+	        		if(jobBase.costingRecord!=null) {
+	        			totalCost = totalCost + (isNaN(jobBase.costingRecord.actualTotalCost)?0:(jobBase.costingRecord.actualTotalCost));
+	        		}
+	        		if(jobBase.pricingRecord!=null) {
+	        			totalPrice = totalPrice + (isNaN(jobBase.pricingRecord.totalPrice)?0:(jobBase.pricingRecord.totalPrice));
+	        		}
+	        	}
+	        	totalMargin = totalPrice-totalCost;
+	        	if(totalPrice!=0) {
+	        		estProfit = (totalMargin/totalPrice)*100;
+	        	}
+	        	return Snowmass.getCurrencyFormatter(false, 0).format(estProfit)+"%";
+	        }
 		]]>
 
 	</mx:Script>
@@ -2705,28 +2761,28 @@
 					<mx:Form width="50%" height="100%" id="costing_total_canvas">
 						
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Actual')}" >
-							<mx:Text  width="50%" height="100%"
+							<mx:Text   height="100%"
 									textAlign="right"
-									 id="cust_discount_text0"/>
+									 id="cust_discount_text0" text="{getActualTotals(invoice.jobs)}"/>
 						</mx:FormItem>
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Price')}" >
-							<mx:Text width="50%" height="100%"
+							<mx:Text  height="100%"
 									 textAlign="right"
-									 id="cust_discount_text1"/>
+									 id="cust_discount_text1"  text="{getPriceTotals(invoice.jobs)}"/>
 						</mx:FormItem>
 						
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Margin')}" >
-							<mx:Text width="50%" height="100%"
+							<mx:Text  height="100%"
 									 textAlign="right"
-									 id="cust_discount_text2"/>
+									 id="cust_discount_text2" text="{getMarginTotals(invoice.jobs)}"/>
 							
 						</mx:FormItem>
 						
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'salesCmd.EstProfit')}" >
 								
-							<mx:Text width="50%" height="100%"
+							<mx:Text  height="100%"
 										 textAlign="right"
-										 id="cust_discount_text3"/>
+										 id="cust_discount_text3" text="{getEstProfitTotals(invoice.jobs)}"/>
 							
 						</mx:FormItem>
 						
