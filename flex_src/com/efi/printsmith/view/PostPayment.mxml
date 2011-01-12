@@ -10,6 +10,7 @@
 	
 	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="getAccount" fault="handleFault(event)" result="handleGetResult(event)"/>
+		<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountsResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServiceUnpost" destination="dataService">
 		<mx:method name="getUnPurchaseByAccountId" fault="handleFault(event)" result="handleGetUnpostResult(event)"/>
@@ -17,6 +18,7 @@
 	<mx:RemoteObject id="dataServiceAccountHistory" destination="dataService">
 		<mx:method name="getAccountHistoryByAccountId" fault="handleFault(event)" result="handleGetUnpostResult(event)"/>
 	</mx:RemoteObject>
+	
 <mx:Script>
                                    
 <![CDATA[
@@ -45,6 +47,8 @@
 
 	[Bindable]                             
 	private var account: Account;
+	[Bindable]  
+ 	private var accounts:ArrayCollection = new ArrayCollection();
 	[Bindable]                             
 	private var accountHistoryDate: AccountHistoryData;;
 	[Bindable]                             
@@ -55,15 +59,25 @@
 		account = new Account();
 		
 	}
-	private function doGet():void{
+	private function handleLoadAccountsResult(ev:ResultEvent):void {
+		accounts = ev.result as ArrayCollection;
+		
+		openAccountPicker()
+	}
+	private function openAccountPicker():void{
 		account = new Account();
 		 var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);
 	    accountPickerWindow.formIsEmpty = true;
 	    accountPickerWindow.prospect_boolean = false;
 	    accountPickerWindow.contact_boolean = false;
+	    accountPickerWindow.setAccounts(accounts);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	}
+	private function doGet():void{
+		dataService.getAccountPicker();
+		
 	}
 	
 	public function getSecurityCommand():String {
