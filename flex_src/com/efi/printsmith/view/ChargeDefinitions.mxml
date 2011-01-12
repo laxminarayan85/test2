@@ -2191,7 +2191,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			event.currentTarget == ship_markup_edit) {			
 			(event.currentTarget as TextInput).text = numberFormatter.format((event.currentTarget as TextInput).text);
 		} else if (event.currentTarget == minimum_charge_edit) {
-			(event.currentTarget as TextInput).text = Snowmass.getCurrencyFormatter(false, 4).format((event.currentTarget as TextInput).text);			
+			(event.currentTarget as TextInput).text = Snowmass.getCurrencyFormatter(false, 2).format((event.currentTarget as TextInput).text);			
 		} else if (event.currentTarget == setup_edit ||
 				   event.currentTarget == rate_edit ||
 				   event.currentTarget == material_edit) {
@@ -2337,7 +2337,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 					<mx:HRule x="10" y="276" width="710" height="8" id="hrule2"/>
 					<mx:HRule x="10" y="396" width="710" height="8" id="hrule3"/>
 					<mx:CheckBox x="216" y="222" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumCharge')}" id="minimum_charge_check" selected="{charge.useMinimumCharge}" change="setDocDirty()"/>
-					<mx:TextInput x="349" y="222" restrict="0-9\.\-\," width="96" id="minimum_charge_edit" text="{Snowmass.getCurrencyFormatter(false, 4).format(charge.minimum)}" enabled="{minimum_charge_check.selected}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
+					<mx:TextInput x="349" y="222" restrict="0-9\.\-\," width="96" id="minimum_charge_edit" text="{Snowmass.getCurrencyFormatter(false, 2).format(charge.minimum)}" enabled="{minimum_charge_check.selected}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					<mx:CheckBox x="216" y="247" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.MinimumTime')}" id="minimum_time_check" selected="{charge.useMinimumTime}" change="setDocDirty()"/>
 					<mx:TextInput x="349" y="247" restrict="0-9" width="96" id="minimum_time_edit" text="{numberFormatter.format(charge.minimumTime)}" enabled="{minimum_time_check.selected}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					

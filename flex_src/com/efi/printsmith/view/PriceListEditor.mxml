@@ -45,12 +45,6 @@
 		<mx:SetProperty target="{remove_pricelistelement_button}" name="x" value="171.5"/>
 		<mx:SetProperty target="{canvas1}" name="height" value="403"/>
 		<mx:SetStyle target="{dataGrid}" name="bottom" value="62"/>
-		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mx:Label x="4" y="346" text="Over Quantity" id="label0"/>
-		</mx:AddChild>
-		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mx:TextInput x="114" y="344" width="113.5" id="over_quantity"/>
-		</mx:AddChild>
 		<mx:SetProperty target="{amt_is_currency}" name="selected" value="{priceList.isDollar}"/>
 		<mx:SetProperty target="{amt_is_percent}" name="selected" value="{priceList.isPercentage}"/>
 		<mx:SetProperty target="{chkUseAsRateList}" name="y" value="153"/>
@@ -112,8 +106,6 @@
 		<mx:SetProperty target="{label1}" name="width" value="82.5"/>
 		<mx:SetProperty target="{dataGrid}" name="width" value="168"/>
 		<mx:SetProperty target="{canvas1}" name="height" value="391"/>
-		<mx:RemoveChild target="{label0}"/>
-		<mx:RemoveChild target="{over_quantity}"/>
 		<mx:RemoveChild target="{chkLastLineAddlnQty}"/>
 		
 	</mx:State>
@@ -193,8 +185,6 @@
 			<mx:RadioButton x="10" y="29" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'editListCmd.AmountisPercent')}" groupName="amount_radio_group" value="amtispercent" id="radiobutton3" enabled="false" visible="true" selected="{priceList.isPercentage}"/>
 		</mx:AddChild>
 		<mx:SetProperty target="{title_edit}" name="width" value="207"/>
-		<mx:RemoveChild target="{label0}"/>
-		<mx:RemoveChild target="{over_quantity}"/>
 		<mx:RemoveChild target="{chkLastLineAddlnQty}"/>
 
 	</mx:State>
@@ -225,8 +215,6 @@
 		<mx:SetProperty target="{title_edit}" name="x" value="365.5"/>
 		<mx:SetStyle target="{add_pricelistelement_button}" name="bottom" value="4"/>
 		<mx:SetStyle target="{remove_pricelistelement_button}" name="bottom" value="4"/>
-		<mx:RemoveChild target="{label0}"/>
-		<mx:RemoveChild target="{over_quantity}"/>
 		<mx:SetStyle target="{dataGrid}" name="bottom" value="32"/>
 		<mx:RemoveChild target="{chkLastLineAddlnQty}"/>
 	</mx:State>
@@ -250,8 +238,6 @@
 		<mx:SetStyle target="{add_pricelistelement_button}" name="bottom" value="40"/>
 		<mx:SetProperty target="{canvas1}" name="width" value="233"/>
 		<mx:SetProperty name="width" value="262"/>
-		<mx:RemoveChild target="{label0}"/>
-		<mx:RemoveChild target="{over_quantity}"/>
 	</mx:State>
 </mx:states>
 <mx:Script source="../common/scripts/StringUtils.as"/>
@@ -312,7 +298,7 @@
 
     private var formIsValid:Boolean = false;
     private var focussedFormControl:DisplayObject;
-
+	
 	[Bindable]
 	private var amountRadioValue:String = "amtiscurrency";
 	
@@ -476,11 +462,11 @@
 			if (priceList.elements != null) {
 				priceList.elements.filterFunction = unfilterElements;
 				priceList.elements.refresh();
-				for (var i:int = 0;i < priceList.elements.length;i++) {
-					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement
-					if (element.lastLine == true)
-						element.amount = parseCurrencyFloat(this.over_quantity.text);
-				}
+//				for (var i:int = 0;i < priceList.elements.length;i++) {
+//					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement
+//					if (element.lastLine == true)
+//						element.amount = parseCurrencyFloat(this.over_quantity.text);
+//				}
 			}
 			maptoPricelist();
 			
@@ -518,7 +504,7 @@
 		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
 		priceList.isPercentage = this.amt_is_percent.selected;
 		priceList.isDollar = this.amt_is_currency.selected;
-		priceList.lastItemIsPriceAdditionalQty = this.chkLastLineAddlnQty.selected;
+		//priceList.lastItemIsPriceAdditionalQty = this.chkLastLineAddlnQty.selected;
 		if (copyFLag){
 			priceList.id = 0;
 			for (var t:int = 0;t < priceList.elements.length;t++) {
@@ -543,26 +529,6 @@
 
 	private function handleSaveItemsResult(ev:ResultEvent):void {
 		priceList = ev.result as PriceListBase;
-		/* if (this.parentContainer.name == "Copier Definitions") {
-				var editCopierDefinitions:CopierDefinitions = this.parentContainer as CopierDefinitions;
-				if (itemType == "WasteChart") {
-					editCopierDefinitions.wasteName.label = priceList.name;
-				} else if (itemType == "SpeedTable") {
-					
-				}		
-			}
-			if (this.parentContainer.name == "Press Definitions") {
-				var editPressDefinitions:PressDefinitions = this.parentContainer as PressDefinitions;
-				if (itemType == "WasteChart") {
-					editPressDefinitions.selectedWasteChart.label= priceList.name;
-					
-				} else if (itemType == "SpeedTable") {
-				editPressDefinitions.selectedSpeedTable.label = priceList.name;
-				editPressDefinitions.selectedSpeedTable.selected =priceList as PriceListBase;
-				
-					
-				}		 
-			} */
 			var selectEvent:SavePriceListEvent = new SavePriceListEvent(SavePriceListEvent.Save, priceList);
 			dispatchEvent(selectEvent);
 
@@ -581,11 +547,6 @@
 		} else if (itemType == "PaperPrice") {
 			priceList = ev.result as PaperPrice;
 		}		
-//		 else if (itemType == "Matrix") {
-//			priceList = ev.result as com.efi.printsmith.data.Matrix;
-//		}
-//
-		
 		var editPage:Container = parentContainer;
 	}
 	
@@ -595,8 +556,8 @@
 				if (priceList.elements != null) {
 					for (var i:int = 0;i < priceList.elements.length;i++) {
 						 var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-						 if (element.lastLine == true)
-						 	this.over_quantity.text = element.amount.toString();
+//						 if (element.lastLine == true)
+//						 	this.over_quantity.text = element.amount.toString();
 					}
 					this.priceList.elements.filterFunction = filterElements;
 					this.priceList.elements.refresh();
@@ -604,14 +565,14 @@
 			} else if (itemType == "WasteChart") {
 				for (var i:int = 0;i < priceList.elements.length;i++) {
 					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-					element.amount = element.amount * 100; // TODO: This is wrong - we should not be changing values for display. Create a renderer if needed.
+					element.amount = element.amount * 100;
 				}
 			} else if (itemType == "SpeedTable") {
 			} else if (itemType == "PaperPrice") {
 				if (priceList.isPercentage == true) {
 					for (var i:int = 0;i < priceList.elements.length;i++) {
 						var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
-						element.amount = element.amount * 100; // TODO: This is wrong - we should not be changing values for display. Create a renderer if needed.
+						element.amount = element.amount * 100;
 					}
 				}
 			}
@@ -656,18 +617,34 @@
 		if (priceList.elements == null) priceList.elements = new ArrayCollection();
 		var newItem:PriceListElement = new PriceListElement();
 		newItem.id = 0;
-		newItem.amount = 0;
-		newItem.quantity = 0;
+		
+		if (chkLastLineAddlnQty != null && chkLastLineAddlnQty.selected && priceList.elements.length > 0) {
+			var prevElement:PriceListElement = priceList.elements.getItemAt(priceList.elements.length-1) as PriceListElement;
+			
+			newItem.amount = prevElement.amount;
+			newItem.quantity = prevElement.quantity;
+			prevElement.amount = 0;
+			prevElement.quantity = 0;
+		} else {
+			newItem.amount = 0;
+			newItem.quantity = 0;
+		}
 		priceList.elements.addItem(newItem);
 	}
 	
 	private function doRemovePriceListElement():void {
 		var deleteItem:PriceListElement = dataGrid.selectedItem as PriceListElement;
-		priceList.elements.removeItemAt(priceList.elements.getItemIndex(deleteItem));
+		var index:int = priceList.elements.getItemIndex(deleteItem);
+		priceList.elements.removeItemAt(index);
+		if (priceList.elements.length > 0 && index == 0) {
+			dataGrid.selectedItem = priceList.elements[0];
+		} else if (priceList.elements.length > index) {
+			dataGrid.selectedItem = priceList.elements[index];
+		} else if (priceList.elements.length > index - 1) {
+			dataGrid.selectedItem = priceList.elements[index-1];
+		}
 	}
 
-
-	
 	private function showSide(item:Object, column:DataGridColumn):String{
 		
 		if (item != null && item.side != null) {
@@ -811,7 +788,8 @@
 					   click="doRemovePriceListElement()"
 					   icon="@Embed(source='../../../../assets/delete16.png')"
 					   width="24"
-					   bottom="3"/>
+					   bottom="3"
+					   enabled="{dataGrid.selectedIndex>=0}"/>
 		<mx:LinkButton x="126"
 					   id="add_pricelistelement_button"
 					   click="doNewPriceListElement()"

@@ -145,23 +145,28 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		if (cuts_text != null) {
 			chargeDefinition.presetCuts = parseInt(cuts_text.text);
 		}
-		var colonPosition:int = startTimeString.indexOf(":");
+
 		if (time_start_edit != null) {
 			if (startTimeString.indexOf(":") != -1) {
-				chargeDefinition.presetTimeStartHour = parseInt(startTimeString.substr(0,colonPosition));
-				chargeDefinition.presetTimeStartMinute = parseInt(startTimeString.substr(colonPosition+1));
+				chargeDefinition.presetTimeStartHour = parseInt(startTimeString.substr(0,startTimeString.indexOf(":")));
+				chargeDefinition.presetTimeStartMinute = parseInt(startTimeString.substr(startTimeString.indexOf(":")+1));
+			} if (startTimeString.indexOf(".") != -1) {
+				chargeDefinition.presetTimeStartHour = parseInt(startTimeString.substr(0,startTimeString.indexOf(".")));
+				chargeDefinition.presetTimeStartMinute = parseInt(startTimeString.substr(startTimeString.indexOf(".")+1));
 			} else {
-				chargeDefinition.presetTimeStartMinute = parseInt(startTimeString);
+				chargeDefinition.presetTimeStartHour = parseInt(startTimeString);
 			}
 		}
 				
 		if (time_stop_edit != null) {
-			colonPosition = stopTimeString.indexOf(":");
 			if (stopTimeString.indexOf(":") != -1) {
-				chargeDefinition.presetTimeStopHour = parseInt(stopTimeString.substr(0,colonPosition));
-				chargeDefinition.presetTimeStopMinute = parseInt(stopTimeString.substr(colonPosition+1));
+				chargeDefinition.presetTimeStopHour = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(":")));
+				chargeDefinition.presetTimeStopMinute = parseInt(stopTimeString.substr(stopTimeString.indexOf(":")+1));
+			} if (startTimeString.indexOf(".") != -1) {
+				chargeDefinition.presetTimeStopHour = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(".")));
+				chargeDefinition.presetTimeStopMinute = parseInt(stopTimeString.substr(stopTimeString.indexOf(".")+1));
 			} else {
-				chargeDefinition.presetTimeStopMinute = parseInt(stopTimeString);
+				chargeDefinition.presetTimeStopHour = parseInt(startTimeString);
 			}
 		}
 	}
@@ -716,7 +721,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 							 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Hidden')}"
 							 id="hidden_check"
 							 fontSize="9"
-							 selected="{chargeDefinition.presetHidden}" width="64"/>
+							 selected="{chargeDefinition.presetHidden}" width="64" enabled="false"/>
 			</mx:HBox>
 			<mx:HBox width="100%" id="description_box">
 				<mx:TextInput text="{chargeDefinition.presetDescriptionLabel}" width="25%" id="description_label_text" textAlign="right"/>
@@ -753,12 +758,12 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				<mx:VBox label="time" width="100%" height="100%" id="time" creationPolicy="all">
 					<mx:HBox width="100%" height="50%" horizontalAlign="right">
 						<mx:TextInput text="{chargeDefinition.presetTimeStartLabel}" id="time_start_label_text" textAlign="right"/>
-						<mx:TextInput text="{startTimeString}" id="time_start_edit" textAlign="right"/>
+						<mx:TextInput text="{startTimeString}" id="time_start_edit" textAlign="right" focusOut="this.updatePrice(event)"/>
 						<mx:Spacer width="30"/>
 	                </mx:HBox>
 					<mx:HBox width="100%" height="50%" horizontalAlign="right">
 						<mx:TextInput text="{chargeDefinition.presetTimeStopLabel}" id="time_end_label_text" textAlign="right"/>
-						<mx:TextInput text="{stopTimeString}" id="time_stop_edit" textAlign="right"/>
+						<mx:TextInput text="{stopTimeString}" id="time_stop_edit" textAlign="right" focusOut="this.updatePrice(event)"/>
 						<mx:Spacer width="30"/>
 	                </mx:HBox>
 				</mx:VBox>

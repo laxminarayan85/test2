@@ -2827,7 +2827,9 @@ public class DataService extends HibernateService {
 						log.error("Null priceList element found");
 					}
 				}
+				Collections.sort(priceList.getElements());
 			}
+			
 			return priceList;
 		} catch (NoResultException e) {
 			log.warn("No result found for getPriceList " + e);
@@ -2859,6 +2861,7 @@ public class DataService extends HibernateService {
 						log.error("Null priceList element found");
 					}
 				}
+				Collections.sort(priceList.getElements());
 			}
 			return priceList;
 		} catch (NoResultException e) {
