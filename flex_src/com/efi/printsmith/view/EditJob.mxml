@@ -565,6 +565,12 @@
 				   fault="handleFault(event)"
 				   result="handleLoadLocationResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="vendorDataService"
+					 destination="dataService">
+		<mx:method name="getAll"
+				   fault="handleFault(event)"
+				   result="handleLoadVendorResult(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="productDataService"
 					 destination="dataService">
 		<mx:method name="getAll"
@@ -891,6 +897,7 @@
 				dataServicePreferencesDefaultPresses.getSingle("PreferencesDefaultPresses");
 			    taxTableDataService.getCurrentTaxTables("TaxTable");
 			    dataServiceGroup.getAll("StockGroup");
+			    vendorDataService.getAll("Vendor");
 				
 				if (job == null) {
 					job = new Job();
@@ -1986,6 +1993,7 @@
 					job.parentStockCost = localJob.parentStockCost;
 					job.copyMinutes = localJob.copyMinutes;
 					job.runTime = localJob.runTime;
+					job.markup = localJob.markup;
 					if (job.pricingRecord != null) {
 						overs_total_price.text = Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.oversTotalPrice.toString());
 						job_price.text = Snowmass.getCurrencyFormatter(false,2).format((job.pricingRecord.totalPrice));
