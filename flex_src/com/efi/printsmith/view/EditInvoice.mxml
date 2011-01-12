@@ -1114,8 +1114,8 @@
 					jobsList.addItem(target.job);
 				}
 				
-				if(target.multiQtyJobList!= null && target.multiQtyJobList.length>0){
-					for each(var multiQtyJobObject:Job in target.multiQtyJobList){
+				if(target.invoiceMultiQtyJobList!= null && target.invoiceMultiQtyJobList.length>0){
+					for each(var multiQtyJobObject:Job in target.invoiceMultiQtyJobList){
 						jobsList.addItem(multiQtyJobObject);
 					}
 				}
@@ -2202,6 +2202,8 @@
 			        		item.costingRecord.costEntered = true;
 			        		item.costingRecord.originalTotalCost = item.costingRecord.actualTotalCost;
 			        		invoice.jobs.refresh();
+			        		invoice_cost_grid.dataProvider.refresh();
+			        		invoice_cost_grid.validateProperties();
 			        	}
 		        	}
 	        	}

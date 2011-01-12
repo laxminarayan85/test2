@@ -1331,6 +1331,24 @@
 					job.costingRecord.actualSetupTime = job.setupTime;
 					job.costingRecord.actualWashupTime = job.washupTime;
 				}
+				if(invoiceMultiQtyJobList!=null) {
+					for each(var jobBaseObj:JobBase in invoiceMultiQtyJobList) {
+						if(jobBaseObj.costingRecord==null) {
+							jobBaseObj.costingRecord = new CostingRecord();
+						}
+						if(!jobBaseObj.costingRecord.costEntered && !jobBaseObj.costingRecord.dataCollected) {
+							if(jobBaseObj.pricingRecord!=null) {
+								jobBaseObj.costingRecord.actualLaborCost = jobBaseObj.pricingRecord.laborCost;
+								jobBaseObj.costingRecord.actualStockCost = jobBaseObj.pricingRecord.stockCost;
+								jobBaseObj.costingRecord.actualTotalCost = jobBaseObj.costingRecord.actualLaborCost+jobBaseObj.costingRecord.actualStockCost;
+								jobBaseObj.costingRecord.originalTotalCost = jobBaseObj.costingRecord.actualTotalCost; 
+							}
+							jobBaseObj.costingRecord.actualRunTime = jobBaseObj.runTime;
+							jobBaseObj.costingRecord.actualSetupTime = jobBaseObj.setupTime;
+							jobBaseObj.costingRecord.actualWashupTime = jobBaseObj.washupTime;
+						}
+					}
+				}
 			}
 			private function doSaveTemplate():void
 			{
@@ -2887,6 +2905,9 @@
 	    			multiQtyJobObject.id = 0;
 	    			multiQtyJobObject.defaultJob = false;
 	    			multiQtyJobObject.multiQtyJob = true;
+	    			if(multiQtyJobObject.costingRecord!=null) {
+	    				multiQtyJobObject.costingRecord = new CostingRecord();
+	    			}
 	    			if(multiQtyJobObject.charges!=null && multiQtyJobObject.charges.length>0){
 	    				for each(var chargeObj:Charge in multiQtyJobObject.charges) {
 	    					chargeObj.id = 0;
