@@ -123,6 +123,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.Sort;
+			import mx.collections.SortField;
 			import mx.events.DataGridEvent;
 			import mx.events.DataGridEventReason;
 			import mx.managers.DragManager;
@@ -2183,8 +2185,17 @@
 	            }
 	        }
 	        
-	        public function getCostingColor(item:Object):uint {
+	        public function getCostingColor(item:Object,priceCheck:Boolean=false):uint {
 	        	if(item.costingRecord!=null) {
+	        		if(priceCheck) {
+	        			var totalPrice:Number = 0;
+	        			if(item.pricingRecord!=null){
+	        				totalPrice = item.pricingRecord.totalPrice;
+	        			}
+	        			if(totalPrice<item.costingRecord.actualTotalCost){
+	        				return 0XFF0000;
+	        			}
+	        		}
 	        		if(item.costingRecord.costEntered) {
 	        			return 0x0000FF;
 	        		} else if(item.costingRecord.dataCollected) {
@@ -2203,18 +2214,13 @@
 			        		item.costingRecord.originalTotalCost = item.costingRecord.actualTotalCost;
 			        	}
 		        	}
+	        		callLater(updateCostingDataGrid);
 	        	}
 	        }
 	        
-	        private function processCostingGridData(event:DataGridEvent):void {
-		        if (event.reason == DataGridEventReason.CANCELLED){
-		            return;
-		        }           
-				event.reason = DataGridEventReason.CANCELLED;		
-				invoice_cost_grid.destroyItemEditor();
-				
-			}
-
+	        private function updateCostingDataGrid():void {
+	        	invoice_cost_grid.dataProvider = getCostingJobsList(invoice.jobs);
+	        }
 		]]>
 
 	</mx:Script>
@@ -2440,7 +2446,7 @@
 				<mx:DataGrid width="100%"
 							 height="100%"
 							 id="invoice_cost_grid"
-							 dataProvider="{getCostingJobsList(invoice.jobs)}" editable="true" itemEditEnd="{processCostingGridData(event)}">
+							 dataProvider="{getCostingJobsList(invoice.jobs)}" editable="true">
 					<mx:columns>
 						<mx:DataGridColumn headerText=""
 										   width="50"
@@ -2496,7 +2502,7 @@
 										   labelFunction="getMarginValue" editable="false">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Label color="{outerDocument.getCostingColor(data)}"/>
+									<mx:Label color="{outerDocument.getCostingColor(data,true)}"/>
 								</mx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
