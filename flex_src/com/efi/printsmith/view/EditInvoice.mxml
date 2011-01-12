@@ -2201,9 +2201,6 @@
 			        		item.costingRecord.dataCollected = false;
 			        		item.costingRecord.costEntered = true;
 			        		item.costingRecord.originalTotalCost = item.costingRecord.actualTotalCost;
-			        		invoice.jobs.refresh();
-			        		invoice_cost_grid.dataProvider.refresh();
-			        		invoice_cost_grid.validateProperties();
 			        	}
 		        	}
 	        	}
