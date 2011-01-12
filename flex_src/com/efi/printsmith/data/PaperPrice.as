@@ -6,7 +6,7 @@ package com.efi.printsmith.data
 	[RemoteClass(alias="com.efi.printsmith.data.PaperPrice")]
 	[Managed]
 	
-	public dynamic class PaperPrice extends PriceListBase
+	public dynamic class PaperPrice extends Matrix
 	{
 
 		public function PaperPrice() {
