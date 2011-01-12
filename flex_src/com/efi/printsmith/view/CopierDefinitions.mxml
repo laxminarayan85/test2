@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" preinitialize="preInit();" xmlns:components="com.efi.printsmith.components.*" xmlns:vo="com.efi.printsmith.vo.*"
- xmlns:common="com.efi.printsmith.common.components.*" width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}"
- label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions')}" fontSize="9" xmlns:ns1="com.efi.printsmith.components.preferences.*"
+ xmlns:common="com.efi.printsmith.common.components.*" width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopierDigitalDefinit')}"
+ label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopierDigitalDefinit')}" name="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopierDigitalDefinit')}" fontSize="9" xmlns:ns1="com.efi.printsmith.components.preferences.*"
  implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent">
   <mx:Script source="../security/PSSecurityInclude.as" />
 	<mx:states>
@@ -178,7 +178,7 @@
 		notification_consumer.subscribe();   
 		
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
-		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pmethSetCmd.CopierDefinitions');
+		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.CopierDigitalDefinit');
 		
 		
 		fireGetAllEvent("SalesCategory", new mx.rpc.Responder(handleLoadSalesCategoryResult, handleFault));  
