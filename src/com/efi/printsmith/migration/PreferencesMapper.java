@@ -118,11 +118,11 @@ public class PreferencesMapper extends ImportMapper {
 		else if (group.equals("Paper Calculator"))
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
 		else if (group.equals("Company Info"))
-			importPreferencesSystemField(key, fieldName, fieldValue);
+			importPreferencesSystemField(key, fieldName, fieldValue, true);
 		else if (group.equals("Quantity Breaks"))
 			importPreferencesQuantityBreaksField(fieldValue);
 		else if (group.equals("Blank Stock Setup") || group.equals("Stock Setup") || group.equals("Customer Stock Setup")) {
-			importPreferencesSystemField(key, fieldName, fieldValue);
+			importPreferencesSystemField(key, fieldName, fieldValue, true);
 			importPreferencesStocksField(group, key, fieldName, fieldValue);
 		}
 		else if (group.equals("Standard Markup")) {
@@ -135,17 +135,17 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesCashRegisterField(key, fieldName, fieldValue);
 			importPreferencesPOSField(key, fieldName, fieldValue);
 		} else if (group.equals("Alternate Currency"))
-			importPreferencesSystemField(key, fieldName, fieldValue);
+			importPreferencesSystemField(key, fieldName, fieldValue, true);
 		else if (group.equals("Dongle"))
-			importPreferencesSystemField(key, fieldName, fieldValue);
+			importPreferencesSystemField(key, fieldName, fieldValue, true);
 		else if (group.equals("Local Workstation")) {
-			importPreferencesSystemField(key, fieldName, fieldValue);
+			importPreferencesSystemField(key, fieldName, fieldValue, true);
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
 			importPreferencesPOSField(key, fieldName, fieldValue);
 			importPreferencesAccountingField(key, fieldName, fieldValue);
 		}
 		else if (group.equals("Def Customer")) {
-			importPreferencesSystemField(key, fieldName, fieldValue);
+			importPreferencesSystemField(key, fieldName, fieldValue, true);
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
 			importPreferencesAccountingField(key, fieldName, fieldValue);
 		}
@@ -155,7 +155,7 @@ public class PreferencesMapper extends ImportMapper {
 		else if (group.equals("CreditCard Info"))
 			importPreferencesCreditCardField(key, fieldName, fieldValue);
 		else if (group.equals("Money Formats"))
-			importPreferencesSystemField(key, fieldName, fieldValue);
+			importPreferencesSystemField(key, fieldName, fieldValue, false);
 	}
 	private void importAddressFormats(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
@@ -1106,7 +1106,7 @@ public class PreferencesMapper extends ImportMapper {
 		return returnValue;
 	}
 	
-	private void importPreferencesSystemField(String key, String name, String value) throws Exception {
+	private void importPreferencesSystemField(String key, String name, String value, boolean importRoundDown) throws Exception {
 		DataService dataService = new DataService();
 		PreferencesSystem preferencesSystem = (PreferencesSystem)dataService.getSingle("PreferencesSystem");
 		Address address = null;
@@ -1145,7 +1145,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setUseAlternateCurrency(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("factor"))
 			preferencesSystem.setConversionFactor(Utilities.tokenToDouble(value));
-		else if (name.equals("roundDown"))
+		else if (name.equals("roundDown") && importRoundDown)
 			preferencesSystem.setAlwaysRoundDown(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("roundToCnt"))
 			preferencesSystem.setAlternateRoundto(Utilities.tokenToInt(value));
@@ -1288,7 +1288,7 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesSystem.setNumbersRoundto(Utilities.tokenToInt(value));
 		else if (name.equals("roundTaxUp"))
 			preferencesSystem.setRoundTaxUp(Utilities.tokenToBooleanValue(value));
-		else if (name.equals("roundDown"))
+		else if (name.equals("roundDown") && importRoundDown)
 			preferencesSystem.setAlwaysRoundDown(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("fiscalYearStartMonth")) {
 			int month = Utilities.tokenToInt(value);
