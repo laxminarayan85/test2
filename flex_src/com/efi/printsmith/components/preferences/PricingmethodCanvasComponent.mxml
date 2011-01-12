@@ -77,6 +77,16 @@
 				}
 				return true;
 			}
+			
+			public function getCategoryName(item:Object):String {
+				if(item.category!=null){
+					if(item.estimator!=null && item.estimator.name=="Press Definitions" || item.estimator.name=="Copier Definitions" || item.estimator.name=="List Price") {
+						return "";
+					}
+					return item.category.name;
+				}
+				return "";
+			}
 		]]>
 	</mx:Script>
 	
@@ -165,16 +175,20 @@
 							dataField="category" editable="true">
 							<mx:itemRenderer>
 			        			<mx:Component>
-			                		<mx:Text selectable="false" text="{data.category.name}"/>
+			                		<mx:Text selectable="false" text="{outerDocument.getCategoryName(data)}"/>
 			        			</mx:Component>
 			    			</mx:itemRenderer>
 							<mx:itemEditor>
 								<mx:Component>
-									<components:CustomComboBoxComponent datagridControl="true" variableName="category"
-										updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
-										masterList="{outerDocument.salesCategoryArray}" updateFirstElement="true"
-										customText="{outerDocument.getCustomTextData(outerDocument.salesCategoryArray,data,data.category)}"
-										enabled="{outerDocument.checkEnablity(data)}" disabledColor="#000000"/>
+									<mx:HBox width="100%" horizontalScrollPolicy="off">
+										<components:CustomComboBoxComponent datagridControl="true" variableName="category"
+											updateObject="true" objectLabelFieldId="id" labelFieldId="id" labelFieldName="name"
+											masterList="{outerDocument.salesCategoryArray}" updateFirstElement="true"
+											customText="{outerDocument.getCustomTextData(outerDocument.salesCategoryArray,data,data.category)}"
+											visible="{outerDocument.checkEnablity(data)}" disabledColor="#000000"/>
+										<mx:Text text="" visible="{!(outerDocument.checkEnablity(data))}"/>
+									</mx:HBox>
+									
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>
