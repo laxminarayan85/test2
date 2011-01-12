@@ -42,6 +42,8 @@ public class LoginService extends DataService {
 			
 			Users user = (Users) q.getSingleResult();
 			if (user.getDisableUser().equals(false)) {		
+				if ( user.getForcePasswordChange().equals(true))
+					return( user);
 				if (user.getRobustPassword() != null && user.getRobustPassword().booleanValue() == true) {
 					String localPW = EncryptionService.decryptData(user.getPassword(), "AES256PASSWORD_A");
 				
