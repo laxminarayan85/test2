@@ -45,7 +45,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "paperprice")
 @SQLDelete(sql="update paperprice set isdeleted='TRUE' where id=?")
 @Where(clause="isdeleted <> 'TRUE'")
-public class PaperPrice extends PriceListBase {
+public class PaperPrice extends Matrix {
 
 	/**
 	 * @generated
