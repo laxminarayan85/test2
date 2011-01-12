@@ -545,7 +545,7 @@
 		} else if (itemType == "SpeedTable") {
 			priceList = ev.result as SpeedTable;
 		} else if (itemType == "PaperPrice") {
-			priceList = ev.result as PaperPrice;
+			//priceList = ev.result as PaperPrice;
 		}		
 		var editPage:Container = parentContainer;
 	}
@@ -604,11 +604,12 @@
 			}
 			else
 				priceList = ev.result as SpeedTable;
-		} else if (itemType == "PaperPrice") {
-			if (ev.result == null)
-				priceList = new PaperPrice();
-			else
-				priceList = ev.result as PaperPrice;
+		//} else if (itemType == "PaperPrice") {
+			//if (ev.result == null)
+				//priceList = new PaperPrice();
+			//else
+				//priceList = ev.result as PaperPrice;
+		//}
 		}
 		updateNewPriceList();
 	}
