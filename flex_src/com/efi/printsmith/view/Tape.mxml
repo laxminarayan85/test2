@@ -26,6 +26,7 @@
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.TapeDepositAppliedRecord;
 	import com.efi.printsmith.data.Transaction;
 	import mx.charts.series.ColumnSeries;
 	import mx.events.FlexEvent;
@@ -36,6 +37,7 @@
 	import mx.collections.XMLListCollection;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.AbstractEvent;
 	import mx.controls.Alert;
     import mx.printing.FlexPrintJob;
     import mx.printing.PrintAdvancedDataGrid;
@@ -51,6 +53,7 @@
 	import com.efi.printsmith.data.TapeBatch;
 	import com.efi.printsmith.data.TapeSessionBatch;
 	import com.efi.printsmith.data.TapePaymentRecord;
+	import com.efi.printsmith.data.TapeDepositAppliedRecord;
 	import com.efi.printsmith.data.TapeSaleRecord;
 	import com.efi.printsmith.data.AccountHistoryData;
 	import com.efi.printsmith.data.CreditCardTransactions;
@@ -60,7 +63,7 @@
 	[Bindable]
 	private var tapeBatch:TapeBatch;
 	[Bindable]
-	private var tapeTreeData:Array;
+	private var tapeTreeData:ArrayCollection;
 	
 	private var tapeEntryCount:int = 0;
 	
@@ -84,7 +87,6 @@
 	private function handleLoadCurrentTapeBatch(evt:ResultEvent):void {		
 		var i:int = 0;
 		var j:int = 0;
-		var subArray:Array;
 		var item:Object;
 		var tapeSessionBatch:TapeSessionBatch;
 			
@@ -95,24 +97,22 @@
 			tapeBatch.sessionBatches = new ArrayCollection();
 		}
 		
-		tapeTreeData = new Array();
-		tapeTreeData = tapeTreeData.concat(tapeBatch);
+		tapeTreeData = new ArrayCollection();
+		tapeTreeData.addItem(tapeBatch);
 		
 		for (i = 0; i < tapeBatch.sessionBatches.length; i++) {
 			item = tapeBatch.sessionBatches.getItemAt(i);
-			tapeTreeData = tapeTreeData.concat(item);
+			tapeTreeData.addItem(item);
 			
-			subArray = new Array();
 			tapeSessionBatch = item as TapeSessionBatch;
 			++tapeEntryCount;
 			if (tapeSessionBatch != null) {
 				for (j = 0; j < tapeSessionBatch.transactions.length; j++) {
 					item = tapeSessionBatch.transactions.getItemAt(j);
-					subArray = subArray.concat(item);
+					tapeTreeData.addItem(item);
 					++tapeEntryCount;
 				}
 			}
-			tapeTreeData = tapeTreeData.concat(subArray);
 		}
 				
 		this.throbber.visible = false;
@@ -197,6 +197,7 @@
 		var temp:String;
 		var tempSale:TapeSaleRecord;
 		var tempPayment:TapePaymentRecord;
+		var tempDeposit:TapeDepositAppliedRecord;
 		var tempBatch:TapeBatch;
 		var tempSession:TapeSessionBatch;
 		
@@ -215,6 +216,10 @@
 				description = description + " " + tempPayment.paymentMethod;
 			}
 			return (description);
+		} else if (item is TapeDepositAppliedRecord) {
+			tempDeposit = item as TapeDepositAppliedRecord;
+			description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.DepositAPPLIEDInvoic");
+			description = StringUtil.substitute(description,tempDeposit.invoice.displayId); 
 		} else if (item is TapeSaleRecord) {
 			tempSale = item as TapeSaleRecord;
 			
@@ -258,6 +263,7 @@
 		var tempPayment:TapePaymentRecord;
 		var tempBatch:TapeBatch;
 		var tempSession:TapeSessionBatch;
+		var tempDeposit:TapeDepositAppliedRecord;
 		
 		if (item is TapeBatch) {
 			tempBatch = item as TapeBatch;
@@ -271,8 +277,10 @@
 		} else if (item is TapeSessionBatch) {
 			tempSession = item as TapeSessionBatch;
 			return numberFormatter.format(tempSession.accumTotal);
+		} else if (item is TapeDepositAppliedRecord) {
+			tempDeposit = item as TapeDepositAppliedRecord;
+			return numberFormatter.format(tempDeposit.totalDeposits);
 		}
-		
 		return "";
 	} 
 	
@@ -308,6 +316,44 @@
 		return (description);
 	}	
 	
+	public function doListClick():void {
+		if(tapeList.selectedIndex > -1){
+			var item:Object = tapeList.selectedItem as Object;
+			var i:int;
+			
+			if (item is TapeBatch) {
+				
+			} else {
+				var selectedArr:Array = new Array();
+				var sessionStart:int = 0;
+				var sessionEnd:int = 0;
+				
+				// backup through list looking for start of session
+				for (i = tapeList.selectedIndex; i > 0; i--) {
+					item = tapeTreeData.getItemAt(i);
+					if (item is TapeSessionBatch) {
+						sessionStart = i;
+						break;
+					}
+				}
+				if (sessionStart > 0) {
+					sessionEnd = tapeTreeData.length;		// default to end of tape, to select all of last session
+					// cycle through session looking for end
+					for (i = sessionStart+1; i < tapeTreeData.length; i++) {
+						item = tapeTreeData.getItemAt(i);
+						if (item is TapeSessionBatch) {
+							sessionEnd = i-1;
+							break;
+						}
+					}
+					for (i = sessionStart; i <= sessionEnd; i++) {
+						selectedArr.push(i);
+					}
+					tapeList.selectedIndices = selectedArr;
+				}
+			}
+		}
+	}
 
 ]]>
                              
@@ -327,7 +373,7 @@
 		<mx:Label x="112" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'wipRepCmd.Refresh')}" width="114" textAlign="center"/>
 		<mx:Label x="199" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'tapeCmd.VoidTransaction')}" width="150" textAlign="center"/>
 		
-		<mx:DataGrid x="10" y="103" width="552" height="470" id="tapeList" dataProvider="{tapeTreeData}" itemClick="">
+		<mx:DataGrid x="10" y="103" width="552" height="470" id="tapeList" dataProvider="{tapeTreeData}" itemClick="doListClick()" allowMultipleSelection="true">
 			<mx:columns>
 				<mx:DataGridColumn headerText="Date" labelFunction="showDate" width="120"/>
 				<mx:DataGridColumn headerText="Transaction" labelFunction="showDescription"/>

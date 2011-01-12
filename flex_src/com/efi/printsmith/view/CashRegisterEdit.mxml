@@ -283,6 +283,8 @@
 	import com.efi.printsmith.data.TapeSessionBatch;
 	import com.efi.printsmith.data.TapePaymentRecord;
 	import com.efi.printsmith.data.TapeSaleRecord;
+	import com.efi.printsmith.data.TapeDepositAppliedRecord;
+	
 	import com.efi.printsmith.data.AccountHistoryData;
 	import com.efi.printsmith.data.CreditCardTransactions;
 	import com.efi.printsmith.data.CreditCard;
@@ -293,6 +295,7 @@
 	import com.efi.printsmith.data.PreferencesCreditCard;
 	import com.efi.printsmith.data.Account;
 	import com.efi.printsmith.data.UnpurchasedMerchandise;
+	import com.efi.printsmith.data.DepositEntry;
 
 	import com.efi.printsmith.events.JobEditCompleteEvent;
 	import com.efi.printsmith.events.CreditCardTrackReadEvent;
@@ -2081,10 +2084,22 @@
 					if (tempSale.isPickup) {
 						if (tempSale.invoice != null) {
 							
-						//	totalDeposits
+							for (var j:int=0; j < tempSale.invoice.deposits.length; j++)	{
+								var deposit:DepositEntry = tempSale.invoice.deposits.getItemAt(j) as DepositEntry;
+								if (deposit != null && deposit.amount > 0)	{
+									totalDeposits += deposit.amount;
+								}
+							}
+							
 							//
 							// insert desposit applied transaction after the Sale (Pickup)
-							//TODO
+							//
+							if (totalDeposits > 0) {
+								var depApplied:TapeDepositAppliedRecord = new TapeDepositAppliedRecord();
+								depApplied.totalDeposits = totalDeposits;
+						//		depApplied.invoice = tempSale.invoice;		// which invoice applied to
+								sessionBatch.transactions.addItemAt(depApplied,i);
+							}
 						}		
 					}
 				}
@@ -2288,6 +2303,7 @@
  		if (evt.placeHolder is TapePaymentRecord) {
 			var tempPayment:TapePaymentRecord = evt.placeHolder as TapePaymentRecord;
 			tempPayment.refNumber = evt.description;
+			tempPayment.isPaidOut = true;
 		} else if (evt.placeHolder is TapeSaleRecord) {
 			var tempSale:TapeSaleRecord = evt.placeHolder as TapeSaleRecord;
 			tempSale.description = evt.description;
