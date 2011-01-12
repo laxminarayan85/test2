@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<mx:Canvas width="632" height="382" verticalScrollPolicy="off" horizontalScrollPolicy="off"  xmlns:mx="http://www.adobe.com/2006/mxml"
+			 fontSize="9">
+		
+		<mx:Text x="0" y="16" text="Copies" width="63" height="43" textAlign="center" fontWeight="bold"/>
+		<mx:Text x="60" y="16" text="Colors" width="569.5" height="16.5" textAlign="center" fontWeight="bold"/>
+		<mx:TextInput id="header1" x="60" y="42.5" width="115" height="20" text="{matrix.header1}" textAlign="center" focusIn="setCurrentValue(event)" focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header2" x="173" y="42.5" width="115" height="20" text="{matrix.header2}" textAlign="center" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header3" x="287" y="42.5" width="115" height="20" text="{matrix.header3}" textAlign="center" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header4" x="400.5" y="42.5" width="115" height="20" text="{matrix.header4}" textAlign="center" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
+		<mx:TextInput id="header5" x="514.5" y="42.5" width="115" height="20" text="{matrix.header5}" textAlign="center" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
+		<mx:DataGrid 
+			width="629.5" dataProvider="{matrix.elements}" 
+					showHeaders="true" borderStyle="solid" borderThickness="3" x="0" 
+					editable="true" enabled="true" horizontalGridLines="true"
+					bottom="0" top="60" rowHeight="20" alternatingItemColors="[#FFFFFF, #FFFFFF]"
+					itemEditEnd="formatData(event);"
+					doubleClickEnabled="true" focusIn="gridGotFocus()" id="matrix_grid">
+				<mx:columns>
+				     <mx:DataGridColumn dataField="qty" headerText="" sortable="false" width="50"/>
+				     <mx:DataGridColumn dataField="price1" headerText="Front" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price11" headerText="Back" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price2" headerText="Front" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price12" headerText="Back" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price3" headerText="Front" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price13" headerText="Back" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price4" headerText="Front" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price14" headerText="Back" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price5" headerText="Front" editable="true" sortable="false" width="50" textAlign="right"/>
+				     <mx:DataGridColumn dataField="price15" headerText="Back" editable="true" sortable="false" width="50" textAlign="right"/>
+				</mx:columns>
+		<mx:Script source="../../common/scripts/StringUtils.as"/>
+		<mx:Script>
+			<![CDATA[
+				import com.efi.printsmith.data.Matrix;
+				import mx.events.*;
+				import mx.controls.*; 
+				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
+				[Bindable] public var hour:Number = 0;
+				[Bindable] public var currentValue:String = "";
+				[Bindable] public var gridHasFocus:Boolean = false;
+				public function mapToMatrix():void {
+					matrix.header1 = parseInt(this.header1.text);
+					matrix.header2 = parseInt(this.header2.text);
+					matrix.header3 = parseInt(this.header3.text);
+					matrix.header4 = parseInt(this.header4.text);
+					matrix.header5 = parseInt(this.header5.text);
+				}
+				private function setCurrentValue(evt:FocusEvent):void {
+					currentValue = evt.currentTarget.text;
+					gridHasFocus = false;
+				}
+				private function gridGotFocus():void {
+					if (!gridHasFocus) {
+						this.matrix_grid.invalidateDisplayList();
+						this.matrix_grid.editedItemPosition = {rowIndex:0, columnIndex:0};
+					}
+					gridHasFocus = true;
+				}
+				private function checkNaN(evt:FocusEvent) {
+					var value:Number = 0;
+					switch(evt.currentTarget) {
+						case this.header1:
+							value = parseFloat(this.header1.text);
+							if (isNaN(value))
+								this.header1.text = currentValue;
+							else
+								this.header1.text = value.toFixed(0);
+							break;
+						case this.header2:
+							value = parseFloat(this.header2.text);
+							if (isNaN(value))
+								this.header2.text = currentValue;
+							else
+								this.header2.text = value.toFixed(0);
+							break;
+						case this.header3:
+							value = parseFloat(this.header3.text);
+							if (isNaN(value))
+								this.header3.text = currentValue;
+							else
+								this.header3.text = value.toFixed(0);
+							break;
+						case this.header4:
+							value = parseFloat(this.header4.text);
+							if (isNaN(value))
+								this.header4.text = currentValue;
+							else
+								this.header4.text = value.toFixed(0);
+							break;
+						case this.header5:
+							value = parseFloat(this.header5.text);
+							if (isNaN(value))
+								this.header5.text = currentValue;
+							else
+								this.header5.text = value.toFixed(0);
+							break;
+					}
+				}
+				private function formatData(event:DataGridEvent) {
+					// Check the reason for the event.
+			        if (event.reason == DataGridEventReason.CANCELLED)
+			        {
+			            return;
+			        }            
+			
+			        var newData:String= 
+			            TextInput(event.currentTarget.itemEditorInstance).text;
+					var parsedValue:Number = parseCurrencyFloat(newData);
+			        if(newData != "") {
+		            	if (isNaN(parsedValue)) {
+		            		TextInput(matrix_grid.itemEditorInstance).text="0";
+		            	} else {
+		            		TextInput(matrix_grid.itemEditorInstance).text=parsedValue.toString();
+		            	}
+			        }
+				}
+			]]>
+		</mx:Script>
+		</mx:DataGrid>
+	</mx:Canvas>
+
