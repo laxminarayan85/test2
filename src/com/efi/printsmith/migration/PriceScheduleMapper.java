@@ -39,7 +39,7 @@ public class PriceScheduleMapper extends ImportMapper {
 				} else if ("ID".equals(currentFieldToken)) {
 					paperPrice.setPrevId(currentImportToken);
 				} else if ("name".equals(currentFieldToken)) {
-					paperPrice.setName(currentImportToken);
+					//paperPrice.setName(currentImportToken);
 				} else if (qtyString.equals(currentFieldToken)) {
 					qty = Utilities.tokenToInt(currentImportToken);
 				} else if (sides1String.equals(currentFieldToken) && qty > 0) {
@@ -53,7 +53,7 @@ public class PriceScheduleMapper extends ImportMapper {
 						color = sides1 - ((x - 1) * 5);
 					priceListElement.setColor(color);
 					priceListElement.setAmount(Utilities.tokenToDouble(currentImportToken));
-					paperPrice.addElements(priceListElement);
+					//paperPrice.addElements(priceListElement);
 					sides1++;
 				} else if (sides2String.equals(currentFieldToken) && qty > 0) {
 					priceListElement = new PriceListElement();
@@ -66,7 +66,7 @@ public class PriceScheduleMapper extends ImportMapper {
 						color = sides2 - ((x - 1) * 5);
 					priceListElement.setColor(color);
 					priceListElement.setAmount(Utilities.tokenToDouble(currentImportToken));
-					paperPrice.addElements(priceListElement);
+					//paperPrice.addElements(priceListElement);
 					sides2++;
 				}
 			}

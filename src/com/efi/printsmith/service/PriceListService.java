@@ -956,7 +956,7 @@ public class PriceListService extends SnowmassHibernateService {
 	public PaperPrice createPaperPrice() {
 		PaperPrice paperPrice = new PaperPrice();
 		
-		paperPrice.setIsDollar(true);
+		//paperPrice.setIsDollar(true);
 		
 		PriceListElement element = null;
 		for (int i = 0; i < 14; i++) {
@@ -964,10 +964,10 @@ public class PriceListService extends SnowmassHibernateService {
 			element.setAmount(0.0);
 			element.setQuantity(0L);
 			
-			paperPrice.addElements(element);
+			//paperPrice.addElements(element);
 		}
-		paperPrice.setInterpolate(false);
-		paperPrice.setIsPercentage(false);
+		//paperPrice.setInterpolate(false);
+		//paperPrice.setIsPercentage(false);
 		return paperPrice;
 	}
 }
