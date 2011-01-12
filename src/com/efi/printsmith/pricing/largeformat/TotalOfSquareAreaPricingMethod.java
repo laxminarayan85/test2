@@ -89,8 +89,8 @@ public class TotalOfSquareAreaPricingMethod extends LargeFormatPricingMethod {
 						stockTotalPrice = (stockPrice * ((calcArea / 2) / runout));
 						laborTotalPrice = (pricePerCopy * calcArea);
 					} else {
-						stockTotalPrice = (stockPrice * ((calcArea / 2) / runout));
-						laborTotalPrice = (pricePerCopy * calcArea);
+						stockTotalPrice = (stockPrice * ((calcArea) / runout));
+						laborTotalPrice = (pricePerCopy * calcArea * 2);
 					}
 				} else {
 					stockTotalPrice = ((stockPrice * calcArea / runout));
@@ -132,8 +132,8 @@ public class TotalOfSquareAreaPricingMethod extends LargeFormatPricingMethod {
 						stockTotalPrice = (discountedStockPrice * ((calcArea / 2) / runout));
 						laborTotalPrice = (pricePerCopy * calcArea);
 					} else {
-						stockTotalPrice = (discountedStockPrice * ((calcArea / 2) / runout));
-						laborTotalPrice = (pricePerCopy * calcArea);
+						stockTotalPrice = (discountedStockPrice * ((calcArea) / runout));
+						laborTotalPrice = (pricePerCopy * calcArea * 2);
 					}
 				} else {
 					stockTotalPrice = ((discountedStockPrice * calcArea / runout));
@@ -218,8 +218,8 @@ public class TotalOfSquareAreaPricingMethod extends LargeFormatPricingMethod {
 						stockTotalPrice = (stockPrice * ((calcArea / 2) / runout));
 						laborTotalPrice = (pricePerCopy * calcArea);
 					} else {
-						stockTotalPrice = (stockPrice * ((calcArea / 2) / runout));
-						laborTotalPrice = (pricePerCopy * calcArea);
+						stockTotalPrice = (stockPrice * ((calcArea) / runout));
+						laborTotalPrice = (pricePerCopy * calcArea * 2);
 					}
 				} else {
 					stockTotalPrice = ((stockPrice * calcArea / runout));

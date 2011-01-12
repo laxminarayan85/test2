@@ -29,7 +29,7 @@ public class MailingPricingMethod {
 		DataService dataService = new DataService();
 		List <PreferencesMarkups> markups = null;
 		if (pricingMethod.getTitle().equals("Mailing") || pricingMethod.getTitle().equals("Outside Services")) {
-			markups = (List<PreferencesMarkups>)dataService.getAll("OutsideServices");
+			markups = (List<PreferencesMarkups>)dataService.getAll("OutsideService");
 		} else {
 			markups = (List<PreferencesMarkups>)dataService.getAll("Merchandise");
 		}

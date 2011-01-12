@@ -83,7 +83,7 @@ public class SquareAreaAndOriginalsPricingMethod extends
 			else if (pricingMatrix.getHeader10() >= originals)
 				j = 9;
 			else
-				j = 9;
+				j = 0;
 
 			for (i = 0; i < pricingMatrix.getElements().size(); i++) {
 				if (pricingMatrix.getElements().get(i).getLastLine())
