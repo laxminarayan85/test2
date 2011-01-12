@@ -651,6 +651,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.Sort;
+			import mx.collections.SortField;
 			import com.efi.printsmith.data.CostingRecord;
 			import com.efi.printsmith.data.PreferencesStocks;
 			import com.efi.printsmith.events.JobNotesAddedEvent;
@@ -3287,6 +3289,17 @@
 				return certifiedString;
 			}
 			
+			private function getSortedList(list:ArrayCollection):ArrayCollection {
+				var dataSortField:SortField = new SortField();
+                dataSortField.name = "qtyOrdered";
+                dataSortField.numeric = true;
+ 				var numericDataSort:Sort = new Sort();
+                numericDataSort.fields = [dataSortField];
+                list.sort = numericDataSort;
+                list.refresh();
+				return list;
+			}
+			
 		]]>
 
 	</mx:Script>
@@ -3772,7 +3785,7 @@
 									  y="26"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" textAlign="right" width="108" id="label42"
 									  visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}"/>
-							<mx:ComboBox id="multiQtyCombo" dataProvider="{invoiceMultiQtyJobList}" labelField="qtyOrdered"
+							<mx:ComboBox id="multiQtyCombo" dataProvider="{getSortedList(invoiceMultiQtyJobList)}" labelField="qtyOrdered"
 								x="496" y="26" visible="false" close="{openEditMultiQtyJobWindow()}"/>
 							<mx:Label id="multiQtyLabel" x="496" y="26" text="{getMultiQtyString(invoiceMultiQtyJobList,invoiceMultiQtyJobList.length)}"
 								visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}" click="{openMultiQtyCombo(invoiceMultiQtyJobList)}"/>

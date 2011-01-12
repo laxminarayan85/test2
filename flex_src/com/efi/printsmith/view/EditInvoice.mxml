@@ -2032,6 +2032,9 @@
 					}
 					object.defaultJob = true;
 				}
+				invoice.jobs.refresh();
+				invoice_job_grid.dataProvider.refresh();
+				invoice_job_grid.validateProperties();
 				if (invoice.jobs != null && invoice.jobs.length > 0) {
 					var i:int;
 					invoice.subTotal = 0;
