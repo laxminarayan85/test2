@@ -106,23 +106,23 @@ public class TapeDepositAppliedRecord extends Transaction {
 	 */	
     @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
-	private Invoice invoice;
+	private InvoiceBase invoice;
 	
 	/**
 	 * @generated
  	 */
-	public Invoice getInvoice(){
+	public InvoiceBase getInvoice(){
     return invoice; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setInvoice(Invoice newVal) {
+   * @generated
+   */	
+  public void setInvoice(InvoiceBase newVal) {
     this.invoice = newVal;
   }
-	
+
 	/**
 	 * @generated
 	 */		
@@ -141,7 +141,7 @@ public class TapeDepositAppliedRecord extends Transaction {
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (TOTALDEPOSITS.equals(propertyName)) setTotalDeposits((Double)newValue); else
-    if (INVOICE.equals(propertyName)) setInvoice((Invoice)newValue); else
+    if (INVOICE.equals(propertyName)) setInvoice((InvoiceBase)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -154,7 +154,7 @@ public class TapeDepositAppliedRecord extends Transaction {
     if (TOTALDEPOSITS.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (INVOICE.equals(propertyName)) 
-      return new Class<?>[] {Invoice.class};		
+      return new Class<?>[] {InvoiceBase.class};		
     return super.getPropertyClass(propertyName);
   }
 	

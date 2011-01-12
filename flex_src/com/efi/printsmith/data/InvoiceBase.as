@@ -91,6 +91,7 @@ package com.efi.printsmith.data
 		public var invoiceNumberPrefix:String = "";
 		public var invoiceNumberSuffix:String = "";
 		public var deposits:ArrayCollection;
+		public var accountHistoryData:AccountHistoryData;
 	
 	}
 }

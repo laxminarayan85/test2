@@ -15,7 +15,7 @@ package com.efi.printsmith.data
 		public override var isDeleted:Boolean=false;
 				
 		public var totalDeposits:Number = 0;
-		public var invoice:Invoice;
+		public var invoice:InvoiceBase;
 	
 	}
 }

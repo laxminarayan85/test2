@@ -363,6 +363,11 @@ public class InvoiceBase extends ModelBase {
   public static final String DEPOSITS = "Deposits";
 
 	/**
+   * @generated
+   */
+  public static final String ACCOUNTHISTORYDATA = "AccountHistoryData";
+
+	/**
 	 * @generated
 	 */
 	public InvoiceBase() {
@@ -2227,6 +2232,27 @@ public class InvoiceBase extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+    @ManyToOne(optional=true)
+    @Where(clause="isdeleted <> 'TRUE'")
+  private AccountHistoryData accountHistoryData;
+
+	/**
+   * @generated
+ 	 */
+  public AccountHistoryData getAccountHistoryData(){
+    return accountHistoryData; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setAccountHistoryData(AccountHistoryData newVal) {
+    this.accountHistoryData = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2309,6 +2335,7 @@ public class InvoiceBase extends ModelBase {
     if (INVOICENUMBERPREFIX.equals(propertyName)) return getInvoiceNumberPrefix();
     if (INVOICENUMBERSUFFIX.equals(propertyName)) return getInvoiceNumberSuffix();
     if (DEPOSITS.equals(propertyName)) return getDeposits();
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) return getAccountHistoryData();
     return super.getProperty(propertyName);
   }
 	
@@ -2395,6 +2422,7 @@ public class InvoiceBase extends ModelBase {
     if (INVOICENUMBERPREFIX.equals(propertyName)) setInvoiceNumberPrefix((String)newValue); else
     if (INVOICENUMBERSUFFIX.equals(propertyName)) setInvoiceNumberSuffix((String)newValue); else
     if (DEPOSITS.equals(propertyName)) setDeposits((java.util.List<DepositEntry>)newValue); else
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) setAccountHistoryData((AccountHistoryData)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2558,6 +2586,8 @@ public class InvoiceBase extends ModelBase {
       return new Class<?>[] {String.class};		
     if (DEPOSITS.equals(propertyName)) 
       return new Class<?>[] {java.util.List.class, DepositEntry.class};		
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) 
+      return new Class<?>[] {AccountHistoryData.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2645,6 +2675,7 @@ public class InvoiceBase extends ModelBase {
     if (INVOICENUMBERPREFIX.equals(propertyName)) return InvoiceBase.class;
     if (INVOICENUMBERSUFFIX.equals(propertyName)) return InvoiceBase.class;
     if (DEPOSITS.equals(propertyName)) return InvoiceBase.class;
+    if (ACCOUNTHISTORYDATA.equals(propertyName)) return InvoiceBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2809,6 +2840,8 @@ public class InvoiceBase extends ModelBase {
     if (! SmartEquals(getInvoiceNumberSuffix(), objT.getInvoiceNumberSuffix()))
       return false;
     if (! SmartEquals(getDeposits(), objT.getDeposits()))
+      return false;
+    if (! SmartEquals(getAccountHistoryData(), objT.getAccountHistoryData()))
       return false;
     return true;
   }			
