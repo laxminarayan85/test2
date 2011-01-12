@@ -1621,7 +1621,9 @@ public class DefaultDataFactory {
 		users.setShowUserNameLog(true);
 		users.setAccessLevel(99);
 		users.setAccessGroup(owneraccessgroup);
+		users.setForcePasswordChange(false);
 		users.setDisableUser(false);
+		users.setRobustPassword(false);
 		try {
 			dataservice.addUpdate(users);
 		} catch (Exception e) {
