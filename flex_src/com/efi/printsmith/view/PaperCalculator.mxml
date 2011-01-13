@@ -539,7 +539,9 @@
 				var selectEvent:JobEditCompleteEvent = new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, job);
 				mapToJobData();
 			//	dataService.addUpdate(job.paperCal);
-				dispatchEvent(selectEvent);			
+				dispatchEvent(selectEvent);
+				registerClassAlias("com.efi.printsmith.data.Job",Job);
+				originalJob = ObjectUtil.copy(job) as Job;			
 				closeWindow();
 			}
 			
