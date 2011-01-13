@@ -215,7 +215,6 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	public function init(event:FlexEvent=null):void {
 		consumer.subscribe();
 		notification_consumer.subscribe();  
-		this.enabled = false;
 		pickerLoaded = false;
 //		account= new Account();
 		
@@ -254,8 +253,10 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
      	Snowmass.getInstance().addEventListener(CreditCardTrackReadEvent.BRICKREAD, handleBrickRead);
 		
 		// mode stuff 
-		if (_mode == CT_FROM_PICKER)	
+		if (_mode == CT_FROM_PICKER)	{
+			this.enabled = false;
 			openContactPicker();
+		}
 		else	{
 		 	//set toolbar
 			lblPrevious.visible = false;
