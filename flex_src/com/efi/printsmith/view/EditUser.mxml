@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.data.*" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" name="User Editor"
-width="100%" height="619" defaultButton="{submitButton}" 
-implements="com.efi.printsmith.security.ISecureComponent" xmlns:ns1="com.efi.printsmith.components.*"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:vo="com.efi.printsmith.data.*"
+headerHeight="0" width="100%" height="100%" defaultButton="{submitButton}" 
+implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent" xmlns:ns1="com.efi.printsmith.components.*"
 preinitialize="preInit();" xmlns:components="com.efi.printsmith.common.components.*"
 showCloseButton="false"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserDefinitions')}" xmlns:text="flash.text.*">
@@ -30,6 +30,9 @@ showCloseButton="false"
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.mdi.view.window.MDIWindow;
+	import mx.utils.ObjectUtil;
+	import com.efi.mdi.event.compare.MDICompareObjectEvent;
 	import com.efi.printsmith.security.PSSecurityCommands;
 	import mx.events.FlexEvent;
 	import mx.controls.dataGridClasses.DataGridColumn;
@@ -83,13 +86,19 @@ showCloseButton="false"
 	 [Bindable]                             
 	private var accessGroup:AccessGroup = new AccessGroup();  
  	
- 	private var focusedFormControl:DisplayObject;                           
+ 	private var focusedFormControl:DisplayObject;
+ 	
+ 	[Bindable] private var originalUser:Users;                   
+ 	
+ 	[Bindable] public var selectedIndexSelection:int = -1;        
            
 	public function getSecurityCommand():String {
 		return PSSecurityCommands.ADMIN_USERDEFINTIONS;
 	}
 		       
 	public function init(event:FlexEvent = null):void {
+		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+      	mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "usecCmd.UserDefinitions");
 		consumer.subscribe();
 		notification_consumer.subscribe();     
 	    resetFocus();              
@@ -253,14 +262,25 @@ showCloseButton="false"
 		                    
 	} 
 	private function setUser():void{
-		user1= new Users();  
-		user1.accessGroup = new AccessGroup();
+		user1= new Users();
+		setOriginalUser();
 		
 	}       
 	private function handleLoadResult(ev:ResultEvent):void {
 		userslist = ev.result as ArrayCollection;
 		dataGrid.invalidateList();
+		if(selectedIndexSelection!=-1) {
+			if(userslist.length>selectedIndexSelection) {
+				dataGrid.selectedIndex = selectedIndexSelection;
+				user1 = dataGrid.selectedItem as Users;
+				setOriginalUser();
+			} else {
+				setUser();
+			}
+			selectedIndexSelection = -1;
+		}
 	}
+	
 	private function handleLoadAccessGroupResult(ev:ResultEvent):void {
 		var index:int;
 		var index3:int;
@@ -279,9 +299,11 @@ showCloseButton="false"
 			
 		
 	}
+	
 	private function handleLoadAccessLevelResult(ev:ResultEvent):void {
 		accessLevels = ev.result as ArrayCollection;
 	}
+	
 	private function handleDeleteResult(ev:ResultEvent):void {
 	     dataService.getAllOrderBy("Users", "name"); 
 	     send();
@@ -291,6 +313,9 @@ showCloseButton="false"
 		user1.name= nameField.text;
 	//	user1.password = passwordField.text;
 		user1.accessGroup= accessGroupList.selectedItem as AccessGroup;
+		if(originalUser!=null && originalUser.accessGroup==null) {
+			originalUser.accessGroup= accessGroupList.selectedItem as AccessGroup;
+		}
 		user1.accessLevel=  parseInt(access_level.text)
 		user1.forcePasswordChange = force_password.selected;
 		user1.lockSalesRep = lock_salesrep.selected;
@@ -370,8 +395,14 @@ showCloseButton="false"
 		doUserGridClick();                          		
 	}   
 	private function doUserGridClick():void {
+		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doSelectOperation);
+		dispatchEvent(mDICompareObjectEvent);
+	}    
+	
+	private function doSelectOperation():void {
 		setUser();
 		user1 = dataGrid.selectedItem as Users;
+		setOriginalUser();
 		if(user1 == null)
 			nameField.enabled = false;
 		else if ( user_login.name == user1.name)
@@ -395,7 +426,7 @@ showCloseButton="false"
 	    		enableform(false)
 	    	}
 	    }       
-	}    
+	}
 	private function enableform(temp:Boolean):void{
 		force_password.enabled= temp;
 		lock_salesrep.enabled= temp;
@@ -488,12 +519,65 @@ showCloseButton="false"
 		} else {
 			return "None";
 		}
-	}                                   
+	}  
+	
+	public function setOriginalUser():void {
+		registerClassAlias("com.efi.printsmith.data.Users",Users);
+		originalUser = ObjectUtil.copy(user1) as Users;
+	}
+	
+	public function getOriginalObject():ArrayCollection {
+		var originalList:ArrayCollection = new ArrayCollection();
+		originalList.addItem(originalUser);
+		return originalList;
+	}
+		
+	public function getUpdatedObject():ArrayCollection {
+		var updatedList:ArrayCollection = new ArrayCollection();
+		updatedList.addItem(user1);
+		return updatedList;
+	}
+	
+	public function getConfirmationText():String {
+		if(user1!=null){
+			return "\n"+user1.name;
+		}
+		return "";
+	} 
+		
+	public function onClose():void {
+		if(user1!=null){
+			mapToUserData();
+		}
+	}
+	
+	public function onSave():void {
+		saveUser();
+	}
+	
+	public function onDontSave():void {
+		selectedIndexSelection = dataGrid.selectedIndex; 
+		dataService.getAllOrderBy("Users", "name");
+	}
+	
+	public function onCancel():void {
+		if(user1!=null && userslist!=null && userslist.length>0){
+			var counter:int=0;
+			for each(var usersObj:Users in userslist) {
+				if(user1.id == usersObj.id){
+					dataGrid.selectedItem = usersObj;
+					dataGrid.selectedIndex = counter;
+					break;	
+				}
+				counter++;
+			}
+		}
+	}                                 
 ]]>        
 </mx:Script>
  <mx:Canvas width="638" height="100%">                            
  
-	<mx:DataGrid x="10" y="10" width="606" id="dataGrid" dataProvider="{userslist}" height="134" click="doUserGridClick();" >
+	<mx:DataGrid x="10" y="10" width="606" id="dataGrid" dataProvider="{userslist}" height="134" itemClick="{doUserGridClick()}" >
 		<mx:columns>
 			<mx:DataGridColumn sortable="false" id="namerow" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.UserName')}" labelFunction="getNamelabel"/>
 			<mx:DataGridColumn sortable="false" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.AccessGroup')}" labelFunction="getAccessgrouplabel"/>
