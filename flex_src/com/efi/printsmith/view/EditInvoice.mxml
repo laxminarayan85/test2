@@ -16,6 +16,7 @@
 		  name="Invoice Editor"
 		  fontSize="9" xmlns:components="com.efi.printsmith.common.components.*">
 	
+	
 	<mx:RemoteObject id="estimatorService"
 						destination="estimatorService">
 		<mx:method name="createInvoiceFromEstimate"
@@ -1656,7 +1657,7 @@
 				return Snowmass.getCurrencyFormatter(false, 2).format(diffValue)+" "+ Snowmass.getCurrencyFormatter(false, 0).format(prcntValue)+"%";
 			}
 			
-			private function gridJobPrice(item:Object, column:DataGridColumn):String {
+			public function gridJobPrice(item:Object, column:DataGridColumn):String {
 				if(item is Job) {
 					var localJob:Job = item as Job;
 					if (localJob != null && localJob.pricingRecord != null) {					
@@ -2599,16 +2600,17 @@
 							 sortableColumns="false"
 							 doubleClick="{doDoubleclickInvoiceItem()}"
 						  	 doubleClickEnabled="true"
-						  	 dragEnabled="true">
+						  	 dragEnabled="true"
+						  	 editable="true">
 					<mx:columns>
-						<mx:DataGridColumn>
+						<mx:DataGridColumn editable="false">
 							<mx:itemRenderer>
 								<mx:Component>
 									<mx:Label text="{outerDocument.getJobIndex(data)}" textAlign="center" fontWeight="bold"/>
 								</mx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn visible="{multiQtyJobPresent}">
+						<mx:DataGridColumn visible="{multiQtyJobPresent}" editable="false">
 							<mx:itemRenderer>
 									<mx:Component>
 									<mx:HBox width="100%" horizontalAlign="center">
@@ -2620,11 +2622,44 @@
 							</mx:itemRenderer>
 						</mx:DataGridColumn>	
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Qty')}"
-										   labelFunction="getQtyOrdered"/>
+										   labelFunction="getQtyOrdered" editable="true">
+							<mx:itemEditor>
+								<mx:Component>
+									<components:CustomNumericTextInputComponent
+										dataHolder="{data}" variableName="{(data is Job)?'qtyOrdered':'quantity'}" customText="{(data is Job)?data.qtyOrdered:data.quantity}"
+										precision="2" rounding="nearest" textAlignStyle="left">
+										<mx:Script>
+											<![CDATA[
+												import com.efi.printsmith.data.Job;
+											]]>
+										</mx:Script>
+									</components:CustomNumericTextInputComponent>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
-										   labelFunction="getJobChargeDescription" dataField="description"/>
+										   labelFunction="getJobChargeDescription" dataField="description" editable="false"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Price')}"
-										   labelFunction="gridJobPrice" textAlign="right"/>
+										   textAlign="right" editable="true">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Label text="{outerDocument.gridJobPrice(data,null)}" textAlign="right"/>
+								</mx:Component>
+							</mx:itemRenderer>
+							<mx:itemEditor>
+								<mx:Component>
+									<components:CustomNumericTextInputComponent
+										dataHolder="{(data is Job)?data.pricingRecord:data}" variableName="{(data is Job)?'totalPrice':'price'}" customText="{(data is Job)?data.pricingRecord.totalPrice:data.price}"
+										precision="2" rounding="nearest">
+										<mx:Script>
+											<![CDATA[
+												import com.efi.printsmith.data.Job;
+											]]>
+										</mx:Script>
+									</components:CustomNumericTextInputComponent>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>
 
 					</mx:columns>
 				</mx:DataGrid>
