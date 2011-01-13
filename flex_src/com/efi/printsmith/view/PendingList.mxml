@@ -922,13 +922,21 @@
 	}
 	
 	public function getInvoiceNumber(item:Object, preferencesPOSObj:PreferencesPOS):String {
+		var pref:String = "";
+		var suff:String = "";
+		
 		if(item!=null && (item is Invoice || item is Estimate)){
+			if (item.invoiceNumberPrefix != null)
+				pref = "";
+			if (item.invoiceNumberSuffix != null)
+				suff = "";		
+					
 			if(preferencesPOSObj!=null && preferencesPOSObj.showDocumentType){
 				if(item is Estimate) {
-					return "E#"+item.invoiceNumber;
+					return "E#"+ pref + item.invoiceNumber + suff;
 				}
 			}
-			return item.invoiceNumber;
+			return pref + item.invoiceNumber + suff;
 		}
 		return "";
 	}
