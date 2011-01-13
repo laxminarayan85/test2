@@ -1308,7 +1308,7 @@
 			private function doSave():void
 			{
 				mapToJobData();
-				updateCostingRecord();
+				updateCostingRecordAndPrice();
 				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.invoiceMultiQtyJobList, this.jobIndex);
 				dispatchEvent(jobEditCompleteEvent);
 				var mdiWindow:MDIWindow = this.parent as MDIWindow;
@@ -1316,7 +1316,10 @@
 				//PopUpManager.removePopUp(this);
 			}
 			
-			private function updateCostingRecord():void {
+			private function updateCostingRecordAndPrice():void {
+				if(job.pricingRecord!=null){
+					job.pricingRecord.originalPrice = job.pricingRecord.totalPrice;
+				}
 				if(job.costingRecord==null) {
 					job.costingRecord = new CostingRecord();
 				}
@@ -1333,6 +1336,9 @@
 				}
 				if(invoiceMultiQtyJobList!=null) {
 					for each(var jobBaseObj:JobBase in invoiceMultiQtyJobList) {
+						if(jobBaseObj.pricingRecord!=null){
+							jobBaseObj.pricingRecord.originalPrice = jobBaseObj.pricingRecord.totalPrice;
+						}
 						if(jobBaseObj.costingRecord==null) {
 							jobBaseObj.costingRecord = new CostingRecord();
 						}

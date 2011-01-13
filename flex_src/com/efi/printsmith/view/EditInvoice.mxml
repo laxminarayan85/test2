@@ -655,6 +655,9 @@
 						if(jobBaseObj.costingRecord!=null) {
 							jobBaseObj.costingRecord.originalTotalCost = jobBaseObj.costingRecord.actualTotalCost;
 						}
+						if(jobBaseObj.pricingRecord!=null) {
+							jobBaseObj.pricingRecord.originalPrice = jobBaseObj.pricingRecord.totalPrice;
+						}
 					}
 				}
 			}
@@ -2218,6 +2221,18 @@
 	        	}
 	        }
 	        
+	        public function updatePricing(item:Object):void {
+	        	if(item is Job) {
+	        		var localJob:Job = item as Job;
+	        		if(localJob.pricingRecord!=null) {
+	        			if(localJob.pricingRecord.originalPrice!=localJob.pricingRecord.totalPrice) {
+	        				localJob.pricingRecord.totalPriceOverride = true;
+	        			}
+	        		}
+	        		callLater(updateCostingDataGrid);
+	        	}
+	        }
+	        
 	        private function updateCostingDataGrid():void {
 	        	invoice_cost_grid.dataProvider = getCostingJobsList(invoice.jobs);
 	        	cust_discount_text0.text = getActualTotals(invoice.jobs);
@@ -2522,13 +2537,13 @@
 										   dataField="description" editable="false"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Estimated')}"
 										   width="150"
-										   labelFunction="getEstimatedCost" editable="false"/>
+										   labelFunction="getEstimatedCost" editable="false" textAlign="right"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Actual')}"
 										   width="150"
 										   labelFunction="getActualCost">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Label color="{outerDocument.getCostingColor(data)}"/>
+									<mx:Label color="{outerDocument.getCostingColor(data)}" textAlign="right"/>
 								</mx:Component>
 							</mx:itemRenderer>
 							<mx:itemEditor>
@@ -2544,7 +2559,7 @@
 										   labelFunction="getDifferenceValue" editable="false">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Label color="{outerDocument.getCostingColor(data)}"/>
+									<mx:Label color="{outerDocument.getCostingColor(data)}" textAlign="right"/>
 								</mx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
@@ -2553,16 +2568,23 @@
 										   labelFunction="gridJobPrice">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Label color="{outerDocument.getCostingColor(data)}"/>
+									<mx:Label color="{outerDocument.getCostingColor(data)}" textAlign="right"/>
 								</mx:Component>
 							</mx:itemRenderer>
+							<mx:itemEditor>
+								<mx:Component>
+									<components:CustomNumericTextInputComponent
+										dataHolder="{data.pricingRecord}" variableName="totalPrice" customText="{data.pricingRecord.totalPrice}"
+										precision="2" rounding="nearest" focusOut="{outerDocument.updatePricing(data)}"/>
+								</mx:Component>
+							</mx:itemEditor>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Margin')}"
 										   width="150"
 										   labelFunction="getMarginValue" editable="false">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Label color="{outerDocument.getCostingColor(data,true)}"/>
+									<mx:Label color="{outerDocument.getCostingColor(data,true)}" textAlign="right"/>
 								</mx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
