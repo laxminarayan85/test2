@@ -2220,6 +2220,10 @@
 	        
 	        private function updateCostingDataGrid():void {
 	        	invoice_cost_grid.dataProvider = getCostingJobsList(invoice.jobs);
+	        	cust_discount_text0.text = getActualTotals(invoice.jobs);
+	        	cust_discount_text1.text = getPriceTotals(invoice.jobs);
+	        	cust_discount_text2.text = getMarginTotals(invoice.jobs);
+	        	cust_discount_text3.text = getEstProfitTotals(invoice.jobs);
 	        }
 	        
 	        private function getActualTotals(jobList:ArrayCollection):String {

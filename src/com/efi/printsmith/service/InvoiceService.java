@@ -129,6 +129,11 @@ public class InvoiceService extends SnowmassHibernateService {
 					jobBaseObj.setMultiQtyJob(false);
 					jobBaseObj.setParentInvoice(invoice);
 					jobBaseObj.setReleasedToProduction(false);
+					if(jobBaseObj.getCostingRecord()!=null) {
+						jobBaseObj.getCostingRecord().setId(0L);
+						jobBaseObj.getCostingRecord().setModified(null);
+						jobBaseObj.getCostingRecord().setCreated(null);
+					}
 					if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
 						for(Charge charge : jobBaseObj.getCharges()) {
 							charge.setId(0L);
@@ -199,6 +204,11 @@ public class InvoiceService extends SnowmassHibernateService {
 					jobBaseObj.setMultiQtyJob(false);
 					jobBaseObj.setParentInvoice(invoice);
 					jobBaseObj.setReleasedToProduction(false);
+					if(jobBaseObj.getCostingRecord()!=null) {
+						jobBaseObj.getCostingRecord().setId(0L);
+						jobBaseObj.getCostingRecord().setModified(null);
+						jobBaseObj.getCostingRecord().setCreated(null);
+					}
 					if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
 						for(Charge charge : jobBaseObj.getCharges()) {
 							charge.setId(0L);
@@ -219,6 +229,11 @@ public class InvoiceService extends SnowmassHibernateService {
 				jobBaseObj.setMultiQtyJob(false);
 				jobBaseObj.setParentInvoice(invoice);
 				jobBaseObj.setReleasedToProduction(false);
+				if(jobBaseObj.getCostingRecord()!=null) {
+					jobBaseObj.getCostingRecord().setId(0L);
+					jobBaseObj.getCostingRecord().setModified(null);
+					jobBaseObj.getCostingRecord().setCreated(null);
+				}
 				if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
 					for(Charge charge : jobBaseObj.getCharges()) {
 						charge.setId(0L);
@@ -288,6 +303,11 @@ public class InvoiceService extends SnowmassHibernateService {
 			}
 			jobBaseObj.setParentInvoice(estimate);
 			jobBaseObj.setReleasedToProduction(false);
+			if(jobBaseObj.getCostingRecord()!=null) {
+				jobBaseObj.getCostingRecord().setId(0L);
+				jobBaseObj.getCostingRecord().setModified(null);
+				jobBaseObj.getCostingRecord().setCreated(null);
+			}
 			if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
 				for(Charge charge : jobBaseObj.getCharges()) {
 					charge.setId(0L);
