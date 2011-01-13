@@ -14,7 +14,7 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var lastUpdated:Date = new Date();
+		public var lastUpdated:Date = null;
 		public var status:String = "";
 		public var deviceId:String = "";
 		public var queueId:String = "";

@@ -18,7 +18,7 @@ package com.efi.printsmith.data
 		public var description:String = "";
 		public var method:String = "";
 		public var value:Number = 0;
-		public var date:Date = new Date();
+		public var date:Date = null;
 		public var children:ArrayCollection;
 	
 	}

@@ -79,7 +79,7 @@ package com.efi.printsmith.data
 		public var schedulerEnabled:Boolean = false;
 		public var trackerEnabled:Boolean = false;
 		public var maximumNodeCount:int = 0;
-		public var expirationDate:Date = new Date();
+		public var expirationDate:Date = null;
 		public var cCEncryptionData:String = "";
 		public var config:String = "";
 		public var process:String = "";

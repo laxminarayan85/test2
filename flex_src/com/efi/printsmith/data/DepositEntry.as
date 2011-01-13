@@ -15,7 +15,7 @@ package com.efi.printsmith.data
 		public var isDeleted:Boolean=false;
 				
 		public var referenceNumber:String = "";
-		public var date:Date = new Date();
+		public var date:Date = null;
 		public var amount:Number = 0;
 		public var type:DepositType;
 		public var creditCardType:int = 0;

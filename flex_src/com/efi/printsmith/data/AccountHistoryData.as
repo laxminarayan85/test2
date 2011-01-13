@@ -20,9 +20,9 @@ package com.efi.printsmith.data
 		public var invoice:InvoiceBase;
 		public var financeCharge:int = 0;
 		public var storeNumber:String = "";
-		public var postedDate:Date = new Date();
-		public var paymentDueDate:Date = new Date();
-		public var finalPaymentDate:Date = new Date();
+		public var postedDate:Date = null;
+		public var paymentDueDate:Date = null;
+		public var finalPaymentDate:Date = null;
 		public var subTotalPosted:Number = 0;
 		public var total:Number = 0;
 		public var refundTotal:Number = 0;
@@ -38,8 +38,8 @@ package com.efi.printsmith.data
 		public var custPO:String = "";
 		public var salesRep:SalesRep;
 		public var orderNoDisplay:String = "";
-		public var partialPayPaydate:Date = new Date();
-		public var finalPayPaydate:Date = new Date();
+		public var partialPayPaydate:Date = null;
+		public var finalPayPaydate:Date = null;
 		public var partialPayCheckNumber:String = "";
 		public var finalPayCheckNumber:String = "";
 		public var partialPayRefNumber:String = "";

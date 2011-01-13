@@ -16,7 +16,7 @@ package com.efi.printsmith.data
 				
 		public var repositoryPath:String = "";
 		public var job:Job;
-		public var dateAdded:Date = new Date();
+		public var dateAdded:Date = null;
 		public var originalFilename:String = "";
 		public var fileType:String = "";
 	

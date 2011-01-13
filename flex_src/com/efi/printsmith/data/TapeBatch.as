@@ -15,7 +15,7 @@ package com.efi.printsmith.data
 		public var isDeleted:Boolean=false;
 				
 		public var name:int = 0;
-		public var openDate:Date = new Date();
+		public var openDate:Date = null;
 		public var appVersion:String = "";
 		public var closed:Boolean = false;
 		public var sessionBatches:ArrayCollection;

@@ -22,7 +22,7 @@ package com.efi.printsmith.data
 		public var fromAddressID:Number = 0;
 		public var deliveryContact:Contact;
 		public var takenBy:String = "";
-		public var deliveryDate:Date = new Date();
+		public var deliveryDate:Date = null;
 		public var customerPO:String = "";
 		public var orderNumber:int = 0;
 		public var trackingNumber:String = "";

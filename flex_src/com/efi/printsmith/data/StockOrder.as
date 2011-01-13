@@ -32,8 +32,8 @@ package com.efi.printsmith.data
 		public var orderQuantity:int = 0;
 		public var vendorStockNumber:String = "";
 		public var stockOrderNumber:String = "";
-		public var deliveryDate:Date = new Date();
-		public var enterDate:Date = new Date();
+		public var deliveryDate:Date = null;
+		public var enterDate:Date = null;
 		public var allowModifaction:Boolean = false;
 		public var poNumber:String = "";
 		public var customerName:String = "";

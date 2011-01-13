@@ -19,7 +19,7 @@ package com.efi.printsmith.data
 		public var webparents:String = "";
 		public var webmessagetype:String = "";
 		public var webtransactionID:String = "";
-		public var websenddate:Date = new Date();
+		public var websenddate:Date = null;
 		public var servercode:String = "";
 	
 	}

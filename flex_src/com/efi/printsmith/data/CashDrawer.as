@@ -15,7 +15,7 @@ package com.efi.printsmith.data
 		public var isDeleted:Boolean=false;
 				
 		public var amount:Number = 0;
-		public var transactionDate:Date = new Date();
+		public var transactionDate:Date = null;
 		public var held:Boolean = false;
 		public var fund:Number = 0;
 		public var checkCount:int = 0;
@@ -26,8 +26,8 @@ package com.efi.printsmith.data
 		public var arBalance:Number = 0;
 		public var changeFund:Number = 0;
 		public var paidOuts:Number = 0;
-		public var lastCloseOutDate:Date = new Date();
-		public var lastStartupDate:Date = new Date();
+		public var lastCloseOutDate:Date = null;
+		public var lastStartupDate:Date = null;
 		public var prevArBalance:Number = 0;
 	
 	}

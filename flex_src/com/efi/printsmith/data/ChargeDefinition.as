@@ -73,8 +73,8 @@ package com.efi.printsmith.data
 		public var materialQty:Number = 0;
 		public var groupQty:Number = 0;
 		public var price:Number = 0;
-		public var timeStart:Date = new Date();
-		public var timeEnd:Date = new Date();
+		public var timeStart:Date = null;
+		public var timeEnd:Date = null;
 		public var customerCharge:Boolean = false;
 		public var pressCharge:Boolean = false;
 		public var hideChargeInPrintouts:Boolean = false;

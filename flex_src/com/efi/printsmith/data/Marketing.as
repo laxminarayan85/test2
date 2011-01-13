@@ -15,11 +15,11 @@ package com.efi.printsmith.data
 		public var isDeleted:Boolean=false;
 				
 		public var marketID:int = 0;
-		public var followup:Date = new Date();
-		public var birthDate:Date = new Date();
-		public var user3:Date = new Date();
-		public var user4:Date = new Date();
-		public var user5:Date = new Date();
+		public var followup:Date = null;
+		public var birthDate:Date = null;
+		public var user3:Date = null;
+		public var user4:Date = null;
+		public var user5:Date = null;
 		public var leadSource:String = "";
 		public var leadSource2:String = "";
 		public var commonInterst:String = "";

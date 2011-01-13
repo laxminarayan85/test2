@@ -14,10 +14,10 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var customtoDate:Date = new Date();
-		public var customfromDate:Date = new Date();
-		public var fromDate:Date = new Date();
-		public var toDate:Date = new Date();
+		public var customtoDate:Date = null;
+		public var customfromDate:Date = null;
+		public var fromDate:Date = null;
+		public var toDate:Date = null;
 		public var day:String = "";
 		public var type:String = "";
 		public var periodNumber:int = 0;

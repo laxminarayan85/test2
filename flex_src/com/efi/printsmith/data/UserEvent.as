@@ -15,7 +15,7 @@ package com.efi.printsmith.data
 		public var isDeleted:Boolean=false;
 				
 		public var userName:String = "";
-		public var dateStamp:Date = new Date();
+		public var dateStamp:Date = null;
 		public var reasonCode:int = 0;
 		public var eventString:String = "";
 		public var workstationId:int = 0;

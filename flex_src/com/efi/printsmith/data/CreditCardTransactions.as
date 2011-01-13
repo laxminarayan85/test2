@@ -14,7 +14,7 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var transactionDate:Date = new Date();
+		public var transactionDate:Date = null;
 		public var transactionType:int = 0;
 		public var transactionStatus:int = 0;
 		public var transactionResults:int = 0;
@@ -23,7 +23,7 @@ package com.efi.printsmith.data
 		public var poNumber:String = "";
 		public var referenceNumber:String = "";
 		public var approvalCode:String = "";
-		public var approvalDate:Date = new Date();
+		public var approvalDate:Date = null;
 		public var message:String = "";
 		public var permanent:Boolean = false;
 		public var manualCode:String = "";
@@ -44,7 +44,7 @@ package com.efi.printsmith.data
 		public var orderName:String = "";
 		public var orderNumber:String = "";
 		public var verbalAuthCode:String = "";
-		public var verbalAuthDate:Date = new Date();
+		public var verbalAuthDate:Date = null;
 		public var firstNumberPrefix:Number = 0;
 		public var activeAccepted:Boolean = false;
 		public var accountNumber:Number = 0;

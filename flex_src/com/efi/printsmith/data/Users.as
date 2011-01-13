@@ -33,8 +33,8 @@ package com.efi.printsmith.data
 		public var prevPassword3:String = "";
 		public var prevPassword4:String = "";
 		public var loginAttempts:int = 0;
-		public var lastLogin:Date = new Date();
-		public var passwordChangedDate:Date = new Date();
+		public var lastLogin:Date = null;
+		public var passwordChangedDate:Date = null;
 	
 	}
 }

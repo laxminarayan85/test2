@@ -39,7 +39,7 @@ package com.efi.printsmith.data
 		public var entireOrderCharge:Boolean = false;
 		public var sheetsPerSet:int = 0;
 		public var isCostInSets:Boolean = false;
-		public var priceExpires:Date = new Date();
+		public var priceExpires:Date = null;
 		public var qtybreak1:int = 0;
 		public var qtybreak2:int = 0;
 		public var qtybreak3:int = 0;
@@ -109,7 +109,7 @@ package com.efi.printsmith.data
 		public var reOrderPoint:int = 0;
 		public var minOrderQty:int = 0;
 		public var evenIncrements:Boolean = false;
-		public var expires:Date = new Date();
+		public var expires:Date = null;
 		public var binLocation:String = "";
 		public var shellItem:Boolean = false;
 		public var forestManagement:String = "";

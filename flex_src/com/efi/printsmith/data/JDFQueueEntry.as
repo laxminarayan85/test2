@@ -16,7 +16,7 @@ package com.efi.printsmith.data
 				
 		public var message:String = "";
 		public var response:String = "";
-		public var sent:Date = new Date();
+		public var sent:Date = null;
 		public var status:String = "";
 		public var url:String = "";
 		public var jobid:Number = 0;
