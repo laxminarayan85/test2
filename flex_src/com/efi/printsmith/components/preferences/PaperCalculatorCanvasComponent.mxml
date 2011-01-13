@@ -509,7 +509,7 @@
 								
 									<components:CustomCheckBoxComponent
 										label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.TrimFourSides')}"
-										dataHolder="{preferencesEstimating}" variableName="trimFourSides" customText="{preferencesEstimating.trimFourSides}"
+										dataHolder="{preferencesEstimating}" variableName="backTrimRun" customText="{preferencesEstimating.backTrimRun}"
 										selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 									
 								</mx:GridItem>

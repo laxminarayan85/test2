@@ -476,7 +476,7 @@
 				job.paperCal.whiteSpaceBottom=parseFloat(txtWhiteSpaceBottom.text);
 				job.paperCal.whiteSpaceRight=parseFloat(txtWhiteSpaceRight.text);
 				job.paperCal.whiteSpaceTop=parseFloat(txtWhiteSpaceTop.text);
-				job.paperCal.workandTumble=chkWorkAndTumble.selected;
+				job.paperCal.runAndTumble=chkWorkAndTumble.selected;
 
 			}
 

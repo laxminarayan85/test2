@@ -96,7 +96,7 @@ public class JobService extends SnowmassHibernateService {
 			paperCalculator.setBleedTop(estimatingPreferences.getBleedTop());
 			paperCalculator.setBackTrimParent(estimatingPreferences.getBackTrimParent());
 			paperCalculator.setBackTrimRun(estimatingPreferences.getBackTrimRun());
-		//	paperCalculator.setWorkAndTumble(estimatingPreferences.getWorkandTumble());
+			paperCalculator.setRunAndTumble(estimatingPreferences.getWorkandTumble());
 			paperCalculator.setPrintParentToFinishSection(estimatingPreferences.getPrintParentToFinishSection());
 			paperCalculator.setPrintParentToRunSection(estimatingPreferences.getPrintParentToRunSection());
 			paperCalculator.setPrintRunToFinishSection(estimatingPreferences.getPrintRunToFinishSection());
