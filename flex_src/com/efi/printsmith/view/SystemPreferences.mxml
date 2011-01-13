@@ -2011,6 +2011,26 @@
 			return;
 		}
 		
+		if(selectedSection == "genericPrefCmd.CashRegister"){
+			for each(var prefCashRegister:PreferencesCashRegister in PreferencesCashRegisterArray) {
+				if(prefCashRegister.title==null || prefCashRegister.title==""){
+					tvPreference.selectedIndex = selectedIndexSelection;
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'PrefCashRegister.NoTitle'));
+					return;
+				} 
+			}
+		}
+		
+		if(selectedSection == "genericPrefCmd.PricingMethod"){
+			for each(var prefPricingMethod:PreferencesPricingMethod in PreferencesPricingMethodArray) {
+				if(prefPricingMethod.title==null || prefPricingMethod.title==""){
+					tvPreference.selectedIndex = selectedIndexSelection;
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'PrefPricingMethod.NoTitle'));
+					return;
+				} 
+			}
+		}
+		
 		if(selectedSection == "genericPrefCmd.Behavior" || selectedSection == "genericPrefCmd.Company" || selectedSection == "genericPrefCmd.BusinessCalendar"
 			|| selectedSection == "genericPrefCmd.Numbers" || selectedSection == "genericPrefCmd.AlternateCurrency" || selectedSection == "genericPrefCmd.International") {
 			if(!compareObject(preferencesSystem,preferencesSystemOrigObj)){
