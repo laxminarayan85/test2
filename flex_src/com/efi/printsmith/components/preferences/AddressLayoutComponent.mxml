@@ -89,7 +89,7 @@
 					if(addEditFlag=="add") {
 						for each(var countryObj:Country in countryArray) {
 							if(countryObj.name == country.name && (countryObj.id!=country.id || (countryObj.id==0 && country.id==0))){
-								Alert.show("Entered Country Name already exists");
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'PrefAddress.AlreadyExists'));
 								return;
 							}
 						}
@@ -98,7 +98,7 @@
 						for(var i:int=0;i<countryArray.length;i++){
 							var countryObject:Country = countryArray.getItemAt(i) as Country;
 							if(countryObject.name == country.name && (countryObject.id!=country.id || (countryObject.id==0 && country.id==0)) && selectedCountryIndex!=i){
-								Alert.show("Entered Country Name already exists");
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'PrefAddress.AlreadyExists'));
 								return;
 							}
 						}	
@@ -107,7 +107,7 @@
 					dispatchEvent(event);
 					PopUpManager.removePopUp(this);
 				} else {
-					Alert.show("Please enter Country Name");
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'PrefAddress.NoName'));
 					return;
 				}
 			}
