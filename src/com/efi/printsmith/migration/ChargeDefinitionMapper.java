@@ -16,6 +16,8 @@ import com.efi.printsmith.data.FoldTemplate;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.ChargeCost;
 import com.efi.printsmith.data.CostCenter;
+import com.efi.printsmith.data.PreferencesDefaultPresses;
+import com.efi.printsmith.data.PreferencesSystem;
 import com.efi.printsmith.data.ProductionLocations;
 import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.ShippingMethod;
@@ -65,7 +67,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 			} else {
 				Charge charge = new Charge();
 				ChargeDefinition chargeDefinition = new ChargeDefinition();
-
+				PreferencesSystem preferences = (PreferencesSystem) dataService.getSingle("PreferencesSystem");
 				/* TODO: These strings need to come in from PrintSmith, until then use english defaults */
 				chargeDefinition.setPresetDescriptionLabel("Description");
 				chargeDefinition.setPresetInSetsOfLabel("In sets of:");
@@ -83,8 +85,8 @@ public class ChargeDefinitionMapper extends ImportMapper {
 				chargeDefinition.setPresetTimeStopLabel("Time Stop:");
 				chargeDefinition.setPresetNumberOfColorsLabel("Colors");
 				chargeDefinition.setPresetCoverageLabel("Pct. Coverage:");
-				chargeDefinition.setPresetPricePerPoundLabel("Price/Lb:");
-				chargeDefinition.setPresetPoundsOfInkLabel("Pounds of Ink");
+				chargeDefinition.setPresetPricePerPoundLabel("Price/"+preferences.getInkWeightSingular()+":");
+				chargeDefinition.setPresetPoundsOfInkLabel(preferences.getInkWeightPlural() + " of Ink");
 				chargeDefinition.setPresetTotalWeightLabel("Total Weight");
 				chargeDefinition.setPresetAreaLabel("Area:");
 				chargeDefinition.setPresetCutsLabel("Cuts:");		
