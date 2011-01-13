@@ -7,12 +7,12 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent">
 <mx:Script source="../security/PSSecurityInclude.as" />
 <mx:Metadata>
-		[Protected(permissions="Employee_Employees_Settings",notInPermissionAction="invisible",componentId="canvasSettings")]
-	 	[Protected(permissions="Employee_Employees_Settings",notInPermissionAction="visible",componentId="accessSettings")]
-	 	[Protected(permissions="Employee_Employees_Personal",notInPermissionAction="invisible",componentId="canvasPersonal")]
-	 	[Protected(permissions="Employee_Employees_Personal",notInPermissionAction="visible",componentId="accessPersonal")]
-	 	[Protected(permissions="Employee_Employees_Production",notInPermissionAction="invisible",componentId="canvasProduction")]
-	 	[Protected(permissions="Employee_Employees_Production",notInPermissionAction="visible",componentId="accessProduction")]
+		[Protected(permissions="Employee_Settings",notInPermissionAction="invisible",componentId="canvasSettings")]
+	 	[Protected(permissions="Employee_Settings",notInPermissionAction="visible",componentId="accessSettings")]
+	 	[Protected(permissions="Employee_Personal",notInPermissionAction="invisible",componentId="canvasPersonal")]
+	 	[Protected(permissions="Employee_Personal",notInPermissionAction="visible",componentId="accessPersonal")]
+	 	[Protected(permissions="Employee_Production",notInPermissionAction="invisible",componentId="canvasProduction")]
+	 	[Protected(permissions="Employee_Production",notInPermissionAction="visible",componentId="accessProduction")]
 </mx:Metadata>
 <mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>

@@ -188,9 +188,9 @@ package com.efi.printsmith.security
 		public static const TRACKER_ROUTINGS:String = "Tracker_Routings";
 		public static const EMPLOYEE_CLOCKINOUT:String = "Employee_ClockInOut";
 		public static const EMPLOYEE_EMPLOYEES:String = "Employee_Employees";
-		public static const EMPLOYEE_EMPLOYEES_SETTINGS:String = "Employee_Employees_Settings";
-		public static const EMPLOYEE_EMPLOYEES_PERSONAL:String = "Employee_Employees_Personal";
-		public static const EMPLOYEE_EMPLOYEES_PRODUCTION:String = "Employee_Employees_Production";
+		public static const EMPLOYEE_EMPLOYEES_SETTINGS:String = "Employee_Settings";
+		public static const EMPLOYEE_EMPLOYEES_PERSONAL:String = "Employee_Personal";
+		public static const EMPLOYEE_EMPLOYEES_PRODUCTION:String = "Employee_Production";
 		public static const EMPLOYEE_CLOCKOPTIONS:String = "Employee_ClockOptions";
 		public static const EMPLOYEE_TIMEPERIODS:String = "Employee_TimePeriods";
 		public static const EMPLOYEE_TIMECARDS:String = "Employee_TimeCards";
