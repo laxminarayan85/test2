@@ -1445,13 +1445,24 @@
 				if (invoice != null && invoice.shippingMethod != null)
 					ship_via_combo.selectedIndex=findItem(invoice.shippingMethod.name, shippingMethods);
 			}
+			private function getAcctBillToContact(ac:ArrayCollection):Contact	{
+				if (ac!= null)	{
+					for (var i:int=0; i<ac.length; i++)	{
+						var tmp:Contact = ac.getItemAt(i) as Contact;
+						if (tmp.id == invoice.account.billToContact.id)	{
+							return tmp;
+						}
+					}
+				}
+				return null;
+			} 
 			private function handleLoadContacts(ev:ResultEvent):void
 			{
 				var ac:ArrayCollection =ev.result as ArrayCollection;
 				
 				var contact:Contact = null;
 				if (invoice.contact == null)	{
-					contact = invoice.account.billToContact;
+					contact = getAcctBillToContact(ac);					
 				}
 				else	{
 					if (invoice.contact.tempFlag)	{
