@@ -1190,22 +1190,22 @@
  		if ( account.marketing == null)
  			account.marketing = new Marketing();
  		else{
- 			if (account.marketing.birthDate == null)
- 				account.marketing.birthDate = new Date();
- 			if (account.marketing.followup == null)
- 				account.marketing.followup = new Date();
- 			if (account.marketing.user3 == null)
- 				account.marketing.user3 = new Date();
- 			if (account.marketing.user4 == null)
- 				account.marketing.user4 = new Date();
- 			if (account.marketing.user5 == null)
- 				account.marketing.user5 = new Date();
+// 			if (account.marketing.birthDate == null)
+// 				account.marketing.birthDate = new Date();
+// 			if (account.marketing.followup == null)
+// 				account.marketing.followup = new Date();
+// 			if (account.marketing.user3 == null)
+// 				account.marketing.user3 = new Date();
+// 			if (account.marketing.user4 == null)
+// 				account.marketing.user4 = new Date();
+// 			if (account.marketing.user5 == null)
+// 				account.marketing.user5 = new Date();
  			
  		}
- 		if (account.creditCardExpiration == null)
- 			account.creditCardExpiration = new Date();	
- 		if ( account.resaleCertExpirationDate == null)
- 			account.resaleCertExpirationDate = new Date();
+// 		if (account.creditCardExpiration == null)
+// 			account.creditCardExpiration = new Date();	
+// 		if ( account.resaleCertExpirationDate == null)
+// 			account.resaleCertExpirationDate = new Date();
  			
  		
  		
