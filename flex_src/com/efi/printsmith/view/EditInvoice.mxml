@@ -124,6 +124,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.InvoiceNotesAddedEvent;
 			import mx.collections.Sort;
 			import mx.collections.SortField;
 			import mx.events.DataGridEvent;
@@ -370,8 +371,11 @@
 					var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this,true);
   					mdiWin.title = this.title;
   					
-  					if (invoice.notes != null && invoice.notes.showOnOpen) {
-  						doNotepad();
+  					if (invoice.notes != null)	{
+  						lblHasNotes.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.HasNotes');
+  						if ( invoice.notes.showOnOpen) {
+  							doNotepad();
+  						}
   					}
   					
   					if (invoice.deposits != null)	{
@@ -393,7 +397,6 @@
 				}
 				
 					
-				this.createInvoice.visible = false;		
 				salesRepDataService.getAll("SalesRep");
 				holdStateDataService.getAll("HoldState");
 				shippingMethodDataService.getAll("ShippingMethod");
@@ -1306,9 +1309,9 @@
 				job_costing_stack.selectedChild=this.invoice_job_canvas;
 				bottomrightstack.selectedChild = job_info_canvas;
 				
-				if (editorType == EDITESTIMATE) {
-					this.createInvoice.visible = true;
-				}
+//				if (editorType == EDITESTIMATE) {
+//					this.createInvoice.visible = true;
+//				}
 //				invoice_job_grid.dataProvider = getJobList(invoice.jobs);
 //				invoice_job_grid.validateNow();
 			}
@@ -1344,8 +1347,13 @@
 					invoice.notes = new NotePad();
 				}
 				titleWindow.SetNote(invoice.notes.id, invoice)
+				titleWindow.addEventListener(InvoiceNotesAddedEvent.INVOICENOTESADDED,onNotesAdded);
 			}
-
+			
+			private function onNotesAdded(evt:InvoiceNotesAddedEvent):void	{
+				lblHasNotes.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "newInvCmd.HasNotes");
+			}
+			
 			private function doTickets(ev:MouseEvent=null):void
 			{
 				if (isNaN(invoice.id)) {
@@ -2725,7 +2733,7 @@
 										 dataProvider="{invoiceTemplates}"/>
 						</mx:HBox>
 						<mx:Text width="50%" height="5%" visible="{(!isNaN(invoice.id))}" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.OnPendingList')}" />
-						<mx:Button width="50%" height="5%" label="Create Invoice" id="createInvoice" click="doCreateInvoice()" enabled="true"/>
+						<mx:Label width="50%" height="5%" id="lblHasNotes" />
 						<mx:VBox id="btnDepEntry"  width="250" height="150" backgroundColor="0xc0c0c0" click="openDepositEntry();" >
 							<mx:Text id="txtDep1" text="" textAlign="left" width="100%" height="10%"  />
 							<mx:Text id="txtDep2" text="" textAlign="left" width="100%" height="10%"  />

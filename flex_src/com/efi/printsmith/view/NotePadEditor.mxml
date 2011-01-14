@@ -18,6 +18,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.events.InvoiceNotesAddedEvent;
 	import com.efi.printsmith.data.InvoiceBase;
 	import com.efi.printsmith.data.Job;
 	import com.efi.printsmith.data.NotePad;
@@ -72,7 +73,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			
 			dataInvoiceService.addUpdate(this.invoice);
 		}
-			
+		dispatchEvent(new InvoiceNotesAddedEvent(InvoiceNotesAddedEvent.INVOICENOTESADDED, notePad));	
 		
 	}
 	private function handleSaveInvoiceResult(event:Event):void {
