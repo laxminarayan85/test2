@@ -55,6 +55,7 @@ public class InvoiceMapper extends ImportMapper {
 		DataService dataService = new DataService();
 		String last = new String();
 		String first = new String();
+		String neam = new String();
 		Account account= null;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -121,6 +122,9 @@ public class InvoiceMapper extends ImportMapper {
 				TaxTable taxTable = dataService.getByTaxTableName(currentImportToken);
 				if (taxTable != null)
 					invoice.setTaxTable(taxTable);
+				else 
+					neam = currentImportToken;
+					
 			} else if ("ship mode".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("print count".equals(currentFieldToken)) {
@@ -486,7 +490,12 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("tax table ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("tax table name".equals(currentFieldToken)) {
-				/* TODO */
+				TaxTable taxTable = dataService.getByTaxTableName(currentImportToken);
+				if (taxTable != null)
+					invoice.setTaxTable(taxTable);
+				else 
+					neam = currentImportToken;
+					
 			} else if ("tax code ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("tax code name".equals(currentFieldToken)) {
@@ -814,6 +823,7 @@ public class InvoiceMapper extends ImportMapper {
 		NotePad notePad = new NotePad();
 		String last = new String();
 		String first = new String();
+		String neam = new String();
 		Account account = null;
 		DataService dataService = new DataService();
 		for (int i=0; i < fieldTokens.length; i++) {
@@ -1246,7 +1256,12 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("tax table ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("tax table name".equals(currentFieldToken)) {
-				/* TODO */
+				TaxTable taxTable = dataService.getByTaxTableName(currentImportToken);
+				if (taxTable != null)
+					invoice.setTaxTable(taxTable);
+				else 
+					neam = currentImportToken;
+					
 			} else if ("tax code ID".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("tax code name".equals(currentFieldToken)) {
