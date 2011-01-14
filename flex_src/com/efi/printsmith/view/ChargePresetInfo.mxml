@@ -169,7 +169,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 				definition.presetTimeStopHour = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(".")));
 				definition.presetTimeStopMinute = parseInt(stopTimeString.substr(stopTimeString.indexOf(".")+1));
 			} else {
-				definition.presetTimeStopHour = parseInt(startTimeString);
+				definition.presetTimeStopHour = parseInt(stopTimeString);
 			}
 		}
 	}
@@ -211,9 +211,11 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		var minStr:String = (chargeDefinition.presetTimeStartMinute < 10?"0":"") + chargeDefinition.presetTimeStartMinute;
 		startTimeString = hourStr + ":" + minStr;
 
-		hourStr = ((timeStop/60) < 10?"0":"") + (int(timeStop/60));
-		timeStop = timeStop - (int(timeStop/60));
-		minStr = (timeStop < 10?"0":"") + timeStop;
+		hourStr = (chargeDefinition.presetTimeStopHour < 10?"0":"") + chargeDefinition.presetTimeStopHour;
+		minStr = (chargeDefinition.presetTimeStopMinute < 10?"0":"") + chargeDefinition.presetTimeStopMinute;
+//		hourStr = ((timeStop/60) < 10?"0":"") + (int(timeStop/60));
+//		timeStop = timeStop - (int(timeStop/60));
+//		minStr = (timeStop < 10?"0":"") + timeStop;
 		stopTimeString = hourStr + ":" + minStr;
 
 		chargeService.createChargeFromChargeDefinition(this.chargeDefinition);
