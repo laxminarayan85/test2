@@ -36,6 +36,7 @@
     import com.efi.printsmith.view.PressDefinitions;
     import com.efi.printsmith.data.Charge;   
     import com.efi.printsmith.events.PriceListPickerSelectEvent;
+    import com.efi.printsmith.events.PaperPricePickerSelectEvent;
     import com.efi.printsmith.events.SavePriceListEvent;
     import com.efi.printsmith.common.components.CustomDeleteButtonComponent;
          
@@ -149,8 +150,13 @@
 	}
 
 	private function doSelect():void {	
-		var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.SELECTPRICELIST, dataGrid.selectedItem as PriceListBase);
-		dispatchEvent(selectEvent);
+		if (this.title == "Paper Price") {
+			var selectEvent:com.efi.printsmith.events.PaperPricePickerSelectEvent = new com.efi.printsmith.events.PaperPricePickerSelectEvent(PaperPricePickerSelectEvent.SELECTPRICELIST, dataGrid.selectedItem as PaperPrice);
+			dispatchEvent(selectEvent);
+		} else {
+			var priceListSelectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.SELECTPRICELIST, dataGrid.selectedItem as PriceListBase);
+			dispatchEvent(priceListSelectEvent);
+		}
 		PopUpManager.removePopUp(this);
 	}     
 	

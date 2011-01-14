@@ -94,7 +94,7 @@ public class MatrixUtilities {
 	}
 	
 	static public double getStampScheduleCost(StampSchedule stampSchedule, long inches, long lines) {
-		return getCost(stampSchedule,inches,lines);
+		return getCost((Matrix)stampSchedule,inches,lines);
 	}
 	
 	static public double getCost(Matrix matrix, long xLookup, long yLookup) {
@@ -102,25 +102,25 @@ public class MatrixUtilities {
 		double cost = 0.0;
 		if (matrix != null) {
 			for (int i = 1; i <= 10; i++) {
-				if (i == 1 && (xLookup <= matrix.getHeader1())) {
+				if (i == 1 && (xLookup >= matrix.getHeader1())) {
 					element = i;
-				} else if (i == 2 && (xLookup <= matrix.getHeader2())) {
+				} else if (i == 2 && (xLookup >= matrix.getHeader2())) {
 					element = i;
-				}else if (i == 3 && (xLookup <= matrix.getHeader3())) {
+				}else if (i == 3 && (xLookup >= matrix.getHeader3())) {
 					element = i;
-				}else if (i == 4 && (xLookup <= matrix.getHeader4())) {
+				}else if (i == 4 && (xLookup >= matrix.getHeader4())) {
 					element = i;
-				}else if (i == 5 && (xLookup <= matrix.getHeader5())) {
+				}else if (i == 5 && (xLookup >= matrix.getHeader5())) {
 					element = i;
-				}else if (i == 6 && (xLookup <= matrix.getHeader6())) {
+				}else if (i == 6 && (xLookup >= matrix.getHeader6())) {
 					element = i;
-				}else if (i == 7 && (xLookup <= matrix.getHeader7())) {
+				}else if (i == 7 && (xLookup >= matrix.getHeader7())) {
 					element = i;
-				}else if (i == 8 && (xLookup <= matrix.getHeader8())) {
+				}else if (i == 8 && (xLookup >= matrix.getHeader8())) {
 					element = i;
-				}else if (i == 9 && (xLookup <= matrix.getHeader9())) {
+				}else if (i == 9 && (xLookup >= matrix.getHeader9())) {
 					element = i;
-				}else {
+				}else if (i == 10 && (xLookup >= matrix.getHeader10())){
 					element = i;
 				}
 			}
@@ -128,7 +128,7 @@ public class MatrixUtilities {
 			List<MatrixElement> elements = matrix.getElements();
 			Collections.sort(elements, new MatrixElementComparator());
 			for (int i = 0; i < elements.size(); i++) {
-				if (elements.get(i).getQty() <= yLookup) {
+				if (elements.get(i).getQty() >= yLookup && elements.get(i).getLastLine() == false) {
 					if (element == 1)
 						cost = elements.get(i).getPrice1().doubleValue();
 					if (element == 2)
@@ -186,15 +186,15 @@ public class MatrixUtilities {
 		double cost = 0.0;
 		if (matrix != null) {
 			for (int i = 1; i <= 5; i++) {
-				if (i == 1 && (xLookup <= matrix.getHeader1())) {
+				if (i == 1 && (xLookup >= matrix.getHeader1())) {
 					element = i;
-				} else if (i == 2 && (xLookup <= matrix.getHeader2())) {
+				} else if (i == 2 && (xLookup >= matrix.getHeader2())) {
 					element = i;
-				}else if (i == 3 && (xLookup <= matrix.getHeader3())) {
+				}else if (i == 3 && (xLookup >= matrix.getHeader3())) {
 					element = i;
-				}else if (i == 4 && (xLookup <= matrix.getHeader4())) {
+				}else if (i == 4 && (xLookup >= matrix.getHeader4())) {
 					element = i;
-				}else if (i == 5 && (xLookup <= matrix.getHeader5())) {
+				}else if (i == 5 && (xLookup >= matrix.getHeader5())) {
 					element = i;
 				}else {
 					element = 1;
@@ -204,7 +204,7 @@ public class MatrixUtilities {
 			List<MatrixElement> elements = matrix.getElements();
 			Collections.sort(elements, new MatrixElementComparator());
 			for (int i = 0; i < elements.size(); i++) {
-				if (elements.get(i).getQty() <= yLookup) {
+				if (elements.get(i).getQty() >= yLookup && elements.get(i).getLastLine() == false) {
 					if (element == 1)
 						if (isFront)
 							cost = elements.get(i).getPrice1().doubleValue();
@@ -242,15 +242,15 @@ public class MatrixUtilities {
 		double cost = 0.0;
 		if (matrix != null) {
 			for (int i = 1; i <= 5; i++) {
-				if (i == 1 && (xLookup <= matrix.getHeader1())) {
+				if (i == 1 && (xLookup >= matrix.getHeader1())) {
 					element = i;
-				} else if (i == 2 && (xLookup <= matrix.getHeader2())) {
+				} else if (i == 2 && (xLookup >= matrix.getHeader2())) {
 					element = i;
-				}else if (i == 3 && (xLookup <= matrix.getHeader3())) {
+				}else if (i == 3 && (xLookup >= matrix.getHeader3())) {
 					element = i;
-				}else if (i == 4 && (xLookup <= matrix.getHeader4())) {
+				}else if (i == 4 && (xLookup >= matrix.getHeader4())) {
 					element = i;
-				}else if (i == 5 && (xLookup <= matrix.getHeader5())) {
+				}else if (i == 5 && (xLookup >= matrix.getHeader5())) {
 					element = i;
 				}else {
 					element = 1;
@@ -260,7 +260,7 @@ public class MatrixUtilities {
 			List<MatrixElement> elements = matrix.getElements();
 			Collections.sort(elements, new MatrixElementComparator());
 			for (int i = 0; i < elements.size(); i++) {
-				if (elements.get(i).getQty() <= yLookup) {
+				if (elements.get(i).getQty() >= yLookup && elements.get(i).getLastLine() == false) {
 					if (element == 1)
 						cost = elements.get(i).getPrice1().doubleValue();
 					if (element == 2)

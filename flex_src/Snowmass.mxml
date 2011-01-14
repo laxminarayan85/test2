@@ -46,6 +46,7 @@
 </mx:RemoteObject>
 <mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleLoadResult(event)"/>
+		<mx:method name="getStampSchedule" fault="handleFault(event)" result="handleGetStampScheduleResult(event)"/>
 </mx:RemoteObject>
 <mx:RemoteObject id="dimensionDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadDimensionResult(event)"/>
@@ -56,8 +57,12 @@
 <mx:RemoteObject id="preferencesSystemService" destination="dataService">
 	<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="matrixService" destination="matrixService">
+	<mx:method name="newStampSchedule" fault="handleFault(event)" result="handleCreateStampSchedule(event)"/>
+</mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.data.StampSchedule;
 		import com.efi.printsmith.events.PendingListUpdateEvent;
 		import com.efi.printsmith.pages.PendingChangeDueDate;
 		import com.efi.printsmith.pages.PendingStatus;
@@ -397,6 +402,10 @@
 					&& (ss.commandName.indexOf("rStandardMenuText.ListPriceSchedules") > -1 ))	{
 						doPricing();					
 				}	
+				if ((ss.menu == "rStandardMenuText.Pricing")
+					&& (ss.commandName.indexOf("rStandardMenuText.StampSchedule") > -1 ))	{
+						doStampPricing();					
+				}
 				if ((ss.menu == "rStandardMenuText.Admin")
 					&& (ss.commandName.indexOf("rStandardMenuText.PaperCalculator") > -1 ))	{
 						doPaperCal();					
@@ -825,8 +834,29 @@
 			var event:EditPricingEvent = new EditPricingEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
-
-
+		public function doStampPricing():void {
+			dataService.getStampSchedule();
+		}
+		
+		public function handleGetStampScheduleResult(event:ResultEvent):void {
+			var stampSchedule:StampSchedule = event.result as com.efi.printsmith.data.StampSchedule;
+			if (stampSchedule == null) {
+				matrixService.newStampSchedule();
+			} else {
+				var editPage:Container = this;
+				var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, true));
+			    titleWindow.setStyle("borderAlpha", 0.9);
+			    titleWindow.setStampSchedule(stampSchedule);
+			}
+		}
+		
+		public function handleCreateStampSchedule(event:ResultEvent):void {
+			var stampSchedule:StampSchedule = event.result as com.efi.printsmith.data.StampSchedule;
+			var editPage:Container = this;
+			var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, true));
+		    titleWindow.setStyle("borderAlpha", 0.9);
+		    titleWindow.setStampSchedule(stampSchedule);
+		}
 		public function doUtilities():void {
 			var child:Utilities = new Utilities();
 			if (child.checkSecurityAccess())

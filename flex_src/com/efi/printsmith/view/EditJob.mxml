@@ -437,10 +437,10 @@
 				<mx:Label x="2" y="281" text="Number Of Inches"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<mx:TextInput x="107" y="255" id="job_number_of_lines" text="{job.numberOfLines}" textAlign="right" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="107" y="255" id="job_number_of_lines" text="{job.numberOfLines}" focusOut="fieldChanged(event)" textAlign="right" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<mx:TextInput x="107" y="279" id="job_number_of_inches" text="{job.numberOfInches}" textAlign="right" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="107" y="279" id="job_number_of_inches" text="{job.numberOfInches}" focusOut="fieldChanged(event)" textAlign="right" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:RemoveChild target="{job_unitCost}"/>
 			<mx:RemoveChild target="{label36}"/>
@@ -2446,8 +2446,11 @@
 					break;
 				case this.job_number_of_inches:
 					doUpdatePrice = true;
+					job.numberOfInches = parseFloat(this.job_number_of_inches.text);
 					break;
 				case this.job_number_of_lines:
+					doUpdatePrice = true;
+					job.numberOfLines = parseInt(this.job_number_of_lines.text);
 					break;
 				case this.num_copies:
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;

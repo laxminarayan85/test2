@@ -11,7 +11,7 @@ public class LinesAndInchesPricingMethod {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		DataService dataService = new DataService();
-		double cost = MatrixUtilities.getStampScheduleCost((StampSchedule)dataService.getSingle("StampSchedule"), job.getNumberOfInches(), job.getNumberOfLines());
+		double cost = MatrixUtilities.getStampScheduleCost((StampSchedule)dataService.getStampSchedule(), job.getNumberOfInches(), job.getNumberOfLines());
 		double price = cost * job.getQtyOrdered();
 		job.setTotalCost(cost);
 		job.getPricingRecord().setTotalPrice(price);

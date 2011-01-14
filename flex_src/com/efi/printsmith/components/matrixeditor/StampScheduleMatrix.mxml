@@ -40,7 +40,7 @@
 				import com.efi.printsmith.data.Matrix;
 				import mx.events.*;
 				import mx.controls.*; 
-				[Bindable] public var matrix:com.efi.printsmith.data.Matrix = null;
+				[Bindable] public var matrix:com.efi.printsmith.data.StampSchedule = null;
 				[Bindable] public var currentValue:String = "";
 				[Bindable] public var gridHasFocus:Boolean = false;
 				public function mapToMatrix():void {

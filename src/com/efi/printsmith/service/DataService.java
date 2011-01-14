@@ -73,6 +73,7 @@ import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.MatrixElement;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.StampSchedule;
 import com.efi.printsmith.data.Period;
 import com.efi.printsmith.data.PickerObject;
 import com.efi.printsmith.data.PreferencesPricingMethod;
@@ -2979,6 +2980,39 @@ public class DataService extends HibernateService {
 				}
 			}
 			return paperPrice;
+		} catch (NoResultException e) {
+			log.warn("No result found for getMatrix " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getMatrix " + e);
+			return null;
+		} catch (Exception e) {
+			log.error(e); 			
+			throw e; 
+		} finally {
+			em.close();
+		}
+	}
+
+	public ModelBase getStampSchedule() throws Exception {
+		log.debug("** getPaperPrice called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			//Query query = em.createNamedQuery("PaperPrice.byId");
+			//query.setParameter("id", id);
+			Query findQuery = em.createQuery("from StampSchedule");
+			StampSchedule stampSchedule = (StampSchedule) findQuery.getSingleResult();
+
+			if (stampSchedule.getElements() != null) {
+				for (int i = 0; i < stampSchedule.getElements().size(); i++) {
+					MatrixElement element = stampSchedule.getElements().get(i);
+
+					if (element == null) {
+						log.error("Null matrix element found");
+					}
+				}
+			}
+			return stampSchedule;
 		} catch (NoResultException e) {
 			log.warn("No result found for getMatrix " + e);
 			return null;

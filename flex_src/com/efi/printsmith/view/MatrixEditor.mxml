@@ -678,7 +678,7 @@
 		<mx:SetProperty target="{price11}" name="y" value="164"/>
 		<mx:SetProperty target="{price19}" name="y" value="209"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:StampScheduleMatrix x="10" y="10" id="stamp_schedule" matrix="{paperPrice}">
+			<mtrx:StampScheduleMatrix x="10" y="10" id="stamp_schedule" matrix="{stampSchedule}">
 			</mtrx:StampScheduleMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{label1}" name="x" value="10"/>
@@ -774,6 +774,7 @@
 	[Bindable]                                
 	public var matrix:com.efi.printsmith.data.Matrix;
 	public var paperPrice:com.efi.printsmith.data.PaperPrice = null;
+	public var stampSchedule:com.efi.printsmith.data.StampSchedule = null;
 	public var doubleSided:Boolean = false;
 	public var pricingType:String = CopierPricingMethod.CopiesAndOriginals;
 	
@@ -953,6 +954,45 @@
 				this.paperPrice.elements.sort = sort;
 			}
 			this.paperPrice.elements.refresh();
+		} else if (this.currentState == "STAMPSCHEDULE") {
+			this.stampSchedule = ObjectUtil.copy(matrix) as com.efi.printsmith.data.StampSchedule;
+			var newMatrix:Boolean = true;
+			for (var i:int=0;i<this.stampSchedule.elements.length;i++) {
+				var element:com.efi.printsmith.data.MatrixElement = this.stampSchedule.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
+				if (element.lastLine == true) {
+					if (element.qty > 0)
+						newMatrix = false;
+					this.price1.text = element.price1.toString();
+					this.price2.text = element.price2.toString();
+					this.price3.text = element.price3.toString();
+					this.price4.text = element.price4.toString();
+					this.price5.text = element.price5.toString();
+					this.price6.text = element.price6.toString();
+					this.price7.text = element.price7.toString();
+					this.price8.text = element.price8.toString();
+					this.price9.text = element.price9.toString();
+					this.price10.text = element.price10.toString();
+					this.price11.text = element.price11.toString();
+					this.price12.text = element.price12.toString();
+					this.price13.text = element.price13.toString();
+					this.price14.text = element.price14.toString();
+					this.price15.text = element.price15.toString();
+					this.price16.text = element.price16.toString();
+					this.price17.text = element.price17.toString();
+					this.price18.text = element.price18.toString();
+					this.price19.text = element.price19.toString();
+					this.price20.text = element.price20.toString();
+				}
+			}
+			this.stampSchedule.elements.filterFunction = filterMatrix;
+			if (newMatrix == false) {
+				var sortField:SortField = new SortField("qty");
+				sortField.numeric = true;
+				var sort:Sort = new Sort();
+				sort.fields = [sortField];
+				this.stampSchedule.elements.sort = sort;
+			}
+			this.stampSchedule.elements.refresh();
 		} else {
 			this.matrix = ObjectUtil.copy(matrix) as com.efi.printsmith.data.Matrix;
 			var newMatrix:Boolean = true;
@@ -1071,10 +1111,11 @@
 			this.pass_price_schedule.mapToMatrix();
 			paperPrice = this.pass_price_schedule.matrix as PaperPrice;
 			paperPrice.name = this.passScheduleName.text;
-			paperPrice.name = this.priceScheduleMethodCombo.selectedItem.data;
+			paperPrice.method = this.priceScheduleMethodCombo.selectedItem.data;
+			break;
 		case "STAMPSCHEDULE":
 			this.stamp_schedule.mapToMatrix();
-			matrix = this.stamp_schedule.matrix;
+			stampSchedule = this.stamp_schedule.matrix;
 			break;
 		default:
 			matrixeditor.mapToMatrix();
@@ -1110,6 +1151,35 @@
 				}
 			}
 			dataService.addUpdate(paperPrice);
+		} else if (this.currentState == "STAMPSCHEDULE") {
+			stampSchedule.elements.filterFunction = unfilterMatrix;
+			stampSchedule.elements.refresh();
+			for (var i:int=0;i<this.stampSchedule.elements.length;i++) {
+				var element:com.efi.printsmith.data.MatrixElement = this.stampSchedule.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
+				if (element.lastLine == true) {
+					element.price1 = parseFloat(this.price1.text);
+					element.price2 = parseFloat(this.price2.text);
+					element.price3 = parseFloat(this.price3.text);
+					element.price4 = parseFloat(this.price4.text);
+					element.price5 = parseFloat(this.price5.text);
+					element.price6 = parseFloat(this.price6.text);
+					element.price7 = parseFloat(this.price7.text);
+					element.price8 = parseFloat(this.price8.text);
+					element.price9 = parseFloat(this.price9.text);
+					element.price10 = parseFloat(this.price10.text);
+					element.price11 = parseFloat(this.price11.text);
+					element.price12 = parseFloat(this.price12.text);
+					element.price13 = parseFloat(this.price13.text);
+					element.price14 = parseFloat(this.price14.text);
+					element.price15 = parseFloat(this.price15.text);
+					element.price16 = parseFloat(this.price16.text);
+					element.price17 = parseFloat(this.price17.text);
+					element.price18 = parseFloat(this.price18.text);
+					element.price19 = parseFloat(this.price19.text);
+					element.price20 = parseFloat(this.price20.text);
+				}
+			}
+			dataService.addUpdate(stampSchedule);
 		} else {
 			matrix.elements.filterFunction = unfilterMatrix;
 			matrix.elements.refresh();

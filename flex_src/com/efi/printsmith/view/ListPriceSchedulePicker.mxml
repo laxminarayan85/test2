@@ -221,8 +221,8 @@
 	}
 	private function handleDeleteResult(event:ResultEvent):void {
 		dataService.getAll(this.itemType);
-		var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CLEARPRICELIST, null);
-		dispatchEvent(selectEvent);
+		//var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CLEARPRICELIST, null);
+		//dispatchEvent(selectEvent);
 		
 	}
 	private function doCancel():void {
@@ -247,8 +247,9 @@
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="doSelect();"  width="129" x="399" y="10"/>
 		<mx:Button label="New Copy Schedule" click="doNewCopy();" id="new_button" width="129" x="399" y="40"/>
 		<mx:Button label="New Pass Schedule" click="doNewPass();" id="new_button0" width="129" x="399" y="70"/>
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" id="cancel_button" width="129" x="399" y="111"/>
-		<mx:HRule x="396" y="101" width="109.5"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" id="cancel_button" width="129" x="400.5" y="146"/>
+		<mx:HRule x="397.5" y="130" width="132" height="8"/>
+		<common:CustomDeleteButtonComponent isIcon="false" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" deleteLabel="{this.label}" clickFuncName="doDelete" id="delete_button" width="130.5" x="397.5" y="100"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 

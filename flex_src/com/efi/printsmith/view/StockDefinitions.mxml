@@ -342,6 +342,7 @@
 	import com.efi.printsmith.events.StockPickerSelectEvent;
 	import com.efi.printsmith.events.AccountPickerSelectEvent;
 	import com.efi.printsmith.events.PriceListPickerSelectEvent;
+	import com.efi.printsmith.events.PaperPricePickerSelectEvent;
 	import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
 	
 	import mx.controls.Alert;          
@@ -551,7 +552,7 @@
 	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
 	    priceListPickerWindow.itemType = "PaperPrice";
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
-	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
+	    priceListPickerWindow.addEventListener(PaperPricePickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
 
 	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearPriceList);
 
@@ -561,9 +562,9 @@
 		stockDefinitions.defaultPriceList = null;
 	}
 	
-    private function handleSelectPriceList(evt:PriceListPickerSelectEvent):void {
- 		if (evt.priceList != null) {
-			stockDefinitions.defaultPriceList = evt.priceList as PaperPrice;
+    private function handleSelectPriceList(evt:com.efi.printsmith.events.PaperPricePickerSelectEvent):void {
+ 		if (evt.paperPrice != null) {
+			stockDefinitions.defaultPriceList = evt.paperPrice as PaperPrice;
 		} else {
 			stockDefinitions.defaultPriceList = null;
 			Alert.show("Price List Picker returned a null price list", "Error");
