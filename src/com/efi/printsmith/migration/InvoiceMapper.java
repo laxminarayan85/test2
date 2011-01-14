@@ -117,7 +117,7 @@ public class InvoiceMapper extends ImportMapper {
 				invoice.setResaleId(currentImportToken);
 			} else if ("tax code".equals(currentFieldToken)) {
 				/* TODO */
-			} else if ("tax table".equals(currentFieldToken)) {
+			} else if ("tax table name".equals(currentFieldToken)) {
 				TaxTable taxTable = dataService.getByTaxTableName(currentImportToken);
 				if (taxTable != null)
 					invoice.setTaxTable(taxTable);

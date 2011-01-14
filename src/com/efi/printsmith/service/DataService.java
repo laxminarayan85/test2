@@ -1326,7 +1326,7 @@ public class DataService extends HibernateService {
 		log.debug("** getByTaxTableName called.");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		try {
-			String queryString = "from TaxTable where name = '" + name + "'";
+			String queryString = "from TaxTable where  taxtableiscurrent = true and name = '" + name + "'";
 			Query query = em.createQuery(queryString);
 			TaxTable object = (TaxTable) query.getSingleResult();
 			return object;
