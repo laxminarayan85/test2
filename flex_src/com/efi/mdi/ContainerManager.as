@@ -199,6 +199,7 @@ package com.efi.mdi
 			return null;
 		}
 		
+		
 		public function getChildrenOfWindow(id:int):ArrayCollection	{
 			var win:WindowItem = getWindowFromTree(id, _baseWindowItem);
 			var ac:ArrayCollection = new ArrayCollection();
@@ -207,6 +208,26 @@ package com.efi.mdi
 				for (var i:int = 0; i < win.children.length; i++)	{
 					var w:WindowItem = win.children.getItemAt(i) as WindowItem;
 					ac.addItem(getWindow(w.id));
+				}
+				return ac;
+			}
+			return null;
+		}
+		
+		public function getDescendentsOfWindow(id:int):Array	{
+			var win:WindowItem = getWindowFromTree(id, _baseWindowItem);
+			var ac:Array = new Array();
+			
+			if (win.children != null)	{
+				for (var i:int = 0; i < win.children.length; i++)	{
+					var w:WindowItem = win.children.getItemAt(i) as WindowItem;
+					ac.push(w.id);
+					var sub:Array = getDescendentsOfWindow(w.id);
+					if (sub != null)	{
+						for (var j:int=0; j <sub.length; j++)	{
+							ac.push(sub[j]);
+						}
+					}					
 				}
 				return ac;
 			}

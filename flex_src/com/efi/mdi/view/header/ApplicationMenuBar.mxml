@@ -109,27 +109,53 @@
 			}
 			private function removeWindow(event:WindowCloseEvent):void	{
 				var ac:ArrayCollection = getChildrenOfWindowMenuItem();
+				var winId:int = -1;
+				var descOfClosedWin:Array = event.spawnIds;
+				
+				if (event.child is MDIWindow)	{
+					winId = (event.child as MDIWindow).windowID;					
+				}
+				else	{
+					winId = (event.child as MinimizedWindow).windowRef.windowID;
+				}
+				
 				if (ac)	{	
 					for (var i:int=0; i<ac.length; i++)	{
 						var item:ApplicationMenuItem = ac.getItemAt(i) as ApplicationMenuItem;
 						if (item is WindowApplicationMenuItem)	{
-							if ((event.child is MDIWindow)
-								&& ((item as WindowApplicationMenuItem).mdiWindow == (event.child as MDIWindow)))	{
+//							if ((event.child is MDIWindow)
+//								&& ((item as WindowApplicationMenuItem).mdiWindow == (event.child as MDIWindow)))	{
+//								ac.removeItemAt(i);
+//								refreshDataProvider(ac);
+//							}
+//							if ((event.child is MinimizedWindow)
+//								&& ((item as WindowApplicationMenuItem).mdiWindow == (event.child as MinimizedWindow).windowRef))	{
+//								ac.removeItemAt(i);
+//								refreshDataProvider(ac);
+//							}
+							
+							var winAppMenuItem:WindowApplicationMenuItem = item as WindowApplicationMenuItem;
+							if ((winAppMenuItem.mdiWindow.windowID == winId) 
+									|| (isChildOf(winAppMenuItem.mdiWindow.windowID, descOfClosedWin)))	{
 								ac.removeItemAt(i);
+								i--;
 								refreshDataProvider(ac);
-								break;
-							}
-							if ((event.child is MinimizedWindow)
-								&& ((item as WindowApplicationMenuItem).mdiWindow == (event.child as MinimizedWindow).windowRef))	{
-								ac.removeItemAt(i);
-								refreshDataProvider(ac);
-								break;
 							}
 						}
 					}
 				}				
 			}					
 			
+			private function isChildOf(winId:int, childList:Array):Boolean	{
+				if (childList != null)	{
+					for (var i:int=0; i<childList.length; i++)	{
+						if (childList[i] == winId)	{
+							return true;
+						}
+					}
+				}
+				return false;
+			}
 			private function getChildrenOfWindowMenuItem():ArrayCollection	{
 				if ((_windowMenuLabel) && (_menuData))	{
 					if (_winMenuItems == null)	{

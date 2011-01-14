@@ -7,6 +7,7 @@ package com.efi.mdi.view.window
 	import com.efi.mdi.event.window.WindowMinimizeEvent;
 	import com.efi.mdi.event.window.WindowResizeStartEvent;
 	import com.efi.mdi.event.window.WindowTitleChangedEvent;
+
 	
 	import flash.display.Shape;
 	import flash.events.MouseEvent;
@@ -148,11 +149,12 @@ package com.efi.mdi.view.window
 		}
 		
 		public function closeWindow():void	{
-			dispatchEvent(new WindowCloseEvent(WindowCloseEvent.WINDOW_CLOSE, this));
+			dispatchEvent(new WindowCloseEvent(WindowCloseEvent.WINDOW_CLOSE, this, ContainerManager.getExistingInstance().getDescendentsOfWindow(this.windowID)));
 		}
 		private function onClose(event:MouseEvent):void	{
-			dispatchEvent(new WindowCloseEvent(WindowCloseEvent.WINDOW_CLOSE, this));
+			dispatchEvent(new WindowCloseEvent(WindowCloseEvent.WINDOW_CLOSE, this, ContainerManager.getExistingInstance().getDescendentsOfWindow(this.windowID)));
 		}
+		
 		
 //		public function addChildWindow(id:int):void	{
 //			if (_childWindows == null)

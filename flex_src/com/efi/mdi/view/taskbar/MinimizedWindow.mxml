@@ -11,6 +11,8 @@
  	</mx:Metadata>	
 	<mx:Script>
 		<![CDATA[
+
+			import com.efi.mdi.ContainerManager;
 			import com.efi.mdi.event.window.WindowCloseEvent;
 			import com.efi.mdi.event.window.WindowRestoreEvent;
 			import com.efi.mdi.view.window.MDIWindow;
@@ -42,7 +44,8 @@
 			}
 			
 			private function onClose(event:MouseEvent):void	{
-				dispatchEvent(new WindowCloseEvent(WindowCloseEvent.WINDOW_CLOSE, this));
+				dispatchEvent(new WindowCloseEvent(WindowCloseEvent.WINDOW_CLOSE, this, ContainerManager.getExistingInstance().getDescendentsOfWindow(this.windowRef.windowID) ));
+
 			}
 		]]>
 	</mx:Script>

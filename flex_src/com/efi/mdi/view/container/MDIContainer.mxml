@@ -133,6 +133,7 @@
 					if (ac != null)	{
 						for (var i:int=0; i<ac.length; i++)	{
 							var win:MDIWindow = ac.getItemAt(i) as MDIWindow;
+							
 							if (win.state == MDIWindow.MINIMIZED)	{
 								var min:MinimizedWindow = ContainerManager.getExistingInstance().getMinimized(win);
 								if (min)
@@ -150,9 +151,9 @@
 				if (isRoot)	{
 					ContainerManager.getExistingInstance().recalculateWindowStyles();
 					ContainerManager.getExistingInstance().removeChildFromTree(window);
+				
 				}
-				
-				
+			
 			}
 			
 			private function onClose(event:WindowCloseEvent):void	{
