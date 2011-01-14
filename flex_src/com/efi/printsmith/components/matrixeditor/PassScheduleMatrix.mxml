@@ -2,8 +2,8 @@
 	<mx:Canvas width="632" height="382" verticalScrollPolicy="off" horizontalScrollPolicy="off"  xmlns:mx="http://www.adobe.com/2006/mxml"
 			 fontSize="9">
 		
-		<mx:Text x="0" y="16" text="Copies" width="63" height="43" textAlign="center" fontWeight="bold"/>
-		<mx:Text x="60" y="16" text="Colors" width="569.5" height="16.5" textAlign="center" fontWeight="bold"/>
+		<mx:Text x="22" y="35.5" text="Qty" width="63" height="16.5" textAlign="center" fontWeight="bold"/>
+		<mx:Text x="60" y="16" text="Passes" width="569.5" height="16.5" textAlign="center" fontWeight="bold"/>
 		<mx:TextInput id="header1" x="107" y="42.5" width="105" height="20" text="{matrix.header1}" textAlign="center" focusIn="setCurrentValue(event)" focusOut="checkNaN(event)"/>
 		<mx:TextInput id="header2" x="210" y="42.5" width="106" height="20" text="{matrix.header2}" textAlign="center" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
 		<mx:TextInput id="header3" x="314" y="42.5" width="108" height="20" text="{matrix.header3}" textAlign="center" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"/>
