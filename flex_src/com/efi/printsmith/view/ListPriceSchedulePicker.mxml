@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:common="com.efi.printsmith.common.components.*" xmlns:vo="com.efi.printsmith.vo.*" width="574" height="346" defaultButton="{select_button}" showCloseButton="false" 
+	implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();" 
+    close="PopUpManager.removePopUp(this);"
+    title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ListPriceSchedules')}" 
+    xmlns:text="flash.text.*" 
+    borderThickness="3" borderStyle="solid" horizontalScrollPolicy="off" 
+    label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ListPriceSchedules')}" 
+    name="Price List"
+    verticalScrollPolicy="off">
+
+<mx:RemoteObject id="dataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
+	<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	<mx:method name="getPaperPrice" fault="handleFault(event)" result="handleLoadPaperPriceResult(event)"/>
+</mx:RemoteObject>
+
+<mx:RemoteObject id="matrixService" destination="matrixService">
+	<mx:method name="newPaperPrice" fault="handleFault(event)" result="handleCreatePaperPrice(event)"/>
+</mx:RemoteObject>
+<mx:Producer id="producer" destination="pricelist"/>
+<mx:Consumer id="consumer" destination="pricelist" message="messageHandler(event.message)"/>
+<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
+<mx:Script source="../security/PSSecurityInclude.as" />
+<mx:Script>
+                                   
+<![CDATA[
+	import com.efi.printsmith.security.PSSecurityCommands;
+	import mx.events.FlexEvent; 
+	import com.efi.printsmith.data.Contact;           
+    import com.efi.printsmith.data.Account;    
+    import com.efi.printsmith.view.EditContact;
+    import com.efi.printsmith.view.EditCustomer;    
+    import com.efi.printsmith.view.PressDefinitions;
+    import com.efi.printsmith.data.Charge;   
+    import com.efi.printsmith.events.PriceListPickerSelectEvent;
+    import com.efi.printsmith.events.SavePriceListEvent;
+    import com.efi.printsmith.common.components.CustomDeleteButtonComponent;
+         
+	import mx.managers.PopUpManager;     
+	import com.efi.printsmith.data.SpeedTable;  
+	import com.efi.printsmith.data.PriceList;
+	import com.efi.printsmith.data.PriceListBase; 
+	import com.efi.printsmith.data.WasteChart; 
+	import com.efi.printsmith.data.PaperPrice;
+	import com.efi.printsmith.data.Matrix;
+	                         
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
+	import mx.collections.ArrayCollection;
+	    
+	[Bindable]                                
+	private var list:ArrayCollection = new ArrayCollection();
+                                                                        	         
+	public var itemType:String;
+	
+	[Bindable]                                
+	public var paperPrice:PaperPrice;
+
+	public var parentContainer:Container;
+	// Holds a reference to the currently focussed control on the form.
+ 	private var focusedFormControl:DisplayObject;                           
+           
+	                    
+	private function handleLoadResult(event:ResultEvent):void {
+		list = event.result as ArrayCollection;
+		if (this.paperPrice != null)
+			dataGrid.selectedIndex = findItem(this.paperPrice.name,list);
+	}
+	
+	private function handleLoadPaperPriceResult(event:ResultEvent):void {
+		var tempPaperPrice:PaperPrice = event.result as PaperPrice;
+		var editPage:Container = parentContainer;
+		var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    if (tempPaperPrice.type == 1)
+	    	titleWindow.setCopySchedule(tempPaperPrice);
+	    else
+	    	titleWindow.setPassSchedule(tempPaperPrice);
+	    PopUpManager.removePopUp(this);
+	}
+	
+	private function handleFault(ev:FaultEvent):void {                               
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error", 0, this, null);                                 
+	}
+
+	private function messageHandler(message:IMessage):void
+	{
+		var messageBody:Object = message.body;// as com.efi.messaging.MessageBody;
+		
+		var messageType:String = messageBody.messageType;
+		if (messageType == "ADDUPDATE" || messageType == "DELETE") {
+			var payloadType:String = messageBody.payloadType as String; // What kind of item was added/deleted
+			var payload:Number = messageBody.payload as Number; // ID if item added or deleted
+			if (payloadType == "PriceList" || payloadType == "PriceListBase" || payloadType == "WasteChart" || payloadType == "SpeedTable" || payloadType == "Matrix") {
+				dataService.getAll(payloadType)
+			}
+		}
+	}
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+	public function setPriceList(priceList:PriceListBase):void {
+		/*this.priceList = priceList;
+		if (list.length == 0)
+			dataService.getAll(this.itemType);
+		else
+			dataGrid.selectedIndex = findItem(this.priceList.name,list);*/
+	}
+	
+	public function getSecurityCommand():String {
+		return PSSecurityCommands.PRICING_LISTPRICESCHED;
+	}
+		                                                       
+	private function init(event:FlexEvent=null):void {   
+		consumer.subscribe();
+		notification_consumer.subscribe();     
+
+		this.itemType = "PaperPrice";
+		dataService.getAll("PaperPrice");
+	
+		parentContainer = Snowmass.getInstance().containerManager.getActiveWindowContent(); //.mainNavigator.selectedChild;
+
+	}
+
+	private function doSelect():void {	
+		doEdit();
+	}     
+	
+	private function handleCreatePaperPrice(evt:ResultEvent):void {
+		var newPaperPrice:PaperPrice = evt.result as PaperPrice;
+		if (newPaperPrice == null) {
+	    	Alert.show("Unknown Price List type to create.", "Error", 0, this, null);
+	    	return;
+		}
+		var editPage:Container = parentContainer;
+		var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, true));
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    if (newPaperPrice.type == 1)
+	    	titleWindow.setCopySchedule(newPaperPrice);
+	    else
+	    	titleWindow.setPassSchedule(newPaperPrice);
+	   PopUpManager.removePopUp(this);	
+	}
+	
+	private function doNewCopy():void {
+	    var newPaperPrice:PaperPrice = null;
+	    matrixService.newPaperPrice(1);
+	}
+	
+	private function doNewPass():void {
+		var newPaperPrice:PaperPrice = null;
+		matrixService.newPaperPrice(2);
+	}
+
+	private function doEdit():void {
+	    if (dataGrid.selectedItem == null){
+	    	Alert.show("No Item selected to Edit.", "Warning", 0, this, null);
+			return;	    	
+	    }
+		var paperPrice:PaperPrice = dataGrid.selectedItem as com.efi.printsmith.data.PaperPrice;
+		dataService.getPaperPrice(paperPrice.id);
+		
+	}
+	private function doCopy():void {
+		/*var newPaperPrice:PaperPrice = null;
+	       newPaperPrice = new PaperPrice; 	
+	      if (dataGrid.selectedItem == null){
+	    	Alert.show("No Item selected to Edit.", "Warning", 0, this, null);
+			return;	    	
+	    }
+		newPaperPrice = dataGrid.selectedItem as PaperPrice;
+		var editPage:Container = parentContainer;
+		var titleWindow:PriceListEditor = PriceListEditor(PopUpManager.createPopUp(editPage, PriceListEditor, true));
+		titleWindow.setCopy(true);
+	    titleWindow.setStyle("borderAlpha", 0.9);
+	    titleWindow.setPriceList(newPriceList);
+	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSave);*/
+	   
+	}
+	private function handleSave(ev:SavePriceListEvent):void
+	{ 
+		/*dataService.getAll(this.itemType);
+		var temp:PriceListBase = ev.priceList as PriceListBase;
+	   var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.SELECTPRICELIST, temp);
+		dispatchEvent(selectEvent);
+		PopUpManager.removePopUp(this);*/
+	   
+	}
+		
+	private function doClear():void {
+		/*var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CLEARPRICELIST, null);
+		dispatchEvent(selectEvent);
+		PopUpManager.removePopUp(this);*/
+	}
+	
+	private function doDelete():void {
+		var temp:PaperPrice
+			temp = dataGrid.selectedItem as PaperPrice;
+			if (temp != null)
+				dataService.deleteItem("PaperPrice", temp.id);
+	}
+	private function handleDeleteResult(event:ResultEvent):void {
+		dataService.getAll(this.itemType);
+		var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CLEARPRICELIST, null);
+		dispatchEvent(selectEvent);
+		
+	}
+	private function doCancel():void {
+		//var cancelEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, null);
+		//dispatchEvent(cancelEvent);
+		PopUpManager.removePopUp(this);
+	}
+]]>        
+</mx:Script>
+                             
+
+                             
+	<mx:Canvas width="549" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+		<mx:DataGrid id="dataGrid" width="389.5" height="261" dataProvider="{list}"
+		doubleClickEnabled="true" doubleClick="doEdit()"  
+		showHeaders="false" borderStyle="solid" borderThickness="3" x="0" y="0" 
+		editable="false" enabled="true">               
+		<mx:columns>
+		     <mx:DataGridColumn dataField="name" headerText="labelCmd.Name" />                         
+		</mx:columns>
+		</mx:DataGrid>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Select')}" id="select_button" enabled="{(dataGrid.selectedItem != null)}" click="doSelect();"  width="129" x="399" y="10"/>
+		<mx:Button label="New Copy Schedule" click="doNewCopy();" id="new_button" width="129" x="399" y="40"/>
+		<mx:Button label="New Pass Schedule" click="doNewPass();" id="new_button0" width="129" x="399" y="70"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" id="cancel_button" width="129" x="399" y="111"/>
+		<mx:HRule x="396" y="101" width="109.5"/>
+	</mx:Canvas>
+<mx:Spacer height="10" />        
+
+</mx:TitleWindow>

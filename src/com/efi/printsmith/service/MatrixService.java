@@ -7,6 +7,7 @@ import java.util.List;
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.data.enums.CopierPricingMethod;
 import com.efi.printsmith.data.enums.Price2Side;
+import com.efi.printsmith.data.enums.PriceScheduleMethod;
 
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
@@ -45,7 +46,7 @@ import flex.messaging.io.ArrayList;
 public class MatrixService extends SnowmassHibernateService {
 	protected static final String PERSISTENCE_UNIT = "printsmith_db";
 
-	protected static Logger log = Logger.getLogger(PriceListService.class);
+	protected static Logger log = Logger.getLogger(MatrixService.class);
 	
 //	protected static EntityManagerFactory entityManagerFactory = null;
 	
@@ -53,19 +54,25 @@ public class MatrixService extends SnowmassHibernateService {
 		super();
 	}
 	
-	public PaperPrice newPaperPrice() {
+	public PaperPrice newPaperPrice(int type) {
 		PaperPrice paperPrice = new PaperPrice();
 		
-		paperPrice.setHeader1(0L);
-		paperPrice.setHeader2(0L);
-		paperPrice.setHeader3(0L);
-		paperPrice.setHeader4(0L);
-		paperPrice.setHeader5(0L);
+		paperPrice.setHeader1(1L);
+		paperPrice.setHeader2(2L);
+		paperPrice.setHeader3(3L);
+		paperPrice.setHeader4(4L);
+		paperPrice.setHeader5(5L);
 		paperPrice.setHeader6(0L);
 		paperPrice.setHeader7(0L);
 		paperPrice.setHeader8(0L);
 		paperPrice.setHeader9(0L);
 		paperPrice.setHeader10(0L);
+		paperPrice.setType(type);
+		paperPrice.setMethod(PriceScheduleMethod.UseOrderedQuantity.name());
+		if (type == 1)
+			paperPrice.setName("New Copy Schedule");
+		else
+			paperPrice.setName("New Pass Schedule");
 		
 		for (int i=0; i<15; i++) {
 			paperPrice.addElements(newMatrixElement(i==14));

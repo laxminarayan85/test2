@@ -5,19 +5,19 @@ package com.efi.printsmith.events.commandEvents.EditForms
 	import com.efi.printsmith.events.commandEvents.*;
 	import com.efi.printsmith.data.PaperPrice;
 
-	public class EditPricingEvent extends CommandEventBase
+	public class EditListPricingEvent extends CommandEventBase
 	{
-		public static const COMMANDID:String = "CMD_PriceList";
+		public static const COMMANDID:String = "CMD_ListPriceSchedule";
 		public var object:PaperPrice;
 		
-		public function EditPricingEvent(object:PaperPrice, callbacks:IResponder=null)
+		public function EditListPricingEvent(object:PaperPrice, callbacks:IResponder=null)
 		{
 			this.object = object;
-			super(EditPricingEvent.COMMANDID, callbacks);
+			super(EditListPricingEvent.COMMANDID, callbacks);
 		}
 		
 		override public function clone():Event {
-			return new EditPricingEvent(object, callbacks);
+			return new EditListPricingEvent(object, callbacks);
 		}
 	}
 }

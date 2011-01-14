@@ -9,7 +9,7 @@
     horizontalScrollPolicy="off" 
     label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobPriceMatrixCmd.PriceMatrix')}" 
     name="Price List"
-    verticalScrollPolicy="off" fontSize="9">
+    verticalScrollPolicy="off" fontSize="9" xmlns:ns1="com.efi.printsmith.common.components.*">
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -76,7 +76,7 @@
 		<mx:SetProperty name="height" value="490"/>
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyDoubleMatrix id="copies_and_originals_two_sides_editor" x="2" y="-11" matrix="{matrix}">
+			<mtrx:ByCopyDoubleMatrix id="copies_and_originals_two_sides_editor" x="2" y="-11" matrix="{paperPrice}">
 			</mtrx:ByCopyDoubleMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="1202"/>
@@ -171,7 +171,7 @@
 	<mx:State name="COPIESPERORIGINALSTWOSIDES">
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix id="copies_per_originals_two_sides_editor" x="-1" y="-1" height="360" matrix="{matrix}">
+			<mtrx:BasicDoubleMatrix id="copies_per_originals_two_sides_editor" x="-1" y="-1" height="360" matrix="{paperPrice}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>
 		<mx:SetProperty name="height" value="490"/>
@@ -580,10 +580,173 @@
 		<mx:RemoveChild target="{price20}"/>
 		<mx:SetProperty target="{price2}" name="width" value="77"/>
 	</mx:State>
+	<mx:State name="COPYPRICESCHEDULE">
+		<mx:RemoveChild target="{matrixeditor}"/>
+		<mx:SetProperty name="width" value="686"/>
+		<mx:SetProperty target="{price2}" name="x" value="129"/>
+		<mx:SetProperty target="{price2}" name="y" value="400"/>
+		<mx:SetProperty target="{price3}" name="x" value="184"/>
+		<mx:SetProperty target="{price3}" name="y" value="400"/>
+		<mx:SetProperty target="{price4}" name="x" value="241"/>
+		<mx:SetProperty target="{price4}" name="y" value="400"/>
+		<mx:SetProperty target="{price5}" name="x" value="298.5"/>
+		<mx:SetProperty target="{price5}" name="y" value="400"/>
+		<mx:SetProperty target="{price6}" name="x" value="354.5"/>
+		<mx:SetProperty target="{price6}" name="y" value="400"/>
+		<mx:SetProperty target="{price7}" name="x" value="412.5"/>
+		<mx:SetProperty target="{price7}" name="y" value="400"/>
+		<mx:SetProperty target="{price8}" name="x" value="469.5"/>
+		<mx:SetProperty target="{price8}" name="y" value="400"/>
+		<mx:SetProperty target="{price9}" name="x" value="525"/>
+		<mx:SetProperty target="{price9}" name="y" value="400"/>
+		<mx:SetProperty target="{price10}" name="x" value="582"/>
+		<mx:SetProperty target="{price10}" name="y" value="400"/>
+		<mx:SetProperty target="{price20}" name="x" value="10"/>
+		<mx:SetProperty target="{price20}" name="y" value="149"/>
+		<mx:SetProperty target="{price11}" name="y" value="179"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:PriceScheduleMatrix x="10" y="10" id="copy_price_schedule" matrix="{paperPrice}">
+			</mtrx:PriceScheduleMatrix>
+		</mx:AddChild>
+		<mx:SetProperty name="height" value="572"/>
+		<mx:SetProperty target="{label1}" name="y" value="402"/>
+		<mx:SetProperty target="{price1}" name="y" value="400"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="524"/>
+		<mx:SetProperty target="{label1}" name="x" value="10"/>
+		<mx:SetProperty target="{price1}" name="x" value="74"/>
+		<mx:SetProperty target="{canvas1}" name="width" value="655"/>
+		<mx:SetProperty target="{select_button}" name="y"/>
+		<mx:SetStyle target="{select_button}" name="bottom" value="10"/>
+		<mx:SetStyle target="{select_button}" name="right" value="124"/>
+		<mx:SetStyle target="{clear_button}" name="bottom" value="10"/>
+		<mx:SetStyle target="{clear_button}" name="right" value="19"/>
+		<mx:SetProperty target="{price1}" name="width" value="54"/>
+		<mx:SetProperty target="{price2}" name="width" value="54"/>
+		<mx:SetProperty target="{price3}" name="width" value="54"/>
+		<mx:SetProperty target="{price4}" name="width" value="54"/>
+		<mx:SetProperty target="{price5}" name="width" value="54"/>
+		<mx:SetProperty target="{price10}" name="width" value="54"/>
+		<mx:SetProperty target="{price9}" name="width" value="54"/>
+		<mx:SetProperty target="{price8}" name="width" value="54"/>
+		<mx:SetProperty target="{price7}" name="width" value="54"/>
+		<mx:SetProperty target="{price6}" name="width" value="54"/>
+		<mx:AddChild relativeTo="{price1}" position="before">
+			<mx:Label x="10" y="475" text="Method" id="label0"/>
+		</mx:AddChild>
+		<mx:AddChild relativeTo="{price1}" position="before">
+			<mx:Label x="10" y="449" text="Name" id="label2"/>
+		</mx:AddChild>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mx:TextInput x="74" y="447" width="176" id="scheduleName" text="{paperPrice.name}"/>
+		</mx:AddChild>
+		<mx:RemoveChild target="{priceScheduleMethodCombo}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild" target="{priceScheduleMethodCombo}"/>
+		<mx:SetProperty target="{priceScheduleMethodCombo}" name="x" value="74"/>
+		<mx:SetProperty target="{priceScheduleMethodCombo}" name="y" value="473"/>
+	</mx:State>
+	<mx:State name="STAMPSCHEDULE">
+		<mx:SetProperty name="width" value="722"/>
+		<mx:RemoveChild target="{matrixeditor}"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="469"/>
+		<mx:SetProperty name="height" value="520"/>
+		<mx:SetProperty target="{label1}" name="y" value="383"/>
+		<mx:SetProperty target="{price1}" name="y" value="381"/>
+		<mx:SetProperty target="{price2}" name="x" value="140"/>
+		<mx:SetProperty target="{price2}" name="y" value="381"/>
+		<mx:SetProperty target="{price3}" name="x" value="200"/>
+		<mx:SetProperty target="{price3}" name="y" value="381"/>
+		<mx:SetProperty target="{price4}" name="x" value="261"/>
+		<mx:SetProperty target="{price4}" name="y" value="381"/>
+		<mx:SetProperty target="{price5}" name="x" value="322"/>
+		<mx:SetProperty target="{price5}" name="y" value="381"/>
+		<mx:SetProperty target="{price6}" name="x" value="384"/>
+		<mx:SetProperty target="{price6}" name="y" value="381"/>
+		<mx:SetProperty target="{price7}" name="x" value="444"/>
+		<mx:SetProperty target="{price7}" name="y" value="381"/>
+		<mx:SetProperty target="{price8}" name="x" value="504"/>
+		<mx:SetProperty target="{price8}" name="y" value="381"/>
+		<mx:SetProperty target="{price9}" name="x" value="566"/>
+		<mx:SetProperty target="{price9}" name="y" value="381"/>
+		<mx:SetProperty target="{price10}" name="x" value="628"/>
+		<mx:SetProperty target="{price10}" name="y" value="381"/>
+		<mx:SetProperty target="{price12}" name="x" value="43"/>
+		<mx:SetProperty target="{price12}" name="y" value="119"/>
+		<mx:SetProperty target="{price13}" name="x" value="24"/>
+		<mx:SetProperty target="{price13}" name="y" value="149"/>
+		<mx:SetProperty target="{price14}" name="y" value="149"/>
+		<mx:SetProperty target="{price11}" name="x" value="110"/>
+		<mx:SetProperty target="{price11}" name="y" value="164"/>
+		<mx:SetProperty target="{price19}" name="y" value="209"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:StampScheduleMatrix x="10" y="10" id="stamp_schedule" matrix="{paperPrice}">
+			</mtrx:StampScheduleMatrix>
+		</mx:AddChild>
+		<mx:SetProperty target="{label1}" name="x" value="10"/>
+		<mx:SetProperty target="{price1}" name="x" value="79"/>
+		<mx:SetProperty target="{price1}" name="width" value="54"/>
+		<mx:SetProperty target="{price2}" name="width" value="54"/>
+		<mx:SetProperty target="{price6}" name="width" value="54"/>
+		<mx:SetProperty target="{price7}" name="width" value="54"/>
+		<mx:SetProperty target="{price3}" name="width" value="54"/>
+		<mx:SetProperty target="{price8}" name="width" value="54"/>
+		<mx:SetProperty target="{price9}" name="width" value="54"/>
+		<mx:SetProperty target="{price4}" name="width" value="54"/>
+		<mx:SetProperty target="{price5}" name="width" value="54"/>
+		<mx:SetProperty target="{price10}" name="width" value="54"/>
+		<mx:SetProperty target="{select_button}" name="y"/>
+		<mx:SetStyle target="{select_button}" name="bottom" value="10"/>
+		<mx:SetStyle target="{select_button}" name="right" value="192"/>
+		<mx:SetStyle target="{clear_button}" name="bottom" value="10"/>
+		<mx:SetStyle target="{clear_button}" name="right" value="87"/>
+	</mx:State>
+	<mx:State name="PASSPRICESCHEDULE">
+		<mx:RemoveChild target="{matrixeditor}"/>
+		<mx:SetProperty name="width" value="684"/>
+		<mx:SetProperty name="height" value="596"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="538"/>
+		<mx:SetProperty target="{label1}" name="y" value="400"/>
+		<mx:SetProperty target="{price1}" name="y" value="398"/>
+		<mx:SetProperty target="{price2}" name="x" value="221"/>
+		<mx:SetProperty target="{price2}" name="y" value="398"/>
+		<mx:SetProperty target="{price4}" name="x" value="433"/>
+		<mx:SetProperty target="{price4}" name="y" value="398"/>
+		<mx:SetProperty target="{price3}" name="x" value="326"/>
+		<mx:SetProperty target="{price3}" name="y" value="398"/>
+		<mx:SetProperty target="{price5}" name="x" value="538"/>
+		<mx:SetProperty target="{price5}" name="y" value="398"/>
+		<mx:SetProperty target="{price12}" name="x" value="70"/>
+		<mx:SetProperty target="{price12}" name="y" value="119"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mtrx:PassScheduleMatrix x="10" y="10" matrix="{paperPrice}" id="pass_price_schedule">
+			</mtrx:PassScheduleMatrix>
+		</mx:AddChild>
+		<mx:SetProperty target="{label1}" name="x" value="10"/>
+		<mx:SetProperty target="{price1}" name="x" value="118"/>
+		<mx:SetProperty target="{select_button}" name="y"/>
+		<mx:SetStyle target="{select_button}" name="right" value="118"/>
+		<mx:SetStyle target="{clear_button}" name="right" value="10"/>
+		<mx:SetProperty target="{canvas1}" name="width" value="659"/>
+		<mx:SetStyle target="{select_button}" name="bottom" value="10"/>
+		<mx:SetStyle target="{clear_button}" name="bottom" value="10"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mx:Label x="10" y="475" text="Method" id="label3"/>
+		</mx:AddChild>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mx:Label x="10" y="449" text="Name" id="label4"/>
+		</mx:AddChild>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+			<mx:TextInput x="74" y="447" width="176" id="passScheduleName" text="{paperPrice.name}"/>
+		</mx:AddChild>
+		<mx:RemoveChild target="{priceScheduleMethodCombo}"/>
+		<mx:AddChild relativeTo="{canvas1}" position="lastChild" target="{priceScheduleMethodCombo}"/>
+		<mx:SetProperty target="{priceScheduleMethodCombo}" name="x" value="70"/>
+		<mx:SetProperty target="{priceScheduleMethodCombo}" name="y" value="477"/>
+	</mx:State>
 </mx:states>
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.data.enums.PriceScheduleMethod;
 	import mx.utils.ObjectUtil;	
 	import mx.collections.Sort;
 	import mx.collections.SortField;
@@ -610,11 +773,12 @@
 	    
 	[Bindable]                                
 	public var matrix:com.efi.printsmith.data.Matrix;
+	public var paperPrice:com.efi.printsmith.data.PaperPrice = null;
 	public var doubleSided:Boolean = false;
 	public var pricingType:String = CopierPricingMethod.CopiesAndOriginals;
 	
 	public var parentContainer:Container;
-   	
+   	public var priceScheduleMethod:ArrayCollection = new ArrayCollection(PriceScheduleMethod.toArray());
 	private function handleFault(ev:FaultEvent):void {                               
 		var message:String;
 		message = "Error: "                          
@@ -738,47 +902,97 @@
 				break;
 		}
 	}
+	
+	private function findItem(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.data) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
 
 	public function setMatrix(matrix:com.efi.printsmith.data.Matrix):void {
 		if (matrix == null) return;
-		this.matrix = ObjectUtil.copy(matrix) as com.efi.printsmith.data.Matrix;
-		var newMatrix:Boolean = true;
-		for (var i:int=0;i<this.matrix.elements.length;i++) {
-			var element:com.efi.printsmith.data.MatrixElement = this.matrix.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
-			if (element.lastLine == true) {
-				if (element.qty > 0)
-					newMatrix = false;
-				this.price1.text = element.price1.toString();
-				this.price2.text = element.price2.toString();
-				this.price3.text = element.price3.toString();
-				this.price4.text = element.price4.toString();
-				this.price5.text = element.price5.toString();
-				this.price6.text = element.price6.toString();
-				this.price7.text = element.price7.toString();
-				this.price8.text = element.price8.toString();
-				this.price9.text = element.price9.toString();
-				this.price10.text = element.price10.toString();
-				this.price11.text = element.price11.toString();
-				this.price12.text = element.price12.toString();
-				this.price13.text = element.price13.toString();
-				this.price14.text = element.price14.toString();
-				this.price15.text = element.price15.toString();
-				this.price16.text = element.price16.toString();
-				this.price17.text = element.price17.toString();
-				this.price18.text = element.price18.toString();
-				this.price19.text = element.price19.toString();
-				this.price20.text = element.price20.toString();
+		if (this.currentState == "COPYPRICESCHEDULE" || this.currentState == "PASSPRICESCHEDULE") {
+			this.paperPrice = ObjectUtil.copy(matrix) as com.efi.printsmith.data.PaperPrice;
+			var newMatrix:Boolean = true;
+			for (var i:int=0;i<this.paperPrice.elements.length;i++) {
+				var element:com.efi.printsmith.data.MatrixElement = this.paperPrice.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
+				if (element.lastLine == true) {
+					if (element.qty > 0)
+						newMatrix = false;
+					this.price1.text = element.price1.toString();
+					this.price2.text = element.price2.toString();
+					this.price3.text = element.price3.toString();
+					this.price4.text = element.price4.toString();
+					this.price5.text = element.price5.toString();
+					this.price6.text = element.price6.toString();
+					this.price7.text = element.price7.toString();
+					this.price8.text = element.price8.toString();
+					this.price9.text = element.price9.toString();
+					this.price10.text = element.price10.toString();
+					this.price11.text = element.price11.toString();
+					this.price12.text = element.price12.toString();
+					this.price13.text = element.price13.toString();
+					this.price14.text = element.price14.toString();
+					this.price15.text = element.price15.toString();
+					this.price16.text = element.price16.toString();
+					this.price17.text = element.price17.toString();
+					this.price18.text = element.price18.toString();
+					this.price19.text = element.price19.toString();
+					this.price20.text = element.price20.toString();
+				}
 			}
+			this.paperPrice.elements.filterFunction = filterMatrix;
+			if (newMatrix == false) {
+				var sortField:SortField = new SortField("qty");
+				sortField.numeric = true;
+				var sort:Sort = new Sort();
+				sort.fields = [sortField];
+				this.paperPrice.elements.sort = sort;
+			}
+			this.paperPrice.elements.refresh();
+		} else {
+			this.matrix = ObjectUtil.copy(matrix) as com.efi.printsmith.data.Matrix;
+			var newMatrix:Boolean = true;
+			for (var i:int=0;i<this.matrix.elements.length;i++) {
+				var element:com.efi.printsmith.data.MatrixElement = this.matrix.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
+				if (element.lastLine == true) {
+					if (element.qty > 0)
+						newMatrix = false;
+					this.price1.text = element.price1.toString();
+					this.price2.text = element.price2.toString();
+					this.price3.text = element.price3.toString();
+					this.price4.text = element.price4.toString();
+					this.price5.text = element.price5.toString();
+					this.price6.text = element.price6.toString();
+					this.price7.text = element.price7.toString();
+					this.price8.text = element.price8.toString();
+					this.price9.text = element.price9.toString();
+					this.price10.text = element.price10.toString();
+					this.price11.text = element.price11.toString();
+					this.price12.text = element.price12.toString();
+					this.price13.text = element.price13.toString();
+					this.price14.text = element.price14.toString();
+					this.price15.text = element.price15.toString();
+					this.price16.text = element.price16.toString();
+					this.price17.text = element.price17.toString();
+					this.price18.text = element.price18.toString();
+					this.price19.text = element.price19.toString();
+					this.price20.text = element.price20.toString();
+				}
+			}
+			this.matrix.elements.filterFunction = filterMatrix;
+			if (newMatrix == false) {
+				var sortField:SortField = new SortField("qty");
+				sortField.numeric = true;
+				var sort:Sort = new Sort();
+				sort.fields = [sortField];
+				this.matrix.elements.sort = sort;
+			}
+			this.matrix.elements.refresh();
 		}
-		this.matrix.elements.filterFunction = filterMatrix;
-		if (newMatrix == false) {
-			var sortField:SortField = new SortField("qty");
-			sortField.numeric = true;
-			var sort:Sort = new Sort();
-			sort.fields = [sortField];
-			this.matrix.elements.sort = sort;
-		}
-		this.matrix.elements.refresh();
 	}   
 	
 	public function filterMatrix(item:com.efi.printsmith.data.MatrixElement):Boolean {
@@ -847,39 +1061,85 @@
 			matrixeditor.mapToMatrix();
 			matrix = matrixeditor.matrix;
 			break;
+		case "COPYPRICESCHEDULE":
+			this.copy_price_schedule.mapToMatrix();
+			paperPrice = this.copy_price_schedule.matrix as PaperPrice;
+			paperPrice.name = this.scheduleName.text;
+			paperPrice.method = this.priceScheduleMethodCombo.selectedItem.data;
+			break;
+		case "PASSPRICESCHEDULE":
+			this.pass_price_schedule.mapToMatrix();
+			paperPrice = this.pass_price_schedule.matrix as PaperPrice;
+			paperPrice.name = this.passScheduleName.text;
+			paperPrice.name = this.priceScheduleMethodCombo.selectedItem.data;
+		case "STAMPSCHEDULE":
+			this.stamp_schedule.mapToMatrix();
+			matrix = this.stamp_schedule.matrix;
+			break;
 		default:
 			matrixeditor.mapToMatrix();
 			matrix = matrixeditor.matrix;
 			break;
 		}
-		matrix.elements.filterFunction = unfilterMatrix;
-		matrix.elements.refresh();
-		for (var i:int=0;i<this.matrix.elements.length;i++) {
-			var element:com.efi.printsmith.data.MatrixElement = this.matrix.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
-			if (element.lastLine == true) {
-				element.price1 = parseFloat(this.price1.text);
-				element.price2 = parseFloat(this.price2.text);
-				element.price3 = parseFloat(this.price3.text);
-				element.price4 = parseFloat(this.price4.text);
-				element.price5 = parseFloat(this.price5.text);
-				element.price6 = parseFloat(this.price6.text);
-				element.price7 = parseFloat(this.price7.text);
-				element.price8 = parseFloat(this.price8.text);
-				element.price9 = parseFloat(this.price9.text);
-				element.price10 = parseFloat(this.price10.text);
-				element.price11 = parseFloat(this.price11.text);
-				element.price12 = parseFloat(this.price12.text);
-				element.price13 = parseFloat(this.price13.text);
-				element.price14 = parseFloat(this.price14.text);
-				element.price15 = parseFloat(this.price15.text);
-				element.price16 = parseFloat(this.price16.text);
-				element.price17 = parseFloat(this.price17.text);
-				element.price18 = parseFloat(this.price18.text);
-				element.price19 = parseFloat(this.price19.text);
-				element.price20 = parseFloat(this.price20.text);
+		if (this.currentState == "COPYPRICESCHEDULE" || this.currentState == "PASSPRICESCHEDULE") {
+			paperPrice.elements.filterFunction = unfilterMatrix;
+			paperPrice.elements.refresh();
+			for (var i:int=0;i<this.paperPrice.elements.length;i++) {
+				var element:com.efi.printsmith.data.MatrixElement = this.paperPrice.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
+				if (element.lastLine == true) {
+					element.price1 = parseFloat(this.price1.text);
+					element.price2 = parseFloat(this.price2.text);
+					element.price3 = parseFloat(this.price3.text);
+					element.price4 = parseFloat(this.price4.text);
+					element.price5 = parseFloat(this.price5.text);
+					element.price6 = parseFloat(this.price6.text);
+					element.price7 = parseFloat(this.price7.text);
+					element.price8 = parseFloat(this.price8.text);
+					element.price9 = parseFloat(this.price9.text);
+					element.price10 = parseFloat(this.price10.text);
+					element.price11 = parseFloat(this.price11.text);
+					element.price12 = parseFloat(this.price12.text);
+					element.price13 = parseFloat(this.price13.text);
+					element.price14 = parseFloat(this.price14.text);
+					element.price15 = parseFloat(this.price15.text);
+					element.price16 = parseFloat(this.price16.text);
+					element.price17 = parseFloat(this.price17.text);
+					element.price18 = parseFloat(this.price18.text);
+					element.price19 = parseFloat(this.price19.text);
+					element.price20 = parseFloat(this.price20.text);
+				}
 			}
+			dataService.addUpdate(paperPrice);
+		} else {
+			matrix.elements.filterFunction = unfilterMatrix;
+			matrix.elements.refresh();
+			for (var i:int=0;i<this.matrix.elements.length;i++) {
+				var element:com.efi.printsmith.data.MatrixElement = this.matrix.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
+				if (element.lastLine == true) {
+					element.price1 = parseFloat(this.price1.text);
+					element.price2 = parseFloat(this.price2.text);
+					element.price3 = parseFloat(this.price3.text);
+					element.price4 = parseFloat(this.price4.text);
+					element.price5 = parseFloat(this.price5.text);
+					element.price6 = parseFloat(this.price6.text);
+					element.price7 = parseFloat(this.price7.text);
+					element.price8 = parseFloat(this.price8.text);
+					element.price9 = parseFloat(this.price9.text);
+					element.price10 = parseFloat(this.price10.text);
+					element.price11 = parseFloat(this.price11.text);
+					element.price12 = parseFloat(this.price12.text);
+					element.price13 = parseFloat(this.price13.text);
+					element.price14 = parseFloat(this.price14.text);
+					element.price15 = parseFloat(this.price15.text);
+					element.price16 = parseFloat(this.price16.text);
+					element.price17 = parseFloat(this.price17.text);
+					element.price18 = parseFloat(this.price18.text);
+					element.price19 = parseFloat(this.price19.text);
+					element.price20 = parseFloat(this.price20.text);
+				}
+			}
+			dataService.addUpdate(matrix);
 		}
-		dataService.addUpdate(matrix);
 		PopUpManager.removePopUp(this);
 	}     
 	
@@ -899,6 +1159,29 @@
 	private function handleSaveResult(ev:ResultEvent):void {
 		matrix = ev.result as com.efi.printsmith.data.Matrix;
 		var editPage:Container = parentContainer;
+	}
+	
+	public function setCopySchedule(tempMatrix:com.efi.printsmith.data.Matrix):void {
+		this.currentState = "COPYPRICESCHEDULE";
+		this.setMatrix(tempMatrix);
+		this.priceScheduleMethodCombo.visible = true;
+		this.priceScheduleMethodCombo.selectedIndex = findItem(paperPrice.method,this.priceScheduleMethod);
+		if (this.priceScheduleMethodCombo.selectedIndex == -1)
+			this.priceScheduleMethodCombo.selectedIndex = 0;
+	}
+	
+	public function setPassSchedule(tempMatrix:com.efi.printsmith.data.Matrix):void {
+		this.currentState = "PASSPRICESCHEDULE";
+		this.setMatrix(tempMatrix);
+		this.priceScheduleMethodCombo.visible = true;
+		this.priceScheduleMethodCombo.selectedIndex = findItem(paperPrice.method,this.priceScheduleMethod);
+		if (this.priceScheduleMethodCombo.selectedIndex == -1)
+			this.priceScheduleMethodCombo.selectedIndex = 0;
+	}
+	
+	public function setStampSchedule(tempMatrix:com.efi.printsmith.data.Matrix):void {
+		this.currentState = "STAMPSCHEDULE";
+		this.setMatrix(tempMatrix);
 	}
 	
 	public function setMatrixType(pricingMethod:String,doubleSidedPricing:Boolean):void {
@@ -1009,4 +1292,5 @@
 		<mx:TextInput x="45" y="48" width="100" id="price2" tabIndex="2" focusOut="checkNaN(event)"/>
 
 	</mx:Canvas>
+	<mx:ComboBox width="176" dataProvider="{priceScheduleMethod}" id="priceScheduleMethodCombo" visible="false"></mx:ComboBox>
 </mx:TitleWindow>

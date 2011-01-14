@@ -181,6 +181,103 @@ public class MatrixUtilities {
 		return cost;
 	}
 	
+	static public double getPaperPrice(Matrix matrix, long xLookup, long yLookup, boolean isFront) {
+		long element = 0;
+		double cost = 0.0;
+		if (matrix != null) {
+			for (int i = 1; i <= 5; i++) {
+				if (i == 1 && (xLookup <= matrix.getHeader1())) {
+					element = i;
+				} else if (i == 2 && (xLookup <= matrix.getHeader2())) {
+					element = i;
+				}else if (i == 3 && (xLookup <= matrix.getHeader3())) {
+					element = i;
+				}else if (i == 4 && (xLookup <= matrix.getHeader4())) {
+					element = i;
+				}else if (i == 5 && (xLookup <= matrix.getHeader5())) {
+					element = i;
+				}else {
+					element = 1;
+				}
+			}
+			
+			List<MatrixElement> elements = matrix.getElements();
+			Collections.sort(elements, new MatrixElementComparator());
+			for (int i = 0; i < elements.size(); i++) {
+				if (elements.get(i).getQty() <= yLookup) {
+					if (element == 1)
+						if (isFront)
+							cost = elements.get(i).getPrice1().doubleValue();
+						else
+							cost = elements.get(i).getPrice11().doubleValue();
+					if (element == 2)
+						if (isFront)
+							cost = elements.get(i).getPrice2().doubleValue();
+						else
+							cost = elements.get(i).getPrice12().doubleValue();
+					if (element == 3)
+						if (isFront)
+							cost = elements.get(i).getPrice3().doubleValue();
+						else
+							cost = elements.get(i).getPrice13().doubleValue();
+					if (element == 4)
+						if (isFront)
+							cost = elements.get(i).getPrice4().doubleValue();
+						else
+							cost = elements.get(i).getPrice14().doubleValue();
+					if (element == 5)
+						if (isFront)
+							cost = elements.get(i).getPrice5().doubleValue();
+						else
+							cost = elements.get(i).getPrice15().doubleValue();
+					break;
+				}
+			}
+		}
+		return cost;
+	}
+	
+	static public double getPassPrice(Matrix matrix, long xLookup, long yLookup) {
+		long element = 0;
+		double cost = 0.0;
+		if (matrix != null) {
+			for (int i = 1; i <= 5; i++) {
+				if (i == 1 && (xLookup <= matrix.getHeader1())) {
+					element = i;
+				} else if (i == 2 && (xLookup <= matrix.getHeader2())) {
+					element = i;
+				}else if (i == 3 && (xLookup <= matrix.getHeader3())) {
+					element = i;
+				}else if (i == 4 && (xLookup <= matrix.getHeader4())) {
+					element = i;
+				}else if (i == 5 && (xLookup <= matrix.getHeader5())) {
+					element = i;
+				}else {
+					element = 1;
+				}
+			}
+			
+			List<MatrixElement> elements = matrix.getElements();
+			Collections.sort(elements, new MatrixElementComparator());
+			for (int i = 0; i < elements.size(); i++) {
+				if (elements.get(i).getQty() <= yLookup) {
+					if (element == 1)
+						cost = elements.get(i).getPrice1().doubleValue();
+					if (element == 2)
+						cost = elements.get(i).getPrice2().doubleValue();
+					if (element == 3)
+						cost = elements.get(i).getPrice3().doubleValue();
+					if (element == 4)
+						cost = elements.get(i).getPrice4().doubleValue();
+					if (element == 5)
+						cost = elements.get(i).getPrice5().doubleValue();
+					break;
+				}
+			}
+		}
+		return cost;
+	}
+	
 	static public double calculateInterpolation(Matrix matrix, long lookup) {
 		double retVal = 0.0;
 		

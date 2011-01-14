@@ -2,10 +2,9 @@ package com.efi.printsmith.business.commandDelegates.EditForms
 {
 	import com.efi.printsmith.data.*;
 	import com.efi.printsmith.business.commandDelegates.*;
-	import com.efi.printsmith.events.commandEvents.EditForms.EditPricingEvent;
+	import com.efi.printsmith.events.commandEvents.EditForms.EditListPricingEvent;
 	import com.efi.printsmith.view.PriceListEditor;
 	import com.efi.printsmith.view.PriceListPicker;
-	import com.efi.printsmith.view.ListPriceSchedulePicker;
 	
 	import mx.controls.Alert;
 	import mx.rpc.Fault;
@@ -13,9 +12,9 @@ package com.efi.printsmith.business.commandDelegates.EditForms
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	
-	public class EditPricingDelegate extends InterfaceCommandDelegate 
+	public class EditListPricingDelegate extends InterfaceCommandDelegate 
 	{
-		public function EditPricingDelegate(responder:IResponder) {
+		public function EditListPricingDelegate(responder:IResponder) {
 			super(responder);
 		}
 		

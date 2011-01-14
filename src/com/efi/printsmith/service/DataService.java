@@ -111,6 +111,7 @@ import com.efi.printsmith.data.TrackerConsoleJobs;
 import com.efi.printsmith.data.TrackerManager;
 import com.efi.printsmith.data.UnpurchasedMerchandise;
 import com.efi.printsmith.data.WasteChart;
+import com.efi.printsmith.data.PaperPrice;
 import com.efi.printsmith.defaultdata.DefaultDataFactory;
 import com.efi.printsmith.messaging.MessageServiceAdapter;
 import com.efi.printsmith.messaging.MessageTypes;
@@ -2959,6 +2960,39 @@ public class DataService extends HibernateService {
 			em.close();
 		}
 	}
+	
+	public ModelBase getPaperPrice(Long id) throws Exception {
+		log.debug("** getPaperPrice called.");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("PaperPrice.byId");
+			query.setParameter("id", id);
+			PaperPrice paperPrice = (PaperPrice) query.getSingleResult();
+
+			if (paperPrice.getElements() != null) {
+				for (int i = 0; i < paperPrice.getElements().size(); i++) {
+					MatrixElement element = paperPrice.getElements().get(i);
+
+					if (element == null) {
+						log.error("Null matrix element found");
+					}
+				}
+			}
+			return paperPrice;
+		} catch (NoResultException e) {
+			log.warn("No result found for getMatrix " + e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			log.warn("No result found for getMatrix " + e);
+			return null;
+		} catch (Exception e) {
+			log.error(e); 			
+			throw e; 
+		} finally {
+			em.close();
+		}
+	}
+
 
 	public ModelBase getMatrix(Long id) throws Exception {
 		log.debug("** getMatrix called.");

@@ -509,6 +509,14 @@
 			<mx:RemoveChild target="{multiQtyLabel}"/>
 			<mx:RemoveChild target="{button1}"/>
 		</mx:State>
+		<mx:State name="ListPrice" basedOn="PrintMethod">
+			<mx:RemoveChild target="{label23}"/>
+			<mx:RemoveChild target="{front_passes_text}"/>
+			<mx:RemoveChild target="{back_passes_text}"/>
+			<mx:RemoveChild target="{customer_suppliled_stock}"/>
+			<mx:RemoveChild target="{specialOrder}"/>
+			<mx:RemoveChild target="{special_order_button}"/>
+		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="prefStocksDataService"
 					 destination="dataService">
@@ -1817,6 +1825,8 @@
 						}
 					}
 					else if (this.job_type.text == "Printing" || this.job_type.text == "B&W" || this.job_type.text == "Color" || this.job_type.text == "Blank" || this.job_type.text == "List" || (this.job_type.text == "Large Format" && stockDefinitionObj.stockunit == 4)) {
+						if (this.job_type.text == "List")
+							this.currentState = "ListPrice";
 						this.job.parentSize.name = stockDefinitionObj.parentsize.name;
 						this.job.parentSize.type = stockDefinitionObj.parentsize.type;
 						this.job.parentSize.height = stockDefinitionObj.parentsize.height;

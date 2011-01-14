@@ -211,6 +211,16 @@
 			</hibernate>
 		</properties>
 	</destination>
+	<destination id="matrixService">
+		<properties>
+			<source>
+				com.efi.printsmith.service.MatrixService
+			</source>
+			<hibernate>
+				<loadMethod>load</loadMethod>
+			</hibernate>
+		</properties>
+	</destination>
 	<destination id="creditCardService">
 		<properties>
 			<source>
