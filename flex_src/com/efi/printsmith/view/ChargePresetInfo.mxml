@@ -43,7 +43,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
     import mx.events.ValidationResultEvent;    
     import mx.formatters.NumberFormatter;
     import mx.utils.GraphicsUtil;    
-    
+    import mx.utils.ObjectUtil;
+   
     private var accounts:ArrayCollection = new ArrayCollection();
     
     private var pricingCharge:Charge = null;
@@ -56,6 +57,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	[Bindable] private var stopMinute:Number = 0;
 	[Bindable] private var startTimeString:String = "00:00";
 	[Bindable] private var stopTimeString:String = "00:00";
+
+    private var originalChargeDefinition:ChargeDefinition = new ChargeDefinition();
 		
 	public function init():void {
 	    PopUpManager.centerPopUp(this);
@@ -66,7 +69,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		}
 	}      
 	
-	private function mapToChargeDefinition():void {
+	private function mapToChargeDefinition(definition:ChargeDefinition):void {
 		if (time_start_edit != null) {
 			startTimeString = time_start_edit.text;
 		}
@@ -74,106 +77,112 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 			stopTimeString = time_stop_edit.text;
 		}
 		if (this.time_start_label_text != null) {
-			chargeDefinition.presetTimeStartLabel = this.time_start_label_text.text;
+			definition.presetTimeStartLabel = this.time_start_label_text.text;
 		}
 		if (this.time_end_label_text != null) {
-			chargeDefinition.presetTimeStopLabel = this.time_end_label_text.text;
+			definition.presetTimeStopLabel = this.time_end_label_text.text;
 		}
-		chargeDefinition.rateLabel = rate_label_text.text;
-		chargeDefinition.presetNotesLabel = notes_label_text.text;
-		chargeDefinition.presetPriceLabel = price_label_text.text;
-		chargeDefinition.presetPrice = parseCurrencyFloat(price_text.text);
-		chargeDefinition.presetRate = parseCurrencyFloat(rate_text.text);
-		chargeDefinition.rate = chargeDefinition.presetRate;
-		chargeDefinition.presetNotes = notes_default_text.text;
-		chargeDefinition.presetDescription = description_default_text.text;
-		chargeDefinition.presetDescriptionLabel = description_label_text.text;
-		chargeDefinition.presetQuantity = parseCurrencyFloat(quantity_text.text);
-		chargeDefinition.presetQuantityLabel = quantity_label_text.text
-		chargeDefinition.presetHidden = hidden_check.selected;
-		chargeDefinition.presetDisplayQuantity = displayQty_check.selected;
-		chargeDefinition.presetBrokered = brokered_check.selected;
-		chargeDefinition.presetTaxable = taxable_check.selected;
-		chargeDefinition.presetShowNotes = show_notes_check.selected;
-		chargeDefinition.presetFinished = finished_check.selected;
-		chargeDefinition.presetMaterialQuantity = parseCurrencyFloat(this.material_quantity.text);
-		chargeDefinition.presetMaterialQuantityLabel = this.material_quantity_label_text.text;
-		chargeDefinition.presetMaterialRate = parseCurrencyFloat(this.material_rate.text);
-		chargeDefinition.material = chargeDefinition.presetMaterialRate;
-		chargeDefinition.presetMaterialRateLabel = this.material_rate_label_text.text;
-		chargeDefinition.presetMaterialSetsOf = parseCurrencyFloat(this.material_sets_of_text.text);
-		chargeDefinition.materialSetCount = chargeDefinition.presetMaterialSetsOf;
-		chargeDefinition.presetMaterialSetsOfLabel = this.material_sets_of_label_text.text;
-		chargeDefinition.presetQuantityPerSet = parseCurrencyFloat(this.quantity_per_set_text.text);
-		chargeDefinition.presetQuantityPerSetLabel = this.quantity_per_set_label_text.text;
-		chargeDefinition.presetPoundsofInk = parseCurrencyFloat(this.pounds_of_ink_text.text);
-		chargeDefinition.presetPoundsOfInkLabel = this.pounds_of_ink_label_text.text;
-		chargeDefinition.presetCoverage = parseCurrencyFloat(this.coverage_text.text);
-		chargeDefinition.presetCoverageLabel = this.coverage_label_text.text;
-		chargeDefinition.presetNumberOfColors = parseCurrencyFloat(this.number_of_colors_text.text);
-		chargeDefinition.presetNumberOfColorsLabel = this.number_of_colors_label_text.text;
-		chargeDefinition.presetSheetsPerLift = parseCurrencyFloat(this.sheets_per_lift_text.text);
-		chargeDefinition.presetSheetsPerLiftLabel = this.sheets_per_lift_label_text.text;
-		chargeDefinition.presetSetup = parseCurrencyFloat(this.setup_text.text);
-		chargeDefinition.setupPrice = chargeDefinition.presetSetup;
-		chargeDefinition.presetInSetsOf = parseCurrencyFloat(this.in_sets_of_text.text);
-		chargeDefinition.presetInSetsOfLabel = this.in_sets_of_label_text.text;
-		chargeDefinition.rateSetCount = chargeDefinition.presetInSetsOf;
-		chargeDefinition.presetSetupLabel = this.setup_label_text.text;
-		chargeDefinition.presetPricePerPoundLabel = this.price_per_pound_label_text.text;
-		chargeDefinition.presetCoverPerPoundLabel = this.cover_per_pound_label_text.text;
-		chargeDefinition.presetTotalWeightLabel = this.total_weight_label_text.text;
-		chargeDefinition.presetAreaLabel = this.area_label_text.text;
-		chargeDefinition.presetUpLabel = this.up_label_text.text;
+		definition.rateLabel = rate_label_text.text;
+		definition.presetNotesLabel = notes_label_text.text;
+		definition.presetPriceLabel = price_label_text.text;
+		definition.presetPrice = parseCurrencyFloat(price_text.text);
+		definition.presetRate = parseCurrencyFloat(rate_text.text);
+		definition.rate = definition.presetRate;
+		definition.presetNotes = notes_default_text.text;
+		definition.presetDescription = description_default_text.text;
+		definition.presetDescriptionLabel = description_label_text.text;
+		definition.presetQuantity = parseCurrencyFloat(quantity_text.text);
+		definition.presetQuantityLabel = quantity_label_text.text
+		definition.presetHidden = hidden_check.selected;
+		definition.presetDisplayQuantity = displayQty_check.selected;
+		definition.presetBrokered = brokered_check.selected;
+		definition.presetTaxable = taxable_check.selected;
+		definition.presetShowNotes = show_notes_check.selected;
+		definition.presetFinished = finished_check.selected;
+		definition.presetMaterialQuantity = parseCurrencyFloat(this.material_quantity.text);
+		definition.presetMaterialQuantityLabel = this.material_quantity_label_text.text;
+		definition.presetMaterialRate = parseCurrencyFloat(this.material_rate.text);
+		definition.material = definition.presetMaterialRate;
+		definition.presetMaterialRateLabel = this.material_rate_label_text.text;
+		definition.presetMaterialSetsOf = parseCurrencyFloat(this.material_sets_of_text.text);
+		definition.materialSetCount = definition.presetMaterialSetsOf;
+		definition.presetMaterialSetsOfLabel = this.material_sets_of_label_text.text;
+		definition.presetQuantityPerSet = parseCurrencyFloat(this.quantity_per_set_text.text);
+		definition.presetQuantityPerSetLabel = this.quantity_per_set_label_text.text;
+		definition.presetPoundsofInk = parseCurrencyFloat(this.pounds_of_ink_text.text);
+		definition.presetPoundsOfInkLabel = this.pounds_of_ink_label_text.text;
+		definition.presetCoverage = parseCurrencyFloat(this.coverage_text.text);
+		definition.presetCoverageLabel = this.coverage_label_text.text;
+		definition.presetNumberOfColors = parseCurrencyFloat(this.number_of_colors_text.text);
+		definition.presetNumberOfColorsLabel = this.number_of_colors_label_text.text;
+		definition.presetSheetsPerLift = parseCurrencyFloat(this.sheets_per_lift_text.text);
+		definition.presetSheetsPerLiftLabel = this.sheets_per_lift_label_text.text;
+		definition.presetSetup = parseCurrencyFloat(this.setup_text.text);
+		definition.setupPrice = definition.presetSetup;
+		definition.presetInSetsOf = parseCurrencyFloat(this.in_sets_of_text.text);
+		definition.presetInSetsOfLabel = this.in_sets_of_label_text.text;
+		definition.rateSetCount = definition.presetInSetsOf;
+		definition.presetSetupLabel = this.setup_label_text.text;
+		definition.presetPricePerPoundLabel = this.price_per_pound_label_text.text;
+		definition.presetCoverPerPoundLabel = this.cover_per_pound_label_text.text;
+		definition.presetTotalWeightLabel = this.total_weight_label_text.text;
+		definition.presetAreaLabel = this.area_label_text.text;
+		definition.presetUpLabel = this.up_label_text.text;
 		if (this.linear_bottom != null) {
-			chargeDefinition.linearX1 = this.linear_bottom.selected;
+			definition.linearX1 = this.linear_bottom.selected;
 		}
 		if (this.linear_top != null) {
-			chargeDefinition.linearX2 = this.linear_top.selected;
+			definition.linearX2 = this.linear_top.selected;
 		}
 		if (this.linear_right != null) {
-			chargeDefinition.linearY1 = this.linear_right.selected;
+			definition.linearY1 = this.linear_right.selected;
 		}
 		if (this.linear_left != null) {
-			chargeDefinition.linearY2 = this.linear_left.selected;
+			definition.linearY2 = this.linear_left.selected;
 		}
 		if (tax_table_combo.selectedIndex == 0) {
-			chargeDefinition.presetTaxTable = null;
+			definition.presetTaxTable = null;
 		} else {
-			chargeDefinition.presetTaxTable = (tax_table_combo.selectedItem as TaxTable);
+			definition.presetTaxTable = (tax_table_combo.selectedItem as TaxTable);
 		}
 		if (cuts_text != null) {
-			chargeDefinition.presetCuts = parseInt(cuts_text.text);
+			definition.presetCuts = parseInt(cuts_text.text);
 		}
 
 		if (time_start_edit != null) {
 			if (startTimeString.indexOf(":") != -1) {
-				chargeDefinition.presetTimeStartHour = parseInt(startTimeString.substr(0,startTimeString.indexOf(":")));
-				chargeDefinition.presetTimeStartMinute = parseInt(startTimeString.substr(startTimeString.indexOf(":")+1));
+				definition.presetTimeStartHour = parseInt(startTimeString.substr(0,startTimeString.indexOf(":")));
+				definition.presetTimeStartMinute = parseInt(startTimeString.substr(startTimeString.indexOf(":")+1));
 			} if (startTimeString.indexOf(".") != -1) {
-				chargeDefinition.presetTimeStartHour = parseInt(startTimeString.substr(0,startTimeString.indexOf(".")));
-				chargeDefinition.presetTimeStartMinute = parseInt(startTimeString.substr(startTimeString.indexOf(".")+1));
+				definition.presetTimeStartHour = parseInt(startTimeString.substr(0,startTimeString.indexOf(".")));
+				definition.presetTimeStartMinute = parseInt(startTimeString.substr(startTimeString.indexOf(".")+1));
 			} else {
-				chargeDefinition.presetTimeStartHour = parseInt(startTimeString);
+				definition.presetTimeStartHour = parseInt(startTimeString);
 			}
 		}
 				
 		if (time_stop_edit != null) {
 			if (stopTimeString.indexOf(":") != -1) {
-				chargeDefinition.presetTimeStopHour = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(":")));
-				chargeDefinition.presetTimeStopMinute = parseInt(stopTimeString.substr(stopTimeString.indexOf(":")+1));
+				definition.presetTimeStopHour = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(":")));
+				definition.presetTimeStopMinute = parseInt(stopTimeString.substr(stopTimeString.indexOf(":")+1));
 			} if (startTimeString.indexOf(".") != -1) {
-				chargeDefinition.presetTimeStopHour = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(".")));
-				chargeDefinition.presetTimeStopMinute = parseInt(stopTimeString.substr(stopTimeString.indexOf(".")+1));
+				definition.presetTimeStopHour = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(".")));
+				definition.presetTimeStopMinute = parseInt(stopTimeString.substr(stopTimeString.indexOf(".")+1));
 			} else {
-				chargeDefinition.presetTimeStopHour = parseInt(startTimeString);
+				definition.presetTimeStopHour = parseInt(startTimeString);
 			}
 		}
 	}
 	
 	private function doOK():void {
-		mapToChargeDefinition();
-		var selectEvent:ChargePresetInfoEvent = new ChargePresetInfoEvent(ChargePresetInfoEvent.CHARGEPRESETOK, chargeDefinition);
+		mapToChargeDefinition(originalChargeDefinition);
+		originalChargeDefinition.overrideMaterialQty = chargeDefinition.overrideMaterialQty;
+		originalChargeDefinition.overrideNumberOfCuts = chargeDefinition.overrideNumberOfCuts;
+		originalChargeDefinition.overridePrice = chargeDefinition.overridePrice;
+		originalChargeDefinition.overrideRate = chargeDefinition.overrideRate;
+		originalChargeDefinition.overrideRateQuantity = chargeDefinition.overrideRateQuantity;
+		
+		var selectEvent:ChargePresetInfoEvent = new ChargePresetInfoEvent(ChargePresetInfoEvent.CHARGEPRESETOK, originalChargeDefinition);
 		dispatchEvent(selectEvent);
 		PopUpManager.removePopUp(this);
 	} 
@@ -185,7 +194,8 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	} 
 	
 	public function setChargeDefinition(chargeDefinition:ChargeDefinition):void {
-		this.chargeDefinition = chargeDefinition;
+		this.originalChargeDefinition = chargeDefinition;
+		this.chargeDefinition = ObjectUtil.copy(chargeDefinition) as ChargeDefinition;
 		
 		this.title = this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargePresetCmd.PresetInfo') + " " + chargeDefinition.title;
 	
@@ -677,7 +687,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 	}
 	
 	public function updatePrice(event:Event):void {
-		mapToChargeDefinition();
+		mapToChargeDefinition(chargeDefinition);
 		chargeService.createChargeFromChargeDefinition(this.chargeDefinition);
 	}
 

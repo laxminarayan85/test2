@@ -856,7 +856,7 @@
 					cuts_box.includeInLayout = cuts_box.visible = true;
 					sheets_per_lift_box.includeInLayout = sheets_per_lift_box.visible = chargeDefinition.sheet_lift_check && chargeDefinition.adjustableSets;
 					quantity_per_set_box.includeInLayout = quantity_per_set_box.visible = false;
-					if (charge.chargeDefinition.cutsArePrePress) {
+					if (this.chargeDefinition.cutsArePrePress) {
 						cutDescription = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ParenttoRunSize');
  					} else {
 						cutDescription = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.RuntoFinishSize');
