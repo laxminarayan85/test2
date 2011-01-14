@@ -2260,8 +2260,10 @@
 				
 				if (invoice.taxTable != null) {
 					pickTaxTable.selectedIndex = findItem(invoice.taxTable.name, TaxTableArray);
-					pickTaxCode.selectedIndex = findItem(invoice.taxCode.name, TaxCodesArray)
+					
 				}
+				if ( invoice.taxCode != null)
+					pickTaxCode.selectedIndex = findItem(invoice.taxCode.name, TaxCodesArray)
 				
 				if (txtSaleDescription != null)
 					txtSaleDescription.text = activeSale.description;

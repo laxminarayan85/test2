@@ -276,7 +276,7 @@
 		var tempTax:TaxElement;
 		saveNoRate= false;
 		tempRate = parseFloat(effect_rate.text);
-		if ( tempRate != taxTable.effectiveTaxRate && !newTable){
+		if ( tempRate != (taxTable.effectiveTaxRate * 100)&& !newTable){
 			taxTable.taxTableIsCurrent = false;
 			tempTaxTable.name = name_edit.text;
 			tempTaxTable.abbr = Abbr_edit.text;
@@ -494,7 +494,7 @@
 						<mx:itemRenderer>
 								<mx:Component> 
 										<components:CustomCheckBoxComponent 
-											datagridControl="true" click="{outerDocument.processGridData(data)}" variableName="defaultTable" customText="{data.defaultTable}"
+											datagridControl="true"  enabled="{!data.disableTable}" click="{outerDocument.processGridData(data)}" variableName="defaultTable" customText="{data.defaultTable}"
 											selectedValue="true" deSelectedValue="false" />
 								</mx:Component>
 								
