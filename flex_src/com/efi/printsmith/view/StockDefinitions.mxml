@@ -1448,10 +1448,10 @@
 		BinLocation.enabled = checked;
 		ShellItem.enabled = checked;
 		chkEvenIncrements.enabled = checked;
-		if (stockDefinitions.priceExpires == null) {
-			stockDefinitions.priceExpires = new Date();
-			PriceExpires.selectedDate = stockDefinitions.priceExpires;
-		}
+//		if (stockDefinitions.priceExpires == null) {
+//			stockDefinitions.priceExpires = new Date();
+//			PriceExpires.selectedDate = stockDefinitions.priceExpires;
+//		}
 	}
 	
 	private function doAccount():void {
@@ -1558,28 +1558,26 @@
 			parentSize.selectedIndex = findItem(stockDefinitions.parentsize.name, dimensions);
 		if ( stockDefinitions.normalRunSize != null)
 			NormalRunSize.selectedIndex = findItem(stockDefinitions.normalRunSize.name, dimensions);	
-		if (stockDefinitions.priceExpires != null)
-			PriceExpires.selectedDate =stockDefinitions.priceExpires;	
-		if (stockDefinitions.expires != null)
-			Expires.selectedDate = stockDefinitions.expires;	
-			
-			//// check box values here
-			chkstandardItem.selected = stockDefinitions.standardItem;
-			chkIsMetric.selected = stockDefinitions.isMetric;
-			doMetric();
-			chkAutocalcblankstock.selected = stockDefinitions.autoCalculateBlank;
-			chkEvenIncrements.selected = stockDefinitions.evenIncrements;
-			chkcharge4entiteorder.selected = stockDefinitions.noBrokenCarton;
-			chkCostIsInSets.selected = stockDefinitions.isCostInSets;
-			chkfscCertified.selected = stockDefinitions.fscCertified;
-			chksfiCertified.selected = stockDefinitions.sfiCertified
-			chkgreensealCertified.selected = stockDefinitions.greenSealCertified;
-			chkExcludeFromWebUpdate.selected = stockDefinitions.excludeFromWeb;
-			ShellItem.selected = stockDefinitions.shellItem;
-			
-			this.charges = stockDefinitions.charges;
-			standardItemCheckEvent();
-			stockChanges = stockDefinitions.stockChanges;
+		PriceExpires.selectedDate =stockDefinitions.priceExpires;	
+		Expires.selectedDate = stockDefinitions.expires;	
+		
+		//// check box values here
+		chkstandardItem.selected = stockDefinitions.standardItem;
+		chkIsMetric.selected = stockDefinitions.isMetric;
+		doMetric();
+		chkAutocalcblankstock.selected = stockDefinitions.autoCalculateBlank;
+		chkEvenIncrements.selected = stockDefinitions.evenIncrements;
+		chkcharge4entiteorder.selected = stockDefinitions.noBrokenCarton;
+		chkCostIsInSets.selected = stockDefinitions.isCostInSets;
+		chkfscCertified.selected = stockDefinitions.fscCertified;
+		chksfiCertified.selected = stockDefinitions.sfiCertified
+		chkgreensealCertified.selected = stockDefinitions.greenSealCertified;
+		chkExcludeFromWebUpdate.selected = stockDefinitions.excludeFromWeb;
+		ShellItem.selected = stockDefinitions.shellItem;
+		
+		this.charges = stockDefinitions.charges;
+		standardItemCheckEvent();
+		stockChanges = stockDefinitions.stockChanges;
 			
 	}
 
