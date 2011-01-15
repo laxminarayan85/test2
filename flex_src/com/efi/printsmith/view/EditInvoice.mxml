@@ -1538,7 +1538,14 @@
 				if (invoice.account == null)
 					this.setAccount(new Account());
 			}
-
+			
+			private function onConfirmNotes(evt:CloseEvent):void	{
+				if (evt.detail == Alert.YES)	{
+					var si:SpecialInstructions = new SpecialInstructions();
+					si.instructions = invoice.account.accountNote;
+					invoice.specialInstructions = si;
+				}
+			}
 			private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void
 			{
 				if (evt.account != null)
@@ -1549,7 +1556,12 @@
 					}
 					else{
 					
-					this.setAccount(evt.account);
+						this.setAccount(evt.account);
+						if (evt.account.accountNote != null)	{
+							var a:Array = new Array();
+							a.push("invoice notes");
+							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_CUSTOMERACCOUNTNOTES',a),"",Alert.YES|Alert.NO,this,onConfirmNotes);
+						}
 					}
 				}
 				else
