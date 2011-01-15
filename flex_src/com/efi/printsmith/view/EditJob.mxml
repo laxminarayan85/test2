@@ -1136,6 +1136,7 @@
 			public function setJob(job2:Job):void
 			{
 				this.job=job2;
+				
 				loadData();
 				mapFromJobData();
 				this.invoice = job.parentInvoice;
@@ -1443,6 +1444,9 @@
 			{
 				this.job = ev.result as Job;
 				job.defaultJob = true;
+				if (job.parentInvoice.account.jobNote != null)	{
+					job.jobNotes = 	job.parentInvoice.account.jobNote;
+				}
 				setJob(job);
 				setPaperCalculatorData = true;				
 				this.copy_single_radio.selected = this.job.singleSided;
