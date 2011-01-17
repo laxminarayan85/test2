@@ -200,6 +200,16 @@ public class TableEditorMapper extends ImportMapper {
 									
 									if (disabledNode != null)
 										((TaxTable) modelBase).setDisableTable(Utilities.tokenToBooleanValue(disabledNode.getNodeValue()));
+									
+									Node defaultNode = null;
+									try {
+										defaultNode = fieldAttributes.getNamedItem("default");
+									} catch (Exception e) {
+										defaultNode = null;
+									}
+									
+									if (defaultNode != null)
+										((TaxTable) modelBase).setDefaultTable(Utilities.tokenToBooleanValue(disabledNode.getNodeValue()));
 									if (((TaxTable) modelBase).getName().equals("") == false)
 										dataService.addUpdate(modelBase);
 								}
