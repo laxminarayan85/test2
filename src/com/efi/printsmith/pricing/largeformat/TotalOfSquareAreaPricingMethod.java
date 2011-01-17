@@ -37,7 +37,10 @@ public class TotalOfSquareAreaPricingMethod extends LargeFormatPricingMethod {
 		} catch (Exception e) {
 
 		}
-		area = area * job.getNumCopies();
+		if (copierDefinition.getSquareAreaType().equals("AreaFinishSize"))
+			area = area * (job.getQtyOrdered() * job.getSheets());
+		else
+			area = area * ((job.getQtyOrdered() * job.getSheets()) / job.getNumUp());
 		calcArea = area;
 		MatrixElement matrixElement = MatrixUtilities.lookupMatrixElement(job
 				.getPricingCopier().getCopierMatrix(), area);

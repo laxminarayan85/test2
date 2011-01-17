@@ -22,13 +22,34 @@ public class StockCostEngine {
 					qty = job.getTotalImpressions() / job.getPaperCal().getRunout();
 			} else { if (pricingMethod.getTitle().equals("Blank")) {
 				qty = job.getQtyOrdered();
+			} else if (job.getPricingMethod().getMethod().equals("Large Format")) {
+				try {
+					if (job.getPricingCopier().getSquareAreaType() == "AreaFinishSize")
+						qty = PriceListUtilities.getAreaFromSizeString(job.getFinishSize());
+					else
+						if (job.getStock() != null && job.getStock().getStockunit() == 4)
+							qty = PriceListUtilities.getAreaFromSizeString(job.getRunSize());
+						else
+							qty = new Double(Double.parseDouble(job.getParentSize()
+									.getName())
+									* job.getCutOff()).longValue();
+				}
+				catch (Exception e) {
+					
+				}
+				if (job.getPricingCopier().getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndCopies.name())) {
+					qty = qty * job.getTotalCopies();
+				} else if (job.getPricingCopier().getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndOriginals.name())) {
+					qty = qty * job.getQtyOrdered() * job.getSheets();
+				} else if (job.getPricingCopier().getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.TotalSquareArea.name())) {
+					qty = qty * job.getQtyOrdered() * job.getSheets();
+				}
 			} else
 				if (job.getPaperCal().getRunout() == 0)
 					qty = job.getTotalCopies();
 				else
 					qty = job.getTotalCopies() / job.getPaperCal().getRunout();
 			}
-			
 			StockDefinition stockDefinition = job.getStock();
 			if (stockDefinition != null) {
 				double markup = 0.0;
