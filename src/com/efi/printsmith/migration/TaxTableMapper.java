@@ -49,11 +49,11 @@ public class TaxTableMapper extends ImportMapper {
 		
 		Date createDateTime =new Date();
 		Date localDateTime=new Date();
+		String prevId = "";
 		int count = 0;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
-			String prevId = "";
 			if ("recno".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("rstatus".equals(currentFieldToken)) {
