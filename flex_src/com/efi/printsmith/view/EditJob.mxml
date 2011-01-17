@@ -1326,8 +1326,15 @@
 			}
 			
 			private function updateCostingRecordAndPrice():void {
+				job.originalQty = job.qtyOrdered;
 				if(job.pricingRecord!=null){
 					job.pricingRecord.originalPrice = job.pricingRecord.totalPrice;
+				}
+				if(job.charges!=null){
+					for each(var chargeObj:Charge in job.charges) {
+						chargeObj.originalPrice = chargeObj.price;
+						chargeObj.originalQty = chargeObj.quantity;
+					}
 				}
 				if(job.costingRecord==null) {
 					job.costingRecord = new CostingRecord();
@@ -1345,8 +1352,15 @@
 				}
 				if(invoiceMultiQtyJobList!=null) {
 					for each(var jobBaseObj:JobBase in invoiceMultiQtyJobList) {
+						jobBaseObj.originalQty = job.qtyOrdered;
 						if(jobBaseObj.pricingRecord!=null){
 							jobBaseObj.pricingRecord.originalPrice = jobBaseObj.pricingRecord.totalPrice;
+						}
+						if(jobBaseObj.charges!=null){
+							for each(var chargeObject:Charge in jobBaseObj.charges) {
+								chargeObject.originalPrice = chargeObject.price;
+								chargeObject.originalQty = chargeObject.quantity;
+							}
 						}
 						if(jobBaseObj.costingRecord==null) {
 							jobBaseObj.costingRecord = new CostingRecord();

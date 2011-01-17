@@ -656,12 +656,27 @@
 					
 				if(invoice.jobs!=null) {
 					for each(var jobBaseObj:JobBase in invoice.jobs) {
+						jobBaseObj.originalQty = jobBaseObj.qtyOrdered;
 						if(jobBaseObj.costingRecord!=null) {
 							jobBaseObj.costingRecord.originalTotalCost = jobBaseObj.costingRecord.actualTotalCost;
 						}
 						if(jobBaseObj.pricingRecord!=null) {
 							jobBaseObj.pricingRecord.originalPrice = jobBaseObj.pricingRecord.totalPrice;
 						}
+						
+						if(jobBaseObj.charges!=null) {
+							for each(var chargeObj:Charge in jobBaseObj.charges) {
+								chargeObj.originalPrice = chargeObj.price;
+								chargeObj.originalQty = chargeObj.quantity;
+							}
+						}
+					}
+				}
+				
+				if(invoice.charges!=null) {
+					for each(var chargeObj:Charge in invoice.charges) {
+						chargeObj.originalPrice = chargeObj.price;
+						chargeObj.originalQty = chargeObj.quantity;
 					}
 				}
 			}
@@ -1107,6 +1122,10 @@
 			private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
 			{
 				this.invoice.charges=evt.chargeArray;
+				for each(var chargeObj:Charge in invoice.charges) {
+					chargeObj.originalPrice = chargeObj.price;
+					chargeObj.originalQty = chargeObj.quantity;
+				}
 				//this.updatePrice();
 			}
 
@@ -2258,11 +2277,81 @@
 	        		var localJob:Job = item as Job;
 	        		if(localJob.pricingRecord!=null) {
 	        			if(localJob.pricingRecord.originalPrice!=localJob.pricingRecord.totalPrice) {
+	        				localJob.pricingRecord.originalPrice = localJob.pricingRecord.totalPrice;
 	        				localJob.pricingRecord.totalPriceOverride = true;
 	        			}
+	        		}	        		
+	        	} else if(item is Charge) {
+	        		var localCharge:Charge = item as Charge;
+	        		if(localCharge.originalPrice!=localCharge.price){
+	        			localCharge.originalPrice==localCharge.price;
+	        			localCharge.overridePrice = true;
 	        		}
-	        		callLater(updateCostingDataGrid);
 	        	}
+	        	callLater(updateCostingDataGrid);
+	        }
+	        
+	        public function updateInvoicePricing(item:Object):void {
+	        	if(item is Job) {
+	        		var localJob:Job = item as Job;
+	        		if(localJob.pricingRecord!=null) {
+	        			if(localJob.pricingRecord.originalPrice!=localJob.pricingRecord.totalPrice) {
+	        				localJob.pricingRecord.originalPrice = localJob.pricingRecord.totalPrice;
+	        				localJob.pricingRecord.totalPriceOverride = true;
+	        			}
+	        		}	        		
+	        	} else if(item is Charge) {
+	        		var localCharge:Charge = item as Charge;
+	        		if(localCharge.originalPrice!=localCharge.price){
+	        			localCharge.originalPrice==localCharge.price;
+	        			localCharge.overridePrice = true;
+	        		}
+	        	}
+	        	callLater(updateInvoiceDataGrid);
+	        }
+	        
+	        public function updateQuantity(item:Object):void {
+	        	if(item is Job) {
+	        		var localJob:Job = item as Job;
+        			if(localJob.originalQty!=localJob.qtyOrdered) {
+        				localJob.originalQty = localJob.qtyOrdered;
+        			}       		
+	        	} else if(item is Charge) {
+	        		var localCharge:Charge = item as Charge;
+	        		if(localCharge.originalQty!=localCharge.quantity){
+	        			localCharge.originalQty==localCharge.quantity;
+	        			localCharge.overrideQuantity = true;
+	        		}
+	        	}
+	        	callLater(updateInvoiceDataGrid);
+	        }
+	        
+	        private function updateInvoiceDataGrid():void {
+	        	invoice_job_grid.dataProvider = getJobChargesList(invoice.jobs,invoice.charges);
+	        	calculateTotals();
+	        }
+	        
+	        private function calculateTotals():void {
+	        	if (invoice.jobs != null && invoice.jobs.length > 0) {
+					var i:int;
+					invoice.subTotal = 0;
+					for (i=0; i<invoice.jobs.length; i++) {
+						var tmpJob:Job = invoice.jobs.getItemAt(i) as Job;	
+						invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+						if(tmpJob.charges!=null) {
+							for each(var chargeObj:Charge in tmpJob.charges) {
+								invoice.subTotal += chargeObj.price;
+							}
+						}
+					}
+				}
+				if(invoice.charges!=null) {
+					for each(var chargeObj:Charge in invoice.charges) {
+						invoice.subTotal += chargeObj.price;
+					}
+				}
+				invoice.grandTotal = invoice.subTotal;
+				invoice.amountDue = invoice.grandTotal;
 	        }
 	        
 	        private function updateCostingDataGrid():void {
@@ -2658,7 +2747,7 @@
 								<mx:Component>
 									<components:CustomNumericTextInputComponent
 										dataHolder="{data}" variableName="{(data is Job)?'qtyOrdered':'quantity'}" customText="{(data is Job)?data.qtyOrdered:data.quantity}"
-										precision="2" rounding="nearest" textAlignStyle="left">
+										precision="2" rounding="nearest" textAlignStyle="left" focusOut="{outerDocument.updateQuantity(data)}">
 										<mx:Script>
 											<![CDATA[
 												import com.efi.printsmith.data.Job;
@@ -2681,7 +2770,7 @@
 								<mx:Component>
 									<components:CustomNumericTextInputComponent
 										dataHolder="{(data is Job)?data.pricingRecord:data}" variableName="{(data is Job)?'totalPrice':'price'}" customText="{(data is Job)?data.pricingRecord.totalPrice:data.price}"
-										precision="2" rounding="nearest">
+										precision="2" rounding="nearest" focusOut="{outerDocument.updateInvoicePricing(data)}">
 										<mx:Script>
 											<![CDATA[
 												import com.efi.printsmith.data.Job;
