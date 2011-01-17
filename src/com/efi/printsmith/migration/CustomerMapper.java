@@ -207,7 +207,7 @@ public class CustomerMapper extends ImportMapper {
 							customer.setTaxTable(taxTable);
 					}
 				} else if ("tax table is default".equals(currentFieldToken)) {
-					if (currentImportToken.equals("0") == false) {
+					if (currentImportToken.equals("0") == false  && taxTable != null) {
 						if (taxTable.getDefaultTable() != null && taxTable.getDefaultTable() != true){
 							taxTable.setDefaultTable(true);
 							dataService.addUpdate(taxTable);
