@@ -2337,10 +2337,21 @@
 					invoice.subTotal = 0;
 					for (i=0; i<invoice.jobs.length; i++) {
 						var tmpJob:Job = invoice.jobs.getItemAt(i) as Job;	
-						invoice.subTotal += tmpJob.pricingRecord.totalPrice;
-						if(tmpJob.charges!=null) {
-							for each(var chargeObj:Charge in tmpJob.charges) {
-								invoice.subTotal += chargeObj.price;
+						if(invoice is Estimate){
+							if(tmpJob.defaultJob){
+								invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+								if(tmpJob.charges!=null) {
+									for each(var chargeObj:Charge in tmpJob.charges) {
+										invoice.subTotal += chargeObj.price;
+									}
+								}
+							}
+						} else {
+							invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+							if(tmpJob.charges!=null) {
+								for each(var chargeObj:Charge in tmpJob.charges) {
+									invoice.subTotal += chargeObj.price;
+								}
 							}
 						}
 					}
