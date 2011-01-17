@@ -29,6 +29,7 @@ public class TableEditorMapper extends ImportMapper {
 		ModelBase modelBase = null;
 		DataService dataService = new DataService();
 		String title = "";
+		String name = "";
 		boolean firstRec = true;
 		int recordNumber = 0;
 		for (int i=0;i<fileNodes.getLength();i++) {
@@ -43,7 +44,7 @@ public class TableEditorMapper extends ImportMapper {
 							if (nameNode.getNodeValue().equals("title")) {
 								title = recordNodes.item(z).getTextContent();
 							} else if (nameNode.getNodeValue().equals("id") && recordNodes.item(z).getTextContent().equals("0") == false) {
-								if (firstRec == false)
+								if (firstRec == false && name.equals("") == false)
 									dataService.addUpdate(modelBase);
 								if (title.equals("Business Type"))
 									modelBase = new BusinessType();
@@ -173,15 +174,18 @@ public class TableEditorMapper extends ImportMapper {
 								modelBase.setDisplayId(Utilities.tokenToLong(recordNodes.item(z).getTextContent()));
 								firstRec = false;
 							} else if (nameNode.getNodeValue().equals("name")) {
-								if (title.equals("Tax Tables")) {
+								if (title.equals("Tax Tables") && recordNodes.item(z).getTextContent().equals("") == false) {
 									TaxTable taxTable = (TaxTable)dataService.getByName("TaxTable", recordNodes.item(z).getTextContent());
 									if (taxTable == null) {
 										taxTable = new TaxTable();
 										taxTable.setName(recordNodes.item(z).getTextContent());
+										taxTable.setTaxTableIsCurrent(true);
+										taxTable.setDisableTable(false);
 										modelBase = dataService.addUpdate(taxTable);
 									} else
 										modelBase = taxTable;
 								}
+								name = recordNodes.item(z).getTextContent();
 								modelBase = setName(modelBase,recordNodes.item(z).getTextContent());
 							} else if (nameNode.getNodeValue().equals("key")) {
 								modelBase = setKey(modelBase,recordNodes.item(z).getTextContent());
@@ -196,7 +200,8 @@ public class TableEditorMapper extends ImportMapper {
 									
 									if (disabledNode != null)
 										((TaxTable) modelBase).setDisableTable(Utilities.tokenToBooleanValue(disabledNode.getNodeValue()));
-									dataService.addUpdate(modelBase);
+									if (((TaxTable) modelBase).getName().equals("") == false)
+										dataService.addUpdate(modelBase);
 								}
 							}
 						}

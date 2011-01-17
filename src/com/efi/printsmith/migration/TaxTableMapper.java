@@ -64,11 +64,12 @@ public class TaxTableMapper extends ImportMapper {
 				taxTable.setPrevId(currentImportToken);
 				prevId = currentImportToken;
 			} else if ("taxTableTableName".equals(currentFieldToken)) {
-				//TaxTable testTable = dataService.getByTaxTableName(currentImportToken);
-				//if (testTable != null) {
-				//	taxTable = testTable;
-				//	taxTable.setPrevId(prevId);
-				//}
+				TaxTable testTable = dataService.getByTaxTableName(currentImportToken);
+				if (testTable != null) {
+					taxTable = null;
+					taxTable = dataService.getByTaxTableName(currentImportToken);
+					taxTable.setPrevId(prevId);
+				}
 				taxTable.setName(currentImportToken);
 				taxTable.setDefaultTable(false);
 			} else if ("taxTableTableKey".equals(currentFieldToken)) {
@@ -383,6 +384,7 @@ public class TaxTableMapper extends ImportMapper {
 			}
 			          
            }
+		 taxTable = (TaxTable)dataService.addUpdate(taxTable);
 		 if (taxElement != null)
       	   taxTable.addTaxElements(taxElement);
 		 if (taxElement2 != null)
