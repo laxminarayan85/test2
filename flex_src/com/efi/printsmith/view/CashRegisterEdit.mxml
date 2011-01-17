@@ -831,11 +831,12 @@
 					//
 					if (tempSale.isPickup) {
 						if (tempSale.invoice != null) {
-							tempSale.invoice.pickupDate = new Date();
-							tempSale.invoice.offPendingDate = tempSale.invoice.pickupDate;
-							tempSale.invoice.onPendingList = false;
-							tempSale.invoice.locked = true;
-							dataService.addUpdate(tempSale.invoice);
+						// moved to save results of the ArHistRecord
+						//	tempSale.invoice.pickupDate = new Date();
+						//	tempSale.invoice.offPendingDate = tempSale.invoice.pickupDate;
+						//	tempSale.invoice.onPendingList = false;
+						//	tempSale.invoice.locked = true;
+						//	dataService.addUpdate(tempSale.invoice);
 							
 							// TODO - costing the invoice is needed
 							
@@ -958,12 +959,43 @@
 	}
 	
 	private function handleSaveTapeBatchResult(ev:ResultEvent):void{
+		var tapeBatch:TapeBatch = ev.result as TapeBatch;
+		var i:int = 0;
+		var temp:Object = null;
+		var tempSale:TapeSaleRecord = null;
+		
+		// session batch was saved before now.
+		// attach any history records to the effected invoices
+		//
+		if (sessionBatch != null && sessionBatch.transactions!= null) {
+			for(i = 0; i< sessionBatch.transactions.length; i++) {
+				temp  = sessionBatch.transactions.getItemAt(i) as Object;
+				
+				if (temp is TapeSaleRecord) {
+					tempSale = temp as TapeSaleRecord;
+					//
+					// invoice pickup, place a record into the invoice that points at the history record
+					//		that was created for the pick.  this is where invoice balance will come from.
+					//
+					if (tempSale.isPickup) {
+						if (tempSale.invoice != null) {
+							tempSale.invoice.pickupDate = new Date();
+							tempSale.invoice.offPendingDate = tempSale.invoice.pickupDate;
+							tempSale.invoice.onPendingList = false;
+							tempSale.invoice.locked = true;
+							tempSale.invoice.accountHistoryData = tempSale.accountHistoryData;
+							dataService.addUpdate(tempSale.invoice);
+						} 
+					}
+				}
+			}
+		}
+		
 		//
 		// save the cash drawer, when complete the register will be reset back to inital state
 		// see "handleSaveCashDrawerResult"
 		//
 		dataServiceCashDrawer.addUpdate(cashDrawer);
-
 	}
 		
 	private function UpdateCashRegister():void{
