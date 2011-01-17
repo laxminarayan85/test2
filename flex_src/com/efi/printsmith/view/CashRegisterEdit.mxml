@@ -1011,6 +1011,10 @@
 			// assume zero tax under these conditions
 			if (chkNonTax.selected || activeSale.taxTable == null || activeSale.subTotal < .01){
 				activeSale.taxAmount = 0;
+				if (activeSale.opPrice == false) {
+					activeSale.total = activeSale.subTotal + activeSale.taxAmount;
+					activeSale.total = roundToCurrency(activeSale.total);
+				}
 				UpdateBatchNumbers();
 			}
 			else {
@@ -1170,7 +1174,7 @@
 					activeSale.taxTable = pickTaxTable.selectedItem as TaxTable;
 					activeSale.taxCode = pickTaxCode.selectedItem as TaxCodes;
 		
-					if (chkNonTax.selected || activeSale.taxTable != null){
+					if (chkNonTax.selected || activeSale.taxTable == null){
 						activeSale.taxAmount = 0;
 					}
 					else {
@@ -2097,7 +2101,7 @@
 							if (totalDeposits > 0) {
 								var depApplied:TapeDepositAppliedRecord = new TapeDepositAppliedRecord();
 								depApplied.totalDeposits = totalDeposits;
-						//		depApplied.invoice = tempSale.invoice;		// which invoice applied to
+								depApplied.invoice = tempSale.invoice;		// which invoice applied to
 								sessionBatch.transactions.addItemAt(depApplied,i);
 							}
 						}		
