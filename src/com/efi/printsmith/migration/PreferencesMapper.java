@@ -26,6 +26,7 @@ import com.efi.printsmith.data.PreferencesSystem;
 import com.efi.printsmith.data.PreferencesCreditCard;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.SizeTable;
+import com.efi.printsmith.data.StampSchedule;
 import com.efi.printsmith.data.TaxCodes;
 import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.Country;
@@ -33,6 +34,7 @@ import com.efi.printsmith.data.AddressFormatting;
 import com.efi.printsmith.data.EstimatorTypes;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import com.efi.printsmith.service.DataService;
+import com.efi.printsmith.service.MatrixService;
 
 public class PreferencesMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(InvoiceMapper.class);
@@ -74,8 +76,101 @@ public class PreferencesMapper extends ImportMapper {
 							keyValue = keyNode.getNodeValue();
 						if (groupTitleNode.getNodeValue().equals("Sales Category List")) {
 							importSalesCategoryListRecord(keyValue, valueValue);
-						}
-						this.importField(groupTitleNode.getNodeValue(), keyValue, titleValue, valueValue);
+						} else if (groupTitleNode.getNodeValue().equals("Global Stamp Schedule")) {
+							MatrixService matrixService = new MatrixService();
+							StampSchedule stampSchedule = (StampSchedule)dataService.getStampSchedule();
+							if (stampSchedule == null)
+								stampSchedule = matrixService.newStampSchedule();
+							NodeList stampNodes = itemNodes.item(x).getChildNodes();
+							for(int s=0;s<stampNodes.getLength();s++) {
+								if (stampNodes.item(s) != null && stampNodes.item(s).getNodeType() == Node.ELEMENT_NODE) {
+									if (stampNodes.item(s).getNodeName() == "inches") {
+										NamedNodeMap fieldAttributes = stampNodes.item(s).getAttributes();
+										Node indexNode = fieldAttributes.getNamedItem("index");
+										Node qtyNode = fieldAttributes.getNamedItem("inches_quantity");
+										int index = Utilities.tokenToInt(indexNode.getNodeValue());
+										switch (index) {
+										case 0:
+											stampSchedule.setHeader1(Utilities.tokenToLong(qtyNode.getNodeValue()));
+											break;
+										case 1:
+											stampSchedule.setHeader2(Utilities.tokenToLong(qtyNode.getNodeValue()));
+											break;
+										case 2:
+											stampSchedule.setHeader3(Utilities.tokenToLong(qtyNode.getNodeValue()));
+											break;
+										case 3:
+											stampSchedule.setHeader4(Utilities.tokenToLong(qtyNode.getNodeValue()));
+											break;
+										case 4:
+											stampSchedule.setHeader5(Utilities.tokenToLong(qtyNode.getNodeValue()));
+											break;
+										case 5:
+											stampSchedule.setHeader6(Utilities.tokenToLong(qtyNode.getNodeValue()));
+											break;
+										case 6:
+											stampSchedule.setHeader7(Utilities.tokenToLong(qtyNode.getNodeValue()));
+											break;
+										case 7:
+											stampSchedule.setHeader8(Utilities.tokenToLong(qtyNode.getNodeValue()));
+											break;
+										case 8:
+											stampSchedule.setHeader9(Utilities.tokenToLong(qtyNode.getNodeValue()));
+											break;
+										}
+									} else if (stampNodes.item(s).getNodeName() == "lines") {
+										NamedNodeMap fieldAttributes = stampNodes.item(s).getAttributes();
+										Node indexNode = fieldAttributes.getNamedItem("index");
+										Node qtyNode = fieldAttributes.getNamedItem("lines_quantity");
+										stampSchedule.getElements().get(Utilities.tokenToInt(indexNode.getNodeValue())).setQty(Utilities.tokenToInt(qtyNode.getNodeValue()));
+									} else if (stampNodes.item(s).getNodeName() == "prices_y") {
+										NodeList pricesNodes = stampNodes.item(s).getChildNodes();
+										for (int z=0;z<pricesNodes.getLength();z++) {
+											if (pricesNodes.item(z).getNodeType() == Node.ELEMENT_NODE) {
+												NamedNodeMap fieldAttributes = pricesNodes.item(z).getAttributes();
+												Node yNode = fieldAttributes.getNamedItem("y");
+												Node xNode = fieldAttributes.getNamedItem("x");
+												Node priceNode = fieldAttributes.getNamedItem("price");
+												int xValue = Utilities.tokenToInt(xNode.getNodeValue());
+												int yValue = Utilities.tokenToInt(yNode.getNodeValue());
+												double price = Utilities.tokenToDouble(priceNode.getNodeValue());
+												switch (xValue) {
+												case 0:
+													stampSchedule.getElements().get(yValue).setPrice1(price);
+													break;
+												case 1:
+													stampSchedule.getElements().get(yValue).setPrice2(price);
+													break;
+												case 2:
+													stampSchedule.getElements().get(yValue).setPrice3(price);
+													break;
+												case 3:
+													stampSchedule.getElements().get(yValue).setPrice4(price);
+													break;
+												case 4:
+													stampSchedule.getElements().get(yValue).setPrice5(price);
+													break;
+												case 5:
+													stampSchedule.getElements().get(yValue).setPrice6(price);
+													break;
+												case 6:
+													stampSchedule.getElements().get(yValue).setPrice7(price);
+													break;
+												case 7:
+													stampSchedule.getElements().get(yValue).setPrice8(price);
+													break;
+												case 8:
+													stampSchedule.getElements().get(yValue).setPrice9(price);
+													break;
+												}
+											}
+										}
+									}
+								}
+							}
+							dataService.addUpdate(stampSchedule);
+						} else
+							this.importField(groupTitleNode.getNodeValue(), keyValue, titleValue, valueValue);
 					}
 				}
 			}
@@ -157,6 +252,7 @@ public class PreferencesMapper extends ImportMapper {
 		else if (group.equals("Money Formats"))
 			importPreferencesSystemField(key, fieldName, fieldValue, false);
 	}
+	
 	private void importAddressFormats(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
 		Country country = null;
