@@ -1211,8 +1211,8 @@
 				//job.backInks=this.back_inks_text;
 				job.backPasses=parseInt(this.back_passes_text.text);
 				job.backWashes=parseInt(this.back_washes_text.text);
-				job.costUnits = parseInt(this.per.text);
-				job.parentStockCost = parseFloat(this.parent_costs.text);
+				//job.costUnits = parseInt(this.per.text);
+				//job.parentStockCost = parseFloat(this.parent_costs.text);
 				job.location=job_location.selectedItem as ProductionLocations;
 				if (run_method_radiogroup.selectedValue != null) {
 					job.runMethod=run_method_radiogroup.selectedValue.toString();

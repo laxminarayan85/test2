@@ -366,7 +366,8 @@ public class SquareAreaAndOriginalsPricingMethod extends
 						Price2Side.UsingSideFactor.name())) {
 			stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();
 		}
-		stockCalcArea = area;
+		if (job.getQtyOrdered() > 0)
+			stockCalcArea = area;
 		if (job.getDoubleSided()
 				&& copierDefinition.getPriceTwoSide().equals(
 						Price2Side.NotChangingPrice.name()))

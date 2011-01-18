@@ -38,7 +38,8 @@ public class TotalOfSquareAreaPricingMethod extends LargeFormatPricingMethod {
 		} catch (Exception e) {
 
 		}
-		stockCalcArea = area;
+		if (job.getQtyOrdered() > 0)
+			stockCalcArea = area;
 		if (copierDefinition.getSquareAreaType().equals("AreaFinishSize"))
 			area = area * (job.getQtyOrdered() * job.getSheets());
 		else

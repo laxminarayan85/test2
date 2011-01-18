@@ -42,7 +42,8 @@ public class SquareAreaPerCopyPricingMethod extends LargeFormatPricingMethod {
 		double pricePerCopy = 0.0;
 		double pricePerSecondSide = 0.0;
 		double unitPrice = 0.0;
-		stockCalcArea = area;
+		if (job.getQtyOrdered() > 0)
+			stockCalcArea = area;
 		area = area * job.getTotalCopies();
 		double calcArea = 0.0;
 		if (job.getDoubleSided() && copierDefinition.getPriceTwoSide().equals(
