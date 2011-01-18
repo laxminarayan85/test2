@@ -73,6 +73,7 @@ import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.MatrixElement;
 import com.efi.printsmith.data.ModelBase;
+import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.data.StampSchedule;
 import com.efi.printsmith.data.Period;
 import com.efi.printsmith.data.PickerObject;
@@ -1941,17 +1942,18 @@ public class DataService extends HibernateService {
 				while (sqle != null) {
 					sqle = sqle.getNextException();
 				}
+			} catch (GenericJDBCException e) {
+				System.out.println(e.getSQL());				
+				tx.rollback();
+				throw e;
 			} catch (PersistenceException e) {
 				log.error("** Error: " + e.getMessage());
-				GenericJDBCException jdbcEx = (GenericJDBCException) e
-						.getCause();
-				System.out.println(jdbcEx.getSQL());
 				tx.rollback();
-				throw new Exception(e.getMessage());
+				throw e;
 			} catch (Exception e) {
 				log.error("** Error: " + e.getMessage());
 				tx.rollback();
-				throw new Exception(e.getMessage());
+				throw e;
 			}
 		} catch (Exception e) {
 			log.error("Exception caught");
@@ -2287,11 +2289,6 @@ public class DataService extends HibernateService {
 
 					log.info("assigning parentInvoice to job. Invoice: "
 							+ invoice.getId() + " Job: " + job.getId());
-					PriceLogEntry priceLogEntry = job.getPricingRecord().getPriceLogEntry();
-					if (priceLogEntry == null)
-						priceLogEntry = new PriceLogEntry();
-					priceLogEntry = (PriceLogEntry)addUpdate(priceLogEntry);
-					job.getPricingRecord().setPriceLogEntry(priceLogEntry);
 					//Make sure dimensions are using valid dimension objects
 					if (job.getParentSize() != null) {
 						Dimension dimension = dataService.getByDimensionName("Dimension", job.getParentSize().getName());

@@ -206,6 +206,7 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="getAccount" fault="handleFault(event)" result="handleGetResult(event)"/>
 		<mx:method name="getInvoiceByInvoiceNumber" fault="handleFault(event)" result="handleLoadInvoice(event)"/>
+		<mx:method name="saveInvoice" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServiceUnPurchase" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveUnPurchaseResult(event)"/>
@@ -984,7 +985,7 @@
 							tempSale.invoice.onPendingList = false;
 							tempSale.invoice.locked = true;
 							tempSale.invoice.accountHistoryData = tempSale.accountHistoryData;
-							dataService.addUpdate(tempSale.invoice);
+							dataService.saveInvoice(tempSale.invoice);
 						} 
 					}
 				}
@@ -2253,7 +2254,7 @@
 				message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Sorrybutthisinvoiceh");
 				Alert.show(message, "Warning", 0, null, null, null, 4); 
 				goodPickup = false;
-			}
+			} 
 			
 			if (invoice.account == null || invoice.account.accountId == "") {
 				message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Cantpickupaninvoiceu");

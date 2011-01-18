@@ -171,6 +171,7 @@
     
 	private var searchStr:String = "";
 
+	private var pickupAction:Boolean = false;
 
     [Bindable]
 	private var treeData:XML =
@@ -631,24 +632,10 @@
 	}	
 
 	public function handleUIPickupEvent(evt:ResultEvent):void {
+		pickupAction = true;
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
 			if(dgView.selectedItem is Invoice) {
-				var inv:InvoiceBase = dgView.selectedItem as InvoiceBase;
-				if(preferencesSystem!=null && preferencesSystem.onlyPostMarkedReadyInvoices && !inv.readyToPickup) {
-					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oneormoreofthedocume'));
-					return;
-				}
-				var cashRegister:CashRegisterEdit = new CashRegisterEdit();
-				var child:Panel = cashRegister as Panel;
-				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
-				if (win == null) {
-					Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
-				}
-				else {
-					win.bringWindowToFront();	
-				}
-				win = Snowmass.getInstance().containerManager.getWindowWithChild(child);
-				cashRegister.CashRegisterInvPickup(inv);
+				dataService.getInvoice((dgView.selectedItem as InvoiceBase).id);
 			} else if(dgView.selectedItem is Estimate) {
 				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.DoyoureallywanttoArc'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmArchiveHandler, null, Alert.NO);
 			}
@@ -817,6 +804,24 @@
 		
 	}
 	
+	private function doPickupInvoice(inv:InvoiceBase):void {
+		if(preferencesSystem!=null && preferencesSystem.onlyPostMarkedReadyInvoices && !inv.readyToPickup) {
+			Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oneormoreofthedocume'));
+			return;
+		}
+		var cashRegister:CashRegisterEdit = new CashRegisterEdit();
+		var child:Panel = cashRegister as Panel;
+		var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+		if (win == null) {
+			Snowmass.getInstance().containerManager.openNewMDIWindow(child.title,child);
+		}
+		else {
+			win.bringWindowToFront();	
+		}
+		win = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+		cashRegister.CashRegisterInvPickup(inv);
+	}
+	
 	private function doEditInvoice(inv:InvoiceBase):void	{
 		if (Snowmass.getInstance().security.commandEnabled(EditEditInvoiceEvent.COMMANDID)) {
 			var child:EditInvoice = new EditInvoice();
@@ -880,17 +885,23 @@
 			dataService.getPending();
 		}
  	}
+ 	
 	private function handleGetResult(ev:ResultEvent):void {
 		var invoiceBase:InvoiceBase = ev.result as InvoiceBase;
-		
 		if (invoiceBase !=null) {
-			if (invoiceBase is Invoice) {
-				doEditInvoice(invoiceBase);
-			} else if (invoiceBase is Estimate) {
-				doEditEstimate(invoiceBase);
+			if (pickupAction) {
+				pickupAction = false;
+				doPickupInvoice(invoiceBase);
+			} else {
+				if (invoiceBase is Invoice) {
+					doEditInvoice(invoiceBase);
+				} else if (invoiceBase is Estimate) {
+					doEditEstimate(invoiceBase);
+				}
 			}
 		}
 	}
+	
 	private function doDoubleClick():void {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
 			if(pendingOptions.selectedValue==null || pendingOptions.selectedValue==Constants.PENDING_OPEN){
