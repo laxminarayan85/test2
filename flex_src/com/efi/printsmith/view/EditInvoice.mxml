@@ -124,6 +124,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.events.DragEvent;
 			import com.efi.printsmith.events.InvoiceNotesAddedEvent;
 			import mx.collections.Sort;
 			import mx.collections.SortField;
@@ -292,6 +293,8 @@
 			private var contactTemp:Contact = null;
 						
 			[Bindable] private var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
+			
+			private var randomNumber:int;
 						
 			public function getSecurityCommand():String {
 				
@@ -313,6 +316,8 @@
 				inv_sales_rep.enabled = !(loginUser.lockSalesRep);
 				//vbox.getDividerAt(0).visible=false;
 				//vbox.getDividerAt(1).visible=false;
+				
+				randomNumber = Math.random();
 				
 				if (invoice == null) {
 					invoice=new Invoice();
@@ -2023,7 +2028,10 @@
 												jobBaseObject.jobIndex = counter;
 												estimatesJobChargeList.addItem(jobBaseObject);
 												if(jobBaseObject.charges!=null && jobBaseObject.charges.length>0) {
+													var chargeCounter:int=0;
 													for each(var chargeObj:Charge in jobBaseObject.charges){
+														chargeObj.jobIndex = jobBaseObject.jobIndex;
+														chargeObj.chargeIndex = chargeCounter+1; 
 														estimatesJobChargeList.addItem(chargeObj);
 													}
 												}
@@ -2042,7 +2050,9 @@
 							resetJobsList = true;
 						}
 						if(chargesList!=null && chargesList.length>0) {
+							var chargeCounter:int=0;
 							for each(var chargeObj:Charge in chargesList){
+								chargeObj.chargeIndex = chargeCounter+1; 
 								chargeObj.parentInvoice = invoice;
 								estimatesJobChargeList.addItem(chargeObj);
 							}
@@ -2259,7 +2269,7 @@
 				}
 			}
 			
-			private function mouseMoveHandler(event:MouseEvent):void {
+			/* private function mouseMoveHandler(event:MouseEvent):void {
             
 	            // Get the drag initiator component from the event object.
 	            var dragInitiator:DataGrid=DataGrid(event.currentTarget);
@@ -2270,10 +2280,26 @@
 		
 		            // Add the data to the object.
 		            ds.addData(dragInitiator.selectedItem, 'draggedItem');
+		            
+		            ds.addData(randomNumber, 'uniqueKey');
 		
 		            // Call the DragManager doDrag() method to start the drag. 
 		            DragManager.doDrag(dragInitiator, ds, event);
 	            }
+	        } */
+	        
+	        private function dragEnterHandler(event:DragEvent):void {
+	        	DragManager.acceptDragDrop(event.currentTarget as DataGrid);
+	        }
+	        
+	        private function dragDropHandler(event:DragEvent):void {
+	        	if (event.dragSource.hasFormat('items')) {
+	            	var dragObj:Array = event.dragSource.dataForFormat("items") as Array; 
+					var draggedItem:Object = dragObj[0];
+					if(draggedItem is Charge) {
+						trace("event.currentTarget==>"+event.currentTarget);
+					}
+	        	}
 	        }
 	        
 	        public function getCostingColor(item:Object,priceCheck:Boolean=false):uint {
@@ -2792,6 +2818,8 @@
 							 doubleClick="{doDoubleclickInvoiceItem()}"
 						  	 doubleClickEnabled="true"
 						  	 dragEnabled="true"
+						  	 dragEnter="{dragEnterHandler(event)}"
+						  	 dragDrop="{dragDropHandler(event)}"
 						  	 editable="true">
 					<mx:columns>
 						<mx:DataGridColumn editable="false">
