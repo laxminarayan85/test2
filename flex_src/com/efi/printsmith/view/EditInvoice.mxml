@@ -1721,7 +1721,44 @@
 				return "";
 			}
 			
-			private function getJobChargeDescription(item:Object, column:DataGridColumn):String {
+			public function getNonTaxLabel(item:Object):String {
+				if(item is Job) {
+					var localJob:Job = item as Job;
+					if(!localJob.taxable) {
+						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.nontax');
+					}
+				} else if(item is Charge) {
+					var localCharge:Charge = item as Charge;
+					if(!localCharge.taxable) {
+						return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.nontax');
+					}
+				}
+				return "";
+			}
+			
+			public function getInvoiceIndicator(item:Object):String {
+				var indicatorString:String = "";
+				if(item is Job) {
+					var localJob:Job = item as Job;
+					if(!localJob.finished) {
+						indicatorString = indicatorString + resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.1');
+					}
+					if(localJob.brokered) {
+						indicatorString = indicatorString + resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.B');
+					}
+				} else if(item is Charge) {
+					var localCharge:Charge = item as Charge;
+					if(!localCharge.finished) {
+						indicatorString = indicatorString + resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.1');
+					}
+					if(localCharge.brokered) {
+						indicatorString = indicatorString + resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.B');
+					}
+				}
+				return indicatorString;
+			}
+			
+			public function getJobChargeDescription(item:Object, column:DataGridColumn):String {
 				var description:String = "";
 				if(item is Job) {
 					description = item.description;
@@ -2428,6 +2465,29 @@
 	        	}
 	        	return Snowmass.getCurrencyFormatter(false, 0).format(estProfit)+"%";
 	        }
+	        
+	        public function getTicketDescription(item:Object,column:DataGridColumn):String {
+				if(item.completed){
+					item.description+" "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.done');
+				}
+				return item.description;
+			}
+			
+			public function openDeliveryTicket():void {
+				if(invoice!=null && invoice is Invoice && !isNaN(invoice.id) && invoice.id!=0) {
+					var child:DeliveryTicketEdit = new DeliveryTicketEdit();
+					child.setInvoice(invoice as InvoiceBase);
+					child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDeliveryTicketJobsList,false,0,true);
+					var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+					if (win == null) {
+						Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
+					}
+					else {
+						win.closeWindow();
+						Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
+					}
+				}
+			}
 		]]>
 
 	</mx:Script>
@@ -2769,12 +2829,25 @@
 							</mx:itemEditor>
 						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
-										   labelFunction="getJobChargeDescription" dataField="description" editable="false"/>
+					   		dataField="description" editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:HBox width="100%" horizontalScrollPolicy="off">
+										<mx:Label text="{outerDocument.getJobChargeDescription(data,null)}"/>	
+										<mx:Label text="{outerDocument.getNonTaxLabel(data)}" textAlign="right"/>
+									</mx:HBox>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Price')}"
 										   textAlign="right" editable="true">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Label text="{outerDocument.gridJobPrice(data,null)}" textAlign="right"/>
+									<mx:HBox width="100%" horizontalScrollPolicy="off">
+										<mx:Label text="{outerDocument.getInvoiceIndicator(data)}"/>
+										<mx:Label text="{outerDocument.gridJobPrice(data,null)}" textAlign="right"/>	
+									</mx:HBox>
+									
 								</mx:Component>
 							</mx:itemRenderer>
 							<mx:itemEditor>
@@ -2808,7 +2881,7 @@
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Shipped')}"
 							dataField="qtyShipped"/>	
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
-							dataField="description"/>
+							labelFunction="getTicketDescription" dataField="description"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Ticket')}">
 							<mx:itemRenderer>
 								<mx:Component>

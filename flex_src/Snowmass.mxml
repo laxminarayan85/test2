@@ -422,7 +422,13 @@
 				if ((ss.menu == "rStandardMenuText.Invoice")
 					&& (ss.commandName.indexOf("rStandardMenuText.TrackerStatus") > -1 ))	{
 						doTrackerStatus();				
-					}	
+					}
+						
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.GenerateDeliveryTick") > -1 ))	{
+						doGenerateDeliveryTicket();				
+				}	
+					
 				if ((ss.menu == "rStandardMenuText.Window")
 					&& (ss.commandName.indexOf("rStandardMenuText.Maximize") > -1 ))	{
 						doMaximize();				
@@ -515,6 +521,16 @@
 				if(win.content is EditInvoice){
 					var editInvoice:EditInvoice = win.content as EditInvoice;
 					editInvoice.openTrackerStatus();
+				}
+			}
+		}
+		
+		public function doGenerateDeliveryTicket():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.openDeliveryTicket();
 				}
 			}
 		}
