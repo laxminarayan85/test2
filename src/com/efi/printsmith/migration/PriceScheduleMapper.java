@@ -58,7 +58,7 @@ public class PriceScheduleMapper extends ImportMapper {
 						method = PriceScheduleMethod.UseOrderedQuantityPerSheet.name();
 				} else if ("schedule type".equals(currentFieldToken) && x == 1) {
 					if (currentImportToken.equals("1")) {
-						matrix = new StampSchedule();
+						break; // Exported stamp schedule in this file is not correct, will be added to preferences export.
 					}
 					else if (currentImportToken.equals("4")) {
 						matrix = new PaperPrice();
