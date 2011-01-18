@@ -651,24 +651,22 @@
 		<mx:SetProperty name="height" value="520"/>
 		<mx:SetProperty target="{label1}" name="y" value="383"/>
 		<mx:SetProperty target="{price1}" name="y" value="381"/>
-		<mx:SetProperty target="{price2}" name="x" value="140"/>
+		<mx:SetProperty target="{price2}" name="x" value="153"/>
 		<mx:SetProperty target="{price2}" name="y" value="381"/>
-		<mx:SetProperty target="{price3}" name="x" value="200"/>
+		<mx:SetProperty target="{price3}" name="x" value="223"/>
 		<mx:SetProperty target="{price3}" name="y" value="381"/>
-		<mx:SetProperty target="{price4}" name="x" value="261"/>
+		<mx:SetProperty target="{price4}" name="x" value="290"/>
 		<mx:SetProperty target="{price4}" name="y" value="381"/>
-		<mx:SetProperty target="{price5}" name="x" value="322"/>
+		<mx:SetProperty target="{price5}" name="x" value="356"/>
 		<mx:SetProperty target="{price5}" name="y" value="381"/>
-		<mx:SetProperty target="{price6}" name="x" value="384"/>
+		<mx:SetProperty target="{price6}" name="x" value="421"/>
 		<mx:SetProperty target="{price6}" name="y" value="381"/>
-		<mx:SetProperty target="{price7}" name="x" value="444"/>
+		<mx:SetProperty target="{price7}" name="x" value="490"/>
 		<mx:SetProperty target="{price7}" name="y" value="381"/>
-		<mx:SetProperty target="{price8}" name="x" value="504"/>
+		<mx:SetProperty target="{price8}" name="x" value="557"/>
 		<mx:SetProperty target="{price8}" name="y" value="381"/>
-		<mx:SetProperty target="{price9}" name="x" value="566"/>
+		<mx:SetProperty target="{price9}" name="x" value="624"/>
 		<mx:SetProperty target="{price9}" name="y" value="381"/>
-		<mx:SetProperty target="{price10}" name="x" value="628"/>
-		<mx:SetProperty target="{price10}" name="y" value="381"/>
 		<mx:SetProperty target="{price12}" name="x" value="43"/>
 		<mx:SetProperty target="{price12}" name="y" value="119"/>
 		<mx:SetProperty target="{price13}" name="x" value="24"/>
@@ -682,7 +680,7 @@
 			</mtrx:StampScheduleMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{label1}" name="x" value="10"/>
-		<mx:SetProperty target="{price1}" name="x" value="79"/>
+		<mx:SetProperty target="{price1}" name="x" value="88"/>
 		<mx:SetProperty target="{price1}" name="width" value="54"/>
 		<mx:SetProperty target="{price2}" name="width" value="54"/>
 		<mx:SetProperty target="{price6}" name="width" value="54"/>
@@ -692,12 +690,12 @@
 		<mx:SetProperty target="{price9}" name="width" value="54"/>
 		<mx:SetProperty target="{price4}" name="width" value="54"/>
 		<mx:SetProperty target="{price5}" name="width" value="54"/>
-		<mx:SetProperty target="{price10}" name="width" value="54"/>
 		<mx:SetProperty target="{select_button}" name="y"/>
 		<mx:SetStyle target="{select_button}" name="bottom" value="10"/>
 		<mx:SetStyle target="{select_button}" name="right" value="192"/>
 		<mx:SetStyle target="{clear_button}" name="bottom" value="10"/>
 		<mx:SetStyle target="{clear_button}" name="right" value="87"/>
+		<mx:RemoveChild target="{price10}"/>
 	</mx:State>
 	<mx:State name="PASSPRICESCHEDULE">
 		<mx:RemoveChild target="{matrixeditor}"/>

@@ -4,16 +4,15 @@
 		
 		<mx:Text x="0" y="23.35" text="Lines" width="63" height="38.666668" textAlign="center" fontWeight="bold"/>
 		<mx:Text x="71" y="14" text="Inches" width="593" height="21" textAlign="center" fontWeight="bold"/>
-		<mx:TextInput id="header1" x="63" y="43" width="62" height="20" text="{matrix.header1}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
-		<mx:TextInput id="header2" x="124" y="43" width="62" height="20" text="{matrix.header2}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
-		<mx:TextInput id="header3" x="185" y="43" width="62" height="20" text="{matrix.header3}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
-		<mx:TextInput id="header4" x="246" y="43" width="62" height="20" text="{matrix.header4}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"  textAlign="center"/>
-		<mx:TextInput id="header5" x="307" y="43" width="62" height="20" text="{matrix.header5}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
-		<mx:TextInput id="header6" x="367" y="43" width="62" height="20" text="{matrix.header6}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
-		<mx:TextInput id="header7" x="428" y="43" width="62" height="20" text="{matrix.header7}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
-		<mx:TextInput id="header8" x="489" y="43" width="62" height="20" text="{matrix.header8}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
-		<mx:TextInput id="header9" x="549" y="43" width="62" height="20" text="{matrix.header9}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
-		<mx:TextInput id="header10" x="610" y="43" width="63" height="20" text="{matrix.header10}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header1" x="69" y="43" width="69" height="20" text="{matrix.header1}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header2" x="136" y="43" width="69" height="20" text="{matrix.header2}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header3" x="202" y="43" width="69" height="20" text="{matrix.header3}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header4" x="269" y="43" width="69" height="20" text="{matrix.header4}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)"  textAlign="center"/>
+		<mx:TextInput id="header5" x="336" y="43" width="69" height="20" text="{matrix.header5}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header6" x="402" y="43" width="69" height="20" text="{matrix.header6}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header7" x="469" y="43" width="69" height="20" text="{matrix.header7}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header8" x="536" y="43" width="69" height="20" text="{matrix.header8}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
+		<mx:TextInput id="header9" x="605" y="43" width="69" height="20" text="{matrix.header9}" focusIn="setCurrentValue(event)"  focusOut="checkNaN(event)" textAlign="center"/>
 		<mx:DataGrid 
 			width="674" dataProvider="{matrix.elements}" 
 					showHeaders="false" borderStyle="solid" borderThickness="3" x="0" 
@@ -32,7 +31,6 @@
 				     <mx:DataGridColumn dataField="price7" editable="true" sortable="false" width="60" textAlign="right"/>
 				     <mx:DataGridColumn dataField="price8" editable="true" sortable="false" width="60" textAlign="right"/>
 				     <mx:DataGridColumn dataField="price9" editable="true" sortable="false" width="60" textAlign="right"/>
-				     <mx:DataGridColumn dataField="price10" editable="true" sortable="false" width="60" textAlign="right"/>
 				</mx:columns>
 		<mx:Script source="../../common/scripts/StringUtils.as"/>
 		<mx:Script>
@@ -53,7 +51,7 @@
 					matrix.header7 = parseInt(this.header7.text);
 					matrix.header8 = parseInt(this.header8.text);
 					matrix.header9 = parseInt(this.header9.text);
-					matrix.header10 = parseInt(this.header10.text);
+					//matrix.header10 = parseInt(this.header10.text);
 				}
 				private function setCurrentValue(evt:FocusEvent):void {
 					currentValue = evt.currentTarget.text;
@@ -133,13 +131,13 @@
 							else
 								this.header9.text = value.toFixed(0);
 							break;
-						case this.header10:
+						/*case this.header10:
 							value = parseFloat(this.header10.text);
 							if (isNaN(value))
 								this.header10.text = currentValue;
 							else
 								this.header10.text = value.toFixed(0);
-							break;
+							break;*/
 					}
 				}
 				private function formatData(event:DataGridEvent) {
