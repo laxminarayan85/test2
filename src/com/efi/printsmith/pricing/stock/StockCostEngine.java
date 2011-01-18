@@ -37,13 +37,6 @@ public class StockCostEngine {
 				catch (Exception e) {
 					
 				}
-				if (job.getPricingCopier().getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndCopies.name())) {
-					qty = qty * job.getTotalCopies();
-				} else if (job.getPricingCopier().getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.SquareAreaAndOriginals.name())) {
-					qty = qty * job.getQtyOrdered() * job.getSheets();
-				} else if (job.getPricingCopier().getMethod().equals(com.efi.printsmith.data.enums.LargeFormatPriceMethod.TotalSquareArea.name())) {
-					qty = qty * job.getQtyOrdered() * job.getSheets();
-				}
 			} else
 				if (job.getPaperCal().getRunout() == 0)
 					qty = job.getTotalCopies();

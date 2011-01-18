@@ -26,6 +26,7 @@ public class SquareAreaAndCopiesPricingMethod extends LargeFormatPricingMethod {
 		PriceStockEngine priceStockEngine = new PriceStockEngine();
 		double stockPrice = priceStockEngine.priceStock(job);
 		long area = 0;
+		long stockCalcArea = 0;
 		double stockTotalPrice = 0.0;
 		double laborTotalPrice = 0.0;
 		try {
@@ -358,6 +359,7 @@ public class SquareAreaAndCopiesPricingMethod extends LargeFormatPricingMethod {
 						Price2Side.UsingSideFactor.name())) {
 			stockPrice = stockPrice * job.getPricingCopier().getSideTwoFactor();
 		}
+		stockCalcArea = area;
 		if (job.getDoubleSided()
 				&& copierDefinition.getPriceTwoSide().equals(
 						Price2Side.NotChangingPrice.name()))
@@ -375,10 +377,10 @@ public class SquareAreaAndCopiesPricingMethod extends LargeFormatPricingMethod {
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(
 							Price2Side.NotChangingPrice.name())) {
-						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						stockTotalPrice = (stockPrice * ((stockCalcArea)));
 						laborTotalPrice = (pricePerCopy * (area / 2));
 					} else {
-						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						stockTotalPrice = (stockPrice * ((stockCalcArea)));
 						laborTotalPrice = (pricePerCopy * area);
 					}
 				} else {
@@ -400,14 +402,14 @@ public class SquareAreaAndCopiesPricingMethod extends LargeFormatPricingMethod {
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(
 							Price2Side.NotChangingPrice.name())) {
-						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						stockTotalPrice = (stockPrice * ((stockCalcArea)));
 						laborTotalPrice = (pricePerCopy * (area / 2));
 					} else if (side2PricingMethod
 							.equals(Price2Side.UsingSideFactor.name())) {
-						stockTotalPrice = (stockPrice * ((area) / runout));
+						stockTotalPrice = (stockPrice * stockCalcArea);
 						laborTotalPrice = (pricePerCopy * area);
 					} else {
-						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						stockTotalPrice = (stockPrice * ((stockCalcArea)));
 						laborTotalPrice = (pricePerCopy * area);
 					}
 				} else {
@@ -544,14 +546,14 @@ public class SquareAreaAndCopiesPricingMethod extends LargeFormatPricingMethod {
 							.name())) {
 						pricePerCopy = (pricePerCopy * copierDefinition
 								.getSideTwoFactor()) / 2;
-						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						stockTotalPrice = (stockPrice * ((stockCalcArea)));
 						laborTotalPrice = (pricePerCopy * (area));
 					} else if (copierDefinition.getPriceTwoSide().equals(
 							Price2Side.NotChangingPrice.name())) {
-						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						stockTotalPrice = (stockPrice * ((stockCalcArea)));
 						laborTotalPrice = (pricePerCopy * (area / 2));
 					} else {
-						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						stockTotalPrice = (stockPrice * ((stockCalcArea)));
 						laborTotalPrice = (pricePerCopy * area);
 					}
 				} else {
@@ -572,10 +574,10 @@ public class SquareAreaAndCopiesPricingMethod extends LargeFormatPricingMethod {
 				if (job.getDoubleSided()) {
 					if (copierDefinition.getPriceTwoSide().equals(
 							Price2Side.NotChangingPrice.name())) {
-						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						stockTotalPrice = (stockPrice * ((stockCalcArea)));
 						laborTotalPrice = (pricePerCopy * (area / 2));
 					} else {
-						stockTotalPrice = (stockPrice * ((area / 2) / runout));
+						stockTotalPrice = (stockPrice * ((stockCalcArea)));
 						laborTotalPrice = (pricePerCopy * area);
 					}
 				} else {
