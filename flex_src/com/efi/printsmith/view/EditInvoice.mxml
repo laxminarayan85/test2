@@ -2468,7 +2468,7 @@
 	        
 	        public function getTicketDescription(item:Object,column:DataGridColumn):String {
 				if(item.completed){
-					item.description+" "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.done');
+					return item.description+" "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.done');
 				}
 				return item.description;
 			}

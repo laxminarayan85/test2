@@ -353,7 +353,7 @@
 		
 		public function getDescription(item:Object):String {
 			if(item.completed){
-				item.description+" "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.done');
+				return item.description+" "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowCmd.done');
 			}
 			return item.description;
 		}
