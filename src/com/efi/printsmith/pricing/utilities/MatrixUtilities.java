@@ -197,7 +197,7 @@ public class MatrixUtilities {
 				}else if (i == 5 && (xLookup >= matrix.getHeader5())) {
 					element = i;
 				}else {
-					element = 1;
+					element = element;
 				}
 			}
 			
@@ -253,7 +253,7 @@ public class MatrixUtilities {
 				}else if (i == 5 && (xLookup >= matrix.getHeader5())) {
 					element = i;
 				}else {
-					element = 1;
+					element = element;
 				}
 			}
 			
