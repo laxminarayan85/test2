@@ -65,9 +65,9 @@ public class Transaction extends ModelBase {
 	 */
 	public static final String TAXTABLE = "TaxTable";
 	/**
-	 * @generated
-	 */
-	public static final String ISDELETEDRECORD = "IsDeletedRecord";
+   * @generated
+   */
+  public static final String ISVOIDED = "IsVoided";
 	/**
 	 * @generated
 	 */
@@ -209,28 +209,25 @@ public class Transaction extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private Boolean isDeletedRecord;
-	
+  private Boolean isVoided;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public Boolean getIsDeletedRecord(){
-    return isDeletedRecord; 
+  public Boolean getIsVoided(){
+    return isVoided; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setIsDeletedRecord(Boolean newVal) {
-    this.isDeletedRecord = newVal;
+   * @generated
+   */	
+  public void setIsVoided(Boolean newVal) {
+    this.isVoided = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -385,7 +382,7 @@ public class Transaction extends ModelBase {
     if (TAXCODE.equals(propertyName)) return getTaxCode();
     if (TAXEXEMPT.equals(propertyName)) return getTaxExempt();
     if (TAXTABLE.equals(propertyName)) return getTaxTable();
-    if (ISDELETEDRECORD.equals(propertyName)) return getIsDeletedRecord();
+    if (ISVOIDED.equals(propertyName)) return getIsVoided();
     if (INDEX.equals(propertyName)) return getIndex();
     if (CHECKNUMBER.equals(propertyName)) return getCheckNumber();
     if (SUBTOTAL.equals(propertyName)) return getSubTotal();
@@ -405,7 +402,7 @@ public class Transaction extends ModelBase {
     if (TAXCODE.equals(propertyName)) setTaxCode((TaxCodes)newValue); else
     if (TAXEXEMPT.equals(propertyName)) setTaxExempt((Boolean)newValue); else
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
-    if (ISDELETEDRECORD.equals(propertyName)) setIsDeletedRecord((Boolean)newValue); else
+    if (ISVOIDED.equals(propertyName)) setIsVoided((Boolean)newValue); else
     if (INDEX.equals(propertyName)) setIndex((Integer)newValue); else
     if (CHECKNUMBER.equals(propertyName)) setCheckNumber((String)newValue); else
     if (SUBTOTAL.equals(propertyName)) setSubTotal((BigDecimal)newValue); else
@@ -429,7 +426,7 @@ public class Transaction extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (TAXTABLE.equals(propertyName)) 
       return new Class<?>[] {TaxTable.class};		
-    if (ISDELETEDRECORD.equals(propertyName)) 
+    if (ISVOIDED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
     if (INDEX.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
@@ -457,7 +454,7 @@ public class Transaction extends ModelBase {
     if (TAXCODE.equals(propertyName)) return Transaction.class;
     if (TAXEXEMPT.equals(propertyName)) return Transaction.class;
     if (TAXTABLE.equals(propertyName)) return Transaction.class;
-    if (ISDELETEDRECORD.equals(propertyName)) return Transaction.class;
+    if (ISVOIDED.equals(propertyName)) return Transaction.class;
     if (INDEX.equals(propertyName)) return Transaction.class;
     if (CHECKNUMBER.equals(propertyName)) return Transaction.class;
     if (SUBTOTAL.equals(propertyName)) return Transaction.class;
@@ -483,7 +480,7 @@ public class Transaction extends ModelBase {
       return false;
     if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
       return false;
-    if (! SmartEquals(getIsDeletedRecord(), objT.getIsDeletedRecord()))
+    if (! SmartEquals(getIsVoided(), objT.getIsVoided()))
       return false;
     if (! SmartEquals(getIndex(), objT.getIndex()))
       return false;

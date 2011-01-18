@@ -18,7 +18,7 @@ package com.efi.printsmith.data
 		public var taxCode:TaxCodes;
 		public var taxExempt:Boolean = false;
 		public var taxTable:TaxTable;
-		public var isDeletedRecord:Boolean = false;
+		public var isVoided:Boolean = false;
 		public var index:int = 0;
 		public var checkNumber:String = "";
 		public var subTotal:Number = 0;

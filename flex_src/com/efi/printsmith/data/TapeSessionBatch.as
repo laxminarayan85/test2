@@ -26,6 +26,7 @@ package com.efi.printsmith.data
 		public var user:Users;
 		public var workstation:String = "";
 		public var account:Account;
+		public var isVoided:Boolean = false;
 	
 	}
 }

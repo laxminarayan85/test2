@@ -54,11 +54,11 @@ public class PaperPrice extends Matrix {
 	/**
    * @generated
    */
-  public static final String TYPE = "Type";
+  public static final String METHOD = "Method";
 	/**
    * @generated
    */
-  public static final String METHOD = "Method";
+  public static final String TYPE = "Type";
 
 	/**
 	 * @generated
@@ -104,26 +104,6 @@ public class PaperPrice extends Matrix {
    * @generated
    */	
  	@Basic
-  private Integer type;
-
-	/**
-   * @generated
- 	 */
-  public Integer getType(){
-    return type; 
-  }
-
-	/**
-   * @generated
-   */	
-  public void setType(Integer newVal) {
-    this.type = newVal;
-  }
-
-	/**
-   * @generated
-   */	
- 	@Basic
   private String method;
 
 	/**
@@ -142,13 +122,33 @@ public class PaperPrice extends Matrix {
 
 	/**
    * @generated
+   */	
+ 	@Basic
+  private Integer type;
+
+	/**
+   * @generated
+ 	 */
+  public Integer getType(){
+    return type; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setType(Integer newVal) {
+    this.type = newVal;
+  }
+
+	/**
+   * @generated
    */		
   @Transient
   @Override
   public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (NAME.equals(propertyName)) return getName();
-    if (TYPE.equals(propertyName)) return getType();
     if (METHOD.equals(propertyName)) return getMethod();
+    if (TYPE.equals(propertyName)) return getType();
     return super.getProperty(propertyName);
   }
 
@@ -159,8 +159,8 @@ public class PaperPrice extends Matrix {
   @Override
   public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (NAME.equals(propertyName)) setName((String)newValue); else
-    if (TYPE.equals(propertyName)) setType((Integer)newValue); else
     if (METHOD.equals(propertyName)) setMethod((String)newValue); else
+    if (TYPE.equals(propertyName)) setType((Integer)newValue); else
     super.setProperty(propertyName, newValue);
   }
 
@@ -172,10 +172,10 @@ public class PaperPrice extends Matrix {
   public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
-    if (TYPE.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
     if (METHOD.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (TYPE.equals(propertyName)) 
+      return new Class<?>[] {Integer.class};		
     return super.getPropertyClass(propertyName);
   }
 
@@ -186,8 +186,8 @@ public class PaperPrice extends Matrix {
   @Override
   public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) return PaperPrice.class;
-    if (TYPE.equals(propertyName)) return PaperPrice.class;
     if (METHOD.equals(propertyName)) return PaperPrice.class;
+    if (TYPE.equals(propertyName)) return PaperPrice.class;
     return super.getPropertyOwner(propertyName);
   }
 
@@ -201,9 +201,9 @@ public class PaperPrice extends Matrix {
     PaperPrice objT = (PaperPrice)obj;
     if (! SmartEquals(getName(), objT.getName()))
       return false;
-    if (! SmartEquals(getType(), objT.getType()))
-      return false;
     if (! SmartEquals(getMethod(), objT.getMethod()))
+      return false;
+    if (! SmartEquals(getType(), objT.getType()))
       return false;
     return true;
   }
