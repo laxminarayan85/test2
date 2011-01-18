@@ -102,6 +102,10 @@ public class TapeSessionBatch extends ModelBase {
    */
   public static final String ISVOIDED = "IsVoided";
 	/**
+   * @generated
+   */
+  public static final String REFUNDMETHOD = "RefundMethod";
+	/**
 	 * @generated
 	 */
 	public TapeSessionBatch() {
@@ -451,6 +455,25 @@ public class TapeSessionBatch extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private String refundMethod;
+	/**
+   * @generated
+ 	 */
+  public String getRefundMethod(){
+    return refundMethod; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setRefundMethod(String newVal) {
+    this.refundMethod = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -469,6 +492,7 @@ public class TapeSessionBatch extends ModelBase {
     if (WORKSTATION.equals(propertyName)) return getWorkstation();
     if (ACCOUNT.equals(propertyName)) return getAccount();
     if (ISVOIDED.equals(propertyName)) return getIsVoided();
+    if (REFUNDMETHOD.equals(propertyName)) return getRefundMethod();
     return super.getProperty(propertyName);
   }
 	
@@ -491,6 +515,7 @@ public class TapeSessionBatch extends ModelBase {
     if (WORKSTATION.equals(propertyName)) setWorkstation((String)newValue); else
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     if (ISVOIDED.equals(propertyName)) setIsVoided((Boolean)newValue); else
+    if (REFUNDMETHOD.equals(propertyName)) setRefundMethod((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -526,6 +551,8 @@ public class TapeSessionBatch extends ModelBase {
       return new Class<?>[] {Account.class};		
     if (ISVOIDED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (REFUNDMETHOD.equals(propertyName)) 
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -549,6 +576,7 @@ public class TapeSessionBatch extends ModelBase {
     if (WORKSTATION.equals(propertyName)) return TapeSessionBatch.class;
     if (ACCOUNT.equals(propertyName)) return TapeSessionBatch.class;
     if (ISVOIDED.equals(propertyName)) return TapeSessionBatch.class;
+    if (REFUNDMETHOD.equals(propertyName)) return TapeSessionBatch.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -585,6 +613,8 @@ public class TapeSessionBatch extends ModelBase {
     if (! SmartEquals(getAccount(), objT.getAccount()))
       return false;
     if (! SmartEquals(getIsVoided(), objT.getIsVoided()))
+      return false;
+    if (! SmartEquals(getRefundMethod(), objT.getRefundMethod()))
       return false;
     return true;
   }			
