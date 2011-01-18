@@ -46,7 +46,14 @@ public class PriceScheduleMapper extends ImportMapper {
 				if ("recno".equals(currentFieldToken)) {
 					/* TODO */
 				} else if ("rtype".equals(currentFieldToken)) {
-					/* TODO */
+					if (currentImportToken.equals("0"))
+						method = PriceScheduleMethod.UsePressSheets.name();
+					else if (currentImportToken.equals("1"))
+						method = PriceScheduleMethod.UseOrderedQuantity.name();
+					else if (currentImportToken.equals("2"))
+						method = PriceScheduleMethod.UseSheetsAndBinderyWaste.name();
+					else if (currentImportToken.equals("3"))
+						method = PriceScheduleMethod.UseOrderedQuantityPerSheet.name();
 				} else if ("record type".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0"))
 						method = PriceScheduleMethod.UsePressSheets.name();
