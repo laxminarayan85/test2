@@ -2427,7 +2427,9 @@
 									swapJob.jobIndex = i+2;
 								}
 								selectedJob.multiQtyJob = false;
-								selectedJob.jobGroup = 0;
+								if(selectedJob.multiQtyJob){
+									selectedJob.jobGroup = 0;
+								}
 								selectedJob.jobIndex = droppableIndex;
 								invoice.jobs.addItem(selectedJob);
 							}
@@ -2435,8 +2437,10 @@
 					}
 				} else {
 					invoice.jobs.removeItemAt(selectedJob.jobIndex-1);
+					if(selectedJob.multiQtyJob){
+						selectedJob.jobGroup = 0;
+					}
 					selectedJob.multiQtyJob = false;
-					selectedJob.jobGroup = 0;
 					selectedJob.jobIndex = invoice.jobs.length+1;
 					invoice.jobs.addItem(selectedJob);
 				}
