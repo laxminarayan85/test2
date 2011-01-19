@@ -2302,7 +2302,13 @@
 	        } */
 	        
 	        private function dragEnterHandler(event:DragEvent):void {
-	        	DragManager.acceptDragDrop(event.currentTarget as DataGrid);
+	        	if (event.dragSource.hasFormat('items')) {
+	            	var dragObj:Array = event.dragSource.dataForFormat("items") as Array; 
+					var draggedItem:Object = dragObj[0];
+					if(draggedItem is Job || draggedItem is Charge) {
+	        			DragManager.acceptDragDrop(event.currentTarget as DataGrid);
+	    			}
+	        	}
 	        }
 	        
 	        private function dragDropHandler(event:DragEvent):void {
@@ -2310,82 +2316,144 @@
 	        	if (event.dragSource.hasFormat('items')) {
 	            	var dragObj:Array = event.dragSource.dataForFormat("items") as Array; 
 					var draggedItem:Object = dragObj[0];
+					var dataGrid:DataGrid = event.currentTarget as DataGrid;
+					dataGrid.hideDropFeedback(event);
+					var dropIndex:int = dataGrid.calculateDropIndex(event);
 					if(draggedItem is Charge) {
-						registerClassAlias("com.efi.printsmith.data.Charge",Charge);
-						var selectedCharge:Charge = ObjectUtil.copy(draggedItem) as Charge;
-						var dataGrid:DataGrid = event.currentTarget as DataGrid;
-						dataGrid.hideDropFeedback(event);
-						var dropIndex:int = dataGrid.calculateDropIndex(event);
-						if(selectedCharge.parentInvoice!=null) {
-							if(invoice.charges!=null) {
-								invoice.charges.removeItemAt(selectedCharge.chargeIndex-1);
-							}
-						} else if(selectedCharge.parentJob!=null) {
-							for each(var jobBaseObj:Job in invoice.jobs) {
-								if(jobBaseObj.jobIndex==selectedCharge.jobIndex) {
-									if(jobBaseObj.charges!=null) {
-										jobBaseObj.charges.removeItemAt(selectedCharge.chargeIndex-1);
-									}
-								}
+						dropCharge(draggedItem,dropIndex);
+					} else if(draggedItem is Job) {
+						dropJob(draggedItem,dropIndex);
+					}
+	        	}
+	        }
+	        
+	        private function dropCharge(draggedItem:Object,dropIndex:int):void {
+	        	registerClassAlias("com.efi.printsmith.data.Charge",Charge);
+				var selectedCharge:Charge = ObjectUtil.copy(draggedItem) as Charge;
+				if(selectedCharge.parentInvoice!=null) {
+					if(invoice.charges!=null) {
+						invoice.charges.removeItemAt(selectedCharge.chargeIndex-1);
+					}
+				} else if(selectedCharge.parentJob!=null) {
+					for each(var jobBaseObj:Job in invoice.jobs) {
+						if(jobBaseObj.jobIndex==selectedCharge.jobIndex) {
+							if(jobBaseObj.charges!=null) {
+								jobBaseObj.charges.removeItemAt(selectedCharge.chargeIndex-1);
 							}
 						}
-						if(dropIndex<invoice_job_grid.dataProvider.length){
-							var localObject:Object = invoice_job_grid.dataProvider.getItemAt(dropIndex);
-							if(localObject is Job) {
-								var localJob:Job = localObject as Job;
-								selectedCharge.id = 0;
-								selectedCharge.created = null;
-								selectedCharge.created = null;
-								selectedCharge.parentInvoice = null;
-								selectedCharge.parentJob = localJob;
-								if(localJob.charges==null) {
-									localJob.charges = new ArrayCollection();
-								}
-								localJob.charges.addItem(selectedCharge);
-								localJob.charges.refresh();
-								
-							} else if(localObject is Charge) {
-								var localCharge:Charge = localObject as Charge;
-								if(localCharge.parentJob!=null) {
-									selectedCharge.id = 0;
-									selectedCharge.created = null;
-									selectedCharge.created = null;
-									selectedCharge.parentInvoice = null;
-									selectedCharge.parentJob = localCharge.parentJob;
-									if(localCharge.parentJob.charges==null) {
-										localCharge.parentJob.charges = new ArrayCollection();
-									}
-									localCharge.parentJob.charges.addItem(selectedCharge);
-									localCharge.parentJob.charges.refresh();
-								} else if(localCharge.parentInvoice!=null) {
-									selectedCharge.id = 0;
-									selectedCharge.created = null;
-									selectedCharge.created = null;
-									selectedCharge.parentInvoice = localCharge.parentInvoice;
-									selectedCharge.parentJob = null;
-									if(localCharge.parentInvoice.charges==null) {
-										localCharge.parentInvoice.charges = new ArrayCollection();
-									}
-									localCharge.parentInvoice.charges.addItem(selectedCharge);
-									localCharge.parentInvoice.charges.refresh();
-								}
-							}
-						} else {
+					}
+				}
+				if(dropIndex<invoice_job_grid.dataProvider.length){
+					var localObject:Object = invoice_job_grid.dataProvider.getItemAt(dropIndex);
+					if(localObject is Job) {
+						var localJob:Job = localObject as Job;
+						selectedCharge.id = 0;
+						selectedCharge.created = null;
+						selectedCharge.created = null;
+						selectedCharge.parentInvoice = null;
+						selectedCharge.parentJob = localJob;
+						if(localJob.charges==null) {
+							localJob.charges = new ArrayCollection();
+						}
+						localJob.charges.addItem(selectedCharge);
+						localJob.charges.refresh();
+						
+					} else if(localObject is Charge) {
+						var localCharge:Charge = localObject as Charge;
+						if(localCharge.parentJob!=null) {
 							selectedCharge.id = 0;
 							selectedCharge.created = null;
 							selectedCharge.created = null;
-							selectedCharge.parentInvoice = invoice;
-							selectedCharge.parentJob = null;
-							if(invoice.charges==null) {
-								invoice.charges = new ArrayCollection();
+							selectedCharge.parentInvoice = null;
+							selectedCharge.parentJob = localCharge.parentJob;
+							if(localCharge.parentJob.charges==null) {
+								localCharge.parentJob.charges = new ArrayCollection();
 							}
-							invoice.charges.addItem(selectedCharge);
-							invoice.charges.refresh();
+							localCharge.parentJob.charges.addItem(selectedCharge);
+							localCharge.parentJob.charges.refresh();
+						} else if(localCharge.parentInvoice!=null) {
+							selectedCharge.id = 0;
+							selectedCharge.created = null;
+							selectedCharge.created = null;
+							selectedCharge.parentInvoice = localCharge.parentInvoice;
+							selectedCharge.parentJob = null;
+							if(localCharge.parentInvoice.charges==null) {
+								localCharge.parentInvoice.charges = new ArrayCollection();
+							}
+							localCharge.parentInvoice.charges.addItem(selectedCharge);
+							localCharge.parentInvoice.charges.refresh();
 						}
 					}
-					invoice_job_grid.dataProvider = getJobChargesList(invoice.jobs,invoice.charges);
-	        	}
+				} else {
+					selectedCharge.id = 0;
+					selectedCharge.created = null;
+					selectedCharge.created = null;
+					selectedCharge.parentInvoice = invoice;
+					selectedCharge.parentJob = null;
+					if(invoice.charges==null) {
+						invoice.charges = new ArrayCollection();
+					}
+					invoice.charges.addItem(selectedCharge);
+					invoice.charges.refresh();
+				}
 	        }
+	        
+	        private function dropJob(draggedItem:Object,dropIndex:int):void {
+	        	registerClassAlias("com.efi.printsmith.data.Job",Job);
+				var selectedJob:Job = ObjectUtil.copy(draggedItem) as Job;
+				if(dropIndex<invoice_job_grid.dataProvider.length){
+					var localObject:Object = invoice_job_grid.dataProvider.getItemAt(dropIndex);
+					if(localObject is Job) {
+						var localJob:Job = localObject as Job;
+						if(selectedJob.jobIndex!=localJob.jobIndex){
+							var initValue:int=0;
+							var maxValue:int=0;
+							var droppableIndex:Number = localJob.jobIndex;
+							if(selectedJob.jobIndex>localJob.jobIndex) {
+								initValue = localJob.jobIndex-1;
+								maxValue = selectedJob.jobIndex-1;
+							} else {
+								initValue = selectedJob.jobIndex-1;
+								maxValue = localJob.jobIndex-1;
+							}
+							invoice.jobs.removeItemAt(selectedJob.jobIndex-1);
+							if(localJob.multiQtyJob){
+								selectedJob.multiQtyJob = true;
+								selectedJob.jobGroup = localJob.jobGroup;
+								invoice.jobs.addItem(selectedJob);
+							} else {
+								for(var i:int=initValue;i<maxValue;i++) {
+									var swapJob:Job = invoice.jobs.getItemAt(i) as Job;
+									swapJob.jobIndex = i+2;
+								}
+								selectedJob.multiQtyJob = false;
+								selectedJob.jobGroup = 0;
+								selectedJob.jobIndex = droppableIndex;
+								invoice.jobs.addItem(selectedJob);
+							}
+						}	
+					}
+				} else {
+					invoice.jobs.removeItemAt(selectedJob.jobIndex-1);
+					selectedJob.multiQtyJob = false;
+					selectedJob.jobGroup = 0;
+					selectedJob.jobIndex = invoice.jobs.length+1;
+					invoice.jobs.addItem(selectedJob);
+				}
+				invoice.jobs = getSortedList(invoice.jobs);
+				invoice_job_grid.dataProvider = getJobChargesList(invoice.jobs,invoice.charges);
+			}
+	        
+	        private function getSortedList(list:ArrayCollection):ArrayCollection {
+				var dataSortField:SortField = new SortField();
+                dataSortField.name = "jobIndex";
+                dataSortField.numeric = true;
+ 				var numericDataSort:Sort = new Sort();
+                numericDataSort.fields = [dataSortField];
+                list.sort = numericDataSort;
+                list.refresh();
+				return list;
+			}
 	        
 	        public function getCostingColor(item:Object,priceCheck:Boolean=false):uint {
 	        	if(item.costingRecord!=null) {
