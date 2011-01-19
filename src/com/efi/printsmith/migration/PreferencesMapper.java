@@ -1163,7 +1163,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setDefaultInvoice(getDefaultDocumentFormat(value));
 		else if (name.equals("Estimator_defaultEstimateFormat"))
 			preferencesEstimating.setDefaultEstimate(getDefaultDocumentFormat(value));
-		
+		else if (name.equals("reportParent_show_cut_diagram"))
+			preferencesEstimating.setPrintParentToFinishSection(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesEstimating);
 	}
 	
