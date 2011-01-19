@@ -1458,9 +1458,10 @@
 			{
 				this.job = ev.result as Job;
 				job.defaultJob = true;
-				if (job.parentInvoice.account.jobNote != null)	{
-					job.jobNotes = 	job.parentInvoice.account.jobNote;
-				}
+				if ( job.parentInvoice != null)
+					if (job.parentInvoice.account.jobNote != null)	{
+						job.jobNotes = 	job.parentInvoice.account.jobNote;
+					}
 				setJob(job);
 				setPaperCalculatorData = true;				
 				this.copy_single_radio.selected = this.job.singleSided;
