@@ -415,6 +415,8 @@
 			InitSaleRecord();		// setup for another sale
 			invoice = null;
 			this.currentState = "";
+			if (chkNonTax.selected == true)
+				chkNonTax.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
 			openTree();
 			charges = new ArrayCollection();
 			UpdateBatchNumbers();	
@@ -1708,8 +1710,13 @@
 		if (customerAccount.taxCode != null)
 			pickTaxCode.selectedIndex = findItem(customerAccount.taxCode.name, TaxCodesArray);
 		
+		// sync up the non tax button with the account status
 		if (customerAccount.taxExempt == true) {
-			chkNonTax.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
+			if (chkNonTax.selected == false)
+				chkNonTax.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
+		} else {
+			if (chkNonTax.selected == true)
+				chkNonTax.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
 		}
 		sessionBatch.account = customerAccount;
 		
@@ -2174,6 +2181,10 @@
 		invoice = null;
 		customerAccount = null;
 		this.currentState = "";
+		
+		if (chkNonTax.selected == true)
+			chkNonTax.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
+
 		openTree();
 		UpdateBatchNumbers();					
 	}
