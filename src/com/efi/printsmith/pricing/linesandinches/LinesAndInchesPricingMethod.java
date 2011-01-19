@@ -1,6 +1,7 @@
 package com.efi.printsmith.pricing.linesandinches;
 
 import com.efi.printsmith.data.Job;
+import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.PricingRecord;
 import com.efi.printsmith.pricing.utilities.MatrixUtilities;
 import com.efi.printsmith.service.DataService;
@@ -14,6 +15,8 @@ public class LinesAndInchesPricingMethod {
 		double cost = MatrixUtilities.getStampScheduleCost((StampSchedule)dataService.getStampSchedule(), job.getNumberOfInches(), job.getNumberOfLines());
 		double price = cost * job.getQtyOrdered();
 		job.setTotalCost(cost);
+		job.getPricingRecord().setStockCost(price);
+		job.getPricingRecord().setStockTotalPrice(price);
 		job.getPricingRecord().setTotalPrice(price);
 		return job;
 	}

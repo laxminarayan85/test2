@@ -2701,6 +2701,8 @@
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
 				} else if (pricingMethod.title == "Lines & Inches") {
 					this.currentState = "LinesAndInches";
+					job.salesCategory = pricingMethod.category;
+					
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
 				} else if (pricingMethod.title == "Mailing") {
 					this.currentState = "Mailing";

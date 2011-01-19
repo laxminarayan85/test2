@@ -860,7 +860,7 @@
 				matrixService.newStampSchedule();
 			} else {
 				var editPage:Container = this;
-				var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, true));
+				var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, false));
 			    titleWindow.setStyle("borderAlpha", 0.9);
 			    titleWindow.setStampSchedule(stampSchedule);
 			}
