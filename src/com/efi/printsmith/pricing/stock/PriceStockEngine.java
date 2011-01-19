@@ -202,7 +202,7 @@ public class PriceStockEngine {
 			double markup = 0.0;
 			double stockCost = 0.0;
 			if (qty > 0) {
-				if (qty <= stockDefinition.getQtybreak1()) {
+				if (stockDefinition.getQtybreak1() == 0 || qty <= stockDefinition.getQtybreak1()) {
 					markup = stockDefinition.getMarkup1();
 					stockCost = stockDefinition.getCost1().doubleValue();
 				} else if (qty <= stockDefinition.getQtybreak2()) {
