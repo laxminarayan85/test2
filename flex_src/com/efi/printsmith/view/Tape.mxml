@@ -19,13 +19,24 @@
 	<mx:NumberFormatter precision="2" id="numberFormatter"/>
 	<mx:NumberFormatter precision="0" id="quantityFormatter"/>
 
+ 	<mx:RemoteObject id="dataService" destination="dataService">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
+		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
+	</mx:RemoteObject>
+
 	<mx:RemoteObject id="dataServiceTapeBatch" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveTapeBatchResult(event)"/>
 		<mx:method name="getCurrentTapeBatch" fault="handleFault(event)" result="handleLoadCurrentTapeBatch(event)"/>
 	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceCashDrawer" destination="dataService">
+		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadCashDrawerResultForVoid(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCashDrawerResult(event)"/>
+	</mx:RemoteObject>
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.Account;
 	import com.efi.printsmith.data.TapeDepositAppliedRecord;
 	import com.efi.printsmith.data.Transaction;
 	import mx.charts.series.ColumnSeries;
@@ -55,15 +66,19 @@
 	import com.efi.printsmith.data.TapePaymentRecord;
 	import com.efi.printsmith.data.TapeDepositAppliedRecord;
 	import com.efi.printsmith.data.TapeSaleRecord;
+	import com.efi.printsmith.data.TapeVoidRecord;
 	import com.efi.printsmith.data.AccountHistoryData;
 	import com.efi.printsmith.data.CreditCardTransactions;
 	import com.efi.printsmith.data.CreditCard;	
+	import com.efi.printsmith.data.CashDrawer;	
 	[Bindable]
 	private var sessionBatch:TapeSessionBatch;
 	[Bindable]
 	private var tapeBatch:TapeBatch;
 	[Bindable]
 	private var tapeTreeData:ArrayCollection;
+   [Bindable]
+	private var cashDrawer:CashDrawer;
 	
 	private var tapeEntryCount:int = 0;
 	
@@ -129,6 +144,41 @@
 		this.throbber.stop();
 	}
 	
+	private function handleLoadCashDrawerResultForVoid(ev:ResultEvent):void {
+	    var cashDrawerArray:ArrayCollection = ev.result as ArrayCollection;
+	    
+	    //
+	    // should never be more than one cash drawer in the current design
+	    //
+		if (cashDrawerArray.length > 0)
+		{
+			cashDrawer = cashDrawerArray.getItemAt(0) as CashDrawer;
+		} else {
+	     	cashDrawer = new CashDrawer();
+	     	dataServiceCashDrawer.addUpdate(cashDrawer);
+		}
+		
+		doVoidSelection();
+	}
+	
+	private function handleSaveCashDrawerResult(ev:ResultEvent):void {
+		var i:int = 0;
+		cashDrawer = ev.result as CashDrawer;
+				
+		//
+		//  all saves have been completed
+		//
+		this.throbber.visible = false;
+		this.throbber.stop();
+	}	
+
+	private function handleSaveResult(ev:ResultEvent):void {
+
+	}
+	private function handleDeleteResult(ev:ResultEvent):void {
+
+	}
+	
 	private function handleFault(ev:FaultEvent):void
 	{
 		var message:String;
@@ -137,12 +187,252 @@
 		Alert.show(message, "Error", 0, null);
 	}
 	
-	private function doVoid():void 
-	{
+	private function doVoid():void{
+		// current monies held in the cash drawer
+		cashDrawer = new CashDrawer();
+		
+		dataServiceCashDrawer.getAll("CashDrawer");
+	}
+
+	private function testVoidItem(temp :Object):int {
+		var results:int = 0;
+		
+		if (temp != null) {
+			if (temp is TapeBatch) {
+				// do nothing - this is the tape header
+			} else if (temp is TapeSessionBatch) {
+				
+			} else if (temp is TapePaymentRecord) {
+				
+			} else if (temp is TapeSaleRecord) {
+				
+			} else if (temp is TapeDepositAppliedRecord) {
+				
+			}
+		}
+		
+		return(results);
+	}
+
+	private function doRemoveHistory(temp :Object, account:Account, accountHistoryData:AccountHistoryData):int {
+		var results:int = 0;
+		var deltaAmount:Number = 0;
+		//
+		// reverse a invoice pickup, delete history item
+		//
+		if (temp is TapeSaleRecord) {
+			var tempSale:TapeSaleRecord = temp as TapeSaleRecord;
+			deltaAmount = accountHistoryData.subTotalPosted;		//TODO - might need tax's removed			
+			account.ordersYear -= 1;
+			account.ordersTotal -= 1;
+			account.salesMonth -= deltaAmount;
+			account.salesYear -= deltaAmount;
+			account.termsDiscount -= deltaAmount;
+			
+			//
+			// strip the history record
+			//
+			dataService.deleteItem("AccountHistoryData",accountHistoryData.id);
+		}
+		//TODO - reverse Journal Entry
+		
+		return(results);
 	}
 	
+	private function doVoidPickup(temp :Object, account:Account):int {
+		var results:int = 0;
+		var accountHistoryData:AccountHistoryData;
+		
+		if (temp != null) {
+			if (temp is TapeSaleRecord) {
+				var tempSale:TapeSaleRecord = temp as TapeSaleRecord;
+				if (tempSale.isPickup == true) {
+					tempSale.invoice.pickupDate = null;
+					tempSale.invoice.offPendingDate = tempSale.invoice.pickupDate;
+					tempSale.invoice.onPendingList = true;
+					tempSale.invoice.locked = false;
+					
+					accountHistoryData = tempSale.invoice.accountHistoryData;
+					tempSale.invoice.accountHistoryData = null;		// no longer in history, but linkage belongs to Tape
+					
+					//
+					// put invoice back on the pending list
+					dataService.addUpdate(tempSale.invoice);
+					
+					//
+					// remove the history record and reverse any account balances
+					//
+					doRemoveHistory(temp, account, accountHistoryData);
+				}
+				
+				tempSale.isVoided = true;
+			}
+		}
+	
+		return(results);
+	}
+
+	private function doReverseCashDrawer(account:Account, paymentMethod:String, delta:Number):int {
+		var results:int = 0;
+
+		switch(paymentMethod)
+		{
+			case Constants.POS_CASH_REGISTER_PAYMODE_CASH:
+				cashDrawer.cashTotal -= delta;
+				break;
+				
+			case Constants.POS_CASH_REGISTER_PAYMODE_CHECK:
+			case Constants.POS_CASH_REGISTER_PAYMODE_DRAFT:	// i.e., check
+				cashDrawer.checkCount--;
+				cashDrawer.checkTotal -= delta;
+				break;
+				
+			case Constants.POS_CASH_REGISTER_PAYMODE_CREDITCARD:
+				cashDrawer.cardCount--;
+				cashDrawer.cardTotal -= delta;
+				
+				//TODO - reverse any credit card integration transaction
+				break;
+				
+			case Constants.POS_CASH_REGISTER_PAYMODE_CHARGE:
+				cashDrawer.arBalance -= delta;
+				if (account != null) {
+					account.balance -= delta;
+				}
+				break;
+		}
+		return(results);
+	}
+	
+	//
+	// undue any change given during the transaction
+	//
+	private function doReverseSessionRefund(temp :Object):int {
+		var results:int = 0;
+		var tempBatch:TapeSessionBatch = temp as TapeSessionBatch;
+	
+		if (tempBatch != null) {	
+			switch (tempBatch.refundMethod) {
+				case Constants.POS_CASH_REGISTER_PAYMODE_CREDITCARD:
+					cashDrawer.cardTotal += sessionBatch.accumChange;
+					cashDrawer.cardCount--;
+					break;
+				case Constants.POS_CASH_REGISTER_PAYMODE_CASH:
+				default:
+					cashDrawer.cashTotal += sessionBatch.accumChange;
+					break;
+			}
+			
+			tempBatch.isVoided = true;
+		}
+		return(results);
+	}
+	
+	private function doVoidItem(temp :Object, account:Account):int {
+		var results:int = 0;
+		
+		if (temp != null) {
+			if (temp is TapeBatch) {
+				// do nothing - this is the tape header
+			} else if (temp is TapeSessionBatch) {
+				doReverseSessionRefund(temp);
+			} else if (temp is TapePaymentRecord) {
+				var tempPayment:TapePaymentRecord = temp as TapePaymentRecord;
+				
+				if (tempPayment != null) {
+					doReverseCashDrawer(account, tempPayment.paymentMethod, tempPayment.total);
+					tempPayment.isVoided = true;
+				}
+				
+			} else if (temp is TapeSaleRecord) {
+				doVoidPickup(temp, account);
+			} else if (temp is TapeDepositAppliedRecord) {
+				
+			}
+		}
+		
+		return(results);
+	}
+	
+	private function doVoidSelection():void {
+		var voidCounter:int=0; 
+		var voidErr:int = 0;
+		var voidTransactions:ArrayCollection = new ArrayCollection(); 
+		var temp :Object;
+		var account:Account = null;
+		var voidRecord:TapeVoidRecord = null;
+		
+		temp = new Object();
+		
+		voidCounter = tapeList.selectedItems.length;
+		voidTransactions = new ArrayCollection();
+		
+		for (var i:int = 0;i < voidCounter && voidErr == 0;i++) {
+			temp = tapeList.selectedItems[i] as Object;
+			voidErr = testVoidItem(temp);
+		}
+		
+		if (voidErr == 0) {
+			for (var i:int = 0;i < voidCounter;i++) {
+				temp = tapeList.selectedItems[i] as Object;
+				
+				// only one account can be effected at a time, keep a reference to it
+				if (temp is TapeSessionBatch) {
+					var tempBatch:TapeSessionBatch = temp as TapeSessionBatch;
+					if (tempBatch != null) {
+						account = tempBatch.account;
+					}
+				} 
+				
+				// based on item type, do a reverse action to this step
+				doVoidItem(temp, account);
+				
+				// marked as VOIDED - save to DB
+				dataService.addUpdate(temp);		
+			}
+			
+			// account stastistics have been updated, save out
+			if (account != null) {
+				dataService.addUpdate(account);
+			}
+			
+			// appeand new tape entries to know that a VOID occured and by whom
+			sessionBatch = InitSessionBatch();
+			voidRecord = InitVoidRecord(0);			//TODO - need real line number from tape UI
+			sessionBatch.transactions.addItem(voidRecord);
+			tapeBatch.sessionBatches.addItem(sessionBatch);
+			dataServiceTapeBatch.addUpdate(tapeBatch); 
+		}
+	}
+
+    private function InitSessionBatch():TapeSessionBatch {
+   		sessionBatch = new TapeSessionBatch();   		
+   		//
+   		// array of Transactions, could be Sale or Payments
+   		//
+		sessionBatch.transactions = new ArrayCollection();
+		
+		// the user was logged in during the session
+		sessionBatch.user = Snowmass.getInstance().currentUser;
+		
+		// date that appears in register tape UI
+		sessionBatch.created = new Date();
+		
+		return(sessionBatch);
+    }
+	
+    private function InitVoidRecord(index:int):TapeVoidRecord {
+    	var voidRecord:TapeVoidRecord = new TapeVoidRecord();
+    	voidRecord.index = index;
+    	return(voidRecord);
+    }
+   
 	private function doRefresh():void 
 	{
+		this.throbber.visible = true;
+		this.throbber.play();
+		tapeBatch = new TapeBatch();
+		dataServiceTapeBatch.getCurrentTapeBatch();
 	}
 	
 	
@@ -191,7 +481,11 @@
 			myPrintJob.send();
 	 	}
  	}
- 	
+ 
+ //	private function doGetCellColor(item:Object): uint{
+//		return(0xFE0D0D);
+//	}
+	
  	private function showDescription(item:Object, column:DataGridColumn):String{
 		var description:String;
 		var temp:String;
@@ -200,6 +494,9 @@
 		var tempDeposit:TapeDepositAppliedRecord;
 		var tempBatch:TapeBatch;
 		var tempSession:TapeSessionBatch;
+		var voidRecord:TapeVoidRecord;
+		
+//		tapeList.setStyle("backgroundColor",doGetCellColor(item));
 		
 		if (item is TapeBatch) {
 			tempBatch = item as TapeBatch;
@@ -252,6 +549,11 @@
 				temp = StringUtil.substitute(temp,tempSession.account.displayId.toString(), tempSession.account.title); 
 				description = description + "  " + temp;
 			}
+			return (description);
+		} else if (item is TapeVoidRecord) {
+			voidRecord = item as TapeVoidRecord;
+			description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"tapeCmd.VOIDtapetransactionl");
+			description = StringUtil.substitute(description,voidRecord.index); 
 			return (description);
 		}
 		
@@ -315,6 +617,7 @@
 		
 		return (description);
 	}	
+	
 	
 	public function doListClick():void {
 		if(tapeList.selectedIndex > -1){
