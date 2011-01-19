@@ -102,6 +102,7 @@ package com.efi.printsmith.data
 		public var webCompanyId:WebCompany;
 		public var webCatalog:WebCatalogs;
 		public var access_level:int = 0;
+		public var walkIn:Boolean = false;
 	
 	}
 }

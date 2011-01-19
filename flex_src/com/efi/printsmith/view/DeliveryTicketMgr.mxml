@@ -773,14 +773,14 @@
 								<mx:Component>
 									<mx:Label text="{data.address.name}"/>
 								</mx:Component>
-							</mx:itemRenderer>
+							</mx:itemRenderer> 
 						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
 				<ns1:SmallThrobber id="throbber_broker" height="20" width="20" visible="false" horizontalCenter="0" verticalCenter="0"/>
 			</mx:Canvas>
 			<mx:HBox width="100%" height="30%">
-				<ns1:AddressEditor enableEditBtn="{broker!=null}"
+				<ns1:AddressEditor editable="{broker!=null}"
 					id="ship_to_address_editor" addressLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Address')}" width="30%" height="100%"/>
 				<ns1:ContactInfoEditor enableEditBtn="{broker!=null}"
 					id="ship_to_contact_editor" contactLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Contact')}" width="30%" height="100%"/>

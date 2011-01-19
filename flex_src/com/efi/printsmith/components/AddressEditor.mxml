@@ -51,9 +51,7 @@
 			
 			[Bindable] public var openedFromEmployee:Boolean = false;
 			
-			[Bindable] public var enableEditBtn:Boolean = true;
-			
-			private var _editable:Boolean = true;
+			[Bindable] private var _editable:Boolean = true;
 			
 			public function set editable(val:Boolean):void	{
 				_editable = val;
@@ -185,7 +183,7 @@
 			<mx:LinkButton height="100%" width="10%"
 						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Edit')}"
 					   id="edit_address_button"
-					   enabled="{enableEditBtn}" 
+					   visible="{_editable}" 
 					   click="doEditAddress();"/>
 			
 		</mx:HBox>

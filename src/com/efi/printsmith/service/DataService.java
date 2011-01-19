@@ -369,7 +369,7 @@ public class DataService extends HibernateService {
 			// null order by title";
 			String queryString = "select new Account( "
 					+ columnStr
-					+ ") from Account a left outer join a.contact order by a.prospect, a.title ";
+					+ ") from Account a left outer join a.contact where (a.walkIn = false or a.walkIn = null) order by a.prospect, a.title ";
 
 			Query query = em.createQuery(queryString);
 
@@ -1607,8 +1607,10 @@ public class DataService extends HibernateService {
 		this.addUpdate(sequenceValues);
 		
 		// since this is a new account, need to assign contact ids as well
-		this.setContactId(account.getContact());
-		this.setContactId(account.getBillToContact());
+		if (account.getContact() != null)
+			this.setContactId(account.getContact());
+		if (account.getBillToContact() != null)
+			this.setContactId(account.getBillToContact());
 	}
 
 	private void setEmployeeId(Employee employee) throws Exception {

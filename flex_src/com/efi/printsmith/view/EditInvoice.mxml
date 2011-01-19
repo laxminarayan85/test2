@@ -52,6 +52,9 @@
 		<mx:method name="getDeliveryTicketJobsByInvoice"
 				   fault="handleFault(event)"
 				   result="handleLoadDeliveryTicketJobsResult(event)"/>
+		<mx:method name="addUpdate"
+				   fault="handleFault(event)"
+				   result="handleSaveWalkInAcct(event)"/>		   
 	</mx:RemoteObject>
 	<mx:RemoteObject id="invoiceService"
 					 destination="invoiceService" showBusyCursor="true">
@@ -336,7 +339,7 @@
 				} else {
 	
 					if (invoice is Estimate)
-						editorType= EDITESTIMATE
+						editorType = EDITESTIMATE
 					
 					if (editorType == EDITESTIMATE) {
 						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
@@ -434,7 +437,7 @@
 					// editing new contact should not create temp, only new
 					var currentContact = contact_list.selectedItem as Contact;	
 					// remove new / temp contacts that already exist.
-					if (newContact || (currentContact["newFlag"] == true))	{
+					if (newContact || (currentContact != null && (currentContact["newFlag"] == true)))	{
 						newContact = false;
 						c = new Contact();
 						c["newFlag"] = true;
@@ -479,7 +482,19 @@
 			}
 
 			
-			
+			private function handleSaveWalkInAcct(event:ResultEvent):void	{
+				var a:Account = event.result as Account;
+				invoice.account = a;
+				if (contactTemp != null)	{
+					contactTemp.parentAccount = a;
+					tempContactDataService.addUpdate(contactTemp);
+				}
+				else	{
+					dataService.saveInvoice(invoice);	
+				}
+				
+			}
+
 			private function saveNewContactResult(evt:ResultEvent):void	{
 				var currentContact:Contact = contact_list.selectedItem as Contact;
 				if (currentContact["newFlag"] == true)	{
@@ -1066,9 +1081,15 @@
 				mapToInvoiceData();
 				var doInvoiceLater:Boolean = false;
 				
-				if (contactTemp != null && (contact_list.selectedItem as Contact).tempFlag)	{
-					tempContactDataService.addUpdate(contactTemp);
+				if (invoice.account.walkIn)	{
+					dataService.addUpdate(invoice.account);
 					doInvoiceLater = true;
+				}
+				if (contactTemp != null && (contact_list.selectedItem as Contact).tempFlag)	{
+					if (!invoice.account.walkIn)	{
+						tempContactDataService.addUpdate(contactTemp);
+						doInvoiceLater = true;
+					}
 				}
 				
 				if (contactNew != null)	{
@@ -1351,7 +1372,18 @@
 				invoice.account=accountItem;
 				invoice.shipToAddress=accountItem.shipToAddress;
 				invoice.billToAddress=accountItem.shipToAddress;
-				accountDataService.getContactsByAccountId("Contact", invoice.account.id);
+				
+				if (isNaN(invoice.id) && accountItem.walkIn)	{
+					accountItem.status = "CustomerStatusInactive";
+					accountItem.type = "cash_check_credit";
+					bill_to_address_editor.editable = true; 
+					btnContactNew.enabled = false;
+				}
+				else	{
+					bill_to_address_editor.editable = false;
+					btnContactNew.enabled = true;
+					accountDataService.getContactsByAccountId("Contact", invoice.account.id);
+				}
 //				this.accountcontacts.removeAll();
 //				if (accountItem.contact != null)
 //					this.accountcontacts.addItem(accountItem.contact);
@@ -1574,7 +1606,18 @@
 			{
 				if (evt.account != null)
 				{
-					if (evt.account.status == "CustomerStatusFrozen"){
+					if (evt.account.accountId == "1")	{
+						// walk in account
+						var walkin:Account = new Account();
+						walkin.walkIn = true;
+//						var c1:Contact = new Contact(); 
+//						var c2:Contact = new Contact();
+//						walkin.billToContact = c1;
+//						walkin.contact = c2;
+						//dataService.addUpdate(walkin);
+						this.setAccount(walkin);			
+					}
+					else if (evt.account.status == "CustomerStatusFrozen"){
 						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'Customer_Acct.FROZEN'));
 						this.setAccount(new Account());
 					}
@@ -1872,25 +1915,28 @@
 			}
 			
 			private function openDepositEntry():void		{
-				var thisWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this, true);
-				var ac:ArrayCollection = Snowmass.getInstance().containerManager.getChildrenOfWindow(thisWin.windowID);
+				if (invoice is Invoice)	{
+					
 				
-				if (ac != null)	{
-					for (var i:int=0; i<ac.length; i++)	{
-						var win:MDIWindow = ac.getItemAt(i) as MDIWindow;
-						if (win.content.className.indexOf("DepositEntryEditor") > -1)	{
-							win.bringWindowToFront();
-							return;
-						}  
+					var thisWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this, true);
+					var ac:ArrayCollection = Snowmass.getInstance().containerManager.getChildrenOfWindow(thisWin.windowID);
+					
+					if (ac != null)	{
+						for (var i:int=0; i<ac.length; i++)	{
+							var win:MDIWindow = ac.getItemAt(i) as MDIWindow;
+							if (win.content.className.indexOf("DepositEntryEditor") > -1)	{
+								win.bringWindowToFront();
+								return;
+							}  
+						}
 					}
-				}
-								
-				var de:DepositEntryEditor = new DepositEntryEditor();
-				de.addEventListener(DepositEntryAddedEvent.DEPOSITENTRYADDED, onDepEntryAdded,false, 0, true);
-				var winId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this, true).windowID;
-				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.DepositEntry'), de,-1,-1,550,500,winId);
-				de.depArray = expandDepositsArray(invoice.deposits);
-				
+									
+					var de:DepositEntryEditor = new DepositEntryEditor();
+					de.addEventListener(DepositEntryAddedEvent.DEPOSITENTRYADDED, onDepEntryAdded,false, 0, true);
+					var winId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this, true).windowID;
+					Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.DepositEntry'), de,-1,-1,550,500,winId);
+					de.depArray = expandDepositsArray(invoice.deposits);
+				}				
 			}
 			
 			private function expandDepositsArray(ac:ArrayCollection):ArrayCollection	{
@@ -2706,7 +2752,7 @@
 						
 					<mx:VBox height="70%" width="100%">
 							<ns1:AddressEditor 
-										   id="bill_to_address_editor" 
+										   id="bill_to_address_editor" backgroundColor="red"
 										   address="{invoice.billToAddress}" editable="false"
 										   addressLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress')}"/>
 										   <!--title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.DeliveryIntent')}"-->
