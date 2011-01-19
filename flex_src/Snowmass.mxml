@@ -860,9 +860,11 @@
 				matrixService.newStampSchedule();
 			} else {
 				var editPage:Container = this;
-				var titleWindow:MatrixEditor = MatrixEditor(PopUpManager.createPopUp(editPage, MatrixEditor, false));
+				var titleWindow:MatrixEditor = new MatrixEditor();
+				containerManager.openNewMDIWindow("Rubber Stamps", titleWindow);
 			    titleWindow.setStyle("borderAlpha", 0.9);
 			    titleWindow.setStampSchedule(stampSchedule);
+			    titleWindow.width = 800;
 			}
 		}
 		
