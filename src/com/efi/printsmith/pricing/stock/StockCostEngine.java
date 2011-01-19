@@ -25,14 +25,14 @@ public class StockCostEngine {
 			} else if (job.getPricingMethod().getMethod().equals("Large Format")) {
 				try {
 					if (job.getPricingCopier().getSquareAreaType() == "AreaFinishSize")
-						qty = PriceListUtilities.getAreaFromSizeString(job.getFinishSize());
+						qty = PriceListUtilities.getAreaFromSizeString(job.getFinishSize()) * job.getTotalCopies();
 					else
 						if (job.getStock() != null && job.getStock().getStockunit() == 4)
-							qty = PriceListUtilities.getAreaFromSizeString(job.getRunSize());
+							qty = PriceListUtilities.getAreaFromSizeString(job.getRunSize()) * job.getTotalCopies();
 						else
 							qty = new Double(Double.parseDouble(job.getParentSize()
 									.getName())
-									* job.getCutOff()).longValue();
+									* job.getCutOff()).longValue() * job.getTotalCopies();
 				}
 				catch (Exception e) {
 					
