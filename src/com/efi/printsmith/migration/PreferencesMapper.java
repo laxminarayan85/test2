@@ -855,6 +855,14 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesAccounting.setPrintDocument(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("Estimator_defaultJournalFormat"))
 			preferencesAccounting.setJournalDocumentPreference(value);
+		else if (name.equals("CreditLimit"))
+			preferencesAccounting.setCreditLimit(Utilities.tokenToDouble(value));
+		else if (name.equals("noDraftDeposit_on_ticket"))
+			preferencesAccounting.setRemoveDraftsFromDeposit(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("defaultNewAcctSalesRep"))
+			preferencesAccounting.setDefaultSalesRep(value);
+		else if (name.equals("defaultShippingMode"))
+			preferencesAccounting.setDefaultShipping(value);
 		dataService.addUpdate(preferencesAccounting);
 	}
 	private void importPreferencesPOSField(String key, String name, String value) throws Exception {
