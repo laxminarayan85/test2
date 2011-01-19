@@ -1165,6 +1165,9 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setDefaultEstimate(getDefaultDocumentFormat(value));
 		else if (name.equals("reportParent_show_cut_diagram"))
 			preferencesEstimating.setPrintParentToFinishSection(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("Estimator_autoShowJobPaperCalc"))
+			preferencesEstimating.setShowPaperCalculator(Utilities.tokenToBooleanValue(value));
+		
 		dataService.addUpdate(preferencesEstimating);
 	}
 	
