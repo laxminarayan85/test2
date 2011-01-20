@@ -33,7 +33,7 @@ public class PrintPricingMethod {
 		}
 		else
 			pressSpeed = pressDefinition.getAvgImpressPerHour();
-		
+		job.setCopyMinutes(pressSpeed.doubleValue());
 		double runHours = job.getTotalImpressions() / pressSpeed.doubleValue();
 		float setupHours = (pressDefinition.getSetupMin().floatValue() / 60) * job.getSheets();
 		//float wasteHours = job.getEstWaste() / new Double(pressSpeed).floatValue();
@@ -47,7 +47,8 @@ public class PrintPricingMethod {
 		stockPrice = (stockPrice * job.getImpressionsPerRun()) * job.getSheets();
 		double price = pressPrice + stockPrice;
 		pricingRecord.setTotalPrice(new Double(Math.round(price * 100)) / 100);
-		
+		pricingRecord.setStockTotalPrice(stockPrice);
+		pricingRecord.setLaborTotalPrice(pressPrice);
 		return job;
 	}
 	

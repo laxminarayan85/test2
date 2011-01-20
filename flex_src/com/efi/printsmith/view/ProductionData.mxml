@@ -260,7 +260,7 @@ width="938" height="507"  creationComplete="init()"
 			this.parent_costs.text = job.parentStockCost.toFixed(2);
 			if (job.pricingMethod.title == "Printing") {
 				this.copier.text = job.pricingPress.name;
-				this.copier_speed.text = job.pricingPress.avgImpressPerHour.toString();
+				this.copier_speed.text = job.copyMinutes.toString();
 				this.copier_label.visible = false;
 				this.copier_speed_label.visible = false;
 				this.press_label.visible = true;
@@ -268,13 +268,25 @@ width="938" height="507"  creationComplete="init()"
 				var setupHours:String = (this.job.pricingPress.setupMin / 60).toFixed(0);
 				var setupMinutes:Number = this.job.pricingPress.setupMin;
 				setupMinutes = setupMinutes - (parseInt(setupHours) * 60);
-				this.setup_time.text = setupHours + ":" + setupMinutes.toString();
-				var runHours:String = (this.job.impressionsPerRun / this.job.pricingPress.avgImpressPerHour).toFixed(0);
-				var runMinutes:Number = (this.job.impressionsPerRun / this.job.pricingPress.avgImpressPerHour) * 60;
-				runMinutes = runMinutes - (parseInt(runHours) * 60);
-				this.run_time.text = runHours + ":" + runMinutes.toFixed(0);
+				if (setupMinutes < 10)
+					this.setup_time.text = setupHours + ":0" + setupMinutes.toString();
+				else
+					this.setup_time.text = setupHours + ":" + setupMinutes.toString();
+				var minimumHours:Number = this.job.pricingPress.minLabor / 60;
+				var runHours:Number = this.job.impressionsPerRun / this.job.copyMinutes;
+				if (runHours < minimumHours)
+					runHours = minimumHours;
+				if (job.doubleSided == true)
+					runHours = runHours * 2;
+				var runHoursString:String = runHours.toFixed(0);
+				var runMinutes:Number = runHours * 60;
+				runMinutes = runMinutes - Math.floor(runHours);
+				if (runMinutes < 10)
+					this.run_time.text = runHoursString + ":0" + runMinutes.toFixed(0);
+				else
+					this.run_time.text = runHoursString + ":" + runMinutes.toFixed(0);
 				this.washup_time.text = "0:00";
-				this.total_time.text = (parseInt(setupHours) + parseInt(runHours)).toString() + ":" + (setupMinutes + runMinutes).toFixed(0);
+				this.total_time.text = (parseInt(setupHours) + parseInt(runHoursString)).toString() + ":" + (setupMinutes + runMinutes).toFixed(0);
 			} else {
 				this.copier.text = job.pricingCopier.name;
 				this.copier_speed.text = job.copyMinutes.toString();
@@ -282,13 +294,13 @@ width="938" height="507"  creationComplete="init()"
 				this.copier_speed_label.visible = true;
 				this.press_label.visible = false;
 				this.press_speed_label.visible = false;
-				var runHours:String = Math.floor((this.job.runTime / 60)).toFixed(0);
-				runHours = runHours.replace(".","");
-				var runMinutes:Number = this.job.runTime - (parseInt(runHours) * 60);
+				var runHoursString:String = Math.floor((this.job.runTime / 60)).toFixed(0);
+				runHoursString = runHoursString.replace(".","");
+				var runMinutes:Number = this.job.runTime - (parseInt(runHoursString) * 60);
 				if (runMinutes < 10)
-					this.run_time.text = runHours + ":0" + runMinutes.toFixed(0);
+					this.run_time.text = runHoursString + ":0" + runMinutes.toFixed(0);
 				else
-					this.run_time.text = runHours + ":" + runMinutes.toFixed(0);
+					this.run_time.text = runHoursString + ":" + runMinutes.toFixed(0);
 				var totalTime:Number = job.runTime + job.setupTime + job.washupTime;
 				var totalHours:String = Math.floor((totalTime / 60)).toFixed(0);
 				totalHours = totalHours.replace(".","");

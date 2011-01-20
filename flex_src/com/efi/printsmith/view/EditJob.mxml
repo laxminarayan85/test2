@@ -4086,7 +4086,7 @@
 														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTurn')}"
 														groupName="run_method_radiogroup"
 														height="18"
-														value="{Constants.JOB_RUN_METHOD_WORK_TURN}" width="179" id="radiobutton1"/>
+														value="{Constants.JOB_RUN_METHOD_WORK_TURN}" width="179" id="radiobutton1" enabled="false"/>
 										<mx:RadioButton x="10"
 														y="6"
 														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Sheetwise')}"
@@ -4098,7 +4098,7 @@
 														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTumble')}"
 														groupName="run_method_radiogroup"
 														height="18"
-														value="{Constants.JOB_RUN_METHOD_WORK_TUMBLE}" width="169" id="radiobutton3"/>
+														value="{Constants.JOB_RUN_METHOD_WORK_TUMBLE}" width="169" id="radiobutton3" enabled="false"/>
 									</mx:Panel>
 									<mx:Label x="48"
 											  y="54"
