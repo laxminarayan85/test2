@@ -985,6 +985,25 @@ public class PreferencesPOS extends ModelBase {
   public void setPendingOption(String newVal) {
     this.pendingOption = newVal;
   }
+  	@ManyToOne( cascade = {CascadeType.ALL})
+	@Where(clause="isdeleted <> 'TRUE'")
+	private FontDefinition cashDrawerFontBean;
+  	
+  	
+
+	/**
+	 * @return the cashDrawerFontBean
+	 */
+	public FontDefinition getCashDrawerFontBean() {
+		return cashDrawerFontBean;
+	}
+
+	/**
+	 * @param cashDrawerFontBean the cashDrawerFontBean to set
+	 */
+	public void setCashDrawerFontBean(FontDefinition cashDrawerFontBean) {
+		this.cashDrawerFontBean = cashDrawerFontBean;
+	}
 
 	/**
 	 * @generated

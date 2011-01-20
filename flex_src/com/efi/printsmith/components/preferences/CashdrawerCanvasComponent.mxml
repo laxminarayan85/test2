@@ -6,6 +6,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.managers.PopUpManager;
+			import com.efi.printsmith.common.components.CustomFontComponent;
 			import com.efi.printsmith.data.PreferencesPOS;
 			import mx.collections.ArrayCollection;
 			[Bindable] public var preferencesPOS:PreferencesPOS = new PreferencesPOS();
@@ -14,6 +16,14 @@
 			[Bindable] public var stopBitsArray:ArrayCollection = new ArrayCollection();
 			[Bindable] public var parityArray:ArrayCollection = new ArrayCollection();
 			[Bindable] public var dataSizeArray:ArrayCollection = new ArrayCollection();
+			
+			private function openFontComponent():void{
+				var fontComponent:CustomFontComponent = PopUpManager.createPopUp(this,CustomFontComponent,true) as CustomFontComponent;
+				fontComponent.dataHolder = preferencesPOS;
+				fontComponent.variableName = "cashDrawerFontBean";
+				fontComponent.customText = preferencesPOS.cashDrawerFontBean;
+				PopUpManager.centerPopUp(fontComponent);
+			}
 		]]>
 	</mx:Script>
 	
@@ -53,6 +63,11 @@
 					<components:CustomStringTextInputComponent width="200"
 						dataHolder="{preferencesPOS}" variableName="defaultPrinter" customText="{preferencesPOS.defaultPrinter}"
 						enabled="{preferencesPOS.receiptPrinterStatus=='Named Graphics Printer' || preferencesPOS.receiptPrinterStatus=='Named Serial Port'}"/>
+						
+					<mx:Button
+						label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'drawerCmd.Font')}"
+						click="{openFontComponent()}" enabled="{preferencesPOS!=null &amp;&amp; preferencesPOS.receiptPrinterStatus!=null &amp;&amp; (preferencesPOS.receiptPrinterStatus=='Named Graphics Printer' || preferencesPOS.receiptPrinterStatus=='Named Serial Port')}"
+						disabledColor="#000000"/>
 						
 				</mx:HBox>
 				

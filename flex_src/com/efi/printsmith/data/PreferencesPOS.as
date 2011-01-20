@@ -48,6 +48,7 @@ package com.efi.printsmith.data
 		public var includePastDueDocuments:Boolean = false;
 		public var colorPastDueEntries:Boolean = false;
 		public var pendingOption:String = "";
+		public var cashDrawerFontBean:FontDefinition;
 	
 	}
 }
