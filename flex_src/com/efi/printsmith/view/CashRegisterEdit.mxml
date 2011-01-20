@@ -611,7 +611,7 @@
 				//
 				// look for the first charcater in the radio button titles as a match
 				//
-				if (stringChar == rbCash.label.substr(0,1)) {
+				if (stringChar == "+") {
 					rbCash.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
 				} else if (stringChar == rbCreditCard.label.substr(0,1)) {
 					rbCreditCard.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
