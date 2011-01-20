@@ -339,16 +339,13 @@
 							 y="96"
 							 width="281"
 							 id="job_mailingnotes"
-							 text="{job.notes}"
+							 text="{job.notes}" tabIndex="0"
 							 height="77"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{label32}" position="before">
 				<mx:Label x="10"
 						  y="97"
 						  text="Notes" width="67" textAlign="right"/>
-			</mx:AddChild>
-			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<components:CheckBoxRenderer x="85" y="181" id="job_shownotes" selected="false"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{label32}" position="before">
 				<mx:Label x="10"
@@ -363,7 +360,7 @@
 			<mx:SetProperty target="{label33}" name="y" value="83"/>
 			<mx:SetProperty target="{job_over_under}" name="y" value="81"/>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<mx:TextInput x="496" y="52" width="98" focusOut="fieldChanged(event)" id="job_unitCost" text="{job.unitCost}" textAlign="right" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="496" y="52" width="98" focusOut="fieldChanged(event)" tabIndex="0" id="job_unitCost" text="{job.unitCost}" textAlign="right" mouseDown="textInputClick(event)"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="421"
@@ -374,7 +371,7 @@
 			<mx:SetProperty target="{label34}" name="y" value="109"/>
 			<mx:SetProperty target="{bindery_waste}" name="y" value="109"/>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<mx:TextInput x="496" y="137" width="98" focusOut="fieldChanged(event)" id="job_totalCost" text="{job.totalCost}" textAlign="right" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="496" y="137" tabIndex="0" width="98" focusOut="fieldChanged(event)" id="job_totalCost" text="{job.totalCost}" textAlign="right" mouseDown="textInputClick(event)"  change="editTotalCost(event)"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="421"
@@ -382,7 +379,7 @@
 						  text="Total Cost" width="67" textAlign="right" id="label37"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<mx:TextInput x="496" y="167" width="98" focusOut="fieldChanged(event)" id="job_markup" text="{job.markup}" textAlign="right" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="496" y="165" tabIndex="0" width="98" focusOut="fieldChanged(event)" id="job_markup" text="{job.markup}" textAlign="right" mouseDown="textInputClick(event)"  change="editMarkup(event)"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="421"
@@ -390,7 +387,13 @@
 						  text="Markup" width="67" textAlign="right" id="label38"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<mx:ComboBox x="85" y="207" id="job_vendor" labelField="name" dataProvider="{vendors}" width="183"></mx:ComboBox>
+				<mx:ComboBox x="85" y="207" tabIndex="0" id="job_vendor" labelField="name" dataProvider="{vendors}" width="183"></mx:ComboBox>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
+				<mx:CheckBox x="85"
+							 y="179"
+							 id="job_show_notes"
+							 width="17" selected="{job.showNotes}"/>
 			</mx:AddChild>
 		</mx:State>
 		<mx:State name="ChargesOnly" basedOn="Mailing">
@@ -849,6 +852,18 @@
 					check_taxtable.visible = true;
 				}
 		
+			}
+			
+			private function setOverrideForField(field:TextInput, overrideActive:Boolean):void
+			{
+				if (overrideActive)
+				{
+					field.setStyle("fontStyle","italic");
+					field.setStyle("textDecoration","underline");
+				} else {
+					field.setStyle("fontStyle","normal");
+					field.setStyle("textDecoration","none");
+				}
 			}
 			
 			private function handleLoadTaxTables(ev:ResultEvent):void {
@@ -2697,17 +2712,60 @@
 				} else if (pricingMethod.title == "Outside Services") {
 					this.currentState = "Mailing";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
+					job_description.tabIndex=0;
+					job_mailingnotes.tabIndex=1;
+					job_vendor.tabIndex=2;
+					job_ordered.tabIndex=3;
+					job_unitCost.tabIndex=4;
+					job_over_under.tabIndex=5;
+					bindery_waste.tabIndex=6;
+					job_totalCost.tabIndex=7;
+					job_markup.tabIndex=8;
+					job_price.tabIndex=9;
+					overs_unit_price.tabIndex=10;
+					overs_total_price.tabIndex=11;
+					job_vendor.selectedIndex=-1;
+					job_vendor.text="";
 				} else if (pricingMethod.title == "Merchandise") {
 					this.currentState = "Mailing";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
+					job_description.tabIndex=0;
+					job_mailingnotes.tabIndex=1;
+					job_vendor.tabIndex=2;
+					job_ordered.tabIndex=3;
+					job_unitCost.tabIndex=4;
+					job_over_under.tabIndex=5;
+					bindery_waste.tabIndex=6;
+					job_totalCost.tabIndex=7;
+					job_markup.tabIndex=8;
+					job_price.tabIndex=9;
+					overs_unit_price.tabIndex=10;
+					overs_total_price.tabIndex=11;
+					job_vendor.selectedIndex=-1;
+					job_vendor.text="";
 				} else if (pricingMethod.title == "Lines & Inches") {
 					this.currentState = "LinesAndInches";
 					job.salesCategory = pricingMethod.category;
-					
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
+					job_vendor.selectedIndex=-1;
+					job_vendor.text="";
 				} else if (pricingMethod.title == "Mailing") {
 					this.currentState = "Mailing";
 					estimator_viewstack.selectedChild = copy_estimator_canvas;
+					job_description.tabIndex=0;
+					job_mailingnotes.tabIndex=1;
+					job_vendor.tabIndex=2;
+					job_ordered.tabIndex=3;
+					job_unitCost.tabIndex=4;
+					job_over_under.tabIndex=5;
+					bindery_waste.tabIndex=6;
+					job_totalCost.tabIndex=7;
+					job_markup.tabIndex=8;
+					job_price.tabIndex=9;
+					overs_unit_price.tabIndex=10;
+					overs_total_price.tabIndex=11;
+					job_vendor.selectedIndex=-1;
+					job_vendor.text="";
 				} else if (pricingMethod.title == "Blank") {
 					this.currentState = "Blank";
 				}
@@ -2802,6 +2860,7 @@
 	    			job.pricingRecord.unitPriceOverride = true;
 	    			job.pricingRecord.unitPrice = parseFloat(job_unitPrice.text); 
 	    		}
+	    		setOverrideForField(job_unitPrice,job.pricingRecord.unitPriceOverride);
 	    	}
 	    	
 	    	private function editBinderyWaste(evt:Event):void {
@@ -2812,6 +2871,41 @@
 	    			job.binderyWasteOverride = true;
 	    			job.binderyWaste = parseInt(bindery_waste.text);
 	    		}
+	    		setOverrideForField(bindery_waste, job.binderyWasteOverride);
+	    	}
+	    	
+	    	private function editTotalPrice(evt:Event):void {
+	    		if (job_price.text == "") {
+	    			job.pricingRecord.totalPriceOverride = false;
+	    			job.pricingRecord.totalPrice = 0;
+	    		} else {
+	    			job.pricingRecord.totalPriceOverride = true;
+	    			job.pricingRecord.totalPrice = parseFloat(job_price.text);
+	    		}
+	    		setOverrideForField(job_price,job.pricingRecord.totalPriceOverride);
+	    	}
+	    	
+	    	private function editMarkup(evt:Event):void {
+	    		if (job_markup.text == "") {
+	    			job.markup = 0;
+	    			setOverrideForField(job_markup,false);
+	    		} else {
+	    			job.markup = parseFloat(job_markup.text);
+	    			setOverrideForField(job_markup,true);
+	    		}
+	    	}
+	    	
+	    	private function editTotalCost(evt:Event):void {
+	    		if (this.job_totalCost.text == "") {
+	    			job.orStockCost = false;
+	    			job.totalCost = 0;
+	    			job.pricingRecord.stockCost = 0;
+	    		} else {
+	    			job.orStockCost = true;
+	    			job.totalCost = parseFloat(job_totalCost.text);
+	    			job.pricingRecord.stockCost = parseFloat(job_totalCost.text);
+	    		}
+	    		setOverrideForField(job_totalCost,job.orStockCost);
 	    	}
 	    	
 	    	private function editEstWaste(evt:Event):void {
@@ -3759,7 +3853,7 @@
 										  mouseDown="textInputClick(event)" 
 										  textAlign="right" 
 										  tabEnabled="false"
-										  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice)}"/>
+										  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice)}" change="editTotalPrice(event)"/>
 							<mx:Label x="385"
 									  y="304"
 									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label7"/>
