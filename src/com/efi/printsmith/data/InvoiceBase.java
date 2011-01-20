@@ -721,7 +721,7 @@ public class InvoiceBase extends ModelBase {
 	 */	
     @OneToMany(  cascade = {CascadeType.ALL}, mappedBy="parentInvoice")
     @Where(clause="isdeleted <> 'TRUE'")
-    @OrderBy("jobNumber ASC")
+    @OrderBy("jobIndex,jobNumber ASC")
     @JoinTable( name = "invoicebase_jobs")
 	private java.util.List<JobBase> jobs;
 	
