@@ -401,8 +401,12 @@
 			var address:Address = new Address();
 			address.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd._BrokerName_');
 			newBroker.address = address;
-			newBrokerFlag = true;
-			dataServiceBroker.addUpdate(newBroker);
+			broker = newBroker;
+			ship_to_address_editor.setAddress(broker.address);
+			ship_to_address_editor.doEditAddress();
+			ship_to_contact_editor.setContact(copyBrokerToContact(broker));
+			/* newBrokerFlag = true;
+			dataServiceBroker.addUpdate(newBroker); */
 		}
 		
 		private function brokerItemClickHandler(event:Event):void {
@@ -441,6 +445,27 @@
 		
 		private function saveContactToBrokerHandler(event:SaveContactEvent):void {
 			if(broker!=null){
+				if(isNaN(broker.id) || broker.id==0) {
+					for each(var brokerObj:Broker in brokersList) {
+						if(broker.address!=null && brokerObj.address!=null && broker.address.name==brokerObj.address.name) {
+							ship_to_address_editor.setAddress(broker.address);
+							ship_to_address_editor.doEditAddress();
+							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'Broker.AlreadyExists'));
+							return;
+						}
+					}
+				} else {
+					for each(var brokerObj:Broker in brokersList) {
+						for each(var brokerObj:Broker in brokersList) {
+							if(broker.id!=brokerObj.id && broker.address!=null && brokerObj.address!=null && broker.address.name==brokerObj.address.name) {
+								ship_to_address_editor.setAddress(broker.address);
+								ship_to_address_editor.doEditAddress();
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'Broker.AlreadyExists'));
+								return;
+							}
+						}
+					}
+				}
 				copyContactToBroker(event.contact,broker);
 				dataServiceBroker.addUpdate(broker);
 			}
@@ -448,6 +473,27 @@
 		
 		private function saveAddressToBrokerHandler(event:SaveAddressEvent):void {
 			if(broker!=null){
+				if(isNaN(broker.id) || broker.id==0) {
+					for each(var brokerObj:Broker in brokersList) {
+						if(event.address!=null && brokerObj.address!=null && event.address.name==brokerObj.address.name) {
+							ship_to_address_editor.setAddress(event.address);
+							ship_to_address_editor.doEditAddress();
+							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'Broker.AlreadyExists'));
+							return;
+						}
+					}
+				} else {
+					for each(var brokerObj:Broker in brokersList) {
+						for each(var brokerObj:Broker in brokersList) {
+							if(broker.id!=brokerObj.id && event.address!=null && brokerObj.address!=null && event.address.name==brokerObj.address.name) {
+								ship_to_address_editor.setAddress(event.address);
+								ship_to_address_editor.doEditAddress();
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'Broker.AlreadyExists'));
+								return;
+							}
+						}
+					}
+				}
 				broker.address = event.address;
 				dataServiceBroker.addUpdate(broker);
 			}
@@ -477,7 +523,12 @@
 				}
 				if(event.account.contact!=null){
 					dataServiceContact.getContactById(event.account.contact.id);
+					return;
 				}
+				broker = newBrokerObj;
+				ship_to_address_editor.setAddress(broker.address);
+				ship_to_address_editor.doEditAddress();
+				ship_to_contact_editor.setContact(copyBrokerToContact(broker));
 			}
 		}
 		
@@ -492,8 +543,12 @@
 						comLink.modified = null;
 					}
 				}
-				newBrokerFlag = true;
-				dataServiceBroker.addUpdate(newBrokerObj);
+				broker = newBrokerObj;
+				ship_to_address_editor.setAddress(newBrokerObj.address);
+				ship_to_address_editor.doEditAddress();
+				ship_to_contact_editor.setContact(copyBrokerToContact(newBrokerObj));
+				/* newBrokerFlag = true;
+				dataServiceBroker.addUpdate(newBrokerObj); */
 			}
 		}
 		
@@ -525,6 +580,7 @@
 			var child:DeliveryTicketLayout = new DeliveryTicketLayout();
 			registerClassAlias("com.efi.printsmith.data.FormPreferences",FormPreferences);
 			child.formPreferences = ObjectUtil.copy(event.result) as FormPreferences;
+			child.formPreferencesList = formPreferencesList;
 			child.addEventListener(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,updateFormPreferencesList,false,0,true);
 			var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
 			if (win == null)	{
@@ -548,6 +604,7 @@
 			if(formPreferencesGrid.selectedIndex>-1 && formPreferencesGrid.selectedItem!=null) {
 				var child:DeliveryTicketLayout = new DeliveryTicketLayout();
 				registerClassAlias("com.efi.printsmith.data.FormPreferences",FormPreferences);
+				child.formPreferencesList = formPreferencesList;
 				child.formPreferences = ObjectUtil.copy(formPreferencesGrid.selectedItem) as FormPreferences;
 				child.addEventListener(FormPreferencesUpdateEvent.FP_UPDATE_EVENT,updateFormPreferencesList,false,0,true);
 				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);

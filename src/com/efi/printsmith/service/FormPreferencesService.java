@@ -97,7 +97,7 @@ public class FormPreferencesService extends SnowmassHibernateService {
 		formPreferences.setFormImageSource("ResourceFile");
 		formPreferences.setLogoImageSource("ResourceFile");
 		formPreferences.setMeasurement("Pixels");
-		formPreferences = (FormPreferences) dataService.addUpdate(formPreferences);
+		//formPreferences = (FormPreferences) dataService.addUpdate(formPreferences);
 		return formPreferences;
 	}
 

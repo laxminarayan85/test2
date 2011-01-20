@@ -29,6 +29,8 @@
 			
 			[Bindable] private var measurementList:ArrayCollection = new ArrayCollection();
 			
+			[Bindable] public var formPreferencesList:ArrayCollection = new ArrayCollection();
+			
 			private var measurementValue:String = "";
 			
 			private function init():void {
@@ -218,6 +220,21 @@
 			
 			private function updateFormPreferences():void {
 				if(formPreferences!=null) {
+					if(isNaN(formPreferences.id) || formPreferences.id==0) {
+						for each(var formPrefObj:FormPreferences in formPreferencesList) {
+							if(formPrefObj.title == formPreferences.title){
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'FormPreference.AlreadyExists'));
+								return;
+							}
+						}
+					} else {
+						for each(var formPrefObj:FormPreferences in formPreferencesList) {
+							if(formPrefObj.id!=formPreferences.id && formPrefObj.title == formPreferences.title){
+								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'FormPreference.AlreadyExists'));
+								return;
+							}
+						}
+					}
 					dataService.addUpdate(formPreferences);
 				}	
 			}

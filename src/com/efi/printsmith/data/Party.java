@@ -200,7 +200,7 @@ public class Party extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
+    @ManyToOne( cascade = {CascadeType.ALL})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private Address address;
 	
