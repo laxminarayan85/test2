@@ -523,15 +523,16 @@
 			
 			private function fillRunToFinishGrainArray(fillArray:ArrayCollection):void
 			{
-				var setting:Object=new Object();
-				setting.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Neither');
-				fillArray.addItem(setting);
-				setting=new Object();
-				setting.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcPickerCmd.MatchGrain');
-				fillArray.addItem(setting);
-				setting=new Object();
-				setting.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.SwingCombination');
-				fillArray.addItem(setting);
+				var menuItem:String = new String();
+				
+				menuItem=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Neither');
+				fillArray.addItem(menuItem);
+				menuItem = new String();
+				menuItem=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcPickerCmd.MatchGrain');
+				fillArray.addItem(menuItem);
+				menuItem = new String();
+				menuItem=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.SwingCombination');
+				fillArray.addItem(menuItem);
 			}
 
 			private function doSave():void
