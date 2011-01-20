@@ -1461,6 +1461,9 @@
 			preferencesEstimating.gripLocation = 'Top';
 			preferencesEstimating.folioLocation = 'Top';
 		}
+		if(preferencesEstimating.fontStyle==null || preferencesEstimating.fontStyle=="") {
+			preferencesEstimating.fontStyle = "Default";
+		}
 		registerClassAlias("com.efi.printsmith.data.PreferencesEstimating",PreferencesEstimating);
 		preferencesEstimatingOrigObj = ObjectUtil.copy(preferencesEstimating) as PreferencesEstimating;
 		successCheckCount++;

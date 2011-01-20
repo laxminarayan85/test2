@@ -1,4 +1,3 @@
-
 package com.efi.printsmith.data;
 
 import java.math.BigDecimal;
@@ -27,26 +26,23 @@ import org.hibernate.annotations.Where;
  * @generated
  */
 
- 
 /**
  * @generated
- */	
-@NamedQueries({
-  @NamedQuery(name = "PreferencesEstimating.findall", query = "from PreferencesEstimating"),
-  @NamedQuery(name = "PreferencesEstimating.byId", query = "select a from PreferencesEstimating a where a.id= :id")
-})
-
-
-
-/**
+ */
+@NamedQueries( {
+		@NamedQuery(name = "PreferencesEstimating.findall", query = "from PreferencesEstimating"),
+		@NamedQuery(name = "PreferencesEstimating.byId", query = "select a from PreferencesEstimating a where a.id= :id") })
+/*
  * @generated
- */	
+ */
 @Entity
 @Table(name = "preferencesestimating")
-//@SQLDelete(sql="update modelbase set isdeleted='TRUE' from preferencesestimating where modelbase.id=?")
-@SQLDelete(sql="update preferencesestimating set isdeleted='TRUE' where id=?")
-//Filter added to retrieve only records that have not been soft deleted.
-@Where(clause="isdeleted <> 'TRUE'")
+// @SQLDelete(sql=
+// "update modelbase set isdeleted='TRUE' from preferencesestimating where modelbase.id=?"
+// )
+@SQLDelete(sql = "update preferencesestimating set isdeleted='TRUE' where id=?")
+// Filter added to retrieve only records that have not been soft deleted.
+@Where(clause = "isdeleted <> 'TRUE'")
 public class PreferencesEstimating extends ModelBase {
 	/**
 	 * @generated
@@ -229,9 +225,9 @@ public class PreferencesEstimating extends ModelBase {
 	 */
 	public static final String BACKTRIMPARENT = "BackTrimParent";
 	/**
-   * @generated
-   */
-  public static final String BACKTRIMRUN = "BackTrimRun";
+	 * @generated
+	 */
+	public static final String BACKTRIMRUN = "BackTrimRun";
 	/**
 	 * @generated
 	 */
@@ -286,1923 +282,1970 @@ public class PreferencesEstimating extends ModelBase {
 	public static final String BARCODEFONT = "BarCodeFont";
 
 	/**
-   * @generated
-   */
-  public static final String DEFAULTHISTORYVIEW = "DefaultHistoryView";
+	 * @generated
+	 */
+	public static final String DEFAULTHISTORYVIEW = "DefaultHistoryView";
 
 	/**
+	 * 
+	 * @generated
+	 */
 
-   * @generated
-
-   */
-
-  public static final String TWOSTAGECLEARSEARCH = "TwoStageClearSearch";
+	public static final String TWOSTAGECLEARSEARCH = "TwoStageClearSearch";
 
 	/**
 	 * @generated
 	 */
 	public PreferencesEstimating() {
-    this.created = new Date();
-    this.modified = new Date();
-    this.isDeleted = false;
-  }
+		this.created = new Date();
+		this.modified = new Date();
+		this.isDeleted = false;
+	}
 
 	@Basic
 	private Boolean isDeleted = false;
-	
+
 	public Boolean getIsDeleted() {
 		return isDeleted;
 	}
-	
+
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
- 	
-	
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private String folioLocation;
-	
-	/**
-	 * @generated
- 	 */
-	public String getFolioLocation(){
-    return folioLocation; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public String getFolioLocation() {
+		return folioLocation;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setFolioLocation(String newVal) {
-    this.folioLocation = newVal;
-  }
-	
- 	
-	
+		this.folioLocation = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private String gripLocation;
-	
-	/**
-	 * @generated
- 	 */
-	public String getGripLocation(){
-    return gripLocation; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public String getGripLocation() {
+		return gripLocation;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setGripLocation(String newVal) {
-    this.gripLocation = newVal;
-  }
-	
- 	
-	
+		this.gripLocation = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean closeAfterCopy;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getCloseAfterCopy(){
-    return closeAfterCopy; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getCloseAfterCopy() {
+		return closeAfterCopy;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setCloseAfterCopy(Boolean newVal) {
-    this.closeAfterCopy = newVal;
-  }
-	
- 	
-	
+		this.closeAfterCopy = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean stockCostInEstimator;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getStockCostInEstimator(){
-    return stockCostInEstimator; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getStockCostInEstimator() {
+		return stockCostInEstimator;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setStockCostInEstimator(Boolean newVal) {
-    this.stockCostInEstimator = newVal;
-  }
-	
- 	
-	
+		this.stockCostInEstimator = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean canChangeAddress;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getCanChangeAddress(){
-    return canChangeAddress; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getCanChangeAddress() {
+		return canChangeAddress;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setCanChangeAddress(Boolean newVal) {
-    this.canChangeAddress = newVal;
-  }
-	
- 	
-	
+		this.canChangeAddress = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean showPaperCalculator;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getShowPaperCalculator(){
-    return showPaperCalculator; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getShowPaperCalculator() {
+		return showPaperCalculator;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setShowPaperCalculator(Boolean newVal) {
-    this.showPaperCalculator = newVal;
-  }
-	
- 	
-	
+		this.showPaperCalculator = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean useStockParentSize;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getUseStockParentSize(){
-    return useStockParentSize; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getUseStockParentSize() {
+		return useStockParentSize;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setUseStockParentSize(Boolean newVal) {
-    this.useStockParentSize = newVal;
-  }
-	
- 	
-	
+		this.useStockParentSize = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean calculateReOrderDate;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getCalculateReOrderDate(){
-    return calculateReOrderDate; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getCalculateReOrderDate() {
+		return calculateReOrderDate;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setCalculateReOrderDate(Boolean newVal) {
-    this.calculateReOrderDate = newVal;
-  }
-	
- 	
-	
+		this.calculateReOrderDate = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean validateSalesRep;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getValidateSalesRep(){
-    return validateSalesRep; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getValidateSalesRep() {
+		return validateSalesRep;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setValidateSalesRep(Boolean newVal) {
-    this.validateSalesRep = newVal;
-  }
-	
- 	
-	
+		this.validateSalesRep = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean leaveFoldedSizeEmpty;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getLeaveFoldedSizeEmpty(){
-    return leaveFoldedSizeEmpty; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getLeaveFoldedSizeEmpty() {
+		return leaveFoldedSizeEmpty;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setLeaveFoldedSizeEmpty(Boolean newVal) {
-    this.leaveFoldedSizeEmpty = newVal;
-  }
-	
- 	
-	
+		this.leaveFoldedSizeEmpty = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean doNotCostDuringPost;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getDoNotCostDuringPost(){
-    return doNotCostDuringPost; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getDoNotCostDuringPost() {
+		return doNotCostDuringPost;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setDoNotCostDuringPost(Boolean newVal) {
-    this.doNotCostDuringPost = newVal;
-  }
-	
- 	
-	
+		this.doNotCostDuringPost = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean autoShowCharges;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getAutoShowCharges(){
-    return autoShowCharges; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getAutoShowCharges() {
+		return autoShowCharges;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setAutoShowCharges(Boolean newVal) {
-    this.autoShowCharges = newVal;
-  }
-	
- 	
-	
+		this.autoShowCharges = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean neverUsePresetPressOnStockChanges;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getNeverUsePresetPressOnStockChanges(){
-    return neverUsePresetPressOnStockChanges; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getNeverUsePresetPressOnStockChanges() {
+		return neverUsePresetPressOnStockChanges;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setNeverUsePresetPressOnStockChanges(Boolean newVal) {
-    this.neverUsePresetPressOnStockChanges = newVal;
-  }
-	
- 	
-	
+		this.neverUsePresetPressOnStockChanges = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean addFixedWasteForEachPass;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getAddFixedWasteForEachPass(){
-    return addFixedWasteForEachPass; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getAddFixedWasteForEachPass() {
+		return addFixedWasteForEachPass;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setAddFixedWasteForEachPass(Boolean newVal) {
-    this.addFixedWasteForEachPass = newVal;
-  }
-	
- 	
-	
+		this.addFixedWasteForEachPass = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean addFixedWasteForEachColor;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getAddFixedWasteForEachColor(){
-    return addFixedWasteForEachColor; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getAddFixedWasteForEachColor() {
+		return addFixedWasteForEachColor;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setAddFixedWasteForEachColor(Boolean newVal) {
-    this.addFixedWasteForEachColor = newVal;
-  }
-	
- 	
-	
+		this.addFixedWasteForEachColor = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean calculateInkbyImpressions;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getCalculateInkbyImpressions(){
-    return calculateInkbyImpressions; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getCalculateInkbyImpressions() {
+		return calculateInkbyImpressions;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setCalculateInkbyImpressions(Boolean newVal) {
-    this.calculateInkbyImpressions = newVal;
-  }
-	
- 	
-	
+		this.calculateInkbyImpressions = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean useHistoryTitleforNewTitle;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getUseHistoryTitleforNewTitle(){
-    return useHistoryTitleforNewTitle; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getUseHistoryTitleforNewTitle() {
+		return useHistoryTitleforNewTitle;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setUseHistoryTitleforNewTitle(Boolean newVal) {
-    this.useHistoryTitleforNewTitle = newVal;
-  }
-	
- 	
-	
+		this.useHistoryTitleforNewTitle = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Integer normalDueDateDays;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getNormalDueDateDays(){
-    return normalDueDateDays; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Integer getNormalDueDateDays() {
+		return normalDueDateDays;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setNormalDueDateDays(Integer newVal) {
-    this.normalDueDateDays = newVal;
-  }
-	
- 	
-	
+		this.normalDueDateDays = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean closeInvoiceAfterPrintingTicket;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getCloseInvoiceAfterPrintingTicket(){
-    return closeInvoiceAfterPrintingTicket; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getCloseInvoiceAfterPrintingTicket() {
+		return closeInvoiceAfterPrintingTicket;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setCloseInvoiceAfterPrintingTicket(Boolean newVal) {
-    this.closeInvoiceAfterPrintingTicket = newVal;
-  }
-	
- 	
-	
+		this.closeInvoiceAfterPrintingTicket = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean closeInvoicesAndEstimateAfterPrinting;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getCloseInvoicesAndEstimateAfterPrinting(){
-    return closeInvoicesAndEstimateAfterPrinting; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getCloseInvoicesAndEstimateAfterPrinting() {
+		return closeInvoicesAndEstimateAfterPrinting;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setCloseInvoicesAndEstimateAfterPrinting(Boolean newVal) {
-    this.closeInvoicesAndEstimateAfterPrinting = newVal;
-  }
-	
- 	
-	
+		this.closeInvoicesAndEstimateAfterPrinting = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Integer defaultInvoice;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getDefaultInvoice(){
-    return defaultInvoice; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Integer getDefaultInvoice() {
+		return defaultInvoice;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setDefaultInvoice(Integer newVal) {
-    this.defaultInvoice = newVal;
-  }
-	
- 	
-	
+		this.defaultInvoice = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Integer defaultEstimate;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getDefaultEstimate(){
-    return defaultEstimate; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Integer getDefaultEstimate() {
+		return defaultEstimate;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setDefaultEstimate(Integer newVal) {
-    this.defaultEstimate = newVal;
-  }
-	
- 	
-	
+		this.defaultEstimate = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Integer numberOfDaysBeforeDue;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getNumberOfDaysBeforeDue(){
-    return numberOfDaysBeforeDue; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Integer getNumberOfDaysBeforeDue() {
+		return numberOfDaysBeforeDue;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setNumberOfDaysBeforeDue(Integer newVal) {
-    this.numberOfDaysBeforeDue = newVal;
-  }
-	
- 	
-	
+		this.numberOfDaysBeforeDue = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Integer dueFrom;
-	
-	/**
-	 * @generated
- 	 */
-	public Integer getDueFrom(){
-    return dueFrom; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Integer getDueFrom() {
+		return dueFrom;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setDueFrom(Integer newVal) {
-    this.dueFrom = newVal;
-  }
-	
- 	
-	
+		this.dueFrom = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean useGripEdgeGap;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getUseGripEdgeGap(){
-    return useGripEdgeGap; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getUseGripEdgeGap() {
+		return useGripEdgeGap;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setUseGripEdgeGap(Boolean newVal) {
-    this.useGripEdgeGap = newVal;
-  }
-	
- 	
-	
+		this.useGripEdgeGap = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double gripEdgeGap;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getGripEdgeGap(){
-    return gripEdgeGap; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getGripEdgeGap() {
+		return gripEdgeGap;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setGripEdgeGap(Double newVal) {
-    this.gripEdgeGap = newVal;
-  }
-	
- 	
-	
+		this.gripEdgeGap = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean useFolioEdge;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getUseFolioEdge(){
-    return useFolioEdge; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getUseFolioEdge() {
+		return useFolioEdge;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setUseFolioEdge(Boolean newVal) {
-    this.useFolioEdge = newVal;
-  }
-	
- 	
-	
+		this.useFolioEdge = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double folioEdge;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getFolioEdge(){
-    return folioEdge; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getFolioEdge() {
+		return folioEdge;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setFolioEdge(Double newVal) {
-    this.folioEdge = newVal;
-  }
-	
- 	
-	
+		this.folioEdge = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean useColorBar;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getUseColorBar(){
-    return useColorBar; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getUseColorBar() {
+		return useColorBar;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setUseColorBar(Boolean newVal) {
-    this.useColorBar = newVal;
-  }
-	
- 	
-	
+		this.useColorBar = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double colorBar;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getColorBar(){
-    return colorBar; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getColorBar() {
+		return colorBar;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setColorBar(Double newVal) {
-    this.colorBar = newVal;
-  }
-	
- 	
-	
+		this.colorBar = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean useWhiteSpace;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getUseWhiteSpace(){
-    return useWhiteSpace; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getUseWhiteSpace() {
+		return useWhiteSpace;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setUseWhiteSpace(Boolean newVal) {
-    this.useWhiteSpace = newVal;
-  }
-	
- 	
-	
+		this.useWhiteSpace = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double whiteSpace;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getWhiteSpace(){
-    return whiteSpace; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getWhiteSpace() {
+		return whiteSpace;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setWhiteSpace(Double newVal) {
-    this.whiteSpace = newVal;
-  }
-	
- 	
-	
+		this.whiteSpace = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double whiteSpaceTop;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getWhiteSpaceTop(){
-    return whiteSpaceTop; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getWhiteSpaceTop() {
+		return whiteSpaceTop;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setWhiteSpaceTop(Double newVal) {
-    this.whiteSpaceTop = newVal;
-  }
-	
- 	
-	
+		this.whiteSpaceTop = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double whiteSpaceRight;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getWhiteSpaceRight(){
-    return whiteSpaceRight; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getWhiteSpaceRight() {
+		return whiteSpaceRight;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setWhiteSpaceRight(Double newVal) {
-    this.whiteSpaceRight = newVal;
-  }
-	
- 	
-	
+		this.whiteSpaceRight = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double whiteSpaceBottom;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getWhiteSpaceBottom(){
-    return whiteSpaceBottom; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getWhiteSpaceBottom() {
+		return whiteSpaceBottom;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setWhiteSpaceBottom(Double newVal) {
-    this.whiteSpaceBottom = newVal;
-  }
-	
- 	
-	
+		this.whiteSpaceBottom = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean useGutter;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getUseGutter(){
-    return useGutter; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getUseGutter() {
+		return useGutter;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setUseGutter(Boolean newVal) {
-    this.useGutter = newVal;
-  }
-	
- 	
-	
+		this.useGutter = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double gutter;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getGutter(){
-    return gutter; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getGutter() {
+		return gutter;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setGutter(Double newVal) {
-    this.gutter = newVal;
-  }
-	
- 	
-	
+		this.gutter = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double gutterHorizontal;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getGutterHorizontal(){
-    return gutterHorizontal; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getGutterHorizontal() {
+		return gutterHorizontal;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setGutterHorizontal(Double newVal) {
-    this.gutterHorizontal = newVal;
-  }
-	
- 	
-	
+		this.gutterHorizontal = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean useBleed;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getUseBleed(){
-    return useBleed; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getUseBleed() {
+		return useBleed;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setUseBleed(Boolean newVal) {
-    this.useBleed = newVal;
-  }
-	
- 	
-	
+		this.useBleed = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double bleed;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getBleed(){
-    return bleed; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getBleed() {
+		return bleed;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setBleed(Double newVal) {
-    this.bleed = newVal;
-  }
-	
- 	
-	
+		this.bleed = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double bleedTop;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getBleedTop(){
-    return bleedTop; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getBleedTop() {
+		return bleedTop;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setBleedTop(Double newVal) {
-    this.bleedTop = newVal;
-  }
-	
- 	
-	
+		this.bleedTop = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double bleedRight;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getBleedRight(){
-    return bleedRight; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getBleedRight() {
+		return bleedRight;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setBleedRight(Double newVal) {
-    this.bleedRight = newVal;
-  }
-	
- 	
-	
+		this.bleedRight = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Double bleedBottom;
-	
-	/**
-	 * @generated
- 	 */
-	public Double getBleedBottom(){
-    return bleedBottom; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Double getBleedBottom() {
+		return bleedBottom;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setBleedBottom(Double newVal) {
-    this.bleedBottom = newVal;
-  }
-	
- 	
-	
+		this.bleedBottom = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
-	@Column(name="defaultPressCuttOff", precision=19, scale=4)
+	 */
+	@Basic
+	@Column(name = "defaultPressCuttOff", precision = 19, scale = 4)
 	private BigDecimal defaultPressCuttOff;
-	
-	/**
-	 * @generated
- 	 */
-	public BigDecimal getDefaultPressCuttOff(){
-    return defaultPressCuttOff; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public BigDecimal getDefaultPressCuttOff() {
+		return defaultPressCuttOff;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setDefaultPressCuttOff(BigDecimal newVal) {
-    this.defaultPressCuttOff = newVal;
-    this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
-  }
-	
+		this.defaultPressCuttOff = newVal;
+		this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
+	}
+
 	/**
 	 * @generated
-	 */	
+	 */
 	public void setDefaultPressCuttOff(double newVal) {
-    this.defaultPressCuttOff = BigDecimal.valueOf(newVal);
-    this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
-  }
- 	
-	
+		this.defaultPressCuttOff = BigDecimal.valueOf(newVal);
+		this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean backTrimParent;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getBackTrimParent(){
-    return backTrimParent; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getBackTrimParent() {
+		return backTrimParent;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setBackTrimParent(Boolean newVal) {
-    this.backTrimParent = newVal;
-  }
-	
- 	
-	
-	/**
-   * @generated
-   */	
- 	@Basic
-  private Boolean backTrimRun;
-
-	/**
-   * @generated
- 	 */
-  public Boolean getBackTrimRun(){
-    return backTrimRun; 
-  }
-
-	/**
-   * @generated
-   */	
-  public void setBackTrimRun(Boolean newVal) {
-    this.backTrimRun = newVal;
-  }
+		this.backTrimParent = newVal;
+	}
 
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
+	private Boolean backTrimRun;
+
+	/**
+	 * @generated
+	 */
+	public Boolean getBackTrimRun() {
+		return backTrimRun;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setBackTrimRun(Boolean newVal) {
+		this.backTrimRun = newVal;
+	}
+
+	/**
+	 * @generated
+	 */
+	@Basic
 	private Boolean workandTumble;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getWorkandTumble(){
-    return workandTumble; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getWorkandTumble() {
+		return workandTumble;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setWorkandTumble(Boolean newVal) {
-    this.workandTumble = newVal;
-  }
-	
- 	
-	
+		this.workandTumble = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private String runToFinishGrain;
-	
-	/**
-	 * @generated
- 	 */
-	public String getRunToFinishGrain(){
-    return runToFinishGrain; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public String getRunToFinishGrain() {
+		return runToFinishGrain;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setRunToFinishGrain(String newVal) {
-    this.runToFinishGrain = newVal;
-  }
-	
- 	
-	
+		this.runToFinishGrain = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean printParentToFinishSection;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getPrintParentToFinishSection(){
-    return printParentToFinishSection; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getPrintParentToFinishSection() {
+		return printParentToFinishSection;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setPrintParentToFinishSection(Boolean newVal) {
-    this.printParentToFinishSection = newVal;
-  }
-	
- 	
-	
+		this.printParentToFinishSection = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean printParentToRunSection;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getPrintParentToRunSection(){
-    return printParentToRunSection; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getPrintParentToRunSection() {
+		return printParentToRunSection;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setPrintParentToRunSection(Boolean newVal) {
-    this.printParentToRunSection = newVal;
-  }
-	
- 	
-	
+		this.printParentToRunSection = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean printRunToFinishSection;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getPrintRunToFinishSection(){
-    return printRunToFinishSection; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getPrintRunToFinishSection() {
+		return printRunToFinishSection;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setPrintRunToFinishSection(Boolean newVal) {
-    this.printRunToFinishSection = newVal;
-  }
-	
- 	
-	
+		this.printRunToFinishSection = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean attachToJobTicket;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getAttachToJobTicket(){
-    return attachToJobTicket; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getAttachToJobTicket() {
+		return attachToJobTicket;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setAttachToJobTicket(Boolean newVal) {
-    this.attachToJobTicket = newVal;
-  }
-	
- 	
-	
+		this.attachToJobTicket = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private String jobTicketFormat;
-	
-	/**
-	 * @generated
- 	 */
-	public String getJobTicketFormat(){
-    return jobTicketFormat; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public String getJobTicketFormat() {
+		return jobTicketFormat;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setJobTicketFormat(String newVal) {
-    this.jobTicketFormat = newVal;
-  }
-	
- 	
-	
+		this.jobTicketFormat = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private String customJobTicket;
-	
-	/**
-	 * @generated
- 	 */
-	public String getCustomJobTicket(){
-    return customJobTicket; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public String getCustomJobTicket() {
+		return customJobTicket;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setCustomJobTicket(String newVal) {
-    this.customJobTicket = newVal;
-  }
-	
- 	
-	
+		this.customJobTicket = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private String chargeDescription;
-	
-	/**
-	 * @generated
- 	 */
-	public String getChargeDescription(){
-    return chargeDescription; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public String getChargeDescription() {
+		return chargeDescription;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setChargeDescription(String newVal) {
-    this.chargeDescription = newVal;
-  }
-	
- 	
-	
+		this.chargeDescription = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean showAmountsOnTicket;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getShowAmountsOnTicket(){
-    return showAmountsOnTicket; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getShowAmountsOnTicket() {
+		return showAmountsOnTicket;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setShowAmountsOnTicket(Boolean newVal) {
-    this.showAmountsOnTicket = newVal;
-  }
-	
- 	
-	
+		this.showAmountsOnTicket = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean addBarCodes;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getAddBarCodes(){
-    return addBarCodes; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getAddBarCodes() {
+		return addBarCodes;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setAddBarCodes(Boolean newVal) {
-    this.addBarCodes = newVal;
-  }
-	
- 	
-	
+		this.addBarCodes = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
- 	@Basic
+	 */
+	@Basic
 	private Boolean showRefNumber;
-	
-	/**
-	 * @generated
- 	 */
-	public Boolean getShowRefNumber(){
-    return showRefNumber; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public Boolean getShowRefNumber() {
+		return showRefNumber;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setShowRefNumber(Boolean newVal) {
-    this.showRefNumber = newVal;
-  }
-	
- 	
-	
+		this.showRefNumber = newVal;
+	}
+
 	/**
 	 * @generated
-	 */	
-    @ManyToOne( cascade = {CascadeType.ALL})
-    @Where(clause="isdeleted <> 'TRUE'")
+	 */
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@Where(clause = "isdeleted <> 'TRUE'")
 	private FontDefinition barCodeFont;
-	
-	/**
-	 * @generated
- 	 */
-	public FontDefinition getBarCodeFont(){
-    return barCodeFont; 
-  }
 
-	
 	/**
 	 * @generated
-	 */	
+	 */
+	public FontDefinition getBarCodeFont() {
+		return barCodeFont;
+	}
+
+	/**
+	 * @generated
+	 */
 	public void setBarCodeFont(FontDefinition newVal) {
-    this.barCodeFont = newVal;
-  }
-	
-	/**
-   * @generated
-   */	
- 	@Basic
-  private Boolean defaultHistoryView;
-
-	/**
-   * @generated
- 	 */
-  public Boolean getDefaultHistoryView(){
-    return defaultHistoryView; 
-  }
-
-	/**
-   * @generated
-   */	
-  public void setDefaultHistoryView(Boolean newVal) {
-    this.defaultHistoryView = newVal;
-  }
-
-	/**
-
-   * @generated
-
-   */	
-
- 	@Basic
-
-  private Boolean twoStageClearSearch;
-
-	/**
-
-   * @generated
-
- 	 */
-
-  public Boolean getTwoStageClearSearch(){
-    return twoStageClearSearch; 
-  }
-
-	/**
-
-   * @generated
-
-   */	
-
-  public void setTwoStageClearSearch(Boolean newVal) {
-    this.twoStageClearSearch = newVal;
-  }
+		this.barCodeFont = newVal;
+	}
 
 	/**
 	 * @generated
-	 */		
+	 */
+	@Basic
+	private Boolean defaultHistoryView;
+
+	/**
+	 * @generated
+	 */
+	public Boolean getDefaultHistoryView() {
+		return defaultHistoryView;
+	}
+
+	/**
+	 * @generated
+	 */
+	public void setDefaultHistoryView(Boolean newVal) {
+		this.defaultHistoryView = newVal;
+	}
+
+	/**
+	 * 
+	 * @generated
+	 */
+
+	@Basic
+	private Boolean twoStageClearSearch;
+
+	/**
+	 * 
+	 * @generated
+	 */
+
+	public Boolean getTwoStageClearSearch() {
+		return twoStageClearSearch;
+	}
+
+	/**
+	 * 
+	 * @generated
+	 */
+
+	public void setTwoStageClearSearch(Boolean newVal) {
+		this.twoStageClearSearch = newVal;
+	}
+
+	@Basic
+	private String fontStyle;
+
+	/**
+	 * @return the fontStyle
+	 */
+	public String getFontStyle() {
+		return fontStyle;
+	}
+
+	/**
+	 * @param fontStyle
+	 *            the fontStyle to set
+	 */
+	public void setFontStyle(String fontStyle) {
+		this.fontStyle = fontStyle;
+	}
+
+	/**
+	 * @generated
+	 */
 	@Transient
 	@Override
-	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (FOLIOLOCATION.equals(propertyName)) return getFolioLocation();
-    if (GRIPLOCATION.equals(propertyName)) return getGripLocation();
-    if (CLOSEAFTERCOPY.equals(propertyName)) return getCloseAfterCopy();
-    if (STOCKCOSTINESTIMATOR.equals(propertyName)) return getStockCostInEstimator();
-    if (CANCHANGEADDRESS.equals(propertyName)) return getCanChangeAddress();
-    if (SHOWPAPERCALCULATOR.equals(propertyName)) return getShowPaperCalculator();
-    if (USESTOCKPARENTSIZE.equals(propertyName)) return getUseStockParentSize();
-    if (CALCULATEREORDERDATE.equals(propertyName)) return getCalculateReOrderDate();
-    if (VALIDATESALESREP.equals(propertyName)) return getValidateSalesRep();
-    if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName)) return getLeaveFoldedSizeEmpty();
-    if (DONOTCOSTDURINGPOST.equals(propertyName)) return getDoNotCostDuringPost();
-    if (AUTOSHOWCHARGES.equals(propertyName)) return getAutoShowCharges();
-    if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName)) return getNeverUsePresetPressOnStockChanges();
-    if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName)) return getAddFixedWasteForEachPass();
-    if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName)) return getAddFixedWasteForEachColor();
-    if (CALCULATEINKBYIMPRESSIONS.equals(propertyName)) return getCalculateInkbyImpressions();
-    if (USEHISTORYTITLEFORNEWTITLE.equals(propertyName)) return getUseHistoryTitleforNewTitle();
-    if (NORMALDUEDATEDAYS.equals(propertyName)) return getNormalDueDateDays();
-    if (CLOSEINVOICEAFTERPRINTINGTICKET.equals(propertyName)) return getCloseInvoiceAfterPrintingTicket();
-    if (CLOSEINVOICESANDESTIMATEAFTERPRINTING.equals(propertyName)) return getCloseInvoicesAndEstimateAfterPrinting();
-    if (DEFAULTINVOICE.equals(propertyName)) return getDefaultInvoice();
-    if (DEFAULTESTIMATE.equals(propertyName)) return getDefaultEstimate();
-    if (NUMBEROFDAYSBEFOREDUE.equals(propertyName)) return getNumberOfDaysBeforeDue();
-    if (DUEFROM.equals(propertyName)) return getDueFrom();
-    if (USEGRIPEDGEGAP.equals(propertyName)) return getUseGripEdgeGap();
-    if (GRIPEDGEGAP.equals(propertyName)) return getGripEdgeGap();
-    if (USEFOLIOEDGE.equals(propertyName)) return getUseFolioEdge();
-    if (FOLIOEDGE.equals(propertyName)) return getFolioEdge();
-    if (USECOLORBAR.equals(propertyName)) return getUseColorBar();
-    if (COLORBAR.equals(propertyName)) return getColorBar();
-    if (USEWHITESPACE.equals(propertyName)) return getUseWhiteSpace();
-    if (WHITESPACE.equals(propertyName)) return getWhiteSpace();
-    if (WHITESPACETOP.equals(propertyName)) return getWhiteSpaceTop();
-    if (WHITESPACERIGHT.equals(propertyName)) return getWhiteSpaceRight();
-    if (WHITESPACEBOTTOM.equals(propertyName)) return getWhiteSpaceBottom();
-    if (USEGUTTER.equals(propertyName)) return getUseGutter();
-    if (GUTTER.equals(propertyName)) return getGutter();
-    if (GUTTERHORIZONTAL.equals(propertyName)) return getGutterHorizontal();
-    if (USEBLEED.equals(propertyName)) return getUseBleed();
-    if (BLEED.equals(propertyName)) return getBleed();
-    if (BLEEDTOP.equals(propertyName)) return getBleedTop();
-    if (BLEEDRIGHT.equals(propertyName)) return getBleedRight();
-    if (BLEEDBOTTOM.equals(propertyName)) return getBleedBottom();
-    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) return getDefaultPressCuttOff();
-    if (BACKTRIMPARENT.equals(propertyName)) return getBackTrimParent();
-    if (BACKTRIMRUN.equals(propertyName)) return getBackTrimRun();
-    if (WORKANDTUMBLE.equals(propertyName)) return getWorkandTumble();
-    if (RUNTOFINISHGRAIN.equals(propertyName)) return getRunToFinishGrain();
-    if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) return getPrintParentToFinishSection();
-    if (PRINTPARENTTORUNSECTION.equals(propertyName)) return getPrintParentToRunSection();
-    if (PRINTRUNTOFINISHSECTION.equals(propertyName)) return getPrintRunToFinishSection();
-    if (ATTACHTOJOBTICKET.equals(propertyName)) return getAttachToJobTicket();
-    if (JOBTICKETFORMAT.equals(propertyName)) return getJobTicketFormat();
-    if (CUSTOMJOBTICKET.equals(propertyName)) return getCustomJobTicket();
-    if (CHARGEDESCRIPTION.equals(propertyName)) return getChargeDescription();
-    if (SHOWAMOUNTSONTICKET.equals(propertyName)) return getShowAmountsOnTicket();
-    if (ADDBARCODES.equals(propertyName)) return getAddBarCodes();
-    if (SHOWREFNUMBER.equals(propertyName)) return getShowRefNumber();
-    if (BARCODEFONT.equals(propertyName)) return getBarCodeFont();
-    if (DEFAULTHISTORYVIEW.equals(propertyName)) return getDefaultHistoryView();
-    if (TWOSTAGECLEARSEARCH.equals(propertyName)) return getTwoStageClearSearch();
-    return super.getProperty(propertyName);
-  }
-	
+	public Object getProperty(String propertyName)
+			throws UnknownPropertyException {
+		if (FOLIOLOCATION.equals(propertyName))
+			return getFolioLocation();
+		if (GRIPLOCATION.equals(propertyName))
+			return getGripLocation();
+		if (CLOSEAFTERCOPY.equals(propertyName))
+			return getCloseAfterCopy();
+		if (STOCKCOSTINESTIMATOR.equals(propertyName))
+			return getStockCostInEstimator();
+		if (CANCHANGEADDRESS.equals(propertyName))
+			return getCanChangeAddress();
+		if (SHOWPAPERCALCULATOR.equals(propertyName))
+			return getShowPaperCalculator();
+		if (USESTOCKPARENTSIZE.equals(propertyName))
+			return getUseStockParentSize();
+		if (CALCULATEREORDERDATE.equals(propertyName))
+			return getCalculateReOrderDate();
+		if (VALIDATESALESREP.equals(propertyName))
+			return getValidateSalesRep();
+		if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName))
+			return getLeaveFoldedSizeEmpty();
+		if (DONOTCOSTDURINGPOST.equals(propertyName))
+			return getDoNotCostDuringPost();
+		if (AUTOSHOWCHARGES.equals(propertyName))
+			return getAutoShowCharges();
+		if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName))
+			return getNeverUsePresetPressOnStockChanges();
+		if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName))
+			return getAddFixedWasteForEachPass();
+		if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName))
+			return getAddFixedWasteForEachColor();
+		if (CALCULATEINKBYIMPRESSIONS.equals(propertyName))
+			return getCalculateInkbyImpressions();
+		if (USEHISTORYTITLEFORNEWTITLE.equals(propertyName))
+			return getUseHistoryTitleforNewTitle();
+		if (NORMALDUEDATEDAYS.equals(propertyName))
+			return getNormalDueDateDays();
+		if (CLOSEINVOICEAFTERPRINTINGTICKET.equals(propertyName))
+			return getCloseInvoiceAfterPrintingTicket();
+		if (CLOSEINVOICESANDESTIMATEAFTERPRINTING.equals(propertyName))
+			return getCloseInvoicesAndEstimateAfterPrinting();
+		if (DEFAULTINVOICE.equals(propertyName))
+			return getDefaultInvoice();
+		if (DEFAULTESTIMATE.equals(propertyName))
+			return getDefaultEstimate();
+		if (NUMBEROFDAYSBEFOREDUE.equals(propertyName))
+			return getNumberOfDaysBeforeDue();
+		if (DUEFROM.equals(propertyName))
+			return getDueFrom();
+		if (USEGRIPEDGEGAP.equals(propertyName))
+			return getUseGripEdgeGap();
+		if (GRIPEDGEGAP.equals(propertyName))
+			return getGripEdgeGap();
+		if (USEFOLIOEDGE.equals(propertyName))
+			return getUseFolioEdge();
+		if (FOLIOEDGE.equals(propertyName))
+			return getFolioEdge();
+		if (USECOLORBAR.equals(propertyName))
+			return getUseColorBar();
+		if (COLORBAR.equals(propertyName))
+			return getColorBar();
+		if (USEWHITESPACE.equals(propertyName))
+			return getUseWhiteSpace();
+		if (WHITESPACE.equals(propertyName))
+			return getWhiteSpace();
+		if (WHITESPACETOP.equals(propertyName))
+			return getWhiteSpaceTop();
+		if (WHITESPACERIGHT.equals(propertyName))
+			return getWhiteSpaceRight();
+		if (WHITESPACEBOTTOM.equals(propertyName))
+			return getWhiteSpaceBottom();
+		if (USEGUTTER.equals(propertyName))
+			return getUseGutter();
+		if (GUTTER.equals(propertyName))
+			return getGutter();
+		if (GUTTERHORIZONTAL.equals(propertyName))
+			return getGutterHorizontal();
+		if (USEBLEED.equals(propertyName))
+			return getUseBleed();
+		if (BLEED.equals(propertyName))
+			return getBleed();
+		if (BLEEDTOP.equals(propertyName))
+			return getBleedTop();
+		if (BLEEDRIGHT.equals(propertyName))
+			return getBleedRight();
+		if (BLEEDBOTTOM.equals(propertyName))
+			return getBleedBottom();
+		if (DEFAULTPRESSCUTTOFF.equals(propertyName))
+			return getDefaultPressCuttOff();
+		if (BACKTRIMPARENT.equals(propertyName))
+			return getBackTrimParent();
+		if (BACKTRIMRUN.equals(propertyName))
+			return getBackTrimRun();
+		if (WORKANDTUMBLE.equals(propertyName))
+			return getWorkandTumble();
+		if (RUNTOFINISHGRAIN.equals(propertyName))
+			return getRunToFinishGrain();
+		if (PRINTPARENTTOFINISHSECTION.equals(propertyName))
+			return getPrintParentToFinishSection();
+		if (PRINTPARENTTORUNSECTION.equals(propertyName))
+			return getPrintParentToRunSection();
+		if (PRINTRUNTOFINISHSECTION.equals(propertyName))
+			return getPrintRunToFinishSection();
+		if (ATTACHTOJOBTICKET.equals(propertyName))
+			return getAttachToJobTicket();
+		if (JOBTICKETFORMAT.equals(propertyName))
+			return getJobTicketFormat();
+		if (CUSTOMJOBTICKET.equals(propertyName))
+			return getCustomJobTicket();
+		if (CHARGEDESCRIPTION.equals(propertyName))
+			return getChargeDescription();
+		if (SHOWAMOUNTSONTICKET.equals(propertyName))
+			return getShowAmountsOnTicket();
+		if (ADDBARCODES.equals(propertyName))
+			return getAddBarCodes();
+		if (SHOWREFNUMBER.equals(propertyName))
+			return getShowRefNumber();
+		if (BARCODEFONT.equals(propertyName))
+			return getBarCodeFont();
+		if (DEFAULTHISTORYVIEW.equals(propertyName))
+			return getDefaultHistoryView();
+		if (TWOSTAGECLEARSEARCH.equals(propertyName))
+			return getTwoStageClearSearch();
+		return super.getProperty(propertyName);
+	}
+
 	/**
 	 * @generated
-	 */		
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (FOLIOLOCATION.equals(propertyName)) setFolioLocation((String)newValue); else
-    if (GRIPLOCATION.equals(propertyName)) setGripLocation((String)newValue); else
-    if (CLOSEAFTERCOPY.equals(propertyName)) setCloseAfterCopy((Boolean)newValue); else
-    if (STOCKCOSTINESTIMATOR.equals(propertyName)) setStockCostInEstimator((Boolean)newValue); else
-    if (CANCHANGEADDRESS.equals(propertyName)) setCanChangeAddress((Boolean)newValue); else
-    if (SHOWPAPERCALCULATOR.equals(propertyName)) setShowPaperCalculator((Boolean)newValue); else
-    if (USESTOCKPARENTSIZE.equals(propertyName)) setUseStockParentSize((Boolean)newValue); else
-    if (CALCULATEREORDERDATE.equals(propertyName)) setCalculateReOrderDate((Boolean)newValue); else
-    if (VALIDATESALESREP.equals(propertyName)) setValidateSalesRep((Boolean)newValue); else
-    if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName)) setLeaveFoldedSizeEmpty((Boolean)newValue); else
-    if (DONOTCOSTDURINGPOST.equals(propertyName)) setDoNotCostDuringPost((Boolean)newValue); else
-    if (AUTOSHOWCHARGES.equals(propertyName)) setAutoShowCharges((Boolean)newValue); else
-    if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName)) setNeverUsePresetPressOnStockChanges((Boolean)newValue); else
-    if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName)) setAddFixedWasteForEachPass((Boolean)newValue); else
-    if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName)) setAddFixedWasteForEachColor((Boolean)newValue); else
-    if (CALCULATEINKBYIMPRESSIONS.equals(propertyName)) setCalculateInkbyImpressions((Boolean)newValue); else
-    if (USEHISTORYTITLEFORNEWTITLE.equals(propertyName)) setUseHistoryTitleforNewTitle((Boolean)newValue); else
-    if (NORMALDUEDATEDAYS.equals(propertyName)) setNormalDueDateDays((Integer)newValue); else
-    if (CLOSEINVOICEAFTERPRINTINGTICKET.equals(propertyName)) setCloseInvoiceAfterPrintingTicket((Boolean)newValue); else
-    if (CLOSEINVOICESANDESTIMATEAFTERPRINTING.equals(propertyName)) setCloseInvoicesAndEstimateAfterPrinting((Boolean)newValue); else
-    if (DEFAULTINVOICE.equals(propertyName)) setDefaultInvoice((Integer)newValue); else
-    if (DEFAULTESTIMATE.equals(propertyName)) setDefaultEstimate((Integer)newValue); else
-    if (NUMBEROFDAYSBEFOREDUE.equals(propertyName)) setNumberOfDaysBeforeDue((Integer)newValue); else
-    if (DUEFROM.equals(propertyName)) setDueFrom((Integer)newValue); else
-    if (USEGRIPEDGEGAP.equals(propertyName)) setUseGripEdgeGap((Boolean)newValue); else
-    if (GRIPEDGEGAP.equals(propertyName)) setGripEdgeGap((Double)newValue); else
-    if (USEFOLIOEDGE.equals(propertyName)) setUseFolioEdge((Boolean)newValue); else
-    if (FOLIOEDGE.equals(propertyName)) setFolioEdge((Double)newValue); else
-    if (USECOLORBAR.equals(propertyName)) setUseColorBar((Boolean)newValue); else
-    if (COLORBAR.equals(propertyName)) setColorBar((Double)newValue); else
-    if (USEWHITESPACE.equals(propertyName)) setUseWhiteSpace((Boolean)newValue); else
-    if (WHITESPACE.equals(propertyName)) setWhiteSpace((Double)newValue); else
-    if (WHITESPACETOP.equals(propertyName)) setWhiteSpaceTop((Double)newValue); else
-    if (WHITESPACERIGHT.equals(propertyName)) setWhiteSpaceRight((Double)newValue); else
-    if (WHITESPACEBOTTOM.equals(propertyName)) setWhiteSpaceBottom((Double)newValue); else
-    if (USEGUTTER.equals(propertyName)) setUseGutter((Boolean)newValue); else
-    if (GUTTER.equals(propertyName)) setGutter((Double)newValue); else
-    if (GUTTERHORIZONTAL.equals(propertyName)) setGutterHorizontal((Double)newValue); else
-    if (USEBLEED.equals(propertyName)) setUseBleed((Boolean)newValue); else
-    if (BLEED.equals(propertyName)) setBleed((Double)newValue); else
-    if (BLEEDTOP.equals(propertyName)) setBleedTop((Double)newValue); else
-    if (BLEEDRIGHT.equals(propertyName)) setBleedRight((Double)newValue); else
-    if (BLEEDBOTTOM.equals(propertyName)) setBleedBottom((Double)newValue); else
-    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) setDefaultPressCuttOff((BigDecimal)newValue); else
-    if (BACKTRIMPARENT.equals(propertyName)) setBackTrimParent((Boolean)newValue); else
-    if (BACKTRIMRUN.equals(propertyName)) setBackTrimRun((Boolean)newValue); else
-    if (WORKANDTUMBLE.equals(propertyName)) setWorkandTumble((Boolean)newValue); else
-    if (RUNTOFINISHGRAIN.equals(propertyName)) setRunToFinishGrain((String)newValue); else
-    if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) setPrintParentToFinishSection((Boolean)newValue); else
-    if (PRINTPARENTTORUNSECTION.equals(propertyName)) setPrintParentToRunSection((Boolean)newValue); else
-    if (PRINTRUNTOFINISHSECTION.equals(propertyName)) setPrintRunToFinishSection((Boolean)newValue); else
-    if (ATTACHTOJOBTICKET.equals(propertyName)) setAttachToJobTicket((Boolean)newValue); else
-    if (JOBTICKETFORMAT.equals(propertyName)) setJobTicketFormat((String)newValue); else
-    if (CUSTOMJOBTICKET.equals(propertyName)) setCustomJobTicket((String)newValue); else
-    if (CHARGEDESCRIPTION.equals(propertyName)) setChargeDescription((String)newValue); else
-    if (SHOWAMOUNTSONTICKET.equals(propertyName)) setShowAmountsOnTicket((Boolean)newValue); else
-    if (ADDBARCODES.equals(propertyName)) setAddBarCodes((Boolean)newValue); else
-    if (SHOWREFNUMBER.equals(propertyName)) setShowRefNumber((Boolean)newValue); else
-    if (BARCODEFONT.equals(propertyName)) setBarCodeFont((FontDefinition)newValue); else
-    if (DEFAULTHISTORYVIEW.equals(propertyName)) setDefaultHistoryView((Boolean)newValue); else
-    if (TWOSTAGECLEARSEARCH.equals(propertyName)) setTwoStageClearSearch((Boolean)newValue); else
-    super.setProperty(propertyName, newValue);
-  }
-	
-	/**
-	 * @generated
-	 */		
-	@Transient
-	@Override
-	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (FOLIOLOCATION.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (GRIPLOCATION.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (CLOSEAFTERCOPY.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (STOCKCOSTINESTIMATOR.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (CANCHANGEADDRESS.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (SHOWPAPERCALCULATOR.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (USESTOCKPARENTSIZE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (CALCULATEREORDERDATE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (VALIDATESALESREP.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (DONOTCOSTDURINGPOST.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (AUTOSHOWCHARGES.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (CALCULATEINKBYIMPRESSIONS.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (USEHISTORYTITLEFORNEWTITLE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (NORMALDUEDATEDAYS.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
-    if (CLOSEINVOICEAFTERPRINTINGTICKET.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (CLOSEINVOICESANDESTIMATEAFTERPRINTING.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (DEFAULTINVOICE.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
-    if (DEFAULTESTIMATE.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
-    if (NUMBEROFDAYSBEFOREDUE.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
-    if (DUEFROM.equals(propertyName)) 
-      return new Class<?>[] {Integer.class};		
-    if (USEGRIPEDGEGAP.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (GRIPEDGEGAP.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (USEFOLIOEDGE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (FOLIOEDGE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (USECOLORBAR.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (COLORBAR.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (USEWHITESPACE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (WHITESPACE.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (WHITESPACETOP.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (WHITESPACERIGHT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (WHITESPACEBOTTOM.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (USEGUTTER.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (GUTTER.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (GUTTERHORIZONTAL.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (USEBLEED.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (BLEED.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (BLEEDTOP.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (BLEEDRIGHT.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (BLEEDBOTTOM.equals(propertyName)) 
-      return new Class<?>[] {Double.class};		
-    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) 
-      return new Class<?>[] {BigDecimal.class};		
-    if (BACKTRIMPARENT.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (BACKTRIMRUN.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (WORKANDTUMBLE.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (RUNTOFINISHGRAIN.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (PRINTPARENTTORUNSECTION.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (PRINTRUNTOFINISHSECTION.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (ATTACHTOJOBTICKET.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (JOBTICKETFORMAT.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (CUSTOMJOBTICKET.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (CHARGEDESCRIPTION.equals(propertyName)) 
-      return new Class<?>[] {String.class};		
-    if (SHOWAMOUNTSONTICKET.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (ADDBARCODES.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (SHOWREFNUMBER.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (BARCODEFONT.equals(propertyName)) 
-      return new Class<?>[] {FontDefinition.class};		
-    if (DEFAULTHISTORYVIEW.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    if (TWOSTAGECLEARSEARCH.equals(propertyName)) 
-      return new Class<?>[] {Boolean.class};		
-    return super.getPropertyClass(propertyName);
-  }
-	
+	public void setProperty(String propertyName, Object newValue)
+			throws PropertyException {
+		if (FOLIOLOCATION.equals(propertyName))
+			setFolioLocation((String) newValue);
+		else if (GRIPLOCATION.equals(propertyName))
+			setGripLocation((String) newValue);
+		else if (CLOSEAFTERCOPY.equals(propertyName))
+			setCloseAfterCopy((Boolean) newValue);
+		else if (STOCKCOSTINESTIMATOR.equals(propertyName))
+			setStockCostInEstimator((Boolean) newValue);
+		else if (CANCHANGEADDRESS.equals(propertyName))
+			setCanChangeAddress((Boolean) newValue);
+		else if (SHOWPAPERCALCULATOR.equals(propertyName))
+			setShowPaperCalculator((Boolean) newValue);
+		else if (USESTOCKPARENTSIZE.equals(propertyName))
+			setUseStockParentSize((Boolean) newValue);
+		else if (CALCULATEREORDERDATE.equals(propertyName))
+			setCalculateReOrderDate((Boolean) newValue);
+		else if (VALIDATESALESREP.equals(propertyName))
+			setValidateSalesRep((Boolean) newValue);
+		else if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName))
+			setLeaveFoldedSizeEmpty((Boolean) newValue);
+		else if (DONOTCOSTDURINGPOST.equals(propertyName))
+			setDoNotCostDuringPost((Boolean) newValue);
+		else if (AUTOSHOWCHARGES.equals(propertyName))
+			setAutoShowCharges((Boolean) newValue);
+		else if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName))
+			setNeverUsePresetPressOnStockChanges((Boolean) newValue);
+		else if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName))
+			setAddFixedWasteForEachPass((Boolean) newValue);
+		else if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName))
+			setAddFixedWasteForEachColor((Boolean) newValue);
+		else if (CALCULATEINKBYIMPRESSIONS.equals(propertyName))
+			setCalculateInkbyImpressions((Boolean) newValue);
+		else if (USEHISTORYTITLEFORNEWTITLE.equals(propertyName))
+			setUseHistoryTitleforNewTitle((Boolean) newValue);
+		else if (NORMALDUEDATEDAYS.equals(propertyName))
+			setNormalDueDateDays((Integer) newValue);
+		else if (CLOSEINVOICEAFTERPRINTINGTICKET.equals(propertyName))
+			setCloseInvoiceAfterPrintingTicket((Boolean) newValue);
+		else if (CLOSEINVOICESANDESTIMATEAFTERPRINTING.equals(propertyName))
+			setCloseInvoicesAndEstimateAfterPrinting((Boolean) newValue);
+		else if (DEFAULTINVOICE.equals(propertyName))
+			setDefaultInvoice((Integer) newValue);
+		else if (DEFAULTESTIMATE.equals(propertyName))
+			setDefaultEstimate((Integer) newValue);
+		else if (NUMBEROFDAYSBEFOREDUE.equals(propertyName))
+			setNumberOfDaysBeforeDue((Integer) newValue);
+		else if (DUEFROM.equals(propertyName))
+			setDueFrom((Integer) newValue);
+		else if (USEGRIPEDGEGAP.equals(propertyName))
+			setUseGripEdgeGap((Boolean) newValue);
+		else if (GRIPEDGEGAP.equals(propertyName))
+			setGripEdgeGap((Double) newValue);
+		else if (USEFOLIOEDGE.equals(propertyName))
+			setUseFolioEdge((Boolean) newValue);
+		else if (FOLIOEDGE.equals(propertyName))
+			setFolioEdge((Double) newValue);
+		else if (USECOLORBAR.equals(propertyName))
+			setUseColorBar((Boolean) newValue);
+		else if (COLORBAR.equals(propertyName))
+			setColorBar((Double) newValue);
+		else if (USEWHITESPACE.equals(propertyName))
+			setUseWhiteSpace((Boolean) newValue);
+		else if (WHITESPACE.equals(propertyName))
+			setWhiteSpace((Double) newValue);
+		else if (WHITESPACETOP.equals(propertyName))
+			setWhiteSpaceTop((Double) newValue);
+		else if (WHITESPACERIGHT.equals(propertyName))
+			setWhiteSpaceRight((Double) newValue);
+		else if (WHITESPACEBOTTOM.equals(propertyName))
+			setWhiteSpaceBottom((Double) newValue);
+		else if (USEGUTTER.equals(propertyName))
+			setUseGutter((Boolean) newValue);
+		else if (GUTTER.equals(propertyName))
+			setGutter((Double) newValue);
+		else if (GUTTERHORIZONTAL.equals(propertyName))
+			setGutterHorizontal((Double) newValue);
+		else if (USEBLEED.equals(propertyName))
+			setUseBleed((Boolean) newValue);
+		else if (BLEED.equals(propertyName))
+			setBleed((Double) newValue);
+		else if (BLEEDTOP.equals(propertyName))
+			setBleedTop((Double) newValue);
+		else if (BLEEDRIGHT.equals(propertyName))
+			setBleedRight((Double) newValue);
+		else if (BLEEDBOTTOM.equals(propertyName))
+			setBleedBottom((Double) newValue);
+		else if (DEFAULTPRESSCUTTOFF.equals(propertyName))
+			setDefaultPressCuttOff((BigDecimal) newValue);
+		else if (BACKTRIMPARENT.equals(propertyName))
+			setBackTrimParent((Boolean) newValue);
+		else if (BACKTRIMRUN.equals(propertyName))
+			setBackTrimRun((Boolean) newValue);
+		else if (WORKANDTUMBLE.equals(propertyName))
+			setWorkandTumble((Boolean) newValue);
+		else if (RUNTOFINISHGRAIN.equals(propertyName))
+			setRunToFinishGrain((String) newValue);
+		else if (PRINTPARENTTOFINISHSECTION.equals(propertyName))
+			setPrintParentToFinishSection((Boolean) newValue);
+		else if (PRINTPARENTTORUNSECTION.equals(propertyName))
+			setPrintParentToRunSection((Boolean) newValue);
+		else if (PRINTRUNTOFINISHSECTION.equals(propertyName))
+			setPrintRunToFinishSection((Boolean) newValue);
+		else if (ATTACHTOJOBTICKET.equals(propertyName))
+			setAttachToJobTicket((Boolean) newValue);
+		else if (JOBTICKETFORMAT.equals(propertyName))
+			setJobTicketFormat((String) newValue);
+		else if (CUSTOMJOBTICKET.equals(propertyName))
+			setCustomJobTicket((String) newValue);
+		else if (CHARGEDESCRIPTION.equals(propertyName))
+			setChargeDescription((String) newValue);
+		else if (SHOWAMOUNTSONTICKET.equals(propertyName))
+			setShowAmountsOnTicket((Boolean) newValue);
+		else if (ADDBARCODES.equals(propertyName))
+			setAddBarCodes((Boolean) newValue);
+		else if (SHOWREFNUMBER.equals(propertyName))
+			setShowRefNumber((Boolean) newValue);
+		else if (BARCODEFONT.equals(propertyName))
+			setBarCodeFont((FontDefinition) newValue);
+		else if (DEFAULTHISTORYVIEW.equals(propertyName))
+			setDefaultHistoryView((Boolean) newValue);
+		else if (TWOSTAGECLEARSEARCH.equals(propertyName))
+			setTwoStageClearSearch((Boolean) newValue);
+		else
+			super.setProperty(propertyName, newValue);
+	}
 
 	/**
 	 * @generated
-	 */		
+	 */
 	@Transient
 	@Override
-	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (FOLIOLOCATION.equals(propertyName)) return PreferencesEstimating.class;
-    if (GRIPLOCATION.equals(propertyName)) return PreferencesEstimating.class;
-    if (CLOSEAFTERCOPY.equals(propertyName)) return PreferencesEstimating.class;
-    if (STOCKCOSTINESTIMATOR.equals(propertyName)) return PreferencesEstimating.class;
-    if (CANCHANGEADDRESS.equals(propertyName)) return PreferencesEstimating.class;
-    if (SHOWPAPERCALCULATOR.equals(propertyName)) return PreferencesEstimating.class;
-    if (USESTOCKPARENTSIZE.equals(propertyName)) return PreferencesEstimating.class;
-    if (CALCULATEREORDERDATE.equals(propertyName)) return PreferencesEstimating.class;
-    if (VALIDATESALESREP.equals(propertyName)) return PreferencesEstimating.class;
-    if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName)) return PreferencesEstimating.class;
-    if (DONOTCOSTDURINGPOST.equals(propertyName)) return PreferencesEstimating.class;
-    if (AUTOSHOWCHARGES.equals(propertyName)) return PreferencesEstimating.class;
-    if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName)) return PreferencesEstimating.class;
-    if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName)) return PreferencesEstimating.class;
-    if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName)) return PreferencesEstimating.class;
-    if (CALCULATEINKBYIMPRESSIONS.equals(propertyName)) return PreferencesEstimating.class;
-    if (USEHISTORYTITLEFORNEWTITLE.equals(propertyName)) return PreferencesEstimating.class;
-    if (NORMALDUEDATEDAYS.equals(propertyName)) return PreferencesEstimating.class;
-    if (CLOSEINVOICEAFTERPRINTINGTICKET.equals(propertyName)) return PreferencesEstimating.class;
-    if (CLOSEINVOICESANDESTIMATEAFTERPRINTING.equals(propertyName)) return PreferencesEstimating.class;
-    if (DEFAULTINVOICE.equals(propertyName)) return PreferencesEstimating.class;
-    if (DEFAULTESTIMATE.equals(propertyName)) return PreferencesEstimating.class;
-    if (NUMBEROFDAYSBEFOREDUE.equals(propertyName)) return PreferencesEstimating.class;
-    if (DUEFROM.equals(propertyName)) return PreferencesEstimating.class;
-    if (USEGRIPEDGEGAP.equals(propertyName)) return PreferencesEstimating.class;
-    if (GRIPEDGEGAP.equals(propertyName)) return PreferencesEstimating.class;
-    if (USEFOLIOEDGE.equals(propertyName)) return PreferencesEstimating.class;
-    if (FOLIOEDGE.equals(propertyName)) return PreferencesEstimating.class;
-    if (USECOLORBAR.equals(propertyName)) return PreferencesEstimating.class;
-    if (COLORBAR.equals(propertyName)) return PreferencesEstimating.class;
-    if (USEWHITESPACE.equals(propertyName)) return PreferencesEstimating.class;
-    if (WHITESPACE.equals(propertyName)) return PreferencesEstimating.class;
-    if (WHITESPACETOP.equals(propertyName)) return PreferencesEstimating.class;
-    if (WHITESPACERIGHT.equals(propertyName)) return PreferencesEstimating.class;
-    if (WHITESPACEBOTTOM.equals(propertyName)) return PreferencesEstimating.class;
-    if (USEGUTTER.equals(propertyName)) return PreferencesEstimating.class;
-    if (GUTTER.equals(propertyName)) return PreferencesEstimating.class;
-    if (GUTTERHORIZONTAL.equals(propertyName)) return PreferencesEstimating.class;
-    if (USEBLEED.equals(propertyName)) return PreferencesEstimating.class;
-    if (BLEED.equals(propertyName)) return PreferencesEstimating.class;
-    if (BLEEDTOP.equals(propertyName)) return PreferencesEstimating.class;
-    if (BLEEDRIGHT.equals(propertyName)) return PreferencesEstimating.class;
-    if (BLEEDBOTTOM.equals(propertyName)) return PreferencesEstimating.class;
-    if (DEFAULTPRESSCUTTOFF.equals(propertyName)) return PreferencesEstimating.class;
-    if (BACKTRIMPARENT.equals(propertyName)) return PreferencesEstimating.class;
-    if (BACKTRIMRUN.equals(propertyName)) return PreferencesEstimating.class;
-    if (WORKANDTUMBLE.equals(propertyName)) return PreferencesEstimating.class;
-    if (RUNTOFINISHGRAIN.equals(propertyName)) return PreferencesEstimating.class;
-    if (PRINTPARENTTOFINISHSECTION.equals(propertyName)) return PreferencesEstimating.class;
-    if (PRINTPARENTTORUNSECTION.equals(propertyName)) return PreferencesEstimating.class;
-    if (PRINTRUNTOFINISHSECTION.equals(propertyName)) return PreferencesEstimating.class;
-    if (ATTACHTOJOBTICKET.equals(propertyName)) return PreferencesEstimating.class;
-    if (JOBTICKETFORMAT.equals(propertyName)) return PreferencesEstimating.class;
-    if (CUSTOMJOBTICKET.equals(propertyName)) return PreferencesEstimating.class;
-    if (CHARGEDESCRIPTION.equals(propertyName)) return PreferencesEstimating.class;
-    if (SHOWAMOUNTSONTICKET.equals(propertyName)) return PreferencesEstimating.class;
-    if (ADDBARCODES.equals(propertyName)) return PreferencesEstimating.class;
-    if (SHOWREFNUMBER.equals(propertyName)) return PreferencesEstimating.class;
-    if (BARCODEFONT.equals(propertyName)) return PreferencesEstimating.class;
-    if (DEFAULTHISTORYVIEW.equals(propertyName)) return PreferencesEstimating.class;
-    if (TWOSTAGECLEARSEARCH.equals(propertyName)) return PreferencesEstimating.class;
-    return super.getPropertyOwner(propertyName);
-  }
-	
+	public Class<?>[] getPropertyClass(String propertyName)
+			throws UnknownPropertyException {
+		if (FOLIOLOCATION.equals(propertyName))
+			return new Class<?>[] { String.class };
+		if (GRIPLOCATION.equals(propertyName))
+			return new Class<?>[] { String.class };
+		if (CLOSEAFTERCOPY.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (STOCKCOSTINESTIMATOR.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (CANCHANGEADDRESS.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (SHOWPAPERCALCULATOR.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (USESTOCKPARENTSIZE.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (CALCULATEREORDERDATE.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (VALIDATESALESREP.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (DONOTCOSTDURINGPOST.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (AUTOSHOWCHARGES.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (CALCULATEINKBYIMPRESSIONS.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (USEHISTORYTITLEFORNEWTITLE.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (NORMALDUEDATEDAYS.equals(propertyName))
+			return new Class<?>[] { Integer.class };
+		if (CLOSEINVOICEAFTERPRINTINGTICKET.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (CLOSEINVOICESANDESTIMATEAFTERPRINTING.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (DEFAULTINVOICE.equals(propertyName))
+			return new Class<?>[] { Integer.class };
+		if (DEFAULTESTIMATE.equals(propertyName))
+			return new Class<?>[] { Integer.class };
+		if (NUMBEROFDAYSBEFOREDUE.equals(propertyName))
+			return new Class<?>[] { Integer.class };
+		if (DUEFROM.equals(propertyName))
+			return new Class<?>[] { Integer.class };
+		if (USEGRIPEDGEGAP.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (GRIPEDGEGAP.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (USEFOLIOEDGE.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (FOLIOEDGE.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (USECOLORBAR.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (COLORBAR.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (USEWHITESPACE.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (WHITESPACE.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (WHITESPACETOP.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (WHITESPACERIGHT.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (WHITESPACEBOTTOM.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (USEGUTTER.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (GUTTER.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (GUTTERHORIZONTAL.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (USEBLEED.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (BLEED.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (BLEEDTOP.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (BLEEDRIGHT.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (BLEEDBOTTOM.equals(propertyName))
+			return new Class<?>[] { Double.class };
+		if (DEFAULTPRESSCUTTOFF.equals(propertyName))
+			return new Class<?>[] { BigDecimal.class };
+		if (BACKTRIMPARENT.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (BACKTRIMRUN.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (WORKANDTUMBLE.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (RUNTOFINISHGRAIN.equals(propertyName))
+			return new Class<?>[] { String.class };
+		if (PRINTPARENTTOFINISHSECTION.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (PRINTPARENTTORUNSECTION.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (PRINTRUNTOFINISHSECTION.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (ATTACHTOJOBTICKET.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (JOBTICKETFORMAT.equals(propertyName))
+			return new Class<?>[] { String.class };
+		if (CUSTOMJOBTICKET.equals(propertyName))
+			return new Class<?>[] { String.class };
+		if (CHARGEDESCRIPTION.equals(propertyName))
+			return new Class<?>[] { String.class };
+		if (SHOWAMOUNTSONTICKET.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (ADDBARCODES.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (SHOWREFNUMBER.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (BARCODEFONT.equals(propertyName))
+			return new Class<?>[] { FontDefinition.class };
+		if (DEFAULTHISTORYVIEW.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		if (TWOSTAGECLEARSEARCH.equals(propertyName))
+			return new Class<?>[] { Boolean.class };
+		return super.getPropertyClass(propertyName);
+	}
+
 	/**
 	 * @generated
-	 */			
+	 */
+	@Transient
+	@Override
+	public Class<?> getPropertyOwner(String propertyName)
+			throws UnknownPropertyException {
+		if (FOLIOLOCATION.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (GRIPLOCATION.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (CLOSEAFTERCOPY.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (STOCKCOSTINESTIMATOR.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (CANCHANGEADDRESS.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (SHOWPAPERCALCULATOR.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (USESTOCKPARENTSIZE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (CALCULATEREORDERDATE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (VALIDATESALESREP.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (LEAVEFOLDEDSIZEEMPTY.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (DONOTCOSTDURINGPOST.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (AUTOSHOWCHARGES.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (NEVERUSEPRESETPRESSONSTOCKCHANGES.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (ADDFIXEDWASTEFOREACHPASS.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (ADDFIXEDWASTEFOREACHCOLOR.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (CALCULATEINKBYIMPRESSIONS.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (USEHISTORYTITLEFORNEWTITLE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (NORMALDUEDATEDAYS.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (CLOSEINVOICEAFTERPRINTINGTICKET.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (CLOSEINVOICESANDESTIMATEAFTERPRINTING.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (DEFAULTINVOICE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (DEFAULTESTIMATE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (NUMBEROFDAYSBEFOREDUE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (DUEFROM.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (USEGRIPEDGEGAP.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (GRIPEDGEGAP.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (USEFOLIOEDGE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (FOLIOEDGE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (USECOLORBAR.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (COLORBAR.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (USEWHITESPACE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (WHITESPACE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (WHITESPACETOP.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (WHITESPACERIGHT.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (WHITESPACEBOTTOM.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (USEGUTTER.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (GUTTER.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (GUTTERHORIZONTAL.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (USEBLEED.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (BLEED.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (BLEEDTOP.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (BLEEDRIGHT.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (BLEEDBOTTOM.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (DEFAULTPRESSCUTTOFF.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (BACKTRIMPARENT.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (BACKTRIMRUN.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (WORKANDTUMBLE.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (RUNTOFINISHGRAIN.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (PRINTPARENTTOFINISHSECTION.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (PRINTPARENTTORUNSECTION.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (PRINTRUNTOFINISHSECTION.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (ATTACHTOJOBTICKET.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (JOBTICKETFORMAT.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (CUSTOMJOBTICKET.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (CHARGEDESCRIPTION.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (SHOWAMOUNTSONTICKET.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (ADDBARCODES.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (SHOWREFNUMBER.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (BARCODEFONT.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (DEFAULTHISTORYVIEW.equals(propertyName))
+			return PreferencesEstimating.class;
+		if (TWOSTAGECLEARSEARCH.equals(propertyName))
+			return PreferencesEstimating.class;
+		return super.getPropertyOwner(propertyName);
+	}
+
+	/**
+	 * @generated
+	 */
 	@Override
 	public boolean deepEquals(Object obj) {
-    if (! super.deepEquals(obj))
-      return false;
-    PreferencesEstimating objT = (PreferencesEstimating)obj;
-    if (! SmartEquals(getFolioLocation(), objT.getFolioLocation()))
-      return false;
-    if (! SmartEquals(getGripLocation(), objT.getGripLocation()))
-      return false;
-    if (! SmartEquals(getCloseAfterCopy(), objT.getCloseAfterCopy()))
-      return false;
-    if (! SmartEquals(getStockCostInEstimator(), objT.getStockCostInEstimator()))
-      return false;
-    if (! SmartEquals(getCanChangeAddress(), objT.getCanChangeAddress()))
-      return false;
-    if (! SmartEquals(getShowPaperCalculator(), objT.getShowPaperCalculator()))
-      return false;
-    if (! SmartEquals(getUseStockParentSize(), objT.getUseStockParentSize()))
-      return false;
-    if (! SmartEquals(getCalculateReOrderDate(), objT.getCalculateReOrderDate()))
-      return false;
-    if (! SmartEquals(getValidateSalesRep(), objT.getValidateSalesRep()))
-      return false;
-    if (! SmartEquals(getLeaveFoldedSizeEmpty(), objT.getLeaveFoldedSizeEmpty()))
-      return false;
-    if (! SmartEquals(getDoNotCostDuringPost(), objT.getDoNotCostDuringPost()))
-      return false;
-    if (! SmartEquals(getAutoShowCharges(), objT.getAutoShowCharges()))
-      return false;
-    if (! SmartEquals(getNeverUsePresetPressOnStockChanges(), objT.getNeverUsePresetPressOnStockChanges()))
-      return false;
-    if (! SmartEquals(getAddFixedWasteForEachPass(), objT.getAddFixedWasteForEachPass()))
-      return false;
-    if (! SmartEquals(getAddFixedWasteForEachColor(), objT.getAddFixedWasteForEachColor()))
-      return false;
-    if (! SmartEquals(getCalculateInkbyImpressions(), objT.getCalculateInkbyImpressions()))
-      return false;
-    if (! SmartEquals(getUseHistoryTitleforNewTitle(), objT.getUseHistoryTitleforNewTitle()))
-      return false;
-    if (! SmartEquals(getNormalDueDateDays(), objT.getNormalDueDateDays()))
-      return false;
-    if (! SmartEquals(getCloseInvoiceAfterPrintingTicket(), objT.getCloseInvoiceAfterPrintingTicket()))
-      return false;
-    if (! SmartEquals(getCloseInvoicesAndEstimateAfterPrinting(), objT.getCloseInvoicesAndEstimateAfterPrinting()))
-      return false;
-    if (! SmartEquals(getDefaultInvoice(), objT.getDefaultInvoice()))
-      return false;
-    if (! SmartEquals(getDefaultEstimate(), objT.getDefaultEstimate()))
-      return false;
-    if (! SmartEquals(getNumberOfDaysBeforeDue(), objT.getNumberOfDaysBeforeDue()))
-      return false;
-    if (! SmartEquals(getDueFrom(), objT.getDueFrom()))
-      return false;
-    if (! SmartEquals(getUseGripEdgeGap(), objT.getUseGripEdgeGap()))
-      return false;
-    if (! SmartEquals(getGripEdgeGap(), objT.getGripEdgeGap()))
-      return false;
-    if (! SmartEquals(getUseFolioEdge(), objT.getUseFolioEdge()))
-      return false;
-    if (! SmartEquals(getFolioEdge(), objT.getFolioEdge()))
-      return false;
-    if (! SmartEquals(getUseColorBar(), objT.getUseColorBar()))
-      return false;
-    if (! SmartEquals(getColorBar(), objT.getColorBar()))
-      return false;
-    if (! SmartEquals(getUseWhiteSpace(), objT.getUseWhiteSpace()))
-      return false;
-    if (! SmartEquals(getWhiteSpace(), objT.getWhiteSpace()))
-      return false;
-    if (! SmartEquals(getWhiteSpaceTop(), objT.getWhiteSpaceTop()))
-      return false;
-    if (! SmartEquals(getWhiteSpaceRight(), objT.getWhiteSpaceRight()))
-      return false;
-    if (! SmartEquals(getWhiteSpaceBottom(), objT.getWhiteSpaceBottom()))
-      return false;
-    if (! SmartEquals(getUseGutter(), objT.getUseGutter()))
-      return false;
-    if (! SmartEquals(getGutter(), objT.getGutter()))
-      return false;
-    if (! SmartEquals(getGutterHorizontal(), objT.getGutterHorizontal()))
-      return false;
-    if (! SmartEquals(getUseBleed(), objT.getUseBleed()))
-      return false;
-    if (! SmartEquals(getBleed(), objT.getBleed()))
-      return false;
-    if (! SmartEquals(getBleedTop(), objT.getBleedTop()))
-      return false;
-    if (! SmartEquals(getBleedRight(), objT.getBleedRight()))
-      return false;
-    if (! SmartEquals(getBleedBottom(), objT.getBleedBottom()))
-      return false;
-    if (! SmartEquals(getDefaultPressCuttOff(), objT.getDefaultPressCuttOff()))
-      return false;
-    if (! SmartEquals(getBackTrimParent(), objT.getBackTrimParent()))
-      return false;
-    if (! SmartEquals(getBackTrimRun(), objT.getBackTrimRun()))
-      return false;
-    if (! SmartEquals(getWorkandTumble(), objT.getWorkandTumble()))
-      return false;
-    if (! SmartEquals(getRunToFinishGrain(), objT.getRunToFinishGrain()))
-      return false;
-    if (! SmartEquals(getPrintParentToFinishSection(), objT.getPrintParentToFinishSection()))
-      return false;
-    if (! SmartEquals(getPrintParentToRunSection(), objT.getPrintParentToRunSection()))
-      return false;
-    if (! SmartEquals(getPrintRunToFinishSection(), objT.getPrintRunToFinishSection()))
-      return false;
-    if (! SmartEquals(getAttachToJobTicket(), objT.getAttachToJobTicket()))
-      return false;
-    if (! SmartEquals(getJobTicketFormat(), objT.getJobTicketFormat()))
-      return false;
-    if (! SmartEquals(getCustomJobTicket(), objT.getCustomJobTicket()))
-      return false;
-    if (! SmartEquals(getChargeDescription(), objT.getChargeDescription()))
-      return false;
-    if (! SmartEquals(getShowAmountsOnTicket(), objT.getShowAmountsOnTicket()))
-      return false;
-    if (! SmartEquals(getAddBarCodes(), objT.getAddBarCodes()))
-      return false;
-    if (! SmartEquals(getShowRefNumber(), objT.getShowRefNumber()))
-      return false;
-    if (! SmartEquals(getBarCodeFont(), objT.getBarCodeFont()))
-      return false;
-    if (! SmartEquals(getDefaultHistoryView(), objT.getDefaultHistoryView()))
-      return false;
-    if (! SmartEquals(getTwoStageClearSearch(), objT.getTwoStageClearSearch()))
-      return false;
-    return true;
-  }			
+		if (!super.deepEquals(obj))
+			return false;
+		PreferencesEstimating objT = (PreferencesEstimating) obj;
+		if (!SmartEquals(getFolioLocation(), objT.getFolioLocation()))
+			return false;
+		if (!SmartEquals(getGripLocation(), objT.getGripLocation()))
+			return false;
+		if (!SmartEquals(getCloseAfterCopy(), objT.getCloseAfterCopy()))
+			return false;
+		if (!SmartEquals(getStockCostInEstimator(), objT
+				.getStockCostInEstimator()))
+			return false;
+		if (!SmartEquals(getCanChangeAddress(), objT.getCanChangeAddress()))
+			return false;
+		if (!SmartEquals(getShowPaperCalculator(), objT
+				.getShowPaperCalculator()))
+			return false;
+		if (!SmartEquals(getUseStockParentSize(), objT.getUseStockParentSize()))
+			return false;
+		if (!SmartEquals(getCalculateReOrderDate(), objT
+				.getCalculateReOrderDate()))
+			return false;
+		if (!SmartEquals(getValidateSalesRep(), objT.getValidateSalesRep()))
+			return false;
+		if (!SmartEquals(getLeaveFoldedSizeEmpty(), objT
+				.getLeaveFoldedSizeEmpty()))
+			return false;
+		if (!SmartEquals(getDoNotCostDuringPost(), objT
+				.getDoNotCostDuringPost()))
+			return false;
+		if (!SmartEquals(getAutoShowCharges(), objT.getAutoShowCharges()))
+			return false;
+		if (!SmartEquals(getNeverUsePresetPressOnStockChanges(), objT
+				.getNeverUsePresetPressOnStockChanges()))
+			return false;
+		if (!SmartEquals(getAddFixedWasteForEachPass(), objT
+				.getAddFixedWasteForEachPass()))
+			return false;
+		if (!SmartEquals(getAddFixedWasteForEachColor(), objT
+				.getAddFixedWasteForEachColor()))
+			return false;
+		if (!SmartEquals(getCalculateInkbyImpressions(), objT
+				.getCalculateInkbyImpressions()))
+			return false;
+		if (!SmartEquals(getUseHistoryTitleforNewTitle(), objT
+				.getUseHistoryTitleforNewTitle()))
+			return false;
+		if (!SmartEquals(getNormalDueDateDays(), objT.getNormalDueDateDays()))
+			return false;
+		if (!SmartEquals(getCloseInvoiceAfterPrintingTicket(), objT
+				.getCloseInvoiceAfterPrintingTicket()))
+			return false;
+		if (!SmartEquals(getCloseInvoicesAndEstimateAfterPrinting(), objT
+				.getCloseInvoicesAndEstimateAfterPrinting()))
+			return false;
+		if (!SmartEquals(getDefaultInvoice(), objT.getDefaultInvoice()))
+			return false;
+		if (!SmartEquals(getDefaultEstimate(), objT.getDefaultEstimate()))
+			return false;
+		if (!SmartEquals(getNumberOfDaysBeforeDue(), objT
+				.getNumberOfDaysBeforeDue()))
+			return false;
+		if (!SmartEquals(getDueFrom(), objT.getDueFrom()))
+			return false;
+		if (!SmartEquals(getUseGripEdgeGap(), objT.getUseGripEdgeGap()))
+			return false;
+		if (!SmartEquals(getGripEdgeGap(), objT.getGripEdgeGap()))
+			return false;
+		if (!SmartEquals(getUseFolioEdge(), objT.getUseFolioEdge()))
+			return false;
+		if (!SmartEquals(getFolioEdge(), objT.getFolioEdge()))
+			return false;
+		if (!SmartEquals(getUseColorBar(), objT.getUseColorBar()))
+			return false;
+		if (!SmartEquals(getColorBar(), objT.getColorBar()))
+			return false;
+		if (!SmartEquals(getUseWhiteSpace(), objT.getUseWhiteSpace()))
+			return false;
+		if (!SmartEquals(getWhiteSpace(), objT.getWhiteSpace()))
+			return false;
+		if (!SmartEquals(getWhiteSpaceTop(), objT.getWhiteSpaceTop()))
+			return false;
+		if (!SmartEquals(getWhiteSpaceRight(), objT.getWhiteSpaceRight()))
+			return false;
+		if (!SmartEquals(getWhiteSpaceBottom(), objT.getWhiteSpaceBottom()))
+			return false;
+		if (!SmartEquals(getUseGutter(), objT.getUseGutter()))
+			return false;
+		if (!SmartEquals(getGutter(), objT.getGutter()))
+			return false;
+		if (!SmartEquals(getGutterHorizontal(), objT.getGutterHorizontal()))
+			return false;
+		if (!SmartEquals(getUseBleed(), objT.getUseBleed()))
+			return false;
+		if (!SmartEquals(getBleed(), objT.getBleed()))
+			return false;
+		if (!SmartEquals(getBleedTop(), objT.getBleedTop()))
+			return false;
+		if (!SmartEquals(getBleedRight(), objT.getBleedRight()))
+			return false;
+		if (!SmartEquals(getBleedBottom(), objT.getBleedBottom()))
+			return false;
+		if (!SmartEquals(getDefaultPressCuttOff(), objT
+				.getDefaultPressCuttOff()))
+			return false;
+		if (!SmartEquals(getBackTrimParent(), objT.getBackTrimParent()))
+			return false;
+		if (!SmartEquals(getBackTrimRun(), objT.getBackTrimRun()))
+			return false;
+		if (!SmartEquals(getWorkandTumble(), objT.getWorkandTumble()))
+			return false;
+		if (!SmartEquals(getRunToFinishGrain(), objT.getRunToFinishGrain()))
+			return false;
+		if (!SmartEquals(getPrintParentToFinishSection(), objT
+				.getPrintParentToFinishSection()))
+			return false;
+		if (!SmartEquals(getPrintParentToRunSection(), objT
+				.getPrintParentToRunSection()))
+			return false;
+		if (!SmartEquals(getPrintRunToFinishSection(), objT
+				.getPrintRunToFinishSection()))
+			return false;
+		if (!SmartEquals(getAttachToJobTicket(), objT.getAttachToJobTicket()))
+			return false;
+		if (!SmartEquals(getJobTicketFormat(), objT.getJobTicketFormat()))
+			return false;
+		if (!SmartEquals(getCustomJobTicket(), objT.getCustomJobTicket()))
+			return false;
+		if (!SmartEquals(getChargeDescription(), objT.getChargeDescription()))
+			return false;
+		if (!SmartEquals(getShowAmountsOnTicket(), objT
+				.getShowAmountsOnTicket()))
+			return false;
+		if (!SmartEquals(getAddBarCodes(), objT.getAddBarCodes()))
+			return false;
+		if (!SmartEquals(getShowRefNumber(), objT.getShowRefNumber()))
+			return false;
+		if (!SmartEquals(getBarCodeFont(), objT.getBarCodeFont()))
+			return false;
+		if (!SmartEquals(getDefaultHistoryView(), objT.getDefaultHistoryView()))
+			return false;
+		if (!SmartEquals(getTwoStageClearSearch(), objT
+				.getTwoStageClearSearch()))
+			return false;
+		return true;
+	}
 }

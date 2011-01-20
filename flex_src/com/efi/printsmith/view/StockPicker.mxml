@@ -10,6 +10,18 @@
     [Protected(permissions="StockDefinition_Delete",notInPermissionAction="invisible",componentId="select_button0")]
 </mx:Metadata>
 
+	<mx:Style>
+		.small{
+				fontSize: 9;
+			}
+		.medium{
+				fontSize: 11;
+			}
+		.large{
+			fontSize: 13;
+		}
+	</mx:Style>
+
    	<mx:Script source="../common/scripts/CommonUtils.as"/>      
 	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
@@ -23,6 +35,10 @@
 	
 	<mx:RemoteObject id="dataServiceSystem" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemResult(event)"/>
+	</mx:RemoteObject>	
+	
+	<mx:RemoteObject id="dataServiceEstimating" destination="dataService">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadEstimatingResult(event)"/>
 	</mx:RemoteObject>	
 	
 	<mx:RemoteObject id="dataServiceGroup" destination="dataService" showBusyCursor="true">
@@ -134,7 +150,7 @@
 	
 	[Bindable] public var parentWindowId:int;
 	
-	[Bindable] private var preferencesEstimating:PreferencesEstimating;
+	[Bindable] public var preferencesEstimating:PreferencesEstimating;
 	
 	private var twoStageClearSearchCount:int;
 	
@@ -371,6 +387,7 @@
 	    ShellLabel();
 	    showSearchBox.setStyle("icon", downIcon);
 	    dataServiceSystem.getAll("PreferencesSystem");
+	    dataServiceEstimating.getSingle("PreferencesEstimating");
 	  // dataService.getAllNameIDOnly("StockDefinition");
 	//	dataServicePreferencesStockDefinition.getAll("PreferencesStockDefinition");
 	}
@@ -1225,6 +1242,10 @@
   		}
 	}
 	
+	private function handleLoadEstimatingResult(event:ResultEvent):void {
+		preferencesEstimating = event.result as PreferencesEstimating;
+	}
+	
 	private function setJobCustomerStock(event:Event):void {
 		if(editableJob!=null){
 			editableJob.customerSuppliedStock = event.currentTarget.selected;
@@ -1318,6 +1339,19 @@
 		}
 		return -1;
 	}   
+	
+	public function getStyleName(preferencesEstimatingObj:PreferencesEstimating):Object {
+		if(preferencesEstimatingObj!=null) {
+			if(preferencesEstimatingObj.fontStyle=="Small") {
+				return "small";
+			} else if(preferencesEstimatingObj.fontStyle=="Medium") {
+				return "medium";
+			} else if(preferencesEstimatingObj.fontStyle=="Large") {
+				return "large";
+			}
+		}
+		return "";
+	}
 
 ]]>        
 </mx:Script> 
@@ -1347,27 +1381,27 @@
 		<mx:LinkButton id="showSearchBox" click="toggleSearchBox();" textAlign="left" label="Search Stocks" width="100%" height="5%"/>
 		<mx:HBox id="searcharea" width="100%" height="30%" >
 			<mx:Form id="col1" width="30%" >
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:ComboBox width="100%" id="txtGroup" dataProvider="{stockGroups}" labelField="name" change="search();"/>
 				</mx:FormItem>
 				<mx:Label width="100%" height="10%" />
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:TextInput id="txtName" width="100%" change="search();"/>
 				</mx:FormItem>
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Finish')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Finish')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:ComboBox width="100%" id="txtFinish" dataProvider="{finishes}" labelField="name"  change="search();"/>
 				</mx:FormItem>
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}" width="100%" >
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:ComboBox width="100%" id="txtColor" dataProvider="{colors}" labelField="name" change="search();"/>
 				</mx:FormItem>
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Grade')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Grade')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:ComboBox width="100%" id="txtGrade" dataProvider="{grades}" labelField="name" change="search();"/>
 				</mx:FormItem>
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}" width="100%" >
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:TextInput id="txtMinOrder" width="100%" change="search();"/>
 				</mx:FormItem>
 				<mx:Label width="100%" height="10%" />
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Vendor')}" width="100%" >
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Vendor')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:HBox width="100%">
 						<mx:ComboBox width="90%" id="txtVendor" dataProvider="{vendors}" labelField="name" change="search();"/>
 						<mx:Image width="10%" visible="false" source="assets/WebStatus.png" id="web_status"/>
@@ -1375,35 +1409,35 @@
 				</mx:FormItem>				
 			</mx:Form>
 			<mx:Form id="col2" width="30%" >
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Type')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Type')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:ComboBox width="100%" id="txtStockType" dataProvider="{stockTypes}" labelField="name" change="search();"/>
 				</mx:FormItem>
 				<mx:Label width="100%" height="10%" />
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ProductID')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ProductID')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:TextInput width="100%" id="txtProductId" change="search();"/>
 				
 				</mx:FormItem>
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:ComboBox width="100%"  id="txtCoatedSides" dataProvider="{coatedSides}" labelField="name" change="search();"/>
 				
 				</mx:FormItem>
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GenericColor')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GenericColor')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:ComboBox width="100%"  id="txtGenericColors" dataProvider="{genericColors}" labelField="name" change="search();"/>
 				
 				</mx:FormItem>
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thickness')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thickness')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:HBox width="100%">
 						<mx:TextInput  width="25%" id="txtThickness" change="search();"/>
 						<mx:ComboBox  width="75%" id="txtThicknessUOM" dataProvider="{uoms}" labelField="name" change="search();"/>	
 					</mx:HBox>
 				
 				</mx:FormItem>
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.SheetsSet')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.SheetsSet')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:TextInput width="100%" id="txtSheetsPerSet" change="search();"/>
 				
 				</mx:FormItem>
 				<mx:Label width="100%" height="10%" />
-				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockNumber')}" width="100%">
+				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockNumber')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 					<mx:TextInput width="100%"  id="txtStockNumber" change="search();"/>
 				</mx:FormItem>
 			</mx:Form>
@@ -1413,36 +1447,36 @@
 				<mx:Form width="80%" height="50%" verticalGap="1">
 					<mx:FormItem width="100%" >
 						<mx:HBox width="100%">
-							<mx:Label width="50%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Min')}" textAlign="center"/>
-							<mx:Label width="50%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Max')}" textAlign="center"/>
+							<mx:Label width="50%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Min')}" textAlign="center" styleName="{getStyleName(preferencesEstimating)}"/>
+							<mx:Label width="50%" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Max')}" textAlign="center" styleName="{getStyleName(preferencesEstimating)}"/>
 						</mx:HBox>
 					</mx:FormItem>
-					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Size')}" width="100%">
+					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Size')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 						<mx:HBox width="100%">
 							<mx:TextInput width="50%"   id="txtSizeMin" change="search();"/>
 							<mx:TextInput width="50%"  id="txtSizeMax" change="search();"/>
 						</mx:HBox>
 					</mx:FormItem>
-					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}" width="100%">
+					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 						<mx:HBox width="100%">
 							<mx:TextInput width="50%" id="txtWeightMin" change="search();"/>
 							<mx:TextInput width="50%" id="txtWeightMax" change="search();"/>
 						</mx:HBox>
 					</mx:FormItem>
-					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CWT')}" width="100%">
+					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CWT')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 						<mx:HBox width="100%">
 							<mx:TextInput width="50%" id="txtCwtMin" change="search();"/>
 							<mx:TextInput width="50%" id="txtCwtMax" change="search();"/>
 						</mx:HBox>
 					</mx:FormItem>
-					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.QtyOnHand')}" width="100%">
+					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.QtyOnHand')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 						<mx:HBox width="100%">
 							<mx:TextInput width="50%" id="txtQtyOnHandMin" change="search();"/>
 							<mx:TextInput width="50%" id="txtQtyOnHandMax" change="search();"/>
 						
 						</mx:HBox>
 					</mx:FormItem>
-					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RollWidth')}" width="100%">
+					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RollWidth')}" width="100%" styleName="{getStyleName(preferencesEstimating)}">
 						<mx:HBox width="100%">
 							<mx:TextInput width="50%" enabled="false" id="txtRollWidthMin" change="search();"/>
 							<mx:TextInput width="50%" enabled="false" id="txtRollWidthMax" change="search();"/>
@@ -1453,11 +1487,11 @@
 				</mx:Form>
 				
 				<mx:VBox width="80%" height="50%" verticalGap="1">
-					<mx:CheckBox  height="20%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRollStock')}" id="chkShowRollStock" change="doRollStockChanged();" enabled="{!fromJobPage}"/>
-					<mx:CheckBox height="20%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock" change="doLargeFormatChange();" enabled="{!fromJobPage}"/>
-					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate" change="doLargeFormatChange();"/>
-					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock" change="search();"/>
-					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="doShellsChange();"/>
+					<mx:CheckBox  height="20%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRollStock')}" id="chkShowRollStock" change="doRollStockChanged();" enabled="{!fromJobPage}" styleName="{getStyleName(preferencesEstimating)}"/>
+					<mx:CheckBox height="20%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowLargeFormatStock')}" id="chkShowLargeFormatStock" change="doLargeFormatChange();" enabled="{!fromJobPage}" styleName="{getStyleName(preferencesEstimating)}"/>
+					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowRigidSubstrate')}" id="chkShowRigidSubstrate" change="doLargeFormatChange();" styleName="{getStyleName(preferencesEstimating)}"/>
+					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowInventoriedStock')}" id="chkShowInventoriedStock" change="search();" styleName="{getStyleName(preferencesEstimating)}"/>
+					<mx:CheckBox height="20%" width="100%"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ShowShellsAccount0')}" id="chkShowShells" change="doShellsChange();" styleName="{getStyleName(preferencesEstimating)}"/>
 				</mx:VBox>
 				
 			</mx:VBox>
@@ -1466,35 +1500,209 @@
 		<mx:DataGrid id="dataGrid" width="100%" height="90%" dataProvider="{stockDefinitions}"
 		doubleClickEnabled="true" columnStretch="onGridResize(event)" allowMultipleSelection="true" doubleClick="selectStockDefinition()" verticalScrollPolicy="auto" horizontalScrollPolicy="on" showHeaders="true" backgroundColor="#FFFFFF" borderStyle="solid" borderThickness="3" right="0" left="0" bottom="0" top="273" change="doEnableWebStatus();">               
 		<mx:columns>
-		     <mx:DataGridColumn width="{colWidths.name}" dataField="name" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}" />
-		     <mx:DataGridColumn width="{colWidths.weight}" dataField="weight" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}"/>
-		     <mx:DataGridColumn width="{colWidths.size}" dataField="size" labelFunction ="getSizeLabel" sortCompareFunction="sortSize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Size')}"/>
-		     <mx:DataGridColumn width="{colWidths.color}" dataField="color" labelFunction="getColorLabel" sortCompareFunction="sortColor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}"/>
-		     <mx:DataGridColumn width="{colWidths.genericColor}" dataField="genericColor" labelFunction="getGenericColorLabel" sortCompareFunction="sortGenColor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GenericColor')}"/>
-		     <mx:DataGridColumn width="{colWidths.finish}" dataField="finish" labelFunction="getFinishLabel" sortCompareFunction="sortFinish" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Finish')}"/>
-		     <mx:DataGridColumn width="{colWidths.thickness}" dataField="thickness" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thickness')}"/>
-		     <mx:DataGridColumn width="{colWidths.grade}"  dataField="grade" labelFunction="getGradeLabel" sortCompareFunction="sortGrade" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Grade')}"/>
-		     <mx:DataGridColumn  width="{colWidths.cwt1}" dataField="cwt1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CWT')}"/>
-		     <mx:DataGridColumn width="{colWidths.vendor}" dataField="vendor"   labelFunction="getVendorLabel" sortCompareFunction="sortVendor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Vendor')}"/>
-		     <mx:DataGridColumn  width="{colWidths.stocknumber}" dataField="stocknumber" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockNumber')}"/>
-		     <mx:DataGridColumn  width="{colWidths.id}" dataField="id" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ProductID')}"/>
-		     <mx:DataGridColumn  width="{colWidths.onHand}" dataField="onHand" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.QtyOnHand')}"/>
-		     <mx:DataGridColumn  width="{colWidths.committed}" dataField="committed" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Committed')}"/>
-		     <mx:DataGridColumn  width="{colWidths.onOrder}" dataField="onOrder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Ordered')}"/>
-		     <mx:DataGridColumn  width="{colWidths.shellItem}" dataField="shellItem" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Shell')}"/>
-		     <mx:DataGridColumn   width="{colWidths.normalSize}" dataField="normalSize" labelFunction="getNormalSizeLabel" sortCompareFunction="sortNormal" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RunSize')}"/>
-		     <mx:DataGridColumn  width="{colWidths.basicSize}" dataField="basicsize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.BasicSize')}"/>
-		     <mx:DataGridColumn  width="{colWidths.group}" dataField="group" labelFunction="getGroupLabel" sortCompareFunction="sortGroup" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}"/>
-		     <mx:DataGridColumn  width="{colWidths.type}" dataField="type" labelFunction="getTypeLabel" sortCompareFunction="sortType" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Type')}"/>
-		     <mx:DataGridColumn  width="{colWidths.coated}" dataField="coated" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}"/>
-		     <mx:DataGridColumn  width="{colWidths.minOrder}" dataField="minorder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}"/>
-		     <mx:DataGridColumn  width="{colWidths.cost1}" dataField="cost1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Price')}"/>
-		     <mx:DataGridColumn  width="{colWidths.priceExpires}" dataField="priceExpires" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.PriceExpires')}"/>
-		     <mx:DataGridColumn  width="{colWidths.forestManagement}" dataField="forestManagement" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ForestMgmt')}"/>
-		     <mx:DataGridColumn  width="{colWidths.pcwRecycledPercent}" dataField="pcwRecycledPercent" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Recycle')}"/> 
-		     <mx:DataGridColumn width="{colWidths.fscCertified}" dataField="fscCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.FSC')}"/>
-		     <mx:DataGridColumn width="{colWidths.sfiCertified}" dataField="sfiCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.SFI')}"/>
-		     <mx:DataGridColumn width="{colWidths.greenSealCertified}" dataField="greenSealCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GreenSeal')}"/>
+		     <mx:DataGridColumn width="{colWidths.name}" dataField="name" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Name')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn width="{colWidths.weight}" dataField="weight" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Weight')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn width="{colWidths.size}" dataField="size" labelFunction ="getSizeLabel" sortCompareFunction="sortSize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Size')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn width="{colWidths.color}" dataField="color" labelFunction="getColorLabel" sortCompareFunction="sortColor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Color')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn width="{colWidths.genericColor}" dataField="genericColor" labelFunction="getGenericColorLabel" sortCompareFunction="sortGenColor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GenericColor')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn width="{colWidths.finish}" dataField="finish" labelFunction="getFinishLabel" sortCompareFunction="sortFinish" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Finish')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn width="{colWidths.thickness}" dataField="thickness" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Thickness')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn width="{colWidths.grade}"  dataField="grade" labelFunction="getGradeLabel" sortCompareFunction="sortGrade" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Grade')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.cwt1}" dataField="cwt1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CWT')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn width="{colWidths.vendor}" dataField="vendor"   labelFunction="getVendorLabel" sortCompareFunction="sortVendor" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Vendor')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.stocknumber}" dataField="stocknumber" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.StockNumber')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.id}" dataField="id" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ProductID')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.onHand}" dataField="onHand" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.QtyOnHand')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.committed}" dataField="committed" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Committed')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.onOrder}" dataField="onOrder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Ordered')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.shellItem}" dataField="shellItem" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Shell')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn   width="{colWidths.normalSize}" dataField="normalSize" labelFunction="getNormalSizeLabel" sortCompareFunction="sortNormal" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.RunSize')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.basicSize}" dataField="basicsize" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.BasicSize')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.group}" dataField="group" labelFunction="getGroupLabel" sortCompareFunction="sortGroup" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Group')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.type}" dataField="type" labelFunction="getTypeLabel" sortCompareFunction="sortType" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Type')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.coated}" dataField="coated" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.CoatedSides')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.minOrder}" dataField="minorder" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.MinimumOrder')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.cost1}" dataField="cost1" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Price')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.priceExpires}" dataField="priceExpires" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.PriceExpires')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.forestManagement}" dataField="forestManagement" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.ForestMgmt')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn  width="{colWidths.pcwRecycledPercent}" dataField="pcwRecycledPercent" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.Recycle')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn> 
+		     <mx:DataGridColumn width="{colWidths.fscCertified}" dataField="fscCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.FSC')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn width="{colWidths.sfiCertified}" dataField="sfiCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.SFI')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
+		     <mx:DataGridColumn width="{colWidths.greenSealCertified}" dataField="greenSealCertified" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockPickerCmd.GreenSeal')}">
+		     	<mx:itemRenderer>
+		     		<mx:Component>
+		     			<mx:Label styleName="{outerDocument.getStyleName(outerDocument.preferencesEstimating)}"/>
+		     		</mx:Component>
+		     	</mx:itemRenderer>
+		     </mx:DataGridColumn>
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:Label height="5%" id="lblCount" />

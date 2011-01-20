@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
-	xmlns:components="com.efi.printsmith.common.components.*">
-	
+	xmlns:components="com.efi.printsmith.common.components.*" creationComplete="{initComp()}">
+
+	<mx:Script source="../../common/scripts/ComponentHelper.as"/>
+		
 	<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.data.PreferencesEstimating;
@@ -11,6 +13,27 @@
 			[Bindable] public var preferencesStockDefinitionArray:ArrayCollection = new ArrayCollection();
 			
 			[Bindable] public var preferencesEstimating:PreferencesEstimating = new PreferencesEstimating();
+			
+			[Bindable] private var fontStyleArray:ArrayCollection = new ArrayCollection();
+			
+			private function initComp():void {
+				var fontStyleObj:Object = new Object();
+				fontStyleObj.key = "Small";
+				fontStyleObj.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_321.Small');
+				fontStyleArray.addItem(fontStyleObj);
+				fontStyleObj = new Object();
+				fontStyleObj.key = "Medium";
+				fontStyleObj.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_321.Medium');
+				fontStyleArray.addItem(fontStyleObj);
+				fontStyleObj = new Object();
+				fontStyleObj.key = "Large";
+				fontStyleObj.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_321.Large');
+				fontStyleArray.addItem(fontStyleObj);
+				fontStyleObj = new Object();
+				fontStyleObj.key = "Default";
+				fontStyleObj.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'menu_321.Default');
+				fontStyleArray.addItem(fontStyleObj);
+			}
 			
 			private function columnsnameStockDefinition(item:Object, column:DataGridColumn):String{
 				var tmpName:PreferencesStockDefinition = item as PreferencesStockDefinition;
@@ -68,6 +91,14 @@
 					</mx:columns>
 					
 				</mx:DataGrid>
+				
+				<mx:HBox width="100%">
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.FontAppearance')}"/>
+					<components:CustomComboBoxComponent 
+						masterList="{fontStyleArray}" labelFieldId="key" labelFieldName="name"
+						dataHolder="{preferencesEstimating}" variableName="fontStyle" customText="{getCustomTextData(fontStyleArray,preferencesEstimating,preferencesEstimating.fontStyle)}"/>
+						
+				</mx:HBox>
 				
 				<components:CustomCheckBoxComponent
 					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.TwoStageClearSearch')}"

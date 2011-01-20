@@ -75,6 +75,7 @@ package com.efi.printsmith.data
 		public var barCodeFont:FontDefinition;
 		public var defaultHistoryView:Boolean = false;
 		public var twoStageClearSearch:Boolean = false;
+		public var fontStyle:String = "";
 	
 	}
 }
