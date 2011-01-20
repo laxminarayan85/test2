@@ -206,6 +206,11 @@ public class Charge extends ModelBase {
 	public static final String CHARGENUMBER = "ChargeNumber";
 
 	/**
+   * @generated
+   */
+  public static final String FROMACCOUNT = "FromAccount";
+
+	/**
 	 * @generated
 	 */
 	public Charge() {
@@ -1059,6 +1064,26 @@ public class Charge extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean fromAccount;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getFromAccount(){
+    return fromAccount; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setFromAccount(Boolean newVal) {
+    this.fromAccount = newVal;
+  }
+
+	/**
 	 * @return the runTime
 	 */
 	public Long getRunTime() {
@@ -1147,6 +1172,7 @@ public class Charge extends ModelBase {
     if (LINEARY2.equals(propertyName)) return getLinearY2();
     if (TAXTABLE.equals(propertyName)) return getTaxTable();
     if (CHARGENUMBER.equals(propertyName)) return getChargeNumber();
+    if (FROMACCOUNT.equals(propertyName)) return getFromAccount();
     return super.getProperty(propertyName);
   }
 
@@ -1197,6 +1223,7 @@ public class Charge extends ModelBase {
     if (LINEARY2.equals(propertyName)) setLinearY2((Boolean)newValue); else
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
     if (CHARGENUMBER.equals(propertyName)) setChargeNumber((Long)newValue); else
+    if (FROMACCOUNT.equals(propertyName)) setFromAccount((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 
@@ -1287,6 +1314,8 @@ public class Charge extends ModelBase {
       return new Class<?>[] {TaxTable.class};		
     if (CHARGENUMBER.equals(propertyName)) 
       return new Class<?>[] {Long.class};		
+    if (FROMACCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 
@@ -1337,6 +1366,7 @@ public class Charge extends ModelBase {
     if (LINEARY2.equals(propertyName)) return Charge.class;
     if (TAXTABLE.equals(propertyName)) return Charge.class;
     if (CHARGENUMBER.equals(propertyName)) return Charge.class;
+    if (FROMACCOUNT.equals(propertyName)) return Charge.class;
     return super.getPropertyOwner(propertyName);
   }
 
@@ -1427,6 +1457,8 @@ public class Charge extends ModelBase {
     if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
       return false;
     if (! SmartEquals(getChargeNumber(), objT.getChargeNumber()))
+      return false;
+    if (! SmartEquals(getFromAccount(), objT.getFromAccount()))
       return false;
     return true;
   }

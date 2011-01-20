@@ -54,6 +54,7 @@ package com.efi.printsmith.data
 		public var linearY2:Boolean = false;
 		public var taxTable:TaxTable;
 		public var chargeNumber:Number = 0;
+		public var fromAccount:Boolean = false;
 	
 	}
 }
