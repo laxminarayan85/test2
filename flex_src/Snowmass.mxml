@@ -468,7 +468,21 @@
 					&& (ss.commandName.indexOf("rStandardMenuText.OpenTape") > -1 ))	{
 						doOpenTape();				
 					}		
-					
+				
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.CreateCustomerfmDocu") > -1 ))	{
+						var mdi:MDIWindow = containerManager.getActiveWindow()	;
+						if (mdi.content is EditInvoice)	{
+							(mdi.content as EditInvoice).createCustFromDoc();		
+						}			
+					}
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.DepositEntry") > -1 ))	{
+						var mdi:MDIWindow = containerManager.getActiveWindow()	;
+						if (mdi.content is EditInvoice)	{
+							(mdi.content as EditInvoice).openDepositEntry();	
+						}			
+					}	
 			}
 			if (event.menuItem is WindowApplicationMenuItem)	{
 				var winItem:WindowApplicationMenuItem = event.menuItem as WindowApplicationMenuItem;

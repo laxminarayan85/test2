@@ -23,6 +23,12 @@
 					fault="handleFault(event)"
 					result="handleCreateInvoiceResult(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="createCustFromDocService"
+						destination="dataService">
+		<mx:method name="addUpdate"
+					fault="handleFault(event)"
+					result="handleCreateCustomerFromDoc(event)"/>
+	</mx:RemoteObject>
 	<mx:RemoteObject id="dataService"
 					 destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll"
@@ -1056,6 +1062,7 @@
 				invoice.resaleId = inv_resale_number.text;
 				invoice.expenseCode = inv_expense_code.text;
 				invoice.firmWantedByDate = inv_firm_wanted.selected;
+				 
 				
 				//invoice.salesCode =
 				if (inv_sales_rep != null && inv_sales_rep.selectedItem != null)
@@ -1073,6 +1080,10 @@
 				si.instructions = special_instructions_edit.text;
 				invoice.specialInstructions=si;
 				invoice.billToAddress=bill_to_address_editor.getAddress();
+				if ((invoice.billToAddress != null) && ( invoice.account.walkIn ))	{
+					invoice.account.title = invoice.billToAddress.name;
+				}					
+				
 				invoice.shipToAddress=this.delivery_intent_address_editor.getAddress();
 				//invoice.contact = contact_editor.getContact();
 				invoice.takenBy = taken_by.text;
@@ -1564,11 +1575,18 @@
 				txtNumContacts.text = "(" + ac.length + ")";
 				contact_list.selectedIndex = findItemIndex(accountcontacts, contact);
 				contact_editor.setContact(contact);
-				contact_ship_address.dataProvider = contact.shipToAddress;
-				if (contact.shipToAddress == null || contact.shipToAddress.length == 0)
+				if (contact != null)	{
+					contact_ship_address.dataProvider = contact.shipToAddress;
+					
+					if (contact.shipToAddress == null || contact.shipToAddress.length == 0)
+						rdoContactAddress.enabled = false;
+					else
+						rdoContactAddress.enabled = true;
+				}
+				else	{
+					contact_ship_address.dataProvider = null;
 					rdoContactAddress.enabled = false;
-				else
-					rdoContactAddress.enabled = true;					 
+				}					 
 			}
 			private function findItemIndex(array:ArrayCollection, item:ModelBase):int	{
 				for (var i:int=0;i<array.length;i++)	{
@@ -1902,6 +1920,7 @@
 				temp.lastName = selContact.lastName;
 				temp.prefix = selContact.prefix;
 				temp.suffix = selContact.suffix;
+				temp.useContactAddress = selContact.useContactAddress;
 				temp.comLinks = new ArrayCollection();
 				for (var i:int=0; i<selContact.comLinks.length;i++)	{
 					var coml:ComLink = selContact.comLinks.getItemAt(i) as ComLink;
@@ -1913,6 +1932,7 @@
 				temp.jobTitle = selContact.jobTitle;
 				temp.salutation = selContact.salutation;
 				temp.parentAccount = invoice.account;
+				temp.address = selContact.address;
 				temp.shipToAddress = selContact.shipToAddress; // doesnt matter if same reference
 				if (temp["newFlag"] != true)	{
 					// remove new and temp contact if any
@@ -1939,7 +1959,22 @@
 				}
 			}
 			
-			private function openDepositEntry():void		{
+			public function createCustFromDoc():void	{
+				//only for deleted customers or walk in customers
+				if (invoice.account.walkIn && invoice.billToAddress != null && invoice.billToAddress.name != "")	{					
+					invoice.account.walkIn = false;
+					createCustFromDocService.addUpdate(invoice.account);	
+				}
+				if (invoice.account.isDeleted)	{
+					invoice.account.isDeleted = true;
+					createCustFromDocService.addUpdate(invoice.account);
+				}	
+			}
+			
+			private function handleCreateCustomerFromDoc(event:ResultEvent):void	{
+				//this.setAccount(event.result as Account, false);
+			}
+			public function openDepositEntry():void		{
 				if (invoice is Invoice)	{
 					
 				
