@@ -16,6 +16,7 @@ package com.efi.printsmith.data
 				
 		public var name:String = "";
 		public var glAccount:String = "";
+		public var nonSale:Boolean = false;
 	
 	}
 }

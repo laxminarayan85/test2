@@ -2,6 +2,7 @@ package com.efi.printsmith.migration;
 
 import java.io.File;
 import java.util.List;
+import java.lang.String;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -808,6 +809,10 @@ public class PreferencesMapper extends ImportMapper {
 		if (salesCategory == null) {
 			salesCategory = new SalesCategory();
 			salesCategory.setPrevId(key);
+			if ( (Utilities.tokenToInt(key) >= 17 )&& ( Utilities.tokenToInt(key) <= 21))
+				salesCategory.setNonSale(true);
+			else	
+				salesCategory.setNonSale(false);
 			salesCategory.setName(name);
 			dataService.addUpdate(salesCategory);
 		}

@@ -57,6 +57,11 @@ public class SalesCategory extends ModelBase {
   public static final String GLACCOUNT = "GlAccount";
 
 	/**
+   * @generated
+   */
+  public static final String NONSALE = "NonSale";
+
+	/**
 	 * @generated
 	 */
 	public SalesCategory() {
@@ -125,6 +130,28 @@ public class SalesCategory extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean nonSale;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getNonSale(){
+    return nonSale; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setNonSale(Boolean newVal) {
+    this.nonSale = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -132,6 +159,7 @@ public class SalesCategory extends ModelBase {
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (NAME.equals(propertyName)) return getName();
     if (GLACCOUNT.equals(propertyName)) return getGlAccount();
+    if (NONSALE.equals(propertyName)) return getNonSale();
     return super.getProperty(propertyName);
   }
 	
@@ -143,6 +171,7 @@ public class SalesCategory extends ModelBase {
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (NAME.equals(propertyName)) setName((String)newValue); else
     if (GLACCOUNT.equals(propertyName)) setGlAccount((String)newValue); else
+    if (NONSALE.equals(propertyName)) setNonSale((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -156,6 +185,8 @@ public class SalesCategory extends ModelBase {
       return new Class<?>[] {String.class};		
     if (GLACCOUNT.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (NONSALE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -168,6 +199,7 @@ public class SalesCategory extends ModelBase {
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (NAME.equals(propertyName)) return SalesCategory.class;
     if (GLACCOUNT.equals(propertyName)) return SalesCategory.class;
+    if (NONSALE.equals(propertyName)) return SalesCategory.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -182,6 +214,8 @@ public class SalesCategory extends ModelBase {
     if (! SmartEquals(getName(), objT.getName()))
       return false;
     if (! SmartEquals(getGlAccount(), objT.getGlAccount()))
+      return false;
+    if (! SmartEquals(getNonSale(), objT.getNonSale()))
       return false;
     return true;
   }			
