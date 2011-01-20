@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import com.efi.printsmith.Constants;
 import com.efi.printsmith.data.CostingRecord;
 import com.efi.printsmith.data.Dimension;
 import com.efi.printsmith.data.InvoiceBase;
@@ -1196,11 +1197,11 @@ public class JobMapper extends ImportMapper {
 				job.setTotalImpressions(totalQty);
 		}
 		if( dutch)
-			tempPaper.setRunToFinishGrain("Swing / Combination");
+			tempPaper.setRunToFinishGrain(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION);
 		else if (grain)
-			tempPaper.setRunToFinishGrain("Match Grain");
+			tempPaper.setRunToFinishGrain(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN);
 			else
-				tempPaper.setRunToFinishGrain("Neither");
+				tempPaper.setRunToFinishGrain(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER);
 		job.setPaperCal(tempPaper);
 		pricingRecord = (PricingRecord)dataService.addUpdate(pricingRecord);
 		pricingRecord.setId(pricingRecord.getId());

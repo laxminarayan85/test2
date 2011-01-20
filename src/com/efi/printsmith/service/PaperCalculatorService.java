@@ -24,8 +24,6 @@ import javax.persistence.EntityManagerFactory;
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.Constants;
-import com.efi.printsmith.data.Account;
-import com.efi.printsmith.data.CreditCardTransactions;
 import com.efi.printsmith.data.JobBase;
 import com.efi.printsmith.data.PaperCalculator;
 import com.efi.printsmith.data.enums.RunMethod;
