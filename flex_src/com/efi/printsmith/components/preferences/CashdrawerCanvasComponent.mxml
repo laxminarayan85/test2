@@ -113,10 +113,10 @@
 							dataHolder="{preferencesPOS}" variableName="useMasterDrawer" customText="{preferencesPOS.useMasterDrawer}"
 							selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!preferencesPOS.lockSettings}"/>
 							
-						<components:CustomCheckBoxComponent
+						<!--<components:CustomCheckBoxComponent
 							label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'drawerCmd.Keepsettingslocal')}"
 							dataHolder="{preferencesPOS}" variableName="keepLocalSettings" customText="{preferencesPOS.keepLocalSettings}"
-							selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!preferencesPOS.lockSettings}"/>
+							selectedValue="true" deSelectedValue="false" defaultValue="false" enabled="{!preferencesPOS.lockSettings}"/>-->
 							
 					
 					</mx:VBox>
