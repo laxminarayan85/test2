@@ -4,7 +4,7 @@
 		  xmlns:ns1="com.efi.printsmith.components.*"
 		  xmlns:ns2="com.efi.printsmith.common.components.*"
 		  xmlns:common="com.efi.printsmith.common.components.*"
-		  xmlns:vo="com.efi.printsmith.vo.*"
+		  xmlns:vo="com.efi.printsmith.vo.*" 
 		  xmlns:fc="http://www.adobe.com/2006/fc"
 		  xmlns:hc="com.hillelcoren.components.*"
 		  xmlns:viewStackEffects="org.efflex.mx.viewStackEffects.*"
@@ -373,9 +373,11 @@
 							accountDataService.getAccountPicker();
 						}
 						//doAccountPicker();
-					}
+					} 
 					if (invoice.account != null)
-						this.setAccount(invoice.account);
+					
+						this.setAccount(invoice.account, false);
+									
 					var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this,true);
   					mdiWin.title = this.title;
   					
@@ -1367,23 +1369,46 @@
 				estimatorService.createInvoiceFromEstimate(this.invoice,Job);
 			}
 
-			public function setAccount(accountItem:Account):void
+			public function setAccount(accountItem:Account, fromChangeAccount:Boolean=true):void
 			{
 				invoice.account=accountItem;
-				invoice.shipToAddress=accountItem.shipToAddress;
-				invoice.billToAddress=accountItem.shipToAddress;
 				
-				if (isNaN(invoice.id) && accountItem.walkIn)	{
-					accountItem.status = "CustomerStatusInactive";
-					accountItem.type = "cash_check_credit";
+				if (fromChangeAccount)	{
+					invoice.shipToAddress=accountItem.shipToAddress;
+					invoice.billToAddress=accountItem.shipToAddress;
+				}
+				if (accountItem.walkIn)	{
+					if (isNaN(invoice.id))	{
+						accountItem.status = "CustomerStatusInactive";
+						accountItem.type = "cash_check_credit";
+						
+						txtNumContacts.text = "";
+						contact_list.dataProvider = null; //.selectedIndex = findItemIndex(accountcontacts, contact);
+						contact_editor.setContact(null);
+							
+					}
+					else	{
+						contact_editor.setContact(invoice.contact);
+						if (invoice.contact != null)	{
+							var ac:ArrayCollection = new ArrayCollection();
+							ac.addItem(invoice.contact);
+							accountcontacts = ac;
+						}
+						
+					}
+					contact_ship_address.dataProvider = null;
+					rdoContactAddress.enabled = false;
 					bill_to_address_editor.editable = true; 
 					btnContactNew.enabled = false;
+					
 				}
 				else	{
 					bill_to_address_editor.editable = false;
 					btnContactNew.enabled = true;
 					accountDataService.getContactsByAccountId("Contact", invoice.account.id);
 				}
+				
+				
 //				this.accountcontacts.removeAll();
 //				if (accountItem.contact != null)
 //					this.accountcontacts.addItem(accountItem.contact);
@@ -1673,8 +1698,8 @@
 			}
 			
 			private function disableDeliveryIntentAddress(): void {
-				this.delivery_intent_address_editor.enabled = false;
-				this.delivery_intent_address_editor.setAddress(this.bill_to_address_editor.getAddress());
+				this.delivery_intent_address_editor.enabled = false; 
+				//this.delivery_intent_address_editor.setAddress(this.bill_to_address_editor.getAddress());
 			}
 
 			private function openEditJobWindow(job:Job):void {
@@ -2752,7 +2777,7 @@
 						
 					<mx:VBox height="70%" width="100%">
 							<ns1:AddressEditor 
-										   id="bill_to_address_editor" backgroundColor="red"
+										   id="bill_to_address_editor" 
 										   address="{invoice.billToAddress}" editable="false"
 										   addressLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress')}"/>
 										   <!--title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.DeliveryIntent')}"-->
@@ -2767,16 +2792,16 @@
 												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.InvoiceAddress')}" id="rdoInvAddress"
 												groupName="delivery_intent_radio_group" selected="true" click="disableDeliveryIntentAddress();"/>
 								<mx:HBox width="100%" >
-									<mx:RadioButton id="rdoContactAddress" enabled="false"
+									<mx:RadioButton id="rdoContactAddress" enabled="false" click="disableDeliveryIntentAddress();"
 												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.ContactShipAddress')}"
 												groupName="delivery_intent_radio_group" />
 									<mx:ComboBox id="contact_ship_address" labelFunction="getContactShipToLabel" enabled="{rdoContactAddress.selected}"/>
 									
 								</mx:HBox>
 
-								<mx:RadioButton 
+								<mx:RadioButton id="rdoOtherAddress"
 												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.OtherAddress')}"
-												groupName="delivery_intent_radio_group" click="enableDeliveryIntentAddress();"/>
+												groupName="delivery_intent_radio_group" change="enableDeliveryIntentAddress();" />
 								<ns1:AddressEditor 
 										   id="delivery_intent_address_editor"
 										   address="{invoice.shipToAddress}"
@@ -2857,7 +2882,7 @@
 									  text="{invoice.invoiceNumber}"
 								/>
 						</mx:FormItem>					
-					</mx:Form>
+					</mx:Form> 
 					
 					<ns1:ContactInfoEditor height="70%" width="100%" id="contact_editor" contactLabel="Contact" />
 									
