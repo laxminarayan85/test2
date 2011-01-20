@@ -77,6 +77,13 @@ package com.efi.printsmith
 		static public const ACCOUNT_TYPE_CHARGE:String = "charge_acct";
 		static public const ACCOUNT_TYPE_CARD_ON_FILE:String = "credit_card_on_file";
 
+		static public const ACCOUNT_STATUS_NEW:String = "CustomerStatusNew";
+		static public const ACCOUNT_STATUS_CURRENT:String = "CustomerStatusCurrent";
+		static public const ACCOUNT_STATUS_DELIQUENT:String = "CustomerStatusDeliguent";
+		static public const ACCOUNT_STATUS_INACTIVE:String = "CustomerStatusInactive";
+		static public const ACCOUNT_STATUS_FROZEN:String = "CustomerStatusFrozen";
+		static public const ACCOUNT_STATUS_PASTDUE:String = "CustomerStatusPastDue";
+
 		static public const POS_CASH_REGISTER_PAYMODE_CASH:String = "Cash";
 		static public const POS_CASH_REGISTER_PAYMODE_CREDITCARD:String = "Credit Card";
 		static public const POS_CASH_REGISTER_PAYMODE_CHECK:String = "Check";

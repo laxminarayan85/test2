@@ -448,6 +448,9 @@
 	
 	private function handleAccountSaveResult(ev:ResultEvent):void {
 		customerAccount = null;		// no longer needed after a POST
+		acct_type.text = "";
+		acct_status_text.text = "";
+		acct_title.text = "";
 	}
 
 	private function handleLoadCashRegPreferencesResult(ev:ResultEvent):void{
@@ -1420,7 +1423,7 @@
 				}
 				
 				if (customerAccount != null) {
-					if (customerAccount.type == "cash_only" || customerAccount.type == "full_deposit") {
+					if (customerAccount.type == Constants.ACCOUNT_TYPE_CASH_ONLY || customerAccount.type == Constants.ACCOUNT_TYPE_FULL_DEPOSIT) {
 						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Onlycashisacceptedas");
 						Alert.show(message, "Warning", 0, null, null, null, 4); 
 						payOK = false;
@@ -1440,7 +1443,7 @@
 				activePayment.customerAccount = customerAccount;	
 				
 				if (customerAccount != null) {
-					if (customerAccount.status == "CustomerStatusFrozen") {
+					if (customerAccount.status == Constants.ACCOUNT_STATUS_FROZEN) {
 						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_CustomeraccountisFRO");
 						Alert.show(message, "Warning", 0, null, null, null, 4); 
 						payOK = false;
@@ -1720,6 +1723,48 @@
 		}
 		sessionBatch.account = customerAccount;
 		
+		acct_title.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.3');
+		acct_title.text = StringUtil.substitute(acct_title.text,customerAccount.title,customerAccount.displayId.toString()); 
+		
+		switch ( customerAccount.status){
+ 		case Constants.ACCOUNT_STATUS_NEW:
+ 			acct_status_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.New');
+ 			break;
+ 		case Constants.ACCOUNT_STATUS_CURRENT:
+ 			acct_status_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Current');
+ 			break;
+ 		case Constants.ACCOUNT_STATUS_DELIQUENT:
+ 			acct_status_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Delinquent');
+ 			break;
+ 		case Constants.ACCOUNT_STATUS_INACTIVE:
+ 			acct_status_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Inactive');
+ 			break;
+ 		case Constants.ACCOUNT_STATUS_FROZEN:
+ 			acct_status_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Frozen');
+ 			break;
+ 		case Constants.ACCOUNT_STATUS_PASTDUE:
+ 			acct_status_text.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.PastDue')
+ 			break;
+ 		}
+		
+ 		switch ( customerAccount.type){
+ 		case Constants.ACCOUNT_TYPE_CASH_CHECK_CREDIT:
+ 			acct_type.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CashCheckCreditCard');
+ 			break;
+ 		case Constants.ACCOUNT_TYPE_FULL_DEPOSIT:
+ 			acct_type.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.FullDeposit');
+ 			break;
+ 		case Constants.ACCOUNT_TYPE_CASH_ONLY:
+ 			acct_type.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CashOnly');
+ 			break;
+ 		case Constants.ACCOUNT_TYPE_CHARGE:
+ 			acct_type.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.ChargeAccount');
+ 			break;
+ 		case Constants.ACCOUNT_TYPE_CARD_ON_FILE:
+ 			acct_type.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CreditCardonFile')
+ 			break;
+ 		}
+	
 		// TODO - assign default invoice format from account
 	}
 	
@@ -2181,6 +2226,9 @@
 		invoice = null;
 		customerAccount = null;
 		this.currentState = "";
+		acct_type.text = "";
+		acct_status_text.text = "";
+		acct_title.text = "";
 		
 		if (chkNonTax.selected == true)
 			chkNonTax.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
@@ -2451,9 +2499,13 @@
 
 	<mx:Canvas x="130" y="80" width="100%" height="100%" id="cashregister_canvas" hideEffect="effect" showEffect="effect">
 		<mx:Button x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.CustAcct')}" id="btnCustAcct" click="doAccount();"/>
-		<mx:TextInput x="161" y="6" text="{customerAccount.title}" width="304" fontSize="9" fontWeight="bold" height="20"/>
-		<mx:TextInput x="161" y="25" text="{customerAccount.type}" width="304" fontSize="9" fontWeight="normal" height="20"/>
-		<mx:TextInput x="468" y="25" text="{customerAccount.status}" width="58" fontSize="9" fontWeight="normal" height="20"/>
+		<mx:Text x="161" y="6" id="acct_title" width="304" fontSize="9" fontWeight="bold" height="20"/>
+		
+		<mx:Text x="210" y="25" id="acct_type" width="284" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:Text x="550" y="25" id="acct_status_text" width="85" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:Label x="163" y="25" width="50" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Type')}" textAlign="right" fontSize="9"/>
+		<mx:Label x="502" y="25" width="50" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Status')}" textAlign="right" fontSize="9"/>
+		
 		<mx:Canvas x="0" y="50" width="200" height="95" id="tax_canvas" borderStyle="inset">
 			<mx:Label x="5" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxTable')}" width="64" textAlign="right"/>
 			<mx:Label x="5" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.TaxCode')}" width="64" textAlign="right"/>
