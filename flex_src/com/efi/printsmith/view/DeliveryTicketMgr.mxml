@@ -210,7 +210,8 @@
 					if(brokerObj.id == savedBrokerId){
 						brokerGrid.selectedIndex = counter;
 						broker = brokerObj;
-						ship_to_address_editor.setAddress(broker.address);
+						registerClassAlias("com.efi.printsmith.data.Address",Address);
+						ship_to_address_editor.setAddress(ObjectUtil.copy(broker.address) as Address);
 						if(newBrokerFlag){
 							newBrokerFlag = false;
 							ship_to_address_editor.doEditAddress();
@@ -402,7 +403,8 @@
 			address.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'deliveryTicketMgrCmd._BrokerName_');
 			newBroker.address = address;
 			broker = newBroker;
-			ship_to_address_editor.setAddress(broker.address);
+			registerClassAlias("com.efi.printsmith.data.Address",Address);
+			ship_to_address_editor.setAddress(ObjectUtil.copy(broker.address) as Address);
 			ship_to_address_editor.doEditAddress();
 			ship_to_contact_editor.setContact(copyBrokerToContact(broker));
 			/* newBrokerFlag = true;
@@ -412,7 +414,8 @@
 		private function brokerItemClickHandler(event:Event):void {
 			if(event.currentTarget.selectedIndex>-1 && event.currentTarget.selectedItem!=null){ 
 				broker = event.currentTarget.selectedItem as Broker;
-				ship_to_address_editor.setAddress(broker.address);
+				registerClassAlias("com.efi.printsmith.data.Address",Address);
+				ship_to_address_editor.setAddress(ObjectUtil.copy(broker.address) as Address);
 				ship_to_contact_editor.setContact(copyBrokerToContact(broker));
 			}
 		}
@@ -448,7 +451,8 @@
 				if(isNaN(broker.id) || broker.id==0) {
 					for each(var brokerObj:Broker in brokersList) {
 						if(broker.address!=null && brokerObj.address!=null && broker.address.name==brokerObj.address.name) {
-							ship_to_address_editor.setAddress(broker.address);
+							registerClassAlias("com.efi.printsmith.data.Address",Address);
+							ship_to_address_editor.setAddress(ObjectUtil.copy(broker.address) as Address);
 							ship_to_address_editor.doEditAddress();
 							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'Broker.AlreadyExists'));
 							return;
@@ -458,7 +462,8 @@
 					for each(var brokerObj:Broker in brokersList) {
 						for each(var brokerObj:Broker in brokersList) {
 							if(broker.id!=brokerObj.id && broker.address!=null && brokerObj.address!=null && broker.address.name==brokerObj.address.name) {
-								ship_to_address_editor.setAddress(broker.address);
+								registerClassAlias("com.efi.printsmith.data.Address",Address);
+								ship_to_address_editor.setAddress(ObjectUtil.copy(broker.address) as Address);
 								ship_to_address_editor.doEditAddress();
 								Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'Broker.AlreadyExists'));
 								return;
@@ -526,7 +531,8 @@
 					return;
 				}
 				broker = newBrokerObj;
-				ship_to_address_editor.setAddress(broker.address);
+				registerClassAlias("com.efi.printsmith.data.Address",Address);
+				ship_to_address_editor.setAddress(ObjectUtil.copy(broker.address) as Address);
 				ship_to_address_editor.doEditAddress();
 				ship_to_contact_editor.setContact(copyBrokerToContact(broker));
 			}
@@ -544,9 +550,10 @@
 					}
 				}
 				broker = newBrokerObj;
-				ship_to_address_editor.setAddress(newBrokerObj.address);
+				registerClassAlias("com.efi.printsmith.data.Address",Address);
+				ship_to_address_editor.setAddress(ObjectUtil.copy(broker.address) as Address);
 				ship_to_address_editor.doEditAddress();
-				ship_to_contact_editor.setContact(copyBrokerToContact(newBrokerObj));
+				ship_to_contact_editor.setContact(copyBrokerToContact(broker));
 				/* newBrokerFlag = true;
 				dataServiceBroker.addUpdate(newBrokerObj); */
 			}
