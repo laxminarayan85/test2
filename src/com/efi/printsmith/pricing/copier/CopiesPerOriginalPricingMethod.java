@@ -130,6 +130,7 @@ public class CopiesPerOriginalPricingMethod extends CopierPricingMethod {
 						} else {
 							pricePerCopy = MatrixUtilities.calculateStepPriceSideTwo(copierDefinition.getCopierMatrix(), lookupQty);
 						}
+						pricePerCopy *= copierDefinition.getCopyMarkup2();
 						stockTotalPrice = (stockPrice*((job.getTotalCopies()/2)/runout));
 						laborTotalPrice = (pricePerCopy * job.getTotalCopies());
 					} else {
