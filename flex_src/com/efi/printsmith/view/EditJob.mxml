@@ -2883,6 +2883,8 @@
 	    		} else {
 	    			job.pricingRecord.totalPriceOverride = true;
 	    			job.pricingRecord.totalPrice = parseFloat(job_price.text);
+	    			job.pricingRecord.stockCost = job.pricingRecord.totalPrice;
+	    			job.pricingRecord.stockTotalPrice = job.pricingRecord.totalPrice;
 	    		}
 	    		setOverrideForField(job_price,job.pricingRecord.totalPriceOverride);
 	    	}
@@ -2902,13 +2904,13 @@
 	    			job.orStockCost = false;
 	    			job.totalCost = 0;
 	    			job.pricingRecord.stockCost = 0;
-	    			this.updatePrice();
 	    		} else {
 	    			job.orStockCost = true;
 	    			job.totalCost = parseFloat(job_totalCost.text);
 	    			job.pricingRecord.stockCost = parseFloat(job_totalCost.text);
 	    		}
 	    		setOverrideForField(job_totalCost,job.orStockCost);
+	    		this.updatePrice();
 	    	}
 	    	
 	    	private function editEstWaste(evt:Event):void {

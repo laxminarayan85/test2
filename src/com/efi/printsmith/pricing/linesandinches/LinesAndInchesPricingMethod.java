@@ -12,14 +12,16 @@ public class LinesAndInchesPricingMethod {
 		PricingRecord pricingRecord = job.getPricingRecord();
 		DataService dataService = new DataService();
 		double cost = MatrixUtilities.getStampScheduleCost((StampSchedule)dataService.getStampSchedule(), job.getNumberOfInches(), job.getNumberOfLines());
-		double price = cost * job.getQtyOrdered();
 		if (job.getOrStockCost() == false) {
 			job.setTotalCost(cost);
-			job.getPricingRecord().setStockCost(price);
-			job.getPricingRecord().setStockTotalPrice(price);
-		}
-		if (job.getPricingRecord().getTotalPriceOverride() == false)
+		} else
+			cost = job.getTotalCost().doubleValue();
+		double price = cost * job.getQtyOrdered();
+		if (job.getPricingRecord().getTotalPriceOverride() == false) {
 			job.getPricingRecord().setTotalPrice(price);
+		}
+		job.getPricingRecord().setStockCost(job.getPricingRecord().getTotalPrice());
+		job.getPricingRecord().setStockTotalPrice(job.getPricingRecord().getTotalPrice());
 		return job;
 	}
 }
