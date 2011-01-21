@@ -1890,7 +1890,7 @@ public class PaperCalculatorService extends SnowmassHibernateService {
 					break;
 				case Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH:
 					//job->usePaperCalcUp == 0 && 
-					if (job.getNumUp() != papercal.getRunout().intValue())		// job->finishOut
+					if (job.getNumUp().intValue() != papercal.getFinishout().intValue())	
 					{
 					    g.setStroke(strokeTwoPixel);
 					    g.setColor(Color.red);

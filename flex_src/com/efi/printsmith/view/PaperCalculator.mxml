@@ -154,12 +154,11 @@
 					}
 					
 					intValue = results.getItemAt(14) as Number;		// finishOut
-			//		job.pa finishOut = intValue;
+			    	job.paperCal.finishout = intValue;
 					if (job.orUp == 0)
 						job.numUp = intValue;
 					
-					job.paperCal.runout = job.numUp;		// TEMP
-			//		job.paperCal.sheetsOut = job.paperCal.runout;
+					job.paperCal.sheetsOut = job.numUp;
 					
 					// cut counts, the override logic is handled in JAVA
 					intValue = results.getItemAt(1) as Number;
@@ -378,13 +377,13 @@
 				calc_order_radio_group.selectedValue = job.paperCal.whichStartSize;
 				parent_size_edit.selectedIndex = findItem(job.parentSize.name,dimensions);
 				if ( parent_size_edit.selectedIndex == -1)
-					parent_size_edit.text = "";
+					parent_size_edit.text = job.parentSize.name;
 				finish_size_edit.selectedIndex = findItem(job.finishSize.name, dimensions)
 				if (finish_size_edit.selectedIndex == -1)
-					finish_size_edit.text = "";
+					finish_size_edit.text = job.finishSize.name;
 				run_size_edit.selectedIndex = findItem(job.runSize.name, dimensions)
 				if (run_size_edit.selectedIndex == -1)
-					run_size_edit.text = "";
+					run_size_edit.text = job.runSize.name;
 				
 				setOverrideForField(txtCutstoRun, job.orRunCuts);
 				setOverrideForField(txtCutstoFinish, job.orFinishCuts);
@@ -477,7 +476,7 @@
 				job.paperCal.whiteSpaceRight=parseFloat(txtWhiteSpaceRight.text);
 				job.paperCal.whiteSpaceTop=parseFloat(txtWhiteSpaceTop.text);
 				job.paperCal.runAndTumble=chkWorkAndTumble.selected;
-
+				job.cutOff = job.runSize.height;		// large format
 			}
 
 			private function doGrip():void
@@ -590,6 +589,9 @@
 				job.runSize.width = job.parentSize.width;
 				run_size_edit.text = job.runSize.name;
 				run_size_edit.selectedIndex = parent_size_edit.selectedIndex;
+				if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
+					job.cutOff = job.runSize.height;
+				}
 			}
 
 			if (job.finishSize.width == 0 || job.finishSize.height == 0 || job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
@@ -680,14 +682,25 @@
 						
 					case run_size_edit:
 						sizeStr = Snowmass.formatSizeString(run_size_edit.text);
+						if (job.runSize == null)
+							job.runSize = new Dimension()
+						job.runSize.name = sizeStr;
+						job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
+						job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
+
+						if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
+							job.cutOff = job.runSize.height;
+							if (job.runSize.width != job.parentSize.width) {
+								job.runSize.width = job.parentSize.width;		// must stay in sync
+								job.runSize.name = job.runSize.width.toString() + " x " + job.runSize.height.toString();
+								sizeStr = job.runSize.name;
+							}
+						}
+						
 						run_size_edit.selectedIndex = findItem(sizeStr, dimensions);
+
 						if (run_size_edit.selectedIndex == -1) {
-					//		run_size_edit.text = sizeStr;
-							if (job.runSize == null)
-								job.runSize = new Dimension()
 							job.runSize.name = sizeStr;
-							job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
-							job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
 						}
 						else {
 							localSize = run_size_edit.selectedItem as Dimension;
@@ -783,6 +796,16 @@
 	   					job.runSize.type = tempItem.type;		
 						job.runSize.width = tempItem.width;		
 						job.runSize.height = tempItem.height;		
+						
+						if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
+							job.cutOff = job.runSize.height;
+							if (job.runSize.width != job.parentSize.width) {
+								job.runSize.width = job.parentSize.width;		// must stay in sync
+								job.runSize.name = job.runSize.width.toString() + " x " + job.runSize.height.toString();
+								tempItem.name = job.runSize.name;
+								dropTarget.text = job.runSize.name;
+							}
+						}
 
 	       				run_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
 	       				

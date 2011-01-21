@@ -1233,10 +1233,15 @@
 				if (run_method_radiogroup.selectedValue != null) {
 					job.runMethod=run_method_radiogroup.selectedValue.toString();
 				}
+				if (cutOff_edit != null)
+					job.cutOff= parseInt(cutOff_edit.text);
+
 				if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed") {
 					if (job.parentSize == null)
 						job.parentSize = new Dimension;
 					job.parentSize.name = this.roll_width.text;
+					job.parentSize.width = parseInt(this.roll_width.text);
+					job.parentSize.height = job.cutOff;
 				}
 				else {
 					if ( job.parentSize != null) {
@@ -1250,8 +1255,15 @@
 						}
 					}
 				}
-				
-				if ( job.runSize != null && job_size.selectedItem != null) {
+
+				if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed") {
+					if ( job.runSize != null) {
+						job.runSize.height = job.cutOff;
+						job.runSize.width = job.parentSize.width;
+						job.runSize.name = job.runSize.width.toString() + " x " + job.runSize.height.toString();
+						job.runSize.type = job.parentSize.name;
+					}
+				} else  if ( job.runSize != null && job_size.selectedItem != null) {
 					//job.runSize = job_size.selectedItem as Dimension;
 					localSize = job_size.selectedItem as Dimension;
 					if (localSize != null) {
@@ -1282,8 +1294,6 @@
 					}
 				}
 
-				if (cutOff_edit != null)
-					job.cutOff= parseInt(cutOff_edit.text);
 				if (job_imp != null)
 					job.impositionsPerRun = parseInt(job_imp.text);
 				if (total_imp != null)
@@ -1840,6 +1850,13 @@
 						this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
 						if (this.job_finish_size.selectedIndex == -1)
 							this.job_finish_size.text = job.finishSize.name;
+						
+						// run starts off the the same
+						this.job.runSize.name = this.job.finishSize.name;
+						this.job.runSize.type = this.job.finishSize.type;
+						this.job.runSize.height = this.job.finishSize.height;
+						this.job.runSize.width = this.job.finishSize.width;
+
 					//	this.job.foldedSize.name = "";
 						
 						this.job.foldedSize = new Dimension();
@@ -2141,10 +2158,11 @@
 					}
 					
 					intValue = results.getItemAt(14) as Number;		// finishOut
-			    	job.paperCal.finishOut = intValue;
-					if (job.orUp == 0)
+			    	job.paperCal.finishout = intValue;
+					if (job.orUp == 0) {
 						job.numUp = intValue;
-					
+						job_up.text = job.numUp.toString();
+					}
 					//job.paperCal.runout = job.numUp;		// TEMP
 					job.paperCal.sheetsOut = job.numUp;
 					
@@ -2963,6 +2981,8 @@
 				job.parentSize = localJob.parentSize;
 				job.runSize = localJob.runSize;
 				job.finishSize = localJob.finishSize;
+				job.cutOff = localJob.cutOff;
+				job.numUp = localJob.numUp;
 				
 				if (job.parentSize != null)
 					this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
