@@ -253,7 +253,7 @@ public class PreferencesMapper extends ImportMapper {
 		else if (group.equals("CreditCard Info"))
 			importPreferencesCreditCardField(key, fieldName, fieldValue);
 		else if (group.equals("Money Formats"))
-			importPreferencesSystemField(key, fieldName, fieldValue, false);
+			importPreferencesSystemField(key, fieldName, fieldValue, true);
 	}
 	
 	private void importAddressFormats(String key, String name, String value) throws Exception {
