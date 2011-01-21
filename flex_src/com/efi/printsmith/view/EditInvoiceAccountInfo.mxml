@@ -794,7 +794,7 @@
 					
 					if (contact.shipToAddress == null || contact.shipToAddress.length == 0)
 						rdoContactAddress.enabled = false;
-					else
+					else 
 						rdoContactAddress.enabled = true;
 				}
 				else	{
@@ -905,13 +905,22 @@
 			}
 			
 			
-			
+			private function updateAddressEditor(add:Address):void	{
+				this.delivery_intent_address_editor.setAddress(ObjectUtil.copy(add) as Address);
+			}
 			private function enableDeliveryIntentAddress():void {
 				this.delivery_intent_address_editor.enabled = true;
+				updateAddressEditor(this.bill_to_address_editor.getAddress());
+			
 			}
 			
 			private function disableDeliveryIntentAddress(): void {
-				this.delivery_intent_address_editor.enabled = false; 
+				this.delivery_intent_address_editor.enabled = false;
+				if (rdoContactAddress.selected)
+					updateAddressEditor(contact_ship_address.selectedItem as Address);
+				else
+					updateAddressEditor(this.bill_to_address_editor.getAddress());
+				 
 				//this.delivery_intent_address_editor.setAddress(this.bill_to_address_editor.getAddress());
 			}
 
@@ -1093,7 +1102,7 @@
 									<mx:RadioButton id="rdoContactAddress" enabled="false" click="disableDeliveryIntentAddress();"
 												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.ContactShipAddress')}"
 												groupName="delivery_intent_radio_group" />
-									<mx:ComboBox id="contact_ship_address" labelFunction="getContactShipToLabel" enabled="{rdoContactAddress.selected}"/>
+									<mx:ComboBox id="contact_ship_address" labelFunction="getContactShipToLabel" change="{updateAddressEditor(contact_ship_address.selectedItem as Address);}" enabled="{rdoContactAddress.selected}"/>
 									
 								</mx:HBox>
 
