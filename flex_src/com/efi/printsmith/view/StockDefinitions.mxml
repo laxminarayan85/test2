@@ -226,6 +226,9 @@
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="getStockDefinition" fault="handleFault(event)" result="handleGetResult(event)"/>
+		<mx:method name="getDimensionByWildcardName"
+				   fault="handleFault(event)"
+				   result="handleDimesionByNameResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServicePreferencesStockDefinition" destination="dataService">
 		<mx:method name="getAllOrderBy" fault="handleFault(event)" result="handleLoadPreferencesStockDefinitionResult(event)"/>
@@ -439,6 +442,7 @@
 	private var pressDefinition:PressDefinition = new PressDefinition(); 
 	private var first:Boolean
     private var formIsValid:Boolean = false;
+    private var dimensionTarget:Object=new Object();
     
     [Bindable] public var fromJobPage:Boolean = false;
     
@@ -447,6 +451,40 @@
 	public function getSecurityCommand():String {
     	return PSSecurityCommands.PRICING_STOCKDEF;
     }
+    
+    private function handleDimesionByNameResult(ev:ResultEvent):void
+	{
+		var matchingDimensions:ArrayCollection=new ArrayCollection();
+
+		matchingDimensions = ev.result as ArrayCollection;
+		if (matchingDimensions.length > 0) {
+			var dim:Dimension = matchingDimensions.getItemAt(0) as Dimension;
+			
+			switch(dimensionTarget) {
+			case parentSize:
+				if (dim != null)
+					parentSize.text = dim.name;
+				else
+					parentSize.text = "";
+				break;
+			case NormalRunSize:
+				if (dim != null)
+					NormalRunSize.text = dim.name;
+				else
+					NormalRunSize.text = "";
+				break;
+			}
+		} else {
+			switch(dimensionTarget) {
+			case parentSize:
+				parentSize.text = "";
+				break;
+			case NormalRunSize:
+				NormalRunSize.text = "";
+				break;
+			}
+		}
+	}
                                                                              
 	public function init(event:FlexEvent = null):void {
 		if(stockDefinitions==null){
@@ -1775,16 +1813,22 @@
 	
 	private function handleFocusOutEvent(evt:FocusEvent):void
 	{
+		this.dimensionTarget = evt.currentTarget
 		if (evt.currentTarget == this.parentSize) {
 			var text:String = Snowmass.formatSizeString(this.parentSize.text);
 			//this.parentSize.selectedItem = findItem(text, this.dimensions);
-			this.parentSize.text = text;
+			if (text.indexOf("x") + 2 == text.length)
+				dataService.getDimensionByWildcardName(text);
+			else
+				this.parentSize.text = text;
 			stockDefinitions.parentsize.name = parentSize.text;
 			calstockMWeight(evt);
 		} else if (evt.currentTarget == this.NormalRunSize) {
 			var text:String = Snowmass.formatSizeString(this.NormalRunSize.text);
-			//this.NormalRunSize.selectedItem = findItem(text, this.dimensions);
-			this.NormalRunSize.text = text;
+			if (text.indexOf("x") + 2 == text.length)
+				dataService.getDimensionByWildcardName(text);
+			else
+				this.NormalRunSize.text = text;
 			stockDefinitions.normalRunSize.name = NormalRunSize.text;
 		}
 		super.focusOutHandler(evt);
@@ -2250,7 +2294,7 @@ private function doRound(evt:FocusEvent):void{
 
 	<mx:TabNavigator x="0" y="175" width="953" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
 		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SpecificationandPric')}" id="page_specification_and_pricing" width="100%" height="100%">
-			<mx:Panel x="14.5" y="0" width="926.5" height="225" layout="absolute" dropShadowEnabled="false">
+			<mx:Panel x="14.5" y="0" width="926.5" height="225" layout="absolute" dropShadowEnabled="false" id="panel3">
 				<mx:Label x="0" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Vendor')}" textAlign="right" width="98.5"/>
 				<mx:Label x="1" y="35" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.StockType')}" textAlign="right" width="97.5" id="label6"/>
 				<mx:Label x="276" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Stock')}" textAlign="right" width="72.5"/>
@@ -2266,12 +2310,6 @@ private function doRound(evt:FocusEvent):void{
 				<comp:EditableComboBox x="106.5" y="5" width="150.5" id="cboVendor" dataProvider="{stockVendor}" labelField="name" focusOut="doStockVendor()" optional="true"/>
 				<mx:ComboBox x="106.5" y="33" id="stkType" width="150.5" dataProvider="{stockType}" labelField="name" change="doStockType()" />
 				<mx:TextInput x="356.5" y="5" width="93" id="stockNumber" text="{stockDefinitions.stocknumber}" height="22"/>
-				<fc:AutoComplete x="106.5" y="60" width="132" 
-					  id="parentSize"
-					  dataProvider="{dimensions}"
-					  labelFunction="getParentsizename"
-					   focusOut="handleFocusOutEvent(event)"
-				/>
 				<mx:TextInput  restrict="0-9\." x="337" y="60" width="122.5" id="thickNess" focusOut="convertoCaliper();"/>
 				<mx:TextInput  restrict="0-9\." x="106.5" y="116" width="107" id="sheetsPerCarton" text="{stockDefinitions.sheetspercarton}" focusOut="doRound(event)"/>
 				<mx:TextInput  restrict="0-9\." x="375.5" y="89" width="89.5" id="mWeight" text="{stockDefinitions.mweight}" enabled="{!fromJobPage}"/>
@@ -2293,6 +2331,7 @@ private function doRound(evt:FocusEvent):void{
 
 				</mx:Panel>
 				<mx:CheckBox x="457.5" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Excludefromwebupdate')}" id="chkExcludeFromWebUpdate"/>
+				<mx:ComboBox x="106.5" y="60" width="132" id="parentSize" tabIndex="10" labelField = "name" dataProvider="{dimensions}" editable="true" focusOut="handleFocusOutEvent(event)"></mx:ComboBox>
 			</mx:Panel>
 			<mx:Panel x="14.5" y="233" width="746.5" height="200" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyAdjustments')}" dropShadowEnabled="false" id="panel2">
 				<mx:Label x="105" y="32" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}" width="112" textAlign="right" id="qtybreaklabel"/>
