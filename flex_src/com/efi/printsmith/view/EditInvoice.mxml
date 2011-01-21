@@ -1110,8 +1110,20 @@
 				titleWindow.addEventListener(InvoiceNotesAddedEvent.INVOICENOTESADDED,onNotesAdded);
 			}
 			
+			private function isNotePadEmpty(notes:NotePad):Boolean	{
+				if (notes.notesWho == "" && notes.phoneNumber == "" && notes.notesWhat ==""
+					&& notes.howMany == "" && notes.whatSize =="" 
+					&& notes.paper == "" && notes.notes == "" 
+					&& notes.notesWhen == "")
+					return true;
+				else
+					return false;
+			}
 			private function onNotesAdded(evt:InvoiceNotesAddedEvent):void	{
-				lblHasNotes.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "newInvCmd.HasNotes");
+				if (isNotePadEmpty(evt.notes))	
+					lblHasNotes.text = "";
+				else
+					lblHasNotes.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "newInvCmd.HasNotes");
 			}
 			
 			private function doTickets(ev:MouseEvent=null):void
