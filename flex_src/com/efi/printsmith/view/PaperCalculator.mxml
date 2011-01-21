@@ -407,7 +407,16 @@
 				}
 				return -1;
 			}
-
+			
+			private function localParseText(txt:String):Number{
+				var results:Number = 0;
+				
+				if (txt.length > 0) {
+					results = parseFloat(txt);
+				}
+				return(results);
+			}
+			
 			private function mapToJobData():void
 			{
 				if (gripLocation.selectedValue != null) {
@@ -451,18 +460,18 @@
 				job.paperCal.attachToJobTicket=chkAttachToJobTicket.selected;
 				job.paperCal.backTrimParent=chkBackTrimParent.selected;
 				job.paperCal.backTrimRun = chkTrimFourSides.selected;
-				job.paperCal.bleedLeft=parseFloat(txtBleed.text);
-				job.paperCal.bleedBottom=parseFloat(txtBleedBottom.text);
-				job.paperCal.bleedRight=parseFloat(txtBleedRight.text);
-				job.paperCal.bleedTop=parseFloat(txtBleedTop.text);
-				job.paperCal.colorBar=parseFloat(txtColorBar.text);
+				job.paperCal.bleedLeft=localParseText(txtBleed.text);
+				job.paperCal.bleedBottom=localParseText(txtBleedBottom.text);
+				job.paperCal.bleedRight=localParseText(txtBleedRight.text);
+				job.paperCal.bleedTop=localParseText(txtBleedTop.text);
+				job.paperCal.colorBar=localParseText(txtColorBar.text);
 				job.paperCal.cutstoFinish=parseInt(txtCutstoFinish.text);
 				job.paperCal.cutstoRun=parseInt(txtCutstoRun.text);
 				job.paperCal.disableFSC=chkDisableFSC.selected
-				job.paperCal.folioEdge=parseFloat(txtFolioEdge.text);
-				job.paperCal.gripEdgeGap=parseFloat(txtGripEdge.text);
-				job.paperCal.gutter=parseFloat(txtGutter.text);
-				job.paperCal.gutterHorizontal=parseFloat(txtGutterHorizontal.text);
+				job.paperCal.folioEdge=localParseText(txtFolioEdge.text);
+				job.paperCal.gripEdgeGap=localParseText(txtGripEdge.text);
+				job.paperCal.gutter=localParseText(txtGutter.text);
+				job.paperCal.gutterHorizontal=localParseText(txtGutterHorizontal.text);
 				job.paperCal.sheetsOut=parseInt(txtSheetsOut.text);
 			//	job.paperCal.trimFourSides=chkTrimFourSides.selected;
 				job.paperCal.useBleed=chkBleed.selected;
@@ -471,10 +480,10 @@
 				job.paperCal.useGripEdgeGap=chkGripEdge.selected;
 				job.paperCal.useGutter=chkGutter.selected;
 				job.paperCal.useWhiteSpace=chkWhiteSpace.selected;
-				job.paperCal.whiteSpaceLeft=parseFloat(txtWhiteSpace.text);
-				job.paperCal.whiteSpaceBottom=parseFloat(txtWhiteSpaceBottom.text);
-				job.paperCal.whiteSpaceRight=parseFloat(txtWhiteSpaceRight.text);
-				job.paperCal.whiteSpaceTop=parseFloat(txtWhiteSpaceTop.text);
+				job.paperCal.whiteSpaceLeft=localParseText(txtWhiteSpace.text);
+				job.paperCal.whiteSpaceBottom=localParseText(txtWhiteSpaceBottom.text);
+				job.paperCal.whiteSpaceRight=localParseText(txtWhiteSpaceRight.text);
+				job.paperCal.whiteSpaceTop=localParseText(txtWhiteSpaceTop.text);
 				job.paperCal.runAndTumble=chkWorkAndTumble.selected;
 				job.cutOff = job.runSize.height;		// large format
 			}
@@ -589,8 +598,10 @@
 				job.runSize.width = job.parentSize.width;
 				run_size_edit.text = job.runSize.name;
 				run_size_edit.selectedIndex = parent_size_edit.selectedIndex;
-				if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
-					job.cutOff = job.runSize.height;
+				if (this.job.pricingMethod != null) {
+					if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
+						job.cutOff = job.runSize.height;
+					}
 				}
 			}
 
@@ -687,16 +698,17 @@
 						job.runSize.name = sizeStr;
 						job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
 						job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
-
-						if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
-							job.cutOff = job.runSize.height;
-							if (job.runSize.width != job.parentSize.width) {
-								job.runSize.width = job.parentSize.width;		// must stay in sync
-								job.runSize.name = job.runSize.width.toString() + " x " + job.runSize.height.toString();
-								sizeStr = job.runSize.name;
+						
+						if (this.job.pricingMethod != null) {
+							if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
+								job.cutOff = job.runSize.height;
+								if (job.runSize.width != job.parentSize.width) {
+									job.runSize.width = job.parentSize.width;		// must stay in sync
+									job.runSize.name = job.runSize.width.toString() + " x " + job.runSize.height.toString();
+									sizeStr = job.runSize.name;
+								}
 							}
 						}
-						
 						run_size_edit.selectedIndex = findItem(sizeStr, dimensions);
 
 						if (run_size_edit.selectedIndex == -1) {
@@ -797,16 +809,17 @@
 						job.runSize.width = tempItem.width;		
 						job.runSize.height = tempItem.height;		
 						
-						if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
-							job.cutOff = job.runSize.height;
-							if (job.runSize.width != job.parentSize.width) {
-								job.runSize.width = job.parentSize.width;		// must stay in sync
-								job.runSize.name = job.runSize.width.toString() + " x " + job.runSize.height.toString();
-								tempItem.name = job.runSize.name;
-								dropTarget.text = job.runSize.name;
+						if (this.job.pricingMethod != null) {
+							if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
+								job.cutOff = job.runSize.height;
+								if (job.runSize.width != job.parentSize.width) {
+									job.runSize.width = job.parentSize.width;		// must stay in sync
+									job.runSize.name = job.runSize.width.toString() + " x " + job.runSize.height.toString();
+									tempItem.name = job.runSize.name;
+									dropTarget.text = job.runSize.name;
+								}
 							}
 						}
-
 	       				run_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
 	       				
 	       				// keep in sync
