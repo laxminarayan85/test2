@@ -70,10 +70,13 @@
 						
 						<mx:DataGridColumn
 							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.GLAccount')}"
-							dataField="glAccount">
+							dataField="glAccount" width="100">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:Label text="{data.glAccount}"/>
+									<mx:HBox width="100%" horizontalScrollPolicy="off">
+										<mx:Label text="{data.glAccount}" width="90%"/>
+										<mx:Label text="*" visible="{data.nonSale}" includeInLayout="{data.nonSale}" textAlign="right" width="10%"/>
+									</mx:HBox>
 								</mx:Component>
 							</mx:itemRenderer>
 							<mx:itemEditor>
@@ -87,6 +90,8 @@
 							
 					</mx:columns>
 				</mx:DataGrid>
+				
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'otherPrefCmd.DenotesaNonSalecateg')}"/>
 				
 				<mx:HBox width="100%">
 				

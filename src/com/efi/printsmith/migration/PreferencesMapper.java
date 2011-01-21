@@ -77,6 +77,8 @@ public class PreferencesMapper extends ImportMapper {
 							keyValue = keyNode.getNodeValue();
 						if (groupTitleNode.getNodeValue().equals("Sales Category List")) {
 							importSalesCategoryListRecord(keyValue, valueValue);
+						} else if (groupTitleNode.getNodeValue().equals("Sales General Ledger Categories")) {
+							importSalesCategoryAccountRecord(keyValue, valueValue);
 						} else if (groupTitleNode.getNodeValue().equals("Global Stamp Schedule")) {
 							MatrixService matrixService = new MatrixService();
 							StampSchedule stampSchedule = (StampSchedule)dataService.getStampSchedule();
@@ -817,6 +819,16 @@ public class PreferencesMapper extends ImportMapper {
 			dataService.addUpdate(salesCategory);
 		}
 	}
+	
+	private void importSalesCategoryAccountRecord(String key, String name) throws Exception {
+		DataService dataService = new DataService();
+		SalesCategory salesCategory = (SalesCategory) dataService.getByPrevId("SalesCategory", key);
+		if(salesCategory!=null) {
+			salesCategory.setGlAccount(name);
+			dataService.addUpdate(salesCategory);
+		}
+	}
+	
 	private void importPreferencesAccountingField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
 		PreferencesAccounting preferencesAccounting = (PreferencesAccounting)dataService.getSingle("PreferencesAccounting");
