@@ -14,7 +14,8 @@ public class MailingPricingMethod {
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		
 		//if (job.getQtyOrdered() > 0) {
-			job.setTotalCost(job.getQtyOrdered() * job.getUnitCost().doubleValue());
+			if (job.getOrStockCost() == false)
+				job.setTotalCost(job.getQtyOrdered() * job.getUnitCost().doubleValue());
 			double markup = getMarkup(job.getTotalCost().doubleValue(), job.getPricingMethod());
 			job.setMarkup(markup);
 			pricingRecord.setTotalPrice(job.getTotalCost().doubleValue() * markup);
