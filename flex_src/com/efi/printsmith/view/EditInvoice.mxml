@@ -15,6 +15,11 @@
 		  implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
 		  name="Invoice Editor"
 		  fontSize="9" xmlns:components="com.efi.printsmith.common.components.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.accessibility.AccImpl;
+		]]>
+	</mx:Script>
 	
 	
 	<mx:RemoteObject id="estimatorService"
@@ -34,9 +39,6 @@
 		<mx:method name="getAll"
 				   fault="handleFault(event)"
 				   result="handleLoadResult(event)"/>
-		<mx:method name="getSingle"
-				   fault="handleFault(event)"
-				   result="handleLoadSingleResult(event)"/>
 		<mx:method name="deleteItem"
 				   fault="handleFault(event)"
 				   result="handleDeleteResult(event)"/>
@@ -77,32 +79,11 @@
 					fault="handleFault(event)"
 					result="handleCopyToNewEstimateResult(event)"/>
 	</mx:RemoteObject>
-	<mx:RemoteObject id="salesRepDataService"
-					 destination="dataService">
-		<mx:method name="getAll"
-				   fault="handleFault(event)"
-				   result="handleLoadSalesReps(event)"/>
-	</mx:RemoteObject>
-	<mx:RemoteObject id="holdStateDataService"
-					 destination="dataService">
-		<mx:method name="getAll"
-				   fault="handleFault(event)"
-				   result="handleLoadHoldState(event)"/>
-	</mx:RemoteObject>
-
-	<mx:RemoteObject id="shippingMethodDataService"
-					 destination="dataService">
-		<mx:method name="getAll"
-				   fault="handleFault(event)"
-				   result="handleLoadShippingMethods(event)"/>
-	</mx:RemoteObject>
 	
 	
 	<mx:RemoteObject id="accountDataService"
 					 destination="dataService">
-		<mx:method name="getContactsByAccountId"
-				   fault="handleFault(event)"
-				   result="handleLoadContacts(event)"/>
+	
 		<mx:method name="getAccountPicker"
 				   fault="handleFault(event)"
 				   result="handleLoadAccountsResult(event)"/>
@@ -296,15 +277,17 @@
 			private var preferencesAccounting:PreferencesAccounting;
 			
 			
-			private var newContact:Boolean = false;
-			private var tempContactId:Number = -1;
-			private var contactNew:Contact = null;
-			private var contactTemp:Contact = null;
+//			private var newContact:Boolean = false;
+//			private var tempContactId:Number = -1;
+			public var contactNew:Contact = null;
+			public var contactTemp:Contact = null;
+			public var selectedContact:Contact = null;
 						
 			[Bindable] private var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
 			
 			private var randomNumber:int;
-						
+			private var windowRef:MDIWindow;
+									
 			public function getSecurityCommand():String {
 				
 				if ((invoice != null) && (invoice is Estimate))
@@ -316,48 +299,38 @@
 		
 			public function init(event:FlexEvent = null):void
 			{
+				windowRef = Snowmass.getInstance().containerManager.getWindowWithChild(this, true);
+				
 				// create toolbar buttons
 				createToolbarButtons();
 				
-				this.bill_to_address_editor.setLabel(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress'));
-				loginUser = new Users();
-				loginUser = Snowmass.getInstance().currentUser;
-				inv_sales_rep.enabled = !(loginUser.lockSalesRep);
-				//vbox.getDividerAt(0).visible=false;
-				//vbox.getDividerAt(1).visible=false;
 				
 				randomNumber = Math.random();
 				
 				if (invoice == null) {
+				
 					invoice=new Invoice();
 					invoice.takenBy=Snowmass.getInstance().currentUser.name;
 					invoice.onPendingList = true;
+
 					doAccountPicker();
-					if (editorType == EDITESTIMATE){
-						inv_number.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceRpt.NewEstimates');
-						invoice_number_edit.label= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Estimate');
-					} else {
-						inv_number.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceRpt.NewInvoices');
-						invoice_number_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice');
-					}
+
+					
 					
 					
 				} else {
 	
 					if (invoice is Estimate)
-						editorType = EDITESTIMATE
+						editorType = EDITESTIMATE;
 					
 					if (editorType == EDITESTIMATE) {
 						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
 				//		this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
 						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Estimate');
-						invoice_number_edit.label= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Estimate');
-						
 					} else {
 						this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 				//		this.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
 						this.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Invoice');
-						invoice_number_edit.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice');
 					}
 					
 					if (invoice.id > 0) {
@@ -374,18 +347,12 @@
 						} else {
 							this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')+": "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.new');
 						}
-						if(invoice.account==null){
-							loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
-							accountDataService.getAccountPicker();
-						}
-						//doAccountPicker();
+						
+						if (invoice.account == null)
+							doAccountPicker();
 					} 
-					if (invoice.account != null)
-					
-						this.setAccount(invoice.account, false);
 									
-					var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this,true);
-  					mdiWin.title = this.title;
+					windowRef.title = this.title;
   					
   					if (invoice.notes != null)	{
   						lblHasNotes.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.HasNotes');
@@ -413,11 +380,6 @@
 				}
 				
 					
-				salesRepDataService.getAll("SalesRep");
-				holdStateDataService.getAll("HoldState");
-				shippingMethodDataService.getAll("ShippingMethod");
-				dataService.getSingle("PreferencesEstimating");
-				dataService.getSingle("PreferencesAccounting");
 				invoiceRepositoryService.getItemList();
 				var eventJobs:InvoiceJobsEvent = new InvoiceJobsEvent(toolbar.getButton("new_job_button0"),new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 				eventJobs.dispatch();
@@ -425,70 +387,13 @@
 				eventCharges.dispatch();
 				
 				
-				job_costing_stack.selectedChild = account_info_canvas;
-				bottomrightstack.selectedChild = blankarea;
-				
-				contact_editor.addEventListener("SaveContactEvent", saveContactHandler, false, 1);
-				contact_editor.addEventListener(CloseEvent.CLOSE, onContactEditorClose,false,1);
-				
+			
 			}
 			
-			private function onContactEditorClose(evt:CloseEvent):void	{
-				if (newContact)
-					newContact = false;
+			private function openAccountInfo():void	{
+				
 			}
-			private function saveContactHandler(evt:SaveContactEvent):void	{
-				var c:Contact = null;
-					
-				if (evt.contact.id != NaN)	{
-					var c:Contact = null;
-					// editing new contact should not create temp, only new
-					var currentContact = contact_list.selectedItem as Contact;	
-					// remove new / temp contacts that already exist.
-					if (newContact || (currentContact != null && (currentContact["newFlag"] == true)))	{
-						newContact = false;
-						c = new Contact();
-						c["newFlag"] = true;
-						removeNewContactFromList();
-					}
-					else	{
-						c = new Contact();
-						c.tempFlag = true;
-						removeTempContactFromList();
-					}
-					c.firstName = evt.contact.firstName;
-					c.lastName = evt.contact.lastName;
-					c.prefix = evt.contact.prefix;
-					c.suffix = evt.contact.suffix;
-					c.comLinks = new ArrayCollection();
-					for (var i:int=0; i<evt.contact.comLinks.length;i++)	{
-						var coml:ComLink = evt.contact.comLinks.getItemAt(i) as ComLink;
-						var newcoml:ComLink = new ComLink();
-						newcoml.type = coml.type;
-						newcoml.value = coml.value;
-						c.comLinks.addItem(newcoml);
-					}
-					c.jobTitle = evt.contact.jobTitle;
-					c.salutation = evt.contact.salutation;
-					c.parentAccount = invoice.account;
-				}
-				else	{
-					c = evt.contact;
-				}
-				if (c.tempFlag)	{
-					contactTemp = c;
-				}
-				else	{
-					contactNew = c;
-				}
-
-				(contact_list.dataProvider as ArrayCollection).addItem(c);
-				contact_list.selectedItem = c;
-
-
-//				contactDataService.addUpdate(c);
-			}
-
+		
 			
 			private function handleSaveWalkInAcct(event:ResultEvent):void	{
 				var a:Account = event.result as Account;
@@ -504,7 +409,7 @@
 			}
 
 			private function saveNewContactResult(evt:ResultEvent):void	{
-				var currentContact:Contact = contact_list.selectedItem as Contact;
+				var currentContact:Contact = selectedContact;
 				if (currentContact["newFlag"] == true)	{
 					invoice.contact = evt.result as Contact;
 					dataService.saveInvoice(invoice);
@@ -552,7 +457,7 @@
 				tb = new ToolbarButton(
 									"change_account_button", 
 									resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.AccountInfo'),
-									accountIcon,doChangeAcct);
+									accountIcon,doAccountPicker);
 				ac.addItem(tb); 
 				
 				tb = new ToolbarButton(
@@ -679,8 +584,6 @@
 			private function handleLoadInvoice(event:ResultEvent):void {
 				this.invoice = event.result as InvoiceBase;
 				
-				if ( invoice.account != null)
-					UpdateCustomerStatus();
 					
 				if(invoice.jobs!=null) {
 					for each(var jobBaseObj:JobBase in invoice.jobs) {
@@ -714,127 +617,11 @@
 
 			}
 			
-			private function handleLoadSingleResult(event:ResultEvent):void {
-				if (event.result is PreferencesEstimating)	{
-					preferencesEstimating = event.result as PreferencesEstimating;
-					if (preferencesEstimating.canChangeAddress)
-						bill_to_address_editor.enabled = true;
-					else
-						bill_to_address_editor.enabled = false;
-				}
-				if (event.result is PreferencesAccounting)	{
-					preferencesAccounting = event.result as PreferencesAccounting;	
-//					invoicePrefix = preferencesAccounting.invoicePrefix;
-//					invoiceSuffix = preferencesAccounting.invoiceSuffix;
-//					estimatePrefix = preferencesAccounting.estimatePrefix;
-//					estimateSuffix = preferencesAccounting.estimateSuffix;
-//					allowInvoicePrefix = preferencesAccounting.invoiceAllowPrefixMod;
-//					allowInvoiceSuffix = preferencesAccounting.invoiceAllowSuffixMod;
-//					allowEstimatePrefix = preferencesAccounting.estimateAllowPrefixMod;
-//					allowEstimateSuffix = preferencesAccounting.estimateAllowSuffixMod;
-					txtPrefix.editable = getPrefixEditable();
-//					txtPrefix.visible = getPrefixVisible();
-					txtPrefix.text = getPrefixText();
-					txtSuffix.editable = getSuffixEditable();
-//					txtSuffix.visible = getSuffixVisible();
-					txtSuffix.text = getSuffixText();									
-				}
-			}
-			
-			private function getPrefixEditable():Boolean	{
-				if (preferencesAccounting != null)	{
-					if (invoice is Invoice)	{
-						return preferencesAccounting.invoiceAllowPrefixMod;
-					}
-					else	{
-						return preferencesAccounting.estimateAllowPrefixMod;
-					}
-				}
-				return false;
-			}
-			
-			private function getSuffixEditable():Boolean	{
-				if (preferencesAccounting != null)	{
-					if (invoice is Invoice)	{
-						return preferencesAccounting.invoiceAllowSuffixMod;
-					}
-					else	{
-						return preferencesAccounting.estimateAllowSuffixMod;
-					}
-				}
-				return false;
-			}
-//			private function getSuffixVisible():Boolean	{
-//				if (preferencesAccounting != null)	{
-//					if (invoice is Invoice)	{
-//						if (preferencesAccounting.invoiceSuffix == null && !preferencesAccounting.invoiceAllowSuffixMod)	{
-//							return false;
-//						}
-//						return true;
-//					}
-//					else	{
-//						if (preferencesAccounting.estimateSuffix == null && !preferencesAccounting.estimateAllowSuffixMod)	{
-//							return false;
-//						}
-//						return true;
-//					}
-//				}
-//				return false;
-//			}
-//			private function getPrefixVisible():Boolean	{
-//				if (preferencesAccounting != null)	{
-//					if (invoice is Invoice)	{
-//						if (preferencesAccounting.invoicePrefix == null && !preferencesAccounting.invoiceAllowPrefixMod)	{
-//							return false;
-//						}
-//						return true;
-//					}
-//					else	{
-//						if (preferencesAccounting.estimatePrefix== null && !preferencesAccounting.estimateAllowPrefixMod)	{
-//							return false;
-//						}
-//						return true;
-//					}
-//				}
-//				return false;
-//			}
-			private function getPrefixText():String{
-				if (isNaN(invoice.id))	{
-					if (preferencesAccounting != null)	{
-						if (invoice is Invoice)	{
-							return preferencesAccounting.invoicePrefix;
-						}
-						else	{
-							return preferencesAccounting.estimatePrefix;
-						}
-					}
-				}
-				else	{
-					return invoice.invoiceNumberPrefix;
-				}
-				return null;
-			}
-			private function getSuffixText():String{
-				if (isNaN(invoice.id))	{
-					if (preferencesAccounting != null)	{
-						if (invoice is Invoice)	{
-							return preferencesAccounting.invoiceSuffix;
-						}
-						else	{
-							return preferencesAccounting.estimateSuffix;
-						}
-					}
-				}
-				else	{
-					return invoice.invoiceNumberSuffix;
-				}
-				return null;
-			}
+		
 			private function handleSaveResult(ev:ResultEvent):void
 			{
 				var convertedEstimate:Boolean = false;
 				this.invoice = ev.result as InvoiceBase;
-				inv_number.text = invoice.invoiceNumber;
 				//this.parent.removeChild(this);
 				if(invoice is Invoice){
 					if(convertedEstimatedId!=0){
@@ -1051,24 +838,6 @@
 
 			public function mapToInvoiceData():void
 			{
-
-				invoice.name=name_edit.text;
-				invoice.invoiceNumberPrefix = txtPrefix.text;
-				invoice.invoiceNumberSuffix = txtSuffix.text;
-				invoice.invoiceNumber=inv_number.text;
-				invoice.contact=contact_list.selectedItem as Contact;
-				invoice.customerPO=inv_po_number.text;
-				invoice.holdState=inv_hold_state.selectedItem as HoldState;
-				invoice.resaleId = inv_resale_number.text;
-				invoice.expenseCode = inv_expense_code.text;
-				invoice.firmWantedByDate = inv_firm_wanted.selected;
-				 
-				
-				//invoice.salesCode =
-				if (inv_sales_rep != null && inv_sales_rep.selectedItem != null)
-					invoice.salesRep=inv_sales_rep.selectedItem as SalesRep;
-				if (ship_via_combo != null && ship_via_combo.selectedItem != null)
-					invoice.shippingMethod=ship_via_combo.selectedItem as ShippingMethod;
 				
 				var si:SpecialInstructions = null;
 				if (invoice.specialInstructions != null)	{
@@ -1079,14 +848,7 @@
 				}
 				si.instructions = special_instructions_edit.text;
 				invoice.specialInstructions=si;
-				invoice.billToAddress=bill_to_address_editor.getAddress();
-				if ((invoice.billToAddress != null) && ( invoice.account.walkIn ))	{
-					invoice.account.title = invoice.billToAddress.name;
-				}					
 				
-				invoice.shipToAddress=this.delivery_intent_address_editor.getAddress();
-				//invoice.contact = contact_editor.getContact();
-				invoice.takenBy = taken_by.text;
 			}
 
 			public function doSave(ev:MouseEvent=null):void
@@ -1094,22 +856,24 @@
 				mapToInvoiceData();
 				var doInvoiceLater:Boolean = false;
 				
-				if (invoice.account.walkIn)	{
-					dataService.addUpdate(invoice.account);
-					doInvoiceLater = true;
-				}
-				if (contactTemp != null && (contact_list.selectedItem as Contact).tempFlag)	{
-					if (!invoice.account.walkIn)	{
-						tempContactDataService.addUpdate(contactTemp);
+				if (invoice.account != null)	{				
+					if (invoice.account.walkIn)	{
+						dataService.addUpdate(invoice.account);
+						doInvoiceLater = true;
+					}
+					if (contactTemp != null && selectedContact.tempFlag)	{
+						if (!invoice.account.walkIn)	{
+							tempContactDataService.addUpdate(contactTemp);
+							doInvoiceLater = true;
+						}
+					}
+					
+					if (contactNew != null)	{
+						newContactDataService.addUpdate(contactNew);
 						doInvoiceLater = true;
 					}
 				}
-				
-				if (contactNew != null)	{
-					newContactDataService.addUpdate(contactNew);
-					doInvoiceLater = true;
-				}
-				
+								
 				if (!doInvoiceLater)
 					dataService.saveInvoice(invoice);
 				
@@ -1131,15 +895,7 @@
 				Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 			}
 
-			private function onNewContact():void	{
-				newContact = true;
-				if (contactNew == null)
-					contactNew = new Contact();
-					
-				contact_editor.setContact(contactNew);
-				contact_editor.edit_contact_button.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
-			}			
-
+	
 			private function doNewJob(ev:MouseEvent=null):void
 			{
 				var editJobWindow:EditJob= new EditJob(); //EditJob(PopUpManager.createPopUp(this, EditJob, true));
@@ -1223,50 +979,7 @@
 				invoice.amountDue = invoice.grandTotal;
 				this.showJobs();
 			}
-		private function UpdateCustomerStatus():void{
-			
-			switch (invoice.account.status){
-				
-					case "CustomerStatusNew":
-							account_status.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.New');
-						break;
-					case "CustomerStatusCurrent":
-							account_status.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Current');
-						break;
-					case "CustomerStatusInactive":
-							account_status.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Inactive');
-						break;
-					case "CustomerStatusPastDue":
-							account_status.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.PastDue');
-						break;
-					case "CustomerStatusDelinquent":
-							account_status.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Delinquent');
-						break;
-					case "CustomerStatusFrozen":
-							account_status.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custStatus.Frozen');
-						break;
-
-			}
-			switch (invoice.account.type){
-				
-					case "full_deposit":
-							account_type.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.FullDeposit');
-						break;
-					case "cash_only":
-							account_type.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CashOnly');
-						break;
-					case "cash_check_credit":
-							account_type.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CashCheckCreditCard');
-						break;
-					case "charge_acct":
-							account_type.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.ChargeAccount');
-						break;
-					case "credit_card_on_file":
-							account_type.text= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custType.CreditCardonFile');
-						break;
-
-			}
-		}
+	
 			private function saveJob(event:Event):void
 			{
 				var target:EditJob=event.target as EditJob;
@@ -1349,13 +1062,6 @@
 				this.showJobs();
 			}
 
-			private function doChangeAcct(event:MouseEvent=null):void
-			{
-				job_costing_stack.selectedChild=account_info_canvas;
-				bottomrightstack.selectedChild = blankarea;
-				//viewstack3.selectedChild=this.account_total_canvas;
-			}
-			
 			private function showCosting(event:MouseEvent=null):void
 			{
 				job_costing_stack.selectedChild=this.invoice_cost_canvas;
@@ -1379,45 +1085,9 @@
 				var selectedJob:Job = invoice_job_grid.selectedItem as Job;
 				estimatorService.createInvoiceFromEstimate(this.invoice,Job);
 			}
-
-			public function setAccount(accountItem:Account, fromChangeAccount:Boolean=true):void
-			{
-				invoice.account=accountItem;
-				
-				if (fromChangeAccount)	{
-					invoice.shipToAddress=accountItem.shipToAddress;
-					invoice.billToAddress=accountItem.shipToAddress;
-				}
-				if (accountItem.walkIn)	{
-					if (isNaN(invoice.id))	{
-						accountItem.status = "CustomerStatusInactive";
-						accountItem.type = "cash_check_credit";
-						
-						txtNumContacts.text = "";
-						contact_list.dataProvider = null; //.selectedIndex = findItemIndex(accountcontacts, contact);
-						contact_editor.setContact(null);
-							
-					}
-					else	{
-						contact_editor.setContact(invoice.contact);
-						if (invoice.contact != null)	{
-							var ac:ArrayCollection = new ArrayCollection();
-							ac.addItem(invoice.contact);
-							accountcontacts = ac;
-						}
-						
-					}
-					contact_ship_address.dataProvider = null;
-					rdoContactAddress.enabled = false;
-					bill_to_address_editor.editable = true; 
-					btnContactNew.enabled = false;
-					
-				}
-				else	{
-					bill_to_address_editor.editable = false;
-					btnContactNew.enabled = true;
-					accountDataService.getContactsByAccountId("Contact", invoice.account.id);
-				}
+			
+			// called from init - for existing invoice
+			// called from 	handleaccountpickerselect - when account is selected or changed
 				
 				
 //				this.accountcontacts.removeAll();
@@ -1426,10 +1096,8 @@
 //				if (accountItem.billToContact != null && accountItem.billToContact != accountItem.contact)
 //					this.accountcontacts.addItem(accountItem.billToContact);
 //				contact_list.selectedItem=invoice.account.contact as Contact;
-				bill_to_address_editor.setAddress(invoice.billToAddress);
-				this.delivery_intent_address_editor.setAddress(invoice.shipToAddress);
-				UpdateCustomerStatus();
-			}
+			
+			
 
 			private function doNotepad(ev:MouseEvent=null):void
 			{
@@ -1481,113 +1149,6 @@
 				return -1;
 			}
 
-//			private function doSaleRep():void
-//			{
-//				var sales:SalesRep;
-//				var result:Boolean;
-//
-//				if (inv_sales_rep.typedText != null && inv_sales_rep.typedText != "" && inv_sales_rep.selectedIndex == -1)
-//				{
-//					var item:int=findItem(inv_sales_rep.typedText, salesReps);
-//					if (item == -1)
-//					{
-//						sales=new SalesRep();
-//						sales.name=inv_sales_rep.text;
-//						salesRepDataService.addUpdate(sales);
-//						invoice.salesRep=sales
-//					}
-//					else
-//					{
-//						inv_sales_rep.selectedItem=item;
-//					}
-//				}
-//			}
-//
-//			private function doShipVia():void
-//			{
-//				var shipv:ShippingMethod;
-//				var result:Boolean;
-//
-//				if (ship_via_combo.text != null && ship_via_combo.text != "" && ship_via_combo.selectedIndex == -1)
-//				{
-//					var item:int=findItem(ship_via_combo.text, shippingMethods);
-//					if (item == -1)
-//					{
-//						shipv=new ShippingMethod();
-//						shipv.name=ship_via_combo.text;
-//						shippingMethodDataService.addUpdate(shipv);
-//						invoice.shippingMethod=shipv;
-//					}
-//					else
-//					{
-//						ship_via_combo.selectedIndex=item;
-//					}
-//				}
-//			}
-
-			private function handleLoadSalesReps(ev:ResultEvent):void
-			{
-				salesReps=ev.result as ArrayCollection;
-				if (invoice != null && invoice.salesRep != null)
-					inv_sales_rep.selectedIndex=findItem(invoice.salesRep.name, salesReps);
-			}
-
-			private function handleLoadHoldState(ev:ResultEvent):void
-			{
-				holdStates=ev.result as ArrayCollection;
-				if (invoice != null && invoice.holdState != null)
-					inv_hold_state.selectedIndex=findItem(invoice.holdState.name, holdStates);
-			}
-
-			private function handleLoadShippingMethods(ev:ResultEvent):void
-			{
-				shippingMethods=ev.result as ArrayCollection;
-				if (invoice != null && invoice.shippingMethod != null)
-					ship_via_combo.selectedIndex=findItem(invoice.shippingMethod.name, shippingMethods);
-			}
-			private function getAcctBillToContact(ac:ArrayCollection):Contact	{
-				if (ac!= null)	{
-					for (var i:int=0; i<ac.length; i++)	{
-						var tmp:Contact = ac.getItemAt(i) as Contact;
-						if (tmp.id == invoice.account.billToContact.id)	{
-							return tmp;
-						}
-					}
-				}
-				return null;
-			} 
-			private function handleLoadContacts(ev:ResultEvent):void
-			{
-				var ac:ArrayCollection =ev.result as ArrayCollection;
-				
-				var contact:Contact = null;
-				if (invoice.contact == null)	{
-					contact = getAcctBillToContact(ac);					
-				}
-				else	{
-					if (invoice.contact.tempFlag)	{
-						ac.addItem(invoice.contact);
-					}
-					contact = invoice.contact;						
-				}
-				
-				accountcontacts =  ac;
-				txtNumContacts.text = "(" + ac.length + ")";
-				contact_list.selectedIndex = findItemIndex(accountcontacts, contact);
-				contact_editor.setContact(contact);
-				if (contact != null)	{
-					contact_ship_address.dataProvider = contact.shipToAddress;
-					
-					if (contact.shipToAddress == null || contact.shipToAddress.length == 0)
-						rdoContactAddress.enabled = false;
-					else
-						rdoContactAddress.enabled = true;
-				}
-				else	{
-					contact_ship_address.dataProvider = null;
-					rdoContactAddress.enabled = false;
-				}					 
-			}
 			private function findItemIndex(array:ArrayCollection, item:ModelBase):int	{
 				for (var i:int=0;i<array.length;i++)	{
 					var obj:ModelBase = array.getItemAt(i) as ModelBase;
@@ -1601,90 +1162,35 @@
 				invoice = ev.result as InvoiceBase;
 				this.invoice.takenBy=Snowmass.getInstance().currentUser.name;
 						
-				this.bill_to_address_editor.setAddress(invoice.billToAddress);
-				this.delivery_intent_address_editor.setAddress(invoice.shipToAddress);
-				if (invoice != null && invoice.account != null) 
-					accountDataService.getContactsByAccountId("Contact", invoice.account.id);
-				
-				if (invoice.account == null){
-					var eventChangeAccounts:InvoiceChangeAccountsEvent = new InvoiceChangeAccountsEvent(change_account_button,new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
-					eventChangeAccounts.dispatch();
-					doChangeAcct();
-					doAccountPicker();
-				}
 				
 			}
-			private function doAccountPicker():void
+			private function doAccountPicker(evt:MouseEvent = null):void
 			{
-					
-
-				var accountPickerWindow:AccountPicker=AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
-				accountPickerWindow.setStyle("borderAlpha", 0.9);
-				accountPickerWindow.setAccounts(accounts)
-				accountPickerWindow.formIsEmpty=true;
-				 accountPickerWindow.prospect_boolean = true;
-				accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
-				accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
-				accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);
+				var thisWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this, true);
+				var ac:ArrayCollection = Snowmass.getInstance().containerManager.getChildrenOfWindow(thisWin.windowID);
 				
-				if(loadComponent) {
-					loadComponent.close();
+				if (ac != null)	{
+					for (var i:int=0; i<ac.length; i++)	{
+						var win:MDIWindow = ac.getItemAt(i) as MDIWindow;
+						if (win.content.className.indexOf("EditInvoiceAccountInfo") > -1)	{
+							win.bringWindowToFront();
+							return;
+						}  
+					}
 				}
+								
+				var accInfoRef:EditInvoiceAccountInfo = new EditInvoiceAccountInfo();
+				accInfoRef.parentInvoice = invoice;
+				accInfoRef.invWindow = this;
+				
+				//accInfo.addEventListener(DepositEntryAddedEvent.DEPOSITENTRYADDED, onDepEntryAdded,false, 0, true);
+				var winId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this, true).windowID;
+				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.AccountInfo'), accInfoRef,-1,-1,-1,-1,winId);
+				
 			}
 
-			private function handleAccountPickerCancel(evt:AccountPickerSelectEvent):void
-			{
-				if (invoice.account == null)
-					this.setAccount(new Account());
-			}
+
 			
-			private function onConfirmNotes(evt:CloseEvent):void	{
-				if (evt.detail == Alert.YES)	{
-					var si:SpecialInstructions = new SpecialInstructions();
-					si.instructions = invoice.account.accountNote;
-					invoice.specialInstructions = si;
-				}
-			}
-			private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void
-			{
-				if (evt.account != null)
-				{
-					if (evt.account.accountId == "1")	{
-						// walk in account
-						var walkin:Account = new Account();
-						walkin.walkIn = true;
-//						var c1:Contact = new Contact(); 
-//						var c2:Contact = new Contact();
-//						walkin.billToContact = c1;
-//						walkin.contact = c2;
-						//dataService.addUpdate(walkin);
-						this.setAccount(walkin);			
-					}
-					else if (evt.account.status == "CustomerStatusFrozen"){
-						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'Customer_Acct.FROZEN'));
-						this.setAccount(new Account());
-					}
-					else{
-					
-						this.setAccount(evt.account);
-						if (evt.account.accountNote != null)	{
-							var a:Array = new Array();
-							a.push("invoice notes");
-							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_CUSTOMERACCOUNTNOTES',a),"",Alert.YES|Alert.NO,this,onConfirmNotes);
-						}
-					}
-				}
-				else
-				{
-					this.setAccount(new Account());
-					Alert.show("Account Picker returned a null account", "Error");
-				}
-			}
-
-			private function handleAccountPickerNew(evt:AccountPickerSelectEvent):void
-			{
-				this.setAccount(new Account());
-			}
 			
 			private function handleLoadJobForEdit(evt:ResultEvent):void {
 				var selectedJob:Job = evt.result as Job;
@@ -1710,15 +1216,7 @@
 					openEditJobWindow(selectedJob);
 				}
 			}
-			
-			private function enableDeliveryIntentAddress():void {
-				this.delivery_intent_address_editor.enabled = true;
-			}
-			
-			private function disableDeliveryIntentAddress(): void {
-				this.delivery_intent_address_editor.enabled = false; 
-				//this.delivery_intent_address_editor.setAddress(this.bill_to_address_editor.getAddress());
-			}
+		
 
 			private function openEditJobWindow(job:Job):void {
 				var editJobWindow:EditJob= new EditJob(); //EditJob(PopUpManager.createPopUp(this, EditJob, true));
@@ -1892,73 +1390,7 @@
 				}
 			}
 			
-			private function removeNewContactFromList():void	{
-				if (contactNew != null)	{
-					contactNew = null;
-					var i:int = findFirstIndexByCondition(contact_list.dataProvider as ArrayCollection,"newFlag",true);
-					if (i > -1)
-						(contact_list.dataProvider as ArrayCollection).removeItemAt(i);
-				}
-					
-			}
-			private function removeTempContactFromList():void	{
-				if (contactTemp != null)	{
-					contactTemp = null;
-					var i:int = findFirstIndexByCondition(contact_list.dataProvider as ArrayCollection,"tempFlag",true);
-					if (i > -1)
-						(contact_list.dataProvider as ArrayCollection).removeItemAt(i);
-				}
 
-			}
-			private function doContactChange():void{
-				var temp:Contact= new Contact();
-				var selContact:Contact = contact_list.selectedItem as Contact;
-				
-				temp["newFlag"] = selContact["newFlag"];
-				temp.tempFlag = selContact.tempFlag;
-				temp.firstName = selContact.firstName;
-				temp.lastName = selContact.lastName;
-				temp.prefix = selContact.prefix;
-				temp.suffix = selContact.suffix;
-				temp.useContactAddress = selContact.useContactAddress;
-				temp.comLinks = new ArrayCollection();
-				for (var i:int=0; i<selContact.comLinks.length;i++)	{
-					var coml:ComLink = selContact.comLinks.getItemAt(i) as ComLink;
-					var newcoml:ComLink = new ComLink();
-					newcoml.type = coml.type;
-					newcoml.value = coml.value;
-					temp.comLinks.addItem(newcoml);
-				}
-				temp.jobTitle = selContact.jobTitle;
-				temp.salutation = selContact.salutation;
-				temp.parentAccount = invoice.account;
-				temp.address = selContact.address;
-				temp.shipToAddress = selContact.shipToAddress; // doesnt matter if same reference
-				if (temp["newFlag"] != true)	{
-					// remove new and temp contact if any
-					removeNewContactFromList();
-				}
-				if (!temp.tempFlag)	{
-					removeTempContactFromList();
-				}
-				contact_editor.setContact(temp);
-				contact_ship_address.dataProvider = temp.shipToAddress;
-				if (temp.shipToAddress == null || temp.shipToAddress.length == 0)	{
-					rdoInvAddress.selected = true;
-					rdoContactAddress.enabled = false;					 
-				}
-				else	{
-					rdoContactAddress.enabled = true;
-				}
-				if( temp.useContactAddress) {
-					bill_to_address_editor.setAddress(temp.address);
-					//this.delivery_intent_address_editor.setAddress(temp.address);
-				}
-				else	{
-					bill_to_address_editor.setAddress(invoice.billToAddress);
-				}
-			}
-			
 			public function createCustFromDoc():void	{
 				//only for deleted customers or walk in customers
 				if (invoice.account.walkIn && invoice.billToAddress != null && invoice.billToAddress.name != "")	{					
@@ -2788,218 +2220,6 @@
 		<mx:ViewStack id="job_costing_stack" height="80%" width="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
 
 		
-			<mx:HBox id="account_info_canvas" >
-				<mx:VBox width="50%" height="100%">
-					<mx:HBox width="100%" height="5%" >
-						<mx:Form height="100%" width="80%">
-							<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Title')}">
-								<mx:TextInput text="{invoice.name}"
-									  id="name_edit"
-									  />
-							</mx:FormItem>
-							<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCmd.Account')}">
-								<mx:Text 
-									 text="{invoice.account.title}"
-								 	id="account_text"
-								 	/>		
-							</mx:FormItem>
-					
-						</mx:Form>
-						<mx:Button width="20%" height="10%" id="change_account_button"
-								   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Changeacct')}"
-								   click="{accountDataService.getAccountPicker()}"
-								   />
-						
-					</mx:HBox>
-						
-					<mx:VBox height="70%" width="100%">
-							<ns1:AddressEditor 
-										   id="bill_to_address_editor" 
-										   address="{invoice.billToAddress}" editable="false"
-										   addressLabel="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.InvoiceAddress')}"/>
-										   <!--title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.DeliveryIntent')}"-->
-							<mx:VBox height="70%" width="100%" 
-								  dropShadowEnabled="false"
-								  
-								  horizontalScrollPolicy="off"
-								  verticalScrollPolicy="off">
-								<mx:Label fontWeight="bold" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.DeliveryIntent')}" height="2%" width="100%" />
-								<mx:RadioButtonGroup id="delivery_intent_radio_group"/>
-								<mx:RadioButton
-												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.InvoiceAddress')}" id="rdoInvAddress"
-												groupName="delivery_intent_radio_group" selected="true" click="disableDeliveryIntentAddress();"/>
-								<mx:HBox width="100%" >
-									<mx:RadioButton id="rdoContactAddress" enabled="false" click="disableDeliveryIntentAddress();"
-												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.ContactShipAddress')}"
-												groupName="delivery_intent_radio_group" />
-									<mx:ComboBox id="contact_ship_address" labelFunction="getContactShipToLabel" enabled="{rdoContactAddress.selected}"/>
-									
-								</mx:HBox>
-
-								<mx:RadioButton id="rdoOtherAddress"
-												label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.OtherAddress')}"
-												groupName="delivery_intent_radio_group" change="enableDeliveryIntentAddress();" />
-								<ns1:AddressEditor 
-										   id="delivery_intent_address_editor"
-										   address="{invoice.shipToAddress}"
-										   enabled="false"/>
-								<mx:HBox width="100%">
-									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Orderedon')}:" width="20%"
-										textAlign="right" fontWeight="bold"/>
-									<mx:DateField id="ordered_date" selectedDate="{invoice.orderedDate}" width="35%"
-										change="{setInvoiceDates(event,'orderedDate','ordered_week')}"/>
-									<mx:Label text="{getOrderedTime(invoice.orderedDate)}" width="35%"/>
-									<mx:Label id="ordered_week" text="{getWeekName(invoice.orderedDate)}" width="10%"/>
-								</mx:HBox>
-								
-								<mx:HBox width="100%">
-									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Wantedby')}:" width="20%"
-										textAlign="right" fontWeight="bold"/>
-									<components:CustomDateFieldComponent id="wanted_date" selectedDate="{invoice.wantedDate}" width="35%"
-										change="{setInvoiceDates(event,'wantedDate','wanted_week')}"/>
-									<components:CustomTimeEntryDateComponent
-										dataHolder="{invoice}" variableName="wantedDate" customText="{invoice.wantedDate}" 
-										is24Hour="false" width="35%" borderStyle="none"/>
-									<mx:Label id="wanted_week" text="{getWeekName(invoice.wantedDate)}" width="10%"/>
-								</mx:HBox>
-								
-								<mx:HBox width="100%">
-									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Deliveron')}:" width="20%"
-										textAlign="right" fontWeight="bold"/>
-									<components:CustomDateFieldComponent id="completed_date" selectedDate="{invoice.completedDate}" width="35%"
-										change="{setInvoiceDates(event,'completedDate','completed_week')}"/>
-									<components:CustomTimeEntryDateComponent
-										dataHolder="{invoice}" variableName="completedDate" customText="{invoice.completedDate}" 
-										is24Hour="false" width="35%" borderStyle="none"/>
-									<mx:Label id="completed_week" text="{getWeekName(invoice.completedDate)}" width="10%"/>
-								</mx:HBox>
-								
-								<mx:HBox width="100%">
-									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Proofby')}:" width="20%"
-										textAlign="right" fontWeight="bold"/>
-									<components:CustomDateFieldComponent id="proofby_date" selectedDate="{invoice.proofDate}" width="35%"
-										change="{setInvoiceDates(event,'proofDate','proofby_week')}"/>
-									<components:CustomTimeEntryDateComponent
-										dataHolder="{invoice}" variableName="proofDate" customText="{invoice.proofDate}" 
-										is24Hour="false" width="35%" borderStyle="none"/>
-									<mx:Label id="proofby_week" text="{getWeekName(invoice.proofDate)}" width="10%"/>
-								</mx:HBox>
-								
-								<mx:HBox width="100%">
-									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Reorder')}:" width="20%"
-										textAlign="right" fontWeight="bold"/>
-									<components:CustomDateFieldComponent id="reorder_date" selectedDate="{invoice.reorderDate}" width="35%"
-										change="{setInvoiceDates(event,'reorderDate')}"/>
-									<components:CustomCheckBoxComponent
-										label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.FileOriginals')}"
-										dataHolder="{invoice}" variableName="fileOriginals" customText="{invoice.fileOriginals}"
-										defaultValue="false" selectedValue="true" deSelectedValue="false" width="45%"/>
-								</mx:HBox>
-								
-							</mx:VBox>			   
-						
-					</mx:VBox>
-					
-					<mx:VBox height="25%" width="100%">
-						
-					</mx:VBox> 
-					
-					
-				</mx:VBox>	
-					
-				<mx:VBox width="50%" height="100%">
-					<mx:HBox height="1%" width="100%">
-						<mx:TextInput maxChars="6" width="10%" id="txtPrefix" text="{invoice.invoiceNumberPrefix}" textAlign="right" />
-						<mx:TextInput editable="false" width="80%" id="txtInvNum" text="{invoice.invoiceNumber}" />
-						<mx:TextInput maxChars="6" width="10%" id="txtSuffix" text="{invoice.invoiceNumberSuffix}" textAlign="left" />						
-					</mx:HBox>
-					<mx:Form height="1%" width="100%">	
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Invoice')}" textAlign="right" id="invoice_number_edit">
-							<mx:Text id="inv_number"
-									  text="{invoice.invoiceNumber}"
-								/>
-						</mx:FormItem>					
-					</mx:Form> 
-					
-					<ns1:ContactInfoEditor height="70%" width="100%" id="contact_editor" contactLabel="Contact" />
-									
-					<mx:HBox height="10%" width="100%">
-						<mx:Label height="100%" width="15%"
-								  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.ContactList')}" textAlign="right"/>
-						<mx:Text height="100%" width="5%"
-								  id="txtNumContacts" textAlign="right"/>
-								  
-						<mx:ComboBox height="100%" width="40%"
-									 dataProvider="{accountcontacts}"
-									 id="contact_list" labelFunction="contactLabel" change="doContactChange()"/>
-						<mx:Button id="btnContactNew" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" click="onNewContact();" />
-					</mx:HBox>
-					
-					<mx:Form height="40%" width="100%">
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.AccountStatus')}" >
-							<mx:Text id="account_status" />
-						</mx:FormItem>
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rCustSort.AccountType')}" >
-							<mx:Text id="account_type"/>
-						</mx:FormItem>
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Takenby')}" >
-							<mx:TextInput id="taken_by"
-									  text="{invoice.takenBy}"/>
-						</mx:FormItem>
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.SalesRep')}" >
-							<common:EditableComboBox id="inv_sales_rep"
-										 dataProvider="{salesReps}"
-										 labelField="name"
-										 />
-						</mx:FormItem>
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rChargeLabel.ShipVia')}" >
-							
-							<common:EditableComboBox id="ship_via_combo"
-											 dataProvider="{shippingMethods}"
-											 labelField="name"
-											 
-											 />
-						</mx:FormItem>
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleJobEditCmd.Hold')}" >
-							<common:EditableComboBox 
-									  id="inv_hold_state"
-									  dataProvider="{holdStates}"
-											 labelField="name"
-											 
-									  />
-						</mx:FormItem>		
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.PO')}" >
-							<mx:TextInput 
-									  id="inv_po_number"
-									  text="{invoice.customerPO}"
-									  />
-						</mx:FormItem>
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Resale')}" >
-							<mx:TextInput 
-									  id="inv_resale_number"
-									  text="{invoice.resaleId}"
-									  />
-						</mx:FormItem>		
-						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.ExpenseCode')}" >
-							<mx:TextInput id="inv_expense_code"
-									  text="{invoice.expenseCode}"
-									  />
-						</mx:FormItem>					  
-						<mx:FormItem >					
-							<mx:CheckBox id="inv_firm_wanted" selected="{invoice.firmWantedByDate}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Firmwantedbydate')}" />
-						</mx:FormItem>
-						<mx:FormItem label= "{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custDataCmd.Proofreader')}" >
-							<mx:TextInput id="inv_proofreader"
-										  text=""
-										  />
-						</mx:FormItem>
-					</mx:Form>
-				</mx:VBox>	
-					
-					
-					
-								
-			</mx:HBox>
 			<mx:VBox id="invoice_cost_canvas">
 				<mx:DataGrid width="100%"
 							 height="100%"

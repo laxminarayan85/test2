@@ -22,6 +22,7 @@
 	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
+			import mx.utils.ObjectUtil;
 			import com.efi.printsmith.data.ContactNamePrefix;
 			import com.efi.printsmith.data.ContactNameSuffixes;
 			import mx.events.FlexEvent;
@@ -59,6 +60,8 @@
 			
 			[Bindable] public var enableEditBtn:Boolean = true;
 			
+			public var contactByRef:Boolean = true;
+
 			public function init():void
 			{ 
 				dataService.getAll("JobTitle");
@@ -225,7 +228,13 @@
 				titleWindow.setJobTitles(jobTitles);
 				titleWindow.setPrefix(prefixes);
 				titleWindow.setSuffix(suffixes);
-				titleWindow.setContact(contact);
+				
+				if (contactByRef)	{
+					titleWindow.setContact(contact);
+				}
+				else	{
+					titleWindow.setContact(ObjectUtil.copy(contact) as Contact);
+				}
 
 				titleWindow.setStyle("borderAlpha", 0.9);
 				
