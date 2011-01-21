@@ -542,7 +542,7 @@
 											textAlign="right" width="160" />
 											
 										<components:CustomComboBoxComponent width="164"
-											masterList="{runToFinishGrainArray}" labelFieldId="name" labelFieldName="name"
+											masterList="{runToFinishGrainArray}" labelFieldId="key" labelFieldName="name"
 											dataHolder="{preferencesEstimating}" variableName="runToFinishGrain" customText="{getCustomTextData(runToFinishGrainArray,preferencesEstimating,preferencesEstimating.runToFinishGrain)}" 
 											updateFirstElement="true"/>
 										

@@ -161,6 +161,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>-->
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.Constants;
 	import com.efi.mdi.compare.ObjectCompareUtil;
 	import com.efi.printsmith.security.PSSecurityUtils;
 	import mx.utils.StringUtil;
@@ -717,12 +718,15 @@
 
 	private function fillRunToFinishGrainArray(fillArray:ArrayCollection):void{
 		var setting:Object = new Object();
+		setting.key = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER;
 		setting.name= resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.Neither' );
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.key = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN
 		setting.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcPickerCmd.MatchGrain' );
 		fillArray.addItem(setting);
 		setting = new Object();
+		setting.key = Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION;
 		setting.name=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPaperCalcCmd.SwingCombination' );
 		fillArray.addItem(setting);
 	}
