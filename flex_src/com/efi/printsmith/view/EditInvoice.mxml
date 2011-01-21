@@ -2502,6 +2502,8 @@
 					invoice.charges.addItem(selectedCharge);
 					invoice.charges.refresh();
 				}
+				invoice.jobs = getSortedList(invoice.jobs);
+				invoice_job_grid.dataProvider = getJobChargesList(invoice.jobs,invoice.charges);
 	        }
 	        
 	        private function dropJob(draggedItem:Object,dropIndex:int):void {
