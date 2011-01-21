@@ -139,7 +139,7 @@ public abstract class CopierPricingMethod {
 						}
 					}
 				}
-				job.setEstWaste(new Double(estWaste).longValue());
+				job.setEstWaste(new Double(Math.ceil(estWaste)).longValue());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
