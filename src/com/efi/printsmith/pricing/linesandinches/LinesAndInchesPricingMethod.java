@@ -10,14 +10,16 @@ import com.efi.printsmith.data.StampSchedule;
 public class LinesAndInchesPricingMethod {
 	public Job priceLinesAndInchesJob(Job job) throws Exception{
 		PricingRecord pricingRecord = job.getPricingRecord();
-		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		DataService dataService = new DataService();
 		double cost = MatrixUtilities.getStampScheduleCost((StampSchedule)dataService.getStampSchedule(), job.getNumberOfInches(), job.getNumberOfLines());
 		double price = cost * job.getQtyOrdered();
-		job.setTotalCost(cost);
-		job.getPricingRecord().setStockCost(price);
-		job.getPricingRecord().setStockTotalPrice(price);
-		job.getPricingRecord().setTotalPrice(price);
+		if (job.getOrStockCost() == false) {
+			job.setTotalCost(cost);
+			job.getPricingRecord().setStockCost(price);
+			job.getPricingRecord().setStockTotalPrice(price);
+		}
+		if (job.getPricingRecord().getTotalPriceOverride() == false)
+			job.getPricingRecord().setTotalPrice(price);
 		return job;
 	}
 }

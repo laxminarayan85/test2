@@ -371,7 +371,7 @@
 			<mx:SetProperty target="{label34}" name="y" value="109"/>
 			<mx:SetProperty target="{bindery_waste}" name="y" value="109"/>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
-				<mx:TextInput x="496" y="137" tabIndex="0" width="98" focusOut="fieldChanged(event)" id="job_totalCost" text="{job.totalCost}" textAlign="right" mouseDown="textInputClick(event)"  change="editTotalCost(event)"/>
+				<mx:TextInput x="496" y="137" tabIndex="0" width="98" focusOut="fieldChanged(event)" id="job_totalCost" text="{Snowmass.getCurrencyFormatter(false,2).format(job.totalCost)}" textAlign="right" mouseDown="textInputClick(event)"  change="editTotalCost(event)"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas4}" position="lastChild">
 				<mx:Label x="421"
@@ -2879,6 +2879,7 @@
 	    		if (job_price.text == "") {
 	    			job.pricingRecord.totalPriceOverride = false;
 	    			job.pricingRecord.totalPrice = 0;
+	    			this.updatePrice();
 	    		} else {
 	    			job.pricingRecord.totalPriceOverride = true;
 	    			job.pricingRecord.totalPrice = parseFloat(job_price.text);
@@ -2901,6 +2902,7 @@
 	    			job.orStockCost = false;
 	    			job.totalCost = 0;
 	    			job.pricingRecord.stockCost = 0;
+	    			this.updatePrice();
 	    		} else {
 	    			job.orStockCost = true;
 	    			job.totalCost = parseFloat(job_totalCost.text);
