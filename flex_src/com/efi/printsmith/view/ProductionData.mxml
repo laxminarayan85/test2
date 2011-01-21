@@ -83,6 +83,7 @@ width="938" height="507"  creationComplete="init()"
 	import com.efi.printsmith.data.Dimension;
 	import com.efi.printsmith.data.Job;
 	import com.efi.printsmith.data.JobBase;
+	import mx.utils.ObjectUtil;
 	import mx.controls.Alert;                                         
 	import mx.managers.PopUpManager;                                         
 	import mx.containers.TitleWindow;                                         
@@ -101,6 +102,7 @@ width="938" height="507"  creationComplete="init()"
 	import com.efi.printsmith.data.Invoice;         
 	import com.efi.printsmith.events.AccountPickerSelectEvent;	  
 	import com.efi.printsmith.events.PriceJobEvent;
+	import com.efi.printsmith.events.JobEditCompleteEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.IResponder;   
@@ -108,6 +110,8 @@ width="938" height="507"  creationComplete="init()"
 	
 	[Bindable]                                         
 	private var job:Job;
+	[Bindable]
+	private var originalJob:Job;
 	
 	[Bindable]
 	private var dimensionsArray:ArrayCollection=new ArrayCollection();
@@ -202,7 +206,7 @@ width="938" height="507"  creationComplete="init()"
 	
 	public function setJob(job2:JobBase):void
 	{
-		this.job = job2 as Job;
+		this.job = ObjectUtil.copy(job2) as Job;
 		dimensionDataService.getAll("Dimension");
 		setProductionData();
 	}			
@@ -566,6 +570,8 @@ width="938" height="507"  creationComplete="init()"
 	
 	private function doOK():void
 	{
+		var selectEvent:JobEditCompleteEvent = new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, job);
+		dispatchEvent(selectEvent);
 		PopUpManager.removePopUp(this);
 	}
 

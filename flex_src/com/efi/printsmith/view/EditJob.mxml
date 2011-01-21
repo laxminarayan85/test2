@@ -1113,7 +1113,8 @@
 			{
 				var productionDataWindow:ProductionData=ProductionData(PopUpManager.createPopUp(this, ProductionData, true));
 				productionDataWindow.setStyle("borderAlpha", 0.9);
-				productionDataWindow.setJob(this.job);	
+				productionDataWindow.setJob(this.job);
+				productionDataWindow.addEventListener(JobEditCompleteEvent.SAVE, handleJobEditSave);
 			}
 			
 			private function doPrint():void {
