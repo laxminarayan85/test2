@@ -56,7 +56,7 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 				log.error(e);
 			}			
 		}
-		if (chargeDefinition.getRateSetCount() != null && chargeDefinition.getRateSetCount() == 0) {
+		if (chargeDefinition.getCoverlbInk() != null && chargeDefinition.getCoverlbInk().equals(0)) {
 			price = new BigDecimal(0.0);
 		} else {
 			if (chargeDefinition.getUseColors()) {
@@ -127,10 +127,10 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 //				}
 //				localCharge.setOverrideMaterialQuantity(false);
 //			} else {
-			if (chargeDefinition.getRateSetCount() != null) {
-				rateSetCount = chargeDefinition.getRateSetCount();
+			if (chargeDefinition.getCoverlbInk() != null) {
+				rateSetCount = chargeDefinition.getCoverlbInk().doubleValue();
 			}
-				pounds = (inches * localCharge.getCoverage())/rateSetCount;
+			pounds = (inches * localCharge.getCoverage())/rateSetCount;
 //			}
 			
 			pounds *= colors;

@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 
 import com.efi.printsmith.service.ReportService;
 import com.inet.report.ReportException;
+import com.inet.report.Engine;
 
 public class ReportServlet extends HttpServlet implements Servlet {
 	private static final long serialVersionUID = 1L;
@@ -30,6 +31,23 @@ public class ReportServlet extends HttpServlet implements Servlet {
 	protected static Logger log = Logger.getLogger(ReportServlet.class);
 
 	public void init() throws ServletException {
+		String crystalClearPropertiesFileName = System.getProperty("com.efi.printsmith.crystalClearPropertiesFile");
+		final File properties = new File(this.getServletContext().getRealPath("WEB-INF/"+crystalClearPropertiesFileName));
+		
+		if (properties.exists()) {
+			System.out.println(properties.getAbsolutePath());
+		} else {
+			System.out.println(properties.getAbsolutePath());
+		}
+		log.debug("Properties location: " + properties);
+		
+		try {
+		Engine.setPath(properties.toURL());
+		} catch (IOException e) {
+		final String msg = "Unable to set engine properties path. "
+				+ e.getMessage();
+		throw new ServletException(msg, e);
+		}
 	}
 
 	protected void doGet(HttpServletRequest request,
