@@ -101,7 +101,7 @@ public class ChargeJobAwarePricingMethod extends ChargePricingMethod{
 			}
 		
 			if ((chargeDefinition.getUseColors() || chargeDefinition.getUseSides() ||
-				chargeDefinition.getUseOriginals() || chargeDefinition.getUseSignatures()) && chargeDefinition.getCutsArePrePress()) {
+				chargeDefinition.getUseOriginals() || chargeDefinition.getUseSignatures()) && (!(charge instanceof CuttingCharge || chargeDefinition.getCutsArePrePress()))) {
 				charge.setQuantity(charge.getQuantity()*runs*originals);
 			}
 			

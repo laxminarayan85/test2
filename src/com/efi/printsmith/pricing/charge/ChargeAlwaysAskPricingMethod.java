@@ -140,6 +140,8 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 	
 	private double calculateChargeTimeQuantity(Charge charge) {
 		double retVal = 0.0;
+		int startMinutes = 0;
+		int endMinutes = 0;
 		
 		if (charge.getStartHours() == 0 && charge.getStartMinutes() == 0) {
 			retVal = charge.getEndHours() * 60;
@@ -147,10 +149,15 @@ public class ChargeAlwaysAskPricingMethod extends ChargePricingMethod {
 		} else if (charge.getEndHours() == 0 && charge.getEndMinutes() == 0) {
 			retVal = charge.getStartHours() * 60;
 			retVal += charge.getStartMinutes();			
-		} else {
-			int startMinutes = 0;
-			int endMinutes = 0;
+		} else if (charge.getStartHours() > charge.getEndHours()) {
+			endMinutes = charge.getStartHours() * 60;
+			endMinutes += charge.getStartMinutes();
 			
+			startMinutes = charge.getEndHours() * 60;
+			startMinutes += charge.getEndMinutes();
+			
+			retVal = endMinutes - startMinutes;
+		} else {
 			startMinutes = charge.getStartHours() * 60;
 			startMinutes += charge.getStartMinutes();
 			

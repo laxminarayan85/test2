@@ -303,15 +303,15 @@
 				
 				// create toolbar buttons
 				createToolbarButtons();
-				
+				this.showJobs();
 				
 				randomNumber = Math.random();
-				
 				if (invoice == null) {
 				
 					invoice=new Invoice();
 					invoice.takenBy=Snowmass.getInstance().currentUser.name;
 					invoice.onPendingList = true;
+	
 
 					doAccountPicker();
 
@@ -385,9 +385,6 @@
 				eventJobs.dispatch();
 				var eventCharges:InvoiceChargesEvent = new InvoiceChargesEvent(toolbar.getButton("new_job_button"),new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 				eventCharges.dispatch();
-				
-				
-			
 			}
 			
 			private function openAccountInfo():void	{

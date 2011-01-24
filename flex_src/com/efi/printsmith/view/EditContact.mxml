@@ -255,6 +255,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 		// mode stuff 
 		if (_mode == CT_FROM_PICKER)	{
 			this.enabled = false;
+			Snowmass.getInstance().containerManager.getWindowWithChild(this).enabled = false;
 			openContactPicker();
 		}
 		else	{
@@ -405,6 +406,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	   
 		setDefaultContact();
 		use_contact_check.enabled = true;
+		Snowmass.getInstance().containerManager.getWindowWithChild(this).enabled = true;
 		this.enabled = true;
 	 	
 	}  
@@ -926,6 +928,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 		setMarketing();
 		setCreditCard();
 		this.setContact(contact);   defect 875*/
+		Snowmass.getInstance().containerManager.getWindowWithChild(this).enabled = true;
 		this.enabled = true;
 
 	}
@@ -940,6 +943,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	private function doSelectOperation(evtContact:Contact):void {
 		var temp:Contact = new Contact();
 		temp= evtContact as Contact;
+		Snowmass.getInstance().containerManager.getWindowWithChild(this).enabled = true;
 		this.enabled = true;
 		dataService2.getContact(temp.id );	
 	}
@@ -953,6 +957,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 		this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.ContactNewAccount");
 		var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
 		mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"kContactManagerCommand.ContactNewAccount");
+		mdiWin.enabled = true;
 		this.enabled = true;
 		this.contact = new Contact();
 		accountName.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kContactManagerCommand.notassigned');

@@ -923,6 +923,7 @@
 			    taxTableDataService.getCurrentTaxTables("TaxTable");
 			    dataServiceGroup.getAll("StockGroup");
 			    vendorDataService.getAll("Vendor");
+				chargeCommandDataService.getChargeList();
 				
 				if (job == null) {
 					job = new Job();
@@ -1609,7 +1610,6 @@
 				
 				chage_stock_button.enabled = true;
 
-				chargeCommandDataService.getChargeList();
 				if (doInitialStockPicker) initialStockPicker();
 				
 				if(loadComponent) {
@@ -1621,7 +1621,6 @@
 			{
 				chargeCommands=ev.result as ArrayCollection;
 				add_charge_button.enabled=true;
-				
 			}
 
 			private function handleLoadPricingMethodResult(ev:ResultEvent):void

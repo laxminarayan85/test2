@@ -516,7 +516,7 @@
 							charge.endHours = parseInt(stopTimeString.substr(0,stopTimeString.indexOf(".")));
 							charge.endMinutes = parseInt(stopTimeString.substr(stopTimeString.indexOf(".")+1));
 						} else {
-							charge.startHours = parseInt(startTimeString);
+							charge.endHours = parseInt(stopTimeString);
 						}
 					}
 					if (this.charge is InkCharge) {
@@ -636,7 +636,7 @@
 	  		private function updateRate():void {
 	  			if (this.rate_edit.text == "") {
 	    			this.charge.overrideRate = false;
-	    			this.charge.rate = 0;
+	    			this.charge.rate = chargeDefinition.rate;
 	    		 	this.rate_edit.setStyle("textDecoration", "none");
 	    		 	this.rate_edit.setStyle("fontStyle", "none");
 	    		} else {
@@ -681,6 +681,10 @@
 	    			this.charge.overridePrice = true;
 	    			this.charge.price = parseCurrencyFloat(price_edit.text); 
 	    		}
+			}
+			
+			private function updateQtyPerSet():void {
+				this.charge.qtyPerSet = parseFloat(this.quantity_per_set_text.text);
 			}
 			
 			private function updateTotalWeightEdit():void {
@@ -1492,7 +1496,7 @@
 									</mx:HBox>
 									<mx:HBox width="100%" id="quantity_per_set_box" visible="false">
 										<mx:Text text="{chargeDefinition.presetQuantityPerSetLabel}" width="50%" id="quantity_per_set_label_text" textAlign="right"/>
-										<mx:TextInput text="{chargeDefinition.presetQuantityPerSet}" width="50%" id="quantity_per_set_text" textAlign="right" focusOut="this.updatePrice()"/>
+										<mx:TextInput text="{chargeDefinition.presetQuantityPerSet}" width="50%" id="quantity_per_set_text" textAlign="right" change="this.updateQtyPerSet()" focusOut="this.updatePrice()"/>
 										<mx:Spacer width="49"/>
 									</mx:HBox>
 									<mx:HBox width="100%" id="area_box" visible="false">

@@ -86,6 +86,7 @@ creationComplete="init()" label="{resourceManager.getString(Snowmass.RESOURCE_BU
 		definition.presetNotesLabel = notes_label_text.text;
 		definition.presetPriceLabel = price_label_text.text;
 		definition.presetPrice = parseCurrencyFloat(price_text.text);
+		definition.presetRateLabel = rate_label_text.text;
 		definition.presetRate = parseCurrencyFloat(rate_text.text);
 		definition.rate = definition.presetRate;
 		definition.presetNotes = notes_default_text.text;
