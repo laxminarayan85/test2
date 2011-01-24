@@ -1309,6 +1309,7 @@
 				job.specialOrderStock = specialOrder.selected;
 				job.customerSuppliedStock = customer_suppliled_stock.selected;
 				job.parentInvoice = this.invoice;
+				this.job.charges = this.charges;
 			}
 
 			private function mapFromJobData():void
@@ -1724,9 +1725,12 @@
 			{
 				if (invoice_charge_datagrid.selectedItem != null)
 				{
-					var charge:Charge=invoice_charge_datagrid.selectedItem as Charge;
-					var index:int=this.job.charges.getItemIndex(charge);
-					this.job.charges.removeItemAt(index);
+			//		var charge:Charge=invoice_charge_datagrid.selectedItem as Charge;
+			//		var index:int=this.job.charges.getItemIndex(charge);
+					var index:int=invoice_charge_datagrid.selectedIndex;
+					if (index > -1) {
+						this.charges.removeItemAt(index);
+					}
 				}
 			}
 

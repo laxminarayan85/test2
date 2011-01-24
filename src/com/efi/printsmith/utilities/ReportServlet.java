@@ -32,21 +32,18 @@ public class ReportServlet extends HttpServlet implements Servlet {
 
 	public void init() throws ServletException {
 		String crystalClearPropertiesFileName = System.getProperty("com.efi.printsmith.crystalClearPropertiesFile");
-		final File properties = new File(this.getServletContext().getRealPath("WEB-INF/"+crystalClearPropertiesFileName));
-		
-		if (properties.exists()) {
-			System.out.println(properties.getAbsolutePath());
-		} else {
-			System.out.println(properties.getAbsolutePath());
+		if (crystalClearPropertiesFileName == null || crystalClearPropertiesFileName.length() == 0) {
+			log.error("No Crystal Clear properties file found. Make sure that com.efi.printsmith.crystalClearPropertiesFile is defined correctly in instance.properties");
 		}
+		final File properties = new File(this.getServletContext().getRealPath("WEB-INF/"+crystalClearPropertiesFileName));
 		log.debug("Properties location: " + properties);
 		
 		try {
-		Engine.setPath(properties.toURL());
+			Engine.setPath(properties.toURL());
 		} catch (IOException e) {
-		final String msg = "Unable to set engine properties path. "
-				+ e.getMessage();
-		throw new ServletException(msg, e);
+			final String msg = "Unable to set engine properties path. "
+					+ e.getMessage();
+			throw new ServletException(msg, e);
 		}
 	}
 
