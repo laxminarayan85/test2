@@ -861,7 +861,19 @@
 	}
 	
 	private function doSave():void {
+		var index:int;
+		var temp:String;
+		
 		if(account!=null){
+			index = findItemCase(name_edit.text, accounts, account);
+			if ( index > -1)
+				{
+					temp = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_4Thereisalreadyacust');
+					temp = StringUtil.substitute(temp,name_edit.text);
+					Alert.show(temp);
+					return;
+				}
+							
 			mapToAccountData();
 			if(account.title==null || account.title==""){
 				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Cantfileanaccountift'));
@@ -869,6 +881,7 @@
 				this.enabled = false;
 				dataService.addUpdate(account);
 			}
+			
 		} else {
 			doNewOperation();
 		}                                        		
@@ -885,6 +898,17 @@
 		for each(var element:Object in array) {
 			if (name == element.name) {
 				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}
+	private function findItemCase(name:String, array:ArrayCollection, temp:Account):int {
+		for each(var element:Object in array) {
+			if (name.toUpperCase() == element.title.toUpperCase()) {
+				if (temp.id == element.id)
+					return -1;
+				else
+					return array.getItemIndex(element);
 			}
 		}
 		return -1;
