@@ -1,20 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}" width="750">
 
+	<mx:Script source="../util/tracker/TrackerUtil.as"/>
+
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.ChargeCommand;
+			import com.efi.printsmith.data.Charge;
+			import com.efi.printsmith.data.InkColor;
+			import flash.net.registerClassAlias;
+			import mx.utils.ObjectUtil;
+			import mx.collections.ArrayCollection;
 			import mx.utils.StringUtil;
 			import com.efi.printsmith.data.StockDefinition;
 			import com.efi.printsmith.data.PreferencesStocks;
 			import mx.managers.PopUpManager;
 			import com.efi.printsmith.data.JobBase;
 			
-			[Bindable] public var jobObj:JobBase;
+			[Bindable] private var jobObj:JobBase;
 			
 			[Bindable] public var preferencesStocks:PreferencesStocks;
 			
+			[Bindable] public var dataGridList:ArrayCollection = new ArrayCollection();
+			
 			private function init():void {
 				PopUpManager.centerPopUp(this);
+			}
+			
+			public function setJob(jobBaseObj:JobBase):void {
+				registerClassAlias("com.efi.printsmith.data.JobBase",JobBase);
+				jobObj = ObjectUtil.copy(jobBaseObj) as JobBase;
+				var dataGridItem:Object = new Object();
+				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Quantity');
+				dataGridList.addItem(dataGridItem);
+				dataGridItem = new Object();
+				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.TotalPressTime');
+				var totalTime:Number = (isNaN(jobObj.runTime)?0:jobObj.runTime)+(isNaN(jobObj.washupTime)?0:jobObj.washupTime)
+										+(isNaN(jobObj.setupTime)?0:jobObj.setupTime);
+				dataGridItem.estTime = convertMilliSecondsToString(totalTime,true);
+				if(jobObj.pricingRecord!=null) {
+					dataGridItem.estCost = jobObj.pricingRecord.laborCost.toFixed(2);
+					dataGridItem.markUpAmount = (jobObj.pricingRecord.laborTotalPrice - jobObj.pricingRecord.laborCost).toFixed(2);
+					if(dataGridItem.estCost!=0) {
+						dataGridItem.markUpPrnct = ((dataGridItem.markUpAmount/dataGridItem.estCost)*100).toFixed(2)+"%";
+					}
+					dataGridItem.sellPrice = jobObj.pricingRecord.laborTotalPrice.toFixed(2);
+				}
+				dataGridList.addItem(dataGridItem);
+				dataGridItem = new Object();
+				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.RunningSpeedsph');
+				dataGridItem.quantity = jobObj.copyMinutes.toFixed(2);
+				dataGridList.addItem(dataGridItem);
+				dataGridItem = new Object();
+				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.ParentSheetsRequired');
+				dataGridItem.quantity = (jobObj.totalImpressions * jobObj.sheets / jobObj.numOn).toFixed(2);
+				if(jobObj.pricingRecord!=null) {
+					dataGridItem.estCost = jobObj.pricingRecord.stockCost.toFixed(2);
+					dataGridItem.markUpAmount = (jobObj.pricingRecord.stockTotalPrice - jobObj.pricingRecord.stockCost).toFixed(2);
+					if(dataGridItem.estCost!=0) {
+						dataGridItem.markUpPrnct = ((dataGridItem.markUpAmount/dataGridItem.estCost)*100).toFixed(2)+"%";
+					}
+					dataGridItem.sellPrice = jobObj.pricingRecord.stockTotalPrice.toFixed(2);
+				}
+				dataGridList.addItem(dataGridItem);
+				dataGridItem = new Object();
+				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.PressSheets');
+				dataGridItem.quantity = (jobObj.totalImpressions).toFixed(2);
+				dataGridList.addItem(dataGridItem);
+				dataGridItem = new Object();
+				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.EstimatedWaste');
+				dataGridItem.quantity = (jobObj.estWaste).toFixed(2);
+				dataGridList.addItem(dataGridItem);
+				dataGridItem = new Object();
+				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.BinderyWaste');
+				dataGridItem.quantity = (jobObj.binderyWaste).toFixed(2);
+				dataGridList.addItem(dataGridItem);
+				dataGridItem = new Object();
+				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.ColorsFront');
+				dataGridList.addItem(dataGridItem);
+				dataGridItem = new Object();
+				if(jobObj.frontInks==null || jobObj.frontInks.length==0){ 
+					dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+				} else {
+					var inkString:String = "\t";
+					for(var i:int=0;i<jobObj.frontInks.length;i++) {
+						var inkColor:InkColor = jobObj.frontInks.getItemAt(i) as InkColor; 
+						if(i==jobObj.frontInks.length-1) {
+							inkString = inkColor.name;
+						} else {
+							if(i==jobObj.frontInks.length-2) {
+								inkString = inkColor.name+" & ";
+							} else {
+								inkString = inkColor.name+", ";
+							} 
+						}
+					}
+					dataGridItem.item = inkString;
+				}
+				dataGridList.addItem(dataGridItem);
+				dataGridItem = new Object();
+				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.ColorsBack');
+				dataGridList.addItem(dataGridItem);
+				dataGridItem = new Object();
+				if(jobObj.backInks==null || jobObj.backInks.length==0){ 
+					dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+				} else {
+					var inkString:String = "\t";
+					for(var i:int=0;i<jobObj.backInks.length;i++) {
+						var inkColor:InkColor = jobObj.backInks.getItemAt(i) as InkColor; 
+						if(i==jobObj.backInks.length-1) {
+							inkString = inkColor.name;
+						} else {
+							if(i==jobObj.backInks.length-2) {
+								inkString = inkColor.name+" & ";
+							} else {
+								inkString = inkColor.name+", ";
+							} 
+						}
+					}
+					dataGridItem.item = inkString;
+				}
+				dataGridList.addItem(dataGridItem);
+				if(jobObj.charges!=null && jobObj.charges.length>0){
+					var commandList:ArrayCollection = new ArrayCollection();
+					for each(var charge:Charge in jobObj.charges) {
+						var checkFlag:Boolean = false;
+						if(charge.chargeDefinition!=null && charge.chargeDefinition.parent!=null && charge.chargeDefinition.parent.parent!=null) {
+							for each(var commandObj:ChargeCommand in commandList) {
+								if(commandObj.id==charge.chargeDefinition.parent.parent.id) {
+									checkFlag = true;
+									break;
+								}
+							}
+							if(!checkFlag) {
+								commandList.addItem(charge.chargeDefinition.parent.parent);
+							}	  
+						}
+					}
+					for each(var commandObject:ChargeCommand in commandList) {
+						dataGridItem = new Object();
+						dataGridItem.item = commandObject.name;
+						dataGridList.addItem(dataGridItem);
+						for each(var chargeObj:Charge in jobObj.charges) {
+							if(chargeObj.chargeDefinition!=null && chargeObj.chargeDefinition.parent!=null && chargeObj.chargeDefinition.parent.parent!=null) {
+								if(chargeObj.chargeDefinition.parent.parent.id==commandObject.id) {
+									dataGridItem = new Object();
+									dataGridItem.item = "\t"+chargeObj.chargeDefinition.name;
+									dataGridItem.quantity = chargeObj.quantity;
+									if(chargeObj.chargeDefinition!=null && chargeObj.chargeDefinition.chargeCost!=null) {
+										dataGridItem.estCost = chargeObj.chargeDefinition.chargeCost.unitCost.toFixed(2);
+									}
+									dataGridItem.sellPrice = chargeObj.price;
+									dataGridList.addItem(dataGridItem);
+								}
+							}
+						}
+					}
+				}
 			}
 			
 			private function closeWindow():void {
@@ -311,9 +453,16 @@
 				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
 			}
 			
-			
+			private function getTime(milliseconds:Number):String {
+				if(!isNaN()) {
+					return convertMilliSecondsToString(milliseconds,true);
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
 		]]>
 	</mx:Script>
+	
+	<mx:NumberFormatter id="numFormatter" precision="0" rounding="none"/>
 	
 	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
 
@@ -360,13 +509,13 @@
 			<mx:HBox width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.SetupTime')}:" 
 					fontWeight="bold" width="50%" textAlign="right"/>
-				<mx:TextInput text="{}" width="50%" enabled="false" disabledColor="#000000"/>
+				<mx:TextInput text="{getTime(jobObj.setupTime)}" width="50%" enabled="false" disabledColor="#000000"/>
 			</mx:HBox>
 			
 			<mx:HBox width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.RunTime')}:" 
 					fontWeight="bold" width="50%" textAlign="right"/>
-				<mx:TextInput text="{}" width="50%" enabled="false" disabledColor="#000000"/>
+				<mx:TextInput text="{getTime(jobObj.runTime)}" width="50%" enabled="false" disabledColor="#000000"/>
 			</mx:HBox>
 			
 			<mx:HBox width="100%">
@@ -442,7 +591,7 @@
 			<mx:HBox width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.WashupTime')}:" 
 					fontWeight="bold" width="50%" textAlign="right"/>
-				<mx:TextInput text="{}" width="50%" enabled="false" disabledColor="#000000"/>
+				<mx:TextInput text="{getTime(jobObj.washupTime)}" width="50%" enabled="false" disabledColor="#000000"/>
 			</mx:HBox>
 			
 			<mx:HBox width="100%">
@@ -478,5 +627,17 @@
 		</mx:VBox>
 		
 	</mx:HBox>
+	
+	<mx:DataGrid width="100%" dataProvider="{dataGridList}">
+		<mx:columns>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Item')}" dataField="item"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Quantity')}" dataField="quantity"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.EstTime')}" dataField="estTime"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.EstCost')}" dataField="estCost"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Markup')}" dataField="markUpPrnct"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.MarkupAmt')}" dataField="markUpAmount"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.SellPrice')}" dataField="sellPrice"/>
+		</mx:columns>
+	</mx:DataGrid>
 		
 </mx:TitleWindow>

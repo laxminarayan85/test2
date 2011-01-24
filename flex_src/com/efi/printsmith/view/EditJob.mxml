@@ -3288,7 +3288,7 @@
 				mapToJobData();
 				var estimatorCheckList:EstimatorCheckList = PopUpManager.createPopUp(this,EstimatorCheckList,true) as EstimatorCheckList;
 				estimatorCheckList.preferencesStocks = preferencesStocks;
-				estimatorCheckList.jobObj = this.job;
+				estimatorCheckList.setJob(this.job);
 			}
 			
 			private function getStockName(stockDefObj:StockDefinition,preferencesStocksObj:PreferencesStocks):String {
