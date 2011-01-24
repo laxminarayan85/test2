@@ -2220,6 +2220,12 @@
 					}
 				}
 			}
+			
+			private function keyDownEventHandler(event:KeyboardEvent):void {
+				if(event.keyCode==Keyboard.ENTER) {
+					doDoubleclickInvoiceItem();
+				}
+			}
 		]]>
 
 	</mx:Script>
@@ -2315,7 +2321,8 @@
 						  	 dropEnabled="true"
 						  	 dragEnter="{dragEnterHandler(event)}"
 						  	 dragDrop="{dragDropHandler(event)}"
-						  	 editable="true">
+						  	 editable="true"
+						  	 keyDown="{keyDownEventHandler(event)}">
 					<mx:columns>
 						<mx:DataGridColumn editable="false">
 							<mx:itemRenderer>

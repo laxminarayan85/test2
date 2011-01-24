@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}" width="750">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.utils.StringUtil;
+			import com.efi.printsmith.data.StockDefinition;
+			import com.efi.printsmith.data.PreferencesStocks;
+			import mx.managers.PopUpManager;
+			import com.efi.printsmith.data.JobBase;
+			
+			[Bindable] public var jobObj:JobBase;
+			
+			[Bindable] public var preferencesStocks:PreferencesStocks;
+			
+			private function init():void {
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function getCustomerName(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.parentInvoice!=null && jobObject.parentInvoice.shipToAddress!=null) {
+					return jobObject.parentInvoice.shipToAddress.name;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getContactName(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.parentInvoice!=null && jobObject.parentInvoice.contact!=null) {
+					return jobObject.parentInvoice.contact.firstName+" "+jobObject.parentInvoice.contact.lastName;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getPressDefinition(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.pricingPress!=null) {
+					return jobObject.pricingPress.name;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getMachineName(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.pricingCopier!=null) {
+					return jobObject.pricingCopier.machineName;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getStockNumber(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.stock!=null) {
+					return jobObject.stock.stocknumber;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getVendorName(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.vendor!=null) {
+					return jobObject.vendor.name;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getParentSize(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.parentSize!=null) {
+					return jobObject.parentSize.name;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getRunSize(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.runSize!=null) {
+					return jobObject.runSize.name;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getStockName(stockDefObj:StockDefinition,preferencesStocksObj:PreferencesStocks):String {
+				var displayedText:String = "";
+				if(preferencesStocksObj!=null){
+					if(stockDefObj!=null){
+						if(preferencesStocksObj.weight!=null && preferencesStocksObj.weight!=""){
+							if(stockDefObj.uom!=null && stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Caliper')) {
+								displayedText = preferencesStocksObj.weight;
+								if(displayedText.indexOf("^0")!=-1) {
+									displayedText = displayedText.replace("^0",stockDefObj.weight);
+								}
+								if(displayedText.indexOf("^1")!=-1) {
+									displayedText = displayedText.replace("^1",stockDefObj.name);
+								}
+								if(displayedText.indexOf("^2")!=-1) {
+									if(stockDefObj.finish!=null) {
+										displayedText = displayedText.replace("^2",stockDefObj.finish.name);
+									} else {
+										displayedText = displayedText.replace("^2","");
+									}
+								}
+								if(displayedText.indexOf("^3")!=-1) {
+									displayedText = displayedText.replace("^3",getCertifiedText(stockDefObj,preferencesStocksObj));
+								}
+								if(displayedText==preferencesStocksObj.weight){
+									return stockDefObj.name;
+								}
+								return displayedText;
+							}
+							return stockDefObj.name;
+						} else if(preferencesStocksObj.points!=null && preferencesStocksObj.points!=""){
+							if(stockDefObj.uom!=null && (stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Points')
+								|| stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Mils')
+								|| stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Thous'))) {
+									
+								displayedText = preferencesStocksObj.points;
+								if(displayedText.indexOf("^0")!=-1) {
+									displayedText = displayedText.replace("^0",stockDefObj.weight);
+								}
+								if(displayedText.indexOf("^1")!=-1) {
+									displayedText = displayedText.replace("^1",stockDefObj.name);
+								}
+								if(displayedText.indexOf("^2")!=-1) {
+									if(stockDefObj.finish!=null) {
+										displayedText = displayedText.replace("^2",stockDefObj.finish.name);
+									} else {
+										displayedText = displayedText.replace("^2","");
+									}
+								}
+								if(displayedText.indexOf("^3")!=-1) {
+									displayedText = displayedText.replace("^3",getCertifiedText(stockDefObj,preferencesStocksObj));
+								}
+								if(displayedText==preferencesStocksObj.points){
+									return stockDefObj.name;
+								}
+								return displayedText;
+							}
+							return stockDefObj.name;
+						} else if(preferencesStocksObj.microns!=null && preferencesStocksObj.microns!=""){
+							if(stockDefObj.uom!=null && stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Microns')) {
+								displayedText = preferencesStocksObj.microns;
+								if(displayedText.indexOf("^0")!=-1) {
+									displayedText = displayedText.replace("^0",stockDefObj.weight);
+								}
+								if(displayedText.indexOf("^1")!=-1) {
+									displayedText = displayedText.replace("^1",stockDefObj.name);
+								}
+								if(displayedText.indexOf("^2")!=-1) {
+									if(stockDefObj.finish!=null) {
+										displayedText = displayedText.replace("^2",stockDefObj.finish.name);
+									} else {
+										displayedText = displayedText.replace("^2","");
+									}
+								}
+								if(displayedText.indexOf("^3")!=-1) {
+									displayedText = displayedText.replace("^3",getCertifiedText(stockDefObj,preferencesStocksObj));
+								}
+								if(displayedText==preferencesStocksObj.microns){
+									return stockDefObj.name;
+								}
+								return displayedText;
+							}
+							return stockDefObj.name;
+						} else if(preferencesStocksObj.plies!=null && preferencesStocksObj.plies!=""){
+							if(stockDefObj.uom!=null && stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Plies')) {
+								displayedText = preferencesStocksObj.plies;
+								if(displayedText.indexOf("^0")!=-1) {
+									displayedText = displayedText.replace("^0",stockDefObj.weight);
+								}
+								if(displayedText.indexOf("^1")!=-1) {
+									displayedText = displayedText.replace("^1",stockDefObj.name);
+								}
+								if(displayedText.indexOf("^2")!=-1) {
+									if(stockDefObj.finish!=null) {
+										displayedText = displayedText.replace("^2",stockDefObj.finish.name);
+									} else {
+										displayedText = displayedText.replace("^2","");
+									}
+								}
+								if(displayedText.indexOf("^3")!=-1) {
+									displayedText = displayedText.replace("^3",getCertifiedText(stockDefObj,preferencesStocksObj));
+								}
+								if(displayedText==preferencesStocksObj.plies){
+									return stockDefObj.name;
+								}
+								return displayedText;
+							}
+							return stockDefObj.name;
+						} else if(preferencesStocksObj.millimeters!=null && preferencesStocksObj.millimeters!=""){
+							if(stockDefObj.uom!=null && stockDefObj.uom==resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockPickerCmd.Millimeters')) {
+								displayedText = preferencesStocksObj.millimeters;
+								if(displayedText.indexOf("^0")!=-1) {
+									displayedText = displayedText.replace("^0",stockDefObj.weight);
+								}
+								if(displayedText.indexOf("^1")!=-1) {
+									displayedText = displayedText.replace("^1",stockDefObj.name);
+								}
+								if(displayedText.indexOf("^2")!=-1) {
+									if(stockDefObj.finish!=null) {
+										displayedText = displayedText.replace("^2",stockDefObj.finish.name);
+									} else {
+										displayedText = displayedText.replace("^2","");
+									}
+								}
+								if(displayedText.indexOf("^3")!=-1) {
+									displayedText = displayedText.replace("^3",getCertifiedText(stockDefObj,preferencesStocksObj));
+								}
+								if(displayedText==preferencesStocksObj.millimeters){
+									return stockDefObj.name;
+								}
+								return displayedText;
+							}
+							return stockDefObj.name;
+						}
+					}
+				} else {
+					return stockDefObj.name;
+				}
+				return "";
+			}
+			
+			private function getCertifiedText(stockDefObj:StockDefinition, preferencesStocksObj:PreferencesStocks):String {
+				var certifiedString:String = "";
+				if(preferencesStocksObj!=null && stockDefObj!=null){
+					if(preferencesStocksObj.includeCerifiedOption || preferencesStocksObj.includeManagementType || preferencesStocksObj.includeRecyclePercent) {
+						if(preferencesStocksObj.open!=null && preferencesStocksObj.open!=""){
+							certifiedString = preferencesStocksObj.open;
+						} else {
+							certifiedString = "(";
+						}
+						if(stockDefObj.fscCertified || stockDefObj.sfiCertified || stockDefObj.greenSealCertified){
+							if(preferencesStocksObj.includeCerifiedOption){
+								if(stockDefObj.fscCertified) {
+									certifiedString = certifiedString+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.FSC');
+								}
+								if(stockDefObj.sfiCertified) {
+									if(stockDefObj.fscCertified){
+										certifiedString = certifiedString+", "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.SFI');
+									} else {
+										certifiedString = certifiedString+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.SFI');
+									}
+								}
+								if(stockDefObj.greenSealCertified) {
+									if(stockDefObj.fscCertified || stockDefObj.sfiCertified){ 
+										certifiedString = certifiedString+", "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.GreenSeal');
+									} else { 
+										certifiedString = certifiedString+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.GreenSeal');
+									}
+								}
+								certifiedString = certifiedString+" "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.Certified');
+							}
+						}
+						if(preferencesStocksObj.includeManagementType){
+							if(stockDefObj.forestManagement!=null && stockDefObj.forestManagement!="") {
+								certifiedString = certifiedString+" "+stockDefObj.forestManagement;
+							}
+						}
+						if(preferencesStocksObj.includeRecyclePercent){
+							if(!(isNaN(stockDefObj.pcwRecycledPercent)) && stockDefObj.pcwRecycledPercent!=0) {
+								certifiedString = certifiedString+" "+StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'stockDefCmd.Recycled0'),(stockDefObj.pcwRecycledPercent*100)+"%");
+							} 
+						}
+						if(preferencesStocksObj.close!=null && preferencesStocksObj.close!=""){
+							certifiedString = certifiedString+preferencesStocksObj.close;
+						} else {
+							certifiedString = certifiedString+")";
+						}
+					}
+				}
+				return certifiedString;
+			}
+			
+			
+			private function getOrderedOnDate(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.parentInvoice!=null && jobObject.parentInvoice.orderedDate!=null) {
+					return dateFormatter.format(jobObject.parentInvoice.orderedDate);
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getTakenBy(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.parentInvoice!=null && jobObject.parentInvoice.takenBy!=null) {
+					return jobObject.parentInvoice.takenBy;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getSalesRep(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.parentInvoice!=null && jobObject.parentInvoice.salesRep!=null) {
+					return jobObject.parentInvoice.salesRep.name;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getWantedByDate(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.parentInvoice!=null && jobObject.parentInvoice.wantedDate!=null) {
+					return dateFormatter.format(jobObject.parentInvoice.wantedDate);
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getFinishedSize(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.finishSize!=null) {
+					return jobObject.finishSize.name;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			private function getFoldedSize(jobObject:JobBase):String {
+				if(jobObject!=null && jobObject.foldedSize!=null) {
+					return jobObject.foldedSize.name;
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NA');
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
+
+	<mx:HBox width="100%">
+	
+		<mx:VBox width="50%">
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Customer')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getCustomerName(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Contact')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getContactName(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.JobDescription')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{jobObj.description}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.DocumentNumber')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{jobObj.parentInvoice.invoiceNumber}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.PressDefinition')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getPressDefinition(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.MachineName')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getMachineName(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.SetupTime')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.RunTime')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Stock')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getStockName(jobObj.stock,preferencesStocks)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.StockNumber')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getStockNumber(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Vendor')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getVendorName(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.ParentSize')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getParentSize(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.RunSize')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getRunSize(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+		</mx:VBox>
+		
+		<mx:VBox width="50%">
+		
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.OrderedOn')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getOrderedOnDate(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.TakenBy')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getTakenBy(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.SalesRep')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getSalesRep(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.WantedBy')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getWantedByDate(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.ColorsFront')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{jobObj.frontColors}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.ColorsBack')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{jobObj.backColors}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.WashupTime')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobDataCmd.TargetAdjust')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.FoldedSize')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{getFoldedSize(jobObj)}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Sheets')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{jobObj.sheets}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Signatures')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{jobObj.signatures}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.NumberUpOn')}:" 
+					fontWeight="bold" width="50%" textAlign="right"/>
+				<mx:TextInput text="{jobObj.numUp}/{jobObj.numOn}" width="50%" enabled="false" disabledColor="#000000"/>
+			</mx:HBox>
+			
+		</mx:VBox>
+		
+	</mx:HBox>
+		
+</mx:TitleWindow>

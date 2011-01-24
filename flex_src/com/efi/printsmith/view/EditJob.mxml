@@ -662,6 +662,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.pages.EstimatorCheckList;
 			import mx.collections.Sort;
 			import mx.collections.SortField;
 			import com.efi.printsmith.data.CostingRecord;
@@ -3283,6 +3284,13 @@
 				multiQtyViewWindow.multiQtyJob = this.job;
 			}
 			
+			private function openEstimatorCheckList():void {
+				mapToJobData();
+				var estimatorCheckList:EstimatorCheckList = PopUpManager.createPopUp(this,EstimatorCheckList,true) as EstimatorCheckList;
+				estimatorCheckList.preferencesStocks = preferencesStocks;
+				estimatorCheckList.jobObj = this.job;
+			}
+			
 			private function getStockName(stockDefObj:StockDefinition,preferencesStocksObj:PreferencesStocks):String {
 				var displayedText:String = "";
 				if(preferencesStocksObj!=null){
@@ -3748,8 +3756,12 @@
 							<mx:LinkButton x="10"
 										   y="110"
 										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" click="{openMultiQtyView()}"
-										   color="{job.showMultiQty?0x00BB00:0x000000}"/>							
-							<mx:LinkButton x="22" y="129" label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
+										   color="{job.showMultiQty?0x00BB00:0x000000}"/>
+							<mx:LinkButton x="10"
+										   y="130"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.EstimatorChecklist')}"
+										   click="{openEstimatorCheckList()}"/>							
+							<mx:LinkButton x="22" y="149" label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
 						</mx:Canvas>
 					</mx:Accordion>
 					<mx:ViewStack id="viewstack3"
