@@ -81,8 +81,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("maxY".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("isWeb".equals(currentFieldToken)) {
-				//pressDefinition.setPerfector(Utilities
-						//.tokenToBooleanValue(currentImportToken));
+				pressDefinition.setPerfector(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("variable speed".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("use waste".equals(currentFieldToken)) {
@@ -274,7 +273,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("time in seconds".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("perfector".equals(currentFieldToken)) {
-				pressDefinition.setPerfector(Utilities.tokenToBooleanValue(currentImportToken));
+			// not used see defect	703 pressDefinition.setPerfector(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("defaultRollFed".equals(currentFieldToken)) {
 				if (currentImportToken.equals("1") == true) {
 					defaultRollfed = true;

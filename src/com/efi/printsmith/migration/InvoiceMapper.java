@@ -140,8 +140,10 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("old estimate number".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("order date".equals(currentFieldToken)) {
-				if (currentImportToken.equals("") == false)
+				if (currentImportToken.equals("") == false){
 					invoice.setOrderedDate(Utilities.tokenToDate(currentImportToken));
+					invoice.setCreated(Utilities.tokenToDate(currentImportToken));
+				}
 			} else if ("due date".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("proof date".equals(currentFieldToken)) {
@@ -906,8 +908,10 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("old estimate number".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("order date".equals(currentFieldToken)) {
-				if (currentImportToken.equals("") == false)
+				if (currentImportToken.equals("") == false){
 					invoice.setOrderedDate(Utilities.tokenToDate(currentImportToken));
+					invoice.setCreated(Utilities.tokenToDate(currentImportToken));
+				}
 			} else if ("due date".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("proof date".equals(currentFieldToken)) {

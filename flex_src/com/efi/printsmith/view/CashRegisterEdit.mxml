@@ -1724,7 +1724,7 @@
 		sessionBatch.account = customerAccount;
 		
 		acct_title.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.3');
-		acct_title.text = StringUtil.substitute(acct_title.text,customerAccount.title,customerAccount.displayId.toString()); 
+		acct_title.text = StringUtil.substitute(acct_title.text,customerAccount.title,customerAccount.accountId); 
 		
 		switch ( customerAccount.status){
  		case Constants.ACCOUNT_STATUS_NEW:
