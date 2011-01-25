@@ -1455,7 +1455,16 @@ public class PreferencesMapper extends ImportMapper {
 				preferencesSystem.setFiscalYearStartMonth("December");
 				break;
 			}
-		}
+		} else if (name.equals("sortInternational_string_compare"))
+			preferencesSystem.setUseTextSorting(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("aussieRounding"))
+			preferencesSystem.setAustrailianInvoiceRounding(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("disableFontStyles"))
+			preferencesSystem.setDisableTextStyles(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("disableNonTaxable_Inv_Job_Charge"))
+			preferencesSystem.setDisableNonTaxableOptions(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("useChileTaxVerify"))
+			preferencesSystem.setUseChileTaxIdVerification(Utilities.tokenToBooleanValue(value));
 		if (address != null)
 			preferencesSystem.setCompanyAddress(address);
 		dataService.addUpdate(preferencesSystem);
