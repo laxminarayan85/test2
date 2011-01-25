@@ -74,6 +74,7 @@ import com.efi.printsmith.data.Matrix;
 import com.efi.printsmith.data.MatrixElement;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PricingRecord;
+import com.efi.printsmith.data.ProductionFacilities;
 import com.efi.printsmith.data.StampSchedule;
 import com.efi.printsmith.data.Period;
 import com.efi.printsmith.data.PickerObject;
@@ -3817,6 +3818,10 @@ public class DataService extends HibernateService {
 
 						Query query = em.createQuery(queryString);
 						if (!employee.getAllPricingMethods()) {
+							if(employee.getEmployeePricings()==null || employee.getEmployeePricings().isEmpty()) {
+								PreferencesPricingMethod emptyPreferencesPricingMethod = new PreferencesPricingMethod();
+								emptyPreferencesPricingMethod.setId(0L);
+							}
 							query.setParameter("pricingMethods", employee
 									.getEmployeePricings());
 						}
@@ -4953,13 +4958,25 @@ public class DataService extends HibernateService {
 				}
 				Query query = em.createQuery(queryString);
 				if (!trackerManager.getShowAllFacilities()) {
-					query.setParameter("productionFacilities", trackerManager
-							.getProductionFacilities());
+					if(trackerManager.getProductionFacilities()==null) {
+						ProductionFacilities emptyProductionFacilities = new ProductionFacilities();
+						emptyProductionFacilities.setId(0L);
+						query.setParameter("productionFacilities",emptyProductionFacilities);
+					} else {
+						query.setParameter("productionFacilities", trackerManager
+								.getProductionFacilities());
+					}
 				}
 				if (!trackerManager.getShowAllStations()) {
 					List<ProductionStations> selectedStations = new ArrayList<ProductionStations>();
 					if (trackerManager.getSelectedStations() != null) {
 						selectedStations = trackerManager.getSelectedStations();
+					}
+					if(selectedStations==null || selectedStations.isEmpty()) {
+						selectedStations = new ArrayList<ProductionStations>();
+						ProductionStations emptyProductionStations = new ProductionStations();
+						emptyProductionStations.setId(0L);
+						selectedStations.add(emptyProductionStations);
 					}
 					query.setParameter("selectedStations", selectedStations);
 				}
