@@ -26,6 +26,7 @@
 			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
 			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
 			<mx:SetProperty target="{PriceExpires}" name="width" value="137"/>
+			<mx:RemoveChild target="{label10}"/>
 		</mx:State>
 		<mx:State name="RollStock">
 			<mx:SetProperty target="{label1}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWeight')}"/>
@@ -1232,7 +1233,7 @@
 		var result:Boolean;
 		
 		if (defaultLargeCopier.text != null && defaultLargeCopier.text != "" && defaultLargeCopier.selectedIndex == -1) {
-			var item:int = findItem(defaultLargeCopier.text, copierDefinitions);
+			var item:int = findItem(defaultLargeCopier.text, copierLarge);
 			if (item == -1) {
 				defaultLargeCopier.selectedItem = null;
 			}
@@ -1876,12 +1877,13 @@
 	
 	
 	private function doMetric():void{
-	
+	 
 		if ( chkIsMetric.selected){
 			Basicsize.text = ""
 			label5.visible = false;
 			weight_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.GSM');
 			cboUom.selectedIndex = findItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns'), stockUom);
+			ConvertThickness();
 			cboUom.enabled = false;
 			if (this.currentState =="SheetStock")
 				calstockMWeight(null);
@@ -1899,7 +1901,7 @@
 			weight_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Weight');
 			if ( stockDefinitions.stktype != null && stockDefinitions.stktype.size!=null)
 				Basicsize.text = stockDefinitions.stktype.size.name
-			cboUom.selectedIndex = findItem(stockDefinitions.uom,stockUom)
+			cboUom.selectedIndex = findItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns'),stockUom)
 			cboUom.enabled = true;
 			if (this.currentState=="RollStock")
 				Costunits.enabled = false;
@@ -1940,7 +1942,7 @@
 	}
 	private function UpdateAvailable(evt:FocusEvent):void {
 		doRound(evt);
-		Available.text = (parseInt(OnHand.text)-parseInt(Committed.text)).toString(); 
+		Available.text = (parseInt(OnHand.text.replace(",",""))-parseInt(Committed.text.replace(",",""))).toString(); 
 		 
 	 	//stockDefinitions.available = stockDefinitions.onHand - stockDefinitions.committed;
 	}
@@ -2115,7 +2117,7 @@ private function doRound(evt:FocusEvent):void{
 			temp = numberFormatter.format(MinOrderQty.text)
 			MinOrderQty.text = temp;
 		}else if (evt.currentTarget == OnHand) {
-			temp = numberFormatter.format(OnHand.text)
+			temp = numberFormatter.format(OnHand.text.replace(",",""))
 			OnHand.text = temp;
 		}
 		
@@ -2463,7 +2465,7 @@ private function doRound(evt:FocusEvent):void{
 				<mx:TextInput restrict="0-9\." x="125" y="53" width="90" id="DefaultLargeFormat" text="{Snowmass.getCurrencyFormatter(false, 4).format(stockDefinitions.copier3PricePerSheet)}"/>
 				<mx:ComboBox x="223" y="3" width="201" id="defaultBWCopier" focusOut="doCopierDefinitionBW();" dataProvider="{copierDefinitions}" labelField="name"/>
 				<mx:ComboBox x="223" y="28" width="201" id="defaultColorCopier" focusOut="doCopierDefinitionColor();" dataProvider="{copierDefinitions}" labelField="name"/>
-				<mx:ComboBox x="223" y="53" width="201" id="defaultLargeCopier" focusOut="doCopierDefinitionLarge();" dataProvider="{copierDefinitions}" labelField="name"/>
+				<mx:ComboBox x="223" y="53" width="201" id="defaultLargeCopier" focusOut="doCopierDefinitionLarge();" dataProvider="{copierLarge}" labelField="name"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'changePriceCmd.PresetCharges')}" dropShadowEnabled="false" id="PanelCharges">
 				<mx:Button x="10" y="4" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AddCharges')}" click="doAddCharges();" width="110"/>
