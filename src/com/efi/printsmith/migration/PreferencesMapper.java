@@ -25,6 +25,7 @@ import com.efi.printsmith.data.PreferencesQuantityBreaks;
 import com.efi.printsmith.data.PreferencesStocks;
 import com.efi.printsmith.data.PreferencesSystem;
 import com.efi.printsmith.data.PreferencesCreditCard;
+import com.efi.printsmith.data.PreferencesStockDefinition;
 import com.efi.printsmith.data.SalesCategory;
 import com.efi.printsmith.data.SizeTable;
 import com.efi.printsmith.data.StampSchedule;
@@ -243,6 +244,7 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
 			importPreferencesPOSField(key, fieldName, fieldValue);
 			importPreferencesAccountingField(key, fieldName, fieldValue);
+			importPreferencesStockDefinitionField(key, fieldName, fieldValue);
 		}
 		else if (group.equals("Def Customer")) {
 			importPreferencesSystemField(key, fieldName, fieldValue, true);
@@ -411,6 +413,15 @@ public class PreferencesMapper extends ImportMapper {
 		}
 		dataService.addUpdate(addressFormatting);
 	}
+	
+	private void importPreferencesStockDefinitionField(String key, String name, String value) throws Exception {
+		DataService dataService = new DataService();
+		PreferencesStockDefinition preferencesStockDefinition = (PreferencesStockDefinition)dataService.getQuery("PreferencesStockDefinition", " where columnorder="+key);
+		if (name.equals("StockCol_column_show"))
+			preferencesStockDefinition.setVisible(Utilities.tokenToBooleanValue(value));
+		dataService.addUpdate(preferencesStockDefinition);
+	}
+	
 	private void importPreferencesCreditCardField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
 		PreferencesCreditCard preferencesCreditCard = (PreferencesCreditCard)dataService.getByPrevId("PreferencesCreditCard", key);
@@ -1207,7 +1218,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setShowPaperCalculator(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("numberOfDaysBeforePaymentDue"))
 			preferencesEstimating.setNumberOfDaysBeforeDue(Utilities.tokenToInt(value));
-		
+		else if (name.equals("StockPicker_twoStageClearSearch"))
+			preferencesEstimating.setTwoStageClearSearch(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesEstimating);
 	}
 	
