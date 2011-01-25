@@ -3819,11 +3819,15 @@ public class DataService extends HibernateService {
 						Query query = em.createQuery(queryString);
 						if (!employee.getAllPricingMethods()) {
 							if(employee.getEmployeePricings()==null || employee.getEmployeePricings().isEmpty()) {
+								List<PreferencesPricingMethod> preferencesPricingMethodList = new ArrayList<PreferencesPricingMethod>();
 								PreferencesPricingMethod emptyPreferencesPricingMethod = new PreferencesPricingMethod();
 								emptyPreferencesPricingMethod.setId(0L);
+								preferencesPricingMethodList.add(emptyPreferencesPricingMethod);
+								query.setParameter("pricingMethods", preferencesPricingMethodList);
+							} else {
+								query.setParameter("pricingMethods", employee
+										.getEmployeePricings());
 							}
-							query.setParameter("pricingMethods", employee
-									.getEmployeePricings());
 						}
 						if (!employee.getAllCopiers()) {
 							List<String> copiersList = new ArrayList<String>();
@@ -3831,7 +3835,13 @@ public class DataService extends HibernateService {
 									.getEmployeeCopiers()) {
 								copiersList.add(productionCopiers.getName());
 							}
-							query.setParameter("copiers", copiersList);
+							if(copiersList==null || copiersList.isEmpty()) {
+								List<String> emptyCopiersList = new ArrayList<String>();
+								emptyCopiersList.add("");
+								query.setParameter("copiers", emptyCopiersList);
+							} else {
+								query.setParameter("copiers", copiersList);
+							}
 						}
 						if (!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
@@ -3840,6 +3850,15 @@ public class DataService extends HibernateService {
 								chargeDefinitionsList.add(chargeCommand
 										.getName());
 							}
+							/*if(chargeDefinitionsList==null || chargeDefinitionsList.isEmpty()) {
+								List<String> emptyChargeDefinitionsList = new ArrayList<String>();
+								emptyChargeDefinitionsList.add("");
+								query.setParameter("charges",emptyChargeDefinitionsList);
+							} else {
+								query
+										.setParameter("charges",
+												chargeDefinitionsList);
+							}*/
 						}
 						if (!employee.getAllPresses()) {
 							List<String> pressesList = new ArrayList<String>();
@@ -3847,12 +3866,26 @@ public class DataService extends HibernateService {
 									.getEmployeePresses()) {
 								pressesList.add(productionPress.getName());
 							}
-							query.setParameter("presses", pressesList);
+							if(pressesList==null || pressesList.isEmpty()) {
+								List<String> emptyPressesList = new ArrayList<String>();
+								emptyPressesList.add("");
+								query.setParameter("presses", emptyPressesList);
+							} else {
+								query.setParameter("presses", pressesList);
+							}
 						}
 						if (employee.getOnlyShowProductionParents()
 								|| trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations", employee
-									.getProductionParents());
+							if(employee.getProductionParents()==null || employee.getProductionParents().isEmpty()) {
+								List<ProductionLocations> productionLocationsList = new ArrayList<ProductionLocations>();
+								ProductionLocations emptyProductionLocations = new ProductionLocations();
+								emptyProductionLocations.setId(0L);
+								productionLocationsList.add(emptyProductionLocations);
+								query.setParameter("locations", productionLocationsList);
+							} else {
+								query.setParameter("locations", employee
+										.getProductionParents());
+							}
 						}
 						if (employee.getCustomerWant() != null
 								|| employee.getAnyPastDue()) {
@@ -4004,14 +4037,28 @@ public class DataService extends HibernateService {
 								chargeDefinitionsList.add(chargeCommand
 										.getName());
 							}
-							query
-									.setParameter("charges",
-											chargeDefinitionsList);
+							if(chargeDefinitionsList==null || chargeDefinitionsList.isEmpty()) {
+								List<String> emptyChargeDefinitionsList = new ArrayList<String>();
+								emptyChargeDefinitionsList.add("");
+								query.setParameter("charges",emptyChargeDefinitionsList);
+							} else {
+								query
+										.setParameter("charges",
+												chargeDefinitionsList);
+							}
 						}
 						if (employee.getOnlyShowProductionParents()
 								|| trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations", employee
-									.getProductionParents());
+							if(employee.getProductionParents()==null || employee.getProductionParents().isEmpty()) {
+								List<ProductionLocations> productionLocationsList = new ArrayList<ProductionLocations>();
+								ProductionLocations emptyProductionLocations = new ProductionLocations();
+								emptyProductionLocations.setId(0L);
+								productionLocationsList.add(emptyProductionLocations);
+								query.setParameter("locations", productionLocationsList);
+							} else {
+								query.setParameter("locations", employee
+										.getProductionParents());
+							}
 						}
 						if (employee.getCustomerWant() != null
 								|| employee.getAnyPastDue()) {
@@ -4172,14 +4219,28 @@ public class DataService extends HibernateService {
 								chargeDefinitionsList.add(chargeCommand
 										.getName());
 							}
-							query
-									.setParameter("charges",
-											chargeDefinitionsList);
+							if(chargeDefinitionsList==null || chargeDefinitionsList.isEmpty()) {
+								List<String> emptyChargeDefinitionsList = new ArrayList<String>();
+								emptyChargeDefinitionsList.add("");
+								query.setParameter("charges",emptyChargeDefinitionsList);
+							} else {
+								query
+										.setParameter("charges",
+												chargeDefinitionsList);
+							}
 						}
 						if (employee.getOnlyShowProductionParents()
 								|| trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations", employee
-									.getProductionParents());
+							if(employee.getProductionParents()==null || employee.getProductionParents().isEmpty()) {
+								List<ProductionLocations> productionLocationsList = new ArrayList<ProductionLocations>();
+								ProductionLocations emptyProductionLocations = new ProductionLocations();
+								emptyProductionLocations.setId(0L);
+								productionLocationsList.add(emptyProductionLocations);
+								query.setParameter("locations", productionLocationsList);
+							} else {
+								query.setParameter("locations", employee
+										.getProductionParents());
+							}
 						}
 						if (employee.getCustomerWant() != null
 								|| employee.getAnyPastDue()) {
@@ -4316,8 +4377,16 @@ public class DataService extends HibernateService {
 								+ " order by estimate.invoiceNumber,job.jobNumber asc";
 						Query query = em.createQuery(queryString);
 						if (!employee.getAllPricingMethods()) {
-							query.setParameter("pricingMethods", employee
-									.getEmployeePricings());
+							if(employee.getEmployeePricings()==null || employee.getEmployeePricings().isEmpty()) {
+								List<PreferencesPricingMethod> preferencesPricingMethodList = new ArrayList<PreferencesPricingMethod>();
+								PreferencesPricingMethod emptyPreferencesPricingMethod = new PreferencesPricingMethod();
+								emptyPreferencesPricingMethod.setId(0L);
+								preferencesPricingMethodList.add(emptyPreferencesPricingMethod);
+								query.setParameter("pricingMethods", preferencesPricingMethodList);
+							} else {
+								query.setParameter("pricingMethods", employee
+										.getEmployeePricings());
+							}
 						}
 						if (!employee.getAllCopiers()) {
 							List<String> copiersList = new ArrayList<String>();
@@ -4325,7 +4394,13 @@ public class DataService extends HibernateService {
 									.getEmployeeCopiers()) {
 								copiersList.add(productionCopiers.getName());
 							}
-							query.setParameter("copiers", copiersList);
+							if(copiersList==null || copiersList.isEmpty()) {
+								List<String> emptyCopiersList = new ArrayList<String>();
+								emptyCopiersList.add("");
+								query.setParameter("copiers", emptyCopiersList);
+							} else {
+								query.setParameter("copiers", copiersList);
+							}
 						}
 						if (!employee.getAllChargeTypes()) {
 							chargeDefinitionsList = new ArrayList<String>();
@@ -4341,12 +4416,26 @@ public class DataService extends HibernateService {
 									.getEmployeePresses()) {
 								pressesList.add(productionPress.getName());
 							}
-							query.setParameter("presses", pressesList);
+							if(pressesList==null || pressesList.isEmpty()) {
+								List<String> emptyPressesList = new ArrayList<String>();
+								emptyPressesList.add("");
+								query.setParameter("presses", emptyPressesList);
+							} else {
+								query.setParameter("presses", pressesList);
+							}
 						}
 						if (employee.getOnlyShowProductionParents()
 								|| trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations", employee
-									.getProductionParents());
+							if(employee.getProductionParents()==null || employee.getProductionParents().isEmpty()) {
+								List<ProductionLocations> productionLocationsList = new ArrayList<ProductionLocations>();
+								ProductionLocations emptyProductionLocations = new ProductionLocations();
+								emptyProductionLocations.setId(0L);
+								productionLocationsList.add(emptyProductionLocations);
+								query.setParameter("locations", productionLocationsList);
+							} else {
+								query.setParameter("locations", employee
+										.getProductionParents());
+							}
 						}
 						if (employee.getCustomerWant() != null
 								|| employee.getAnyPastDue()) {
@@ -4499,14 +4588,28 @@ public class DataService extends HibernateService {
 								chargeDefinitionsList.add(chargeCommand
 										.getName());
 							}
-							query
-									.setParameter("charges",
-											chargeDefinitionsList);
+							if(chargeDefinitionsList==null || chargeDefinitionsList.isEmpty()) {
+								List<String> emptyChargeDefinitionsList = new ArrayList<String>();
+								emptyChargeDefinitionsList.add("");
+								query.setParameter("charges",emptyChargeDefinitionsList);
+							} else {
+								query
+										.setParameter("charges",
+												chargeDefinitionsList);
+							}
 						}
 						if (employee.getOnlyShowProductionParents()
 								|| trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations", employee
-									.getProductionParents());
+							if(employee.getProductionParents()==null || employee.getProductionParents().isEmpty()) {
+								List<ProductionLocations> productionLocationsList = new ArrayList<ProductionLocations>();
+								ProductionLocations emptyProductionLocations = new ProductionLocations();
+								emptyProductionLocations.setId(0L);
+								productionLocationsList.add(emptyProductionLocations);
+								query.setParameter("locations", productionLocationsList);
+							} else {
+								query.setParameter("locations", employee
+										.getProductionParents());
+							}
 						}
 						if (employee.getCustomerWant() != null
 								|| employee.getAnyPastDue()) {
@@ -4667,14 +4770,28 @@ public class DataService extends HibernateService {
 								chargeDefinitionsList.add(chargeCommand
 										.getName());
 							}
-							query
-									.setParameter("charges",
-											chargeDefinitionsList);
+							if(chargeDefinitionsList==null || chargeDefinitionsList.isEmpty()) {
+								List<String> emptyChargeDefinitionsList = new ArrayList<String>();
+								emptyChargeDefinitionsList.add("");
+								query.setParameter("charges",emptyChargeDefinitionsList);
+							} else {
+								query
+										.setParameter("charges",
+												chargeDefinitionsList);
+							}	
 						}
 						if (employee.getOnlyShowProductionParents()
 								|| trackerConsole.getShowEmployeeProdParents()) {
-							query.setParameter("locations", employee
-									.getProductionParents());
+							if(employee.getProductionParents()==null || employee.getProductionParents().isEmpty()) {
+								List<ProductionLocations> productionLocationsList = new ArrayList<ProductionLocations>();
+								ProductionLocations emptyProductionLocations = new ProductionLocations();
+								emptyProductionLocations.setId(0L);
+								productionLocationsList.add(emptyProductionLocations);
+								query.setParameter("locations", productionLocationsList);
+							} else {
+								query.setParameter("locations", employee
+										.getProductionParents());
+							}
 						}
 						if (employee.getCustomerWant() != null
 								|| employee.getAnyPastDue()) {
