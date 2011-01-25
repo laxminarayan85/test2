@@ -41,6 +41,7 @@
 			import mx.controls.Alert;
 			import mx.controls.Image;
 			import mx.utils.ObjectUtil;
+			import mx.utils.StringUtil;
 			import com.efi.printsmith.security.PSSecurityCommands;
 			import mx.managers.PopUpManager;
 			import com.efi.mdi.view.window.MDIWindow;
@@ -232,6 +233,7 @@
 							job.runSize.type = dim.type;
 							run_size_edit.text = dim.name;
 							run_size_edit.selectedIndex = findItem(dim.name, dimensions);
+							validateSizes(dimensionTarget);
 							break;
 						case finish_size_edit:
 							job.finishSize.height = dim.height;
@@ -240,6 +242,7 @@
 							job.finishSize.type = dim.type;
 							finish_size_edit.text = dim.name;
 							finish_size_edit.selectedIndex = findItem(dim.name, dimensions);
+							validateSizes(dimensionTarget);
 							break;
 						}
 					}
@@ -576,7 +579,7 @@
 			}
 
 		private function dimensionChangePropagate(target:Object):void
-		{	
+		{				
 			//
 			// if the values of the other sheets are ZERO, then flow given target to them
 			//
@@ -642,6 +645,33 @@
 				finish_size_edit.selectedIndex = run_size_edit.selectedIndex;
 			}
 		}
+
+		private function validateSizes(target:Object):void
+		{	
+			var message:String;
+			
+			switch(target) {
+			case parent_size_edit:
+				break;
+			case run_size_edit:
+				if (job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
+					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheRunSizeisl");
+					Alert.show(message, "Warning", 0, null, null, null, 4); 
+				}
+				break;
+			case finish_size_edit:
+				if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
+					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
+					if (job.jobNumber != null)
+						message = StringUtil.substitute(message,job.jobNumber.toString());
+					else
+						message = StringUtil.substitute(message,"0");
+					Alert.show(message, "Warning", 0, null, null, null, 4); 
+				}
+				break;
+			}
+		}
+
 		
 		private function dimensionChange(target:Object):void
 		{	
@@ -669,6 +699,7 @@
 						}
 				} else {
 					run_size_edit.text = job.runSize.name;
+					validateSizes(dimensionTarget);
 					dimensionChangePropagate(dimensionTarget);
 					refreshCalcAndImage();
 				}
@@ -685,6 +716,7 @@
 					}
 				} else {
 					finish_size_edit.text = job.finishSize.name;
+					validateSizes(dimensionTarget);
 					dimensionChangePropagate(dimensionTarget);
 					refreshCalcAndImage();
 				}
@@ -833,6 +865,7 @@
 						job.finishSize.height = tempItem.height;		
 	       				finish_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
 	       				target = finish_size_edit;
+	       				validateSizes(target);
 	       			} else if (dropTarget.id == run_size_edit.id) {
 	   					job.runSize.name = tempItem.name;		
 	   					job.runSize.type = tempItem.type;		
@@ -852,6 +885,7 @@
 						}
 	       				run_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
 	       				target = run_size_edit;
+	       				validateSizes(target);
 	       			} else if (dropTarget.id == parent_size_edit.id) {
 	   					job.parentSize.name = tempItem.name;		
 	   					job.parentSize.type = tempItem.type;		
