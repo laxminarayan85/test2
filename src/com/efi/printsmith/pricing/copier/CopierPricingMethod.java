@@ -160,8 +160,14 @@ public abstract class CopierPricingMethod {
 				WasteChart wasteChart = chargeDefinition.getWasteChart();
 				if (wasteChart != null)
 				{
-					double wastePct = PriceListUtilities.lookupPrice(wasteChart, job.getNumCopies());
-					binderyWaste = binderyWaste + (job.getNumCopies() * wastePct);
+					double wastePct = 0.0;
+					if (job.getDoubleSided()) {
+						wastePct = PriceListUtilities.lookupPrice(wasteChart, job.getNumCopies() * 2);
+						binderyWaste = binderyWaste + (job.getNumCopies() * wastePct);
+					} else {
+						wastePct = PriceListUtilities.lookupPrice(wasteChart, job.getNumCopies());
+						binderyWaste = binderyWaste + (job.getNumCopies() * wastePct);
+					}
 				}
 				job.setBinderyWaste(new Double(binderyWaste).longValue());
 			}
