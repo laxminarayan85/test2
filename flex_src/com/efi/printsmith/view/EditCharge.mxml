@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
-	headerHeight="0" width="100%" height="100%" xmlns:components="com.efi.printsmith.components.*" creationComplete="{init()}">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	xmlns:components="com.efi.printsmith.components.*" creationComplete="{init()}"
+	showCloseButton="true" close="{closeWindow()}">
 	
 	<mx:RemoteObject id="shippingMethodDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadShippingMethods(event)"/>
@@ -14,6 +15,9 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.UpdateChargeEvent;
+			import mx.managers.PopUpManager;
+			import com.efi.mdi.view.window.MDIWindow;
 			import com.efi.printsmith.data.JobBase;
 			import com.efi.printsmith.data.enums.ChargeQtyType;
 			import com.efi.printsmith.data.enums.ChargeMethod;
@@ -53,9 +57,11 @@
 			
 			[Bindable] private var job:JobBase;
 			
+			[Bindable] public var jobIndex:int=-1;
+			
 			public function setCharge(chargeObj:Charge):void {
 				registerClassAlias("com.efi.printsmith.data.Charge",Charge);
-				charge = ObjectUtil.copy(chargeObj) as Charge;
+				this.charge = ObjectUtil.copy(chargeObj) as Charge;
 				if(charge.parentJob!=null) {
 					job = charge.parentJob;
 				}
@@ -65,10 +71,16 @@
 			
 			public function init():void
 			{
+				this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeUpdtCmd.UpdateCharge');
+				PopUpManager.centerPopUp(this);
 				dataServiceSystemPreferences.getSingle("PreferencesSystem");
 			    shippingMethodDataService.getAll("ShippingMethod");
 			    buildShipToArray();
 				
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
 			}
 			
 			private function buildShipToArray():void {
@@ -686,7 +698,7 @@
 			}
 			
 			private function updatePrice():void
-			{
+			{	
 				mapToChargeData();
 				var priceChargeEvent:PriceChargeEvent = new PriceChargeEvent(this.charge, new mx.rpc.Responder(handlePriceChargeComplete, handlePriceChargeFault));
 				priceChargeEvent.dispatch();
@@ -848,6 +860,18 @@
 				} else {
 					Alert.show("Unknown error when pricing job", "Error in Pricing", 0, null);
 				}
+			}
+			
+			private function doSave():void {
+				mapToChargeData();
+				dispatchEvent(new UpdateChargeEvent(UpdateChargeEvent.UPDATECHARGE_EVENT,charge,jobIndex,true));
+				closeWindow();
+			}
+			
+			private function doDelete():void {
+				mapToChargeData();
+				dispatchEvent(new UpdateChargeEvent(UpdateChargeEvent.UPDATECHARGE_EVENT,charge,jobIndex,false));
+				closeWindow();
 			}
 			
 		]]>
@@ -1132,6 +1156,20 @@
 			<mx:Spacer width="8"/>
 			<mx:Text text="{cutDescription}" width="50%" id="cut_description_text" fontWeight="bold" textAlign="left"/>
 			<mx:Spacer width="40"/>
+		</mx:HBox>
+		<mx:HBox width="100%">
+			<mx:HBox width="100%" horizontalAlign="left">
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Change')}"
+					click="{doSave()}"/>
+			</mx:HBox>
+			<mx:HBox width="100%" horizontalAlign="center">
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Delete')}"
+					click="{doDelete()}"/>
+			</mx:HBox>
+			<mx:HBox width="100%" horizontalAlign="right">
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.DontChange')}"
+					click="{closeWindow()}"/>
+			</mx:HBox>
 		</mx:HBox>	
 	</mx:VBox>
-</mx:Panel>
+</mx:TitleWindow>

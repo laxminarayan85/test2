@@ -114,6 +114,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.UpdateChargeEvent;
 			import mx.events.DragEvent;
 			import com.efi.printsmith.events.InvoiceNotesAddedEvent;
 			import mx.collections.Sort;
@@ -1224,11 +1225,45 @@
 					} */
 					openEditJobWindow(selectedJob);
 				} else if(invoice_job_grid.selectedIndex>-1 && invoice_job_grid.selectedItem!=null && invoice_job_grid.selectedItem is Charge){
-					var editChargeWindow:EditCharge = new EditCharge();
-					var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
-					Snowmass.getInstance().containerManager.openNewMDIWindow("",editChargeWindow, -1,-1,-1,-1, windowID);
-					editChargeWindow.setCharge(invoice_job_grid.selectedItem as Charge);
+					var selectedCharge:Charge = invoice_job_grid.selectedItem as Charge;
+					var editChargeWindow:EditCharge = PopUpManager.createPopUp(this,EditCharge,true) as EditCharge;
+					editChargeWindow.setCharge(selectedCharge);
+					if(selectedCharge.parentJob!=null) {
+						editChargeWindow.jobIndex = selectedCharge.jobIndex;
+					}
+					editChargeWindow.addEventListener(UpdateChargeEvent.UPDATECHARGE_EVENT,updateChargeEventHandler,false,0,true);
 				} 
+			}
+			
+			private function updateChargeEventHandler(event:UpdateChargeEvent):void {
+				if(event.isSave) {
+					if(event.jobIndex!=-1){
+						for each(var jobObj:JobBase in invoice.jobs) {
+							if(jobObj.jobIndex == event.jobIndex) {
+								if(jobObj.charges!=null) {
+									jobObj.charges.removeItemAt(event.charge.chargeIndex-1);
+									jobObj.charges.addItemAt(event.charge,event.charge.chargeIndex-1);
+								}
+								break;
+							}
+						}
+					} else {
+						invoice.charges.removeItemAt(event.charge.chargeIndex-1);
+						invoice.charges.addItemAt(event.charge,event.charge.chargeIndex-1);
+					}
+				} else {
+					if(event.jobIndex!=-1){
+						for each(var jobObj:JobBase in invoice.jobs) {
+							if(jobObj.jobIndex == event.jobIndex) {
+								jobObj.charges.removeItemAt(event.charge.chargeIndex-1);
+								break;
+							}
+						}
+					} else {
+						invoice.charges.removeItemAt(event.charge.chargeIndex-1);
+					}
+				}
+				invoice_job_grid.dataProvider = getJobChargesList(invoice.jobs,invoice.charges);
 			}
 		
 
