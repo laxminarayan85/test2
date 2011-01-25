@@ -245,7 +245,7 @@
 					}
 				}
 				
-				dimensionChangePropagate();
+				dimensionChangePropagate(dimensionTarget);
 				refreshCalcAndImage();
 			}
 
@@ -575,8 +575,49 @@
 				finishBoolean = true;
 			}
 
-		private function dimensionChangePropagate():void
+		private function dimensionChangePropagate(target:Object):void
 		{	
+			//
+			// if the values of the other sheets are ZERO, then flow given target to them
+			//
+			switch(target) {
+			case parent_size_edit:
+				break;
+			case run_size_edit:
+				if (job.parentSize.width == 0 || job.parentSize.height == 0) {
+					job.parentSize.name = job.runSize.name;
+					job.parentSize.type = job.runSize.type;
+					job.parentSize.height = job.runSize.height;
+					job.parentSize.width = job.runSize.width;
+					parent_size_edit.selectedIndex = run_size_edit.selectedIndex;
+					parent_size_edit.text = job.parentSize.name;
+				}
+				break;
+			case finish_size_edit:
+				if (job.runSize.width == 0 || job.runSize.height == 0) {
+					job.runSize.name = job.finishSize.name;
+					job.runSize.type = job.finishSize.type;
+					job.runSize.height = job.finishSize.height;
+					job.runSize.width = job.finishSize.width;
+					run_size_edit.text = job.runSize.name;
+					run_size_edit.selectedIndex = finish_size_edit.selectedIndex;
+					if (this.job.pricingMethod != null) {
+						if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
+							job.cutOff = job.runSize.height;
+						}
+					}
+				}
+				if (job.parentSize.width == 0 || job.parentSize.height == 0) {
+					job.parentSize.name = job.runSize.name;
+					job.parentSize.type = job.runSize.type;
+					job.parentSize.height = job.runSize.height;
+					job.parentSize.width = job.runSize.width;
+					parent_size_edit.selectedIndex = run_size_edit.selectedIndex;
+					parent_size_edit.text = job.parentSize.name;
+				}
+				break;
+			}
+			
 			// keep in sync
 			if (job.runSize.width == 0 || job.runSize.height == 0 || job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
 				job.runSize.name = job.parentSize.name;
@@ -612,7 +653,7 @@
 					dataService.getDimensionByWildcardName(parent_size_edit.text);
 				} else {
 					parent_size_edit.text = job.parentSize.name;
-					dimensionChangePropagate();
+					dimensionChangePropagate(dimensionTarget);
 					refreshCalcAndImage();
 				}
 				break;
@@ -621,14 +662,14 @@
 					if (run_size_edit.text.length == 0) {		// user emptys the size field
 							job.runSize = new Dimension();
 							run_size_edit.selectedItem = null;
-							dimensionChangePropagate();
+							dimensionChangePropagate(dimensionTarget);
 							refreshCalcAndImage();
 						} else {
 							dataService.getDimensionByWildcardName(run_size_edit.text);
 						}
 				} else {
 					run_size_edit.text = job.runSize.name;
-					dimensionChangePropagate();
+					dimensionChangePropagate(dimensionTarget);
 					refreshCalcAndImage();
 				}
 				break;
@@ -637,14 +678,14 @@
 					if (finish_size_edit.text.length == 0) {		// user emptys the size field
 						job.finishSize = new Dimension();
 						finish_size_edit.selectedItem = null;
-						dimensionChangePropagate();
+						dimensionChangePropagate(dimensionTarget);
 						refreshCalcAndImage();
 					} else {
 						dataService.getDimensionByWildcardName(finish_size_edit.text);
 					}
 				} else {
 					finish_size_edit.text = job.finishSize.name;
-					dimensionChangePropagate();
+					dimensionChangePropagate(dimensionTarget);
 					refreshCalcAndImage();
 				}
 				break;
@@ -766,6 +807,8 @@
             }
             
 			private function dragDropHandlerAllSizes(event:DragEvent):void {
+             var target:Object = new Object();
+             
               if (event.dragSource.hasFormat("items"))
               {
                 // Explicitly handle the dragDrop event.            
@@ -788,8 +831,8 @@
 	   					job.finishSize.type = tempItem.type;		
 						job.finishSize.width = tempItem.width;		
 						job.finishSize.height = tempItem.height;		
-	
 	       				finish_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
+	       				target = finish_size_edit;
 	       			} else if (dropTarget.id == run_size_edit.id) {
 	   					job.runSize.name = tempItem.name;		
 	   					job.runSize.type = tempItem.type;		
@@ -808,9 +851,7 @@
 							}
 						}
 	       				run_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
-	       				
-	       				// keep in sync
-						dimensionChangePropagate();
+	       				target = run_size_edit;
 	       			} else if (dropTarget.id == parent_size_edit.id) {
 	   					job.parentSize.name = tempItem.name;		
 	   					job.parentSize.type = tempItem.type;		
@@ -818,11 +859,10 @@
 						job.parentSize.height = tempItem.height;		
 	
 	       				parent_size_edit.selectedIndex = findItem(tempItem.name, dimensions);
-	       				
-	       				// keep in sync
-						dimensionChangePropagate();
+	       				target = parent_size_edit;
 	       			}
-	       			
+	       			// keep in sync
+					dimensionChangePropagate(target);
 					refreshCalcAndImage();
        			}
               }
