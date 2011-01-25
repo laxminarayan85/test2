@@ -1032,7 +1032,7 @@
 					  width="93"
 					  focusOut="refreshCalcAndImage()"
 					  text="{job.paperCal.folioEdge}" height="20"/>
-		<mx:TextInput enabled="{chkColorBar.selected}"
+		<mx:TextInput enabled="false"
 					  x="262"
 					  y="217"
 					  id="txtColorBar"
