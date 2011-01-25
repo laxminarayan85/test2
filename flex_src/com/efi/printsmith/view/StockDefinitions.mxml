@@ -25,6 +25,7 @@
 			<mx:SetProperty target="{qtybreaklabel}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}"/>
 			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
 			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
+			<mx:SetProperty target="{PriceExpires}" name="width" value="137"/>
 		</mx:State>
 		<mx:State name="RollStock">
 			<mx:SetProperty target="{label1}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWeight')}"/>
@@ -94,6 +95,7 @@
 			</mx:AddChild>
 			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
 			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
+			<mx:SetProperty target="{PriceExpires}" name="width" value="137"/>
 		</mx:State>
 		<mx:State name="SheetStock">
 			<mx:SetProperty target="{mWeight}" name="enabled" value="false"/>
@@ -103,9 +105,6 @@
 			<mx:SetProperty target="{label7}" name="width" value="121.5"/>
 			<mx:SetProperty target="{label11}" name="x" value="246.5"/>
 			<mx:SetProperty target="{minOrder}" name="width" value="107"/>
-			<mx:SetProperty target="{pcwRecycled}" name="x" value="152"/>
-			<mx:SetProperty target="{label12}" name="width" value="134"/>
-			<mx:SetProperty target="{pcwRecycled}" name="width" value="32.5"/>
 			<mx:SetProperty target="{PriceExpires}" name="width" value="137"/>
 			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
 			<mx:SetProperty target="{qtybreaklabel}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.QtyBreaks')}"/>
@@ -114,6 +113,7 @@
 			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
 			<mx:SetProperty target="{radiobutton1}" name="y" value="85"/>
 			<mx:SetProperty target="{MinOrderQty}" name="x" value="425"/>
+			<mx:SetProperty target="{defaultLargeCopier}" name="dataProvider" value="{copierLarge}"/>
 		</mx:State>
 		<mx:State name="RigidSubstrate">
 			<mx:RemoveChild target="{Basicsize}"/>
@@ -154,6 +154,7 @@
 			</mx:AddChild>
 			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
 			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
+			<mx:SetProperty target="{PriceExpires}" name="width" value="137"/>
 		</mx:State>
 		<mx:State name="LargeFormat">
 			<mx:SetProperty target="{label3}" name="text" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollWidth')}"/>
@@ -216,6 +217,7 @@
 			<mx:SetProperty target="{ListPerM5}" name="enabled" value="false"/>
 			<mx:SetProperty target="{tab_pages}" name="x" value="0"/>
 			<mx:SetProperty target="{tab_pages}" name="y" value="175"/>
+			<mx:SetProperty target="{PriceExpires}" name="width" value="137"/>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="dataService" destination="dataService">
@@ -287,6 +289,7 @@
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dimensionDataService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadDimensionResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveDimensionResult(event)"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject id="dataServiceSystemPreferences" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadSystemPreferencesResult(event)"/>
@@ -437,7 +440,9 @@
     [Bindable]
     private var preferencesDefaultPress:PreferencesDefaultPresses = new PreferencesDefaultPresses();
 	[Bindable]
-	private var copierDefinitions:ArrayCollection = new ArrayCollection();  
+	private var copierDefinitions:ArrayCollection = new ArrayCollection(); 
+	[Bindable]
+	private var copierLarge:ArrayCollection = new ArrayCollection();   
 	[Bindable]
 	private var pressDefinition:PressDefinition = new PressDefinition(); 
 	private var first:Boolean
@@ -505,7 +510,7 @@
 			stockDefinitions.charges = new ArrayCollection;
 			stockDefinitions.stockChanges = new ArrayCollection;
 		}
-		
+		this.currentState="SheetStock";
 		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 
 	    loadUomArray();
@@ -784,7 +789,9 @@
 	    	stockDefinitions.stockChanges = new ArrayCollection;
 	    	registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
 			originalStockDefinitions = ObjectUtil.copy(stockDefinitions) as StockDefinition;
+			
 		}
+		this.currentState="SheetStock";
 	}
 	
 	private function handleStockPickerSelect(evt:StockPickerSelectEvent):void {
@@ -1373,7 +1380,7 @@
 		NormalRunSize.selectedIndex = -1;
 		
 	}
-
+	
 	/* private function handleLoadStockChangesResult(ev:ResultEvent):void {
 		 stockChanges = ev.result as ArrayCollection;
 	} */
@@ -1383,12 +1390,18 @@
 	}
 	private function handleLoadCopierDefinition(ev:ResultEvent):void {
 		 copierDefinitions = new ArrayCollection();
+		 copierLarge = new ArrayCollection();
 		 var copier:CopierDefinition = new CopierDefinition();
+		  var copier1:CopierDefinition = new CopierDefinition();
 		 copierDefinitions.addItem(copier);
+		 copierLarge.addItem(copier1);
 		 var resultArray:ArrayCollection = ev.result as ArrayCollection;
 		 for (var i:int;i<resultArray.length;i++) {
 		 	copier = resultArray.getItemAt(i) as CopierDefinition;
-		 	copierDefinitions.addItem(copier);
+		 	if ( copier.largeFormat ==  true)
+		 		copierLarge.addItem(copier)
+		 	else
+		 		copierDefinitions.addItem(copier);
 		 }
 	}
 	private function handleLoadStockGroup(ev:ResultEvent):void {
@@ -1505,6 +1518,7 @@
 	    accountPickerWindow.formIsEmpty = true;
 	    accountPickerWindow.setAccounts(accounts)
 	    accountPickerWindow.prospect_boolean = false;
+	    accountPickerWindow.contact_boolean = false;
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTNEWACCOUNT, handleAccountPickerNew);	
@@ -1830,6 +1844,7 @@
 			else
 				this.NormalRunSize.text = text;
 			stockDefinitions.normalRunSize.name = NormalRunSize.text;
+		
 		}
 		super.focusOutHandler(evt);
 	}
@@ -1992,7 +2007,10 @@
 		}
 	
 	}
-	
+	private function handleSaveDimensionResult(ev:ResultEvent):void {
+    	dimensions.addItem(ev.result as Dimension);
+    	parentSize.selectedIndex = findItem(stockDefinitions.parentsize.name, dimensions);
+	}
 	private function calstockMWeight(event:FocusEvent):void{
 		var parent: Number;
 		var basic:Number;
@@ -2001,6 +2019,17 @@
 		var tempFloat:Number;
 		var stckType:StockType;
 		pDim = parentSize.selectedItem as Dimension;
+		if ( pDim == null){
+			if ( stockDefinitions.parentsize.name != ""){
+				pDim = new Dimension()
+				pDim.name = stockDefinitions.parentsize.name;
+				pDim.width = Snowmass.getWidthFromSizeString(pDim);
+				pDim.height = Snowmass.getLengthFromSizeString(pDim);
+				dimensionDataService.addUpdate(pDim);
+				
+				
+			}
+		}
 		if (pDim != null) {
 			parent = pDim.width * pDim.height;
 			stckType = stkType.selectedItem  as StockType;
@@ -2018,6 +2047,7 @@
 			
 					weight = ((parent / basic)* parseFloat(weight_edit.text.replace(",",""))*2);
 					mWeight.text =  Snowmass.getCurrencyFormatter(false, 2).format(weight);
+				
 				}
 				calCartonWeight(event);
 			}
@@ -2280,7 +2310,7 @@ private function doRound(evt:FocusEvent):void{
 	<mx:Label x="493" y="92" id="weight_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Weight')}" width="67.5" textAlign="right"/>
 	<mx:Label x="493" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Coated')}" width="67.5" textAlign="right"/>
 
-	<comp:EditableComboBox optional="true" editable="true" x="126" y="133" width="93" id="cboGenericColor" dataProvider="{stockGenericColor}" labelField="name" focusOut="doStockGenericColor()"/>
+	<comp:EditableComboBox optional="true" editable="true" x="126" y="133" width="138" id="cboGenericColor" dataProvider="{stockGenericColor}" labelField="name" focusOut="doStockGenericColor()"/>
 	<comp:EditableComboBox optional="true"  x="380" y="112" width="105" id="cboStockGrade" dataProvider="{stockGrade}"  labelField="name" focusOut="doStockGrade()"/>
 	<mx:TextInput x="568.5" y="90" width="55" id="weight_edit" text="{stockDefinitions.weight}" focusOut="calstockMWeight(event);"/>
 	<comp:EditableComboBox optional="true" editable="true" x="568.5" y="114" width="55" id="coated" dataProvider="{stockCoated}" labelField="name"/>

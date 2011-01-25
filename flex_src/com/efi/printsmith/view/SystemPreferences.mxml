@@ -952,7 +952,10 @@
 		
 		if(selectedSection == "genericPrefCmd.CashRegister"){
 			checkCount = 1;
+			var index:int = 1;
 			for each(var preferencesCashRegister:PreferencesCashRegister in PreferencesCashRegisterArray){
+				preferencesCashRegister.buttonPrefixCharacter = index.toString();
+				index++;
 				if(preferencesCashRegister.taxTable!=null){
 					if(preferencesCashRegister.taxTable.id==-1){
 						preferencesCashRegister.taxTable = null;

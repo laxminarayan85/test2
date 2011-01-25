@@ -2,7 +2,7 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
 	layout="absolute" width="559" height="394" creationComplete="init()" 
 	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
-	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.TableEditor')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.TableEditor')}" name="Stock Definition">
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.TableEditor')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.TableEditor')}" name="Table Editor">
 <mx:RemoteObject id="dataTableService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTableResult(event)"/>
 </mx:RemoteObject>

@@ -116,7 +116,7 @@
  	 	 	 	<mx:TextInput x="121" y="152" width="75" textAlign="right" id="invoice_payment"/>
  	 	 	</mx:AddChild>
  	 	</mx:State>
- 	 	<mx:State name="paymentPaymentMethod">
+ 	 	<mx:State name="paymentPaymentMethod" basedOn="departmentState">
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:Label x="10" y="154" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Amount')}" width="103" textAlign="right"/>
  	 	 	</mx:AddChild>
@@ -136,6 +136,7 @@
  	 	 	<mx:SetProperty target="{cashregister_canvas}" name="height" value="577"/>
  	 	 	<mx:SetProperty target="{cashregister_canvas}" name="width" value="687"/>
  	 	 	<mx:SetProperty name="width" value="857"/>
+ 	 	 	<mx:SetProperty target="{accept_button}" name="enabled" value="true"/>
  	 	</mx:State>
  	 	<mx:State name="paymentCreditCard" basedOn="paymentPaymentMethod">
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
@@ -151,6 +152,7 @@
  	 	 	 	<mx:TextInput x="121" y="114" width="75"  id="card_ref" focusOut="UpdateCashRegister()"/>
  	 	 	</mx:AddChild>
  	 	 	<mx:SetProperty target="{cashReg_grid}" name="x" value="0"/>
+ 	 	 	<mx:SetProperty target="{accept_button}" name="enabled" value="true"/>
  	 <!-- 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:Button x="204" y="115" width="19" height="19" click="doCreditCardManualApproval()" enabled="{enableCCApproval}" id="btnCCmanualApprove0">
  	 	 	 		<mx:icon>@Embed(source='../../../../assets/CreditCardManualApproval.png')</mx:icon>
@@ -167,8 +169,11 @@
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:TextInput x="121" y="114" width="75" id="check_num" focusOut="UpdateCashRegister()"/>
  	 	 	</mx:AddChild>
+ 	 	 	<mx:SetProperty target="{accept_button}" name="enabled" value="true"/>
  	 	</mx:State>
- 	 	<mx:State name="paymentCharge" basedOn="paymentPaymentMethod"/>
+ 	 	<mx:State name="paymentCharge" basedOn="paymentPaymentMethod">
+ 	 	 	<mx:SetProperty target="{accept_button}" name="enabled" value="true"/>
+ 	 	</mx:State>
  	 	<mx:State name="invoiceCash" basedOn="invoicePaymentMethod">
  	 	</mx:State>
  	 	<mx:State name="invoiceCreditCard" basedOn="invoicePaymentMethod">
@@ -1031,7 +1036,7 @@
 				this.focusManager.defaultButton = accept_button;
 			}	
 			else {
-				accept_button.enabled = false;
+				
 				this.focusManager.defaultButton = null;
 			}
 		
@@ -1263,7 +1268,7 @@
 	private function paymentMethodChanged(event:Event):void {
 		var rbvalue:String = event.currentTarget.selectedValue;
 						
-		this.currentState = "";
+		//this.currentState = "";
 		
 		//
 		// reverse any external values that could have already been completed, ie.. a Credit Card charge
@@ -2243,7 +2248,10 @@
 		tmpItem = item as PreferencesCashRegister;
 		
 		if (tmpItem != null && tmpItem.title != null && tmpItem.title != "") {
-			return tmpItem.buttonPrefixCharacter.toString() + " " + tmpItem.title;
+			if ( tmpItem.buttonPrefixCharacter != null)
+				return tmpItem.buttonPrefixCharacter.toString() + " " + tmpItem.title;
+			else
+				return tmpItem.title;
 		} else {
 			return "";
 		}
