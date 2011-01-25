@@ -654,19 +654,23 @@
 			case parent_size_edit:
 				break;
 			case run_size_edit:
-				if (job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
-					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheRunSizeisl");
-					Alert.show(message, "Warning", 0, null, null, null, 4); 
+				if (job.parentSize.width > 0 && job.parentSize.height > 0) {
+					if (job.runSize.width > job.parentSize.width || job.runSize.height > job.parentSize.height) {
+						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheRunSizeisl");
+						Alert.show(message, "Warning", 0, null, null, null, 4); 
+					}
 				}
 				break;
 			case finish_size_edit:
-				if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
-					message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
-					if (job.jobNumber != null)
-						message = StringUtil.substitute(message,job.jobNumber.toString());
-					else
-						message = StringUtil.substitute(message,"0");
-					Alert.show(message, "Warning", 0, null, null, null, 4); 
+				if (job.runSize.width > 0 && job.runSize.height > 0) {
+					if (job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height) {
+						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_WarningTheFinishSize");
+						if (job.jobNumber != null)
+							message = StringUtil.substitute(message,job.jobNumber.toString());
+						else
+							message = StringUtil.substitute(message,"0");
+						Alert.show(message, "Warning", 0, null, null, null, 4); 
+					}
 				}
 				break;
 			}
