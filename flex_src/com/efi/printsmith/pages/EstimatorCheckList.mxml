@@ -5,6 +5,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.enums.ChargeCostMethod;
 			import com.efi.printsmith.data.ChargeCommand;
 			import com.efi.printsmith.data.Charge;
 			import com.efi.printsmith.data.InkColor;
@@ -28,6 +29,11 @@
 			}
 			
 			public function setJob(jobBaseObj:JobBase):void {
+				var totalEstTime:Number = 0;
+				var totalEstCost:Number = 0;
+				var totalMarkUpPrnct:Number = 0;
+				var totalMarkUpAmount:Number = 0;
+				var totalSellPrice:Number = 0;
 				registerClassAlias("com.efi.printsmith.data.JobBase",JobBase);
 				jobObj = ObjectUtil.copy(jobBaseObj) as JobBase;
 				var dataGridItem:Object = new Object();
@@ -38,13 +44,17 @@
 				var totalTime:Number = (isNaN(jobObj.runTime)?0:jobObj.runTime)+(isNaN(jobObj.washupTime)?0:jobObj.washupTime)
 										+(isNaN(jobObj.setupTime)?0:jobObj.setupTime);
 				dataGridItem.estTime = convertMilliSecondsToString(totalTime,true);
+				totalEstTime = totalEstTime+totalTime;
 				if(jobObj.pricingRecord!=null) {
 					dataGridItem.estCost = jobObj.pricingRecord.laborCost.toFixed(2);
+					totalEstCost = totalEstCost + jobObj.pricingRecord.laborCost;
 					dataGridItem.markUpAmount = (jobObj.pricingRecord.laborTotalPrice - jobObj.pricingRecord.laborCost).toFixed(2);
+					totalMarkUpAmount = totalMarkUpAmount + (jobObj.pricingRecord.laborTotalPrice - jobObj.pricingRecord.laborCost); 
 					if(dataGridItem.estCost!=0) {
 						dataGridItem.markUpPrnct = ((dataGridItem.markUpAmount/dataGridItem.estCost)*100).toFixed(2)+"%";
 					}
 					dataGridItem.sellPrice = jobObj.pricingRecord.laborTotalPrice.toFixed(2);
+					totalSellPrice = totalSellPrice + dataGridItem.sellPrice;
 				}
 				dataGridList.addItem(dataGridItem);
 				dataGridItem = new Object();
@@ -56,11 +66,14 @@
 				dataGridItem.quantity = (jobObj.totalImpressions * jobObj.sheets / jobObj.numOn).toFixed(2);
 				if(jobObj.pricingRecord!=null) {
 					dataGridItem.estCost = jobObj.pricingRecord.stockCost.toFixed(2);
+					totalEstCost = totalEstCost + jobObj.pricingRecord.stockCost;
 					dataGridItem.markUpAmount = (jobObj.pricingRecord.stockTotalPrice - jobObj.pricingRecord.stockCost).toFixed(2);
+					totalMarkUpAmount = totalMarkUpAmount + (jobObj.pricingRecord.stockTotalPrice - jobObj.pricingRecord.stockCost);
 					if(dataGridItem.estCost!=0) {
 						dataGridItem.markUpPrnct = ((dataGridItem.markUpAmount/dataGridItem.estCost)*100).toFixed(2)+"%";
 					}
 					dataGridItem.sellPrice = jobObj.pricingRecord.stockTotalPrice.toFixed(2);
+					totalSellPrice = totalSellPrice + dataGridItem.sellPrice;
 				}
 				dataGridList.addItem(dataGridItem);
 				dataGridItem = new Object();
@@ -147,16 +160,48 @@
 									dataGridItem = new Object();
 									dataGridItem.item = "\t"+chargeObj.chargeDefinition.name;
 									dataGridItem.quantity = chargeObj.quantity;
+									dataGridItem.estCost = 0;
+									var estCost:Number = 0;
 									if(chargeObj.chargeDefinition!=null && chargeObj.chargeDefinition.chargeCost!=null) {
-										dataGridItem.estCost = chargeObj.chargeDefinition.chargeCost.unitCost.toFixed(2);
+										if(chargeObj.chargeDefinition.chargeCost.costingMethod == ChargeCostMethod.TimeAndMaterial && chargeObj.chargeDefinition.chargeCost.speedTable == null){
+											var totalSetUp:Number = ((chargeObj.chargeDefinition.chargeCost.setupMinutes/60) * chargeObj.chargeDefinition.chargeCost.laborRate) + chargeObj.chargeDefinition.chargeCost.fixedMaterials;
+											var totalCost:Number = (chargeObj.chargeDefinition.chargeCost.laborRate/chargeObj.chargeDefinition.chargeCost.piecesPerHour)+chargeObj.chargeDefinition.chargeCost.unitMaterials;
+											if(totalSetUp>0) {
+												estCost = totalSetUp;
+												dataGridItem.estCost = totalSetUp.toFixed(2);
+											} else {
+												estCost = totalCost;
+												dataGridItem.estCost = totalCost.toFixed(2);
+											}
+										} else {
+											dataGridItem.estCost = Number(0).toFixed(2);
+										}
+										totalEstCost = totalEstCost + estCost;
 									}
 									dataGridItem.sellPrice = chargeObj.price;
+									dataGridItem.markUpAmount = dataGridItem.sellPrice - dataGridItem.estCost;
+									totalMarkUpAmount = totalMarkUpAmount + (dataGridItem.sellPrice - dataGridItem.estCost);
+									if(dataGridItem.estCost!=0) {
+										dataGridItem.markUpPrnct = ((dataGridItem.markUpAmount/dataGridItem.estCost)*100).toFixed(2)+"%";
+									}
+									totalSellPrice = totalSellPrice + dataGridItem.sellPrice;
 									dataGridList.addItem(dataGridItem);
 								}
 							}
 						}
 					}
 				}
+				dataGridItem = new Object();
+				dataGridItem.isTotal = true;
+				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Total');
+				dataGridItem.estTime = convertMilliSecondsToString(totalEstTime,true);
+				dataGridItem.estCost = totalEstCost.toFixed(2);
+				if(totalEstCost!=0) {
+					dataGridItem.markUpPrnct = ((totalMarkUpAmount/totalEstCost)*100).toFixed(2)+"%";
+				}
+				dataGridItem.markUpAmount = totalMarkUpAmount.toFixed(2);
+				dataGridItem.sellPrice = totalSellPrice.toFixed(2);
+				dataGridList.addItem(dataGridItem);
 			}
 			
 			private function closeWindow():void {
@@ -630,13 +675,55 @@
 	
 	<mx:DataGrid width="100%" dataProvider="{dataGridList}">
 		<mx:columns>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Item')}" dataField="item"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Quantity')}" dataField="quantity"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.EstTime')}" dataField="estTime"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.EstCost')}" dataField="estCost"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Markup')}" dataField="markUpPrnct"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.MarkupAmt')}" dataField="markUpAmount"/>
-			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.SellPrice')}" dataField="sellPrice"/>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Item')}" dataField="item">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label fontWeight="{data.isTotal?'bold':'normal'}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Quantity')}" dataField="quantity">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label fontWeight="{data.isTotal?'bold':'normal'}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.EstTime')}" dataField="estTime">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label fontWeight="{data.isTotal?'bold':'normal'}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.EstCost')}" dataField="estCost">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label fontWeight="{data.isTotal?'bold':'normal'}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Markup')}" dataField="markUpPrnct">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label fontWeight="{data.isTotal?'bold':'normal'}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.MarkupAmt')}" dataField="markUpAmount">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label fontWeight="{data.isTotal?'bold':'normal'}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.SellPrice')}" dataField="sellPrice">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Label fontWeight="{data.isTotal?'bold':'normal'}"/>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
 		</mx:columns>
 	</mx:DataGrid>
 		
