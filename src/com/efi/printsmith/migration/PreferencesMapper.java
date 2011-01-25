@@ -1184,6 +1184,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setPrintParentToFinishSection(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("Estimator_autoShowJobPaperCalc"))
 			preferencesEstimating.setShowPaperCalculator(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("numberOfDaysBeforePaymentDue"))
+			preferencesEstimating.setNumberOfDaysBeforeDue(Utilities.tokenToInt(value));
 		
 		dataService.addUpdate(preferencesEstimating);
 	}
