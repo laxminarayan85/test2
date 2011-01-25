@@ -63,6 +63,7 @@
  	 	 	<mx:SetProperty target="{txtSaleDescription}" name="width" value="349"/>
  	 	 	<mx:SetProperty target="{txtSaleDescription}" name="height" value="45"/>
  	 	 	<mx:SetProperty target="{txtSaleDescription}" name="enabled" value="true"/>
+ 	 	 	<mx:SetProperty target="{txtSaleDescription}" name="editable" value="false"/>
 
  	 	</mx:State>
  	 	<mx:State name="departmentState">
@@ -2335,7 +2336,7 @@
 			if (goodPickup) {
 				// TODO: test for delayed payment from PSS
 				
-				
+				dataService.getAccount(invoice.account.id);
 				customerAccount = invoice.account;			// active account for charging
 				activeSale.isPickup = true;
 				activeSale.invoice = invoice;
@@ -2348,7 +2349,7 @@
 					
 				activeSale.taxAmount = invoice.tax;
 				activeSale.description = invoice.name;
-				
+			
 				if (activeSale.description.length == 0)
 					activeSale.description = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posPendCmd.PickUp');
 				
@@ -2380,6 +2381,8 @@
 				
 				// except this sale transaction
 				doAccept();
+				if( goodPickup)
+					txtSaleDescription.text = invoice.name;
 				
 				//
 				// ACCOUNT is a charge account, pre set payment button

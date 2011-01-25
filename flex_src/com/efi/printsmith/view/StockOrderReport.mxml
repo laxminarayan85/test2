@@ -68,7 +68,7 @@
 
 	public function getDateField(item:Object, column:DataGridColumn):String{
 		var tmpItem:Date ;
-		tmpItem = item.enterDate as Date;
+		tmpItem = item.created as Date;
 		
 		if (tmpItem != null ) {
 			return Snowmass.getShortDateTimeFormatter().format(tmpItem)

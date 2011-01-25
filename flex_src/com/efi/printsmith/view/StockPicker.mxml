@@ -261,8 +261,9 @@
 				finishes = ac;
 			}			
 		}
-		if(editableJob.stock!=null) {
-			setJobStockDefiniton(editableJob.stock);
+		if(editableJob!=null)
+			if(editableJob.stock!=null) {
+				setJobStockDefiniton(editableJob.stock);
 		}
 
 	}	

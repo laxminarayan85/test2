@@ -1279,7 +1279,8 @@
     			setMarketing();
 				this.setAccount(account); 
     			}
-    			
+    		account.shipToAddress = ship_to_address_editor.getAddress();
+			account.billToAddress = bill_to_address_editor.getAddress();	
 	    	if (account.shipToAddress == null) {
 	    		account.shipToAddress = new Address();
 	    		account.shipToAddress.name = name_edit.text;
@@ -1291,6 +1292,9 @@
 	    		account.shipToAddress.country = "";
 	    		account.shipToAddress.zone = "";
 	    	}
+	    	else{
+	    		account.shipToAddress.name = name_edit.text;
+	    	}
 	    	if (account.billToAddress == null) {
 	    		account.billToAddress = new Address();
 	    		account.billToAddress.name = name_edit.text;
@@ -1301,6 +1305,8 @@
 	    		account.billToAddress.zip = "";
 	    		account.billToAddress.country = "";
 	    		account.billToAddress.zone = "";
+	    	}else{
+	    		account.billToAddress.name = name_edit.text;
 	    	}
 	    	this.ship_to_address_editor.setAddress(account.shipToAddress);
 	    	this.bill_to_address_editor.setAddress(account.billToAddress);

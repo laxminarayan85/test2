@@ -153,8 +153,9 @@
 		if (stockOrder == null)
 			stockOrder = new StockOrder();
 		stockOrder.invoiceNumber = Invoice_Edit.text;
-		if (invoice.account != null)
-			stockOrder.customerName= invoice.account.title;
+		if (invoice != null)
+			if (invoice.account != null)
+				stockOrder.customerName= invoice.account.title;
 		
 		stockOrder.jobNumber = job_edit.text;
 		
@@ -228,7 +229,8 @@
 	     StockDefinitionArray = ev.result as ArrayCollection;
 	     
 	     this.enabled=true;
-   	 loadStockVendor();
+	     select_button.enabled = true;
+   		 loadStockVendor();
 	}
 	private function handleFault(ev:FaultEvent):void {  
 		var message:String;
@@ -464,7 +466,7 @@
 	<mx:Button x="177" y="10" width="50" height="38" label="Button">
 		<mx:icon>@Embed(source='../../../../assets/auto_order.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="305" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/get.png')" click=" doGet();"/>
+	<mx:Button x="305" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/get.png')" click=" doGet();" id="select_button" enabled="false"/>
 	<mx:Button x="392" y="10" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/print.png')" click="doReport()">
 	</mx:Button>
 	<mx:Button x="489" y="10"  click="docancel()" width="38" height="38" label="Button" icon="@Embed(source='../../../../assets/cancel.png')" />
