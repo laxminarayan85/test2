@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="100%" height="100%"
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" headerHeight="0" width="100%" height="100%"
 	title = "{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.TrackerManager')}"
 	label = "{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.TrackerManager')}"
 	creationComplete="{initTrackerMgrWindow()}" xmlns:components="com.efi.printsmith.common.components.*">
@@ -55,6 +55,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.mdi.view.window.MDIWindow;
 			import mx.events.CloseEvent;
 			import com.efi.printsmith.data.ProductionDates;
 			import com.efi.printsmith.data.ProductionLocations;
@@ -113,6 +114,8 @@
 			
 			private function initTrackerMgrWindow():void {
 				onLoad = true;
+				var mdiWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this);
+				mdiWin.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.TrackerManager');
 				dataService.getSingle("TrackerManager");
 				dataServiceException.getAll("ProductionExceptions");
 				dataServiceRouteSetUp.getRoutingStepSetUpList();
@@ -218,6 +221,7 @@
 				}
 				if(onLoad){
 					onLoad = false;
+					trackerManager.daysold = 180;
 					dataServiceFacilty.getAll("ProductionFacilities");
 					dataServiceLocation.getAll("ProductionLocations");
 					dataServiceDates.getAll("ProductionDates");
@@ -1192,7 +1196,10 @@
 				
 			<mx:HBox width="100%">
 				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.ClearTrackerhistoryf')}:"/>
-				<mx:TextInput textAlign="center" text="180"/>
+				<components:CustomNumericTextInputComponent
+					dataHolder="{trackerManager}" variableName="daysold" customText="{trackerManager.daysold}"
+					precision="0" rounding="nearest" isInteger="true" textAlignStyle="center"/>
+				<!--<mx:TextInput textAlign="center" text="180"/>-->
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowMgrCmd.daysold')}"/>
 			</mx:HBox>
 			
