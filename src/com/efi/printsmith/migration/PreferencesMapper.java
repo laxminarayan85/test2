@@ -215,8 +215,10 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesPOSField(key, fieldName, fieldValue);
 		else if (group.equals("Paper Calculator"))
 			importPreferencesEstimatingField(key, fieldName, fieldValue);
-		else if (group.equals("Company Info"))
+		else if (group.equals("Company Info")) {
 			importPreferencesSystemField(key, fieldName, fieldValue, true);
+			importPreferencesAccountingField(key, fieldName, fieldValue);
+		}
 		else if (group.equals("Quantity Breaks"))
 			importPreferencesQuantityBreaksField(fieldValue);
 		else if (group.equals("Blank Stock Setup") || group.equals("Stock Setup") || group.equals("Customer Stock Setup")) {
@@ -880,6 +882,25 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesAccounting.setDefaultSalesRep(value);
 		else if (name.equals("defaultShippingMode"))
 			preferencesAccounting.setDefaultShipping(value);
+		else if (name.equals("creditCardApproval_Active"))
+			preferencesAccounting.setActivateCreditCardApproval(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("creditCardIntegration")) {
+			if (value.equals("SkipJack"))
+				preferencesAccounting.setCreditCardProcessor("useskipjackprocessor");
+			else if (value.equals("SuperCharge"))
+				preferencesAccounting.setCreditCardProcessor("useobsoletedropfolder");
+			else if (value.equals("EFS"))
+				preferencesAccounting.setCreditCardProcessor("useefsprocessor");
+		} else if (name.equals("skipjackMode")) {
+			if (value.equals("normal"))
+				preferencesAccounting.setSkipJackMode(0);
+			else if (value.equals("advanced"))
+				preferencesAccounting.setSkipJackMode(1);
+			else
+				preferencesAccounting.setSkipJackMode(3);
+		} else if (name.equals("skipjackPortNumber"))
+			preferencesAccounting.setPortNumber(value);
+			
 		dataService.addUpdate(preferencesAccounting);
 	}
 	private void importPreferencesPOSField(String key, String name, String value) throws Exception {

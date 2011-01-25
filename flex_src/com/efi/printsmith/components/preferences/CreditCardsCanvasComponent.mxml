@@ -287,10 +287,10 @@
 							<mx:columns>
 							
 								<mx:DataGridColumn width="40"
-									headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Use')}" dataField="used" editable="false">
+									headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'pricePrefCmd.Use')}" dataField="activeaccepted" editable="false">
 									<mx:itemRenderer>
 										<mx:Component>
-											<components:CustomCheckBoxComponent datagridControl="true" variableName="used" customText="{data.used}"
+											<components:CustomCheckBoxComponent datagridControl="true" variableName="activeaccepted" customText="{data.activeaccepted}"
 												selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 										</mx:Component>
 									</mx:itemRenderer>
