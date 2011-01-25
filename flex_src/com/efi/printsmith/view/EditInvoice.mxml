@@ -1223,7 +1223,12 @@
 						openEditJobWindow(selectedJob);
 					} */
 					openEditJobWindow(selectedJob);
-				}
+				} else if(invoice_job_grid.selectedIndex>-1 && invoice_job_grid.selectedItem!=null && invoice_job_grid.selectedItem is Charge){
+					var editChargeWindow:EditCharge = new EditCharge();
+					var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
+					Snowmass.getInstance().containerManager.openNewMDIWindow("",editChargeWindow, -1,-1,-1,-1, windowID);
+					editChargeWindow.setCharge(invoice_job_grid.selectedItem as Charge);
+				} 
 			}
 		
 
