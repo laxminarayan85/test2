@@ -531,6 +531,11 @@
 					return;
 				}
 				broker = newBrokerObj;
+				if(broker.address!=null) {
+					broker.address.id = 0;
+					broker.address.created = null;
+					broker.address.modified = null;
+				}
 				registerClassAlias("com.efi.printsmith.data.Address",Address);
 				ship_to_address_editor.setAddress(ObjectUtil.copy(broker.address) as Address);
 				ship_to_address_editor.doEditAddress();
@@ -550,6 +555,11 @@
 					}
 				}
 				broker = newBrokerObj;
+				if(broker.address!=null) {
+					broker.address.id = 0;
+					broker.address.created = null;
+					broker.address.modified = null;
+				}
 				registerClassAlias("com.efi.printsmith.data.Address",Address);
 				ship_to_address_editor.setAddress(ObjectUtil.copy(broker.address) as Address);
 				ship_to_address_editor.doEditAddress();
