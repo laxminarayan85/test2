@@ -20,6 +20,7 @@ import com.efi.printsmith.data.PreferencesAccounting;
 import com.efi.printsmith.data.PreferencesCashRegister;
 import com.efi.printsmith.data.PreferencesEstimating;
 import com.efi.printsmith.data.PreferencesPOS;
+import com.efi.printsmith.data.PreferencesPendingList;
 import com.efi.printsmith.data.PreferencesPricingMethod;
 import com.efi.printsmith.data.PreferencesQuantityBreaks;
 import com.efi.printsmith.data.PreferencesStocks;
@@ -285,6 +286,7 @@ public class PreferencesMapper extends ImportMapper {
 			importPreferencesPOSField(key, fieldName, fieldValue);
 			importPreferencesAccountingField(key, fieldName, fieldValue);
 			importPreferencesStockDefinitionField(key, fieldName, fieldValue);
+			importPreferencesPendingListField(key, fieldName, fieldValue);
 		}
 		else if (group.equals("Def Customer")) {
 			importPreferencesSystemField(key, fieldName, fieldValue, true);
@@ -460,6 +462,15 @@ public class PreferencesMapper extends ImportMapper {
 			PreferencesStockDefinition preferencesStockDefinition = (PreferencesStockDefinition)dataService.getQuery("PreferencesStockDefinition", " where columnorder="+key);
 			preferencesStockDefinition.setVisible(Utilities.tokenToBooleanValue(value));
 			dataService.addUpdate(preferencesStockDefinition);
+		}
+	}
+	
+	private void importPreferencesPendingListField(String key, String name, String value) throws Exception {
+		DataService dataService = new DataService();
+		if (name.equals("PendingList_column_show")) {
+			PreferencesPendingList preferencesPendingList = (PreferencesPendingList)dataService.getQuery("PreferencesPendingList", " where columnorder="+key);
+			preferencesPendingList.setVisible(Utilities.tokenToBooleanValue(value));
+			dataService.addUpdate(preferencesPendingList);
 		}
 	}
 	
