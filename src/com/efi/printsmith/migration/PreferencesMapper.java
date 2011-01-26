@@ -34,6 +34,7 @@ import com.efi.printsmith.data.TaxTable;
 import com.efi.printsmith.data.Country;
 import com.efi.printsmith.data.AddressFormatting;
 import com.efi.printsmith.data.EstimatorTypes;
+import com.efi.printsmith.data.Users;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.service.MatrixService;
@@ -41,6 +42,7 @@ import com.efi.printsmith.service.MatrixService;
 public class PreferencesMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(InvoiceMapper.class);
 	public void importFile(File uploadedFile) throws Exception {
+		String currentGroup = "";
 		try {
 			DataService dataService = new DataService();
 			deletePricingMethods();
@@ -54,6 +56,7 @@ public class PreferencesMapper extends ImportMapper {
 				NodeList itemNodes = groupNodes.item(i).getChildNodes();
 				NamedNodeMap groupAttributes = groupNodes.item(i).getAttributes();
 				Node groupTitleNode = groupAttributes.getNamedItem("Title");
+				currentGroup = groupTitleNode.getNodeValue();
 				for(int x=0;x<itemNodes.getLength();x++) {
 					if (itemNodes.item(x).getNodeType() == Node.ELEMENT_NODE) {
 						NamedNodeMap itemAttributes = itemNodes.item(x).getAttributes();
@@ -80,7 +83,44 @@ public class PreferencesMapper extends ImportMapper {
 							importSalesCategoryListRecord(keyValue, valueValue);
 						} else if (groupTitleNode.getNodeValue().equals("Sales General Ledger Categories")) {
 							importSalesCategoryAccountRecord(keyValue, valueValue);
-						} else if (groupTitleNode.getNodeValue().equals("Global Stamp Schedule")) {
+						} else if (groupTitleNode.getNodeValue().equals("User Name List")) { 
+							NodeList subGroupNodes = itemNodes.item(x).getChildNodes();
+							Users user = null;
+							for (int z=0;z<subGroupNodes.getLength();z++) {
+								if (subGroupNodes.item(z) != null && subGroupNodes.item(z).getNodeType() == Node.ELEMENT_NODE) {
+									if (titleNode.getNodeValue().equals("User Details")) {
+										user = (Users)dataService.getByPrevId("Users", keyValue);
+										if (user == null) {
+											user = new Users();
+											user.setPrevId(keyValue);
+											user.setDisableUser(false);
+											user.setShowUserNameLog(true);
+										}
+										NamedNodeMap fieldAttributes = subGroupNodes.item(z).getAttributes();
+										titleNode = fieldAttributes.getNamedItem("Title");
+										valueNode = fieldAttributes.getNamedItem("Value");
+										if (titleNode.getNodeValue().equals("title"))
+											user.setName(valueNode.getNodeValue());
+										else if (titleNode.getNodeValue().equals("access_level"))
+											user.setAccessLevel(Utilities.tokenToInt(valueNode.getNodeValue()));
+										else if (titleNode.getNodeValue().equals("can_return_cash"))
+											user.setNoCashReturn(Utilities.tokenToBooleanValue(valueNode.getNodeValue()));
+										else if (titleNode.getNodeValue().equals("can_override_credit_limits"))
+											user.setOverrideCredit(Utilities.tokenToBooleanValue(valueNode.getNodeValue()));
+										else if (titleNode.getNodeValue().equals("show_quickaccess_panel_at_signon"))
+											user.setQuickAccess(Utilities.tokenToBooleanValue(valueNode.getNodeValue()));
+										else if (titleNode.getNodeValue().equals("can_refund_credit_cards"))
+											user.setRefundCreditCards(Utilities.tokenToBooleanValue(valueNode.getNodeValue()));
+										else if (titleNode.getNodeValue().equals("use_strong_password_rules"))
+											user.setRobustPassword(Utilities.tokenToBooleanValue(valueNode.getNodeValue()));
+									}
+								}
+								if (user != null) {
+									dataService.addUpdate(user);
+									user = null;
+								}
+							}
+						}else if (groupTitleNode.getNodeValue().equals("Global Stamp Schedule")) {
 							MatrixService matrixService = new MatrixService();
 							StampSchedule stampSchedule = (StampSchedule)dataService.getStampSchedule();
 							if (stampSchedule == null)
@@ -416,10 +456,11 @@ public class PreferencesMapper extends ImportMapper {
 	
 	private void importPreferencesStockDefinitionField(String key, String name, String value) throws Exception {
 		DataService dataService = new DataService();
-		PreferencesStockDefinition preferencesStockDefinition = (PreferencesStockDefinition)dataService.getQuery("PreferencesStockDefinition", " where columnorder="+key);
-		if (name.equals("StockCol_column_show"))
+		if (name.equals("StockCol_column_show")) {
+			PreferencesStockDefinition preferencesStockDefinition = (PreferencesStockDefinition)dataService.getQuery("PreferencesStockDefinition", " where columnorder="+key);
 			preferencesStockDefinition.setVisible(Utilities.tokenToBooleanValue(value));
-		dataService.addUpdate(preferencesStockDefinition);
+			dataService.addUpdate(preferencesStockDefinition);
+		}
 	}
 	
 	private void importPreferencesCreditCardField(String key, String name, String value) throws Exception {
