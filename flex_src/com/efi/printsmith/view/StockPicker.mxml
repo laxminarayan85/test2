@@ -27,7 +27,7 @@
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="getStockPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
-		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
+		<mx:method name="getStockDefinition" fault="handleFault(event)" result="handleGetResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadItemsResult(event)"/>
 		
@@ -424,7 +424,7 @@
 		var temp:StockDefinition
 		temp = dataGrid.selectedItem as StockDefinition;
 		if (temp != null)
-			dataService.getById("StockDefinition", temp.id );
+			dataService.getStockDefinition(temp.id);
 		
 	}     
 	

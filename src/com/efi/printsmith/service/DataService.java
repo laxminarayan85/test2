@@ -103,6 +103,7 @@ import com.efi.printsmith.data.StockGrade;
 import com.efi.printsmith.data.StockGroup;
 import com.efi.printsmith.data.StockOrder;
 import com.efi.printsmith.data.StockType;
+import com.efi.printsmith.data.StockChanges;
 import com.efi.printsmith.data.Substrate;
 import com.efi.printsmith.data.TapeBatch;
 import com.efi.printsmith.data.TapeSessionBatch;
@@ -2455,6 +2456,12 @@ public class DataService extends HibernateService {
 					ChargeDefinition chargeDefinition = stockDefinition
 							.getCharges().get(i);
 					if (chargeDefinition == null) {
+						log.error("null charge found");
+					}
+				}
+				for (int i = 0; i < stockDefinition.getStockChanges().size(); i++) {
+					StockChanges change = stockDefinition.getStockChanges().get(i);
+					if (change == null) {
 						log.error("null charge found");
 					}
 				}

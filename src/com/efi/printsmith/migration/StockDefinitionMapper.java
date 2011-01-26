@@ -480,9 +480,9 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("copier[3]".equals(currentFieldToken)) {
 				stockDefinition.setCopier3PricePerSheet(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("price changed date".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setLastPriceChange(Utilities.tokenToDate(currentImportToken));
 			}  else if ("last modification date".equals(currentFieldToken)) {
-				/* TODO */
+				stockDefinition.setLastUpdated(Utilities.tokenToDate(currentImportToken));
 			}  else if ("comment".equals(currentFieldToken)) {
 				stockDefinition.setComments(currentImportToken);
 			}  else if ("measure".equals(currentFieldToken)) {

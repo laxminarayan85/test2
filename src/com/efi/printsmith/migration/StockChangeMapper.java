@@ -21,6 +21,7 @@ public class StockChangeMapper extends ImportMapper {
 		log.info("Entering StockChangeMapper->importTokens");
 		StockChanges stockChanges = new StockChanges();
 		DataService dataService = new DataService();
+		StockDefinition stocktemp = null;
 		StockDefinition stockDefinition = null;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -34,8 +35,10 @@ public class StockChangeMapper extends ImportMapper {
 			} else if (currentFieldToken.equals("date stamp") == true) {
 				stockChanges.setStockChangeDate(Utilities.tokenToDate(currentImportToken));
 			} else if (currentFieldToken.equals("stock id") == true) {
-				stockDefinition = (StockDefinition)dataService.getByPrevId("StockDefinition", currentImportToken);
-				if (stockDefinition != null)
+				stocktemp = (StockDefinition)dataService.getByPrevId("StockDefinition", currentImportToken);
+				if (stocktemp != null)
+					stockDefinition= (StockDefinition)dataService.getStockDefinition(stocktemp.getId());
+				if ( stockDefinition != null)
 					stockChanges.setStockDefinition(stockDefinition);
 			} else if (currentFieldToken.equals("reason code") == true) {
 				if (currentImportToken.equals("1") == true)

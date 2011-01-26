@@ -4146,7 +4146,6 @@
 			private function formatChargePrice(item:Object, column:DataGridColumn):String {
 				return this.numberFormatter.format(item.price);
 			}
-			
 			private function openStockDefinition():void {
 				var stockDefinitionsWindow:StockDefinitions = new StockDefinitions();
 				var stockDefinitionsObj:StockDefinition = new StockDefinition();
@@ -4160,8 +4159,21 @@
 				if(specialObject!=null){
 					var stockDefinitionsWindow:StockDefinitions = new StockDefinitions();
 					var stockDefinitionsObj:StockDefinition = new StockDefinition();
+					switch (this.job.pricingMethod.method ){
+						case "Roll Fed":
+							stockDefinitionsObj.stockunit = 2
+						break;
+						case "Large Format":
+							stockDefinitionsObj.stockunit = 3
+						break;
+						default:
+							stockDefinitionsObj.stockunit = 1
+						break;
+						
+					}
 					stockDefinitionsObj.stkgroup = specialObject;
 					stockDefinitionsWindow.stockDefinitions = stockDefinitionsObj;
+			//		stockDefinitionsWindow.setStockDefinition(stockDefinitionsObj);
 					stockDefinitionsWindow.fromJobPage = true;
 					stockDefinitionsWindow.addEventListener(SpecialOrderStockDefEvent.SPECIAL_ORDER_SAVE_EVENT,function(event:SpecialOrderStockDefEvent):void {
 						job.customerSuppliedStock = false;
@@ -4176,6 +4188,7 @@
 					dataServiceGroup.addUpdate(specialObject);
 				}
 			}
+			
 			
 			private function handleSaveGroupResult(event:ResultEvent):void {
 				stockGroups.addItem(event.result as StockGroup);

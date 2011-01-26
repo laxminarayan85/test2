@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
-	layout="absolute" width="100%" height="100%" preinitialize="preInit();"  
+	layout="absolute" width="100%" height="825" preinitialize="preInit();"  
 	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
 	xmlns:comp="com.efi.printsmith.common.components.*" headerHeight="0"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" name="Stock Definition"
@@ -510,8 +510,12 @@
 			stockDefinitions = new StockDefinition;
 			stockDefinitions.charges = new ArrayCollection;
 			stockDefinitions.stockChanges = new ArrayCollection;
+			this.currentState="SheetStock";
+		}else{
+			doStockUnitChange(stockDefinitions.stockunit.toString());
 		}
-		this.currentState="SheetStock";
+		
+		
 		loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 
 	    loadUomArray();
@@ -660,9 +664,7 @@
 		if (stockDefinition != null)
 		{
 			stockDefinitions = stockDefinition;
-	    	stockDefinitions.charges = new ArrayCollection;
-	    	stockDefinitions.stockChanges = new ArrayCollection;
-			mapFromStockDefinitionData();
+	    	mapFromStockDefinitionData();
 		} else {
 	    	stockDefinitions = new StockDefinition();
 	    	stockDefinitions.charges = new ArrayCollection;
@@ -673,6 +675,13 @@
 	   stockChanges = new ArrayCollection(); 
 	    
 	    stockChanges = stockDefinitions.stockChanges;
+	    var sortField:SortField = new SortField("stockChangeDate");
+		sortField.descending = true;
+		var sort:Sort = new Sort();
+		sort.fields = [sortField];
+		stockChanges.sort = sort;
+		stockChanges.refresh();
+
 	  /*  loadStockGroup();
 	    loadStockVendor();
 	    loadStockGrade();
@@ -894,15 +903,45 @@
 	private function doNewOperation(resetObj:Boolean=true):void {
 		if(resetObj){
   	    	stockDefinitions = new StockDefinition();
+  	    	stockDefinitions.stockunit = 1;
+  	    	this.stockUnit.selectedValue = 1;
+  	    	this.radiobutton1.selected = true;
+  		}
+  		else{
+  			doStockUnitChange(stockDefinitions.stockunit.toString())
+  			switch (stockDefinitions.stockunit){
+  			case 1:
+  				this.radiobutton0.enabled = true;
+  				this.radiobutton1.enabled = true;
+  				this.radiobutton2.enabled = false;
+  				this.radiobutton3.enabled = false;
+  				this.radiobutton4.enabled = false;
+  			break;
+  			case 3:
+  				this.radiobutton0.enabled = false;
+  				this.radiobutton1.enabled = false;
+  				this.radiobutton2.enabled = true;
+  				this.radiobutton3.enabled = false;
+  				this.radiobutton4.enabled = false;
+  			break;
+  			case 2:
+  				this.radiobutton0.enabled = false;
+  				this.radiobutton1.enabled = false;
+  				this.radiobutton2.enabled = false;
+  				this.radiobutton3.enabled = true;
+  				this.radiobutton4.enabled = false;
+  			break;
+  			}
+  			
   		}
   	    Expires.text = "";
   	    stockDefinitions.parentsize = new Dimension();
     	stockDefinitions.charges = new ArrayCollection;
     	stockDefinitions.stockChanges = new ArrayCollection;
     	stockDefinitions.normalRunSize = new Dimension();
-    	stockDefinitions.stockunit = 1;
-    	this.stockUnit.selectedValue = 1;
-    	this.radiobutton1.selected = true;
+    	
+    	
+    	
   	    doStockType();
   	    standardItemCheckEvent();
   	    registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
@@ -1853,23 +1892,23 @@
 		
 		if (item == "0"){
 			this.currentState="Envelope"
-			stockUnit.selectedValue="Envelope";
+			stockUnit.selectedValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope');
 		}
 		if (item == "1"){
 			this.currentState="SheetStock"
-			stockUnit.selectedValue="SheetStock";
+			stockUnit.selectedValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock');
 		}
 		if (item == "2"){
 			this.currentState="RollStock"
-			stockUnit.selectedValue="RollStock";
+			stockUnit.selectedValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock');
 		}
 		if (item == "3"){
 			this.currentState="LargeFormat"	
-			stockUnit.selectedValue="LargeFormat";			
+			stockUnit.selectedValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat');			
 		}
 		if (item == "4"){
 			this.currentState="RigidSubstrate"	
-			stockUnit.selectedValue="RigidSubstrate";		
+			stockUnit.selectedValue=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate');		
 		}
 		
 	}
@@ -2285,7 +2324,16 @@ private function doRound(evt:FocusEvent):void{
 	public function onCancel():void {
 		
 	}
-
+	public function getDateField(item:Object, column:DataGridColumn):String{
+		var tmpItem:Date ;
+		tmpItem = item.stockChangeDate as Date;
+		
+		if (tmpItem != null ) {
+			return Snowmass.getShortDateTimeFormatter().format(tmpItem)
+		} else {
+			return "";
+		}
+	}   
 ]]>
                              
 </mx:Script>	
@@ -2318,13 +2366,13 @@ private function doRound(evt:FocusEvent):void{
 	<comp:EditableComboBox optional="true" editable="true" x="568.5" y="114" width="55" id="coated" dataProvider="{stockCoated}" labelField="name"/>
 
 	<mx:RadioButtonGroup id="stockUnit" change="doStockUnitChangeEvent(event)"/>
-	<mx:RadioButton x="636" y="67" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}"/>
+	<mx:RadioButton x="636" y="67" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Envelope')}" id="radiobutton0"/>
 	<mx:RadioButton x="636" y="85" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetStock')}" id="radiobutton1"/>
-	<mx:RadioButton x="636" y="103" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}" groupName="stockUnit"  value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}"/>
+	<mx:RadioButton x="636" y="103" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}" groupName="stockUnit"  value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RollStock')}" id="radiobutton3"/>
 	<mx:RadioButton x="636" y="122" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" groupName="stockUnit" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LargeFormat')}" id="radiobutton2"/>
-	<mx:RadioButton x="636" y="140" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}"/>
+	<mx:RadioButton x="636" y="140" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}" groupName="stockUnit" width="138" value="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.RigidSubstrate')}" id="radiobutton4"/>
 
-	<mx:TabNavigator x="0" y="175" width="953" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
+	<mx:TabNavigator x="-8" y="203" width="953" height="585" id="tab_pages" selectedIndex="0" creationPolicy="all">
 		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SpecificationandPric')}" id="page_specification_and_pricing" width="100%" height="100%">
 			<mx:Panel x="14.5" y="0" width="926.5" height="225" layout="absolute" dropShadowEnabled="false" id="panel3">
 				<mx:Label x="0" y="7" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Vendor')}" textAlign="right" width="98.5"/>
@@ -2500,11 +2548,11 @@ private function doRound(evt:FocusEvent):void{
 				<mx:Text x="430" y="176" width="291" id="account_name" text="{stockDefinitions.account.title}" />
 				<mx:DateField x="122" y="148" id="Expires" width="159" text="{stockDefinitions.priceExpires}"  editable="true"/>
 			</mx:Panel>
-			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.MostRecentInventoryC')}" dropShadowEnabled="false">
+			<mx:Panel x="10" y="274" width="690" height="268" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kInventoryHistoryCmd.InventoryHistory')}" dropShadowEnabled="false">
 				<mx:DataGrid dataProvider="{stockChanges}" left="5" right="5" top="5" bottom="30" id="stockchangeGrid">
 					<mx:columns>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.User')}" dataField="PSUser"/>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Date')}" dataField="stockChangeDate"/>
+						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Date')}" labelFunction="getDateField" />
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.HowChanged')}" dataField="howChanged"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Quantity')}" dataField="quantity"/>
 						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Reference')}" dataField="reference"/>
@@ -2549,4 +2597,8 @@ private function doRound(evt:FocusEvent):void{
 		<mx:icon>@Embed(source='../../../../assets/price_list.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="157" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefRpt.PriceList')}" width="64" visible="{!fromJobPage}"/>
+	<mx:Label x="321" y="142"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LastUpdated')}" fontWeight="bold"/>
+	<mx:Label x="322" y="159" textAlign="right"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LastPriceChange')}" fontWeight="bold"/>
+	<mx:Text x="451" y="142" text="{Snowmass.getShortDateTimeFormatter().format(stockDefinitions.lastUpdated)}" enabled="false" id="updatedDate" width="34"/>
+	<mx:Text x="451" y="159" text="{Snowmass.getShortDateTimeFormatter().format(stockDefinitions.lastPriceChange)}" id="pricechangedate" enabled="true"/>
 </mx:Panel>

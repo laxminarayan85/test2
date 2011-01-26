@@ -568,6 +568,15 @@ public class StockDefinition extends ModelBase {
 	public static final String WEBENABLED = "WebEnabled";
 
 	/**
+   * @generated
+   */
+  public static final String LASTUPDATED = "LastUpdated";
+	/**
+   * @generated
+   */
+  public static final String LASTPRICECHANGE = "LastPriceChange";
+
+	/**
 	 * @generated
 	 */
 	public StockDefinition() {
@@ -3284,7 +3293,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @OneToMany()
+    @OneToMany(  cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	@JoinTable( name = "stockdefinition_stockchanges")
 	private java.util.List<StockChanges> stockChanges;
@@ -3731,6 +3740,46 @@ public class StockDefinition extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date lastUpdated;
+
+	/**
+   * @generated
+ 	 */
+  public Date getLastUpdated(){
+    return lastUpdated; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setLastUpdated(Date newVal) {
+    this.lastUpdated = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date lastPriceChange;
+
+	/**
+   * @generated
+ 	 */
+  public Date getLastPriceChange(){
+    return lastPriceChange; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setLastPriceChange(Date newVal) {
+    this.lastPriceChange = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -3866,6 +3915,8 @@ public class StockDefinition extends ModelBase {
     if (JDFSTOCKID.equals(propertyName)) return getJdfStockId();
     if (EXCLUDEFROMWEB.equals(propertyName)) return getExcludeFromWeb();
     if (WEBENABLED.equals(propertyName)) return getWebEnabled();
+    if (LASTUPDATED.equals(propertyName)) return getLastUpdated();
+    if (LASTPRICECHANGE.equals(propertyName)) return getLastPriceChange();
     return super.getProperty(propertyName);
   }
 	
@@ -4005,6 +4056,8 @@ public class StockDefinition extends ModelBase {
     if (JDFSTOCKID.equals(propertyName)) setJdfStockId((String)newValue); else
     if (EXCLUDEFROMWEB.equals(propertyName)) setExcludeFromWeb((Boolean)newValue); else
     if (WEBENABLED.equals(propertyName)) setWebEnabled((Boolean)newValue); else
+    if (LASTUPDATED.equals(propertyName)) setLastUpdated((Date)newValue); else
+    if (LASTPRICECHANGE.equals(propertyName)) setLastPriceChange((Date)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -4274,6 +4327,10 @@ public class StockDefinition extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (WEBENABLED.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (LASTUPDATED.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (LASTPRICECHANGE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -4414,6 +4471,8 @@ public class StockDefinition extends ModelBase {
     if (JDFSTOCKID.equals(propertyName)) return StockDefinition.class;
     if (EXCLUDEFROMWEB.equals(propertyName)) return StockDefinition.class;
     if (WEBENABLED.equals(propertyName)) return StockDefinition.class;
+    if (LASTUPDATED.equals(propertyName)) return StockDefinition.class;
+    if (LASTPRICECHANGE.equals(propertyName)) return StockDefinition.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -4684,6 +4743,10 @@ public class StockDefinition extends ModelBase {
     if (! SmartEquals(getExcludeFromWeb(), objT.getExcludeFromWeb()))
       return false;
     if (! SmartEquals(getWebEnabled(), objT.getWebEnabled()))
+      return false;
+    if (! SmartEquals(getLastUpdated(), objT.getLastUpdated()))
+      return false;
+    if (! SmartEquals(getLastPriceChange(), objT.getLastPriceChange()))
       return false;
     return true;
   }			

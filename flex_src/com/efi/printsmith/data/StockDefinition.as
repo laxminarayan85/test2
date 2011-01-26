@@ -144,6 +144,8 @@ package com.efi.printsmith.data
 		public var jdfStockId:String = "";
 		public var excludeFromWeb:Boolean = false;
 		public var webEnabled:Boolean = false;
+		public var lastUpdated:Date = null;
+		public var lastPriceChange:Date = null;
 	
 	}
 }
