@@ -1294,10 +1294,21 @@
 	private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
 	{
 		this.stockDefinitions.charges=evt.chargeArray;
+		if  ( this.stockDefinitions.charges.length > 0){
+	     	chargeLabel.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
+	     	chargeLabel.label = StringUtil.substitute(chargeLabel.label,this.stockDefinitions.charges.length);
+		 }
+		 else
+	 		chargeLabel.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')
 	}
 	private function handleChargeDefinitionCancel(evt:ChargeDefinitionSelectEvent):void
 	{
-		
+		if  ( this.stockDefinitions.charges.length > 0){
+	     	chargeLabel.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
+	     	chargeLabel.label = StringUtil.substitute(chargeLabel.label,this.stockDefinitions.charges.length);
+		 }
+		 else
+	 		chargeLabel.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')
 	}
 
 	private function doShowHistory():void {
@@ -1669,6 +1680,13 @@
 		ShellItem.selected = stockDefinitions.shellItem;
 		
 		this.charges = stockDefinitions.charges;
+		if  ( stockDefinitions.charges.length > 0){
+	     	chargeLabel.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'extPBookCmd.Charges')
+	     	chargeLabel.label = StringUtil.substitute(chargeLabel.label,this.stockDefinitions.charges.length);
+		 }
+		 else
+	 		chargeLabel.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.AddCharges')
+		
 		standardItemCheckEvent();
 		stockChanges = stockDefinitions.stockChanges;
 			
@@ -2516,7 +2534,7 @@ private function doRound(evt:FocusEvent):void{
 				<mx:ComboBox x="223" y="53" width="201" id="defaultLargeCopier" focusOut="doCopierDefinitionLarge();" dataProvider="{copierLarge}" labelField="name"/>
 			</mx:Panel>
 			<mx:Panel x="10" y="373" width="690" height="154" layout="absolute" title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'changePriceCmd.PresetCharges')}" dropShadowEnabled="false" id="PanelCharges">
-				<mx:Button x="10" y="4" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AddCharges')}" click="doAddCharges();" width="110"/>
+				<mx:Button x="10" y="4" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.AddCharges')}" click="doAddCharges();" width="110" id="chargeLabel"/>
 				<mx:List x="128" y="6" id="Additional1" dataProvider="{stockDefinitions.charges}"  labelField="name" width="238" height="98"/>
 			</mx:Panel>
 		</mx:Canvas>
@@ -2597,8 +2615,8 @@ private function doRound(evt:FocusEvent):void{
 		<mx:icon>@Embed(source='../../../../assets/price_list.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="157" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefRpt.PriceList')}" width="64" visible="{!fromJobPage}"/>
-	<mx:Label x="321" y="142"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LastUpdated')}" fontWeight="bold"/>
-	<mx:Label x="322" y="159" textAlign="right"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LastPriceChange')}" fontWeight="bold"/>
-	<mx:Text x="451" y="142" text="{Snowmass.getShortDateTimeFormatter().format(stockDefinitions.lastUpdated)}" enabled="false" id="updatedDate" width="34"/>
-	<mx:Text x="451" y="159" text="{Snowmass.getShortDateTimeFormatter().format(stockDefinitions.lastPriceChange)}" id="pricechangedate" enabled="true"/>
+	<mx:Label x="321" y="142"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LastUpdated')}" fontWeight="normal"/>
+	<mx:Label x="322" y="159" textAlign="right"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LastPriceChange')}" fontWeight="normal"/>
+	<mx:Text x="451" y="142" text="{Snowmass.getShortDateTimeFormatter().format(stockDefinitions.lastUpdated)}" enabled="false" id="updatedDate" width="132"/>
+	<mx:Text x="451" y="159" text="{Snowmass.getShortDateTimeFormatter().format(stockDefinitions.lastPriceChange)}" id="pricechangedate" enabled="false" width="132"/>
 </mx:Panel>
