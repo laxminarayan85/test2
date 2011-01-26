@@ -3791,9 +3791,12 @@
 										   color="{job.showMultiQty?0x00BB00:0x000000}"/>
 							<mx:LinkButton x="10"
 										   y="130"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ChangeStockSelection')}" click="changeStockDefinition()" width="169"/>
+							<mx:LinkButton x="10"
+										   y="150"
 										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.EstimatorChecklist')}"
 										   click="{openEstimatorCheckList()}"/>							
-							<mx:LinkButton x="22" y="149" label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
+							<mx:LinkButton x="22" y="169" label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
 						</mx:Canvas>
 					</mx:Accordion>
 					<mx:ViewStack id="viewstack3"
