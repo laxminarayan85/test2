@@ -204,6 +204,12 @@
 		uploadFile("Address");
 	}
 	
+	private function handleSelectEmployeeFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("Employee");
+	}
+	
 	private function handleLoadFileComplete(event:Event):void {
 		progress_bar.visible = false;
 		if (fileTypeArrayIndex > -1 && fileTypeArrayIndex < fileTypeArray.length - 1) {
@@ -296,6 +302,7 @@
 		fileTypeArray.addItem("WEB Locations");
 		fileTypeArray.addItem("Zip");
 		fileTypeArray.addItem("DL Address Data");
+		fileTypeArray.addItem("DL Employee Data");
 		fileTypeArray.addItem("DL Price Lists Data");
 		fileTypeArray.addItem("DL Charge Definitions Data");
 		fileTypeArray.addItem("DL TaxTable DB Data");
@@ -336,6 +343,15 @@
 				fileReference = fileArray.getItemAt(index) as FileReference;
 				if (fileReference != null) {
 					handleSelectAddressFile(evt);
+				}
+			}
+		}
+		if (fileName == "DL Employee Data") {
+			index = fileNameArray.getItemIndex("DL Employee Data");
+			if (index.valueOf() > -1) {
+				fileReference = fileArray.getItemAt(index) as FileReference;
+				if (fileReference != null) {
+					handleSelectEmployeeFile(evt);
 				}
 			}
 		}
