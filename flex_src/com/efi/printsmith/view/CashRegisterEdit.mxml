@@ -115,6 +115,16 @@
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:TextInput x="121" y="152" width="75" textAlign="right" id="invoice_payment"/>
  	 	 	</mx:AddChild>
+ 	 	 	<mx:RemoveChild target="{invstate_label1}"/>
+ 	 	 	<mx:RemoveChild target="{txtInvoiceNumber}"/>
+ 	 	 	<mx:RemoveChild target="{invstate_label2}"/>
+ 	 	 	<mx:RemoveChild target="{txtInvoiceTotalDue}"/>
+ 	 	 	<mx:RemoveChild target="{invstate_label3}"/>
+ 	 	 	<mx:RemoveChild target="{txtSaleDescription}"/>
+ 	 	 	<mx:RemoveChild target="{invstate_label4}"/>
+ 	 	 	<mx:RemoveChild target="{txtInvoicePaid}"/>
+ 	 	 	<mx:RemoveChild target="{invstate_label5}"/>
+ 	 	 	<mx:RemoveChild target="{txtInvoiceStillDue}"/>
  	 	</mx:State>
  	 	<mx:State name="paymentPaymentMethod" basedOn="departmentState">
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
@@ -126,6 +136,13 @@
  	 	 	<mx:RemoveChild target="{txtSaleDescription}"/>
  	 	 	<mx:SetProperty target="{tax_canvas1}" name="height" value="278"/>
  	 	 	<mx:SetProperty target="{tax_canvas3}" name="height" value="157"/>
+ 	 	 	<mx:RemoveChild target="{label1}"/>
+ 	 	 	<mx:RemoveChild target="{txtSaleQuantity}"/>
+ 	 	 	<mx:RemoveChild target="{txtSaleUnitPrice}"/>
+ 	 	 	<mx:RemoveChild target="{txtSaleTotal}"/>
+ 	 	 	<mx:RemoveChild target="{label2}"/>
+ 	 	 	<mx:RemoveChild target="{label3}"/>
+ 	 	 	<mx:RemoveChild target="{label4}"/>
  	 	</mx:State>
  	 	<mx:State name="paymentCash" basedOn="paymentPaymentMethod">
  	 	 	<mx:SetProperty target="{button1}" name="y" value="547"/>
@@ -1036,7 +1053,7 @@
 				this.focusManager.defaultButton = accept_button;
 			}	
 			else {
-				
+				accept_button.enabled = false;
 				this.focusManager.defaultButton = null;
 			}
 		
@@ -1268,7 +1285,10 @@
 	private function paymentMethodChanged(event:Event):void {
 		var rbvalue:String = event.currentTarget.selectedValue;
 						
-		//this.currentState = "";
+		//
+		// no left open transactions
+		//
+		doAccept();
 		
 		//
 		// reverse any external values that could have already been completed, ie.. a Credit Card charge
@@ -1291,9 +1311,9 @@
 				payment_cash_edit.tabIndex = 1;
 			}
 			btPayment.enabled = true;
-			
 			btPayment.tabIndex = 2;
 			btnSave.tabIndex = 3;
+			rbCash.selected = true;
 		}
 		if (rbvalue == "Credit Card")
 		{
@@ -1592,7 +1612,7 @@
 	
 	private function doAccept():void{
 		
-		if (this.currentState != "") {
+		if (this.currentState == "invoiceState" || this.currentState == "departmentState") {
 			if (txtSaleDescription != null)
 				activeSale.description = txtSaleDescription.text;
 			if (txtSaleQuantity != null)
@@ -1602,13 +1622,19 @@
 			if (txtSaleTotal != null)	
 				activeSale.subTotal = parseFloat(txtSaleTotal.text.replace(",",""));
 			
-			sessionBatch.accumSubTotal = roundToCurrency((sessionBatch.accumSubTotal + activeSale.subTotal));
-			sessionBatch.accumTotal = roundToCurrency((sessionBatch.accumTotal + activeSale.total));
-			sessionBatch.accumTaxTotal = roundToCurrency((sessionBatch.accumTaxTotal + activeSale.taxAmount));
-			sessionBatch.accumChange = roundToCurrency((sessionBatch.accumTendered - sessionBatch.accumTotal));
-			if ( activeSale.isPickup)
-				activeSale.cashRegisterDept = null;
-			sessionBatch.transactions.addItem(activeSale);			
+			//
+			// don't add a ZERO sale item to the transaction list
+			//
+			if (activeSale.subTotal != 0) {
+				sessionBatch.accumSubTotal = roundToCurrency((sessionBatch.accumSubTotal + activeSale.subTotal));
+				sessionBatch.accumTotal = roundToCurrency((sessionBatch.accumTotal + activeSale.total));
+				sessionBatch.accumTaxTotal = roundToCurrency((sessionBatch.accumTaxTotal + activeSale.taxAmount));
+				sessionBatch.accumChange = roundToCurrency((sessionBatch.accumTendered - sessionBatch.accumTotal));
+				if ( activeSale.isPickup)
+					activeSale.cashRegisterDept = null;
+				
+				sessionBatch.transactions.addItem(activeSale);			
+			}
 			
 			InitSaleRecord();		// setup for another sale
 		}
