@@ -137,7 +137,7 @@ if $os400; then
   # Enable multi threading
   export QIBM_MULTI_THREADED=Y
 fi
-
+	
 # Get standard Java environment variables
 if $os400; then
   # -r will Only work on the os400 if the files are:

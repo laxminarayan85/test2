@@ -250,7 +250,8 @@
 	import com.efi.printsmith.events.SaveEvent;
 
 	import com.efi.printsmith.view.*;
-	import com.efi.printsmith.data.*; 
+	import com.efi.printsmith.data.*;
+	import com.efi.printsmith.common.components.PriceListElementRenderer;
 
 	import mx.managers.PopUpManager;                                 
 	import mx.controls.Alert;                          
@@ -440,6 +441,18 @@
 			this.amt_is_currency.selected = false;
 			this.amt_is_percent.selected = false;
 		}
+		
+		if (this.chkLastLineAddlnQty.enabled && this.chkLastLineAddlnQty.selected) {
+			this.colAmt.itemRenderer = new ClassFactory(com.efi.printsmith.common.components.PriceListElementRenderer);
+			this.colQty.itemRenderer = new ClassFactory(com.efi.printsmith.common.components.PriceListElementRenderer);
+			this.colSide.itemRenderer = new ClassFactory(com.efi.printsmith.common.components.PriceListElementRenderer);
+		    this.colColor.itemRenderer = new ClassFactory(com.efi.printsmith.common.components.PriceListElementRenderer);
+		} else {
+			this.colAmt.itemRenderer = new ClassFactory(Label);
+			this.colQty.itemRenderer = new ClassFactory(Label);
+			this.colSide.itemRenderer = new ClassFactory(Label);
+			this.colColor.itemRenderer = new ClassFactory(Label);
+		}
 	}
 
 	private function validate(validator:Validator):Boolean
@@ -563,15 +576,15 @@
 					this.priceList.elements.refresh();
 				}
 			} else if (itemType == "WasteChart") {
-				for (var i:int = 0;i < priceList.elements.length;i++) {
-					var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+				for (i = 0;i < priceList.elements.length;i++) {
+					element = priceList.elements.getItemAt(i) as PriceListElement;
 					element.amount = element.amount * 100;
 				}
 			} else if (itemType == "SpeedTable") {
 			} else if (itemType == "PaperPrice") {
 				if (priceList.isPercentage == true) {
-					for (var i:int = 0;i < priceList.elements.length;i++) {
-						var element:PriceListElement = priceList.elements.getItemAt(i) as PriceListElement;
+					for (i = 0;i < priceList.elements.length;i++) {
+						element = priceList.elements.getItemAt(i) as PriceListElement;
 						element.amount = element.amount * 100;
 					}
 				}
@@ -766,10 +779,10 @@
 			itemEditEnd="formatData(event);"
 			initialize="gridInit(event);">
 		<mx:columns>
-		     <mx:DataGridColumn dataField="quantity" headerText="{quantity_header}" textAlign="right" sortable="false" width="60"/>
-		     <mx:DataGridColumn dataField="amount" headerText="{price_header}" textAlign="right" sortable="false" width="60" labelFunction="formatAmount"/>
-			 <mx:DataGridColumn id="colSide" headerText="{side_header}" textAlign="right" dataField="side" labelFunction="showSide"/>
-		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" textAlign="right" labelFunction="showColor" sortable="false" width="65"/>
+		     <mx:DataGridColumn id="colQty" dataField="quantity" headerText="{quantity_header}" textAlign="right" sortable="false" width="60" itemRenderer="com.efi.printsmith.common.components.PriceListElementRenderer"/>
+		     <mx:DataGridColumn id="colAmt" dataField="amount" headerText="{price_header}" textAlign="right" sortable="false" width="60" labelFunction="formatAmount" itemRenderer="com.efi.printsmith.common.components.PriceListElementRenderer"/>
+			 <mx:DataGridColumn id="colSide" headerText="{side_header}" textAlign="right" dataField="side" labelFunction="showSide" itemRenderer="com.efi.printsmith.common.components.PriceListElementRenderer"/>
+		     <mx:DataGridColumn id="colColor" dataField="color" headerText="{color_header}" textAlign="right" labelFunction="showColor" sortable="false" width="65" itemRenderer="com.efi.printsmith.common.components.PriceListElementRenderer"/>
 		</mx:columns>
 		</mx:DataGrid>
 		<mx:TextInput y="10" id="title_edit" change="updateTitle(title_edit.text);" text="{priceList.name}" width="210.5" x="309.5"/>
