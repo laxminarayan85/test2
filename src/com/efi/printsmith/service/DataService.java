@@ -5980,7 +5980,7 @@ public class DataService extends HibernateService {
 			if (batches != null) {
 				for (int i = 0; i < batches.size(); i++) {
 					TapeSessionBatch batch = batches.get(i);
-					
+					batch.setSessionID(new Long(i+1));
 					if (batch != null) {
 						List<com.efi.printsmith.data.Transaction> transactions = batch.getTransactions();
 						for (int j = 0; j < transactions.size(); j++) {

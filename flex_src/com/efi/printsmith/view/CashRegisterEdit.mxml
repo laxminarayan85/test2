@@ -958,6 +958,11 @@
 				}
 			}
 			
+			// keep a running count as the session ID
+			//	for the register tape to give a scrolling index
+			//	and for a reference of a tape VOID number.
+			sessionBatch.sessionID = tapeBatch.sessionBatches.length + 1;
+			
 			tapeBatch.sessionBatches.addItem(sessionBatch);
 			dataServiceTapeBatch.addUpdate(tapeBatch); 
 		}

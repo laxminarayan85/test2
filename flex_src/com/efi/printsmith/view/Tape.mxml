@@ -58,6 +58,7 @@
 	import mx.rpc.IResponder;
 	import com.efi.printsmith.Constants;
 	import mx.utils.StringUtil;
+	import mx.formatters.NumberBaseRoundType;
 	
 	import com.efi.printsmith.data.TaxTable;
 	import com.efi.printsmith.data.TaxCodes;
@@ -99,19 +100,17 @@
 		dataServiceTapeBatch.getCurrentTapeBatch();
 	}
 	
-	private function handleLoadCurrentTapeBatch(evt:ResultEvent):void {		
+	private function loadTapeBatchIntoGrid(tapeBatch:TapeBatch) : void {
 		var i:int = 0;
 		var j:int = 0;
 		var item:Object;
 		var tapeSessionBatch:TapeSessionBatch;
-			
-		tapeEntryCount = 0;
-		tapeBatch = evt.result as TapeBatch;
-		
+
 		if (tapeBatch.sessionBatches == null) {
 			tapeBatch.sessionBatches = new ArrayCollection();
 		}
 		
+		tapeEntryCount = 0;
 		tapeTreeData = new ArrayCollection();
 		tapeTreeData.addItem(tapeBatch);
 		
@@ -129,6 +128,13 @@
 				}
 			}
 		}
+	}
+	
+	private function handleLoadCurrentTapeBatch(evt:ResultEvent):void {		
+			
+		tapeBatch = evt.result as TapeBatch;
+		
+		loadTapeBatchIntoGrid(tapeBatch);
 				
 		this.throbber.visible = false;
 		this.throbber.stop();
@@ -136,6 +142,10 @@
 	
 	private function handleSaveTapeBatchResult(ev:ResultEvent):void{
 		tapeBatch = ev.result as TapeBatch;
+		
+		// load into the tape view grid
+		//
+		loadTapeBatchIntoGrid(tapeBatch);
 		
 		//
 		// good save of Tape batch and all session layers
@@ -229,6 +239,9 @@
 			account.salesYear -= deltaAmount;
 			account.termsDiscount -= deltaAmount;
 			
+			account.salesMonth = roundToCurrency(account.salesMonth);
+			account.salesYear = roundToCurrency(account.salesYear);
+			account.termsDiscount = roundToCurrency(account.termsDiscount);
 			//
 			// strip the history record
 			//
@@ -239,7 +252,7 @@
 		return(results);
 	}
 	
-	private function doVoidPickup(temp :Object, account:Account):int {
+	private function doVoidSaleItem(temp :Object, account:Account):int {
 		var results:int = 0;
 		var accountHistoryData:AccountHistoryData;
 		
@@ -279,25 +292,29 @@
 		{
 			case Constants.POS_CASH_REGISTER_PAYMODE_CASH:
 				cashDrawer.cashTotal -= delta;
+				cashDrawer.cashTotal = roundToCurrency(cashDrawer.cashTotal);
 				break;
 				
 			case Constants.POS_CASH_REGISTER_PAYMODE_CHECK:
 			case Constants.POS_CASH_REGISTER_PAYMODE_DRAFT:	// i.e., check
 				cashDrawer.checkCount--;
 				cashDrawer.checkTotal -= delta;
+				cashDrawer.checkTotal = roundToCurrency(cashDrawer.checkTotal);
 				break;
 				
 			case Constants.POS_CASH_REGISTER_PAYMODE_CREDITCARD:
 				cashDrawer.cardCount--;
 				cashDrawer.cardTotal -= delta;
-				
+				cashDrawer.cardTotal = roundToCurrency(cashDrawer.cardTotal);
 				//TODO - reverse any credit card integration transaction
 				break;
 				
 			case Constants.POS_CASH_REGISTER_PAYMODE_CHARGE:
 				cashDrawer.arBalance -= delta;
+				cashDrawer.arBalance = roundToCurrency(cashDrawer.arBalance);
 				if (account != null) {
 					account.balance -= delta;
+					account.balance = roundToCurrency(account.balance);
 				}
 				break;
 		}
@@ -314,12 +331,14 @@
 		if (tempBatch != null) {	
 			switch (tempBatch.refundMethod) {
 				case Constants.POS_CASH_REGISTER_PAYMODE_CREDITCARD:
-					cashDrawer.cardTotal += sessionBatch.accumChange;
+					cashDrawer.cardTotal += tempBatch.accumChange;
+					cashDrawer.cardTotal = roundToCurrency(cashDrawer.cardTotal);
 					cashDrawer.cardCount--;
 					break;
 				case Constants.POS_CASH_REGISTER_PAYMODE_CASH:
 				default:
-					cashDrawer.cashTotal += sessionBatch.accumChange;
+					cashDrawer.cashTotal += tempBatch.accumChange;
+					cashDrawer.cashTotal = roundToCurrency(cashDrawer.cashTotal);
 					break;
 			}
 			
@@ -345,7 +364,7 @@
 				}
 				
 			} else if (temp is TapeSaleRecord) {
-				doVoidPickup(temp, account);
+				doVoidSaleItem(temp, account);
 			} else if (temp is TapeDepositAppliedRecord) {
 				
 			}
@@ -361,19 +380,21 @@
 		var temp :Object;
 		var account:Account = null;
 		var voidRecord:TapeVoidRecord = null;
+		var i:int = 0;
+		var sessionID:Number = new Number(0);
 		
 		temp = new Object();
 		
 		voidCounter = tapeList.selectedItems.length;
 		voidTransactions = new ArrayCollection();
 		
-		for (var i:int = 0;i < voidCounter && voidErr == 0;i++) {
+		for (i = 0;i < voidCounter && voidErr == 0;i++) {
 			temp = tapeList.selectedItems[i] as Object;
 			voidErr = testVoidItem(temp);
 		}
 		
 		if (voidErr == 0) {
-			for (var i:int = 0;i < voidCounter;i++) {
+			for (i = 0;i < voidCounter;i++) {
 				temp = tapeList.selectedItems[i] as Object;
 				
 				// only one account can be effected at a time, keep a reference to it
@@ -381,6 +402,7 @@
 					var tempBatch:TapeSessionBatch = temp as TapeSessionBatch;
 					if (tempBatch != null) {
 						account = tempBatch.account;
+						sessionID = tempBatch.sessionID;		// reference in VOID item
 					}
 				} 
 				
@@ -398,10 +420,13 @@
 			
 			// appeand new tape entries to know that a VOID occured and by whom
 			sessionBatch = InitSessionBatch();
-			voidRecord = InitVoidRecord(0);			//TODO - need real line number from tape UI
+			voidRecord = InitVoidRecord(sessionID);			//TODO - need real line number from tape UI
 			sessionBatch.transactions.addItem(voidRecord);
 			tapeBatch.sessionBatches.addItem(sessionBatch);
 			dataServiceTapeBatch.addUpdate(tapeBatch); 
+			
+			this.throbber.visible = true;
+			this.throbber.play();
 		}
 	}
 
@@ -418,12 +443,17 @@
 		// date that appears in register tape UI
 		sessionBatch.created = new Date();
 		
+		// keep a running count as the session ID
+		//	for the register tape to give a scrolling index
+		//	and for a reference of a tape VOID number.
+		sessionBatch.sessionID = tapeBatch.sessionBatches.length + 1;			
+
 		return(sessionBatch);
     }
 	
-    private function InitVoidRecord(index:int):TapeVoidRecord {
+    private function InitVoidRecord(index:Number):TapeVoidRecord {
     	var voidRecord:TapeVoidRecord = new TapeVoidRecord();
-    	voidRecord.index = index;
+    	voidRecord.index = int(index);
     	return(voidRecord);
     }
    
@@ -549,6 +579,10 @@
 				temp = StringUtil.substitute(temp,tempSession.account.displayId.toString(), tempSession.account.title); 
 				description = description + "  " + temp;
 			}
+			
+			if (tempSession.isVoided == true) {
+				description = description + "-VOIDED-";
+			}
 			return (description);
 		} else if (item is TapeVoidRecord) {
 			voidRecord = item as TapeVoidRecord;
@@ -585,6 +619,30 @@
 		}
 		return "";
 	} 
+	
+	private function showID(item:Object, column:DataGridColumn):String{
+		var description:String = new String;
+		var tempSale:TapeSaleRecord;
+		var tempPayment:TapePaymentRecord;
+		var tempBatch:TapeBatch;
+		var tempSession:TapeSessionBatch;
+		
+		if (item is TapeBatch) {
+			
+		} else if (item is TapePaymentRecord) {
+
+		} else if (item is TapeSaleRecord) {
+
+		} else if (item is TapeSessionBatch) {
+			tempSession = item as TapeSessionBatch;
+			if (tempSession != null) {
+				description = tempSession.sessionID.toString();
+			}
+		}
+		
+		return (description);
+	}	
+	
 	
 	private function showDate(item:Object, column:DataGridColumn):String{
 		var description:String = new String;
@@ -657,6 +715,20 @@
 			}
 		}
 	}
+	
+	private function roundToCurrency(temp:Number):Number {
+		var tempStr:String;
+		var results:Number;
+		
+		// round direction
+		numberFormatter.rounding = NumberBaseRoundType.NEAREST;
+		// keep 4 places so round has something to work with
+        tempStr = numberFormatter.format(temp.toFixed(4));
+        // number formatter will come back with (2) places after decimal
+        // turn back into a floating point number
+		results = parseFloat(tempStr.replace(",",""));
+		return(results);
+	}
 
 ]]>
                              
@@ -678,6 +750,7 @@
 		
 		<mx:DataGrid x="10" y="103" width="552" height="470" id="tapeList" dataProvider="{tapeTreeData}" itemClick="doListClick()" allowMultipleSelection="true">
 			<mx:columns>
+				<mx:DataGridColumn headerText="ID" textAlign="right" labelFunction="showID" width="45"/>
 				<mx:DataGridColumn headerText="Date" labelFunction="showDate" width="120"/>
 				<mx:DataGridColumn headerText="Transaction" labelFunction="showDescription"/>
 				<mx:DataGridColumn headerText="Price" textAlign="right" width="120" labelFunction="showPrice"/>
