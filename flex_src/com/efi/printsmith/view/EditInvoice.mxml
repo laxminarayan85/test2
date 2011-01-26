@@ -276,6 +276,7 @@
 			
 			private var preferencesEstimating:PreferencesEstimating;
 			private var preferencesAccounting:PreferencesAccounting;
+			private var deletedJobs:ArrayCollection = null;
 			
 			
 //			private var newContact:Boolean = false;
@@ -874,6 +875,10 @@
 								
 				if (!doInvoiceLater)
 					dataService.saveInvoice(invoice);
+					
+				for (var i:int = 0; i < this.deletedJobs.length; i++) {
+					dataService.deleteItem("Job", (deletedJobs.getItemAt(i) as Job).id);
+				}
 				
 			}
 
@@ -902,7 +907,8 @@
 				var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
 				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobCmd.NewJob'),editJobWindow, -1,-1,-1,-1, windowID);
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, addNewJob);
-			}
+				editJobWindow.addEventListener(JobEditCompleteEvent.DELETE, deleteJob);
+			} 
 			
 			
 			private function doNewCharge(ev:MouseEvent=null):void {
@@ -912,8 +918,7 @@
 				chargePicker.addEventListener(ChargeDefinitionSelectEvent.CHARGEDEFINITIONCOMPLETE, handleChargeDefinitionComplete,false,0,true);
 			}
 			
-			private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
-			{
+			private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void {
 				this.invoice.charges=evt.chargeArray;
 				for each(var chargeObj:Charge in invoice.charges) {
 					chargeObj.originalPrice = chargeObj.price;
@@ -922,8 +927,24 @@
 				//this.updatePrice();
 			}
 
-			private function addNewJob(event:Event):void
-			{
+			private function deleteJob(event:Event):void {
+				var target:EditJob=event.target as EditJob;
+				var deletedJob:Job = target.job as Job;
+				
+				if (invoice.jobs.contains(deletedJob)) {
+					invoice.jobs.removeItemAt(invoice.jobs.getItemIndex(deletedJob));
+				}
+				updateTotals();
+				this.showJobs();
+				
+				if (this.deletedJobs == null) {
+					this.deletedJobs = new ArrayCollection();
+				}
+				
+				this.deletedJobs.addItem(deletedJob);
+			}
+			
+			private function addNewJob(event:Event):void {
 				var target:EditJob=event.target as EditJob;
 				
 				var jobsList:ArrayCollection = new ArrayCollection();
@@ -1279,6 +1300,7 @@
 				editJobWindow.setJob(job);
 				editJobWindow.invoiceMultiQtyJobList = multiQtyJobList;
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveJob);
+				editJobWindow.addEventListener(JobEditCompleteEvent.DELETE, deleteJob);
 				/* var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
 				editJobWindow.setStyle("borderAlpha", 0.9);
 				editJobWindow.setJob(job);

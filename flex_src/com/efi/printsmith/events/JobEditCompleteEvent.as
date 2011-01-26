@@ -9,6 +9,7 @@ package com.efi.printsmith.events
 	public class JobEditCompleteEvent extends Event
 	{
 		public static const SAVE:String = "JobEditSave";
+		public static const DELETE:String = "JobEditDelete";
 		public static const CANCEL:String = "JobEditCancel";
 		
 		public var jobIndex:Number = 0;

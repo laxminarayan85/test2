@@ -710,7 +710,6 @@
 			import com.efi.printsmith.data.PreferencesDefaultPresses;
 			import com.efi.printsmith.data.TaxTable;
 			
-			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.StockPickerSelectEvent;
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
@@ -1108,7 +1107,6 @@
 			{
 				var mdiWindow:MDIWindow = this.parent as MDIWindow;
 				mdiWindow.closeWindow();
-				//PopUpManager.removePopUp(this);
 			}
 			
 			private function doProductionData():void
@@ -1352,6 +1350,36 @@
 				var mdiWindow:MDIWindow = this.parent as MDIWindow;
 				mdiWindow.closeWindow();
 				//PopUpManager.removePopUp(this);
+			}
+			
+			private function deleteJob():void {
+				mapToJobData();
+
+				var jobIndex:Number = 0;
+				
+				if (job.id != 0) {
+					if (this.invoice != null) {
+						jobIndex = this.invoice.jobs.getItemIndex(job);
+					}
+				}
+
+				var jobDescription:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Job');
+									
+				if (job.description != null && job.description.length > 0) {
+					jobDescription = StringUtil.substitute(jobDescription, jobIndex + job.description);
+				}
+				
+				var deleteStr:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Oktodelete0'), jobDescription);
+				Alert.show(deleteStr,"Warning",Alert.OK|Alert.CANCEL,this,handleDeleteJob,null,Alert.OK);
+			}
+			
+			private function handleDeleteJob(event:CloseEvent):void {
+				if (event.detail == Alert.OK) {
+					var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.DELETE, this.job, this.invoiceMultiQtyJobList, this.jobIndex);
+					dispatchEvent(jobEditCompleteEvent);
+					var mdiWindow:MDIWindow = this.parent as MDIWindow;
+					mdiWindow.closeWindow();
+				}
 			}
 			
 			private function updateCostingRecordAndPrice():void {
@@ -3522,7 +3550,7 @@
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"
 					  width="38"
 					  textAlign="center"/>
-			<mx:LinkButton x="150.5"
+			<mx:LinkButton x="254.5"
 					   y="10"
 					   width="38"
 					   height="38"
@@ -3530,12 +3558,12 @@
 					   id="note_pad_button">
 				<mx:icon>@Embed(source='../../../../assets/notes.png')</mx:icon>
 			</mx:LinkButton>
-			<mx:Label x="139"
+			<mx:Label x="243"
 					  y="46"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobNotes')}"
 					  width="61"
 					  textAlign="center"/>
-			<mx:LinkButton x="253"
+			<mx:LinkButton x="357"
 					   y="10"
 					   width="38"
 					   height="38"
@@ -3555,14 +3583,14 @@
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
 					  width="58"
 					  textAlign="center"/>
-			<mx:LinkButton x="396.5"
+			<mx:LinkButton x="500.5"
 					   y="10"
 					   width="38"
 					   height="38"
 					   id="tickets_button">
 				<mx:icon>@Embed(source='../../../../assets/print_carton_labels.png')</mx:icon>
 			</mx:LinkButton>
-			<mx:LinkButton x="503"
+			<mx:LinkButton x="607"
 					   y="10"
 					   width="38"
 					   height="38"
@@ -3583,22 +3611,22 @@
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Submit')}"
 					  width="58"
 					  textAlign="center"/>-->
-			<mx:Label x="488"
+			<mx:Label x="592"
 					  y="46"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Production')}"
 					  width="68"
 					  textAlign="center"/>
-			<mx:Label x="371"
+			<mx:Label x="475"
 					  y="46"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.CartonLabels')}"
 					  width="89"
 					  textAlign="center"/>
-			<mx:Label x="243"
+			<mx:Label x="347"
 					  y="46"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Preview')}"
 					  width="58"
 					  textAlign="center"/>
-			<mx:LinkButton x="319.5"
+			<mx:LinkButton x="423.5"
 					   y="10"
 					   width="38"
 					   height="38"
@@ -3606,7 +3634,7 @@
 					   id="change_account_button">
 				<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
 			</mx:LinkButton>
-			<mx:Label x="299"
+			<mx:Label x="403"
 					  y="46"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobTicket')}"
 					  width="79"
@@ -4371,6 +4399,19 @@
 					</mx:ViewStack>
 				</mx:HDividedBox>
 			</mx:Canvas>
+			<mx:LinkButton x="155.5"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="deleteJob();"
+					   id="delete_job_button">
+				<mx:icon>@Embed(source='../../../../assets/notes.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="144"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.DeleteJob')}"
+					  width="61"
+					  textAlign="center"/>
 			<!--<mx:LinkButton x="629"
 					   y="10"
 					   width="38"
