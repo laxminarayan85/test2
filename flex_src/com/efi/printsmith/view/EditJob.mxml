@@ -659,8 +659,891 @@
 	</mx:RemoteObject>
 	
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
-	
-	<mx:Script>
+   	<mx:NumberFormatter id="numberFormatter" precision="2" useNegativeSign="true" useThousandsSeparator="true"/>
+
+	<mx:VBox width="100%"
+			 height="625"
+			 creationPolicy="all" id="vbox1" verticalScrollPolicy="off">
+		<mx:Canvas width="939"
+				   height="624"
+				   verticalScrollPolicy="off"
+				   fontSize="9" id="canvas1">
+			<mx:LinkButton x="10"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="doSave();"
+					   id="file_button">
+				<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="10"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"
+					  width="38"
+					  textAlign="center"/>
+			<mx:LinkButton x="254.5"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="openJobNotes();"
+					   id="note_pad_button">
+				<mx:icon>@Embed(source='../../../../assets/notes.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="243"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobNotes')}"
+					  width="61"
+					  textAlign="center"/>
+			<mx:LinkButton x="357"
+					   y="10"
+					   width="38"
+					   height="38"
+					   id="new_job_button">
+				<mx:icon>@Embed(source='../../../../assets/preview.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:LinkButton x="67"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="doDelete();"
+					   id="cancel_button">
+				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="56"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
+					  width="58"
+					  textAlign="center"/>
+			<mx:LinkButton x="500.5"
+					   y="10"
+					   width="38"
+					   height="38"
+					   id="tickets_button">
+				<mx:icon>@Embed(source='../../../../assets/print_carton_labels.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:LinkButton x="607"
+					   y="10"
+					   width="38"
+					   height="38"
+					   id="print_button"
+					   click="doProductionData();">
+				<mx:icon>@Embed(source='../../../../assets/production.png')</mx:icon>
+			</mx:LinkButton>
+			<!--<mx:LinkButton x="564"
+					   y="10"
+					   width="38"
+					   height="38"
+					   id="preview_button"
+					   click="submitToFiery()">
+				<mx:icon>@Embed(source='../../../../assets/submit.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="554"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Submit')}"
+					  width="58"
+					  textAlign="center"/>-->
+			<mx:Label x="592"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Production')}"
+					  width="68"
+					  textAlign="center"/>
+			<mx:Label x="475"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.CartonLabels')}"
+					  width="89"
+					  textAlign="center"/>
+			<mx:Label x="347"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Preview')}"
+					  width="58"
+					  textAlign="center"/>
+			<mx:LinkButton x="423.5"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="doPrint()"
+					   id="change_account_button">
+				<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="403"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobTicket')}"
+					  width="79"
+					  textAlign="center"/>
+			<mx:CheckBox x="10"
+						 y="68"
+						 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Brokered')}"
+						 id="check_brokered"
+						 selected="{job.brokered}" width="75"/>
+			<mx:CheckBox x="93"
+						 y="68"
+						 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
+						 id="check_taxtable"
+						 selected="{job.taxable}" width="70"/>
+			<mx:CheckBox x="370.5"
+						 y="68"
+						 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
+						 id="checked_finished"
+						 selected="{job.finished}" width="87"/>
+			<common:EditableComboBox x="510.5"
+							 y="68"
+							 width="100"
+							 id="product"
+							 dataProvider="{productCodes}"
+							 labelField="name"
+							 editable="true"
+							 alwaysAddNewItem="true"
+							 optional="true"
+							 focusOut="doProduct();"
+							 tabIndex="27"
+							 height="20"/>
+			<mx:TextInput
+						  y="94"
+						  width="797"
+						  id="job_comment"
+						  text="{job.comment}"
+						  height="20"
+						  tabIndex="30"
+						  right="10"/>
+			<mx:Label x="10"
+					  y="96"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Comment')}" textAlign="right" width="98"/>
+			<common:EditableComboBox x="668"
+							 y="68"
+							 width="100"
+							 id="job_location"
+							 dataProvider="{locations}"
+							 labelField="name"
+							 tabIndex="28"
+							 editable="false"
+							 optional="true"
+							 height="20"/>
+			<mx:Label x="450.5"
+					  y="70"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Product')}" textAlign="right" width="52"/>
+			<mx:Label x="604"
+					  y="70"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Location')}" textAlign="right" width="56"/>
+			<mx:Label x="756"
+					  y="70"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Type')}" textAlign="right" width="46.5"/>
+			<mx:ComboBox
+						 y="67.5"
+						 id="job_type"
+						 dataProvider="{pricingMethods}"
+						 change="updatePricingMethod();"
+						 labelField="title"
+						 right="10"
+						 tabIndex="29"
+						 left="810.5">
+			</mx:ComboBox>
+			<mx:Label x="162"
+					  y="70"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" textAlign="right" width="55.5"/>
+			<mx:ComboBox
+						 y="67.5"
+						 id="tax_table_combo"
+						 dataProvider="{taxTables}"
+						 change="updatePricingMethod();"
+						 labelField="name"
+						 right="581.5"
+						 tabIndex="26"
+						 left="221.5">
+			</mx:ComboBox>
+			<mx:Canvas x="0" y="119" width="939" height="512" verticalScrollPolicy="auto" id="canvas2">
+				<mx:HDividedBox x="0"
+								width="939"
+								height="502" verticalScrollPolicy="off" id="hdividedbox1" bottom="10">
+					<!--			<mx:Tree width="200"
+						 height="100%">
+						 </mx:Tree>
+					-->
+					<mx:Accordion width="250"
+								  height="502"
+								  fontSize="9" headerHeight="18">
+						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Charges')}"
+								   width="100%"
+								   height="100%"
+								   fontSize="9"
+								   verticalScrollPolicy="off"
+								   horizontalScrollPolicy="off">
+							<mx:LinkButton x="188"
+										   id="delete_charge_button"
+										   click="doDeleteCharge()"
+										   icon="@Embed(source='../../../../assets/delete16.png')"
+										   width="24"
+										   bottom="2"/>
+							<mx:LinkButton x="219"
+										   id="add_charge_button"
+										   click="doAddCharge()"
+										   icon="@Embed(source='../../../../assets/add16.png')"
+										   width="24"
+										   bottom="2" enabled="false"/>
+							<mx:DataGrid
+										 id="invoice_charge_datagrid"
+										 dataProvider="{this.charges}"
+										 left="0"
+										 bottom="25"
+										 top="0"
+										 right="0"
+										 showHeaders="false" alternatingItemColors="[#FFFFFF,#FFFFFF]">
+								<mx:columns>
+									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}"
+													   dataField="description"/>
+									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}"
+													   width="90" labelFunction="formatChargePrice"
+													   dataField="price"
+													    textAlign="right"/>
+								</mx:columns>
+							</mx:DataGrid>
+						</mx:Canvas>
+						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Commands')}"
+								   width="100%"
+								   height="100%">
+							<mx:LinkButton x="10"
+										   y="10"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PrintJobTicket')}"/>
+							<mx:LinkButton x="10"
+										   y="30"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PreviewJobTicket')}"/>
+							<mx:LinkButton x="10"
+										   y="50"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.JobTicketNotes')}"/>
+							<mx:LinkButton x="10"
+										   y="70"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebWorkSheet')}"/>
+							<mx:LinkButton x="10"
+										   y="90"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.DigitalAssets')}"
+										   click="doDigitalAssets()"/>
+							<mx:LinkButton x="10"
+										   y="110"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" click="{openMultiQtyView()}"
+										   color="{job.showMultiQty?0x00BB00:0x000000}"/>
+							<mx:LinkButton x="10"
+										   y="130"
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.EstimatorChecklist')}"
+										   click="{openEstimatorCheckList()}"/>							
+							<mx:LinkButton x="22" y="149" label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
+						</mx:Canvas>
+					</mx:Accordion>
+					<mx:ViewStack id="viewstack3"
+								  width="640"
+								  height="504">
+						<mx:Canvas label="View 1"
+								   width="100%"
+								   height="100%"
+								   fontSize="9" id="canvas4">
+							<mx:TextArea x="85"
+										 y="1"
+										 width="281"
+										 id="job_description"
+										 text="{job.description}"
+										 tabIndex="0"
+										 height="40"/>
+							<mx:Label x="10"
+									  y="2"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}" width="67" textAlign="right" id="label32"/>
+							<mx:TextInput x="496"
+										  y="47"
+										  id="job_over_under"
+										  text="{job.oversUnders}"
+										  height="20"
+										  tabIndex="2"
+										  tabEnabled="false"
+										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
+							<mx:TextInput x="496"
+										  y="70"
+										  id="sets_of"
+										  text="{job.inSetsOf}"
+										  height="20"
+								          tabEnabled="false"
+										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
+							<commoncomponents:CustomNumericTextInputComponent x="496"
+										  y="324"
+										  id="overs_unit_price"
+										  height="20"
+										  width="98" 
+										  tabEnabled="false"
+										  dataHolder="{job.pricingRecord}" variableName="oversUnitPrice"
+										  customText="{job.pricingRecord.oversUnitPrice}"
+										  precision="4" rounding="nearest"
+										  text="{Snowmass.getCurrencyFormatter(false,4).format(job.pricingRecord.oversUnitPrice)}"
+										  mouseDown="textInputClick(event)" textAlign="right"/>
+							<commoncomponents:CustomNumericTextInputComponent x="496"
+										  y="346"
+										  id="overs_total_price"
+										  height="20"
+										  width="98" 
+										  tabEnabled="false"
+										  dataHolder="{job.pricingRecord}" variableName="oversTotalPrice"
+										  customText="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice)}"
+										  precision="2" rounding="nearest"
+										  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.oversTotalPrice)}"
+										  mouseDown="textInputClick(event)" textAlign="right"/>
+							<mx:Label x="385"
+									  y="348"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversTotalPrice')}" textAlign="right" width="108" id="label1"/>
+							<mx:Label x="385"
+									  y="410"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Other')}" textAlign="right" width="108" id="label2"/>
+							<mx:Label x="385"
+									  y="368"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Prep')}" textAlign="right" width="108" id="label3"/>
+							<mx:Label x="496"
+									  y="368"
+									  width="98"
+									  id="job_prep"
+									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.prepPrice)}"
+									  height="20" textAlign="right"/>
+							<mx:Label x="496"
+									  y="389"
+									  width="98"
+									  id="job_bind"
+									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.bindPrice)}"
+									  height="20" textAlign="right"/>
+							<mx:Label x="496"
+									  y="410"
+									  width="98"
+									  id="job_other"
+									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.otherChargePrice)}"
+									  height="20" textAlign="right"/>
+							<mx:Label x="385"
+									  y="445"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Total')}" textAlign="right" width="108" id="label4"/>
+							<mx:Label x="496.95"
+									  y="445"
+									  width="97.05"
+									  id="job_total"
+									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice)}"
+									  height="20" textAlign="right"/>
+							<mx:Label x="496"
+									  y="208"
+									  width="98"
+									  id="num_signatures"
+									  text="{job.signatures}"
+									  height="20" textAlign="right"/>
+							<mx:Label x="496"
+									  y="229"
+									  width="98"
+									  id="job_imp"
+									  height="20" textAlign="right" text="{job.impressionsPerRun}"/>
+							<mx:Label x="496"
+									  y="250"
+									  width="98"
+									  id="total_imp"
+									  height="20" textAlign="right" text="{job.totalImpressions}"/>
+							<mx:Label x="496"
+									  y="271"
+									  width="98"
+									  id="job_weight"
+									  height="20" textAlign="right" text="{numberFormatter.format(job.weight)}"/>
+							<mx:Label x="385"
+									  y="389"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Bind')}" textAlign="right" width="108" id="label5"/>
+							<commoncomponents:CustomNumericTextInputComponent x="496"
+										  y="302"
+										  id="job_price"
+										  height="20"
+										  width="98" 
+										  dataHolder="{job.pricingRecord}" variableName="totalPrice"
+										  customText="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice)}"
+										  precision="2" rounding="nearest"
+										  mouseDown="textInputClick(event)" 
+										  textAlign="right" 
+										  tabEnabled="false"
+										  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice)}" change="editTotalPrice(event)"/>
+							<mx:Label x="385"
+									  y="304"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label7"/>
+							<mx:Label x="385"
+									  y="326"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversUnitPrice')}" textAlign="right" width="108" id="label6"/>
+							<mx:TextInput x="496"
+										  y="93"
+										  id="job_sheets"
+										  text="{job.sheets}"
+										  height="20"
+										  tabIndex="3"
+										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
+							<mx:TextInput x="496"
+										  y="116"
+										  width="45.300003"
+										  id="job_up"
+										  text="{job.numUp}"
+										  tabIndex="4"
+										  height="20" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)" change="doUpdateNumberOn();"/>
+							<mx:TextInput x="548.3"
+										  y="116"
+										  width="45.700005"
+										  id="job_on"
+										  text="{job.numOn}"
+										  tabIndex="5"
+										  height="20" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
+							<mx:TextInput x="496"
+										  y="138"
+										  id="job_press"
+										  height="20"
+										  width="98"
+										  tabIndex="6"
+										  text="{job.pressQty}" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
+							<mx:TextInput x="496"
+										  y="161"
+										  id="bindery_waste"
+										  text="{job.binderyWaste}"
+										  height="20"
+										  tabIndex="7"
+										  width="98" mouseDown="textInputClick(event)" textAlign="right" change="editBinderyWaste(event)" focusOut="fieldChanged(event)"/>
+							<mx:TextInput x="496"
+										  y="184"
+										  id="est_waste"
+										  text="{job.estWaste}"
+										  height="20"
+										  tabIndex="8"
+										  width="98" mouseDown="textInputClick(event)" textAlign="right" change="editEstWaste(event)" focusOut="fieldChanged(event)"/>
+							<mx:Label x="385"
+									  y="271"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Weight')}" textAlign="right" width="108" id="label11"/>
+							<mx:Label x="385"
+									  y="250"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.TotImp')}" textAlign="right" width="108" id="label8"/>
+							<mx:Label x="385"
+									  y="229"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.ImpRun')}" textAlign="right" width="108" id="label9"/>
+							<mx:Label x="385"
+									  y="208"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OfSignatures')}" textAlign="right" width="108" id="label10"/>
+							<mx:Label x="385"
+									  y="186"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.EstWaste')}" textAlign="right" width="108" id="label31"/>
+							<mx:Label x="385"
+									  y="163"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.BinderyWaste')}" textAlign="right" width="108" id="label34"/>
+							<mx:Label x="385"
+									  y="140"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Press')}" textAlign="right" width="108" id="label12"/>
+							<mx:Label x="385"
+									  y="118"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UpOn')}" textAlign="right" width="108" id="label30"/>
+							<mx:Label x="385"
+									  y="95"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Sheets')}" textAlign="right" width="108" id="label29"/>
+							<mx:Label x="385"
+									  y="72"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.InSetsOf')}" textAlign="right" width="108" id="label28"/>
+							<mx:TextInput x="496"
+										  y="1"
+										  id="job_ordered"
+										  text="{job.qtyOrdered}"
+										  height="20"
+										  tabIndex="1"
+										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
+							<mx:Label x="385"
+									  y="3"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Ordered')}" textAlign="right" width="108"/>
+							<mx:Label x="385"
+									  y="26"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" textAlign="right" width="108" id="label42"
+									  visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}"/>
+							<mx:ComboBox id="multiQtyCombo" dataProvider="{getSortedList(invoiceMultiQtyJobList)}" labelField="qtyOrdered"
+								x="496" y="26" visible="false" close="{openEditMultiQtyJobWindow()}"/>
+							<mx:Label id="multiQtyLabel" x="496" y="26" text="{getMultiQtyString(invoiceMultiQtyJobList,invoiceMultiQtyJobList.length)}"
+								visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}" click="{openMultiQtyCombo(invoiceMultiQtyJobList)}"/>
+							<mx:Button 
+								x="555" y="24" label="+" visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}" click="{addMultiQtyJob()}" id="button1"/>
+							<mx:Label x="385"
+									  y="49"
+									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversUnders')}" textAlign="right" width="108" id="label33"/>
+									  
+							<mx:VRule x="374"
+									  bottom="5"
+									  top="5"/>
+							<mx:HRule y="296"
+									  height="2.0054946"
+									  right="5"
+									  left="380" id="hrule4"/>
+							<mx:HRule y="434"
+									  height="2.0054946"
+									  right="5"
+									  left="380" id="hrule2"/>
+							<mx:HRule y="438"
+									  height="2.0054946"
+									  right="5"
+									  left="380" id="hrule1"/>
+							<mx:HRule x="10"
+									  y="46"
+									  width="356"
+									  height="2" id="hrule3"/>
+							<mx:ViewStack x="10"
+										  y="46"
+										  id="viewstack4"
+										  width="358"
+										  height="218">
+								<mx:Canvas label="View 1"
+										   width="100%"
+										   height="100%" id="canvas3">
+									<mx:Text x="107"
+											 y="57"
+											 width="247"
+											 height="20"
+											 id="job_color"
+											 text="{job.stock.color.name}"
+											 fontSize="9"/>
+									<mx:TextInput x="107"
+												  y="167"
+												  width="100"
+												  height="20"
+												  id="number_lines"
+												  fontSize="9"
+												  tabIndex="14"
+												  mouseDown="textInputClick(event)" />
+									<mx:Label x="6"
+											  y="147"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.FoldedSize')}"
+											  fontSize="9" textAlign="right" width="94" id="label16"/>
+									<mx:Label x="6"
+											  y="125"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Finish')}"
+											  fontSize="9" textAlign="right" width="94" id="label17"/>
+									<mx:Label x="6"
+											  y="190"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}"
+											  fontSize="9" textAlign="right" width="94" id="label15"/>
+									<mx:TextInput x="107"
+												  y="189"
+												  width="100"
+												  height="20"
+												  id="job_unit_price"
+												  tabIndex="15"
+												  fontSize="9" mouseDown="textInputClick(event)" />
+									<mx:Label x="6"
+											  y="103"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RunSize')}"
+											  fontSize="9" textAlign="right" width="94" id="runsize_label"/>
+									<mx:Label x="11"
+											  y="81"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Parent')}"
+											  fontSize="9" textAlign="right" width="89" id="label13"/>
+									<mx:Label x="6"
+											  y="169"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.NumberofLines')}"
+											  fontSize="9" textAlign="right" width="94" id="label14"/>
+									<mx:TextInput x="107"
+												  y="35"
+												  width="171"
+												  height="20"
+												  id="job_stock"
+												  tabIndex="9"
+												  text="{getStockName(job.stock,preferencesStocks)}"
+												  fontSize="9" mouseDown="textInputClick(event)" />
+									<mx:Label x="6"
+											  y="37"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Stock')}"
+											  fontSize="9" width="94" textAlign="right" id="label18"/>
+									<mx:Label x="10"
+											  y="57"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Color')}"
+											  fontSize="9" textAlign="right" width="90" id="label19"/>
+									<mx:CheckBox x="10"
+												 y="6"
+												 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CustomerSuppliedStoc')}"
+												 id="customer_suppliled_stock"
+												 fontSize="9"
+												  selected="{job.customerSuppliedStock}"
+												   change="doCustomerSupplied()" click="enableStockCostFields()"/>
+									<mx:CheckBox x="218"
+												 y="7"
+												 fontSize="9" id="specialOrder"
+												  selected="{job.specialOrderStock}"
+												   change="doSpecialOrder()" click="enableStockCostFields()"/>
+									<mx:Button x="240"
+											   y="7"
+											   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.SpecialOrder')}"
+											   fontSize="9"
+											   height="18"
+											   id="special_order_button" width="108" click="{openStockDefinition()}"/>
+							<!--		<mx:Image x="215"
+											  y="81"
+											  width="139"
+											  id="cutDiagram"
+											  height="124" click="doPaperCal();" source="assets/380.png"/>
+								-->	
+									<mx:Canvas x="215"
+											   y="81"
+											   width="140"
+											   height="127"
+											   borderStyle="inset"
+											   click="doPaperCal();"
+											   id="cutDiagram">
+									</mx:Canvas>
+									<mx:HRule x="2"
+											  y="215"
+											  width="356"
+											  height="2"/>
+									<mx:Button x="286"
+											   y="35"
+											   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Change')}"
+											   fontSize="9"
+											   height="18"
+											   id="chage_stock_button"
+											   enabled="false"
+											   click="changeStockDefinition()" width="62"/>
+									<mx:ComboBox x="108" y="79" width="99" id="job_parent" tabIndex="10" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" tabIndex="11" focusIn="runSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" tabIndex="12" focusIn="finishSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" tabIndex="13" focusIn="foldedSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:Label x="-20" y="171" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.StockCost')}" width="120" textAlign="right" id="parent_cost_label"/>
+									<mx:Label x="-20" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" width="120" textAlign="right" id="per_label"/>
+									<mx:TextInput x="108" y="169" height="20" width="99" textAlign="right" id="parent_costs" focusOut="fieldChanged(event)"/>
+									<mx:TextInput x="108" y="188" height="20" width="99" textAlign="right" id="per" focusOut="fieldChanged(event)"/>
+								</mx:Canvas>
+								<mx:Canvas label="merchandise_canvas"
+										   width="100%"
+										   height="100%">
+									<mx:TextArea x="79"
+												 y="10"
+												 width="277"
+												 id="job_notes" 
+												 text="{job.jobNotes}"/>
+									<mx:Label x="-36"
+											  y="11"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Notes')}"/>
+									<mx:CheckBox x="79"
+												 y="62"
+												 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.ShowNotes')}"
+												 id="check_job_notes"
+												 selected="{job.jobTicketNotes}"/>
+									<mx:TextInput x="79"
+												  y="92"
+												  width="277"
+												  height="22"
+												  id="vendor_edit" mouseDown="textInputClick(event)" />
+									<mx:Label x="-36"
+											  y="94"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Vendor')}"/>
+								</mx:Canvas>
+							</mx:ViewStack>
+							<mx:ViewStack x="10"
+										  y="263"
+										  id="estimator_viewstack"
+										  width="358"
+										  height="239">
+								<mx:Canvas id="printing_estimator_canvas"
+										   width="100%"
+										   height="100%">
+									<mx:ComboBox x="107"
+													 y="5"
+													 width="241"
+													 height="20"
+													 id="job_pricing_press"
+													 dataProvider="{presses}"
+													 labelField="name"
+													 tabIndex="16"
+													 fontSize="9" change="changePricingPress()"/>
+									<mx:Label x="10"
+											  y="7"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PricingPress')}"
+											  fontSize="9" textAlign="right" width="91" id="label20"/>
+									<mx:ComboBox x="107"
+													 y="28"
+													 width="241"
+													 height="20"
+													 id="job_costing_press"
+													 dataProvider="{costingPresses}"
+													 labelField="name"
+													 tabIndex="17"
+													 fontSize="9"/>
+									<mx:Label x="10"
+											  y="30"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CostingPress')}"
+											  fontSize="9" textAlign="right" width="91" id="label21"/>
+									<mx:Label x="6"
+											  y="96"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Back')}"
+											  fontSize="9" textAlign="right" width="34" id="label26"/>
+									<mx:Label x="5"
+											  y="73"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Front')}"
+											  fontSize="9" textAlign="right" width="35" id="label24"/>
+									<mx:Panel x="48"
+											  y="122"
+											  width="203"
+											  height="94"
+											  layout="absolute"
+											  title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RunMethod')}"
+											  dropShadowEnabled="false"
+											  fontSize="9" headerHeight="20" borderThicknessBottom="3" borderThicknessLeft="3" borderThicknessRight="3">
+										<mx:RadioButtonGroup id="run_method_radiogroup"/>
+										<mx:RadioButton x="10"
+														y="27"
+														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTurn')}"
+														groupName="run_method_radiogroup"
+														height="18"
+														value="{Constants.JOB_RUN_METHOD_WORK_TURN}" width="179" id="radiobutton1" enabled="false"/>
+										<mx:RadioButton x="10"
+														y="6"
+														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Sheetwise')}"
+														groupName="run_method_radiogroup"
+														height="18"
+														value="{Constants.JOB_RUN_METHOD_SHEETWISE}" width="177" id="radiobutton2"/>
+										<mx:RadioButton x="10"
+														y="48"
+														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTumble')}"
+														groupName="run_method_radiogroup"
+														height="18"
+														value="{Constants.JOB_RUN_METHOD_WORK_TUMBLE}" width="169" id="radiobutton3" enabled="false"/>
+									</mx:Panel>
+									<mx:Label x="48"
+											  y="54"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Colors')}"
+											  width="46"
+											  textAlign="center"
+											  fontSize="9" id="label22"/>
+									<mx:Label x="96"
+											  y="54"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Passes')}"
+											  width="46"
+											  textAlign="center"
+											  fontSize="9" id="label23"/>
+									<mx:Label x="144"
+											  y="54"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Washes')}"
+											  width="46"
+											  textAlign="center"
+											  fontSize="9" id="label25"/>
+									<mx:Label x="192"
+											  y="54"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Ink')}"
+											  width="156"
+											  textAlign="center"
+											  fontSize="9" id="label27"/>
+									<mx:TextInput x="48"
+												  y="71"
+												  width="46"
+												  height="20"
+												  id="front_colors_text"
+												  fontSize="9" textAlign="center"
+												  tabIndex="18"
+												  text="{job.frontColors}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
+									<mx:TextInput x="96"
+												  y="71"
+												  width="46"
+												  height="20"
+												  id="front_passes_text"
+												  fontSize="9" textAlign="center"
+												  tabIndex="19"
+												  text="{job.frontPasses}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
+									<mx:TextInput x="96"
+												  y="94"
+												  width="46"
+												  height="20"
+												  id="back_passes_text"
+												  tabIndex="23"
+												  fontSize="9" textAlign="center"
+												  text="{job.backPasses}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
+									<mx:TextInput x="144"
+												  y="71"
+												  width="46"
+												  height="20"
+												  id="front_washes_text"
+												  fontSize="9" textAlign="center"
+												  tabIndex="20"
+												  text="{job.frontWashes}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
+									<mx:List x="192"
+												  y="71"
+												  width="156"
+												  height="20"
+												  id="front_inks_text"
+												  fontSize="9" textAlign="center"
+												  tabIndex="21"
+												   dataProvider="{job.frontInks}"
+												    labelField="name" click="doInkEditorFront();" wordWrap="true"/>
+									<mx:List x="192"
+												  y="94"
+												  width="156"
+												  height="20"
+												  id="back_inks_text"
+												  tabIndex="25"
+												  fontSize="9" textAlign="center"
+												   dataProvider="{job.backInks}"
+												    labelField="name" click="doInkEditorBack();"/>
+									<mx:TextInput x="144"
+												  y="94"
+												  width="46"
+												  height="20"
+												  id="back_washes_text"
+												  tabIndex="24"
+												  fontSize="9" textAlign="center"
+												  text="{job.backWashes}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
+									<mx:TextInput x="48"
+												  y="94"
+												  width="46"
+												  height="20"
+												  id="back_colors_text"
+												  tabIndex="22"
+												  fontSize="9" textAlign="center"
+												  text="{job.backColors}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
+								</mx:Canvas>
+								<mx:Canvas id="copy_estimator_canvas" label="Copiers" width="100%" height="100%">
+									<mx:ComboBox x="107"
+													 y="5"
+													 width="241"
+													 height="20"
+													 id="job_pricing_copier"
+													 dataProvider="{copiers}"
+													 labelField="name"
+													 change="changePricingCopier()"
+													 tabIndex="16"
+													 fontSize="9"/>
+									<mx:Label x="10"
+											  y="7"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PricingCopier')}"
+											  fontSize="9" width="90" textAlign="right"/>
+									<mx:ComboBox x="107"
+													 y="28"
+													 width="241"
+													 height="20"
+													 id="job_costing_copier"
+													 dataProvider="{costingCopiers}"
+													 labelField="name"
+													 tabIndex="17"
+													 fontSize="9"/>
+									<mx:Label x="10"
+											  y="30"
+											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CostingCopier')}"
+											  fontSize="9" width="90" textAlign="right"/>
+									<mx:RadioButtonGroup id="copierSides"/>
+									<mx:RadioButton x="107" y="58" click="changeJobSides(event)" id="copy_single_radio" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.SingleSided')}" groupName="copierSides" fontSize="9"/>
+									<mx:RadioButton x="107" y="78" click="changeJobSides(event)" id="copy_double_radio" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.DoubleSided')}" groupName="copierSides" fontSize="9"/>
+								</mx:Canvas>
+							</mx:ViewStack>
+							<components:SmallThrobber visible="false" id="pricing_throbber" x="599" y="301" height="20" width="20"/>
+							<mx:LinkButton x="596" y="301" width="20" id="refresh_price_btn" height="20" click="updatePrice()">
+								<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
+							</mx:LinkButton>
+							<mx:LinkButton x="618" y="301" width="20" id="price_info_btn" height="20" click="showJobPricingInfo()" visible="false">
+								<mx:icon>@Embed(source='../../../../assets/help_small.png')</mx:icon>
+							</mx:LinkButton>
+							
+						
+						</mx:Canvas>
+					</mx:ViewStack>
+				</mx:HDividedBox>
+			</mx:Canvas>
+			<mx:LinkButton x="155.5"
+					   y="10"
+					   width="38"
+					   height="38"
+					   click="deleteJob();"
+					   id="delete_job_button">
+				<mx:icon>@Embed(source='../../../../assets/deleteJob.png')</mx:icon>
+			</mx:LinkButton>
+			<mx:Label x="144"
+					  y="46"
+					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.DeleteJob')}"
+					  width="61"
+					  textAlign="center"/>
+			<mx:Script>
 		<![CDATA[
 			import com.efi.printsmith.pages.EstimatorCheckList;
 			import mx.collections.Sort;
@@ -3528,893 +4411,6 @@
 		]]>
 
 	</mx:Script>
-   	<mx:NumberFormatter id="numberFormatter" precision="2" useNegativeSign="true" useThousandsSeparator="true"/>
-
-	<mx:VBox width="100%"
-			 height="625"
-			 creationPolicy="all" id="vbox1" verticalScrollPolicy="off">
-		<mx:Canvas width="939"
-				   height="624"
-				   verticalScrollPolicy="off"
-				   fontSize="9" id="canvas1">
-			<mx:LinkButton x="10"
-					   y="10"
-					   width="38"
-					   height="38"
-					   click="doSave();"
-					   id="file_button">
-				<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
-			</mx:LinkButton>
-			<mx:Label x="10"
-					  y="46"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"
-					  width="38"
-					  textAlign="center"/>
-			<mx:LinkButton x="254.5"
-					   y="10"
-					   width="38"
-					   height="38"
-					   click="openJobNotes();"
-					   id="note_pad_button">
-				<mx:icon>@Embed(source='../../../../assets/notes.png')</mx:icon>
-			</mx:LinkButton>
-			<mx:Label x="243"
-					  y="46"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobNotes')}"
-					  width="61"
-					  textAlign="center"/>
-			<mx:LinkButton x="357"
-					   y="10"
-					   width="38"
-					   height="38"
-					   id="new_job_button">
-				<mx:icon>@Embed(source='../../../../assets/preview.png')</mx:icon>
-			</mx:LinkButton>
-			<mx:LinkButton x="67"
-					   y="10"
-					   width="38"
-					   height="38"
-					   click="doDelete();"
-					   id="cancel_button">
-				<mx:icon>@Embed(source='../../../../assets/delete.png')</mx:icon>
-			</mx:LinkButton>
-			<mx:Label x="56"
-					  y="46"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"
-					  width="58"
-					  textAlign="center"/>
-			<mx:LinkButton x="500.5"
-					   y="10"
-					   width="38"
-					   height="38"
-					   id="tickets_button">
-				<mx:icon>@Embed(source='../../../../assets/print_carton_labels.png')</mx:icon>
-			</mx:LinkButton>
-			<mx:LinkButton x="607"
-					   y="10"
-					   width="38"
-					   height="38"
-					   id="print_button"
-					   click="doProductionData();">
-				<mx:icon>@Embed(source='../../../../assets/production.png')</mx:icon>
-			</mx:LinkButton>
-			<!--<mx:LinkButton x="564"
-					   y="10"
-					   width="38"
-					   height="38"
-					   id="preview_button"
-					   click="submitToFiery()">
-				<mx:icon>@Embed(source='../../../../assets/submit.png')</mx:icon>
-			</mx:LinkButton>
-			<mx:Label x="554"
-					  y="46"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Submit')}"
-					  width="58"
-					  textAlign="center"/>-->
-			<mx:Label x="592"
-					  y="46"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Production')}"
-					  width="68"
-					  textAlign="center"/>
-			<mx:Label x="475"
-					  y="46"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.CartonLabels')}"
-					  width="89"
-					  textAlign="center"/>
-			<mx:Label x="347"
-					  y="46"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Preview')}"
-					  width="58"
-					  textAlign="center"/>
-			<mx:LinkButton x="423.5"
-					   y="10"
-					   width="38"
-					   height="38"
-					   click="doPrint()"
-					   id="change_account_button">
-				<mx:icon>@Embed(source='../../../../assets/print.png')</mx:icon>
-			</mx:LinkButton>
-			<mx:Label x="403"
-					  y="46"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.JobTicket')}"
-					  width="79"
-					  textAlign="center"/>
-			<mx:CheckBox x="10"
-						 y="68"
-						 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Brokered')}"
-						 id="check_brokered"
-						 selected="{job.brokered}" width="75"/>
-			<mx:CheckBox x="93"
-						 y="68"
-						 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Taxable')}"
-						 id="check_taxtable"
-						 selected="{job.taxable}" width="70"/>
-			<mx:CheckBox x="370.5"
-						 y="68"
-						 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.Finished')}"
-						 id="checked_finished"
-						 selected="{job.finished}" width="87"/>
-			<common:EditableComboBox x="510.5"
-							 y="68"
-							 width="100"
-							 id="product"
-							 dataProvider="{productCodes}"
-							 labelField="name"
-							 editable="true"
-							 alwaysAddNewItem="true"
-							 optional="true"
-							 focusOut="doProduct();"
-							 tabIndex="27"
-							 height="20"/>
-			<mx:TextInput
-						  y="94"
-						  width="797"
-						  id="job_comment"
-						  text="{job.comment}"
-						  height="20"
-						  tabIndex="30"
-						  right="10"/>
-			<mx:Label x="10"
-					  y="96"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Comment')}" textAlign="right" width="98"/>
-			<common:EditableComboBox x="668"
-							 y="68"
-							 width="100"
-							 id="job_location"
-							 dataProvider="{locations}"
-							 labelField="name"
-							 tabIndex="28"
-							 editable="false"
-							 optional="true"
-							 height="20"/>
-			<mx:Label x="450.5"
-					  y="70"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Product')}" textAlign="right" width="52"/>
-			<mx:Label x="604"
-					  y="70"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Location')}" textAlign="right" width="56"/>
-			<mx:Label x="756"
-					  y="70"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Type')}" textAlign="right" width="46.5"/>
-			<mx:ComboBox
-						 y="67.5"
-						 id="job_type"
-						 dataProvider="{pricingMethods}"
-						 change="updatePricingMethod();"
-						 labelField="title"
-						 right="10"
-						 tabIndex="29"
-						 left="810.5">
-			</mx:ComboBox>
-			<mx:Label x="162"
-					  y="70"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" textAlign="right" width="55.5"/>
-			<mx:ComboBox
-						 y="67.5"
-						 id="tax_table_combo"
-						 dataProvider="{taxTables}"
-						 change="updatePricingMethod();"
-						 labelField="name"
-						 right="581.5"
-						 tabIndex="26"
-						 left="221.5">
-			</mx:ComboBox>
-			<mx:Canvas x="0" y="119" width="939" height="512" verticalScrollPolicy="auto" id="canvas2">
-				<mx:HDividedBox x="0"
-								width="939"
-								height="502" verticalScrollPolicy="off" id="hdividedbox1" bottom="10">
-					<!--			<mx:Tree width="200"
-						 height="100%">
-						 </mx:Tree>
-					-->
-					<mx:Accordion width="250"
-								  height="502"
-								  fontSize="9" headerHeight="18">
-						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Charges')}"
-								   width="100%"
-								   height="100%"
-								   fontSize="9"
-								   verticalScrollPolicy="off"
-								   horizontalScrollPolicy="off">
-							<mx:LinkButton x="188"
-										   id="delete_charge_button"
-										   click="doDeleteCharge()"
-										   icon="@Embed(source='../../../../assets/delete16.png')"
-										   width="24"
-										   bottom="2"/>
-							<mx:LinkButton x="219"
-										   id="add_charge_button"
-										   click="doAddCharge()"
-										   icon="@Embed(source='../../../../assets/add16.png')"
-										   width="24"
-										   bottom="2" enabled="false"/>
-							<mx:DataGrid
-										 id="invoice_charge_datagrid"
-										 dataProvider="{this.charges}"
-										 left="0"
-										 bottom="25"
-										 top="0"
-										 right="0"
-										 showHeaders="false" alternatingItemColors="[#FFFFFF,#FFFFFF]">
-								<mx:columns>
-									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}"
-													   dataField="description"/>
-									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}"
-													   width="90" labelFunction="formatChargePrice"
-													   dataField="price"
-													    textAlign="right"/>
-								</mx:columns>
-							</mx:DataGrid>
-						</mx:Canvas>
-						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Commands')}"
-								   width="100%"
-								   height="100%">
-							<mx:LinkButton x="10"
-										   y="10"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PrintJobTicket')}"/>
-							<mx:LinkButton x="10"
-										   y="30"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PreviewJobTicket')}"/>
-							<mx:LinkButton x="10"
-										   y="50"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.JobTicketNotes')}"/>
-							<mx:LinkButton x="10"
-										   y="70"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebWorkSheet')}"/>
-							<mx:LinkButton x="10"
-										   y="90"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.DigitalAssets')}"
-										   click="doDigitalAssets()"/>
-							<mx:LinkButton x="10"
-										   y="110"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" click="{openMultiQtyView()}"
-										   color="{job.showMultiQty?0x00BB00:0x000000}"/>
-							<mx:LinkButton x="10"
-										   y="130"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ChangeStockSelection')}" click="changeStockDefinition()" width="169"/>
-							<mx:LinkButton x="10"
-										   y="150"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.EstimatorChecklist')}"
-										   click="{openEstimatorCheckList()}"/>							
-							<mx:LinkButton x="22" y="169" label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
-						</mx:Canvas>
-					</mx:Accordion>
-					<mx:ViewStack id="viewstack3"
-								  width="640"
-								  height="504">
-						<mx:Canvas label="View 1"
-								   width="100%"
-								   height="100%"
-								   fontSize="9" id="canvas4">
-							<mx:TextArea x="85"
-										 y="1"
-										 width="281"
-										 id="job_description"
-										 text="{job.description}"
-										 tabIndex="0"
-										 height="40"/>
-							<mx:Label x="10"
-									  y="2"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}" width="67" textAlign="right" id="label32"/>
-							<mx:TextInput x="496"
-										  y="47"
-										  id="job_over_under"
-										  text="{job.oversUnders}"
-										  height="20"
-										  tabIndex="2"
-										  tabEnabled="false"
-										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
-							<mx:TextInput x="496"
-										  y="70"
-										  id="sets_of"
-										  text="{job.inSetsOf}"
-										  height="20"
-								          tabEnabled="false"
-										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
-							<commoncomponents:CustomNumericTextInputComponent x="496"
-										  y="324"
-										  id="overs_unit_price"
-										  height="20"
-										  width="98" 
-										  tabEnabled="false"
-										  dataHolder="{job.pricingRecord}" variableName="oversUnitPrice"
-										  customText="{job.pricingRecord.oversUnitPrice}"
-										  precision="4" rounding="nearest"
-										  text="{Snowmass.getCurrencyFormatter(false,4).format(job.pricingRecord.oversUnitPrice)}"
-										  mouseDown="textInputClick(event)" textAlign="right"/>
-							<commoncomponents:CustomNumericTextInputComponent x="496"
-										  y="346"
-										  id="overs_total_price"
-										  height="20"
-										  width="98" 
-										  tabEnabled="false"
-										  dataHolder="{job.pricingRecord}" variableName="oversTotalPrice"
-										  customText="{Snowmass.getCurrencyFormatter(true,2).format(job.pricingRecord.oversTotalPrice)}"
-										  precision="2" rounding="nearest"
-										  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.oversTotalPrice)}"
-										  mouseDown="textInputClick(event)" textAlign="right"/>
-							<mx:Label x="385"
-									  y="348"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversTotalPrice')}" textAlign="right" width="108" id="label1"/>
-							<mx:Label x="385"
-									  y="410"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Other')}" textAlign="right" width="108" id="label2"/>
-							<mx:Label x="385"
-									  y="368"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Prep')}" textAlign="right" width="108" id="label3"/>
-							<mx:Label x="496"
-									  y="368"
-									  width="98"
-									  id="job_prep"
-									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.prepPrice)}"
-									  height="20" textAlign="right"/>
-							<mx:Label x="496"
-									  y="389"
-									  width="98"
-									  id="job_bind"
-									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.bindPrice)}"
-									  height="20" textAlign="right"/>
-							<mx:Label x="496"
-									  y="410"
-									  width="98"
-									  id="job_other"
-									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.otherChargePrice)}"
-									  height="20" textAlign="right"/>
-							<mx:Label x="385"
-									  y="445"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Total')}" textAlign="right" width="108" id="label4"/>
-							<mx:Label x="496.95"
-									  y="445"
-									  width="97.05"
-									  id="job_total"
-									  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice + job.pricingRecord.prepPrice + job.pricingRecord.bindPrice + job.pricingRecord.otherChargePrice)}"
-									  height="20" textAlign="right"/>
-							<mx:Label x="496"
-									  y="208"
-									  width="98"
-									  id="num_signatures"
-									  text="{job.signatures}"
-									  height="20" textAlign="right"/>
-							<mx:Label x="496"
-									  y="229"
-									  width="98"
-									  id="job_imp"
-									  height="20" textAlign="right" text="{job.impressionsPerRun}"/>
-							<mx:Label x="496"
-									  y="250"
-									  width="98"
-									  id="total_imp"
-									  height="20" textAlign="right" text="{job.totalImpressions}"/>
-							<mx:Label x="496"
-									  y="271"
-									  width="98"
-									  id="job_weight"
-									  height="20" textAlign="right" text="{numberFormatter.format(job.weight)}"/>
-							<mx:Label x="385"
-									  y="389"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Bind')}" textAlign="right" width="108" id="label5"/>
-							<commoncomponents:CustomNumericTextInputComponent x="496"
-										  y="302"
-										  id="job_price"
-										  height="20"
-										  width="98" 
-										  dataHolder="{job.pricingRecord}" variableName="totalPrice"
-										  customText="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice)}"
-										  precision="2" rounding="nearest"
-										  mouseDown="textInputClick(event)" 
-										  textAlign="right" 
-										  tabEnabled="false"
-										  text="{Snowmass.getCurrencyFormatter(false,2).format(job.pricingRecord.totalPrice)}" change="editTotalPrice(event)"/>
-							<mx:Label x="385"
-									  y="304"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}" textAlign="right" width="108" id="label7"/>
-							<mx:Label x="385"
-									  y="326"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversUnitPrice')}" textAlign="right" width="108" id="label6"/>
-							<mx:TextInput x="496"
-										  y="93"
-										  id="job_sheets"
-										  text="{job.sheets}"
-										  height="20"
-										  tabIndex="3"
-										  width="98" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
-							<mx:TextInput x="496"
-										  y="116"
-										  width="45.300003"
-										  id="job_up"
-										  text="{job.numUp}"
-										  tabIndex="4"
-										  height="20" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)" change="doUpdateNumberOn();"/>
-							<mx:TextInput x="548.3"
-										  y="116"
-										  width="45.700005"
-										  id="job_on"
-										  text="{job.numOn}"
-										  tabIndex="5"
-										  height="20" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
-							<mx:TextInput x="496"
-										  y="138"
-										  id="job_press"
-										  height="20"
-										  width="98"
-										  tabIndex="6"
-										  text="{job.pressQty}" mouseDown="textInputClick(event)" textAlign="right" focusOut="fieldChanged(event)"/>
-							<mx:TextInput x="496"
-										  y="161"
-										  id="bindery_waste"
-										  text="{job.binderyWaste}"
-										  height="20"
-										  tabIndex="7"
-										  width="98" mouseDown="textInputClick(event)" textAlign="right" change="editBinderyWaste(event)" focusOut="fieldChanged(event)"/>
-							<mx:TextInput x="496"
-										  y="184"
-										  id="est_waste"
-										  text="{job.estWaste}"
-										  height="20"
-										  tabIndex="8"
-										  width="98" mouseDown="textInputClick(event)" textAlign="right" change="editEstWaste(event)" focusOut="fieldChanged(event)"/>
-							<mx:Label x="385"
-									  y="271"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Weight')}" textAlign="right" width="108" id="label11"/>
-							<mx:Label x="385"
-									  y="250"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.TotImp')}" textAlign="right" width="108" id="label8"/>
-							<mx:Label x="385"
-									  y="229"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.ImpRun')}" textAlign="right" width="108" id="label9"/>
-							<mx:Label x="385"
-									  y="208"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OfSignatures')}" textAlign="right" width="108" id="label10"/>
-							<mx:Label x="385"
-									  y="186"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.EstWaste')}" textAlign="right" width="108" id="label31"/>
-							<mx:Label x="385"
-									  y="163"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.BinderyWaste')}" textAlign="right" width="108" id="label34"/>
-							<mx:Label x="385"
-									  y="140"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Press')}" textAlign="right" width="108" id="label12"/>
-							<mx:Label x="385"
-									  y="118"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UpOn')}" textAlign="right" width="108" id="label30"/>
-							<mx:Label x="385"
-									  y="95"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Sheets')}" textAlign="right" width="108" id="label29"/>
-							<mx:Label x="385"
-									  y="72"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.InSetsOf')}" textAlign="right" width="108" id="label28"/>
-							<mx:TextInput x="496"
-										  y="1"
-										  id="job_ordered"
-										  text="{job.qtyOrdered}"
-										  height="20"
-										  tabIndex="1"
-										  width="98" mouseDown="textInputClick(event)" focusOut="fieldChanged(event)" textAlign="right"/>
-							<mx:Label x="385"
-									  y="3"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Ordered')}" textAlign="right" width="108"/>
-							<mx:Label x="385"
-									  y="26"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" textAlign="right" width="108" id="label42"
-									  visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}"/>
-							<mx:ComboBox id="multiQtyCombo" dataProvider="{getSortedList(invoiceMultiQtyJobList)}" labelField="qtyOrdered"
-								x="496" y="26" visible="false" close="{openEditMultiQtyJobWindow()}"/>
-							<mx:Label id="multiQtyLabel" x="496" y="26" text="{getMultiQtyString(invoiceMultiQtyJobList,invoiceMultiQtyJobList.length)}"
-								visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}" click="{openMultiQtyCombo(invoiceMultiQtyJobList)}"/>
-							<mx:Button 
-								x="555" y="24" label="+" visible="{invoice is Estimate &amp;&amp; !job.multiQtyJob}" click="{addMultiQtyJob()}" id="button1"/>
-							<mx:Label x="385"
-									  y="49"
-									  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.OversUnders')}" textAlign="right" width="108" id="label33"/>
-									  
-							<mx:VRule x="374"
-									  bottom="5"
-									  top="5"/>
-							<mx:HRule y="296"
-									  height="2.0054946"
-									  right="5"
-									  left="380" id="hrule4"/>
-							<mx:HRule y="434"
-									  height="2.0054946"
-									  right="5"
-									  left="380" id="hrule2"/>
-							<mx:HRule y="438"
-									  height="2.0054946"
-									  right="5"
-									  left="380" id="hrule1"/>
-							<mx:HRule x="10"
-									  y="46"
-									  width="356"
-									  height="2" id="hrule3"/>
-							<mx:ViewStack x="10"
-										  y="46"
-										  id="viewstack4"
-										  width="358"
-										  height="218">
-								<mx:Canvas label="View 1"
-										   width="100%"
-										   height="100%" id="canvas3">
-									<mx:Text x="107"
-											 y="57"
-											 width="247"
-											 height="20"
-											 id="job_color"
-											 text="{job.stock.color.name}"
-											 fontSize="9"/>
-									<mx:TextInput x="107"
-												  y="167"
-												  width="100"
-												  height="20"
-												  id="number_lines"
-												  fontSize="9"
-												  tabIndex="14"
-												  mouseDown="textInputClick(event)" />
-									<mx:Label x="6"
-											  y="147"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.FoldedSize')}"
-											  fontSize="9" textAlign="right" width="94" id="label16"/>
-									<mx:Label x="6"
-											  y="125"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Finish')}"
-											  fontSize="9" textAlign="right" width="94" id="label17"/>
-									<mx:Label x="6"
-											  y="190"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}"
-											  fontSize="9" textAlign="right" width="94" id="label15"/>
-									<mx:TextInput x="107"
-												  y="189"
-												  width="100"
-												  height="20"
-												  id="job_unit_price"
-												  tabIndex="15"
-												  fontSize="9" mouseDown="textInputClick(event)" />
-									<mx:Label x="6"
-											  y="103"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RunSize')}"
-											  fontSize="9" textAlign="right" width="94" id="runsize_label"/>
-									<mx:Label x="11"
-											  y="81"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Parent')}"
-											  fontSize="9" textAlign="right" width="89" id="label13"/>
-									<mx:Label x="6"
-											  y="169"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.NumberofLines')}"
-											  fontSize="9" textAlign="right" width="94" id="label14"/>
-									<mx:TextInput x="107"
-												  y="35"
-												  width="171"
-												  height="20"
-												  id="job_stock"
-												  tabIndex="9"
-												  text="{getStockName(job.stock,preferencesStocks)}"
-												  fontSize="9" mouseDown="textInputClick(event)" />
-									<mx:Label x="6"
-											  y="37"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Stock')}"
-											  fontSize="9" width="94" textAlign="right" id="label18"/>
-									<mx:Label x="10"
-											  y="57"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Color')}"
-											  fontSize="9" textAlign="right" width="90" id="label19"/>
-									<mx:CheckBox x="10"
-												 y="6"
-												 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CustomerSuppliedStoc')}"
-												 id="customer_suppliled_stock"
-												 fontSize="9"
-												  selected="{job.customerSuppliedStock}"
-												   change="doCustomerSupplied()" click="enableStockCostFields()"/>
-									<mx:CheckBox x="218"
-												 y="7"
-												 fontSize="9" id="specialOrder"
-												  selected="{job.specialOrderStock}"
-												   change="doSpecialOrder()" click="enableStockCostFields()"/>
-									<mx:Button x="240"
-											   y="7"
-											   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.SpecialOrder')}"
-											   fontSize="9"
-											   height="18"
-											   id="special_order_button" width="108" click="{openStockDefinition()}"/>
-							<!--		<mx:Image x="215"
-											  y="81"
-											  width="139"
-											  id="cutDiagram"
-											  height="124" click="doPaperCal();" source="assets/380.png"/>
-								-->	
-									<mx:Canvas x="215"
-											   y="81"
-											   width="140"
-											   height="127"
-											   borderStyle="inset"
-											   click="doPaperCal();"
-											   id="cutDiagram">
-									</mx:Canvas>
-									<mx:HRule x="2"
-											  y="215"
-											  width="356"
-											  height="2"/>
-									<mx:Button x="286"
-											   y="35"
-											   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Change')}"
-											   fontSize="9"
-											   height="18"
-											   id="chage_stock_button"
-											   enabled="false"
-											   click="changeStockDefinition()" width="62"/>
-									<mx:ComboBox x="108" y="79" width="99" id="job_parent" tabIndex="10" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" tabIndex="11" focusIn="runSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" tabIndex="12" focusIn="finishSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" tabIndex="13" focusIn="foldedSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:Label x="-20" y="171" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.StockCost')}" width="120" textAlign="right" id="parent_cost_label"/>
-									<mx:Label x="-20" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" width="120" textAlign="right" id="per_label"/>
-									<mx:TextInput x="108" y="169" height="20" width="99" textAlign="right" id="parent_costs" focusOut="fieldChanged(event)"/>
-									<mx:TextInput x="108" y="188" height="20" width="99" textAlign="right" id="per" focusOut="fieldChanged(event)"/>
-								</mx:Canvas>
-								<mx:Canvas label="merchandise_canvas"
-										   width="100%"
-										   height="100%">
-									<mx:TextArea x="79"
-												 y="10"
-												 width="277"
-												 id="job_notes" 
-												 text="{job.jobNotes}"/>
-									<mx:Label x="-36"
-											  y="11"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Notes')}"/>
-									<mx:CheckBox x="79"
-												 y="62"
-												 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rPresetInfo.ShowNotes')}"
-												 id="check_job_notes"
-												 selected="{job.jobTicketNotes}"/>
-									<mx:TextInput x="79"
-												  y="92"
-												  width="277"
-												  height="22"
-												  id="vendor_edit" mouseDown="textInputClick(event)" />
-									<mx:Label x="-36"
-											  y="94"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Vendor')}"/>
-								</mx:Canvas>
-							</mx:ViewStack>
-							<mx:ViewStack x="10"
-										  y="263"
-										  id="estimator_viewstack"
-										  width="358"
-										  height="239">
-								<mx:Canvas id="printing_estimator_canvas"
-										   width="100%"
-										   height="100%">
-									<mx:ComboBox x="107"
-													 y="5"
-													 width="241"
-													 height="20"
-													 id="job_pricing_press"
-													 dataProvider="{presses}"
-													 labelField="name"
-													 tabIndex="16"
-													 fontSize="9" change="changePricingPress()"/>
-									<mx:Label x="10"
-											  y="7"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PricingPress')}"
-											  fontSize="9" textAlign="right" width="91" id="label20"/>
-									<mx:ComboBox x="107"
-													 y="28"
-													 width="241"
-													 height="20"
-													 id="job_costing_press"
-													 dataProvider="{costingPresses}"
-													 labelField="name"
-													 tabIndex="17"
-													 fontSize="9"/>
-									<mx:Label x="10"
-											  y="30"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CostingPress')}"
-											  fontSize="9" textAlign="right" width="91" id="label21"/>
-									<mx:Label x="6"
-											  y="96"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Back')}"
-											  fontSize="9" textAlign="right" width="34" id="label26"/>
-									<mx:Label x="5"
-											  y="73"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Front')}"
-											  fontSize="9" textAlign="right" width="35" id="label24"/>
-									<mx:Panel x="48"
-											  y="122"
-											  width="203"
-											  height="94"
-											  layout="absolute"
-											  title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RunMethod')}"
-											  dropShadowEnabled="false"
-											  fontSize="9" headerHeight="20" borderThicknessBottom="3" borderThicknessLeft="3" borderThicknessRight="3">
-										<mx:RadioButtonGroup id="run_method_radiogroup"/>
-										<mx:RadioButton x="10"
-														y="27"
-														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTurn')}"
-														groupName="run_method_radiogroup"
-														height="18"
-														value="{Constants.JOB_RUN_METHOD_WORK_TURN}" width="179" id="radiobutton1" enabled="false"/>
-										<mx:RadioButton x="10"
-														y="6"
-														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Sheetwise')}"
-														groupName="run_method_radiogroup"
-														height="18"
-														value="{Constants.JOB_RUN_METHOD_SHEETWISE}" width="177" id="radiobutton2"/>
-										<mx:RadioButton x="10"
-														y="48"
-														label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.WorkandTumble')}"
-														groupName="run_method_radiogroup"
-														height="18"
-														value="{Constants.JOB_RUN_METHOD_WORK_TUMBLE}" width="169" id="radiobutton3" enabled="false"/>
-									</mx:Panel>
-									<mx:Label x="48"
-											  y="54"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Colors')}"
-											  width="46"
-											  textAlign="center"
-											  fontSize="9" id="label22"/>
-									<mx:Label x="96"
-											  y="54"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Passes')}"
-											  width="46"
-											  textAlign="center"
-											  fontSize="9" id="label23"/>
-									<mx:Label x="144"
-											  y="54"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Washes')}"
-											  width="46"
-											  textAlign="center"
-											  fontSize="9" id="label25"/>
-									<mx:Label x="192"
-											  y="54"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Ink')}"
-											  width="156"
-											  textAlign="center"
-											  fontSize="9" id="label27"/>
-									<mx:TextInput x="48"
-												  y="71"
-												  width="46"
-												  height="20"
-												  id="front_colors_text"
-												  fontSize="9" textAlign="center"
-												  tabIndex="18"
-												  text="{job.frontColors}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
-									<mx:TextInput x="96"
-												  y="71"
-												  width="46"
-												  height="20"
-												  id="front_passes_text"
-												  fontSize="9" textAlign="center"
-												  tabIndex="19"
-												  text="{job.frontPasses}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
-									<mx:TextInput x="96"
-												  y="94"
-												  width="46"
-												  height="20"
-												  id="back_passes_text"
-												  tabIndex="23"
-												  fontSize="9" textAlign="center"
-												  text="{job.backPasses}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
-									<mx:TextInput x="144"
-												  y="71"
-												  width="46"
-												  height="20"
-												  id="front_washes_text"
-												  fontSize="9" textAlign="center"
-												  tabIndex="20"
-												  text="{job.frontWashes}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
-									<mx:List x="192"
-												  y="71"
-												  width="156"
-												  height="20"
-												  id="front_inks_text"
-												  fontSize="9" textAlign="center"
-												  tabIndex="21"
-												   dataProvider="{job.frontInks}"
-												    labelField="name" click="doInkEditorFront();" wordWrap="true"/>
-									<mx:List x="192"
-												  y="94"
-												  width="156"
-												  height="20"
-												  id="back_inks_text"
-												  tabIndex="25"
-												  fontSize="9" textAlign="center"
-												   dataProvider="{job.backInks}"
-												    labelField="name" click="doInkEditorBack();"/>
-									<mx:TextInput x="144"
-												  y="94"
-												  width="46"
-												  height="20"
-												  id="back_washes_text"
-												  tabIndex="24"
-												  fontSize="9" textAlign="center"
-												  text="{job.backWashes}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
-									<mx:TextInput x="48"
-												  y="94"
-												  width="46"
-												  height="20"
-												  id="back_colors_text"
-												  tabIndex="22"
-												  fontSize="9" textAlign="center"
-												  text="{job.backColors}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
-								</mx:Canvas>
-								<mx:Canvas id="copy_estimator_canvas" label="Copiers" width="100%" height="100%">
-									<mx:ComboBox x="107"
-													 y="5"
-													 width="241"
-													 height="20"
-													 id="job_pricing_copier"
-													 dataProvider="{copiers}"
-													 labelField="name"
-													 change="changePricingCopier()"
-													 tabIndex="16"
-													 fontSize="9"/>
-									<mx:Label x="10"
-											  y="7"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.PricingCopier')}"
-											  fontSize="9" width="90" textAlign="right"/>
-									<mx:ComboBox x="107"
-													 y="28"
-													 width="241"
-													 height="20"
-													 id="job_costing_copier"
-													 dataProvider="{costingCopiers}"
-													 labelField="name"
-													 tabIndex="17"
-													 fontSize="9"/>
-									<mx:Label x="10"
-											  y="30"
-											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.CostingCopier')}"
-											  fontSize="9" width="90" textAlign="right"/>
-									<mx:RadioButtonGroup id="copierSides"/>
-									<mx:RadioButton x="107" y="58" click="changeJobSides(event)" id="copy_single_radio" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.SingleSided')}" groupName="copierSides" fontSize="9"/>
-									<mx:RadioButton x="107" y="78" click="changeJobSides(event)" id="copy_double_radio" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.DoubleSided')}" groupName="copierSides" fontSize="9"/>
-								</mx:Canvas>
-							</mx:ViewStack>
-							<components:SmallThrobber visible="false" id="pricing_throbber" x="599" y="301" height="20" width="20"/>
-							<mx:LinkButton x="596" y="301" width="20" id="refresh_price_btn" height="20" click="updatePrice()">
-								<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
-							</mx:LinkButton>
-							<mx:LinkButton x="618" y="301" width="20" id="price_info_btn" height="20" click="showJobPricingInfo()" visible="false">
-								<mx:icon>@Embed(source='../../../../assets/help_small.png')</mx:icon>
-							</mx:LinkButton>
-							
-						
-						</mx:Canvas>
-					</mx:ViewStack>
-				</mx:HDividedBox>
-			</mx:Canvas>
-			<mx:LinkButton x="155.5"
-					   y="10"
-					   width="38"
-					   height="38"
-					   click="deleteJob();"
-					   id="delete_job_button">
-				<mx:icon>@Embed(source='../../../../assets/notes.png')</mx:icon>
-			</mx:LinkButton>
-			<mx:Label x="144"
-					  y="46"
-					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.DeleteJob')}"
-					  width="61"
-					  textAlign="center"/>
 			<!--<mx:LinkButton x="629"
 					   y="10"
 					   width="38"

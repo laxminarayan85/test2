@@ -933,8 +933,11 @@
 				
 				if (invoice.jobs.contains(deletedJob)) {
 					invoice.jobs.removeItemAt(invoice.jobs.getItemIndex(deletedJob));
+					invoice_job_grid.invalidateDisplayList();
+					invoice_job_grid.invalidateList();
+					resetJobsList = true;
+					updateTotals();
 				}
-				updateTotals();
 				this.showJobs();
 				
 				if (this.deletedJobs == null) {
@@ -993,7 +996,7 @@
 					for each(var jobBaseObject:JobBase in target.invoiceMultiQtyJobList){
 						jobList.addItem(jobBaseObject);
 					}
-					for each(var jobBaseObject:JobBase in target.multiQtyJobList){
+					for each(jobBaseObject in target.multiQtyJobList){
 						jobList.addItem(jobBaseObject);
 					}
 					invoice.jobs = jobList;
