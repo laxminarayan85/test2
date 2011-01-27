@@ -1300,7 +1300,8 @@
 						} 
 					}
 				}
-				editJobWindow.setJob(job);
+				registerClassAlias("com.efi.printsmith.data.Job",Job);
+				editJobWindow.setJob(ObjectUtil.copy(job) as Job);
 				editJobWindow.invoiceMultiQtyJobList = multiQtyJobList;
 				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveJob);
 				editJobWindow.addEventListener(JobEditCompleteEvent.DELETE, deleteJob);
