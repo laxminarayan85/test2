@@ -1281,7 +1281,7 @@
 						}
 						trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
 						trackerConsoleStopWindow.productionLocations = productionLocationArray;
-						trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;
+						trackerConsoleStopWindow.setTrackerConsoleJobs(trackerConsoleJobsStopBean);
 						trackerConsoleStopWindow.addEventListener(TrackerConsoleStopEvent.STOP_JOB_EVENT,function(event:TrackerConsoleStopEvent):void {
 							if(event.isStop){
 								copyFromStopWindow(event.trackerConsoleJobs,selectedTrackerConsoleJob);
@@ -1566,7 +1566,7 @@
 							}
 							trackerConsoleStopWindow.exceptionsArray = exceptionsArray;
 							trackerConsoleStopWindow.productionLocations = productionLocationArray;
-							trackerConsoleStopWindow.trackerConsoleJobs = trackerConsoleJobsStopBean;
+							trackerConsoleStopWindow.setTrackerConsoleJobs(trackerConsoleJobsStopBean);
 							trackerConsoleStopWindow.addEventListener(TrackerConsoleStopEvent.STOP_JOB_EVENT,function(event:TrackerConsoleStopEvent):void {
 								if(event.isStop){
 									copyFromStopWindow(event.trackerConsoleJobs,selectedTrackerConsoleJob);
@@ -2000,10 +2000,8 @@
 		private function getSpoilage(object:TrackerConsoleJobs):Number {
 			var spoilage:Number = 0;
 			if(object.job!=null){
-				if(object.job.costingRecord!=null){
-					if(!isNaN(object.job.costingRecord.actualSpoilage)){
-						spoilage = object.job.costingRecord.actualSpoilage;
-					}
+				if(!isNaN(object.job.estWaste)){
+					spoilage = object.job.estWaste;
 				}
 			} else if(object.charge!=null) {
 				if(object.charge.chargeCostingRecord!=null){

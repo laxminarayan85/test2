@@ -3,12 +3,22 @@
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.StopTrackerStep')}"
 	creationComplete="{initDetailsWindow()}" showCloseButton="true" close="{cancel()}" xmlns:components="com.efi.printsmith.common.components.*" xmlns:tracker="com.efi.printsmith.components.tracker.*">
 	
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getJob" fault="handleFault(event)" result="handleLoadJobResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script source="../common/scripts/ComponentHelper.as"/>
 	
 	<mx:Script source="../util/tracker/TrackerUtil.as"/>
 	
 	<mx:Script>
 		<![CDATA[
+			import flash.net.registerClassAlias;
+			import mx.utils.ObjectUtil;
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import com.efi.printsmith.events.PriceJobEvent;
 			import mx.collections.ArrayCollection;
 			import com.efi.printsmith.events.TrackerConsoleStopEvent;
 			import com.efi.printsmith.data.TrackerConsolePasses;
@@ -17,8 +27,9 @@
 			import com.efi.printsmith.data.Charge;
 			import com.efi.printsmith.data.Job;
 			import com.efi.printsmith.data.TrackerConsoleJobs;
+			import mx.rpc.Responder;
 			
-			[Bindable] public var trackerConsoleJobs:TrackerConsoleJobs;
+			[Bindable] private var trackerConsoleJobs:TrackerConsoleJobs;
 			
 			[Bindable] public var nowDate:Date = new Date();
 			
@@ -26,8 +37,79 @@
 			
 			[Bindable] public var productionLocations:ArrayCollection = new ArrayCollection();
 			
+			[Bindable] public var job:Job;
+			
+			[Bindable] private var okBtnEnabled:Boolean = false;
+			
 			private function initDetailsWindow():void {
 				PopUpManager.centerPopUp(this);
+			}
+			
+			public function setTrackerConsoleJobs(trackerConsoleJobsObj:TrackerConsoleJobs):void {
+				registerClassAlias("com.efi.printsmith.data.TrackerConsoleJobs",TrackerConsoleJobs);
+				trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobsObj) as TrackerConsoleJobs;
+				if(trackerConsoleJobs.job!=null) {
+					dataService.getJob(trackerConsoleJobs.job.id);
+				}
+			}
+			
+			private function updateCosting():void {
+				if(trackerConsoleJobs!=null) {
+					job.qtyOrdered = trackerConsoleJobs.impressions;
+					if (trackerConsoleJobs.spoilage > 0) {		
+						job.orWaste = true;
+						job.estWasteOverride = true;
+						job.estWaste = job.estWaste + trackerConsoleJobs.spoilage;
+					}
+					
+					if ((trackerConsoleJobs.totalSetUpTime/(60*1000)) != job.setupTime) {		// compare in MINUTES
+						job.orSetupTime = true;
+						job.setupTime = trackerConsoleJobs.totalSetUpTime/(60*1000);
+					}
+					
+					if ((trackerConsoleJobs.totalRunTime/(60*1000)) != job.runTime) {		// compare in MINUTES
+						job.orRuntime = true;
+						job.runTime = trackerConsoleJobs.totalRunTime/(60*1000);
+					}
+							
+					if ((trackerConsoleJobs.totalWashUpTime/(60*1000)) != job.washupTime) {		// compare in MINUTES
+						job.orWashupTime = true;
+						job.washupTime = trackerConsoleJobs.totalWashUpTime/(60*1000);
+					}
+					updatePrice();
+				}
+			}
+			
+			private function handleLoadJobResult(event:ResultEvent):void {
+				this.job = event.result as Job;
+				updateCosting();
+			}
+			
+			private function handleFault(ev:FaultEvent):void
+			{
+				var message:String;
+				message="Error: " + ev.fault.faultCode + " - " + ev.fault.faultDetail + " - " + ev.fault.faultString;
+				Alert.show(message, "Error", 0, null);
+			}
+
+			
+			private function updatePrice():void
+			{	
+				var priceJobEvent:PriceJobEvent = new PriceJobEvent(this.job, new mx.rpc.Responder(handlePriceJobComplete, handlePriceJobFault));
+				priceJobEvent.dispatch();
+			}
+			
+			private function handlePriceJobComplete(event:ResultEvent):void {
+				job = event.result as Job;
+				okBtnEnabled = true;
+			}
+			
+			private function handlePriceJobFault(event:FaultEvent):void {
+				if (event != null && event.fault != null && event.fault.faultString != null) {				
+					Alert.show(event.fault.faultString, "Error in Pricing", 0, null);
+				} else {
+					Alert.show("Unknown error when pricing job", "Error in Pricing", 0, null);
+				}
 			}
 			
 			private function cancel():void {
@@ -271,10 +353,8 @@
 				}
 				if(flag==0){
 					if(object.job!=null){
-						if(object.job.costingRecord!=null){
-							if(!isNaN(object.job.costingRecord.actualSpoilage)){
-								spoilage = object.job.costingRecord.actualSpoilage;
-							}
+						if(!isNaN(object.job.estWaste)){
+							spoilage = object.job.estWaste;
 						}
 					} else if(object.charge!=null) {
 						if(object.charge.chargeCostingRecord!=null){
@@ -641,7 +721,7 @@
 				<mx:Spacer width="10%"/>
 				<components:CustomNumericTextInputComponent width="30%"
 					dataHolder="{trackerConsoleJobs}" variableName="impressions" customText="{getJobImpressions(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.impressions)}" 
-					enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+					enabled="{job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
 					allowNegative="true" precision="0" rounding="nearest" isInteger="true" textAlignStyle="left"
 					focusOut="{setImpressionsValue()}"/>
 			</mx:HBox>
@@ -654,7 +734,7 @@
 				<mx:Spacer width="10%"/>
 				<components:CustomNumericTextInputComponent width="30%"
 					dataHolder="{trackerConsoleJobs}" variableName="spoilage" customText="{getJobSpoilage(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.spoilage)}" 
-					enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+					enabled="{job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
 					allowNegative="false" precision="0" rounding="nearest" isInteger="true" textAlignStyle="left" focusIn="{trackerConsoleJobs.initialSpoilageValue=trackerConsoleJobs.spoilage}"
 					focusOut="{resetCalcValues()}"/>
 			</mx:HBox>
@@ -708,7 +788,7 @@
 					<components:CustomNumericTextInputComponent width="50%"
 						dataHolder="{trackerConsoleJobs}" variableName="startSpoilage" customText="{getStartSpoilage(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.startSpoilage)}"
 						precision="0" rounding="nearest" allowNegative="true" textAlignStyle="right"
-						enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+						enabled="{job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
 						focusOut="{setSpoilageValue('start')}"/>
 					
 				</mx:HBox>
@@ -720,7 +800,7 @@
 					<components:CustomNumericTextInputComponent width="50%"
 						dataHolder="{trackerConsoleJobs}" variableName="endSpoilage" customText="{getEndSpoilage(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.endSpoilage)}"
 						precision="0" rounding="nearest" allowNegative="true" textAlignStyle="right"
-						enabled="{trackerConsoleJobs.job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
+						enabled="{job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
 						focusOut="{setSpoilageValue('end')}"/>
 					
 				</mx:HBox>
@@ -767,7 +847,7 @@
 		selectedValue="true" deSelectedValue="false" defaultValue="false"/>
 	
 	<mx:HBox width="100%" horizontalAlign="center">
-		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{stopJob()}"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{stopJob()}" enabled="{okBtnEnabled}"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{cancelStopJob()}"/>
 	</mx:HBox>
 </mx:TitleWindow>
