@@ -1166,7 +1166,8 @@ public class PreferencesMapper extends ImportMapper {
 				hexDecimalValue = Integer.toHexString(Utilities.tokenToInt(value)/256);
 				preferencesPOS.setEstimateColor(preferencesPOS.getEstimateColor()+(hexDecimalValue.length()==1?"0"+hexDecimalValue:hexDecimalValue));
 			}
-		}
+		} else if (name.equals("hideTax_australia"))
+			preferencesPOS.setHideTaxLines(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesPOS);
 	}
 	private void importPreferencesEstimatingField(String key, String name, String value) throws Exception {
