@@ -399,7 +399,15 @@
 	}
 	
 	private function handleLoadTaxTableResult(ev:ResultEvent):void {
+		var i:int;
+		var temp:TaxTable = new TaxTable();
 	     TaxTableArray = ev.result as ArrayCollection;
+	     for(i = 0; i< TaxTableArray.length; i++) {
+	     	temp = TaxTableArray.getItemAt(i) as TaxTable;
+	     	if ( temp.defaultTable)
+	    	 	pickTaxTable.selectedIndex = i
+	     }
+	    	  
 	}
 	private function handleLoadTaxCodesResult(ev:ResultEvent):void {
 	     TaxCodesArray = ev.result as ArrayCollection;

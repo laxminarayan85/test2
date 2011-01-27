@@ -1934,12 +1934,15 @@
 	
 	
 	private function doMetric():void{
-	 
+		var index:int
+	 index = findItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Millimeters'), stockUom);
 		if ( chkIsMetric.selected){
 			Basicsize.text = ""
 			label5.visible = false;
 			weight_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.GSM');
-			cboUom.selectedIndex = findItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns'), stockUom);
+			
+			if ( cboUom.selectedIndex != index)
+				cboUom.selectedIndex = findItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns'), stockUom);
 			ConvertThickness();
 			cboUom.enabled = false;
 			if (this.currentState =="SheetStock")
@@ -1958,7 +1961,8 @@
 			weight_label.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Weight');
 			if ( stockDefinitions.stktype != null && stockDefinitions.stktype.size!=null)
 				Basicsize.text = stockDefinitions.stktype.size.name
-			cboUom.selectedIndex = findItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns'),stockUom)
+			if ( cboUom.selectedIndex != index)
+				cboUom.selectedIndex = findItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_303.Microns'), stockUom);
 			cboUom.enabled = true;
 			if (this.currentState=="RollStock")
 				Costunits.enabled = false;
