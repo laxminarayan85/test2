@@ -2035,7 +2035,7 @@
 			public function setJob(job2:Job):void
 			{
 				this.job=job2;
-				
+				this.charges = this.job.charges;
 				loadData();
 				mapFromJobData();
 				this.invoice = job.parentInvoice;
