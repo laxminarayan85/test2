@@ -339,6 +339,7 @@
 	import com.efi.printsmith.data.StockForest;
 	import com.efi.printsmith.data.Vendor;
 	import com.efi.printsmith.data.Dimension;
+	import com.efi.printsmith.data.StockChange
 		
 	import com.efi.printsmith.data.PriceList;
 	import com.efi.printsmith.data.PaperPrice;
@@ -1330,7 +1331,7 @@
 	}
 	
 	 private function handleSaveStockChangesResult(ev:ResultEvent):void {
-    	stockDefinitions.stockChanges.addItem(ev.result as StockChanges);
+    	stockDefinitions.stockChanges.addItem(ev.result as StockChange);
     	dataService.addUpdate(stockDefinitions);
 		standardItemCheckEvent();
     	
@@ -1696,7 +1697,7 @@
 	 	var percentvalue:String;
 	 	var index:int;
 	 	var dif:int;
-	 	var manualStock:StockChanges
+	 	var manualStock:StockChange
 	 	
 	 //combobox and select box values
 	 
@@ -1876,7 +1877,7 @@
 			}
 		if ( stockDefinitions.onHand < parseInt(OnHand.text.replace(",",""))){
 			dif = parseInt(OnHand.text.replace(",","")) - stockDefinitions.onHand;
-			manualStock = new StockChanges();
+			manualStock = new StockChange();
 			manualStock.stockChangeDate = new Date();
 			manualStock.howChanged = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStockInvReasonText.Manuallychanged')
 			manualStock.pSUser = Snowmass.getInstance().currentUser.name;
@@ -1886,7 +1887,7 @@
 			}
 		else if ( stockDefinitions.onHand > parseInt(OnHand.text.replace(",",""))){
 			dif = stockDefinitions.onHand - parseInt(OnHand.text.replace(",",""))
-			manualStock = new StockChanges();
+			manualStock = new StockChange();
 			manualStock.stockChangeDate = new Date();
 			manualStock.howChanged = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStockInvReasonText.Manuallychanged')
 			manualStock.pSUser = Snowmass.getInstance().currentUser.name;
