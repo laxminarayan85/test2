@@ -1047,9 +1047,11 @@
 			this.colorcheck.enabled = true;
 			this.blackwhitecheck.enabled = true;
 		}
-		if (pricing_method_combo.selectedIndex != -1){
-			pricing_method_combo.selectedIndex = findItemArray(pricing_method_combo.selectedItem.toString(), methodType.toArray());
-		} else {
+		//if (pricing_method_combo.selectedIndex != -1){
+		//	pricing_method_combo.selectedIndex = findItemArray(pricing_method_combo.selectedItem.toString(), methodType.toArray());
+		//} else {
+		if (pricing_method_combo.selectedIndex == -1)
+		{
 			pricing_method_combo.selectedIndex = findItemArray(copierDefinition.method, methodType.toArray());
 		}
 		updateControlState();
