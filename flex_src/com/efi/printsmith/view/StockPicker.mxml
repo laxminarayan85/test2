@@ -27,7 +27,7 @@
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAllNameIDOnly" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="getStockPicker" fault="handleFault(event)" result="handleLoadResult(event)"/>
-		<mx:method name="getStockDefinition" fault="handleFault(event)" result="handleGetResult(event)"/>
+		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadItemsResult(event)"/>
 		
@@ -165,6 +165,16 @@
 		this.chkShowLargeFormatStock.enabled = false;
 		this.chkShowRigidSubstrate.enabled = false;
 		this.chkShowRollStock.enabled = false;
+		this.search();
+	}
+	
+	public function setRollFedOnly() {
+		this.chkShowLargeFormatStock.selected = false;
+		this.chkShowRigidSubstrate.selected = false;
+		this.chkShowLargeFormatStock.enabled = false;
+		this.chkShowRigidSubstrate.enabled = false;
+		this.chkShowRollStock.enabled = false;
+		this.chkShowRollStock.selected = true;
 		this.search();
 	}
 

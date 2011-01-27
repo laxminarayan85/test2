@@ -94,14 +94,13 @@ public class PriceJobEngine {
 			} else {
 				printPricingMethod.pricePrintJob(job);
 			}
-		} else if (pricingMethod.getMethod().equals("Roll-Fed")) {
-			LargeFormatPricingMethod largeFormatPricingMethod = LargeFormatPricingMethodFactory
-					.createLargeFormatPricingMethod(job.getPricingCopier()
-							.getMethod());
-			if (largeFormatPricingMethod == null) {
-				log.error("No pricing Method found for Copier");
+		} else if (pricingMethod.getMethod().equals("Roll Fed")) {
+			PrintPricingMethod printPricingMethod = PrintPricingMethodFactory
+					.createPrintPricingMethod();
+			if (printPricingMethod == null) {
+				log.error("No pricing Method found for Printing");
 			} else {
-				largeFormatPricingMethod.priceLargeFormatJob(job);
+				printPricingMethod.pricePrintJob(job);
 			}
 		} else if (pricingMethod.getMethod().equals("Large Format")) {
 			LargeFormatPricingMethod largeFormatPricingMethod = LargeFormatPricingMethodFactory

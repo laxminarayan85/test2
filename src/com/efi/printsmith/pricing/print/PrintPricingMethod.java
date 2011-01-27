@@ -23,8 +23,11 @@ public class PrintPricingMethod {
 		PressDefinition pressDefinition = job.getPricingPress();
 		PriceStockEngine priceStockEngine = new PriceStockEngine();
 		StockCostEngine stockCost = new StockCostEngine();
-		job = stockCost.calculateStockCost(job);
-		double stockPrice = priceStockEngine.priceStock(job);
+		double stockPrice = 0.0;
+		if (job.getPricingMethod().getTitle().equals("Printing")) {
+			job = stockCost.calculateStockCost(job);
+			stockPrice = priceStockEngine.priceStock(job);
+		}
 		double pressPrice = 0.0;
 		BigDecimal pressSpeed;
 		if (pressDefinition.getSpeedTable() != null) {

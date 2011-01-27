@@ -520,6 +520,26 @@
 			<mx:RemoveChild target="{specialOrder}"/>
 			<mx:RemoveChild target="{special_order_button}"/>
 		</mx:State>
+		<mx:State name="Rollfed" basedOn="PrintMethod">
+			<mx:RemoveChild target="{label13}"/>
+			<mx:RemoveChild target="{runsize_label}"/>
+			<mx:RemoveChild target="{job_size}"/>
+			<mx:RemoveChild target="{job_parent}"/>
+			<mx:SetProperty target="{front_passes_text}" name="enabled" value="true"/>
+			<mx:SetProperty target="{back_passes_text}" name="enabled" value="true"/>
+			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
+				<mx:Label x="13" y="79" width="86" id="rollWidth_label0" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RollWidth')}" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
+				<mx:Label x="9" y="103" width="91" id="cutoff_label0" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Cutoff')}" textAlign="right"/>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
+				<mx:TextInput x="106" y="102" width="100" height="20" id="cutOff_edit0"  text="{job.cutOff}" mouseDown="textInputClick(event)" />
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
+				<mx:TextInput x="107" y="77" width="100" height="20" id="roll_width0"  text="{job.rollWidth}" mouseDown="textInputClick(event)" />
+			</mx:AddChild>
+		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="prefStocksDataService"
 					 destination="dataService">
@@ -2119,11 +2139,16 @@
 				if (cutOff_edit != null)
 					job.cutOff= parseInt(cutOff_edit.text);
 
-				if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed") {
+				if (this.job_type.text == "Large Format" || job_type.text == "Roll Fed") {
 					if (job.parentSize == null)
 						job.parentSize = new Dimension;
-					job.parentSize.name = this.roll_width.text;
-					job.parentSize.width = parseInt(this.roll_width.text);
+					if (this.job_type.text == "Large Format") {
+						job.parentSize.name = this.roll_width.text;
+						job.parentSize.width = parseInt(this.roll_width.text);
+					} else {
+						job.parentSize.name = this.roll_width0.text;
+						job.parentSize.width = parseInt(this.roll_width0.text);
+					}
 					job.parentSize.height = job.cutOff;
 				}
 				else {
@@ -2139,7 +2164,7 @@
 					}
 				}
 
-				if (this.job_type.text == "Large Format" || job_type.text == "Roll-Fed") {
+				if (this.job_type.text == "Large Format" || job_type.text == "Roll Fed") {
 					if ( job.runSize != null) {
 						job.runSize.height = job.cutOff;
 						job.runSize.width = job.parentSize.width;
@@ -2666,6 +2691,8 @@
 			   	}
 				if (this.currentState == "LargeFormat")
 					stockPickerWindow.setLargeFormatOnly();
+				if (this.job_type.text == "Roll Fed")
+					stockPickerWindow.setRollFedOnly();
 				stockPickerWindow.parentWindowId = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
 				stockPickerWindow.addEventListener(StockPickerSelectEvent.CANCELSELECTSTOCK, handleStockPickerCancel, false, 0, true);
 				stockPickerWindow.addEventListener(StockPickerSelectEvent.SELECTSTOCK, handleStockPickerSelect, false, 0, true);
@@ -2746,16 +2773,26 @@
 					if (this.job_type.text == "Large Format" && stockDefinitionObj.stockunit == 4)
 							this.currentState = "CopyMethod";
 //					this.job.stock=evt.stockDefinition;
-					if ((this.job_type.text == "Large Format" && stockDefinitionObj.stockunit != 4) || job_type.text == "Roll-Fed") {
+					if ((this.job_type.text == "Large Format" && stockDefinitionObj.stockunit != 4) || job_type.text == "Roll Fed") {
 						var cutoff:Number;
 						if (estimatingPreferences != null)
 							cutoff = estimatingPreferences.defaultPressCuttOff;
 						else
 							cutoff = 0;
-						this.job.rollWidth = stockDefinitionObj.parentsize.width;
-						this.roll_width.text = job.rollWidth.toString();
-						this.job.cutOff = cutoff;
-						this.cutOff_edit.text = cutoff.toString();
+						if (this.job_type.text == "Large Format") {
+							this.job.rollWidth = stockDefinitionObj.parentsize.width;
+							this.roll_width.text = job.rollWidth.toString();
+						} else {
+							this.job.rollWidth = stockDefinitionObj.parentsize.width;
+							this.roll_width0.text = job.rollWidth.toString();
+						}
+						if (this.job_type.text == "Large Format") {
+							this.job.cutOff = cutoff;
+							this.cutOff_edit.text = cutoff.toString();
+						} else {
+							this.job.cutOff = cutoff;
+							this.cutOff_edit0.text = cutoff.toString();
+						}
 						if (job.finishSize == null)
 							job.finishSize = new Dimension();
 						this.job.finishSize.name = stockDefinitionObj.parentsize.name + " x " + cutoff.toString();
@@ -3577,13 +3614,20 @@
 							this.job_costing_press.text = "Using Pricing Copier/Press";
 						}
 					}
-				} else if (pricingMethod.title == "Roll-Fed") {
-					this.currentState = "LargeFormat";
+				} else if (pricingMethod.title == "Roll Fed") {
+					this.currentState = "Rollfed";
 					estimator_viewstack.selectedChild = printing_estimator_canvas;
+					costingPresses.filterFunction = filterRollFedCostingPresses;
+					costingPresses.refresh();
+					this.front_passes_text.enabled = false;
+					this.back_passes_text.enabled = false;
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultRollFedPress != null) {
 						if (preferencesDefaultPresses.defaultRollFedPress != null) {
 							this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);
 							this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);
+							if (this.job_costing_press.selectedIndex == -1) {
+								this.job_costing_press.text = "Using Pricing Copier/Press";
+							}
 						}
 					}
 				} else if (pricingMethod.title == "B&W") {
@@ -3731,6 +3775,10 @@
 			
 			public function filterCostingPresses(item:PressDefinition):Boolean {
 				return item.costingPress == true;
+			}
+			
+			public function filterRollFedCostingPresses(item:PressDefinition):Boolean {
+				return item.costingPress == true && item.rollFed == true;
 			}
 			
 			private function updateWeight():void{
@@ -4146,6 +4194,7 @@
 			private function formatChargePrice(item:Object, column:DataGridColumn):String {
 				return this.numberFormatter.format(item.price);
 			}
+			
 			private function openStockDefinition():void {
 				var stockDefinitionsWindow:StockDefinitions = new StockDefinitions();
 				var stockDefinitionsObj:StockDefinition = new StockDefinition();
@@ -4212,9 +4261,9 @@
 				multiQtyViewWindow.multiQtyJob = this.job;
 			}
 			
-			public function openEstimatorCheckList():void {
+			private function openEstimatorCheckList():void {
 				mapToJobData();
-				var estimatorCheckList:EstimatorCheckList = PopUpManager.createPopUp(this,EstimatorCheckList,false) as EstimatorCheckList;
+				var estimatorCheckList:EstimatorCheckList = PopUpManager.createPopUp(this,EstimatorCheckList,true) as EstimatorCheckList;
 				estimatorCheckList.preferencesStocks = preferencesStocks;
 				estimatorCheckList.setJob(this.job);
 			}

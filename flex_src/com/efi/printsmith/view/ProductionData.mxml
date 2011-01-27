@@ -237,7 +237,7 @@ width="938" height="507"  creationComplete="init()"
 			this.labor_price.text = job.pricingRecord.laborTotalPrice.toFixed(2);
 			this.labor_markup.text = (job.pricingRecord.laborTotalPrice - job.pricingRecord.laborCost).toFixed(2);
 			this.parent_costs.text = job.parentStockCost.toFixed(2);
-		} else if (job.pricingMethod.title == "Printing" || job.pricingMethod.method == "Large Format" || job.pricingMethod.method == "B&W" || job.pricingMethod.method == "Color") {
+		} else if (job.pricingMethod.title == "Printing" || job.pricingMethod.title == "Roll Fed" || job.pricingMethod.method == "Large Format" || job.pricingMethod.method == "B&W" || job.pricingMethod.method == "Color") {
 			this.parent_size.selectedIndex = findItem(job.parentSize.name,this.dimensionsArray);
 			this.run_size.selectedIndex = findItem(job.runSize.name,this.dimensionsArray);
 			this.production_run.text = job.totalImpressions.toString();
