@@ -30,7 +30,7 @@
 		<mx:method name="getById" fault="handleFault(event)" result="handleGetResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadItemsResult(event)"/>
-		
+		<mx:method name="getStockDefinition" fault="handleFault(event)" result="handleGetResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:RemoteObject id="dataServiceSystem" destination="dataService">
