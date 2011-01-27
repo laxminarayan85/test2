@@ -192,20 +192,8 @@ public abstract class CopierPricingMethod {
 		
 		if (copierDefinition == null) return;
 		if (copierDefinition != null && job.getOrRuntime() == false) {
-			if (job.getPricingMethod().getMethod() == "Large Format") {
-				long area = 0;
-				try {
-					if (copierDefinition.getSquareAreaType().equals("AreaFinishSize"))
-						area = PriceListUtilities.getAreaFromSizeString(job
-								.getFinishSize());
-					else
-						area = new Double(job.getRollWidth() * job.getCutOff())
-								.longValue();
-				} catch (Exception e) {
-
-				}
-				area = area * job.getTotalCopies();
-				job.setRunTime(new Double(area / copierDefinition.getCopyMinutes()));
+			if (job.getPricingMethod().getMethod().equals("Large Format")) {
+				job.setRunTime(new Double((job.getCutOff() * job.getTotalCopies()) / copierDefinition.getCopyMinutes()));
 			}
 			else
 				job.setRunTime(new Double(job.getTotalCopies().doubleValue() / copierDefinition.getCopyMinutes()));
