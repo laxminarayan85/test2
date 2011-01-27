@@ -1305,6 +1305,8 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setNumberOfDaysBeforeDue(Utilities.tokenToInt(value));
 		else if (name.equals("StockPicker_twoStageClearSearch"))
 			preferencesEstimating.setTwoStageClearSearch(Utilities.tokenToBooleanValue(value));
+		else if (name.equals("forceHistroyViewToThisYear"))
+			preferencesEstimating.setDefaultHistoryView(Utilities.tokenToBooleanValue(value));
 		dataService.addUpdate(preferencesEstimating);
 	}
 	
