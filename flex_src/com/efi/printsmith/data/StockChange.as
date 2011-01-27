@@ -3,14 +3,14 @@ package com.efi.printsmith.data
 	import mx.collections.ArrayCollection; 
 	import com.efi.printsmith.data.*;
 	
-	[RemoteClass(alias="com.efi.printsmith.data.StockChanges")]
+	[RemoteClass(alias="com.efi.printsmith.data.StockChange")]
 	[Managed]
 	
-	public dynamic class StockChanges extends ModelBase
+	public dynamic class StockChange extends ModelBase
 	{
 
-		public function StockChanges() {
-			remoteObjectName = "com.efi.printsmith.data.StockChanges";
+		public function StockChange() {
+			remoteObjectName = "com.efi.printsmith.data.StockChange";
 		}
 		public var isDeleted:Boolean=false;
 				
