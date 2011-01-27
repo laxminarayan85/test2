@@ -76,7 +76,7 @@
 		<mx:SetProperty name="height" value="490"/>
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:ByCopyDoubleMatrix id="copies_and_originals_two_sides_editor" x="2" y="-11" matrix="{paperPrice}">
+			<mtrx:ByCopyDoubleMatrix id="copies_and_originals_two_sides_editor" x="2" y="-11" matrix="{matrix}">
 			</mtrx:ByCopyDoubleMatrix>
 		</mx:AddChild>
 		<mx:SetProperty target="{canvas1}" name="width" value="1202"/>
