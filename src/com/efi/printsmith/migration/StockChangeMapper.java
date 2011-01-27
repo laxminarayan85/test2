@@ -3,7 +3,7 @@ package com.efi.printsmith.migration;
 
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.StockDefinition;
-import com.efi.printsmith.data.StockChanges;
+import com.efi.printsmith.data.StockChange;
 import com.efi.printsmith.service.DataService;
 
 import java.io.File;
@@ -19,7 +19,7 @@ public class StockChangeMapper extends ImportMapper {
 	}
 	public ModelBase importTokens(String[] fieldTokens, String[] importTokens) throws Exception {
 		log.info("Entering StockChangeMapper->importTokens");
-		StockChanges stockChanges = new StockChanges();
+		StockChange stockChanges = new StockChange();
 		DataService dataService = new DataService();
 		StockDefinition stocktemp = null;
 		StockDefinition stockDefinition = null;
@@ -85,7 +85,7 @@ public class StockChangeMapper extends ImportMapper {
 				/* TODO */
 			}
 		}
-		stockChanges = (StockChanges)dataService.addUpdate(stockChanges);
+		stockChanges = (StockChange)dataService.addUpdate(stockChanges);
 		stockChanges.setId(stockChanges.getId());
 		if (stockDefinition != null) {
 			stockDefinition.addStockChanges(stockChanges);

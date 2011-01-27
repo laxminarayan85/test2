@@ -325,7 +325,7 @@
 	import com.efi.printsmith.data.PressDefinition;
 	import com.efi.printsmith.data.StockDefinition;
 	import com.efi.printsmith.data.CopierDefinition;
-	import com.efi.printsmith.data.StockChanges;
+	import com.efi.printsmith.data.StockChange;
 	import com.efi.printsmith.data.Account;
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.data.PreferencesDefaultPresses;

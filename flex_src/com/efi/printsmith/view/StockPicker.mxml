@@ -54,6 +54,7 @@
 <mx:Script>
                                    
 <![CDATA[
+	import com.efi.printsmith.data.StockChange;
 	import com.efi.printsmith.data.PreferencesEstimating;
 	import com.efi.mdi.view.window.MDIWindow;
 	import com.efi.printsmith.events.SpecialOrderStockDefEvent;
@@ -287,6 +288,14 @@
 	private function handleGetResult(ev:ResultEvent):void {
 		var stockDef:StockDefinition;
 		stockDef = ev.result as StockDefinition;
+		
+		if (stockDef.stockChanges != null) {
+			for (var i:int=0; i<stockDef.stockChanges.length; i++) {
+				var stockChange:StockChange = stockDef.stockChanges.getItemIndex(i) as StockChange;
+				
+				stockDef.stockChanges.setItemAt(stockChange, i);
+			}
+		}
 		var selectEvent:StockPickerSelectEvent = new StockPickerSelectEvent(StockPickerSelectEvent.SELECTSTOCK, stockDef);
 		dispatchEvent(selectEvent);
 		PopUpManager.removePopUp(this);

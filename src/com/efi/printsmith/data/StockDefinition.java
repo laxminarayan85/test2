@@ -3296,21 +3296,21 @@ public class StockDefinition extends ModelBase {
     @OneToMany(  cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	@JoinTable( name = "stockdefinition_stockchanges")
-	private java.util.List<StockChanges> stockChanges;
+	private java.util.List<StockChange> stockChanges;
 	
 	/**
 	 * @generated
  	 */
-	public java.util.List<StockChanges> getStockChanges(){
+	public java.util.List<StockChange> getStockChanges(){
     return stockChanges; 
   }
 
 	/**
 	 * @generated
 	 */	
-	public void addStockChanges(StockChanges obj) {
+	public void addStockChanges(StockChange obj) {
     if (stockChanges == null) {
-      stockChanges = new java.util.ArrayList<StockChanges>();
+      stockChanges = new java.util.ArrayList<StockChange>();
     }
     stockChanges.add(obj);
   }
@@ -3318,7 +3318,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-	public void setStockChanges(java.util.List<StockChanges> newVal) {
+	public void setStockChanges(java.util.List<StockChange> newVal) {
     this.stockChanges = newVal;
   }
 	
@@ -4037,7 +4037,7 @@ public class StockDefinition extends ModelBase {
     if (COPIER1PRICEPERSHEET.equals(propertyName)) setCopier1PricePerSheet((BigDecimal)newValue); else
     if (COPIER2PRICEPERSHEET.equals(propertyName)) setCopier2PricePerSheet((BigDecimal)newValue); else
     if (COPIER3PRICEPERSHEET.equals(propertyName)) setCopier3PricePerSheet((BigDecimal)newValue); else
-    if (STOCKCHANGES.equals(propertyName)) setStockChanges((java.util.List<StockChanges>)newValue); else
+    if (STOCKCHANGES.equals(propertyName)) setStockChanges((java.util.List<StockChange>)newValue); else
     if (MILL.equals(propertyName)) setMill((Integer)newValue); else
     if (LOTCOUNT.equals(propertyName)) setLotcount((Integer)newValue); else
     if (CARTONWEIGHT.equals(propertyName)) setCartonWeight((Double)newValue); else
@@ -4290,7 +4290,7 @@ public class StockDefinition extends ModelBase {
     if (COPIER3PRICEPERSHEET.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
     if (STOCKCHANGES.equals(propertyName)) 
-      return new Class<?>[] {java.util.List.class, StockChanges.class};		
+      return new Class<?>[] {java.util.List.class, StockChange.class};		
     if (MILL.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (LOTCOUNT.equals(propertyName)) 
