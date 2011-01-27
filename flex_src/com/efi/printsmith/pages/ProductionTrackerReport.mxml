@@ -149,8 +149,9 @@
 				var totalCost:String = "0";
 				var trackerConsoleJobsObj:TrackerConsoleJobs = object as TrackerConsoleJobs;
 				if(trackerConsoleJobsObj.job!=null){
-					if(!isNaN(trackerConsoleJobsObj.job.totalCost)){
-						totalCost = String(trackerConsoleJobsObj.job.totalCost);
+					if(trackerConsoleJobsObj.job.pricingRecord!=null){
+						totalCost = String(isNaN(trackerConsoleJobsObj.job.pricingRecord.laborCost)?0:trackerConsoleJobsObj.job.pricingRecord.laborCost
+						+isNaN(trackerConsoleJobsObj.job.pricingRecord.stockCost)?0:trackerConsoleJobsObj.job.pricingRecord.stockCost);
 					}
 				} else if(trackerConsoleJobsObj.charge!=null) {
 					if(trackerConsoleJobsObj.charge.chargeCostingRecord!=null){
