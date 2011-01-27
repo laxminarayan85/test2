@@ -44,7 +44,7 @@ public class TableEditorMapper extends ImportMapper {
 							if (nameNode.getNodeValue().equals("title")) {
 								title = recordNodes.item(z).getTextContent();
 							} else if (nameNode.getNodeValue().equals("id") && recordNodes.item(z).getTextContent().equals("0") == false) {
-								if (firstRec == false && name.equals("") == false)
+								if (firstRec == false)
 									dataService.addUpdate(modelBase);
 								if (title.equals("Business Type"))
 									modelBase = new BusinessType();
