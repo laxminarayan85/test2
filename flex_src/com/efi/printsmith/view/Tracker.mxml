@@ -623,11 +623,31 @@
 		public function getProductionLoc(object:Object):String {
 			if(object is Job){
 				var job:Job = object as Job;
-				return job.location.name;	
+				if(job.pricingPress!=null && job.pricingPress.productionLocation!=null) {
+					return job.pricingPress.productionLocation;	
+				}
 			}
 			if(object is Charge){
 				var charge:Charge = object as Charge;
-				return charge.productionLocation.name;
+				if(charge.chargeDefinition!=null && charge.chargeDefinition.location!=null) {
+					return charge.chargeDefinition.location.name;
+				}
+			}
+			return "";
+		}
+		
+		public function getActiveLoc(object:Object):String {
+			if(object is Job){
+				var job:Job = object as Job;
+				if(job.location!=null) {
+					return job.location.name;	
+				}
+			}
+			if(object is Charge){
+				var charge:Charge = object as Charge;
+				if(charge.productionLocation!=null) {
+					return charge.productionLocation.name;
+				}
 			}
 			return "";
 		}
@@ -920,15 +940,22 @@
 				trackerConsoleJobs.productionFacilities = trackerConsole.productionFacilities;
 				trackerConsoleJobs.productionStations = trackerConsole.productionStations;
 				if(selectedJob!=null){
-					trackerConsoleJobs.productionLocations = selectedJob.location;
-					trackerConsole.productionLocation = selectedJob.location;
+					if(selectedJob.pricingPress!=null && selectedJob.pricingPress.productionLocation!=null) {
+						var productionLoc:ProductionLocations = findItem(selectedJob.pricingPress.productionLocation,productionLocationArray) as ProductionLocations;
+						if(productionLoc!=null) {
+							trackerConsoleJobs.productionLocations = productionLoc;
+							trackerConsole.productionLocation = productionLoc;
+						}
+					}
 					if(trackerConsole.productionLocation==null){
 						trackerConsole.productionLocation = new ProductionLocations();
 					}
 					trackerconsole_location.customText = getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation);
 				} else if(selectedCharge!=null){
-					trackerConsoleJobs.productionLocations = selectedCharge.productionLocation;
-					trackerConsole.productionLocation = selectedCharge.productionLocation;
+					if(selectedCharge.chargeDefinition!=null && selectedCharge.chargeDefinition.location!=null) {
+						trackerConsoleJobs.productionLocations = selectedCharge.chargeDefinition.location;
+						trackerConsole.productionLocation = selectedCharge.chargeDefinition.location;
+					}
 					if(trackerConsole.productionLocation==null){
 						trackerConsole.productionLocation = new ProductionLocations();
 					}
@@ -984,6 +1011,20 @@
 				trackerConsoleJobsAddUpdate = true;
 				saveDataServiceJob.addUpdate(trackerConsoleJobs);
 			}
+		}
+		
+		private function findItem(name:String, array:ArrayCollection):Object
+		{
+			var indexCounter:int = 0;
+			for each (var element:Object in array)
+			{	
+				if (name == element.name)
+				{ 
+					return array.getItemAt(indexCounter);
+				}
+				indexCounter++;
+			}
+			return null;
 		}
 		
 		private function handleDeleteListResult(event:ResultEvent):void {
@@ -2100,7 +2141,7 @@
 							<mx:itemRenderer>
 								<mx:Component>
 									<trackercomponent:TrackerConsoleLabelComponent pendingList="true"
-										strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getProductionLoc(data)}"/>
+										strikethrough="{outerDocument.getStrikeThroughValue(data)}" text="{outerDocument.getActiveLoc(data)}"/>
 								</mx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>

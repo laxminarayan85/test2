@@ -888,8 +888,10 @@
 				if (!doInvoiceLater)
 					dataService.saveInvoice(invoice);
 					
-				for (var i:int = 0; i < this.deletedJobs.length; i++) {
-					dataService.deleteItem("Job", (deletedJobs.getItemAt(i) as Job).id);
+				if(deletedJobs!=null) {
+					for (var i:int = 0; i < this.deletedJobs.length; i++) {
+						dataService.deleteItem("Job", (deletedJobs.getItemAt(i) as Job).id);
+					}
 				}
 				
 			}

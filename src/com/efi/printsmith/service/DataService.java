@@ -3945,6 +3945,7 @@ public class DataService extends HibernateService {
 								 * jobChargesList.add(charge); } } } } }
 								 */
 								Hibernate.initialize(job.getParentInvoice());
+								Hibernate.initialize(job.getPricingPress());
 								jobChargesList.add(job);
 							}
 						}
@@ -4496,6 +4497,7 @@ public class DataService extends HibernateService {
 								 * jobChargesList.add(charge); } } } } }
 								 */
 								Hibernate.initialize(job.getParentInvoice());
+								Hibernate.initialize(job.getPricingPress());
 								jobChargesList.add(job);
 							}
 						}
