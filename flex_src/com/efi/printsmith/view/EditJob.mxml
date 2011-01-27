@@ -3558,6 +3558,7 @@
 						job.runSize.name = sizeStr;
 						job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
 						job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
+						job_size.text = job.runSize.name;
 					}
 					else if (job_size.selectedItem != null) {
 						//job.runSize = job_size.selectedItem as Dimension;
@@ -3566,7 +3567,7 @@
 						job.runSize.type = localSize.type;
 						job.runSize.height = localSize.height;
 						job.runSize.width = localSize.width;
-
+						job_size.text = job.runSize.name;
 						/*if (job.runSize.width * job.runSize.height > job.parentSize.width * job.parentSize.height) {
 							//job.runSize = oldDimension;
 							//job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
