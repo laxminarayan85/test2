@@ -3947,14 +3947,26 @@
 				job.cutOff = localJob.cutOff;
 				job.numUp = localJob.numUp;
 				
-				if (job.parentSize != null)
+				if (job.parentSize != null) {
 					this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
-				if (job.runSize != null)
+					if (this.job_parent.selectedIndex == -1)
+						this.job_parent.text = job.parentSize.name;
+				}
+				if (job.runSize != null) {
 					this.job_size.selectedIndex = findItem(job.runSize.name, dimensionsArray);
-				if (job.foldedSize != null)
+					if (this.job_size.selectedIndex == -1)
+						this.job_size.text = job.runSize.name;
+				}
+				if (job.foldedSize != null) {
 					this.job_fold_size.selectedIndex = findItem(job.foldedSize.name, dimensionsArray);
-				if ( job.finishSize != null)
+					if (this.job_fold_size.selectedIndex == -1)
+						this.job_fold_size.text = job.foldedSize.name;
+				}
+				if ( job.finishSize != null) {
 					this.job_finish_size.selectedIndex = findItem(job.finishSize.name, dimensionsArray);
+					if (this.job_finish_size.selectedIndex == -1)
+						this.job_finish_size.text = job.finishSize.name;
+				}
 	    		
 	    		job.paperCal = localJob.paperCal;
 	    		
