@@ -22,6 +22,10 @@
 	</mx:Script>
 	
 	
+	<mx:RemoteObject id="prefStocksDataService" destination="dataService">
+		<mx:method name="getSingle" fault="handleFault(event)" result="handleLoadPrefStocksResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:RemoteObject id="estimatorService"
 						destination="estimatorService">
 		<mx:method name="createInvoiceFromEstimate"
@@ -114,6 +118,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.PreferencesStocks;
+			import com.efi.printsmith.pages.EstimatorCheckList;
 			import com.efi.printsmith.events.UpdateChargeEvent;
 			import mx.events.DragEvent;
 			import com.efi.printsmith.events.InvoiceNotesAddedEvent;
@@ -288,7 +294,10 @@
 			[Bindable] private var deliveryTicketJobsList:ArrayCollection = new ArrayCollection();
 			
 			private var randomNumber:int;
+			
 			private var windowRef:MDIWindow;
+			
+			[Bindable] private var preferencesStocks:PreferencesStocks;
 									
 			public function getSecurityCommand():String {
 				
@@ -380,6 +389,8 @@
 				if(!invoice.onPendingList){
 					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisdocumentislocked'));
 				}
+				
+				prefStocksDataService.getSingle("PreferencesStocks");
 				
 					
 				invoiceRepositoryService.getItemList();
@@ -2242,6 +2253,20 @@
 			private function keyDownEventHandler(event:KeyboardEvent):void {
 				if(event.keyCode==Keyboard.ENTER) {
 					doDoubleclickInvoiceItem();
+				}
+			}
+			
+			private function handleLoadPrefStocksResult(event:ResultEvent):void {
+				preferencesStocks = event.result as PreferencesStocks;
+			}
+			
+			public function openEstimatorCheckList():void {
+				if(invoice!=null && invoice.jobs!=null) {
+					for each(var jobObj:JobBase in invoice.jobs) {
+						var estimatorCheckList:EstimatorCheckList = PopUpManager.createPopUp(this,EstimatorCheckList,false) as EstimatorCheckList;
+						estimatorCheckList.preferencesStocks = preferencesStocks;
+						estimatorCheckList.setJob(jobObj);
+					}
 				}
 			}
 		]]>

@@ -428,6 +428,11 @@
 					&& (ss.commandName.indexOf("rStandardMenuText.GenerateDeliveryTick") > -1 ))	{
 						doGenerateDeliveryTicket();				
 				}	
+				
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.OpenEstimatorCheckli") > -1 ))	{
+						doOpenEstimatorCheckList();	
+				}	
 					
 				if ((ss.menu == "rStandardMenuText.Window")
 					&& (ss.commandName.indexOf("rStandardMenuText.Maximize") > -1 ))	{
@@ -545,6 +550,19 @@
 				if(win.content is EditInvoice){
 					var editInvoice:EditInvoice = win.content as EditInvoice;
 					editInvoice.openDeliveryTicket();
+				}
+			}
+		}
+		
+		public function doOpenEstimatorCheckList():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.openEstimatorCheckList();
+				} else if(win.content is EditJob) {
+					var editJob:EditJob = win.content as EditJob;
+					editJob.openEstimatorCheckList();
 				}
 			}
 		}

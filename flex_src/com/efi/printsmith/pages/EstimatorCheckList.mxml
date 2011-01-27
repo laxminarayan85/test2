@@ -36,6 +36,10 @@
 				var totalSellPrice:Number = 0;
 				registerClassAlias("com.efi.printsmith.data.JobBase",JobBase);
 				jobObj = ObjectUtil.copy(jobBaseObj) as JobBase;
+				this.title = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.EstimatorChecklistJo'),null,null,null,null,jobObj.jobIndex);
+				if(jobObj.parentInvoice!=null) {
+					this.title = this.title + " ("+jobObj.parentInvoice.invoiceNumber+")";
+				}
 				var dataGridItem:Object = new Object();
 				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.Quantity');
 				dataGridList.addItem(dataGridItem);
@@ -43,8 +47,8 @@
 				dataGridItem.item = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kEstimatorChecklistCommand.TotalPressTime');
 				var totalTime:Number = (isNaN(jobObj.runTime)?0:jobObj.runTime)+(isNaN(jobObj.washupTime)?0:jobObj.washupTime)
 										+(isNaN(jobObj.setupTime)?0:jobObj.setupTime);
-				dataGridItem.estTime = convertMilliSecondsToString(totalTime,true);
-				totalEstTime = totalEstTime+totalTime;
+				dataGridItem.estTime = convertMilliSecondsToString((totalTime*60*1000),true);
+				totalEstTime = totalEstTime+(totalTime*60*1000);
 				if(jobObj.pricingRecord!=null) {
 					dataGridItem.estCost = jobObj.pricingRecord.laborCost.toFixed(2);
 					totalEstCost = totalEstCost + jobObj.pricingRecord.laborCost;
@@ -54,7 +58,7 @@
 						dataGridItem.markUpPrnct = ((dataGridItem.markUpAmount/dataGridItem.estCost)*100).toFixed(2)+"%";
 					}
 					dataGridItem.sellPrice = jobObj.pricingRecord.laborTotalPrice.toFixed(2);
-					totalSellPrice = totalSellPrice + dataGridItem.sellPrice;
+					totalSellPrice = totalSellPrice + jobObj.pricingRecord.laborTotalPrice;
 				}
 				dataGridList.addItem(dataGridItem);
 				dataGridItem = new Object();
@@ -73,7 +77,7 @@
 						dataGridItem.markUpPrnct = ((dataGridItem.markUpAmount/dataGridItem.estCost)*100).toFixed(2)+"%";
 					}
 					dataGridItem.sellPrice = jobObj.pricingRecord.stockTotalPrice.toFixed(2);
-					totalSellPrice = totalSellPrice + dataGridItem.sellPrice;
+					totalSellPrice = totalSellPrice + jobObj.pricingRecord.stockTotalPrice;
 				}
 				dataGridList.addItem(dataGridItem);
 				dataGridItem = new Object();
@@ -178,13 +182,13 @@
 										}
 										totalEstCost = totalEstCost + estCost;
 									}
-									dataGridItem.sellPrice = chargeObj.price;
-									dataGridItem.markUpAmount = dataGridItem.sellPrice - dataGridItem.estCost;
-									totalMarkUpAmount = totalMarkUpAmount + (dataGridItem.sellPrice - dataGridItem.estCost);
+									dataGridItem.sellPrice = (chargeObj.price).toFixed(2);
+									dataGridItem.markUpAmount = (chargeObj.price - estCost).toFixed(2);
+									totalMarkUpAmount = totalMarkUpAmount + (chargeObj.price - estCost);
 									if(dataGridItem.estCost!=0) {
 										dataGridItem.markUpPrnct = ((dataGridItem.markUpAmount/dataGridItem.estCost)*100).toFixed(2)+"%";
 									}
-									totalSellPrice = totalSellPrice + dataGridItem.sellPrice;
+									totalSellPrice = totalSellPrice + chargeObj.price;
 									dataGridList.addItem(dataGridItem);
 								}
 							}
