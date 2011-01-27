@@ -343,10 +343,7 @@ width="938" height="507"  creationComplete="init()"
 					this.sheets_purchased_label.visible = false;
 					this.run_size.selectedIndex = -1;
 					this.run_size.text = job.rollWidth + " x " + job.cutOff;
-					if (job.pricingCopier.squareAreaType == "AreaFinishSize")
-						this.area.text = (job.finishSize.height * job.finishSize.width).toFixed(0);
-					else
-						this.area.text = (job.rollWidth * job.cutOff).toFixed(0);
+					this.area.text = (job.rollWidth * job.cutOff).toFixed(0);
 				}
 			}
 		} else {
