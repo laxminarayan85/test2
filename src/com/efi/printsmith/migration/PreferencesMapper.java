@@ -12,6 +12,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.efi.printsmith.data.AccessGroup;
 import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.Merchandise;
 import com.efi.printsmith.data.ModelBase;
@@ -42,6 +43,7 @@ import com.efi.printsmith.service.MatrixService;
 
 public class PreferencesMapper extends ImportMapper {
 	protected static Logger log = Logger.getLogger(InvoiceMapper.class);
+	@SuppressWarnings("unchecked")
 	public void importFile(File uploadedFile) throws Exception {
 		String currentGroup = "";
 		try {
@@ -89,7 +91,7 @@ public class PreferencesMapper extends ImportMapper {
 							Users user = null;
 							for (int z=0;z<subGroupNodes.getLength();z++) {
 								if (subGroupNodes.item(z) != null && subGroupNodes.item(z).getNodeType() == Node.ELEMENT_NODE) {
-									if (titleNode.getNodeValue().equals("User Details")) {
+									//if (titleNode.getNodeValue().equals("User Details")) {
 										user = (Users)dataService.getByPrevId("Users", keyValue);
 										if (user == null) {
 											user = new Users();
@@ -102,6 +104,8 @@ public class PreferencesMapper extends ImportMapper {
 										valueNode = fieldAttributes.getNamedItem("Value");
 										if (titleNode.getNodeValue().equals("title"))
 											user.setName(valueNode.getNodeValue());
+										else if (titleNode.getNodeValue().equals("access_group_id"))
+											user.setPrevPassword4(valueNode.getNodeValue()); //Temp to use to map access groups after importing access groups
 										else if (titleNode.getNodeValue().equals("access_level"))
 											user.setAccessLevel(Utilities.tokenToInt(valueNode.getNodeValue()));
 										else if (titleNode.getNodeValue().equals("can_return_cash"))
@@ -114,11 +118,39 @@ public class PreferencesMapper extends ImportMapper {
 											user.setRefundCreditCards(Utilities.tokenToBooleanValue(valueNode.getNodeValue()));
 										else if (titleNode.getNodeValue().equals("use_strong_password_rules"))
 											user.setRobustPassword(Utilities.tokenToBooleanValue(valueNode.getNodeValue()));
-									}
+									//}
 								}
 								if (user != null) {
 									dataService.addUpdate(user);
 									user = null;
+								}
+							}
+						} else if (groupTitleNode.getNodeValue().equals("Access Group List")) {
+							NodeList subGroupNodes = itemNodes.item(x).getChildNodes();
+							List <Users> users = (List<Users>)dataService.getUsers("Users");
+							AccessGroup accessGroup = null;
+							NamedNodeMap fieldAttributes = itemNodes.item(x).getAttributes();
+							titleNode = fieldAttributes.getNamedItem("Title");
+							valueNode = fieldAttributes.getNamedItem("VarName");
+							keyNode = fieldAttributes.getNamedItem("Key");
+							if (titleNode.getNodeValue().equals("Access Group ID")) {
+								String key = keyNode.getNodeValue();
+								String groupName = valueNode.getNodeValue();
+								if (groupName.equals("Admin All"))
+									groupName = "System Admin";
+								accessGroup = (AccessGroup)dataService.getByName("AccessGroup", groupName);
+								if (accessGroup == null) {
+									accessGroup = new AccessGroup();
+									accessGroup.setName(groupName);
+									accessGroup = (AccessGroup)dataService.addUpdate(accessGroup);
+								}
+								for (int u=0;u<users.size();u++) {
+									if (users.get(u).getPrevPassword4() != null && users.get(u).getPrevPassword4().equals(key)) {
+										Users user = users.get(u);
+										user.setPrevPassword4("");
+										user.setAccessGroup(accessGroup);
+										dataService.addUpdate(user);
+									}
 								}
 							}
 						}else if (groupTitleNode.getNodeValue().equals("Global Stamp Schedule")) {
