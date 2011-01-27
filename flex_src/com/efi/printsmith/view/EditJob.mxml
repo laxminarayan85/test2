@@ -4261,9 +4261,9 @@
 				multiQtyViewWindow.multiQtyJob = this.job;
 			}
 			
-			private function openEstimatorCheckList():void {
+			public function openEstimatorCheckList():void {
 				mapToJobData();
-				var estimatorCheckList:EstimatorCheckList = PopUpManager.createPopUp(this,EstimatorCheckList,true) as EstimatorCheckList;
+				var estimatorCheckList:EstimatorCheckList = PopUpManager.createPopUp(this,EstimatorCheckList,false) as EstimatorCheckList;
 				estimatorCheckList.preferencesStocks = preferencesStocks;
 				estimatorCheckList.setJob(this.job);
 			}
