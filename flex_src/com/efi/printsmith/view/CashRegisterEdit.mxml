@@ -1262,7 +1262,7 @@
 						}
 					}
 
-					doAccept();	
+					doAccept(true);	
 				}
 			}
 		}
@@ -1291,7 +1291,7 @@
 			if (txtSaleTotal != null)
 				txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.subTotal);
 
-			doAccept();
+			doAccept(true);
 		}
 	}
 	
@@ -1301,7 +1301,7 @@
 		//
 		// no left open transactions
 		//
-		doAccept();
+		doAccept(false);
 		
 		//
 		// reverse any external values that could have already been completed, ie.. a Credit Card charge
@@ -1625,9 +1625,9 @@
 		return tempString;
 	}
 	
-	private function doAccept():void{
+	private function doAccept(quickEst:Boolean):void{
 		
-		if (this.currentState == "invoiceState" || this.currentState == "departmentState") {
+		if (quickEst || this.currentState == "invoiceState" || this.currentState == "departmentState") {
 			if (txtSaleDescription != null)
 				activeSale.description = txtSaleDescription.text;
 			if (txtSaleQuantity != null)
@@ -2129,7 +2129,7 @@
 		//
 		// no left open transactions
 		//
-		doAccept();
+		doAccept(false);
 		
 		//
 		// make sure the session batch has the current account picked in the UI
@@ -2431,7 +2431,7 @@
 				UpdateCashRegister();
 				
 				// except this sale transaction
-				doAccept();
+				doAccept(false);
 				if( goodPickup)
 					txtSaleDescription.text = invoice.name;
 				
@@ -2575,7 +2575,7 @@
 				
 		</mx:Canvas>
 		<mx:Canvas x="0" y="143" width="408" height="278" id="tax_canvas1" hideEffect="effect" showEffect="effect" borderStyle="inset">
-			<mx:Button x="10" y="200" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Accept')}" click="doAccept();" width="176" enabled="false" id="accept_button"/>
+			<mx:Button x="10" y="200" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.Accept')}" click="doAccept(false);" width="176" enabled="false" id="accept_button"/>
 			<mx:CheckBox x="10" y="243" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posRegisterCmd.PrintReceipt')}" id="checkbox1"/>
 			<mx:TextArea x="396" y="266" width="4.8" height="4.8" focusIn="doDescriptionActivate()" id="txtSaleDescription" tabIndex="4" enabled="true"/>
 		</mx:Canvas>
