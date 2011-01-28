@@ -417,10 +417,10 @@
 	<mx:Label x="10" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="49"/>
 	<mx:Label x="100" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="35"/>
 	<mx:Label x="195" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="57"/>
-	<mx:Label x="17" y="84" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" width="67"/>
-	<mx:Label x="17" y="114" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Abbreviation')}" width="67"/>
-	<mx:TextInput x="92" y="82" id="name_edit" text="{taxTable.name}"/>
-	<mx:TextInput x="92" y="112" id="Abbr_edit" text="{taxTable.abbr}"/>
+	<mx:Label x="17" y="84" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxTable')}" width="106"/>
+	<mx:Label x="17" y="114" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.Abbreviation')}" width="106"/>
+	<mx:TextInput x="131" y="82" id="name_edit" text="{taxTable.name}"/>
+	<mx:TextInput x="131" y="112" id="Abbr_edit" text="{taxTable.abbr}"/>
 	<mx:DataGrid x="17" y="140" width="450" height="273"  editable="true" itemFocusOut="updatetax()" change="updatetax()" dataProvider="{taxElementsArray}"  id="elementGrid">
 		<mx:columns>
 			<mx:DataGridColumn labelFunction="lfRowNum" width="30"/>
@@ -506,7 +506,7 @@
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'taxCmd.TaxRate')}" labelFunction="doeffectiveTaxRate" width="100"/>
 		</mx:columns>
 	</mx:DataGrid>
-	<mx:CheckBox x="304" y="82" click="doDisable()"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.Disable')}" id="disable_check"/>
+	<mx:CheckBox x="339" y="82" click="doDisable()"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'webDataCmd.Disable')}" id="disable_check" width="128"/>
 	<mx:DataGrid x="18.5" y="813" width="435"  id="tableGrid0" dataProvider="{historytaxTables}" itemClick="doSelectHistoryTaxTable()" height="111">
 		<mx:columns>
 			<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeCostCmd.LastChange')}" dataField="modified" width="150"/>
