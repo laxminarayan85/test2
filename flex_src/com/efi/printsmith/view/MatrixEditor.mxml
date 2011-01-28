@@ -922,25 +922,15 @@
 					if (element.qty > 0)
 						newMatrix = false;
 					this.price1.text = element.price1.toString();
-					this.price2.text = element.price2.toString();
-					this.price3.text = element.price3.toString();
-					this.price4.text = element.price4.toString();
-					this.price5.text = element.price5.toString();
-					this.price6.text = element.price6.toString();
-					this.price7.text = element.price7.toString();
-					this.price8.text = element.price8.toString();
-					this.price9.text = element.price9.toString();
-					this.price10.text = element.price10.toString();
-					this.price11.text = element.price11.toString();
-					this.price12.text = element.price12.toString();
-					this.price13.text = element.price13.toString();
-					this.price14.text = element.price14.toString();
-					this.price15.text = element.price15.toString();
-					this.price16.text = element.price16.toString();
-					this.price17.text = element.price17.toString();
-					this.price18.text = element.price18.toString();
-					this.price19.text = element.price19.toString();
-					this.price20.text = element.price20.toString();
+					this.price2.text = element.price11.toString();
+					this.price3.text = element.price2.toString();
+					this.price4.text = element.price12.toString();
+					this.price5.text = element.price3.toString();
+					this.price6.text = element.price13.toString();
+					this.price7.text = element.price4.toString();
+					this.price8.text = element.price14.toString();
+					this.price9.text = element.price5.toString();
+					this.price10.text = element.price15.toString();
 				}
 			}
 			this.paperPrice.elements.filterFunction = filterMatrix;
@@ -1127,25 +1117,15 @@
 				var element:com.efi.printsmith.data.MatrixElement = this.paperPrice.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
 				if (element.lastLine == true) {
 					element.price1 = parseFloat(this.price1.text);
-					element.price2 = parseFloat(this.price2.text);
-					element.price3 = parseFloat(this.price3.text);
-					element.price4 = parseFloat(this.price4.text);
-					element.price5 = parseFloat(this.price5.text);
-					element.price6 = parseFloat(this.price6.text);
-					element.price7 = parseFloat(this.price7.text);
-					element.price8 = parseFloat(this.price8.text);
-					element.price9 = parseFloat(this.price9.text);
-					element.price10 = parseFloat(this.price10.text);
-					element.price11 = parseFloat(this.price11.text);
-					element.price12 = parseFloat(this.price12.text);
-					element.price13 = parseFloat(this.price13.text);
-					element.price14 = parseFloat(this.price14.text);
-					element.price15 = parseFloat(this.price15.text);
-					element.price16 = parseFloat(this.price16.text);
-					element.price17 = parseFloat(this.price17.text);
-					element.price18 = parseFloat(this.price18.text);
-					element.price19 = parseFloat(this.price19.text);
-					element.price20 = parseFloat(this.price20.text);
+					element.price2 = parseFloat(this.price3.text);
+					element.price3 = parseFloat(this.price5.text);
+					element.price4 = parseFloat(this.price7.text);
+					element.price5 = parseFloat(this.price9.text);
+					element.price11 = parseFloat(this.price2.text);
+					element.price12 = parseFloat(this.price4.text);
+					element.price13 = parseFloat(this.price6.text);
+					element.price14 = parseFloat(this.price8.text);
+					element.price15 = parseFloat(this.price10.text);
 				}
 			}
 			dataService.addUpdate(paperPrice);

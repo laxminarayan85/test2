@@ -17,7 +17,7 @@
 					itemEditEnd="formatData(event);"
 					doubleClickEnabled="true" focusIn="gridGotFocus()" id="matrix_grid">
 				<mx:columns>
-				     <mx:DataGridColumn dataField="qty" headerText="" sortable="false" width="50"/>
+				     <mx:DataGridColumn dataField="qty" headerText="" sortable="false" width="50" textAlign="right"/>
 				     <mx:DataGridColumn dataField="price1" headerText="Front" editable="true" sortable="false" width="50" textAlign="right"/>
 				     <mx:DataGridColumn dataField="price11" headerText="Back" editable="true" sortable="false" width="50" textAlign="right"/>
 				     <mx:DataGridColumn dataField="price2" headerText="Front" editable="true" sortable="false" width="50" textAlign="right"/>
