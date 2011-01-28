@@ -590,7 +590,7 @@
     	InitPaymentRecord();
     	
  		activeSale = new TapeSaleRecord();
- 		activeSale.cashRegisterDept = new PreferencesCashRegister();
+ 		activeSale.cashRegisterDept = null;
 		activeSale.customerAccount = new Account();
 		creditLimit = 0;
 		
@@ -1160,7 +1160,9 @@
 		txtSaleDescription.text = treeItem.title;
 		
 		activeSale.cashRegisterDept = treeItem;
-		activeSale.description = activeSale.cashRegisterDept.title;
+		if (activeSale.cashRegisterDept != null) {
+			activeSale.description = activeSale.cashRegisterDept.title;
+		}
 		
 		if (treeItem.taxTable != null)
 			pickTaxTable.selectedIndex = findItem(treeItem.taxTable.name, TaxTableArray);
