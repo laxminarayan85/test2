@@ -3578,7 +3578,7 @@
 					}
 					if (this.currentSizeName != job.runSize.name) {
 						doUpdatePrice = true;
-						dimensionChange(job_finish_size);
+						dimensionChange(job_size);
 					}
 					break;
 				}
