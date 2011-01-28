@@ -928,7 +928,8 @@
 										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PreviewJobTicket')}"/>
 							<mx:LinkButton x="10"
 										   y="50"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.JobTicketNotes')}"/>
+										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.JobTicketNotes')}" click="{openJobNotes()}" 
+										   color="{(job.jobNotes!=null &amp;&amp; job.jobNotes!='')?0x00BB00:0x000000}"/>
 							<mx:LinkButton x="10"
 										   y="70"
 										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebWorkSheet')}"/>
