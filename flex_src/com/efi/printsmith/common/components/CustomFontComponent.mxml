@@ -27,11 +27,12 @@
 			
 			[Bindable] public var fontSizeArray:ArrayCollection = new ArrayCollection();
 			
-			[Bindable] public var sampleTextString:String = "This is a test string";
+			[Bindable] public var sampleTextString:String = "";
 			
 			private var _customText:FontDefinition;
 			
 			private function initComponent():void {
+				sampleTextString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'editTypeSpecCmd.Thequickredfoxjumpso');
 				var collection:ArrayCollection = new ArrayCollection(Font.enumerateFonts(true));
 				var sort:Sort = new Sort();
 				sort.fields = [new SortField("fontName",true)];
@@ -142,21 +143,21 @@
 			<mx:Spacer width="30"/>
 			<mx:VBox width="100%"> 
 				<mx:HBox width="100%">
-					<mx:Label text="Font:" textAlign="right" width="40"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'editTypeSpecCmd.Font')}:" textAlign="right" width="40"/>
 					<components:CustomComboBoxComponent
 						masterList="{fontStyleArray}" labelFieldId="fontName" labelFieldName="fontName"
 						dataHolder="{fontDefinition}" variableName="fontName" customText="{getCustomTextData(fontStyleArray,fontDefinition,fontDefinition.fontName)}" updateFirstElement="true"
 						change="{updateStyle()}" width="240"/>
 				</mx:HBox>
 				<mx:HBox width="100%">
-					<mx:Label text="Size:" textAlign="right" width="40"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'editTypeSpecCmd.Size')}:" textAlign="right" width="40"/>
 					<components:CustomComboBoxComponent
 						masterList="{fontSizeArray}" labelFieldId="id" labelFieldName="name"
 						dataHolder="{fontDefinition}" variableName="size" customText="{getCustomTextData(fontSizeArray,fontDefinition,fontDefinition.size)}" updateFirstElement="true"
 						change="{updateStyle()}" width="60"/>
 				</mx:HBox>
 				<mx:HBox width="100%">
-					<mx:Label text="Size:" textAlign="right" width="40"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'editTypeSpecCmd.Style')}:" textAlign="right" width="40"/>
 					<mx:HBox width="100%">
 						<mx:VBox>
 							<components:CustomCheckBoxComponent label="Bold"
