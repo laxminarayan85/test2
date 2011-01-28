@@ -143,7 +143,7 @@
 					var dt:DepositType = findFirstItemByCondition(depTypeList, "name",rdgPaymentMethod1.selectedValue) as DepositType; 
 					de.type = dt;
 					de.depositNumber = 1;
-					if (isNaN(txtAmount1.text as Number) || (Number(txtAmount1.text) < 0))	{
+					if (!stringIsAValidNumber(txtAmount1.text) || (parseFloat(txtAmount1.text) < 0))	{
 						Alert.show("Payment 1 not a number");
 						txtAmount1.setFocus();
 						return;
@@ -168,7 +168,7 @@
 					dt = findFirstItemByCondition(depTypeList, "name",rdgPaymentMethod2.selectedValue) as DepositType; 
 					de.type = dt;
 					de.depositNumber = 2;
-					if (isNaN(txtAmount2.text as Number) || (Number(txtAmount2.text) < 0))	{
+					if (!stringIsAValidNumber(txtAmount2.text) || (parseFloat(txtAmount2.text) < 0))	{
 						Alert.show("Payment 2 not a number");
 						txtAmount2.setFocus();
 						return;
@@ -193,7 +193,7 @@
 					dt = findFirstItemByCondition(depTypeList, "name",rdgPaymentMethod3.selectedValue) as DepositType; 
 					de.type = dt;
 					de.depositNumber = 3;
-					if (isNaN(txtAmount3.text as Number) || (Number(txtAmount3.text) < 0))	{
+					if (!stringIsAValidNumber(txtAmount3.text) || (parseFloat(txtAmount3.text) < 0))	{
 						Alert.show("Payment 3 not a number");
 						txtAmount3.setFocus();
 						return;
@@ -286,9 +286,9 @@
 		<mx:VBox width="70%" height="100%">
 			<mx:HBox height="20%" width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Ref')}" width="10%" height="100%" />
-				<mx:TextInput id="txtRef1" maxChars="12" width="30%" height="100%" />
+				<mx:TextInput id="txtRef1" maxChars="12" width="40%" height="100%" />
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Amount')}" width="10%" height="100%" />
-				<mx:TextInput id="txtAmount1" text="0.0" width="10%"  height="100%" />				
+				<mx:TextInput id="txtAmount1" textAlign="right" text="0.0" width="40%"  height="100%" />				
 			</mx:HBox>			
 			<mx:Button height="10%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Void')}" visible="true" id="btnVoid1" click="onVoid1();"/>
 			<mx:Form   visible="false" id="frmCC1" height="30%" width=" 50%">
@@ -308,9 +308,9 @@
 		<mx:VBox width="70%" height="100%">
 			<mx:HBox height="20%" width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Ref')}" width="10%" height="100%" />
-				<mx:TextInput id="txtRef2" maxChars="12" width="30%" height="100%" />
+				<mx:TextInput id="txtRef2" maxChars="12" width="40%" height="100%" />
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Amount')}" width="10%" height="100%" />
-				<mx:TextInput id="txtAmount2" text="0.0" width="10%" height="100%" />				
+				<mx:TextInput id="txtAmount2" textAlign="right" text="0.0" width="40%" height="100%" />				
 			</mx:HBox>			
 			<mx:Button height="10%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Void')}" id="btnVoid2" visible="true"  click="onVoid2();"/>
 			<mx:Form  visible="false" id="frmCC2" height="30%" width=" 50%">
@@ -326,13 +326,13 @@
 			<mx:RadioButton groupName="rdgPaymentMethod3" selected="true" click="paymentMethod3Selected()" id="rdoCash3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Cash')}" />
 			<mx:RadioButton groupName="rdgPaymentMethod3" click="paymentMethod3Selected()" id="rdoCheck3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Check')}" />
 			<mx:RadioButton groupName="rdgPaymentMethod3" click="paymentMethod3Selected()" id="rdoCC3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.CreditCard')}" />
-		</mx:VBox>
+		</mx:VBox> 
 		<mx:VBox width="70%" height="100%">
 			<mx:HBox height="20%" width="100%">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Ref')}" width="10%" height="100%" />
-				<mx:TextInput id="txtRef3" maxChars="12" width="30%" height="100%" />
+				<mx:TextInput id="txtRef3" maxChars="12" width="40%" height="100%" />
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Amount')}" width="10%" height="100%" />
-				<mx:TextInput id="txtAmount3" text="0.0" width="10%" height="100%" />				
+				<mx:TextInput id="txtAmount3" textAlign="right" text="0.0" width="40%" height="100%" />				
 			</mx:HBox>			
 			<mx:Button height="10%" width="100%" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Void')}" id="btnVoid3" visible="true"  click="onVoid3();"/>
 			<mx:Form visible="false" id="frmCC3" height="30%" width=" 50%">

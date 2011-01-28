@@ -130,3 +130,6 @@ public function cloneAC(src:ArrayCollection):ArrayCollection	{
 	return dest;	
 }
  
+public function stringIsAValidNumber(s: String) : Boolean {
+    return Boolean(s.match(/^[0-9]+.?[0-9]+$/));
+}
