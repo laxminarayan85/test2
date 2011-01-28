@@ -84,7 +84,7 @@ import com.efi.printsmith.data.*;
 		
 		 switch (temp.name)
 		 {
-			case "Business Type":
+			case "BusinessType":
 				tempClass = BusinessType;
 				break;
 		 	case "City":

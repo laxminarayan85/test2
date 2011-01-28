@@ -130,6 +130,7 @@ public class ChargeInkPricingMethod extends ChargePricingMethod {
 			if (chargeDefinition.getCoverlbInk() != null) {
 				rateSetCount = chargeDefinition.getCoverlbInk().doubleValue();
 			}
+			if (rateSetCount == 0.0) rateSetCount = 1;
 			pounds = (inches * localCharge.getCoverage())/rateSetCount;
 //			}
 			
