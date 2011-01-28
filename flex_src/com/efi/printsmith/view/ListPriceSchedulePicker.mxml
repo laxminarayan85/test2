@@ -56,6 +56,8 @@
 	import mx.messaging.messages.IMessage;
 	import mx.core.Application;
 	import mx.collections.ArrayCollection;
+	import mx.collections.Sort;
+	import mx.collections.SortField;
 	    
 	[Bindable]                                
 	private var list:ArrayCollection = new ArrayCollection();
@@ -72,6 +74,11 @@
 	                    
 	private function handleLoadResult(event:ResultEvent):void {
 		list = event.result as ArrayCollection;
+		var sortField:SortField = new SortField("name");
+		sortField.numeric = false;
+		var sort:Sort = new Sort();
+		sort.fields = [sortField];
+		list.sort = sort;
 		if (this.paperPrice != null)
 			dataGrid.selectedIndex = findItem(this.paperPrice.name,list);
 	}
