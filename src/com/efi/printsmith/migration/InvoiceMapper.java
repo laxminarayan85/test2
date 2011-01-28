@@ -145,7 +145,9 @@ public class InvoiceMapper extends ImportMapper {
 					invoice.setCreated(Utilities.tokenToDate(currentImportToken));
 				}
 			} else if ("due date".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false){
+					invoice.setWantedDate(Utilities.tokenToDate(currentImportToken));
+				}
 			} else if ("proof date".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false)
 					invoice.setProofDate(Utilities.tokenToDate(currentImportToken));
@@ -913,7 +915,9 @@ public class InvoiceMapper extends ImportMapper {
 					invoice.setCreated(Utilities.tokenToDate(currentImportToken));
 				}
 			} else if ("due date".equals(currentFieldToken)) {
-				/* TODO */
+				if (currentImportToken.equals("") == false){
+					invoice.setWantedDate(Utilities.tokenToDate(currentImportToken));
+				}
 			} else if ("proof date".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == false)
 					invoice.setProofDate(Utilities.tokenToDate(currentImportToken));
