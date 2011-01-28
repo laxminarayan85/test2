@@ -165,6 +165,12 @@
 									dataGridItem.item = "\t"+chargeObj.chargeDefinition.name;
 									dataGridItem.quantity = chargeObj.quantity;
 									dataGridItem.estCost = 0;
+									if(chargeObj.chargeCostingRecord!=null){
+										var totalTime:Number = (isNaN(chargeObj.chargeCostingRecord.runTime)?0:chargeObj.chargeCostingRecord.runTime)
+											+(isNaN(chargeObj.chargeCostingRecord.setupTime)?0:chargeObj.chargeCostingRecord.setupTime);
+										dataGridItem.estTime = convertMilliSecondsToString((totalTime*60*1000),true);
+										totalEstTime = totalEstTime+(totalTime*60*1000);
+									}
 									var estCost:Number = 0;
 									if(chargeObj.chargeDefinition!=null && chargeObj.chargeDefinition.chargeCost!=null) {
 										if(chargeObj.chargeDefinition.chargeCost.costingMethod == ChargeCostMethod.TimeAndMaterial && chargeObj.chargeDefinition.chargeCost.speedTable == null){
