@@ -665,6 +665,19 @@ public class JobBase extends ModelBase {
   public static final String COSTUNITSOVERRIDE = "CostUnitsOverride";
 
 	/**
+   * @generated
+   */
+  public static final String RUNBYDATE = "RunByDate";
+	/**
+   * @generated
+   */
+  public static final String STARTBYDATE = "StartByDate";
+	/**
+   * @generated
+   */
+  public static final String SUBMITTEDDATE = "SubmittedDate";
+
+	/**
 	 * @generated
 	 */
 	public JobBase() {
@@ -4160,6 +4173,66 @@ public class JobBase extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date runByDate;
+
+	/**
+   * @generated
+ 	 */
+  public Date getRunByDate(){
+    return runByDate; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setRunByDate(Date newVal) {
+    this.runByDate = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date startByDate;
+
+	/**
+   * @generated
+ 	 */
+  public Date getStartByDate(){
+    return startByDate; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setStartByDate(Date newVal) {
+    this.startByDate = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Date submittedDate;
+
+	/**
+   * @generated
+ 	 */
+  public Date getSubmittedDate(){
+    return submittedDate; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setSubmittedDate(Date newVal) {
+    this.submittedDate = newVal;
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -4314,6 +4387,9 @@ public class JobBase extends ModelBase {
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) return getParentStockCostOverride();
     if (COSTUNITS.equals(propertyName)) return getCostUnits();
     if (COSTUNITSOVERRIDE.equals(propertyName)) return getCostUnitsOverride();
+    if (RUNBYDATE.equals(propertyName)) return getRunByDate();
+    if (STARTBYDATE.equals(propertyName)) return getStartByDate();
+    if (SUBMITTEDDATE.equals(propertyName)) return getSubmittedDate();
     return super.getProperty(propertyName);
   }
 	
@@ -4472,6 +4548,9 @@ public class JobBase extends ModelBase {
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) setParentStockCostOverride((Boolean)newValue); else
     if (COSTUNITS.equals(propertyName)) setCostUnits((Integer)newValue); else
     if (COSTUNITSOVERRIDE.equals(propertyName)) setCostUnitsOverride((Boolean)newValue); else
+    if (RUNBYDATE.equals(propertyName)) setRunByDate((Date)newValue); else
+    if (STARTBYDATE.equals(propertyName)) setStartByDate((Date)newValue); else
+    if (SUBMITTEDDATE.equals(propertyName)) setSubmittedDate((Date)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -4779,6 +4858,12 @@ public class JobBase extends ModelBase {
       return new Class<?>[] {Integer.class};		
     if (COSTUNITSOVERRIDE.equals(propertyName)) 
       return new Class<?>[] {Boolean.class};		
+    if (RUNBYDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (STARTBYDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
+    if (SUBMITTEDDATE.equals(propertyName)) 
+      return new Class<?>[] {Date.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -4938,6 +5023,9 @@ public class JobBase extends ModelBase {
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) return JobBase.class;
     if (COSTUNITS.equals(propertyName)) return JobBase.class;
     if (COSTUNITSOVERRIDE.equals(propertyName)) return JobBase.class;
+    if (RUNBYDATE.equals(propertyName)) return JobBase.class;
+    if (STARTBYDATE.equals(propertyName)) return JobBase.class;
+    if (SUBMITTEDDATE.equals(propertyName)) return JobBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -5246,6 +5334,12 @@ public class JobBase extends ModelBase {
     if (! SmartEquals(getCostUnits(), objT.getCostUnits()))
       return false;
     if (! SmartEquals(getCostUnitsOverride(), objT.getCostUnitsOverride()))
+      return false;
+    if (! SmartEquals(getRunByDate(), objT.getRunByDate()))
+      return false;
+    if (! SmartEquals(getStartByDate(), objT.getStartByDate()))
+      return false;
+    if (! SmartEquals(getSubmittedDate(), objT.getSubmittedDate()))
       return false;
     return true;
   }			
