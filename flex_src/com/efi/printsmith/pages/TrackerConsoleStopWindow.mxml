@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="725" height="750"
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.StopTrackerStep')}"
-	creationComplete="{initDetailsWindow()}" showCloseButton="true" close="{cancel()}" xmlns:components="com.efi.printsmith.common.components.*" xmlns:tracker="com.efi.printsmith.components.tracker.*">
+	creationComplete="{initDetailsWindow()}" showCloseButton="true" close="{cancel()}" xmlns:components="com.efi.printsmith.common.components.*" xmlns:tracker="com.efi.printsmith.components.tracker.*" xmlns:components1="com.efi.printsmith.components.*">
 	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getJob" fault="handleFault(event)" result="handleLoadJobResult(event)"/>
@@ -39,6 +39,8 @@
 			
 			[Bindable] public var job:Job;
 			
+			[Bindable] public var localJob:Job;
+			
 			[Bindable] private var okBtnEnabled:Boolean = false;
 			
 			private function initDetailsWindow():void {
@@ -54,27 +56,33 @@
 			}
 			
 			private function updateCosting():void {
+				okBtnEnabled = false;
+				refresh_price_btn.visible = false;
+				pricing_throbber.visible = true;
+				pricing_throbber.play();
 				if(trackerConsoleJobs!=null) {
-					job.qtyOrdered = trackerConsoleJobs.impressions;
+					registerClassAlias("com.efi.printsmith.data.Job",Job);
+					localJob = ObjectUtil.copy(job) as Job;
+					localJob.qtyOrdered = trackerConsoleJobs.impressions;
 					if (trackerConsoleJobs.spoilage > 0) {		
-						job.orWaste = true;
-						job.estWasteOverride = true;
-						job.estWaste = job.estWaste + trackerConsoleJobs.spoilage;
+						localJob.orWaste = true;
+						localJob.estWasteOverride = true;
+						localJob.estWaste = localJob.estWaste + trackerConsoleJobs.spoilage;
 					}
 					
-					if ((trackerConsoleJobs.totalSetUpTime/(60*1000)) != job.setupTime) {		// compare in MINUTES
-						job.orSetupTime = true;
-						job.setupTime = trackerConsoleJobs.totalSetUpTime/(60*1000);
+					if ((trackerConsoleJobs.totalSetUpTime/(60*1000)) != localJob.setupTime) {		// compare in MINUTES
+						localJob.orSetupTime = true;
+						localJob.setupTime = trackerConsoleJobs.totalSetUpTime/(60*1000);
 					}
 					
-					if ((trackerConsoleJobs.totalRunTime/(60*1000)) != job.runTime) {		// compare in MINUTES
-						job.orRuntime = true;
-						job.runTime = trackerConsoleJobs.totalRunTime/(60*1000);
+					if ((trackerConsoleJobs.totalRunTime/(60*1000)) != localJob.runTime) {		// compare in MINUTES
+						localJob.orRuntime = true;
+						localJob.runTime = trackerConsoleJobs.totalRunTime/(60*1000);
 					}
 							
-					if ((trackerConsoleJobs.totalWashUpTime/(60*1000)) != job.washupTime) {		// compare in MINUTES
-						job.orWashupTime = true;
-						job.washupTime = trackerConsoleJobs.totalWashUpTime/(60*1000);
+					if ((trackerConsoleJobs.totalWashUpTime/(60*1000)) != localJob.washupTime) {		// compare in MINUTES
+						localJob.orWashupTime = true;
+						localJob.washupTime = trackerConsoleJobs.totalWashUpTime/(60*1000);
 					}
 					updatePrice();
 				}
@@ -95,12 +103,20 @@
 			
 			private function updatePrice():void
 			{	
-				var priceJobEvent:PriceJobEvent = new PriceJobEvent(this.job, new mx.rpc.Responder(handlePriceJobComplete, handlePriceJobFault));
+				var priceJobEvent:PriceJobEvent = new PriceJobEvent(this.localJob, new mx.rpc.Responder(handlePriceJobComplete, handlePriceJobFault));
 				priceJobEvent.dispatch();
 			}
 			
 			private function handlePriceJobComplete(event:ResultEvent):void {
-				job = event.result as Job;
+				var tmpJob:Job = event.result as Job;
+				if(tmpJob.pricingRecord!=null) {
+					var laborCost:Number = (isNaN(tmpJob.pricingRecord.laborCost))?0:tmpJob.pricingRecord.laborCost;
+					var stockCost:Number = (isNaN(tmpJob.pricingRecord.stockCost))?0:tmpJob.pricingRecord.stockCost;
+					trackerConsoleJobs.totalCost = laborCost + stockCost;
+				}
+				refresh_price_btn.visible = true;
+				pricing_throbber.stop();
+				pricing_throbber.visible = false;
 				okBtnEnabled = true;
 			}
 			
@@ -443,7 +459,7 @@
 				return laborCost;
 			}
 			
-			private function getTotalCost(object:TrackerConsoleJobs, flag:int,treatAsNonProdStep:Boolean):Object {
+			private function getTotalCost(object:TrackerConsoleJobs, totalCostValue:Number, flag:int,treatAsNonProdStep:Boolean):Object {
 				var totalCost:Number = 0;
 				if(treatAsNonProdStep){
 					return "--";
@@ -451,8 +467,8 @@
 				if(flag==0){
 					totalCost = Number(getStockCost(object,treatAsNonProdStep))+Number(getLaborCost(object,treatAsNonProdStep));
 				} else if(flag==1){
-					if(!isNaN(trackerConsoleJobs.totalCost)) {
-						totalCost = trackerConsoleJobs.totalCost;
+					if(!isNaN(totalCostValue)) {
+						totalCost = totalCostValue;
 					}
 				}
 				if(object.employee!=null){
@@ -493,6 +509,7 @@
 						trackerConsoleJobs.initialEndSpoilage = 0;
 						trackerConsoleJobs.endSpoilage = 0;
 						trackerConsoleJobs.difference = 0;
+						updateCosting();
 					}
 				}
 			}
@@ -507,10 +524,11 @@
 						trackerConsoleJobs.spoilage = 0;
 						trackerConsoleJobs.initialSpoilageValue = 0;
 					}
+					updateCosting();
 				}
 			}
 			
-			private function setSpoilageValue(stateValue:String):void {
+			private function setSpoilageValue(stateValue:String=null):void {
 				if(stateValue=="start"){
 					trackerConsoleJobs.endSpoilage = trackerConsoleJobs.difference+trackerConsoleJobs.startSpoilage;
 				} else if(stateValue=="end"){
@@ -520,11 +538,11 @@
 				trackerConsoleJobs.endSpoilage!=trackerConsoleJobs.initialEndSpoilage){
 					if(trackerConsoleJobs.difference>trackerConsoleJobs.impressions){
 						trackerConsoleJobs.spoilage = trackerConsoleJobs.difference-trackerConsoleJobs.impressions;
-						trackerConsoleJobs.initialSpoilageValue = trackerConsoleJobs.spoilage;
 					} else {
 						trackerConsoleJobs.spoilage = 0;
-						trackerConsoleJobs.initialSpoilageValue = 0;
 					}
+					trackerConsoleJobs.initialSpoilageValue = trackerConsoleJobs.spoilage;
+					updateCosting();
 				}
 				trackerConsoleJobs.initialStartSpoilage = trackerConsoleJobs.startSpoilage;
 				trackerConsoleJobs.initialEndSpoilage = trackerConsoleJobs.endSpoilage;
@@ -736,7 +754,7 @@
 					dataHolder="{trackerConsoleJobs}" variableName="spoilage" customText="{getJobSpoilage(trackerConsoleJobs.treatAsNonProdStep,trackerConsoleJobs.spoilage)}" 
 					enabled="{job!=null &amp;&amp; !trackerConsoleJobs.treatAsNonProdStep}" disabledColor="#000000"
 					allowNegative="false" precision="0" rounding="nearest" isInteger="true" textAlignStyle="left" focusIn="{trackerConsoleJobs.initialSpoilageValue=trackerConsoleJobs.spoilage}"
-					focusOut="{resetCalcValues()}"/>
+					focusOut="{resetCalcValues();}"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalGap="2">
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowStopCmd.BinderyWaste')}:"
@@ -766,12 +784,19 @@
 				<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'workflowDetailsCmd.Cost')}:"
 					width="30%" textAlign="right"/>
 				<components:CustomNumericTextInputComponent 
-					customText="{getTotalCost(trackerConsoleJobs,0,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
+					customText="{getTotalCost(trackerConsoleJobs,trackerConsoleJobs.totalCost,0,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
 					precision="2" rounding="nearest" width="30%" enabled="false" disabledColor="#000000"/>
 				<mx:Spacer width="10%"/>
 				<components:CustomNumericTextInputComponent 
-					customText="{getTotalCost(trackerConsoleJobs,1,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
-					precision="2" rounding="nearest" width="30%" enabled="false" disabledColor="#000000"/>
+					customText="{getTotalCost(trackerConsoleJobs,trackerConsoleJobs.totalCost,1,trackerConsoleJobs.treatAsNonProdStep)}" textAlignStyle="left"
+					precision="2" rounding="nearest" width="23%" enabled="false" disabledColor="#000000"/>
+				<mx:Canvas height="20" width="7%">
+					<mx:LinkButton width="100%" height="100%" id="refresh_price_btn" click="{updateCosting()}">
+						<mx:icon>@Embed(source='../../../../assets/refresh_small.png')</mx:icon>
+					</mx:LinkButton>	
+					<components1:SmallThrobber width="100%" height="100%" id="pricing_throbber" visible="false"/>
+				</mx:Canvas>
+				
 			</mx:HBox>
 			
 		</mx:VBox>

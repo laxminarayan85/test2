@@ -2188,6 +2188,12 @@ public class DataService extends HibernateService {
 					tmpId = job.getPress().getId();
 					job.setPress((PressDefinition) this.getById("PressDefinition", tmpId));
 				}
+				
+				if(job.getCharges()!=null) {
+					for (Charge charge : job.getCharges()) {
+						Hibernate.initialize(charge.getParentJob());
+					}
+				}
 
 			}
 		} catch (NoResultException e) {

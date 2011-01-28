@@ -1178,7 +1178,7 @@
 						if(selectedTrackerConsoleJob.job.costingRecord==null){
 							selectedTrackerConsoleJob.job.costingRecord = new CostingRecord();
 						}
-						if(selectedTrackerConsoleJob.job.costingRecord.costEntered){
+						if(selectedTrackerConsoleJob.job.costingRecord.costEntered || !selectedTrackerConsoleJob.job.costingRecord.dataCollected){
 							selectedTrackerConsoleJob.job.costingRecord.actualTotalCost = selectedTrackerConsoleJob.totalCost;
 							selectedTrackerConsoleJob.job.costingRecord.actualRunTime = selectedTrackerConsoleJob.totalRunTime;
 							selectedTrackerConsoleJob.job.costingRecord.actualSetupTime = selectedTrackerConsoleJob.totalSetUpTime;
