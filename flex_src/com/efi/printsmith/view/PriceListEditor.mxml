@@ -517,7 +517,7 @@
 		priceList.ignorePriceAdjustments = chkIgnoreGlobalPriceChange.selected;
 		priceList.isPercentage = this.amt_is_percent.selected;
 		priceList.isDollar = this.amt_is_currency.selected;
-		//priceList.lastItemIsPriceAdditionalQty = this.chkLastLineAddlnQty.selected;
+		priceList.lastItemIsPriceAdditionalQty = this.chkLastLineAddlnQty.selected;
 		if (copyFLag){
 			priceList.id = 0;
 			for (var t:int = 0;t < priceList.elements.length;t++) {

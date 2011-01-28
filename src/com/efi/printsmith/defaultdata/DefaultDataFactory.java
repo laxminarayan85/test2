@@ -403,7 +403,7 @@ public class DefaultDataFactory {
 		return;
 			
 		TableEditor tableEditor = new TableEditor();
-		tableEditor.setName("Business Type");
+		tableEditor.setName("BusinessType");
 		tableEditor.setUserName("Business Type");
 		try {
 			tableEditor = (TableEditor) dataservice.addUpdate(tableEditor);

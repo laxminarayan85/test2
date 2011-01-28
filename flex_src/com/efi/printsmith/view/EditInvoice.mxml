@@ -890,7 +890,7 @@
 					
 				if(deletedJobs!=null) {
 					for (var i:int = 0; i < this.deletedJobs.length; i++) {
-						dataService.deleteItem("Job", (deletedJobs.getItemAt(i) as Job).id);
+						dataService.deleteItem("Job", (deletedJobs.getItemAt(i) as Number));
 					}
 				}
 				
@@ -945,20 +945,26 @@
 				var target:EditJob=event.target as EditJob;
 				var deletedJob:Job = target.job as Job;
 				
-				if (invoice.jobs.contains(deletedJob)) {
-					invoice.jobs.removeItemAt(invoice.jobs.getItemIndex(deletedJob));
-					invoice_job_grid.invalidateDisplayList();
-					invoice_job_grid.invalidateList();
-					resetJobsList = true;
-					updateTotals();
+				var jobsList:ArrayCollection = invoice.jobs;
+				
+				if (jobsList != null) {
+					for (var i:int=0; i < jobsList.length; i++) {
+						if (jobsList.getItemAt(i).id == deletedJob.id) {
+							jobsList.removeItemAt(i);
+						}
+					}
 				}
+
+				invoice.jobs = jobsList;
+				
+				updateTotals();
 				this.showJobs();
 				
 				if (this.deletedJobs == null) {
 					this.deletedJobs = new ArrayCollection();
 				}
 				
-				this.deletedJobs.addItem(deletedJob);
+				this.deletedJobs.addItem(deletedJob.id);
 			}
 			
 			private function addNewJob(event:Event):void {
