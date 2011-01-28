@@ -576,10 +576,10 @@
 					this.priceList.elements.refresh();
 				}
 			} else if (itemType == "WasteChart") {
-				for (i = 0;i < priceList.elements.length;i++) {
+				/*for (i = 0;i < priceList.elements.length;i++) {
 					element = priceList.elements.getItemAt(i) as PriceListElement;
 					element.amount = element.amount * 100;
-				}
+				}*/
 			} else if (itemType == "SpeedTable") {
 			} else if (itemType == "PaperPrice") {
 //				if (priceList.isPercentage == true) {
