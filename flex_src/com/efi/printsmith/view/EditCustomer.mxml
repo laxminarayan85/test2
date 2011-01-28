@@ -268,7 +268,10 @@
 
 	public function handleUIEvent(evt:ResultEvent):void {
 		if (evt.result != null){
-			dataService.deleteItem("Account", evt.result.id);
+			if (isNaN(evt.result.id))
+				doNewOperation();
+			else
+				dataService.deleteItem("Account", evt.result.id);
 		}
 	}		
 
@@ -1313,6 +1316,8 @@
 	    }
     }
    private function ClearLabel():void{
+    	if ( credit_limit_edit.text == "0")
+    		credit_limit_edit.text = "0.00"
     	
     	if (credit_limit_edit.text == "" || credit_limit_edit.text == "0.00") {
     		limit.visible = true;
