@@ -338,9 +338,10 @@ public class DataService extends HibernateService {
 				+ "a.stktype, a.stkgroup, a.coated, a.minorder, a.cost1, a.priceExpires, a.forestManagement, "
 				+ "a.pcwRecycledPercent, a.fscCertified, a.sfiCertified, a.greenSealCertified, a.sheetsPerSet, a.uom , a.stockunit, a.standardItem ";
 		try {
-			String queryString = "select new StockDefinition( "
-					+ columnStr
-					+ ") from StockDefinition a left outer join a.normalRunSize left outer join a.parentsize";
+			String queryString = " from StockDefinition "; //a  where (a.normalRunSize is null or a.normalRunSize is not null) and (a.parentsize is null or a.parentsize is not null) "; //order by a.name";
+//				"select new StockDefinition(  "
+//					+ columnStr
+//					+ ") from StockDefinition a ";
 
 			Query query = em.createQuery(queryString);
 

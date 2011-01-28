@@ -1315,6 +1315,9 @@
 	private function handleSaveResult(ev:ResultEvent):void {
 		openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'genericPrefCmd.StockDefinitions')));
 		openConfirmationComponent("The StockDefinition has been successfully saved");
+		
+		loadStockDefinitions();
+		
 		setStockDefinition(ev.result as StockDefinition);
 		if(fromJobPage) {
 			registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
