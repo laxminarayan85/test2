@@ -221,7 +221,7 @@
 						click="{openColorPicker(pastDueColor)}" width="170" />
 						
 					<components:CustomColorPickerComponent id="pastDueColor" visible="false" includeInLayout="false"
-						dataHolder="{preferencesPOS}" variableName="pastDueColor" customText="{preferencesPOS.pastDueColor}"/>
+						dataHolder="{preferencesPOS}" variableName="pastDueColor" customText="{preferencesPOS.pastDueColor}" focusAlpha="0"/>
 						
 					<mx:VBox width="80" height="25" backgroundColor="{uint(parseInt(preferencesPOS.pastDueColor))}"
 						borderStyle="solid"/>
@@ -235,7 +235,7 @@
 						click="{openColorPicker(pickupColor)}" width="170" />
 						
 					<components:CustomColorPickerComponent id="pickupColor" visible="false" includeInLayout="false"
-						dataHolder="{preferencesPOS}" variableName="pickupColor" customText="{preferencesPOS.pickupColor}"/>
+						dataHolder="{preferencesPOS}" variableName="pickupColor" customText="{preferencesPOS.pickupColor}" focusAlpha="0"/>
 						
 					<mx:VBox width="80" height="25" backgroundColor="{uint(parseInt(preferencesPOS.pickupColor))}"
 						borderStyle="solid"/>
@@ -249,7 +249,7 @@
 						click="{openColorPicker(invoiceColor)}" width="170" />
 						
 					<components:CustomColorPickerComponent id="invoiceColor" visible="false" includeInLayout="false"
-						dataHolder="{preferencesPOS}" variableName="invoiceColor" customText="{preferencesPOS.invoiceColor}"/>
+						dataHolder="{preferencesPOS}" variableName="invoiceColor" customText="{preferencesPOS.invoiceColor}" focusAlpha="0"/>
 						
 					<mx:VBox width="80" height="25" backgroundColor="{uint(parseInt(preferencesPOS.invoiceColor))}"
 						borderStyle="solid"/>
@@ -263,7 +263,7 @@
 						click="{openColorPicker(estimateColor)}" width="170" />
 						
 					<components:CustomColorPickerComponent id="estimateColor" visible="false" includeInLayout="false"
-						dataHolder="{preferencesPOS}" variableName="estimateColor" customText="{preferencesPOS.estimateColor}"/>
+						dataHolder="{preferencesPOS}" variableName="estimateColor" customText="{preferencesPOS.estimateColor}" focusAlpha="0"/>
 						
 					<mx:VBox width="80" height="25" backgroundColor="{uint(parseInt(preferencesPOS.estimateColor))}"
 						borderStyle="solid"/>
