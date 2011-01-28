@@ -282,9 +282,9 @@
 	
 	<mx:HBox width="100%" horizontalAlign="center">
 	
-		<mx:Button label="Ok" click="{saveUpdateData()}"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{saveUpdateData()}"/>
 		
-		<mx:Button label="Cancel" click="{closeWindow()}"/>
+		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{closeWindow()}"/>
 		
 	</mx:HBox>
 	
