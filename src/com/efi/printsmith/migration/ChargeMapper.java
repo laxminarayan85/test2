@@ -83,6 +83,10 @@ public class ChargeMapper extends ImportMapper {
 				charge.setFinished(Utilities.tokenToBooleanValue(currentImportToken));
 			} else if ("displayqty".equals(currentFieldToken)) {
 				charge.setDisplayQty(Utilities.tokenToBooleanValue(currentImportToken));
+			} else if ("material quantity".equals(currentFieldToken)) {
+				charge.setMaterialQty(Utilities.tokenToDouble(currentImportToken));
+			} else if ("material sets".equals(currentFieldToken)) {
+				charge.setMaterialSets(Utilities.tokenToDouble(currentImportToken));
 			} else if ("brokered".equals(currentFieldToken)) {
 				charge.setBrokered(Utilities.tokenToBooleanValue(currentImportToken));
 //			} else if ("attribute1".equals(currentFieldToken)) {
