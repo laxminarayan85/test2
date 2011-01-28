@@ -387,6 +387,7 @@ width="938" height="507"  creationComplete="init()"
 			this.labor_cost.text = job.pricingRecord.laborCost.toFixed(2);
 			this.labor_price.text = job.pricingRecord.laborTotalPrice.toFixed(2);
 			this.labor_markup.text = (job.pricingRecord.laborTotalPrice - job.pricingRecord.laborCost).toFixed(2);
+			this.show_cutout_btn.visible = false;
 		}
 	}
 	
