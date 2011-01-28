@@ -118,6 +118,8 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.pricing.InvoicePricing;
+			import mx.formatters.NumberFormatter;
 			import com.efi.printsmith.data.StockDefinition;
 			import com.efi.printsmith.data.PreferencesStocks;
 			import com.efi.printsmith.pages.EstimatorCheckList;
@@ -297,6 +299,7 @@
 			private var randomNumber:int;
 			
 			private var windowRef:MDIWindow;
+			private var invoicePricing:InvoicePricing;
 			
 			[Bindable] public var preferencesStocks:PreferencesStocks;
 									
@@ -393,6 +396,8 @@
 				
 				prefStocksDataService.getSingle("PreferencesStocks");
 				
+				invoicePricing = new InvoicePricing();
+				invoicePricing.invoice = invoice;
 					
 				invoiceRepositoryService.getItemList();
 				var eventJobs:InvoiceJobsEvent = new InvoiceJobsEvent(toolbar.getButton("new_job_button0"),new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
@@ -1694,9 +1699,7 @@
 			public function openDepositEntry():void		{
 				if (invoice is Invoice)	{
 					
-				
-					var thisWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this, true);
-					var ac:ArrayCollection = Snowmass.getInstance().containerManager.getChildrenOfWindow(thisWin.windowID);
+					var ac:ArrayCollection = Snowmass.getInstance().containerManager.getChildrenOfWindow(windowRef.windowID);
 					
 					if (ac != null)	{
 						for (var i:int=0; i<ac.length; i++)	{
@@ -1710,11 +1713,36 @@
 									
 					var de:DepositEntryEditor = new DepositEntryEditor();
 					de.addEventListener(DepositEntryAddedEvent.DEPOSITENTRYADDED, onDepEntryAdded,false, 0, true);
-					var winId:int = Snowmass.getInstance().containerManager.getWindowWithChild(this, true).windowID;
+					var winId:int = windowRef.windowID;
 					Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.DepositEntry'), de,-1,-1,550,500,winId);
 					de.depArray = expandDepositsArray(invoice.deposits);
 				}				
 			}
+
+			public function openDocTotals():void		{
+				
+				var ac:ArrayCollection = Snowmass.getInstance().containerManager.getChildrenOfWindow(windowRef.windowID);
+				
+				if (ac != null)	{
+					for (var i:int=0; i<ac.length; i++)	{
+						var win:MDIWindow = ac.getItemAt(i) as MDIWindow;
+						if (win.content.className.indexOf("DocumentTotalsEditor") > -1)	{
+							win.bringWindowToFront();
+							return;
+						}  
+					}
+				}
+								
+				var de:DocumentTotalsEditor= new DocumentTotalsEditor();
+				//de.addEventListener(DepositEntryAddedEvent.DEPOSITENTRYADDED, onDepEntryAdded,false, 0, true);
+				var winId:int = windowRef.windowID;
+				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.DocumentTotals'), de,-1,-1,550,500,winId);
+				de.invoice = invoice; 
+				
+				
+								
+			}
+
 			
 			private function expandDepositsArray(ac:ArrayCollection):ArrayCollection	{
 				if (ac == null)
@@ -1765,7 +1793,8 @@
 				if (ac != null && ac.length ==3)	{
 					setDepositLabels(ac);
 					invoice.deposits = trimDepositsArray(ac);
-					invoice.amountDue = ((ac.getItemAt(0) as DepositEntry).amount + (ac.getItemAt(1) as DepositEntry).amount + (ac.getItemAt(2) as DepositEntry).amount) * -1;
+					
+					//invoice.amountDue = ((ac.getItemAt(0) as DepositEntry).amount + (ac.getItemAt(1) as DepositEntry).amount + (ac.getItemAt(2) as DepositEntry).amount) * -1;
 				}
 			}
 			
@@ -1773,21 +1802,21 @@
 				var dep1:DepositEntry = ac.getItemAt(0) as DepositEntry;
 				txtDep1.text = "";
 				if (dep1.amount != 0)	{
-					txtDep1.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 1: " + Snowmass.getCurrencyFormatter(true, 2).format(dep1.amount) + " (" + dep1.type.name + ") ";
+					txtDep1.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 1: " + Snowmass.getCurrencyFormatter(false, 2).format(dep1.amount) + " (" + dep1.type.name + ") ";
 					if (dep1.referenceNumber != "") 
 						txtDep1.text += " (" + dep1.referenceNumber + ")";
 				}
 				var dep2:DepositEntry = ac.getItemAt(1) as DepositEntry;
 				txtDep2.text = "";
 				if (dep2.amount != 0)	{
-					txtDep2.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 2: " + Snowmass.getCurrencyFormatter(true, 2).format(dep2.amount) + " (" + dep2.type.name + ") ";
+					txtDep2.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 2: " + Snowmass.getCurrencyFormatter(false, 2).format(dep2.amount) + " (" + dep2.type.name + ") ";
 					if (dep2.referenceNumber != "") 
 						txtDep2.text += " (" + dep2.referenceNumber + ")";
 				}
 				var dep3:DepositEntry = ac.getItemAt(2) as DepositEntry;
 				txtDep3.text = "";
 				if (dep3.amount != 0)	{
-					txtDep3.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 3: " + Snowmass.getCurrencyFormatter(true, 2).format(dep3.amount) + " (" + dep3.type.name + ") ";
+					txtDep3.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'depositCmd.Deposit') + " 3: " + Snowmass.getCurrencyFormatter(false, 2).format(dep3.amount) + " (" + dep3.type.name + ") ";
 					if (dep3.referenceNumber != "") 
 						txtDep3.text += " (" + dep3.referenceNumber + ")";
 				}
@@ -2718,7 +2747,7 @@
 						 				 
 					</mx:VBox>
 					<mx:VRule width="2%" height="100%"/>
-					<mx:Form width="30%" height="100%">
+					<mx:Form width="30%" height="100%"  click="openDocTotals();">
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.CustDiscount')}"  >
 							<mx:Text textAlign="right"
 									 id="cust_discount_text"
@@ -2812,7 +2841,7 @@
 						</mx:HBox>
 					</mx:VBox>
 					<mx:VRule width="2%" height="100%"/>
-					<mx:Form width="50%" height="100%" id="costing_total_canvas">
+					<mx:Form width="50%" height="100%" id="costing_total_canvas" click="openDocTotals();">
 						
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invCostingCmd.Actual')}" >
 							<mx:Text   height="100%"

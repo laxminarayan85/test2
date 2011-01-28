@@ -488,6 +488,13 @@
 							(mdi.content as EditInvoice).openDepositEntry();	
 						}			
 					}	
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.DocumentTotals") > -1 ))	{
+						var mdi:MDIWindow = containerManager.getActiveWindow()	;
+						if (mdi.content is EditInvoice)	{
+							(mdi.content as EditInvoice).openDocTotals();
+						}			
+					}	
 			}
 			if (event.menuItem is WindowApplicationMenuItem)	{
 				var winItem:WindowApplicationMenuItem = event.menuItem as WindowApplicationMenuItem;
@@ -1584,6 +1591,7 @@
         	currencyValidator.currencySymbol = "$"; // TODO
         	return currencyValidator;
         }
+        
         
         public static function getCurrencyFormatter(showSymbol:Boolean, precision:Number):CurrencyFormatter {
         	var formatter:CurrencyFormatter = new CurrencyFormatter();
