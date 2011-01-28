@@ -237,7 +237,7 @@ width="938" height="507"  creationComplete="init()"
 			this.labor_price.text = job.pricingRecord.laborTotalPrice.toFixed(2);
 			this.labor_markup.text = (job.pricingRecord.laborTotalPrice - job.pricingRecord.laborCost).toFixed(2);
 			this.parent_costs.text = job.parentStockCost.toFixed(2);
-		} else if (job.pricingMethod.title == "Printing" || job.pricingMethod.title == "Roll Fed" || job.pricingMethod.method == "Large Format" || job.pricingMethod.method == "B&W" || job.pricingMethod.method == "Color") {
+		} else if (job.pricingMethod.title == "Printing" || job.pricingMethod.title == "List" || job.pricingMethod.title == "Roll Fed" || job.pricingMethod.method == "Large Format" || job.pricingMethod.method == "B&W" || job.pricingMethod.method == "Color") {
 			this.parent_size.selectedIndex = findItem(job.parentSize.name,this.dimensionsArray);
 			this.run_size.selectedIndex = findItem(job.runSize.name,this.dimensionsArray);
 			this.production_run.text = job.totalImpressions.toString();
@@ -262,7 +262,7 @@ width="938" height="507"  creationComplete="init()"
 			this.labor_price.text = job.pricingRecord.laborTotalPrice.toFixed(2);
 			this.labor_markup.text = (job.pricingRecord.laborTotalPrice - job.pricingRecord.laborCost).toFixed(2);
 			this.parent_costs.text = job.parentStockCost.toFixed(2);
-			if (job.pricingMethod.title == "Printing") {
+			if (job.pricingMethod.title == "Printing" || job.pricingMethod.title == "List") {
 				this.copier.text = job.pricingPress.name;
 				this.copier_speed.text = job.copyMinutes.toString();
 				this.copier_label.visible = false;
@@ -282,7 +282,7 @@ width="938" height="507"  creationComplete="init()"
 					runHours = minimumHours;
 				if (job.doubleSided == true)
 					runHours = runHours * 2;
-				var runHoursString:String = runHours.toFixed(0);
+				var runHoursString:String = runHours.toFixed(0).replace(".","");
 				var runMinutes:Number = runHours * 60;
 				runMinutes = runMinutes - Math.floor(runHours);
 				if (runMinutes < 10)
@@ -341,6 +341,7 @@ width="938" height="507"  creationComplete="init()"
 					this.sheets_purchased.visible = false;
 					this.requires_label.visible = false;
 					this.sheets_purchased_label.visible = false;
+					this.text1.visible = false;
 					this.run_size.selectedIndex = -1;
 					this.run_size.text = job.rollWidth + " x " + job.cutOff;
 					this.area.text = (job.rollWidth * job.cutOff).toFixed(0);
@@ -427,6 +428,19 @@ width="938" height="507"  creationComplete="init()"
 			job.orRunOut = false;
 		else
 			job.orRunOut = true;
+		setOverrideForField(number_out,job.orRunOut);
+	}
+	
+	private function setOverrideForField(field:TextInput, overrideActive:Boolean):void
+	{
+		if (overrideActive)
+		{
+			field.setStyle("fontStyle","italic");
+			field.setStyle("textDecoration","underline");
+		} else {
+			field.setStyle("fontStyle","normal");
+			field.setStyle("textDecoration","none");
+		}
 	}
 	
 	private function doProductionPriceChange():void {
@@ -434,6 +448,7 @@ width="938" height="507"  creationComplete="init()"
 			job.pricingRecord.productionPriceOverride = false;
 		else
 			job.pricingRecord.productionPriceOverride = true;
+		this.setOverrideForField(production,job.pricingRecord.productionPriceOverride);
 	}
 	
 	private function doCopierSpeedChange():void {
@@ -441,6 +456,7 @@ width="938" height="507"  creationComplete="init()"
 			job.copyMinutesOverride = false;
 		else
 			job.copyMinutesOverride = true;
+		setOverrideForField(copier_speed,job.copyMinutesOverride);
 	}
 	
 	private function doParentCostChange():void {
@@ -448,6 +464,7 @@ width="938" height="507"  creationComplete="init()"
 			job.parentStockCostOverride = false;
 		else
 			job.parentStockCostOverride = true;
+		setOverrideForField(parent_costs,job.parentStockCostOverride);
 	}
 	
 	private function doPerChange():void {
@@ -455,6 +472,7 @@ width="938" height="507"  creationComplete="init()"
 			job.costUnitsOverride = false;
 		else
 			job.costUnitsOverride = true;
+		setOverrideForField(per,job.costUnitsOverride);
 	}
 	
 	private function doMarkupChange():void {
@@ -462,6 +480,7 @@ width="938" height="507"  creationComplete="init()"
 			job.orStockMarkup = false;
 		else
 			job.orStockMarkup = true;
+		setOverrideForField(markup,job.orStockMarkup);
 	}
 	
 	private function fieldChanged(evt:FocusEvent):void

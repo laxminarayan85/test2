@@ -66,6 +66,7 @@ public class PricingService extends SnowmassHibernateService {
 		}
 		
 		this.calculateOvers(job);
+		job.getPricingRecord().setTotalPrice(job.getPricingRecord().getTotalPrice().doubleValue() + job.getPricingRecord().getProductionPrice().doubleValue());
 		job.getPricingRecord().setTotalPrice(new Double(Math.round(job.getPricingRecord().getTotalPrice().doubleValue() * 100)) / 100);
 		job.getPricingRecord().setUnitPrice(new Double(Math.round(job.getPricingRecord().getUnitPrice().doubleValue() * 10000)) / 10000);
 		JobUtilities.calculateSignatures(job);

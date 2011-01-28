@@ -1392,7 +1392,7 @@
 											  layout="absolute"
 											  title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RunMethod')}"
 											  dropShadowEnabled="false"
-											  fontSize="9" headerHeight="20" borderThicknessBottom="3" borderThicknessLeft="3" borderThicknessRight="3">
+											  fontSize="9" headerHeight="20" borderThicknessBottom="3" borderThicknessLeft="3" borderThicknessRight="3" id="workAndTumble">
 										<mx:RadioButtonGroup id="run_method_radiogroup"/>
 										<mx:RadioButton x="10"
 														y="27"
@@ -3172,7 +3172,7 @@
 			}			
 
 			private function checkCopierSize():void {
-				if (this.currentState != "LargeFormat") {
+				if (this.currentState != "LargeFormat" && this.currentState != "Rollfed") {
 					var copier:CopierDefinition = this.job_pricing_copier.selectedItem as CopierDefinition;
 					var minSize:Dimension = new Dimension();
 					minSize.name = copier.minSize;
@@ -3227,11 +3227,11 @@
 					job.runSize.width = job.parentSize.width;
 					job_size.text = job.runSize.name;
 					job_size.selectedIndex = job_parent.selectedIndex;
-					if (this.currentState != "LargeFormat")
+					if (this.currentState != "LargeFormat" && this.currentState != "Rollfed")
 						callLater(runSizeToBig);
 				}
 	
-				if (this.currentState != "LargeFormat") {
+				if (this.currentState != "LargeFormat" && this.currentState != "Rollfed") {
 					if ((job.finishSize != null && job.runSize != null) && (job.finishSize.width == 0 || job.finishSize.height == 0 || job.finishSize.width > job.runSize.width || job.finishSize.height > job.runSize.height)) {
 						var warn:Boolean = true;
 						if (job.finishSize.width == 0 || job.finishSize.height == 0 || this.dimensionJobTarget == this.job_size)
@@ -3622,6 +3622,10 @@
 					costingPresses.refresh();
 					this.front_passes_text.enabled = false;
 					this.back_passes_text.enabled = false;
+					this.workAndTumble.visible = false;
+					this.radiobutton1.visible = false;
+					this.radiobutton2.visible = false;
+					this.radiobutton3.visible = false;
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultRollFedPress != null) {
 						if (preferencesDefaultPresses.defaultRollFedPress != null) {
 							this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultRollFedPress.id, presses);

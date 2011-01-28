@@ -59,7 +59,7 @@ public class PressDefinitionMapper extends ImportMapper {
 			} else if ("addl run".equals(currentFieldToken)) {
 				pressDefinition.setSetupAddRun(Utilities.tokenToLong(currentImportToken));
 			} else if ("press speed".equals(currentFieldToken)) {
-				/* TODO */
+				pressDefinition.setAvgImpressPerHour(Utilities.tokenToDouble(currentImportToken));
 			} else if ("fixed spoilage".equals(currentFieldToken)) {
 				pressDefinition.setFixedWaste(Utilities.tokenToDouble(currentImportToken));
 			} else if ("labor rate".equals(currentFieldToken)) {
