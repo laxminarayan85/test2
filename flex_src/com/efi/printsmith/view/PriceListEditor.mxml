@@ -624,11 +624,11 @@
 				//priceList = ev.result as PaperPrice;
 		//}
 		}
-		if (priceList.isPercentage && priceList.elements != null) {
+		/*if (priceList.isPercentage && priceList.elements != null) {
 			for (var i:int=0; i< priceList.elements.length; i++) {
 				(priceList.elements.getItemAt(i) as PriceListElement).amount *= 100;
 			}
-		}
+		}*/
 		updateNewPriceList();
 	}
 	
