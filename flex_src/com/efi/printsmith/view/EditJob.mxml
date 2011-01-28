@@ -3952,6 +3952,25 @@
 				job.finishSize = localJob.finishSize;
 				job.cutOff = localJob.cutOff;
 				job.numUp = localJob.numUp;
+				job.typeSettingDate = localJob.typeSettingDate;
+				job.proofBackDate = localJob.proofBackDate;
+				job.bluelineDate = localJob.bluelineDate;
+				job.bluelineBackDate = localJob.bluelineBackDate;
+				job.stockCutDate = localJob.stockCutDate;
+				job.atPressDate = localJob.atPressDate;
+				job.printedDate = localJob.printedDate;
+				job.copiedDate = localJob.copiedDate;
+				job.binderyDate = localJob.binderyDate;
+				job.cutDate = localJob.cutDate;
+				job.foldedDate = localJob.foldedDate;
+				job.finishedDate = localJob.foldedDate;
+				job.mailingDate = localJob.mailingDate;
+				job.outsideServiceDate = localJob.outsideServiceDate;
+				job.otherDate = localJob.otherDate;
+				job.deliveredDate = localJob.deliveredDate;
+				job.runByDate = localJob.runByDate;
+				job.startByDate = localJob.startByDate;
+				job.submittedDate = localJob.submittedDate;
 				
 				if (job.parentSize != null) {
 					this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
@@ -3975,6 +3994,7 @@
 				}
 	    		
 	    		job.paperCal = localJob.paperCal;
+	    		job.pricingRecord = localJob.pricingRecord;
 	    		
 	    		refreshCalcAndImage();
 	    	}

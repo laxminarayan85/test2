@@ -123,6 +123,17 @@ width="938" height="507"  creationComplete="init()"
     private var dates:ArrayCollection = new ArrayCollection();
 	
 	public function init():void {
+		this.run_by_date.visible = false;
+		this.start_by_date.visible = false;
+		this.submitted_date.visible = false;
+		this.runByDate.visible = false;
+		this.runByTime.visible = false;
+		this.startByDate.visible = false;
+		this.startByTime.visible = false;
+		this.submittedDate.visible = false;
+		this.submittedTime.visible = false;
+		this.submittedDate.enabled = false;
+		this.submittedTime.enabled = false;
 		consumer.subscribe();
 		dimensionDataService.getAll("Dimension");
 		dataService.getAll("ProductionDates");
@@ -292,6 +303,17 @@ width="938" height="507"  creationComplete="init()"
 				this.washup_time.text = "0:00";
 				this.total_time.text = (parseInt(setupHours) + parseInt(runHoursString)).toString() + ":" + (setupMinutes + runMinutes).toFixed(0);
 			} else {
+				if (job.pricingCopier.integratedDevice) {
+					this.run_by_date.visible = true;
+					this.start_by_date.visible = true;
+					this.submitted_date.visible = true;
+					this.runByDate.visible = true;
+					this.runByTime.visible = true;
+					this.startByDate.visible = true;
+					this.startByTime.visible = true;
+					this.submittedDate.visible = true;
+					this.submittedTime.visible = true;
+				}
 				this.copier.text = job.pricingCopier.name;
 				this.copier_speed.text = job.copyMinutes.toString();
 				this.copier_label.visible = true;
@@ -347,6 +369,7 @@ width="938" height="507"  creationComplete="init()"
 					this.area.text = (job.rollWidth * job.cutOff).toFixed(0);
 				}
 			}
+			setAllOverrides();
 		} else {
 			this.currentState = "ChargesOnly";
 			this.labor_cost.text = job.pricingRecord.laborTotalPrice.toString();
@@ -444,8 +467,11 @@ width="938" height="507"  creationComplete="init()"
 	}
 	
 	private function doProductionPriceChange():void {
-		if (this.production.text == "" || isNaN(parseInt(this.production.text)))
+		if (this.production.text == "" || isNaN(parseInt(this.production.text))) {
 			job.pricingRecord.productionPriceOverride = false;
+			job.pricingRecord.productionPrice = 0.00;
+			production.text = "0.00";
+		}
 		else
 			job.pricingRecord.productionPriceOverride = true;
 		this.setOverrideForField(production,job.pricingRecord.productionPriceOverride);
@@ -481,6 +507,15 @@ width="938" height="507"  creationComplete="init()"
 		else
 			job.orStockMarkup = true;
 		setOverrideForField(markup,job.orStockMarkup);
+	}
+	
+	private function setAllOverrides():void {
+		setOverrideForField(markup,job.orStockMarkup);
+		setOverrideForField(per,job.costUnitsOverride);
+		setOverrideForField(parent_costs,job.parentStockCostOverride);
+		setOverrideForField(copier_speed,job.copyMinutesOverride);
+		setOverrideForField(production,job.pricingRecord.productionPriceOverride);
+		setOverrideForField(number_out,job.orRunOut);
 	}
 	
 	private function fieldChanged(evt:FocusEvent):void
@@ -565,8 +600,31 @@ width="938" height="507"  creationComplete="init()"
 	
 	private function updatePrice():void
 	{
+		updateDates();
 		var priceJobEvent:PriceJobEvent = new PriceJobEvent(this.job, new mx.rpc.Responder(handlePriceJobComplete, handlePriceJobFault));
 		priceJobEvent.dispatch();
+	}
+	
+	private function updateDates():void {
+		job.typeSettingDate = this.typeSettingDate.selectedDate;
+		job.proofBackDate = this.proofBackDate.selectedDate;
+		job.bluelineDate = this.bluelineDate.selectedDate;
+		job.bluelineBackDate = this.bluelineBackDate.selectedDate;
+		job.stockCutDate = this.stockCutDate.selectedDate;
+		job.atPressDate = this.atPressDate.selectedDate;
+		job.printedDate = this.printedDate.selectedDate;
+		job.copiedDate = this.copiedDate.selectedDate;
+		job.binderyDate = this.binderyDate.selectedDate;
+		job.cutDate = this.cutDate.selectedDate;
+		job.foldedDate = this.foldedDate.selectedDate;
+		job.finishedDate = this.foldedDate.selectedDate;
+		job.mailingDate = this.mailingDate.selectedDate;
+		job.outsideServiceDate = this.outsideServiceDate.selectedDate;
+		job.otherDate = this.otherDate.selectedDate;
+		job.deliveredDate = this.deliveredDate.selectedDate;
+		job.runByDate = this.runByDate.selectedDate;
+		job.startByDate = this.startByDate.selectedDate;
+		job.submittedDate = this.submittedDate.selectedDate;
 	}
 	
 	private function handlePriceJobComplete(ev:ResultEvent):void
@@ -586,6 +644,7 @@ width="938" height="507"  creationComplete="init()"
 	
 	private function doOK():void
 	{
+		updateDates();
 		var selectEvent:JobEditCompleteEvent = new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, job);
 		dispatchEvent(selectEvent);
 		PopUpManager.removePopUp(this);
@@ -684,52 +743,64 @@ width="938" height="507"  creationComplete="init()"
 	<mx:ComboBox x="138" y="30" width="84" id="run_size" labelField="name" focusOut="runSizeLostFocus()" dataProvider="{dimensionsArray}" editable="true" height="20"></mx:ComboBox>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="0" height="23" showSeconds="false" dataHolder="{job}" variableName="typeSettingDate" customText="{job.typeSettingDate}" is24Hour="false"  disabledColor="#000000" id="typeSettingTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="0" width="100" id="typeSettingDate" dataProvider="{job.typeSettingDate}"/>
+	<mx:DateField x="700" y="0" width="100" id="typeSettingDate" selectedDate="{job.typeSettingDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="20" height="23" showSeconds="false" dataHolder="{job}" variableName="proofBackDate" customText="{job.proofBackDate}" is24Hour="false"  disabledColor="#000000" id="proofBackTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="20" width="100" id="proofBackDate" dataProvider="{job.proofBackDate}"/>
+	<mx:DateField x="700" y="20" width="100" id="proofBackDate" selectedDate="{job.proofBackDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="40" height="23" showSeconds="false" dataHolder="{job}" variableName="bluelineDate" customText="{job.bluelineDate}" is24Hour="false"  disabledColor="#000000" id="bluelineTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="40" width="100" id="bluelineDate" dataProvider="{job.bluelineDate}"/>
+	<mx:DateField x="700" y="40" width="100" id="bluelineDate" selectedDate="{job.bluelineDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="60" height="23" showSeconds="false" dataHolder="{job}" variableName="bluelineBackDate" customText="{job.bluelineBackDate}" is24Hour="false"  disabledColor="#000000" id="bluelineBackTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="60" width="100" id="bluelineBackDate" dataProvider="{job.bluelineBackDate}"/>
+	<mx:DateField x="700" y="60" width="100" id="bluelineBackDate" selectedDate="{job.bluelineBackDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="81" height="23" showSeconds="false" dataHolder="{job}" variableName="stockCutDate" customText="{job.stockCutDate}" is24Hour="false"  disabledColor="#000000" id="stockCutTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="81" width="100" id="stockCutDate" dataProvider="{job.stockCutDate}"/>
+	<mx:DateField x="700" y="81" width="100" id="stockCutDate" selectedDate="{job.stockCutDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="102" height="23" showSeconds="false" dataHolder="{job}" variableName="atPressDate" customText="{job.atPressDate}" is24Hour="false"  disabledColor="#000000" id="atPressTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="102" width="100" id="atPressDate" dataProvider="{job.atPressDate}"/>
+	<mx:DateField x="700" y="102" width="100" id="atPressDate" selectedDate="{job.atPressDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="125" height="23" showSeconds="false" dataHolder="{job}" variableName="printedDate" customText="{job.printedDate}" is24Hour="false"  disabledColor="#000000" id="printedTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="125" width="100" id="printedDate" dataProvider="{job.printedDate}"/>
+	<mx:DateField x="700" y="125" width="100" id="printedDate" selectedDate="{job.printedDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="146" height="23" showSeconds="false" dataHolder="{job}" variableName="copiedDate" customText="{job.copiedDate}" is24Hour="false"  disabledColor="#000000" id="copiedTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="146" width="100" id="copiedDate" dataProvider="{job.copiedDate}"/>
+	<mx:DateField x="700" y="146" width="100" id="copiedDate" selectedDate="{job.copiedDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="166" height="23" showSeconds="false" dataHolder="{job}" variableName="binderyDate" customText="{job.binderyDate}" is24Hour="false"  disabledColor="#000000" id="binderyTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="166" width="100" id="binderyDate" dataProvider="{job.binderyDate}"/>
+	<mx:DateField x="700" y="166" width="100" id="binderyDate" selectedDate="{job.binderyDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="188" height="23" showSeconds="false" dataHolder="{job}" variableName="cutDate" customText="{job.cutDate}" is24Hour="false"  disabledColor="#000000" id="cutTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="188" width="100" id="cutDate" dataProvider="{job.cutDate}"/>
+	<mx:DateField x="700" y="188" width="100" id="cutDate" selectedDate="{job.cutDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="210" height="23" showSeconds="false" dataHolder="{job}" variableName="foldedDate" customText="{job.foldedDate}" is24Hour="false"  disabledColor="#000000" id="foldedTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="210" width="100" id="foldedDate" dataProvider="{job.foldedDate}"/>
+	<mx:DateField x="700" y="210" width="100" id="foldedDate" selectedDate="{job.foldedDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="230" height="23" showSeconds="false" dataHolder="{job}" variableName="finishedDate" customText="{job.finishedDate}" is24Hour="false"  disabledColor="#000000" id="finishedTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="230" width="100" id="finishedDate" dataProvider="{job.finishedDate}"/>
+	<mx:DateField x="700" y="230" width="100" id="finishedDate" selectedDate="{job.finishedDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="252" height="23" showSeconds="false" dataHolder="{job}" variableName="mailingDate" customText="{job.mailingDate}" is24Hour="false"  disabledColor="#000000" id="mailingTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="252" width="100" id="mailingDate" dataProvider="{job.mailingDate}"/>
+	<mx:DateField x="700" y="252" width="100" id="mailingDate" selectedDate="{job.mailingDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="274" height="23" showSeconds="false" dataHolder="{job}" variableName="outsideServiceDate" customText="{job.outsideServiceDate}" is24Hour="false"  disabledColor="#000000" id="outsideServiceTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="274" width="100" id="outsideServiceDate" dataProvider="{job.outsideServiceDate}"/>
+	<mx:DateField x="700" y="274" width="100" id="outsideServiceDate" selectedDate="{job.outsideServiceDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="295" height="23" showSeconds="false" dataHolder="{job}" variableName="otherDate" customText="{job.otherDate}" is24Hour="false"  disabledColor="#000000" id="otherTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="295" width="100" id="otherDate" dataProvider="{job.otherDate}"/>
+	<mx:DateField x="700" y="295" width="100" id="otherDate" selectedDate="{job.otherDate}"/>
 	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="317" height="23" showSeconds="false" dataHolder="{job}" variableName="deliveredDate" customText="{job.deliveredDate}" is24Hour="false"  disabledColor="#000000" id="deliveredTime">
 	</ns1:CustomTimeEntryDateComponent>
-	<mx:DateField x="700" y="317" width="100" id="deliveredDate" dataProvider="{job.deliveredDate}"/>
+	<mx:Label x="595" y="363" text="Run By Date:" width="97" textAlign="right" id="run_by_date"/>
+	<mx:Label x="595" y="385" text="Start By Date:" width="97" textAlign="right" id="start_by_date"/>
+	<mx:Label x="595" y="408" text="Submitted Date:" width="97" textAlign="right" id="submitted_date"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="363" height="23" showSeconds="false" dataHolder="{job}" variableName="runByDate" customText="{job.outsideServiceDate}" is24Hour="false"  disabledColor="#000000" id="runByTime">
+	</ns1:CustomTimeEntryDateComponent>
+	<mx:DateField x="700" y="363" width="100" id="runByDate" selectedDate="{job.runByDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="384" height="23" showSeconds="false" dataHolder="{job}" variableName="startByDate" customText="{job.otherDate}" is24Hour="false"  disabledColor="#000000" id="startByTime">
+	</ns1:CustomTimeEntryDateComponent>
+	<mx:DateField x="700" y="384" width="100" id="startByDate" selectedDate="{job.startByDate}"/>
+	<ns1:CustomTimeEntryDateComponent width="103" x="802" y="406" height="23" showSeconds="false" dataHolder="{job}" variableName="submittedDate" customText="{job.deliveredDate}" is24Hour="false"  disabledColor="#000000" id="submittedTime">
+	</ns1:CustomTimeEntryDateComponent>
+	<mx:DateField x="700" y="406" width="100" id="submittedDate" selectedDate="{job.submittedDate}"/>
+	<mx:DateField x="700" y="317" width="100" id="deliveredDate" selectedDate="{job.deliveredDate}"/>
 </mx:Canvas>
 
 </mx:Panel>
