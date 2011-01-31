@@ -19,7 +19,7 @@ import mx.rpc.events.ResultEvent;
 import mx.collections.ArrayCollection;
 import mx.rpc.events.FaultEvent;  
 import mx.controls.Alert; 
-import com.efi.printsmith.data.TableEditor; 
+import com.efi.printsmith.data.TableProperties; 
 import com.efi.printsmith.data.*;
 
 
@@ -60,8 +60,8 @@ import com.efi.printsmith.data.*;
 	}
 	
 	private function doTableCombo():void{
-		var temp:TableEditor;
-		temp = table_combo.selectedItem as TableEditor;
+		var temp:TableProperties;
+		temp = table_combo.selectedItem as TableProperties;
 		dataService.getAll(temp.name)
 		dataService.getMaxDisplayId(temp.name);
 	}
@@ -78,9 +78,9 @@ import com.efi.printsmith.data.*;
 	}
 	
 	private function setClassType():Class{
-		var temp:TableEditor;
+		var temp:TableProperties;
 		
-		temp = table_combo.selectedItem as TableEditor;
+		temp = table_combo.selectedItem as TableProperties;
 		
 		 switch (temp.name)
 		 {
@@ -254,11 +254,11 @@ import com.efi.printsmith.data.*;
 	}
 	
 	private function removeItem() : void{
-		var temp:TableEditor;
+		var temp:TableProperties;
 		var index:int;
 		tempClass = setClassType();
 		var tempObject: Object = new tempClass();
-		temp = table_combo.selectedItem as TableEditor;
+		temp = table_combo.selectedItem as TableProperties;
 		tempObject = datagrid.selectedItem as tempClass;
 		if ( tempObject.id  == 0){
 			index = findItem(tempObject.name, tableDataArray);
@@ -269,10 +269,10 @@ import com.efi.printsmith.data.*;
 	
 	}
 	private function doDelete():void{
-		var temp:TableEditor;
-		var temp2:TableEditor;
-		temp = table_combo.selectedItem as TableEditor;
-		temp2 = datagrid.selectedItem as TableEditor;
+		var temp:TableProperties;
+		var temp2:TableProperties;
+		temp = table_combo.selectedItem as TableProperties;
+		temp2 = datagrid.selectedItem as TableProperties;
 		if (temp2 != null)
 			dataService.deleteItem(temp.name, temp2.id);
 	}

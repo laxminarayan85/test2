@@ -64,6 +64,11 @@ public class Dimension extends ModelBase {
 	public static final String HEIGHT = "Height";
 
 	/**
+   * @generated
+   */
+  public static final String METRIC = "Metric";
+
+	/**
 	 * @generated
 	 */
 	public Dimension() {
@@ -179,6 +184,28 @@ public class Dimension extends ModelBase {
   }
 	
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean metric;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getMetric(){
+    return metric; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setMetric(Boolean newVal) {
+    this.metric = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -188,6 +215,7 @@ public class Dimension extends ModelBase {
     if (NAME.equals(propertyName)) return getName();
     if (WIDTH.equals(propertyName)) return getWidth();
     if (HEIGHT.equals(propertyName)) return getHeight();
+    if (METRIC.equals(propertyName)) return getMetric();
     return super.getProperty(propertyName);
   }
 	
@@ -201,6 +229,7 @@ public class Dimension extends ModelBase {
     if (NAME.equals(propertyName)) setName((String)newValue); else
     if (WIDTH.equals(propertyName)) setWidth((Float)newValue); else
     if (HEIGHT.equals(propertyName)) setHeight((Float)newValue); else
+    if (METRIC.equals(propertyName)) setMetric((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -218,6 +247,8 @@ public class Dimension extends ModelBase {
       return new Class<?>[] {Float.class};		
     if (HEIGHT.equals(propertyName)) 
       return new Class<?>[] {Float.class};		
+    if (METRIC.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -232,6 +263,7 @@ public class Dimension extends ModelBase {
     if (NAME.equals(propertyName)) return Dimension.class;
     if (WIDTH.equals(propertyName)) return Dimension.class;
     if (HEIGHT.equals(propertyName)) return Dimension.class;
+    if (METRIC.equals(propertyName)) return Dimension.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -250,6 +282,8 @@ public class Dimension extends ModelBase {
     if (! SmartEquals(getWidth(), objT.getWidth()))
       return false;
     if (! SmartEquals(getHeight(), objT.getHeight()))
+      return false;
+    if (! SmartEquals(getMetric(), objT.getMetric()))
       return false;
     return true;
   }			

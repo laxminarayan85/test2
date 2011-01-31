@@ -187,6 +187,11 @@ public class PreferencesPOS extends ModelBase {
   public static final String PENDINGOPTION = "PendingOption";
 
 	/**
+   * @generated
+   */
+  public static final String CASHDRAWERFONTBEAN = "CashDrawerFontBean";
+
+	/**
 	 * @generated
 	 */
 	public PreferencesPOS() {
@@ -1045,6 +1050,7 @@ public class PreferencesPOS extends ModelBase {
     if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) return getIncludePastDueDocuments();
     if (COLORPASTDUEENTRIES.equals(propertyName)) return getColorPastDueEntries();
     if (PENDINGOPTION.equals(propertyName)) return getPendingOption();
+    if (CASHDRAWERFONTBEAN.equals(propertyName)) return getCashDrawerFontBean();
     return super.getProperty(propertyName);
   }
 	
@@ -1088,6 +1094,7 @@ public class PreferencesPOS extends ModelBase {
     if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) setIncludePastDueDocuments((Boolean)newValue); else
     if (COLORPASTDUEENTRIES.equals(propertyName)) setColorPastDueEntries((Boolean)newValue); else
     if (PENDINGOPTION.equals(propertyName)) setPendingOption((String)newValue); else
+    if (CASHDRAWERFONTBEAN.equals(propertyName)) setCashDrawerFontBean((FontDefinition)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -1165,6 +1172,8 @@ public class PreferencesPOS extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (PENDINGOPTION.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (CASHDRAWERFONTBEAN.equals(propertyName)) 
+      return new Class<?>[] {FontDefinition.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -1209,6 +1218,7 @@ public class PreferencesPOS extends ModelBase {
     if (INCLUDEPASTDUEDOCUMENTS.equals(propertyName)) return PreferencesPOS.class;
     if (COLORPASTDUEENTRIES.equals(propertyName)) return PreferencesPOS.class;
     if (PENDINGOPTION.equals(propertyName)) return PreferencesPOS.class;
+    if (CASHDRAWERFONTBEAN.equals(propertyName)) return PreferencesPOS.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -1287,6 +1297,8 @@ public class PreferencesPOS extends ModelBase {
     if (! SmartEquals(getColorPastDueEntries(), objT.getColorPastDueEntries()))
       return false;
     if (! SmartEquals(getPendingOption(), objT.getPendingOption()))
+      return false;
+    if (! SmartEquals(getCashDrawerFontBean(), objT.getCashDrawerFontBean()))
       return false;
     return true;
   }			

@@ -32,8 +32,8 @@ import org.hibernate.annotations.Where;
  * @generated
  */	
 @NamedQueries({
-	@NamedQuery(name = "TapeVoidRecord.findall", query = "from TapeVoidRecord"),
-	@NamedQuery(name = "TapeVoidRecord.byId", query = "select a from TapeVoidRecord a where a.id= :id")
+  @NamedQuery(name = "TapeVoidRecord.findall", query = "from TapeVoidRecord"),
+  @NamedQuery(name = "TapeVoidRecord.byId", query = "select a from TapeVoidRecord a where a.id= :id")
 })
 
 
@@ -53,10 +53,10 @@ public class TapeVoidRecord extends Transaction {
 	 * @generated
 	 */
 	public TapeVoidRecord() {
-		this.created = new Date();
-		this.modified = new Date();
-		this.isDeleted = false;
-	}
+    this.created = new Date();
+    this.modified = new Date();
+    this.isDeleted = false;
+  }
 
 	@Basic
 	private Boolean isDeleted = false;

@@ -3306,15 +3306,15 @@ public class StockDefinition extends ModelBase {
   }
 
 	/**
-	 * @generated
-	 */	
-	public void addStockChanges(StockChange obj) {
+   * @generated
+   */	
+  public void addStockChanges(StockChange obj) {
     if (stockChanges == null) {
       stockChanges = new java.util.ArrayList<StockChange>();
     }
     stockChanges.add(obj);
   }
-	
+
 	/**
 	 * @generated
 	 */	

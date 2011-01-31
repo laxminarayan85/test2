@@ -114,22 +114,22 @@ package com.efi.printsmith.data
 		public var parentInvoice:InvoiceBase;
 		public var rootChargeRecord:String = "";
 		public var digitalAssets:ArrayCollection;
-		public var typeSettingDate:Date = new Date();
-		public var proofBackDate:Date = new Date();
-		public var bluelineDate:Date = new Date();
-		public var bluelineBackDate:Date = new Date();
-		public var stockCutDate:Date = new Date();
-		public var atPressDate:Date = new Date();
-		public var printedDate:Date = new Date();
-		public var copiedDate:Date = new Date();
-		public var binderyDate:Date = new Date();
-		public var cutDate:Date = new Date();
-		public var foldedDate:Date = new Date();
-		public var finishedDate:Date = new Date();
-		public var mailingDate:Date = new Date();
-		public var outsideServiceDate:Date = new Date();
-		public var otherDate:Date = new Date();
-		public var deliveredDate:Date = new Date();
+		public var typeSettingDate:Date = null;
+		public var proofBackDate:Date = null;
+		public var bluelineDate:Date = null;
+		public var bluelineBackDate:Date = null;
+		public var stockCutDate:Date = null;
+		public var atPressDate:Date = null;
+		public var printedDate:Date = null;
+		public var copiedDate:Date = null;
+		public var binderyDate:Date = null;
+		public var cutDate:Date = null;
+		public var foldedDate:Date = null;
+		public var finishedDate:Date = null;
+		public var mailingDate:Date = null;
+		public var outsideServiceDate:Date = null;
+		public var otherDate:Date = null;
+		public var deliveredDate:Date = null;
 		public var usePaperCalcUp:Boolean = false;
 		public var rollWidth:Number = 0;
 		public var defaultJob:Boolean = false;
@@ -163,9 +163,9 @@ package com.efi.printsmith.data
 		public var parentStockCostOverride:Boolean = false;
 		public var costUnits:int = 0;
 		public var costUnitsOverride:Boolean = false;
-		public var runByDate:Date = new Date();
-		public var startByDate:Date = new Date();
-		public var submittedDate:Date = new Date();
+		public var runByDate:Date = null;
+		public var startByDate:Date = null;
+		public var submittedDate:Date = null;
 	
 	}
 }
