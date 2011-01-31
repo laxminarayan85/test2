@@ -609,10 +609,9 @@
 			</mtrx:PriceScheduleMatrix>
 		</mx:AddChild>
 		<mx:SetProperty name="height" value="572"/>
-		<mx:SetProperty target="{label1}" name="y" value="402"/>
+		<mx:SetProperty target="{label1}" name="y" value="405"/>
 		<mx:SetProperty target="{price1}" name="y" value="400"/>
 		<mx:SetProperty target="{canvas1}" name="height" value="525"/>
-		<mx:SetProperty target="{label1}" name="x" value="10"/>
 		<mx:SetProperty target="{price1}" name="x" value="74"/>
 		<mx:SetProperty target="{canvas1}" name="width" value="655"/>
 		<mx:SetProperty target="{select_button}" name="y"/>
@@ -643,6 +642,8 @@
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild" target="{priceScheduleMethodCombo}"/>
 		<mx:SetProperty target="{priceScheduleMethodCombo}" name="x" value="74"/>
 		<mx:SetProperty target="{priceScheduleMethodCombo}" name="y" value="473"/>
+		<mx:SetProperty target="{label1}" name="x" value="-4"/>
+		<mx:SetProperty target="{label1}" name="width" value="70"/>
 	</mx:State>
 	<mx:State name="STAMPSCHEDULE">
 		<mx:SetProperty name="width" value="722"/>
