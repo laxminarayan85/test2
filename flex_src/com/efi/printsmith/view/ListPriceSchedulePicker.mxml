@@ -256,7 +256,7 @@
 		<mx:Button label="New Pass Schedule" click="doNewPass();" id="new_button0" width="129" x="399" y="70"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" id="cancel_button" width="129" x="400.5" y="146"/>
 		<mx:HRule x="397.5" y="130" width="132" height="8"/>
-		<common:CustomDeleteButtonComponent isIcon="false" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" deleteLabel="{this.label}" clickFuncName="doDelete" id="delete_button" width="130.5" x="397.5" y="100"/>
+		<common:CustomDeleteButtonComponent isIcon="false" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" deleteLabel="{this.label}" clickFuncName="doDelete" id="delete_button" width="130.5" x="397.5" y="100" enabled="{dataGrid.selectedItem != null}"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
