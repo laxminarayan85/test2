@@ -217,19 +217,28 @@ public class Charge extends ModelBase {
 	public static final String FROMACCOUNT = "FromAccount";
 
 	/**
-
    * @generated
-
    */
-
   public static final String JOBINDEX = "JobIndex";
+	/**
+   * @generated
+   */
+  public static final String CHARGEINDEX = "ChargeIndex";
+
 	/**
 
    * @generated
 
    */
 
-  public static final String CHARGEINDEX = "ChargeIndex";
+  public static final String ORIGINALPRICE = "OriginalPrice";
+	/**
+
+   * @generated
+
+   */
+
+  public static final String ORIGINALQTY = "OriginalQty";
 
 	/**
 	 * @generated
@@ -1392,21 +1401,14 @@ public class Charge extends ModelBase {
   }
 	
 	/**
-
    * @generated
-
    */	
-
  	@Basic
-
   private Long jobIndex;
 
 	/**
-
    * @generated
-
  	 */
-
   public Long getJobIndex(){
 
     return jobIndex; 
@@ -1414,14 +1416,35 @@ public class Charge extends ModelBase {
   }
 
 	/**
-
    * @generated
-
    */	
-
   public void setJobIndex(Long newVal) {
 
     this.jobIndex = newVal;
+
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Long chargeIndex;
+
+	/**
+   * @generated
+ 	 */
+  public Long getChargeIndex(){
+
+    return chargeIndex; 
+
+  }
+
+	/**
+   * @generated
+   */	
+  public void setChargeIndex(Long newVal) {
+
+    this.chargeIndex = newVal;
 
   }
 
@@ -1433,7 +1456,7 @@ public class Charge extends ModelBase {
 
  	@Basic
 
-  private Long chargeIndex;
+  private BigDecimal originalPrice;
 
 	/**
 
@@ -1441,9 +1464,9 @@ public class Charge extends ModelBase {
 
  	 */
 
-  public Long getChargeIndex(){
+  public BigDecimal getOriginalPrice(){
 
-    return chargeIndex; 
+    return originalPrice; 
 
   }
 
@@ -1453,9 +1476,43 @@ public class Charge extends ModelBase {
 
    */	
 
-  public void setChargeIndex(Long newVal) {
+  public void setOriginalPrice(BigDecimal newVal) {
 
-    this.chargeIndex = newVal;
+    this.originalPrice = newVal;
+
+  }
+
+	/**
+
+   * @generated
+
+   */	
+
+ 	@Basic
+
+  private Double originalQty;
+
+	/**
+
+   * @generated
+
+ 	 */
+
+  public Double getOriginalQty(){
+
+    return originalQty; 
+
+  }
+
+	/**
+
+   * @generated
+
+   */	
+
+  public void setOriginalQty(Double newVal) {
+
+    this.originalQty = newVal;
 
   }
 
@@ -1551,6 +1608,10 @@ public class Charge extends ModelBase {
     if (JOBINDEX.equals(propertyName)) return getJobIndex();
 
     if (CHARGEINDEX.equals(propertyName)) return getChargeIndex();
+
+    if (ORIGINALPRICE.equals(propertyName)) return getOriginalPrice();
+
+    if (ORIGINALQTY.equals(propertyName)) return getOriginalQty();
 
     return super.getProperty(propertyName);
 
@@ -1648,6 +1709,10 @@ public class Charge extends ModelBase {
     if (JOBINDEX.equals(propertyName)) setJobIndex((Long)newValue); else
 
     if (CHARGEINDEX.equals(propertyName)) setChargeIndex((Long)newValue); else
+
+    if (ORIGINALPRICE.equals(propertyName)) setOriginalPrice((BigDecimal)newValue); else
+
+    if (ORIGINALQTY.equals(propertyName)) setOriginalQty((Double)newValue); else
 
     super.setProperty(propertyName, newValue);
 
@@ -1832,6 +1897,14 @@ public class Charge extends ModelBase {
 
       return new Class<?>[] {Long.class};		
 
+    if (ORIGINALPRICE.equals(propertyName)) 
+
+      return new Class<?>[] {BigDecimal.class};		
+
+    if (ORIGINALQTY.equals(propertyName)) 
+
+      return new Class<?>[] {Double.class};		
+
     return super.getPropertyClass(propertyName);
 
   }
@@ -1929,6 +2002,10 @@ public class Charge extends ModelBase {
     if (JOBINDEX.equals(propertyName)) return Charge.class;
 
     if (CHARGEINDEX.equals(propertyName)) return Charge.class;
+
+    if (ORIGINALPRICE.equals(propertyName)) return Charge.class;
+
+    if (ORIGINALQTY.equals(propertyName)) return Charge.class;
 
     return super.getPropertyOwner(propertyName);
 
@@ -2115,6 +2192,14 @@ public class Charge extends ModelBase {
       return false;
 
     if (! SmartEquals(getChargeIndex(), objT.getChargeIndex()))
+
+      return false;
+
+    if (! SmartEquals(getOriginalPrice(), objT.getOriginalPrice()))
+
+      return false;
+
+    if (! SmartEquals(getOriginalQty(), objT.getOriginalQty()))
 
       return false;
 

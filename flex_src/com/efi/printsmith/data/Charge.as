@@ -57,6 +57,8 @@ package com.efi.printsmith.data
 		public var fromAccount:Boolean = false;
 		public var jobIndex:Number = 0;
 		public var chargeIndex:Number = 0;
+		public var originalPrice:Number = 0;
+		public var originalQty:Number = 0;
 	
 	}
 }

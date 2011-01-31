@@ -14,7 +14,8 @@
 				showCloseButton="false"
 				headerHeight="0"
 				width="100%" height="100%" xmlns:components="com.efi.printsmith.components.*" xmlns:ns2="com.adobe.flex.extras.controls.*"
-				xmlns:commoncomponents="com.efi.printsmith.common.components.*">
+				xmlns:commoncomponents="com.efi.printsmith.common.components.*"
+				implements="com.efi.mdi.IMDIWindowAware">
 	<mx:states>
 		<mx:State name="PrintMethod">
 			<mx:SetProperty target="{total_imp}" name="text" value="{job.totalImpressions}"/>
@@ -1740,11 +1741,15 @@
 			
 			[Bindable] public var jobIndex:Number = -1;
 			
-			[Bindable] private var stockGroups:ArrayCollection = new ArrayCollection();  
+			[Bindable] private var stockGroups:ArrayCollection = new ArrayCollection();
+			  
 			private var costingCopierIsUsePress:Boolean = false;
+			
 			private var currentSizeName:String = "";
 			
-			[Bindable] private var preferencesStocks:PreferencesStocks; 
+			[Bindable] private var preferencesStocks:PreferencesStocks;
+			
+			[Bindable] private var originalJob:Job; 
 			
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
@@ -2078,7 +2083,8 @@
 						}
 					}
 					this.job.jobGroup = counter;
-				}				
+				}
+				setOriginalJob();				
 			}
 
 			private function mapToJobData():void
@@ -2091,6 +2097,9 @@
 				job.pricingPress=job_pricing_press.selectedItem as PressDefinition;
 				job.pricingCopier=job_pricing_copier.selectedItem as CopierDefinition;
 				job.costingCopier=job_costing_copier.selectedItem as CopierDefinition;
+				if(originalJob.costingCopier==null) {
+					originalJob.costingCopier=job_costing_copier.selectedItem as CopierDefinition;
+				}
 				
 				//if (job.productCode == null)
 					job.productCode=product.selectedItem as ProductCode;
@@ -2254,6 +2263,7 @@
 			{
 				mapToJobData();
 				updateCostingRecordAndPrice();
+				setOriginalJob();
 				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.invoiceMultiQtyJobList, this.jobIndex);
 				dispatchEvent(jobEditCompleteEvent);
 				var mdiWindow:MDIWindow = this.parent as MDIWindow;
@@ -4506,6 +4516,61 @@
                 list.sort = numericDataSort;
                 list.refresh();
 				return list;
+			}
+			
+			public function setOriginalJob():void {
+				registerClassAlias("com.efi.printsmith.data.Job",Job);
+				originalJob = ObjectUtil.copy(job) as Job;
+			}
+			
+			public function getOriginalObject():ArrayCollection {
+				var originalList:ArrayCollection = new ArrayCollection();
+				originalList.addItem(originalJob);
+				return originalList;
+			}
+				
+			public function getUpdatedObject():ArrayCollection {
+				var updatedList:ArrayCollection = new ArrayCollection();
+				updatedList.addItem(job);
+				return updatedList;
+			}
+			
+			public function getConfirmationText():String {
+				if(job!=null){
+					var pricingMethodTitle:String = "";
+					var invoiceNumber:String = "";
+					if(job.parentInvoice==null || job.parentInvoice.invoiceNumber==null || job.parentInvoice.invoiceNumber==""){
+						invoiceNumber = "0";
+					} else {
+						invoiceNumber = job.parentInvoice.invoiceNumber;
+					}
+					if(job.pricingMethod==null){
+						pricingMethodTitle = "";
+					} else {
+						pricingMethodTitle = job.pricingMethod.title;
+					}
+					var jobTitle:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"jobCmd.EditJob"),invoiceNumber,job.jobIndex,pricingMethodTitle);
+					return "\n"+jobTitle;
+				}
+				return "";
+			} 
+				
+			public function onClose():void {
+				if(job!=null){
+					mapToJobData();
+				}
+			}
+			
+			public function onSave():void {
+				doSave();
+			}
+			
+			public function onDontSave():void {
+				
+			}
+			
+			public function onCancel():void {
+				
 			}
 			
 		]]>
