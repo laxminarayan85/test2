@@ -150,6 +150,13 @@
 				return "";
 			}
 			
+			private function getHoldState(invoiceBaseObj:InvoiceBase):String {
+				if(invoiceBaseObj!=null && invoiceBaseObj.holdState!=null) {
+					return invoiceBaseObj.holdState.name;
+				}
+				return "";
+			}
+			
 			private function doSave():void {
 				if(_invoiceBase.account!=null && customlog_txtarea.text!=null && StringUtil.trim(customlog_txtarea.text)!=""){
 					var customerLog:CustomerLog = new CustomerLog();
@@ -193,6 +200,9 @@
 	<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kSupportCenterCommand.Email')}: {getEmail(_invoiceBase)}"/>
 	
 	<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.PO')}: {getPONo(_invoiceBase)}"/>
+	
+	<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.HoldState')}: {getHoldState(_invoiceBase)}" 
+		visible="{_invoiceBase.holdState!=null}" includeInLayout="{_invoiceBase.holdState!=null}" color="red"/>
 	
 	<mx:Spacer height="10%"/>
 	
