@@ -54,7 +54,8 @@
 			}
 			
 			public function set invoiceBase(tmpInvoiceBase:InvoiceBase):void {
-				_invoiceBase = tmpInvoiceBase;
+				registerClassAlias("com.efi.printsmith.data.InvoiceBase",InvoiceBase);
+				_invoiceBase = ObjectUtil.copy(tmpInvoiceBase) as InvoiceBase;
 				dataService.getAll("ProductionLocations");
 				dataServiceState.getAll("HoldState");
 			}
