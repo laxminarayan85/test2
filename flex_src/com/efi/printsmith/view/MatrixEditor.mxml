@@ -1111,24 +1111,30 @@
 			break;
 		}
 		if (this.currentState == "COPYPRICESCHEDULE" || this.currentState == "PASSPRICESCHEDULE") {
-			paperPrice.elements.filterFunction = unfilterMatrix;
-			paperPrice.elements.refresh();
-			for (var i:int=0;i<this.paperPrice.elements.length;i++) {
-				var element:com.efi.printsmith.data.MatrixElement = this.paperPrice.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
-				if (element.lastLine == true) {
-					element.price1 = parseFloat(this.price1.text);
-					element.price2 = parseFloat(this.price3.text);
-					element.price3 = parseFloat(this.price5.text);
-					element.price4 = parseFloat(this.price7.text);
-					element.price5 = parseFloat(this.price9.text);
-					element.price11 = parseFloat(this.price2.text);
-					element.price12 = parseFloat(this.price4.text);
-					element.price13 = parseFloat(this.price6.text);
-					element.price14 = parseFloat(this.price8.text);
-					element.price15 = parseFloat(this.price10.text);
+			if (paperPrice.name != "") {
+				paperPrice.elements.filterFunction = unfilterMatrix;
+				paperPrice.elements.refresh();
+				for (var i:int=0;i<this.paperPrice.elements.length;i++) {
+					var element:com.efi.printsmith.data.MatrixElement = this.paperPrice.elements.getItemAt(i) as com.efi.printsmith.data.MatrixElement;
+					if (element.lastLine == true) {
+						element.price1 = parseFloat(this.price1.text);
+						element.price2 = parseFloat(this.price3.text);
+						element.price3 = parseFloat(this.price5.text);
+						element.price4 = parseFloat(this.price7.text);
+						element.price5 = parseFloat(this.price9.text);
+						element.price11 = parseFloat(this.price2.text);
+						element.price12 = parseFloat(this.price4.text);
+						element.price13 = parseFloat(this.price6.text);
+						element.price14 = parseFloat(this.price8.text);
+						element.price15 = parseFloat(this.price10.text);
+					}
 				}
+				dataService.addUpdate(paperPrice);
+			} else {
+				var message:String;
+				message = "Please set a name.";
+				Alert.show(message, "Error", 0, this, null); 
 			}
-			dataService.addUpdate(paperPrice);
 		} else if (this.currentState == "STAMPSCHEDULE") {
 			stampSchedule.elements.filterFunction = unfilterMatrix;
 			stampSchedule.elements.refresh();
