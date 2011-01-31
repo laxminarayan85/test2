@@ -979,7 +979,7 @@
 				this.deletedJobs.addItem(deletedJob.id);
 			}
 			
-			private function addNewJob(event:Event):void {
+			private function addNewJob(event:JobEditCompleteEvent):void {
 				var target:EditJob=event.target as EditJob;
 				
 				var jobsList:ArrayCollection = new ArrayCollection();
@@ -999,12 +999,16 @@
 				
 				invoice.jobs = jobsList;
 				
+				if(event.updateLocationDate) {
+					invoice.locationChangeDate = new Date();
+				}
+				
 				/* Hack code - needs to come out in favor of using the Pricing Engine asap */
 				updateTotals();
 				this.showJobs();
 			}
 	
-			private function saveJob(event:Event):void
+			private function saveJob(event:JobEditCompleteEvent):void
 			{
 				var target:EditJob=event.target as EditJob;
 
@@ -1051,6 +1055,11 @@
 					updatedJobList.addItem(tempJobBaseObj);
 				}
 				invoice.jobs = updatedJobList;
+				
+				if(event.updateLocationDate) {
+					invoice.locationChangeDate = new Date();
+				}
+				
 				updateTotals();
 				
 				this.showJobs();

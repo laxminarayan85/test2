@@ -41,6 +41,8 @@
     		
     		[Bindable] private var enabledValue:Boolean = true;
     		
+    		private var updateLocationDate:Boolean = false;
+    		
     		private function init():void {
     			PopUpManager.centerPopUp(this);
     		}
@@ -237,6 +239,7 @@
 						selectedJobBase.location = null;
 					}
 				}
+				updateLocationDate=true;
 			}
 			
 			private function setHoldState():void {
@@ -261,6 +264,9 @@
 					invoiceJobList = ObjectUtil.copy(jobsList) as ArrayCollection
 					invoiceJobList.removeItemAt(0);
 					_invoiceBase.jobs = invoiceJobList;
+					if(updateLocationDate) {
+						_invoiceBase.locationChangeDate = new Date();
+					}
 					dataService.saveInvoice(_invoiceBase);
 				}
 			}
@@ -273,6 +279,7 @@
 				}
 				return "";
 			}
+	
     	]]>
     </mx:Script>
 

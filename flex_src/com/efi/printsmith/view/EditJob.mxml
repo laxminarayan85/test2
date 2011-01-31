@@ -838,7 +838,8 @@
 							 tabIndex="28"
 							 editable="false"
 							 optional="true"
-							 height="20"/>
+							 height="20"
+							 change="{updateLocationDate=true;}"/>
 			<mx:Label x="450.5"
 					  y="70"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Product')}" textAlign="right" width="52"/>
@@ -1751,6 +1752,8 @@
 			
 			[Bindable] private var originalJob:Job; 
 			
+			private var updateLocationDate:Boolean = false;
+			
 			private function handleLoadSystemPreferencesResult(ev:ResultEvent):void {
 				systemPreferencesArray = ev.result as ArrayCollection;
 				if (systemPreferencesArray.length > 0)
@@ -2263,7 +2266,7 @@
 			{
 				mapToJobData();
 				updateCostingRecordAndPrice();
-				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.invoiceMultiQtyJobList, this.jobIndex);
+				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.invoiceMultiQtyJobList, this.jobIndex, this.updateLocationDate);
 				dispatchEvent(jobEditCompleteEvent);
 				callLater(closeWindow);
 				//PopUpManager.removePopUp(this);

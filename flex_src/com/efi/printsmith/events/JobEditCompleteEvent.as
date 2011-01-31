@@ -18,16 +18,19 @@ package com.efi.printsmith.events
 		
 		public var multiQtyJobList:ArrayCollection = new ArrayCollection(); 
 		
-		public function JobEditCompleteEvent(type:String, job:Job, multiQtyJobList:ArrayCollection=null, jobIndex:Number=-1)
+		public var updateLocationDate:Boolean= false;
+		
+		public function JobEditCompleteEvent(type:String, job:Job, multiQtyJobList:ArrayCollection=null, jobIndex:Number=-1, updateLocationDate:Boolean=false)
 		{
 			super(type, true);
 			this.job = job;
 			this.multiQtyJobList = multiQtyJobList;
 			this.jobIndex = jobIndex;
+			this.updateLocationDate = updateLocationDate;
 		}
 
 		override public function clone():Event {
-			return new JobEditCompleteEvent(type, job, multiQtyJobList, jobIndex);
+			return new JobEditCompleteEvent(type, job, multiQtyJobList, jobIndex, updateLocationDate);
 		}
 	}
 }
