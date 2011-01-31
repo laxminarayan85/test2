@@ -2075,14 +2075,40 @@
 			
 			public function getQtyOrdered(item:Object, column:DataGridColumn):String {
 				if(item is Job) {
-					if(item.showMultiQty){
-						return item.qtyOrdered+"+";
+					var localJob:Job = item as Job;
+					if(localJob.showMultiQty){
+						return localJob.qtyOrdered.toFixed(2)+"+";
 					}
-					return item.qtyOrdered;
-				} else {
-					return item.quantity;
+					return localJob.qtyOrdered.toFixed(2);
+				} else if(item is Charge){
+					var localCharge:Charge = item as Charge;
+					if(localCharge.displayQty) {
+						return localCharge.quantity.toFixed(2);
+					}
 				}
 				return "";
+			}
+			
+			public function getCompQuantity(item:Object):Number {
+				if(item is Job) {
+					return item.qtyOrdered;
+				} else {
+					if(item.displayQty) {
+						return item.quantity;
+					}
+				}
+				return 0;
+			}
+			
+			public function getQuantityEnability(item:Object):Boolean {
+				if(item is Job) {
+					return true;
+				} else if(item is Charge){
+					if(item.displayQty) {
+						return true;
+					}
+				}
+				return false;
 			}
 			
 			private function doDoubleclickTicketItem():void	{
@@ -2700,8 +2726,8 @@
 							<mx:itemEditor>
 								<mx:Component>
 									<components:CustomNumericTextInputComponent
-										dataHolder="{data}" variableName="{(data is Job)?'qtyOrdered':'quantity'}" customText="{(data is Job)?data.qtyOrdered:data.quantity}"
-										precision="2" rounding="nearest" textAlignStyle="left" focusOut="{outerDocument.updateQuantity(data)}">
+										dataHolder="{data}" variableName="{(data is Job)?'qtyOrdered':'quantity'}" customText="{outerDocument.getCompQuantity(data)}"
+										precision="2" rounding="nearest" textAlignStyle="left" focusOut="{outerDocument.updateQuantity(data)}" enabled="{outerDocument.getQuantityEnability(data)}">
 										<mx:Script>
 											<![CDATA[
 												import com.efi.printsmith.data.Job;
