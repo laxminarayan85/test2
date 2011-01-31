@@ -12,6 +12,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.efi.printsmith.Constants;
 import com.efi.printsmith.data.AccessGroup;
 import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.Merchandise;
@@ -1221,12 +1222,12 @@ public class PreferencesMapper extends ImportMapper {
 			preferencesEstimating.setUseWhiteSpace(Utilities.tokenToBooleanValue(value));
 		else if (name.equals("grain"))
 			if (Utilities.tokenToBooleanValue(value))
-				preferencesEstimating.setRunToFinishGrain("Match Grain");
+				preferencesEstimating.setRunToFinishGrain(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_MATCH_GRAIN);
 			else
-				preferencesEstimating.setRunToFinishGrain("Neither");
+				preferencesEstimating.setRunToFinishGrain(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_NEITHER);
 		else if (name.equals("dutch")) {
 			if (Utilities.tokenToBooleanValue(value)) {
-				preferencesEstimating.setRunToFinishGrain("Swing / Combination");
+				preferencesEstimating.setRunToFinishGrain(Constants.PAPER_CALCULATOR_GRAIN_DIRECTION_SWING_COMBINATION);
 			}
 		} else if (name.equals("runNTumble"))
 			preferencesEstimating.setWorkandTumble(Utilities.tokenToBooleanValue(value));
