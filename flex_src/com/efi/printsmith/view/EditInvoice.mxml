@@ -12,14 +12,10 @@
 		  height="100%"
 		  headerHeight="0"
 		  title="Edit Invoice" 
-		  implements="com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
+		  implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
 		  name="Invoice Editor"
 		  fontSize="9" xmlns:components="com.efi.printsmith.common.components.*">
-	<mx:Script>
-		<![CDATA[
-			import mx.accessibility.AccImpl;
-		]]>
-	</mx:Script>
+	
 	
 	
 	<mx:RemoteObject id="prefStocksDataService" destination="dataService">
@@ -302,6 +298,10 @@
 			private var invoicePricing:InvoicePricing;
 			
 			[Bindable] public var preferencesStocks:PreferencesStocks;
+			
+			private var onLoad:Boolean = true;
+			
+			[Bindable] private var originalInvoice:InvoiceBase;
 									
 			public function getSecurityCommand():String {
 				
@@ -626,6 +626,8 @@
 						chargeObj.originalQty = chargeObj.quantity;
 					}
 				}
+				updateTotals();
+				setOriginalInvoice();
 			}
 			
 			private function handleLoadResult(event:Event):void
@@ -651,6 +653,7 @@
 					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')));
 				}
 				if(!convertedEstimate){
+					setOriginalInvoice();
 					dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
 					Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 				}
@@ -666,6 +669,7 @@
 			}
 			
 			private function handleEstimateSaveResult(event:ResultEvent):void {
+				setOriginalInvoice();
 				openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')));
 				dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
 				Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
@@ -733,6 +737,7 @@
 					}
 					convertedInvoice.grandTotal = convertedInvoice.subTotal;
 					convertedInvoice.amountDue = convertedInvoice.grandTotal;
+					setOriginalInvoice();
 					dispatchEvent(new ConvertToInvoiceEvent(ConvertToInvoiceEvent.CONVERT_TO_INVOICE_EVENT,convertedInvoice,convertedEstimatedId));
 					Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 				}
@@ -814,6 +819,7 @@
 			private function handleDeleteResult(event:Event):void
 			{
 				if(convertedEstimatedId!=0){
+					setOriginalInvoice();
 					dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
 					Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 				}
@@ -914,6 +920,7 @@
 			public function doCancel(ev:MouseEvent=null):void
 			{
 				//this.parent.removeChild(this);
+				setOriginalInvoice();
 				Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 			}
 
@@ -1851,6 +1858,10 @@
 							invoiceJobChargeList.addItem(chargeObject);
 						}
 						resetJobsList = true;
+						if(onLoad) {
+							onLoad = false;
+							setOriginalInvoice();
+						}
 						return invoiceJobChargeList;
 					} else if(invoice is Estimate) {
 						if(jobList!=null && jobList.length>0){
@@ -1921,6 +1932,10 @@
 								chargeObj.parentInvoice = invoice;
 								estimatesJobChargeList.addItem(chargeObj);
 							}
+						}
+						if(onLoad) {
+							onLoad = false;
+							setOriginalInvoice();
 						}
 						return estimatesJobChargeList;
 					}
@@ -2482,6 +2497,17 @@
 			public function openDeliveryTicket():void {
 				if(invoice!=null && invoice is Invoice && !isNaN(invoice.id) && invoice.id!=0) {
 					var child:DeliveryTicketEdit = new DeliveryTicketEdit();
+					child.name = "DeliveryTicket";
+					var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
+					if (win == null) {
+						child.setInvoice(invoice as InvoiceBase);
+						child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDeliveryTicketJobsList,false,0,true);
+						Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);
+					}
+					else {
+						win.bringWindowToFront();	
+					}/* 
+					var child:DeliveryTicketEdit = new DeliveryTicketEdit();
 					child.setInvoice(invoice as InvoiceBase);
 					child.addEventListener(DeliveryTicketUpdateEvent.DELIVERYTICKET_UPDATE_EVENT,updateDeliveryTicketJobsList,false,0,true);
 					var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(child);
@@ -2491,7 +2517,7 @@
 					else {
 						win.closeWindow();
 						Snowmass.getInstance().containerManager.openNewMDIWindow(child.title, child);	
-					}
+					} */
 				}
 			}
 			
@@ -2513,6 +2539,45 @@
 						estimatorCheckList.setJob(jobObj);
 					}
 				}
+			}
+			
+			public function setOriginalInvoice():void {
+				registerClassAlias("com.efi.printsmith.data.InvoiceBase",InvoiceBase);
+				originalInvoice = ObjectUtil.copy(invoice) as InvoiceBase;
+			}
+			
+			public function getOriginalObject():ArrayCollection {
+				var originalList:ArrayCollection = new ArrayCollection();
+				originalList.addItem(originalInvoice);
+				return originalList;
+			}
+				
+			public function getUpdatedObject():ArrayCollection {
+				var updatedList:ArrayCollection = new ArrayCollection();
+				updatedList.addItem(invoice);
+				return updatedList;
+			}
+			
+			public function getConfirmationText():String {
+				return "\n"+this.title;
+			} 
+				
+			public function onClose():void {
+				if(invoice!=null){
+					mapToInvoiceData();
+				}
+			}
+			
+			public function onSave():void {
+				doSave();
+			}
+			
+			public function onDontSave():void {
+				
+			}
+			
+			public function onCancel():void {
+				
 			}
 		]]>
 
