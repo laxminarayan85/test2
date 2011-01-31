@@ -212,6 +212,8 @@
 	private var JobCharges:ArrayCollection=new ArrayCollection();
 	[Bindable]
 	private var first:Boolean = false;
+	[Bindable]
+	private var notNew:Boolean = false;
     private var focussedFormControl:DisplayObject;
     
     public function getSecurityCommand():String {
@@ -522,6 +524,7 @@
 	}
 	
 	private function doNext():void {
+		notNew = true;
 		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNextOperation);
 		dispatchEvent(mDICompareObjectEvent);
 	}
@@ -539,7 +542,8 @@
 		if (itemp == accounts.length){
 			itemp = accounts.length - 1;
 		}
-		temp = accounts.getItemAt(itemp,0) as Account;   
+		temp = accounts.getItemAt(itemp,0) as Account;  
+		notNew = false; 
 	   dataService.getAccount(temp.id );                            
 	}
 	
@@ -548,6 +552,7 @@
 	}
 	
 	private function doPrev():void {
+		notNew = true;
 		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doPrevOperation);
 		dispatchEvent(mDICompareObjectEvent);
 	}
@@ -561,7 +566,8 @@
 		if (itemp < 0){
 			itemp = 0; 
 		}
-		temp = accounts.getItemAt(itemp,0) as Account;   
+		temp = accounts.getItemAt(itemp,0) as Account; 
+		notNew = false;  
 	    dataService.getAccount(temp.id );                                           
 	} 
 	
@@ -1027,8 +1033,14 @@
 		this.EstInvCharges = this.account.invoiceEstimateCharges;
 		this.JobCharges = this.account.jobCharges;
 //		accounts.addItem(account);
-		doNewOperation();
-		openAccountPicker();
+		if ( !notNew){
+			doNewOperation();
+			openAccountPicker();
+		}else
+		{	
+			if ( this.enabled == false)
+	 		this.enabled = true;
+	 	}
 		var windowSaveSuccessEvent:WindowSaveSuccessEvent = new WindowSaveSuccessEvent(WindowSaveSuccessEvent.WINDOW_SAVESUCCESS_STATUS,true);
 		dispatchEvent(windowSaveSuccessEvent);
 	}
