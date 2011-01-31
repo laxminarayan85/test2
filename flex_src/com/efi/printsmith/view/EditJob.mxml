@@ -2263,12 +2263,16 @@
 			{
 				mapToJobData();
 				updateCostingRecordAndPrice();
-				setOriginalJob();
 				var jobEditCompleteEvent:JobEditCompleteEvent=new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, this.job, this.invoiceMultiQtyJobList, this.jobIndex);
 				dispatchEvent(jobEditCompleteEvent);
+				callLater(closeWindow);
+				//PopUpManager.removePopUp(this);
+			}
+			
+			private function closeWindow():void {
+				setOriginalJob();
 				var mdiWindow:MDIWindow = this.parent as MDIWindow;
 				mdiWindow.closeWindow();
-				//PopUpManager.removePopUp(this);
 			}
 			
 			private function deleteJob():void {
@@ -4558,6 +4562,7 @@
 			public function onClose():void {
 				if(job!=null){
 					mapToJobData();
+					updateCostingRecordAndPrice();
 				}
 			}
 			
