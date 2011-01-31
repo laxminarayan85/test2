@@ -81,6 +81,7 @@
 		this.import_stock_changes.enabled = false;
 		this.import_preferences.enabled = false;
 		this.import_credit_card_transactions.enabled = false;
+		this.accountHistory.enabled = false;
 		this.progress_bar.visible = false;
 	}
 		
@@ -179,7 +180,11 @@
 		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
 		uploadFile("StockChange");
 	}
-	
+	private function handleAccountHistoryFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("History");
+	}
 	private function handleSelectPreferencesFile(evt:Event):void {
 		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
 		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
@@ -319,6 +324,7 @@
 		fileTypeArray.addItem("DL Charges Data");
 		fileTypeArray.addItem("DL Customer Logs Data");
 		fileTypeArray.addItem("DL Credit Card Transaction Data");
+		fileTypeArray.addItem("DL History Data");
 		fileTypeArrayIndex = 0;
 		importFile(evt,fileTypeArray.getItemAt(fileTypeArrayIndex) as String);
 	}
@@ -501,6 +507,16 @@
 				}
 			}
 		}
+		if (fileName == "DL History Data") {
+			index = fileNameArray.getItemIndex("DL History Data");
+			if (index.valueOf() > -1) {
+				fileReference = fileArray.getItemAt(index) as FileReference;
+				if (fileReference != null) {
+					wait = true;
+					handleAccountHistoryFile(evt);
+				}
+			}
+		}
 		if (index == -1 && fileName.substr(0,2) != "DL") {
 			index = fileNameArray.getItemIndex(fileName);
 			if (index.valueOf() > -1) {
@@ -585,6 +601,7 @@
 		this.import_jobs.enabled = true;
 		this.import_preferences.enabled = true;
 		this.import_credit_card_transactions.enabled = true;
+		this.accountHistory.enabled =true;
 	} 
 
 	private function doImportJobs():void {
@@ -683,6 +700,9 @@
 	private function doImportStockChanges():void {
 		doImport(handleSelectStockChangesFile);
 	}
+	private function doImportAccountHistory():void {
+		doImport(handleAccountHistoryFile);
+	}
 
 	private function doWebAdministration():void {
 		var event:EditWebAdminEvent = new EditWebAdminEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
@@ -708,7 +728,6 @@
 
 	public function handleUIEvent(evt:ResultEvent):void {
 		var child:DisplayObject = evt.result as DisplayObject;
-		addUniqueTab(child);
 	}		
 
 	private function addUniqueTab(tab:DisplayObject):void {
@@ -752,7 +771,7 @@
 		<mx:Button label="Import Preferences" id="import_preferences" enabled="true" click="doImportPreferences();"  width="256" x="274" y="220"/>
 		<mx:Button label="Import Table Editor File" id="import_table_editor_file" enabled="true" click="doImportTableEditorFile();"  width="256" x="276" y="380"/>
 		<mx:Button label="Import Credit Card Transactions" id="import_credit_card_transactions" enabled="true" click="doImportCreditCardTransactions();"  width="256" x="274" y="250"/>
-		<mx:Button label="Import All" id="import_all" enabled="true" click="doImportAll();"  width="256" x="143" y="297"/>
+		<mx:Button label="Import All" id="import_all" enabled="true" click="doImportAll();"  width="256" x="146" y="310"/>
 		<mx:Button label="Import Stock Definitions" id="import_stock_definitions" enabled="true" click="doImportStockDefinitions();"  width="256" x="274" y="40"/>
 		<mx:Button label="Import Price Lists" id="import_price_lists" enabled="true" click="doImportPriceLists();"  width="256" x="10" y="10"/>
 		<mx:Button label="Import Price Schedules" id="import_price_schedules" enabled="true" click="doImportPriceSchedules();"  width="256" x="10" y="100"/>
@@ -761,6 +780,7 @@
 		<mx:Button label="Import Tax Tables" id="import_tax_tables" enabled="true" click="doImportTaxTables();"  width="256" x="12" y="70"/>
 		<mx:Button x="10" y="130" label="Import Charge Costing" width="256" id="import_charge_costing" click="doImportChargeCosting();"/>
 		<mx:ProgressBar x="171" y="407" id="progress_bar" label="Importing Data..." indeterminate="true" height="31"/>
+		<mx:Button x="274" y="280" label="Import Account history" width="256" click="doImportAccountHistory()" id="accountHistory"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 
