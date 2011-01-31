@@ -108,7 +108,12 @@ package com.efi.mdi.compare
 	                    	aRef = refs[aDate.time+"Date"];
 	                    	bRef = refs[bDate.time+"Date"];
 	                    } else {
-	                    	if(aSuperObj!=null && bSuperObj!=null){
+	                    	aRef = refs[a];
+	                    	bRef = refs[b];
+	                    	if(aSuperObj!=null && bSuperObj!=null && propertyName!=null){
+	                    		aRef = refs[a+propertyName.localName+aSuperObj.toString()];
+		                    	bRef = refs[b+propertyName.localName+bSuperObj.toString()];
+	                    	} else if(aSuperObj!=null && bSuperObj!=null){
 	                    		aRef = refs[a+aSuperObj.toString()];
 		                    	bRef = refs[b+bSuperObj.toString()];
 	                    	} else {
@@ -131,7 +136,10 @@ package com.efi.mdi.compare
 	                    	refs[aDate.time+"Date"] = true;
 	                    	refs[bDate.time+"Date"] = true;
 	                    } else {
-	                    	if(aSuperObj!=null && bSuperObj!=null){
+	                    	if(aSuperObj!=null && bSuperObj!=null && propertyName!=null){
+	                    		refs[a+propertyName.localName+aSuperObj.toString()] = true;
+	                    		refs[b+propertyName.localName+bSuperObj.toString()] = true;
+	                    	} else if(aSuperObj!=null && bSuperObj!=null) {
 	                    		refs[a+aSuperObj.toString()] = true;
 	                    		refs[b+bSuperObj.toString()] = true;
 	                    	} else {
