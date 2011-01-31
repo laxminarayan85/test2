@@ -280,7 +280,7 @@ width="938" height="507"  creationComplete="init()"
 				this.copier_speed_label.visible = false;
 				this.press_label.visible = true;
 				this.press_speed_label.visible = true;
-				var setupHours:String = (this.job.pricingPress.setupMin / 60).toFixed(0);
+				var setupHours:String = job.setupTime.toFixed(0);
 				var setupMinutes:Number = this.job.pricingPress.setupMin;
 				setupMinutes = setupMinutes - (parseInt(setupHours) * 60);
 				if (setupMinutes < 10)
@@ -288,7 +288,7 @@ width="938" height="507"  creationComplete="init()"
 				else
 					this.setup_time.text = setupHours + ":" + setupMinutes.toString();
 				var minimumHours:Number = this.job.pricingPress.minLabor / 60;
-				var runHours:Number = this.job.impressionsPerRun / this.job.copyMinutes;
+				var runHours:Number = job.runTime;
 				if (runHours < minimumHours)
 					runHours = minimumHours;
 				if (job.doubleSided == true)
