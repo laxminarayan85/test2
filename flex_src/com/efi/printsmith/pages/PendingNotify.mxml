@@ -4,14 +4,23 @@
 	showCloseButton="true" creationComplete="{init()}" close="{closeWindow()}"
     title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posNotifyCmd.NotifyCustomer')}"
     paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
-
+	
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	</mx:RemoteObject>
 	
+	<mx:RemoteObject id="dataServiceCustomerLog" destination="dataService" showBusyCursor="true">
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveCustomerLogResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script source="../common/scripts/CommonUtils.as"/>
+	
 	<mx:Script>
 		<![CDATA[
+			import mx.utils.ObjectUtil;
+			import flash.net.registerClassAlias;
+			import com.efi.printsmith.events.PendingListUpdateEvent;
 			import com.efi.printsmith.data.Estimate;
 			import com.efi.printsmith.data.Invoice;
 			import mx.utils.StringUtil;
@@ -38,7 +47,8 @@
 			}
 			
 			public function set invoiceBase(tmpInvoiceBase:InvoiceBase):void {
-				_invoiceBase = tmpInvoiceBase;
+				registerClassAlias("com.efi.printsmith.data.InvoiceBase",InvoiceBase);
+				_invoiceBase = ObjectUtil.copy(tmpInvoiceBase) as InvoiceBase;
 				dataService.getInvoice(_invoiceBase.id);
 			}
 			
@@ -162,14 +172,26 @@
 					var customerLog:CustomerLog = new CustomerLog();
 					customerLog.account = _invoiceBase.account;
 					customerLog.logEntry = StringUtil.trim(customlog_txtarea.text);
-					dataService.addUpdate(customerLog);
+					dataServiceCustomerLog.addUpdate(customerLog);
 				} else {
-					closeWindow();
+					_invoiceBase.customerNotificationDate = new Date();
+					dataService.addUpdate(_invoiceBase);
 				}
 			}
 			
+			private function handleSaveCustomerLogResult(event:ResultEvent):void {
+				_invoiceBase.customerNotificationDate = new Date();
+				dataService.addUpdate(_invoiceBase);
+			}
+			
 			private function handleSaveResult(event:ResultEvent):void {
-				closeWindow();
+				if(_invoiceBase is Invoice){
+					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Invoice')),Snowmass.getInstance());
+				} else if(_invoiceBase is Estimate){
+					openConfirmationComponent(StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'CommonConfirmation.SAVE'),resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')),Snowmass.getInstance());
+				}
+				dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
+				callLater(closeWindow);
 			}
 			
 			private function getTitle(invoiceBaseObj:InvoiceBase):String {

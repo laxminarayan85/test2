@@ -146,6 +146,8 @@
 		<mx:HBox width="100%" horizontalGap="1">
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rChargeLabel.ShipVia')}: " styleName="boldstyle"/>
 			<mx:Label text="{_invoiceBase.shippingMethod.name}"/>
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posStatusCmd.Notified')}: " styleName="boldstyle" visible="{_invoiceBase.customerNotificationDate!=null}"/>
+			<mx:Label text="{getFormattedDate(_invoiceBase.customerNotificationDate)}" visible="{_invoiceBase.customerNotificationDate!=null}"/>
 		</mx:HBox>
 		
 		<mx:HBox width="100%" horizontalGap="1">
