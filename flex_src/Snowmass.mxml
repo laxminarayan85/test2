@@ -205,6 +205,8 @@
 		private var preferencesSystem:PreferencesSystem;
 		
 		private var autoLogOutTimer:Timer;
+		
+		private var pendingListPicker:PendingListPicker;
 				
 		[Bindable]
 		private var locales:Array = ["de_DE", "en_AU", "en_GB", "en_US", "es_CL", "es_CO", "es_ES", "es_MX", "fr_CA", "fr_FR", "ja_JP", "lv_LV", "nl_NL", "pt_PT", "ru_RU"];
@@ -517,9 +519,11 @@
 		}
 		
 		private function doUpdatePendingDocument():void {
-			var pendingListPicker:PendingListPicker = PopUpManager.createPopUp(this,PendingListPicker,false) as PendingListPicker;
-			pendingListPicker.showEstimates = true;
-			pendingListPicker.openInvoice = true;
+			if(pendingListPicker==null || !pendingListPicker.isPopUp) {
+				pendingListPicker = PopUpManager.createPopUp(this,PendingListPicker,false) as PendingListPicker;
+				pendingListPicker.showEstimates = true;
+				pendingListPicker.openInvoice = true;
+			}
 		}
 		
 		private function doReviewDoc():void {
@@ -1078,6 +1082,7 @@
 
 		private function initAppFunctions() : void {
 			stage.addEventListener(KeyboardEvent.KEY_UP, myKeyUpHandler);
+			stage.addEventListener(KeyboardEvent.KEY_UP, shortCutKeyPressHandler, false, 0, true);
 			stage.addEventListener(MouseEvent.MOUSE_MOVE,globalMouseMove);
 			startSlowIdleTimer();
 		}
@@ -1305,6 +1310,12 @@
 				} else {
 					doKeepAliveCurrentUser();
 				}
+			}
+		}
+		
+		private function shortCutKeyPressHandler(event:KeyboardEvent):void {
+			if(event.ctrlKey && event.keyCode==85) {
+				doUpdatePendingDocument();
 			}
 		}
 		

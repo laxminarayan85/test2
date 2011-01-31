@@ -2570,6 +2570,11 @@
 			public function setOriginalInvoice():void {
 				registerClassAlias("com.efi.printsmith.data.InvoiceBase",InvoiceBase);
 				originalInvoice = ObjectUtil.copy(invoice) as InvoiceBase;
+				if(originalInvoice!=null) {
+					if(originalInvoice.specialInstructions==null) {
+						originalInvoice.specialInstructions = new SpecialInstructions();
+					}
+				}
 			}
 			
 			public function getOriginalObject():ArrayCollection {
