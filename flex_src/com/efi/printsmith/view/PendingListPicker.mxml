@@ -32,6 +32,10 @@
 			
 			[Bindable] public var preferencesPOS:PreferencesPOS;
 			
+			[Bindable] public var showEstimates:Boolean = false;
+			
+			[Bindable] public var openInvoice:Boolean = false;
+			
 			private function init():void {
 				PopUpManager.centerPopUp(this);
 				dataServicePrefPOS.getSingle("PreferencesPOS");
@@ -47,6 +51,8 @@
 				var tempList:ArrayCollection = new ArrayCollection();
 				for each(var invoiceBase:InvoiceBase in list) {
 					if(invoiceBase is Invoice) {
+						tempList.addItem(invoiceBase);
+					} else if(invoiceBase is Estimate && showEstimates) {
 						tempList.addItem(invoiceBase);
 					}
 				}
@@ -167,8 +173,18 @@
 			
 			private function doSelect():void {
 				if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
-					dispatchEvent(new PendingListPickerEvent(PendingListPickerEvent.PENDINGLIST_PICKER_SELECT_EVENT,dgView.selectedItem as InvoiceBase));
-					callLater(closeWindow);
+					if(openInvoice) {
+						var invoiceBase:InvoiceBase = dgView.selectedItem as InvoiceBase;
+						if (invoiceBase is Invoice) {
+							Snowmass.getInstance().doEditInvoice(invoiceBase);
+						} else if (invoiceBase is Estimate) {
+							Snowmass.getInstance().doEditEstimate(invoiceBase);
+						}
+						closeWindow();
+					} else {
+						dispatchEvent(new PendingListPickerEvent(PendingListPickerEvent.PENDINGLIST_PICKER_SELECT_EVENT,dgView.selectedItem as InvoiceBase));
+						callLater(closeWindow);
+					}
 				}
 			}
 		]]>

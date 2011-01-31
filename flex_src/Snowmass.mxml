@@ -447,7 +447,19 @@
 				if ((ss.menu == "rStandardMenuText.Invoice")
 					&& (ss.commandName.indexOf("rAltMenuText.CopytonewInvoice") > -1 ))	{
 						doCopyToNewInvoice();				
-					}		
+					}
+					
+				//Menu for Review Doc
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.UpdatePendingDocumen") > -1 ))	{
+						doUpdatePendingDocument();				
+					}			
+					
+				//Menu for Review Doc
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.ReviewAnyDocument") > -1 ))	{
+						doReviewDoc();				
+					}			
 					
 				//Menu for Copy to New Estimate
 				if ((ss.menu == "rStandardMenuText.Invoice")
@@ -462,11 +474,7 @@
 						doConvertInvoice();				
 					}	
 				
-				//Menu for Review Doc
-				if ((ss.menu == "rStandardMenuText.Invoice")
-					&& (ss.commandName.indexOf("rStandardMenuText.ReviewAnyDocument") > -1 ))	{
-						doReviewDoc();				
-					}		
+				
 				
 				//Menu for Register Tape
 				if ((ss.menu == "rStandardMenuText.POS")
@@ -506,6 +514,12 @@
 				}
 				
 			}			
+		}
+		
+		private function doUpdatePendingDocument():void {
+			var pendingListPicker:PendingListPicker = PopUpManager.createPopUp(this,PendingListPicker,false) as PendingListPicker;
+			pendingListPicker.showEstimates = true;
+			pendingListPicker.openInvoice = true;
 		}
 		
 		private function doReviewDoc():void {
