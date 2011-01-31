@@ -611,7 +611,7 @@
 		<mx:SetProperty name="height" value="572"/>
 		<mx:SetProperty target="{label1}" name="y" value="402"/>
 		<mx:SetProperty target="{price1}" name="y" value="400"/>
-		<mx:SetProperty target="{canvas1}" name="height" value="524"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="525"/>
 		<mx:SetProperty target="{label1}" name="x" value="10"/>
 		<mx:SetProperty target="{price1}" name="x" value="74"/>
 		<mx:SetProperty target="{canvas1}" name="width" value="655"/>
@@ -1346,5 +1346,5 @@
 		<mx:TextInput x="45" y="48" width="100" id="price2" tabIndex="2" focusOut="checkNaN(event)"/>
 
 	</mx:Canvas>
-	<mx:ComboBox width="176" dataProvider="{priceScheduleMethod}" id="priceScheduleMethodCombo" visible="false"></mx:ComboBox>
+	<mx:ComboBox width="225" dataProvider="{priceScheduleMethod}" id="priceScheduleMethodCombo" visible="false"></mx:ComboBox>
 </mx:TitleWindow>
