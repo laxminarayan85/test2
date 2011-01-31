@@ -55,6 +55,8 @@ package com.efi.printsmith.data
 		public var taxTable:TaxTable;
 		public var chargeNumber:Number = 0;
 		public var fromAccount:Boolean = false;
+		public var jobIndex:Number = 0;
+		public var chargeIndex:Number = 0;
 	
 	}
 }
