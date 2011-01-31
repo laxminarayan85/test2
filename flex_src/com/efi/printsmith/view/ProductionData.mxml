@@ -538,6 +538,7 @@ width="938" height="507"  creationComplete="init()"
 				break;
 			case this.copier_speed:
 				job.copyMinutes = parseFloat(this.copier_speed.text);
+				doUpdatePrice = true;
 				break;
 			case this.markup:
 				job.pricingRecord.stockMarkup = parseFloat(this.markup.text);

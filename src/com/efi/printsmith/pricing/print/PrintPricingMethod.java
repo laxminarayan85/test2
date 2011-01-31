@@ -30,12 +30,16 @@ public class PrintPricingMethod {
 		}
 		double pressPrice = 0.0;
 		BigDecimal pressSpeed;
-		if (pressDefinition.getSpeedTable() != null) {
-			pressSpeed = new BigDecimal(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), job.getTotalImpressions()));
-			job.getPricingPress().setAvgImpressPerHour(pressSpeed);
+		if (job.getCopyMinutesOverride()) {
+			pressSpeed = new BigDecimal(job.getCopyMinutes());
+		} else {
+			if (pressDefinition.getSpeedTable() != null) {
+				pressSpeed = new BigDecimal(PriceListUtilities.getSpeedFromSpeedTable(pressDefinition.getSpeedTable(), job.getTotalImpressions()));
+				job.getPricingPress().setAvgImpressPerHour(pressSpeed);
+			}
+			else
+				pressSpeed = pressDefinition.getAvgImpressPerHour();
 		}
-		else
-			pressSpeed = pressDefinition.getAvgImpressPerHour();
 		job.setCopyMinutes(pressSpeed.doubleValue());
 		double runHours = 0.0;
 		if (job.getOrRuntime())

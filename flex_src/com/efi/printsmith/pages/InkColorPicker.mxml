@@ -99,7 +99,7 @@
 					front = true;
 				else
 					front = false;
-		
+				
 			}
 			public function setInks(job:JobBase):void
 			{
@@ -166,12 +166,12 @@
 			textAlign="right" width="84"/>
 		<mx:Text x="10" y="178" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kJobInkEditCmd.Ink6')}"
 			textAlign="right" width="84"/>
-		<ns1:AutoComplete x="113" y="28" id="ink1" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
-		<ns1:AutoComplete x="113" y="58" id="ink2" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
-		<ns1:AutoComplete x="113" y="88" id="ink3" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
-		<ns1:AutoComplete x="113" y="118" id="ink4" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
-		<ns1:AutoComplete x="113" y="148" id="ink5" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
-		<ns1:AutoComplete x="113" y="178" id="ink6" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="28" id="ink1" allowNewValues="true" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="58" id="ink2" allowNewValues="true" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="88" id="ink3" allowNewValues="true" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="118" id="ink4" allowNewValues="true" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="148" id="ink5" allowNewValues="true" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
+		<ns1:AutoComplete x="113" y="178" id="ink6" allowNewValues="true" dataProvider="{inkColorsArray}" width="163" labelField="name"></ns1:AutoComplete>
 	</mx:Canvas>
 
 	<mx:Spacer height="10"/>
