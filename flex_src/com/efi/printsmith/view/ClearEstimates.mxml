@@ -1,48 +1,365 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="400" height="300"
-	creationComplete="{init()}">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="400" height="500"
+	creationComplete="{init()}" showCloseButton="true" close="{closeWindow()}">
+	
+	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
+		<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountsResult(event)"/>
+		<mx:method name="getPending" fault="handleFault(event)" result="handleLoadPendingResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleLoadSaveResult(event)"/>
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadInvoiceResult(event)"/>
+	</mx:RemoteObject>
+	
 	<mx:Script>
 		<![CDATA[
+			import mx.core.Application;
+			import mx.events.CloseEvent;
+			import com.efi.printsmith.data.Invoice;
+			import com.efi.printsmith.data.Estimate;
+			import com.efi.printsmith.data.InvoiceBase;
+			import mx.controls.Alert;
+			import mx.utils.StringUtil;
+			import com.efi.printsmith.events.AccountPickerSelectEvent;
+			import com.efi.printsmith.common.components.CommonLoadComponent;
+			import mx.rpc.events.FaultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			import com.efi.printsmith.data.Account;
 			import mx.managers.PopUpManager;
+			
+			[Bindable] private var account:Account;
+			
+			[Bindable] private var accounts:ArrayCollection;
+			
+			[Bindable] private var loadComponent:CommonLoadComponent;
+			
+			[Bindable] private var pendingList:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] private var clearedEstimates:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] private var estimatesProcessed:Number = 0;
+			
+			[Bindable] private var estimatesInPending:Number = 0;
+			
+			[Bindable] private var invoicesInPending:Number = 0;
+			
 			private function init():void {
+				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 				this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.ClearEstimates');
 				PopUpManager.centerPopUp(this);
+				estimatesGroup.selectedValue = "SomeEstimates";
+				actionGroup.selectedValue = "ClearEstimates";
+				dataService.getAccountPicker();
+				txtinput_1.text = "1";
+				txtinput_2.text = "1";
+				txtinput_3.text = "2";
+			}
+			
+			private function getCheckBoxLabel(accountObj:Account):String {
+				if(accountObj!=null) {
+					return StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.For'),accountObj.title);
+				}
+				return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Forselectedaccount');
+			}
+			
+			private function setBtnLabel(event:Event):void {
+				if(event.currentTarget.selected) {
+					btn_2.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Continue');
+				} else {
+					btn_2.label = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK');
+				}
+			}
+			
+			private function handleLoadAccountsResult(event:ResultEvent):void {
+				if(loadComponent){
+					loadComponent.close();
+				}
+				accounts = event.result as ArrayCollection;
+			}
+			
+			private function handleFault(event:FaultEvent):void {
+				if(loadComponent!=null){
+					loadComponent.close();
+				}
+				var message:String;
+				              
+				message = "Error: "                          
+				+ event.fault.faultCode + " - "                                  
+				+ event.fault.faultDetail + " - "                                  
+				+ event.fault.faultString;
+				Alert.show(message, "Error", 0, null, null, null, 4);        	
+			} 
+			
+			private function doSelectAccount():void {
+				var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
+			    accountPickerWindow.setStyle("borderAlpha", 0.9);
+			    accountPickerWindow.formIsEmpty = true;
+			    accountPickerWindow.prospect_boolean = true;
+			    accountPickerWindow.showContactButton = false;
+			    accountPickerWindow.setAccounts(accounts);
+			    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel, false, 0, true);
+			    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect, false, 0, true);
+			}
+			
+			private function handleAccountPickerCancel(event:AccountPickerSelectEvent):void {
+				account = null;
+			}
+			
+			private function handleAccountPickerSelect(event:AccountPickerSelectEvent):void {
+				account = event.account;
+			}
+			
+			private function disableCheckBoxes(flag:int):void {
+				if(flag==1) {
+					if(estimatesGroup.selectedValue=="AllEstimates") {
+						estimates_check_1.selected = false;
+						estimates_check_2.selected = false;
+						estimates_check_3.selected = false;
+					}
+				}
+				if(flag==2) {
+					if(actionGroup.selectedValue=="VoidEstimates") {
+						estimates_check_4.selected = false;
+					}
+				}
+			}
+			
+			private function handleLoadPendingResult(event:ResultEvent):void {
+				pendingList = event.result as ArrayCollection; 
+				for each(var invoiceBase:InvoiceBase in pendingList) {
+					if(invoiceBase is Estimate) {
+						estimatesInPending++;
+						estimatesProcessed++;
+					} else if(invoiceBase is Invoice) {
+						invoicesInPending++;
+					}
+				}
+			}
+			
+			private function handleLoadInvoiceResult(event:ResultEvent):void {
+				clearedEstimates.addItem(event.result as InvoiceBase);
+			}
+			
+			private function handleLoadSaveResult(event:ResultEvent):void {
+				currentState = "finalState";
+			}
+			
+			private function doClearEstimates():void {
+				if(!estimates_check_5.selected) {
+					var warningString:String = "";
+					var mainWarningString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Areyousureyouwant02f');
+					var allEstimates:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.AllEstimates');
+					var movedString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.moved');
+					var voidedString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.voided');
+					var toString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'salesCmd.to'); 
+					var estHistString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'estHistoryCmd.EstimateHistory');
+					if(estimates_check_4.selected) {
+						estHistString = estHistString+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.wochangingwinlossrat');
+					}
+					if(estimatesGroup.selectedValue=="AllEstimates") {
+						if(actionGroup.selectedValue=="ClearEstimates") {
+							warningString = StringUtil.substitute(mainWarningString,allEstimates,estHistString,movedString,toString);
+						} else if(actionGroup.selectedValue=="VoidEstimates") {
+							warningString = StringUtil.substitute(mainWarningString,allEstimates,"",voidedString,"");
+						}
+					} else if(estimatesGroup.selectedValue=="SomeEstimates") {
+						var arg0String:String = "";
+						var accountString:String = "";
+						if(account==null) {
+							accountString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.unassigned');
+						} else {
+							accountString = account.title;
+						}
+						if(estimates_check_1.selected && estimates_check_2.selected && estimates_check_3.selected) {
+							if(actionGroup.selectedValue=="ClearEstimates") {
+								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdayswitnumforacc'),accountString,txtinput_1.text,txtinput_2.text,txtinput_3.text);
+								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
+							} else if(actionGroup.selectedValue=="VoidEstimates") {
+								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
+							}
+						}
+						else if(estimates_check_1.selected && estimates_check_2.selected) {
+							if(actionGroup.selectedValue=="ClearEstimates") {
+								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdayswitnum'),txtinput_1.text,txtinput_2.text,txtinput_3.text);
+								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
+							} else if(actionGroup.selectedValue=="VoidEstimates") {
+								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
+							}
+						}
+						else if(estimates_check_1.selected && estimates_check_3.selected) {
+							if(actionGroup.selectedValue=="ClearEstimates") {
+								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdaysforacc'),accountString,txtinput_1.text);
+								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
+							} else if(actionGroup.selectedValue=="VoidEstimates") {
+								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
+							}
+						}
+						else if(estimates_check_2.selected && estimates_check_3.selected) {
+							if(actionGroup.selectedValue=="ClearEstimates") {
+								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimateswithnumbersforacc'),accountString,txtinput_2.text,txtinput_3.text);
+								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
+							} else if(actionGroup.selectedValue=="VoidEstimates") {
+								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
+							}
+						}
+						else if(estimates_check_1.selected) {
+							if(actionGroup.selectedValue=="ClearEstimates") {
+								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdays'),txtinput_1.text);
+								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
+							} else if(actionGroup.selectedValue=="VoidEstimates") {
+								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
+							}
+						}
+						else if(estimates_check_2.selected) {
+							if(actionGroup.selectedValue=="ClearEstimates") {
+								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimateswithnumbers'),txtinput_2.text,txtinput_3.text);
+								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
+							} else if(actionGroup.selectedValue=="VoidEstimates") {
+								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
+							}
+						}
+						else if(estimates_check_3.selected) {
+							if(actionGroup.selectedValue=="ClearEstimates") {
+								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesforaccount'),accountString);
+								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
+							} else if(actionGroup.selectedValue=="VoidEstimates") {
+								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
+							}
+						}
+					}
+					Alert.show(warningString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmClearEstimatesHandler, null, Alert.NO);
+				}
+			}
+			
+			private function confirmClearEstimatesHandler(event:CloseEvent):void {
+				if(event.detail == Alert.YES) {
+					dataService.getPending();
+				}
+			}
+			
+			private function checkDaysOldValue():void {
+				if(txtinput_1.text=="" || isNaN(parseInt(txtinput_1.text)) || parseInt(txtinput_1.text)==0) {
+					txtinput_1.text = "1";
+				}
+			}
+			
+			private function checkToFromValue():void {
+				if(txtinput_2.text=="" || isNaN(parseInt(txtinput_2.text)) || parseInt(txtinput_2.text)==0) {
+					txtinput_2.text = "1";
+				}
+				if(txtinput_3.text=="" || isNaN(parseInt(txtinput_3.text)) || parseInt(txtinput_3.text)==0) {
+					txtinput_3.text = String(parseInt(txtinput_2.text)+1);
+				} else {
+					if(parseInt(txtinput_3.text)<=parseInt(txtinput_2.text)) {
+						txtinput_3.text = String(parseInt(txtinput_2.text)+1);
+					}
+				}
+			}
+			
+			private function closeWindow():void {
+				PopUpManager.removePopUp(this);
 			}
 		]]>
 	</mx:Script>
 	
-	<mx:RadioButtonGroup id="estimatesGroup"/>
+	<mx:states>
+		<mx:State name="finalState">
+			<mx:RemoveChild target="{mainVBox}"/>
+			<mx:AddChild>
+				<mx:VBox width="100%" height="100%">
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Done')}"/>
+					<mx:VBox width="100%" horizontalAlign="center">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesprocessed')}: {estimatesProcessed}"/>
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatescleared')}: {clearedEstimates.length}"/>
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesinpendingli')}: {estimatesInPending}"/>
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Invoicesinpendinglis')}: {invoicesInPending}"/>
+					</mx:VBox>
+				</mx:VBox>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
 	
-	<mx:RadioButton value="AllEstimates"
-		groupName="estimatesGroup" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.AllEstimates')}"/>
+	<mx:VBox id="mainVBox" width="100%" height="100%">
 	
-	<mx:RadioButton value="SomeEstimates"
-		groupName="estimatesGroup" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.SomeEstimates')}"/>
+		<mx:RadioButtonGroup id="estimatesGroup" change="{disableCheckBoxes(1)}"/>
 		
-	<mx:HBox width="100%">
-		<mx:Spacer width="5%"/>
-		<mx:CheckBox id="estimates_check_1" width="40%"
-			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdaysold')}"/>
-		<mx:TextInput restrict="1-9" textAlign="center" width="15%"/> 
-	</mx:HBox>
-	
-	<mx:HBox width="100%">
-		<mx:Spacer width="5%"/>
-		<mx:CheckBox id="estimates_check_2" width="40%"
-			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatenumbersfrom')}:"/>
-		<mx:TextInput restrict="1-9" textAlign="center" width="15%"/> 
-	</mx:HBox>
-	
-	<mx:HBox width="100%">
-		<mx:Spacer width="45%"/>
-		<mx:TextInput restrict="1-9" textAlign="center" width="15%"/> 
-	</mx:HBox>
-	
-	<mx:HBox width="100%">
-		<mx:Spacer width="5%"/>
-		<mx:CheckBox id="estimates_check_3" width="40%"
-			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Forselectedaccount')}"/>
-	</mx:HBox>
-	
+		<mx:RadioButton value="AllEstimates"
+			groupName="estimatesGroup" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.AllEstimates')}"/>
+		
+		<mx:RadioButton value="SomeEstimates"
+			groupName="estimatesGroup" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.SomeEstimates')}"/>
+			
+		<mx:HBox width="100%">
+			<mx:Spacer width="5%"/>
+			<mx:CheckBox id="estimates_check_1" width="50%"
+				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdaysold')}"
+				enabled="{estimatesGroup.selectedValue=='SomeEstimates'}"/>
+			<mx:TextInput id="txtinput_1" restrict="1-9" textAlign="center" width="15%"
+				enabled="{estimatesGroup.selectedValue=='SomeEstimates' &amp;&amp; estimates_check_1.selected}" disabledColor="#000000"
+				focusOut="{checkDaysOldValue()}"/>
+			<mx:Spacer width="30%"/> 
+		</mx:HBox>
+		
+		<mx:HBox width="100%">
+			<mx:Spacer width="5%"/>
+			<mx:CheckBox id="estimates_check_2" width="50%"
+				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatenumbersfrom')}:"
+				enabled="{estimatesGroup.selectedValue=='SomeEstimates'}"/>
+			<mx:TextInput id="txtinput_2" restrict="1-9" textAlign="center" width="15%"
+				enabled="{estimatesGroup.selectedValue=='SomeEstimates' &amp;&amp; estimates_check_2.selected}" disabledColor="#000000"
+				focusOut="{checkToFromValue()}"/>
+			<mx:Spacer width="30%"/> 
+		</mx:HBox>
+		
+		<mx:HBox width="100%">
+			<mx:Spacer width="5%"/>
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.to')}:" width="50%" textAlign="right"/>
+			<mx:TextInput id="txtinput_3" restrict="1-9" textAlign="center" width="15%"
+				enabled="{estimatesGroup.selectedValue=='SomeEstimates' &amp;&amp; estimates_check_2.selected}" disabledColor="#000000"
+				focusOut="{checkToFromValue()}"/>
+			<mx:Spacer width="30%"/> 
+		</mx:HBox>
+		
+		<mx:HBox width="100%">
+			<mx:Spacer width="5%"/>
+			<mx:CheckBox id="estimates_check_3" width="50%"
+				label="{getCheckBoxLabel(account)}" enabled="{estimatesGroup.selectedValue=='SomeEstimates'}"/>
+			<mx:Spacer width="45%"/>
+		</mx:HBox>
+		
+		<mx:Button id="btn_1" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.SelectAccount')}" click="{doSelectAccount()}"
+			enabled="{estimatesGroup.selectedValue=='SomeEstimates' &amp;&amp; estimates_check_3.selected}"/>
+		
+		<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.DefaultAction')}"
+			paddingBottom="2" paddingLeft="2" paddingRight="2" paddingTop="2" layout="vertical" width="100%">
+			
+			<mx:RadioButtonGroup id="actionGroup" change="{disableCheckBoxes(2)}"/>
+			
+			<mx:RadioButton value="ClearEstimates"
+				groupName="actionGroup" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.ClearEstimates')}"/>
+			<mx:HBox width="100%">
+				<mx:Spacer width="5%"/>
+				<mx:CheckBox id="estimates_check_4" width="45%"
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Donotchangewinlossra')}"
+					enabled="{actionGroup.selectedValue=='ClearEstimates'}"/>
+			</mx:HBox>
+			<mx:RadioButton value="VoidEstimates"
+				groupName="actionGroup" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.VoidEstimates')}"/>
+			<mx:CheckBox id="estimates_check_5" width="45%"
+				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Askbeforeeach')}"
+				click="{setBtnLabel(event)}"/>
+		</mx:Panel>
+		
+		<mx:Text text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.ClearedEstimatesarer')}" width="95%"/>
+		
+		<mx:HBox width="100%">
+			<mx:HBox width="100%" horizontalAlign="left">
+				<mx:Button id="btn_2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{doClearEstimates()}"/>
+			</mx:HBox>
+			<mx:HBox width="100%" horizontalAlign="right">
+				<mx:Button id="btn_3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{closeWindow()}"/>
+			</mx:HBox>
+		</mx:HBox>
+		
+	</mx:VBox>
 	
 </mx:TitleWindow>
