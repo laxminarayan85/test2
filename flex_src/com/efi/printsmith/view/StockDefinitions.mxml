@@ -1928,6 +1928,106 @@
         return currentControlIsValid;
 	}
 	
+	private function CWTCalculate(cost:Number, unit:Number):Number{
+		if (this.currentState=="LargeFormat")
+		{	// does not apply
+			return 0.0;
+		}else if (this.currentState=="RollStock"){
+			if ( unit == 0)
+				return 0.0;
+			else{
+				return ((cost/unit)* 100.0);
+			}
+		}else{
+			if ( unit == 0 || (parseFloat(mWeight.text) == 0))
+				return 0.0;
+			
+			else{
+				if ( unit == 1000){
+					var costTemp:Number
+					costTemp =  cost;
+				}
+				else
+					{
+						costTemp = (cost/unit)*1000
+					}
+				if ( (parseInt(SheetsPerSet.text) > 1) && (chkCostIsInSets.selected)){
+					costTemp /= parseInt(SheetsPerSet.text)
+					
+				}
+				return  (( costTemp / parseFloat(mWeight.text))* 100.0)
+			}
+		}
+	}
+	private function InSetsChange():void{
+		if (chkCostIsInSets.selected)
+		 	UpdatingCostingSets();
+		 else{
+		 	Cost1.text =  Snowmass.getCurrencyFormatter(false,2).format(stockDefinitions.cost1); 
+		 	Cost2.text =  Snowmass.getCurrencyFormatter(false,2).format(stockDefinitions.cost2); 
+		 	Cost3.text =  Snowmass.getCurrencyFormatter(false,2).format(stockDefinitions.cost3); 
+		 	Cost4.text =  Snowmass.getCurrencyFormatter(false,2).format(stockDefinitions.cost4); 
+		 	Cost5.text =  Snowmass.getCurrencyFormatter(false,2).format(stockDefinitions.cost5); 
+		 	Cost6.text =  Snowmass.getCurrencyFormatter(false,2).format(stockDefinitions.cost6); 
+		 }
+	}
+	private function UpdatingCostingSets():void{
+		Cost1.text = Snowmass.getCurrencyFormatter(false,2).format((parseFloat(Cost1.text) * parseInt(SheetsPerSet.text)));
+		Cost2.text = Snowmass.getCurrencyFormatter(false,2).format((parseFloat(Cost2.text) * parseInt(SheetsPerSet.text)));
+		Cost3.text = Snowmass.getCurrencyFormatter(false,2).format((parseFloat(Cost3.text) * parseInt(SheetsPerSet.text)));
+		Cost4.text = Snowmass.getCurrencyFormatter(false,2).format((parseFloat(Cost4.text) * parseInt(SheetsPerSet.text)));
+		Cost5.text = Snowmass.getCurrencyFormatter(false,2).format((parseFloat(Cost5.text) * parseInt(SheetsPerSet.text)));
+		Cost6.text = Snowmass.getCurrencyFormatter(false,2).format((parseFloat(Cost6.text) * parseInt(SheetsPerSet.text)));
+		
+	}
+	private function UpdateCosting():void{
+		var temp1:Number;
+		var temp2:Number;
+		var temp3:Number;
+		var temp4:Number;
+		var temp5:Number;
+		var temp6:Number;
+		temp1 = CWTCalculate(parseFloat(Cost1.text), parseFloat(Costunits.text))
+		this.Cwt1.text = Snowmass.getCurrencyFormatter(false,2).format(temp1);
+		temp2 = CWTCalculate(parseFloat(Cost2.text), parseFloat(Costunits.text))
+		this.Cwt2.text = Snowmass.getCurrencyFormatter(false,2).format(temp2);
+		temp3 = CWTCalculate(parseFloat(Cost3.text), parseFloat(Costunits.text))
+		this.Cwt3.text = Snowmass.getCurrencyFormatter(false,2).format(temp3);
+		temp4 = CWTCalculate(parseFloat(Cost4.text), parseFloat(Costunits.text))
+		this.Cwt4.text = Snowmass.getCurrencyFormatter(false,2).format(temp4);
+		temp5 = CWTCalculate(parseFloat(Cost5.text), parseFloat(Costunits.text))
+		this.Cwt5.text = Snowmass.getCurrencyFormatter(false,2).format(temp5);
+		temp6 = CWTCalculate(parseFloat(Cost6.text), parseFloat(Costunits.text))
+		this.Cwt6.text = Snowmass.getCurrencyFormatter(false,2).format(temp6);
+	}
+	private function handleFocusCostEvent(evt:FocusEvent):void{
+		var temp:Number
+		
+		if ( evt.currentTarget == this.Cost1){
+			temp = CWTCalculate(parseFloat(Cost1.text), parseFloat(Costunits.text))
+			this.Cwt1.text = Snowmass.getCurrencyFormatter(false,2).format(temp);
+		}
+		if ( evt.currentTarget == this.Cost2){
+			temp = CWTCalculate(parseFloat(Cost2.text), parseFloat(Costunits.text))
+			this.Cwt2.text = Snowmass.getCurrencyFormatter(false,2).format(temp);
+		}
+		if ( evt.currentTarget == this.Cost3){
+			temp = CWTCalculate(parseFloat(Cost3.text), parseFloat(Costunits.text))
+			this.Cwt3.text = Snowmass.getCurrencyFormatter(false,2).format(temp);
+		}
+		if ( evt.currentTarget == this.Cost4){
+			temp = CWTCalculate(parseFloat(Cost4.text), parseFloat(Costunits.text))
+			this.Cwt4.text = Snowmass.getCurrencyFormatter(false,2).format(temp);
+		}
+		if ( evt.currentTarget == this.Cost5){
+			temp = CWTCalculate(parseFloat(Cost5.text), parseFloat(Costunits.text))
+			this.Cwt5.text = Snowmass.getCurrencyFormatter(false,2).format(temp);
+		}
+		if ( evt.currentTarget == this.Cost6){
+			temp = CWTCalculate(parseFloat(Cost6.text), parseFloat(Costunits.text))
+			this.Cwt6.text = Snowmass.getCurrencyFormatter(false,2).format(temp);
+		}
+	}
 	private function handleFocusOutEvent(evt:FocusEvent):void
 	{
 		this.dimensionTarget = evt.currentTarget
@@ -2492,39 +2592,39 @@ private function doRound(evt:FocusEvent):void{
 				<mx:Label x="54" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.CostingUnits')}" width="95" textAlign="right"/>
 				<mx:Label x="252" y="4" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.SheetsSet')}" width="92" textAlign="right" id="label13"/>
 				<mx:Label x="19" y="137" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.PriceExpires')}" width="127" textAlign="right"/>
-				<mx:CheckBox x="450" y="2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.CostisinSets')}" id="chkCostIsInSets" width="194" enabled="{parseInt(SheetsPerSet.text) > 1}"/>
+				<mx:CheckBox x="450" y="2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.CostisinSets')}" id="chkCostIsInSets" width="194" click="InSetsChange()" enabled="{parseInt(SheetsPerSet.text) > 1}"/>
 
 				<mx:TextInput restrict="0-9\." x="225" y="30" width="66"  change="doPriceChange()" id="Qtybreak1" text="{stockDefinitions.qtybreak1}" focusOut="doRound(event)"/>
-				<mx:TextInput restrict="0-9\." x="225" y="50" width="66" change="doPriceChange()"  id="Cost1" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost1)}"/>
+				<mx:TextInput restrict="0-9\." x="225" y="50" width="66"  focusOut="handleFocusCostEvent(event)" change="doPriceChange()"  id="Cost1" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost1)}"/>
 				<mx:TextInput restrict="0-9\." x="225" y="70" width="66" change="doPriceChange()" id="Cwt1" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt1)}"/>
 				<mx:TextInput restrict="0-9\." x="225" y="91" width="66" change="doPriceChange()" id="Markup1" text="{stockDefinitions.markup1}"/>
 				<mx:TextInput restrict="0-9\." x="225" y="112" width="66" change="doPriceChange()" id="ListPerM1" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.listPerM1)}"/>
 				<mx:TextInput restrict="0-9\." x="288" y="30" width="66" change="doPriceChange()" id="Qtybreak2" text="{stockDefinitions.qtybreak2}" focusOut="doRound(event)"/>
-				<mx:TextInput restrict="0-9\."  x="288" y="50" width="66" change="doPriceChange()" id="Cost2" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost2)}"/>
+				<mx:TextInput restrict="0-9\."  x="288" y="50" width="66"  focusOut="handleFocusCostEvent(event)"  change="doPriceChange()" id="Cost2" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost2)}"/>
 				<mx:TextInput restrict="0-9\." x="288" y="70" width="66" change="doPriceChange()" id="Cwt2" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt2)}"/>
 				<mx:TextInput restrict="0-9\." x="288" y="91" width="66" change="doPriceChange()" id="Markup2" text="{stockDefinitions.markup2}"/>
 				<mx:TextInput restrict="0-9\." x="288" y="112" width="66" change="doPriceChange()" id="ListPerM2" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.listPerM2)}"/>
 				<mx:TextInput restrict="0-9\." x="351" y="30" width="66" change="doPriceChange()" id="Qtybreak3" text="{stockDefinitions.qtybreak3}" focusOut="doRound(event)"/>
-				<mx:TextInput restrict="0-9\." x="351" y="50" width="66" change="doPriceChange()" id="Cost3" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost3)}"/>
+				<mx:TextInput restrict="0-9\." x="351" y="50" width="66"   focusOut="handleFocusCostEvent(event)" change="doPriceChange()" id="Cost3" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost3)}"/>
 				<mx:TextInput restrict="0-9\." x="351" y="70" width="66" change="doPriceChange()" id="Cwt3" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt3)}"/>
 				<mx:TextInput restrict="0-9\." x="351" y="91" width="66" change="doPriceChange()" id="Markup3" text="{stockDefinitions.markup3}"/>
 				<mx:TextInput restrict="0-9\." x="351" y="112" width="66" change="doPriceChange()" id="ListPerM3" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.listPerM3)}"/>
 				<mx:TextInput restrict="0-9\." x="412.5" y="30" width="66" change="doPriceChange()" id="Qtybreak4" text="{stockDefinitions.qtybreak4}" focusOut="doRound(event)"/>
-				<mx:TextInput restrict="0-9\." x="412.5" y="50" width="66" change="doPriceChange()" id="Cost4" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost4)}"/>
+				<mx:TextInput restrict="0-9\." x="412.5" y="50" width="66"  focusOut="handleFocusCostEvent(event)"  change="doPriceChange()" id="Cost4" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost4)}"/>
 				<mx:TextInput restrict="0-9\." x="412.5" y="70" width="66" change="doPriceChange()" id="Cwt4" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt4)}"/>
 				<mx:TextInput restrict="0-9\." x="412.5" y="91" width="66" change="doPriceChange()" id="Markup4" text="{stockDefinitions.markup4}"/>
 				<mx:TextInput restrict="0-9\." x="412.5" y="112" width="66" change="doPriceChange()" id="ListPerM4" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.listPerM4)}"/>
 				<mx:TextInput restrict="0-9\." x="476" y="30" width="66" change="doPriceChange()" id="Qtybreak5" text="{stockDefinitions.qtybreak5}" focusOut="doRound(event)"/>
-				<mx:TextInput restrict="0-9\." x="476" y="50" width="66" change="doPriceChange()" id="Cost5" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost5)}"/>
+				<mx:TextInput restrict="0-9\." x="476" y="50" width="66"  focusOut="handleFocusCostEvent(event)"  change="doPriceChange()" id="Cost5" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost5)}"/>
 				<mx:TextInput restrict="0-9\." x="476" y="70" width="66" change="doPriceChange()" id="Cwt5" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt5)}"/>
 				<mx:TextInput restrict="0-9\." x="476" y="91" width="66" change="doPriceChange()" id="Markup5" text="{stockDefinitions.markup5}"/>
 				<mx:TextInput restrict="0-9\." x="476" y="112" width="66" change="doPriceChange()" id="ListPerM5" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.listPerM5)}"/>
 				<mx:TextInput restrict="0-9\." x="540" y="30" width="66" change="doPriceChange()" id="Qtybreak6" text="{stockDefinitions.qtybreak6}" focusOut="doRound(event)"/>
-				<mx:TextInput restrict="0-9\." x="540" y="50" width="66" change="doPriceChange()" id="Cost6" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost6)}"/>
+				<mx:TextInput restrict="0-9\." x="540" y="50" width="66"  focusOut="handleFocusCostEvent(event)"  change="doPriceChange()" id="Cost6" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.cost6)}"/>
 				<mx:TextInput restrict="0-9\." x="540" y="70" width="66" change="doPriceChange()" id="Cwt6" text="{Snowmass.getCurrencyFormatter(false, 2).format(stockDefinitions.cwt6)}"/>
 				<mx:TextInput restrict="0-9\." x="540" y="91" width="66" change="doPriceChange()" id="Markup6" text="{stockDefinitions.markup6}"/>
 				<mx:TextInput restrict="0-9\." x="540" y="112" width="66" change="doPriceChange()" id="ListPerM6" text="{Snowmass.getCurrencyFormatter(false, 3).format(stockDefinitions.listPerM6)}"/>
-				<mx:TextInput restrict="0-9\." x="157" y="2" width="87" change="doPriceChange()" id="Costunits" text="{stockDefinitions.costunits}"/>
+				<mx:TextInput restrict="0-9\." x="157" y="2" width="87"  focusOut="UpdateCosting()" change="doPriceChange()" id="Costunits" text="{stockDefinitions.costunits}"/>
 				<mx:TextInput restrict="0-9\." x="352" y="2" width="81" change="doPriceChange()" id="SheetsPerSet" text="{stockDefinitions.sheetsPerSet}" focusOut="doRound(event);"/>
 				<mx:DateField restrict="0-9\." x="154" y="135" id="PriceExpires" editable="true" text="{stockDefinitions.priceExpires}"/>
 			</mx:Panel>
