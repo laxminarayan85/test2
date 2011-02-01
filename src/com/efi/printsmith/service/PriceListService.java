@@ -920,7 +920,7 @@ public class PriceListService extends SnowmassHibernateService {
 	public WasteChart createWasteChart() {
 		WasteChart wasteChart = new WasteChart();
 		
-		wasteChart.setIsDollar(true);
+		wasteChart.setIsDollar(false);
 		
 		PriceListElement element = null;
 		for (int i = 0; i < 14; i++) {
