@@ -171,7 +171,7 @@
 				if(_invoiceBase.account!=null && customlog_txtarea.text!=null && StringUtil.trim(customlog_txtarea.text)!=""){
 					var customerLog:CustomerLog = new CustomerLog();
 					customerLog.account = _invoiceBase.account;
-					customerLog.logEntry = StringUtil.trim(customlog_txtarea.text);
+					customerLog.logEntry = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posNotifyCmd.Notified')+" "+StringUtil.trim(customlog_txtarea.text);
 					dataServiceCustomerLog.addUpdate(customerLog);
 				} else {
 					_invoiceBase.customerNotificationDate = new Date();
