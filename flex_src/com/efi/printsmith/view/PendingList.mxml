@@ -1112,6 +1112,46 @@
 	}
 	
 	private function sortLocation(obj1:Object, obj2:Object):int 	{
+		var invoice1:InvoiceBase = obj1 as InvoiceBase;
+		var invoice2:InvoiceBase = obj2 as InvoiceBase;
+		var locationName1:String = "";
+		var locationName2:String = "";
+		for each(var job1:JobBase in invoice1.jobs) {
+			if(job1.location!=null){
+				locationName1 = job1.location.name;
+			}
+		}
+		for each(var job2:JobBase in invoice2.jobs) {
+			if(job2.location!=null){
+				locationName2 = job2.location.name;
+			}
+		}
+		if (locationName1 < locationName2)	{
+			return -1;
+		}
+		else if (locationName1 > locationName2)	{
+			return 1;
+		}
+		return 0;
+	}
+	
+	private function sortHoldState(obj1:Object, obj2:Object):int 	{
+		var invoice1:InvoiceBase = obj1 as InvoiceBase;
+		var invoice2:InvoiceBase = obj2 as InvoiceBase;
+		var holdStateName1:String = "";
+		var holdStateName2:String = "";
+		if(invoice1.holdState!=null) {
+			holdStateName1 = invoice1.holdState.name;
+		}
+		if(invoice2.holdState!=null) {
+			holdStateName2 = invoice2.holdState.name;
+		}
+		if (holdStateName1 < holdStateName2)	{
+			return -1;
+		}
+		else if (holdStateName1 > holdStateName2)	{
+			return 1;
+		}
 		return 0;
 	}
 	public function getTypeLabel(item:Object, column:DataGridColumn):String{
@@ -1627,7 +1667,7 @@
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn width="{colWidths.holdState}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleLateAndCompletedCmd.Hold')}" dataField="holdState" labelFunction="getHoldState">
+					<mx:DataGridColumn width="{colWidths.holdState}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleLateAndCompletedCmd.Hold')}" dataField="holdState" labelFunction="getHoldState" sortCompareFunction="sortHoldState">
 						<mx:headerRenderer>
 							<mx:Component>
 								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
