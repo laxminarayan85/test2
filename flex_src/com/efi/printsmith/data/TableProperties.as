@@ -14,7 +14,7 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var table:String = "";
+		public var tableName:String = "";
 		public var userName:String = "";
 		public var enabled:Boolean = false;
 		public var sortBy:String = "";

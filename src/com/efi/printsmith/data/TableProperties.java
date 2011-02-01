@@ -49,9 +49,9 @@ import org.hibernate.annotations.Where;
 @Where(clause="isdeleted <> 'TRUE'")
 public class TableProperties extends ModelBase {
 	/**
-	 * @generated
-	 */
-	public static final String TABLE = "Table";
+   * @generated
+   */
+  public static final String TABLENAME = "TableName";
 	/**
 	 * @generated
 	 */
@@ -91,28 +91,25 @@ public class TableProperties extends ModelBase {
  	
 	
 	/**
-	 * @generated
-	 */	
+   * @generated
+   */	
  	@Basic
-	private String table;
-	
+  private String tableName;
+
 	/**
-	 * @generated
+   * @generated
  	 */
-	public String getTable(){
-    return table; 
+  public String getTableName(){
+    return tableName; 
   }
 
-	
 	/**
-	 * @generated
-	 */	
-	public void setTable(String newVal) {
-    this.table = newVal;
+   * @generated
+   */	
+  public void setTableName(String newVal) {
+    this.tableName = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -209,7 +206,7 @@ public class TableProperties extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-    if (TABLE.equals(propertyName)) return getTable();
+    if (TABLENAME.equals(propertyName)) return getTableName();
     if (USERNAME.equals(propertyName)) return getUserName();
     if (ENABLED.equals(propertyName)) return getEnabled();
     if (SORTBY.equals(propertyName)) return getSortBy();
@@ -223,7 +220,7 @@ public class TableProperties extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (TABLE.equals(propertyName)) setTable((String)newValue); else
+    if (TABLENAME.equals(propertyName)) setTableName((String)newValue); else
     if (USERNAME.equals(propertyName)) setUserName((String)newValue); else
     if (ENABLED.equals(propertyName)) setEnabled((Boolean)newValue); else
     if (SORTBY.equals(propertyName)) setSortBy((String)newValue); else
@@ -237,7 +234,7 @@ public class TableProperties extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-    if (TABLE.equals(propertyName)) 
+    if (TABLENAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (USERNAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
@@ -257,7 +254,7 @@ public class TableProperties extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-    if (TABLE.equals(propertyName)) return TableProperties.class;
+    if (TABLENAME.equals(propertyName)) return TableProperties.class;
     if (USERNAME.equals(propertyName)) return TableProperties.class;
     if (ENABLED.equals(propertyName)) return TableProperties.class;
     if (SORTBY.equals(propertyName)) return TableProperties.class;
@@ -273,7 +270,7 @@ public class TableProperties extends ModelBase {
     if (! super.deepEquals(obj))
       return false;
     TableProperties objT = (TableProperties)obj;
-    if (! SmartEquals(getTable(), objT.getTable()))
+    if (! SmartEquals(getTableName(), objT.getTableName()))
       return false;
     if (! SmartEquals(getUserName(), objT.getUserName()))
       return false;

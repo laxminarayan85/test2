@@ -403,7 +403,7 @@ public class DefaultDataFactory {
 		return;
 			
 		TableProperties tableEditor = new TableProperties();
-		tableEditor.setTable("BusinessType");
+		tableEditor.setTableName("BusinessType");
 		tableEditor.setUserName("Business Type");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -411,7 +411,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("City");
+		tableEditor.setTableName("City");
 		tableEditor.setUserName("City");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -419,7 +419,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("CommonInterest");
+		tableEditor.setTableName("CommonInterest");
 		tableEditor.setUserName("Common Interest");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -427,7 +427,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ContactNamePrefix");
+		tableEditor.setTableName("ContactNamePrefix");
 		tableEditor.setUserName("Contact Name Prefix");
 		try{
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -435,7 +435,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("Dimension");
+		tableEditor.setTableName("Dimension");
 		tableEditor.setUserName("Dimension");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -443,7 +443,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ContactNameSuffixes");
+		tableEditor.setTableName("ContactNameSuffixes");
 		tableEditor.setUserName("Contact Name Suffixes");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -452,7 +452,7 @@ public class DefaultDataFactory {
 		}
 		
 		tableEditor = new TableProperties();
-		tableEditor.setTable("Country");
+		tableEditor.setTableName("Country");
 		tableEditor.setUserName("Country");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -460,7 +460,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("CTPSubstrate");
+		tableEditor.setTableName("CTPSubstrate");
 		tableEditor.setUserName("CTP Substrate");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -468,7 +468,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("Driver");
+		tableEditor.setTableName("Driver");
 		tableEditor.setUserName("Driver");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -476,7 +476,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("GenericColors");
+		tableEditor.setTableName("GenericColors");
 		tableEditor.setUserName("Generic Colors");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -484,7 +484,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("HoldState");
+		tableEditor.setTableName("HoldState");
 		tableEditor.setUserName("Hold State");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -492,7 +492,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("InkColor");
+		tableEditor.setTableName("InkColor");
 		tableEditor.setUserName("Ink Color");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -500,7 +500,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("JobTitle");
+		tableEditor.setTableName("JobTitle");
 		tableEditor.setUserName("Job Title");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -508,7 +508,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("LeadSource");
+		tableEditor.setTableName("LeadSource");
 		tableEditor.setUserName("Lead Source");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -516,7 +516,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("MailerType");
+		tableEditor.setTableName("MailerType");
 		tableEditor.setUserName("Mailer Type");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -524,7 +524,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("MarketingDateLabels");
+		tableEditor.setTableName("MarketingDateLabels");
 		tableEditor.setUserName("Marketing Date Labels");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -532,7 +532,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("MarketingMailers");
+		tableEditor.setTableName("MarketingMailers");
 		tableEditor.setUserName("Marketing Mailers");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -540,7 +540,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("PhoneTags");
+		tableEditor.setTableName("PhoneTags");
 		tableEditor.setUserName("Phone Tags");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -548,7 +548,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ProductionCopiers");
+		tableEditor.setTableName("ProductionCopiers");
 		tableEditor.setUserName("Production Copiers");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -556,7 +556,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ProductionDates");
+		tableEditor.setTableName("ProductionDates");
 		tableEditor.setUserName("Production Dates");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -564,7 +564,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ProductionExceptions");
+		tableEditor.setTableName("ProductionExceptions");
 		tableEditor.setUserName("Production Exceptions");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -572,7 +572,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ProductionFacilities");
+		tableEditor.setTableName("ProductionFacilities");
 		tableEditor.setUserName("Production Facilities");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -580,7 +580,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ProductionLocations");
+		tableEditor.setTableName("ProductionLocations");
 		tableEditor.setUserName("Production Locations");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -588,7 +588,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ProductionPress");
+		tableEditor.setTableName("ProductionPress");
 		tableEditor.setUserName("Production Presses");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -596,7 +596,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ProductionPriority");
+		tableEditor.setTableName("ProductionPriority");
 		tableEditor.setUserName("Production Priority");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -604,7 +604,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ProductionStations");
+		tableEditor.setTableName("ProductionStations");
 		tableEditor.setUserName("Production Stations");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -612,7 +612,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("Products");
+		tableEditor.setTableName("Products");
 		tableEditor.setUserName("Products");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -620,7 +620,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ReportCategories");
+		tableEditor.setTableName("ReportCategories");
 		tableEditor.setUserName("Report Categories");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -628,7 +628,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("SalesRep");
+		tableEditor.setTableName("SalesRep");
 		tableEditor.setUserName("Sales Rep");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -636,7 +636,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("ShippingMethod");
+		tableEditor.setTableName("ShippingMethod");
 		tableEditor.setUserName("ShipVia");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -644,7 +644,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("SportsInterest");
+		tableEditor.setTableName("SportsInterest");
 		tableEditor.setUserName("Sports Interest");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -652,7 +652,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("State");
+		tableEditor.setTableName("State");
 		tableEditor.setUserName("State");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -660,7 +660,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("StockColors");
+		tableEditor.setTableName("StockColors");
 		tableEditor.setUserName("Stock Colors");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -668,7 +668,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("StockFinish");
+		tableEditor.setTableName("StockFinish");
 		tableEditor.setUserName("Stock Finish");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -676,7 +676,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("StockForest");
+		tableEditor.setTableName("StockForest");
 		tableEditor.setUserName("Stock Forest Management");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -684,7 +684,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("StockGrade");
+		tableEditor.setTableName("StockGrade");
 		tableEditor.setUserName("Stock Grade");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -692,7 +692,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("StockGroup");
+		tableEditor.setTableName("StockGroup");
 		tableEditor.setUserName("Stock Group");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -700,7 +700,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("TaxCodes");
+		tableEditor.setTableName("TaxCodes");
 		tableEditor.setUserName("Tax Codes");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -708,14 +708,14 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("TaxTablesElements");
+		tableEditor.setTableName("TaxTablesElements");
 		tableEditor.setUserName("Tax Tables Elements");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}tableEditor = new TableProperties();
-		tableEditor.setTable("TaxTable");
+		tableEditor.setTableName("TaxTable");
 		tableEditor.setUserName("Tax Tables");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -723,7 +723,7 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
 		tableEditor = new TableProperties();
-		tableEditor.setTable("TypeofWork");
+		tableEditor.setTableName("TypeofWork");
 		tableEditor.setUserName("Type of Work");
 		
 		try {
@@ -731,7 +731,7 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}tableEditor = new TableProperties();
-		tableEditor.setTable("Vendor");
+		tableEditor.setTableName("Vendor");
 		tableEditor.setUserName("Vendor");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
@@ -739,14 +739,14 @@ public class DefaultDataFactory {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}tableEditor = new TableProperties();
 		
-		tableEditor.setTable("WebLocations");
+		tableEditor.setTableName("WebLocations");
 		tableEditor.setUserName("Web Locations");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		tableEditor.setTable("Zip");
+		tableEditor.setTableName("Zip");
 		tableEditor.setUserName("Zip");
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
