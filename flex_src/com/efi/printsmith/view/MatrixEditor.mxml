@@ -172,7 +172,7 @@
 	<mx:State name="COPIESPERORIGINALSTWOSIDES">
 		<mx:RemoveChild target="{matrixeditor}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mtrx:BasicDoubleMatrix id="copies_per_originals_two_sides_editor" x="-1" y="-1" height="360" matrix="{paperPrice}">
+			<mtrx:BasicDoubleMatrix id="copies_per_originals_two_sides_editor" x="-1" y="-1" height="360" matrix="{matrix}">
 			</mtrx:BasicDoubleMatrix>
 		</mx:AddChild>
 		<mx:SetProperty name="height" value="490"/>
@@ -201,6 +201,7 @@
 		<mx:RemoveChild target="{price3}"/>
 		<mx:RemoveChild target="{price12}"/>
 		<mx:RemoveChild target="{price13}"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="432"/>
 	</mx:State>
 	<mx:State name="TOTALOFALLCOPIES">
 		<mx:RemoveChild target="{price20}"/>
@@ -257,6 +258,7 @@
 		<mx:RemoveChild target="{price20}"/>
 		<mx:SetProperty target="{price1}" name="width" value="72"/>
 		<mx:SetProperty target="{price2}" name="width" value="76"/>
+		<mx:SetProperty target="{canvas1}" name="height" value="460"/>
 	</mx:State>	
 	<mx:State name="SQUAREAREAOFORIGINALS">
 		<mx:SetProperty name="height" value="484"/>
