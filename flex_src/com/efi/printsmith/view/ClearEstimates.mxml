@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="400" height="300"
+	creationComplete="{init()}">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			private function init():void {
+				this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.ClearEstimates');
+				PopUpManager.centerPopUp(this);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:RadioButtonGroup id="estimatesGroup"/>
+	
+	<mx:RadioButton value="AllEstimates"
+		groupName="estimatesGroup" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.AllEstimates')}"/>
+	
+	<mx:RadioButton value="SomeEstimates"
+		groupName="estimatesGroup" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.SomeEstimates')}"/>
+		
+	<mx:HBox width="100%">
+		<mx:Spacer width="5%"/>
+		<mx:CheckBox id="estimates_check_1" width="40%"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdaysold')}"/>
+		<mx:TextInput restrict="1-9" textAlign="center" width="15%"/> 
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Spacer width="5%"/>
+		<mx:CheckBox id="estimates_check_2" width="40%"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatenumbersfrom')}:"/>
+		<mx:TextInput restrict="1-9" textAlign="center" width="15%"/> 
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Spacer width="45%"/>
+		<mx:TextInput restrict="1-9" textAlign="center" width="15%"/> 
+	</mx:HBox>
+	
+	<mx:HBox width="100%">
+		<mx:Spacer width="5%"/>
+		<mx:CheckBox id="estimates_check_3" width="40%"
+			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Forselectedaccount')}"/>
+	</mx:HBox>
+	
+	
+</mx:TitleWindow>

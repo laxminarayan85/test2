@@ -408,6 +408,12 @@
 					&& (ss.commandName.indexOf("rStandardMenuText.StampSchedule") > -1 ))	{
 						doStampPricing();					
 				}
+				
+				if ((ss.menu == "rStandardMenuText.Admin")
+					&& (ss.commandName.indexOf("rStandardMenuText.ClearEstimates") > -1 ))	{
+						doClearEstimates();					
+					}	
+					
 				if ((ss.menu == "rStandardMenuText.Admin")
 					&& (ss.commandName.indexOf("rStandardMenuText.PaperCalculator") > -1 ))	{
 						doPaperCal();					
@@ -674,6 +680,10 @@
 			}
 	
 			return parseFloat(widthString);
+		}
+		
+		private function doClearEstimates():void {
+			var clearEstimates:ClearEstimates = PopUpManager.createPopUp(this,ClearEstimates,true) as ClearEstimates;
 		}
 		
 		public function doPaperCal():void{
