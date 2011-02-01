@@ -74,7 +74,7 @@ public class TableEditorMapper extends ImportMapper {
 									modelBase = new LeadSource();
 								else if (title.equals("Mailer Type"))
 									modelBase = new MailerType();
-								else if (title.equals("Marketing Date Lables"))
+								else if (title.equals("Marketing Date Labels"))
 									modelBase = new MarketingDateLabels();
 								else if (title.equals("Marketing Mailers"))
 									modelBase = new MarketingMailers();
@@ -94,13 +94,13 @@ public class TableEditorMapper extends ImportMapper {
 									modelBase = new ProductionPress();
 								else if (title.equals("Production Priority"))
 									modelBase = new ProductionPriority();
-								else if (title.equals("ProductionStations"))
+								else if (title.equals("Production Stations"))
 									modelBase = new ProductionStations();
 								else if (title.equals("Products"))
 									modelBase = new Products();
 								else if (title.equals("Report Categories"))
 									modelBase = new ReportCategories();
-								else if (title.equals("Sales Rep:"))
+								else if (title.equals("Sales Rep"))
 									modelBase = new SalesRep();
 								else if (title.equals("Ship Via:"))
 									modelBase = new ShippingMethod();
@@ -140,7 +140,7 @@ public class TableEditorMapper extends ImportMapper {
 										dataService.addUpdate(sizeTable);
 									}
 								}	
-								else if (title.equals("Sports Interest"))
+								else if (title.equals("Sport Interest"))
 									modelBase = new SportsInterest();
 								else if (title.equals("State"))
 									modelBase = new State();
