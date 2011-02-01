@@ -24,12 +24,17 @@
 		import mx.managers.PopUpManager;
 		
 		[Bindable] private var _invoiceBase:InvoiceBase;
+		
+		public var pendingStatus:PendingStatus;
 	
 		private function init():void {
 			PopUpManager.centerPopUp(this);
 		}
 		
 		private function closeWindow():void {
+			if(pendingStatus!=null && pendingStatus.isPopUp) {
+				PopUpManager.removePopUp(pendingStatus);
+			}
 			PopUpManager.removePopUp(this);
 		}
 		

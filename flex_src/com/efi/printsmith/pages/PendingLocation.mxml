@@ -41,6 +41,8 @@
     		
     		[Bindable] private var enabledValue:Boolean = true;
     		
+    		public var pendingStatus:PendingStatus;
+    		
     		private var updateLocationDate:Boolean = false;
     		
     		private function init():void {
@@ -48,6 +50,9 @@
     		}
     		
     		private function closeWindow():void {
+    			if(pendingStatus!=null && pendingStatus.isPopUp) {
+    				PopUpManager.removePopUp(pendingStatus);
+    			}
     			PopUpManager.removePopUp(this);
     		}
     		

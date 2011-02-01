@@ -634,6 +634,7 @@
 	public function handleUIPickupEvent(evt:ResultEvent):void {
 		pickupAction = true;
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
+			handleUIStatusEvent(evt);
 			if(dgView.selectedItem is Invoice) {
 				dataService.getInvoice((dgView.selectedItem as InvoiceBase).id);
 			} else if(dgView.selectedItem is Estimate) {
@@ -648,18 +649,22 @@
 		}	
 	}
 
-	public function handleUIStatusEvent(evt:ResultEvent):void {
+	public function handleUIStatusEvent(evt:ResultEvent):PendingStatus {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
 			var pendingStatus:PendingStatus = PendingStatus(PopUpManager.createPopUp(this, PendingStatus, false));
 			pendingStatus.invoiceBase = dgView.selectedItem as InvoiceBase;
 			pendingStatus.setStyle("borderAlpha", 0.9);
+			return pendingStatus;
 		}
+		return null;
 	}
 	public function handleUILocationEvent(evt:ResultEvent):void {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
+			var pendingStatus:PendingStatus = handleUIStatusEvent(evt);
 			var pendingLocation:PendingLocation = PendingLocation(PopUpManager.createPopUp(this, PendingLocation, false));
 			pendingLocation.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
 			pendingLocation.invoiceBase = dgView.selectedItem as InvoiceBase;
+			pendingLocation.pendingStatus = pendingStatus;
 			pendingLocation.setStyle("borderAlpha", 0.9);
 		}
 	}
@@ -671,16 +676,20 @@
 	}
 	public function handleUINotifyEvent(evt:ResultEvent):void {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
-			var pendingNotify:PendingNotify = PendingNotify(PopUpManager.createPopUp(this, PendingNotify, false));
+			var pendingStatus:PendingStatus = handleUIStatusEvent(evt);
+			var pendingNotify:PendingNotify = PendingNotify(PopUpManager.createPopUp(this, PendingNotify, true));
 			pendingNotify.invoiceBase = dgView.selectedItem as InvoiceBase;
+			pendingNotify.pendingStatus = pendingStatus;
 			pendingNotify.setStyle("borderAlpha", 0.9);	
 		}
 	}
 	public function handleUIDueDateEvent(evt:ResultEvent):void {
 		if(dgView.selectedIndex>-1 && dgView.selectedItem!=null){
-			var pendingChangeDueDate:PendingChangeDueDate = PendingChangeDueDate(PopUpManager.createPopUp(this, PendingChangeDueDate, false));
+			var pendingStatus:PendingStatus = handleUIStatusEvent(evt);
+			var pendingChangeDueDate:PendingChangeDueDate = PendingChangeDueDate(PopUpManager.createPopUp(this, PendingChangeDueDate, true));
 			pendingChangeDueDate.addEventListener(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,updatePendingList,false,0,true);
 			pendingChangeDueDate.invoiceBase = dgView.selectedItem as InvoiceBase;
+			pendingChangeDueDate.pendingStatus = pendingStatus;
 			pendingChangeDueDate.setStyle("borderAlpha", 0.9);
 		}
 	}
