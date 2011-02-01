@@ -13,6 +13,8 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.data.enums.RunMethod;
+			import com.efi.printsmith.Constants;
 			import flash.net.registerClassAlias;
 			import mx.utils.ObjectUtil;
 			import mx.controls.Alert;
@@ -61,9 +63,18 @@
 				pricing_throbber.visible = true;
 				pricing_throbber.play();
 				if(trackerConsoleJobs!=null) {
+					var impressionsCount:Number = 0;
 					registerClassAlias("com.efi.printsmith.data.Job",Job);
 					localJob = ObjectUtil.copy(job) as Job;
-					localJob.qtyOrdered = trackerConsoleJobs.impressions;
+					if (!(isNaN(localJob.inSetsOf)) && localJob.inSetsOf > 0) {               
+						impressionsCount = ((((trackerConsoleJobs.impressions / localJob.impressionsPerRun) - (localJob.estWaste + localJob.binderyWaste)) * (localJob.numUp / localJob.numOn)) / localJob.inSetsOf);     
+				        changeJobQuantity(localJob, impressionsCount);
+					}
+					else {                    
+						impressionsCount = (((trackerConsoleJobs.impressions / localJob.impressionsPerRun) - (localJob.estWaste + localJob.binderyWaste)) * (localJob.numUp / localJob.numOn));
+				        changeJobQuantity(localJob, impressionsCount);
+					}
+
 					if (trackerConsoleJobs.spoilage > 0) {		
 						localJob.orWaste = true;
 						localJob.estWasteOverride = true;
@@ -88,6 +99,88 @@
 				}
 			}
 			
+			private function changeJobQuantity(job:Job, impressionsCount:Number):void {
+				job.qtyOrdered = impressionsCount;
+				calcSignatures(job);
+			}
+			
+			private function calcSignatures(job:Job):void {
+				var runs:Number = 0;
+				var iup, ion, iorigs, ordered, press, xpress, xorig, xup:Number= 0;
+				var iruns, divisor:Number = 0;
+				
+				if (job.numUp < 1) {
+					job.numUp = 1;
+				}
+				if (job.sheets < 1) {
+					job.sheets = 1;
+				}
+				if (job.numOn < 1) {
+					job.numOn = 1;
+				}
+				if (job.numOn > job.sheets) {
+					job.numOn = job.sheets;
+				}
+				if (job.numOn > job.numUp) {
+					job.numOn = job.numUp;
+				}
+				
+				if (job.runMethod == RunMethod.WorkAndTumble ||
+						job.runMethod == RunMethod.WorkAndTurn) {
+					if ((job.numOn * 2) <= job.numUp) {
+						if (job.numUp < (job.sheets/2)) {
+							job.numOn = job.numUp;
+						} else {
+							job.numOn = (job.sheets/2);
+						}
+						if (job.numOn < 1) {
+							job.numOn = 1;
+						}
+					}
+				}
+				
+				ion = job.numOn;
+				iup = job.numUp;
+				iorigs = job.sheets;
+				
+				iruns = iorigs/ion;
+				if (iruns < 1) iruns = 1;
+				
+				divisor = iup/ion;
+				ordered = job.qtyOrdered * job.inSetsOf;
+				
+				if (iorigs%ion != 0) {
+					xorig = iorigs - (iruns * ion);
+					press = ordered/divisor;
+					if ((press*divisor) < ordered) press++;
+					xup = iup/xorig;
+					xpress = ordered/xup;
+					if ((xpress*xup) < ordered) press++; 
+				
+					if (press != 0) 
+						runs = iruns + (xpress/press);
+					else 
+						runs = iruns;
+					iruns++;
+				} else {
+					press = ordered/divisor;
+					if ((press * divisor) < ordered) press++;
+					runs = iruns;
+				}
+				
+				if (job.runMethod == RunMethod.WorkAndTumble) {
+					press += press;
+				}
+				
+				//job.setAdditionalRunCount(runs - floor(runs));
+				
+				//job.setRunSize((runs * job.getFrontPasses() + job.getBackPasses());
+				
+				job.signatures = iruns;
+				
+				job.pressQty = press;
+			}
+						
 			private function handleLoadJobResult(event:ResultEvent):void {
 				this.job = event.result as Job;
 				updateCosting();
