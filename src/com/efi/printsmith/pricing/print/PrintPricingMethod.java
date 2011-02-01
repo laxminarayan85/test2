@@ -63,9 +63,21 @@ public class PrintPricingMethod {
 		if (job.getDoubleSided() == true)
 			totalHours = totalHours * 2;
 		job = calculatePressCost(job);
-		pressPrice = totalHours * pressDefinition.getLaborRate().doubleValue() * pressDefinition.getLaborMarkup();
+		BigDecimal laborRate;
+		double laborMarkup;
+		if (pricingRecord.getLaborRateOverride())
+			laborRate = pricingRecord.getLaborRate();
+		else
+			laborRate = pressDefinition.getLaborRate();
+		if (pricingRecord.getLaborMarkupOverride())
+			laborMarkup = pricingRecord.getLaborMarkup();
+		else
+			laborMarkup = pressDefinition.getLaborMarkup();
+		pressPrice = totalHours * laborRate.doubleValue() * laborMarkup;
 		stockPrice = (stockPrice * job.getImpressionsPerRun()) * job.getSheets();
 		double price = pressPrice + stockPrice;
+		pricingRecord.setLaborRate(laborRate);
+		pricingRecord.setLaborMarkup(laborMarkup);
 		pricingRecord.setTotalPrice(new Double(Math.round(price * 100)) / 100);
 		pricingRecord.setStockTotalPrice(stockPrice);
 		pricingRecord.setLaborTotalPrice(pressPrice);

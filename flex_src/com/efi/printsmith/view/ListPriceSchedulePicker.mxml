@@ -36,7 +36,7 @@
     import com.efi.printsmith.events.PriceListPickerSelectEvent;
     import com.efi.printsmith.events.SavePriceListEvent;
     import com.efi.printsmith.common.components.CustomDeleteButtonComponent;
-         
+    import com.efi.mdi.view.window.MDIWindow;
 	import mx.managers.PopUpManager;     
 	import com.efi.printsmith.data.SpeedTable;  
 	import com.efi.printsmith.data.PriceList;
@@ -235,7 +235,8 @@
 	private function doCancel():void {
 		//var cancelEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, null);
 		//dispatchEvent(cancelEvent);
-		PopUpManager.removePopUp(this);
+		var mdiWindow:MDIWindow = this.parent as MDIWindow;
+		mdiWindow.closeWindow();
 	}
 ]]>        
 </mx:Script>

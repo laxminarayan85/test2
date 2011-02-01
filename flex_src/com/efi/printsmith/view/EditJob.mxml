@@ -1616,6 +1616,9 @@
 			import com.efi.printsmith.data.PreferencesDefaultPresses;
 			import com.efi.printsmith.data.TaxTable;
 			
+			import com.efi.mdi.ContainerManager;
+			import mx.core.Container;
+			
 			import com.efi.printsmith.events.StockPickerSelectEvent;
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.ChargeDefinitionSelectEvent;
@@ -2023,10 +2026,12 @@
 			
 			private function doProductionData():void
 			{
-				var productionDataWindow:ProductionData=ProductionData(PopUpManager.createPopUp(this, ProductionData, false));
-				productionDataWindow.setStyle("borderAlpha", 0.9);
-				productionDataWindow.setJob(this.job);
-				productionDataWindow.addEventListener(JobEditCompleteEvent.SAVE, handleJobEditSave);
+				var editPage:Container = this;
+				var titleWindow:ProductionData = new ProductionData();
+				Snowmass.getInstance().containerManager.openNewMDIWindow("Production Data", titleWindow);
+			    titleWindow.setStyle("borderAlpha", 0.9);
+			    titleWindow.setJob(this.job);
+			    titleWindow.addEventListener(JobEditCompleteEvent.SAVE, handleJobEditSave);
 			}
 			
 			private function doPrint():void {
@@ -3964,7 +3969,7 @@
 	    	private function handleJobEditSave(event:JobEditCompleteEvent):void {
 	    		var localJob:Job = event.job as Job;
 	    		
-				job.parentSize = localJob.parentSize;
+				/*job.parentSize = localJob.parentSize;
 				job.runSize = localJob.runSize;
 				job.finishSize = localJob.finishSize;
 				job.cutOff = localJob.cutOff;
@@ -3987,7 +3992,9 @@
 				job.deliveredDate = localJob.deliveredDate;
 				job.runByDate = localJob.runByDate;
 				job.startByDate = localJob.startByDate;
-				job.submittedDate = localJob.submittedDate;
+				job.submittedDate = localJob.submittedDate;*/
+				
+				job = localJob;
 				
 				if (job.parentSize != null) {
 					this.job_parent.selectedIndex = findItem(job.parentSize.name, dimensionsArray);
