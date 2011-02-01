@@ -1349,6 +1349,20 @@
 	private function handleLoadPreferencesStocks(ev:ResultEvent):void {
 		preferencesStocks = ev.result as PreferencesStocks;
 		this.autoCalculateBlankStock();
+		Qtybreak1.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.stdQty1);
+		Qtybreak2.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.stdQty2);
+		Qtybreak3.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.stdQty3);
+		Qtybreak4.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.stdQty4);
+		Qtybreak5.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.stdQty5);
+		Qtybreak6.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.stdQty6);
+		Markup1.text = Snowmass.getCurrencyFormatter(false,2).format(preferencesStocks.stdMarkup1);
+		Markup2.text = Snowmass.getCurrencyFormatter(false,2).format(preferencesStocks.stdMarkup2);
+		Markup3.text = Snowmass.getCurrencyFormatter(false,2).format(preferencesStocks.stdMarkup3);
+		Markup4.text = Snowmass.getCurrencyFormatter(false,2).format(preferencesStocks.stdMarkup4);
+		Markup5.text = Snowmass.getCurrencyFormatter(false,2).format(preferencesStocks.stdMarkup5);
+		Markup6.text = Snowmass.getCurrencyFormatter(false,2).format(preferencesStocks.stdMarkup6);
+		
+		
 	}
 	private function handleSaveStockGradeResult(ev:ResultEvent):void {
 		stockDefinitions.grade = ev.result as StockGrade
@@ -2348,6 +2362,12 @@ private function doRound(evt:FocusEvent):void{
 			this.BlankSheetPrice5.text = Snowmass.getCurrencyFormatter(false,3).format(((cost * preferencesStocks.blankMarkup5) / parseInt(this.Costunits.text)));
 			this.BlankSheetPrice6.text = Snowmass.getCurrencyFormatter(false,3).format(((cost * preferencesStocks.blankMarkup6) / parseInt(this.Costunits.text)));
 		}
+		BlankSheetqty1.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.blankQty1);
+		BlankSheetqty2.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.blankQty2);
+		BlankSheetqty3.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.blankQty3);
+		BlankSheetqty4.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.blankQty4);
+		BlankSheetqty5.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.blankQty5);
+		BlankSheetqty6.text = Snowmass.getCurrencyFormatter(false,0).format(preferencesStocks.blankQty6);
 	}
 	
 	private function convertoCaliper():void{
