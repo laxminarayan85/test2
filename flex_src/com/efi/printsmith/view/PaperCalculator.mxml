@@ -683,43 +683,44 @@
 			
 			switch(dimensionTarget) {
 			case parent_size_edit:
-				if (job.parentSize.height == 0 || job.parentSize.width == 0) {
+				if ((job.parentSize.height == 0 || job.parentSize.width == 0) && parent_size_edit.text.length > 0) {
 					dataService.getDimensionByWildcardName(parent_size_edit.text);
 				} else {
-					parent_size_edit.text = job.parentSize.name;
+					if (parent_size_edit.text.length == 0) {
+						job.parentSize = new Dimension();
+						parent_size_edit.selectedItem = null;
+					} else {
+						parent_size_edit.text = job.parentSize.name;
+					}
 					dimensionChangePropagate(dimensionTarget);
 					refreshCalcAndImage();
 				}
 				break;
 			case run_size_edit:
-				if (job.runSize.height == 0 || job.runSize.width == 0) {
-					if (run_size_edit.text.length == 0) {		// user emptys the size field
-							job.runSize = new Dimension();
-							run_size_edit.selectedItem = null;
-							dimensionChangePropagate(dimensionTarget);
-							refreshCalcAndImage();
-						} else {
-							dataService.getDimensionByWildcardName(run_size_edit.text);
-						}
+				if ((job.runSize.height == 0 || job.runSize.width == 0) && run_size_edit.text.length > 0) {
+					dataService.getDimensionByWildcardName(run_size_edit.text);
 				} else {
-					run_size_edit.text = job.runSize.name;
-					validateSizes(dimensionTarget);
+					if (run_size_edit.text.length == 0) {		
+						job.runSize = new Dimension();
+						run_size_edit.selectedItem = null;
+					} else {
+						run_size_edit.text = job.runSize.name;
+						validateSizes(dimensionTarget);
+					}
 					dimensionChangePropagate(dimensionTarget);
 					refreshCalcAndImage();
 				}
 				break;
 			case finish_size_edit:
-				if (job.finishSize.height == 0 || job.finishSize.width == 0) {
+				if ((job.finishSize.height == 0 || job.finishSize.width == 0) && finish_size_edit.text.length > 0) {
+					dataService.getDimensionByWildcardName(finish_size_edit.text);
+				} else {
 					if (finish_size_edit.text.length == 0) {		// user emptys the size field
 						job.finishSize = new Dimension();
 						finish_size_edit.selectedItem = null;
-						dimensionChangePropagate(dimensionTarget);
-						refreshCalcAndImage();
 					} else {
-						dataService.getDimensionByWildcardName(finish_size_edit.text);
+						finish_size_edit.text = job.finishSize.name;
 					}
-				} else {
-					finish_size_edit.text = job.finishSize.name;
 					validateSizes(dimensionTarget);
 					dimensionChangePropagate(dimensionTarget);
 					refreshCalcAndImage();
@@ -734,78 +735,109 @@
 				
 				switch (evt.currentTarget) {
 					case parent_size_edit:
-						sizeStr = Snowmass.formatSizeString(parent_size_edit.text);
-						parent_size_edit.selectedIndex = findItem(sizeStr, dimensions);
-						if (parent_size_edit.selectedIndex == -1) {
-						//	parent_size_edit.text = sizeStr;
-							if (job.parentSize == null)
-								job.parentSize = new Dimension()
-							job.parentSize.name = sizeStr;
-							job.parentSize.width = Snowmass.getWidthFromSizeString(job.parentSize);
-							job.parentSize.height = Snowmass.getLengthFromSizeString(job.parentSize);
-						}
-						else {
-							localSize = parent_size_edit.selectedItem as Dimension;
-							job.parentSize.name = localSize.name;
-							job.parentSize.type = localSize.type;
-							job.parentSize.width = localSize.width;
-							job.parentSize.height = localSize.height;
+						if (parent_size_edit.text.length == 0) {
+							if (job.runSize.width > 0 && job.runSize.height > 0) {
+								job.parentSize.name = job.runSize.name;
+								job.parentSize.type = job.runSize.type;
+								job.parentSize.height = job.runSize.height;
+								job.parentSize.width = job.runSize.width;
+								parent_size_edit.selectedIndex = run_size_edit.selectedIndex;
+								parent_size_edit.text = job.parentSize.name;
+							}
+						} else {
+							sizeStr = Snowmass.formatSizeString(parent_size_edit.text);
+							parent_size_edit.selectedIndex = findItem(sizeStr, dimensions);
+							if (parent_size_edit.selectedIndex == -1) {
+							//	parent_size_edit.text = sizeStr;
+								if (job.parentSize == null)
+									job.parentSize = new Dimension()
+								job.parentSize.name = sizeStr;
+								job.parentSize.width = Snowmass.getWidthFromSizeString(job.parentSize);
+								job.parentSize.height = Snowmass.getLengthFromSizeString(job.parentSize);
+							}
+							else {
+								localSize = parent_size_edit.selectedItem as Dimension;
+								job.parentSize.name = localSize.name;
+								job.parentSize.type = localSize.type;
+								job.parentSize.width = localSize.width;
+								job.parentSize.height = localSize.height;
+							}
 						}
 												
 						dimensionChange(parent_size_edit);
 						break;
 						
 					case run_size_edit:
-						sizeStr = Snowmass.formatSizeString(run_size_edit.text);
-						if (job.runSize == null)
-							job.runSize = new Dimension()
-						job.runSize.name = sizeStr;
-						job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
-						job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
-						
-						if (this.job.pricingMethod != null) {
-							if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
-								job.cutOff = job.runSize.height;
-								if (job.runSize.width != job.parentSize.width) {
-									job.runSize.width = job.parentSize.width;		// must stay in sync
-									job.runSize.name = job.runSize.width.toString() + " x " + job.runSize.height.toString();
-									sizeStr = job.runSize.name;
+						if (run_size_edit.text.length == 0) {
+							if (job.parentSize.width > 0 && job.parentSize.height > 0) {
+								job.runSize.name = job.parentSize.name;
+								job.runSize.type = job.parentSize.type;
+								job.runSize.height = job.parentSize.height;
+								job.runSize.width = job.parentSize.width;
+								run_size_edit.text = job.parentSize.name;
+								run_size_edit.selectedIndex = parent_size_edit.selectedIndex;
+								if (this.job.pricingMethod != null) {
+									if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
+										job.runSize.height = job.cutOff;
+									}
 								}
 							}
-						}
-						run_size_edit.selectedIndex = findItem(sizeStr, dimensions);
 
-						if (run_size_edit.selectedIndex == -1) {
+						} else {
+							sizeStr = Snowmass.formatSizeString(run_size_edit.text);
+							if (job.runSize == null)
+								job.runSize = new Dimension()
 							job.runSize.name = sizeStr;
-						}
-						else {
-							localSize = run_size_edit.selectedItem as Dimension;
-							job.runSize.name = localSize.name;
-							job.runSize.type = localSize.type;
-							job.runSize.width = localSize.width;
-							job.runSize.height = localSize.height;
+							job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
+							job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
+							
+							if (this.job.pricingMethod != null) {
+								if (this.job.pricingMethod.title == "Large Format" || this.job.pricingMethod.title == "Roll-Fed") {
+									job.cutOff = job.runSize.height;
+									if (job.runSize.width != job.parentSize.width) {
+										job.runSize.width = job.parentSize.width;		// must stay in sync
+										job.runSize.name = job.runSize.width.toString() + " x " + job.runSize.height.toString();
+										sizeStr = job.runSize.name;
+									}
+								}
+							}
+							run_size_edit.selectedIndex = findItem(sizeStr, dimensions);
+	
+							if (run_size_edit.selectedIndex == -1) {
+								job.runSize.name = sizeStr;
+							}
+							else {
+								localSize = run_size_edit.selectedItem as Dimension;
+								job.runSize.name = localSize.name;
+								job.runSize.type = localSize.type;
+								job.runSize.width = localSize.width;
+								job.runSize.height = localSize.height;
+							}
 						}
 						
 						dimensionChange(run_size_edit);
 						break;
 						
 					case finish_size_edit:
-						sizeStr = Snowmass.formatSizeString(finish_size_edit.text);
-						finish_size_edit.selectedIndex = findItem(sizeStr, dimensions);
-						if (finish_size_edit.selectedIndex == -1) {
-					//		finish_size_edit.text = sizeStr;
-							if (job.finishSize == null)
-								job.finishSize = new Dimension()
-							job.finishSize.name = sizeStr;
-							job.finishSize.width = Snowmass.getWidthFromSizeString(job.finishSize);
-							job.finishSize.height = Snowmass.getLengthFromSizeString(job.finishSize);
-						}
-						else {
-							localSize = finish_size_edit.selectedItem as Dimension;
-							job.finishSize.name = localSize.name;
-							job.finishSize.type = localSize.type;
-							job.finishSize.width = localSize.width;
-							job.finishSize.height = localSize.height;
+						if (finish_size_edit.text.length == 0) {
+							
+						} else {
+							sizeStr = Snowmass.formatSizeString(finish_size_edit.text);
+							finish_size_edit.selectedIndex = findItem(sizeStr, dimensions);
+							if (finish_size_edit.selectedIndex == -1) {
+								if (job.finishSize == null)
+									job.finishSize = new Dimension()
+								job.finishSize.name = sizeStr;
+								job.finishSize.width = Snowmass.getWidthFromSizeString(job.finishSize);
+								job.finishSize.height = Snowmass.getLengthFromSizeString(job.finishSize);
+							}
+							else {
+								localSize = finish_size_edit.selectedItem as Dimension;
+								job.finishSize.name = localSize.name;
+								job.finishSize.type = localSize.type;
+								job.finishSize.width = localSize.width;
+								job.finishSize.height = localSize.height;
+							}
 						}
 						
 						dimensionChange(finish_size_edit);
