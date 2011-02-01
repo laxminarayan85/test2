@@ -143,6 +143,7 @@
  	 	 	<mx:RemoveChild target="{label2}"/>
  	 	 	<mx:RemoveChild target="{label3}"/>
  	 	 	<mx:RemoveChild target="{label4}"/>
+ 	 	 	<mx:SetProperty target="{cashReg_grid}" name="x" value="1"/>
  	 	</mx:State>
  	 	<mx:State name="paymentCash" basedOn="paymentPaymentMethod">
  	 	 	<mx:SetProperty target="{button1}" name="y" value="547"/>
@@ -168,7 +169,6 @@
  	 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:TextInput x="121" y="114" width="75"  id="card_ref" focusOut="UpdateCashRegister()"/>
  	 	 	</mx:AddChild>
- 	 	 	<mx:SetProperty target="{cashReg_grid}" name="x" value="0"/>
  	 	 	<mx:SetProperty target="{accept_button}" name="enabled" value="true"/>
  	 <!-- 	 	<mx:AddChild relativeTo="{tax_canvas2}" position="lastChild">
  	 	 	 	<mx:Button x="204" y="115" width="19" height="19" click="doCreditCardManualApproval()" enabled="{enableCCApproval}" id="btnCCmanualApprove0">
@@ -607,6 +607,7 @@
 		if (txtInvoiceTotalDue != null) {
 			txtInvoiceTotalDue.text = "";
 		}
+		
    }
    
    private function InitSessionBatch():void {
@@ -1055,7 +1056,10 @@
 		else
 			temp = 0;
 		
-		if (this.currentState == "invoiceState") {
+		if (this.currentState == "quickEst") {
+			
+		}
+		else if (this.currentState == "invoiceState") {
 			accept_button.enabled =  true;
 			this.focusManager.defaultButton = accept_button;
 			UpdateBatchNumbers();
@@ -1250,7 +1254,7 @@
 					activeSale.taxTable = pickTaxTable.selectedItem as TaxTable;
 					activeSale.taxCode = pickTaxCode.selectedItem as TaxCodes;
 		
-					if (chkNonTax.selected || activeSale.taxTable == null){
+					if (localCharge.taxable == false || activeSale.taxTable == null){
 						activeSale.taxAmount = 0;
 					}
 					else {
@@ -1263,10 +1267,19 @@
 							activeSale.taxAmount = (activeSale.taxTable.effectiveTaxRate * activeSale.subTotal);
 						}
 					}
-
+					
+					activeSale.total = activeSale.subTotal + activeSale.taxAmount;
+					activeSale.total = roundToCurrency(activeSale.total);
+					UpdateBatchNumbers();
+					
+					// auto accept to add the transactions to the list
 					doAccept(true);	
+					
+					this.currentState == "quickEst";
 				}
 			}
+			
+			this.charges = null;		// all done with them
 		}
 	}
 
@@ -1292,7 +1305,29 @@
 				txtSaleUnitPrice.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.unitPrice);
 			if (txtSaleTotal != null)
 				txtSaleTotal.text = Snowmass.getCurrencyFormatter(false,2).format(activeSale.subTotal);
+			
+			activeSale.taxTable = pickTaxTable.selectedItem as TaxTable;
+			activeSale.taxCode = pickTaxCode.selectedItem as TaxCodes;
 
+			if (target.job.taxable == false || activeSale.taxTable == null){
+				activeSale.taxAmount = 0;
+			}
+			else {
+				// cannot wait on Tax service here, in a loop adding each charge
+				//
+				if (activeSale.taxTable.minAmount > 0 && activeSale.subTotal < activeSale.taxTable.minAmount) {
+					activeSale.taxAmount = 0;
+				}
+				else{
+					activeSale.taxAmount = (activeSale.taxTable.effectiveTaxRate * activeSale.subTotal);
+				}
+			}
+			
+			activeSale.total = activeSale.subTotal + activeSale.taxAmount;
+			activeSale.total = roundToCurrency(activeSale.total);
+			UpdateBatchNumbers();
+			this.currentState == "quickEst";
+			
 			doAccept(true);
 		}
 	}
