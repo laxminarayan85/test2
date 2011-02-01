@@ -600,17 +600,16 @@
 //	}
 //	
 	private function doPriceList():void {
-	    var priceListPickerWindow:PriceListPicker = PriceListPicker(PopUpManager.createPopUp(this, PriceListPicker, true));
+	    var priceListPickerWindow:ListPriceSchedulePicker = ListPriceSchedulePicker(PopUpManager.createPopUp(this, ListPriceSchedulePicker, true));
 	    priceListPickerWindow.setStyle("borderAlpha", 0.9);
-	    priceListPickerWindow.itemType = "PaperPrice";
-	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
+	    priceListPickerWindow.currentState = "Stock";
+	    priceListPickerWindow.addEventListener(PaperPricePickerSelectEvent.CANCELSELECTPRICELIST, handlePriceListPickerCancel);
 	    priceListPickerWindow.addEventListener(PaperPricePickerSelectEvent.SELECTPRICELIST, handleSelectPriceList);
-
-	    priceListPickerWindow.addEventListener(PriceListPickerSelectEvent.CLEARPRICELIST, handleClearPriceList);
+	    priceListPickerWindow.addEventListener(PaperPricePickerSelectEvent.CLEARPRICELIST, handleClearPriceList);
 
 	}
 	
-	private function handleClearPriceList(evt:PriceListPickerSelectEvent):void {
+	private function handleClearPriceList(evt:PaperPricePickerSelectEvent):void {
 		stockDefinitions.defaultPriceList = null;
 	}
 	
@@ -622,7 +621,7 @@
 			Alert.show("Price List Picker returned a null price list", "Error");
 		}     	
     }
-    private function handlePriceListPickerCancel(evt:PriceListPickerSelectEvent):void {
+    private function handlePriceListPickerCancel(evt:PaperPricePickerSelectEvent):void {
     	
     }
 	

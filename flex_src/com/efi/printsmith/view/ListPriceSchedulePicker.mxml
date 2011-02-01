@@ -8,6 +8,19 @@
     label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ListPriceSchedules')}" 
     name="Price List"
     verticalScrollPolicy="off">
+	<mx:states>
+		<mx:State name="Stock">
+			<mx:RemoveChild target="{new_button}"/>
+			<mx:RemoveChild target="{new_button0}"/>
+			<mx:RemoveChild target="{delete_button}"/>
+			<mx:AddChild relativeTo="{canvas1}" position="lastChild">
+				<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Clear')}" enabled="true" click="doClear();" id="clear_button" width="127.5" x="400.5" y="40"/>
+			</mx:AddChild>
+			<mx:SetProperty target="{hrule1}" name="y" value="70"/>
+			<mx:SetProperty target="{cancel_button}" name="y" value="86"/>
+			<mx:SetProperty target="{hrule1}" name="x" value="399.5"/>
+		</mx:State>
+	</mx:states>
 
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="getAll" fault="handleFault(event)" result="handleLoadResult(event)"/>
@@ -33,7 +46,7 @@
     import com.efi.printsmith.view.EditCustomer;    
     import com.efi.printsmith.view.PressDefinitions;
     import com.efi.printsmith.data.Charge;   
-    import com.efi.printsmith.events.PriceListPickerSelectEvent;
+    import com.efi.printsmith.events.PaperPricePickerSelectEvent;
     import com.efi.printsmith.events.SavePriceListEvent;
     import com.efi.printsmith.common.components.CustomDeleteButtonComponent;
     import com.efi.mdi.view.window.MDIWindow;
@@ -149,8 +162,14 @@
 
 	}
 
-	private function doSelect():void {	
-		doEdit();
+	private function doSelect():void {
+		if (this.currentState == "Stock") {
+			var selectEvent:com.efi.printsmith.events.PaperPricePickerSelectEvent = new com.efi.printsmith.events.PaperPricePickerSelectEvent(PaperPricePickerSelectEvent.SELECTPRICELIST, dataGrid.selectedItem as PaperPrice);
+			dispatchEvent(selectEvent);
+			PopUpManager.removePopUp(this);
+		} else {
+			doEdit();
+		}
 	}     
 	
 	private function handleCreatePaperPrice(evt:ResultEvent):void {
@@ -215,9 +234,9 @@
 	}
 		
 	private function doClear():void {
-		/*var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CLEARPRICELIST, null);
+		var selectEvent:PaperPricePickerSelectEvent = new PaperPricePickerSelectEvent(PaperPricePickerSelectEvent.CLEARPRICELIST, null);
 		dispatchEvent(selectEvent);
-		PopUpManager.removePopUp(this);*/
+		PopUpManager.removePopUp(this);
 	}
 	
 	private function doDelete():void {
@@ -233,17 +252,21 @@
 		
 	}
 	private function doCancel():void {
-		//var cancelEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.CANCELSELECTPRICELIST, null);
-		//dispatchEvent(cancelEvent);
-		var mdiWindow:MDIWindow = this.parent as MDIWindow;
-		mdiWindow.closeWindow();
+		if (this.currentState == "Stock") {
+			var cancelEvent:PaperPricePickerSelectEvent = new PaperPricePickerSelectEvent(PaperPricePickerSelectEvent.CANCELSELECTPRICELIST, null);
+			dispatchEvent(cancelEvent);
+			PopUpManager.removePopUp(this);
+		} else {
+			var mdiWindow:MDIWindow = this.parent as MDIWindow;
+			mdiWindow.closeWindow();
+		}
 	}
 ]]>        
 </mx:Script>
                              
 
                              
-	<mx:Canvas width="549" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+	<mx:Canvas width="549" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off" id="canvas1">
 		<mx:DataGrid id="dataGrid" width="389.5" height="261" dataProvider="{list}"
 		doubleClickEnabled="true" doubleClick="doEdit()"  
 		showHeaders="false" borderStyle="solid" borderThickness="3" x="0" y="0" 
@@ -256,7 +279,7 @@
 		<mx:Button label="New Copy Schedule" click="doNewCopy();" id="new_button" width="129" x="399" y="40"/>
 		<mx:Button label="New Pass Schedule" click="doNewPass();" id="new_button0" width="129" x="399" y="70"/>
 		<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();" id="cancel_button" width="129" x="400.5" y="146"/>
-		<mx:HRule x="397.5" y="130" width="132" height="8"/>
+		<mx:HRule x="397.5" y="130" width="132" height="8" id="hrule1"/>
 		<common:CustomDeleteButtonComponent isIcon="false" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" deleteLabel="{this.label}" clickFuncName="doDelete" id="delete_button" width="130.5" x="397.5" y="100" enabled="{dataGrid.selectedItem != null}"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
