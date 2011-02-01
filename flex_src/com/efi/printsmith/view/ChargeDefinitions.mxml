@@ -2284,7 +2284,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			</mx:Button>
 			<mx:Label x="175" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Delete')}" width="58" textAlign="center"/>
 			<mx:Button x="268" y="2" width="38" height="38" id="revert_button" click="doRevert()" enabled="{enableRevert}">
-				<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
+				<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 			</mx:Button>
 			<mx:Label x="258" y="38" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Revert')}" width="58" textAlign="center"/>
 			<mx:Button x="366" y="3" width="38" height="38" id="preset_info_button" click="doPresetInfo()" enabled="{enablePresetInfo}">

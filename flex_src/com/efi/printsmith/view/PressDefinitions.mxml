@@ -1064,7 +1064,7 @@ width="100%" height="100%" title="{resourceManager.getString(Snowmass.RESOURCE_B
 		<mx:icon>@Embed(source='../../../../assets/duplicate.png')</mx:icon>
 	</mx:Button>
 	<mx:Button x="196" y="617" height="38" tabEnabled="false" width="50" click="doRevert();">
-		<mx:icon>@Embed(source='../../../../assets/revert.png')</mx:icon>
+		<mx:icon>@Embed(source='../../../../assets/cancel.png')</mx:icon>
 	</mx:Button>
 	<mx:Label x="10" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.New')}" width="38"/>
 	<mx:Label x="70" y="661" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38"/>
