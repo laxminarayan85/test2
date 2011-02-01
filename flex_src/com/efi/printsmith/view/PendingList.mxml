@@ -533,7 +533,7 @@
 					var nextWeekNumber:int = DateUtil.getWeek(DateUtil.addDays(new Date(),7));
 					if (((inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (DateUtil.getWeek(inv.wantedDate) == nextWeekNumber)))
+						&& (DateUtil.getWeek(inv.wantedDate) == nextWeekNumber && inv.wantedDate.fullYear == DateUtil.addDays(new Date(),7).fullYear)))
 						showItem = true;
 						
 					if (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
@@ -554,7 +554,7 @@
 					var thisWeekNumber:int = DateUtil.getWeek(new Date());
 					if (((inv.completed == false && inv.readyToPickup == false)
 						&& (inv.wantedDate != null)  
-						&& (DateUtil.getWeek(inv.wantedDate) == thisWeekNumber)))
+						&& (DateUtil.getWeek(inv.wantedDate) == thisWeekNumber && inv.wantedDate.fullYear == new Date().fullYear)))
 						showItem = true;
 						
 					if (preferencesPOS!=null && preferencesPOS.includePastDueDocuments
