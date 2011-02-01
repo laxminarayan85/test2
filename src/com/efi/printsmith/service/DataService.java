@@ -357,6 +357,16 @@ public class DataService extends HibernateService {
 			System.out.println(System.currentTimeMillis());
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void updateAllPaperPriceMethods(String method) throws Exception {
+		List <PaperPrice> paperPrices = (List<PaperPrice>) getAll("PaperPrice");
+		for(int i=0;i<paperPrices.size();i++) {
+			PaperPrice paperPrice = paperPrices.get(i);
+			paperPrice.setMethod(method);
+			addUpdate(paperPrice);
+		}
+	}
 
 	public List<?> getAccountPicker() throws Exception {
 		log.debug("** getAccountPicker .");

@@ -14,6 +14,7 @@
 <mx:RemoteObject id="dataService" destination="dataService">
 	<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 	<mx:method name="getMatrix" fault="handleFault(event)" result="handleGetMatrixResult(event)"/>
+	<mx:method name="updateAllPaperPriceMethods" fault="handleFault(event)" result="handleUpdateAllPaperPriceMethods(event)"/>
 </mx:RemoteObject>
 
 <mx:Producer id="producer" destination="pricelist"/>
@@ -776,7 +777,7 @@
 	public var stampSchedule:com.efi.printsmith.data.StampSchedule = null;
 	public var doubleSided:Boolean = false;
 	public var pricingType:String = CopierPricingMethod.CopiesAndOriginals;
-	
+	private var originalPaperPriceMethod:String = "";
 	public var parentContainer:Container;
    	public var priceScheduleMethod:ArrayCollection = new ArrayCollection(PriceScheduleMethod.toArray());
 	private function handleFault(ev:FaultEvent):void {                               
@@ -943,6 +944,7 @@
 				this.paperPrice.elements.sort = sort;
 			}
 			this.paperPrice.elements.refresh();
+			this.originalPaperPriceMethod = this.paperPrice.method;
 		} else if (this.currentState == "STAMPSCHEDULE") {
 			this.stampSchedule = ObjectUtil.copy(matrix) as com.efi.printsmith.data.StampSchedule;
 			var newMatrix:Boolean = true;
@@ -1131,6 +1133,8 @@
 					}
 				}
 				dataService.addUpdate(paperPrice);
+				if (this.originalPaperPriceMethod != this.paperPrice.method)
+					askToUpdateAllMethods();
 			} else {
 				var message:String;
 				message = "Please set a name.";
@@ -1321,6 +1325,21 @@
 			}
 			break;
 		}
+	}
+	
+	private function askToUpdateAllMethods():void {
+		var message:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Wouldyouliketochange') + resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'scheduleCmd.Youchangedhowthis4sc');
+		Alert.show(message, '', 3, this, askToUpdateAllMethodsResult);
+	}
+	
+	private function askToUpdateAllMethodsResult(event:CloseEvent):void {
+		if (event.detail == Alert.YES) {
+			dataService.updateAllPaperPriceMethods(this.priceScheduleMethodCombo.selectedItem.data);
+		}
+	}
+	
+	private function handleUpdateAllPaperPriceMethods(event:ResultEvent):void {
+		
 	}
 	
 ]]>        
