@@ -28,6 +28,7 @@ package com.efi.printsmith.data
 		public var account:Account;
 		public var isVoided:Boolean = false;
 		public var refundMethod:String = "";
+		public var isPOSbatch:Boolean = false;
 	
 	}
 }
