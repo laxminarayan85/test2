@@ -1185,12 +1185,19 @@
 	public function searchLocation(obj:Object, searchStr:String):Boolean	{
 		var inv:InvoiceBase = obj as InvoiceBase;
 		
-		for (var i:int=0; i<inv.charges.length; i++)	{
-			var j:Charge = inv.charges.getItemAt(i) as Charge;
-			if ((j.productionLocation != null) && (j.productionLocation.name.toUpperCase().indexOf(searchStr.toUpperCase()) > -1))
-				return true;
+		for each(var jobBase:JobBase in inv.jobs) {
+			if(jobBase.location!=null){
+				if(jobBase.location.name.toUpperCase().indexOf(searchStr.toUpperCase()) > -1) {
+					return true;
+				}
+			}
+		}
+		
+		if(searchStr.toUpperCase()=="NONE") {
+			return true;
 		}
 		return false;
+		
 	}
 	    
 	private function getSearchBy():ArrayCollection {
@@ -1224,7 +1231,7 @@
 		sc1 = new FilterSearchBy("PO", fp);
 		sc.addItem(sc1);
 
-		fp = new FilterProperty(new FilterProperty(null,"id"), "account");
+		fp = new FilterProperty(new FilterProperty(null,"accountId"), "account");
 		sc1 = new FilterSearchBy("Customer #", fp);
 		sc.addItem(sc1);
 
