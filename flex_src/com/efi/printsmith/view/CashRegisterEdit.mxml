@@ -622,6 +622,9 @@
 		
 		// date that appears in register tape UI
 		sessionBatch.created = new Date();
+		
+		// this session came from the cash register
+		sessionBatch.isPOSbatch = true;
    }
    
  	//
@@ -1549,7 +1552,10 @@
 				}
 			}
 			
-			if (payOK == true) {				
+			if (payOK == true) {	
+				activePayment.taxTable = pickTaxTable.selectedItem as TaxTable;
+				activePayment.taxCode = pickTaxCode.selectedItem as TaxCodes;
+			
 				sessionBatch.transactions.addItem(activePayment);
 				InitPaymentRecord();
 			}
