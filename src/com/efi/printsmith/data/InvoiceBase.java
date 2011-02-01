@@ -368,6 +368,23 @@ public class InvoiceBase extends ModelBase {
   public static final String ACCOUNTHISTORYDATA = "AccountHistoryData";
 
 	/**
+   * @generated
+   */
+  public static final String TAXRATE = "TaxRate";
+	/**
+   * @generated
+   */
+  public static final String ACTUALSUBTOTAL = "ActualSubtotal";
+	/**
+   * @generated
+   */
+  public static final String TAXABLESUBTOTAL = "TaxableSubtotal";
+	/**
+   * @generated
+   */
+  public static final String DISCOUNTABLESUBTOTAL = "DiscountableSubtotal";
+
+	/**
 	 * @generated
 	 */
 	public InvoiceBase() {
@@ -2253,6 +2270,114 @@ public class InvoiceBase extends ModelBase {
   }
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal taxRate;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getTaxRate(){
+    return taxRate; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setTaxRate(BigDecimal newVal) {
+    this.taxRate = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+  public void setTaxRate(double newVal) {
+    this.taxRate = BigDecimal.valueOf(newVal);
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal actualSubtotal;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getActualSubtotal(){
+    return actualSubtotal; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setActualSubtotal(BigDecimal newVal) {
+    this.actualSubtotal = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+  public void setActualSubtotal(double newVal) {
+    this.actualSubtotal = BigDecimal.valueOf(newVal);
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal taxableSubtotal;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getTaxableSubtotal(){
+    return taxableSubtotal; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setTaxableSubtotal(BigDecimal newVal) {
+    this.taxableSubtotal = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+  public void setTaxableSubtotal(double newVal) {
+    this.taxableSubtotal = BigDecimal.valueOf(newVal);
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal discountableSubtotal;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getDiscountableSubtotal(){
+    return discountableSubtotal; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setDiscountableSubtotal(BigDecimal newVal) {
+    this.discountableSubtotal = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+  public void setDiscountableSubtotal(double newVal) {
+    this.discountableSubtotal = BigDecimal.valueOf(newVal);
+  }
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -2336,6 +2461,10 @@ public class InvoiceBase extends ModelBase {
     if (INVOICENUMBERSUFFIX.equals(propertyName)) return getInvoiceNumberSuffix();
     if (DEPOSITS.equals(propertyName)) return getDeposits();
     if (ACCOUNTHISTORYDATA.equals(propertyName)) return getAccountHistoryData();
+    if (TAXRATE.equals(propertyName)) return getTaxRate();
+    if (ACTUALSUBTOTAL.equals(propertyName)) return getActualSubtotal();
+    if (TAXABLESUBTOTAL.equals(propertyName)) return getTaxableSubtotal();
+    if (DISCOUNTABLESUBTOTAL.equals(propertyName)) return getDiscountableSubtotal();
     return super.getProperty(propertyName);
   }
 	
@@ -2423,6 +2552,10 @@ public class InvoiceBase extends ModelBase {
     if (INVOICENUMBERSUFFIX.equals(propertyName)) setInvoiceNumberSuffix((String)newValue); else
     if (DEPOSITS.equals(propertyName)) setDeposits((java.util.List<DepositEntry>)newValue); else
     if (ACCOUNTHISTORYDATA.equals(propertyName)) setAccountHistoryData((AccountHistoryData)newValue); else
+    if (TAXRATE.equals(propertyName)) setTaxRate((BigDecimal)newValue); else
+    if (ACTUALSUBTOTAL.equals(propertyName)) setActualSubtotal((BigDecimal)newValue); else
+    if (TAXABLESUBTOTAL.equals(propertyName)) setTaxableSubtotal((BigDecimal)newValue); else
+    if (DISCOUNTABLESUBTOTAL.equals(propertyName)) setDiscountableSubtotal((BigDecimal)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -2588,6 +2721,14 @@ public class InvoiceBase extends ModelBase {
       return new Class<?>[] {java.util.List.class, DepositEntry.class};		
     if (ACCOUNTHISTORYDATA.equals(propertyName)) 
       return new Class<?>[] {AccountHistoryData.class};		
+    if (TAXRATE.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (ACTUALSUBTOTAL.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (TAXABLESUBTOTAL.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (DISCOUNTABLESUBTOTAL.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -2676,6 +2817,10 @@ public class InvoiceBase extends ModelBase {
     if (INVOICENUMBERSUFFIX.equals(propertyName)) return InvoiceBase.class;
     if (DEPOSITS.equals(propertyName)) return InvoiceBase.class;
     if (ACCOUNTHISTORYDATA.equals(propertyName)) return InvoiceBase.class;
+    if (TAXRATE.equals(propertyName)) return InvoiceBase.class;
+    if (ACTUALSUBTOTAL.equals(propertyName)) return InvoiceBase.class;
+    if (TAXABLESUBTOTAL.equals(propertyName)) return InvoiceBase.class;
+    if (DISCOUNTABLESUBTOTAL.equals(propertyName)) return InvoiceBase.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -2842,6 +2987,14 @@ public class InvoiceBase extends ModelBase {
     if (! SmartEquals(getDeposits(), objT.getDeposits()))
       return false;
     if (! SmartEquals(getAccountHistoryData(), objT.getAccountHistoryData()))
+      return false;
+    if (! SmartEquals(getTaxRate(), objT.getTaxRate()))
+      return false;
+    if (! SmartEquals(getActualSubtotal(), objT.getActualSubtotal()))
+      return false;
+    if (! SmartEquals(getTaxableSubtotal(), objT.getTaxableSubtotal()))
+      return false;
+    if (! SmartEquals(getDiscountableSubtotal(), objT.getDiscountableSubtotal()))
       return false;
     return true;
   }			

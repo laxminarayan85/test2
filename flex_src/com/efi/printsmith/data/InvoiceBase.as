@@ -92,6 +92,10 @@ package com.efi.printsmith.data
 		public var invoiceNumberSuffix:String = "";
 		public var deposits:ArrayCollection;
 		public var accountHistoryData:AccountHistoryData;
+		public var taxRate:Number = 0;
+		public var actualSubtotal:Number = 0;
+		public var taxableSubtotal:Number = 0;
+		public var discountableSubtotal:Number = 0;
 	
 	}
 }
