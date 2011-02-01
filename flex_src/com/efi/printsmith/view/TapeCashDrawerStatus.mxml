@@ -107,18 +107,18 @@
 		<mx:Label x="110.5" y="20" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.CashDrawerStatus')}" width="339" textAlign="left" fontWeight="bold"/>
 		<mx:TextInput x="107" y="68" text="{cashDrawer.checkCount}" width="151" fontSize="9" fontWeight="bold" height="20"/>
 		<mx:Label x="10" y="69" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.Checks')}" width="89" textAlign="right"/>
-		<mx:TextInput x="363" y="68" text="{cashDrawer.checkTotal}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:TextInput x="363" y="68" text="{numberFormatter.format(cashDrawer.checkTotal)}" width="151" fontSize="9" fontWeight="bold" height="20"/>
 		
 		<mx:TextInput x="107" y="95" text="{cashDrawer.cardCount}" width="151" fontSize="9" fontWeight="bold" height="20"/>
 		<mx:Label x="10" y="96" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.CreditCard')}" width="89" textAlign="right"/>
 		
-		<mx:TextInput x="363" y="95" text="{cashDrawer.cardTotal}" width="151" fontSize="9" fontWeight="bold" height="20"/>
-		<mx:TextInput x="363" y="122" text="{cashDrawer.cashTotal}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:TextInput x="363" y="95" text="{numberFormatter.format(cashDrawer.cardTotal)}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:TextInput x="363" y="122" text="{numberFormatter.format(cashDrawer.cashTotal)}" width="151" fontSize="9" fontWeight="bold" height="20"/>
 		
-		<mx:TextInput x="363" y="165" text="{cashDrawer.arBalance}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:TextInput x="363" y="165" text="{numberFormatter.format(cashDrawer.arBalance)}" width="151" fontSize="9" fontWeight="bold" height="20"/>
 		<mx:Label x="10" y="166" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.AccountsReceivableBa')}" width="345" textAlign="right"/>
 		
-		<mx:TextInput x="363" y="192" text="{((cashDrawer.cashTotal + cashDrawer.checkTotal + cashDrawer.cardTotal) + (cashDrawer.arBalance - cashDrawer.prevArBalance - cashDrawer.changeFund))}" width="151" fontSize="9" fontWeight="bold" height="20"/>
+		<mx:TextInput x="363" y="192" text="{numberFormatter.format(((cashDrawer.cashTotal + cashDrawer.checkTotal + cashDrawer.cardTotal) + (cashDrawer.arBalance - cashDrawer.prevArBalance - cashDrawer.changeFund)))}" width="151" fontSize="9" fontWeight="bold" height="20"/>
 		<mx:Label x="10" y="193" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.TodaysApproximateSal')}" width="345" textAlign="right"/>
 		
 		<mx:Label x="266" y="123" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posStatusCmd.CashTotal')}" width="89" textAlign="right"/>
