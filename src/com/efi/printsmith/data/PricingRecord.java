@@ -125,6 +125,23 @@ public class PricingRecord extends ModelBase {
   public static final String LABORCOST = "LaborCost";
 
 	/**
+   * @generated
+   */
+  public static final String LABORRATE = "LaborRate";
+	/**
+   * @generated
+   */
+  public static final String LABORRATEOVERRIDE = "LaborRateOverride";
+	/**
+   * @generated
+   */
+  public static final String LABORMARKUP = "LaborMarkup";
+	/**
+   * @generated
+   */
+  public static final String LABORMARKUPOVERRIDE = "LaborMarkupOverride";
+
+	/**
 	 * @generated
 	 */
 	public PricingRecord() {
@@ -663,6 +680,105 @@ public class PricingRecord extends ModelBase {
 
 
 	/**
+   * @generated
+   */	
+ 	@Basic
+  private BigDecimal laborRate;
+
+	/**
+   * @generated
+ 	 */
+  public BigDecimal getLaborRate(){
+    return laborRate; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborRate(BigDecimal newVal) {
+    this.laborRate = newVal;
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborRate(double newVal) {
+    this.laborRate = BigDecimal.valueOf(newVal);
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean laborRateOverride;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getLaborRateOverride(){
+    return laborRateOverride; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborRateOverride(Boolean newVal) {
+    this.laborRateOverride = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Double laborMarkup;
+
+	/**
+   * @generated
+ 	 */
+  public Double getLaborMarkup(){
+    return laborMarkup; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborMarkup(Double newVal) {
+    this.laborMarkup = newVal;
+  }
+
+
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean laborMarkupOverride;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getLaborMarkupOverride(){
+    return laborMarkupOverride; 
+  }
+
+
+	/**
+   * @generated
+   */	
+  public void setLaborMarkupOverride(Boolean newVal) {
+    this.laborMarkupOverride = newVal;
+  }
+
+
+	/**
 	 * @generated
 	 */		
 	@Transient
@@ -687,6 +803,10 @@ public class PricingRecord extends ModelBase {
     if (PRODUCTIONPRICEOVERRIDE.equals(propertyName)) return getProductionPriceOverride();
     if (STOCKCOST.equals(propertyName)) return getStockCost();
     if (LABORCOST.equals(propertyName)) return getLaborCost();
+    if (LABORRATE.equals(propertyName)) return getLaborRate();
+    if (LABORRATEOVERRIDE.equals(propertyName)) return getLaborRateOverride();
+    if (LABORMARKUP.equals(propertyName)) return getLaborMarkup();
+    if (LABORMARKUPOVERRIDE.equals(propertyName)) return getLaborMarkupOverride();
     return super.getProperty(propertyName);
   }
 	
@@ -715,6 +835,10 @@ public class PricingRecord extends ModelBase {
     if (PRODUCTIONPRICEOVERRIDE.equals(propertyName)) setProductionPriceOverride((Boolean)newValue); else
     if (STOCKCOST.equals(propertyName)) setStockCost((BigDecimal)newValue); else
     if (LABORCOST.equals(propertyName)) setLaborCost((BigDecimal)newValue); else
+    if (LABORRATE.equals(propertyName)) setLaborRate((BigDecimal)newValue); else
+    if (LABORRATEOVERRIDE.equals(propertyName)) setLaborRateOverride((Boolean)newValue); else
+    if (LABORMARKUP.equals(propertyName)) setLaborMarkup((Double)newValue); else
+    if (LABORMARKUPOVERRIDE.equals(propertyName)) setLaborMarkupOverride((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -762,6 +886,14 @@ public class PricingRecord extends ModelBase {
       return new Class<?>[] {BigDecimal.class};		
     if (LABORCOST.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
+    if (LABORRATE.equals(propertyName)) 
+      return new Class<?>[] {BigDecimal.class};		
+    if (LABORRATEOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (LABORMARKUP.equals(propertyName)) 
+      return new Class<?>[] {Double.class};		
+    if (LABORMARKUPOVERRIDE.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
 	
@@ -791,6 +923,10 @@ public class PricingRecord extends ModelBase {
     if (PRODUCTIONPRICEOVERRIDE.equals(propertyName)) return PricingRecord.class;
     if (STOCKCOST.equals(propertyName)) return PricingRecord.class;
     if (LABORCOST.equals(propertyName)) return PricingRecord.class;
+    if (LABORRATE.equals(propertyName)) return PricingRecord.class;
+    if (LABORRATEOVERRIDE.equals(propertyName)) return PricingRecord.class;
+    if (LABORMARKUP.equals(propertyName)) return PricingRecord.class;
+    if (LABORMARKUPOVERRIDE.equals(propertyName)) return PricingRecord.class;
     return super.getPropertyOwner(propertyName);
   }
 	
@@ -839,6 +975,14 @@ public class PricingRecord extends ModelBase {
     if (! SmartEquals(getStockCost(), objT.getStockCost()))
       return false;
     if (! SmartEquals(getLaborCost(), objT.getLaborCost()))
+      return false;
+    if (! SmartEquals(getLaborRate(), objT.getLaborRate()))
+      return false;
+    if (! SmartEquals(getLaborRateOverride(), objT.getLaborRateOverride()))
+      return false;
+    if (! SmartEquals(getLaborMarkup(), objT.getLaborMarkup()))
+      return false;
+    if (! SmartEquals(getLaborMarkupOverride(), objT.getLaborMarkupOverride()))
       return false;
     return true;
   }			

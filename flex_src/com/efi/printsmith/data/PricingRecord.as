@@ -33,6 +33,10 @@ package com.efi.printsmith.data
 		public var productionPriceOverride:Boolean = false;
 		public var stockCost:Number = 0;
 		public var laborCost:Number = 0;
+		public var laborRate:Number = 0;
+		public var laborRateOverride:Boolean = false;
+		public var laborMarkup:Number = 0;
+		public var laborMarkupOverride:Boolean = false;
 	
 	}
 }
