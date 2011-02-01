@@ -47,7 +47,7 @@
     import com.efi.printsmith.view.PressDefinitions;
     import com.efi.printsmith.data.Charge;   
     import com.efi.printsmith.events.PaperPricePickerSelectEvent;
-    import com.efi.printsmith.events.SavePriceListEvent;
+    import com.efi.printsmith.events.SavePaperPriceEvent;
     import com.efi.printsmith.common.components.CustomDeleteButtonComponent;
     import com.efi.mdi.view.window.MDIWindow;
 	import mx.managers.PopUpManager;     
@@ -105,6 +105,7 @@
 	    	titleWindow.setCopySchedule(tempPaperPrice);
 	    else
 	    	titleWindow.setPassSchedule(tempPaperPrice);
+	   	titleWindow.addEventListener(SavePaperPriceEvent.Save, handleSave);
 	    PopUpManager.removePopUp(this);
 	}
 	
@@ -185,7 +186,8 @@
 	    	titleWindow.setCopySchedule(newPaperPrice);
 	    else
 	    	titleWindow.setPassSchedule(newPaperPrice);
-	   PopUpManager.removePopUp(this);	
+	    titleWindow.addEventListener(SavePaperPriceEvent.Save, handleSave);
+	   	PopUpManager.removePopUp(this);	
 	}
 	
 	private function doNewCopy():void {
@@ -223,14 +225,9 @@
 	    titleWindow.addEventListener(SavePriceListEvent.Save, handleSave);*/
 	   
 	}
-	private function handleSave(ev:SavePriceListEvent):void
+	private function handleSave(ev:SavePaperPriceEvent):void
 	{ 
-		/*dataService.getAll(this.itemType);
-		var temp:PriceListBase = ev.priceList as PriceListBase;
-	   var selectEvent:PriceListPickerSelectEvent = new PriceListPickerSelectEvent(PriceListPickerSelectEvent.SELECTPRICELIST, temp);
-		dispatchEvent(selectEvent);
-		PopUpManager.removePopUp(this);*/
-	   
+		dataService.getAll("PaperPrice");
 	}
 		
 	private function doClear():void {
@@ -241,9 +238,9 @@
 	
 	private function doDelete():void {
 		var temp:PaperPrice
-			temp = dataGrid.selectedItem as PaperPrice;
-			if (temp != null)
-				dataService.deleteItem("PaperPrice", temp.id);
+		temp = dataGrid.selectedItem as PaperPrice;
+		if (temp != null)
+			dataService.deleteItem("PaperPrice", temp.id);
 	}
 	private function handleDeleteResult(event:ResultEvent):void {
 		dataService.getAll(this.itemType);

@@ -1165,6 +1165,7 @@
 				}
 			}
 			dataService.addUpdate(stampSchedule);
+			PopUpManager.removePopUp(this);
 		} else {
 			matrix.elements.filterFunction = unfilterMatrix;
 			matrix.elements.refresh();
@@ -1194,8 +1195,8 @@
 				}
 			}
 			dataService.addUpdate(matrix);
+			PopUpManager.removePopUp(this);
 		}
-		PopUpManager.removePopUp(this);
 	}     
 	
 	private function messageHandler(message:IMessage):void
@@ -1212,8 +1213,14 @@
 	}
 	
 	private function handleSaveResult(ev:ResultEvent):void {
-		matrix = ev.result as com.efi.printsmith.data.Matrix;
-		var editPage:Container = parentContainer;
+		if (this.currentState == "COPYPRICESCHEDULE" || this.currentState == "PASSPRICESCHEDULE") {
+			var selectEvent:SavePaperPriceEvent = new SavePaperPriceEvent(SavePaperPriceEvent.Save, this.paperPrice);
+			dispatchEvent(selectEvent);
+			PopUpManager.removePopUp(this);
+		} else {
+			matrix = ev.result as com.efi.printsmith.data.Matrix;
+			var editPage:Container = parentContainer;
+		}
 	}
 	
 	public function setCopySchedule(tempMatrix:com.efi.printsmith.data.Matrix):void {
