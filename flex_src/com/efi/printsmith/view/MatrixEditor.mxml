@@ -636,7 +636,7 @@
 			<mx:Label x="10" y="449" text="Name" id="label2"/>
 		</mx:AddChild>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mx:TextInput x="74" y="447" width="176" id="scheduleName" text="{paperPrice.name}"/>
+			<mx:TextInput x="74" y="447" width="176" id="scheduleName" text="{paperPrice.name}" maxChars="49"/>
 		</mx:AddChild>
 		<mx:RemoveChild target="{priceScheduleMethodCombo}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild" target="{priceScheduleMethodCombo}"/>
@@ -734,7 +734,7 @@
 			<mx:Label x="10" y="449" text="Name" id="label4"/>
 		</mx:AddChild>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild">
-			<mx:TextInput x="74" y="447" width="176" id="passScheduleName" text="{paperPrice.name}"/>
+			<mx:TextInput x="74" y="447" width="176" id="passScheduleName" text="{paperPrice.name}" maxChars="49"/>
 		</mx:AddChild>
 		<mx:RemoveChild target="{priceScheduleMethodCombo}"/>
 		<mx:AddChild relativeTo="{canvas1}" position="lastChild" target="{priceScheduleMethodCombo}"/>
