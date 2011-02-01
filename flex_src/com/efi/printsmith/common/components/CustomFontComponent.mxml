@@ -139,9 +139,9 @@
 		]]>
 	</mx:Script>
 	<mx:VBox width="100%" height="100%">
-		<mx:HBox width="100%">
+		<mx:HBox width="100%" height="60%">
 			<mx:Spacer width="30"/>
-			<mx:VBox width="100%"> 
+			<mx:VBox width="100%" height="100%"> 
 				<mx:HBox width="100%">
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'editTypeSpecCmd.Font')}:" textAlign="right" width="40"/>
 					<components:CustomComboBoxComponent
@@ -188,10 +188,11 @@
 				</mx:HBox>
 			</mx:VBox>
 		</mx:HBox>
-		<mx:VBox width="98%" height="20%" borderStyle="solid">
-			<mx:Label id="labelTxt" text="{sampleTextString}" updateComplete="{updateStyle()}"/>
-		</mx:VBox>
-		<mx:HBox width="100%" horizontalAlign="center">
+		
+		<mx:TextArea id="labelTxt" text="{sampleTextString}" updateComplete="{updateStyle()}" height="20%" width="98%" 
+			editable="false" borderStyle="solid"/>
+		
+		<mx:HBox width="100%" height="20%" horizontalAlign="center">
 			<mx:Button label="OK" click="{saveData()}"/>
 			<mx:Button label="Cancel" click="{closeEventHandler(event)}"/>
 		</mx:HBox>
