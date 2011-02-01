@@ -20,6 +20,7 @@ package com.efi.printsmith.business.commandDelegates.EditForms
 		public function handleUIEvent(event:OrderStockEvent):void {
 			if (checkSecurity(OrderStockEvent.COMMANDID)) {
 				var child:OrderStock = new OrderStock();
+				child.setStockOrder(event.object as StockOrder);
 				var resEvent:ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,child,null,null);
 				responder.result(resEvent);
 			} else {

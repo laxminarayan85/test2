@@ -34,6 +34,7 @@
 	import com.efi.printsmith.data.Vendor;
 	import com.efi.printsmith.data.Dimension;
 	import com.efi.printsmith.events.StockPickerSelectEvent;
+	import com.efi.printsmith.events.commandEvents.EditForms.*;
 	import com.efi.printsmith.data.StockOrder;
 	import com.efi.printsmith.data.StockColors;
 	import com.efi.printsmith.data.StockFinish;
@@ -86,6 +87,8 @@
 	    loadStockColor();
 	    loadStockFinish();
 	    webWorthy = false;
+	   if ( stockOrder != null)
+		   mapfromStockOrder();
 	    
 	}
 	public function docancel():void{
@@ -95,7 +98,34 @@
 	}
 	public function setStockOrder(stockOrder1:StockOrder):void{
 		stockOrder = stockOrder1;
+		
 	}
+	private function mapfromStockOrder():void{
+		
+		Invoice_Edit.text = stockOrder.invoiceNumber ;
+		
+		job_edit.text = stockOrder.jobNumber;
+		name_edit.text = stockOrder.name;
+		coated_edit.text = stockOrder.coated;
+		sheet_edit.text = stockOrder.sheetSize;
+		cost_edit.text = Snowmass.getCurrencyFormatter(false,3).format(stockOrder.cost);
+		per_edit.text = Snowmass.getCurrencyFormatter(false,3).format(stockOrder.per);
+		rollweight_edit.text = Snowmass.getCurrencyFormatter(false,3).format(stockOrder.rollWeight );
+		rollwidth_edit.text = stockOrder.rollWidth;
+		wieght_Edit.text = Snowmass.getCurrencyFormatter(false,3).format(stockOrder.weight);
+		po_number_edit.text = stockOrder.poNumber;
+		order_quantity_edit.text = Snowmass.getCurrencyFormatter(false,0).format(stockOrder.orderQuantity);
+		stock_ordernumber_edit.text = stockOrder.stockOrderNumber;
+		delivery_date.selectedDate = stockOrder.deliveryDate;
+		allow_mod.selected = stockOrder.allowModifaction;
+		stock_number_edit.text = stockOrder.vendorStockNumber;
+		cboVendor.selectedIndex = findItem(stockOrder.vendor.name, stockVendor);
+		stockUnit.selectedValue = findItemById(stockOrder.stockUnit, stockUnits);
+		color_edit.selectedIndex = findItem(stockOrder.color.name, stockColor);
+		finish_edit.selectedIndex = findItem(stockOrder.finish.name, stockFinish);
+		
+	}
+	
 	public function loadStockVendor():void {   
 	    vendorDataService.getAll("Vendor");
 	}
@@ -158,7 +188,7 @@
 				stockOrder.customerName= invoice.account.title;
 		
 		stockOrder.jobNumber = job_edit.text;
-		
+		stockOrder.weight = parseFloat(wieght_Edit.text.replace(",",""));
 		stockOrder.vendor = cboVendor.selectedItem as Vendor;
 		stockOrder.stockUnit = findItem(stockUnit.selectedValue.toString(),stockUnits);
 		stockOrder.vendorStockNumber = stock_number_edit.text;
@@ -171,7 +201,7 @@
 		stockOrder.per = parseFloat(per_edit.text);
 		stockOrder.rollWeight = parseFloat(rollweight_edit.text);
 		stockOrder.rollWidth = rollwidth_edit.text;
-		stockOrder.orderQuantity = parseInt(order_quantity_edit.text);
+		stockOrder.orderQuantity = parseInt(order_quantity_edit.text.replace(",",""));
 		stockOrder.stockOrderNumber= stock_ordernumber_edit.text;
 		stockOrder.deliveryDate= delivery_date.selectedDate;
 		stockOrder.allowModifaction = allow_mod.selected;
@@ -186,17 +216,25 @@
 	}
 	private function handleLoadStockFinish(ev:ResultEvent):void {
 		 stockFinish = ev.result as ArrayCollection;
-		  if ( stockDefinitions.finish != null){
-		 	finish_edit.selectedIndex = findItem(stockDefinitions.finish.name, stockFinish);
-		 }else
-		 	finish_edit.selectedIndex = -1;
+		 if( stockOrder != null){
+			  if ( stockOrder.finish != null ){
+		 			finish_edit.selectedIndex = findItem(stockOrder.finish.name, stockFinish);
+				 }else
+		 			finish_edit.selectedIndex = -1;
+		 }else{
+		 		finish_edit.selectedIndex = -1;
+		 }
 	}
 	private function handleLoadStockColor(ev:ResultEvent):void {
 		 stockColor = ev.result as ArrayCollection;
-		 if ( stockDefinitions.color != null){
-		 	color_edit.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
-		 }else
+		 if ( stockOrder != null){
+		 	 if ( stockOrder.color != null){
+		 		color_edit.selectedIndex = findItem(stockOrder.color.name, stockColor);
+		 	}else
+		 		color_edit.selectedIndex = -1;
+		 }else{
 		 	color_edit.selectedIndex = -1;
+		 }
 		 
 	}
 
@@ -278,7 +316,15 @@
 	}  
 	private function handleLoadVendor(ev:ResultEvent):void {
 		 stockVendor = ev.result as ArrayCollection;
-		 cboVendor.selectedIndex = -1;
+		 if( stockOrder != null){
+			  if ( stockOrder.vendor != null){
+			  	cboVendor.selectedIndex = findItem(stockOrder.vendor.name, stockVendor);
+			 }else
+			 	cboVendor.selectedIndex = -1;
+		 }else{
+		 	cboVendor.selectedIndex = -1;
+		 }
+		
 		 
 	}
     private function setStockDefinition(stockDefinition:StockDefinition):void
@@ -412,8 +458,10 @@
 		
 	}
 	private function doReport():void{
-		var importWindow : StockOrderReport = StockOrderReport(PopUpManager.createPopUp(this, StockOrderReport, true));
-		PopUpManager.centerPopUp(importWindow);
+	/*	var importWindow : StockOrderReport = StockOrderReport(PopUpManager.createPopUp(this, StockOrderReport, true));
+		PopUpManager.centerPopUp(importWindow);*/
+			var event:StockOrderEvent = new StockOrderEvent(null, new mx.rpc.Responder(Snowmass.getInstance().handleUIEvent, handleFault));
+			event.dispatch();
 	}
 	private function UpdateOrderStock():void{
 		var cost:Number;
@@ -489,7 +537,7 @@
 	<mx:Label x="51" y="274"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'orderStockCmd.RollWeight')}" width="82" fontWeight="bold"/>
 	<mx:ComboBox x="136" y="137" id="cboVendor" dataProvider="{stockVendor}" labelField="name" width="131"></mx:ComboBox>
 	<mx:TextInput x="136" y="165" text="{stockDefinitions.name}" focusOut="OrderEnabled()" width="207" id="name_edit"/>
-	<mx:TextInput x="136" y="191" id="wieght_Edit" width="150" text="{stockDefinitions.weight}"/>
+	<mx:TextInput x="135" y="189" id="wieght_Edit" width="150" text="{stockDefinitions.weight}"/>
 	<mx:TextInput x="136" y="222"  id="sheet_edit" width="71"/>
 	<mx:TextInput  x="136" y="248"  id="rollwidth_edit" width="85"/>
 	<mx:TextInput x="136" y="274" text="{stockDefinitions.rollWeight}" id="rollweight_edit"/>

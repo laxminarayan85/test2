@@ -3,14 +3,14 @@ package com.efi.printsmith.events.commandEvents.EditForms
 	import flash.events.Event;
 	import mx.rpc.IResponder;
 	import com.efi.printsmith.events.commandEvents.*;
-	import com.efi.printsmith.data.Users;
+	import com.efi.printsmith.data.StockOrder;
 
 	public class OrderStockEvent extends CommandEventBase
 	{
 		public static const COMMANDID:String = "CMD_OrderStock";
-		public var object:Users;
+		public var object:StockOrder;
 		
-		public function OrderStockEvent(object:Users, callbacks:IResponder=null)
+		public function OrderStockEvent(object:StockOrder, callbacks:IResponder=null)
 		{
 			this.object = object;
 			super(OrderStockEvent.COMMANDID, callbacks);
