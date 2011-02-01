@@ -289,9 +289,9 @@ width="938" height="507"  creationComplete="init()"
 				var setupMinutes:Number = this.job.pricingPress.setupMin;
 				setupMinutes = setupMinutes - (parseInt(setupHours) * 60);
 				if (setupMinutes < 10)
-					this.setup_time.text = setupHours + ":0" + setupMinutes.toString();
+					this.setup_time.text = setupHours + ":0" + setupMinutes.toString().replace(".","");
 				else
-					this.setup_time.text = setupHours + ":" + setupMinutes.toString();
+					this.setup_time.text = setupHours + ":" + setupMinutes.toString().replace(".","");
 				var minimumHours:Number = this.job.pricingPress.minLabor / 60;
 				var runHours:Number = job.runTime;
 				if (runHours < minimumHours)
@@ -302,9 +302,9 @@ width="938" height="507"  creationComplete="init()"
 				var runMinutes:Number = (runHours - Math.floor(runHours)) * 60;
 				runMinutes = runMinutes - Math.floor(runHours);
 				if (runMinutes < 10)
-					this.run_time.text = runHoursString + ":0" + runMinutes.toFixed(0);
+					this.run_time.text = runHoursString + ":0" + runMinutes.toFixed(0).replace(".","");
 				else
-					this.run_time.text = runHoursString + ":" + runMinutes.toFixed(0);
+					this.run_time.text = runHoursString + ":" + runMinutes.toFixed(0).replace(".","");
 				this.washup_time.text = "0:00";
 				this.total_time.text = (parseInt(setupHours) + parseInt(runHoursString)).toString() + ":" + (setupMinutes + runMinutes).toFixed(0);
 			} else {
@@ -329,17 +329,17 @@ width="938" height="507"  creationComplete="init()"
 				runHoursString = runHoursString.replace(".","");
 				var runMinutes:Number = this.job.runTime - (parseInt(runHoursString) * 60);
 				if (runMinutes < 10)
-					this.run_time.text = runHoursString + ":0" + runMinutes.toFixed(0);
+					this.run_time.text = runHoursString + ":0" + runMinutes.toFixed(0).replace(".","");
 				else
-					this.run_time.text = runHoursString + ":" + runMinutes.toFixed(0);
+					this.run_time.text = runHoursString + ":" + runMinutes.toFixed(0).replace(".","");
 				var totalTime:Number = job.runTime + job.setupTime + job.washupTime;
 				var totalHours:String = Math.floor((totalTime / 60)).toFixed(0);
 				totalHours = totalHours.replace(".","");
 				var totalMinutes:Number = totalTime - (parseInt(totalHours) * 60);
 				if (totalMinutes < 10)
-					this.total_time.text = totalHours + ":0" + totalMinutes.toFixed(0);
+					this.total_time.text = totalHours + ":0" + totalMinutes.toFixed(0).replace(".","");
 				else
-					this.total_time.text = totalHours + ":" + totalMinutes.toFixed(0);
+					this.total_time.text = totalHours + ":" + totalMinutes.toFixed(0).replace(".","");
 				this.production_run.text = job.numCopies.toString();
 				if (job.pricingMethod.method != "Large Format"  && job.pricingMethod.method != "Roll Fed") {
 					this.labor_rate.visible = false;
