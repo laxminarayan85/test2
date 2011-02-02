@@ -3403,6 +3403,8 @@
 				switch (evt.currentTarget) {
 				case this.job_ordered:
 					doUpdatePrice = true;
+					if (job.qtyOrdered < 0)
+						job.qtyOrdered = 0;
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					updateWeight();
 					break;
@@ -3451,6 +3453,12 @@
 					this.back_passes_text.text = this.back_colors_text.text;
 					doUpdatePrice = true;
 					break;	
+				case this.front_washes_text:
+					doUpdatePrice = true;
+					break;
+				case this.back_washes_text:
+					doUpdatePrice = true;
+					break;
 				case this.job_unitCost:
 					job.pressQty = job.qtyOrdered*job.inSetsOf/job.numUp;
 					doUpdatePrice = true;
@@ -3590,6 +3598,7 @@
 					}
 					break;
 				}
+				this.setWorkAndTurn();
 				if (doUpdatePrice) updatePrice();
 			}
 			
@@ -3614,6 +3623,8 @@
 					estimator_viewstack.selectedChild = printing_estimator_canvas;
 					costingPresses.filterFunction = filterCostingPresses;
 					costingPresses.refresh();
+					presses.filterFunction = filterOffsetPresses;
+					presses.refresh();
 					if (preferencesDefaultPresses != null && preferencesDefaultPresses.defaultSheetFedPress != null) {
 						this.job_pricing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, presses);
 						this.job_costing_press.selectedIndex = findItemById(preferencesDefaultPresses.defaultSheetFedPress.id, costingPresses);
@@ -3793,6 +3804,10 @@
 			
 			public function filterRollFedCostingPresses(item:PressDefinition):Boolean {
 				return item.costingPress == true && item.rollFed == true;
+			}
+			
+			public function filterOffsetPresses(item:PressDefinition):Boolean {
+				return item.rollFed == false;
 			}
 			
 			private function updateWeight():void{
@@ -4533,6 +4548,22 @@
 				var updatedList:ArrayCollection = new ArrayCollection();
 				updatedList.addItem(job);
 				return updatedList;
+			}
+			
+			public function setWorkAndTurn():void {
+				this.radiobutton1.enabled = false;
+				this.radiobutton3.enabled = false;
+				if (job != null) {
+					if (job.pricingPress.perfector == false &&
+						job.pricingPress.rollFed == false &&
+						job.numUp % 2 == 0 &&
+						job.backColors > 0 &&
+						job.frontColors > 0 &&
+						(job.stock != null || job.stock.coated != true)) {
+							this.radiobutton1.enabled = true;
+							this.radiobutton3.enabled = true;
+					}
+				}
 			}
 			
 			public function getConfirmationText():String {
