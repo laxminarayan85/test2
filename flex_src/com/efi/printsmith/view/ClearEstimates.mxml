@@ -82,11 +82,11 @@
 				} else {
 					estimatesGroup.selectedValue = "SomeEstimates";
 					actionGroup.selectedValue = "ClearEstimates";
-					dataService.getAccountPicker();
 					txtinput_1.text = "1";
 					txtinput_2.text = "1";
 					txtinput_3.text = "2";
 				}
+				dataService.getAccountPicker();
 			}
 			
 			private function getCheckBoxLabel(accountObj:Account):String {

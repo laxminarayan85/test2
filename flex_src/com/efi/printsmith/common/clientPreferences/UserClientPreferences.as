@@ -21,6 +21,8 @@ package com.efi.printsmith.common.clientPreferences
 		
 		public static const PENDINGLIST_GRID_WIDTHS:String = "PendingListGridWidths";
 		
+		public static const CLEARESTIMATES_VALUE:String = "ClearEstimates";
+		
 		
 		public static function getInstance():UserClientPreferences	{
 			if (_instance == null)	{
