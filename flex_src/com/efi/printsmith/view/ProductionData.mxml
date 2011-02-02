@@ -595,7 +595,7 @@ width="938" height="507"  creationComplete="init()"
 				} else {
 					hours = parseInt(this.setup_time.text);
 				}
-				job.setupTime = (hours * 60) + minutes;
+				job.setupTime = ((hours * 60) + minutes) / 60;
 				this.setProductionData();
 				break;
 			case this.run_time:
@@ -610,7 +610,7 @@ width="938" height="507"  creationComplete="init()"
 				} else {
 					hours = parseInt(this.run_time.text);
 				}
-				job.runTime = (hours * 60) + minutes;
+				job.runTime = ((hours * 60) + minutes) / 60;
 				this.setProductionData();
 				break;
 			case this.washup_time:
@@ -625,7 +625,7 @@ width="938" height="507"  creationComplete="init()"
 				} else {
 					hours = parseInt(this.washup_time.text);
 				}
-				job.washupTime = (hours * 60) + minutes;
+				job.washupTime = ((hours * 60) + minutes) / 60;
 				this.setProductionData();
 				break;
 		}

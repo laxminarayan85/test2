@@ -1458,24 +1458,22 @@
 												  fontSize="9" textAlign="center"
 												  tabIndex="20"
 												  text="{job.frontWashes}" focusOut="fieldChanged(event)" mouseDown="textInputClick(event)" />
-									<mx:List x="192"
+									<mx:TextInput x="192"
 												  y="71"
 												  width="156"
 												  height="20"
 												  id="front_inks_text"
-												  fontSize="9" textAlign="center"
-												  tabIndex="21"
-												   dataProvider="{job.frontInks}"
-												    labelField="name" click="doInkEditorFront();" wordWrap="true"/>
-									<mx:List x="192"
+												  fontSize="9" textAlign="left"
+												  tabIndex="21" enabled="false"
+												  click="doInkEditorFront();"/>
+									<mx:TextInput x="192"
 												  y="94"
 												  width="156"
 												  height="20"
 												  id="back_inks_text"
 												  tabIndex="25"
-												  fontSize="9" textAlign="center"
-												   dataProvider="{job.backInks}"
-												    labelField="name" click="doInkEditorBack();"/>
+												  fontSize="9" textAlign="left" enabled="false"
+												  click="doInkEditorBack();"/>
 									<mx:TextInput x="144"
 												  y="94"
 												  width="46"
@@ -4020,10 +4018,76 @@
 	    		
 	    		job.paperCal = localJob.paperCal;
 	    		job.pricingRecord = localJob.pricingRecord;
-	    		
+	    		this.setInkText();
 	    		refreshCalcAndImage();
 	    	}
 	    	
+	    	private function setInkText():void {
+	    		var frontInks:String = "";
+	    		if (job.frontColor1 != "")
+	    			frontInks = frontInks + job.frontColor1;
+	    		if (job.frontColor2 != "") {
+	    			if (job.frontColor3 != "")
+	    				frontInks = frontInks + "; " + job.frontColor2;
+	    			else
+	    				frontInks = frontInks + " & " + job.frontColor2;
+	    		}
+	    		if (job.frontColor3 != "") {
+	    			if (job.frontColor4 != "")
+	    				frontInks = frontInks + "; " + job.frontColor3;
+	    			else
+	    				frontInks = frontInks + " & " + job.frontColor3;
+	    		}
+	    		if (job.frontColor4 != "") {
+	    			if (job.frontColor5 != "")
+	    				frontInks = frontInks + "; " + job.frontColor4;
+	    			else
+	    				frontInks = frontInks + " & " + job.frontColor4;
+	    		}
+	    		if (job.frontColor5 != "") {
+	    			if (job.frontColor6 != "")
+	    				frontInks = frontInks + "; " + job.frontColor5;
+	    			else
+	    				frontInks = frontInks + " & " + job.frontColor5;
+	    		}
+	    		if (job.frontColor6 != "") {
+	    			frontInks = frontInks + " & " + job.frontColor2;
+	    		}
+	    		
+	    		var backInks:String = "";
+	    		if (job.backColor1 != "")
+	    			backInks = backInks + job.backColor1;
+	    		if (job.backColor2 != "") {
+	    			if (job.backColor3 != "")
+	    				backInks = backInks + "; " + job.backColor2;
+	    			else
+	    				backInks = backInks + " & " + job.backColor2;
+	    		}
+	    		if (job.backColor3 != "") {
+	    			if (job.backColor4 != "")
+	    				backInks = backInks + "; " + job.backColor3;
+	    			else
+	    				backInks = backInks + " & " + job.backColor3;
+	    		}
+	    		if (job.backColor4 != "") {
+	    			if (job.backColor5 != "")
+	    				backInks = backInks + "; " + job.backColor4;
+	    			else
+	    				backInks = backInks + " & " + job.backColor4;
+	    		}
+	    		if (job.backColor5 != "") {
+	    			if (job.backColor6 != "")
+	    				backInks = backInks + "; " + job.backColor5;
+	    			else
+	    				backInks = backInks + " & " + job.backColor5;
+	    		}
+	    		if (job.backColor6 != "") {
+	    			backInks = backInks + " & " + job.backColor2;
+	    		}
+	    		
+	    		this.front_inks_text.text = frontInks;
+	    		this.back_inks_text.text = backInks;
+	    	}
 	    	
 	    	private function doXpedxStockStatus():void{
 				var statusWindow:XpdexStockAvailability = XpdexStockAvailability(PopUpManager.createPopUp(this,XpdexStockAvailability,true));
@@ -4057,7 +4121,7 @@
 				inkWindow.setSide("front");
 			 	inkWindow.setInks(job);
 			 	front = true;
-			 	inkWindow.addEventListener(InkColorEvent.Close, handleInkColorClose);
+			 	inkWindow.addEventListener(JobEditCompleteEvent.SAVE, handleJobEditSave);
 			 	
 			 }
 			 private function doInkEditorBack():void{
@@ -4066,13 +4130,13 @@
 				inkWindow.setSide("back");			 	
 			 	inkWindow.setInks(job);
 			 	front = false;
-			 	inkWindow.addEventListener(InkColorEvent.Close, handleInkColorClose);
+			 	inkWindow.addEventListener(JobEditCompleteEvent.SAVE, handleJobEditSave);
 			 	
 			 }
 			 private function handleInkColorClose(event:InkColorEvent):void
 			 {
 			 	if (front)
-			 		job.frontInks = event.tempArray;
+			 		job.backInks = event.tempArray;
 			 	else
 			 		job.backInks = event.tempArray;
 			 }

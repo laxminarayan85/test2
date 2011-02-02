@@ -20,8 +20,8 @@
 	<mx:Script>
 
 		<![CDATA[
-			import com.efi.printsmith.data.JobBase;
-			import com.efi.printsmith.events.InkColorEvent;
+			import com.efi.printsmith.data.Job;
+			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.DialogDoneEvent;
 			import com.efi.printsmith.events.ModelGetSingleEvent;
 			import com.efi.printsmith.events.ModelQueryByCriteriaEvent;
@@ -52,7 +52,7 @@
 			[Bindable]
 			private var front:Boolean;
 			[Bindable]
-			private var job1:JobBase;
+			private var job1:Job;
 			
 			
 			private function handleFault(ev:FaultEvent):void
@@ -68,7 +68,6 @@
 	  			loadInkColors();
 			}
 			private function doClose():void{
-				var selectEvent:InkColorEvent;
 				if (front){
 					job1.frontColor1 = ink1.text;
 					job1.frontColor2 = ink2.text;
@@ -86,7 +85,8 @@
 					job1.backColor6 = ink6.text;
 				}
 				
-				
+				var selectEvent:JobEditCompleteEvent = new JobEditCompleteEvent(JobEditCompleteEvent.SAVE, job1);
+				dispatchEvent(selectEvent);
 				PopUpManager.removePopUp(this);
 				
 			}
@@ -101,7 +101,7 @@
 					front = false;
 				
 			}
-			public function setInks(job:JobBase):void
+			public function setInks(job:Job):void
 			{
 				var temp:InkColor = new InkColor();
 				job1 = job;
@@ -121,12 +121,12 @@
 				}
 				else{
 					//if (job.backInks != null){
-						ink1.text = job.backColor1;
-						ink2.text = job.backColor21;
-						ink3.text = job.backColor3;
-						ink4.text = job.backColor4;
-						ink5.text = job.backColor5;
-						ink6.text = job.backColor6;
+						ink1.text = job1.backColor1;
+						ink2.text = job1.backColor2;
+						ink3.text = job1.backColor3;
+						ink4.text = job1.backColor4;
+						ink5.text = job1.backColor5;
+						ink6.text = job1.backColor6;
 					//}
 					//else
 						//job1.backInks = new ArrayCollection();

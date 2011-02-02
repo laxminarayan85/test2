@@ -60,6 +60,18 @@ public class JobService extends SnowmassHibernateService {
 		job.setSingleSided(true);
 		job.setDoubleSided(false);
 		job.setRunMethod(RunMethod.Sheetwise.name());
+		job.setFrontColor1("");
+		job.setFrontColor2("");
+		job.setFrontColor3("");
+		job.setFrontColor4("");
+		job.setFrontColor5("");
+		job.setFrontColor6("");
+		job.setBackColor1("");
+		job.setBackColor2("");
+		job.setBackColor3("");
+		job.setBackColor4("");
+		job.setBackColor5("");
+		job.setBackColor6("");
 		DataService dataService = new DataService();
 		PaperCalculator paperCalculator = new PaperCalculator();
 
