@@ -17,6 +17,7 @@ public class BlankPricingMethod {
 			double unitPrice = priceStockEnging.priceStock(job);
 			double price = unitPrice * job.getQtyOrdered();
 			job.getPricingRecord().setUnitPrice(unitPrice);
+			job.getPricingRecord().setStockTotalPrice(price);
 			job.getPricingRecord().setTotalPrice(price);
 		}
 		
