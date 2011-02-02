@@ -652,6 +652,7 @@
 					rbCreditCard.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
 				} else if (stringChar == rbCheck.label.substr(0,1)) {
 					rbCheck.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
+					rbCheck.selected = true;
 				} else if (stringChar == rbCharge.label.substr(0,1)) {
 					rbCharge.dispatchEvent(new MouseEvent(MouseEvent.CLICK , false, false));
 				} else {
