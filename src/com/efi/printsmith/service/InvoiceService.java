@@ -255,6 +255,7 @@ public class InvoiceService extends SnowmassHibernateService {
 		invoice.setConvertedInvoiceNo(null);
 		invoice.setOffPendingDate(null);
 		invoice.setOnPendingList(true);
+		invoice.setVoided(false);
 		return invoice;
 	}
 	
@@ -328,6 +329,7 @@ public class InvoiceService extends SnowmassHibernateService {
 		estimate.setConvertedInvoiceNo(null);
 		estimate.setOffPendingDate(null);
 		estimate.setOnPendingList(true);
+		estimate.setVoided(false);
 		return estimate;
 	}
 }

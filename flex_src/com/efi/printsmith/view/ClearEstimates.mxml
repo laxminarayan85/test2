@@ -214,18 +214,18 @@
 							}
 						}
 					}
-					if(tmpClearEstimates.length==0) {
-						clearedEstimatesLength = 0;
-						currentState = "finalState";
+				}
+				if(tmpClearEstimates.length==0) {
+					clearedEstimatesLength = 0;
+					currentState = "finalState";
+				}
+				if(!estimates_check_5.selected) {
+					for each(var tmpClearEstimatesObj:Estimate in tmpClearEstimates) {
+						dataService.getInvoice(tmpClearEstimatesObj.id);
 					}
-					if(!estimates_check_5.selected) {
-						for each(var tmpClearEstimatesObj:Estimate in tmpClearEstimates) {
-							dataService.getInvoice(tmpClearEstimatesObj.id);
-						}
-					} else {
-						clearedEstimates = tmpClearEstimates;
-						moveToNextEstimate();
-					}
+				} else {
+					clearedEstimates = tmpClearEstimates;
+					moveToNextEstimate();
 				}
 			}
 			
