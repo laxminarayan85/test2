@@ -1524,8 +1524,15 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 	public function getConfirmationText():String {
 		var confirmationText:String = "";
 		confirmationText = "\n"+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'jobCmd.Contact')+":";
-		if(originalContact!=null && originalContact.parentAccount!=null){
-			confirmationText = confirmationText+" "+originalContact.parentAccount.title;
+		if(originalContact!=null){
+			confirmationText = confirmationText+" "+originalContact.contactId;
+			if((originalContact.firstName!=null && originalContact.firstName!="") && (originalContact.lastName==null || originalContact.lastName=="")) {
+				confirmationText = confirmationText + " "+originalContact.firstName;
+			} else if((originalContact.lastName!=null && originalContact.lastName!="") && (originalContact.lastName==null || originalContact.lastName=="")) {
+				confirmationText = confirmationText + " "+originalContact.lastName;
+			}  else if((originalContact.firstName!=null && originalContact.firstName!="") && (originalContact.lastName!=null && originalContact.lastName!="")) {
+				confirmationText = confirmationText + " "+originalContact.lastName+", "+originalContact.firstName;
+			}
 		}
 		return confirmationText;
 	}
@@ -1659,7 +1666,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 					<mx:TextInput x="243" y="56" id="cardnumber" text="{contact.creditCard.cardDisplayNumber}" focusOut="doReadCardNumber()"/>
 					<mx:DateField x="243" y="108" id="cardexpiresdate" 
 						labelFunction="dateField_labelFunc" formatString="MM/DD/YYYY" 
-						text="{contact.creditCard.expiresDate}" 
+						selectedDate="{contact.creditCard.expiresDate}" 
 						change="{doReadExpirationDate(event)}"
 						showToday="true" width="160" editable="true"/>
 					<mx:TextInput x="243" y="157" id="cardstreet" text="{contact.creditCard.address1}"/>
