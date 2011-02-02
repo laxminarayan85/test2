@@ -3170,7 +3170,7 @@ public class DataService extends HibernateService {
 			String columnString = "a.id,a.created,a.invoiceNumber,a.name,a.grandTotal,a.convertedInvoiceNo,a.status,a.offPendingDate,a.estimateNotes";
 			Session session = (Session) em.getDelegate();
 			String queryString = "select "+columnString+" from " + className
-					+ " a where a.account.id="+id+" and a.onPendingList=false order by a.created asc";
+					+ " a where a.account.id="+id+" and a.onPendingList=false and a.voided=false order by a.created asc";
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
 			while (rs.next()) {

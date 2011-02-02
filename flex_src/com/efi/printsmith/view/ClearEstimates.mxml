@@ -6,8 +6,12 @@
 		<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountsResult(event)"/>
 		<mx:method name="getPending" fault="handleFault(event)" result="handleLoadPendingResult(event)"/>
 		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleLoadSaveListResult(event)"/>
-		<mx:method name="addUpdate" fault="handleFault(event)" result="handleLoadSaveResult(event)"/>
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadInvoiceResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="dataServiceSingle" destination="dataService" showBusyCursor="true">
+		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadSingleInvoiceResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleLoadSaveResult(event)"/>
 	</mx:RemoteObject>
 	
 	<mx:Script>
@@ -52,6 +56,8 @@
 			private var clearedEstimatesCounter:int = 0;
 			
 			private var pageIndex:int=0;
+			
+			private var statusString:String = "";
 			
 			private function init():void {
 				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
@@ -212,8 +218,13 @@
 						clearedEstimatesLength = 0;
 						currentState = "finalState";
 					}
-					for each(var tmpClearEstimatesObj:Estimate in tmpClearEstimates) {
-						dataService.getInvoice(tmpClearEstimatesObj.id);
+					if(!estimates_check_5.selected) {
+						for each(var tmpClearEstimatesObj:Estimate in tmpClearEstimates) {
+							dataService.getInvoice(tmpClearEstimatesObj.id);
+						}
+					} else {
+						clearedEstimates = tmpClearEstimates;
+						moveToNextEstimate();
 					}
 				}
 			}
@@ -232,6 +243,7 @@
 						clearedEstimatesObj.offPendingDate = new Date();
 					}
 				} else if(actionGroup.selectedValue=="VoidEstimates") {
+					clearedEstimatesObj.voided = true;
 					clearedEstimatesObj.onPendingList = false;
 					clearedEstimatesObj.offPendingDate = new Date();
 				}
@@ -379,8 +391,9 @@
 				return "";
 			}
 			
-			private function clearEstimate():void {
-				if(selectedEstimate!=null) {
+			private function handleLoadSingleInvoiceResult(event:ResultEvent):void {
+				selectedEstimate = event.result as InvoiceBase;
+				if(selectedEstimate!=null && statusString=="clear") {
 					if(estimates_check_4.selected) {
 						selectedEstimate.status = "Neutral";
 						selectedEstimate.onPendingList = false;
@@ -390,15 +403,25 @@
 						selectedEstimate.onPendingList = false;
 						selectedEstimate.offPendingDate = new Date();
 					}
-					dataService.addUpdate(selectedEstimate);
+				} else if(selectedEstimate!=null  && statusString=="void") {
+					selectedEstimate.voided = true;
+					selectedEstimate.onPendingList = false;
+					selectedEstimate.offPendingDate = new Date();
+				}
+				dataServiceSingle.addUpdate(selectedEstimate);
+			}
+			
+			private function clearEstimate():void {
+				if(selectedEstimate!=null) {
+					statusString = "clear";
+					dataServiceSingle.getInvoice(selectedEstimate.id);
 				}
 			}
 			
 			private function voidEstimate():void {
 				if(selectedEstimate!=null) {
-					selectedEstimate.onPendingList = false;
-					selectedEstimate.offPendingDate = new Date();
-					dataService.addUpdate(selectedEstimate);
+					statusString = "void";
+					dataServiceSingle.getInvoice(selectedEstimate.id);
 				}
 			}
 			

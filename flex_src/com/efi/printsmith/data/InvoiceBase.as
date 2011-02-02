@@ -96,6 +96,7 @@ package com.efi.printsmith.data
 		public var actualSubtotal:Number = 0;
 		public var taxableSubtotal:Number = 0;
 		public var discountableSubtotal:Number = 0;
+		public var voided:Boolean = false;
 	
 	}
 }
