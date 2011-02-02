@@ -549,6 +549,9 @@ public class DataService extends HibernateService {
 				if(invoiceBase.getContact()!=null) {
 					Hibernate.initialize(invoiceBase.getContact().getComLinks());
 				}
+				else if(invoiceBase.getAccount()!=null && invoiceBase.getAccount().getBillToContact()!=null) {
+					Hibernate.initialize(invoiceBase.getAccount().getBillToContact().getComLinks());
+				}
 			}
 			
 			String columnString = "a.id,a.comment,a.location,a.parentInvoice";

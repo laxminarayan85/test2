@@ -1044,7 +1044,15 @@
 			}else{
 				return "None";
 			}
-		}else{
+		} else if (tmpInvoice != null && tmpInvoice.contact == null) {
+			if(tmpInvoice.account!=null && tmpInvoice.account.billToContact!=null && tmpInvoice.account.billToContact.comLinks!=null && tmpInvoice.account.billToContact.comLinks.length>0) {
+				for each(var comLinkObj:ComLink in tmpInvoice.account.billToContact.comLinks){
+					if(comLinkObj.type == "Phone"){
+						return comLinkObj.value;
+					}
+				}
+			}
+		} else{
 			return "None";
 		}
 		return "None";
