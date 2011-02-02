@@ -457,6 +457,8 @@
     [Bindable] public var fromJobPage:Boolean = false;
     
     private var focussedFormControl:DisplayObject;
+    
+    private var onDoSave:Boolean = false;
                                            
 	public function getSecurityCommand():String {
     	return PSSecurityCommands.PRICING_STOCKDEF;
@@ -544,8 +546,7 @@
 		var event1:DeleteStockDefinitionEvent = new DeleteStockDefinitionEvent(button_delete, new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 		event1.dispatch();
 		PanelCharges.title = StringUtil.substitute(PanelCharges.title,"10");
-		registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
-		originalStockDefinitions = ObjectUtil.copy(stockDefinitions) as StockDefinition;
+		setOriginalStockDefinitions();
 	}      
 
 	public function handleUIButtonEvent(evt:ResultEvent):void {
@@ -695,8 +696,7 @@
 	    
 		standardItemCheckEvent();
 		doStockUnitChange(stockDefinitions.stockunit.toString());
-		registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
-		originalStockDefinitions = ObjectUtil.copy(stockDefinitions) as StockDefinition;
+		setOriginalStockDefinitions();
 	}			
 	                                                   	
 	public function loadStockDefinitions():void { 
@@ -800,8 +800,7 @@
 			this.stockDefinitions = new StockDefinition;
 	    	stockDefinitions.charges = new ArrayCollection;
 	    	stockDefinitions.stockChanges = new ArrayCollection;
-	    	registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
-			originalStockDefinitions = ObjectUtil.copy(stockDefinitions) as StockDefinition;
+	    	setOriginalStockDefinitions();
 			
 		}
 		this.currentState="SheetStock";
@@ -822,8 +821,7 @@
 			this.stockDefinitions = new StockDefinition();
 	    	stockDefinitions.charges = new ArrayCollection;
 	    	stockDefinitions.stockChanges = new ArrayCollection;
-	    	registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
-			originalStockDefinitions = ObjectUtil.copy(stockDefinitions) as StockDefinition;
+	    	setOriginalStockDefinitions();
 			Alert.show("Stock Picker returned a null stock", "Error");
 		}
 	}
@@ -873,23 +871,24 @@
 		tempStock = StockDefinitionArray.getItemAt(itemp) as StockDefinition;
 		dataService.getStockDefinition(tempStock.id );
 		                                       
-	}                                           
-
+	}                      
+	
 	private function doSave():void {
 		var name:String;
 		name = stockName.text; 
-		stockDefinitionNameValidator.validate(stockName,false)
+		stockDefinitionNameValidator.validate(stockName,false);
 		
 		if (validate(stockDefinitionNameValidator) == true)
 		{
+			onDoSave = true;
 			mapStockDefinitionData();
-			
-			
-			
+			stockDefinitions.lastUpdated = new Date();
+			dataService.addUpdate(stockDefinitions);
+			standardItemCheckEvent();
 		}else {
 			showMessage(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.Unabletosavestockdef'), resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'importCmd.Save')  );
 		}
-	}
+	} 
 	
 	private function doNew():void {
 		var mDICompareObjectEvent:MDICompareObjectEvent = new MDICompareObjectEvent(MDICompareObjectEvent.MDI_COMPAREOBJECT,this,doNewOperation);
@@ -940,8 +939,7 @@
     	
   	    doStockType();
   	    standardItemCheckEvent();
-  	    registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
-		originalStockDefinitions = ObjectUtil.copy(stockDefinitions) as StockDefinition;
+  	    setOriginalStockDefinitions();
   	    
   	 //     setStockDefinition(stockDefinitions);
   	    
@@ -1880,7 +1878,6 @@
 	 stockDefinitions.binLocation = BinLocation.text;
 	 if (stockDefinitions.account != null)
 	 	stockDefinitions.account.title = account_name.text;
-	 stockDefinitions.lastUpdated = new Date();
 	 if (priceChange)
 	 	stockDefinitions.lastPriceChange = new Date();
 	 	
@@ -1910,9 +1907,6 @@
 			manualStock.quantity = dif * -1;
 			stockDefinitions.onHand =parseInt(OnHand.text.replace(",",""));
 			stockChangesDataService.addUpdate(manualStock)
-		}else{
-			dataService.addUpdate(stockDefinitions);
-			standardItemCheckEvent();	
 		}
 	
 	 	
@@ -2470,9 +2464,17 @@ private function doRound(evt:FocusEvent):void{
 	    titleWindow.setPressStockDefinition(this.stockDefinitions as StockDefinition,this.pressDefinition as PressDefinition);
 	}
 	
+	private function setOriginalStockDefinitions():void {
+		registerClassAlias("com.efi.printsmith.data.StockDefinition",StockDefinition);
+		originalStockDefinitions = ObjectUtil.copy(stockDefinitions) as StockDefinition;
+	}
+	
 	public function getOriginalObject():ArrayCollection {
 		var originalList:ArrayCollection = new ArrayCollection();
 		if(originalStockDefinitions!=null){
+			if(originalStockDefinitions.defaultPress==null) {
+				originalStockDefinitions.defaultPress = cboDefaultPress.selectedItem as PressDefinition;
+			}
 			if(originalStockDefinitions.priceExpires!=null){
 				originalStockDefinitions.priceExpires = scrubTimeValue(originalStockDefinitions.priceExpires);
 			}
