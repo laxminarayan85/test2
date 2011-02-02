@@ -56,7 +56,13 @@ public class PrintPricingMethod {
 			setupHours = (pressDefinition.getSetupMin().doubleValue() / 60) * job.getSheets();
 			job.setSetupTime(setupHours);
 		}
-		float totalHours = (float) (runHours + setupHours);
+		Double washupHours = 0.0;
+		if (job.getFrontWashes() + job.getBackWashes() > 0) {
+			Double washupMinutes = (pressDefinition.getWashupMin() + pressDefinition.getWashupPerFountain().doubleValue()) * (job.getFrontWashes() + job.getBackWashes());
+			washupHours = washupMinutes / 60;
+			job.setWashupTime(washupMinutes);
+		}
+		float totalHours = (float) (runHours + setupHours + washupHours);
 		float minimumHours = pressDefinition.getMinLabor().floatValue() / 60;
 		if (totalHours < minimumHours)
 			totalHours = minimumHours;
