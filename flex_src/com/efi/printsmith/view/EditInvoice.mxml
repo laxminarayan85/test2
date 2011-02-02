@@ -295,7 +295,6 @@
 			private var randomNumber:int;
 			
 			private var windowRef:MDIWindow;
-			private var invoicePricing:InvoicePricing;
 			
 			[Bindable] public var preferencesStocks:PreferencesStocks;
 			
@@ -394,11 +393,12 @@
 					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Thisdocumentislocked'));
 				}
 				
+				if (isNaN(invoice.id))	{
+					InvoicePricing.calculateTotals(invoice,InvoicePricing.ALL);	
+				}
+				
 				prefStocksDataService.getSingle("PreferencesStocks");
 				
-				invoicePricing = new InvoicePricing();
-				invoicePricing.invoice = invoice;
-					
 				invoiceRepositoryService.getItemList();
 				var eventJobs:InvoiceJobsEvent = new InvoiceJobsEvent(toolbar.getButton("new_job_button0"),new mx.rpc.Responder(handleUIButtonEvent, handleUIButtonFault));
 				eventJobs.dispatch();
@@ -1273,45 +1273,46 @@
 			}
 			
 			private function updateTotals():void {
-				if (invoice.jobs != null && invoice.jobs.length > 0) {
-					var i:int;
-					invoice.subTotal = 0;
-					var hasMultiQty:Boolean = false;
-					for (i=0; i<invoice.jobs.length; i++) {
-						var jobObj:Job = invoice.jobs.getItemAt(i) as Job;
-						if(jobObj.multiQtyJob) {
-							hasMultiQty = true;
-							break;
-						}
-					}
-					for (i=0; i<invoice.jobs.length; i++) {
-						var tmpJob:Job = invoice.jobs.getItemAt(i) as Job;
-						if(hasMultiQty){
-							if(tmpJob.defaultJob) {
-								invoice.subTotal += tmpJob.pricingRecord.totalPrice;
-								if(tmpJob.charges!=null) {
-									for each(var chargeObj:Charge in tmpJob.charges) {
-										invoice.subTotal += chargeObj.price;
-									}
-								}
-							}
-						} else {	
-							invoice.subTotal += tmpJob.pricingRecord.totalPrice;
-							if(tmpJob.charges!=null) {
-								for each(var chargeObj:Charge in tmpJob.charges) {
-									invoice.subTotal += chargeObj.price;
-								}
-							}
-						}
-					}
-				}
-				if(invoice.charges!=null) {
-					for each(var chargeObj:Charge in invoice.charges) {
-						invoice.subTotal += chargeObj.price;
-					}
-				}
-				invoice.grandTotal = invoice.subTotal;
-				invoice.amountDue = invoice.grandTotal;
+				InvoicePricing.calculateTotals(invoice, InvoicePricing.ALL);
+//				if (invoice.jobs != null && invoice.jobs.length > 0) {
+//					var i:int;
+//					invoice.subTotal = 0;
+//					var hasMultiQty:Boolean = false;
+//					for (i=0; i<invoice.jobs.length; i++) {
+//						var jobObj:Job = invoice.jobs.getItemAt(i) as Job;
+//						if(jobObj.multiQtyJob) {
+//							hasMultiQty = true;
+//							break;
+//						}
+//					}
+//					for (i=0; i<invoice.jobs.length; i++) {
+//						var tmpJob:Job = invoice.jobs.getItemAt(i) as Job;
+//						if(hasMultiQty){
+//							if(tmpJob.defaultJob) {
+//								invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+//								if(tmpJob.charges!=null) {
+//									for each(var chargeObj:Charge in tmpJob.charges) {
+//										invoice.subTotal += chargeObj.price;
+//									}
+//								}
+//							}
+//						} else {	
+//							invoice.subTotal += tmpJob.pricingRecord.totalPrice;
+//							if(tmpJob.charges!=null) {
+//								for each(var chargeObj:Charge in tmpJob.charges) {
+//									invoice.subTotal += chargeObj.price;
+//								}
+//							}
+//						}
+//					}
+//				}
+//				if(invoice.charges!=null) {
+//					for each(var chargeObj:Charge in invoice.charges) {
+//						invoice.subTotal += chargeObj.price;
+//					}
+//				}
+//				invoice.grandTotal = invoice.subTotal;
+//				invoice.amountDue = invoice.grandTotal;
 			}
 		
 
@@ -1810,7 +1811,8 @@
 					setDepositLabels(ac);
 					invoice.deposits = trimDepositsArray(ac);
 					
-					//invoice.amountDue = ((ac.getItemAt(0) as DepositEntry).amount + (ac.getItemAt(1) as DepositEntry).amount + (ac.getItemAt(2) as DepositEntry).amount) * -1;
+					InvoicePricing.calculateTotals(invoice, InvoicePricing.DEPOSITS);
+					
 				}
 			}
 			
@@ -2865,7 +2867,7 @@
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.CustDiscount')}"  >
 							<mx:Text textAlign="right"
 									 id="cust_discount_text"
-									 text="{invoice.discount}"
+									 text="{invoice.dollarDiscount}"
 									 />
 						</mx:FormItem>
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.NetSub')}"  >
@@ -2877,7 +2879,7 @@
 						
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.SalesTax')}" >
 							<mx:Text textAlign="right"
-									 id="sales_tax_text"
+									 id="sales_tax_text" text="{Snowmass.getCurrencyFormatter(true, 2).format(invoice.tax)}"
 									 />
 							
 						</mx:FormItem>
@@ -2885,7 +2887,7 @@
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Shipping')}" >
 							<mx:Text textAlign="right"
 									 id="shipping_text"
-									 text="{Snowmass.getCurrencyFormatter(true, 2).format(invoice.shipCharges)}"
+									 text="{Snowmass.getCurrencyFormatter(true, 2).format(invoice.shipPrice)}"
 									 />
 						</mx:FormItem>
 						
