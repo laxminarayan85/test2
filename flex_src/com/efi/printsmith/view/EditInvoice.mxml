@@ -2622,6 +2622,8 @@
 		]]>
 
 	</mx:Script>
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY L:NN A EEE"/>
+	
 	<mx:VBox height="100%" width="100%" id="mainvbox" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
 		<!-- toolbar-->
 		<ns2:Toolbar id="toolbar" height="5%" width="100%"/>
@@ -2703,93 +2705,100 @@
 				</mx:DataGrid>
 			</mx:VBox>
 			<mx:VBox id="invoice_job_canvas">
-				<mx:DataGrid height="100%"
-							 width="100%"
-							 id="invoice_job_grid"
-							 dataProvider="{getJobChargesList(invoice.jobs,invoice.charges)}"
-							 sortableColumns="false"
-							 doubleClick="{doDoubleclickInvoiceItem()}"
-						  	 doubleClickEnabled="true"
-						  	 dragEnabled="true"
-						  	 dropEnabled="true"
-						  	 dragEnter="{dragEnterHandler(event)}"
-						  	 dragDrop="{dragDropHandler(event)}"
-						  	 editable="true"
-						  	 keyDown="{keyDownEventHandler(event)}">
-					<mx:columns>
-						<mx:DataGridColumn editable="false">
-							<mx:itemRenderer>
-								<mx:Component>
-									<mx:Label text="{outerDocument.getJobIndex(data)}" textAlign="center" fontWeight="bold"/>
-								</mx:Component>
-							</mx:itemRenderer>
-						</mx:DataGridColumn>
-						<mx:DataGridColumn visible="{multiQtyJobPresent}" editable="false">
-							<mx:itemRenderer>
+				<mx:Canvas width="100%" height="100%">
+					<mx:DataGrid height="100%"
+								 width="100%"
+								 id="invoice_job_grid"
+								 dataProvider="{getJobChargesList(invoice.jobs,invoice.charges)}"
+								 sortableColumns="false"
+								 doubleClick="{doDoubleclickInvoiceItem()}"
+							  	 doubleClickEnabled="true"
+							  	 dragEnabled="true"
+							  	 dropEnabled="true"
+							  	 dragEnter="{dragEnterHandler(event)}"
+							  	 dragDrop="{dragDropHandler(event)}"
+							  	 editable="true"
+							  	 keyDown="{keyDownEventHandler(event)}">
+						<mx:columns>
+							<mx:DataGridColumn editable="false">
+								<mx:itemRenderer>
 									<mx:Component>
-									<mx:HBox width="100%" horizontalAlign="center">
-										<mx:RadioButton group="{outerDocument.getRBGroupRef(data)}"
-											enabled="{data.multiQtyJob || data.hasMultiQtyJobs}"
-											selected="{data.defaultJob}" click="{outerDocument.setDefaultJob(data,event)}"/>
-									</mx:HBox>
-								</mx:Component>
-							</mx:itemRenderer>
-						</mx:DataGridColumn>	
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Qty')}"
-										   labelFunction="getQtyOrdered" editable="true">
-							<mx:itemEditor>
-								<mx:Component>
-									<components:CustomNumericTextInputComponent
-										dataHolder="{data}" variableName="{(data is Job)?'qtyOrdered':'quantity'}" customText="{outerDocument.getCompQuantity(data)}"
-										precision="2" rounding="nearest" textAlignStyle="left" focusOut="{outerDocument.updateQuantity(data)}" enabled="{outerDocument.getQuantityEnability(data)}">
-										<mx:Script>
-											<![CDATA[
-												import com.efi.printsmith.data.Job;
-											]]>
-										</mx:Script>
-									</components:CustomNumericTextInputComponent>
-								</mx:Component>
-							</mx:itemEditor>
-						</mx:DataGridColumn>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
-					   		dataField="description" editable="false">
-							<mx:itemRenderer>
-								<mx:Component>
-									<mx:HBox width="100%" horizontalScrollPolicy="off">
-										<mx:Label text="{outerDocument.getJobChargeDescription(data,outerDocument.preferencesStocks,null)}"/>	
-										<mx:Label text="{outerDocument.getNonTaxLabel(data)}" textAlign="right"/>
-									</mx:HBox>
-								</mx:Component>
-							</mx:itemRenderer>
-						</mx:DataGridColumn>
-						<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Price')}"
-										   textAlign="right" editable="true">
-							<mx:itemRenderer>
-								<mx:Component>
-									<mx:HBox width="100%" horizontalScrollPolicy="off">
-										<mx:Label text="{outerDocument.getInvoiceIndicator(data)}"/>
-										<mx:Label text="{outerDocument.gridJobPrice(data,null)}" textAlign="right"/>	
-									</mx:HBox>
-									
-								</mx:Component>
-							</mx:itemRenderer>
-							<mx:itemEditor>
-								<mx:Component>
-									<components:CustomNumericTextInputComponent
-										dataHolder="{(data is Job)?data.pricingRecord:data}" variableName="{(data is Job)?'totalPrice':'price'}" customText="{(data is Job)?data.pricingRecord.totalPrice:data.price}"
-										precision="2" rounding="nearest" focusOut="{outerDocument.updateInvoicePricing(data)}">
-										<mx:Script>
-											<![CDATA[
-												import com.efi.printsmith.data.Job;
-											]]>
-										</mx:Script>
-									</components:CustomNumericTextInputComponent>
-								</mx:Component>
-							</mx:itemEditor>
-						</mx:DataGridColumn>
-
-					</mx:columns>
-				</mx:DataGrid>
+										<mx:Label text="{outerDocument.getJobIndex(data)}" textAlign="center" fontWeight="bold"/>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn visible="{multiQtyJobPresent}" editable="false">
+								<mx:itemRenderer>
+										<mx:Component>
+										<mx:HBox width="100%" horizontalAlign="center">
+											<mx:RadioButton group="{outerDocument.getRBGroupRef(data)}"
+												enabled="{data.multiQtyJob || data.hasMultiQtyJobs}"
+												selected="{data.defaultJob}" click="{outerDocument.setDefaultJob(data,event)}"/>
+										</mx:HBox>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>	
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'copierDefCmd.Qty')}"
+											   labelFunction="getQtyOrdered" editable="true">
+								<mx:itemEditor>
+									<mx:Component>
+										<components:CustomNumericTextInputComponent
+											dataHolder="{data}" variableName="{(data is Job)?'qtyOrdered':'quantity'}" customText="{outerDocument.getCompQuantity(data)}"
+											precision="2" rounding="nearest" textAlignStyle="left" focusOut="{outerDocument.updateQuantity(data)}" enabled="{outerDocument.getQuantityEnability(data)}">
+											<mx:Script>
+												<![CDATA[
+													import com.efi.printsmith.data.Job;
+												]]>
+											</mx:Script>
+										</components:CustomNumericTextInputComponent>
+									</mx:Component>
+								</mx:itemEditor>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Description')}"
+						   		dataField="description" editable="false">
+								<mx:itemRenderer>
+									<mx:Component>
+										<mx:HBox width="100%" horizontalScrollPolicy="off">
+											<mx:Label text="{outerDocument.getJobChargeDescription(data,outerDocument.preferencesStocks,null)}"/>	
+											<mx:Label text="{outerDocument.getNonTaxLabel(data)}" textAlign="right"/>
+										</mx:HBox>
+									</mx:Component>
+								</mx:itemRenderer>
+							</mx:DataGridColumn>
+							<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.Price')}"
+											   textAlign="right" editable="true">
+								<mx:itemRenderer>
+									<mx:Component>
+										<mx:HBox width="100%" horizontalScrollPolicy="off">
+											<mx:Label text="{outerDocument.getInvoiceIndicator(data)}"/>
+											<mx:Label text="{outerDocument.gridJobPrice(data,null)}" textAlign="right"/>	
+										</mx:HBox>
+										
+									</mx:Component>
+								</mx:itemRenderer>
+								<mx:itemEditor>
+									<mx:Component>
+										<components:CustomNumericTextInputComponent
+											dataHolder="{(data is Job)?data.pricingRecord:data}" variableName="{(data is Job)?'totalPrice':'price'}" customText="{(data is Job)?data.pricingRecord.totalPrice:data.price}"
+											precision="2" rounding="nearest" focusOut="{outerDocument.updateInvoicePricing(data)}">
+											<mx:Script>
+												<![CDATA[
+													import com.efi.printsmith.data.Job;
+												]]>
+											</mx:Script>
+										</components:CustomNumericTextInputComponent>
+									</mx:Component>
+								</mx:itemEditor>
+							</mx:DataGridColumn>
+						</mx:columns>
+					</mx:DataGrid>
+					<mx:HBox visible="{invoice.voided}" horizontalCenter="0" verticalCenter="0">
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.VOID')}"
+							fontWeight="bold" fontSize="16"/>
+						<mx:Label text="{dateFormatter.format(invoice.offPendingDate)}" fontSize="14"/>	
+					</mx:HBox>
+					
+				</mx:Canvas>
 				<mx:DataGrid height="100%"
 							 width="100%" 
 							 id="ticket_grid"
