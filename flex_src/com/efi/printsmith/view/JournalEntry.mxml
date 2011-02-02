@@ -76,15 +76,15 @@
 		<mx:Button x="167" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.SelectInvoice')}" id="select_invoice"/>
 		<mx:Label x="-1" y="40"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Name')}"/>
 
-		<mx:TextInput x="145" y="38" text="test" id="customer_name"/>
+		<mx:TextInput x="145" y="38" id="customer_name"/>
 		<mx:Label x="10" y="70" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Status')}"/>
-		<mx:TextInput x="145" y="68" id="customer_status" text="status"/>
+		<mx:TextInput x="145" y="68" id="customer_status"/>
 		<mx:CheckBox x="371" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.PrintDocument')}"/>
 		<mx:CheckBox x="517" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.UpdateCustomerStatis')}"/>
 		<mx:CheckBox x="371" y="38" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.AffectSales')}"/>
 		<mx:Label x="313" y="70"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.TaxTable')}" width="99"/>
 		<mx:Label x="550" y="70" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'memoCmd.Balance')}"/>
-		<mx:ComboBox x="420" y="68" width="122" id="salestax_combo" dataProvider="{taxTables}"></mx:ComboBox>
+		<mx:ComboBox x="420" y="68" width="122" labelField="name" id="salestax_combo" dataProvider="{taxTables}"></mx:ComboBox>
 		<mx:TextInput x="686" y="68" id="header_balance" width="106"/>
 		<mx:Canvas x="10" y="98" width="782" height="442">
 			<mx:DataGrid x="10" y="19" width="321" height="403">

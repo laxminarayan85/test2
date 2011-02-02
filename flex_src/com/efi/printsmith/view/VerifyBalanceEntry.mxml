@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init();" width="532" height="484"
+	 close="PopUpManager.removePopUp(this);"  
+	 label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'verifyCustCmd.VerifyCustomerBalanc')}" 
+	 title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'verifyCustCmd.VerifyCustomerBalanc')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
+	
+	
+	
+<mx:Script>
+                                   
+<![CDATA[
+	import com.efi.printsmith.data.DailySales;
+	import com.efi.printsmith.data.Invoice;
+	import mx.collections.ArrayCollection;        
+    import com.efi.printsmith.data.Account;          
+	import mx.managers.PopUpManager;                                 
+	import mx.controls.Alert;                          
+	import mx.containers.Canvas;   
+	import mx.core.Container;                      
+	import mx.rpc.events.ResultEvent;                                 
+	import mx.rpc.events.FaultEvent;                          
+	import mx.events.ValidationResultEvent;                          
+	import mx.validators.Validator;       
+	import mx.messaging.messages.AsyncMessage;
+	import mx.messaging.messages.IMessage;
+	import mx.core.Application;
+
+	
+	
+	
+	public function init():void{
+	
+	}	
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error");                                 
+	}
+	
+
+]]>        
+</mx:Script>
+	<mx:Canvas x="0" y="0" width="100%" height="100%">
+		<mx:RadioButtonGroup id="CloseoutType"/>
+		<mx:Button x="354" y="383" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Done')}"/>
+	</mx:Canvas>
+                	 
+	 
+</mx:TitleWindow>

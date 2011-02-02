@@ -290,7 +290,37 @@
 				if ((ss.menu == "rStandardMenuText.AR")
 					&& (ss.commandName.indexOf("rStandardMenuText.JournalEntry") > -1 ))	{
 						doJournal();					
-					}						
+					}
+				if ((ss.menu == "rStandardMenuText.AR")
+					&& (ss.commandName.indexOf("rStandardMenuText.DailyCloseout") > -1 ))	{
+						doCloseout();					
+					}
+					
+				if ((ss.menu == "rStandardMenuText.AR")
+					&& (ss.commandName.indexOf("rStandardMenuText.MonthlyCloseout") > -1 ))	{
+						doMonthlyCloseout();					
+					}
+					
+				if ((ss.menu == "rStandardMenuText.AR")
+					&& (ss.commandName.indexOf("rStandardMenuText.GenerateStatements") > -1 ))	{
+						doGenerateStatemnent();					
+					}		
+					
+				if ((ss.menu == "rStandardMenuText.AR")
+					&& (ss.commandName.indexOf("rStandardMenuText.VerifyReceivableBala") > -1 ))	{
+						doVerifyRecievedBalance();					
+					}								
+				if ((ss.menu == "rStandardMenuText.AR")
+					&& (ss.commandName.indexOf("rStandardMenuText.VerifyCustomerBalanc") > -1 ))	{
+						doVerifyCustomerBalance();					
+					}								
+				if ((ss.menu == "rStandardMenuText.AR")
+					&& (ss.commandName.indexOf("rStandardMenuText.VerifyAllBalances") > -1 ))	{
+						doVerifyBalance();					
+					}								
+					
+					
+											
 				if ((ss.menu == "rStandardMenuText.POS")
 					&& (ss.commandName.indexOf("rStandardMenuText.OpenCashRegister") > -1 ))	{
 						doCashRegister();					
@@ -814,6 +844,41 @@
 			var event:JournalEvent = new JournalEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
+				
+		private function doCloseout():void{
+			var event:CloseoutEvent = new CloseoutEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		
+		private function doMonthlyCloseout():void{
+			var event:MonthlyCloseoutEvent = new MonthlyCloseoutEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		
+		private function doGenerateStatemnent():void{
+			var event:GenerateStatmentEvent = new GenerateStatmentEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		
+		private function doVerifyRecievedBalance():void{
+			var event:VerifyRecievedBalanceEvent = new VerifyRecievedBalanceEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		private function doVerifyCustomerBalance():void{
+			var event:VerifyCustomerBalanceEvent = new VerifyCustomerBalanceEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		private function doVerifyBalance():void{
+			var event:VerifyBalanceEvent = new VerifyBalanceEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
+			event.dispatch();
+		}
+		
+		
+		
+		
+		
+		
+		
 		public function doChangePassword():void {
 			var event:ChangePasswordEvent = new ChangePasswordEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();

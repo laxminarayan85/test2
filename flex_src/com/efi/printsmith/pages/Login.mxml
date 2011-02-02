@@ -82,8 +82,15 @@
 	var res:Users = event.result as Users;
 		if (res) {
 			if (res.disableUser) {
+				if ( res.loginAttempts > 7)
+				{
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_MaximumnumberofSigno'), null, Alert.OK, null, null, null, Alert.OK);
+				}else
+				{
+					Alert.show("Disabled User Name", null, Alert.OK, null, null, null, Alert.OK);
+				}
 				Snowmass.getInstance().logUserEvent(Constants.USER_EVENT_FAILED_LOGIN, null, res.text);
-				Alert.show("Disabled User Name", null, Alert.OK, null, null, null, Alert.OK);
+				
 			} else {
 				PopUpManager.removePopUp(this);
 				application.showContainer();

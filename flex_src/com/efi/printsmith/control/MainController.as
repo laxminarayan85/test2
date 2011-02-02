@@ -164,7 +164,12 @@ package com.efi.printsmith.control
 			this.addCommand(OrderStockEvent.COMMANDID, OrderStockCommand);
 			this.addCommand(StockOrderEvent.COMMANDID, StockOrderCommand);
 			this.addCommand(JournalEvent.COMMANDID, JournalCommand);
-		
+			this.addCommand(CloseoutEvent.COMMANDID, CloseoutCommand);
+			this.addCommand(MonthlyCloseoutEvent.COMMANDID, MonthlyCloseoutCommand);
+			this.addCommand(GenerateStatmentEvent.COMMANDID, GenerateStatmentCommand);
+			this.addCommand(VerifyBalanceEvent.COMMANDID,VerifyBalanceCommand);
+			this.addCommand(VerifyCustomerBalanceEvent.COMMANDID, VerifyCustomerBalanceCommand);
+			this.addCommand(VerifyRecievedBalanceEvent.COMMANDID, VerifyRecievedBalanceCommand)
 			}
 		
 	}
