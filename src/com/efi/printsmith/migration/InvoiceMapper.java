@@ -223,11 +223,11 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("discount".equals(currentFieldToken)) {
 				invoice.setDiscount(Utilities.tokenToDouble(currentImportToken));
 			} else if ("tax rate".equals(currentFieldToken)) {
-				invoice.setTax(Utilities.tokenToDouble(currentImportToken));
+				invoice.setTaxRate(Utilities.tokenToDouble(currentImportToken));
 			} else if ("taxable".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("sales tax".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setTax(Utilities.tokenToDouble(currentImportToken));
 			} else if ("subtotal".equals(currentFieldToken)) {
 				invoice.setSubTotal(Utilities.tokenToDouble(currentImportToken));
 				invoice.setPriceSubTotal(Utilities.tokenToDouble(currentImportToken));
@@ -993,11 +993,11 @@ public class InvoiceMapper extends ImportMapper {
 			} else if ("discount".equals(currentFieldToken)) {
 				invoice.setDiscount(Utilities.tokenToDouble(currentImportToken));
 			} else if ("tax rate".equals(currentFieldToken)) {
-				invoice.setTax(Utilities.tokenToDouble(currentImportToken));
+				invoice.setTaxRate(Utilities.tokenToDouble(currentImportToken));
 			} else if ("taxable".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("sales tax".equals(currentFieldToken)) {
-				/* TODO */
+				invoice.setTax(Utilities.tokenToDouble(currentImportToken));
 			} else if ("subtotal".equals(currentFieldToken)) {
 				invoice.setSubTotal(Utilities.tokenToDouble(currentImportToken));
 				invoice.setPriceSubTotal(Utilities.tokenToDouble(currentImportToken));
