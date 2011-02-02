@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" width="325" height="246" creationComplete="init()" 
+	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
+	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.TableProperties')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.TableProperties')}" name="Table Editor">
+<mx:Script>
+                                   
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import mx.collections.ArrayCollection;
+import mx.rpc.events.FaultEvent;  
+import mx.controls.Alert; 
+import com.efi.printsmith.data.TableProperties; 
+import com.efi.printsmith.data.*;
+	
+	[Bindable] private var tableProperties:TableProperties = null;
+	[Bindable] private var statusList:ArrayCollection = new ArrayCollection;
+	
+	public function init():void {
+		statusList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_11200.Editable'));
+		statusList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_11200.Locked'));
+		statusList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_11200.AddEditcommand'));
+		statusList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_11200.AddfromInput'));
+		statusList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_11200.AddfromInputandEdit'));
+	}
+	
+	private function handleFault(ev:FaultEvent):void {  
+		var message:String;
+		              
+		message = "Error: "                          
+		+ ev.fault.faultCode + " - "                                  
+		+ ev.fault.faultDetail + " - "                                  
+		+ ev.fault.faultString;
+		Alert.show(message, "Error");                                 
+	}
+	
+	public function setTableProperties(tableProperties:TableProperties):void {
+		this.tableProperties = tableProperties;
+	}
+	
+	private function doOK():void {
+		this.tableProperties.tableName = text_table_name.text;
+		this.tableProperties.enabled = !check_disabled.selected;
+		switch (combo_table_status.selectedIndex) {
+			case 0:
+				this.tableProperties.status = "Editable";
+				break;
+			case 1:
+				this.tableProperties.status = "Locked";
+				break;
+			case 2:
+				this.tableProperties.status = "Add Edit";
+				break;
+			case 3:
+				this.tableProperties.status = "Add Input";
+				break;
+			case 4:
+				this.tableProperties.status = "Add Input Edit";
+				break;
+		}
+	}
+	
+	private function doCancel():void {
+		
+	}
+]]>         
+</mx:Script>
+	<mx:Form width="100%" bottom="60" top="0">
+		<mx:FormItem label="Title">
+			<mx:TextInput id="text_table_name" text="{tableProperties.tableName}"/>
+		</mx:FormItem>
+		<mx:FormItem label="ID">
+			<mx:TextInput text="{tableProperties.id}"/>
+		</mx:FormItem>
+		<mx:FormItem>
+			<mx:CheckBox id="check_disabled" label="Disable Table" selected="!{tableProperties.enabled}"/>
+		</mx:FormItem>
+		<mx:FormItem label="Number of Entries">
+			<mx:Text/>
+		</mx:FormItem>
+		<mx:FormItem label="Table Status">
+			<mx:ComboBox id="combo_table_status" dataProvider="{statusList}"/>
+		</mx:FormItem>
+	</mx:Form>
+	<mx:HBox width="100%" height="30" bottom="0" horizontalAlign="right">
+		<mx:Button width="80" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOK();"/>
+		<mx:Button width="80" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();"/>
+	</mx:HBox>
+
+</mx:TitleWindow>

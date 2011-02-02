@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
-	layout="absolute" width="559" height="394" creationComplete="init()" 
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" height="394" creationComplete="init()" 
 	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.TableEditor')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.TableEditor')}" name="Table Editor">
 <mx:RemoteObject id="dataTableService" destination="dataService">
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTableResult(event)"/>
 </mx:RemoteObject>
-<mx:RemoteObject id="dataService" destination="dataService">
+<mx:RemoteObject id="dataService" destination="dataService"> 
 		<mx:method name="getAll" fault="handleFault(event)" result="handleLoadTableDataResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
@@ -21,7 +21,8 @@ import mx.rpc.events.FaultEvent;
 import mx.controls.Alert; 
 import com.efi.printsmith.data.TableProperties; 
 import com.efi.printsmith.data.*;
-
+import com.efi.printsmith.events.SaveEvent;
+import com.efi.printsmith.pages.TablePropertiesEditor;
 
 [Bindable]                             
 	private var tablesArray : ArrayCollection = new ArrayCollection(); 
@@ -50,20 +51,22 @@ import com.efi.printsmith.data.*;
 	}
 	private function handleLoadTableResult(ev:ResultEvent):void{
 		tablesArray = ev.result as ArrayCollection;
+		table_combo.selectedItem = tablesArray.getItemAt(0);
+		doTableCombo();
 	}
 	private function handleLoadTableDataResult(ev:ResultEvent):void{
 		tableDataArray = new ArrayCollection();
-	  tableDataArray = ev.result as ArrayCollection;
+		tableDataArray = ev.result as ArrayCollection;		
 	}
 	private function loadTables():void {
-	  dataTableService.getAll("TableEditor");	
+	  dataTableService.getAll("TableProperties");	
 	}
 	
 	private function doTableCombo():void{
 		var temp:TableProperties;
 		temp = table_combo.selectedItem as TableProperties;
-		dataService.getAll(temp.name)
-		dataService.getMaxDisplayId(temp.name);
+		dataService.getAll(temp.tableName)
+		dataService.getMaxDisplayId(temp.tableName);
 	}
 	private function handleDeleteResult(ev:ResultEvent):void {
 		doTableCombo();
@@ -82,7 +85,7 @@ import com.efi.printsmith.data.*;
 		
 		temp = table_combo.selectedItem as TableProperties;
 		
-		 switch (temp.name)
+		 switch (temp.tableName)
 		 {
 			case "BusinessType":
 				tempClass = BusinessType;
@@ -246,7 +249,7 @@ import com.efi.printsmith.data.*;
 	
 	private function findItem(name:String, array:ArrayCollection):int {
 		for each(var element:Object in array) {
-			if (name == element.name) {
+			if (name == element.tableName) {
 				return array.getItemIndex(element);
 			}
 		}
@@ -261,11 +264,11 @@ import com.efi.printsmith.data.*;
 		temp = table_combo.selectedItem as TableProperties;
 		tempObject = datagrid.selectedItem as tempClass;
 		if ( tempObject.id  == 0){
-			index = findItem(tempObject.name, tableDataArray);
+			index = findItem(tempObject.tableName, tableDataArray);
 			tableDataArray.removeItemAt(index);
 		}
 		else
-			dataService.deleteItem(temp.name, tempObject.id);
+			dataService.deleteItem(temp.tableName, tempObject.id);
 	
 	}
 	private function doDelete():void{
@@ -274,38 +277,69 @@ import com.efi.printsmith.data.*;
 		temp = table_combo.selectedItem as TableProperties;
 		temp2 = datagrid.selectedItem as TableProperties;
 		if (temp2 != null)
-			dataService.deleteItem(temp.name, temp2.id);
+			dataService.deleteItem(temp.tableName, temp2.id);
+	}
+	
+	private function doDeleteEntry():void {
+		
+	}
+	
+	private function doTableProperties():void {
+		var temp:TableProperties;
+		temp = table_combo.selectedItem as TableProperties;
+
+		var tablePropertiesWindow:TablePropertiesEditor = new TablePropertiesEditor();
+		
+		tablePropertiesWindow.setTableProperties(null);
+		var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
+		Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTablePropertiesCommand.TableProperties'),tablePropertiesWindow, -1,-1,-1,-1, windowID);
+		tablePropertiesWindow.addEventListener(SaveEvent.Save, saveTableProperties);
+	}
+	
+	private function saveTableProperties(saveEvent:SaveEvent):void {
+		
 	}
 	
 	private function doAdd():void{
 		
 	}
-]]>        
+]]>         
 </mx:Script>
-
-
-	<mx:ComboBox x="268" y="26" id="table_combo" dataProvider="{tablesArray}" change="doTableCombo();" width="167" labelField="userName"></mx:ComboBox>
-	<mx:Label x="130" y="28" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Tables')}" width="130" textAlign="right"/>
-	<mx:DataGrid  id="datagrid" x="38" y="120" width="416"  editable="true" dataProvider="{tableDataArray}" height="215" change="doAdd()" >
+	<mx:DataGrid  id="datagrid" editable="true" dataProvider="{tableDataArray}" change="doAdd()"  right="10" left="10" bottom="40" top="80">
 		<mx:columns>
 			<mx:DataGridColumn   editable="false" id="idcolumn" width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.ID')}" dataField="displayId"/>
 			<mx:DataGridColumn  id="keycolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha')}" dataField="keyAlpha"/>
 			<mx:DataGridColumn  id="namecolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Name')}" dataField="name"/>
 		</mx:columns>
 	</mx:DataGrid>
-	<mx:Button x="47" y="18"  click="doSave()" width="38" height="38" icon="@Embed(source='../../../../assets/save.png')"/>
-	<mx:Label x="47" y="56" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}" width="38"/>
-	<mx:LinkButton x="47"
+	<mx:LinkButton x="370"
 				   id="remove_item_button"
 				   click="removeItem()"
 				   icon="@Embed(source='../../../../assets/delete16.png')"
 				   width="24"
-				   bottom="242"/>
-	<mx:LinkButton x="79"
+				   bottom="10" right="40"/>
+	<mx:LinkButton x="402"
 				   id="add_item_button"
 				   click="addItem()"
 				   icon="@Embed(source='../../../../assets/add16.png')"
 				   width="24"
-				   bottom="242"/>
+				   bottom="10" right="10"/>
+	<mx:HBox x="10" y="10" width="100%">
+		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Tables')}" width="130" textAlign="right"/>
+		<mx:ComboBox id="table_combo" dataProvider="{tablesArray}" change="doTableCombo();" width="167" labelField="userName"></mx:ComboBox>
+		<mx:VBox horizontalAlign="center">
+			<mx:Button click="doTableProperties()" icon="@Embed(source='../../../../assets/properties.png')" width="38" height="38"/>
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.TableProperties')}"/>
+		</mx:VBox>
+		<mx:VBox horizontalAlign="center">
+			<mx:Button click="doDeleteEntry()" icon="@Embed(source='../../../../assets/delete.png')" width="38" height="38"/>
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.DeleteEntry')}"/>
+		</mx:VBox>
+		<mx:VBox horizontalAlign="center">
+			<mx:Button click="doDeleteEntry()" icon="@Embed(source='../../../../assets/save.png')" width="38" height="38"/>
+			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"/>
+		</mx:VBox>
+		<mx:Spacer width="10"/>
+	</mx:HBox>
 
-</mx:TitleWindow>
+</mx:Panel>

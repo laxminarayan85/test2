@@ -880,76 +880,62 @@
 						 height="100%">
 						 </mx:Tree>
 					-->
-					<mx:Accordion width="250"
-								  height="502"
-								  fontSize="9" headerHeight="18">
-						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Charges')}"
-								   width="100%"
-								   height="100%"
-								   fontSize="9"
-								   verticalScrollPolicy="off"
-								   horizontalScrollPolicy="off">
-							<mx:LinkButton x="188"
-										   id="delete_charge_button"
-										   click="doDeleteCharge()"
-										   icon="@Embed(source='../../../../assets/delete16.png')"
-										   width="24"
-										   bottom="2"/>
-							<mx:LinkButton x="219"
-										   id="add_charge_button"
-										   click="doAddCharge()"
-										   icon="@Embed(source='../../../../assets/add16.png')"
-										   width="24"
-										   bottom="2" enabled="false"/>
-							<mx:DataGrid
-										 id="invoice_charge_datagrid"
-										 dataProvider="{this.charges}"
-										 left="0"
-										 bottom="25"
-										 top="0"
-										 right="0"
-										 showHeaders="false" alternatingItemColors="[#FFFFFF,#FFFFFF]">
-								<mx:columns>
-									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}"
-													   dataField="description"/>
-									<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}"
-													   width="90" labelFunction="formatChargePrice"
-													   dataField="price"
-													    textAlign="right"/>
-								</mx:columns>
-							</mx:DataGrid>
-						</mx:Canvas>
-						<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Commands')}"
-								   width="100%"
-								   height="100%">
-							<mx:LinkButton x="10"
-										   y="10"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PrintJobTicket')}"/>
-							<mx:LinkButton x="10"
-										   y="30"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PreviewJobTicket')}"/>
-							<mx:LinkButton x="10"
-										   y="50"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.JobTicketNotes')}" click="{openJobNotes()}" 
-										   color="{(job.jobNotes!=null &amp;&amp; job.jobNotes!='')?0x00BB00:0x000000}"/>
-							<mx:LinkButton x="10"
-										   y="70"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebWorkSheet')}"/>
-							<mx:LinkButton x="10"
-										   y="90"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.DigitalAssets')}"
-										   click="doDigitalAssets()"/>
-							<mx:LinkButton x="10"
-										   y="110"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" click="{openMultiQtyView()}"
-										   color="{job.showMultiQty?0x00BB00:0x000000}"/>
-							<mx:LinkButton x="10"
-										   y="130"
-										   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.EstimatorChecklist')}"
-										   click="{openEstimatorCheckList()}"/>							
-							<mx:LinkButton x="22" y="149" label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
-						</mx:Canvas>
-					</mx:Accordion>
+						<mx:VDividedBox height="100%" borderColor="#000000" borderThickness="1" borderStyle="solid">
+							<mx:VBox width="100%" height="100%" borderColor="#000000" borderThickness="1" borderStyle="solid" borderSides="bottom">
+							<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Charges')}" fontWeight="bold"/>
+							<mx:Canvas 
+									   width="100%"
+									   height="100%"
+									   fontSize="9"
+									   verticalScrollPolicy="off"
+									   horizontalScrollPolicy="off" borderThickness="1">
+								<mx:LinkButton
+											   id="delete_charge_button"
+											   click="doDeleteCharge()"
+											   icon="@Embed(source='../../../../assets/delete16.png')"
+											   width="24"
+											   bottom="2" right="32"/>
+								<mx:LinkButton
+											   id="add_charge_button"
+											   click="doAddCharge()"
+											   icon="@Embed(source='../../../../assets/add16.png')"
+											   width="24"
+											   bottom="2" enabled="false" right="5"/>
+								<mx:DataGrid
+											 id="invoice_charge_datagrid"
+											 dataProvider="{this.charges}"
+											 left="0"
+											 bottom="25"
+											 top="0"
+											 right="0"
+											 showHeaders="false" alternatingItemColors="[#FFFFFF,#FFFFFF]">
+									<mx:columns>
+										<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Description')}"
+														   dataField="description"/>
+										<mx:DataGridColumn headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Price')}"
+														   width="90" labelFunction="formatChargePrice"
+														   dataField="price"
+														    textAlign="right"/>
+									</mx:columns>
+								</mx:DataGrid>
+							</mx:Canvas>
+						</mx:VBox>
+						<mx:VBox borderThickness="1" width="100%" height="100%" borderStyle="solid" borderColor="#000000" borderSides="top">
+							<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Commands')}" fontWeight="bold"/>
+								<mx:LinkButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PrintJobTicket')}"/>
+								<mx:LinkButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.PreviewJobTicket')}"/>
+								<mx:LinkButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.JobTicketNotes')}" click="{openJobNotes()}" 
+											   color="{(job.jobNotes!=null &amp;&amp; job.jobNotes!='')?0x00BB00:0x000000}"/>
+								<mx:LinkButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.WebWorkSheet')}"/>
+								<mx:LinkButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.DigitalAssets')}"
+											   click="doDigitalAssets()"/>
+								<mx:LinkButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.MultiQty')}" click="{openMultiQtyView()}"
+											   color="{job.showMultiQty?0x00BB00:0x000000}"/>
+								<mx:LinkButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.EstimatorChecklist')}"
+											   click="{openEstimatorCheckList()}"/>							
+								<mx:LinkButton label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
+						</mx:VBox>
+					</mx:VDividedBox>
 					<mx:ViewStack id="viewstack3"
 								  width="640"
 								  height="504">
