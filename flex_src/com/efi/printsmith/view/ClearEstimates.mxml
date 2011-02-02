@@ -5,7 +5,8 @@
 	<mx:RemoteObject id="dataService" destination="dataService" showBusyCursor="true">
 		<mx:method name="getAccountPicker" fault="handleFault(event)" result="handleLoadAccountsResult(event)"/>
 		<mx:method name="getPending" fault="handleFault(event)" result="handleLoadPendingResult(event)"/>
-		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleLoadSaveResult(event)"/>
+		<mx:method name="addUpdateDeleteList" fault="handleFault(event)" result="handleLoadSaveListResult(event)"/>
+		<mx:method name="addUpdate" fault="handleFault(event)" result="handleLoadSaveResult(event)"/>
 		<mx:method name="getInvoice" fault="handleFault(event)" result="handleLoadInvoiceResult(event)"/>
 	</mx:RemoteObject>
 	
@@ -34,13 +35,23 @@
 			
 			[Bindable] private var pendingList:ArrayCollection = new ArrayCollection();
 			
+			[Bindable] private var tmpClearEstimates:ArrayCollection = new ArrayCollection();
+			
 			[Bindable] private var clearedEstimates:ArrayCollection = new ArrayCollection();
 			
 			[Bindable] private var estimatesProcessed:Number = 0;
 			
+			[Bindable] private var clearedEstimatesLength:Number = 0;
+			
 			[Bindable] private var estimatesInPending:Number = 0;
 			
 			[Bindable] private var invoicesInPending:Number = 0;
+			
+			[Bindable] private var selectedEstimate:InvoiceBase;
+			
+			private var clearedEstimatesCounter:int = 0;
+			
+			private var pageIndex:int=0;
 			
 			private function init():void {
 				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
@@ -124,7 +135,7 @@
 			}
 			
 			private function handleLoadPendingResult(event:ResultEvent):void {
-				pendingList = event.result as ArrayCollection; 
+				pendingList = event.result as ArrayCollection;
 				for each(var invoiceBase:InvoiceBase in pendingList) {
 					if(invoiceBase is Estimate) {
 						estimatesInPending++;
@@ -133,13 +144,113 @@
 						invoicesInPending++;
 					}
 				}
+				if(estimatesGroup.selectedValue=="AllEstimates") {
+					for each(var invoiceBase:InvoiceBase in pendingList) {
+						if(invoiceBase is Estimate) {
+							tmpClearEstimates.addItem(invoiceBase);
+						}
+					}
+				} else if(estimatesGroup.selectedValue=="SomeEstimates") {
+					if(estimates_check_1.selected) {
+						var daysOld:Number = parseInt(txtinput_1.text);
+						if(!isNaN(daysOld) && daysOld>0) {
+							for each(var invoiceBase:InvoiceBase in pendingList) {
+								if(invoiceBase is Estimate) {
+									if((new Date().time-invoiceBase.created.time)>daysOld*24*60*60*1000) {
+										tmpClearEstimates.addItem(invoiceBase);
+									}
+								}
+							}
+						}
+					}
+					if(estimates_check_2.selected) {
+						var fromEstimateNo:Number = parseInt(txtinput_2.text);
+						var toEstimateNo:Number = parseInt(txtinput_3.text);
+						if(!isNaN(fromEstimateNo) && !isNaN(toEstimateNo) && fromEstimateNo<=toEstimateNo) {
+							for each(var invoiceBase:InvoiceBase in pendingList) {
+								if(invoiceBase is Estimate) {
+									var checkFlag:Boolean = false;
+									for each(var estimateObj:Estimate in tmpClearEstimates) {
+										if(invoiceBase.id == estimateObj.id) {
+											checkFlag = true;
+											break;
+										}
+									}
+									if(!checkFlag) {
+										for(var i:int=fromEstimateNo;i<=toEstimateNo;i++) {
+											if(parseInt(invoiceBase.invoiceNumber)==i) {
+												tmpClearEstimates.addItem(invoiceBase);
+												break;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					if(estimates_check_3.selected) {
+						for each(var invoiceBase:InvoiceBase in pendingList) {
+							if(invoiceBase is Estimate) {
+								var checkFlag:Boolean = false;
+								for each(var estimateObj:Estimate in tmpClearEstimates) {
+									if(invoiceBase.id == estimateObj.id) {
+										checkFlag = true;
+										break;
+									}
+								}
+								if(!checkFlag) {
+									if(account==null && invoiceBase.account==null) {
+										tmpClearEstimates.addItem(invoiceBase);
+									} else if(account!=null && invoiceBase.account!=null && invoiceBase.account.id==account.id) {
+										tmpClearEstimates.addItem(invoiceBase);
+									}
+								}
+							}
+						}
+					}
+					if(tmpClearEstimates.length==0) {
+						clearedEstimatesLength = 0;
+						currentState = "finalState";
+					}
+					for each(var tmpClearEstimatesObj:Estimate in tmpClearEstimates) {
+						dataService.getInvoice(tmpClearEstimatesObj.id);
+					}
+				}
 			}
 			
 			private function handleLoadInvoiceResult(event:ResultEvent):void {
-				clearedEstimates.addItem(event.result as InvoiceBase);
+				clearedEstimatesCounter++;
+				var clearedEstimatesObj:InvoiceBase = event.result as InvoiceBase;
+				if(actionGroup.selectedValue=="ClearEstimates") {
+					if(estimates_check_4.selected) {
+						clearedEstimatesObj.status = "Neutral";
+						clearedEstimatesObj.onPendingList = false;
+						clearedEstimatesObj.offPendingDate = new Date();
+					} else {
+						clearedEstimatesObj.status = "Loss";
+						clearedEstimatesObj.onPendingList = false;
+						clearedEstimatesObj.offPendingDate = new Date();
+					}
+				} else if(actionGroup.selectedValue=="VoidEstimates") {
+					clearedEstimatesObj.onPendingList = false;
+					clearedEstimatesObj.offPendingDate = new Date();
+				}
+				clearedEstimates.addItem(clearedEstimatesObj);
+				if(tmpClearEstimates.length==clearedEstimatesCounter && !estimates_check_5.selected) {
+					clearedEstimatesLength = clearedEstimatesCounter;
+					dataService.addUpdateDeleteList(clearedEstimates,null);
+				} else if(tmpClearEstimates.length==clearedEstimatesCounter && estimates_check_5.selected) {
+					moveToNextEstimate();
+				}
 			}
 			
 			private function handleLoadSaveResult(event:ResultEvent):void {
+				pageIndex++;
+				clearedEstimatesLength++;
+				moveToNextEstimate();
+			}
+			
+			private function handleLoadSaveListResult(event:ResultEvent):void {
 				currentState = "finalState";
 			}
 			
@@ -150,7 +261,7 @@
 					var allEstimates:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.AllEstimates');
 					var movedString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.moved');
 					var voidedString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.voided');
-					var toString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'salesCmd.to'); 
+					var toString:String = " "+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'salesCmd.to'); 
 					var estHistString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'estHistoryCmd.EstimateHistory');
 					if(estimates_check_4.selected) {
 						estHistString = estHistString+resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.wochangingwinlossrat');
@@ -170,63 +281,67 @@
 							accountString = account.title;
 						}
 						if(estimates_check_1.selected && estimates_check_2.selected && estimates_check_3.selected) {
+							arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdayswitnumforacc'),accountString,txtinput_1.text,txtinput_2.text,txtinput_3.text);
 							if(actionGroup.selectedValue=="ClearEstimates") {
-								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdayswitnumforacc'),accountString,txtinput_1.text,txtinput_2.text,txtinput_3.text);
 								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
 							} else if(actionGroup.selectedValue=="VoidEstimates") {
 								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
 							}
 						}
 						else if(estimates_check_1.selected && estimates_check_2.selected) {
+							arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdayswitnum'),txtinput_1.text,txtinput_2.text,txtinput_3.text);
 							if(actionGroup.selectedValue=="ClearEstimates") {
-								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdayswitnum'),txtinput_1.text,txtinput_2.text,txtinput_3.text);
 								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
 							} else if(actionGroup.selectedValue=="VoidEstimates") {
 								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
 							}
 						}
 						else if(estimates_check_1.selected && estimates_check_3.selected) {
+							arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdaysforacc'),accountString,txtinput_1.text);
 							if(actionGroup.selectedValue=="ClearEstimates") {
-								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdaysforacc'),accountString,txtinput_1.text);
 								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
 							} else if(actionGroup.selectedValue=="VoidEstimates") {
 								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
 							}
 						}
 						else if(estimates_check_2.selected && estimates_check_3.selected) {
+							arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimateswithnumbersforacc'),accountString,txtinput_2.text,txtinput_3.text);
 							if(actionGroup.selectedValue=="ClearEstimates") {
-								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimateswithnumbersforacc'),accountString,txtinput_2.text,txtinput_3.text);
 								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
 							} else if(actionGroup.selectedValue=="VoidEstimates") {
 								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
 							}
 						}
 						else if(estimates_check_1.selected) {
+							arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdays'),txtinput_1.text);
 							if(actionGroup.selectedValue=="ClearEstimates") {
-								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdays'),txtinput_1.text);
 								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
 							} else if(actionGroup.selectedValue=="VoidEstimates") {
 								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
 							}
 						}
 						else if(estimates_check_2.selected) {
+							arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimateswithnumbers'),txtinput_2.text,txtinput_3.text);
 							if(actionGroup.selectedValue=="ClearEstimates") {
-								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimateswithnumbers'),txtinput_2.text,txtinput_3.text);
 								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
 							} else if(actionGroup.selectedValue=="VoidEstimates") {
 								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
 							}
 						}
 						else if(estimates_check_3.selected) {
+							arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesforaccount'),accountString);
 							if(actionGroup.selectedValue=="ClearEstimates") {
-								arg0String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesforaccount'),accountString);
 								warningString = StringUtil.substitute(mainWarningString,arg0String,estHistString,movedString,toString);
 							} else if(actionGroup.selectedValue=="VoidEstimates") {
 								warningString = StringUtil.substitute(mainWarningString,arg0String,"",voidedString,"");
 							}
 						}
 					}
-					Alert.show(warningString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmClearEstimatesHandler, null, Alert.NO);
+					if(warningString!="") {
+						Alert.show(warningString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmClearEstimatesHandler, null, Alert.NO);
+					}
+				} else {
+					dataService.getPending();
 				}
 			}
 			
@@ -255,6 +370,57 @@
 				}
 			}
 			
+			private function getConfirmationMessage():String {
+				if(actionGroup.selectedValue=="ClearEstimates") {
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.OKtoclearEstimate');
+				} else if(actionGroup.selectedValue=="VoidEstimates") {
+					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.OKtovoidEstimate'); 
+				}
+				return "";
+			}
+			
+			private function clearEstimate():void {
+				if(selectedEstimate!=null) {
+					if(estimates_check_4.selected) {
+						selectedEstimate.status = "Neutral";
+						selectedEstimate.onPendingList = false;
+						selectedEstimate.offPendingDate = new Date();
+					} else {
+						selectedEstimate.status = "Loss";
+						selectedEstimate.onPendingList = false;
+						selectedEstimate.offPendingDate = new Date();
+					}
+					dataService.addUpdate(selectedEstimate);
+				}
+			}
+			
+			private function voidEstimate():void {
+				if(selectedEstimate!=null) {
+					selectedEstimate.onPendingList = false;
+					selectedEstimate.offPendingDate = new Date();
+					dataService.addUpdate(selectedEstimate);
+				}
+			}
+			
+			private function skipEstimate():void {
+				if(selectedEstimate!=null) {
+					pageIndex++;
+					moveToNextEstimate();
+				}
+			}
+			
+			private function moveToNextEstimate():void {
+				if(pageIndex+1>=clearedEstimates.length){
+					currentState = "finalState";
+					return;
+				}
+				for(var i:int=pageIndex;i<clearedEstimates.length;i++) {
+					selectedEstimate = clearedEstimates.getItemAt(i) as InvoiceBase;
+					currentState = "intermediateState";
+					break;
+				}
+			}
+			
 			private function closeWindow():void {
 				PopUpManager.removePopUp(this);
 			}
@@ -262,6 +428,32 @@
 	</mx:Script>
 	
 	<mx:states>
+		<mx:State name="intermediateState">
+			<mx:RemoveChild target="{mainVBox}"/>
+			<mx:AddChild>
+				<mx:VBox width="100%" height="100%">
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate')}: {selectedEstimate.invoiceNumber} {selectedEstimate.name}" height="8%"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Preparedon')} {dateFormatter.format(selectedEstimate.created)}" height="8%"/>
+					<mx:Label text="{(selectedEstimate.shipToAddress!=null)?selectedEstimate.shipToAddress.name:''}" height="8%"/>
+					<mx:Spacer height="8%"/>
+					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.QuoteTotal')}: {Snowmass.getCurrencyFormatter(false,2).format(selectedEstimate.amountDue)}"
+						height="8%"/>
+					<mx:Spacer height="30%"/>
+					<mx:HBox width="100%" height="30%">
+						<mx:HBox width="100%" horizontalAlign="left">
+							<mx:Label text="{getConfirmationMessage()}"/>
+						</mx:HBox> 
+						<mx:HBox width="100%" horizontalAlign="right">
+							<mx:VBox width="100%">
+								<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Clear')}" click="{clearEstimate()}"/>
+								<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Void')}" click="{voidEstimate()}"/>
+								<mx:Button label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Skip')}" click="{skipEstimate()}"/>
+							</mx:VBox>
+						</mx:HBox> 
+					</mx:HBox>
+				</mx:VBox>
+			</mx:AddChild>
+		</mx:State>
 		<mx:State name="finalState">
 			<mx:RemoveChild target="{mainVBox}"/>
 			<mx:AddChild>
@@ -269,14 +461,16 @@
 					<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Done')}"/>
 					<mx:VBox width="100%" horizontalAlign="center">
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesprocessed')}: {estimatesProcessed}"/>
-						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatescleared')}: {clearedEstimates.length}"/>
-						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesinpendingli')}: {estimatesInPending}"/>
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatescleared')}: {clearedEstimatesLength}"/>
+						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesinpendingli')}: {estimatesInPending-clearedEstimatesLength}"/>
 						<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Invoicesinpendinglis')}: {invoicesInPending}"/>
 					</mx:VBox>
 				</mx:VBox>
 			</mx:AddChild>
 		</mx:State>
 	</mx:states>
+	
+	<mx:DateFormatter id="dateFormatter" formatString="MM/DD/YYYY"/>
 	
 	<mx:VBox id="mainVBox" width="100%" height="100%">
 	
@@ -293,7 +487,7 @@
 			<mx:CheckBox id="estimates_check_1" width="50%"
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdaysold')}"
 				enabled="{estimatesGroup.selectedValue=='SomeEstimates'}"/>
-			<mx:TextInput id="txtinput_1" restrict="1-9" textAlign="center" width="15%"
+			<mx:TextInput id="txtinput_1" restrict="0-9" textAlign="center" width="15%"
 				enabled="{estimatesGroup.selectedValue=='SomeEstimates' &amp;&amp; estimates_check_1.selected}" disabledColor="#000000"
 				focusOut="{checkDaysOldValue()}"/>
 			<mx:Spacer width="30%"/> 
@@ -304,7 +498,7 @@
 			<mx:CheckBox id="estimates_check_2" width="50%"
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatenumbersfrom')}:"
 				enabled="{estimatesGroup.selectedValue=='SomeEstimates'}"/>
-			<mx:TextInput id="txtinput_2" restrict="1-9" textAlign="center" width="15%"
+			<mx:TextInput id="txtinput_2" restrict="0-9" textAlign="center" width="15%"
 				enabled="{estimatesGroup.selectedValue=='SomeEstimates' &amp;&amp; estimates_check_2.selected}" disabledColor="#000000"
 				focusOut="{checkToFromValue()}"/>
 			<mx:Spacer width="30%"/> 
@@ -313,7 +507,7 @@
 		<mx:HBox width="100%">
 			<mx:Spacer width="5%"/>
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.to')}:" width="50%" textAlign="right"/>
-			<mx:TextInput id="txtinput_3" restrict="1-9" textAlign="center" width="15%"
+			<mx:TextInput id="txtinput_3" restrict="0-9" textAlign="center" width="15%"
 				enabled="{estimatesGroup.selectedValue=='SomeEstimates' &amp;&amp; estimates_check_2.selected}" disabledColor="#000000"
 				focusOut="{checkToFromValue()}"/>
 			<mx:Spacer width="30%"/> 
