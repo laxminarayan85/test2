@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StrikeThroughLabelComponent xmlns="com.efi.printsmith.common.components.*" xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.core.UIComponent;
+			import mx.controls.dataGridClasses.DataGridListData;
+			import com.efi.printsmith.view.Tape;
+			import com.efi.printsmith.data.Transaction;
+		
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+
+				// add any font changes here
+			}
+			
+		]]>
+	</mx:Script>
+	
+</StrikeThroughLabelComponent>

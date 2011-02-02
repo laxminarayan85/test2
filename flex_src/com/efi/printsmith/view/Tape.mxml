@@ -18,7 +18,7 @@
 	<mx:CurrencyFormatter precision="2" id="currencyFormatter"/>
 	<mx:NumberFormatter precision="2" id="numberFormatter"/>
 	<mx:NumberFormatter precision="0" id="quantityFormatter"/>
-
+ 
  	<mx:RemoteObject id="dataService" destination="dataService">
 		<mx:method name="addUpdate" fault="handleFault(event)" result="handleSaveResult(event)"/>
 		<mx:method name="deleteItem" fault="handleFault(event)" result="handleDeleteResult(event)"/>
@@ -631,9 +631,6 @@
 				description = description + "  " + temp;
 			}
 			
-			if (tempSession.isVoided == true) {
-				description = description + "-VOIDED-";
-			}
 			return (description);
 		} else if (item is TapeVoidRecord) {
 			voidRecord = item as TapeVoidRecord;
@@ -792,6 +789,28 @@
 		return(results);
 	}
 
+	public function getStrikeThroughValue(item:Object):Boolean {
+		var results:Boolean = new Boolean(false);
+		var tempSale:TapeSaleRecord;
+		var tempPayment:TapePaymentRecord;
+		var tempBatch:TapeBatch;
+		var tempSession:TapeSessionBatch;
+		
+		if (item is TapeBatch) {
+			
+		} else if (item is TapePaymentRecord) {
+			tempPayment = item as TapePaymentRecord;
+			results = tempPayment.isVoided;
+		} else if (item is TapeSaleRecord) {
+			tempSale = item as TapeSaleRecord;
+			results = tempSale.isVoided;
+		} else if (item is TapeSessionBatch) {
+			tempSession = item as TapeSessionBatch;
+			results = tempSession.isVoided;
+		}
+		return(results);
+	}
+
 ]]>
                              
 </mx:Script>
@@ -812,10 +831,42 @@
 		
 		<mx:DataGrid x="10" y="103" width="552" height="470" id="tapeList" dataProvider="{tapeTreeData}" itemClick="doListClick()" allowMultipleSelection="true">
 			<mx:columns>
-				<mx:DataGridColumn headerText="ID" textAlign="right" labelFunction="showID" width="45"/>
-				<mx:DataGridColumn headerText="Date" labelFunction="showDate" width="120"/>
-				<mx:DataGridColumn headerText="Transaction" labelFunction="showDescription"/>
-				<mx:DataGridColumn headerText="Price" textAlign="right" width="120" labelFunction="showPrice"/>
+				<mx:DataGridColumn headerText="ID" textAlign="right" labelFunction="showID" width="45">
+					<mx:itemRenderer>
+						<mx:Component>
+							<components:TapeLabelComponent
+								strikethrough="{outerDocument.getStrikeThroughValue(data)}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+
+				<mx:DataGridColumn headerText="Date" labelFunction="showDate" width="120">
+					<mx:itemRenderer>
+						<mx:Component>
+							<components:TapeLabelComponent
+								strikethrough="{outerDocument.getStrikeThroughValue(data)}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+
+				<mx:DataGridColumn headerText="Transaction" labelFunction="showDescription">
+					<mx:itemRenderer>
+						<mx:Component>
+							<components:TapeLabelComponent
+								strikethrough="{outerDocument.getStrikeThroughValue(data)}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+
+				<mx:DataGridColumn headerText="Price" textAlign="right" width="120" labelFunction="showPrice">
+					<mx:itemRenderer>
+						<mx:Component>
+							<components:TapeLabelComponent
+								strikethrough="{outerDocument.getStrikeThroughValue(data)}"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+
 			</mx:columns>
 		</mx:DataGrid>
 
