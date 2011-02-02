@@ -16,6 +16,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.common.clientPreferences.UserClientPreferences;
 			import mx.core.Application;
 			import mx.events.CloseEvent;
 			import com.efi.printsmith.data.Invoice;
@@ -53,6 +54,8 @@
 			
 			[Bindable] private var selectedEstimate:InvoiceBase;
 			
+			[Bindable] private var btnEnabled:Boolean = false;
+			
 			private var clearedEstimatesCounter:int = 0;
 			
 			private var pageIndex:int=0;
@@ -63,12 +66,27 @@
 				loadComponent = PopUpManager.createPopUp(this,CommonLoadComponent,true) as CommonLoadComponent;
 				this.title = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.ClearEstimates');
 				PopUpManager.centerPopUp(this);
-				estimatesGroup.selectedValue = "SomeEstimates";
-				actionGroup.selectedValue = "ClearEstimates";
-				dataService.getAccountPicker();
-				txtinput_1.text = "1";
-				txtinput_2.text = "1";
-				txtinput_3.text = "2";
+				if(UserClientPreferences.getInstance().getData(UserClientPreferences.CLEARESTIMATES_VALUE)!=null) {
+					var savedObject:Object = UserClientPreferences.getInstance().getData(UserClientPreferences.CLEARESTIMATES_VALUE);
+					estimatesGroup.selectedValue = savedObject.estimatesGroup;
+					estimates_check_1.selected = savedObject.daysOldCheck;
+					txtinput_1.text = savedObject.daysOld;
+					estimates_check_2.selected = savedObject.fromCheck;
+					txtinput_2.text = savedObject.fromValue;
+					txtinput_3.text = savedObject.toValue;
+					estimates_check_3.selected = savedObject.acctCheck;
+					actionGroup.selectedValue = savedObject.actionGroup;
+					estimates_check_4.selected = savedObject.doNotChange;
+					estimates_check_5.selected = savedObject.askBeforeEach;
+					checkBtnEnablity();
+				} else {
+					estimatesGroup.selectedValue = "SomeEstimates";
+					actionGroup.selectedValue = "ClearEstimates";
+					dataService.getAccountPicker();
+					txtinput_1.text = "1";
+					txtinput_2.text = "1";
+					txtinput_3.text = "2";
+				}
 			}
 			
 			private function getCheckBoxLabel(accountObj:Account):String {
@@ -138,6 +156,7 @@
 						estimates_check_4.selected = false;
 					}
 				}
+				checkBtnEnablity();
 			}
 			
 			private function handleLoadPendingResult(event:ResultEvent):void {
@@ -267,6 +286,18 @@
 			}
 			
 			private function doClearEstimates():void {
+				var savedObject:Object = new Object();
+				savedObject.estimatesGroup = estimatesGroup.selectedValue;
+				savedObject.daysOldCheck = estimates_check_1.selected;
+				savedObject.daysOld = txtinput_1.text;
+				savedObject.fromCheck = estimates_check_2.selected;
+				savedObject.fromValue = txtinput_2.text;
+				savedObject.toValue = txtinput_3.text;
+				savedObject.acctCheck = estimates_check_3.selected;
+				savedObject.actionGroup = actionGroup.selectedValue;
+				savedObject.doNotChange = estimates_check_4.selected;
+				savedObject.askBeforeEach = estimates_check_5.selected;
+				UserClientPreferences.getInstance().setData(UserClientPreferences.CLEARESTIMATES_VALUE,savedObject);
 				if(!estimates_check_5.selected) {
 					var warningString:String = "";
 					var mainWarningString:String = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Areyousureyouwant02f');
@@ -444,6 +475,18 @@
 				}
 			}
 			
+			private function checkBtnEnablity():void {
+				if(estimatesGroup.selectedValue == "SomeEstimates") {
+					if(estimates_check_1.selected || estimates_check_2.selected || estimates_check_3.selected) {
+						btnEnabled = true;
+					} else {
+						btnEnabled = false;
+					}
+				} else if(estimatesGroup.selectedValue == "AllEstimates") {
+					btnEnabled = true;
+				}
+			}
+			
 			private function closeWindow():void {
 				PopUpManager.removePopUp(this);
 			}
@@ -509,7 +552,7 @@
 			<mx:Spacer width="5%"/>
 			<mx:CheckBox id="estimates_check_1" width="50%"
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatesoverdaysold')}"
-				enabled="{estimatesGroup.selectedValue=='SomeEstimates'}"/>
+				enabled="{estimatesGroup.selectedValue=='SomeEstimates'}" click="{checkBtnEnablity()}"/>
 			<mx:TextInput id="txtinput_1" restrict="0-9" textAlign="center" width="15%"
 				enabled="{estimatesGroup.selectedValue=='SomeEstimates' &amp;&amp; estimates_check_1.selected}" disabledColor="#000000"
 				focusOut="{checkDaysOldValue()}"/>
@@ -520,7 +563,7 @@
 			<mx:Spacer width="5%"/>
 			<mx:CheckBox id="estimates_check_2" width="50%"
 				label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'clearEstCmd.Estimatenumbersfrom')}:"
-				enabled="{estimatesGroup.selectedValue=='SomeEstimates'}"/>
+				enabled="{estimatesGroup.selectedValue=='SomeEstimates'}" click="{checkBtnEnablity()}"/>
 			<mx:TextInput id="txtinput_2" restrict="0-9" textAlign="center" width="15%"
 				enabled="{estimatesGroup.selectedValue=='SomeEstimates' &amp;&amp; estimates_check_2.selected}" disabledColor="#000000"
 				focusOut="{checkToFromValue()}"/>
@@ -539,7 +582,7 @@
 		<mx:HBox width="100%">
 			<mx:Spacer width="5%"/>
 			<mx:CheckBox id="estimates_check_3" width="50%"
-				label="{getCheckBoxLabel(account)}" enabled="{estimatesGroup.selectedValue=='SomeEstimates'}"/>
+				label="{getCheckBoxLabel(account)}" enabled="{estimatesGroup.selectedValue=='SomeEstimates'}" click="{checkBtnEnablity()}"/>
 			<mx:Spacer width="45%"/>
 		</mx:HBox>
 		
@@ -570,7 +613,8 @@
 		
 		<mx:HBox width="100%">
 			<mx:HBox width="100%" horizontalAlign="left">
-				<mx:Button id="btn_2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{doClearEstimates()}"/>
+				<mx:Button id="btn_2" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}" click="{doClearEstimates()}"
+					enabled="{btnEnabled}"/>
 			</mx:HBox>
 			<mx:HBox width="100%" horizontalAlign="right">
 				<mx:Button id="btn_3" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}" click="{closeWindow()}"/>
