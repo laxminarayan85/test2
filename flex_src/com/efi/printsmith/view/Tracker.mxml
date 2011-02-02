@@ -65,6 +65,8 @@
 	<mx:Script> 
 	                                  
 	<![CDATA[
+		import com.efi.printsmith.events.PinRequestEvent;
+		import com.efi.printsmith.pages.PinRequestComponent;
 		import com.efi.printsmith.data.CostingRecord;
 		import mx.events.FlexEvent;
 		import com.efi.printsmith.security.PSSecurityCommands;
@@ -152,6 +154,8 @@
 		[Bindable] private var completedTrackerConsoleJob:TrackerConsoleJobs;
 		
 		[Bindable] private var dataLoaded:Boolean = false;
+		
+		[Bindable] private var previousSelectedEmployee:Employee;
 		 
 		
 		public function getSecurityCommand():String {
@@ -256,7 +260,7 @@
 				activejobs_throbber.play();
 				dataService.getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(null);
 			}
-			getEmployee();
+			getDetailsBasedOnEmployee();
 		}
 		private function handleLoadProductionLocationResult(event:ResultEvent):void {
 			var list:ArrayCollection = event.result as ArrayCollection;
@@ -331,6 +335,28 @@
 		
 		private function getEmployee(event:Event=null):void {
 			if(trackerConsole.selectedEmployee!=null){
+				if(trackerConsole.selectedEmployee.pinRequired) {
+					var pinRequestComponent:PinRequestComponent = PopUpManager.createPopUp(this,PinRequestComponent,true) as PinRequestComponent;
+					registerClassAlias("com.efi.printsmith.data.Employee",Employee);
+					pinRequestComponent.employee = ObjectUtil.copy(trackerConsole.selectedEmployee) as Employee;
+					pinRequestComponent.addEventListener(PinRequestEvent.PINREQUEST,function(event:PinRequestEvent):void{
+						if(event.success) {
+							getDetailsBasedOnEmployee();
+						} else {
+							trackerConsole.selectedEmployee = previousSelectedEmployee;
+							employee_combo.customText=getCustomTextData(employeesArray,trackerConsole,trackerConsole.selectedEmployee);
+						}
+					},false,0,true);
+				} else {
+					getDetailsBasedOnEmployee();
+				}
+			} else {
+				getDetailsBasedOnEmployee();
+			}
+		}
+		
+		private function getDetailsBasedOnEmployee():void {
+			if(trackerConsole.selectedEmployee!=null){
 				if(trackerConsole.selectedEmployee.employeeId==null){
 					employee = null;
 					selectedJob = null;
@@ -369,6 +395,7 @@
 				activejobs_throbber.play();
 				dataService.getActiveTrackerConsoleJobsBasedOnEmployeeAndTrackerConsole(employee);
 			}
+			previousSelectedEmployee = trackerConsole.selectedEmployee;
 		}
 		
 		private function doConsoleJobSelection(event:Event):void {
