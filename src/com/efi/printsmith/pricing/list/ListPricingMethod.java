@@ -1,5 +1,7 @@
 package com.efi.printsmith.pricing.list;
 
+import java.util.List;
+
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.PricingRecord;
@@ -12,9 +14,12 @@ import com.efi.printsmith.pricing.stock.StockCostEngine;
 import com.efi.printsmith.pricing.utilities.JobUtilities;
 import com.efi.printsmith.pricing.utilities.MatrixUtilities;
 import com.efi.printsmith.pricing.utilities.PriceListUtilities;
+import com.efi.printsmith.service.DataService;
 
 public class ListPricingMethod {
+	@SuppressWarnings("unchecked")
 	public Job priceListJob(Job job) throws Exception {
+		DataService dataService = new DataService();
 		PricingRecord pricingRecord = job.getPricingRecord();
 		if (pricingRecord.getTotalPriceOverride()) return job; /* User overrode price - leave it alone */
 		
@@ -23,8 +28,15 @@ public class ListPricingMethod {
 		calculateTotalImpressions(job);
 		
 		double price = 0.0;
-		if (job.getStock() != null && job.getStock().getDefaultPriceList() != null) {
+		if (job.getStock() != null) {
 			PaperPrice paperPrice = job.getStock().getDefaultPriceList();
+			if (paperPrice == null) {
+				List <PaperPrice> paperPrices = (List<PaperPrice>) dataService.getAll("PaperPrice");
+				if (paperPrices.size()>0)
+					paperPrice = paperPrices.get(0);
+				else
+					return job;
+			}
 			PriceStockEngine priceStockEngine = new PriceStockEngine();
 			StockCostEngine stockCost = new StockCostEngine();
 			job = stockCost.calculateStockCost(job);
