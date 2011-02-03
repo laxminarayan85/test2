@@ -13,7 +13,6 @@
 		  headerHeight="0"
 		  title="Edit Invoice" 
 		  implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent" preinitialize="preInit();"
-		  name="Invoice Editor"
 		  fontSize="9" xmlns:components="com.efi.printsmith.common.components.*">
 	
 	
@@ -1333,20 +1332,26 @@
 					pricingMethodTitle = job.pricingMethod.title;
 				}
 				var jobTitle:String = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"jobCmd.EditJob"),invoiceNumber,job.jobIndex,pricingMethodTitle);
-				Snowmass.getInstance().containerManager.openNewMDIWindow(jobTitle,editJobWindow, -1,-1,-1,-1, windowID);
-				var multiQtyJobList:ArrayCollection = new ArrayCollection();
-				if(!job.multiQtyJob){
-					for each(var jobBaseObj:JobBase in invoice.jobs) {
-						if(job.jobGroup!=0 && jobBaseObj.jobGroup==job.jobGroup && jobBaseObj.multiQtyJob){
-							multiQtyJobList.addItem(jobBaseObj);
-						} 
+				editJobWindow.name = jobTitle;
+				var win:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(editJobWindow,false);
+				if(win == null) {
+					Snowmass.getInstance().containerManager.openNewMDIWindow(jobTitle,editJobWindow, -1,-1,-1,-1, windowID);
+					var multiQtyJobList:ArrayCollection = new ArrayCollection();
+					if(!job.multiQtyJob){
+						for each(var jobBaseObj:JobBase in invoice.jobs) {
+							if(job.jobGroup!=0 && jobBaseObj.jobGroup==job.jobGroup && jobBaseObj.multiQtyJob){
+								multiQtyJobList.addItem(jobBaseObj);
+							} 
+						}
 					}
+					registerClassAlias("com.efi.printsmith.data.Job",Job);
+					editJobWindow.setJob(ObjectUtil.copy(job) as Job);
+					editJobWindow.invoiceMultiQtyJobList = multiQtyJobList;
+					editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveJob);
+					editJobWindow.addEventListener(JobEditCompleteEvent.DELETE, deleteJob);
+				} else {
+					win.bringWindowToFront();
 				}
-				registerClassAlias("com.efi.printsmith.data.Job",Job);
-				editJobWindow.setJob(ObjectUtil.copy(job) as Job);
-				editJobWindow.invoiceMultiQtyJobList = multiQtyJobList;
-				editJobWindow.addEventListener(JobEditCompleteEvent.SAVE, saveJob);
-				editJobWindow.addEventListener(JobEditCompleteEvent.DELETE, deleteJob);
 				/* var editJobWindow:EditJob=EditJob(PopUpManager.createPopUp(this, EditJob, true));
 				editJobWindow.setStyle("borderAlpha", 0.9);
 				editJobWindow.setJob(job);
