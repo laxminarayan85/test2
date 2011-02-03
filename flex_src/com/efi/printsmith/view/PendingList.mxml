@@ -1193,6 +1193,41 @@
 	private function sortWeb(obj1:Object, obj2:Object):int 	{
 		return 0;
 	}
+	
+	private function sortJobComments(obj1:Object, obj2:Object):int {
+		var invoice1:InvoiceBase = obj1 as InvoiceBase;
+		var invoice2:InvoiceBase = obj2 as InvoiceBase;
+		var comments1:String = getJobComments(invoice1,null);
+		var comments2:String = getJobComments(invoice2,null);
+		if (comments1 < comments2)	{
+			return -1;
+		}
+		else if (comments1 > comments2)	{
+			return 1;
+		}
+		return 0;
+	}
+	
+	private function sortSalesRep(obj1:Object, obj2:Object):int {
+		var invoice1:InvoiceBase = obj1 as InvoiceBase;
+		var invoice2:InvoiceBase = obj2 as InvoiceBase;
+		var salesRepName1:String = "";
+		var salesRepName2:String = "";
+		if(invoice1.salesRep!=null) {
+			salesRepName1 = invoice1.salesRep.name;
+		}
+		if(invoice2.salesRep!=null) {
+			salesRepName2 = invoice2.salesRep.name;
+		}
+		if (salesRepName1 < salesRepName2)	{
+			return -1;
+		}
+		else if (salesRepName1 > salesRepName2)	{
+			return 1;
+		}
+		return 0;
+	}
+	
 	public function getJobCountLabel(item:Object, column:DataGridColumn):String{
 		var tmpInvoice:InvoiceBase = item as InvoiceBase;
 		var retVal:String = tmpInvoice.jobs.length.toString();
@@ -1744,7 +1779,7 @@
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn width="{colWidths.openNotesOnOpen}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobComment')}" dataField="openNotesOnOpen" labelFunction="getJobComments">
+					<mx:DataGridColumn width="{colWidths.openNotesOnOpen}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.JobComment')}" dataField="openNotesOnOpen" labelFunction="getJobComments" sortCompareFunction="sortJobComments">
 						<mx:headerRenderer>
 							<mx:Component>
 								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
@@ -1780,7 +1815,7 @@
 							</mx:Component>
 						</mx:itemRenderer>
 					</mx:DataGridColumn>
-					<mx:DataGridColumn width="{colWidths.salesRep}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.SalesRep')}" labelFunction="getSalesRep" dataField="salesRep">
+					<mx:DataGridColumn width="{colWidths.salesRep}" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'posPendCmd.SalesRep')}" labelFunction="getSalesRep" dataField="salesRep" sortCompareFunction="sortSalesRep">
 						<mx:headerRenderer>
 							<mx:Component>
 								<pendinglist:PendingListHeaderRenderer headerFont="{outerDocument.preferencesPOS.headerFontBean}"/>
