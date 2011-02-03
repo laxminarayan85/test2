@@ -372,19 +372,19 @@ width="938" height="507"  creationComplete="init()"
 	}
 	
 	private function setTimes():void {
-		var setupHours:Number = job.setupTime;
+		var setupHours:Number = Math.floor(job.setupTime);
 		var setupHoursString:String = "";
 		if (setupHours >= 1)
 			setupHoursString = setupHours.toFixed(0).replace(".","")
 		else
 			setupHoursString = "0";
-		var setupMinutes:Number = (setupHours - Math.floor(setupHours)) * 60;
+		var setupMinutes:Number = (job.setupTime - Math.floor(job.setupTime)) * 60;
 		if (setupMinutes < 10)
 			this.setup_time.text = setupHoursString + ":0" + setupMinutes.toFixed(0).replace(".","");
 		else
 			this.setup_time.text = setupHoursString + ":" + setupMinutes.toFixed(0).replace(".","");
 		var minimumHours:Number = this.job.pricingPress.minLabor / 60;
-		var runHours:Number = job.runTime;
+		var runHours:Number = Math.floor(job.runTime);
 		if (job.orRuntime == false && runHours < minimumHours)
 			runHours = minimumHours;
 		if (job.orRuntime == false && job.doubleSided == true)
@@ -394,23 +394,33 @@ width="938" height="507"  creationComplete="init()"
 			runHoursString = runHours.toFixed(0).replace(".","");
 		else
 			runHoursString = "0";
-		var runMinutes:Number = (runHours - Math.floor(runHours)) * 60;
+		var runMinutes:Number = (job.runTime - Math.floor(job.runTime)) * 60;
 		if (runMinutes < 10)
 			this.run_time.text = runHoursString + ":0" + runMinutes.toFixed(0).replace(".","");
 		else
 			this.run_time.text = runHoursString + ":" + runMinutes.toFixed(0).replace(".","");
-		var washupHours:Number = (job.washupTime / 60);
+		var washupHours:Number = Math.floor(job.washupTime / 60);
 		var washupHoursString:String = "";
 		if (washupHours >= 1)
 			washupHoursString = washupHours.toFixed(0);
 		else
 			washupHoursString = "0";
-		var washupMinutes:Number = job.washupTime;
+		var washupMinutes:Number = job.washupTime - (parseInt(washupHoursString) * 60);
 		if (washupMinutes < 10)
 			this.washup_time.text = washupHoursString + ":0" + washupMinutes.toString().replace(".","");
 		else
 			this.washup_time.text = washupHoursString + ":" + washupMinutes.toString().replace(".","");
-		this.total_time.text = (parseInt(setupHoursString) + parseInt(runHoursString + parseInt(washupHoursString))).toString() + ":" + (setupMinutes + runMinutes + washupMinutes).toFixed(0);
+		var totalHours:Number = (parseInt(setupHoursString) + parseInt(runHoursString) + parseInt(washupHoursString));
+		var totalMinutes:Number = setupMinutes + runMinutes + washupMinutes;
+		var totalHoursString:String = "";
+		if (totalHours >= 1)
+			totalHoursString = totalHours.toFixed(0);
+		else
+			totalHoursString = "0";
+		if (totalMinutes < 10)
+			this.total_time.text = totalHoursString.replace(".","") + ":0" + totalMinutes.toFixed(0).replace(".","");
+		else
+			this.total_time.text = totalHoursString.replace(".","") + ":" + totalMinutes.toFixed(0).replace(".","");
 	}
 	
 	private function handleLoadResult(ev:ResultEvent):void {
@@ -652,11 +662,11 @@ width="938" height="507"  creationComplete="init()"
 				} if (this.run_time.text.indexOf(".") != -1) {
 					hours = parseInt(this.run_time.text.substr(0,this.run_time.text.indexOf(".")));
 					minutes = parseInt(this.run_time.text.substr(this.run_time.text.indexOf(".")+1));
-				}if (this.setup_time.text.indexOf("/") != -1) {
-					hours = parseInt(this.setup_time.text.substr(0,this.setup_time.text.indexOf("/")));
-					minutes = parseInt(this.setup_time.text.substr(this.setup_time.text.indexOf("/")+1));
+				}if (this.run_time.text.indexOf("/") != -1) {
+					hours = parseInt(this.run_time.text.substr(0,this.run_time.text.indexOf("/")));
+					minutes = parseInt(this.run_time.text.substr(this.run_time.text.indexOf("/")+1));
 				} else {
-					hours = parseInt(this.setup_time.text);
+					hours = parseInt(this.run_time.text);
 				}
 				if (isNaN(hours))
 					hours = 0;
@@ -672,11 +682,11 @@ width="938" height="507"  creationComplete="init()"
 				} if (this.washup_time.text.indexOf(".") != -1) {
 					hours = parseInt(this.washup_time.text.substr(0,this.washup_time.text.indexOf(".")));
 					minutes = parseInt(this.washup_time.text.substr(this.washup_time.text.indexOf(".")+1));
-				}if (this.setup_time.text.indexOf("/") != -1) {
-					hours = parseInt(this.setup_time.text.substr(0,this.setup_time.text.indexOf("/")));
-					minutes = parseInt(this.setup_time.text.substr(this.setup_time.text.indexOf("/")+1));
+				}if (this.washup_time.text.indexOf("/") != -1) {
+					hours = parseInt(this.washup_time.text.substr(0,this.washup_time.text.indexOf("/")));
+					minutes = parseInt(this.washup_time.text.substr(this.washup_time.text.indexOf("/")+1));
 				} else {
-					hours = parseInt(this.setup_time.text);
+					hours = parseInt(this.washup_time.text);
 				}
 				if (isNaN(hours))
 					hours = 0;
