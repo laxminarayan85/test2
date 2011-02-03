@@ -527,6 +527,43 @@
 				}
 			}
 			
+			public function cancelDocument():void {
+				var warningString:String = "";
+				var invoiceString:String = "";
+				if(invoice is Invoice) {
+					invoiceString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rStandardMenuText.Invoice');
+				} else if(invoice is Estimate) {
+					invoiceString = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'newInvCmd.Estimate');
+				}
+				if(!invoice.voided) {
+					warningString = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktovoid0'),invoiceString);
+					Alert.show(warningString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmVoidDocumentHandler, null, Alert.NO);
+				} else if(invoice.voided) {
+					warningString = StringUtil.substitute(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'msg_Oktodelete0'),invoiceString);
+					Alert.show(warningString, resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'webDataCmd.Warning'), Alert.YES|Alert.NO, Application.application as Application, confirmDeleteDocHandler, null, Alert.NO);
+				}
+			}
+			
+			private function confirmVoidDocumentHandler(event:CloseEvent):void {
+				if(event.detail == Alert.YES) {
+					mapToInvoiceData();
+					invoice.voided = true;
+					invoice.onPendingList = false;
+					invoice.offPendingDate = new Date();
+					dataService.saveInvoice(invoice);
+				}
+			}
+			
+			private function confirmDeleteDocHandler(event:CloseEvent):void {
+				if(event.detail == Alert.YES) {
+					if(invoice is Invoice) {
+						dataService.deleteItem("Invoice",invoice.id);
+					} else if(invoice is Estimate) {
+						dataService.deleteItem("Estimate",invoice.id);
+					}
+				}
+			}
+			
 			public function convertToInvoice():void {
 				if(invoice!=null && invoice is Estimate){ 
 					if(invoice.onPendingList){
@@ -817,11 +854,9 @@
 
 			private function handleDeleteResult(event:Event):void
 			{
-				if(convertedEstimatedId!=0){
-					setOriginalInvoice();
-					dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
-					Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
-				}
+				setOriginalInvoice();
+				dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
+				Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 			}
 
 			private function handleFault(ev:FaultEvent):void {  

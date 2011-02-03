@@ -512,6 +512,11 @@
 						doConvertInvoice();				
 					}	
 				
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.CancelDocument") > -1 ))	{
+						doCancelDocument();				
+					}	
+				
 				
 				
 				//Menu for Register Tape
@@ -654,6 +659,19 @@
 				if(win.content is EditInvoice){
 					var editInvoice:EditInvoice = win.content as EditInvoice;
 					editInvoice.convertToInvoice();
+				}
+			}
+		}
+		
+		private function doCancelDocument():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					var invoiceBase:InvoiceBase = editInvoice.invoice;
+					if(invoiceBase!=null && (invoiceBase.onPendingList || invoiceBase.voided)) {
+						editInvoice.cancelDocument();
+					}
 				}
 			}
 		}
