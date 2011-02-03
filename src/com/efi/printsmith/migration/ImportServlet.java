@@ -228,7 +228,9 @@ public class ImportServlet extends HttpServlet implements Servlet {
 					mapper = new EmployeeMapper();
 				} else if ("History".equals(importType)) {
 					mapper = new HistoryMapper();
-				} else {
+				} else if ("EstimateHistory".equals(importType)) {
+					mapper = new EstimateHistoryMapper();
+				}else {
 					throw (new ServletException(
 							"Unknown import type passed to ImportServlet"));
 				}
