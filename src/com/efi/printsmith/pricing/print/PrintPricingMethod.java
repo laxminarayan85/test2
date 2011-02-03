@@ -58,7 +58,7 @@ public class PrintPricingMethod {
 		}
 		Double washupHours = 0.0;
 		if (job.getOrWashupTime())
-			washupHours = job.getWashupTime() * 60;
+			washupHours = job.getWashupTime() / 60;
 		else {
 			if (job.getFrontWashes() + job.getBackWashes() > 0) {
 				Double washupMinutes = (pressDefinition.getWashupMin() + pressDefinition.getWashupPerFountain().doubleValue()) * (job.getFrontWashes() + job.getBackWashes());

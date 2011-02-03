@@ -399,14 +399,18 @@ width="938" height="507"  creationComplete="init()"
 			this.run_time.text = runHoursString + ":0" + runMinutes.toFixed(0).replace(".","");
 		else
 			this.run_time.text = runHoursString + ":" + runMinutes.toFixed(0).replace(".","");
-		var washupHours:String = job.washupTime.toFixed(0);
-		var washupMinutes:Number = job.washupTime;
-		washupMinutes = washupMinutes - (parseInt(washupHours) * 60);
-		if (washupMinutes < 10)
-			this.washup_time.text = washupHours + ":0" + washupMinutes.toString().replace(".","");
+		var washupHours:Number = (job.washupTime / 60);
+		var washupHoursString:String = "";
+		if (washupHours >= 1)
+			washupHoursString = washupHours.toFixed(0);
 		else
-			this.washup_time.text = washupHours + ":" + washupMinutes.toString().replace(".","");
-		this.total_time.text = (parseInt(setupHoursString) + parseInt(runHoursString + parseInt(washupHours))).toString() + ":" + (setupMinutes + runMinutes + washupMinutes).toFixed(0);
+			washupHoursString = "0";
+		var washupMinutes:Number = job.washupTime;
+		if (washupMinutes < 10)
+			this.washup_time.text = washupHoursString + ":0" + washupMinutes.toString().replace(".","");
+		else
+			this.washup_time.text = washupHoursString + ":" + washupMinutes.toString().replace(".","");
+		this.total_time.text = (parseInt(setupHoursString) + parseInt(runHoursString + parseInt(washupHoursString))).toString() + ":" + (setupMinutes + runMinutes + washupMinutes).toFixed(0);
 	}
 	
 	private function handleLoadResult(ev:ResultEvent):void {
@@ -676,7 +680,7 @@ width="938" height="507"  creationComplete="init()"
 				}
 				if (isNaN(hours))
 					hours = 0;
-				job.washupTime = ((hours * 60) + minutes) / 60;
+				job.washupTime = ((hours * 60) + minutes);
 				doUpdatePrice = true;
 				break;
 		}
