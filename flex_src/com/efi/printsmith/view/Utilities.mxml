@@ -82,6 +82,7 @@
 		this.import_preferences.enabled = false;
 		this.import_credit_card_transactions.enabled = false;
 		this.accountHistory.enabled = false;
+		this.estimateHistory.enabled = false;
 		this.progress_bar.visible = false;
 	}
 		
@@ -184,6 +185,11 @@
 		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
 		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
 		uploadFile("History");
+	}
+	private function handleEstimateHistoryFile(evt:Event):void {
+		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
+		fileReference.addEventListener(IOErrorEvent.IO_ERROR, handleIOError);
+		uploadFile("EstimateHistory");
 	}
 	private function handleSelectPreferencesFile(evt:Event):void {
 		fileReference.addEventListener(Event.COMPLETE, handleLoadFileComplete);
@@ -325,6 +331,7 @@
 		fileTypeArray.addItem("DL Customer Logs Data");
 		fileTypeArray.addItem("DL Credit Card Transaction Data");
 		fileTypeArray.addItem("DL History Data");
+		fileTypeArray.addItem("DL Estimate History Data");
 		fileTypeArrayIndex = 0;
 		importFile(evt,fileTypeArray.getItemAt(fileTypeArrayIndex) as String);
 	}
@@ -517,6 +524,16 @@
 				}
 			}
 		}
+		if (fileName == "DL Estimate History Data") {
+			index = fileNameArray.getItemIndex("DL Estimate History Data");
+			if (index.valueOf() > -1) {
+				fileReference = fileArray.getItemAt(index) as FileReference;
+				if (fileReference != null) {
+					wait = true;
+					handleEstimateHistoryFile(evt);
+				}
+			}
+		}
 		if (index == -1 && fileName.substr(0,2) != "DL") {
 			index = fileNameArray.getItemIndex(fileName);
 			if (index.valueOf() > -1) {
@@ -602,6 +619,7 @@
 		this.import_preferences.enabled = true;
 		this.import_credit_card_transactions.enabled = true;
 		this.accountHistory.enabled =true;
+		this.estimateHistory.enabled =true;
 	} 
 
 	private function doImportJobs():void {
@@ -703,7 +721,9 @@
 	private function doImportAccountHistory():void {
 		doImport(handleAccountHistoryFile);
 	}
-
+	private function doImportEstimateHistory():void {
+		doImport(handleEstimateHistoryFile);
+	}
 	private function doWebAdministration():void {
 		var event:EditWebAdminEvent = new EditWebAdminEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
 		event.dispatch();
@@ -758,20 +778,20 @@
                              
 
                              
-	<mx:Canvas width="100%" height="441" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+	<mx:Canvas width="100%" height="548" verticalScrollPolicy="off" horizontalScrollPolicy="off">
 		<mx:Button label="Import Customers &amp; Customer Contacts" id="import_customers" enabled="true" click="doImportCustomers();"  width="256" x="12" y="160"/>
 		<mx:Button label="Import Charge Definitions" id="import_charge_definitions" enabled="true" click="doImportChargeDefinitions();"  width="256" x="10" y="40"/>
 		<mx:Button label="Import Charges" id="import_charge" enabled="true" click="doImportCharge();"  width="256" x="276" y="160"/>
 		<mx:Button label="Import Standalone Contacts" id="import_contacts" enabled="true" click="doImportContacts();"  width="256" x="10" y="190"/>
 		<mx:Button label="Import Customer Logs" id="import_customer_logs" enabled="true" click="doImportCustomerLogs();"  width="256" x="274" y="190"/>
-		<mx:Button label="Web Administration" id="printsmith_site_webadmin" enabled="true" click="doWebAdministration();"  width="256" x="10" y="350"/>
+		<mx:Button label="Web Administration" id="printsmith_site_webadmin" enabled="true" click="doWebAdministration();"  width="256" x="10" y="446"/>
 		<mx:Button label="Import Invoices" id="import_invoices" enabled="true" click="doImportInvoices();"  width="256" x="274" y="100"/>
 		<mx:Button label="Import Jobs" id="import_jobs" enabled="true" click="doImportJobs();"  width="256" x="274" y="130"/>
 		<mx:Button label="Import Press Definitions" id="import_press_definitions" enabled="true" click="doImportPressDefinitions();"  width="256" x="10" y="220"/>
 		<mx:Button label="Import Preferences" id="import_preferences" enabled="true" click="doImportPreferences();"  width="256" x="274" y="220"/>
-		<mx:Button label="Import Table Editor File" id="import_table_editor_file" enabled="true" click="doImportTableEditorFile();"  width="256" x="276" y="380"/>
+		<mx:Button label="Import Table Editor File" id="import_table_editor_file" enabled="true" click="doImportTableEditorFile();"  width="256" x="290" y="446"/>
 		<mx:Button label="Import Credit Card Transactions" id="import_credit_card_transactions" enabled="true" click="doImportCreditCardTransactions();"  width="256" x="274" y="250"/>
-		<mx:Button label="Import All" id="import_all" enabled="true" click="doImportAll();"  width="256" x="146" y="310"/>
+		<mx:Button label="Import All" id="import_all" enabled="true" click="doImportAll();"  width="256" x="146" y="361"/>
 		<mx:Button label="Import Stock Definitions" id="import_stock_definitions" enabled="true" click="doImportStockDefinitions();"  width="256" x="274" y="40"/>
 		<mx:Button label="Import Price Lists" id="import_price_lists" enabled="true" click="doImportPriceLists();"  width="256" x="10" y="10"/>
 		<mx:Button label="Import Price Schedules" id="import_price_schedules" enabled="true" click="doImportPriceSchedules();"  width="256" x="10" y="100"/>
@@ -781,6 +801,7 @@
 		<mx:Button x="10" y="130" label="Import Charge Costing" width="256" id="import_charge_costing" click="doImportChargeCosting();"/>
 		<mx:ProgressBar x="171" y="407" id="progress_bar" label="Importing Data..." indeterminate="true" height="31"/>
 		<mx:Button x="274" y="280" label="Import Account history" width="256" click="doImportAccountHistory()" id="accountHistory"/>
+		<mx:Button x="274" y="310" label="Import Estimate history" width="256" click="doImportEstimateHistory()" id="estimateHistory"/>
 	</mx:Canvas>
 <mx:Spacer height="10" />        
 

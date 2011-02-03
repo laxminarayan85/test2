@@ -537,7 +537,7 @@
 	    
 	    loadStockGenericColor();
 	    loadStockFinish();
-	    loadPressDefinition();
+	    
 	    loadCopierDefinition();
 		loadDimensions();
 		loadCoatedArray()
@@ -693,7 +693,7 @@
 	    loadStockGenericColor();
 	    loadStockFinish();
 	    loadPressDefinition(); */
-	    
+	    loadPressDefinition();
 		standardItemCheckEvent();
 		doStockUnitChange(stockDefinitions.stockunit.toString());
 		setOriginalStockDefinitions();
@@ -804,6 +804,7 @@
 			
 		}
 		this.currentState="SheetStock";
+		loadPressDefinition();
 	}
 	
 	private function handleStockPickerSelect(evt:StockPickerSelectEvent):void {
@@ -1451,7 +1452,25 @@
 	} */
 	
 	private function handleLoadPressDefinition(ev:ResultEvent):void {
-		 pressDefinitions = ev.result as ArrayCollection;
+		 var resultArray:ArrayCollection = ev.result as ArrayCollection;
+		 var press:PressDefinition = new PressDefinition();
+		 pressDefinitions = new ArrayCollection();
+		 for (var i:int;i<resultArray.length;i++) {
+		 	press = resultArray.getItemAt(i) as PressDefinition;
+		 	if (stockDefinitions.stockunit == 2){
+		 			if( press.rollFed)
+		 				pressDefinitions.addItem(press)
+		 		
+		 		}else{
+		 			if (!press.rollFed)
+		 				pressDefinitions.addItem(press)
+		 		}
+		 		
+		 	
+		 	
+		 }
+		
+		
 	}
 	private function handleLoadCopierDefinition(ev:ResultEvent):void {
 		 copierDefinitions = new ArrayCollection();
@@ -2752,14 +2771,14 @@ private function doRound(evt:FocusEvent):void{
 			</mx:Panel>
 		</mx:Canvas>
 	</mx:TabNavigator>
-	<mx:Button x="20" y="5" width="45" height="38" click="doPrev();" visible="{!fromJobPage}">
+	<mx:Button x="20" y="0" width="45" height="38" click="doPrev();" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/previous_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Button x="73" y="5" width="45" height="38" click="doNext();" id="button2" visible="{!fromJobPage}">
+	<mx:Button x="73" y="0" width="45" height="38" click="doNext();" id="button2" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/next_page.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="10" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="55" textAlign="center" id="label15" visible="{!fromJobPage}"/>
-	<mx:Label x="80" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center" id="label14" visible="{!fromJobPage}"/>
+	<mx:Label x="10" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invoiceDeliveryTicketCmd.Previous')}" width="55" textAlign="center" id="label15" visible="{!fromJobPage}"/>
+	<mx:Label x="80" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Next')}" width="38" textAlign="center" id="label14" visible="{!fromJobPage}"/>
 	<mx:Button x="229" y="0" width="38" height="38" click="doSave();" enabled="{enableSave}">
 		<mx:icon>@Embed(source='../../../../assets/file.png')</mx:icon>
 	</mx:Button>
@@ -2787,7 +2806,7 @@ private function doRound(evt:FocusEvent):void{
 	<mx:Button x="170" y="0" width = "38" height="38"  click="doPriceListButton();" visible="{!fromJobPage}">
 		<mx:icon>@Embed(source='../../../../assets/price_list.png')</mx:icon>
 	</mx:Button>
-	<mx:Label x="157" y="41" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefRpt.PriceList')}" width="64" visible="{!fromJobPage}"/>
+	<mx:Label x="157" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefRpt.PriceList')}" width="64" visible="{!fromJobPage}"/>
 	<mx:Label x="321" y="142"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LastUpdated')}" fontWeight="normal"/>
 	<mx:Label x="322" y="159" textAlign="right"  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'stockDefCmd.LastPriceChange')}" fontWeight="normal"/>
 	<mx:Text x="451" y="142" text="{Snowmass.getShortDateTimeFormatter().format(stockDefinitions.lastUpdated)}" enabled="false" id="updatedDate" width="132"/>
