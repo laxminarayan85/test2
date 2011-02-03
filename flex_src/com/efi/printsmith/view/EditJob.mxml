@@ -2662,7 +2662,7 @@
 
 			private function handleChargeDefinitionComplete(evt:ChargeDefinitionSelectEvent):void
 			{
-				this.job.charges=evt.chargeArray;
+				this.charges=evt.chargeArray;
 				this.updatePrice();
 			}
 
