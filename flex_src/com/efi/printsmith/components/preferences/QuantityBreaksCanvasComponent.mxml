@@ -66,7 +66,7 @@
 	
 				<mx:DataGrid id="quantityBreaksGrid" dataProvider="{preferencesQuantityBreaksArray}"
 					editable="true" itemEditEnd="{processQuantityBreaksGridData(event)}"
-					width="98%" height="90%" rowHeight="25">
+					width="40%" height="90%" rowHeight="25">
 					
 					<mx:columns>
 					
@@ -82,14 +82,14 @@
 								<mx:Component>
 									<components:CustomNumericTextInputComponent
 										datagridControl="true" variableName="quantity" customText="{data.quantity}"
-										precision="0" rounding="nearest" isInteger="true"/>
+										precision="0" rounding="nearest" isInteger="true" textAlignStyle="left"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>
 							
 						<mx:DataGridColumn width="50"
 							headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'employeeClockInOutCmd.Break')}"
-							dataField="qtyBreak" editable="false">
+							dataField="qtyBreak" editable="false" textAlign="center">
 							<mx:itemRenderer>
 								<mx:Component>
 										<components:CustomCheckBoxComponent
