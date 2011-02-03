@@ -1191,53 +1191,53 @@
 								<mx:Canvas label="View 1"
 										   width="100%"
 										   height="100%" id="canvas3">
-									<mx:Text x="107"
+									<mx:Text x="98"
 											 y="57"
 											 width="247"
 											 height="20"
 											 id="job_color"
 											 text="{job.stock.color.name}"
 											 fontSize="9"/>
-									<mx:TextInput x="107"
-												  y="167"
+									<mx:TextInput x="99"
+												  y="168"
 												  width="100"
 												  height="20"
 												  id="number_lines"
 												  fontSize="9"
 												  tabIndex="14"
 												  mouseDown="textInputClick(event)" />
-									<mx:Label x="6"
+									<mx:Label x="-4"
 											  y="147"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.FoldedSize')}"
 											  fontSize="9" textAlign="right" width="94" id="label16"/>
-									<mx:Label x="6"
+									<mx:Label x="-4"
 											  y="125"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Finish')}"
 											  fontSize="9" textAlign="right" width="94" id="label17"/>
-									<mx:Label x="6"
+									<mx:Label x="-1"
 											  y="190"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}"
 											  fontSize="9" textAlign="right" width="94" id="label15"/>
-									<mx:TextInput x="107"
-												  y="189"
+									<mx:TextInput x="99"
+												  y="190"
 												  width="100"
 												  height="20"
 												  id="job_unit_price"
 												  tabIndex="15"
 												  fontSize="9" mouseDown="textInputClick(event)" />
-									<mx:Label x="6"
+									<mx:Label x="-4"
 											  y="103"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RunSize')}"
 											  fontSize="9" textAlign="right" width="94" id="runsize_label"/>
-									<mx:Label x="11"
+									<mx:Label x="1"
 											  y="81"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Parent')}"
 											  fontSize="9" textAlign="right" width="89" id="label13"/>
-									<mx:Label x="6"
+									<mx:Label x="-1"
 											  y="169"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.NumberofLines')}"
 											  fontSize="9" textAlign="right" width="94" id="label14"/>
-									<mx:TextInput x="107"
+									<mx:TextInput x="98"
 												  y="35"
 												  width="171"
 												  height="20"
@@ -1245,11 +1245,11 @@
 												  tabIndex="9"
 												  text="{getStockName(job.stock,preferencesStocks)}"
 												  fontSize="9" mouseDown="textInputClick(event)" />
-									<mx:Label x="6"
+									<mx:Label x="-4"
 											  y="37"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Stock')}"
 											  fontSize="9" width="94" textAlign="right" id="label18"/>
-									<mx:Label x="10"
+									<mx:Label x="0"
 											  y="57"
 											  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Color')}"
 											  fontSize="9" textAlign="right" width="90" id="label19"/>
@@ -1277,9 +1277,9 @@
 											  id="cutDiagram"
 											  height="124" click="doPaperCal();" source="assets/380.png"/>
 								-->	
-									<mx:Canvas x="215"
+									<mx:Canvas x="224"
 											   y="81"
-											   width="140"
+											   width="131"
 											   height="127"
 											   borderStyle="inset"
 											   click="doPaperCal();"
@@ -1289,7 +1289,7 @@
 											  y="215"
 											  width="356"
 											  height="2"/>
-									<mx:Button x="286"
+									<mx:Button x="277"
 											   y="35"
 											   label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'usecCmd.Change')}"
 											   fontSize="9"
@@ -1297,14 +1297,20 @@
 											   id="chage_stock_button"
 											   enabled="false"
 											   click="changeStockDefinition()" width="62"/>
-									<mx:ComboBox x="108" y="79" width="99" id="job_parent" tabIndex="10" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="101" width="99" id="job_size" labelField="name" tabIndex="11" focusIn="runSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="123" width="99" id="job_finish_size" labelField="name" tabIndex="12" focusIn="finishSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:ComboBox x="108" y="145" width="99" id="job_fold_size"  labelField="name" tabIndex="13" focusIn="foldedSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
-									<mx:Label x="-20" y="171" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.StockCost')}" width="120" textAlign="right" id="parent_cost_label"/>
-									<mx:Label x="-20" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" width="120" textAlign="right" id="per_label"/>
-									<mx:TextInput x="108" y="169" height="20" width="99" textAlign="right" id="parent_costs" focusOut="fieldChanged(event)"/>
-									<mx:TextInput x="108" y="188" height="20" width="99" textAlign="right" id="per" focusOut="fieldChanged(event)"/>
+									<mx:ComboBox x="99" y="79" width="99" id="job_parent" tabIndex="10" labelField = "name" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="99" y="101" width="99" id="job_size" labelField="name" tabIndex="11" focusIn="runSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="99" y="123" width="99" id="job_finish_size" labelField="name" tabIndex="12" focusIn="finishSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:ComboBox x="99" y="145" width="99" id="job_fold_size"  labelField="name" tabIndex="13" focusIn="foldedSizeGotFocus()" dataProvider="{dimensionsArray}" editable="true" focusOut="fieldChanged(event)"></mx:ComboBox>
+									<mx:Label x="0" y="171" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.StockCost')}" width="90" textAlign="right" id="parent_cost_label"/>
+									<mx:Label x="0" y="190" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.UnitPrice')}" width="90" textAlign="right" id="per_label"/>
+									<mx:TextInput x="99" y="169" height="20" width="99" textAlign="right" id="parent_costs" focusOut="fieldChanged(event)"/>
+									<mx:TextInput x="99" y="188" height="20" width="99" textAlign="right" id="per" focusOut="fieldChanged(event)"/>
+									<mx:RadioButtonGroup id="whichStartGroup1"/>
+									<mx:RadioButton x="202" y="81" groupName="whichStartGroup1" id="whichStart_parent"  click="doSelectWhichStart(Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN)" selected="{job.paperCal.whichStartSize == Constants.PAPER_CALCULATOR_WHICH_START_PARENT_TO_RUN}"/>
+									<mx:RadioButton x="202" y="125" groupName="whichStartGroup1" id="whichStart_finish" click="doSelectWhichStart(Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH)" selected="{job.paperCal.whichStartSize == Constants.PAPER_CALCULATOR_WHICH_START_RUN_TO_FINISH}"/>
+									<mx:RadioButtonGroup id="whichStartGroup2"/>
+									<mx:RadioButton x="202" y="103" groupName="whichStartGroup2" id="whichStart_run" selected="true" enabled="false"/>
+								
 								</mx:Canvas>
 								<mx:Canvas label="merchandise_canvas"
 										   width="100%"
@@ -4681,6 +4687,10 @@
 				
 			}
 			
+			private function doSelectWhichStart(newStart:int) : void {
+				job.paperCal.whichStartSize = newStart;
+				refreshCalcAndImage();
+			}
 		]]>
 
 	</mx:Script>
