@@ -71,9 +71,9 @@
 		
 			if (_invoice.discount > 0)	{
 				if (_invoice.discountIsDollars)	
-					txtDiscAmt.text = _invoice.discount;
+					txtDiscAmt.text = Snowmass.getCurrencyFormatter(true, 2).format(_invoice.discount);
 				else	
-					txtDiscPerc.text = _invoice.discount;
+					txtDiscPerc.text = Snowmass.getCurrencyFormatter(true, 2).format(_invoice.discount);
 				
 			}
 		}
