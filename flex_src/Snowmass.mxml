@@ -503,13 +503,52 @@
 				if ((ss.menu == "rStandardMenuText.Invoice")
 					&& (ss.commandName.indexOf("rAltMenuText.CopytonewEstimate") > -1 ))	{
 						doCopyToNewEstimate();				
-					}		
+					}	
 					
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.AccountInfo") > -1 ))	{
+						doAccountInfo();				
+					}
+					
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rAltMenuText.ChangeAccount") > -1 ))	{
+						doChangeAccount();				
+					}
+					
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.Jobs") > -1 ))	{
+						doOpenJobs();				
+					}
+					
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.Charges") > -1 ))	{
+						doOpenCharges();				
+					}
+					
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.DepositEntry") > -1 ))	{
+						doOpenDepositEntry();				
+					}
+					
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.DocumentTotals") > -1 ))	{
+						doOpenDocumentTotals();				
+					}
+					
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.NotePad") > -1 ))	{
+						doOpenNotePad();				
+					}	
 				
 				//Menu for Convert to Invoice
 				if ((ss.menu == "rStandardMenuText.Invoice")
 					&& (ss.commandName.indexOf("rStandardMenuText.ConverttoInvoice") > -1 ))	{
 						doConvertInvoice();				
+					}
+					
+				if ((ss.menu == "rStandardMenuText.Invoice")
+					&& (ss.commandName.indexOf("rStandardMenuText.FileDocument") > -1 ))	{
+						doFileInvoice();				
 					}	
 				
 				if ((ss.menu == "rStandardMenuText.Invoice")
@@ -639,6 +678,88 @@
 				if(win.content is EditInvoice){
 					var editInvoice:EditInvoice = win.content as EditInvoice;
 					editInvoice.copyToNewInvoice();
+				}
+			}
+		}
+		
+		private function doAccountInfo():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.doAccountPicker();
+				}
+			}
+		}
+		
+		private function doChangeAccount():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.doAccountPicker();
+				}
+			}
+		}
+		
+		private function doOpenJobs():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.doNewJob();
+				}
+			}
+		}
+		
+		private function doOpenCharges():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.doNewCharge();
+				}
+			}
+		}
+		
+		private function doOpenDepositEntry():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.openDepositEntry();
+				}
+			}
+		}
+		
+		private function doOpenDocumentTotals():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.openDocTotals();
+				}
+			}
+		}
+		
+		private function doOpenNotePad():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					editInvoice.doNotepad();
+				}
+			}
+		}
+		
+		private function doFileInvoice():void {
+			var win:MDIWindow = containerManager.getActiveWindow();
+			if(win!=null){
+				if(win.content is EditInvoice){
+					var editInvoice:EditInvoice = win.content as EditInvoice;
+					if(editInvoice.invoice!=null && editInvoice.invoice.onPendingList) {
+						editInvoice.doSave();
+					}
 				}
 			}
 		}

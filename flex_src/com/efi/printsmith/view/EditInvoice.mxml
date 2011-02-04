@@ -959,7 +959,7 @@
 			}
 
 	
-			private function doNewJob(ev:MouseEvent=null):void
+			public function doNewJob(ev:MouseEvent=null):void
 			{
 				var editJobWindow:EditJob= new EditJob(); //EditJob(PopUpManager.createPopUp(this, EditJob, true));
 				editJobWindow.invoice = this.invoice;
@@ -971,7 +971,7 @@
 			} 
 			
 			
-			private function doNewCharge(ev:MouseEvent=null):void {
+			public function doNewCharge(ev:MouseEvent=null):void {
 				var chargePicker:ChargePicker=ChargePicker(PopUpManager.createPopUp(this, ChargePicker, true));
 				chargePicker.charges = this.invoice.charges;
 				chargePicker.setStyle("borderAlpha", 0.9);
@@ -1136,7 +1136,7 @@
 			
 			
 
-			private function doNotepad(ev:MouseEvent=null):void
+			public function doNotepad(ev:MouseEvent=null):void
 			{
 				var titleWindow:NotePadEditor=NotePadEditor(PopUpManager.createPopUp(this, NotePadEditor, true));
 				titleWindow.setStyle("borderAlpha", 0.9);
@@ -1213,7 +1213,7 @@
 						
 				
 			}
-			private function doAccountPicker(evt:MouseEvent = null):void
+			public function doAccountPicker(evt:MouseEvent = null):void
 			{
 				var thisWin:MDIWindow = Snowmass.getInstance().containerManager.getWindowWithChild(this, true);
 				var ac:ArrayCollection = Snowmass.getInstance().containerManager.getChildrenOfWindow(thisWin.windowID);
