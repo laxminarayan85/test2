@@ -594,6 +594,9 @@ width="938" height="507"  creationComplete="init()"
 		setOverrideForField(number_out,job.orRunOut);
 		setOverrideForField(labor_rate,job.pricingRecord.laborRateOverride);
 		setOverrideForField(labor_rate_markup,job.pricingRecord.laborMarkupOverride);
+		setOverrideForField(setup_time,job.orSetupTime);
+		setOverrideForField(run_time,job.orRuntime);
+		setOverrideForField(washup_time,job.orWashupTime);
 	}
 	
 	private function fieldChanged(evt:FocusEvent):void
