@@ -825,7 +825,7 @@
 						  text="{job.comment}"
 						  height="20"
 						  tabIndex="30"
-						  right="10"/>
+						  right="10" change="{updateCommentDate()}"/>
 			<mx:Label x="10"
 					  y="96"
 					  text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Comment')}" textAlign="right" width="98"/>
@@ -4690,6 +4690,12 @@
 			private function doSelectWhichStart(newStart:int) : void {
 				job.paperCal.whichStartSize = newStart;
 				refreshCalcAndImage();
+			}
+			
+			private function updateCommentDate():void {
+				if(job!=null) {
+					job.lastUpdatedCommentDate = new Date();
+				}
 			}
 		]]>
 

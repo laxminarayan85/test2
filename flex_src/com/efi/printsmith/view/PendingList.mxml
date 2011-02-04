@@ -1451,7 +1451,7 @@
 		if(item.jobs!=null) {
 			var commentCounter:int=0;
 			for each(var jobBase:JobBase in item.jobs){
-				if(jobBase.comment!=null){
+				if(jobBase.comment!=null && jobBase.comment!=""){
 					commentCounter++;
 					comments = comments+" "+jobBase.comment;
 				}
@@ -1460,13 +1460,15 @@
 				comments = "";
 				var sortableJobs:ArrayCollection = new ArrayCollection();
 				for each(var jobBaseObj:JobBase in item.jobs){
-					if(jobBaseObj.comment!=null){
+					if(jobBaseObj.comment!=null && jobBaseObj.comment!=""){
 						sortableJobs.addItem(jobBaseObj);
 					}
 				}
 				var sort:Sort = new Sort();
+				sort.fields = [new SortField("lastUpdatedCommentDate")];
 				sort.compareFunction = date_sortCompareFunc;
 				sortableJobs.sort = sort;
+				sortableJobs.refresh();
 				for each(var jobBaseObject:JobBase in sortableJobs){
 					comments = comments+" "+jobBaseObject.comment;
 				} 
@@ -1475,13 +1477,13 @@
 		return comments;
 	}
 	
-	private function date_sortCompareFunc(itemA:Object, itemB:Object):int {
+	private function date_sortCompareFunc(itemA:Object, itemB:Object, fields:Array = null):int {
         /* Date.parse() returns an int, but
            ObjectUtil.dateCompare() expects two
            Date objects, so convert String to
            int to Date. */
-        var dateA:Date = new Date(Date.parse(itemA.modified));
-        var dateB:Date = new Date(Date.parse(itemB.modified));
+        var dateA:Date = new Date(Date.parse(itemA.lastUpdatedCommentDate));
+        var dateB:Date = new Date(Date.parse(itemB.lastUpdatedCommentDate));
         if (dateA == null && dateB == null)
             return 0;
 

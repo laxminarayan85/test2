@@ -166,6 +166,7 @@ package com.efi.printsmith.data
 		public var runByDate:Date = null;
 		public var startByDate:Date = null;
 		public var submittedDate:Date = null;
+		public var lastUpdatedCommentDate:Date = null;
 	
 	}
 }

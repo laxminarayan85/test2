@@ -284,6 +284,12 @@
 				}
 				return "";
 			}
+			
+			private function updateCommentDate():void {
+				if(selectedJobBase!=null) {
+					selectedJobBase.lastUpdatedCommentDate = new Date();
+				}
+			}
 	
     	]]>
     </mx:Script>
@@ -329,7 +335,7 @@
 		<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.Comment')}:" width="30%" textAlign="right"/>
 		<components:CustomTextAreaComponent
 			dataHolder="{selectedJobBase}" variableName="comment" customText="{selectedJobBase.comment}"
-			width="60%" height="10%" enabled="{enabledValue}" disabledColor="#000000"/>
+			width="60%" height="10%" enabled="{enabledValue}" disabledColor="#000000" change="{updateCommentDate()}"/>
 	</mx:HBox>
 	
 	<mx:HRule width="100%"/>

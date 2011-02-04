@@ -554,7 +554,7 @@ public class DataService extends HibernateService {
 				}
 			}
 			
-			String columnString = "a.id,a.comment,a.location,a.parentInvoice";
+			String columnString = "a.id,a.comment,a.location,a.lastUpdatedCommentDate,a.parentInvoice";
 			for (InvoiceBase invoiceBase : invoices) {
 				List<JobBase> jobsList = new ArrayList<JobBase>();
 				String queryString = "select "+columnString+" from JobBase" + " a inner join a.parentInvoice invoice left join a.location location where invoice.id="+invoiceBase.getId();
@@ -565,6 +565,7 @@ public class DataService extends HibernateService {
 					jobBase.setId(rs.getLong(0));
 					jobBase.setComment(rs.getString(1));
 					jobBase.setLocation((ProductionLocations) rs.get(2));
+					jobBase.setLastUpdatedCommentDate(rs.getDate(3));
 					jobsList.add(jobBase);
 				}
 				invoiceBase.setJobs(jobsList);
