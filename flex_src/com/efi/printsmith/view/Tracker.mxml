@@ -900,6 +900,8 @@
 									if (event.detail==Alert.YES) {
 										trackerStatus = "start";
 										trackerConsoleJobsObj.paused = false;
+										trackerConsole.productionLocation = trackerConsoleJobsObj.productionLocations;
+										trackerconsole_location.customText = getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation);
 										for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsObj.passesList) {
 											if(trackerConsolePasses.passNo==trackerConsoleJobsObj.currentPass) {
 												trackerConsolePasses.trackDate = new Date();
@@ -939,6 +941,8 @@
 									if (event.detail==Alert.YES) {
 										trackerStatus = "start";
 										trackerConsoleJobsObj.paused = false;
+										trackerConsole.productionLocation = trackerConsoleJobsObj.productionLocations;
+										trackerconsole_location.customText = getCustomTextData(productionLocationArray,trackerConsole,trackerConsole.productionLocation);
 										for each(var trackerConsolePasses:TrackerConsolePasses in trackerConsoleJobsObj.passesList) {
 											if(trackerConsolePasses.passNo==trackerConsoleJobsObj.currentPass) {
 												trackerConsolePasses.trackDate = new Date();
