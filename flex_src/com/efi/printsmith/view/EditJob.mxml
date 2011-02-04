@@ -152,7 +152,7 @@
 		<mx:State name="LargeFormat">
 			<mx:RemoveChild target="{runsize_label}"/>
 			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
-				<mx:Label x="14" y="83" width="86" id="rollWidth_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RollWidth')}" textAlign="right"/>
+				<mx:Label x="7" y="83" width="86" id="rollWidth_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RollWidth')}" textAlign="right"/>
 			</mx:AddChild>
 			<mx:RemoveChild target="{label13}"/>
 			<mx:RemoveChild target="{label14}"/>
@@ -160,21 +160,21 @@
 			<mx:RemoveChild target="{job_unit_price}"/>
 			<mx:RemoveChild target="{label15}"/>
 			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
-				<mx:Label x="10" y="111" width="91" id="cutoff_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Cutoff')}" textAlign="right"/>
+				<mx:Label x="3" y="111" width="91" id="cutoff_label" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Cutoff')}" textAlign="right"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
-				<mx:TextInput x="107" y="110" width="100" height="20" id="cutOff_edit"  text="{job.cutOff}" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="100" y="110" width="100" height="20" id="cutOff_edit"  text="{job.cutOff}" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:SetProperty target="{label16}" name="x" value="5"/>
 			<mx:SetProperty target="{label16}" name="y" value="164"/>
 			<mx:SetProperty target="{label17}" name="x" value="5"/>
 			<mx:SetProperty target="{label17}" name="y" value="139"/>
-			<mx:SetProperty target="{job_fold_size}" name="y" value="162"/>
+			<mx:SetProperty target="{job_fold_size}" name="y" value="165"/>
 			<mx:SetProperty target="{job_finish_size}" name="y" value="135"/>
 			<mx:RemoveChild target="{job_parent}"/>
 			<mx:RemoveChild target="{job_size}"/>
 			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
-				<mx:TextInput x="108" y="81" width="100" height="20" id="roll_width"  text="{job.rollWidth}" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="101" y="81" width="100" height="20" id="roll_width"  text="{job.rollWidth}" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:RemoveChild target="{label9}"/>
 			<mx:RemoveChild target="{job_imp}"/>
@@ -271,6 +271,9 @@
 			<mx:SetProperty target="{job_total}" name="y" value="467"/>
 			<mx:SetProperty target="{job_total}" name="x" value="501"/>
 			<mx:SetProperty target="{label30}" name="x" value="384"/>
+			<mx:SetProperty target="{parent_costs}" name="y" value="166"/>
+			<mx:SetProperty target="{whichStart_finish}" name="y" value="137"/>
+			<mx:SetProperty target="{whichStart_run}" name="y" value="110"/>
 		</mx:State>
 		<mx:State name="Mailing">
 			<mx:RemoveChild target="{customer_suppliled_stock}"/>
@@ -529,17 +532,18 @@
 			<mx:SetProperty target="{front_passes_text}" name="enabled" value="true"/>
 			<mx:SetProperty target="{back_passes_text}" name="enabled" value="true"/>
 			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
-				<mx:Label x="13" y="79" width="86" id="rollWidth_label0" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RollWidth')}" textAlign="right"/>
+				<mx:Label x="7" y="79" width="86" id="rollWidth_label0" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.RollWidth')}" textAlign="right"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
-				<mx:Label x="9" y="103" width="91" id="cutoff_label0" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Cutoff')}" textAlign="right"/>
+				<mx:Label x="3" y="103" width="91" id="cutoff_label0" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'jobCmd.Cutoff')}" textAlign="right"/>
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
-				<mx:TextInput x="106" y="102" width="100" height="20" id="cutOff_edit0"  text="{job.cutOff}" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="99" y="102" width="100" height="20" id="cutOff_edit0"  text="{job.cutOff}" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
 			<mx:AddChild relativeTo="{canvas3}" position="lastChild">
-				<mx:TextInput x="107" y="77" width="100" height="20" id="roll_width0"  text="{job.rollWidth}" mouseDown="textInputClick(event)" />
+				<mx:TextInput x="100" y="78" width="100" height="20" id="roll_width0"  text="{job.rollWidth}" mouseDown="textInputClick(event)" />
 			</mx:AddChild>
+			<mx:SetProperty target="{whichStart_parent}" name="y" value="80"/>
 		</mx:State>
 	</mx:states>
 	<mx:RemoteObject id="prefStocksDataService"
