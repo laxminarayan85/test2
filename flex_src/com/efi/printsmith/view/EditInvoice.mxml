@@ -1794,7 +1794,7 @@
 				var de:DocumentTotalsEditor= new DocumentTotalsEditor();
 				//de.addEventListener(DepositEntryAddedEvent.DEPOSITENTRYADDED, onDepEntryAdded,false, 0, true);
 				var winId:int = windowRef.windowID;
-				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.DocumentTotals'), de,-1,-1,550,500,winId);
+				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.DocumentTotals'), de,-1,-1,550,750,winId);
 				de.invoice = invoice; 
 				
 				
@@ -2993,7 +2993,7 @@
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.CustDiscount')}"  >
 							<mx:Text textAlign="right"
 									 id="cust_discount_text"
-									 text="{invoice.dollarDiscount}"
+									 text="{Snowmass.getCurrencyFormatter(true, 2).format(invoice.dollarDiscount)}"
 									 />
 						</mx:FormItem>
 						<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'newInvCmd.NetSub')}"  >

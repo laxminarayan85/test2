@@ -22,8 +22,34 @@ package com.efi.printsmith.pricing
 		public function InvoicePricing()	{
 			
 		}
-
-
+		// used by DocumentTotalsWindow - all fields modified by this window should be copied back into original invoice
+		public static function copyPricingFields(_fromInvoice:InvoiceBase, _toInvoice:InvoiceBase):void	{
+			
+			_toInvoice.jobs = _fromInvoice.jobs;
+			_toInvoice.charges = _fromInvoice.charges;
+			_toInvoice.discount = _fromInvoice.discount;
+			_toInvoice.dollarDiscount = _fromInvoice.dollarDiscount;
+			_toInvoice.notTaxable = _fromInvoice.notTaxable;
+			_toInvoice.taxTable = _fromInvoice.taxTable;
+			_toInvoice.taxCode = _fromInvoice.taxCode;
+			_toInvoice.taxRate = _fromInvoice.taxRate;
+			_toInvoice.discountIsOneTime = _fromInvoice.discountIsOneTime;
+			_toInvoice.discountIsDollars = _fromInvoice.discountIsDollars;
+			_toInvoice.shipPrice = _fromInvoice.shipPrice;
+			_toInvoice.actualSubtotal = _fromInvoice.actualSubtotal;
+			_toInvoice.amountDue = _fromInvoice.amountDue;
+			_toInvoice.discountableSubtotal = _fromInvoice.discountableSubtotal;
+			_toInvoice.grandTotal = _fromInvoice.grandTotal;
+			_toInvoice.priceLocked  = _fromInvoice.priceLocked;
+			_toInvoice.shipCharges = _fromInvoice.shipCharges;
+			_toInvoice.shipPrice = 	_fromInvoice.shipPrice;
+			_toInvoice.subTotal = _fromInvoice.subTotal;
+			_toInvoice.tax = _fromInvoice.tax;
+			_toInvoice.taxableSubtotal = _fromInvoice.taxableSubtotal;
+			_toInvoice.deposits = _fromInvoice.deposits;
+		
+			
+		}
 		private static function fixNaNs(_invoice:InvoiceBase):void	{
 			if (isNaN(_invoice.discount))
 				_invoice.discount = 0;
@@ -46,49 +72,49 @@ package com.efi.printsmith.pricing
 			calcTotalDue(_invoice);			
 		}
 		
-		private static function addToSalesCategory(usedCategories:Array, usedCategoriesTotals:Array, sc:SalesCategory, amount:Number):void	{
+		private static function addToSalesCategory(usedCategories:Array, sc:SalesCategory, amount:Number):Array	{
 			if (usedCategories == null)
 				usedCategories = new Array();
-			if (usedCategoriesTotals == null)
-				usedCategoriesTotals  = new Array();
+//			if (usedCategoriesTotals == null)
+//				usedCategoriesTotals  = new Array();
 			
 			if (sc.name == "Shipping")	{
-				return;
+				return usedCategories;
 			}
 			
 			if (usedCategories[sc.name] == null)	{
-				usedCategories[sc.name] = sc;
-				usedCategoriesTotals[sc.name] = amount;	
+				usedCategories[sc.name] = amount;
+//				usedCategoriesTotals[sc.name] = amount;	
 			}	
 			else	{
-				usedCategoriesTotals[sc.name] += amount;
+				usedCategories[sc.name] += amount;
 			}
-			
+			return usedCategories;
 		}		 
-		public static function calcUsedCategories(_invoice:InvoiceBase):ArrayCollection	{
+		public static function calcUsedCategories(_invoice:InvoiceBase):Array	{
 			var usedCategories:Array = null;
-			var usedCategoriesTotals:Array = null;
+//			var usedCategoriesTotals:Array = null;
 						
 			if (_invoice != null)	{
 				if (_invoice.jobs != null)	{
 					for (var i:int=0; i<_invoice.jobs.length; i++)	{
 						var j:Job = _invoice.jobs.getItemAt(i) as Job;
 						if (j.salesCategory != null)	{
-							addToSalesCategory(usedCategories, usedCategoriesTotals, j.salesCategory, j.pricingRecord.totalPrice);
+							usedCategories = addToSalesCategory(usedCategories, j.salesCategory, j.pricingRecord.totalPrice);
 						}	
 						else	{
 							if (j.pricingPress != null && j.pricingPress.salesCat != null)	{
-								addToSalesCategory(usedCategories, usedCategoriesTotals, j.pricingPress.salesCat, j.pricingRecord.totalPrice);
+								usedCategories = addToSalesCategory(usedCategories, j.pricingPress.salesCat, j.pricingRecord.totalPrice);
 							}
 							else if (j.pricingCopier != null && j.pricingCopier.salesCat != null)	{
-								addToSalesCategory(usedCategories, usedCategoriesTotals, j.pricingCopier.salesCat, j.pricingRecord.totalPrice);
+								usedCategories = addToSalesCategory(usedCategories, j.pricingCopier.salesCat, j.pricingRecord.totalPrice);
 							}
 						}
 						if (j.charges != null)	{
 							for (var k:int = 0; k<j.charges.length; k++)	{
 								var c:Charge = j.charges.getItemAt(k) as Charge;
 								if (c.chargeDefinition.salesCategory != null)	{
-									addToSalesCategory(usedCategories, usedCategoriesTotals, c.chargeDefinition.salesCategory, c.price);
+									usedCategories = addToSalesCategory(usedCategories, c.chargeDefinition.salesCategory, c.price);
 								}
 							}
 						}						 
@@ -98,16 +124,16 @@ package com.efi.printsmith.pricing
 					for (var n:int=0; n<_invoice.charges.length; n++)	{
 						var c:Charge = _invoice.charges.getItemAt(n) as Charge;
 						if (c.chargeDefinition.salesCategory != null)	{
-							addToSalesCategory(usedCategories, usedCategoriesTotals, c.chargeDefinition.salesCategory, c.price);
+							usedCategories = addToSalesCategory(usedCategories, c.chargeDefinition.salesCategory, c.price);
 						}	
 					}					
 				}
 			}
 			
-			var ac:ArrayCollection = new ArrayCollection();
-			ac.addItem(usedCategories);
-			ac.addItem(usedCategoriesTotals);
-			return ac;
+//			var ac:ArrayCollection = new ArrayCollection();
+//			ac.addItem(usedCategories);
+//			ac.addItem(usedCategoriesTotals);
+			return usedCategories;
 		}
 		
 		private static function  calcTax(_invoice:InvoiceBase):void	{
@@ -136,35 +162,38 @@ package com.efi.printsmith.pricing
 					taxRate = taxTable.effectiveTaxRate;
 				
 				var taxableSubtotal:Number = 0;
-				
-				if (_invoice.jobs != null)	{
-					for (var i:int=0; i<_invoice.jobs.length; i++)	{
-						var j:Job = _invoice.jobs.getItemAt(i) as Job;
-						if (j.taxable)	{
-							taxableSubtotal += j.pricingRecord.totalPrice; 
-						}
-						if (j.charges != null)	{
-							for (var k:int = 0; k<j.charges.length; k++)	{
-								var c:Charge = j.charges.getItemAt(k) as Charge;
-								if (c.taxable)	{
-									taxableSubtotal += c.price;
-								}
+				if (_invoice.notTaxable)		{
+					_invoice.taxableSubtotal = 0;					
+				}
+				else	{
+					if (_invoice.jobs != null)	{
+						for (var i:int=0; i<_invoice.jobs.length; i++)	{
+							var j:Job = _invoice.jobs.getItemAt(i) as Job;
+							if (j.taxable)	{
+								taxableSubtotal += j.pricingRecord.totalPrice; 
 							}
-						}						 
-					}										
-				}
-				if (_invoice.charges != null)	{
-					for (var n:int=0; n<_invoice.charges.length; n++)	{
-						var c:Charge = _invoice.charges.getItemAt(n) as Charge;
-						if (c.taxable)	{
-							taxableSubtotal += c.price;
-						}	
-					}					
-				}
-				
-				_invoice.taxableSubtotal = taxableSubtotal;
-				
-				
+							if (j.charges != null)	{
+								for (var k:int = 0; k<j.charges.length; k++)	{
+									var c:Charge = j.charges.getItemAt(k) as Charge;
+									if (c.taxable)	{
+										taxableSubtotal += c.price;
+									}
+								}
+							}						 
+						}										
+					}
+					if (_invoice.charges != null)	{
+						for (var n:int=0; n<_invoice.charges.length; n++)	{
+							var c:Charge = _invoice.charges.getItemAt(n) as Charge;
+							if (c.taxable)	{
+								taxableSubtotal += c.price;
+							}	
+						}					
+					}
+					
+					_invoice.taxableSubtotal = taxableSubtotal;
+					
+				}				
 				
 			}
 		}
@@ -259,11 +288,11 @@ package com.efi.printsmith.pricing
 		private static function  calcDollarDiscount(_invoice:InvoiceBase):void	{
 			if (_invoice != null)	{				
 				if (_invoice.discountableSubtotal >= _invoice.discount)	{
-					_invoice.subTotal = _invoice.actualSubTotal - _invoice.discount;
+					_invoice.subTotal = _invoice.actualSubtotal - _invoice.discount;
 					_invoice.dollarDiscount = _invoice.discount;
 				}
 				else	{
-					_invoice.subTotal = _invoice.actualSubTotal - _invoice.discountableSubtotal;
+					_invoice.subTotal = _invoice.actualSubtotal - _invoice.discountableSubtotal;
 					_invoice.dollarDiscount = _invoice.discountableSubtotal;
 				}
 			}
@@ -302,8 +331,15 @@ package com.efi.printsmith.pricing
 		}
 		private static function  calcSalesTax(_invoice:InvoiceBase):void	{
 			if (_invoice != null)	{
-				// calculate sales tax
-				calcShippingTax(_invoice);
+				if (_invoice.notTaxable)	{
+					_invoice.tax = 0;
+				}
+				else	{
+					// calculate sales tax
+					if (_invoice.taxTable != null)	{
+						calcShippingTax(_invoice);
+					}
+				}
 			}
 		}
 		

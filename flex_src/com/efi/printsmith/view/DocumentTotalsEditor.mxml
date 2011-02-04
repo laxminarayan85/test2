@@ -19,6 +19,7 @@
 		
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.data.SalesCategory;
 		import com.efi.printsmith.pricing.InvoicePricing;
 		import com.efi.printsmith.data.InvoiceBase;
 		import com.efi.printsmith.data.DepositEntry;
@@ -35,23 +36,146 @@
 		[Bindable] private var taxTables:ArrayCollection;
 		[Bindable] private var taxCodes:ArrayCollection;
 		
-		private var _invoice:InvoiceBase;
+		private var _invoice:InvoiceBase = new InvoiceBase();
+		private var _origInvoice:InvoiceBase;
 		
+		private var invoiceSet:Boolean = false;
+		private var taxTableLoaded:Boolean = false;
+		private var taxCodeLoaded:Boolean = false;
 		
 		private function handleFault(event:FaultEvent):void	{
 					
 		}
 		
 		public function set invoice(inv:InvoiceBase):void	{
-			_invoice = inv;
+			_origInvoice = inv;
+			InvoicePricing.copyPricingFields(inv, _invoice);
 			
+			if (inv.account.oneTimeDiscount || inv.discountIsOneTime)	{
+				chkApplyOneTime.enabled = true;
+			}	
+			else	{
+				chkApplyOneTime.enabled = false;
+			}
+			
+			invoiceSet = true;
+			if (invoiceSet && taxTableLoaded)	{
+				selectTaxTable();
+			}
+			if (invoiceSet && taxCodeLoaded)	{
+				selectTaxCode();
+			}
+			txtDeposits.text = Snowmass.getCurrencyFormatter(true, 2).format(InvoicePricing.getDeposits(_invoice));
+			
+			populateSalesCats();
+		
+			if (_invoice.discount > 0)	{
+				if (_invoice.discountIsDollars)	
+					txtDiscAmt.text = _invoice.discount;
+				else	
+					txtDiscPerc.text = _invoice.discount;
+				
+			}
 		}
 		
+		private function populateSalesCats():void	{
+			var ac:Array = InvoicePricing.calcUsedCategories(_invoice);
+			var cat:String = "";
+			
+			var total:Number = 0;
+			
+			for (var key:Object in ac)	{
+				var scname:String = key as String;
+				cat += scname + ":  ";
+				var tot:Number = ac[scname] as Number;
+				cat += Snowmass.getCurrencyFormatter(false,2).format(tot) + "\n";
+				total++;
+			}
+			cat += "\n__________\n";
+			var a:Array = new Array();
+			a.push(total);
+			cat += resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"invTotalCmd.UsedCategories",a);
+			txtCat.text = cat;
+		}
+		private function selectTaxTable():void	{
+			if (_invoice.taxTable != null)
+				cboTaxTable.selectedIndex = findFirstIndexByCondition(taxTables, "id",_invoice.taxTable);
+			if (cboTaxTable.selectedIndex == -1 && taxTables.length > 0)	{
+				_invoice.taxTable = taxTables.getItemAt(0) as TaxTable;				 
+			}
+		}
+		
+		private function selectTaxCode():void	{
+			if (_invoice.taxCode != null)
+				cboTaxCode.selectedIndex = findFirstIndexByCondition(taxCodes, "id",_invoice.taxCode);
+				
+			if (cboTaxCode.selectedIndex == -1 && taxCodes.length > 0)	{
+				_invoice.taxCode = taxCodes.getItemAt(0) as TaxCodes;				 
+			}
+
+		}
+		private function onShipping():void	{
+			if (Number(txtShipping.text) > 0)	{
+				_invoice.shipPrice = Number(txtShipping.text);
+				InvoicePricing.calculateTotals(_invoice, InvoicePricing.SHIP);				
+			} 
+		}		
+		private function onPriceLocked():void	{
+			_invoice.priceLocked = chkLockPrices.selected;
+		}
+		
+		private function onNoTax():void	{
+			_invoice.notTaxable = chkNoTax.selected;
+			
+			InvoicePricing.calculateTotals(_invoice,InvoicePricing.TAX);	
+		}
+		
+		private function onTaxTable():void	{
+			_invoice.taxTable = cboTaxTable.selectedItem as TaxTable;
+			InvoicePricing.calculateTotals(_invoice,InvoicePricing.ALL);
+		}
+		private function onTaxCode():void	{
+			_invoice.taxCode = cboTaxCode.selectedItem as TaxCodes;
+			InvoicePricing.calculateTotals(_invoice,InvoicePricing.ALL);
+		}
+		
+		private function onDiscount():void	{
+			if (rdoDiscAmt.selected)	{
+				if (Number(txtDiscAmt.text) > 0)	{
+					_invoice.discount = Number(txtDiscAmt.text);
+					_invoice.discountIsDollars = true;
+					InvoicePricing.calculateTotals(_invoice, InvoicePricing.DISCOUNT);
+				}
+//				else	{
+//					_invoice.discount = 0;
+//					_invoice.discountIsDollars = true;
+//					_invoice.	
+//				}				
+			}
+			else	{
+				if (Number(txtDiscPerc.text) > 0)	{
+					_invoice.discount = Number(txtDiscPerc.text);
+					_invoice.discountIsDollars = false;
+					InvoicePricing.calculateTotals(_invoice, InvoicePricing.DISCOUNT);
+				}
+			}
+		}		
+		private function onOneTimeClick():void	{
+			_invoice.discountIsOneTime = chkApplyOneTime.selected;
+			if (chkApplyOneTime.selected)	{
+				rdoDiscAmt.selected = true;				
+			}
+			else	{
+				rdoDiscPerc.selected = true;
+			}
+		}		
 		
 		private function handleLoadTaxTableResult(event:ResultEvent):void	{
 			taxTables = event.result as ArrayCollection;		
-			if (_invoice.taxTable != null)
-				cboTaxTable.selectedIndex = findFirstIndexByCondition(taxTables, "id",_invoice.taxTable);
+			taxTableLoaded = true;
+			if (invoiceSet && taxTableLoaded)	{
+				selectTaxTable();
+			}
 //			else if (_invoice.account != null && _invoice.account.taxTable != null)	
 //				cboTaxTable.selectedIndex = findFirstIndexByCondition(taxTables, "id",_invoice.account.taxTable.id);
 							
@@ -60,8 +184,10 @@
 		
 		private function handleLoadTaxCodesResult(event:ResultEvent):void	{
 			taxCodes = event.result as ArrayCollection;
-			if (_invoice.taxCode != null)
-				cboTaxCode.selectedIndex = findFirstIndexByCondition(taxCodes, "id",_invoice.taxCode);
+			taxCodeLoaded = true;
+			if (invoiceSet && taxCodeLoaded)	{
+				selectTaxCode();
+			}
 //			else if (_invoice.account != null && _invoice.account.taxCode != null)
 //				cboTaxCode.selectedIndex = findFirstIndexByCondition(taxCodes, "id",_invoice.account.taxCode.id);			
 		}
@@ -90,6 +216,7 @@
 		
 		private function onOK():void	{
 			
+			InvoicePricing.copyPricingFields(_invoice, _origInvoice);
 //			_invoice.taxTable = cboTaxTable.selectedItem as TaxTable;
 //			_invoice.taxCode = cboTaxCode.selectedItem as TaxCodes;
 //			
@@ -131,52 +258,52 @@
 		<mx:VBox height="100%" width="30%">
 			<mx:Form id="frmTax" height="50%" width="100%"> 
 				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'customInvCmd.TaxTable')}">
-					<mx:ComboBox id="cboTaxTable" dataProvider="{taxTables}" labelField="name"  />
+					<mx:ComboBox id="cboTaxTable" dataProvider="{taxTables}" labelField="name" change="onTaxTable();" />
 				</mx:FormItem>
 				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'customInvCmd.TaxCode')}">
-					<mx:ComboBox id="cboTaxCode" dataProvider="{taxCodes}"  labelField="name"/>
+					<mx:ComboBox id="cboTaxCode" dataProvider="{taxCodes}"  labelField="name" change="onTaxCode();"/>
 				</mx:FormItem>
 				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'taxCmd.TaxRate')}">
-					<mx:Text id="txtTaxRate"  text="{(cboTaxTable.selectedItem as TaxTable).effectiveTaxRate}" />
+					<mx:Text id="txtTaxRate"  text="{((cboTaxTable.selectedItem as TaxTable).effectiveTaxRate * 100) + '%'}" />
 				</mx:FormItem>
 				<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.TaxSub')}">
-					<mx:Text id="txtTaxSub" textAlign="right" text="{_invoice.taxableSubtotal}" />
+					<mx:Text id="txtTaxSub" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,2).format(_invoice.taxableSubtotal)}" />
 				</mx:FormItem> 
 				<mx:FormItem>
 					<mx:CheckBox id="chkNoTax" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.NOTAX')}" selected="{_invoice.notTaxable}" />
 				</mx:FormItem>			
 				<mx:FormItem>
-					<mx:CheckBox id="chkApplyOneTime" selected="{_invoice.discountIsOneTime}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Applyonetimediscount')}" />
+					<mx:CheckBox id="chkApplyOneTime" selected="{_invoice.discountIsOneTime}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Applyonetimediscount')}" click="onOneTimeClick();" />
 				</mx:FormItem>							
 			</mx:Form>
 			<mx:RadioButtonGroup id="rdoGpDiscount" />
 			<mx:HBox width="100%" height="5%">
 				<mx:RadioButton id="rdoDiscPerc" selected="{!_invoice.discountIsDollars}" width="50%" height="100%" groupName="rdoGpDiscount" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Discount')}" />
-				<mx:TextInput id="txtDiscPerc" enabled="{rdoDiscPerc.selected}" width="50%" height="100%"  />	
+				<mx:TextInput id="txtDiscPerc" enabled="{rdoDiscPerc.selected}" width="50%" height="100%" enter="onDiscount();" />	
 			</mx:HBox>
 			<mx:HBox width="100%" height="5%">
 				<mx:RadioButton id="rdoDiscAmt" selected="{_invoice.discountIsDollars}" width="50%" height="100%" groupName="rdoGpDiscount" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.DiscountAmt')}" />
-				<mx:TextInput id="txtDiscAmt" enabled="{rdoDiscAmt.selected}" width="50%" height="100%"  />
+				<mx:TextInput id="txtDiscAmt" enabled="{rdoDiscAmt.selected}" width="50%" height="100%"  enter="onDiscount();"/>
 			</mx:HBox>
 			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Dates')}" height="40%" width="100%">
 				<mx:Form height="100%" width="100%">
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Ordered')}">
-						<mx:Text id="txtOrdered" text="{_invoice.orderedDate}" />
+						<mx:Text id="txtOrdered" text="{_origInvoice.orderedDate}" />
 					</mx:FormItem>
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Proofby')}">
-						<mx:Text id="txtProofBy" text="{_invoice.proofDate}"/>
+						<mx:Text id="txtProofBy" text="{_origInvoice.proofDate}"/>
 					</mx:FormItem>
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Wantedby')}">
-						<mx:Text id="txtWantedBy" text="{_invoice.wantedDate}" />
+						<mx:Text id="txtWantedBy" text="{_origInvoice.wantedDate}" />
 					</mx:FormItem>
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Finished')}">
-						<mx:Text id="txtFinished"  text=""/>
+						<mx:Text id="txtFinished"  text="{_origInvoice.completedDate}"/>
 					</mx:FormItem>
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Notified')}">
-						<mx:Text id="txtNotified" text="" />
+						<mx:Text id="txtNotified" text="{_origInvoice.customerNotificationDate}" />
 					</mx:FormItem>		
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.PickedUp')}">
-						<mx:Text id="txtPickedUp" text="{_invoice.pickupDate}" />
+						<mx:Text id="txtPickedUp" text="{_origInvoice.pickupDate}" />
 					</mx:FormItem>									
 				</mx:Form>
 			</mx:Panel>
@@ -195,19 +322,19 @@
 				<mx:Text id="txtSalesTax" textAlign="right" text="{Snowmass.getCurrencyFormatter(true, 2).format(_invoice.tax)}" />
 			</mx:FormItem>									
 			<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Shipping')}">
-				<mx:TextInput id="txtShipping" textAlign="right" text="{Snowmass.getCurrencyFormatter(true, 2).format(_invoice.shipPrice)}" />
+				<mx:TextInput id="txtShipping" textAlign="right" text="{Snowmass.getCurrencyFormatter(false, 2).format(_invoice.shipPrice)}" enter="onShipping();" />
 			</mx:FormItem>									
 			<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Total')}">
-				<mx:Text id="txtTotal" textAlign="right" text="{Snowmass.getCurrencyFormatter(true, 2).format(_invoice.totalCost)}"/>
+				<mx:Text id="txtTotal" textAlign="right" text="{Snowmass.getCurrencyFormatter(true, 2).format(_invoice.grandTotal)}"/>
 			</mx:FormItem>									
 			<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Deposits')}">
-				<mx:Text id="txtDeposits" textAlign="right" text="{Snowmass.getCurrencyFormatter(true, 2).format(InvoicePricing.getDeposits(_invoice))}"/>
+				<mx:Text id="txtDeposits" textAlign="right" />
 			</mx:FormItem>									
 			<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.TotalDue')}">
 				<mx:Text id="txtTotalDue" textAlign="right" text="{Snowmass.getCurrencyFormatter(true, 2).format(_invoice.amountDue)}"/>
 			</mx:FormItem>								
 			<mx:FormItem >
-				<mx:CheckBox id="chkLockPrices" selected="{_invoice.priceLocked}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.LockPrices')}" />
+				<mx:CheckBox id="chkLockPrices" selected="{_invoice.priceLocked}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.LockPrices')}" click="onPriceLocked();"/>
 			</mx:FormItem>								
 		</mx:Form>
 	</mx:HBox>
