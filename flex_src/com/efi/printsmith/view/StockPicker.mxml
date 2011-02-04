@@ -291,7 +291,7 @@
 		
 		if (stockDef.stockChanges != null) {
 			for (var i:int=0; i<stockDef.stockChanges.length; i++) {
-				var stockChange:StockChange = stockDef.stockChanges.getItemIndex(i) as StockChange;
+				var stockChange:StockChange = stockDef.stockChanges.getItemAt(i) as StockChange;
 				
 				stockDef.stockChanges.setItemAt(stockChange, i);
 			}
