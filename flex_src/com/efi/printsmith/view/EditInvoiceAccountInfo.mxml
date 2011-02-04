@@ -1136,12 +1136,12 @@
 								<mx:HBox width="100%">
 									<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custDataCmd.Deliveron')}:" width="20%"
 										textAlign="right" fontWeight="bold"/>
-									<components:CustomDateFieldComponent id="completed_date" selectedDate="{invoice.completedDate}" width="35%"
-										change="{setInvoiceDates(event,'completedDate','completed_week')}"/>
+									<components:CustomDateFieldComponent id="completed_date" selectedDate="{invoice.deliveryIntentDate}" width="35%"
+										change="{setInvoiceDates(event,'deliveryIntentDate','completed_week')}"/>
 									<components:CustomTimeEntryDateComponent
-										dataHolder="{invoice}" variableName="completedDate" customText="{invoice.completedDate}" 
+										dataHolder="{invoice}" variableName="deliveryIntentDate" customText="{invoice.deliveryIntentDate}" 
 										is24Hour="false" width="35%" borderStyle="none"/>
-									<mx:Label id="completed_week" text="{getWeekName(invoice.completedDate)}" width="10%"/>
+									<mx:Label id="completed_week" text="{getWeekName(invoice.deliveryIntentDate)}" width="10%"/>
 								</mx:HBox>
 								
 								<mx:HBox width="100%">

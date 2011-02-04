@@ -984,6 +984,7 @@
 					chargeObj.originalPrice = chargeObj.price;
 					chargeObj.originalQty = chargeObj.quantity;
 				}
+				this.updateTotals();
 				//this.updatePrice();
 			}
 

@@ -290,6 +290,16 @@
 					selectedJobBase.lastUpdatedCommentDate = new Date();
 				}
 			}
+			
+			private function setCompletedDate():void {
+				if(_invoiceBase!=null) {
+					if(_invoiceBase.readyToPickup) {
+						_invoiceBase.completedDate = new Date();
+					} else {
+						_invoiceBase.completedDate = null;
+					}
+				}
+			}
 	
     	]]>
     </mx:Script>
@@ -354,7 +364,8 @@
 		<components:CustomCheckBoxComponent width="70%"
 			label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'posDoneCmd.Readyforpickupdelive')}"
 			dataHolder="{_invoiceBase}" variableName="readyToPickup" customText="{_invoiceBase.readyToPickup}"
-			defaultValue="false" selectedValue="true" deSelectedValue="false" enabled="{_invoiceBase.holdState==null}" disabledColor="#000000"/>
+			defaultValue="false" selectedValue="true" deSelectedValue="false" enabled="{_invoiceBase.holdState==null}" disabledColor="#000000"
+			click="{setCompletedDate()}"/>
 	</mx:HBox>
 	
 	<mx:HBox width="100%">
