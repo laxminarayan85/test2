@@ -134,6 +134,11 @@ public class InvoiceService extends SnowmassHibernateService {
 						jobBaseObj.getCostingRecord().setModified(null);
 						jobBaseObj.getCostingRecord().setCreated(null);
 					}
+					if(jobBaseObj.getPaperCal()!=null) {
+						jobBaseObj.getPaperCal().setId(0L);
+						jobBaseObj.getPaperCal().setCreated(null);
+						jobBaseObj.getPaperCal().setModified(null);
+					}
 					if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
 						for(Charge charge : jobBaseObj.getCharges()) {
 							charge.setId(0L);
@@ -209,6 +214,11 @@ public class InvoiceService extends SnowmassHibernateService {
 						jobBaseObj.getCostingRecord().setModified(null);
 						jobBaseObj.getCostingRecord().setCreated(null);
 					}
+					if(jobBaseObj.getPaperCal()!=null) {
+						jobBaseObj.getPaperCal().setId(0L);
+						jobBaseObj.getPaperCal().setCreated(null);
+						jobBaseObj.getPaperCal().setModified(null);
+					}
 					if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
 						for(Charge charge : jobBaseObj.getCharges()) {
 							charge.setId(0L);
@@ -233,6 +243,11 @@ public class InvoiceService extends SnowmassHibernateService {
 					jobBaseObj.getCostingRecord().setId(0L);
 					jobBaseObj.getCostingRecord().setModified(null);
 					jobBaseObj.getCostingRecord().setCreated(null);
+				}
+				if(jobBaseObj.getPaperCal()!=null) {
+					jobBaseObj.getPaperCal().setId(0L);
+					jobBaseObj.getPaperCal().setCreated(null);
+					jobBaseObj.getPaperCal().setModified(null);
 				}
 				if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
 					for(Charge charge : jobBaseObj.getCharges()) {
@@ -308,6 +323,11 @@ public class InvoiceService extends SnowmassHibernateService {
 				jobBaseObj.getCostingRecord().setId(0L);
 				jobBaseObj.getCostingRecord().setModified(null);
 				jobBaseObj.getCostingRecord().setCreated(null);
+			}
+			if(jobBaseObj.getPaperCal()!=null) {
+				jobBaseObj.getPaperCal().setId(0L);
+				jobBaseObj.getPaperCal().setCreated(null);
+				jobBaseObj.getPaperCal().setModified(null);
 			}
 			if(jobBaseObj.getCharges()!=null && !jobBaseObj.getCharges().isEmpty()) {
 				for(Charge charge : jobBaseObj.getCharges()) {

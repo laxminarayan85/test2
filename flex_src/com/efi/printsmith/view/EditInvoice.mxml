@@ -2431,6 +2431,11 @@
 								selectedJob.multiQtyJob = true;
 								selectedJob.jobGroup = localJob.jobGroup;
 								selectedJob.parentInvoice = this.invoice;
+								if(selectedJob.paperCal!=null) {
+									selectedJob.paperCal.id = 0;
+									selectedJob.paperCal.created = null;
+									selectedJob.paperCal.created = null;
+								}
 								invoice.jobs.addItem(selectedJob);
 							} else {
 								for(var i:int=initValue;i<maxValue;i++) {
@@ -2446,6 +2451,11 @@
 								}
 								selectedJob.parentInvoice = this.invoice;
 								selectedJob.jobIndex = droppableIndex;
+								if(selectedJob.paperCal!=null) {
+									selectedJob.paperCal.id = 0;
+									selectedJob.paperCal.created = null;
+									selectedJob.paperCal.created = null;
+								}
 								invoice.jobs.addItem(selectedJob);
 							}
 						}
@@ -2459,6 +2469,11 @@
 						selectedJob.multiQtyJob = false;
 						selectedJob.jobIndex = invoice.jobs.length+1;
 						selectedJob.parentInvoice = this.invoice;
+						if(selectedJob.paperCal!=null) {
+							selectedJob.paperCal.id = 0;
+							selectedJob.paperCal.created = null;
+							selectedJob.paperCal.created = null;
+						}
 						invoice.jobs.addItem(selectedJob);
 					}
 				}
