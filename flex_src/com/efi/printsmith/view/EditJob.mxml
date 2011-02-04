@@ -3660,6 +3660,8 @@
 					estimator_viewstack.selectedChild = printing_estimator_canvas;
 					costingPresses.filterFunction = filterRollFedCostingPresses;
 					costingPresses.refresh();
+					presses.filterFunction = filterRollfedPresses;
+					presses.refresh();
 					this.front_passes_text.enabled = false;
 					this.back_passes_text.enabled = false;
 					this.workAndTumble.visible = false;
@@ -3828,6 +3830,10 @@
 			
 			public function filterOffsetPresses(item:PressDefinition):Boolean {
 				return item.rollFed == false;
+			}
+			
+			public function filterRollfedPresses(item:PressDefinition):Boolean {
+				return item.rollFed == true;
 			}
 			
 			private function updateWeight():void{
