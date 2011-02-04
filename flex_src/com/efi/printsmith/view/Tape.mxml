@@ -36,6 +36,7 @@
 
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.InvoiceBase;
 	import com.efi.printsmith.data.Account;
 	import com.efi.printsmith.data.TapeDepositAppliedRecord;
 	import com.efi.printsmith.data.Transaction;
@@ -260,17 +261,18 @@
 			if (temp is TapeSaleRecord) {
 				var tempSale:TapeSaleRecord = temp as TapeSaleRecord;
 				if (tempSale.isPickup == true) {
-					tempSale.invoice.pickupDate = null;
-					tempSale.invoice.offPendingDate = tempSale.invoice.pickupDate;
-					tempSale.invoice.onPendingList = true;
-					tempSale.invoice.locked = false;
+					var invoice:InvoiceBase = tempSale.invoice as InvoiceBase;
+					invoice.pickupDate = null;
+					invoice.offPendingDate = tempSale.invoice.pickupDate;
+					invoice.onPendingList = true;
+					invoice.locked = false;
 					
-					accountHistoryData = tempSale.invoice.accountHistoryData;
-					tempSale.invoice.accountHistoryData = null;		// no longer in history, but linkage belongs to Tape
+					accountHistoryData = tempSale.accountHistoryData;
+					tempSale.accountHistoryData = null;		// no longer in history, but linkage belongs to Tape
 					
 					//
 					// put invoice back on the pending list
-					dataService.addUpdate(tempSale.invoice);
+					dataService.addUpdate(invoice);
 					
 					//
 					// remove the history record and reverse any account balances
