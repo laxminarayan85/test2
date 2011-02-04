@@ -155,7 +155,6 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 			titleWindow.parentContainer = this;
 		    titleWindow.setStyle("borderAlpha", 0.9);
 		    titleWindow.formIsEmpty = true;
-			dataService.getAll("Employee");   
 			employee = new Employee();
 			employee.active = true;
 			employee.comLinks = new ArrayCollection();
@@ -164,6 +163,7 @@ implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureCompo
 			loadEmployee = true;
 			dataCount = 5;
 		}
+		dataService.getAll("Employee");
 		pressService.getAll("ProductionPress");
 		copierService.getAll("ProductionCopiers");
 		priceListService.getAll("PreferencesPricingMethod");
