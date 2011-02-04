@@ -8,8 +8,6 @@ package com.efi.printsmith.pricing
 	import com.efi.printsmith.data.TaxCodes;
 	import com.efi.printsmith.data.TaxTable;
 	
-	import mx.collections.ArrayCollection;
-	
 	public class InvoicePricing
 	{
 		
@@ -47,7 +45,12 @@ package com.efi.printsmith.pricing
 			_toInvoice.tax = _fromInvoice.tax;
 			_toInvoice.taxableSubtotal = _fromInvoice.taxableSubtotal;
 			_toInvoice.deposits = _fromInvoice.deposits;
-		
+			_toInvoice.orderedDate = _fromInvoice.orderedDate;
+			_toInvoice.proofDate = _fromInvoice.proofDate;
+			_toInvoice.wantedDate = _fromInvoice.wantedDate;
+			_toInvoice.completedDate = _fromInvoice.completedDate;
+			_toInvoice.customerNotificationDate = _fromInvoice.customerNotificationDate;
+			_toInvoice.pickupDate = _fromInvoice.pickupDate;	
 			
 		}
 		private static function fixNaNs(_invoice:InvoiceBase):void	{

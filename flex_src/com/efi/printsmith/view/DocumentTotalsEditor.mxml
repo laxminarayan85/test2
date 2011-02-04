@@ -19,6 +19,7 @@
 		
 <mx:Script>
 	<![CDATA[
+		import mx.controls.Alert;
 		import com.efi.printsmith.data.SalesCategory;
 		import com.efi.printsmith.pricing.InvoicePricing;
 		import com.efi.printsmith.data.InvoiceBase;
@@ -99,7 +100,7 @@
 		}
 		private function selectTaxTable():void	{
 			if (_invoice.taxTable != null)
-				cboTaxTable.selectedIndex = findFirstIndexByCondition(taxTables, "id",_invoice.taxTable);
+				cboTaxTable.selectedIndex = findFirstIndexByCondition(taxTables, "id",_invoice.taxTable.id);
 			if (cboTaxTable.selectedIndex == -1 && taxTables.length > 0)	{
 				_invoice.taxTable = taxTables.getItemAt(0) as TaxTable;				 
 			}
@@ -107,7 +108,7 @@
 		
 		private function selectTaxCode():void	{
 			if (_invoice.taxCode != null)
-				cboTaxCode.selectedIndex = findFirstIndexByCondition(taxCodes, "id",_invoice.taxCode);
+				cboTaxCode.selectedIndex = findFirstIndexByCondition(taxCodes, "id",_invoice.taxCode.id);
 				
 			if (cboTaxCode.selectedIndex == -1 && taxCodes.length > 0)	{
 				_invoice.taxCode = taxCodes.getItemAt(0) as TaxCodes;				 
@@ -115,6 +116,11 @@
 
 		}
 		private function onShipping():void	{
+			if (!stringIsAValidNumber(txtShipping.text))	{
+				Alert.show("Please enter valid shipping cost");
+				txtShipping.setFocus();
+				return;
+			} 
 			if (Number(txtShipping.text) > 0)	{
 				_invoice.shipPrice = Number(txtShipping.text);
 				InvoicePricing.calculateTotals(_invoice, InvoicePricing.SHIP);				
@@ -140,7 +146,13 @@
 		}
 		
 		private function onDiscount():void	{
+			
 			if (rdoDiscAmt.selected)	{
+				if (!stringIsAValidNumber(txtDiscAmt.text))	{
+					Alert.show("Please enter valid discount amount");
+					txtDiscAmt.setFocus();
+					return;
+				} 
 				if (Number(txtDiscAmt.text) > 0)	{
 					_invoice.discount = Number(txtDiscAmt.text);
 					_invoice.discountIsDollars = true;
@@ -153,6 +165,11 @@
 //				}				
 			}
 			else	{
+				if (!stringIsAValidNumber(txtDiscAmt.text))	{
+					Alert.show("Please enter valid discount percentage");
+					txtDiscPerc.setFocus();
+					return;
+				} 
 				if (Number(txtDiscPerc.text) > 0)	{
 					_invoice.discount = Number(txtDiscPerc.text);
 					_invoice.discountIsDollars = false;
@@ -291,22 +308,22 @@
 			<mx:Panel title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Dates')}" height="40%" width="100%">
 				<mx:Form height="100%" width="100%">
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Ordered')}">
-						<mx:Text id="txtOrdered" text="{_origInvoice.orderedDate}" />
+						<mx:Text id="txtOrdered" text="{_invoice.orderedDate}" />
 					</mx:FormItem>
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Proofby')}">
-						<mx:Text id="txtProofBy" text="{_origInvoice.proofDate}"/>
+						<mx:Text id="txtProofBy" text="{_invoice.proofDate}"/>
 					</mx:FormItem>
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Wantedby')}">
-						<mx:Text id="txtWantedBy" text="{_origInvoice.wantedDate}" />
+						<mx:Text id="txtWantedBy" text="{_invoice.wantedDate}" />
 					</mx:FormItem>
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Finished')}">
-						<mx:Text id="txtFinished"  text="{_origInvoice.completedDate}"/>
+						<mx:Text id="txtFinished"  text="{_invoice.completedDate}"/>
 					</mx:FormItem>
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.Notified')}">
-						<mx:Text id="txtNotified" text="{_origInvoice.customerNotificationDate}" />
+						<mx:Text id="txtNotified" text="{_invoice.customerNotificationDate}" />
 					</mx:FormItem>		
 					<mx:FormItem label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.PickedUp')}">
-						<mx:Text id="txtPickedUp" text="{_origInvoice.pickupDate}" />
+						<mx:Text id="txtPickedUp" text="{_invoice.pickupDate}" />
 					</mx:FormItem>									
 				</mx:Form>
 			</mx:Panel>

@@ -1794,7 +1794,7 @@
 				var de:DocumentTotalsEditor= new DocumentTotalsEditor();
 				//de.addEventListener(DepositEntryAddedEvent.DEPOSITENTRYADDED, onDepEntryAdded,false, 0, true);
 				var winId:int = windowRef.windowID;
-				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.DocumentTotals'), de,-1,-1,550,750,winId);
+				Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'invTotalCmd.DocumentTotals'), de,-1,-1,550,800,winId);
 				de.invoice = invoice; 
 				
 				
