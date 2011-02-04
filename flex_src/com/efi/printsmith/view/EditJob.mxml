@@ -938,6 +938,8 @@
 								<mx:LinkButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kEstimatorChecklistCommand.EstimatorChecklist')}"
 											   click="{openEstimatorCheckList()}"/>							
 								<mx:LinkButton label="Current xpedx Stock Status" click="doXpedxStockStatus()"/>
+								<mx:LinkButton label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.ChangeStockSelection')}"
+											   click="{changeStockDefinition()}"/>	
 						</mx:VBox>
 					</mx:VDividedBox>
 					<mx:ViewStack id="viewstack3"
