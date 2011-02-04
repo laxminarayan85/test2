@@ -1339,9 +1339,30 @@
 	private function paymentMethodChanged(event:Event):void {
 		var rbvalue:String = event.currentTarget.selectedValue;
 						
-		//
-		// no left open transactions
-		//
+		
+		if ( customerAccount != null){
+			switch ( customerAccount.type){
+	 		case Constants.ACCOUNT_TYPE_CASH_CHECK_CREDIT:
+	 			
+	 			break;
+	 		case Constants.ACCOUNT_TYPE_FULL_DEPOSIT:
+	 		
+	 			break;
+	 		case Constants.ACCOUNT_TYPE_CASH_ONLY:
+	 			if( "Cash" != rbvalue){
+	 				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Onlycashisacceptedas'));
+	 				event.currentTarget.selectedValue = "";
+	 				return
+	 			}
+	 			break;
+	 		case Constants.ACCOUNT_TYPE_CHARGE:
+	 			
+	 			break;
+	 		case Constants.ACCOUNT_TYPE_CARD_ON_FILE:
+	 	
+	 			break;
+	 		}
+ 		}
 		doAccept(false);
 		
 		//
@@ -1529,7 +1550,7 @@
 						Alert.show(message, "Warning", 0, null, null, null, 4); 
 						payOK = false;
 					} else if (customerAccount.type != Constants.ACCOUNT_TYPE_CHARGE) {
-						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Onlycashisacceptedas");
+						message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Theselectedaccountdo");
 						Alert.show(message, "Warning", 0, null, null, null, 4); 
 						payOK = false;
 					}

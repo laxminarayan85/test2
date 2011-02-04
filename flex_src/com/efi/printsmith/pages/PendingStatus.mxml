@@ -133,7 +133,7 @@
 		
 		<mx:HBox width="100%" horizontalGap="1">
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.Wantedby')}: " styleName="boldstyle"/>
-			<mx:Label text="{getFormattedDate(_invoiceBase.wantedDate)}"/>
+			<mx:Label text="{getFormattedDate(_invoiceBase.wantedDate)}" enabled="true"/>
 		</mx:HBox>
 		
 		<mx:HBox width="100%" horizontalGap="1">
