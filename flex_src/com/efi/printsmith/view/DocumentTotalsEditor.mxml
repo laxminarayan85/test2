@@ -71,9 +71,9 @@
 		
 			if (_invoice.discount > 0)	{
 				if (_invoice.discountIsDollars)	
-					txtDiscAmt.text = Snowmass.getCurrencyFormatter(true, 2).format(_invoice.discount);
+					txtDiscAmt.text = Snowmass.getCurrencyFormatter(false, 2).format(_invoice.discount);
 				else	
-					txtDiscPerc.text = Snowmass.getCurrencyFormatter(true, 2).format(_invoice.discount);
+					txtDiscPerc.text = Snowmass.getCurrencyFormatter(false, 2).format(_invoice.discount);
 				
 			}
 		}
@@ -215,7 +215,10 @@
 		}
 		
 		private function onOK():void	{
-			
+			onNoTax();
+			onDiscount();
+			onShipping();
+						
 			InvoicePricing.copyPricingFields(_invoice, _origInvoice);
 //			_invoice.taxTable = cboTaxTable.selectedItem as TaxTable;
 //			_invoice.taxCode = cboTaxCode.selectedItem as TaxCodes;

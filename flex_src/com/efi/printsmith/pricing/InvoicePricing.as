@@ -331,10 +331,8 @@ package com.efi.printsmith.pricing
 		}
 		private static function  calcSalesTax(_invoice:InvoiceBase):void	{
 			if (_invoice != null)	{
-				if (_invoice.notTaxable)	{
-					_invoice.tax = 0;
-				}
-				else	{
+				_invoice.tax = 0;
+				if (!_invoice.notTaxable)	{
 					// calculate sales tax
 					if (_invoice.taxTable != null)	{
 						calcShippingTax(_invoice);
