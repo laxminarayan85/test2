@@ -691,10 +691,24 @@
 				if(!convertedEstimate){
 					setOriginalInvoice();
 					dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
+					var pdl:PendingList = getPendingList();
+					if (pdl != null)	{
+						pdl.dispatchEvent(new PendingListUpdateEvent(PendingListUpdateEvent.PENDINGLIST_UPDATE_EVENT,true));
+					}
 					Snowmass.getInstance().containerManager.getWindowWithChild(this,true).closeWindow();
 				}
 			}
 			
+			private function getPendingList():PendingList	{
+				var ac:ArrayCollection = Snowmass.getInstance().containerManager.getAllWindows();
+				for (var i:int=0; i<ac.length; i++)	{
+					var win:MDIWindow = ac.getItemAt(i) as MDIWindow;
+					if (win.content is PendingList)	{
+						return win.content as PendingList;
+					} 
+				}
+				return null;
+			}
 			private function handleEstimateLoadResult(event:ResultEvent):void {
 				var estimateObj:InvoiceBase = event.result as InvoiceBase;
 				estimateObj.status = "Won";
