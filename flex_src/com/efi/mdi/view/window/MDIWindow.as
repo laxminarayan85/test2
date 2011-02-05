@@ -7,7 +7,7 @@ package com.efi.mdi.view.window
 	import com.efi.mdi.event.window.WindowMinimizeEvent;
 	import com.efi.mdi.event.window.WindowResizeStartEvent;
 	import com.efi.mdi.event.window.WindowTitleChangedEvent;
-
+	import com.efi.mdi.view.taskbar.MinimizedWindow;
 	
 	import flash.display.Shape;
 	import flash.events.MouseEvent;
@@ -346,10 +346,15 @@ package com.efi.mdi.view.window
 		
 		
 		public function bringWindowToFront():void	{
-			if (state == OPEN)	{
+			if (state == MINIMIZED)	{
+				var minWin:MinimizedWindow = ContainerManager.getExistingInstance().getMinimized(this);
+				minWin.restoreWindow();
+			}
+			else if (state == OPEN)	{
 				this.parent.setChildIndex(this, ContainerManager.getExistingInstance().getCanvasChildrenCount()-1);
 				ContainerManager.getExistingInstance().recalculateWindowStyles();
 			}
+			
 			//MS:TODO if (state == MINIMIZED)
 		}
 		private function onClick(event:MouseEvent):void	{

@@ -32,7 +32,7 @@
 				}				
 			}
 			
-			private function restoreWindow():void	{
+			public function restoreWindow():void	{
 				dispatchEvent(new WindowRestoreEvent(WindowRestoreEvent.WINDOW_RESTORE, this));
 			}
 			

@@ -713,6 +713,13 @@
 //				contact_list.selectedItem=invoice.account.contact as Contact;
 				bill_to_address_editor.setAddress(invoice.billToAddress);
 				this.delivery_intent_address_editor.setAddress(invoice.shipToAddress);
+				if (isNewInvoice(invoice))	{
+					if (accountItem.salesRep != null)	
+						inv_sales_rep.selectedIndex=findItem(accountItem.salesRep.name, salesReps);
+					if (accountItem.shippingMode != null)	
+						ship_via_combo.selectedIndex=findItem(accountItem.shippingMode.name, shippingMethods);
+										
+				}
 				UpdateCustomerStatus();
 			}
 
@@ -733,22 +740,35 @@
 			private function handleLoadSalesReps(ev:ResultEvent):void
 			{
 				salesReps=ev.result as ArrayCollection;
-				if (invoice != null && invoice.salesRep != null)
-					inv_sales_rep.selectedIndex=findItem(invoice.salesRep.name, salesReps);
+				if (invoice != null)	{
+					if (invoice.salesRep != null)
+						inv_sales_rep.selectedIndex=findItem(invoice.salesRep.name, salesReps);
+					
+				}  
+					
 			}
 
 			private function handleLoadHoldState(ev:ResultEvent):void
 			{
 				holdStates=ev.result as ArrayCollection;
-				if (invoice != null && invoice.holdState != null)
-					inv_hold_state.selectedIndex=findItem(invoice.holdState.name, holdStates);
+				if (invoice != null) 	{
+					if (invoice.holdState != null)	
+						inv_hold_state.selectedIndex=findItem(invoice.holdState.name, holdStates);
+					
+				}
+					
 			}
 
 			private function handleLoadShippingMethods(ev:ResultEvent):void
 			{
 				shippingMethods=ev.result as ArrayCollection;
-				if (invoice != null && invoice.shippingMethod != null)
-					ship_via_combo.selectedIndex=findItem(invoice.shippingMethod.name, shippingMethods);
+				if (invoice != null)	{
+					if (invoice.shippingMethod != null)	{
+						ship_via_combo.selectedIndex=findItem(invoice.shippingMethod.name, shippingMethods);	
+					}
+					
+				} 
+					
 			}
 			private function getAcctBillToContact(ac:ArrayCollection):Contact	{
 				if (ac!= null)	{
@@ -876,7 +896,7 @@
 					else{
 					
 						this.setAccount(evt.account);
-						if (evt.account.accountNote != null)	{
+						if (evt.account.accountNote != null && StringUtil.trim(evt.account.accountNote) != "")	{
 							var a:Array = new Array();
 							a.push("invoice notes");
 							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_CUSTOMERACCOUNTNOTES',a),"",Alert.YES|Alert.NO,this,onConfirmNotes);
