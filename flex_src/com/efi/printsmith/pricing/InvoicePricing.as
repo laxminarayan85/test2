@@ -64,12 +64,15 @@ package com.efi.printsmith.pricing
 				_invoice.grandTotal = 0;
 							
 		}
-		public static function calculateTotals(_invoice:InvoiceBase, step:int ):void	{
+		public static function calculateTotals(_invoice:InvoiceBase, step:int, fullRecalc:Boolean=true ):void	{
 			fixNaNs(_invoice);
-			calcTax(_invoice);
-			calcShipCharges(_invoice);
-			calcSubtotals(_invoice);
-			calcDiscounts(_invoice);
+			calcTax(_invoice, fullRecalc);
+			if (fullRecalc)
+				calcShipCharges(_invoice);
+			if (fullRecalc)
+				calcSubtotals(_invoice);
+				
+			calcDiscounts(_invoice, fullRecalc);
 			calcSalesTax(_invoice);
 			calcTotals(_invoice);
 			calcTotalDue(_invoice);			
@@ -139,7 +142,7 @@ package com.efi.printsmith.pricing
 			return usedCategories;
 		}
 		
-		private static function  calcTax(_invoice:InvoiceBase):void	{
+		private static function  calcTax(_invoice:InvoiceBase, fullRecalc:Boolean):void	{
 			if (_invoice != null)	{
 				var taxTable:TaxTable;
 				var taxCode:TaxCodes;
@@ -164,40 +167,41 @@ package com.efi.printsmith.pricing
 				if (taxTable != null)
 					taxRate = taxTable.effectiveTaxRate;
 				
-				var taxableSubtotal:Number = 0;
-				if (_invoice.notTaxable)		{
-					_invoice.taxableSubtotal = 0;					
-				}
-				else	{
-					if (_invoice.jobs != null)	{
-						for (var i:int=0; i<_invoice.jobs.length; i++)	{
-							var j:Job = _invoice.jobs.getItemAt(i) as Job;
-							if (j.taxable)	{
-								taxableSubtotal += j.pricingRecord.totalPrice; 
-							}
-							if (j.charges != null)	{
-								for (var k:int = 0; k<j.charges.length; k++)	{
-									var c:Charge = j.charges.getItemAt(k) as Charge;
-									if (c.taxable)	{
-										taxableSubtotal += c.price;
-									}
+				if (fullRecalc)	{
+					var taxableSubtotal:Number = 0;
+					if (_invoice.notTaxable)		{
+						_invoice.taxableSubtotal = 0;					
+					}
+					else	{
+						if (_invoice.jobs != null)	{
+							for (var i:int=0; i<_invoice.jobs.length; i++)	{
+								var j:Job = _invoice.jobs.getItemAt(i) as Job;
+								if (j.taxable)	{
+									taxableSubtotal += j.pricingRecord.totalPrice; 
 								}
-							}						 
-						}										
-					}
-					if (_invoice.charges != null)	{
-						for (var n:int=0; n<_invoice.charges.length; n++)	{
-							var c:Charge = _invoice.charges.getItemAt(n) as Charge;
-							if (c.taxable)	{
-								taxableSubtotal += c.price;
-							}	
-						}					
-					}
-					
-					_invoice.taxableSubtotal = taxableSubtotal;
-					
+								if (j.charges != null)	{
+									for (var k:int = 0; k<j.charges.length; k++)	{
+										var c:Charge = j.charges.getItemAt(k) as Charge;
+										if (c.taxable)	{
+											taxableSubtotal += c.price;
+										}
+									}
+								}						 
+							}										
+						}
+						if (_invoice.charges != null)	{
+							for (var n:int=0; n<_invoice.charges.length; n++)	{
+								var c:Charge = _invoice.charges.getItemAt(n) as Charge;
+								if (c.taxable)	{
+									taxableSubtotal += c.price;
+								}	
+							}					
+						}
+						
+						_invoice.taxableSubtotal = taxableSubtotal;
+						
+					}				
 				}				
-				
 			}
 		}
 		
@@ -309,9 +313,10 @@ package com.efi.printsmith.pricing
 			}
 			
 		}
-		private static function calcDiscounts(_invoice:InvoiceBase):void	{
+		private static function calcDiscounts(_invoice:InvoiceBase, fullRecalc:Boolean):void	{
 			if (_invoice != null)	{
-				calcDiscountableSubTotal(_invoice);
+				if (fullRecalc)
+					calcDiscountableSubTotal(_invoice);
 				if (_invoice.discount > 0)	{
 					if (_invoice.discountIsOneTime || _invoice.discountIsDollars)	{
 						calcDollarDiscount(_invoice); 

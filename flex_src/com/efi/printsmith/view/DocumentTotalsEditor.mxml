@@ -44,6 +44,7 @@
 		private var taxTableLoaded:Boolean = false;
 		private var taxCodeLoaded:Boolean = false;
 		
+		
 		private function handleFault(event:FaultEvent):void	{
 					
 		}
@@ -117,13 +118,11 @@
 		}
 		private function onShipping():void	{
 			if (!stringIsAValidNumber(txtShipping.text))	{
-				Alert.show("Please enter valid shipping cost");
-				txtShipping.setFocus();
-				return;
+				txtShipping.text = "0.00"; 				
 			} 
 			if (Number(txtShipping.text) > 0)	{
 				_invoice.shipPrice = Number(txtShipping.text);
-				InvoicePricing.calculateTotals(_invoice, InvoicePricing.SHIP);				
+				InvoicePricing.calculateTotals(_invoice, InvoicePricing.SHIP, false);				
 			} 
 		}		
 		private function onPriceLocked():void	{
@@ -133,30 +132,28 @@
 		private function onNoTax():void	{
 			_invoice.notTaxable = chkNoTax.selected;
 			
-			InvoicePricing.calculateTotals(_invoice,InvoicePricing.TAX);	
+			InvoicePricing.calculateTotals(_invoice,InvoicePricing.TAX, false);	
 		}
 		
 		private function onTaxTable():void	{
 			_invoice.taxTable = cboTaxTable.selectedItem as TaxTable;
-			InvoicePricing.calculateTotals(_invoice,InvoicePricing.ALL);
+			InvoicePricing.calculateTotals(_invoice,InvoicePricing.ALL, false);
 		}
 		private function onTaxCode():void	{
 			_invoice.taxCode = cboTaxCode.selectedItem as TaxCodes;
-			InvoicePricing.calculateTotals(_invoice,InvoicePricing.ALL);
+			InvoicePricing.calculateTotals(_invoice,InvoicePricing.ALL, false);
 		}
 		
 		private function onDiscount():void	{
 			
 			if (rdoDiscAmt.selected)	{
 				if (!stringIsAValidNumber(txtDiscAmt.text))	{
-					Alert.show("Please enter valid discount amount");
-					txtDiscAmt.setFocus();
-					return;
+					txtDiscAmt.text = "0.00";				
 				} 
 				if (Number(txtDiscAmt.text) > 0)	{
 					_invoice.discount = Number(txtDiscAmt.text);
 					_invoice.discountIsDollars = true;
-					InvoicePricing.calculateTotals(_invoice, InvoicePricing.DISCOUNT);
+					InvoicePricing.calculateTotals(_invoice, InvoicePricing.DISCOUNT, false);
 				}
 //				else	{
 //					_invoice.discount = 0;
@@ -166,14 +163,12 @@
 			}
 			else	{
 				if (!stringIsAValidNumber(txtDiscAmt.text))	{
-					Alert.show("Please enter valid discount percentage");
-					txtDiscPerc.setFocus();
-					return;
+					txtDiscPerc.text = "0.00";
 				} 
 				if (Number(txtDiscPerc.text) > 0)	{
 					_invoice.discount = Number(txtDiscPerc.text);
 					_invoice.discountIsDollars = false;
-					InvoicePricing.calculateTotals(_invoice, InvoicePricing.DISCOUNT);
+					InvoicePricing.calculateTotals(_invoice, InvoicePricing.DISCOUNT, false);
 				}
 			}
 		}		
@@ -193,8 +188,6 @@
 			if (invoiceSet && taxTableLoaded)	{
 				selectTaxTable();
 			}
-//			else if (_invoice.account != null && _invoice.account.taxTable != null)	
-//				cboTaxTable.selectedIndex = findFirstIndexByCondition(taxTables, "id",_invoice.account.taxTable.id);
 							
 				
 		}
@@ -205,20 +198,8 @@
 			if (invoiceSet && taxCodeLoaded)	{
 				selectTaxCode();
 			}
-//			else if (_invoice.account != null && _invoice.account.taxCode != null)
-//				cboTaxCode.selectedIndex = findFirstIndexByCondition(taxCodes, "id",_invoice.account.taxCode.id);			
 		}
 		
-//		private function getDeposits(ac:ArrayCollection):Number	{
-//			var dep:Number = 0.0;
-//			if (ac != null)	{
-//				for (var i:int=0; i<ac.length; i++)	{
-//					var de:DepositEntry = ac.getItemAt(i) as DepositEntry;
-//					dep += de.amount;
-//				}
-//			}
-//			return dep; 
-//		}		
 		public function getSecurityCommand():String {
 			return PSSecurityCommands.INVOICE_DOCUMENTTOTALS;
 		}
@@ -235,27 +216,10 @@
 			onNoTax();
 			onDiscount();
 			onShipping();
-						
+			
 			InvoicePricing.copyPricingFields(_invoice, _origInvoice);
-//			_invoice.taxTable = cboTaxTable.selectedItem as TaxTable;
-//			_invoice.taxCode = cboTaxCode.selectedItem as TaxCodes;
-//			
-//			if (rdoDiscPerc.selected)	{
-//				_invoice.discountIsDollars = false;
-//				_invoice.discount = Number(txtDiscPerc.text);
-//			}			
-//			else	{
-//				_invoice.discountIsDollars = true;
-//				_invoice.discount = Number(txtDiscAmt.text);
-//			}
-//			
-//			_invoice.notTaxable = chkNoTax.selected;
-//			_invoice.discountIsOneTime = chkApplyOneTime.selected;
-//			_invoice.shipCharges = Number(txtShipping.text);
-//			_invoice.priceLocked = chkLockPrices.selected;
-//			
-			 
-			closeWindow();	
+			closeWindow();
+				
 		}
 		
 		private function onRecalc():void	{
@@ -290,7 +254,7 @@
 					<mx:Text id="txtTaxSub" textAlign="right" text="{Snowmass.getCurrencyFormatter(true,2).format(_invoice.taxableSubtotal)}" />
 				</mx:FormItem> 
 				<mx:FormItem>
-					<mx:CheckBox id="chkNoTax" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.NOTAX')}" selected="{_invoice.notTaxable}" />
+					<mx:CheckBox id="chkNoTax" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'invTotalCmd.NOTAX')}" selected="{_invoice.notTaxable}" click="{onNoTax();}"/>
 				</mx:FormItem>			
 				<mx:FormItem>
 					<mx:CheckBox id="chkApplyOneTime" selected="{_invoice.discountIsOneTime}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'custCmd.Applyonetimediscount')}" click="onOneTimeClick();" />

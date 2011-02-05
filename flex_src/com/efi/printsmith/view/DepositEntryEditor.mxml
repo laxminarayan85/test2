@@ -144,14 +144,12 @@
 					de.type = dt;
 					de.depositNumber = 1;
 					if (!stringIsAValidNumber(txtAmount1.text) || (parseFloat(txtAmount1.text) < 0))	{
-						Alert.show("Payment 1 not a number");
-						txtAmount1.setFocus();
-						return;
+						txtAmount1.text = "0.00";
 					}
 					de.amount = Number(txtAmount1.text);
 					if ((dt.name == rdoCC1.label || dt.name == rdoCheck1.label) && (de.amount > 0))	{
 						if (StringUtil.trim(txtRef1.text) == "")	{
-							Alert.show("Please enter Ref# 1");
+							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "creditCardManAppvCmd.Needreferencenumber") + " 1");
 							txtRef1.setFocus();
 							return;
 						}						
@@ -169,14 +167,12 @@
 					de.type = dt;
 					de.depositNumber = 2;
 					if (!stringIsAValidNumber(txtAmount2.text) || (parseFloat(txtAmount2.text) < 0))	{
-						Alert.show("Payment 2 not a number");
-						txtAmount2.setFocus();
-						return;
+						txtAmount2.text = "0.00";
 					}
 					de.amount = Number(txtAmount2.text);
 					if ((dt.name == rdoCC2.label || dt.name == rdoCheck2.label)	&& (de.amount > 0)) {
 						if (StringUtil.trim(txtRef2.text) == "")	{
-							Alert.show("Please enter Ref# 2");
+							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "creditCardManAppvCmd.Needreferencenumber") + " 2");
 							txtRef2.setFocus();
 							return;
 						}						
@@ -194,14 +190,12 @@
 					de.type = dt;
 					de.depositNumber = 3;
 					if (!stringIsAValidNumber(txtAmount3.text) || (parseFloat(txtAmount3.text) < 0))	{
-						Alert.show("Payment 3 not a number");
-						txtAmount3.setFocus();
-						return;
+						txtAmount3.text = "0.00";
 					}
 					de.amount = Number(txtAmount3.text);
 					if ((dt.name == rdoCC3.label || dt.name == rdoCheck3.label) && (de.amount > 0))	{
 						if (StringUtil.trim(txtRef3.text) == "")	{
-							Alert.show("Please enter Ref# 3");
+							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "creditCardManAppvCmd.Needreferencenumber") + " 3");
 							txtRef3.setFocus();
 							return;
 						}						
