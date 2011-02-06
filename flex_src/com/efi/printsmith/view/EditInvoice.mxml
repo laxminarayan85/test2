@@ -396,6 +396,10 @@
 					InvoicePricing.calculateTotals(invoice,InvoicePricing.ALL);	
 				}
 				
+				if (invoice.account != null && invoice.account.type == 'full_deposit' && invoice.amountDue > 0)	{
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_WarningThiscustomerm'));
+				}
+				
 				prefStocksDataService.getSingle("PreferencesStocks");
 				
 				invoiceRepositoryService.getItemList();
@@ -926,7 +930,11 @@
 				mapToInvoiceData();
 				var doInvoiceLater:Boolean = false;
 				
-				if (invoice.account != null)	{				
+				if (invoice.account != null)	{	
+					if (invoice.account.type == 'full_deposit' && invoice.amountDue > 0)	{
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_WarningThiscustomerm'));
+					}
+								
 					if (invoice.account.walkIn)	{
 						dataService.addUpdate(invoice.account);
 						doInvoiceLater = true;

@@ -894,12 +894,14 @@
 						this.setAccount(new Account());
 					}
 					else{
-					
 						this.setAccount(evt.account);
 						if (evt.account.accountNote != null && StringUtil.trim(evt.account.accountNote) != "")	{
 							var a:Array = new Array();
 							a.push("invoice notes");
 							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_CUSTOMERACCOUNTNOTES',a),"",Alert.YES|Alert.NO,this,onConfirmNotes);
+						}
+						if (evt.account.type == 'full_deposit')	{
+							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_WarningThiscustomerm'));
 						}
 					}
 				}
