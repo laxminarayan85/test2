@@ -49,31 +49,31 @@ public class PriceStockEngine {
 		
 		for (int i = 1; i <= 6; i++) {
 			if (i == 1) {
-				if (qty >= stockDefinition.getBlankSheetqty1() && qty < stockDefinition.getBlankSheetqty2()) {
+				if (qty >= stockDefinition.getBlankSheetqty1() && (stockDefinition.getBlankSheetqty2() == 0 || qty < stockDefinition.getBlankSheetqty2())) {
 					retVal = stockDefinition.getBlankSheetPrice1();
 					retVal = retVal / stockDefinition.getBlankSheetqty1();
 					break;
 				}
 			}else if (i == 2) {
-				if (qty >= stockDefinition.getBlankSheetqty2() && qty < stockDefinition.getBlankSheetqty3()) {
+				if (qty >= stockDefinition.getBlankSheetqty2() && (stockDefinition.getBlankSheetqty3() == 0 || qty < stockDefinition.getBlankSheetqty3())) {
 					retVal = stockDefinition.getBlankSheetPrice2();
 					retVal = retVal / stockDefinition.getBlankSheetqty2();
 					break;
 				}
 			}else if (i == 3) {
-				if (qty >= stockDefinition.getBlankSheetqty3() && qty < stockDefinition.getBlankSheetqty4()) {
+				if (qty >= stockDefinition.getBlankSheetqty3() && (stockDefinition.getBlankSheetqty4() == 0 || qty < stockDefinition.getBlankSheetqty4())) {
 					retVal = stockDefinition.getBlankSheetPrice3();
 					retVal = retVal / stockDefinition.getBlankSheetqty3();
 					break;
 				}
 			}else if (i == 4) {
-				if (qty >= stockDefinition.getBlankSheetqty4() && qty < stockDefinition.getBlankSheetqty5()) {
+				if (qty >= stockDefinition.getBlankSheetqty4() && (stockDefinition.getBlankSheetqty5() == 0 || qty < stockDefinition.getBlankSheetqty5())) {
 					retVal = stockDefinition.getBlankSheetPrice4();
 					retVal = retVal / stockDefinition.getBlankSheetqty4();
 					break;
 				}
 			}else if (i == 5) {
-				if (qty >= stockDefinition.getBlankSheetqty5() && qty < stockDefinition.getBlankSheetqty6()) {
+				if (qty >= stockDefinition.getBlankSheetqty5() && (stockDefinition.getBlankSheetPrice6() == 0 || qty < stockDefinition.getBlankSheetqty6())) {
 					retVal = stockDefinition.getBlankSheetPrice5();
 					retVal = retVal / stockDefinition.getBlankSheetqty5();
 					break;

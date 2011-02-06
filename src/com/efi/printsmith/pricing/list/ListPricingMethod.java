@@ -33,7 +33,7 @@ public class ListPricingMethod {
 			if (paperPrice == null) {
 				List <PaperPrice> paperPrices = (List<PaperPrice>) dataService.getAll("PaperPrice");
 				if (paperPrices.size()>0)
-					paperPrice = paperPrices.get(0);
+					paperPrice = (PaperPrice)dataService.getPaperPrice(paperPrices.get(0).getId());
 				else
 					return job;
 			}
@@ -53,9 +53,9 @@ public class ListPricingMethod {
 					qty = job.getPressQty() + job.getBinderyWaste();
 				if (paperPrice.getType() == 1) {
 					if (job.getFrontColors() > 0)
-						price += MatrixUtilities.getPaperPrice((Matrix)job.getStock().getDefaultPriceList(), job.getFrontColors(), qty, true);
+						price += MatrixUtilities.getPaperPrice((Matrix)paperPrice, job.getFrontColors(), qty, true);
 					if (job.getBackColors() > 0)
-						price += MatrixUtilities.getPaperPrice((Matrix)job.getStock().getDefaultPriceList(), job.getBackColors(), qty, false);
+						price += MatrixUtilities.getPaperPrice((Matrix)paperPrice, job.getBackColors(), qty, false);
 				} else {
 					price += MatrixUtilities.getPassPrice((Matrix)paperPrice, job.getFrontColors() + job.getBackColors(), qty);
 				}
