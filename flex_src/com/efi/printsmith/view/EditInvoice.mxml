@@ -400,6 +400,14 @@
 					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_WarningThiscustomerm'));
 				}
 				
+				if (invoice.account != null && (invoice.customerPO == null || invoice.customerPO == "") 
+				&& (invoice.account.customerPO != null && invoice.account.customerPO != ""))	{
+					invoice.customerPO = invoice.account.customerPO;
+				}
+				if (invoice is Invoice && invoice.account != null && invoice.account.poRequired && (invoice.customerPO == null || invoice.customerPO == ""))	{
+					Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Ordersforthiscustome'));
+				}
+				
 				prefStocksDataService.getSingle("PreferencesStocks");
 				
 				invoiceRepositoryService.getItemList();
@@ -934,7 +942,9 @@
 					if (invoice.account.type == 'full_deposit' && invoice.amountDue > 0)	{
 						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_WarningThiscustomerm'));
 					}
-								
+					if (invoice.account.poRequired && (invoice.customerPO == null || invoice.customerPO == ""))	{
+						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Ordersforthiscustome'));
+					}			
 					if (invoice.account.walkIn)	{
 						dataService.addUpdate(invoice.account);
 						doInvoiceLater = true;

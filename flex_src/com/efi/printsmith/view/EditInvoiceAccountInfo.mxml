@@ -702,6 +702,11 @@
 					bill_to_address_editor.editable = false;
 					btnContactNew.enabled = true;
 					accountDataService.getContactsByAccountId("Contact", invoice.account.id);
+					
+					if ( (invoice.customerPO == null || invoice.customerPO == "") && (accountItem.customerPO != null && accountItem.customerPO != ""))	{
+						invoice.customerPO = accountItem.customerPO;
+					}
+					
 				}
 				
 				
@@ -902,6 +907,9 @@
 						}
 						if (evt.account.type == 'full_deposit')	{
 							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_WarningThiscustomerm'));
+						}
+						if (!isEstimate(invoice) && evt.account.poRequired && (evt.account.customerPO == null || evt.account.customerPO == ""))	{
+							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Ordersforthiscustome'));
 						}
 					}
 				}
