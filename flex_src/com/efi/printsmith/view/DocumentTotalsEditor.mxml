@@ -71,7 +71,6 @@
 			
 			populateSalesCats();
 		
-			chkApplyOneTime.enabled = false;
 					
 			if (_invoice.discount > 0 || _invoice.discountFactor > 0)	{
 				if (_invoice.discountIsDollars)	{
@@ -177,13 +176,13 @@
 		}		
 		private function onOneTimeClick():void	{
 			_invoice.discountIsOneTime = chkApplyOneTime.selected;
+			rdoDiscAmt.selected = true;	
+				
 			if (chkApplyOneTime.selected)	{
-				rdoDiscAmt.selected = true;	
 				txtDiscAmt.text = Snowmass.getCurrencyFormatter(false,2).format(_invoice.discount);			
 			}
-			else	{
-				rdoDiscPerc.selected = true;
-			}
+			
+			onDiscount();
 		}		
 		
 		private function handleLoadTaxTableResult(event:ResultEvent):void	{

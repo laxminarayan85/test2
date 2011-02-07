@@ -33,6 +33,12 @@
 					fault="handleFault(event)"
 					result="handleCreateCustomerFromDoc(event)"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject id="deductDiscountService"
+						destination="dataService">
+		<mx:method name="addUpdate"
+					/>
+	</mx:RemoteObject>
+		
 	<mx:RemoteObject id="dataService"
 					 destination="dataService" showBusyCursor="true">
 		<mx:method name="getAll"
@@ -941,10 +947,20 @@
 				if (invoice.account != null)	{	
 					if (invoice.account.type == 'full_deposit' && invoice.amountDue > 0)	{
 						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_WarningThiscustomerm'));
-					}
+					} 
 					if (invoice.account.poRequired && (invoice.customerPO == null || invoice.customerPO == ""))	{
 						Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Ordersforthiscustome'));
 					}			
+					if (invoice.discountIsOneTime)	{
+						if (invoice.dollarDiscount < invoice.discount)	{
+							var a:Array = new Array();
+							a.push(Snowmass.getCurrencyFormatter(true,2).format(invoice.account.discountDollarAmt));
+							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Thecustomersonetimed',a),"",Alert.YES|Alert.NO,this,onSelectRemainder);
+						}
+						else	{
+							deductAccountDiscount(invoice.account.discountDollarAmt);
+						}	
+					}
 					if (invoice.account.walkIn)	{
 						dataService.addUpdate(invoice.account);
 						doInvoiceLater = true;
@@ -972,7 +988,22 @@
 				}
 				
 			}
-
+			
+			private function onSelectRemainder(evt:CloseEvent):void	{
+				if (evt.detail == Alert.YES)	{
+					deductAccountDiscount(invoice.dollarDiscount);					
+				}
+				else	{
+					deductAccountDiscount(invoice.account.discountDollarAmt);
+				}
+			}
+			
+			private function deductAccountDiscount(amt:Number):void	{
+				invoice.account.discountDollarAmt = invoice.account.discountDollarAmt - amt;
+				if (invoice.account.discountDollarAmt == 0)
+					invoice.account.oneTimeDiscount = false;
+				deductDiscountService.addUpdate(invoice.account);	
+			}
 			public function doGet():void
 			{
 

@@ -55,6 +55,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.pricing.InvoicePricing;
 			import mx.events.DragEvent;
 			import com.efi.printsmith.events.InvoiceNotesAddedEvent;
 			import mx.collections.Sort;
@@ -924,9 +925,12 @@
 									invoice.discount = evt.account.discountDollarAmt;
 								}
 								else	{
-									Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "one time discount"),"",Alert.YES|Alert.NO,this,onConfirmDiscount);									
+									var a:Array = new Array();
+									a.push(Snowmass.getCurrencyFormatter(true,2).format(invoice.account.discountDollarAmt));
+									Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "custCmd.Thiscustomerhasaonet",a),"",Alert.YES|Alert.NO,this,onConfirmDiscount);									
 								}
 							}
+							InvoicePricing.calculateTotals(invoice,InvoicePricing.ALL, false);
 						}
 //						if (evt.account.discount.oneTimeDiscount)	{
 //							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_CUSTOMERACCOUNTNOTES',a),"",Alert.YES|Alert.NO,this,onConfirmOneTime);
@@ -943,7 +947,8 @@
 			private function onConfirmDiscount(evt:CloseEvent):void	{
 				if (evt.detail == Alert.YES)	{
 					invoice.discountIsOneTime = true;
-					invoice.discount = invoice.account.discount;
+					invoice.discount = invoice.account.discountDollarAmt;
+					
 				}
 			}		
 			private function onConfirmNotes(evt:CloseEvent):void	{
