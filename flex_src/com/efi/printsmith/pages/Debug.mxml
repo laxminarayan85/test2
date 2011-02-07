@@ -66,6 +66,7 @@
 			import com.efi.printsmith.query.RemoteCriterion;
 			import com.efi.printsmith.data.ProductCode;
 			import com.efi.printsmith.data.Location;
+			import com.efi.printsmith.data.DimensionInstance;
 			import com.efi.printsmith.data.SalesCategory;
 			import com.efi.printsmith.view.RepositoryDownload;
 			import com.efi.printsmith.view.RepositoryUpload;	
@@ -216,10 +217,10 @@
 				
 				for (i=0; i<stocktypeNames.length; i++) {
 					stockType = new StockType();
-					stockType.size = new Dimension();
+					stockType.size = new DimensionInstance();
 					stockType.name = stocktypeNames[i];
 					index = findItem(stocktypesizes[i], dimensions);
-					stockType.size = dimensions.getItemAt(index) as Dimension;
+					stockType.size = dimensions.getItemAt(index) as DimensionInstance;
 					stockType.id = 0;
 					stockType.viewableID = i+1;
 					dataService.addUpdate(stockType);

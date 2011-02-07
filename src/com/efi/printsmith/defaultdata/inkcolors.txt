@@ -1,6 +1,6 @@
-Black
-Blue
-Cyan
-Magenta
-Red
-Yellow
+1,Black
+2,Blue
+3,Cyan
+4,Magenta
+5,Red
+6,Yellow

@@ -88,6 +88,7 @@ width="938" height="507"  creationComplete="init()"
 	import com.efi.printsmith.data.ProductionCopiers;
 	import com.efi.printsmith.data.ProductionLocations;
 	import com.efi.printsmith.data.Dimension;
+	import com.efi.printsmith.data.DimensionInstance;
 	import com.efi.printsmith.data.Job;
 	import com.efi.printsmith.data.JobBase;
 	import mx.utils.ObjectUtil;
@@ -461,7 +462,7 @@ width="938" height="507"  creationComplete="init()"
 		this.run_size.selectedIndex = findItem(sizeStr, dimensionsArray);
 		if (this.run_size.selectedIndex == -1) {
 			if (job.runSize == null)
-				job.runSize = new Dimension() as Dimension;
+				job.runSize = new DimensionInstance();
 			job.runSize.name = sizeStr;
 			job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
 			job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);

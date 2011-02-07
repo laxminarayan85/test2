@@ -114,6 +114,7 @@ import com.efi.printsmith.data.TrackerConsole;
 import com.efi.printsmith.data.TrackerConsoleJobs;
 import com.efi.printsmith.data.TrackerManager;
 import com.efi.printsmith.data.UnpurchasedMerchandise;
+import com.efi.printsmith.data.Vendor;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.data.PaperPrice;
 import com.efi.printsmith.defaultdata.DefaultDataFactory;
@@ -2315,50 +2316,50 @@ public class DataService extends HibernateService {
 					log.info("assigning parentInvoice to job. Invoice: "
 							+ invoice.getId() + " Job: " + job.getId());
 					//Make sure dimensions are using valid dimension objects
-					if (job.getParentSize() != null) {
-						Dimension dimension = dataService.getByDimensionName("Dimension", job.getParentSize().getName());
-						if (dimension == null && job.getParentSize().getName().equals("") == false) {
-							dimension = new Dimension();
-							dimension.setName(job.getParentSize().getName());
-							dimension.setHeight(job.getParentSize().getHeight());
-							dimension.setWidth(job.getParentSize().getWidth());
-							dimension = (Dimension)addUpdate(dimension);
-						}
-						job.setParentSize(dimension);
-					}
-					if (job.getRunSize() != null) {
-						Dimension dimension = dataService.getByDimensionName("Dimension", job.getRunSize().getName());
-						if (dimension == null && job.getRunSize().getName().equals("") == false) {
-							dimension = new Dimension();
-							dimension.setName(job.getRunSize().getName());
-							dimension.setHeight(job.getRunSize().getHeight());
-							dimension.setWidth(job.getRunSize().getWidth());
-							dimension = (Dimension)addUpdate(dimension);
-						}
-						job.setRunSize(dimension);
-					}
-					if (job.getFinishSize() != null) {
-						Dimension dimension = dataService.getByDimensionName("Dimension", job.getFinishSize().getName());
-						if (dimension == null && job.getFinishSize().getName().equals("") == false) {
-							dimension = new Dimension();
-							dimension.setName(job.getFinishSize().getName());
-							dimension.setHeight(job.getFinishSize().getHeight());
-							dimension.setWidth(job.getFinishSize().getWidth());
-							dimension = (Dimension)addUpdate(dimension);
-						}
-						job.setFinishSize(dimension);
-					}
-					if (job.getFoldedSize() != null) {
-						Dimension dimension = dataService.getByDimensionName("Dimension", job.getFoldedSize().getName());
-						if (dimension == null && job.getFoldedSize().getName().equals("") == false) {
-							dimension = new Dimension();
-							dimension.setName(job.getFoldedSize().getName());
-							dimension.setHeight(job.getFoldedSize().getHeight());
-							dimension.setWidth(job.getFoldedSize().getWidth());
-							dimension = (Dimension)addUpdate(dimension);
-						}
-						job.setFoldedSize(dimension);
-					}
+//					if (job.getParentSize() != null) {
+//						Dimension dimension = dataService.getByDimensionName("Dimension", job.getParentSize().getName());
+//						if (dimension == null && job.getParentSize().getName().equals("") == false) {
+//							dimension = new Dimension();
+//							dimension.setName(job.getParentSize().getName());
+//							dimension.setHeight(job.getParentSize().getHeight());
+//							dimension.setWidth(job.getParentSize().getWidth());
+//							dimension = (Dimension)addUpdate(dimension);
+//						}
+//						job.setParentSize(dimension);
+//					}
+//					if (job.getRunSize() != null) {
+//						Dimension dimension = dataService.getByDimensionName("Dimension", job.getRunSize().getName());
+//						if (dimension == null && job.getRunSize().getName().equals("") == false) {
+//							dimension = new Dimension();
+//							dimension.setName(job.getRunSize().getName());
+//							dimension.setHeight(job.getRunSize().getHeight());
+//							dimension.setWidth(job.getRunSize().getWidth());
+//							dimension = (Dimension)addUpdate(dimension);
+//						}
+//						job.setRunSize(dimension);
+//					}
+//					if (job.getFinishSize() != null) {
+//						Dimension dimension = dataService.getByDimensionName("Dimension", job.getFinishSize().getName());
+//						if (dimension == null && job.getFinishSize().getName().equals("") == false) {
+//							dimension = new Dimension();
+//							dimension.setName(job.getFinishSize().getName());
+//							dimension.setHeight(job.getFinishSize().getHeight());
+//							dimension.setWidth(job.getFinishSize().getWidth());
+//							dimension = (Dimension)addUpdate(dimension);
+//						}
+//						job.setFinishSize(dimension);
+//					}
+//					if (job.getFoldedSize() != null) {
+//						Dimension dimension = dataService.getByDimensionName("Dimension", job.getFoldedSize().getName());
+//						if (dimension == null && job.getFoldedSize().getName().equals("") == false) {
+//							dimension = new Dimension();
+//							dimension.setName(job.getFoldedSize().getName());
+//							dimension.setHeight(job.getFoldedSize().getHeight());
+//							dimension.setWidth(job.getFoldedSize().getWidth());
+//							dimension = (Dimension)addUpdate(dimension);
+//						}
+//						job.setFoldedSize(dimension);
+//					}
 					job.setParentInvoice(invoice);
 				}
 			}
@@ -6054,6 +6055,165 @@ public class DataService extends HibernateService {
 		return object;
 	}
 	
+	public Vendor addVendor(Vendor vendor) throws Exception {
+		log.debug("** addVendor called.");
+		int maxDisplayId = 1;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Session session = (Session) em.getDelegate();
+			String queryString = "select max(displayId) from Vendor";
+			org.hibernate.Query query = session.createQuery(queryString);
+			ScrollableResults rs = query.scroll();
+			if (rs.next()) {
+				if(rs.getInteger(0)==null) {
+					maxDisplayId = 1;
+				} else {
+					maxDisplayId = rs.getInteger(0).intValue();
+				}
+			}
+			vendor.setDisplayId((long)maxDisplayId);
+			return (Vendor) addUpdate(vendor);
+		} catch (Exception e) {
+			log.error(e); 			
+			throw e; 
+		} finally {
+			em.close();
+		}
+	}
+	
+	public ProductionLocations addProductionLocation(ProductionLocations productionLocation) throws Exception {
+		log.debug("** addVendor called.");
+		int maxDisplayId = 1;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Session session = (Session) em.getDelegate();
+			String queryString = "select max(displayId) from ProductionLocations";
+			org.hibernate.Query query = session.createQuery(queryString);
+			ScrollableResults rs = query.scroll();
+			if (rs.next()) {
+				if(rs.getInteger(0)==null) {
+					maxDisplayId = 1;
+				} else {
+					maxDisplayId = rs.getInteger(0).intValue();
+				}
+			}
+			productionLocation.setDisplayId((long)maxDisplayId);
+			return (ProductionLocations) addUpdate(productionLocation);
+		} catch (Exception e) {
+			log.error(e); 			
+			throw e; 
+		} finally {
+			em.close();
+		}
+	}
+
+	public TaxTable addTaxTable(TaxTable taxTable) throws Exception {
+		log.debug("** addTaxTable called.");
+		int maxDisplayId = 1;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Session session = (Session) em.getDelegate();
+			String queryString = "select max(displayId) from TaxTable";
+			org.hibernate.Query query = session.createQuery(queryString);
+			ScrollableResults rs = query.scroll();
+			if (rs.next()) {
+				if(rs.getInteger(0)==null) {
+					maxDisplayId = 1;
+				} else {
+					maxDisplayId = rs.getInteger(0).intValue();
+				}
+			}
+			taxTable.setDisplayId((long)maxDisplayId);
+			return (TaxTable) addUpdate(taxTable);
+		} catch (Exception e) {
+			log.error(e); 			
+			throw e; 
+		} finally {
+			em.close();
+		}
+	}
+	
+	public StockGrade addStockGrade(StockGrade stockGrade) throws Exception {
+		log.debug("** addStockGrade called.");
+		int maxDisplayId = 1;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Session session = (Session) em.getDelegate();
+			String queryString = "select max(displayId) from StockGrade";
+			org.hibernate.Query query = session.createQuery(queryString);
+			ScrollableResults rs = query.scroll();
+			if (rs.next()) {
+				if(rs.getInteger(0)==null) {
+					maxDisplayId = 1;
+				} else {
+					maxDisplayId = rs.getInteger(0).intValue();
+				}
+			}
+			stockGrade.setDisplayId((long)maxDisplayId);
+			return (StockGrade) addUpdate(stockGrade);
+		} catch (Exception e) {
+			log.error(e); 			
+			throw e; 
+		} finally {
+			em.close();
+		}
+	}
+	
+	public StockGroup addStockGroup(StockGroup stockGroup) throws Exception {
+		log.debug("** addStockGroup called.");
+		int maxDisplayId = 1;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			Session session = (Session) em.getDelegate();
+			String queryString = "select max(displayId) from StockGroup";
+			org.hibernate.Query query = session.createQuery(queryString);
+			ScrollableResults rs = query.scroll();
+			if (rs.next()) {
+				if(rs.getInteger(0)==null) {
+					maxDisplayId = 1;
+				} else {
+					maxDisplayId = rs.getInteger(0).intValue();
+				}
+			}
+			stockGroup.setDisplayId((long)maxDisplayId);
+			return (StockGroup) addUpdate(stockGroup);
+		} catch (Exception e) {
+			log.error(e); 			
+			throw e; 
+		} finally {
+			em.close();
+		}
+	}
+
+	public ModelBase addTableEditorItem(ModelBase object) throws Exception {
+		log.debug("** addTableEditorItem called.");
+		int maxDisplayId = 1;
+		EntityManager em = entityManagerFactory.createEntityManager();
+		try {
+			if ((object.getId() == null || object.getId() == 0) && (object.getDisplayId() == null || object.getDisplayId() == 0)) {
+				object.getClass().getName();
+				Session session = (Session) em.getDelegate();
+				String queryString = "select max(displayId) from " + object.getClass().getName();
+				org.hibernate.Query query = session.createQuery(queryString);
+				ScrollableResults rs = query.scroll();
+				if (rs.next()) {
+					if(rs.getInteger(0)==null) {
+						maxDisplayId = 1;
+					} else {
+						maxDisplayId = rs.getInteger(0).intValue();
+					}
+				}
+				object.setDisplayId((long)maxDisplayId);
+			}
+			return addUpdate(object);
+		} catch (Exception e) {
+			log.error(e); 			
+			throw e; 
+		} finally {
+			em.close();
+		}
+	}
+
 	public FoldTemplate getFoldTemplateByIndex(int i) throws Exception {
 		List<FoldTemplate> templates = (List<FoldTemplate>) this.getAll("FoldTemplate");
 		

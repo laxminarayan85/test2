@@ -1,10 +1,9 @@
 package com.efi.printsmith.migration;
 
-import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.Dimension;
+import com.efi.printsmith.data.DimensionInstance;
 import com.efi.printsmith.data.GenericColors;
 import com.efi.printsmith.data.ModelBase;
-import com.efi.printsmith.data.PreferencesSequenceValues;
 import com.efi.printsmith.data.StockColors;
 import com.efi.printsmith.data.StockDefinition;
 import com.efi.printsmith.data.StockFinish;
@@ -14,10 +13,6 @@ import com.efi.printsmith.data.StockClass;
 import com.efi.printsmith.data.StockType;
 import com.efi.printsmith.data.Vendor;
 import com.efi.printsmith.service.DataService;
-import com.efi.printsmith.data.ChargeDefinition;
-import com.efi.printsmith.data.PressDefinition;
-import com.efi.printsmith.data.CopierDefinition;
-import com.efi.printsmith.data.PaperPrice;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 import java.io.File;
 
@@ -69,8 +64,8 @@ public class XpedxMapper extends ImportMapper {
 				if (importParams.getFullUpdate()) {
 					dimension.setName(currentImportToken);
 					parentdimension.setName(currentImportToken);
-					stockDefinition.setParentsize(dimension);
-					stockDefinition.setNormalRunSize(parentdimension);
+					stockDefinition.setParentsize(new DimensionInstance(dimension));
+					stockDefinition.setNormalRunSize(new DimensionInstance(parentdimension));
 				}
 				break;
 			case 2:
@@ -273,7 +268,7 @@ public class XpedxMapper extends ImportMapper {
 					if (stockGroup == null) {
 						stockGroup = new StockGroup();
 						stockGroup.setName(currentImportToken);
-						stockGroup = (StockGroup)dataService.addUpdate(stockGroup);
+						stockGroup = (StockGroup)dataService.addStockGroup(stockGroup);
 						stockGroup.setId(stockGroup.getId());
 					}
 					stockDefinition.setStkgroup(stockGroup);
@@ -348,16 +343,14 @@ public class XpedxMapper extends ImportMapper {
 			if (stockGrade == null) {
 				stockGrade = new StockGrade();
 				stockGrade.setName("");
-				stockGrade = (StockGrade)dataService.addUpdate(stockGrade);
-				stockGrade.setId(stockGrade.getId());
+				stockGrade = (StockGrade)dataService.addStockGrade(stockGrade);
 			}
 			stockDefinition.setGrade(stockGrade);
 			Vendor vendor = (Vendor)dataService.getByName("Vendor","xpedx");
 			if (vendor == null) {
 				vendor = new Vendor();
 				vendor.setName("xpedx");
-				vendor = (Vendor)dataService.addUpdate(vendor);
-				vendor.setId(vendor.getId());
+				vendor = dataService.addVendor(vendor);
 			}
 			StockClass stockClass = dataService.getByStockClassName("");
 			if (stockClass == null) {

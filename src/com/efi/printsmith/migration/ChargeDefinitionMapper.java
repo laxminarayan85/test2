@@ -23,7 +23,6 @@ import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.ShippingMethod;
 import com.efi.printsmith.data.Substrate;
 import com.efi.printsmith.data.TaxTable;
-import com.efi.printsmith.data.Vendor;
 import com.efi.printsmith.data.WasteChart;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.Charge;
@@ -620,7 +619,7 @@ public class ChargeDefinitionMapper extends ImportMapper {
 							if (location == null) {
 								location = new ProductionLocations();
 								location.setName(currentImportToken);
-								location = (ProductionLocations)dataService.addUpdate(location);
+								location = (ProductionLocations)dataService.addProductionLocation(location);
 							}
 							chargeDefinition.setLocation(location);
 							charge.setProductionLocation(location);

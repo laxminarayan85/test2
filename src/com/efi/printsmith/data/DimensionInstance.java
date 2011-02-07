@@ -48,6 +48,14 @@ import org.hibernate.annotations.Where;
 //Filter added to retrieve only records that have not been soft deleted.
 @Where(clause="isdeleted <> 'TRUE'")
 public class DimensionInstance extends ModelBase {
+	public DimensionInstance (Dimension dimension) {
+		this.metric = dimension.getMetric();
+		this.height = dimension.getHeight();
+		this.width = dimension.getWidth();
+		this.name = dimension.getName();
+		this.type = dimension.getType();
+	}	
+	
 	/**
 	 * @generated
 	 */

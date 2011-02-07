@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import com.efi.printsmith.Constants;
 import com.efi.printsmith.data.CostingRecord;
 import com.efi.printsmith.data.Dimension;
+import com.efi.printsmith.data.DimensionInstance;
 import com.efi.printsmith.data.InvoiceBase;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.ModelBase;
@@ -305,8 +306,7 @@ public class JobMapper extends ImportMapper {
 				if (currentImportToken.equals("0") == false) {
 					parentdimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
 					if (parentdimension != null)
-						job.setParentSize(parentdimension);
-						
+						job.setParentSize(new DimensionInstance(parentdimension));
 					}
 			} else if ("parent Y".equals(currentFieldToken)) {
 				/* TODO */
@@ -316,7 +316,7 @@ public class JobMapper extends ImportMapper {
 				if (currentImportToken.equals("0") == false) {
 					dimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
 					if (dimension != null)
-						job.setRunSize(dimension);
+						job.setRunSize(new DimensionInstance(dimension));
 					}
 			} else if ("run Y".equals(currentFieldToken)) {
 				/* TODO */
@@ -326,7 +326,7 @@ public class JobMapper extends ImportMapper {
 				if (currentImportToken.equals("0") == false) {
 					finishdimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
 					if (finishdimension != null)
-						job.setFinishSize(finishdimension);
+						job.setFinishSize(new DimensionInstance(finishdimension));
 					
 					}
 			} else if ("finish Y".equals(currentFieldToken)) {
@@ -502,7 +502,7 @@ public class JobMapper extends ImportMapper {
 					if (location == null) {
 						location = new ProductionLocations();
 						location.setName(currentImportToken);
-						location = (ProductionLocations)dataService.addUpdate(location);
+						location = (ProductionLocations)dataService.addProductionLocation(location);
 						location.setId(location.getId());
 					}
 					job.setLocation(location);
@@ -747,7 +747,7 @@ public class JobMapper extends ImportMapper {
 				if (currentImportToken.equals("0") == false) {
 					folddimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
 					if (folddimension != null)
-						job.setFoldedSize(folddimension);
+						job.setFoldedSize(new DimensionInstance(folddimension));
 							
 					}
 			} else if ("folded Y".equals(currentFieldToken)) {

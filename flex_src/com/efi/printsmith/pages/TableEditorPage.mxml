@@ -19,9 +19,12 @@ import mx.rpc.events.ResultEvent;
 import mx.collections.ArrayCollection;
 import mx.rpc.events.FaultEvent;  
 import mx.controls.Alert; 
+import mx.events.DataGridEvent;
+
 import com.efi.printsmith.data.TableProperties; 
 import com.efi.printsmith.data.*;
 import com.efi.printsmith.events.SaveEvent;
+import com.efi.printsmith.events.SaveTablePropertiesEvent;
 import com.efi.printsmith.pages.TablePropertiesEditor;
 
 [Bindable]                             
@@ -68,13 +71,15 @@ import com.efi.printsmith.pages.TablePropertiesEditor;
 		dataService.getAll(temp.tableName)
 		dataService.getMaxDisplayId(temp.tableName);
 	}
+	
 	private function handleDeleteResult(ev:ResultEvent):void {
 		doTableCombo();
-		
 	}
+	
 	private function handleSaveResult(ev:ResultEvent):void {
 		doTableCombo();
 	}
+	
 	private function handleGetMaxDisplayIdResult(ev:ResultEvent):void {
 		this.displayId = ev.result as Number;
 		this.displayId = this.displayId + 1;
@@ -227,10 +232,9 @@ import com.efi.printsmith.pages.TablePropertiesEditor;
 		return tempClass;
 	}
 	private function doSave():void{
-		
 		for (var i:int = 0; i < tableDataArray.length; i++) 
 	 		dataService.addUpdate(tableDataArray.getItemAt(i));
-		
+		dataService.addUpdate(table_combo.selectedItem as TableProperties);
 	}
 	
 	private function addItem():void{
@@ -241,10 +245,9 @@ import com.efi.printsmith.pages.TablePropertiesEditor;
 		if( tempClass == TaxTable)
 			tempObject.taxTableIsCurrent = true;
 		tempObject.id = 0;
-		tempObject.displayId = this.displayId;
-		this.displayId = this.displayId + 1;
+		tempObject.displayId = this.displayId++;
+		tempObject.name = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTableEditorCommand.Untitled');
 		tableDataArray.addItem(tempObject);
-		
 	}
 	
 	private function findItem(name:String, array:ArrayCollection):int {
@@ -278,7 +281,7 @@ import com.efi.printsmith.pages.TablePropertiesEditor;
 		temp2 = datagrid.selectedItem as TableProperties;
 		if (temp2 != null)
 			dataService.deleteItem(temp.tableName, temp2.id);
-	}
+	} 
 	
 	private function doDeleteEntry():void {
 		
@@ -290,22 +293,42 @@ import com.efi.printsmith.pages.TablePropertiesEditor;
 
 		var tablePropertiesWindow:TablePropertiesEditor = new TablePropertiesEditor();
 		
-		tablePropertiesWindow.setTableProperties(null);
+		tablePropertiesWindow.setTableProperties(temp);
+		tablePropertiesWindow.numEntries = tableDataArray.length;
 		var windowID:int = Snowmass.getInstance().containerManager.getWindowWithChild(this,true).windowID;
 		Snowmass.getInstance().containerManager.openNewMDIWindow(resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTablePropertiesCommand.TableProperties'),tablePropertiesWindow, -1,-1,-1,-1, windowID);
-		tablePropertiesWindow.addEventListener(SaveEvent.Save, saveTableProperties);
+		tablePropertiesWindow.addEventListener(SaveTablePropertiesEvent.Save, saveTableProperties);
 	}
 	
-	private function saveTableProperties(saveEvent:SaveEvent):void {
-		
+	private function saveTableProperties(saveEvent:SaveTablePropertiesEvent):void {
+		var temp:TableProperties = table_combo.selectedItem as TableProperties;
+		temp = saveEvent.tableProperties;
+		table_combo.selectedItem = temp;
+		table_combo.invalidateDisplayList();
 	}
 	
 	private function doAdd():void{
 		
 	}
+	
+	private function handleItemEditEnd(event:Event):void {
+		if (event != null && event is DataGridEvent) {
+			var listEvent:DataGridEvent = event as DataGridEvent;
+			
+			if (listEvent.currentTarget.itemEditorInstance.text.length == 0) {
+				if (listEvent.currentTarget.editedItemRenderer.data[listEvent.dataField].length == 0) {
+					listEvent.currentTarget.itemEditorInstance.text = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kTableEditorCommand.Untitled');
+				} else {
+					listEvent.currentTarget.itemEditorInstance.text = listEvent.currentTarget.editedItemRenderer.data[listEvent.dataField];
+				}
+				
+			}
+		}
+	} 
+	
 ]]>         
 </mx:Script>
-	<mx:DataGrid  id="datagrid" editable="true" dataProvider="{tableDataArray}" change="doAdd()"  right="10" left="10" bottom="40" top="80">
+	<mx:DataGrid  id="datagrid" editable="true" dataProvider="{tableDataArray}" change="doAdd()"  right="10" left="10" bottom="40" top="80" itemEditEnd="handleItemEditEnd(event)">
 		<mx:columns>
 			<mx:DataGridColumn   editable="false" id="idcolumn" width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.ID')}" dataField="displayId"/>
 			<mx:DataGridColumn  id="keycolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha')}" dataField="keyAlpha"/>
@@ -336,7 +359,7 @@ import com.efi.printsmith.pages.TablePropertiesEditor;
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.DeleteEntry')}"/>
 		</mx:VBox>
 		<mx:VBox horizontalAlign="center">
-			<mx:Button click="doDeleteEntry()" icon="@Embed(source='../../../../assets/save.png')" width="38" height="38"/>
+			<mx:Button click="doSave()" icon="@Embed(source='../../../../assets/save.png')" width="38" height="38"/>
 			<mx:Label text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Save')}"/>
 		</mx:VBox>
 		<mx:Spacer width="10"/>

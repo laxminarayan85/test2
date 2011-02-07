@@ -22,6 +22,7 @@
 			import com.efi.printsmith.data.enums.ChargeQtyType;
 			import com.efi.printsmith.data.enums.ChargeMethod;
 			import com.efi.printsmith.data.Dimension;
+			import com.efi.printsmith.data.DimensionInstance;
 			import com.efi.printsmith.data.PreferencesSystem;
 			import mx.collections.ArrayCollection;
 			import mx.utils.GraphicsUtil;
@@ -604,7 +605,7 @@
 				linear_image.graphics.clear();
 				
 				if (this.job != null && this.job.runSize != null) {
-					var runSize:Dimension = this.job.runSize;
+					var runSize:DimensionInstance = this.job.runSize;
 					if (runSize.height != 0 && runSize.width != 0) {
 						
 						this.linear_top.label = runSize.width.toString();

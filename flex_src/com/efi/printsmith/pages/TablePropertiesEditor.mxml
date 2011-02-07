@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
-	layout="absolute" width="325" height="246" creationComplete="init()" 
+	layout="absolute" width="443" height="272" creationComplete="init()" 
 	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.TableProperties')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTablePropertiesCommand.TableProperties')}" name="Table Editor">
 <mx:Script>
                                    
 <![CDATA[
-import mx.rpc.events.ResultEvent;
-import mx.collections.ArrayCollection;
-import mx.rpc.events.FaultEvent;  
-import mx.controls.Alert; 
-import com.efi.printsmith.data.TableProperties; 
-import com.efi.printsmith.data.*;
+	import mx.rpc.events.ResultEvent;
+	import mx.collections.ArrayCollection;
+	import mx.rpc.events.FaultEvent;  
+	import mx.controls.Alert; 
+	import com.efi.printsmith.data.TableProperties; 
+	import com.efi.printsmith.data.*;
+	import com.efi.printsmith.events.SaveTablePropertiesEvent;
+	import com.efi.printsmith.events.SaveEvent;
+	import com.efi.mdi.view.window.MDIWindow;
+	import com.efi.mdi.event.window.WindowCloseEvent;
 	
 	[Bindable] private var tableProperties:TableProperties = null;
 	[Bindable] private var statusList:ArrayCollection = new ArrayCollection;
+	[Bindable] public var numEntries:Number = 0;
 	
 	public function init():void {
 		statusList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_11200.Editable'));
@@ -22,6 +27,18 @@ import com.efi.printsmith.data.*;
 		statusList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_11200.AddEditcommand'));
 		statusList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_11200.AddfromInput'));
 		statusList.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'menu_11200.AddfromInputandEdit'));
+		if (tableProperties.status == "Editable") {
+			combo_table_status.selectedIndex = 0;
+		} else if (tableProperties.status == "Locked") {
+			combo_table_status.selectedIndex = 1;
+		} else if (tableProperties.status == "Add Edit") {
+			combo_table_status.selectedIndex = 2;
+		} else if (tableProperties.status == "Add Input") {
+			combo_table_status.selectedIndex = 3;
+		} else if (tableProperties.status == "Add Input Edit") {
+			combo_table_status.selectedIndex = 4;
+		}
+		check_disabled.selected = !tableProperties.enabled;
 	}
 	
 	private function handleFault(ev:FaultEvent):void {  
@@ -58,25 +75,31 @@ import com.efi.printsmith.data.*;
 				this.tableProperties.status = "Add Input Edit";
 				break;
 		}
+		var saveEvent:SaveTablePropertiesEvent=new SaveTablePropertiesEvent(SaveTablePropertiesEvent.Save, tableProperties);
+		dispatchEvent(saveEvent);
+		var mdiWindow:MDIWindow = this.parent as MDIWindow;
+		mdiWindow.closeWindow();
 	}
 	
 	private function doCancel():void {
-		
+		var mdiWindow:MDIWindow = this.parent as MDIWindow;
+		mdiWindow.closeWindow();
 	}
+	
 ]]>         
 </mx:Script>
-	<mx:Form width="100%" bottom="60" top="0">
+	<mx:Form width="413" bottom="60" top="0">
 		<mx:FormItem label="Title">
 			<mx:TextInput id="text_table_name" text="{tableProperties.tableName}"/>
 		</mx:FormItem>
 		<mx:FormItem label="ID">
-			<mx:TextInput text="{tableProperties.id}"/>
+			<mx:Text text="{tableProperties.id}"/>
 		</mx:FormItem>
 		<mx:FormItem>
 			<mx:CheckBox id="check_disabled" label="Disable Table" selected="!{tableProperties.enabled}"/>
 		</mx:FormItem>
 		<mx:FormItem label="Number of Entries">
-			<mx:Text/>
+			<mx:Text id="num_entries_text" text="{numEntries}"/>
 		</mx:FormItem>
 		<mx:FormItem label="Table Status">
 			<mx:ComboBox id="combo_table_status" dataProvider="{statusList}"/>
@@ -85,6 +108,7 @@ import com.efi.printsmith.data.*;
 	<mx:HBox width="100%" height="30" bottom="0" horizontalAlign="right">
 		<mx:Button width="80" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}" click="doOK();"/>
 		<mx:Button width="80" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}" click="doCancel();"/>
+		<mx:Spacer width="10"/>
 	</mx:HBox>
 
 </mx:TitleWindow>

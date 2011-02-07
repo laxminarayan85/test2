@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fc="http://www.adobe.com/2006/fc"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fc="http://www.adobe.com/2006/fc" 
+		xmlns:components="com.efi.printsmith.common.components.*" 
         height="262"
         width="438"
         showCloseButton="true"
@@ -43,8 +44,8 @@
     <mx:Label x="12" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'KAddressEditorCommand.Company')}" width="67" textAlign="right" visible="{!openedFromEmployee}"/>
     <mx:TextInput x="85" y="10" width="314" id="company_edit" text="{address.name}" visible="{!openedFromEmployee}"/>
     <mx:TextInput x="85" y="33" width="314" id="street1_edit" text="{address.street1}"/>
-    <mx:TextInput x="85" y="56" width="314" id="street2_edit" text="{address.street2}"/>
-    <mx:ComboBox id="citycombo" x="85" y="80" labelField="name" dataProvider="{cityDataProvider}" focusOut="focusOutCity()"  editable="true" width="170" enabled="true"/>
+    <mx:TextInput x="85" y="56" width="314" id="street2_edit" text="{address.street2}"/> 
+    <components:TableComboBoxComponent id="citycombo" x="85" y="80" labelField="name" tableData="{cityDataProvider}" focusOut="focusOutCity()"  editable="true" width="170" enabled="true"/>
     <mx:ComboBox id="statecombo" restrict="A-z " x="85" y="104" labelField="name" dataProvider="{stateDataProvider}" focusOut="focusOutState(event);" editable="true" width="170" enabled="true"/>
     <mx:ComboBox id="zipcombo"  x="85" y="128" labelField="name" dataProvider="{zipDataProvider}" focusOut="focusOutZip(event)" text="{address.zip}" width="170" editable="true" enabled="true"/>
     <mx:ComboBox id="countrycombo" x="85" y="152" labelField="name" dataProvider="{countryDataProvider}" focusOut="focusOutCountry()" text="{address.country}" editable="true" width="170" enabled="true"/>

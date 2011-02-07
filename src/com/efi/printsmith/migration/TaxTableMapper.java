@@ -384,7 +384,7 @@ public class TaxTableMapper extends ImportMapper {
 			}
 			          
            }
-		 taxTable = (TaxTable)dataService.addUpdate(taxTable);
+		 taxTable = (TaxTable)dataService.addTaxTable(taxTable);
 		 if (taxElement != null)
       	   taxTable.addTaxElements(taxElement);
 		 if (taxElement2 != null)

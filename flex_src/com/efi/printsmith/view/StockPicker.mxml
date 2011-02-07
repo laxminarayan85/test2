@@ -79,6 +79,7 @@
 	import com.efi.printsmith.data.GenericColors;
 	import com.efi.printsmith.data.StockColors;
 	import com.efi.printsmith.data.Dimension;
+	import com.efi.printsmith.data.DimensionInstance;
 	import mx.controls.dataGridClasses.DataGridColumn;
 	import mx.collections.ArrayCollection;           
 	import com.efi.printsmith.events.StockPickerSelectEvent;
@@ -160,7 +161,7 @@
 		defaultSortGrid();
 	}
 	
-	public function setLargeFormatOnly() {
+	public function setLargeFormatOnly():void {
 		this.chkShowLargeFormatStock.selected = true;
 		this.chkShowRigidSubstrate.selected = true;
 		this.chkShowLargeFormatStock.enabled = false;
@@ -169,7 +170,7 @@
 		this.search();
 	}
 	
-	public function setRollFedOnly() {
+	public function setRollFedOnly():void {
 		this.chkShowLargeFormatStock.selected = false;
 		this.chkShowRigidSubstrate.selected = false;
 		this.chkShowLargeFormatStock.enabled = false;
@@ -357,7 +358,7 @@
 		}
 	}
 	
-	private function setColumnWidths()	{
+	private function setColumnWidths():void	{
 		var tmpCols:Object = UserClientPreferences.getInstance().getData(UserClientPreferences.STOCK_PICKER_GRID_WIDTHS);
 		if (tmpCols == null) 	{	
 			tmpCols = new Object();
@@ -580,7 +581,7 @@
 	 	statusWindow.setStock(temp);
 	 }
 	 
-	 public function setStockArray(data:ArrayCollection)	{
+	 public function setStockArray(data:ArrayCollection):void	{
 	 	this.stockDefinitions = data;
 	 	if (data)	{
 	 		totalStocks = data.length;
@@ -657,7 +658,7 @@
 		}
 		this.uoms = uoms;
 		if (!containsBlank(coated,"name"))	{
-			var u:Object= new Object();
+			u = new Object();
 			u.name = "";
 			coated.addItemAt(u, 0);
 		}
@@ -1063,22 +1064,18 @@
 						continue;
 				}
 				if (chkShowShells.selected)	{
-					if (stock.shellItem != null)	{
-						var strShellItem:String = "t";
-						if (stock.shellItem == false)	
-							strShellItem = "f";
-						if (match(strShellItem, "t") == false) 	
-							continue;
-					}
+					var strShellItem:String = "t";
+					if (stock.shellItem == false)	
+						strShellItem = "f";
+					if (match(strShellItem, "t") == false) 	
+						continue;
 				}	
 				if (chkShowInventoriedStock.selected)	{
-					if (stock.standardItem != null)	{
-						var strStdItem:String = "t";
-						if (stock.standardItem == false)	
-							strStdItem = "f";
-						if (match(strStdItem, "t") == false) 	
-							continue;
-					}
+					var strStdItem:String = "t";
+					if (stock.standardItem == false)	
+						strStdItem = "f";
+					if (match(strStdItem, "t") == false) 	
+						continue;
 				}
 				acFiltered.addItem(stock);
 			}
@@ -1193,8 +1190,8 @@
 	
 
 	private function sortSize(obj1:Object, obj2:Object):int{
-		var dim1:Dimension = (obj1 as StockDefinition).parentsize;
-		var dim2:Dimension = (obj2 as StockDefinition).parentsize;
+		var dim1:DimensionInstance = (obj1 as StockDefinition).parentsize;
+		var dim2:DimensionInstance = (obj2 as StockDefinition).parentsize;
 		
 		if (dim1 == null)
 			return -1;
@@ -1218,8 +1215,8 @@
 	}
 	
 	private function sortNormal(obj1:Object, obj2:Object):int{
-		var dim1:Dimension = (obj1 as StockDefinition).normalRunSize;
-		var dim2:Dimension = (obj2 as StockDefinition).normalRunSize;
+		var dim1:DimensionInstance = (obj1 as StockDefinition).normalRunSize;
+		var dim2:DimensionInstance = (obj2 as StockDefinition).normalRunSize;
 		
 		if (dim1 == null)
 			return -1;

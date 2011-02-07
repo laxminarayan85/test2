@@ -104,24 +104,24 @@ public class CustomerMapper extends ImportMapper {
 					}
 				} else if ("inv city".equals(currentFieldToken)) {
 					shipToAddress.setCity(currentImportToken);
-					if (currentImportToken.equals("") == false) {
-						City city = (City)dataService.getByName("City", currentImportToken);
-						if (city == null) {
-							city = new City();
-							city.setName(currentImportToken);
-							city = (City)dataService.addUpdate(city);
-						}
-					}
+//					if (currentImportToken.equals("") == false) {
+//						City city = (City)dataService.getByName("City", currentImportToken);
+//						if (city == null) {
+//							city = new City();
+//							city.setName(currentImportToken);
+//							city = (City)dataService.addUpdate(city);
+//						}
+//					}
 				} else if ("inv zip".equals(currentFieldToken)) {
 					shipToAddress.setZip(currentImportToken);
-					if (currentImportToken.equals("") == false) {
-						Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
-						if (zip == null) {
-							zip = new Zip();
-							zip.setName(currentImportToken);
-							zip = (Zip)dataService.addUpdate(zip);
-						}
-					}
+//					if (currentImportToken.equals("") == false) {
+//						Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
+//						if (zip == null) {
+//							zip = new Zip();
+//							zip.setName(currentImportToken);
+//							zip = (Zip)dataService.addUpdate(zip);
+//						}
+//					}
 				} else if ("inv first name".equals(currentFieldToken)) {
 					shipToContact.setFirstName(currentImportToken);
 				} else if ("inv last name".equals(currentFieldToken)) {
@@ -132,14 +132,14 @@ public class CustomerMapper extends ImportMapper {
 					shipToAddress.setStreet2(currentImportToken);
 				} else if ("inv state".equals(currentFieldToken)) {
 					shipToAddress.setState(currentImportToken);
-					if (currentImportToken.equals("") == false) {
-						State state = (State)dataService.getByName("State", currentImportToken);
-						if (state == null) {
-							state = new State();
-							state.setName(currentImportToken);
-							state = (State)dataService.addUpdate(state);
-						}
-					}
+//					if (currentImportToken.equals("") == false) {
+//						State state = (State)dataService.getByName("State", currentImportToken);
+//						if (state == null) {
+//							state = new State();
+//							state.setName(currentImportToken);
+//							state = (State)dataService.addUpdate(state);
+//						}
+//					}
 				} else if ("inv refno".equals(currentFieldToken)) {
 					customer.setExternalRef(currentImportToken);
 				} else if ("bill name".equals(currentFieldToken)) {
@@ -150,34 +150,34 @@ public class CustomerMapper extends ImportMapper {
 					billToAddress.setStreet2(currentImportToken);
 				} else if ("bill city".equals(currentFieldToken)) {
 					billToAddress.setCity(currentImportToken);
-					if (currentImportToken.equals("") == false) {
-						City city = (City)dataService.getByName("City", currentImportToken);
-						if (city == null) {
-							city = new City();
-							city.setName(currentImportToken);
-							city = (City)dataService.addUpdate(city);
-						}
-					}
+//					if (currentImportToken.equals("") == false) {
+//						City city = (City)dataService.getByName("City", currentImportToken);
+//						if (city == null) {
+//							city = new City();
+//							city.setName(currentImportToken);
+//							city = (City)dataService.addUpdate(city);
+//						}
+//					}
 				} else if ("bill state".equals(currentFieldToken)) {
 					billToAddress.setState(currentImportToken);
-					if (currentImportToken.equals("") == false) {
-						State state = (State)dataService.getByName("State", currentImportToken);
-						if (state == null) {
-							state = new State();
-							state.setName(currentImportToken);
-							state = (State)dataService.addUpdate(state);
-						}
-					}
+//					if (currentImportToken.equals("") == false) {
+//						State state = (State)dataService.getByName("State", currentImportToken);
+//						if (state == null) {
+//							state = new State();
+//							state.setName(currentImportToken);
+//							state = (State)dataService.addUpdate(state);
+//						}
+//					}
 				} else if ("bill zip".equals(currentFieldToken)) {
 					billToAddress.setZip(currentImportToken);
-					if (currentImportToken.equals("") == false) {
-						Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
-						if (zip == null) {
-							zip = new Zip();
-							zip.setName(currentImportToken);
-							zip = (Zip)dataService.addUpdate(zip);
-						}
-					}
+//					if (currentImportToken.equals("") == false) {
+//						Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
+//						if (zip == null) {
+//							zip = new Zip();
+//							zip.setName(currentImportToken);
+//							zip = (Zip)dataService.addUpdate(zip);
+//						}
+//					}
 				} else if ("bill phone".equals(currentFieldToken)) {
 					if (currentImportToken.length() > 0
 							&& !currentImportToken.equals(" ")) {
@@ -208,9 +208,9 @@ public class CustomerMapper extends ImportMapper {
 					}
 				} else if ("tax table is default".equals(currentFieldToken)) {
 					if (currentImportToken.equals("0") == false  && taxTable != null) {
-						if (taxTable.getDefaultTable() != null && taxTable.getDefaultTable() != true){
+						if (taxTable.getDefaultTable() != null && taxTable.getDefaultTable() != true && taxTable.getName() != null && taxTable.getName().length() > 0){
 							taxTable.setDefaultTable(true);
-							dataService.addUpdate(taxTable);
+							dataService.addTaxTable(taxTable);
 						}					
 					}
 				}else if ("sales ranking".equals(currentFieldToken)) {

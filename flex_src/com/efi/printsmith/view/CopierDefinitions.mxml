@@ -84,6 +84,7 @@
 	import com.efi.printsmith.data.Charge;
 	import com.efi.printsmith.pages.DefaultCopierPicker;
 	import com.efi.printsmith.data.Dimension;
+	import com.efi.printsmith.data.DimensionInstance;
 	import com.efi.printsmith.data.PreferencesSystem;
 	import com.efi.printsmith.data.ProductionCopiers;
 	import com.efi.printsmith.data.PriceListBase;

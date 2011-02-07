@@ -45,7 +45,7 @@ public class TableEditorMapper extends ImportMapper {
 								title = recordNodes.item(z).getTextContent();
 							} else if (nameNode.getNodeValue().equals("id") && recordNodes.item(z).getTextContent().equals("0") == false) {
 								if (firstRec == false)
-									dataService.addUpdate(modelBase);
+									dataService.addTableEditorItem(modelBase);
 								if (title.equals("Business Type"))
 									modelBase = new BusinessType();
 								else if (title.equals("Basic Sizes"))
@@ -110,7 +110,7 @@ public class TableEditorMapper extends ImportMapper {
 									if (sizeTable == null) {
 										sizeTable = new SizeTable();
 										sizeTable.setName(title);
-										dataService.addUpdate(sizeTable);
+										dataService.addTableEditorItem(sizeTable);
 									}
 								}	
 								else if (title.equals("Sizes - Metric IN")) {
@@ -119,7 +119,7 @@ public class TableEditorMapper extends ImportMapper {
 									if (sizeTable == null) {
 										sizeTable = new SizeTable();
 										sizeTable.setName(title);
-										dataService.addUpdate(sizeTable);
+										dataService.addTableEditorItem(sizeTable);
 									}
 								}
 								else if (title.equals("Sizes - Metric MM")) {
@@ -128,7 +128,7 @@ public class TableEditorMapper extends ImportMapper {
 									if (sizeTable == null) {
 										sizeTable = new SizeTable();
 										sizeTable.setName(title);
-										dataService.addUpdate(sizeTable);
+										dataService.addTableEditorItem(sizeTable);
 									}
 								}
 								else if (title.equals("Sizes - United States")) {
@@ -137,7 +137,7 @@ public class TableEditorMapper extends ImportMapper {
 									if (sizeTable == null) {
 										sizeTable = new SizeTable();
 										sizeTable.setName(title);
-										dataService.addUpdate(sizeTable);
+										dataService.addTableEditorItem(sizeTable);
 									}
 								}	
 								else if (title.equals("Sport Interest"))
@@ -181,7 +181,7 @@ public class TableEditorMapper extends ImportMapper {
 										taxTable.setName(recordNodes.item(z).getTextContent());
 										taxTable.setTaxTableIsCurrent(true);
 										taxTable.setDisableTable(false);
-										modelBase = dataService.addUpdate(taxTable);
+										modelBase = dataService.addTaxTable(taxTable);
 									} else
 										modelBase = taxTable;
 								}
@@ -211,7 +211,7 @@ public class TableEditorMapper extends ImportMapper {
 									if (defaultNode != null)
 										((TaxTable) modelBase).setDefaultTable(Utilities.tokenToBooleanValue(disabledNode.getNodeValue()));
 									if (((TaxTable) modelBase).getName().equals("") == false)
-										dataService.addUpdate(modelBase);
+										dataService.addTableEditorItem(modelBase);
 								}
 							}
 						}

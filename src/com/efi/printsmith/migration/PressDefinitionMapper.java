@@ -223,7 +223,7 @@ public class PressDefinitionMapper extends ImportMapper {
 					if (prodLocation == null){
 						prodLocation = new ProductionLocations();
 						prodLocation.setName(currentImportToken);
-						prodLocation = (ProductionLocations)dataService.addUpdate(prodLocation);
+						prodLocation = (ProductionLocations)dataService.addProductionLocation(prodLocation);
 					}
 					pressDefinition.setProductionLocation(prodLocation.getName());	
 				}

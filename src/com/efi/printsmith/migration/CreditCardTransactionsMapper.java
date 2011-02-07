@@ -1,29 +1,19 @@
 package com.efi.printsmith.migration;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 
-import au.com.bytecode.opencsv.CSVReader;
-
 import com.efi.printsmith.data.CreditCard;
 import com.efi.printsmith.data.CreditCardTransactions;
 import com.efi.printsmith.data.Account;
-import com.efi.printsmith.data.Invoice;
 import com.efi.printsmith.data.Contact;
 import com.efi.printsmith.data.Address;
 import com.efi.printsmith.data.TaxCodes;
 import com.efi.printsmith.data.TaxTable;
-import com.efi.printsmith.data.Users;
-import com.efi.printsmith.data.Contact;
 import com.efi.printsmith.service.DataService;
 
 public class CreditCardTransactionsMapper extends ImportMapper {

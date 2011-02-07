@@ -66,34 +66,34 @@ public class ContactMapper extends ImportMapper {
 				/* TODO */
 			} else if ("city".equals(currentFieldToken)) {
 				address.setCity(currentImportToken);
-				if (currentImportToken.equals("") == false) {
-					City city = (City)dataService.getByName("City", currentImportToken);
-					if (city == null) {
-						city = new City();
-						city.setName(currentImportToken);
-						city = (City)dataService.addUpdate(city);
-					}
-				}
+//				if (currentImportToken.equals("") == false) {
+//					City city = (City)dataService.getByName("City", currentImportToken);
+//					if (city == null) {
+//						city = new City();
+//						city.setName(currentImportToken);
+//						city = (City)dataService.addUpdate(city);
+//					}
+//				}
 			} else if ("state".equals(currentFieldToken)) {
 				address.setState(currentImportToken);
-				if (currentImportToken.equals("") == false) {
-					State state = (State)dataService.getByName("State", currentImportToken);
-					if (state == null) {
-						state = new State();
-						state.setName(currentImportToken);
-						state = (State)dataService.addUpdate(state);
-					}
-				}
+//				if (currentImportToken.equals("") == false) {
+//					State state = (State)dataService.getByName("State", currentImportToken);
+//					if (state == null) {
+//						state = new State();
+//						state.setName(currentImportToken);
+//						state = (State)dataService.addUpdate(state);
+//					}
+//				}
 			} else if ("zip".equals(currentFieldToken)) {
 				address.setZip(currentImportToken);
-				if (currentImportToken.equals("") == false) {
-					Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
-					if (zip == null) {
-						zip = new Zip();
-						zip.setName(currentImportToken);
-						zip = (Zip)dataService.addUpdate(zip);
-					}
-				}
+//				if (currentImportToken.equals("") == false) {
+//					Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
+//					if (zip == null) {
+//						zip = new Zip();
+//						zip.setName(currentImportToken);
+//						zip = (Zip)dataService.addUpdate(zip);
+//					}
+//				}
 			} else if ("country".equals(currentFieldToken)) {
 				address.setCountry(currentImportToken);
 			} else if ("contact".equals(currentFieldToken)) {

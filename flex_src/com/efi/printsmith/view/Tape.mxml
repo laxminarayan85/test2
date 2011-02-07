@@ -73,6 +73,7 @@
 	import com.efi.printsmith.data.CreditCardTransactions;
 	import com.efi.printsmith.data.CreditCard;	
 	import com.efi.printsmith.data.CashDrawer;	
+	import com.efi.printsmith.data.Invoice;
 	[Bindable]
 	private var sessionBatch:TapeSessionBatch;
 	[Bindable]

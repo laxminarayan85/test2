@@ -183,7 +183,8 @@ public class DefaultDataFactory {
 
 	private void ProcessLabelFormats() throws Exception {
 		List<?> labelFotmatList = (List<?>) dataservice.getAll("LabelFormat");
-
+		long displayId = 1L;
+		
 		if (labelFotmatList.size() > 0)
 			return;
 		
@@ -198,6 +199,7 @@ public class DefaultDataFactory {
 		labelFormat.setSpaceOnRight(1.0);
 		labelFormat.setSpaceOnBottom(18.0);
 		labelFormat.setMeasurements("Pixels");
+		labelFormat.setDisplayId(displayId++);
 		FontDefinition fontDefinition = new FontDefinition();
 		fontDefinition.setFontName("Arial");
 		fontDefinition.setSize(12);
@@ -219,6 +221,7 @@ public class DefaultDataFactory {
 		labelFormat.setSpaceOnRight(10.0);
 		labelFormat.setSpaceOnBottom(10.0);
 		labelFormat.setMeasurements("Pixels");
+		labelFormat.setDisplayId(displayId++);
 		fontDefinition = new FontDefinition();
 		fontDefinition.setFontName("Arial");
 		fontDefinition.setSize(12);
@@ -240,6 +243,7 @@ public class DefaultDataFactory {
 		labelFormat.setSpaceOnRight(10.0);
 		labelFormat.setSpaceOnBottom(0.0);
 		labelFormat.setMeasurements("Pixels");
+		labelFormat.setDisplayId(displayId++);
 		fontDefinition = new FontDefinition();
 		fontDefinition.setFontName("Arial");
 		fontDefinition.setSize(12);
@@ -261,6 +265,7 @@ public class DefaultDataFactory {
 		labelFormat.setSpaceOnRight(30.0);
 		labelFormat.setSpaceOnBottom(10.0);
 		labelFormat.setMeasurements("Pixels");
+		labelFormat.setDisplayId(displayId++);
 		fontDefinition = new FontDefinition();
 		fontDefinition.setFontName("Arial");
 		fontDefinition.setSize(12);
@@ -282,6 +287,7 @@ public class DefaultDataFactory {
 		labelFormat.setSpaceOnRight(0.0);
 		labelFormat.setSpaceOnBottom(0.0);
 		labelFormat.setMeasurements("Pixels");
+		labelFormat.setDisplayId(displayId++);
 		fontDefinition = new FontDefinition();
 		fontDefinition.setFontName("Arial");
 		fontDefinition.setSize(12);
@@ -303,6 +309,7 @@ public class DefaultDataFactory {
 		labelFormat.setSpaceOnRight(123.0);
 		labelFormat.setSpaceOnBottom(154.0);
 		labelFormat.setMeasurements("Pixels");
+		labelFormat.setDisplayId(displayId++);
 		fontDefinition = new FontDefinition();
 		fontDefinition.setFontName("Arial");
 		fontDefinition.setSize(12);
@@ -359,12 +366,14 @@ public class DefaultDataFactory {
 	}
 	private void ProcessWebTranslation() throws Exception {
 		List<?> itemList = (List<?>) dataservice.getAll("WebTranslation");
-
+		long displayId = 1L;
+		
 		if (itemList.size() > 0)
 			return;
 
 		WebTranslation webtranslation = new WebTranslation();
 		webtranslation.setName("Bindery");
+		webtranslation.setDisplayId(displayId++);
 		try {
 			webtranslation = (WebTranslation) dataservice.addUpdate(webtranslation);
 		} catch (Exception e) {
@@ -373,6 +382,7 @@ public class DefaultDataFactory {
 
 		webtranslation = new WebTranslation();
 		webtranslation.setName("PrePress");
+		webtranslation.setDisplayId(displayId++);
 		try {
 			webtranslation = (WebTranslation) dataservice.addUpdate(webtranslation);
 		} catch (Exception e) {
@@ -381,6 +391,7 @@ public class DefaultDataFactory {
 
 		webtranslation = new WebTranslation();
 		webtranslation.setName("Production");
+		webtranslation.setDisplayId(displayId++);
 		try {
 			webtranslation = (WebTranslation) dataservice.addUpdate(webtranslation);
 		} catch (Exception e) {
@@ -389,6 +400,7 @@ public class DefaultDataFactory {
 
 		webtranslation = new WebTranslation();
 		webtranslation.setName("Ready for Customer");
+		webtranslation.setDisplayId(displayId++);
 		try {
 			webtranslation = (WebTranslation) dataservice.addUpdate(webtranslation);
 		} catch (Exception e) {
@@ -753,12 +765,13 @@ public class DefaultDataFactory {
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
-		
 	}
+	
 	private void ProcessPricingMethods() throws Exception {
 
 		List<?> itemList = (List<?>) dataservice.getAll("PreferencesPricingMethod");
-
+		Long displayId = 1L;
+		
 		if (itemList.size() > 0)
 			return;
 		
@@ -767,7 +780,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Multi Part");
 		pricingMethod.setAbbreviation("Multi Part");
 		pricingMethod.setMethod("Multi Part");
-
+		pricingMethod.setDisplayId(displayId++);
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
 		} catch (Exception e) {
@@ -779,6 +792,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Printing");
 		pricingMethod.setAbbreviation("Printing");
 		pricingMethod.setMethod("Printing");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -791,6 +805,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Roll-Fed");
 		pricingMethod.setAbbreviation("Roll-Fed");
 		pricingMethod.setMethod("RollFed");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -803,6 +818,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("B&W");
 		pricingMethod.setAbbreviation("B&W");
 		pricingMethod.setMethod("B&W");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -814,6 +830,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Color");
 		pricingMethod.setAbbreviation("Color");
 		pricingMethod.setMethod("Color");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -826,6 +843,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Large Format");
 		pricingMethod.setAbbreviation("Large Format");
 		pricingMethod.setMethod("Large Format");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -838,6 +856,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Blank");
 		pricingMethod.setAbbreviation("Blank");
 		pricingMethod.setMethod("Blank");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -850,6 +869,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("List");
 		pricingMethod.setAbbreviation("List");
 		pricingMethod.setMethod("List");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -862,6 +882,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Charges Only");
 		pricingMethod.setAbbreviation("Charges Only");
 		pricingMethod.setMethod("Charges Only");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -874,6 +895,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Outside Services");
 		pricingMethod.setAbbreviation("Outside Services");
 		pricingMethod.setMethod("Outside Services");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -886,6 +908,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Merchandise");
 		pricingMethod.setAbbreviation("Merchandise");
 		pricingMethod.setMethod("Merchandise");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -898,6 +921,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Lines & Inches");
 		pricingMethod.setAbbreviation("Lines & Inches");
 		pricingMethod.setMethod("Lines & Inches");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -910,6 +934,7 @@ public class DefaultDataFactory {
 		pricingMethod.setTitle("Mailing");
 		pricingMethod.setAbbreviation("Mailing");
 		pricingMethod.setMethod("Mailing");
+		pricingMethod.setDisplayId(displayId++);
 
 		try {
 			pricingMethod = (PreferencesPricingMethod) dataservice.addUpdate(pricingMethod);
@@ -937,6 +962,7 @@ public class DefaultDataFactory {
 
 		JobMethod jobmethod = new JobMethod();
 		jobmethod.setName("Offset");
+		jobmethod.setDisplayId(1L);
 		try {
 			jobmethod = (JobMethod) dataservice.addUpdate(jobmethod);
 		} catch (Exception e) {
@@ -945,6 +971,7 @@ public class DefaultDataFactory {
 
 		jobmethod = new JobMethod();
 		jobmethod.setName("Digital");
+		jobmethod.setDisplayId(2L);
 		try {
 			jobmethod = (JobMethod) dataservice.addUpdate(jobmethod);
 		} catch (Exception e) {
@@ -953,6 +980,7 @@ public class DefaultDataFactory {
 
 		jobmethod = new JobMethod();
 		jobmethod.setName("Large Format");
+		jobmethod.setDisplayId(3L);
 		try {
 			jobmethod = (JobMethod) dataservice.addUpdate(jobmethod);
 		} catch (Exception e) {
@@ -963,13 +991,15 @@ public class DefaultDataFactory {
 
 	private void ProcessColumnNames() throws Exception {
 		List<?> itemList = (List<?>) dataservice.getAll("ColumnNames");
-
+		long displayId = 1L;
+		
 		if (itemList.size() > 0)
 			return;
 
 		int item = 1;
 		ColumnNames columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Account");
+		columnnames.setDisplayId(1L);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -980,6 +1010,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Document");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1001,6 +1032,7 @@ public class DefaultDataFactory {
 		
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Phone");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1011,6 +1043,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Location");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1021,6 +1054,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.WantedDate");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1031,6 +1065,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("scheduleLateAndCompletedCmd.Hold");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1041,6 +1076,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.Type");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1051,6 +1087,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.DocumentTitle");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1061,6 +1098,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.JobComment");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1071,6 +1109,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.ProofDate");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1081,6 +1120,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.TakenBy");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1091,6 +1131,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.SalesRep");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1101,6 +1142,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.WebReference");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1111,6 +1153,7 @@ public class DefaultDataFactory {
 
 		columnnames = new ColumnNames();
 		columnnames.setName("posPendCmd.JobCount");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1123,6 +1166,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("name");
 		columnnames.setName("stockPickerCmd.Name");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1134,6 +1178,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("weight");
 		columnnames.setName("stockPickerCmd.Weight");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1145,6 +1190,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("parentsize");
 		columnnames.setName("stockPickerCmd.Size");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1156,6 +1202,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("color");
 		columnnames.setName("stockPickerCmd.Color");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1167,6 +1214,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("genericcolor");
 		columnnames.setName("stockPickerCmd.GenericColor");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1178,6 +1226,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("finish");
 		columnnames.setName("stockPickerCmd.Finish");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1189,6 +1238,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("thickness");
 		columnnames.setName("stockPickerCmd.Thickness");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1200,6 +1250,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("grade");
 		columnnames.setName("stockPickerCmd.Grade");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1211,6 +1262,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("cwt1");
 		columnnames.setName("stockPickerCmd.CWT");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1222,6 +1274,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("vendor");
 		columnnames.setName("stockPickerCmd.Vendor");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1233,6 +1286,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("stocknumber");
 		columnnames.setName("stockPickerCmd.StockNumber");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1244,6 +1298,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("id");
 		columnnames.setName("stockPickerCmd.ProductID");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1255,6 +1310,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("onhand");
 		columnnames.setName("stockPickerCmd.QtyOnHand");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1266,6 +1322,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("committed");
 		columnnames.setName("stockPickerCmd.Committed");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1277,6 +1334,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("ordered");
 		columnnames.setName("stockPickerCmd.Ordered");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1288,6 +1346,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("shellitem");
 		columnnames.setName("stockPickerCmd.Shell");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1299,6 +1358,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("normalrunsize");
 		columnnames.setName("stockPickerCmd.RunSize");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1310,6 +1370,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("basicsize");
 		columnnames.setName("stockPickerCmd.BasicSize");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1321,6 +1382,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("stkgroup");
 		columnnames.setName("stockPickerCmd.Group");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1334,6 +1396,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("stktype");
 		columnnames.setName("stockPickerCmd.Type");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1346,6 +1409,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("coated");
 		columnnames.setName("stockPickerCmd.CoatedSides");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1357,6 +1421,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("minorder");
 		columnnames.setName("stockPickerCmd.MinimumOrder");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1368,6 +1433,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("cost1");
 		columnnames.setName("stockPickerCmd.Price");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1379,6 +1445,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("priceexpires");
 		columnnames.setName("stockPickerCmd.PriceExpires");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1390,6 +1457,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("forestmanagement");
 		columnnames.setName("stockPickerCmd.ForestMgmt");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1401,6 +1469,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("pcwrecycledpercent");
 		columnnames.setName("stockPickerCmd.Recycle");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1412,6 +1481,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("fsccertified");
 		columnnames.setName("stockPickerCmd.FSC");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1423,6 +1493,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("sficertified");
 		columnnames.setName("stockPickerCmd.SFI");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1434,6 +1505,7 @@ public class DefaultDataFactory {
 		columnnames = new ColumnNames();
 		columnnames.setInternalName("greensealcertified");
 		columnnames.setName("stockPickerCmd.GreenSeal");
+		columnnames.setDisplayId(displayId++);
 		try {
 			columnnames = (ColumnNames) dataservice.addUpdate(columnnames);
 		} catch (Exception e) {
@@ -1600,6 +1672,7 @@ public class DefaultDataFactory {
 			return;
 
 		Employee employee = new Employee();
+		employee.setDisplayId(1L);
 		employee.setFirstName("Efi");
 		employee.setLastName("Printsmith");
 		try {
@@ -1618,6 +1691,7 @@ public class DefaultDataFactory {
 		Users users = new Users();
 		users.setName("admin");
 		users.setPassword("admin");
+		users.setDisplayId(1L);
 		users.setShowUserNameLog(true);
 		users.setAccessLevel(99);
 		users.setAccessGroup(owneraccessgroup);
@@ -1697,6 +1771,7 @@ public class DefaultDataFactory {
 		creditcard.setAbbreviation("AMEX");
 		creditcard.setCardType("American Express");
 		creditcard.setCode("AM");
+		creditcard.setDisplayId(1L);
 		try {
 			dataservice.addUpdate(creditcard);
 		} catch (Exception e) {
@@ -1707,6 +1782,7 @@ public class DefaultDataFactory {
 		creditcard.setAbbreviation("MC");
 		creditcard.setCardType("Mastercard");
 		creditcard.setCode("M");
+		creditcard.setDisplayId(2L);
 		try {
 			dataservice.addUpdate(creditcard);
 		} catch (Exception e) {
@@ -1717,6 +1793,7 @@ public class DefaultDataFactory {
 		creditcard.setAbbreviation("VI");
 		creditcard.setCardType("Visa");
 		creditcard.setCode("V");
+		creditcard.setDisplayId(3L);
 		try {
 			dataservice.addUpdate(creditcard);
 		} catch (Exception e) {
@@ -1727,6 +1804,7 @@ public class DefaultDataFactory {
 		creditcard.setAbbreviation("DIS");
 		creditcard.setCardType("Discover");
 		creditcard.setCode("D");
+		creditcard.setDisplayId(4L);
 		try {
 			dataservice.addUpdate(creditcard);
 		} catch (Exception e) {
@@ -1742,6 +1820,7 @@ public class DefaultDataFactory {
 
 		ComLinkType comLinkType = new ComLinkType();
 		comLinkType.setType("Phone");
+		comLinkType.setDisplayId(1L);
 		try {
 			dataservice.addUpdate(comLinkType);
 		} catch (Exception e) {
@@ -1749,6 +1828,7 @@ public class DefaultDataFactory {
 		}
 		comLinkType = new ComLinkType();
 		comLinkType.setType("Cell");
+		comLinkType.setDisplayId(2L);
 		try {
 			dataservice.addUpdate(comLinkType);
 		} catch (Exception e) {
@@ -1756,6 +1836,7 @@ public class DefaultDataFactory {
 		}
 		comLinkType = new ComLinkType();
 		comLinkType.setType("Fax");
+		comLinkType.setDisplayId(3L);
 		try {
 			dataservice.addUpdate(comLinkType);
 		} catch (Exception e) {
@@ -1763,6 +1844,7 @@ public class DefaultDataFactory {
 		}
 		comLinkType = new ComLinkType();
 		comLinkType.setType("E-Mail");
+		comLinkType.setDisplayId(4L);
 		try {
 			dataservice.addUpdate(comLinkType);
 		} catch (Exception e) {
@@ -1770,6 +1852,7 @@ public class DefaultDataFactory {
 		}
 		comLinkType = new ComLinkType();
 		comLinkType.setType("IM");
+		comLinkType.setDisplayId(5L);
 		try {
 			dataservice.addUpdate(comLinkType);
 		} catch (Exception e) {
@@ -1777,6 +1860,7 @@ public class DefaultDataFactory {
 		}
 		comLinkType = new ComLinkType();
 		comLinkType.setType("FaceBook");
+		comLinkType.setDisplayId(6L);
 		try {
 			dataservice.addUpdate(comLinkType);
 		} catch (Exception e) {
@@ -1784,6 +1868,7 @@ public class DefaultDataFactory {
 		}
 		comLinkType = new ComLinkType();
 		comLinkType.setType("Twitter");
+		comLinkType.setDisplayId(7L);
 		try {
 			dataservice.addUpdate(comLinkType);
 		} catch (Exception e) {
@@ -1791,6 +1876,7 @@ public class DefaultDataFactory {
 		}
 		comLinkType = new ComLinkType();
 		comLinkType.setType("LinkedIn");
+		comLinkType.setDisplayId(8L);
 		try {
 			dataservice.addUpdate(comLinkType);
 		} catch (Exception e) {
@@ -1798,6 +1884,7 @@ public class DefaultDataFactory {
 		}
 		comLinkType = new ComLinkType();
 		comLinkType.setType("Web Site");
+		comLinkType.setDisplayId(9L);
 		try {
 			dataservice.addUpdate(comLinkType);
 		} catch (Exception e) {
@@ -1805,6 +1892,7 @@ public class DefaultDataFactory {
 		}
 		comLinkType = new ComLinkType();
 		comLinkType.setType("Other");
+		comLinkType.setDisplayId(10L);
 		try {
 			dataservice.addUpdate(comLinkType);
 		} catch (Exception e) {
@@ -1821,6 +1909,7 @@ public class DefaultDataFactory {
 
 		ShippingMethod shippingMethod = new ShippingMethod();
 		shippingMethod.setName("Will Call");
+		shippingMethod.setDisplayId(1L);
 		try {
 			dataservice.addUpdate(shippingMethod);
 		} catch (Exception e) {
@@ -1828,6 +1917,7 @@ public class DefaultDataFactory {
 		}
 		shippingMethod = new ShippingMethod();
 		shippingMethod.setName("Call");
+		shippingMethod.setDisplayId(2L);
 		try {
 			dataservice.addUpdate(shippingMethod);
 		} catch (Exception e) {
@@ -1835,6 +1925,7 @@ public class DefaultDataFactory {
 		}
 		shippingMethod = new ShippingMethod();
 		shippingMethod.setName("Deliver");
+		shippingMethod.setDisplayId(3L);
 		try {
 			dataservice.addUpdate(shippingMethod);
 		} catch (Exception e) {
@@ -1842,6 +1933,7 @@ public class DefaultDataFactory {
 		}
 		shippingMethod = new ShippingMethod();
 		shippingMethod.setName("Ground");
+		shippingMethod.setDisplayId(4L);
 		try {
 			dataservice.addUpdate(shippingMethod);
 		} catch (Exception e) {
@@ -1849,6 +1941,7 @@ public class DefaultDataFactory {
 		}
 		shippingMethod = new ShippingMethod();
 		shippingMethod.setName("FexEx");
+		shippingMethod.setDisplayId(5L);
 		try {
 			dataservice.addUpdate(shippingMethod);
 		} catch (Exception e) {
@@ -1856,6 +1949,7 @@ public class DefaultDataFactory {
 		}
 		shippingMethod = new ShippingMethod();
 		shippingMethod.setName("UPS");
+		shippingMethod.setDisplayId(6L);
 		try {
 			dataservice.addUpdate(shippingMethod);
 		} catch (Exception e) {
@@ -1863,6 +1957,7 @@ public class DefaultDataFactory {
 		}
 		shippingMethod = new ShippingMethod();
 		shippingMethod.setName("UPS Red");
+		shippingMethod.setDisplayId(7L);
 		try {
 			dataservice.addUpdate(shippingMethod);
 		} catch (Exception e) {
@@ -1870,6 +1965,7 @@ public class DefaultDataFactory {
 		}
 		shippingMethod = new ShippingMethod();
 		shippingMethod.setName("UPS Blue");
+		shippingMethod.setDisplayId(8L);
 		try {
 			dataservice.addUpdate(shippingMethod);
 		} catch (Exception e) {
@@ -1877,6 +1973,7 @@ public class DefaultDataFactory {
 		}
 		shippingMethod = new ShippingMethod();
 		shippingMethod.setName("USPS");
+		shippingMethod.setDisplayId(9L);
 		try {
 			dataservice.addUpdate(shippingMethod);
 		} catch (Exception e) {
@@ -1884,6 +1981,7 @@ public class DefaultDataFactory {
 		}
 		shippingMethod = new ShippingMethod();
 		shippingMethod.setName("International");
+		shippingMethod.setDisplayId(10L);
 		try {
 			dataservice.addUpdate(shippingMethod);
 		} catch (Exception e) {
@@ -1965,8 +2063,9 @@ public class DefaultDataFactory {
 				doStockType(f);
 				break;
 			}
-			}
-		}		
+		}
+	}		
+	
 	private void LoadDimesionData(String [] args) throws IOException {
 		if (args.length == 0)
 			args = new String[] { ".." };
@@ -1982,6 +2081,7 @@ public class DefaultDataFactory {
 			}
 		}		
 	}
+	
 	private void LoadFoldTemplateData(String [] args) throws IOException {
 		if (args.length == 0)
 			args = new String[] { ".." };
@@ -2029,149 +2129,78 @@ public class DefaultDataFactory {
 		}
 	}
 	private int doTaxElements(File file) throws Exception {
-		List<?> taxElementList = (List<?>) dataservice
-		.getAll("TaxTablesElements");
-
-		FileInputStream f = new FileInputStream(file);
-		InputStreamReader ip = new InputStreamReader(f);
-		java.io.BufferedReader br = new java.io.BufferedReader(ip);
-		String line = null;
-		String prevID = null;
-		int rv = -1;
-		int count = 0;
-		while ((line = br.readLine()) != null) {
-			count++;
-			if (line.length() > 0) {
-				if (taxElementList.size() > 0) {
-					boolean found = false;
-					for (int i = 0; i < taxElementList.size(); i++) {
-						if (((TaxTablesElements) taxElementList.get(i))
-								.getName().trim().equals(line.trim()) == true) {
-							found = true;
-							break;
-						}
-					}
-					if (found != true) {
-						TaxTablesElements taxElement = new TaxTablesElements();
-						taxElement.setName(line.trim());
-						prevID= Integer.toString(count);
-						taxElement.setPrevId(prevID);
-						try {
-							dataservice.addUpdate(taxElement);
-						} catch (Exception e) {
-							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-							break;
-						}
-					}
-				} else {
-					TaxTablesElements taxElement = new TaxTablesElements();
-					taxElement.setName(line.trim());
-					prevID= Integer.toString(count);
-					taxElement.setPrevId(prevID);
-					try {
-						dataservice.addUpdate(taxElement);
-					} catch (Exception e) {
-						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-						break;
-					}
-				}
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+	
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 2) {
+				throw new java.io.IOException("Expected 2 fields per line in TaxElement");
 			}
-}
-return rv;
-	}
-	private int doInkColor(File file) throws Exception {
-
-		List<?> inkColorList = (List<?>) dataservice
-				.getAll("InkColor");
-
-		FileInputStream f = new FileInputStream(file);
-		InputStreamReader ip = new InputStreamReader(f);
-		java.io.BufferedReader br = new java.io.BufferedReader(ip);
-		String line = null;
-		int rv = -1;
-		while ((line = br.readLine()) != null) {
-			if (line.length() > 0) {
-				if (inkColorList.size() > 0) {
-					boolean found = false;
-					for (int i = 0; i < inkColorList.size(); i++) {
-						if (((InkColor) inkColorList.get(i))
-								.getName().trim().equals(line.trim()) == true) {
-							found = true;
-							break;
-						}
-					}
-					if (found != true) {
-						InkColor inkcolors = new InkColor();
-						inkcolors.setName(line.trim());
-						try {
-							dataservice.addUpdate(inkcolors);
-						} catch (Exception e) {
-							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-							break;
-						}
-					}
-				} else {
-					InkColor inkcolors = new InkColor();
-					inkcolors.setName(line.trim());
-					try {
-						dataservice.addUpdate(inkcolors);
-					} catch (Exception e) {
-						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-						break;
-					}
-				}
+			TaxTablesElements taxElement = new TaxTablesElements();
+			
+			taxElement.setDisplayId(Long.parseLong(fieldTokens[0]));
+			taxElement.setName(fieldTokens[1]);
+			try {
+				dataservice.addUpdate(taxElement);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
 			}
 		}
-		return rv;
+		return -1;
+	}
+	
+	private int doInkColor(File file) throws Exception {
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+	
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 2) {
+				throw new java.io.IOException("Expected 2 fields per line in InkColor");
+			}
+			InkColor inkColor = new InkColor();
+			
+			inkColor.setDisplayId(Long.parseLong(fieldTokens[0]));
+			inkColor.setName(fieldTokens[1]);
+			try {
+				dataservice.addUpdate(inkColor);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
+			}
+		}
+		return -1;
 	}
 	
 	private int doStatesFile(File file) throws java.io.IOException {
-		int rv = -1;
-		try {
-			List<?> stateList = (List<?>) dataservice.getAll("State");
-
-			FileInputStream f = new FileInputStream(file);
-			InputStreamReader ip = new InputStreamReader(f);
-			java.io.BufferedReader br = new java.io.BufferedReader(ip);
-			String line = null;
-			while ((line = br.readLine()) != null) {
-				if (line.length() > 0) {
-					if (stateList.size() > 0) {
-						boolean found = false;
-						for (int i = 0; i < stateList.size(); i++) {
-							if (((State) stateList.get(i)).getName().trim()
-									.equals(line.trim()) == true) {
-								found = true;
-								break;
-							}
-						}
-						if (found != true) {
-							State state = new State();
-							state.setName(line.trim());
-							try {
-								dataservice.addUpdate(state);
-							} catch (Exception e) {
-								log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-								break;
-							}
-						}
-					} else {
-						State state = new State();
-						state.setName(line.trim());
-						try {
-							dataservice.addUpdate(state);
-						} catch (Exception e) {
-							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-							break;
-						}
-					}
-				}
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+	
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 2) {
+				throw new java.io.IOException("Expected 2 fields per line in States");
 			}
-		} catch (Exception e) {
-			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+			State state = new State();
+			
+			state.setDisplayId(Long.parseLong(fieldTokens[0]));
+			state.setName(fieldTokens[1]);;
+			
+			try {
+				dataservice.addUpdate(state);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
+			}
 		}
-		return rv;
+		return -1;
 	}
+	
 	private int doStockType(File file) throws Exception {
 		FileInputStream fis = new FileInputStream(file);
 		InputStreamReader fileReader = new InputStreamReader(fis);
@@ -2180,15 +2209,16 @@ return rv;
 		int index = 0;
 		while ((fieldTokens = csvReader.readNext()) != null) {
 			if (fieldTokens.length != 2) {
-				throw new java.io.IOException("Expected 2 fields per line in Dimension");
+				throw new java.io.IOException("Expected 3 fields per line in Dimension");
 			}
 			index++;
 			Dimension dimension = new Dimension();
 			StockType stockType = new StockType();
-			dimension = dataservice.getByDimensionName("Dimension", fieldTokens[1]);
-			stockType.setSize(dimension);
-			stockType.setName(fieldTokens[0]);
-			stockType.setViewableID(index);
+			dimension = dataservice.getByDimensionName("Dimension", fieldTokens[2]);
+			stockType.setSize(new DimensionInstance(dimension));
+			stockType.setName(fieldTokens[1]);
+			stockType.setDisplayId(Long.parseLong(fieldTokens[0]));
+			stockType.setViewableID(Integer.parseInt(fieldTokens[0]));
 			
 			try {
 				dataservice.addUpdate(stockType);
@@ -2206,15 +2236,16 @@ return rv;
 		String[] fieldTokens = null;
 	
 		while ((fieldTokens = csvReader.readNext()) != null) {
-			if (fieldTokens.length != 3) {
-				throw new java.io.IOException("Expected 3 fields per line in Dimension");
+			if (fieldTokens.length != 4) {
+				throw new java.io.IOException("Expected 4 fields per line in Dimension");
 			}
 			Dimension dimension = new Dimension();
 			
-			dimension.setName(fieldTokens[2]);
+			dimension.setDisplayId(Long.parseLong(fieldTokens[0]));
+			dimension.setName(fieldTokens[3]);
 			dimension.setType("US - Imperial");
-			dimension.setWidth(Float.valueOf(fieldTokens[0]).floatValue());
-			dimension.setHeight(Float.valueOf(fieldTokens[1]).floatValue());
+			dimension.setWidth(Float.valueOf(fieldTokens[1]).floatValue());
+			dimension.setHeight(Float.valueOf(fieldTokens[2]).floatValue());
 			try {
 				dataservice.addUpdate(dimension);
 			} catch (Exception e) {
@@ -2252,50 +2283,29 @@ return rv;
 	}
 	
 	private int doEstimatorTypes(File file) throws Exception {
-
-		List<?> estimatorTypesList = (List<?>) dataservice
-				.getAll("EstimatorTypes");
-
-		FileInputStream f = new FileInputStream(file);
-		InputStreamReader ip = new InputStreamReader(f);
-		java.io.BufferedReader br = new java.io.BufferedReader(ip);
-		String line = null;
-		int rv = -1;
-		while ((line = br.readLine()) != null) {
-			if (line.length() > 0) {
-				if (estimatorTypesList.size() > 0) {
-					boolean found = false;
-					for (int i = 0; i < estimatorTypesList.size(); i++) {
-						if (((EstimatorTypes) estimatorTypesList.get(i))
-								.getName().trim().equals(line.trim()) == true) {
-							found = true;
-							break;
-						}
-					}
-					if (found != true) {
-						EstimatorTypes estimatortypes = new EstimatorTypes();
-						estimatortypes.setName(line.trim());
-						try {
-							dataservice.addUpdate(estimatortypes);
-						} catch (Exception e) {
-							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-							break;
-						}
-					}
-				} else {
-					EstimatorTypes estimatortypes = new EstimatorTypes();
-					estimatortypes.setName(line.trim());
-					try {
-						dataservice.addUpdate(estimatortypes);
-					} catch (Exception e) {
-						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-						break;
-					}
-				}
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+	
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 2) {
+				throw new java.io.IOException("Expected 2 fields per line in EstimatorTypes");
+			}
+			EstimatorTypes estimatorType = new EstimatorTypes();
+			
+			estimatorType.setDisplayId(Long.parseLong(fieldTokens[0]));
+			estimatorType.setName(fieldTokens[1]);
+			try {
+				dataservice.addUpdate(estimatorType);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
 			}
 		}
-		return rv;
+		return -1;
 	}
+	
 	private void LoadProductCodesNamesData(String[] args) throws Exception {
 		if (args.length == 0)
 			args = new String[] { ".." };
@@ -2335,92 +2345,54 @@ return rv;
 		}
 	}
 	private int doProductCodeFile(File file) throws Exception{
-		List<?> productCodeList = (List<?>) dataservice.getAll("ProductCode");
-
-		FileInputStream f = new FileInputStream(file);
-		InputStreamReader ip = new InputStreamReader(f);
-		java.io.BufferedReader br = new java.io.BufferedReader(ip);
-		String line = null;
-		int rv = -1;
-		while ((line = br.readLine()) != null) {
-			if (line.length() > 0) {
-				if (productCodeList.size() > 0) {
-					boolean found = false;
-					for (int i = 0; i < productCodeList.size(); i++) {
-						if (((ProductCode) productCodeList.get(i)).getName().trim()
-								.equals(line.trim()) == true) {
-							found = true;
-							break;
-						}
-					}
-					if (found != true) {
-						ProductCode productCode = new ProductCode();
-						productCode.setName(line.trim());
-						try {
-							dataservice.addUpdate(productCode);
-						} catch (Exception e) {
-							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-							break;
-						}
-					}
-				} else {
-					ProductCode productCode = new ProductCode();
-					productCode.setName(line.trim());
-					try {
-						dataservice.addUpdate(productCode);
-					} catch (Exception e) {
-						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-						break;
-					}
-				}
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+	
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 2) {
+				throw new java.io.IOException("Expected 2 fields per line in ProductCode");
+			}
+			ProductCode productCode = new ProductCode();
+			
+			productCode.setDisplayId(Long.parseLong(fieldTokens[0]));
+			productCode.setName(fieldTokens[1]);
+			try {
+				dataservice.addUpdate(productCode);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
 			}
 		}
-		return rv;
+		return -1;
 	}
+
 	private int doCountryFile(File file) throws Exception {
-
-		List<?> countryList = (List<?>) dataservice.getAll("Country");
-
-		FileInputStream f = new FileInputStream(file);
-		InputStreamReader ip = new InputStreamReader(f);
-		java.io.BufferedReader br = new java.io.BufferedReader(ip);
-		String line = null;
-		int rv = -1;
-		while ((line = br.readLine()) != null) {
-			if (line.length() > 0) {
-				if (countryList.size() > 0) {
-					boolean found = false;
-					for (int i = 0; i < countryList.size(); i++) {
-						if (((Country) countryList.get(i)).getName().trim()
-								.equals(line.trim()) == true) {
-							found = true;
-							break;
-						}
-					}
-					if (found != true) {
-						Country country = new Country();
-						country.setName(line.trim());
-						try {
-							dataservice.addUpdate(country);
-						} catch (Exception e) {
-							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-							break;
-						}
-					}
-				} else {
-					Country country = new Country();
-					country.setName(line.trim());
-					try {
-						dataservice.addUpdate(country);
-					} catch (Exception e) {
-						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-						break;
-					}
-				}
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+	
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 2) {
+				throw new java.io.IOException("Expected 2 fields per line in Countries");
+			}
+			Country country = new Country();
+			
+			country.setDisplayId(Long.parseLong(fieldTokens[0]));
+			country.setName(fieldTokens[1]);;
+			
+			try {
+				dataservice.addUpdate(country);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
 			}
 		}
-		return rv;
+		return -1;
 	}
+	
 private void LoadProductionFaciltyData(String[] args) throws Exception {
 	if (args.length == 0)
 		args = new String[] { ".." };
@@ -2461,95 +2433,53 @@ private void LoadProductionFaciltyData(String[] args) throws Exception {
 			}
 		}
 	}
+	
 	private int doProductionFacilityFile(File file)throws Exception {
-
-		List<?> productionFacilityList = (List<?>) dataservice
-				.getAll("ProductionFacilities");
-
-		FileInputStream f = new FileInputStream(file);
-		InputStreamReader ip = new InputStreamReader(f);
-		java.io.BufferedReader br = new java.io.BufferedReader(ip);
-		String line = null;
-		int rv = -1;
-		while ((line = br.readLine()) != null) {
-			if (line.length() > 0) {
-				if (productionFacilityList.size() > 0) {
-					boolean found = false;
-					for (int i = 0; i < productionFacilityList.size(); i++) {
-						if (((ProductionFacilities) productionFacilityList
-								.get(i)).getName().trim().equals(line.trim()) == true) {
-							found = true;
-							break;
-						}
-					}
-					if (found != true) {
-						ProductionFacilities productionFacility = new ProductionFacilities();
-						productionFacility.setName(line.trim());
-						try {
-							dataservice.addUpdate(productionFacility);
-						} catch (Exception e) {
-							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-							break;
-						}
-					}
-				} else {
-					ProductionFacilities productionFacility = new ProductionFacilities();
-					productionFacility.setName(line.trim());
-					try {
-						dataservice.addUpdate(productionFacility);
-					} catch (Exception e) {
-						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-						break;
-					}
-				}
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+	
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 2) {
+				throw new java.io.IOException("Expected 2 fields per line in ProductionFacility");
+			}
+			ProductionFacilities productionFacility = new ProductionFacilities();
+			
+			productionFacility.setDisplayId(Long.parseLong(fieldTokens[0]));
+			productionFacility.setName(fieldTokens[1]);
+			try {
+				dataservice.addUpdate(productionFacility);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
 			}
 		}
-		return rv;
+		return -1;
 	}
+	
 	private int doProductionLocationsFile(File file) throws Exception {
-
-		List<?> productionLocationsList = (List<?>) dataservice
-				.getAll("ProductionLocations");
-
-		FileInputStream f = new FileInputStream(file);
-		InputStreamReader ip = new InputStreamReader(f);
-		java.io.BufferedReader br = new java.io.BufferedReader(ip);
-		String line = null;
-		int rv = -1;
-		while ((line = br.readLine()) != null) {
-			if (line.length() > 0) {
-				if (productionLocationsList.size() > 0) {
-					boolean found = false;
-					for (int i = 0; i < productionLocationsList.size(); i++) {
-						if (((ProductionLocations) productionLocationsList
-								.get(i)).getName().trim().equals(line.trim()) == true) {
-							found = true;
-							break;
-						}
-					}
-					if (found != true) {
-						ProductionLocations productionLocations = new ProductionLocations();
-						productionLocations.setName(line.trim());
-						try {
-							dataservice.addUpdate(productionLocations);
-						} catch (Exception e) {
-							log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-							break;
-						}
-					}
-				} else {
-					ProductionLocations productionLocations = new ProductionLocations();
-					productionLocations.setName(line.trim());
-					try {
-						dataservice.addUpdate(productionLocations);
-					} catch (Exception e) {
-						log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-						break;
-					}
-				}
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader fileReader = new InputStreamReader(fis);
+		CSVReader csvReader = new CSVReader(fileReader);
+		String[] fieldTokens = null;
+	
+		while ((fieldTokens = csvReader.readNext()) != null) {
+			if (fieldTokens.length != 2) {
+				throw new java.io.IOException("Expected 2 fields per line in ProductionLocations");
+			}
+			ProductionLocations productionLocation = new ProductionLocations();
+			
+			productionLocation.setDisplayId(Long.parseLong(fieldTokens[0]));
+			productionLocation.setName(fieldTokens[1]);
+			try {
+				dataservice.addUpdate(productionLocation);
+			} catch (Exception e) {
+				log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+				break;
 			}
 		}
-		return rv;
+		return -1;
 	}
 
 	private void LoadSecurityCommandsData(String[] args) throws Exception {

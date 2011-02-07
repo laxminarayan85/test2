@@ -55,7 +55,7 @@ public class InvoiceMapper extends ImportMapper {
 		DataService dataService = new DataService();
 		String last = new String();
 		String first = new String();
-		String neam = new String();
+		String name = new String();
 		Account account= null;
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
@@ -123,7 +123,7 @@ public class InvoiceMapper extends ImportMapper {
 				if (taxTable != null)
 					invoice.setTaxTable(taxTable);
 				else 
-					neam = currentImportToken;
+					name = currentImportToken;
 					
 			} else if ("ship mode".equals(currentFieldToken)) {
 				/* TODO */
@@ -495,7 +495,7 @@ public class InvoiceMapper extends ImportMapper {
 				if (taxTable != null)
 					invoice.setTaxTable(taxTable);
 				else 
-					neam = currentImportToken;
+					name = currentImportToken;
 					
 			} else if ("tax code ID".equals(currentFieldToken)) {
 				/* TODO */
@@ -825,7 +825,7 @@ public class InvoiceMapper extends ImportMapper {
 		NotePad notePad = new NotePad();
 		String last = new String();
 		String first = new String();
-		String neam = new String();
+		String name = new String();
 		Account account = null;
 		DataService dataService = new DataService();
 		for (int i=0; i < fieldTokens.length; i++) {
@@ -1266,7 +1266,7 @@ public class InvoiceMapper extends ImportMapper {
 				if (taxTable != null)
 					invoice.setTaxTable(taxTable);
 				else 
-					neam = currentImportToken;
+					name = currentImportToken;
 					
 			} else if ("tax code ID".equals(currentFieldToken)) {
 				/* TODO */

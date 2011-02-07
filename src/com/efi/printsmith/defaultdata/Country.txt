@@ -1,239 +1,239 @@
-Afghanistan
-Albania
-Algeria
-American Samoa
-Andorra
-Angola
-Anguilla
-Antarctica
-Antigua and Barbuda
-Argentina
-Armenia
-Aruba
-Australia
-Austria
-Azerbaijan
-Bahamas
-Bahrain
-Bangladesh
-Barbados
-Belarus
-Belgium
-Belize
-Benin
-Bermuda
-Bhutan
-Bolivia
-Bosnia and Herzegovina
-Botswana
-Bouvet Island
-Brazil
-British Indian Ocean Territory
-Brunei
-Bulgaria
-Burkina Faso
-Burundi
-Cambodia
-Cameroon
-Canada
-Cape Verde
-Cayman Islands
-Central African Republic
-Chad
-Chile
-China
-Christmas Island
-Cocos (Keeling) Islands
-Colombia
-Comoros
-Congo 
-Congo, The Democratic Republic of the
-Cook Islands
-Costa Rica
-Côte d’Ivoire
-Croatia
-Cuba
-Cyprus
-Czech Republic
-Denmark
-Djibouti
-Dominica
-Dominican Republic
-East Timor
-Ecuador
-Egypt
-El Salvador
-Equatorial Guinea
-Eritrea
-Estonia
-Ethiopia
-Falkland Islands
-Faroe Islands
-Fiji Islands
-Finland
-France
-French Guiana
-French Polynesia
-French Southern territories
-Gabon
-Gambia
-Georgia
-Germany
-Ghana
-Gibraltar
-Greece
-Greenland
-Grenada
-Guadeloupe
-Guam
-Guatemala
-Guinea
-Guinea-Bissau
-Guyana
-Haiti
-Heard Island and McDonald Islands
-Holy See (Vatican City State)
-Honduras
-Hong Kong
-Hungary
-Iceland
-India
-Indonesia
-Iran
-Iraq
-Ireland
-Israel
-Italy
-Jamaica
-Japan
-Jordan
-Kazakstan
-Kenya
-Kiribati
-Kuwait
-Kyrgyzstan
-Laos
-Latvia
-Lebanon
-Lesotho
-Liberia
-Libyan Arab Jamahiriya
-Liechtenstein
-Lithuania
-Luxembourg
-Macao
-Macedonia
-Madagascar
-Malawi
-Malaysia
-Maldives
-Mali
-Malta
-Marshall Islands
-Martinique
-Mauritania
-Mauritius
-Mayotte
-Mexico
-Micronesia, Federated States of
-Moldova
-Monaco
-Mongolia
-Montserrat
-Morocco
-Mozambique
-Myanmar
-Namibia
-Nauru
-Nepal
-Netherlands
-Netherlands Antilles
-New Caledonia
-New Zealand
-Nicaragua
-Niger
-Nigeria
-Niue
-Norfolk Island
-North Korea
-Northern Mariana Islands
-Norway
-Oman
-Pakistan
-Palau
-Palestine
-Panama
-Papua New Guinea
-Paraguay
-Peru
-Philippines
-Pitcairn
-Poland
-Portugal
-Puerto Rico
-Qatar
-Réunion
-Romania
-Russian Federation
-Rwanda
-Saint Helena
-Saint Kitts and Nevis
-Saint Lucia
-Saint Pierre and Miquelon
-Saint Vincent and the Grenadines
-Samoa
-San Marino
-Sao Tome and Principe
-Saudi Arabia
-Senegal
-Seychelles
-Sierra Leone
-Singapore
-Slovakia
-Slovenia
-Solomon Islands
-Somalia
-South Africa
-South Georgia and the South Sandwich Islands
-South Korea
-Spain
-Sri Lanka
-Sudan
-Suriname
-Svalbard and Jan Mayen
-Swaziland
-Sweden
-Switzerland
-Syria
-Taiwan
-Tajikistan
-Tanzania
-Thailand
-Togo
-Tokelau
-Tonga
-Trinidad and Tobago
-Tunisia
-Turkey
-Turkmenistan
-Turks and Caicos Islands
-Tuvalu
-Uganda
-Ukraine
-United Arab Emirates
-United Kingdom
-United States
-United States Minor Outlying Islands
-Uruguay
-Uzbekistan
-Vanuatu
-Venezuela
-Vietnam
-Virgin Islands, British
-Virgin Islands, U.S.
-Wallis and Futuna
-Western Sahara
-Yemen
-Yugoslavia
-Zambia
-Zimbabwe 
+1,"Afghanistan"
+2,"Albania"
+3,"Algeria"
+4,"American Samoa"
+5,"Andorra"
+6,"Angola"
+7,"Anguilla"
+8,"Antarctica"
+9,"Antigua and Barbuda"
+10,"Argentina"
+11,"Armenia"
+12,"Aruba"
+13,"Australia"
+14,"Austria"
+15,"Azerbaijan"
+16,"Bahamas"
+17,"Bahrain"
+18,"Bangladesh"
+19,"Barbados"
+20,"Belarus"
+21,"Belgium"
+22,"Belize"
+23,"Benin"
+24,"Bermuda"
+25,"Bhutan"
+26,"Bolivia"
+27,"Bosnia and Herzegovina"
+28,"Botswana"
+29,"Bouvet Island"
+30,"Brazil"
+31,"British Indian Ocean Territory"
+32,"Brunei"
+33,"Bulgaria"
+34,"Burkina Faso"
+35,"Burundi"
+36,"Cambodia"
+37,"Cameroon"
+38,"Canada"
+39,"Cape Verde"
+40,"Cayman Islands"
+41,"Central African Republic"
+42,"Chad"
+43,"Chile"
+44,"China"
+45,"Christmas Island"
+46,"Cocos (Keeling) Islands"
+47,"Colombia"
+48,"Comoros"
+49,"Congo"
+50,"Congo The Democratic Republic of the"
+51,"Cook Islands"
+52,"Costa Rica"
+53,"Cìte d_Ivoire"
+54,"Croatia"
+55,"Cuba"
+56,"Cyprus"
+57,"Czech Republic"
+58,"Denmark"
+59,"Djibouti"
+60,"Dominica"
+61,"Dominican Republic"
+62,"East Timor"
+63,"Ecuador"
+64,"Egypt"
+65,"El Salvador"
+66,"Equatorial Guinea"
+67,"Eritrea"
+68,"Estonia"
+69,"Ethiopia"
+70,"Falkland Islands"
+71,"Faroe Islands"
+72,"Fiji Islands"
+73,"Finland"
+74,"France"
+75,"French Guiana"
+76,"French Polynesia"
+77,"French Southern territories"
+78,"Gabon"
+79,"Gambia"
+80,"Georgia"
+81,"Germany"
+82,"Ghana"
+83,"Gibraltar"
+84,"Greece"
+85,"Greenland"
+86,"Grenada"
+87,"Guadeloupe"
+88,"Guam"
+89,"Guatemala"
+90,"Guinea"
+91,"Guinea-Bissau"
+92,"Guyana"
+93,"Haiti"
+94,"Heard Island and McDonald Islands"
+95,"Holy See (Vatican City State)"
+96,"Honduras"
+97,"Hong Kong"
+98,"Hungary"
+99,"Iceland"
+100,"India"
+101,"Indonesia"
+102,"Iran"
+103,"Iraq"
+104,"Ireland"
+105,"Israel"
+106,"Italy"
+107,"Jamaica"
+108,"Japan"
+109,"Jordan"
+110,"Kazakstan"
+111,"Kenya"
+112,"Kiribati"
+113,"Kuwait"
+114,"Kyrgyzstan"
+115,"Laos"
+116,"Latvia"
+117,"Lebanon"
+118,"Lesotho"
+119,"Liberia"
+120,"Libyan Arab Jamahiriya"
+121,"Liechtenstein"
+122,"Lithuania"
+123,"Luxembourg"
+124,"Macao"
+125,"Macedonia"
+126,"Madagascar"
+127,"Malawi"
+128,"Malaysia"
+129,"Maldives"
+130,"Mali"
+131,"Malta"
+132,"Marshall Islands"
+133,"Martinique"
+134,"Mauritania"
+135,"Mauritius"
+136,"Mayotte"
+137,"Mexico"
+138,"Micronesia, Federated States of"
+139,"Moldova"
+140,"Monaco"
+141,"Mongolia"
+142,"Montserrat"
+143,"Morocco"
+144,"Mozambique"
+145,"Myanmar"
+146,"Namibia"
+147,"Nauru"
+148,"Nepal"
+149,"Netherlands"
+150,"Netherlands Antilles"
+151,"New Caledonia"
+152,"New Zealand"
+153,"Nicaragua"
+154,"Niger"
+155,"Nigeria"
+156,"Niue"
+157,"Norfolk Island"
+158,"North Korea"
+159,"Northern Mariana Islands"
+160,"Norway"
+161,"Oman"
+162,"Pakistan"
+163,"Palau"
+164,"Palestine"
+165,"Panama"
+166,"Papua New Guinea"
+167,"Paraguay"
+168,"Peru"
+169,"Philippines"
+170,"Pitcairn"
+171,"Poland"
+172,"Portugal"
+173,"Puerto Rico"
+174,"Qatar"
+175,"RÇunion"
+176,"Romania"
+177,"Russian Federation"
+178,"Rwanda"
+179,"Saint Helena"
+180,"Saint Kitts and Nevis"
+181,"Saint Lucia"
+182,"Saint Pierre and Miquelon"
+183,"Saint Vincent and the Grenadines"
+184,"Samoa"
+185,"San Marino"
+186,"Sao Tome and Principe"
+187,"Saudi Arabia"
+188,"Senegal"
+189,"Seychelles"
+190,"Sierra Leone"
+191,"Singapore"
+192,"Slovakia"
+193,"Slovenia"
+194,"Solomon Islands"
+195,"Somalia"
+196,"South Africa"
+197,"South Georgia and the South Sandwich Islands"
+198,"South Korea"
+199,"Spain"
+200,"Sri Lanka"
+201,"Sudan"
+202,"Suriname"
+203,"Svalbard and Jan Mayen"
+204,"Swaziland"
+205,"Sweden"
+206,"Switzerland"
+207,"Syria"
+208,"Taiwan"
+209,"Tajikistan"
+210,"Tanzania"
+211,"Thailand"
+212,"Togo"
+213,"Tokelau"
+214,"Tonga"
+215,"Trinidad and Tobago"
+216,"Tunisia"
+217,"Turkey"
+218,"Turkmenistan"
+219,"Turks and Caicos Islands"
+220,"Tuvalu"
+221,"Uganda"
+222,"Ukraine"
+223,"United Arab Emirates"
+224,"United Kingdom"
+225,"United States"
+226,"United States Minor Outlying Islands"
+227,"Uruguay"
+228,"Uzbekistan"
+229,"Vanuatu"
+230,"Venezuela"
+231,"Vietnam"
+232,"Virgin Islands, British"
+233,"Virgin Islands, U.S."
+234,"Wallis and Futuna"
+235,"Western Sahara"
+236,"Yemen"
+237,"Yugoslavia"
+238,"Zambia"
+239,"Zimbabwe 

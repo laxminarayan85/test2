@@ -69,6 +69,7 @@
 		<![CDATA[
 			import mx.controls.dataGridClasses.DataGridColumn;
 			import com.efi.printsmith.data.Dimension;
+			import com.efi.printsmith.data.DimensionInstance;
 			import mx.validators.CurrencyValidator;
 			import com.efi.printsmith.common.components.filter.FilterSearchBy;
 			import com.efi.printsmith.common.components.filter.FilterProperty;
@@ -701,7 +702,7 @@
 				linear_image.graphics.clear();
 				
 				if (this.job != null && this.job.runSize != null) {
-					var runSize:Dimension = this.job.runSize;
+					var runSize:DimensionInstance = this.job.runSize;
 					if (runSize.height != 0 && runSize.width != 0) {
 						
 						this.linear_top.label = runSize.width.toString();

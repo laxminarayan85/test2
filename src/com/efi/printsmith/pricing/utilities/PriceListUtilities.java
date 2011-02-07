@@ -3,6 +3,7 @@ package com.efi.printsmith.pricing.utilities;
 import java.text.ParseException;
 import java.util.List;
 
+import com.efi.printsmith.data.DimensionInstance;
 import com.efi.printsmith.data.Job;
 import com.efi.printsmith.data.PriceList;
 import com.efi.printsmith.data.PriceListBase;
@@ -252,7 +253,7 @@ public class PriceListUtilities {
 		return retVal;
 	}
 
-	static public long getAreaFromSizeString(Dimension size)
+	static public long getAreaFromSizeString(DimensionInstance size)
 			throws NumberFormatException, ParseException {
 		// TODO: Need to be much more flexible in string handling here (A4, B4,
 		// different lengths of dimensions)
@@ -270,7 +271,7 @@ public class PriceListUtilities {
 		return retVal;
 	}
 
-	static public float getLengthFromSizeString(Dimension size)
+	static public float getLengthFromSizeString(DimensionInstance size)
 			throws NumberFormatException, ParseException {
 		// TODO: Need to be much more flexible in string handling here
 		String lengthString = "0";
@@ -283,7 +284,7 @@ public class PriceListUtilities {
 		return Float.parseFloat(lengthString);
 	}
 
-	static public float getWidthFromSizeString(Dimension size)
+	static public float getWidthFromSizeString(DimensionInstance size)
 			throws NumberFormatException, ParseException {
 		// TODO: Need to be much more flexible in string handling here
 		String widthString = "0";

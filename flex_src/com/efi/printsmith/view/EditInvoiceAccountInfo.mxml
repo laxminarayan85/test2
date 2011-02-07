@@ -359,11 +359,9 @@
 			}
 			private function saveContactHandler(evt:SaveContactEvent):void	{
 				var c:Contact = null;
-					
-				if (evt.contact.id != NaN)	{
-					var c:Contact = null;
+				if (!isNaN(evt.contact.id))	{
 					// editing new contact should not create temp, only new
-					var currentContact = contact_list.selectedItem as Contact;	
+					var currentContact:Contact = contact_list.selectedItem as Contact;	
 					// remove new / temp contacts that already exist.
 					if (newContact || (currentContact != null && (currentContact["newFlag"] == true)))	{
 						newContact = false;
@@ -1036,7 +1034,7 @@
 			}
 			private function contactLabel(item:Object):String {
 				var tempItem:Contact = item as Contact;
-				if ((tempItem.tempFlag != null) && (tempItem.tempFlag == true))	{
+				if ((tempItem != null) && (tempItem.tempFlag == true))	{
 					return resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "custDataCmd.TemporaryContact");
 				}
 				if ((tempItem["newFlag"] != null) && (tempItem["newFlag"] == true))	{
@@ -1213,7 +1211,7 @@
 					</mx:VBox> 
 					<mx:HBox height="5%" width="100%" >
 						<mx:Button id="btnOK" click="{doSave();}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.OK')}"/>
-						<mx:Button id="btnCancel" click="doCancel" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Cancel')}"/>
+						<mx:Button id="btnCancel" click="doCancel()" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'custCmd.Cancel')}"/>
 					</mx:HBox>
 					
 				</mx:VBox>	

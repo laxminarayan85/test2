@@ -59,6 +59,7 @@
 			import mx.events.ValidationResultEvent;
 			import com.efi.printsmith.data.JobBase;
 			import com.efi.printsmith.data.Dimension;
+			import com.efi.printsmith.data.DimensionInstance;
 			import com.efi.printsmith.Constants;
 			import com.efi.printsmith.events.JobEditCompleteEvent;
 			import com.efi.printsmith.events.SaveEvent;
@@ -687,7 +688,7 @@
 					dataService.getDimensionByWildcardName(parent_size_edit.text);
 				} else {
 					if (parent_size_edit.text.length == 0) {
-						job.parentSize = new Dimension();
+						job.parentSize = new DimensionInstance();
 						parent_size_edit.selectedItem = null;
 					} else {
 						parent_size_edit.text = job.parentSize.name;
@@ -701,7 +702,7 @@
 					dataService.getDimensionByWildcardName(run_size_edit.text);
 				} else {
 					if (run_size_edit.text.length == 0) {		
-						job.runSize = new Dimension();
+						job.runSize = new DimensionInstance();
 						run_size_edit.selectedItem = null;
 					} else {
 						run_size_edit.text = job.runSize.name;
@@ -716,7 +717,7 @@
 					dataService.getDimensionByWildcardName(finish_size_edit.text);
 				} else {
 					if (finish_size_edit.text.length == 0) {		// user emptys the size field
-						job.finishSize = new Dimension();
+						job.finishSize = new DimensionInstance();
 						finish_size_edit.selectedItem = null;
 					} else {
 						finish_size_edit.text = job.finishSize.name;
@@ -750,7 +751,7 @@
 							if (parent_size_edit.selectedIndex == -1) {
 							//	parent_size_edit.text = sizeStr;
 								if (job.parentSize == null)
-									job.parentSize = new Dimension()
+									job.parentSize = new DimensionInstance()
 								job.parentSize.name = sizeStr;
 								job.parentSize.width = Snowmass.getWidthFromSizeString(job.parentSize);
 								job.parentSize.height = Snowmass.getLengthFromSizeString(job.parentSize);
@@ -786,7 +787,7 @@
 						} else {
 							sizeStr = Snowmass.formatSizeString(run_size_edit.text);
 							if (job.runSize == null)
-								job.runSize = new Dimension()
+								job.runSize = new DimensionInstance()
 							job.runSize.name = sizeStr;
 							job.runSize.width = Snowmass.getWidthFromSizeString(job.runSize);
 							job.runSize.height = Snowmass.getLengthFromSizeString(job.runSize);
@@ -826,7 +827,7 @@
 							finish_size_edit.selectedIndex = findItem(sizeStr, dimensions);
 							if (finish_size_edit.selectedIndex == -1) {
 								if (job.finishSize == null)
-									job.finishSize = new Dimension()
+									job.finishSize = new DimensionInstance()
 								job.finishSize.name = sizeStr;
 								job.finishSize.width = Snowmass.getWidthFromSizeString(job.finishSize);
 								job.finishSize.height = Snowmass.getLengthFromSizeString(job.finishSize);

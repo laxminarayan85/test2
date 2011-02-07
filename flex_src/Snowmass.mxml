@@ -60,8 +60,12 @@
 <mx:RemoteObject id="matrixService" destination="matrixService">
 	<mx:method name="newStampSchedule" fault="handleFault(event)" result="handleCreateStampSchedule(event)"/>
 </mx:RemoteObject>
+<mx:RemoteObject id="tablePropertiesDataService" destination="dataService">
+	<mx:method name="getAll" fault="handleFault(event)" result="handleGetAllTableProperties(event)"/>
+</mx:RemoteObject>
 <mx:Script>
 	<![CDATA[
+		import com.efi.printsmith.data.TableProperties;
 		import com.efi.printsmith.data.StampSchedule;
 		import com.efi.printsmith.events.PendingListUpdateEvent;
 		import com.efi.printsmith.pages.PendingChangeDueDate;
@@ -83,6 +87,7 @@
 		import mx.controls.ComboBox;
 		import mx.controls.Button;
 		import com.efi.printsmith.data.Dimension;
+		import com.efi.printsmith.data.DimensionInstance;
 		import com.efi.printsmith.pages.TrackerStatusView;
 		import com.efi.printsmith.data.SecurityCommands;
 		import com.efi.printsmith.data.JobBase;
@@ -153,7 +158,6 @@
 		import com.efi.printsmith.components.MultiLineLabelButton;
 		import com.efi.printsmith.events.CreditCardTrackReadEvent;
 		import com.efi.printsmith.Constants;
-		import com.efi.printsmith.data.Dimension;
 		
 		public var timer : Timer;
 		public var nf:NumberFormatter;
@@ -182,6 +186,8 @@
 		private var gComponent:IFocusManagerComponent = null;
 		private var gTimer:Timer = null;
 
+		private var gTableProperties:ArrayCollection = null;
+		
 		[Bindable] private var _menuItems:ArrayCollection;
 		
 		public var security:com.efi.printsmith.security.PSSecurity;
@@ -818,14 +824,14 @@
 	    		
 			paperCalWindow.setStyle("borderAlpha", 0.9);
 			paperCalWindow.setdimension(dimensions)
-			job.runSize = new Dimension();
-			job.foldedSize = new Dimension();
-			job.parentSize = new Dimension();
-			job.finishSize = new Dimension();
+			job.runSize = new DimensionInstance();
+			job.foldedSize = new DimensionInstance();
+			job.parentSize = new DimensionInstance();
+			job.finishSize = new DimensionInstance();
 		 	paperCalWindow.setJob(job);
 		}
 		
-		public static function getWidthFromSizeString(size:Dimension):Number {
+		public static function getWidthFromSizeString(size:DimensionInstance):Number {
 			var lengthString:String = "0";
 	
 			var i:int = size.name.indexOf("x");
@@ -838,7 +844,7 @@
 			return parseFloat(lengthString);
 		}
 	
-		public static function getLengthFromSizeString(size:Dimension):Number {
+		public static function getLengthFromSizeString(size:DimensionInstance):Number {
 			var widthString:String = "0";
 	
 			var i:int = size.name.indexOf("x");
@@ -1101,26 +1107,32 @@
 			var event:EditPendingListEvent = new EditPendingListEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
+		
 		public function doEmployee():void {
 			var event:EditEmployeeEvent = new EditEmployeeEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
+		
 		public function doSchedule():void {
 			var event:EditScheduleEvent = new EditScheduleEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
+		
 		public function doSecurity():void {
 			var event:EditSecurityEvent = new EditSecurityEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
+		
 		public function doTracker():void {
 			var event:EditTrackerEvent = new EditTrackerEvent(new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
+		
 		public function doPricing():void {
 			var event:EditPricingEvent = new EditPricingEvent(null, new mx.rpc.Responder(handleUIEvent, handleFault));
 			event.dispatch();
 		}
+		
 		public function doStampPricing():void {
 			dataService.getStampSchedule();
 		}
@@ -1137,6 +1149,23 @@
 			    titleWindow.setStampSchedule(stampSchedule);
 			    titleWindow.width = 800;
 			}
+		}
+		
+		public function handleGetAllTableProperties(event:ResultEvent):void {
+			gTableProperties = event.result as ArrayCollection;
+		}
+		
+		public function getTableProperties(tableName:String):TableProperties {
+			if (gTableProperties != null) {
+				var curTableProperties:TableProperties;
+				for (var i:int=0; i< gTableProperties.length; i++) {
+					curTableProperties = gTableProperties.getItemAt(i) as TableProperties;
+					if (tableName == curTableProperties.tableName) {
+						return curTableProperties;
+					}
+				}
+			}
+			return null;
 		}
 		
 		public function handleCreateStampSchedule(event:ResultEvent):void {
@@ -1261,25 +1290,6 @@
        		}
        	}
        	
-//		private function addUniqueTab(tab:Panel):void {
-//			var tabFound:Boolean = false;
-//			
-//			for (var i:int = 0; i < mainNavigator.numChildren; i++)
-//			{
-//				if (mainNavigator.getChildAt(i).name == tab.name)
-//				{
-//					mainNavigator.selectedIndex = i;
-//					tabFound = true;
-//					break;
-//				}
-//			}
-//			if (!tabFound) {
-//				var tmpPanel:Panel = mainNavigator.addChild(tab) as Panel;
-//				mainNavigator.selectedIndex = mainNavigator.numChildren-1;
-//			}
-//		}
-		//
-		//
  		private function idleTimerCallBack(evt:TimerEvent):void {
             var tmr:Timer = evt.currentTarget as Timer;
            var localTime:Date = new Date();
@@ -1326,7 +1336,6 @@
 		
 		private function init() : void {
 			thisInstance = this;
-//			mainNavigator.setClosePolicyForTab(0, SuperTab.CLOSE_NEVER);
 			var eventDispatcher:IEventDispatcher = resourceManager.loadResourceModule("Resources_en_US.swf");
             eventDispatcher.addEventListener(ResourceEvent.COMPLETE, completeHandler);
             eventDispatcher.addEventListener(ResourceEvent.ERROR, resourceFaultHandler);
@@ -1342,7 +1351,6 @@
 			} else {
 				loginService.validateLogin(userName, userPass);
 			}
-//			moveLogo.play();
 			
 			this.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
 			
@@ -1354,6 +1362,8 @@
 			container.addToHeader(ApplicationHeader.CENTER, debug_button);
 			container.addToHeader(ApplicationHeader.RIGHT, logout_button);
 			this.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandlerFunction,false,0,true);
+			
+			tablePropertiesDataService.getAll("TableProperties");
 		}
 		
 		override protected function createChildren():void	{

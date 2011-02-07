@@ -39,28 +39,28 @@ public class AddressMapper extends ImportMapper {
 			} else if ("country".equals(currentFieldToken)) {
 				address.setCountry(currentImportToken);
 			} else if ("city".equals(currentFieldToken)) {
-				City city = (City)dataService.getByName("City", currentImportToken);
-				if (city == null) {
-					city = new City();
-					city.setName(currentImportToken);
-					city = (City)dataService.addUpdate(city);
-				}
+//				City city = (City)dataService.getByName("City", currentImportToken);
+//				if (city == null) {
+//					city = new City();
+//					city.setName(currentImportToken);
+//					city = (City)dataService.addUpdate(city);
+//				}
 				address.setCity(currentImportToken);
 			} else if ("state".equals(currentFieldToken)) {
-				State state = (State)dataService.getByName("State", currentImportToken);
-				if (state == null) {
-					state = new State();
-					state.setName(currentImportToken);
-					state = (State)dataService.addUpdate(state);
-				}
+//				State state = (State)dataService.getByName("State", currentImportToken);
+//				if (state == null) {
+//					state = new State();
+//					state.setName(currentImportToken);
+//					state = (State)dataService.addUpdate(state);
+//				}
 				address.setState(currentImportToken);
 			} else if ("zip".equals(currentFieldToken)) {
-				Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
-				if (zip == null) {
-					zip = new Zip();
-					zip.setName(currentImportToken);
-					zip = (Zip)dataService.addUpdate(zip);
-				}
+//				Zip zip = (Zip)dataService.getByName("Zip", currentImportToken);
+//				if (zip == null) {
+//					zip = new Zip();
+//					zip.setName(currentImportToken);
+//					zip = (Zip)dataService.addUpdate(zip);
+//				}
 				address.setZip(currentImportToken);
 			}
 		}

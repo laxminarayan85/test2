@@ -2,6 +2,7 @@ package com.efi.printsmith.migration;
 
 import com.efi.printsmith.data.Account;
 import com.efi.printsmith.data.Dimension;
+import com.efi.printsmith.data.DimensionInstance;
 import com.efi.printsmith.data.GenericColors;
 import com.efi.printsmith.data.ModelBase;
 import com.efi.printsmith.data.PreferencesSequenceValues;
@@ -13,13 +14,11 @@ import com.efi.printsmith.data.StockGroup;
 import com.efi.printsmith.data.StockClass;
 import com.efi.printsmith.data.StockType;
 import com.efi.printsmith.data.Vendor;
-import com.efi.printsmith.data.Dimension;
 import com.efi.printsmith.service.DataService;
 import com.efi.printsmith.data.ChargeDefinition;
 import com.efi.printsmith.data.PressDefinition;
 import com.efi.printsmith.data.CopierDefinition;
 import com.efi.printsmith.data.PaperPrice;
-import com.efi.printsmith.data.StockForest;
 import java.io.File;
 import com.efi.printsmith.integration.xpedx.XpdexImportParams;
 
@@ -89,13 +88,10 @@ public class StockDefinitionMapper extends ImportMapper {
 					currentImportToken = "none";
 				}
 				Vendor vendor = (Vendor) dataService.getByName("Vendor", currentImportToken);
-				if (vendor != null) {
-					vendor.setName(currentImportToken);
-					
-				} else{
+				if (vendor == null) {
 					 vendor = new  Vendor();
 					 vendor.setName(currentImportToken);
-					 vendor = (Vendor)dataService.addUpdate(vendor);
+					 vendor = (Vendor)dataService.addVendor(vendor);
 				}
 				stockDefinition.setVendor(vendor);	 
 			}  else if ("sets".equals(currentFieldToken)) {
@@ -106,12 +102,10 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("unit".equals(currentFieldToken)) {
 				stockDefinition.setCostunits(Utilities.tokenToInt(currentImportToken));
 			}  else if ("parent size".equals(currentFieldToken)) {
-				
 				if (currentImportToken.equals("0") == false) {
 					parentdimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
 					if (parentdimension != null)
-						
-						stockDefinition.setParentsize(parentdimension);
+						stockDefinition.setParentsize(new DimensionInstance(parentdimension));
 					else {
 						addParentSize = true;
 						parentSizeName = currentImportToken;
@@ -123,7 +117,7 @@ public class StockDefinitionMapper extends ImportMapper {
 				if (currentImportToken.equals("0") == false) {
 					dimension = (Dimension) dataService.getByName("Dimension",currentImportToken);
 					if (dimension != null)
-						stockDefinition.setNormalRunSize(dimension);
+						stockDefinition.setNormalRunSize(new DimensionInstance(dimension));
 					else {
 						addRunSize = true;
 						runSizeName = currentImportToken;
@@ -339,7 +333,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					{
 						stockGroup = new StockGroup();
 						stockGroup.setName(currentImportToken);
-						stockGroup = (StockGroup)dataService.addUpdate(stockGroup);
+						stockGroup = (StockGroup)dataService.addStockGroup(stockGroup);
 					}
 					stockDefinition.setStkgroup(stockGroup);
 				}
@@ -396,7 +390,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					{
 						stockGrade = new StockGrade();
 						stockGrade.setName(currentImportToken);
-						stockGrade = (StockGrade)dataService.addUpdate(stockGrade);
+						stockGrade = (StockGrade)dataService.addStockGrade(stockGrade);
 					}
 					stockDefinition.setGrade(stockGrade);
 				}
@@ -509,13 +503,13 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("pcw recycle percent".equals(currentFieldToken)) {
 				stockDefinition.setPcwRecycledPercent(Utilities.tokenToDouble(currentImportToken));
 			}  else if ("forest management".equals(currentFieldToken)) {
-				StockForest stockForest = dataService.getByStockForestName(currentImportToken);
-				if (stockForest == null)
-				{
-					stockForest = new StockForest();
-					stockForest.setName(currentImportToken);
-					stockForest = (StockForest)dataService.addUpdate(stockForest);
-				}
+//				StockForest stockForest = dataService.getByStockForestName(currentImportToken);
+//				if (stockForest == null)
+//				{
+//					stockForest = new StockForest();
+//					stockForest.setName(currentImportToken);
+//					stockForest = (StockForest)dataService.addUpdate(stockForest);
+//				}
 				stockDefinition.setForestManagement(currentImportToken);
 			}  else if ("coc expand 1".equals(currentFieldToken)) {
 				/* TODO */
@@ -672,8 +666,8 @@ public class StockDefinitionMapper extends ImportMapper {
 			dimension.setName(parentSizeName);
 			dimension.setWidth(parentSizeX);
 			dimension.setHeight(parentSizeY);
-			dimension = (Dimension)dataService.addUpdate(dimension);
-			stockDefinition.setParentsize(dimension);
+//			dimension = (Dimension)dataService.addUpdate(dimension);
+			stockDefinition.setParentsize(new DimensionInstance(dimension));
 			if (addRunSize == true && parentSizeName.equals(runSizeName))
 				addRunSize = false;
 		}
@@ -682,8 +676,8 @@ public class StockDefinitionMapper extends ImportMapper {
 			dimension.setName(runSizeName);
 			dimension.setWidth(runSizeX);
 			dimension.setHeight(runSizeY);
-			dimension = (Dimension)dataService.addUpdate(dimension);
-			stockDefinition.setNormalRunSize(dimension);
+//			dimension = (Dimension)dataService.addUpdate(dimension);
+			stockDefinition.setNormalRunSize(new DimensionInstance(dimension));
 		}
 		log.info("Leaving StockDefinitionMapper->importTokens");
 		return stockDefinition;

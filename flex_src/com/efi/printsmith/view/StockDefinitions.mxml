@@ -2,7 +2,7 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
 	layout="absolute" width="100%" height="825" preinitialize="preInit();"  
 	xmlns:fc="http://www.adobe.com/2006/fc" xmlns:vo="com.efi.printsmith.data.*" 
-	xmlns:comp="com.efi.printsmith.common.components.*" headerHeight="0"
+	xmlns:comp="com.efi.printsmith.common.components.*" headerHeight="0" 
 	title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.StockDefinitions')}" name="Stock Definition"
 	implements="com.efi.mdi.IMDIWindowAware,com.efi.printsmith.security.ISecureComponent" xmlns:components="com.efi.printsmith.common.components.*">
 	
@@ -305,6 +305,7 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>                                   
 <![CDATA[
+	import com.efi.printsmith.data.DimensionInstance;
 	import com.efi.printsmith.security.PSSecurityCommands;
 	import mx.events.FlexEvent;
 	import com.efi.printsmith.events.SpecialOrderStockDefEvent;
@@ -339,6 +340,7 @@
 	import com.efi.printsmith.data.StockForest;
 	import com.efi.printsmith.data.Vendor;
 	import com.efi.printsmith.data.Dimension;
+	import com.efi.printsmith.data.DimensionInstance;
 	import com.efi.printsmith.data.StockChange
 		
 	import com.efi.printsmith.data.PriceList;
@@ -931,10 +933,10 @@
   			
   		}
   	    Expires.text = "";
-  	    stockDefinitions.parentsize = new Dimension();
+  	    stockDefinitions.parentsize = new DimensionInstance();
     	stockDefinitions.charges = new ArrayCollection;
     	stockDefinitions.stockChanges = new ArrayCollection;
-    	stockDefinitions.normalRunSize = new Dimension();
+    	stockDefinitions.normalRunSize = new DimensionInstance();
     	
     	
     	
@@ -993,7 +995,7 @@
 	private function doStockType() : void {
 		
 		var type:StockType;
-		var dimSize:Dimension;
+		var dimSize:DimensionInstance;
 		
 		type = stkType.selectedItem as StockType;
 //		stockDefinitions.stktype = type;
@@ -1781,7 +1783,7 @@
 	 if (coated != null && coated.selectedItem != null)
 	 	stockDefinitions.coated = coated.text	
 	 if (defaultLargeCopier != null && defaultLargeCopier.selectedItem != null) 
-	 	var copierDefinition:CopierDefinition = defaultLargeCopier.selectedItem as CopierDefinition;
+	 	copierDefinition = defaultLargeCopier.selectedItem as CopierDefinition;
 	    if (copierDefinition != null && copierDefinition.name == "")
 	    	copierDefinition = null;
 	 	stockDefinitions.defaultLargeCopier = copierDefinition;	
@@ -1817,7 +1819,13 @@
 	 //stockDefinitions.coated = coated.text; 
 	 stockDefinitions.stocknumber = stockNumber.text;
 	//stockDefinitions.basicsize = Basicsize.text;
-	stockDefinitions.parentsize = parentSize.selectedItem as Dimension;
+	if (stockDefinitions.parentsize == null) stockDefinitions.parentSize = new DimensionInstance();
+	var localDimension:Dimension = parentSize.selectedItem as Dimension;
+	stockDefinitions.parentsize.height = localDimension.height;
+	stockDefinitions.parentsize.width = localDimension.width;
+	stockDefinitions.parentsize.metric = localDimension.metric;
+	stockDefinitions.parentsize.name = localDimension.name;
+	stockDefinitions.parentsize.type = localDimension.type;
 	// stockDefinitions.thickness = parseFloat(thickNess.text);
 	 if ( mWeight.text == "")
 	 	stockDefinitions.mweight = 0;
@@ -1865,7 +1873,13 @@
 	 stockDefinitions.listPerM5 = parseFloat(removeSymbols(removeSymbols(ListPerM5.text,"$"),","));
 	 stockDefinitions.listPerM6 = parseFloat(removeSymbols(removeSymbols(ListPerM6.text,"$"),","));
 	 stockDefinitions.pcwRecycledPercent = parseFloat(percentvalue) * .01 ;
-	 stockDefinitions.normalRunSize = NormalRunSize.selectedItem as Dimension;
+	 if (stockDefinitions.normalRunSize == null) stockDefinitions.normalRunSize = new DimensionInstance();
+	 localDimension = NormalRunSize.selectedItem as Dimension;
+	 stockDefinitions.normalRunSize.height = localDimension.height;
+	 stockDefinitions.normalRunSize.width = localDimension.width;
+	 stockDefinitions.normalRunSize.metric = localDimension.metric;
+	 stockDefinitions.normalRunSize.name = localDimension.name;
+	 stockDefinitions.normalRunSize.type = localDimension.type;
 	 stockDefinitions.cutsPer100 = parseFloat(CutsPer100.text);
 	 stockDefinitions.minCutCharge = parseFloat(MinCutCharge.text);
 	// stockDefinitions.defaultPress = DefaultPress.text;
@@ -2067,7 +2081,7 @@
 			stockDefinitions.parentsize.name = parentSize.text;
 			calstockMWeight(evt);
 		} else if (evt.currentTarget == this.NormalRunSize) {
-			var text:String = Snowmass.formatSizeString(this.NormalRunSize.text);
+			text = Snowmass.formatSizeString(this.NormalRunSize.text);
 			if (text.indexOf("x") + 2 == text.length)
 				dataService.getDimensionByWildcardName(text);
 			else
@@ -2253,18 +2267,18 @@
 		var pDim:Dimension;
 		var tempFloat:Number;
 		var stckType:StockType;
-		pDim = parentSize.selectedItem as Dimension;
-		if ( pDim == null){
-			if ( stockDefinitions.parentsize.name != ""){
-				pDim = new Dimension()
-				pDim.name = stockDefinitions.parentsize.name;
-				pDim.width = Snowmass.getWidthFromSizeString(pDim);
-				pDim.height = Snowmass.getLengthFromSizeString(pDim);
-				dimensionDataService.addUpdate(pDim);
-				
-				
-			}
-		}
+//		pDim = parentSize.selectedItem as Dimension;
+//		if ( pDim == null){
+//			if ( stockDefinitions.parentsize.name != ""){
+//				pDim = new DimensionInstance()
+//				pDim.name = stockDefinitions.parentsize.name;
+//				pDim.width = Snowmass.getWidthFromSizeString(pDim);
+//				pDim.height = Snowmass.getLengthFromSizeString(pDim);
+//				dimensionDataService.addUpdate(pDim);
+//				
+//				
+//			}
+//		}
 		if (pDim != null) {
 			parent = pDim.width * pDim.height;
 			stckType = stkType.selectedItem  as StockType;
@@ -2366,7 +2380,7 @@ private function doRound(evt:FocusEvent):void{
 			if (this.Cost1.text.substr(0,1) == "$")
 				var cost:Number = parseFloat(this.Cost1.text.substr(1));
 			else
-				var cost:Number = parseFloat(this.Cost1.text)
+				cost = parseFloat(this.Cost1.text)
 	
 			this.BlankSheetPrice1.text = Snowmass.getCurrencyFormatter(false,3).format(((cost * preferencesStocks.blankMarkup1) / parseInt(this.Costunits.text)));
 			this.BlankSheetPrice2.text = Snowmass.getCurrencyFormatter(false,3).format(((cost * preferencesStocks.blankMarkup2) / parseInt(this.Costunits.text)));

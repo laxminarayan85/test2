@@ -1461,7 +1461,7 @@ public class CopierDefinitionMapper extends ImportMapper {
 						prodLocation = new ProductionLocations();
 						prodLocation.setName(currentImportToken);
 						prodLocation = (ProductionLocations) dataService
-								.addUpdate(prodLocation);
+								.addProductionLocation(prodLocation);
 					}
 					copierDefinition.setProductionLocation(prodLocation
 							.getName());
@@ -1486,16 +1486,16 @@ public class CopierDefinitionMapper extends ImportMapper {
 				machineNameId = currentImportToken;
 			} else if ("machine name".equals(currentFieldToken)) {
 				copierDefinition.setMachineName(currentImportToken);
-				if (machineNameId.equals("") == false) {
-					ProductionCopiers productionCopiers = (ProductionCopiers) dataService
-							.getByPrevId("ProductionCopiers", machineNameId);
-					if (productionCopiers == null) {
-						productionCopiers = new ProductionCopiers();
-						productionCopiers.setPrevId(machineNameId);
-						productionCopiers.setName(currentImportToken);
-						dataService.addUpdate(productionCopiers);
-					}
-				}
+//				if (machineNameId.equals("") == false) {
+//					ProductionCopiers productionCopiers = (ProductionCopiers) dataService
+//							.getByPrevId("ProductionCopiers", machineNameId);
+//					if (productionCopiers == null) {
+//						productionCopiers = new ProductionCopiers();
+//						productionCopiers.setPrevId(machineNameId);
+//						productionCopiers.setName(currentImportToken);
+//						dataService.addUpdate(productionCopiers);
+//					}
+//				}
 			} else if ("setup time".equals(currentFieldToken)) {
 				/* TODO */
 			} else if ("labor rate".equals(currentFieldToken)) {

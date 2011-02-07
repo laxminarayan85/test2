@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="comboBoxInit()" open="openEvent(event)" mouseOver="displayToolTip()" close="closeEvent(event)" change="onChange(event)">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ValidationResultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.events.ListEvent;
+			import mx.rpc.events.AbstractEvent;
+			import mx.events.DropdownEvent;
+			import mx.controls.Alert;
+			import mx.controls.listClasses.ListBase;
+			import mx.controls.dataGridClasses.*; 
+			import com.efi.printsmith.data.TableProperties;
+
+	    	[Bindable] public var tableProperties:TableProperties;
+			[Bindable] public var tableData:ArrayCollection;
+			[Bindable] public var comboListData:ArrayCollection;
+
+			/**
+			 * This method helps to perform some operation onload of component.
+			 */
+			public function comboBoxInit():void {
+				if (tableData != null) {
+					comboListData = new ArrayCollection(tableData.toArray());
+				//	if (tableProperties.status == "Add Edit" || tableProperties.status == "Add Input Edit") {
+						comboListData.addItem(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Edit'));
+				//	}
+					dataProvider = comboListData;
+				}
+			}
+			
+			/**
+			 * This method helps to display the tool tip.
+			 */ 
+			public function displayToolTip():void{
+//				if(showToolTip){
+//					this.toolTip = this.text;
+//				}
+			}
+						
+			public function openEvent(event:Event):void {
+				Alert.show("openEvent", "Error");                                 
+			}		
+			
+			public function closeEvent(event:DropdownEvent):void {
+//				try {
+//    	    		if(datagridControl){
+//			    		setStyle('backgroundColor',0x7FCEFF);
+//						check=false;
+//		    		} 
+//				} catch(err:Error) {
+//					Alert.show(err.getStackTrace());
+//				}
+			}
+			
+			/**
+			 * This function gets called when user selects the value from drop-down list,
+			 * helps to save the selected item. 
+			 */
+			public function onChange(event:ListEvent):void{
+//				var customComboBoxValidator:CustomComboBoxValidator = new CustomComboBoxValidator();
+//				customComboBoxValidator.required = required;
+//				customComboBoxValidator.keyValue = initialKeyValue;
+//				customComboBoxValidator.keyName = labelFieldId;
+//				customComboBoxValidator.source = event.currentTarget;
+//				customComboBoxValidator.property = "selectedItem";
+//				var validateEvent:ValidationResultEvent = customComboBoxValidator.validate(event.currentTarget.selectedItem);
+//				if(validateEvent.type == ValidationResultEvent.INVALID){
+//					if(data!=null){
+//						data[columnName+"ErrorText"] = event.currentTarget.selectedItem[labelFieldId];
+//					}
+//					return;
+//				}
+			}
+		]]>
+	</mx:Script>
+</mx:ComboBox>
+

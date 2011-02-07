@@ -26,7 +26,6 @@ public class StockChangeMapper extends ImportMapper {
 		for (int i=0; i < fieldTokens.length; i++) {
 			String currentImportToken = importTokens[i];
 			String currentFieldToken = fieldTokens[i];
-			System.out.println(currentFieldToken + ": " + currentImportToken);
 			
 			if (currentFieldToken.equals("recno") == true) {
 				stockChanges.setPrevId(currentImportToken);

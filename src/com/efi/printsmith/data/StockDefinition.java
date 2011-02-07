@@ -3088,7 +3088,6 @@ public class StockDefinition extends ModelBase {
 	 * @generated
 	 */	
     @Basic
-	@ManyToOne()
 	@Where(clause="isdeleted <> 'TRUE'")
 	private String genericColor;
 	

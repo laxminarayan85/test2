@@ -1,30 +1,30 @@
-Prepress
-Typesetting
-Design
-Proof
-Proof OK'd
-Camera
-Stripping
-Plate
-Outside Prepress
-PCX
-Production
-Staged - Print
-Running - Print
-Complete - drying
-Staged - Digital
-Running - Digital
-Staged - Color Digital
-Running - Color Digital
-Outside Production
-Complete
-Bindery
-Bindery in progress
-Outside bindery
-Boxing
-Shipping
-Pickup
-Waiting for Approval
-Waiting for Artwork
-Warehouse
-Mail Area
+1,"Prepress"
+2,"Typesetting"
+3,"Design"
+4,"Proof"
+5,"Proof OK'd"
+6,"Camera"
+7,"Stripping"
+8,"Plate"
+9,"Outside Prepress"
+10,"PCX"
+11,"Production"
+12,"Staged - Print"
+13,"Running - Print"
+14,"Complete - drying"
+15,"Staged - Digital"
+16,"Running - Digital"
+17,"Staged - Color Digital"
+18,"Running - Color Digital"
+19,"Outside Production"
+20,"Complete"
+21,"Bindery"
+22,"Bindery in progress"
+23,"Outside bindery"
+24,"Boxing"
+25,"Shipping"
+26,"Pickup"
+27,"Waiting for Approval"
+28,"Waiting for Artwork"
+29,"Warehouse"
+30,"Mail Area"

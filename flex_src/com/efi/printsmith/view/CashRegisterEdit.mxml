@@ -280,6 +280,8 @@
 	<mx:Consumer id="notification_consumer" destination="notifications" message="messageHandler(event.message)"/>
 <mx:Script>
 <![CDATA[
+	import com.efi.printsmith.data.Estimate;
+	import com.efi.printsmith.data.Invoice;
 	import com.efi.printsmith.data.Charge;
 	import mx.events.ListEvent;
 	import mx.events.TreeEvent;
@@ -2555,7 +2557,14 @@
 	}
 
 	private function handleLoadInvoice(evt:ResultEvent):void {
-		var invoiceTmp:InvoiceBase = evt.result as InvoiceBase;
+		var invoiceTmp:InvoiceBase;
+		if (evt.result is Invoice) {
+			invoiceTmp = evt.result as Invoice;
+		} else if (evt.result is Estimate) {
+			invoiceTmp = evt.result as Estimate;
+		} else if (evt.result is InvoiceBase) {
+			invoiceTmp = evt.result as InvoiceBase;
+		}
 		    
 		handlePickupInvoice(invoiceTmp);
 		

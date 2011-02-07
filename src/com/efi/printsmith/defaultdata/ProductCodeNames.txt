@@ -1,5 +1,5 @@
-Booklet
-Brochure
-Newsletter
-Rerun
-Special
+1,Booklet
+2,Brochure
+3,Newsletter
+4,Rerun
+5,Special
