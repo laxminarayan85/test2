@@ -53,8 +53,8 @@
 			_origInvoice = inv;
 			InvoicePricing.copyPricingFields(inv, _invoice);
 			
-			if (inv.account.oneTimeDiscount || inv.discountIsOneTime)	{
-				chkApplyOneTime.enabled = true;
+			if (inv.account.oneTimeDiscount)	{
+				chkApplyOneTime.enabled = true; 
 			}	
 			else	{
 				chkApplyOneTime.enabled = false;
@@ -71,12 +71,15 @@
 			
 			populateSalesCats();
 		
-			if (_invoice.discount > 0)	{
-				if (_invoice.discountIsDollars)	
-					txtDiscAmt.text = Snowmass.getCurrencyFormatter(false, 2).format(_invoice.discount);
+			chkApplyOneTime.enabled = false;
+					
+			if (_invoice.discount > 0 || _invoice.discountFactor > 0)	{
+				if (_invoice.discountIsDollars)	{
+					txtDiscAmt.text = Snowmass.getCurrencyFormatter(false, 2).format(_invoice.discount);					
+				}
 				else	
-					txtDiscPerc.text = Snowmass.getCurrencyFormatter(false, 2).format(_invoice.discount);
-				
+					txtDiscPerc.text = Snowmass.getCurrencyFormatter(false, 2).format(_invoice.discountFactor*100);
+				onDiscount();
 			}
 		}
 		
@@ -162,11 +165,11 @@
 //				}				
 			}
 			else	{
-				if (!stringIsAValidNumber(txtDiscAmt.text))	{
+				if (!stringIsAValidNumber(txtDiscPerc.text))	{
 					txtDiscPerc.text = "0.00";
 				} 
 				if (Number(txtDiscPerc.text) > 0)	{
-					_invoice.discount = Number(txtDiscPerc.text);
+					_invoice.discountFactor = Number(txtDiscPerc.text) / 100;
 					_invoice.discountIsDollars = false;
 					InvoicePricing.calculateTotals(_invoice, InvoicePricing.DISCOUNT, false);
 				}
@@ -175,7 +178,8 @@
 		private function onOneTimeClick():void	{
 			_invoice.discountIsOneTime = chkApplyOneTime.selected;
 			if (chkApplyOneTime.selected)	{
-				rdoDiscAmt.selected = true;				
+				rdoDiscAmt.selected = true;	
+				txtDiscAmt.text = Snowmass.getCurrencyFormatter(false,2).format(_invoice.discount);			
 			}
 			else	{
 				rdoDiscPerc.selected = true;

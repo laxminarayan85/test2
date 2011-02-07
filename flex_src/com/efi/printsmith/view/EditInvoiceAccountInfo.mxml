@@ -909,6 +909,28 @@
 						if (!isEstimate(invoice) && evt.account.poRequired && (evt.account.customerPO == null || evt.account.customerPO == ""))	{
 							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Ordersforthiscustome'));
 						}
+						if (evt.account.discount > 0 || evt.account.discountDollarAmt > 0)	{
+							// if any discount exists
+							if (!evt.account.dollarDiscount)	{
+								// automatic percentage discount
+								invoice.discountIsDollars = false;
+								invoice.discountFactor = evt.account.discount ;
+							}
+							else	{
+								invoice.discountIsDollars = true;
+								if (!evt.account.oneTimeDiscount)	{
+									// automatic dollar discount
+									invoice.discountIsDollars = true;
+									invoice.discount = evt.account.discountDollarAmt;
+								}
+								else	{
+									Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, "one time discount"),"",Alert.YES|Alert.NO,this,onConfirmDiscount);									
+								}
+							}
+						}
+//						if (evt.account.discount.oneTimeDiscount)	{
+//							Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_CUSTOMERACCOUNTNOTES',a),"",Alert.YES|Alert.NO,this,onConfirmOneTime);
+//						}
 					}
 				}
 				else
@@ -918,6 +940,12 @@
 				}
 			}
 			
+			private function onConfirmDiscount(evt:CloseEvent):void	{
+				if (evt.detail == Alert.YES)	{
+					invoice.discountIsOneTime = true;
+					invoice.discount = invoice.account.discount;
+				}
+			}		
 			private function onConfirmNotes(evt:CloseEvent):void	{
 				if (evt.detail == Alert.YES)	{
 					var si:SpecialInstructions = new SpecialInstructions();

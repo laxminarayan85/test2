@@ -51,6 +51,7 @@ package com.efi.printsmith.pricing
 			_toInvoice.completedDate = _fromInvoice.completedDate;
 			_toInvoice.customerNotificationDate = _fromInvoice.customerNotificationDate;
 			_toInvoice.pickupDate = _fromInvoice.pickupDate;	
+			_toInvoice.discountFactor = _fromInvoice.discountFactor;
 			
 		}
 		private static function fixNaNs(_invoice:InvoiceBase):void	{
@@ -307,7 +308,7 @@ package com.efi.printsmith.pricing
 		
 		private static function calcPercentageDiscount(_invoice:InvoiceBase):void	{
 			if (_invoice != null)	{
-				var dollarDisc:Number = (_invoice.discount*_invoice.discountableSubtotal) / 100;
+				var dollarDisc:Number = (_invoice.discountFactor*_invoice.discountableSubtotal) ;
 				_invoice.subTotal = _invoice.actualSubtotal - dollarDisc;
 				_invoice.dollarDiscount  =dollarDisc;
 			}
@@ -317,7 +318,7 @@ package com.efi.printsmith.pricing
 			if (_invoice != null)	{
 				if (fullRecalc)
 					calcDiscountableSubTotal(_invoice);
-				if (_invoice.discount > 0)	{
+				if (_invoice.discount > 0 || _invoice.discountFactor > 0)	{
 					if (_invoice.discountIsOneTime || _invoice.discountIsDollars)	{
 						calcDollarDiscount(_invoice); 
 					}
