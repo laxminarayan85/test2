@@ -345,6 +345,8 @@
 	[Bindable]
 	private var enableSave:Boolean = false;
 	[Bindable]
+	private var pickup:Boolean = false;
+	[Bindable]
 	private var enableCCApproval:Boolean = true;
 	[Bindable]
 	private var waitOnNewCashDrawer:Boolean = false;
@@ -1353,7 +1355,7 @@
 	 		case Constants.ACCOUNT_TYPE_CASH_ONLY:
 	 			if( "Cash" != rbvalue){
 	 				Alert.show(resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'msg_Onlycashisacceptedas'));
-	 				event.currentTarget.selectedValue = "";
+	 				rgPaymentMethod.selectedValue = "Cash";
 	 				return
 	 			}
 	 			break;
@@ -1593,6 +1595,14 @@
 	}	
 	
 	private function doAccount():void{
+		var message:String;
+		
+		if ( pickup){
+			message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_Transactionalreadyin");
+			Alert.show(message, "Warning", 0, null, null, null, 4); 
+		}else{
+		
+		
 		 var accountPickerWindow:AccountPicker = AccountPicker(PopUpManager.createPopUp(this, AccountPicker, true));
 	    accountPickerWindow.setStyle("borderAlpha", 0.9);
 	    accountPickerWindow.formIsEmpty = true;
@@ -1601,6 +1611,7 @@
 	    accountPickerWindow.setAccounts(accounts);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.CANCELSELECTACCOUNT, handleAccountPickerCancel);
 	    accountPickerWindow.addEventListener(AccountPickerSelectEvent.SELECTACCOUNT, handleAccountPickerSelect);
+	 }
 	    	   	    
 	}
 	private function handleAccountPickerSelect(evt:AccountPickerSelectEvent):void {
@@ -2331,6 +2342,7 @@
 			dataServiceSessionBatch.addUpdate(sessionBatch);
 		}
 		enableSave = false;
+	pickup = false;
 	}
 	
 	private function doRevert():void{
@@ -2419,7 +2431,7 @@
 
 		if (invoiceTmp != null) {
 			var goodPickup:Boolean = true;
-			
+			pickup = true;
 			invoice = invoiceTmp;
 			
 			if (invoice.pickupDate != null && invoice.pickupDate.getDate() != 0) {
@@ -2439,7 +2451,11 @@
 				Alert.show(message, "Warning", 0, null, null, null, 4); 
 				goodPickup = false;
 			}
-						
+			if (invoice.account.status == "CustomerStatusFrozen") {
+				message = resourceManager.getString(Snowmass.RESOURCE_BUNDLE,"msg_CustomeraccountisFRO");
+				Alert.show(message, "Warning", 0, null, null, null, 4); 
+				goodPickup = false;
+			}			
 			//
 			// attempting to pickup invoice from a different account
 			//
@@ -2456,6 +2472,7 @@
 				
 				dataService.getAccount(invoice.account.id);
 				customerAccount = invoice.account;			// active account for charging
+				btnCustAcct.enabled= false;
 				activeSale.isPickup = true;
 				activeSale.invoice = invoice;
 				activeSale.taxTable = invoice.taxTable
