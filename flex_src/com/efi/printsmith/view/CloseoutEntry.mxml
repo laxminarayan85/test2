@@ -50,8 +50,8 @@
 		<mx:RadioButton x="125" y="202" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kShiftCloseoutCmd.Newcloseoutfortoday')}" groupName="CloseoutType"/>
 		<mx:Label x="37" y="255" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'kShiftCloseoutCmd.Currentdate')}"/>
 		<mx:TextInput x="159" y="253" id="CurrentDate" editable="false"/>
-		<mx:Button x="37" y="392" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}"/>
-		<mx:Button x="371" y="392" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}"/>
+		<mx:Button x="49" y="380" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.OK')}"/>
+		<mx:Button x="323" y="380" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Cancel')}"/>
 	</mx:Canvas>
                 	 
 	 

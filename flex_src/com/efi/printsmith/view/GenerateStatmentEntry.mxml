@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init();" width="828" height="596"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init();" width="828" height="658"
 	 close="PopUpManager.removePopUp(this);"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.GenerateStatements')}"
-	  title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.GenerateStatements')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
+	  title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.GenerateStatements')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid" xmlns:ns1="com.efi.printsmith.common.components.*">
 	
 	
 	
@@ -41,6 +41,92 @@
 	
 ]]>        
 </mx:Script>
+	<mx:Label x="42" y="10" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.ClosingDate')}"/>
+	<mx:Label x="34" y="36"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.PaymentDate')}"/>
+	<ns1:CustomDateFieldComponent x="156" y="8"/>
+	<ns1:CustomDateFieldComponent x="156" y="34"/>
+	<mx:CheckBox x="21" y="67" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.CalculateFinanceChar')}"/>
+	<mx:RadioButtonGroup id="statementtype"/>
+	<mx:RadioButton x="351" y="8"  id="statementTypeAll" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.All')}" groupName="statementtype"/>
+	<mx:RadioButton x="351" y="34" id="statementTypeRange" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.From')}" groupName="statementtype" width="80"/>
+	<mx:RadioButton x="351" y="67"  id="statementTypeSelected" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.SelectedAccounts')}" groupName="statementtype"/>
+	<mx:TextInput x="427" y="34" width="32" id="inputFrom"/>
+	<mx:TextInput x="520" y="34" width="32" id="inputTo"/>
+	<mx:Label x="467" y="36" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.To')}" width="45"/>
+	<mx:TextArea x="21" y="438" width="595" id="messagePrint" height="82"/>
+	<mx:Label x="21" y="412" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Messagetoprintoneach')}"/>
+	<mx:TabNavigator x="21" y="121" width="575" height="283" id="Output">
+		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Output')}" width="100%" height="100%" id="tabOutput">
+			<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Skipaccountswithcurr')}" id="checkCurrentStatus"/>
+			<mx:CheckBox x="10" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Skipaccountswithcurr')}" id="checkCurrentBalance"/>
+			<mx:CheckBox x="10" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Createmasterbillings')}" id="checkMasterBill"/>
+			<mx:RadioButtonGroup id="masterGroup"/>
+			<mx:RadioButton x="56" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Onlymasterbillingacc')}" groupName="masterGroup" id="radioMasterBill"/>
+			<mx:RadioButton x="56" y="126" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Skipsubaccounts')}" groupName="masterGroup" id="radioMasterSkipAccount"/>
+			<mx:RadioButton x="56" y="152" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Additionalsubaccount')}" groupName="masterGroup" id="radioSubAccount"/>
+			<mx:CheckBox x="246" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Shownewpayments')}" id="checkNewPayments"/>
+			<mx:CheckBox x="246" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Showagingamounts')}" id="checkAging"/>
+			<mx:CheckBox x="246" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Showagingtitles')}" id="checkAgingTitles"/>
+			<mx:CheckBox x="246" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Showreminders')}" id="checkReminders"/>
+			<mx:CheckBox x="246" y="130" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Showcustomerstatemen')}" id="checkCusotmerNotes"/>
+		</mx:Canvas>
+		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Accounting')}" width="100%" height="100%" id="tabAccounting">
+			<mx:RadioButtonGroup id="dateStatus" />
+			<mx:RadioButton x="35" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.StatusfromPostingDat')}" groupName="dateStatus" themeColor="#020202"/>
+			<mx:RadioButton x="35" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.StatusfromPaymentDat')}" groupName="dateStatus" themeColor="#020202"/>
+			<mx:RadioButtonGroup id="changeStatus"/>
+			<mx:RadioButton y="105" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Alwayschangeaccounts')}" groupName="changeStatus"  left="35"/>
+			<mx:RadioButton y="131" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Askbeforechangingsta')}" groupName="changeStatus"  left="35"/>
+			<mx:RadioButton y="157" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Neverchangeaccountst')}" groupName="changeStatus" fillAlphas="[1.0, 1.0, 1.0, 1.0]" left="35"/>
+			<mx:CheckBox x="270" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Freezeafter0days')}"/>
+			<mx:CheckBox x="270" y="25" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Unfreezeunder0days')}"/>
+			<mx:CheckBox x="270" y="45" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Markinactiveaccounts')}"/>
+			<mx:CheckBox x="270" y="65" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Inactiveaccttoprospe')}"/>
+			<mx:Panel x="250" y="105" width="250" height="121"  title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.FinanceCharge')}" layout="absolute">
+				<mx:CheckBox x="10" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Onlyapplytoitemspast')}"/>
+				<mx:CheckBox x="10" y="29" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Applyoutstandingcred')}"/>
+				<mx:CheckBox x="10" y="49" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Calculateonlyonceper')}"/>
+			</mx:Panel>
+		</mx:Canvas>
+		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Addressing')}" width="100%" height="100%" id="tabAddress">
+			<mx:RadioButtonGroup id="addressGroup"/>
+			<mx:RadioButton x="28" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.UseStatementaddress')}" groupName="addressGroup"/>
+			<mx:RadioButton x="28" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.UseInvoiceaddress')}" groupName="addressGroup"/>
+			<mx:Label x="47" y="116" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Attentionis')}" textAlign="right"/>
+			<mx:Label x="44" y="153" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Postalbarcodeis')}" textAlign="right"/>
+			<mx:ComboBox x="120" y="114"></mx:ComboBox>
+			<mx:ComboBox x="120" y="151"></mx:ComboBox>
+			<mx:CheckBox x="309" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Showaccountnumber')}"/>
+			<mx:CheckBox x="309" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Showreferencenumber')}"/>
+			<mx:CheckBox x="309" y="66" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Showsalesrepresentat')}"/>
+		</mx:Canvas>
+		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Reports')}"  id="tabReport" width="100%" height="100%">
+			<mx:CheckBox x="23" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Printsummaryreport')}"/>
+			<mx:CheckBox x="68" y="40" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Detailedreport')}"/>
+			<mx:CheckBox x="68" y="70" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Addcollectioninforma')}"/>
+			<mx:CheckBox x="68" y="100" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Alternatelinesinagin')}"/>
+			<mx:CheckBox x="23" y="143" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Savereport')}"/>
+		</mx:Canvas>
+		<mx:Canvas label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.FormLayout')}"  id="tabLayout" width="100%" height="100%">
+			<mx:RadioButtonGroup id="formGroup"/>
+			<mx:RadioButton x="30" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Usepreprintedform')}" groupName="formGroup"/>
+			<mx:RadioButton x="30" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Printcustomformimage')}" groupName="formGroup"/>
+			<mx:RadioButton x="30" y="62" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Generatedetailedform')}" groupName="formGroup"/>
+			<mx:RadioButton x="30" y="88" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Generatebasicform')}" groupName="formGroup"/>
+			<mx:CheckBox x="30" y="137" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Printlogo')}"/>
+			<mx:RadioButtonGroup id="formatGroup"/>
+			<mx:RadioButton x="269" y="10" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.StandardFormat')}" groupName="formatGroup"/>
+			<mx:RadioButton x="269" y="36" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Remittanceadviceonri')}" groupName="formatGroup"/>
+			<mx:RadioButton x="269" y="62" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Paymentstubontop')}" groupName="formatGroup"/>
+			<mx:RadioButton x="269" y="88" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Paymentstubonbottom')}" groupName="formatGroup"/>
+			<mx:Button x="320" y="137" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.AdjustFormandImage')}"/>
+			<mx:Button x="320" y="184" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.ChangeFormLayout')}"/>
+		</mx:Canvas>
+	</mx:TabNavigator>
+	<mx:Button x="34" y="552" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Print')}"/>
+	<mx:Button x="147" y="552" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'statementCmd.Preview')}"/>
+	<mx:Button x="447" y="552" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rButtonLabel.Cancel')}"/>
+	
                 	 
 	 
 </mx:TitleWindow>

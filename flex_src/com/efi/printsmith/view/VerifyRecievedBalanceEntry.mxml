@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init();" width="532" height="484"
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init();" width="374" height="288"
 	 close="PopUpManager.removePopUp(this);"  label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.VerifyReceivableBala')}" 
 	 title="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rStandardMenuText.VerifyReceivableBala')}" xmlns:text="flash.text.*" borderThickness="3" borderStyle="solid">
 	
@@ -45,7 +45,14 @@
 </mx:Script>
 	<mx:Canvas x="0" y="0" width="100%" height="100%">
 		<mx:RadioButtonGroup id="CloseoutType"/>
-		<mx:Button x="354" y="375" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Done')}"/>
+		<mx:Button x="241" y="210" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'rButtonLabel.Done')}" width="97"/>
+		<mx:Label x="36" y="24" textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'verifyARCmd.BalanceinCashDrawer')}"/>
+		<mx:Label x="36" y="50"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'verifyARCmd.TotalCustomerAccount')}"/>
+		<mx:Label x="39" y="76"  textAlign="right" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'verifyARCmd.Difference')}"/>
+		<mx:Text x="36" y="125" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'verifyARCmd.NoteDifferenceshould')}" width="276" height="47"/>
+		<mx:Text x="203" y="24" width="97" id="cashDrawer"/>
+		<mx:Text x="203" y="50" id="customerAccounts" width="97"/>
+		<mx:Text x="203" y="76" id="differenceText" width="97"/>
 	</mx:Canvas>
                 	 
 	 
