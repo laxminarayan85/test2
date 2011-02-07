@@ -74,14 +74,14 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("color".equals(currentFieldToken)) {
 				if (currentImportToken != "")
 				{
-					StockColors stockColor = dataService.getByStockColorName(currentImportToken);
-					if (stockColor == null)
-					{
-						stockColor = new StockColors();
-						stockColor.setName(currentImportToken);
-						stockColor = (StockColors)dataService.addUpdate(stockColor);
-					}
-					stockDefinition.setColor(stockColor.getName());
+//					StockColors stockColor = dataService.getByStockColorName(currentImportToken);
+//					if (stockColor == null)
+//					{
+//						stockColor = new StockColors();
+//						stockColor.setName(currentImportToken);
+//						stockColor = (StockColors)dataService.addUpdate(stockColor);
+//					}
+					stockDefinition.setColor(currentImportToken);
 				}
 			}  else if ("vendor".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == true) {
@@ -357,14 +357,14 @@ public class StockDefinitionMapper extends ImportMapper {
 			}  else if ("generic color name".equals(currentFieldToken)) {
 				if (currentImportToken != "")
 				{
-					GenericColors genericColors = dataService.getByGenericColorsName(currentImportToken);
-					if (genericColors == null)
-					{
-						genericColors = new GenericColors();
-						genericColors.setName(currentImportToken);
-						genericColors = (GenericColors)dataService.addUpdate(genericColors);
-					}
-					stockDefinition.setGenericColor(genericColors.getName());
+//					GenericColors genericColors = dataService.getByGenericColorsName(currentImportToken);
+//					if (genericColors == null)
+//					{
+//						genericColors = new GenericColors();
+//						genericColors.setName(currentImportToken);
+//						genericColors = (GenericColors)dataService.addUpdate(genericColors);
+//					}
+					stockDefinition.setGenericColor(currentImportToken);
 				}
 			}  else if ("generic finish id".equals(currentFieldToken)) {
 				/* done */
@@ -376,7 +376,7 @@ public class StockDefinitionMapper extends ImportMapper {
 					{
 						stockFinish = new StockFinish();
 						stockFinish.setName(currentImportToken);
-						stockFinish = (StockFinish)dataService.addUpdate(stockFinish);
+						stockFinish = (StockFinish)dataService.addTableEditorItem(stockFinish);
 					}
 					stockDefinition.setFinish(stockFinish);
 				}

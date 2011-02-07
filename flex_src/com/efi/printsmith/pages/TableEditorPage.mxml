@@ -59,8 +59,276 @@ import com.efi.printsmith.pages.TablePropertiesEditor;
 	}
 	private function handleLoadTableDataResult(ev:ResultEvent):void{
 		tableDataArray = new ArrayCollection();
-		tableDataArray = ev.result as ArrayCollection;		
+		tableDataArray = ev.result as ArrayCollection;	
+		
+		if ((table_combo.selectedItem as TableProperties).tableName == "BusinessType") {
+//			<mx:DataGridColumn  id="keycolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha')}" dataField="keyAlpha"/>
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;
+			keycolumn.visible=true;
+			key2column.headerText="";
+			key2column.dataField="";
+			key2column.editable=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "City") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;
+			keycolumn.visible=false;			
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "CommonInterest") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ContactNamePrefix") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "Dimension") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rptwriterObjectMgrCmd.Width');
+			keycolumn.dataField="width";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'rptwriterObjectMgrCmd.Height');
+			key2column.dataField="width";
+			key2column.editable=true;			
+			key2column.visible=true;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ContactNameSuffixes") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "Country") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "CTPSubstrate") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "Driver") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;			
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "GenericColors") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="genericColor";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "HoldState") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "InkColor") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "JobTitle") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "LeadSource") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "MailerType") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "MarketingDateLabels") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "MarketingMailers") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "PhoneTags") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ProductionCopiers") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ProductionDates") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ProductionFacilities") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ProductionLocations") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ProductionExceptions") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ProductionPress") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ProductionPriority") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ProductionStations") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "Products") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ReportCategories") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "SalesRep") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "ShippingMethod") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "SportsInterest") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "State") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "StockColors") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.GenericColor');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "StockFinish") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "StockForest") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "StockGrade") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "StockGroup") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "TaxCodes") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "TaxTableElements") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "TaxTable") {
+			keycolumn.headerText=resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha');
+			keycolumn.dataField="keyAlpha";
+			keycolumn.editable=true;			
+			keycolumn.visible=true;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "TypeofWork") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "Vendor") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		} else if ((table_combo.selectedItem as TableProperties).tableName == "Zip") {
+			keycolumn.headerText="";
+			keycolumn.dataField="";
+			keycolumn.editable=false;			
+			keycolumn.visible=false;
+			key2column.visible=false;			
+		}
 	}
+	
 	private function loadTables():void {
 	  dataTableService.getAll("TableProperties");	
 	}
@@ -332,6 +600,7 @@ import com.efi.printsmith.pages.TablePropertiesEditor;
 		<mx:columns>
 			<mx:DataGridColumn   editable="false" id="idcolumn" width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.ID')}" dataField="displayId"/>
 			<mx:DataGridColumn  id="keycolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha')}" dataField="keyAlpha"/>
+			<mx:DataGridColumn  id="key2column" visible="false" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha')}" dataField="keyAlpha"/>
 			<mx:DataGridColumn  id="namecolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.Name')}" dataField="name"/>
 		</mx:columns>
 	</mx:DataGrid>

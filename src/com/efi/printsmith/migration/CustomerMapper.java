@@ -236,7 +236,7 @@ public class CustomerMapper extends ImportMapper {
 						if (salesRep == null) {
 							salesRep = new SalesRep();
 							salesRep.setName(currentImportToken);
-							salesRep = (SalesRep)dataService.addUpdate(salesRep);
+							salesRep = (SalesRep)dataService.addTableEditorItem(salesRep);
 						}
 						customer.setSalesRep(salesRep);
 					}

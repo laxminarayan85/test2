@@ -349,14 +349,14 @@ public class PreferencesMapper extends ImportMapper {
 			country = new Country();
 			country.setName(value);
 			country.setPrevId(key);
-			country = (Country) dataService.addUpdate(country);
+			country = (Country) dataService.addTableEditorItem(country);
 			addressFormatting = new AddressFormatting();
 			addressFormatting.setCountry(country);
 			addressFormatting = (AddressFormatting)dataService.addUpdate(addressFormatting);
 			//country.addAddressFormattings(addressFormatting);
 		} else if(country!=null) {
 			country.setPrevId(key);
-			country = (Country) dataService.addUpdate(country);
+			country = (Country) dataService.addTableEditorItem(country);
 			if (country.getAddressFormattings()==null || country.getAddressFormattings().size() == 0) {
 				addressFormatting = new AddressFormatting();
 				addressFormatting.setCountry(country);
