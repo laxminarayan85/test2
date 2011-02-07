@@ -6065,10 +6065,10 @@ public class DataService extends HibernateService {
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
 			if (rs.next()) {
-				if(rs.getInteger(0)==null) {
+				if(rs.getLong(0)==null) {
 					maxDisplayId = 1;
 				} else {
-					maxDisplayId = rs.getInteger(0).intValue();
+					maxDisplayId = rs.getLong(0).intValue();
 				}
 			}
 			vendor.setDisplayId((long)maxDisplayId);
@@ -6091,10 +6091,10 @@ public class DataService extends HibernateService {
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
 			if (rs.next()) {
-				if(rs.getInteger(0)==null) {
+				if(rs.getLong(0)==null) {
 					maxDisplayId = 1;
 				} else {
-					maxDisplayId = rs.getInteger(0).intValue();
+					maxDisplayId = rs.getLong(0).intValue();
 				}
 			}
 			productionLocation.setDisplayId((long)maxDisplayId);
@@ -6117,10 +6117,10 @@ public class DataService extends HibernateService {
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
 			if (rs.next()) {
-				if(rs.getInteger(0)==null) {
+				if(rs.getLong(0)==null) {
 					maxDisplayId = 1;
 				} else {
-					maxDisplayId = rs.getInteger(0).intValue();
+					maxDisplayId = rs.getLong(0).intValue();
 				}
 			}
 			taxTable.setDisplayId((long)maxDisplayId);
@@ -6143,10 +6143,10 @@ public class DataService extends HibernateService {
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
 			if (rs.next()) {
-				if(rs.getInteger(0)==null) {
+				if(rs.getLong(0)==null) {
 					maxDisplayId = 1;
 				} else {
-					maxDisplayId = rs.getInteger(0).intValue();
+					maxDisplayId = rs.getLong(0).intValue();
 				}
 			}
 			stockGrade.setDisplayId((long)maxDisplayId);
@@ -6169,10 +6169,10 @@ public class DataService extends HibernateService {
 			org.hibernate.Query query = session.createQuery(queryString);
 			ScrollableResults rs = query.scroll();
 			if (rs.next()) {
-				if(rs.getInteger(0)==null) {
+				if(rs.getLong(0)==null) {
 					maxDisplayId = 1;
 				} else {
-					maxDisplayId = rs.getInteger(0).intValue();
+					maxDisplayId = rs.getLong(0).intValue();
 				}
 			}
 			stockGroup.setDisplayId((long)maxDisplayId);
@@ -6197,10 +6197,10 @@ public class DataService extends HibernateService {
 				org.hibernate.Query query = session.createQuery(queryString);
 				ScrollableResults rs = query.scroll();
 				if (rs.next()) {
-					if(rs.getInteger(0)==null) {
+					if(rs.getLong(0)==null) {
 						maxDisplayId = 1;
 					} else {
-						maxDisplayId = rs.getInteger(0).intValue();
+						maxDisplayId = rs.getLong(0).intValue();
 					}
 				}
 				object.setDisplayId((long)maxDisplayId);
