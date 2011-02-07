@@ -605,6 +605,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 				}
 			}
 		} else {
+			this.isDirty = false;
 			updateTreeSelection();
 		}
 	}
