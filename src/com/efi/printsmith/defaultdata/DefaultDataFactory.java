@@ -417,6 +417,7 @@ public class DefaultDataFactory {
 		TableProperties tableEditor = new TableProperties();
 		tableEditor.setTableName("BusinessType");
 		tableEditor.setUserName("Business Type");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -425,6 +426,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("City");
 		tableEditor.setUserName("City");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -433,6 +435,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("CommonInterest");
 		tableEditor.setUserName("Common Interest");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -441,6 +444,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ContactNamePrefix");
 		tableEditor.setUserName("Contact Name Prefix");
+		tableEditor.setEnabled(true);
 		try{
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -449,6 +453,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("Dimension");
 		tableEditor.setUserName("Dimension");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -457,6 +462,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ContactNameSuffixes");
 		tableEditor.setUserName("Contact Name Suffixes");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -466,6 +472,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("Country");
 		tableEditor.setUserName("Country");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -474,6 +481,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("CTPSubstrate");
 		tableEditor.setUserName("CTP Substrate");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -482,6 +490,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("Driver");
 		tableEditor.setUserName("Driver");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -490,6 +499,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("GenericColors");
 		tableEditor.setUserName("Generic Colors");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -498,6 +508,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("HoldState");
 		tableEditor.setUserName("Hold State");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -506,6 +517,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("InkColor");
 		tableEditor.setUserName("Ink Color");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -514,6 +526,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("JobTitle");
 		tableEditor.setUserName("Job Title");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -522,6 +535,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("LeadSource");
 		tableEditor.setUserName("Lead Source");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -530,6 +544,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("MailerType");
 		tableEditor.setUserName("Mailer Type");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -538,6 +553,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("MarketingDateLabels");
 		tableEditor.setUserName("Marketing Date Labels");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -546,6 +562,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("MarketingMailers");
 		tableEditor.setUserName("Marketing Mailers");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -554,6 +571,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("PhoneTags");
 		tableEditor.setUserName("Phone Tags");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -562,6 +580,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ProductionCopiers");
 		tableEditor.setUserName("Production Copiers");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -570,6 +589,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ProductionDates");
 		tableEditor.setUserName("Production Dates");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -578,6 +598,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ProductionExceptions");
 		tableEditor.setUserName("Production Exceptions");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -586,6 +607,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ProductionFacilities");
 		tableEditor.setUserName("Production Facilities");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -594,6 +616,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ProductionLocations");
 		tableEditor.setUserName("Production Locations");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -602,6 +625,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ProductionPress");
 		tableEditor.setUserName("Production Presses");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -610,6 +634,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ProductionPriority");
 		tableEditor.setUserName("Production Priority");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -618,6 +643,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ProductionStations");
 		tableEditor.setUserName("Production Stations");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -626,6 +652,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("Products");
 		tableEditor.setUserName("Products");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -634,6 +661,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ReportCategories");
 		tableEditor.setUserName("Report Categories");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -642,6 +670,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("SalesRep");
 		tableEditor.setUserName("Sales Rep");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -650,6 +679,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("ShippingMethod");
 		tableEditor.setUserName("ShipVia");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -658,6 +688,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("SportsInterest");
 		tableEditor.setUserName("Sports Interest");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -666,6 +697,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("State");
 		tableEditor.setUserName("State");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -674,6 +706,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("StockColors");
 		tableEditor.setUserName("Stock Colors");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -682,6 +715,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("StockFinish");
 		tableEditor.setUserName("Stock Finish");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -690,6 +724,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("StockForest");
 		tableEditor.setUserName("Stock Forest Management");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -698,6 +733,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("StockGrade");
 		tableEditor.setUserName("Stock Grade");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -706,6 +742,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("StockGroup");
 		tableEditor.setUserName("Stock Group");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -714,6 +751,7 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("TaxCodes");
 		tableEditor.setUserName("Tax Codes");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
@@ -722,44 +760,57 @@ public class DefaultDataFactory {
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("TaxTablesElements");
 		tableEditor.setUserName("Tax Tables Elements");
-		try {
-			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
-		} catch (Exception e) {
-			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-		}tableEditor = new TableProperties();
-		tableEditor.setTableName("TaxTable");
-		tableEditor.setUserName("Tax Tables");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
+		
+		tableEditor = new TableProperties();
+		tableEditor.setTableName("TaxTable");
+		tableEditor.setUserName("Tax Tables");
+		tableEditor.setEnabled(true);
+		try {
+			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
 		tableEditor = new TableProperties();
 		tableEditor.setTableName("TypeofWork");
 		tableEditor.setUserName("Type of Work");
-		
-		try {
-			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
-		} catch (Exception e) {
-			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-		}tableEditor = new TableProperties();
-		tableEditor.setTableName("Vendor");
-		tableEditor.setUserName("Vendor");
-		try {
-			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
-		} catch (Exception e) {
-			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
-		}tableEditor = new TableProperties();
-		
-		tableEditor.setTableName("WebLocations");
-		tableEditor.setUserName("Web Locations");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {
 			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
 		}
+		
+		tableEditor = new TableProperties();
+		tableEditor.setTableName("Vendor");
+		tableEditor.setUserName("Vendor");
+		tableEditor.setEnabled(true);
+		try {
+			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
+		tableEditor = new TableProperties();
+		tableEditor.setTableName("WebLocations");
+		tableEditor.setUserName("Web Locations");
+		tableEditor.setEnabled(true);
+		try {
+			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
+		} catch (Exception e) {
+			log.debug("** Exception: " + ExceptionUtil.getExceptionStackTraceAsString(e));
+		}
+		
+		tableEditor = new TableProperties();
 		tableEditor.setTableName("Zip");
 		tableEditor.setUserName("Zip");
+		tableEditor.setEnabled(true);
 		try {
 			tableEditor = (TableProperties) dataservice.addUpdate(tableEditor);
 		} catch (Exception e) {

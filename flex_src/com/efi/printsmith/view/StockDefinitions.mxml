@@ -1821,11 +1821,19 @@
 	//stockDefinitions.basicsize = Basicsize.text;
 	if (stockDefinitions.parentsize == null) stockDefinitions.parentSize = new DimensionInstance();
 	var localDimension:Dimension = parentSize.selectedItem as Dimension;
-	stockDefinitions.parentsize.height = localDimension.height;
-	stockDefinitions.parentsize.width = localDimension.width;
-	stockDefinitions.parentsize.metric = localDimension.metric;
-	stockDefinitions.parentsize.name = localDimension.name;
-	stockDefinitions.parentsize.type = localDimension.type;
+	if (localDimension != null) {
+		stockDefinitions.parentsize.height = localDimension.height;
+		stockDefinitions.parentsize.width = localDimension.width;
+		stockDefinitions.parentsize.metric = localDimension.metric;
+		stockDefinitions.parentsize.name = localDimension.name;
+		stockDefinitions.parentsize.type = localDimension.type;
+	} else {
+		stockDefinitions.parentsize.height = 0;
+		stockDefinitions.parentsize.width = 0;
+		stockDefinitions.parentsize.metric = false;
+		stockDefinitions.parentsize.name = "";
+		stockDefinitions.parentsize.type = "";
+	}
 	// stockDefinitions.thickness = parseFloat(thickNess.text);
 	 if ( mWeight.text == "")
 	 	stockDefinitions.mweight = 0;
@@ -1875,11 +1883,19 @@
 	 stockDefinitions.pcwRecycledPercent = parseFloat(percentvalue) * .01 ;
 	 if (stockDefinitions.normalRunSize == null) stockDefinitions.normalRunSize = new DimensionInstance();
 	 localDimension = NormalRunSize.selectedItem as Dimension;
-	 stockDefinitions.normalRunSize.height = localDimension.height;
-	 stockDefinitions.normalRunSize.width = localDimension.width;
-	 stockDefinitions.normalRunSize.metric = localDimension.metric;
-	 stockDefinitions.normalRunSize.name = localDimension.name;
-	 stockDefinitions.normalRunSize.type = localDimension.type;
+	if (localDimension != null) {
+		 stockDefinitions.normalRunSize.height = localDimension.height;
+		 stockDefinitions.normalRunSize.width = localDimension.width;
+		 stockDefinitions.normalRunSize.metric = localDimension.metric;
+		 stockDefinitions.normalRunSize.name = localDimension.name;
+		 stockDefinitions.normalRunSize.type = localDimension.type;
+	} else {
+		 stockDefinitions.normalRunSize.height = 0;
+		 stockDefinitions.normalRunSize.width = 0;
+		 stockDefinitions.normalRunSize.metric = false;
+		 stockDefinitions.normalRunSize.name = "";
+		 stockDefinitions.normalRunSize.type = "";
+	}
 	 stockDefinitions.cutsPer100 = parseFloat(CutsPer100.text);
 	 stockDefinitions.minCutCharge = parseFloat(MinCutCharge.text);
 	// stockDefinitions.defaultPress = DefaultPress.text;

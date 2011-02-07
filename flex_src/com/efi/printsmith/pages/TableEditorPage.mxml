@@ -533,23 +533,17 @@ import com.efi.printsmith.pages.TablePropertiesEditor;
 		tempClass = setClassType();
 		var tempObject: Object = new tempClass();
 		temp = table_combo.selectedItem as TableProperties;
-		tempObject = datagrid.selectedItem as tempClass;
-		if ( tempObject.id  == 0){
-			index = findItem(tempObject.tableName, tableDataArray);
-			tableDataArray.removeItemAt(index);
-		}
-		else
-			dataService.deleteItem(temp.tableName, tempObject.id);
-	
+		for (var i:int=0; i<datagrid.selectedItems.length; i++) {
+			tempObject = datagrid.selectedItem as tempClass;
+			if ( tempObject.id  == 0){
+				index = findItem(tempObject.tableName, tableDataArray);
+				tableDataArray.removeItemAt(index);
+			}
+			else {
+				dataService.deleteItem(temp.tableName, tempObject.id);
+			}
+		}	
 	}
-	private function doDelete():void{
-		var temp:TableProperties;
-		var temp2:TableProperties;
-		temp = table_combo.selectedItem as TableProperties;
-		temp2 = datagrid.selectedItem as TableProperties;
-		if (temp2 != null)
-			dataService.deleteItem(temp.tableName, temp2.id);
-	} 
 	
 	private function doDeleteEntry():void {
 		
@@ -596,7 +590,7 @@ import com.efi.printsmith.pages.TablePropertiesEditor;
 	
 ]]>         
 </mx:Script>
-	<mx:DataGrid  id="datagrid" editable="true" dataProvider="{tableDataArray}" change="doAdd()"  right="10" left="10" bottom="40" top="80" itemEditEnd="handleItemEditEnd(event)">
+	<mx:DataGrid  id="datagrid" editable="true" dataProvider="{tableDataArray}" change="doAdd()"  right="10" left="10" bottom="40" top="80" itemEditEnd="handleItemEditEnd(event)" allowMultipleSelection="true">
 		<mx:columns>
 			<mx:DataGridColumn   editable="false" id="idcolumn" width="50" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.ID')}" dataField="displayId"/>
 			<mx:DataGridColumn  id="keycolumn" headerText="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'kTableEditorCommand.KeyAlpha')}" dataField="keyAlpha"/>
