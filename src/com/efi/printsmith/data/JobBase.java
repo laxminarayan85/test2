@@ -1455,7 +1455,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private DimensionInstance parentSize;
 	
@@ -1477,7 +1477,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private DimensionInstance runSize;
 	
@@ -1499,7 +1499,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private DimensionInstance finishSize;
 	
@@ -1521,7 +1521,7 @@ public class JobBase extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @ManyToOne( cascade = {CascadeType.ALL})
     @Where(clause="isdeleted <> 'TRUE'")
 	private DimensionInstance foldedSize;
 	

@@ -965,7 +965,7 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne(optional=true)
+    @ManyToOne( cascade = {CascadeType.ALL}, optional=true)
 	@Where(clause="isdeleted <> 'TRUE'")
 	private DimensionInstance parentsize;
 	

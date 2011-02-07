@@ -87,7 +87,7 @@ public class StockType extends ModelBase {
 	/**
 	 * @generated
 	 */	
- 	@ManyToOne()
+ 	@ManyToOne( cascade = {CascadeType.ALL})
 	@Where(clause="isdeleted <> 'TRUE'")
 	@Basic
 	private DimensionInstance size;
