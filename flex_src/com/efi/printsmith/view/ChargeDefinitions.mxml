@@ -1080,6 +1080,8 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 					qtyTypes.removeItemAt(i);
 				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.None) {
 					qtyTypes.removeItemAt(i);
+				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.Sets) {
+					qtyTypes.removeItemAt(i);
 				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.SetupSets) {
 					qtyTypes.removeItemAt(i);
 				} else if (qtyTypes.getItemAt(i).data == ChargeQtyType.TotalWeight) {
@@ -1169,6 +1171,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			Ignorecuts_radio.visible = false;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = true;
 		} else if (charge_method_combo.selectedItem.data == ChargeMethod.Cut) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1207,6 +1210,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			charge_group_2.enabled = false;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = true;
 		} else if (charge_method_combo.selectedItem.data == ChargeMethod.FlatRate) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1244,6 +1248,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			Ignorecuts_radio.visible =false;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = true;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Fold) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1282,6 +1287,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			charge_group_2.enabled = true;
 			fold_template_label.visible = true;
 			fold_template_combo.visible = true;
+			piece_pricing_radio.enabled = true;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Ink) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1320,6 +1326,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			charge_group_2.enabled = true;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = true;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.JobAware) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1357,6 +1364,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			Ignorecuts_radio.visible =false;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = true;
 		} else if (charge_method_combo.selectedItem.data == ChargeMethod.Linear) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1395,6 +1403,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			charge_group_2.enabled = true;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = true;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Markup) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1432,6 +1441,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			Ignorecuts_radio.visible =false;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = true;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.PriceList) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1469,6 +1479,9 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			Ignorecuts_radio.visible =false;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = false;
+			in_set_mat_check.enabled = false;
+			this.in_sets_check.enabled = false;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.RateList) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1506,6 +1519,9 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			Ignorecuts_radio.visible =false;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = false;
+			in_set_mat_check.enabled = false;
+			this.in_sets_check.enabled = false;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.Shipping) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1543,6 +1559,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			Ignorecuts_radio.visible =false;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = true;
 	 	} else if (charge_method_combo.selectedItem.data == ChargeMethod.SquareArea) {
 			no_overrides_check.enabled = true;
 			do_not_discount_check.enabled = true;
@@ -1581,6 +1598,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			charge_group_2.enabled = true;
 			fold_template_label.visible = false;
 			fold_template_combo.visible = false;
+			piece_pricing_radio.enabled = true;
 		}
 		if (this.charge_method_combo.selectedItem.data == ChargeMethod.Ink) {
 			this.rate_check.label = inkPriceLabel; 
@@ -1594,6 +1612,10 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 		updateControlState();
 		if (charge_method_combo.selectedItem.data == ChargeMethod.PriceList || 
 		    charge_method_combo.selectedItem.data == ChargeMethod.RateList) {
+		    if (charge.priceMethod == "PiecePrice") {
+		    	charge.priceMethod = "CostPlus";
+				pricingMethodRadioValue = charge.priceMethod;
+		    }
 			if (charge.priceList == null) {
 				this.doPriceList();
 			}
@@ -2086,13 +2108,18 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			setup_check.selected = false;
 			material_check.enabled = false;
 			material_check.selected = false;
-			in_sets_check.enabled = true;
 			sheet_lift_check.enabled= true;
 			cover_ink_check.enabled= true;
 			ship_markup_check.enabled= true;
 			area_check.enabled= true;
-			in_set_mat_check.enabled = true;
-		
+			if (charge_method_combo.selectedItem.data == ChargeMethod.PriceList ||
+			    charge_method_combo.selectedItem.data == ChargeMethod.RateList) {
+				in_set_mat_check.enabled = false;
+				in_sets_check.enabled = false;				    	
+			} else {
+				in_set_mat_check.enabled = true;
+				in_sets_check.enabled = true;
+			}
 		}
 		else
 		{
