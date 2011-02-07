@@ -13,6 +13,10 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.util.ChargeCostingUtil;
+			import com.efi.printsmith.data.enums.ChargeMethod;
+			import com.efi.printsmith.data.enums.ChargeQtyType;
+			import com.efi.printsmith.data.ChargeDefinition;
 			import com.efi.printsmith.data.enums.RunMethod;
 			import com.efi.printsmith.Constants;
 			import flash.net.registerClassAlias;
@@ -43,6 +47,10 @@
 			
 			[Bindable] public var localJob:Job;
 			
+			[Bindable] public var charge:Charge;
+			
+			[Bindable] public var localCharge:Charge;
+			
 			[Bindable] private var okBtnEnabled:Boolean = false;
 			
 			private function initDetailsWindow():void {
@@ -62,40 +70,48 @@
 				refresh_price_btn.visible = false;
 				pricing_throbber.visible = true;
 				pricing_throbber.play();
-				if(trackerConsoleJobs!=null) {
-					var impressionsCount:Number = 0;
+				if(trackerConsoleJobs!=null && job!=null) {
 					registerClassAlias("com.efi.printsmith.data.Job",Job);
 					localJob = ObjectUtil.copy(job) as Job;
-					if (!(isNaN(localJob.inSetsOf)) && localJob.inSetsOf > 0) {               
-						impressionsCount = ((((trackerConsoleJobs.impressions / localJob.impressionsPerRun) - (localJob.estWaste + localJob.binderyWaste)) * (localJob.numUp / localJob.numOn)) / localJob.inSetsOf);     
-				        changeJobQuantity(localJob, impressionsCount);
-					}
-					else {                    
-						impressionsCount = (((trackerConsoleJobs.impressions / localJob.impressionsPerRun) - (localJob.estWaste + localJob.binderyWaste)) * (localJob.numUp / localJob.numOn));
-				        changeJobQuantity(localJob, impressionsCount);
-					}
-
-					if (trackerConsoleJobs.spoilage > 0) {		
-						localJob.orWaste = true;
-						localJob.estWasteOverride = true;
-						localJob.estWaste = localJob.estWaste + trackerConsoleJobs.spoilage;
-					}
-					
-					if ((trackerConsoleJobs.totalSetUpTime/(60*1000)) != localJob.setupTime) {		// compare in MINUTES
-						localJob.orSetupTime = true;
-						localJob.setupTime = trackerConsoleJobs.totalSetUpTime/(60*1000);
-					}
-					
-					if ((trackerConsoleJobs.totalRunTime/(60*1000)) != localJob.runTime) {		// compare in MINUTES
-						localJob.orRuntime = true;
-						localJob.runTime = trackerConsoleJobs.totalRunTime/(60*1000);
-					}
-							
-					if ((trackerConsoleJobs.totalWashUpTime/(60*1000)) != localJob.washupTime) {		// compare in MINUTES
-						localJob.orWashupTime = true;
-						localJob.washupTime = trackerConsoleJobs.totalWashUpTime/(60*1000);
-					}
+					mapTrackerActualsToJob();
 					updatePrice();
+				} else if(trackerConsoleJobs!=null && charge!=null) {
+					registerClassAlias("com.efi.printsmith.data.Charge",Charge);
+					localCharge = ObjectUtil.copy(charge) as Charge;
+					mapTrackerActualsToCharge();
+				}
+			}
+			
+			private function mapTrackerActualsToJob():void {
+				var impressionsCount:Number = 0;
+				if (!(isNaN(localJob.inSetsOf)) && localJob.inSetsOf > 0) {               
+					impressionsCount = ((((trackerConsoleJobs.impressions / localJob.impressionsPerRun) - (localJob.estWaste + localJob.binderyWaste)) * (localJob.numUp / localJob.numOn)) / localJob.inSetsOf);     
+			        changeJobQuantity(localJob, impressionsCount);
+				}
+				else {                    
+					impressionsCount = (((trackerConsoleJobs.impressions / localJob.impressionsPerRun) - (localJob.estWaste + localJob.binderyWaste)) * (localJob.numUp / localJob.numOn));
+			        changeJobQuantity(localJob, impressionsCount);
+				}
+
+				if (trackerConsoleJobs.spoilage > 0) {		
+					localJob.orWaste = true;
+					localJob.estWasteOverride = true;
+					localJob.estWaste = localJob.estWaste + trackerConsoleJobs.spoilage;
+				}
+				
+				if ((trackerConsoleJobs.totalSetUpTime/(60*1000)) != localJob.setupTime) {		// compare in MINUTES
+					localJob.orSetupTime = true;
+					localJob.setupTime = trackerConsoleJobs.totalSetUpTime/(60*1000);
+				}
+				
+				if ((trackerConsoleJobs.totalRunTime/(60*1000)) != localJob.runTime) {		// compare in MINUTES
+					localJob.orRuntime = true;
+					localJob.runTime = trackerConsoleJobs.totalRunTime/(60*1000);
+				}
+						
+				if ((trackerConsoleJobs.totalWashUpTime/(60*1000)) != localJob.washupTime) {		// compare in MINUTES
+					localJob.orWashupTime = true;
+					localJob.washupTime = trackerConsoleJobs.totalWashUpTime/(60*1000);
 				}
 			}
 			
@@ -180,6 +196,192 @@
 				
 				job.pressQty = press;
 			}
+			
+			private function mapTrackerActualsToCharge():void {
+				if(localCharge!=null && localCharge.chargeDefinition!=null) {
+					var chargeDefinition:ChargeDefinition = localCharge.chargeDefinition;
+					var savedMinFlag:Boolean = false;
+					savedMinFlag = chargeDefinition.useMinimumTime;
+					chargeDefinition.useMinimumTime = false;
+					
+					
+					if (chargeDefinition.quantityType == ChargeQtyType.Time)
+						changeChargeQuantity((trackerConsoleJobs.totalRunTime/(60*1000)),true);
+					else
+						changeChargeQuantity(charge.quantity,true);
+					
+					localCharge.actualCostingSetupTime = ((trackerConsoleJobs.totalSetUpTime / (60*1000)) / 60);		// put into hours
+					localCharge.actualCostingRunTime = (((trackerConsoleJobs.totalRunTime + trackerConsoleJobs.totalWashUpTime) / (60*1000)) / 60);
+					
+					//
+					// recalcualte the new actual cost based on the given qty "time" or "count"
+					//
+					localCharge.chargeCostingRecord.totalCost = new ChargeCostingUtil().getChargeEstCost(localCharge);
+															
+					//
+					// Find the estimated cost based on the time and qty
+					//
+					if (chargeDefinition.quantityType == ChargeQtyType.Time)
+						changeChargeQuantity((trackerConsoleJobs.actualRunTime / (60 * 1000)),true);
+					else
+						changeChargeQuantity(localCharge.quantity,true);
+					
+					
+					chargeDefinition.useMinimumTime = savedMinFlag;
+					localCharge.actualCostingSetupTime = trackerConsoleJobs.actualSetUpTime;
+					localCharge.actualCostingRunTime = 0;
+				}
+			}
+			
+			private function changeChargeQuantity(editQuantity:Number, overrideVal:Boolean):void
+			{
+				if(localCharge.chargeDefinition!=null) {
+					var chargeDefinition:ChargeDefinition = localCharge.chargeDefinition;
+					switch (chargeDefinition.method)
+					{
+						case ChargeMethod.JobAware:
+						case ChargeMethod.Shipping:
+						case ChargeMethod.Linear:
+						case ChargeMethod.Fold:
+						{
+							if (chargeDefinition.quantityType == ChargeQtyType.Quantity)
+							{
+								localCharge.overrideQuantity = overrideVal;
+								chargeDefinition.overrideRateQuantity = overrideVal;
+							}
+							break;
+						}
+					}
+					
+					switch (chargeDefinition.quantityType)
+					{
+						case ChargeQtyType.Sets:
+						case ChargeQtyType.SetupSets:
+						{
+							chargeDefinition.groupQty = editQuantity;
+							switch (chargeDefinition.method)
+							{
+								case ChargeMethod.Cut:
+								{
+									chargeDefinition.overrideNumberOfCuts = overrideVal;
+									break;
+								}
+							}
+							break;
+						}
+						case ChargeQtyType.Quantity:
+						{	// quantity
+							switch (chargeDefinition.method)
+							{
+								case ChargeMethod.Ink:
+								{	// ink charge
+									chargeDefinition.materialSetCount = editQuantity;
+									localCharge.overrideMaterialQuantity = true;
+									chargeDefinition.overrideMaterialQty = true;
+									break;
+								}
+								case ChargeMethod.SquareArea:
+								{	// 
+									chargeDefinition.materialSetCount = editQuantity;
+									localCharge.overrideMaterialQuantity = true;
+									chargeDefinition.overrideMaterialQty = true;
+									break;
+								}
+								default:
+								{
+									chargeDefinition.rateQty = editQuantity;
+									break;
+								}
+							}
+							break;
+						}
+						case ChargeQtyType.Time:
+						{
+							var timeStart:Number = (localCharge.startHours*60)+localCharge.startMinutes;
+							var timeEnd:Number = (localCharge.endHours*60)+localCharge.endMinutes;	
+							if (timeEnd != 0)
+							{
+								timeEnd = timeStart + editQuantity;
+							}
+							else
+							{
+								timeStart = editQuantity;
+							}
+							calcChargeTimeQuantity(chargeDefinition,timeStart,timeEnd);
+							break;
+						}
+						case ChargeQtyType.None:
+						{
+							break;
+						}
+					}
+					
+					if (!chargePriceLocked())
+					{
+						localCharge.price = calcCharge(chargeDefinition);
+					}
+					else
+					{
+						calcCharge(chargeDefinition);	// don't change the price
+					}
+				}
+			}
+			
+			private function calcChargeTimeQuantity(chargeDefinition:ChargeDefinition,timeStart:Number,timeEnd:Number):void {
+				if (timeStart == 0 && timeEnd != 0) {
+					if (chargeDefinition.useMinimumTime && timeEnd < chargeDefinition.minimumTime && chargeDefinition.minimumTime != 0)
+						timeEnd = chargeDefinition.minimumTime;
+			
+					chargeDefinition.rateQty = timeEnd;
+				}
+				else if (timeEnd == 0 && timeStart != 0) {
+					if (chargeDefinition.useMinimumTime && timeStart < chargeDefinition.minimumTime && chargeDefinition.minimumTime != 0)
+						timeStart = chargeDefinition.minimumTime;
+			
+					chargeDefinition.rateQty = timeStart;
+				}
+				else if (timeStart > timeEnd)
+				{	// assume stop is PM and start is AM
+					if ((timeEnd + (12 * 60)) > timeStart)
+					{	// and add 12 hours to stop time
+						chargeDefinition.rateQty = (timeEnd + (12 * 60)) - timeStart;
+					}
+					else
+					{
+						chargeDefinition.rateQty = timeStart - timeEnd;
+					}
+				}
+				else
+				{	// normal start and stop time 
+			
+					//
+					// 8.0.4 - enforce the minimum time from the charge def
+					//
+					if (chargeDefinition.useMinimumTime && (timeEnd - timeStart) < chargeDefinition.minimumTime && chargeDefinition.minimumTime != 0)
+						timeEnd = (timeEnd + (chargeDefinition.minimumTime - (timeEnd - timeStart)));
+			
+					chargeDefinition.rateQty = timeEnd - timeStart;
+				}
+						
+				//
+				// convert to decimal hours 
+				//
+				chargeDefinition.rateQty = chargeDefinition.rateQty / 60.0;	// actual  quantity is "hidden" here 
+				chargeDefinition.materialQty = chargeDefinition.rateQty;
+				
+			}
+			
+			private function chargePriceLocked():Boolean {
+				if(localCharge!=null) {
+					if(localCharge.parentInvoice!=null) 
+						return localCharge.parentInvoice.priceLocked;
+				}
+				return false;
+			}
+			
+			private function calcCharge(chargeDefinition:ChargeDefinition):Number {
+				return 0;
+			}	
 						
 			private function handleLoadJobResult(event:ResultEvent):void {
 				this.job = event.result as Job;
