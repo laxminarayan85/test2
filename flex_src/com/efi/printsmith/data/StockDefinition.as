@@ -22,7 +22,7 @@ package com.efi.printsmith.data
 		public var isMetric:Boolean = false;
 		public var finish:StockFinish;
 		public var weight:Number = 0;
-		public var color:StockColors;
+		public var color:String = "";
 		public var grade:StockGrade;
 		public var coated:String = "";
 		public var stocknumber:String = "";
@@ -118,7 +118,7 @@ package com.efi.printsmith.data
 		public var sfiCertified:Boolean = false;
 		public var greenSealCertified:Boolean = false;
 		public var defaultPriceList:PaperPrice;
-		public var genericColor:GenericColors;
+		public var genericColor:String = "";
 		public var account:Account;
 		public var stockId:String = "";
 		public var charges:ArrayCollection;

@@ -1082,7 +1082,7 @@
 			}
 			colors.name = cboGenericColor.text;
 			stockGenericColorDataService.addUpdate(colors);
-			stockDefinitions.genericColor = colors;
+			stockDefinitions.genericColor = colors.name;
 			
 //			var item:int = findItem(cboGenericColor.text, stockGenericColor);
 //			if (item == -1) {
@@ -1116,7 +1116,7 @@
 			}
 			colors.name = cbostkcolor.text;
 			stockColorDataService.addUpdate(colors);
-			stockDefinitions.color = colors;
+			stockDefinitions.color = colors.name;
 			
 //			var item:int = findItem(cbostkcolor.text, stockColor);
 //			if (item == -1) {
@@ -1530,7 +1530,7 @@
 		 stockColor = ev.result as ArrayCollection;
 		 sortArray(stockColor, "name");
 		 if ( stockDefinitions.color != null){
-		 	cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
+		 	cbostkcolor.selectedIndex = findItem(stockDefinitions.color, stockColor);
 		 }
 		 
 	}
@@ -1540,7 +1540,7 @@
 		 stockGenericColor = ev.result as ArrayCollection;
 		 sortArray(stockGenericColor, "name");
 		 if ( stockDefinitions.genericColor != null){
-		 	cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor.name, stockGenericColor);
+		 	cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor, stockGenericColor);
 		 }
 	}
 	
@@ -1664,9 +1664,9 @@
 			cbostockClass.selectedIndex = findItem(stockDefinitions.stkclass.name,stockClass);
 
 		if (stockDefinitions.color != null) 
-			cbostkcolor.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
+			cbostkcolor.selectedIndex = findItem(stockDefinitions.color, stockColor);
 		if (stockDefinitions.genericColor != null){
-			cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor.name, stockGenericColor);
+			cboGenericColor.selectedIndex = findItem(stockDefinitions.genericColor, stockGenericColor);
 		}
 				
 		if (stockDefinitions.stktype != null)
@@ -1740,7 +1740,7 @@
 	 	stockDefinitions.grade = cboStockGrade.selectedItem as StockGrade;
 
 	 if (cbostkcolor != null && cbostkcolor.selectedItem != null) 
-	 	stockDefinitions.color = cbostkcolor.selectedItem as StockColors;
+	 	stockDefinitions.color = (cbostkcolor.selectedItem as StockColors).name;
 
 	 if (cboStockGroup != null && cboStockGroup.selectedItem != null) 
 	 	stockDefinitions.stkgroup = cboStockGroup.selectedItem as StockGroup;
@@ -1756,7 +1756,7 @@
 	 	stockDefinitions.vendor = cboVendor.selectedItem as Vendor;
 
 	 if (cboGenericColor != null && cboGenericColor.selectedItem != null) 
-	 	stockDefinitions.genericColor = cboGenericColor.selectedItem as GenericColors;
+	 	stockDefinitions.genericColor = (cboGenericColor.selectedItem as GenericColors).name;
 	 
 	 if (cboUom != null && cboUom.selectedItem != null)
 	 	stockDefinitions.uom = cboUom.selectedItem.name as String; 

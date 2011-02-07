@@ -82,7 +82,7 @@ public class StockDefinitionMapper extends ImportMapper {
 						stockColor.setName(currentImportToken);
 						stockColor = (StockColors)dataService.addUpdate(stockColor);
 					}
-					stockDefinition.setColor(stockColor);
+					stockDefinition.setColor(stockColor.getName());
 				}
 			}  else if ("vendor".equals(currentFieldToken)) {
 				if (currentImportToken.equals("") == true) {
@@ -370,7 +370,7 @@ public class StockDefinitionMapper extends ImportMapper {
 						genericColors.setName(currentImportToken);
 						genericColors = (GenericColors)dataService.addUpdate(genericColors);
 					}
-					stockDefinition.setGenericColor(genericColors);
+					stockDefinition.setGenericColor(genericColors.getName());
 				}
 			}  else if ("generic finish id".equals(currentFieldToken)) {
 				/* done */

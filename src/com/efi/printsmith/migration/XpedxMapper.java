@@ -288,7 +288,7 @@ public class XpedxMapper extends ImportMapper {
 						stockColor = (StockColors)dataService.addUpdate(stockColor);
 						stockColor.setId(stockColor.getId());
 					}
-					stockDefinition.setColor(stockColor);
+					stockDefinition.setColor(stockColor.getName());
 					GenericColors genericColor = dataService.getByGenericColorsName(currentImportToken);
 					if (genericColor == null) {
 						genericColor = new GenericColors();
@@ -296,7 +296,7 @@ public class XpedxMapper extends ImportMapper {
 						genericColor = (GenericColors)dataService.addUpdate(genericColor);
 						genericColor.setId(genericColor.getId());
 					}
-					stockDefinition.setGenericColor(genericColor);
+					stockDefinition.setGenericColor(genericColor.getName());
 				}
 				break;
 			case 40:

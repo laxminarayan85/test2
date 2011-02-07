@@ -36,7 +36,7 @@ package com.efi.printsmith.data
 		public var personalAcct:Boolean = false;
 		public var numberofEmployees:int = 0;
 		public var annualRev:int = 0;
-		public var businessType:BusinessType;
+		public var businessType:String = "";
 	
 	}
 }

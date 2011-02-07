@@ -1539,7 +1539,7 @@
 						description = description + ", " + localJob.finishSize.name;
 					}
 					if(localJob.stock!=null && localJob.stock.color!=null) {
-						description = description + " " + localJob.stock.color.name;
+						description = description + " " + localJob.stock.color;
 					}
 					description = description + " " + getStockName(localJob.stock,prefStcoksObj);
 				} else if(item is Charge) {

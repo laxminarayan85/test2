@@ -596,7 +596,7 @@ public class StockDefinition extends ModelBase {
     this.isDeleted = isDeleted;
   }
 
-	public StockDefinition(Long id, String Name, Double weight,Dimension parentsize,StockColors color, GenericColors genericcolor,
+	public StockDefinition(Long id, String Name, Double weight,Dimension parentsize,String color, String genericcolor,
 			StockFinish finish, Double thickness, StockGrade grade, Double cwt1, Vendor vendor, String stocknumber, Integer onhand,
 			Integer committed, Integer ordered, Boolean shellitem, Dimension normalrunsize, StockType stocktype,
 			StockGroup stkgroup, String coated, Integer minorder, BigDecimal cost1, Date priceexpire, String forestmanagement,
@@ -826,27 +826,26 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @Basic
+	@ManyToOne()
 	@Where(clause="isdeleted <> 'TRUE'")
-	private StockColors color;
+	private String color;
 	
 	/**
 	 * @generated
  	 */
-	public StockColors getColor(){
+	public String getColor(){
     return color; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setColor(StockColors newVal) {
+   * @generated
+   */	
+  public void setColor(String newVal) {
     this.color = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -3093,27 +3092,26 @@ public class StockDefinition extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne()
+    @Basic
+	@ManyToOne()
 	@Where(clause="isdeleted <> 'TRUE'")
-	private GenericColors genericColor;
+	private String genericColor;
 	
 	/**
 	 * @generated
  	 */
-	public GenericColors getGenericColor(){
+	public String getGenericColor(){
     return genericColor; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setGenericColor(GenericColors newVal) {
+   * @generated
+   */	
+  public void setGenericColor(String newVal) {
     this.genericColor = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -3934,7 +3932,7 @@ public class StockDefinition extends ModelBase {
     if (ISMETRIC.equals(propertyName)) setIsMetric((Boolean)newValue); else
     if (FINISH.equals(propertyName)) setFinish((StockFinish)newValue); else
     if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
-    if (COLOR.equals(propertyName)) setColor((StockColors)newValue); else
+    if (COLOR.equals(propertyName)) setColor((String)newValue); else
     if (GRADE.equals(propertyName)) setGrade((StockGrade)newValue); else
     if (COATED.equals(propertyName)) setCoated((String)newValue); else
     if (STOCKNUMBER.equals(propertyName)) setStocknumber((String)newValue); else
@@ -4030,7 +4028,7 @@ public class StockDefinition extends ModelBase {
     if (SFICERTIFIED.equals(propertyName)) setSfiCertified((Boolean)newValue); else
     if (GREENSEALCERTIFIED.equals(propertyName)) setGreenSealCertified((Boolean)newValue); else
     if (DEFAULTPRICELIST.equals(propertyName)) setDefaultPriceList((PaperPrice)newValue); else
-    if (GENERICCOLOR.equals(propertyName)) setGenericColor((GenericColors)newValue); else
+    if (GENERICCOLOR.equals(propertyName)) setGenericColor((String)newValue); else
     if (ACCOUNT.equals(propertyName)) setAccount((Account)newValue); else
     if (STOCKID.equals(propertyName)) setStockId((String)newValue); else
     if (CHARGES.equals(propertyName)) setCharges((java.util.List<ChargeDefinition>)newValue); else
@@ -4084,7 +4082,7 @@ public class StockDefinition extends ModelBase {
     if (WEIGHT.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (COLOR.equals(propertyName)) 
-      return new Class<?>[] {StockColors.class};		
+      return new Class<?>[] {String.class};		
     if (GRADE.equals(propertyName)) 
       return new Class<?>[] {StockGrade.class};		
     if (COATED.equals(propertyName)) 
@@ -4276,7 +4274,7 @@ public class StockDefinition extends ModelBase {
     if (DEFAULTPRICELIST.equals(propertyName)) 
       return new Class<?>[] {PaperPrice.class};		
     if (GENERICCOLOR.equals(propertyName)) 
-      return new Class<?>[] {GenericColors.class};		
+      return new Class<?>[] {String.class};		
     if (ACCOUNT.equals(propertyName)) 
       return new Class<?>[] {Account.class};		
     if (STOCKID.equals(propertyName)) 

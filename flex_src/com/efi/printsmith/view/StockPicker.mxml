@@ -742,26 +742,26 @@
 		return 0;		
 	}	
 	public function sortColor(obj1:Object, obj2:Object):int	{
-		var	c1:StockColors = (obj1 as StockDefinition).color;
-		var	c2:StockColors = (obj2 as StockDefinition).color;
+		var	c1:String = (obj1 as StockDefinition).color;
+		var	c2:String = (obj2 as StockDefinition).color;
 		
 		if (c1 == null)
 			return -1;
 		if (c2 == null)
 			return 1;
 			
-		return getCompareResult(c1.name, c2.name);
+		return getCompareResult(c1, c2);
 	}
 	public function sortGenColor(obj1:Object, obj2:Object):int	{
-		var	c1:GenericColors = (obj1 as StockDefinition).genericColor;
-		var	c2:GenericColors = (obj2 as StockDefinition).genericColor;
+		var	c1:String = (obj1 as StockDefinition).genericColor;
+		var	c2:String = (obj2 as StockDefinition).genericColor;
 		
 		if (c1 == null)
 			return -1;
 		if (c2 == null)
 			return 1;
 			
-		return getCompareResult(c1.name, c2.name);	
+		return getCompareResult(c1, c2);	
 	}
 
 	public function sortFinish(obj1:Object, obj2:Object):int	{
@@ -1336,9 +1336,9 @@
 				txtCoatedSides.text = stockDefObj.coated;
 			}
 			if(stockDefObj.genericColor!=null) {
-				txtGenericColors.text = stockDefObj.genericColor.name;
+				txtGenericColors.text = stockDefObj.genericColor;
 				if(genericColors!=null && genericColors.length>0) {
-					txtGenericColors.selectedIndex = findItemID(stockDefObj.genericColor.id,genericColors);
+					txtGenericColors.selectedIndex = findItemName(stockDefObj.genericColor,genericColors);
 				}
 			}
 			if(stockDefObj.sheetsPerSet!=0) {
@@ -1354,6 +1354,15 @@
 	private function findItemID(id:int, array:ArrayCollection):int {
 		for each(var element:Object in array) {
 			if (id == element.id) {
+				return array.getItemIndex(element);
+			}
+		}
+		return -1;
+	}   
+	
+	private function findItemName(name:String, array:ArrayCollection):int {
+		for each(var element:Object in array) {
+			if (name == element.name) {
 				return array.getItemIndex(element);
 			}
 		}

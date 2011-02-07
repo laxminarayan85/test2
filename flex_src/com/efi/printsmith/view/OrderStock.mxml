@@ -345,7 +345,7 @@
 				cboVendor.text = "";
 		}	
 		if (stockDefinitions.color != null) 
-			color_edit.selectedIndex = findItem(stockDefinitions.color.name, stockColor);
+			color_edit.selectedIndex = findItem(stockDefinitions.color, stockColor);
 		if (stockDefinitions.stockunit != -1){
 			stockUnit.selectedValue = findItemById(stockDefinitions.stockunit,stockUnits);
 		}

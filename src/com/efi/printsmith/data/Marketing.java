@@ -673,25 +673,27 @@ public class Marketing extends ModelBase {
 	/**
 	 * @generated
 	 */	
-    @ManyToOne( cascade = {CascadeType.ALL})
+    @Basic
+	@ManyToOne( cascade = {CascadeType.ALL})
 	@Where(clause="isdeleted <> 'TRUE'")
-	private BusinessType businessType;
+	private String businessType;
 	
 	/**
 	 * @generated
  	 */
-	public BusinessType getBusinessType(){
+	public String getBusinessType(){
     return businessType; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setBusinessType(BusinessType newVal) {
+   * @generated
+   */	
+  public void setBusinessType(String newVal) {
     this.businessType = newVal;
   }
-	
+
+
 	/**
 	 * @generated
 	 */		
@@ -752,7 +754,7 @@ public class Marketing extends ModelBase {
     if (PERSONALACCT.equals(propertyName)) setPersonalAcct((Boolean)newValue); else
     if (NUMBEROFEMPLOYEES.equals(propertyName)) setNumberofEmployees((Integer)newValue); else
     if (ANNUALREV.equals(propertyName)) setAnnualRev((Integer)newValue); else
-    if (BUSINESSTYPE.equals(propertyName)) setBusinessType((BusinessType)newValue); else
+    if (BUSINESSTYPE.equals(propertyName)) setBusinessType((String)newValue); else
     super.setProperty(propertyName, newValue);
   }
 	
@@ -807,7 +809,7 @@ public class Marketing extends ModelBase {
     if (ANNUALREV.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (BUSINESSTYPE.equals(propertyName)) 
-      return new Class<?>[] {BusinessType.class};		
+      return new Class<?>[] {String.class};		
     return super.getPropertyClass(propertyName);
   }
 	

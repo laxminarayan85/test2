@@ -32,11 +32,8 @@ import org.hibernate.annotations.Where;
  * @generated
  */	
 @NamedQueries({
-
   @NamedQuery(name = "JobBase.findall", query = "from JobBase"),
-
   @NamedQuery(name = "JobBase.byId", query = "select a from JobBase a where a.id= :id")
-
 })
 
 
@@ -673,13 +670,9 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */
 	public JobBase() {
-
     this.created = new Date();
-
     this.modified = new Date();
-
     this.isDeleted = false;
-
   }
 
 	@Basic
@@ -704,9 +697,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getJobNumber(){
-
     return jobNumber; 
-
   }
 
 	
@@ -714,9 +705,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setJobNumber(String newVal) {
-
     this.jobNumber = newVal;
-
   }
 	
  	
@@ -731,9 +720,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getJobIndex(){
-
     return jobIndex; 
-
   }
 
 	
@@ -741,9 +728,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setJobIndex(Long newVal) {
-
     this.jobIndex = newVal;
-
   }
 	
  	
@@ -759,9 +744,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public SalesCategory getSalesCategory(){
-
     return salesCategory; 
-
   }
 
 	
@@ -769,9 +752,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setSalesCategory(SalesCategory newVal) {
-
     this.salesCategory = newVal;
-
   }
 	
  	
@@ -787,9 +768,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public ProductCode getProductCode(){
-
     return productCode; 
-
   }
 
 	
@@ -797,9 +776,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setProductCode(ProductCode newVal) {
-
     this.productCode = newVal;
-
   }
 	
  	
@@ -816,33 +793,24 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<JobBase> getChildren(){
-
     return children; 
-
   }
 
 	/**
 	 * @generated
 	 */	
 	public void addChildren(JobBase obj) {
-
     if (children == null) {
-
       children = new java.util.ArrayList<JobBase>();
-
     }
-
     children.add(obj);
-
   }
 	
 	/**
 	 * @generated
 	 */	
 	public void setChildren(java.util.List<JobBase> newVal) {
-
     this.children = newVal;
-
   }
 	
  	
@@ -859,33 +827,24 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<Charge> getCharges(){
-
     return charges; 
-
   }
 
 	/**
 	 * @generated
 	 */	
 	public void addCharges(Charge obj) {
-
     if (charges == null) {
-
       charges = new java.util.ArrayList<Charge>();
-
     }
-
     charges.add(obj);
-
   }
 	
 	/**
 	 * @generated
 	 */	
 	public void setCharges(java.util.List<Charge> newVal) {
-
     this.charges = newVal;
-
   }
 	
  	
@@ -900,9 +859,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getJobNotes(){
-
     return jobNotes; 
-
   }
 
 	
@@ -910,9 +867,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setJobNotes(String newVal) {
-
     this.jobNotes = newVal;
-
   }
 	
  	
@@ -927,9 +882,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getJobTicketNotes(){
-
     return jobTicketNotes; 
-
   }
 
 	
@@ -937,9 +890,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setJobTicketNotes(Boolean newVal) {
-
     this.jobTicketNotes = newVal;
-
   }
 	
  	
@@ -954,9 +905,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getBrokered(){
-
     return brokered; 
-
   }
 
 	
@@ -964,9 +913,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBrokered(Boolean newVal) {
-
     this.brokered = newVal;
-
   }
 	
  	
@@ -981,9 +928,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getTaxable(){
-
     return taxable; 
-
   }
 
 	
@@ -991,9 +936,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setTaxable(Boolean newVal) {
-
     this.taxable = newVal;
-
   }
 	
  	
@@ -1008,9 +951,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getFinished(){
-
     return finished; 
-
   }
 
 	
@@ -1018,9 +959,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFinished(Boolean newVal) {
-
     this.finished = newVal;
-
   }
 	
  	
@@ -1036,9 +975,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public ProductionLocations getLocation(){
-
     return location; 
-
   }
 
 	
@@ -1046,9 +983,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setLocation(ProductionLocations newVal) {
-
     this.location = newVal;
-
   }
 	
  	
@@ -1063,9 +998,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getComment(){
-
     return comment; 
-
   }
 
 	
@@ -1073,9 +1006,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setComment(String newVal) {
-
     this.comment = newVal;
-
   }
 	
  	
@@ -1090,9 +1021,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getDescription(){
-
     return description; 
-
   }
 
 	
@@ -1100,9 +1029,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setDescription(String newVal) {
-
     this.description = newVal;
-
   }
 	
  	
@@ -1117,9 +1044,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getQtyOrdered(){
-
     return qtyOrdered; 
-
   }
 
 	
@@ -1127,9 +1052,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setQtyOrdered(Long newVal) {
-
     this.qtyOrdered = newVal;
-
   }
 	
  	
@@ -1144,9 +1067,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getOversUnders(){
-
     return oversUnders; 
-
   }
 
 	
@@ -1154,9 +1075,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOversUnders(Long newVal) {
-
     this.oversUnders = newVal;
-
   }
 	
  	
@@ -1171,9 +1090,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getInSetsOf(){
-
     return inSetsOf; 
-
   }
 
 	
@@ -1181,9 +1098,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setInSetsOf(Long newVal) {
-
     this.inSetsOf = newVal;
-
   }
 	
  	
@@ -1198,9 +1113,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getInSetsOfOverride(){
-
     return inSetsOfOverride; 
-
   }
 
 	
@@ -1208,9 +1121,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setInSetsOfOverride(Boolean newVal) {
-
     this.inSetsOfOverride = newVal;
-
   }
 	
  	
@@ -1225,9 +1136,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getSheets(){
-
     return sheets; 
-
   }
 
 	
@@ -1235,9 +1144,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setSheets(Long newVal) {
-
     this.sheets = newVal;
-
   }
 	
  	
@@ -1252,9 +1159,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getNumUp(){
-
     return numUp; 
-
   }
 
 	
@@ -1262,9 +1167,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setNumUp(Long newVal) {
-
     this.numUp = newVal;
-
   }
 	
  	
@@ -1279,9 +1182,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getNumOn(){
-
     return numOn; 
-
   }
 
 	
@@ -1289,9 +1190,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setNumOn(Long newVal) {
-
     this.numOn = newVal;
-
   }
 	
  	
@@ -1307,9 +1206,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PressDefinition getPress(){
-
     return press; 
-
   }
 
 	
@@ -1317,9 +1214,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setPress(PressDefinition newVal) {
-
     this.press = newVal;
-
   }
 	
  	
@@ -1334,9 +1229,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getBinderyWaste(){
-
     return binderyWaste; 
-
   }
 
 	
@@ -1344,9 +1237,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBinderyWaste(Long newVal) {
-
     this.binderyWaste = newVal;
-
   }
 	
  	
@@ -1361,9 +1252,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getBinderyWasteOverride(){
-
     return binderyWasteOverride; 
-
   }
 
 	
@@ -1371,9 +1260,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBinderyWasteOverride(Boolean newVal) {
-
     this.binderyWasteOverride = newVal;
-
   }
 	
  	
@@ -1388,9 +1275,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getEstWaste(){
-
     return estWaste; 
-
   }
 
 	
@@ -1398,9 +1283,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setEstWaste(Long newVal) {
-
     this.estWaste = newVal;
-
   }
 	
  	
@@ -1415,9 +1298,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getEstWasteOverride(){
-
     return estWasteOverride; 
-
   }
 
 	
@@ -1425,9 +1306,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setEstWasteOverride(Boolean newVal) {
-
     this.estWasteOverride = newVal;
-
   }
 	
  	
@@ -1442,9 +1321,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getSignatures(){
-
     return signatures; 
-
   }
 
 	
@@ -1452,9 +1329,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setSignatures(Long newVal) {
-
     this.signatures = newVal;
-
   }
 	
  	
@@ -1470,9 +1345,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PressDefinition getPricingPress(){
-
     return pricingPress; 
-
   }
 
 	
@@ -1480,9 +1353,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setPricingPress(PressDefinition newVal) {
-
     this.pricingPress = newVal;
-
   }
 	
  	
@@ -1498,9 +1369,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PressDefinition getCostingPress(){
-
     return costingPress; 
-
   }
 
 	
@@ -1508,9 +1377,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCostingPress(PressDefinition newVal) {
-
     this.costingPress = newVal;
-
   }
 	
  	
@@ -1525,9 +1392,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getRunMethod(){
-
     return runMethod; 
-
   }
 
 	
@@ -1535,9 +1400,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setRunMethod(String newVal) {
-
     this.runMethod = newVal;
-
   }
 	
  	
@@ -1552,9 +1415,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Double getWashupTime(){
-
     return washupTime; 
-
   }
 
 	
@@ -1562,9 +1423,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setWashupTime(Double newVal) {
-
     this.washupTime = newVal;
-
   }
 	
  	
@@ -1580,9 +1439,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public StockDefinition getStock(){
-
     return stock; 
-
   }
 
 	
@@ -1590,9 +1447,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setStock(StockDefinition newVal) {
-
     this.stock = newVal;
-
   }
 	
  	
@@ -1608,9 +1463,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Dimension getParentSize(){
-
     return parentSize; 
-
   }
 
 	
@@ -1618,9 +1471,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setParentSize(Dimension newVal) {
-
     this.parentSize = newVal;
-
   }
 	
  	
@@ -1636,9 +1487,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Dimension getRunSize(){
-
     return runSize; 
-
   }
 
 	
@@ -1646,9 +1495,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setRunSize(Dimension newVal) {
-
     this.runSize = newVal;
-
   }
 	
  	
@@ -1664,9 +1511,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Dimension getFinishSize(){
-
     return finishSize; 
-
   }
 
 	
@@ -1674,9 +1519,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFinishSize(Dimension newVal) {
-
     this.finishSize = newVal;
-
   }
 	
  	
@@ -1692,9 +1535,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Dimension getFoldedSize(){
-
     return foldedSize; 
-
   }
 
 	
@@ -1702,9 +1543,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFoldedSize(Dimension newVal) {
-
     this.foldedSize = newVal;
-
   }
 	
  	
@@ -1719,9 +1558,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getFrontColors(){
-
     return frontColors; 
-
   }
 
 	
@@ -1729,9 +1566,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFrontColors(Integer newVal) {
-
     this.frontColors = newVal;
-
   }
 	
  	
@@ -1746,9 +1581,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBackColors(){
-
     return backColors; 
-
   }
 
 	
@@ -1756,9 +1589,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBackColors(Integer newVal) {
-
     this.backColors = newVal;
-
   }
 	
  	
@@ -1773,9 +1604,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getFrontPasses(){
-
     return frontPasses; 
-
   }
 
 	
@@ -1783,9 +1612,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFrontPasses(Integer newVal) {
-
     this.frontPasses = newVal;
-
   }
 	
  	
@@ -1800,9 +1627,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBackPasses(){
-
     return backPasses; 
-
   }
 
 	
@@ -1810,9 +1635,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBackPasses(Integer newVal) {
-
     this.backPasses = newVal;
-
   }
 	
  	
@@ -1827,9 +1650,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getFrontWashes(){
-
     return frontWashes; 
-
   }
 
 	
@@ -1837,9 +1658,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFrontWashes(Integer newVal) {
-
     this.frontWashes = newVal;
-
   }
 	
  	
@@ -1854,9 +1673,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getBackWashes(){
-
     return backWashes; 
-
   }
 
 	
@@ -1864,9 +1681,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBackWashes(Integer newVal) {
-
     this.backWashes = newVal;
-
   }
 	
  	
@@ -1883,33 +1698,24 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<InkColor> getFrontInks(){
-
     return frontInks; 
-
   }
 
 	/**
 	 * @generated
 	 */	
 	public void addFrontInks(InkColor obj) {
-
     if (frontInks == null) {
-
       frontInks = new java.util.ArrayList<InkColor>();
-
     }
-
     frontInks.add(obj);
-
   }
 	
 	/**
 	 * @generated
 	 */	
 	public void setFrontInks(java.util.List<InkColor> newVal) {
-
     this.frontInks = newVal;
-
   }
 	
  	
@@ -1926,33 +1732,24 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<InkColor> getBackInks(){
-
     return backInks; 
-
   }
 
 	/**
 	 * @generated
 	 */	
 	public void addBackInks(InkColor obj) {
-
     if (backInks == null) {
-
       backInks = new java.util.ArrayList<InkColor>();
-
     }
-
     backInks.add(obj);
-
   }
 	
 	/**
 	 * @generated
 	 */	
 	public void setBackInks(java.util.List<InkColor> newVal) {
-
     this.backInks = newVal;
-
   }
 	
  	
@@ -1967,9 +1764,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getPressQty(){
-
     return pressQty; 
-
   }
 
 	
@@ -1977,9 +1772,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setPressQty(Long newVal) {
-
     this.pressQty = newVal;
-
   }
 	
  	
@@ -1995,9 +1788,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PricingRecord getPricingRecord(){
-
     return pricingRecord; 
-
   }
 
 	
@@ -2005,9 +1796,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setPricingRecord(PricingRecord newVal) {
-
     this.pricingRecord = newVal;
-
   }
 	
  	
@@ -2023,9 +1812,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public CopierDefinition getPricingCopier(){
-
     return pricingCopier; 
-
   }
 
 	
@@ -2033,9 +1820,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setPricingCopier(CopierDefinition newVal) {
-
     this.pricingCopier = newVal;
-
   }
 	
  	
@@ -2051,9 +1836,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public CopierDefinition getCostingCopier(){
-
     return costingCopier; 
-
   }
 
 	
@@ -2061,9 +1844,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCostingCopier(CopierDefinition newVal) {
-
     this.costingCopier = newVal;
-
   }
 	
  	
@@ -2079,9 +1860,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PreferencesPricingMethod getPricingMethod(){
-
     return pricingMethod; 
-
   }
 
 	
@@ -2089,9 +1868,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setPricingMethod(PreferencesPricingMethod newVal) {
-
     this.pricingMethod = newVal;
-
   }
 	
  	
@@ -2106,9 +1883,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getDoubleSided(){
-
     return doubleSided; 
-
   }
 
 	
@@ -2116,9 +1891,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setDoubleSided(Boolean newVal) {
-
     this.doubleSided = newVal;
-
   }
 	
  	
@@ -2133,9 +1906,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getSingleSided(){
-
     return singleSided; 
-
   }
 
 	
@@ -2143,9 +1914,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setSingleSided(Boolean newVal) {
-
     this.singleSided = newVal;
-
   }
 	
  	
@@ -2161,9 +1930,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public CostingRecord getCostingRecord(){
-
     return costingRecord; 
-
   }
 
 	
@@ -2171,9 +1938,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCostingRecord(CostingRecord newVal) {
-
     this.costingRecord = newVal;
-
   }
 	
  	
@@ -2188,9 +1953,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Double getWeight(){
-
     return weight; 
-
   }
 
 	
@@ -2198,9 +1961,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setWeight(Double newVal) {
-
     this.weight = newVal;
-
   }
 	
  	
@@ -2215,9 +1976,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getTotalCopies(){
-
     return totalCopies; 
-
   }
 
 	
@@ -2225,9 +1984,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setTotalCopies(Long newVal) {
-
     this.totalCopies = newVal;
-
   }
 	
  	
@@ -2242,9 +1999,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getNumCopies(){
-
     return numCopies; 
-
   }
 
 	
@@ -2252,9 +2007,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setNumCopies(Long newVal) {
-
     this.numCopies = newVal;
-
   }
 	
  	
@@ -2269,9 +2022,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getNumCopiesOverride(){
-
     return numCopiesOverride; 
-
   }
 
 	
@@ -2279,9 +2030,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setNumCopiesOverride(Boolean newVal) {
-
     this.numCopiesOverride = newVal;
-
   }
 	
  	
@@ -2296,9 +2045,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getStockQty(){
-
     return stockQty; 
-
   }
 
 	
@@ -2306,9 +2053,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setStockQty(Long newVal) {
-
     this.stockQty = newVal;
-
   }
 	
  	
@@ -2323,9 +2068,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Double getCutOff(){
-
     return cutOff; 
-
   }
 
 	
@@ -2333,9 +2076,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCutOff(Double newVal) {
-
     this.cutOff = newVal;
-
   }
 	
  	
@@ -2350,9 +2091,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getImpressionsPerRun(){
-
     return impressionsPerRun; 
-
   }
 
 	
@@ -2360,9 +2099,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setImpressionsPerRun(Long newVal) {
-
     this.impressionsPerRun = newVal;
-
   }
 	
  	
@@ -2377,9 +2114,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getTotalImpressions(){
-
     return totalImpressions; 
-
   }
 
 	
@@ -2387,9 +2122,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setTotalImpressions(Long newVal) {
-
     this.totalImpressions = newVal;
-
   }
 	
  	
@@ -2404,9 +2137,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Double getMarkup(){
-
     return markup; 
-
   }
 
 	
@@ -2414,9 +2145,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setMarkup(Double newVal) {
-
     this.markup = newVal;
-
   }
 	
  	
@@ -2431,9 +2160,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public BigDecimal getTotalCost(){
-
     return totalCost; 
-
   }
 
 	
@@ -2441,18 +2168,14 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setTotalCost(BigDecimal newVal) {
-
     this.totalCost = newVal;
-
   }
 	
 	/**
 	 * @generated
 	 */	
 	public void setTotalCost(double newVal) {
-
     this.totalCost = BigDecimal.valueOf(newVal);
-
   }
  	
 	
@@ -2466,9 +2189,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public BigDecimal getUnitCost(){
-
     return unitCost; 
-
   }
 
 	
@@ -2476,18 +2197,14 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setUnitCost(BigDecimal newVal) {
-
     this.unitCost = newVal;
-
   }
 	
 	/**
 	 * @generated
 	 */	
 	public void setUnitCost(double newVal) {
-
     this.unitCost = BigDecimal.valueOf(newVal);
-
   }
  	
 	
@@ -2501,9 +2218,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getNotes(){
-
     return notes; 
-
   }
 
 	
@@ -2511,9 +2226,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setNotes(String newVal) {
-
     this.notes = newVal;
-
   }
 	
  	
@@ -2528,9 +2241,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowNotes(){
-
     return showNotes; 
-
   }
 
 	
@@ -2538,9 +2249,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setShowNotes(Boolean newVal) {
-
     this.showNotes = newVal;
-
   }
 	
  	
@@ -2556,9 +2265,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Vendor getVendor(){
-
     return vendor; 
-
   }
 
 	
@@ -2566,9 +2273,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setVendor(Vendor newVal) {
-
     this.vendor = newVal;
-
   }
 	
  	
@@ -2583,9 +2288,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getNumberOfLines(){
-
     return numberOfLines; 
-
   }
 
 	
@@ -2593,9 +2296,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setNumberOfLines(Long newVal) {
-
     this.numberOfLines = newVal;
-
   }
 	
  	
@@ -2610,9 +2311,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getNumberOfInches(){
-
     return numberOfInches; 
-
   }
 
 	
@@ -2620,9 +2319,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setNumberOfInches(Long newVal) {
-
     this.numberOfInches = newVal;
-
   }
 	
  	
@@ -2637,9 +2334,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getSpecialOrderStock(){
-
     return specialOrderStock; 
-
   }
 
 	
@@ -2647,9 +2342,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setSpecialOrderStock(Boolean newVal) {
-
     this.specialOrderStock = newVal;
-
   }
 	
  	
@@ -2664,9 +2357,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getCustomerSuppliedStock(){
-
     return customerSuppliedStock; 
-
   }
 
 	
@@ -2674,9 +2365,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCustomerSuppliedStock(Boolean newVal) {
-
     this.customerSuppliedStock = newVal;
-
   }
 	
  	
@@ -2692,9 +2381,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PaperPrice getPaperPrice(){
-
     return paperPrice; 
-
   }
 
 	
@@ -2702,9 +2389,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setPaperPrice(PaperPrice newVal) {
-
     this.paperPrice = newVal;
-
   }
 	
  	
@@ -2720,9 +2405,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public JobJDFStatus getJdfStatus(){
-
     return jdfStatus; 
-
   }
 
 	
@@ -2730,9 +2413,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setJdfStatus(JobJDFStatus newVal) {
-
     this.jdfStatus = newVal;
-
   }
 	
  	
@@ -2748,9 +2429,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public PaperCalculator getPaperCal(){
-
     return paperCal; 
-
   }
 
 	
@@ -2758,9 +2437,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setPaperCal(PaperCalculator newVal) {
-
     this.paperCal = newVal;
-
   }
 	
  	
@@ -2775,9 +2452,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrQtyOrder(){
-
     return orQtyOrder; 
-
   }
 
 	
@@ -2785,9 +2460,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrQtyOrder(Boolean newVal) {
-
     this.orQtyOrder = newVal;
-
   }
 	
  	
@@ -2802,9 +2475,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrSets(){
-
     return orSets; 
-
   }
 
 	
@@ -2812,9 +2483,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrSets(Boolean newVal) {
-
     this.orSets = newVal;
-
   }
 	
  	
@@ -2829,9 +2498,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrRuntime(){
-
     return orRuntime; 
-
   }
 
 	
@@ -2839,9 +2506,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrRuntime(Boolean newVal) {
-
     this.orRuntime = newVal;
-
   }
 	
  	
@@ -2856,9 +2521,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrSetupTime(){
-
     return orSetupTime; 
-
   }
 
 	
@@ -2866,9 +2529,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrSetupTime(Boolean newVal) {
-
     this.orSetupTime = newVal;
-
   }
 	
  	
@@ -2883,9 +2544,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrWashupTime(){
-
     return orWashupTime; 
-
   }
 
 	
@@ -2893,9 +2552,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrWashupTime(Boolean newVal) {
-
     this.orWashupTime = newVal;
-
   }
 	
  	
@@ -2910,9 +2567,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrStockUnits(){
-
     return orStockUnits; 
-
   }
 
 	
@@ -2920,9 +2575,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrStockUnits(Boolean newVal) {
-
     this.orStockUnits = newVal;
-
   }
 	
  	
@@ -2937,9 +2590,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrStockMarkup(){
-
     return orStockMarkup; 
-
   }
 
 	
@@ -2947,9 +2598,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrStockMarkup(Boolean newVal) {
-
     this.orStockMarkup = newVal;
-
   }
 	
  	
@@ -2964,9 +2613,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrStockCost(){
-
     return orStockCost; 
-
   }
 
 	
@@ -2974,9 +2621,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrStockCost(Boolean newVal) {
-
     this.orStockCost = newVal;
-
   }
 	
  	
@@ -2991,9 +2636,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrWaste(){
-
     return orWaste; 
-
   }
 
 	
@@ -3001,9 +2644,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrWaste(Boolean newVal) {
-
     this.orWaste = newVal;
-
   }
 	
  	
@@ -3018,9 +2659,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrProduction(){
-
     return orProduction; 
-
   }
 
 	
@@ -3028,9 +2667,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrProduction(Boolean newVal) {
-
     this.orProduction = newVal;
-
   }
 	
  	
@@ -3045,9 +2682,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrUnit(){
-
     return orUnit; 
-
   }
 
 	
@@ -3055,9 +2690,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrUnit(Boolean newVal) {
-
     this.orUnit = newVal;
-
   }
 	
  	
@@ -3072,9 +2705,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrPrice(){
-
     return orPrice; 
-
   }
 
 	
@@ -3082,9 +2713,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrPrice(Boolean newVal) {
-
     this.orPrice = newVal;
-
   }
 	
  	
@@ -3099,9 +2728,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrRunOut(){
-
     return orRunOut; 
-
   }
 
 	
@@ -3109,9 +2736,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrRunOut(Boolean newVal) {
-
     this.orRunOut = newVal;
-
   }
 	
  	
@@ -3126,9 +2751,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrLaborMarkup(){
-
     return orLaborMarkup; 
-
   }
 
 	
@@ -3136,9 +2759,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrLaborMarkup(Boolean newVal) {
-
     this.orLaborMarkup = newVal;
-
   }
 	
  	
@@ -3153,9 +2774,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrLaborRate(){
-
     return orLaborRate; 
-
   }
 
 	
@@ -3163,9 +2782,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrLaborRate(Boolean newVal) {
-
     this.orLaborRate = newVal;
-
   }
 	
  	
@@ -3180,9 +2797,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrAvgImpression(){
-
     return orAvgImpression; 
-
   }
 
 	
@@ -3190,9 +2805,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrAvgImpression(Boolean newVal) {
-
     this.orAvgImpression = newVal;
-
   }
 	
  	
@@ -3207,9 +2820,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrPassFront(){
-
     return orPassFront; 
-
   }
 
 	
@@ -3217,9 +2828,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrPassFront(Boolean newVal) {
-
     this.orPassFront = newVal;
-
   }
 	
  	
@@ -3234,9 +2843,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrPassBack(){
-
     return orPassBack; 
-
   }
 
 	
@@ -3244,9 +2851,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrPassBack(Boolean newVal) {
-
     this.orPassBack = newVal;
-
   }
 	
  	
@@ -3261,9 +2866,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrParentSize(){
-
     return orParentSize; 
-
   }
 
 	
@@ -3271,9 +2874,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrParentSize(Boolean newVal) {
-
     this.orParentSize = newVal;
-
   }
 	
  	
@@ -3288,9 +2889,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrBinderyWaste(){
-
     return orBinderyWaste; 
-
   }
 
 	
@@ -3298,9 +2897,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrBinderyWaste(Boolean newVal) {
-
     this.orBinderyWaste = newVal;
-
   }
 	
  	
@@ -3315,9 +2912,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrRunCuts(){
-
     return orRunCuts; 
-
   }
 
 	
@@ -3325,9 +2920,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrRunCuts(Boolean newVal) {
-
     this.orRunCuts = newVal;
-
   }
 	
  	
@@ -3342,9 +2935,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrFinishCuts(){
-
     return orFinishCuts; 
-
   }
 
 	
@@ -3352,9 +2943,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrFinishCuts(Boolean newVal) {
-
     this.orFinishCuts = newVal;
-
   }
 	
  	
@@ -3369,9 +2958,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrUp(){
-
     return orUp; 
-
   }
 
 	
@@ -3379,9 +2966,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrUp(Boolean newVal) {
-
     this.orUp = newVal;
-
   }
 	
  	
@@ -3396,9 +2981,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getOrParentOut(){
-
     return orParentOut; 
-
   }
 
 	
@@ -3406,9 +2989,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOrParentOut(Boolean newVal) {
-
     this.orParentOut = newVal;
-
   }
 	
  	
@@ -3424,9 +3005,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public InvoiceBase getParentInvoice(){
-
     return parentInvoice; 
-
   }
 
 	
@@ -3434,9 +3013,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setParentInvoice(InvoiceBase newVal) {
-
     this.parentInvoice = newVal;
-
   }
 	
  	
@@ -3451,9 +3028,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getRootChargeRecord(){
-
     return rootChargeRecord; 
-
   }
 
 	
@@ -3461,9 +3036,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setRootChargeRecord(String newVal) {
-
     this.rootChargeRecord = newVal;
-
   }
 	
  	
@@ -3480,33 +3053,24 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public java.util.List<DigitalAsset> getDigitalAssets(){
-
     return digitalAssets; 
-
   }
 
 	/**
 	 * @generated
 	 */	
 	public void addDigitalAssets(DigitalAsset obj) {
-
     if (digitalAssets == null) {
-
       digitalAssets = new java.util.ArrayList<DigitalAsset>();
-
     }
-
     digitalAssets.add(obj);
-
   }
 	
 	/**
 	 * @generated
 	 */	
 	public void setDigitalAssets(java.util.List<DigitalAsset> newVal) {
-
     this.digitalAssets = newVal;
-
   }
 	
  	
@@ -3521,9 +3085,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getTypeSettingDate(){
-
     return typeSettingDate; 
-
   }
 
 	
@@ -3531,9 +3093,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setTypeSettingDate(Date newVal) {
-
     this.typeSettingDate = newVal;
-
   }
 	
  	
@@ -3548,9 +3108,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getProofBackDate(){
-
     return proofBackDate; 
-
   }
 
 	
@@ -3558,9 +3116,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setProofBackDate(Date newVal) {
-
     this.proofBackDate = newVal;
-
   }
 	
  	
@@ -3575,9 +3131,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getBluelineDate(){
-
     return bluelineDate; 
-
   }
 
 	
@@ -3585,9 +3139,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBluelineDate(Date newVal) {
-
     this.bluelineDate = newVal;
-
   }
 	
  	
@@ -3602,9 +3154,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getBluelineBackDate(){
-
     return bluelineBackDate; 
-
   }
 
 	
@@ -3612,9 +3162,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBluelineBackDate(Date newVal) {
-
     this.bluelineBackDate = newVal;
-
   }
 	
  	
@@ -3629,9 +3177,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getStockCutDate(){
-
     return stockCutDate; 
-
   }
 
 	
@@ -3639,9 +3185,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setStockCutDate(Date newVal) {
-
     this.stockCutDate = newVal;
-
   }
 	
  	
@@ -3656,9 +3200,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getAtPressDate(){
-
     return atPressDate; 
-
   }
 
 	
@@ -3666,9 +3208,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setAtPressDate(Date newVal) {
-
     this.atPressDate = newVal;
-
   }
 	
  	
@@ -3683,9 +3223,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getPrintedDate(){
-
     return printedDate; 
-
   }
 
 	
@@ -3693,9 +3231,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setPrintedDate(Date newVal) {
-
     this.printedDate = newVal;
-
   }
 	
  	
@@ -3710,9 +3246,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getCopiedDate(){
-
     return copiedDate; 
-
   }
 
 	
@@ -3720,9 +3254,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCopiedDate(Date newVal) {
-
     this.copiedDate = newVal;
-
   }
 	
  	
@@ -3737,9 +3269,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getBinderyDate(){
-
     return binderyDate; 
-
   }
 
 	
@@ -3747,9 +3277,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBinderyDate(Date newVal) {
-
     this.binderyDate = newVal;
-
   }
 	
  	
@@ -3764,9 +3292,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getCutDate(){
-
     return cutDate; 
-
   }
 
 	
@@ -3774,9 +3300,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCutDate(Date newVal) {
-
     this.cutDate = newVal;
-
   }
 	
  	
@@ -3791,9 +3315,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getFoldedDate(){
-
     return foldedDate; 
-
   }
 
 	
@@ -3801,9 +3323,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFoldedDate(Date newVal) {
-
     this.foldedDate = newVal;
-
   }
 	
  	
@@ -3818,9 +3338,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getFinishedDate(){
-
     return finishedDate; 
-
   }
 
 	
@@ -3828,9 +3346,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFinishedDate(Date newVal) {
-
     this.finishedDate = newVal;
-
   }
 	
  	
@@ -3845,9 +3361,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getMailingDate(){
-
     return mailingDate; 
-
   }
 
 	
@@ -3855,9 +3369,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setMailingDate(Date newVal) {
-
     this.mailingDate = newVal;
-
   }
 	
  	
@@ -3872,9 +3384,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getOutsideServiceDate(){
-
     return outsideServiceDate; 
-
   }
 
 	
@@ -3882,9 +3392,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOutsideServiceDate(Date newVal) {
-
     this.outsideServiceDate = newVal;
-
   }
 	
  	
@@ -3899,9 +3407,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getOtherDate(){
-
     return otherDate; 
-
   }
 
 	
@@ -3909,9 +3415,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setOtherDate(Date newVal) {
-
     this.otherDate = newVal;
-
   }
 	
  	
@@ -3926,9 +3430,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Date getDeliveredDate(){
-
     return deliveredDate; 
-
   }
 
 	
@@ -3936,9 +3438,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setDeliveredDate(Date newVal) {
-
     this.deliveredDate = newVal;
-
   }
 	
  	
@@ -3953,9 +3453,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getUsePaperCalcUp(){
-
     return usePaperCalcUp; 
-
   }
 
 	
@@ -3963,9 +3461,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setUsePaperCalcUp(Boolean newVal) {
-
     this.usePaperCalcUp = newVal;
-
   }
 	
  	
@@ -3980,9 +3476,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Double getRollWidth(){
-
     return rollWidth; 
-
   }
 
 	
@@ -3990,9 +3484,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setRollWidth(Double newVal) {
-
     this.rollWidth = newVal;
-
   }
 	
  	
@@ -4007,9 +3499,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getDefaultJob(){
-
     return defaultJob; 
-
   }
 
 	
@@ -4017,9 +3507,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setDefaultJob(Boolean newVal) {
-
     this.defaultJob = newVal;
-
   }
 	
  	
@@ -4034,9 +3522,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getMultiQtyJob(){
-
     return multiQtyJob; 
-
   }
 
 	
@@ -4044,9 +3530,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setMultiQtyJob(Boolean newVal) {
-
     this.multiQtyJob = newVal;
-
   }
 	
  	
@@ -4061,9 +3545,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getJobGroup(){
-
     return jobGroup; 
-
   }
 
 	
@@ -4071,9 +3553,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setJobGroup(Integer newVal) {
-
     this.jobGroup = newVal;
-
   }
 	
  	
@@ -4088,9 +3568,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getBackColor1(){
-
     return backColor1; 
-
   }
 
 	
@@ -4098,9 +3576,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBackColor1(String newVal) {
-
     this.backColor1 = newVal;
-
   }
 	
  	
@@ -4115,9 +3591,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getBackColor2(){
-
     return backColor2; 
-
   }
 
 	
@@ -4125,9 +3599,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBackColor2(String newVal) {
-
     this.backColor2 = newVal;
-
   }
 	
  	
@@ -4142,9 +3614,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getBackColor3(){
-
     return backColor3; 
-
   }
 
 	
@@ -4152,9 +3622,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBackColor3(String newVal) {
-
     this.backColor3 = newVal;
-
   }
 	
  	
@@ -4169,9 +3637,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getBackColor4(){
-
     return backColor4; 
-
   }
 
 	
@@ -4179,9 +3645,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBackColor4(String newVal) {
-
     this.backColor4 = newVal;
-
   }
 	
  	
@@ -4196,9 +3660,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getBackColor5(){
-
     return backColor5; 
-
   }
 
 	
@@ -4206,9 +3668,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBackColor5(String newVal) {
-
     this.backColor5 = newVal;
-
   }
 	
  	
@@ -4223,9 +3683,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getBackColor6(){
-
     return backColor6; 
-
   }
 
 	
@@ -4233,9 +3691,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBackColor6(String newVal) {
-
     this.backColor6 = newVal;
-
   }
 	
  	
@@ -4250,9 +3706,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getBackColor7(){
-
     return backColor7; 
-
   }
 
 	
@@ -4260,9 +3714,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setBackColor7(String newVal) {
-
     this.backColor7 = newVal;
-
   }
 	
  	
@@ -4277,9 +3729,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFrontColor1(){
-
     return frontColor1; 
-
   }
 
 	
@@ -4287,9 +3737,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFrontColor1(String newVal) {
-
     this.frontColor1 = newVal;
-
   }
 	
  	
@@ -4304,9 +3752,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFrontColor2(){
-
     return frontColor2; 
-
   }
 
 	
@@ -4314,9 +3760,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFrontColor2(String newVal) {
-
     this.frontColor2 = newVal;
-
   }
 	
  	
@@ -4331,9 +3775,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFrontColor4(){
-
     return frontColor4; 
-
   }
 
 	
@@ -4341,9 +3783,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFrontColor4(String newVal) {
-
     this.frontColor4 = newVal;
-
   }
 	
  	
@@ -4358,9 +3798,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFrontColor3(){
-
     return frontColor3; 
-
   }
 
 	
@@ -4368,9 +3806,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFrontColor3(String newVal) {
-
     this.frontColor3 = newVal;
-
   }
 	
  	
@@ -4385,9 +3821,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFrontColor5(){
-
     return frontColor5; 
-
   }
 
 	
@@ -4395,9 +3829,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFrontColor5(String newVal) {
-
     this.frontColor5 = newVal;
-
   }
 	
  	
@@ -4412,9 +3844,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFrontColor6(){
-
     return frontColor6; 
-
   }
 
 	
@@ -4422,9 +3852,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFrontColor6(String newVal) {
-
     this.frontColor6 = newVal;
-
   }
 	
  	
@@ -4439,9 +3867,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public String getFrontColor7(){
-
     return frontColor7; 
-
   }
 
 	
@@ -4449,9 +3875,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setFrontColor7(String newVal) {
-
     this.frontColor7 = newVal;
-
   }
 	
  	
@@ -4466,9 +3890,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Double getRunTime(){
-
     return runTime; 
-
   }
 
 	
@@ -4476,9 +3898,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setRunTime(Double newVal) {
-
     this.runTime = newVal;
-
   }
 	
  	
@@ -4493,9 +3913,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Double getSetupTime(){
-
     return setupTime; 
-
   }
 
 	
@@ -4503,9 +3921,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setSetupTime(Double newVal) {
-
     this.setupTime = newVal;
-
   }
 	
  	
@@ -4520,9 +3936,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getReleasedToProduction(){
-
     return releasedToProduction; 
-
   }
 
 	
@@ -4530,9 +3944,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setReleasedToProduction(Boolean newVal) {
-
     this.releasedToProduction = newVal;
-
   }
 	
  	
@@ -4548,9 +3960,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public TaxTable getTaxTable(){
-
     return taxTable; 
-
   }
 
 	
@@ -4558,9 +3968,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setTaxTable(TaxTable newVal) {
-
     this.taxTable = newVal;
-
   }
 	
  	
@@ -4575,9 +3983,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getShowMultiQty(){
-
     return showMultiQty; 
-
   }
 
 	
@@ -4585,9 +3991,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setShowMultiQty(Boolean newVal) {
-
     this.showMultiQty = newVal;
-
   }
 	
  	
@@ -4602,9 +4006,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getMultiQuantity1(){
-
     return multiQuantity1; 
-
   }
 
 	
@@ -4612,9 +4014,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setMultiQuantity1(Long newVal) {
-
     this.multiQuantity1 = newVal;
-
   }
 	
  	
@@ -4629,9 +4029,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getMultiQuantity2(){
-
     return multiQuantity2; 
-
   }
 
 	
@@ -4639,9 +4037,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setMultiQuantity2(Long newVal) {
-
     this.multiQuantity2 = newVal;
-
   }
 	
  	
@@ -4656,9 +4052,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Long getMultiQuantity3(){
-
     return multiQuantity3; 
-
   }
 
 	
@@ -4666,9 +4060,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setMultiQuantity3(Long newVal) {
-
     this.multiQuantity3 = newVal;
-
   }
 	
  	
@@ -4683,9 +4075,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Double getCopyMinutes(){
-
     return copyMinutes; 
-
   }
 
 	
@@ -4693,9 +4083,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCopyMinutes(Double newVal) {
-
     this.copyMinutes = newVal;
-
   }
 	
  	
@@ -4710,9 +4098,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getCopyMinutesOverride(){
-
     return copyMinutesOverride; 
-
   }
 
 	
@@ -4720,9 +4106,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCopyMinutesOverride(Boolean newVal) {
-
     this.copyMinutesOverride = newVal;
-
   }
 	
  	
@@ -4737,9 +4121,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public BigDecimal getParentStockCost(){
-
     return parentStockCost; 
-
   }
 
 	
@@ -4747,18 +4129,14 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setParentStockCost(BigDecimal newVal) {
-
     this.parentStockCost = newVal;
-
   }
 	
 	/**
 	 * @generated
 	 */	
 	public void setParentStockCost(double newVal) {
-
     this.parentStockCost = BigDecimal.valueOf(newVal);
-
   }
  	
 	
@@ -4772,9 +4150,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getParentStockCostOverride(){
-
     return parentStockCostOverride; 
-
   }
 
 	
@@ -4782,9 +4158,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setParentStockCostOverride(Boolean newVal) {
-
     this.parentStockCostOverride = newVal;
-
   }
 	
  	
@@ -4799,9 +4173,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Integer getCostUnits(){
-
     return costUnits; 
-
   }
 
 	
@@ -4809,9 +4181,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCostUnits(Integer newVal) {
-
     this.costUnits = newVal;
-
   }
 	
  	
@@ -4826,9 +4196,7 @@ public class JobBase extends ModelBase {
 	 * @generated
  	 */
 	public Boolean getCostUnitsOverride(){
-
     return costUnitsOverride; 
-
   }
 
 	
@@ -4836,9 +4204,7 @@ public class JobBase extends ModelBase {
 	 * @generated
 	 */	
 	public void setCostUnitsOverride(Boolean newVal) {
-
     this.costUnitsOverride = newVal;
-
   }
 	
 	/**
@@ -4851,18 +4217,14 @@ public class JobBase extends ModelBase {
    * @generated
  	 */
   public Date getRunByDate(){
-
     return runByDate; 
-
   }
 
 	/**
    * @generated
    */	
   public void setRunByDate(Date newVal) {
-
     this.runByDate = newVal;
-
   }
 
 	/**
@@ -4875,18 +4237,14 @@ public class JobBase extends ModelBase {
    * @generated
  	 */
   public Date getStartByDate(){
-
     return startByDate; 
-
   }
 
 	/**
    * @generated
    */	
   public void setStartByDate(Date newVal) {
-
     this.startByDate = newVal;
-
   }
 
 	/**
@@ -4899,18 +4257,14 @@ public class JobBase extends ModelBase {
    * @generated
  	 */
   public Date getSubmittedDate(){
-
     return submittedDate; 
-
   }
 
 	/**
    * @generated
    */	
   public void setSubmittedDate(Date newVal) {
-
     this.submittedDate = newVal;
-
   }
 
 	/**
@@ -4930,9 +4284,7 @@ public class JobBase extends ModelBase {
  	 */
 
   public Date getLastUpdatedCommentDate(){
-
     return lastUpdatedCommentDate; 
-
   }
 
 	/**
@@ -4942,9 +4294,7 @@ public class JobBase extends ModelBase {
    */	
 
   public void setLastUpdatedCommentDate(Date newVal) {
-
     this.lastUpdatedCommentDate = newVal;
-
   }
 
 	/**
@@ -4953,315 +4303,160 @@ public class JobBase extends ModelBase {
 	@Transient
 	@Override
 	public Object getProperty(String propertyName) throws UnknownPropertyException {
-
     if (JOBNUMBER.equals(propertyName)) return getJobNumber();
-
     if (JOBINDEX.equals(propertyName)) return getJobIndex();
-
     if (SALESCATEGORY.equals(propertyName)) return getSalesCategory();
-
     if (PRODUCTCODE.equals(propertyName)) return getProductCode();
-
     if (CHILDREN.equals(propertyName)) return getChildren();
-
     if (CHARGES.equals(propertyName)) return getCharges();
-
     if (JOBNOTES.equals(propertyName)) return getJobNotes();
-
     if (JOBTICKETNOTES.equals(propertyName)) return getJobTicketNotes();
-
     if (BROKERED.equals(propertyName)) return getBrokered();
-
     if (TAXABLE.equals(propertyName)) return getTaxable();
-
     if (FINISHED.equals(propertyName)) return getFinished();
-
     if (LOCATION.equals(propertyName)) return getLocation();
-
     if (COMMENT.equals(propertyName)) return getComment();
-
     if (DESCRIPTION.equals(propertyName)) return getDescription();
-
     if (QTYORDERED.equals(propertyName)) return getQtyOrdered();
-
     if (OVERSUNDERS.equals(propertyName)) return getOversUnders();
-
     if (INSETSOF.equals(propertyName)) return getInSetsOf();
-
     if (INSETSOFOVERRIDE.equals(propertyName)) return getInSetsOfOverride();
-
     if (SHEETS.equals(propertyName)) return getSheets();
-
     if (NUMUP.equals(propertyName)) return getNumUp();
-
     if (NUMON.equals(propertyName)) return getNumOn();
-
     if (PRESS.equals(propertyName)) return getPress();
-
     if (BINDERYWASTE.equals(propertyName)) return getBinderyWaste();
-
     if (BINDERYWASTEOVERRIDE.equals(propertyName)) return getBinderyWasteOverride();
-
     if (ESTWASTE.equals(propertyName)) return getEstWaste();
-
     if (ESTWASTEOVERRIDE.equals(propertyName)) return getEstWasteOverride();
-
     if (SIGNATURES.equals(propertyName)) return getSignatures();
-
     if (PRICINGPRESS.equals(propertyName)) return getPricingPress();
-
     if (COSTINGPRESS.equals(propertyName)) return getCostingPress();
-
     if (RUNMETHOD.equals(propertyName)) return getRunMethod();
-
     if (WASHUPTIME.equals(propertyName)) return getWashupTime();
-
     if (STOCK.equals(propertyName)) return getStock();
-
     if (PARENTSIZE.equals(propertyName)) return getParentSize();
-
     if (RUNSIZE.equals(propertyName)) return getRunSize();
-
     if (FINISHSIZE.equals(propertyName)) return getFinishSize();
-
     if (FOLDEDSIZE.equals(propertyName)) return getFoldedSize();
-
     if (FRONTCOLORS.equals(propertyName)) return getFrontColors();
-
     if (BACKCOLORS.equals(propertyName)) return getBackColors();
-
     if (FRONTPASSES.equals(propertyName)) return getFrontPasses();
-
     if (BACKPASSES.equals(propertyName)) return getBackPasses();
-
     if (FRONTWASHES.equals(propertyName)) return getFrontWashes();
-
     if (BACKWASHES.equals(propertyName)) return getBackWashes();
-
     if (FRONTINKS.equals(propertyName)) return getFrontInks();
-
     if (BACKINKS.equals(propertyName)) return getBackInks();
-
     if (PRESSQTY.equals(propertyName)) return getPressQty();
-
     if (PRICINGRECORD.equals(propertyName)) return getPricingRecord();
-
     if (PRICINGCOPIER.equals(propertyName)) return getPricingCopier();
-
     if (COSTINGCOPIER.equals(propertyName)) return getCostingCopier();
-
     if (PRICINGMETHOD.equals(propertyName)) return getPricingMethod();
-
     if (DOUBLESIDED.equals(propertyName)) return getDoubleSided();
-
     if (SINGLESIDED.equals(propertyName)) return getSingleSided();
-
     if (COSTINGRECORD.equals(propertyName)) return getCostingRecord();
-
     if (WEIGHT.equals(propertyName)) return getWeight();
-
     if (TOTALCOPIES.equals(propertyName)) return getTotalCopies();
-
     if (NUMCOPIES.equals(propertyName)) return getNumCopies();
-
     if (NUMCOPIESOVERRIDE.equals(propertyName)) return getNumCopiesOverride();
-
     if (STOCKQTY.equals(propertyName)) return getStockQty();
-
     if (CUTOFF.equals(propertyName)) return getCutOff();
-
     if (IMPRESSIONSPERRUN.equals(propertyName)) return getImpressionsPerRun();
-
     if (TOTALIMPRESSIONS.equals(propertyName)) return getTotalImpressions();
-
     if (MARKUP.equals(propertyName)) return getMarkup();
-
     if (TOTALCOST.equals(propertyName)) return getTotalCost();
-
     if (UNITCOST.equals(propertyName)) return getUnitCost();
-
     if (NOTES.equals(propertyName)) return getNotes();
-
     if (SHOWNOTES.equals(propertyName)) return getShowNotes();
-
     if (VENDOR.equals(propertyName)) return getVendor();
-
     if (NUMBEROFLINES.equals(propertyName)) return getNumberOfLines();
-
     if (NUMBEROFINCHES.equals(propertyName)) return getNumberOfInches();
-
     if (SPECIALORDERSTOCK.equals(propertyName)) return getSpecialOrderStock();
-
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) return getCustomerSuppliedStock();
-
     if (PAPERPRICE.equals(propertyName)) return getPaperPrice();
-
     if (JDFSTATUS.equals(propertyName)) return getJdfStatus();
-
     if (PAPERCAL.equals(propertyName)) return getPaperCal();
-
     if (ORQTYORDER.equals(propertyName)) return getOrQtyOrder();
-
     if (ORSETS.equals(propertyName)) return getOrSets();
-
     if (ORRUNTIME.equals(propertyName)) return getOrRuntime();
-
     if (ORSETUPTIME.equals(propertyName)) return getOrSetupTime();
-
     if (ORWASHUPTIME.equals(propertyName)) return getOrWashupTime();
-
     if (ORSTOCKUNITS.equals(propertyName)) return getOrStockUnits();
-
     if (ORSTOCKMARKUP.equals(propertyName)) return getOrStockMarkup();
-
     if (ORSTOCKCOST.equals(propertyName)) return getOrStockCost();
-
     if (ORWASTE.equals(propertyName)) return getOrWaste();
-
     if (ORPRODUCTION.equals(propertyName)) return getOrProduction();
-
     if (ORUNIT.equals(propertyName)) return getOrUnit();
-
     if (ORPRICE.equals(propertyName)) return getOrPrice();
-
     if (ORRUNOUT.equals(propertyName)) return getOrRunOut();
-
     if (ORLABORMARKUP.equals(propertyName)) return getOrLaborMarkup();
-
     if (ORLABORRATE.equals(propertyName)) return getOrLaborRate();
-
     if (ORAVGIMPRESSION.equals(propertyName)) return getOrAvgImpression();
-
     if (ORPASSFRONT.equals(propertyName)) return getOrPassFront();
-
     if (ORPASSBACK.equals(propertyName)) return getOrPassBack();
-
     if (ORPARENTSIZE.equals(propertyName)) return getOrParentSize();
-
     if (ORBINDERYWASTE.equals(propertyName)) return getOrBinderyWaste();
-
     if (ORRUNCUTS.equals(propertyName)) return getOrRunCuts();
-
     if (ORFINISHCUTS.equals(propertyName)) return getOrFinishCuts();
-
     if (ORUP.equals(propertyName)) return getOrUp();
-
     if (ORPARENTOUT.equals(propertyName)) return getOrParentOut();
-
     if (PARENTINVOICE.equals(propertyName)) return getParentInvoice();
-
     if (ROOTCHARGERECORD.equals(propertyName)) return getRootChargeRecord();
-
     if (DIGITALASSETS.equals(propertyName)) return getDigitalAssets();
-
     if (TYPESETTINGDATE.equals(propertyName)) return getTypeSettingDate();
-
     if (PROOFBACKDATE.equals(propertyName)) return getProofBackDate();
-
     if (BLUELINEDATE.equals(propertyName)) return getBluelineDate();
-
     if (BLUELINEBACKDATE.equals(propertyName)) return getBluelineBackDate();
-
     if (STOCKCUTDATE.equals(propertyName)) return getStockCutDate();
-
     if (ATPRESSDATE.equals(propertyName)) return getAtPressDate();
-
     if (PRINTEDDATE.equals(propertyName)) return getPrintedDate();
-
     if (COPIEDDATE.equals(propertyName)) return getCopiedDate();
-
     if (BINDERYDATE.equals(propertyName)) return getBinderyDate();
-
     if (CUTDATE.equals(propertyName)) return getCutDate();
-
     if (FOLDEDDATE.equals(propertyName)) return getFoldedDate();
-
     if (FINISHEDDATE.equals(propertyName)) return getFinishedDate();
-
     if (MAILINGDATE.equals(propertyName)) return getMailingDate();
-
     if (OUTSIDESERVICEDATE.equals(propertyName)) return getOutsideServiceDate();
-
     if (OTHERDATE.equals(propertyName)) return getOtherDate();
-
     if (DELIVEREDDATE.equals(propertyName)) return getDeliveredDate();
-
     if (USEPAPERCALCUP.equals(propertyName)) return getUsePaperCalcUp();
-
     if (ROLLWIDTH.equals(propertyName)) return getRollWidth();
-
     if (DEFAULTJOB.equals(propertyName)) return getDefaultJob();
-
     if (MULTIQTYJOB.equals(propertyName)) return getMultiQtyJob();
-
     if (JOBGROUP.equals(propertyName)) return getJobGroup();
-
     if (BACKCOLOR1.equals(propertyName)) return getBackColor1();
-
     if (BACKCOLOR2.equals(propertyName)) return getBackColor2();
-
     if (BACKCOLOR3.equals(propertyName)) return getBackColor3();
-
     if (BACKCOLOR4.equals(propertyName)) return getBackColor4();
-
     if (BACKCOLOR5.equals(propertyName)) return getBackColor5();
-
     if (BACKCOLOR6.equals(propertyName)) return getBackColor6();
-
     if (BACKCOLOR7.equals(propertyName)) return getBackColor7();
-
     if (FRONTCOLOR1.equals(propertyName)) return getFrontColor1();
-
     if (FRONTCOLOR2.equals(propertyName)) return getFrontColor2();
-
     if (FRONTCOLOR4.equals(propertyName)) return getFrontColor4();
-
     if (FRONTCOLOR3.equals(propertyName)) return getFrontColor3();
-
     if (FRONTCOLOR5.equals(propertyName)) return getFrontColor5();
-
     if (FRONTCOLOR6.equals(propertyName)) return getFrontColor6();
-
     if (FRONTCOLOR7.equals(propertyName)) return getFrontColor7();
-
     if (RUNTIME.equals(propertyName)) return getRunTime();
-
     if (SETUPTIME.equals(propertyName)) return getSetupTime();
-
     if (RELEASEDTOPRODUCTION.equals(propertyName)) return getReleasedToProduction();
-
     if (TAXTABLE.equals(propertyName)) return getTaxTable();
-
     if (SHOWMULTIQTY.equals(propertyName)) return getShowMultiQty();
-
     if (MULTIQUANTITY1.equals(propertyName)) return getMultiQuantity1();
-
     if (MULTIQUANTITY2.equals(propertyName)) return getMultiQuantity2();
-
     if (MULTIQUANTITY3.equals(propertyName)) return getMultiQuantity3();
-
     if (COPYMINUTES.equals(propertyName)) return getCopyMinutes();
-
     if (COPYMINUTESOVERRIDE.equals(propertyName)) return getCopyMinutesOverride();
-
     if (PARENTSTOCKCOST.equals(propertyName)) return getParentStockCost();
-
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) return getParentStockCostOverride();
-
     if (COSTUNITS.equals(propertyName)) return getCostUnits();
-
     if (COSTUNITSOVERRIDE.equals(propertyName)) return getCostUnitsOverride();
-
     if (RUNBYDATE.equals(propertyName)) return getRunByDate();
-
     if (STARTBYDATE.equals(propertyName)) return getStartByDate();
-
     if (SUBMITTEDDATE.equals(propertyName)) return getSubmittedDate();
-
     if (LASTUPDATEDCOMMENTDATE.equals(propertyName)) return getLastUpdatedCommentDate();
-
     return super.getProperty(propertyName);
-
   }
 	
 	/**
@@ -5270,315 +4465,160 @@ public class JobBase extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-
     if (JOBNUMBER.equals(propertyName)) setJobNumber((String)newValue); else
-
     if (JOBINDEX.equals(propertyName)) setJobIndex((Long)newValue); else
-
     if (SALESCATEGORY.equals(propertyName)) setSalesCategory((SalesCategory)newValue); else
-
     if (PRODUCTCODE.equals(propertyName)) setProductCode((ProductCode)newValue); else
-
     if (CHILDREN.equals(propertyName)) setChildren((java.util.List<JobBase>)newValue); else
-
     if (CHARGES.equals(propertyName)) setCharges((java.util.List<Charge>)newValue); else
-
     if (JOBNOTES.equals(propertyName)) setJobNotes((String)newValue); else
-
     if (JOBTICKETNOTES.equals(propertyName)) setJobTicketNotes((Boolean)newValue); else
-
     if (BROKERED.equals(propertyName)) setBrokered((Boolean)newValue); else
-
     if (TAXABLE.equals(propertyName)) setTaxable((Boolean)newValue); else
-
     if (FINISHED.equals(propertyName)) setFinished((Boolean)newValue); else
-
     if (LOCATION.equals(propertyName)) setLocation((ProductionLocations)newValue); else
-
     if (COMMENT.equals(propertyName)) setComment((String)newValue); else
-
     if (DESCRIPTION.equals(propertyName)) setDescription((String)newValue); else
-
     if (QTYORDERED.equals(propertyName)) setQtyOrdered((Long)newValue); else
-
     if (OVERSUNDERS.equals(propertyName)) setOversUnders((Long)newValue); else
-
     if (INSETSOF.equals(propertyName)) setInSetsOf((Long)newValue); else
-
     if (INSETSOFOVERRIDE.equals(propertyName)) setInSetsOfOverride((Boolean)newValue); else
-
     if (SHEETS.equals(propertyName)) setSheets((Long)newValue); else
-
     if (NUMUP.equals(propertyName)) setNumUp((Long)newValue); else
-
     if (NUMON.equals(propertyName)) setNumOn((Long)newValue); else
-
     if (PRESS.equals(propertyName)) setPress((PressDefinition)newValue); else
-
     if (BINDERYWASTE.equals(propertyName)) setBinderyWaste((Long)newValue); else
-
     if (BINDERYWASTEOVERRIDE.equals(propertyName)) setBinderyWasteOverride((Boolean)newValue); else
-
     if (ESTWASTE.equals(propertyName)) setEstWaste((Long)newValue); else
-
     if (ESTWASTEOVERRIDE.equals(propertyName)) setEstWasteOverride((Boolean)newValue); else
-
     if (SIGNATURES.equals(propertyName)) setSignatures((Long)newValue); else
-
     if (PRICINGPRESS.equals(propertyName)) setPricingPress((PressDefinition)newValue); else
-
     if (COSTINGPRESS.equals(propertyName)) setCostingPress((PressDefinition)newValue); else
-
     if (RUNMETHOD.equals(propertyName)) setRunMethod((String)newValue); else
-
     if (WASHUPTIME.equals(propertyName)) setWashupTime((Double)newValue); else
-
     if (STOCK.equals(propertyName)) setStock((StockDefinition)newValue); else
-
     if (PARENTSIZE.equals(propertyName)) setParentSize((Dimension)newValue); else
-
     if (RUNSIZE.equals(propertyName)) setRunSize((Dimension)newValue); else
-
     if (FINISHSIZE.equals(propertyName)) setFinishSize((Dimension)newValue); else
-
     if (FOLDEDSIZE.equals(propertyName)) setFoldedSize((Dimension)newValue); else
-
     if (FRONTCOLORS.equals(propertyName)) setFrontColors((Integer)newValue); else
-
     if (BACKCOLORS.equals(propertyName)) setBackColors((Integer)newValue); else
-
     if (FRONTPASSES.equals(propertyName)) setFrontPasses((Integer)newValue); else
-
     if (BACKPASSES.equals(propertyName)) setBackPasses((Integer)newValue); else
-
     if (FRONTWASHES.equals(propertyName)) setFrontWashes((Integer)newValue); else
-
     if (BACKWASHES.equals(propertyName)) setBackWashes((Integer)newValue); else
-
     if (FRONTINKS.equals(propertyName)) setFrontInks((java.util.List<InkColor>)newValue); else
-
     if (BACKINKS.equals(propertyName)) setBackInks((java.util.List<InkColor>)newValue); else
-
     if (PRESSQTY.equals(propertyName)) setPressQty((Long)newValue); else
-
     if (PRICINGRECORD.equals(propertyName)) setPricingRecord((PricingRecord)newValue); else
-
     if (PRICINGCOPIER.equals(propertyName)) setPricingCopier((CopierDefinition)newValue); else
-
     if (COSTINGCOPIER.equals(propertyName)) setCostingCopier((CopierDefinition)newValue); else
-
     if (PRICINGMETHOD.equals(propertyName)) setPricingMethod((PreferencesPricingMethod)newValue); else
-
     if (DOUBLESIDED.equals(propertyName)) setDoubleSided((Boolean)newValue); else
-
     if (SINGLESIDED.equals(propertyName)) setSingleSided((Boolean)newValue); else
-
     if (COSTINGRECORD.equals(propertyName)) setCostingRecord((CostingRecord)newValue); else
-
     if (WEIGHT.equals(propertyName)) setWeight((Double)newValue); else
-
     if (TOTALCOPIES.equals(propertyName)) setTotalCopies((Long)newValue); else
-
     if (NUMCOPIES.equals(propertyName)) setNumCopies((Long)newValue); else
-
     if (NUMCOPIESOVERRIDE.equals(propertyName)) setNumCopiesOverride((Boolean)newValue); else
-
     if (STOCKQTY.equals(propertyName)) setStockQty((Long)newValue); else
-
     if (CUTOFF.equals(propertyName)) setCutOff((Double)newValue); else
-
     if (IMPRESSIONSPERRUN.equals(propertyName)) setImpressionsPerRun((Long)newValue); else
-
     if (TOTALIMPRESSIONS.equals(propertyName)) setTotalImpressions((Long)newValue); else
-
     if (MARKUP.equals(propertyName)) setMarkup((Double)newValue); else
-
     if (TOTALCOST.equals(propertyName)) setTotalCost((BigDecimal)newValue); else
-
     if (UNITCOST.equals(propertyName)) setUnitCost((BigDecimal)newValue); else
-
     if (NOTES.equals(propertyName)) setNotes((String)newValue); else
-
     if (SHOWNOTES.equals(propertyName)) setShowNotes((Boolean)newValue); else
-
     if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
-
     if (NUMBEROFLINES.equals(propertyName)) setNumberOfLines((Long)newValue); else
-
     if (NUMBEROFINCHES.equals(propertyName)) setNumberOfInches((Long)newValue); else
-
     if (SPECIALORDERSTOCK.equals(propertyName)) setSpecialOrderStock((Boolean)newValue); else
-
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) setCustomerSuppliedStock((Boolean)newValue); else
-
     if (PAPERPRICE.equals(propertyName)) setPaperPrice((PaperPrice)newValue); else
-
     if (JDFSTATUS.equals(propertyName)) setJdfStatus((JobJDFStatus)newValue); else
-
     if (PAPERCAL.equals(propertyName)) setPaperCal((PaperCalculator)newValue); else
-
     if (ORQTYORDER.equals(propertyName)) setOrQtyOrder((Boolean)newValue); else
-
     if (ORSETS.equals(propertyName)) setOrSets((Boolean)newValue); else
-
     if (ORRUNTIME.equals(propertyName)) setOrRuntime((Boolean)newValue); else
-
     if (ORSETUPTIME.equals(propertyName)) setOrSetupTime((Boolean)newValue); else
-
     if (ORWASHUPTIME.equals(propertyName)) setOrWashupTime((Boolean)newValue); else
-
     if (ORSTOCKUNITS.equals(propertyName)) setOrStockUnits((Boolean)newValue); else
-
     if (ORSTOCKMARKUP.equals(propertyName)) setOrStockMarkup((Boolean)newValue); else
-
     if (ORSTOCKCOST.equals(propertyName)) setOrStockCost((Boolean)newValue); else
-
     if (ORWASTE.equals(propertyName)) setOrWaste((Boolean)newValue); else
-
     if (ORPRODUCTION.equals(propertyName)) setOrProduction((Boolean)newValue); else
-
     if (ORUNIT.equals(propertyName)) setOrUnit((Boolean)newValue); else
-
     if (ORPRICE.equals(propertyName)) setOrPrice((Boolean)newValue); else
-
     if (ORRUNOUT.equals(propertyName)) setOrRunOut((Boolean)newValue); else
-
     if (ORLABORMARKUP.equals(propertyName)) setOrLaborMarkup((Boolean)newValue); else
-
     if (ORLABORRATE.equals(propertyName)) setOrLaborRate((Boolean)newValue); else
-
     if (ORAVGIMPRESSION.equals(propertyName)) setOrAvgImpression((Boolean)newValue); else
-
     if (ORPASSFRONT.equals(propertyName)) setOrPassFront((Boolean)newValue); else
-
     if (ORPASSBACK.equals(propertyName)) setOrPassBack((Boolean)newValue); else
-
     if (ORPARENTSIZE.equals(propertyName)) setOrParentSize((Boolean)newValue); else
-
     if (ORBINDERYWASTE.equals(propertyName)) setOrBinderyWaste((Boolean)newValue); else
-
     if (ORRUNCUTS.equals(propertyName)) setOrRunCuts((Boolean)newValue); else
-
     if (ORFINISHCUTS.equals(propertyName)) setOrFinishCuts((Boolean)newValue); else
-
     if (ORUP.equals(propertyName)) setOrUp((Boolean)newValue); else
-
     if (ORPARENTOUT.equals(propertyName)) setOrParentOut((Boolean)newValue); else
-
     if (PARENTINVOICE.equals(propertyName)) setParentInvoice((InvoiceBase)newValue); else
-
     if (ROOTCHARGERECORD.equals(propertyName)) setRootChargeRecord((String)newValue); else
-
     if (DIGITALASSETS.equals(propertyName)) setDigitalAssets((java.util.List<DigitalAsset>)newValue); else
-
     if (TYPESETTINGDATE.equals(propertyName)) setTypeSettingDate((Date)newValue); else
-
     if (PROOFBACKDATE.equals(propertyName)) setProofBackDate((Date)newValue); else
-
     if (BLUELINEDATE.equals(propertyName)) setBluelineDate((Date)newValue); else
-
     if (BLUELINEBACKDATE.equals(propertyName)) setBluelineBackDate((Date)newValue); else
-
     if (STOCKCUTDATE.equals(propertyName)) setStockCutDate((Date)newValue); else
-
     if (ATPRESSDATE.equals(propertyName)) setAtPressDate((Date)newValue); else
-
     if (PRINTEDDATE.equals(propertyName)) setPrintedDate((Date)newValue); else
-
     if (COPIEDDATE.equals(propertyName)) setCopiedDate((Date)newValue); else
-
     if (BINDERYDATE.equals(propertyName)) setBinderyDate((Date)newValue); else
-
     if (CUTDATE.equals(propertyName)) setCutDate((Date)newValue); else
-
     if (FOLDEDDATE.equals(propertyName)) setFoldedDate((Date)newValue); else
-
     if (FINISHEDDATE.equals(propertyName)) setFinishedDate((Date)newValue); else
-
     if (MAILINGDATE.equals(propertyName)) setMailingDate((Date)newValue); else
-
     if (OUTSIDESERVICEDATE.equals(propertyName)) setOutsideServiceDate((Date)newValue); else
-
     if (OTHERDATE.equals(propertyName)) setOtherDate((Date)newValue); else
-
     if (DELIVEREDDATE.equals(propertyName)) setDeliveredDate((Date)newValue); else
-
     if (USEPAPERCALCUP.equals(propertyName)) setUsePaperCalcUp((Boolean)newValue); else
-
     if (ROLLWIDTH.equals(propertyName)) setRollWidth((Double)newValue); else
-
     if (DEFAULTJOB.equals(propertyName)) setDefaultJob((Boolean)newValue); else
-
     if (MULTIQTYJOB.equals(propertyName)) setMultiQtyJob((Boolean)newValue); else
-
     if (JOBGROUP.equals(propertyName)) setJobGroup((Integer)newValue); else
-
     if (BACKCOLOR1.equals(propertyName)) setBackColor1((String)newValue); else
-
     if (BACKCOLOR2.equals(propertyName)) setBackColor2((String)newValue); else
-
     if (BACKCOLOR3.equals(propertyName)) setBackColor3((String)newValue); else
-
     if (BACKCOLOR4.equals(propertyName)) setBackColor4((String)newValue); else
-
     if (BACKCOLOR5.equals(propertyName)) setBackColor5((String)newValue); else
-
     if (BACKCOLOR6.equals(propertyName)) setBackColor6((String)newValue); else
-
     if (BACKCOLOR7.equals(propertyName)) setBackColor7((String)newValue); else
-
     if (FRONTCOLOR1.equals(propertyName)) setFrontColor1((String)newValue); else
-
     if (FRONTCOLOR2.equals(propertyName)) setFrontColor2((String)newValue); else
-
     if (FRONTCOLOR4.equals(propertyName)) setFrontColor4((String)newValue); else
-
     if (FRONTCOLOR3.equals(propertyName)) setFrontColor3((String)newValue); else
-
     if (FRONTCOLOR5.equals(propertyName)) setFrontColor5((String)newValue); else
-
     if (FRONTCOLOR6.equals(propertyName)) setFrontColor6((String)newValue); else
-
     if (FRONTCOLOR7.equals(propertyName)) setFrontColor7((String)newValue); else
-
     if (RUNTIME.equals(propertyName)) setRunTime((Double)newValue); else
-
     if (SETUPTIME.equals(propertyName)) setSetupTime((Double)newValue); else
-
     if (RELEASEDTOPRODUCTION.equals(propertyName)) setReleasedToProduction((Boolean)newValue); else
-
     if (TAXTABLE.equals(propertyName)) setTaxTable((TaxTable)newValue); else
-
     if (SHOWMULTIQTY.equals(propertyName)) setShowMultiQty((Boolean)newValue); else
-
     if (MULTIQUANTITY1.equals(propertyName)) setMultiQuantity1((Long)newValue); else
-
     if (MULTIQUANTITY2.equals(propertyName)) setMultiQuantity2((Long)newValue); else
-
     if (MULTIQUANTITY3.equals(propertyName)) setMultiQuantity3((Long)newValue); else
-
     if (COPYMINUTES.equals(propertyName)) setCopyMinutes((Double)newValue); else
-
     if (COPYMINUTESOVERRIDE.equals(propertyName)) setCopyMinutesOverride((Boolean)newValue); else
-
     if (PARENTSTOCKCOST.equals(propertyName)) setParentStockCost((BigDecimal)newValue); else
-
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) setParentStockCostOverride((Boolean)newValue); else
-
     if (COSTUNITS.equals(propertyName)) setCostUnits((Integer)newValue); else
-
     if (COSTUNITSOVERRIDE.equals(propertyName)) setCostUnitsOverride((Boolean)newValue); else
-
     if (RUNBYDATE.equals(propertyName)) setRunByDate((Date)newValue); else
-
     if (STARTBYDATE.equals(propertyName)) setStartByDate((Date)newValue); else
-
     if (SUBMITTEDDATE.equals(propertyName)) setSubmittedDate((Date)newValue); else
-
     if (LASTUPDATEDCOMMENTDATE.equals(propertyName)) setLastUpdatedCommentDate((Date)newValue); else
-
     super.setProperty(propertyName, newValue);
-
   }
 	
 	/**
@@ -5587,621 +4627,313 @@ public class JobBase extends ModelBase {
 	@Transient
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
-
     if (JOBNUMBER.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (JOBINDEX.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (SALESCATEGORY.equals(propertyName)) 
-
       return new Class<?>[] {SalesCategory.class};		
-
     if (PRODUCTCODE.equals(propertyName)) 
-
       return new Class<?>[] {ProductCode.class};		
-
     if (CHILDREN.equals(propertyName)) 
-
       return new Class<?>[] {java.util.List.class, JobBase.class};		
-
     if (CHARGES.equals(propertyName)) 
-
       return new Class<?>[] {java.util.List.class, Charge.class};		
-
     if (JOBNOTES.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (JOBTICKETNOTES.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (BROKERED.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (TAXABLE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (FINISHED.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (LOCATION.equals(propertyName)) 
-
       return new Class<?>[] {ProductionLocations.class};		
-
     if (COMMENT.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (DESCRIPTION.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (QTYORDERED.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (OVERSUNDERS.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (INSETSOF.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (INSETSOFOVERRIDE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (SHEETS.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (NUMUP.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (NUMON.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (PRESS.equals(propertyName)) 
-
       return new Class<?>[] {PressDefinition.class};		
-
     if (BINDERYWASTE.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (BINDERYWASTEOVERRIDE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ESTWASTE.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (ESTWASTEOVERRIDE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (SIGNATURES.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (PRICINGPRESS.equals(propertyName)) 
-
       return new Class<?>[] {PressDefinition.class};		
-
     if (COSTINGPRESS.equals(propertyName)) 
-
       return new Class<?>[] {PressDefinition.class};		
-
     if (RUNMETHOD.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (WASHUPTIME.equals(propertyName)) 
-
       return new Class<?>[] {Double.class};		
-
     if (STOCK.equals(propertyName)) 
-
       return new Class<?>[] {StockDefinition.class};		
-
     if (PARENTSIZE.equals(propertyName)) 
-
       return new Class<?>[] {Dimension.class};		
-
     if (RUNSIZE.equals(propertyName)) 
-
       return new Class<?>[] {Dimension.class};		
-
     if (FINISHSIZE.equals(propertyName)) 
-
       return new Class<?>[] {Dimension.class};		
-
     if (FOLDEDSIZE.equals(propertyName)) 
-
       return new Class<?>[] {Dimension.class};		
-
     if (FRONTCOLORS.equals(propertyName)) 
-
       return new Class<?>[] {Integer.class};		
-
     if (BACKCOLORS.equals(propertyName)) 
-
       return new Class<?>[] {Integer.class};		
-
     if (FRONTPASSES.equals(propertyName)) 
-
       return new Class<?>[] {Integer.class};		
-
     if (BACKPASSES.equals(propertyName)) 
-
       return new Class<?>[] {Integer.class};		
-
     if (FRONTWASHES.equals(propertyName)) 
-
       return new Class<?>[] {Integer.class};		
-
     if (BACKWASHES.equals(propertyName)) 
-
       return new Class<?>[] {Integer.class};		
-
     if (FRONTINKS.equals(propertyName)) 
-
       return new Class<?>[] {java.util.List.class, InkColor.class};		
-
     if (BACKINKS.equals(propertyName)) 
-
       return new Class<?>[] {java.util.List.class, InkColor.class};		
-
     if (PRESSQTY.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (PRICINGRECORD.equals(propertyName)) 
-
       return new Class<?>[] {PricingRecord.class};		
-
     if (PRICINGCOPIER.equals(propertyName)) 
-
       return new Class<?>[] {CopierDefinition.class};		
-
     if (COSTINGCOPIER.equals(propertyName)) 
-
       return new Class<?>[] {CopierDefinition.class};		
-
     if (PRICINGMETHOD.equals(propertyName)) 
-
       return new Class<?>[] {PreferencesPricingMethod.class};		
-
     if (DOUBLESIDED.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (SINGLESIDED.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (COSTINGRECORD.equals(propertyName)) 
-
       return new Class<?>[] {CostingRecord.class};		
-
     if (WEIGHT.equals(propertyName)) 
-
       return new Class<?>[] {Double.class};		
-
     if (TOTALCOPIES.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (NUMCOPIES.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (NUMCOPIESOVERRIDE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (STOCKQTY.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (CUTOFF.equals(propertyName)) 
-
       return new Class<?>[] {Double.class};		
-
     if (IMPRESSIONSPERRUN.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (TOTALIMPRESSIONS.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (MARKUP.equals(propertyName)) 
-
       return new Class<?>[] {Double.class};		
-
     if (TOTALCOST.equals(propertyName)) 
-
       return new Class<?>[] {BigDecimal.class};		
-
     if (UNITCOST.equals(propertyName)) 
-
       return new Class<?>[] {BigDecimal.class};		
-
     if (NOTES.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (SHOWNOTES.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (VENDOR.equals(propertyName)) 
-
       return new Class<?>[] {Vendor.class};		
-
     if (NUMBEROFLINES.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (NUMBEROFINCHES.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (SPECIALORDERSTOCK.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (PAPERPRICE.equals(propertyName)) 
-
       return new Class<?>[] {PaperPrice.class};		
-
     if (JDFSTATUS.equals(propertyName)) 
-
       return new Class<?>[] {JobJDFStatus.class};		
-
     if (PAPERCAL.equals(propertyName)) 
-
       return new Class<?>[] {PaperCalculator.class};		
-
     if (ORQTYORDER.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORSETS.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORRUNTIME.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORSETUPTIME.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORWASHUPTIME.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORSTOCKUNITS.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORSTOCKMARKUP.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORSTOCKCOST.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORWASTE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORPRODUCTION.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORUNIT.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORPRICE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORRUNOUT.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORLABORMARKUP.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORLABORRATE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORAVGIMPRESSION.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORPASSFRONT.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORPASSBACK.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORPARENTSIZE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORBINDERYWASTE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORRUNCUTS.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORFINISHCUTS.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORUP.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ORPARENTOUT.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (PARENTINVOICE.equals(propertyName)) 
-
       return new Class<?>[] {InvoiceBase.class};		
-
     if (ROOTCHARGERECORD.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (DIGITALASSETS.equals(propertyName)) 
-
       return new Class<?>[] {java.util.List.class, DigitalAsset.class};		
-
     if (TYPESETTINGDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (PROOFBACKDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (BLUELINEDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (BLUELINEBACKDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (STOCKCUTDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (ATPRESSDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (PRINTEDDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (COPIEDDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (BINDERYDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (CUTDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (FOLDEDDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (FINISHEDDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (MAILINGDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (OUTSIDESERVICEDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (OTHERDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (DELIVEREDDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (USEPAPERCALCUP.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (ROLLWIDTH.equals(propertyName)) 
-
       return new Class<?>[] {Double.class};		
-
     if (DEFAULTJOB.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (MULTIQTYJOB.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (JOBGROUP.equals(propertyName)) 
-
       return new Class<?>[] {Integer.class};		
-
     if (BACKCOLOR1.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (BACKCOLOR2.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (BACKCOLOR3.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (BACKCOLOR4.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (BACKCOLOR5.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (BACKCOLOR6.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (BACKCOLOR7.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (FRONTCOLOR1.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (FRONTCOLOR2.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (FRONTCOLOR4.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (FRONTCOLOR3.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (FRONTCOLOR5.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (FRONTCOLOR6.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (FRONTCOLOR7.equals(propertyName)) 
-
       return new Class<?>[] {String.class};		
-
     if (RUNTIME.equals(propertyName)) 
-
       return new Class<?>[] {Double.class};		
-
     if (SETUPTIME.equals(propertyName)) 
-
       return new Class<?>[] {Double.class};		
-
     if (RELEASEDTOPRODUCTION.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (TAXTABLE.equals(propertyName)) 
-
       return new Class<?>[] {TaxTable.class};		
-
     if (SHOWMULTIQTY.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (MULTIQUANTITY1.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (MULTIQUANTITY2.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (MULTIQUANTITY3.equals(propertyName)) 
-
       return new Class<?>[] {Long.class};		
-
     if (COPYMINUTES.equals(propertyName)) 
-
       return new Class<?>[] {Double.class};		
-
     if (COPYMINUTESOVERRIDE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (PARENTSTOCKCOST.equals(propertyName)) 
-
       return new Class<?>[] {BigDecimal.class};		
-
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (COSTUNITS.equals(propertyName)) 
-
       return new Class<?>[] {Integer.class};		
-
     if (COSTUNITSOVERRIDE.equals(propertyName)) 
-
       return new Class<?>[] {Boolean.class};		
-
     if (RUNBYDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (STARTBYDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (SUBMITTEDDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     if (LASTUPDATEDCOMMENTDATE.equals(propertyName)) 
-
       return new Class<?>[] {Date.class};		
-
     return super.getPropertyClass(propertyName);
-
   }
 	
 
@@ -6211,315 +4943,160 @@ public class JobBase extends ModelBase {
 	@Transient
 	@Override
 	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
-
     if (JOBNUMBER.equals(propertyName)) return JobBase.class;
-
     if (JOBINDEX.equals(propertyName)) return JobBase.class;
-
     if (SALESCATEGORY.equals(propertyName)) return JobBase.class;
-
     if (PRODUCTCODE.equals(propertyName)) return JobBase.class;
-
     if (CHILDREN.equals(propertyName)) return JobBase.class;
-
     if (CHARGES.equals(propertyName)) return JobBase.class;
-
     if (JOBNOTES.equals(propertyName)) return JobBase.class;
-
     if (JOBTICKETNOTES.equals(propertyName)) return JobBase.class;
-
     if (BROKERED.equals(propertyName)) return JobBase.class;
-
     if (TAXABLE.equals(propertyName)) return JobBase.class;
-
     if (FINISHED.equals(propertyName)) return JobBase.class;
-
     if (LOCATION.equals(propertyName)) return JobBase.class;
-
     if (COMMENT.equals(propertyName)) return JobBase.class;
-
     if (DESCRIPTION.equals(propertyName)) return JobBase.class;
-
     if (QTYORDERED.equals(propertyName)) return JobBase.class;
-
     if (OVERSUNDERS.equals(propertyName)) return JobBase.class;
-
     if (INSETSOF.equals(propertyName)) return JobBase.class;
-
     if (INSETSOFOVERRIDE.equals(propertyName)) return JobBase.class;
-
     if (SHEETS.equals(propertyName)) return JobBase.class;
-
     if (NUMUP.equals(propertyName)) return JobBase.class;
-
     if (NUMON.equals(propertyName)) return JobBase.class;
-
     if (PRESS.equals(propertyName)) return JobBase.class;
-
     if (BINDERYWASTE.equals(propertyName)) return JobBase.class;
-
     if (BINDERYWASTEOVERRIDE.equals(propertyName)) return JobBase.class;
-
     if (ESTWASTE.equals(propertyName)) return JobBase.class;
-
     if (ESTWASTEOVERRIDE.equals(propertyName)) return JobBase.class;
-
     if (SIGNATURES.equals(propertyName)) return JobBase.class;
-
     if (PRICINGPRESS.equals(propertyName)) return JobBase.class;
-
     if (COSTINGPRESS.equals(propertyName)) return JobBase.class;
-
     if (RUNMETHOD.equals(propertyName)) return JobBase.class;
-
     if (WASHUPTIME.equals(propertyName)) return JobBase.class;
-
     if (STOCK.equals(propertyName)) return JobBase.class;
-
     if (PARENTSIZE.equals(propertyName)) return JobBase.class;
-
     if (RUNSIZE.equals(propertyName)) return JobBase.class;
-
     if (FINISHSIZE.equals(propertyName)) return JobBase.class;
-
     if (FOLDEDSIZE.equals(propertyName)) return JobBase.class;
-
     if (FRONTCOLORS.equals(propertyName)) return JobBase.class;
-
     if (BACKCOLORS.equals(propertyName)) return JobBase.class;
-
     if (FRONTPASSES.equals(propertyName)) return JobBase.class;
-
     if (BACKPASSES.equals(propertyName)) return JobBase.class;
-
     if (FRONTWASHES.equals(propertyName)) return JobBase.class;
-
     if (BACKWASHES.equals(propertyName)) return JobBase.class;
-
     if (FRONTINKS.equals(propertyName)) return JobBase.class;
-
     if (BACKINKS.equals(propertyName)) return JobBase.class;
-
     if (PRESSQTY.equals(propertyName)) return JobBase.class;
-
     if (PRICINGRECORD.equals(propertyName)) return JobBase.class;
-
     if (PRICINGCOPIER.equals(propertyName)) return JobBase.class;
-
     if (COSTINGCOPIER.equals(propertyName)) return JobBase.class;
-
     if (PRICINGMETHOD.equals(propertyName)) return JobBase.class;
-
     if (DOUBLESIDED.equals(propertyName)) return JobBase.class;
-
     if (SINGLESIDED.equals(propertyName)) return JobBase.class;
-
     if (COSTINGRECORD.equals(propertyName)) return JobBase.class;
-
     if (WEIGHT.equals(propertyName)) return JobBase.class;
-
     if (TOTALCOPIES.equals(propertyName)) return JobBase.class;
-
     if (NUMCOPIES.equals(propertyName)) return JobBase.class;
-
     if (NUMCOPIESOVERRIDE.equals(propertyName)) return JobBase.class;
-
     if (STOCKQTY.equals(propertyName)) return JobBase.class;
-
     if (CUTOFF.equals(propertyName)) return JobBase.class;
-
     if (IMPRESSIONSPERRUN.equals(propertyName)) return JobBase.class;
-
     if (TOTALIMPRESSIONS.equals(propertyName)) return JobBase.class;
-
     if (MARKUP.equals(propertyName)) return JobBase.class;
-
     if (TOTALCOST.equals(propertyName)) return JobBase.class;
-
     if (UNITCOST.equals(propertyName)) return JobBase.class;
-
     if (NOTES.equals(propertyName)) return JobBase.class;
-
     if (SHOWNOTES.equals(propertyName)) return JobBase.class;
-
     if (VENDOR.equals(propertyName)) return JobBase.class;
-
     if (NUMBEROFLINES.equals(propertyName)) return JobBase.class;
-
     if (NUMBEROFINCHES.equals(propertyName)) return JobBase.class;
-
     if (SPECIALORDERSTOCK.equals(propertyName)) return JobBase.class;
-
     if (CUSTOMERSUPPLIEDSTOCK.equals(propertyName)) return JobBase.class;
-
     if (PAPERPRICE.equals(propertyName)) return JobBase.class;
-
     if (JDFSTATUS.equals(propertyName)) return JobBase.class;
-
     if (PAPERCAL.equals(propertyName)) return JobBase.class;
-
     if (ORQTYORDER.equals(propertyName)) return JobBase.class;
-
     if (ORSETS.equals(propertyName)) return JobBase.class;
-
     if (ORRUNTIME.equals(propertyName)) return JobBase.class;
-
     if (ORSETUPTIME.equals(propertyName)) return JobBase.class;
-
     if (ORWASHUPTIME.equals(propertyName)) return JobBase.class;
-
     if (ORSTOCKUNITS.equals(propertyName)) return JobBase.class;
-
     if (ORSTOCKMARKUP.equals(propertyName)) return JobBase.class;
-
     if (ORSTOCKCOST.equals(propertyName)) return JobBase.class;
-
     if (ORWASTE.equals(propertyName)) return JobBase.class;
-
     if (ORPRODUCTION.equals(propertyName)) return JobBase.class;
-
     if (ORUNIT.equals(propertyName)) return JobBase.class;
-
     if (ORPRICE.equals(propertyName)) return JobBase.class;
-
     if (ORRUNOUT.equals(propertyName)) return JobBase.class;
-
     if (ORLABORMARKUP.equals(propertyName)) return JobBase.class;
-
     if (ORLABORRATE.equals(propertyName)) return JobBase.class;
-
     if (ORAVGIMPRESSION.equals(propertyName)) return JobBase.class;
-
     if (ORPASSFRONT.equals(propertyName)) return JobBase.class;
-
     if (ORPASSBACK.equals(propertyName)) return JobBase.class;
-
     if (ORPARENTSIZE.equals(propertyName)) return JobBase.class;
-
     if (ORBINDERYWASTE.equals(propertyName)) return JobBase.class;
-
     if (ORRUNCUTS.equals(propertyName)) return JobBase.class;
-
     if (ORFINISHCUTS.equals(propertyName)) return JobBase.class;
-
     if (ORUP.equals(propertyName)) return JobBase.class;
-
     if (ORPARENTOUT.equals(propertyName)) return JobBase.class;
-
     if (PARENTINVOICE.equals(propertyName)) return JobBase.class;
-
     if (ROOTCHARGERECORD.equals(propertyName)) return JobBase.class;
-
     if (DIGITALASSETS.equals(propertyName)) return JobBase.class;
-
     if (TYPESETTINGDATE.equals(propertyName)) return JobBase.class;
-
     if (PROOFBACKDATE.equals(propertyName)) return JobBase.class;
-
     if (BLUELINEDATE.equals(propertyName)) return JobBase.class;
-
     if (BLUELINEBACKDATE.equals(propertyName)) return JobBase.class;
-
     if (STOCKCUTDATE.equals(propertyName)) return JobBase.class;
-
     if (ATPRESSDATE.equals(propertyName)) return JobBase.class;
-
     if (PRINTEDDATE.equals(propertyName)) return JobBase.class;
-
     if (COPIEDDATE.equals(propertyName)) return JobBase.class;
-
     if (BINDERYDATE.equals(propertyName)) return JobBase.class;
-
     if (CUTDATE.equals(propertyName)) return JobBase.class;
-
     if (FOLDEDDATE.equals(propertyName)) return JobBase.class;
-
     if (FINISHEDDATE.equals(propertyName)) return JobBase.class;
-
     if (MAILINGDATE.equals(propertyName)) return JobBase.class;
-
     if (OUTSIDESERVICEDATE.equals(propertyName)) return JobBase.class;
-
     if (OTHERDATE.equals(propertyName)) return JobBase.class;
-
     if (DELIVEREDDATE.equals(propertyName)) return JobBase.class;
-
     if (USEPAPERCALCUP.equals(propertyName)) return JobBase.class;
-
     if (ROLLWIDTH.equals(propertyName)) return JobBase.class;
-
     if (DEFAULTJOB.equals(propertyName)) return JobBase.class;
-
     if (MULTIQTYJOB.equals(propertyName)) return JobBase.class;
-
     if (JOBGROUP.equals(propertyName)) return JobBase.class;
-
     if (BACKCOLOR1.equals(propertyName)) return JobBase.class;
-
     if (BACKCOLOR2.equals(propertyName)) return JobBase.class;
-
     if (BACKCOLOR3.equals(propertyName)) return JobBase.class;
-
     if (BACKCOLOR4.equals(propertyName)) return JobBase.class;
-
     if (BACKCOLOR5.equals(propertyName)) return JobBase.class;
-
     if (BACKCOLOR6.equals(propertyName)) return JobBase.class;
-
     if (BACKCOLOR7.equals(propertyName)) return JobBase.class;
-
     if (FRONTCOLOR1.equals(propertyName)) return JobBase.class;
-
     if (FRONTCOLOR2.equals(propertyName)) return JobBase.class;
-
     if (FRONTCOLOR4.equals(propertyName)) return JobBase.class;
-
     if (FRONTCOLOR3.equals(propertyName)) return JobBase.class;
-
     if (FRONTCOLOR5.equals(propertyName)) return JobBase.class;
-
     if (FRONTCOLOR6.equals(propertyName)) return JobBase.class;
-
     if (FRONTCOLOR7.equals(propertyName)) return JobBase.class;
-
     if (RUNTIME.equals(propertyName)) return JobBase.class;
-
     if (SETUPTIME.equals(propertyName)) return JobBase.class;
-
     if (RELEASEDTOPRODUCTION.equals(propertyName)) return JobBase.class;
-
     if (TAXTABLE.equals(propertyName)) return JobBase.class;
-
     if (SHOWMULTIQTY.equals(propertyName)) return JobBase.class;
-
     if (MULTIQUANTITY1.equals(propertyName)) return JobBase.class;
-
     if (MULTIQUANTITY2.equals(propertyName)) return JobBase.class;
-
     if (MULTIQUANTITY3.equals(propertyName)) return JobBase.class;
-
     if (COPYMINUTES.equals(propertyName)) return JobBase.class;
-
     if (COPYMINUTESOVERRIDE.equals(propertyName)) return JobBase.class;
-
     if (PARENTSTOCKCOST.equals(propertyName)) return JobBase.class;
-
     if (PARENTSTOCKCOSTOVERRIDE.equals(propertyName)) return JobBase.class;
-
     if (COSTUNITS.equals(propertyName)) return JobBase.class;
-
     if (COSTUNITSOVERRIDE.equals(propertyName)) return JobBase.class;
-
     if (RUNBYDATE.equals(propertyName)) return JobBase.class;
-
     if (STARTBYDATE.equals(propertyName)) return JobBase.class;
-
     if (SUBMITTEDDATE.equals(propertyName)) return JobBase.class;
-
     if (LASTUPDATEDCOMMENTDATE.equals(propertyName)) return JobBase.class;
-
     return super.getPropertyOwner(propertyName);
-
   }
 	
 	/**
@@ -6527,626 +5104,315 @@ public class JobBase extends ModelBase {
 	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
-
     if (! super.deepEquals(obj))
-
       return false;
-
     JobBase objT = (JobBase)obj;
-
     if (! SmartEquals(getJobNumber(), objT.getJobNumber()))
-
       return false;
-
     if (! SmartEquals(getJobIndex(), objT.getJobIndex()))
-
       return false;
-
     if (! SmartEquals(getSalesCategory(), objT.getSalesCategory()))
-
       return false;
-
     if (! SmartEquals(getProductCode(), objT.getProductCode()))
-
       return false;
-
     if (! SmartEquals(getChildren(), objT.getChildren()))
-
       return false;
-
     if (! SmartEquals(getCharges(), objT.getCharges()))
-
       return false;
-
     if (! SmartEquals(getJobNotes(), objT.getJobNotes()))
-
       return false;
-
     if (! SmartEquals(getJobTicketNotes(), objT.getJobTicketNotes()))
-
       return false;
-
     if (! SmartEquals(getBrokered(), objT.getBrokered()))
-
       return false;
-
     if (! SmartEquals(getTaxable(), objT.getTaxable()))
-
       return false;
-
     if (! SmartEquals(getFinished(), objT.getFinished()))
-
       return false;
-
     if (! SmartEquals(getLocation(), objT.getLocation()))
-
       return false;
-
     if (! SmartEquals(getComment(), objT.getComment()))
-
       return false;
-
     if (! SmartEquals(getDescription(), objT.getDescription()))
-
       return false;
-
     if (! SmartEquals(getQtyOrdered(), objT.getQtyOrdered()))
-
       return false;
-
     if (! SmartEquals(getOversUnders(), objT.getOversUnders()))
-
       return false;
-
     if (! SmartEquals(getInSetsOf(), objT.getInSetsOf()))
-
       return false;
-
     if (! SmartEquals(getInSetsOfOverride(), objT.getInSetsOfOverride()))
-
       return false;
-
     if (! SmartEquals(getSheets(), objT.getSheets()))
-
       return false;
-
     if (! SmartEquals(getNumUp(), objT.getNumUp()))
-
       return false;
-
     if (! SmartEquals(getNumOn(), objT.getNumOn()))
-
       return false;
-
     if (! SmartEquals(getPress(), objT.getPress()))
-
       return false;
-
     if (! SmartEquals(getBinderyWaste(), objT.getBinderyWaste()))
-
       return false;
-
     if (! SmartEquals(getBinderyWasteOverride(), objT.getBinderyWasteOverride()))
-
       return false;
-
     if (! SmartEquals(getEstWaste(), objT.getEstWaste()))
-
       return false;
-
     if (! SmartEquals(getEstWasteOverride(), objT.getEstWasteOverride()))
-
       return false;
-
     if (! SmartEquals(getSignatures(), objT.getSignatures()))
-
       return false;
-
     if (! SmartEquals(getPricingPress(), objT.getPricingPress()))
-
       return false;
-
     if (! SmartEquals(getCostingPress(), objT.getCostingPress()))
-
       return false;
-
     if (! SmartEquals(getRunMethod(), objT.getRunMethod()))
-
       return false;
-
     if (! SmartEquals(getWashupTime(), objT.getWashupTime()))
-
       return false;
-
     if (! SmartEquals(getStock(), objT.getStock()))
-
       return false;
-
     if (! SmartEquals(getParentSize(), objT.getParentSize()))
-
       return false;
-
     if (! SmartEquals(getRunSize(), objT.getRunSize()))
-
       return false;
-
     if (! SmartEquals(getFinishSize(), objT.getFinishSize()))
-
       return false;
-
     if (! SmartEquals(getFoldedSize(), objT.getFoldedSize()))
-
       return false;
-
     if (! SmartEquals(getFrontColors(), objT.getFrontColors()))
-
       return false;
-
     if (! SmartEquals(getBackColors(), objT.getBackColors()))
-
       return false;
-
     if (! SmartEquals(getFrontPasses(), objT.getFrontPasses()))
-
       return false;
-
     if (! SmartEquals(getBackPasses(), objT.getBackPasses()))
-
       return false;
-
     if (! SmartEquals(getFrontWashes(), objT.getFrontWashes()))
-
       return false;
-
     if (! SmartEquals(getBackWashes(), objT.getBackWashes()))
-
       return false;
-
     if (! SmartEquals(getFrontInks(), objT.getFrontInks()))
-
       return false;
-
     if (! SmartEquals(getBackInks(), objT.getBackInks()))
-
       return false;
-
     if (! SmartEquals(getPressQty(), objT.getPressQty()))
-
       return false;
-
     if (! SmartEquals(getPricingRecord(), objT.getPricingRecord()))
-
       return false;
-
     if (! SmartEquals(getPricingCopier(), objT.getPricingCopier()))
-
       return false;
-
     if (! SmartEquals(getCostingCopier(), objT.getCostingCopier()))
-
       return false;
-
     if (! SmartEquals(getPricingMethod(), objT.getPricingMethod()))
-
       return false;
-
     if (! SmartEquals(getDoubleSided(), objT.getDoubleSided()))
-
       return false;
-
     if (! SmartEquals(getSingleSided(), objT.getSingleSided()))
-
       return false;
-
     if (! SmartEquals(getCostingRecord(), objT.getCostingRecord()))
-
       return false;
-
     if (! SmartEquals(getWeight(), objT.getWeight()))
-
       return false;
-
     if (! SmartEquals(getTotalCopies(), objT.getTotalCopies()))
-
       return false;
-
     if (! SmartEquals(getNumCopies(), objT.getNumCopies()))
-
       return false;
-
     if (! SmartEquals(getNumCopiesOverride(), objT.getNumCopiesOverride()))
-
       return false;
-
     if (! SmartEquals(getStockQty(), objT.getStockQty()))
-
       return false;
-
     if (! SmartEquals(getCutOff(), objT.getCutOff()))
-
       return false;
-
     if (! SmartEquals(getImpressionsPerRun(), objT.getImpressionsPerRun()))
-
       return false;
-
     if (! SmartEquals(getTotalImpressions(), objT.getTotalImpressions()))
-
       return false;
-
     if (! SmartEquals(getMarkup(), objT.getMarkup()))
-
       return false;
-
     if (! SmartEquals(getTotalCost(), objT.getTotalCost()))
-
       return false;
-
     if (! SmartEquals(getUnitCost(), objT.getUnitCost()))
-
       return false;
-
     if (! SmartEquals(getNotes(), objT.getNotes()))
-
       return false;
-
     if (! SmartEquals(getShowNotes(), objT.getShowNotes()))
-
       return false;
-
     if (! SmartEquals(getVendor(), objT.getVendor()))
-
       return false;
-
     if (! SmartEquals(getNumberOfLines(), objT.getNumberOfLines()))
-
       return false;
-
     if (! SmartEquals(getNumberOfInches(), objT.getNumberOfInches()))
-
       return false;
-
     if (! SmartEquals(getSpecialOrderStock(), objT.getSpecialOrderStock()))
-
       return false;
-
     if (! SmartEquals(getCustomerSuppliedStock(), objT.getCustomerSuppliedStock()))
-
       return false;
-
     if (! SmartEquals(getPaperPrice(), objT.getPaperPrice()))
-
       return false;
-
     if (! SmartEquals(getJdfStatus(), objT.getJdfStatus()))
-
       return false;
-
     if (! SmartEquals(getPaperCal(), objT.getPaperCal()))
-
       return false;
-
     if (! SmartEquals(getOrQtyOrder(), objT.getOrQtyOrder()))
-
       return false;
-
     if (! SmartEquals(getOrSets(), objT.getOrSets()))
-
       return false;
-
     if (! SmartEquals(getOrRuntime(), objT.getOrRuntime()))
-
       return false;
-
     if (! SmartEquals(getOrSetupTime(), objT.getOrSetupTime()))
-
       return false;
-
     if (! SmartEquals(getOrWashupTime(), objT.getOrWashupTime()))
-
       return false;
-
     if (! SmartEquals(getOrStockUnits(), objT.getOrStockUnits()))
-
       return false;
-
     if (! SmartEquals(getOrStockMarkup(), objT.getOrStockMarkup()))
-
       return false;
-
     if (! SmartEquals(getOrStockCost(), objT.getOrStockCost()))
-
       return false;
-
     if (! SmartEquals(getOrWaste(), objT.getOrWaste()))
-
       return false;
-
     if (! SmartEquals(getOrProduction(), objT.getOrProduction()))
-
       return false;
-
     if (! SmartEquals(getOrUnit(), objT.getOrUnit()))
-
       return false;
-
     if (! SmartEquals(getOrPrice(), objT.getOrPrice()))
-
       return false;
-
     if (! SmartEquals(getOrRunOut(), objT.getOrRunOut()))
-
       return false;
-
     if (! SmartEquals(getOrLaborMarkup(), objT.getOrLaborMarkup()))
-
       return false;
-
     if (! SmartEquals(getOrLaborRate(), objT.getOrLaborRate()))
-
       return false;
-
     if (! SmartEquals(getOrAvgImpression(), objT.getOrAvgImpression()))
-
       return false;
-
     if (! SmartEquals(getOrPassFront(), objT.getOrPassFront()))
-
       return false;
-
     if (! SmartEquals(getOrPassBack(), objT.getOrPassBack()))
-
       return false;
-
     if (! SmartEquals(getOrParentSize(), objT.getOrParentSize()))
-
       return false;
-
     if (! SmartEquals(getOrBinderyWaste(), objT.getOrBinderyWaste()))
-
       return false;
-
     if (! SmartEquals(getOrRunCuts(), objT.getOrRunCuts()))
-
       return false;
-
     if (! SmartEquals(getOrFinishCuts(), objT.getOrFinishCuts()))
-
       return false;
-
     if (! SmartEquals(getOrUp(), objT.getOrUp()))
-
       return false;
-
     if (! SmartEquals(getOrParentOut(), objT.getOrParentOut()))
-
       return false;
-
     if (! SmartEquals(getParentInvoice(), objT.getParentInvoice()))
-
       return false;
-
     if (! SmartEquals(getRootChargeRecord(), objT.getRootChargeRecord()))
-
       return false;
-
     if (! SmartEquals(getDigitalAssets(), objT.getDigitalAssets()))
-
       return false;
-
     if (! SmartEquals(getTypeSettingDate(), objT.getTypeSettingDate()))
-
       return false;
-
     if (! SmartEquals(getProofBackDate(), objT.getProofBackDate()))
-
       return false;
-
     if (! SmartEquals(getBluelineDate(), objT.getBluelineDate()))
-
       return false;
-
     if (! SmartEquals(getBluelineBackDate(), objT.getBluelineBackDate()))
-
       return false;
-
     if (! SmartEquals(getStockCutDate(), objT.getStockCutDate()))
-
       return false;
-
     if (! SmartEquals(getAtPressDate(), objT.getAtPressDate()))
-
       return false;
-
     if (! SmartEquals(getPrintedDate(), objT.getPrintedDate()))
-
       return false;
-
     if (! SmartEquals(getCopiedDate(), objT.getCopiedDate()))
-
       return false;
-
     if (! SmartEquals(getBinderyDate(), objT.getBinderyDate()))
-
       return false;
-
     if (! SmartEquals(getCutDate(), objT.getCutDate()))
-
       return false;
-
     if (! SmartEquals(getFoldedDate(), objT.getFoldedDate()))
-
       return false;
-
     if (! SmartEquals(getFinishedDate(), objT.getFinishedDate()))
-
       return false;
-
     if (! SmartEquals(getMailingDate(), objT.getMailingDate()))
-
       return false;
-
     if (! SmartEquals(getOutsideServiceDate(), objT.getOutsideServiceDate()))
-
       return false;
-
     if (! SmartEquals(getOtherDate(), objT.getOtherDate()))
-
       return false;
-
     if (! SmartEquals(getDeliveredDate(), objT.getDeliveredDate()))
-
       return false;
-
     if (! SmartEquals(getUsePaperCalcUp(), objT.getUsePaperCalcUp()))
-
       return false;
-
     if (! SmartEquals(getRollWidth(), objT.getRollWidth()))
-
       return false;
-
     if (! SmartEquals(getDefaultJob(), objT.getDefaultJob()))
-
       return false;
-
     if (! SmartEquals(getMultiQtyJob(), objT.getMultiQtyJob()))
-
       return false;
-
     if (! SmartEquals(getJobGroup(), objT.getJobGroup()))
-
       return false;
-
     if (! SmartEquals(getBackColor1(), objT.getBackColor1()))
-
       return false;
-
     if (! SmartEquals(getBackColor2(), objT.getBackColor2()))
-
       return false;
-
     if (! SmartEquals(getBackColor3(), objT.getBackColor3()))
-
       return false;
-
     if (! SmartEquals(getBackColor4(), objT.getBackColor4()))
-
       return false;
-
     if (! SmartEquals(getBackColor5(), objT.getBackColor5()))
-
       return false;
-
     if (! SmartEquals(getBackColor6(), objT.getBackColor6()))
-
       return false;
-
     if (! SmartEquals(getBackColor7(), objT.getBackColor7()))
-
       return false;
-
     if (! SmartEquals(getFrontColor1(), objT.getFrontColor1()))
-
       return false;
-
     if (! SmartEquals(getFrontColor2(), objT.getFrontColor2()))
-
       return false;
-
     if (! SmartEquals(getFrontColor4(), objT.getFrontColor4()))
-
       return false;
-
     if (! SmartEquals(getFrontColor3(), objT.getFrontColor3()))
-
       return false;
-
     if (! SmartEquals(getFrontColor5(), objT.getFrontColor5()))
-
       return false;
-
     if (! SmartEquals(getFrontColor6(), objT.getFrontColor6()))
-
       return false;
-
     if (! SmartEquals(getFrontColor7(), objT.getFrontColor7()))
-
       return false;
-
     if (! SmartEquals(getRunTime(), objT.getRunTime()))
-
       return false;
-
     if (! SmartEquals(getSetupTime(), objT.getSetupTime()))
-
       return false;
-
     if (! SmartEquals(getReleasedToProduction(), objT.getReleasedToProduction()))
-
       return false;
-
     if (! SmartEquals(getTaxTable(), objT.getTaxTable()))
-
       return false;
-
     if (! SmartEquals(getShowMultiQty(), objT.getShowMultiQty()))
-
       return false;
-
     if (! SmartEquals(getMultiQuantity1(), objT.getMultiQuantity1()))
-
       return false;
-
     if (! SmartEquals(getMultiQuantity2(), objT.getMultiQuantity2()))
-
       return false;
-
     if (! SmartEquals(getMultiQuantity3(), objT.getMultiQuantity3()))
-
       return false;
-
     if (! SmartEquals(getCopyMinutes(), objT.getCopyMinutes()))
-
       return false;
-
     if (! SmartEquals(getCopyMinutesOverride(), objT.getCopyMinutesOverride()))
-
       return false;
-
     if (! SmartEquals(getParentStockCost(), objT.getParentStockCost()))
-
       return false;
-
     if (! SmartEquals(getParentStockCostOverride(), objT.getParentStockCostOverride()))
-
       return false;
-
     if (! SmartEquals(getCostUnits(), objT.getCostUnits()))
-
       return false;
-
     if (! SmartEquals(getCostUnitsOverride(), objT.getCostUnitsOverride()))
-
       return false;
-
     if (! SmartEquals(getRunByDate(), objT.getRunByDate()))
-
       return false;
-
     if (! SmartEquals(getStartByDate(), objT.getStartByDate()))
-
       return false;
-
     if (! SmartEquals(getSubmittedDate(), objT.getSubmittedDate()))
-
       return false;
-
     if (! SmartEquals(getLastUpdatedCommentDate(), objT.getLastUpdatedCommentDate()))
-
       return false;
-
     return true;
-
   }			
 }

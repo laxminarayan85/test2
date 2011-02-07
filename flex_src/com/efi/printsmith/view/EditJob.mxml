@@ -1202,7 +1202,7 @@
 											 width="247"
 											 height="20"
 											 id="job_color"
-											 text="{job.stock.color.name}"
+											 text="{job.stock.color}"
 											 fontSize="9"/>
 									<mx:TextInput x="99"
 												  y="168"

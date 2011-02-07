@@ -903,7 +903,7 @@ public class CustomerMapper extends ImportMapper {
 			customer.setBillToContact(billToContact);
 		}
 		customer.setMarketing(marketing);
-		marketing.setBusinessType(businessType);
+		marketing.setBusinessType(businessType.getName());
 		shipToContact.setParentAccount(customer);
 		billToContact.setParentAccount(customer);
 

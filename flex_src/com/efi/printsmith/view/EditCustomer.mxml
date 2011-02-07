@@ -711,7 +711,7 @@
 			account.marketing.numberofEmployees= parseInt(numberofEmployees.text);
 			
 			if (business_type_combo != null && business_type_combo.selectedItem != null) 
-				account.marketing.businessType = business_type_combo.selectedItem as BusinessType;
+				account.marketing.businessType = (business_type_combo.selectedItem as BusinessType).name;
 		}
 		
 		if (sales_rep_combo != null && sales_rep_combo.selectedItem != null && sales_rep_combo.text != "") 
@@ -1019,7 +1019,7 @@
 				business = new BusinessType();
 				business.name = business_type_combo.text;
 				businessTypeDataService.addUpdate(business);
-				account.marketing.businessType= business;
+				account.marketing.businessType= business.name;
 			}
 			else {
 				business_type_combo.selectedIndex = item;
