@@ -262,7 +262,7 @@
 			if (temp is TapeSaleRecord) {
 				var tempSale:TapeSaleRecord = temp as TapeSaleRecord;
 				if (tempSale.isPickup == true) {
-					var invoice:InvoiceBase = tempSale.invoice as InvoiceBase;
+					var invoice:Invoice = tempSale.invoice as Invoice;
 					invoice.pickupDate = null;
 					invoice.offPendingDate = tempSale.invoice.pickupDate;
 					invoice.onPendingList = true;
