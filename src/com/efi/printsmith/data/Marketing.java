@@ -674,7 +674,6 @@ public class Marketing extends ModelBase {
 	 * @generated
 	 */	
     @Basic
-	@ManyToOne( cascade = {CascadeType.ALL})
 	@Where(clause="isdeleted <> 'TRUE'")
 	private String businessType;
 	
