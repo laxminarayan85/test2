@@ -34,6 +34,7 @@
  	[Protected(permissions="Preferences_EstimatorBehavior",notInPermissionAction="disable",componentId="estimatorbehavior_canvas")]
  	[Protected(permissions="Preferences_EstimatorPrinting",notInPermissionAction="disable",componentId="estimatorprinting_canvas")]
  	[Protected(permissions="Preferences_PaperCalculator",notInPermissionAction="disable",componentId="papercalculator_canvas")]
+ 	[Protected(permissions="Preferences_EstimatorCalc",notInPermissionAction="disable",componentId="estimatorcalculation_canvas")]
  	[Protected(permissions="Preferences_JobTicket",notInPermissionAction="disable",componentId="jobticket_canvas")]
  	[Protected(permissions="Preferences_QuantityBreaks",notInPermissionAction="disable",componentId="quantitybreaks_canvas")]
  	[Protected(permissions="Preferences_Markups",notInPermissionAction="disable",componentId="markups_canvas")]
@@ -465,24 +466,25 @@
 				<node label="genericPrefCmd.EstimatorBehavior" isBranch="false" tag="11" command="Preferences_EstimatorBehavior"/>
 				<node label="genericPrefCmd.EstimatorPrinting" isBranch="false" tag="12" command="Preferences_EstimatorPrinting"/>
 				<node label="genericPrefCmd.PaperCalculator" isBranch="false" tag="13" command="Preferences_PaperCalculator"/>
-				<node label="genericPrefCmd.JobTicket" isBranch="false" tag="14" command="Preferences_JobTicket"/>
-				<node label="genericPrefCmd.QuantityBreaks" isBranch="false" tag="15" command="Preferences_QuantityBreaks"/>
-				<node label="genericPrefCmd.Markups" isBranch="false" tag="16" command="Preferences_Markups"/>
-				<node label="genericPrefCmd.StocksandSizes" isBranch="false" tag="17" command="Preferences_StocksandSizes"/>
-				<node label="genericPrefCmd.StockDefinitions" isBranch="false" tag="18" command="Preferences_StockDefinitions"/>
-				<node label="genericPrefCmd.PricingMethod" isBranch="false" tag="19" command="Preferences_PricingMethod"/>
+				<node label="genericPrefCmd.EstimatorCalculation" isBranch="false" tag="14" command="Preferences_EstimatorCalc"/>
+				<node label="genericPrefCmd.JobTicket" isBranch="false" tag="15" command="Preferences_JobTicket"/>
+				<node label="genericPrefCmd.QuantityBreaks" isBranch="false" tag="16" command="Preferences_QuantityBreaks"/>
+				<node label="genericPrefCmd.Markups" isBranch="false" tag="17" command="Preferences_Markups"/>
+				<node label="genericPrefCmd.StocksandSizes" isBranch="false" tag="18" command="Preferences_StocksandSizes"/>
+				<node label="genericPrefCmd.StockDefinitions" isBranch="false" tag="19" command="Preferences_StockDefinitions"/>
+				<node label="genericPrefCmd.PricingMethod" isBranch="false" tag="20" command="Preferences_PricingMethod"/>
 			</node>			
 			<node label="genericPrefCmd.Accounting" isBranch="true" command="Preferences_Accounting">
-				<node label="genericPrefCmd.CreditDefaults" isBranch="false" tag="20" command="Preferences_CreditDefaults"/>
-				<node label="genericPrefCmd.AgingPeriods" isBranch="false" tag="21" command="Preferences_AgingPeriods"/>
-				<node label="genericPrefCmd.SalesCategories" isBranch="false" tag="22" command="Preferences_SalesCategories"/>
-				<node label="genericPrefCmd.GLProfiles" isBranch="false" tag="23" command="Preferences_GLProfiles"/>
-				<node label="genericPrefCmd.CreditCardInfo" isBranch="false" tag="24" command="Preferences_CreditCardInfo"/>
-				<node label="genericPrefCmd.OrderNumberFormat" isBranch="false" tag="25" command="Preferences_OrderNumFormat"/>
-				<node label="genericPrefCmd.JournalEntries" isBranch="false" tag="26" command="Preferences_JournalEntries"/>
+				<node label="genericPrefCmd.CreditDefaults" isBranch="false" tag="21" command="Preferences_CreditDefaults"/>
+				<node label="genericPrefCmd.AgingPeriods" isBranch="false" tag="22" command="Preferences_AgingPeriods"/>
+				<node label="genericPrefCmd.SalesCategories" isBranch="false" tag="23" command="Preferences_SalesCategories"/>
+				<node label="genericPrefCmd.GLProfiles" isBranch="false" tag="24" command="Preferences_GLProfiles"/>
+				<node label="genericPrefCmd.CreditCardInfo" isBranch="false" tag="25" command="Preferences_CreditCardInfo"/>
+				<node label="genericPrefCmd.OrderNumberFormat" isBranch="false" tag="26" command="Preferences_OrderNumFormat"/>
+				<node label="genericPrefCmd.JournalEntries" isBranch="false" tag="27" command="Preferences_JournalEntries"/>
 			</node>
 			<node label="genericPrefCmd.Integration" isBranch="true" command="Preferences_Integration">
-				<node label="genericPrefCmd.Integration" isBranch="false" tag="27" command="Preferences_Integration"/>
+				<node label="genericPrefCmd.Integration" isBranch="false" tag="28" command="Preferences_Integration"/>
 			</node>
 		</root>;
 	
@@ -979,7 +981,7 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
-			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.EstimatorCalculation" || selectedSection == "genericPrefCmd.JobTicket"){
 			checkCount = 1;
 			dataServiceEstimator.addUpdate(preferencesEstimating);
 		}
@@ -2053,7 +2055,7 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
-			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.EstimatorCalculation" || selectedSection == "genericPrefCmd.JobTicket"){
 			if(!compareObject(preferencesEstimating,preferencesEstimatingOrigObj)){
 				isObjEqual = false;
 			}
@@ -2471,7 +2473,7 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
-			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.EstimatorCalculation" || selectedSection == "genericPrefCmd.JobTicket"){
 			checkCount = 1;
 			dataServiceEstimator.getAll("PreferencesEstimating");
 		}
@@ -2601,7 +2603,7 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
-			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.EstimatorCalculation" || selectedSection == "genericPrefCmd.JobTicket"){
 			originalList.addItem(preferencesEstimatingOrigObj);
 		}
 		
@@ -2674,7 +2676,7 @@
 		}
 		
 		if(selectedSection == "genericPrefCmd.EstimatorBehavior" || selectedSection == "genericPrefCmd.EstimatorPrinting" ||
-			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.JobTicket"){
+			selectedSection == "genericPrefCmd.PaperCalculator" || selectedSection == "genericPrefCmd.EstimatorCalculation" || selectedSection == "genericPrefCmd.JobTicket"){
 			updatedList.addItem(preferencesEstimating);
 		}
 		
@@ -2838,6 +2840,9 @@
 					
 				<prefcomp:PaperCalculatorCanvasComponent id="papercalculator_canvas" preferencesEstimating="{preferencesEstimating}"
 					runToFinishGrainArray="{RunToFinishGrainArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
+					
+				<prefcomp:EstimatorCalculationComponent id="estimatorcalculation_canvas" preferencesEstimating="{preferencesEstimating}"
+					width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>
 					
 				<prefcomp:JobTicketCanvasComponent id="jobticket_canvas" preferencesEstimating="{preferencesEstimating}"
 					jobTicketStylesArray="{JobTicketStylesArray}" width="100%" height="100%"  hideEffect="effect" showEffect="effect"/>

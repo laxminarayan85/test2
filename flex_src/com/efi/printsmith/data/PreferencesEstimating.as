@@ -76,6 +76,12 @@ package com.efi.printsmith.data
 		public var defaultHistoryView:Boolean = false;
 		public var twoStageClearSearch:Boolean = false;
 		public var fontStyle:String = "";
+		public var adjustWorkAndTurn:Boolean = false;
+		public var noWasteInRunTime:Boolean = false;
+		public var useEstimatesAsWorkOrders:Boolean = false;
+		public var wasteFactor:Boolean = false;
+		public var showWordCount:Boolean = false;
+		public var calcWasteInEachRun:Boolean = false;
 	
 	}
 }

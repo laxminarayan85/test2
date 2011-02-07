@@ -1,3 +1,4 @@
+
 package com.efi.printsmith.data;
 
 import java.math.BigDecimal;
@@ -26,19 +27,25 @@ import org.hibernate.annotations.Where;
  * @generated
  */
 
+ 
 /**
  * @generated
- */
+ */	
 @NamedQueries({
   @NamedQuery(name = "PreferencesEstimating.findall", query = "from PreferencesEstimating"),
   @NamedQuery(name = "PreferencesEstimating.byId", query = "select a from PreferencesEstimating a where a.id= :id")
 })
-/*
+
+
+
+/**
  * @generated
- */
+ */	
 @Entity
 @Table(name = "preferencesestimating")
+//@SQLDelete(sql="update modelbase set isdeleted='TRUE' from preferencesestimating where modelbase.id=?")
 @SQLDelete(sql="update preferencesestimating set isdeleted='TRUE' where id=?")
+//Filter added to retrieve only records that have not been soft deleted.
 @Where(clause="isdeleted <> 'TRUE'")
 public class PreferencesEstimating extends ModelBase {
 	/**
@@ -277,23 +284,43 @@ public class PreferencesEstimating extends ModelBase {
 	 * @generated
 	 */
 	public static final String BARCODEFONT = "BarCodeFont";
-
 	/**
 	 * @generated
 	 */
 	public static final String DEFAULTHISTORYVIEW = "DefaultHistoryView";
-
 	/**
-	 * 
 	 * @generated
 	 */
-
 	public static final String TWOSTAGECLEARSEARCH = "TwoStageClearSearch";
+	/**
+	 * @generated
+	 */
+	public static final String FONTSTYLE = "FontStyle";
 
 	/**
    * @generated
    */
-  public static final String FONTSTYLE = "FontStyle";
+  public static final String ADJUSTWORKANDTURN = "AdjustWorkAndTurn";
+	/**
+   * @generated
+   */
+  public static final String NOWASTEINRUNTIME = "NoWasteInRunTime";
+	/**
+   * @generated
+   */
+  public static final String USEESTIMATESASWORKORDERS = "UseEstimatesAsWorkOrders";
+	/**
+   * @generated
+   */
+  public static final String WASTEFACTOR = "WasteFactor";
+	/**
+   * @generated
+   */
+  public static final String SHOWWORDCOUNT = "ShowWordCount";
+	/**
+   * @generated
+   */
+  public static final String CALCWASTEINEACHRUN = "CalcWasteInEachRun";
 
 	/**
 	 * @generated
@@ -306,1277 +333,1576 @@ public class PreferencesEstimating extends ModelBase {
 
 	@Basic
 	private Boolean isDeleted = false;
-
+	
 	public Boolean getIsDeleted() {
 		return isDeleted;
 	}
-
+	
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private String folioLocation;
-
+	
 	/**
 	 * @generated
-	 */
-	public String getFolioLocation() {
+ 	 */
+	public String getFolioLocation(){
     return folioLocation; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setFolioLocation(String newVal) {
     this.folioLocation = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private String gripLocation;
-
+	
 	/**
 	 * @generated
-	 */
-	public String getGripLocation() {
+ 	 */
+	public String getGripLocation(){
     return gripLocation; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setGripLocation(String newVal) {
     this.gripLocation = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean closeAfterCopy;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getCloseAfterCopy() {
+ 	 */
+	public Boolean getCloseAfterCopy(){
     return closeAfterCopy; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setCloseAfterCopy(Boolean newVal) {
     this.closeAfterCopy = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean stockCostInEstimator;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getStockCostInEstimator() {
+ 	 */
+	public Boolean getStockCostInEstimator(){
     return stockCostInEstimator; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setStockCostInEstimator(Boolean newVal) {
     this.stockCostInEstimator = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean canChangeAddress;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getCanChangeAddress() {
+ 	 */
+	public Boolean getCanChangeAddress(){
     return canChangeAddress; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setCanChangeAddress(Boolean newVal) {
     this.canChangeAddress = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean showPaperCalculator;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getShowPaperCalculator() {
+ 	 */
+	public Boolean getShowPaperCalculator(){
     return showPaperCalculator; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setShowPaperCalculator(Boolean newVal) {
     this.showPaperCalculator = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean useStockParentSize;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getUseStockParentSize() {
+ 	 */
+	public Boolean getUseStockParentSize(){
     return useStockParentSize; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setUseStockParentSize(Boolean newVal) {
     this.useStockParentSize = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean calculateReOrderDate;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getCalculateReOrderDate() {
+ 	 */
+	public Boolean getCalculateReOrderDate(){
     return calculateReOrderDate; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setCalculateReOrderDate(Boolean newVal) {
     this.calculateReOrderDate = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean validateSalesRep;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getValidateSalesRep() {
+ 	 */
+	public Boolean getValidateSalesRep(){
     return validateSalesRep; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setValidateSalesRep(Boolean newVal) {
     this.validateSalesRep = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean leaveFoldedSizeEmpty;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getLeaveFoldedSizeEmpty() {
+ 	 */
+	public Boolean getLeaveFoldedSizeEmpty(){
     return leaveFoldedSizeEmpty; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setLeaveFoldedSizeEmpty(Boolean newVal) {
     this.leaveFoldedSizeEmpty = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean doNotCostDuringPost;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getDoNotCostDuringPost() {
+ 	 */
+	public Boolean getDoNotCostDuringPost(){
     return doNotCostDuringPost; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setDoNotCostDuringPost(Boolean newVal) {
     this.doNotCostDuringPost = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean autoShowCharges;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getAutoShowCharges() {
+ 	 */
+	public Boolean getAutoShowCharges(){
     return autoShowCharges; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setAutoShowCharges(Boolean newVal) {
     this.autoShowCharges = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean neverUsePresetPressOnStockChanges;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getNeverUsePresetPressOnStockChanges() {
+ 	 */
+	public Boolean getNeverUsePresetPressOnStockChanges(){
     return neverUsePresetPressOnStockChanges; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setNeverUsePresetPressOnStockChanges(Boolean newVal) {
     this.neverUsePresetPressOnStockChanges = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean addFixedWasteForEachPass;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getAddFixedWasteForEachPass() {
+ 	 */
+	public Boolean getAddFixedWasteForEachPass(){
     return addFixedWasteForEachPass; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setAddFixedWasteForEachPass(Boolean newVal) {
     this.addFixedWasteForEachPass = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean addFixedWasteForEachColor;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getAddFixedWasteForEachColor() {
+ 	 */
+	public Boolean getAddFixedWasteForEachColor(){
     return addFixedWasteForEachColor; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setAddFixedWasteForEachColor(Boolean newVal) {
     this.addFixedWasteForEachColor = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean calculateInkbyImpressions;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getCalculateInkbyImpressions() {
+ 	 */
+	public Boolean getCalculateInkbyImpressions(){
     return calculateInkbyImpressions; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setCalculateInkbyImpressions(Boolean newVal) {
     this.calculateInkbyImpressions = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean useHistoryTitleforNewTitle;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getUseHistoryTitleforNewTitle() {
+ 	 */
+	public Boolean getUseHistoryTitleforNewTitle(){
     return useHistoryTitleforNewTitle; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setUseHistoryTitleforNewTitle(Boolean newVal) {
     this.useHistoryTitleforNewTitle = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Integer normalDueDateDays;
-
+	
 	/**
 	 * @generated
-	 */
-	public Integer getNormalDueDateDays() {
+ 	 */
+	public Integer getNormalDueDateDays(){
     return normalDueDateDays; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setNormalDueDateDays(Integer newVal) {
     this.normalDueDateDays = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean closeInvoiceAfterPrintingTicket;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getCloseInvoiceAfterPrintingTicket() {
+ 	 */
+	public Boolean getCloseInvoiceAfterPrintingTicket(){
     return closeInvoiceAfterPrintingTicket; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setCloseInvoiceAfterPrintingTicket(Boolean newVal) {
     this.closeInvoiceAfterPrintingTicket = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean closeInvoicesAndEstimateAfterPrinting;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getCloseInvoicesAndEstimateAfterPrinting() {
+ 	 */
+	public Boolean getCloseInvoicesAndEstimateAfterPrinting(){
     return closeInvoicesAndEstimateAfterPrinting; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setCloseInvoicesAndEstimateAfterPrinting(Boolean newVal) {
     this.closeInvoicesAndEstimateAfterPrinting = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Integer defaultInvoice;
-
+	
 	/**
 	 * @generated
-	 */
-	public Integer getDefaultInvoice() {
+ 	 */
+	public Integer getDefaultInvoice(){
     return defaultInvoice; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setDefaultInvoice(Integer newVal) {
     this.defaultInvoice = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Integer defaultEstimate;
-
+	
 	/**
 	 * @generated
-	 */
-	public Integer getDefaultEstimate() {
+ 	 */
+	public Integer getDefaultEstimate(){
     return defaultEstimate; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setDefaultEstimate(Integer newVal) {
     this.defaultEstimate = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Integer numberOfDaysBeforeDue;
-
+	
 	/**
 	 * @generated
-	 */
-	public Integer getNumberOfDaysBeforeDue() {
+ 	 */
+	public Integer getNumberOfDaysBeforeDue(){
     return numberOfDaysBeforeDue; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setNumberOfDaysBeforeDue(Integer newVal) {
     this.numberOfDaysBeforeDue = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Integer dueFrom;
-
+	
 	/**
 	 * @generated
-	 */
-	public Integer getDueFrom() {
+ 	 */
+	public Integer getDueFrom(){
     return dueFrom; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setDueFrom(Integer newVal) {
     this.dueFrom = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean useGripEdgeGap;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getUseGripEdgeGap() {
+ 	 */
+	public Boolean getUseGripEdgeGap(){
     return useGripEdgeGap; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setUseGripEdgeGap(Boolean newVal) {
     this.useGripEdgeGap = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double gripEdgeGap;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getGripEdgeGap() {
+ 	 */
+	public Double getGripEdgeGap(){
     return gripEdgeGap; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setGripEdgeGap(Double newVal) {
     this.gripEdgeGap = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean useFolioEdge;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getUseFolioEdge() {
+ 	 */
+	public Boolean getUseFolioEdge(){
     return useFolioEdge; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setUseFolioEdge(Boolean newVal) {
     this.useFolioEdge = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double folioEdge;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getFolioEdge() {
+ 	 */
+	public Double getFolioEdge(){
     return folioEdge; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setFolioEdge(Double newVal) {
     this.folioEdge = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean useColorBar;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getUseColorBar() {
+ 	 */
+	public Boolean getUseColorBar(){
     return useColorBar; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setUseColorBar(Boolean newVal) {
     this.useColorBar = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double colorBar;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getColorBar() {
+ 	 */
+	public Double getColorBar(){
     return colorBar; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setColorBar(Double newVal) {
     this.colorBar = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean useWhiteSpace;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getUseWhiteSpace() {
+ 	 */
+	public Boolean getUseWhiteSpace(){
     return useWhiteSpace; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setUseWhiteSpace(Boolean newVal) {
     this.useWhiteSpace = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double whiteSpace;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getWhiteSpace() {
+ 	 */
+	public Double getWhiteSpace(){
     return whiteSpace; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setWhiteSpace(Double newVal) {
     this.whiteSpace = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double whiteSpaceTop;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getWhiteSpaceTop() {
+ 	 */
+	public Double getWhiteSpaceTop(){
     return whiteSpaceTop; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setWhiteSpaceTop(Double newVal) {
     this.whiteSpaceTop = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double whiteSpaceRight;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getWhiteSpaceRight() {
+ 	 */
+	public Double getWhiteSpaceRight(){
     return whiteSpaceRight; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setWhiteSpaceRight(Double newVal) {
     this.whiteSpaceRight = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double whiteSpaceBottom;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getWhiteSpaceBottom() {
+ 	 */
+	public Double getWhiteSpaceBottom(){
     return whiteSpaceBottom; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setWhiteSpaceBottom(Double newVal) {
     this.whiteSpaceBottom = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean useGutter;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getUseGutter() {
+ 	 */
+	public Boolean getUseGutter(){
     return useGutter; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setUseGutter(Boolean newVal) {
     this.useGutter = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double gutter;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getGutter() {
+ 	 */
+	public Double getGutter(){
     return gutter; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setGutter(Double newVal) {
     this.gutter = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double gutterHorizontal;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getGutterHorizontal() {
+ 	 */
+	public Double getGutterHorizontal(){
     return gutterHorizontal; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setGutterHorizontal(Double newVal) {
     this.gutterHorizontal = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean useBleed;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getUseBleed() {
+ 	 */
+	public Boolean getUseBleed(){
     return useBleed; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setUseBleed(Boolean newVal) {
     this.useBleed = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double bleed;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getBleed() {
+ 	 */
+	public Double getBleed(){
     return bleed; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setBleed(Double newVal) {
     this.bleed = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double bleedTop;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getBleedTop() {
+ 	 */
+	public Double getBleedTop(){
     return bleedTop; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setBleedTop(Double newVal) {
     this.bleedTop = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double bleedRight;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getBleedRight() {
+ 	 */
+	public Double getBleedRight(){
     return bleedRight; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setBleedRight(Double newVal) {
     this.bleedRight = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Double bleedBottom;
-
+	
 	/**
 	 * @generated
-	 */
-	public Double getBleedBottom() {
+ 	 */
+	public Double getBleedBottom(){
     return bleedBottom; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setBleedBottom(Double newVal) {
     this.bleedBottom = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	@Column(name="defaultPressCuttOff", precision=19, scale=4)
 	private BigDecimal defaultPressCuttOff;
-
+	
 	/**
 	 * @generated
-	 */
-	public BigDecimal getDefaultPressCuttOff() {
+ 	 */
+	public BigDecimal getDefaultPressCuttOff(){
     return defaultPressCuttOff; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setDefaultPressCuttOff(BigDecimal newVal) {
     this.defaultPressCuttOff = newVal;
     this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
   }
-
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setDefaultPressCuttOff(double newVal) {
     this.defaultPressCuttOff = BigDecimal.valueOf(newVal);
     this.defaultPressCuttOff.setScale(4, RoundingMode.HALF_UP);
   }
-
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean backTrimParent;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getBackTrimParent() {
+ 	 */
+	public Boolean getBackTrimParent(){
     return backTrimParent; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setBackTrimParent(Boolean newVal) {
     this.backTrimParent = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean backTrimRun;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getBackTrimRun() {
+ 	 */
+	public Boolean getBackTrimRun(){
     return backTrimRun; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setBackTrimRun(Boolean newVal) {
     this.backTrimRun = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean workandTumble;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getWorkandTumble() {
+ 	 */
+	public Boolean getWorkandTumble(){
     return workandTumble; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setWorkandTumble(Boolean newVal) {
     this.workandTumble = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private String runToFinishGrain;
-
+	
 	/**
 	 * @generated
-	 */
-	public String getRunToFinishGrain() {
+ 	 */
+	public String getRunToFinishGrain(){
     return runToFinishGrain; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setRunToFinishGrain(String newVal) {
     this.runToFinishGrain = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean printParentToFinishSection;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getPrintParentToFinishSection() {
+ 	 */
+	public Boolean getPrintParentToFinishSection(){
     return printParentToFinishSection; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setPrintParentToFinishSection(Boolean newVal) {
     this.printParentToFinishSection = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean printParentToRunSection;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getPrintParentToRunSection() {
+ 	 */
+	public Boolean getPrintParentToRunSection(){
     return printParentToRunSection; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setPrintParentToRunSection(Boolean newVal) {
     this.printParentToRunSection = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean printRunToFinishSection;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getPrintRunToFinishSection() {
+ 	 */
+	public Boolean getPrintRunToFinishSection(){
     return printRunToFinishSection; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setPrintRunToFinishSection(Boolean newVal) {
     this.printRunToFinishSection = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean attachToJobTicket;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getAttachToJobTicket() {
+ 	 */
+	public Boolean getAttachToJobTicket(){
     return attachToJobTicket; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setAttachToJobTicket(Boolean newVal) {
     this.attachToJobTicket = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private String jobTicketFormat;
-
+	
 	/**
 	 * @generated
-	 */
-	public String getJobTicketFormat() {
+ 	 */
+	public String getJobTicketFormat(){
     return jobTicketFormat; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setJobTicketFormat(String newVal) {
     this.jobTicketFormat = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private String customJobTicket;
-
+	
 	/**
 	 * @generated
-	 */
-	public String getCustomJobTicket() {
+ 	 */
+	public String getCustomJobTicket(){
     return customJobTicket; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setCustomJobTicket(String newVal) {
     this.customJobTicket = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private String chargeDescription;
-
+	
 	/**
 	 * @generated
-	 */
-	public String getChargeDescription() {
+ 	 */
+	public String getChargeDescription(){
     return chargeDescription; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setChargeDescription(String newVal) {
     this.chargeDescription = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean showAmountsOnTicket;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getShowAmountsOnTicket() {
+ 	 */
+	public Boolean getShowAmountsOnTicket(){
     return showAmountsOnTicket; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setShowAmountsOnTicket(Boolean newVal) {
     this.showAmountsOnTicket = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean addBarCodes;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getAddBarCodes() {
+ 	 */
+	public Boolean getAddBarCodes(){
     return addBarCodes; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setAddBarCodes(Boolean newVal) {
     this.addBarCodes = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean showRefNumber;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getShowRefNumber() {
+ 	 */
+	public Boolean getShowRefNumber(){
     return showRefNumber; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setShowRefNumber(Boolean newVal) {
     this.showRefNumber = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@ManyToOne( cascade = {CascadeType.ALL})
-	@Where(clause="isdeleted <> 'TRUE'")
+	 */	
+    @ManyToOne( cascade = {CascadeType.ALL})
+    @Where(clause="isdeleted <> 'TRUE'")
 	private FontDefinition barCodeFont;
-
+	
 	/**
 	 * @generated
-	 */
-	public FontDefinition getBarCodeFont() {
+ 	 */
+	public FontDefinition getBarCodeFont(){
     return barCodeFont; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setBarCodeFont(FontDefinition newVal) {
     this.barCodeFont = newVal;
   }
-
+	
+ 	
+	
 	/**
 	 * @generated
-	 */
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean defaultHistoryView;
-
+	
 	/**
 	 * @generated
-	 */
-	public Boolean getDefaultHistoryView() {
+ 	 */
+	public Boolean getDefaultHistoryView(){
     return defaultHistoryView; 
   }
 
+	
 	/**
 	 * @generated
-	 */
+	 */	
 	public void setDefaultHistoryView(Boolean newVal) {
     this.defaultHistoryView = newVal;
   }
-
+	
+ 	
+	
 	/**
-	 * 
 	 * @generated
-	 */
-
-	@Basic
+	 */	
+ 	@Basic
 	private Boolean twoStageClearSearch;
-
+	
 	/**
-	 * 
 	 * @generated
-	 */
-
-	public Boolean getTwoStageClearSearch() {
+ 	 */
+	public Boolean getTwoStageClearSearch(){
     return twoStageClearSearch; 
   }
 
+	
 	/**
-	 * 
 	 * @generated
-	 */
-
+	 */	
 	public void setTwoStageClearSearch(Boolean newVal) {
     this.twoStageClearSearch = newVal;
   }
-
-	@Basic
+	
+ 	
+	
+	/**
+	 * @generated
+	 */	
+ 	@Basic
 	private String fontStyle;
+	
+	/**
+	 * @generated
+ 	 */
+	public String getFontStyle(){
+    return fontStyle; 
+  }
+
+	
+	/**
+	 * @generated
+	 */	
+	public void setFontStyle(String newVal) {
+    this.fontStyle = newVal;
+  }
+	
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean adjustWorkAndTurn;
 
 	/**
-	 * @return the fontStyle
-	 */
-	public String getFontStyle() {
-		return fontStyle;
-	}
+   * @generated
+ 	 */
+  public Boolean getAdjustWorkAndTurn(){
+    return adjustWorkAndTurn; 
+  }
 
 	/**
-	 * @param fontStyle
-	 *            the fontStyle to set
-	 */
-	public void setFontStyle(String fontStyle) {
-		this.fontStyle = fontStyle;
-	}
+   * @generated
+   */	
+  public void setAdjustWorkAndTurn(Boolean newVal) {
+    this.adjustWorkAndTurn = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean noWasteInRunTime;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getNoWasteInRunTime(){
+    return noWasteInRunTime; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setNoWasteInRunTime(Boolean newVal) {
+    this.noWasteInRunTime = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean useEstimatesAsWorkOrders;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getUseEstimatesAsWorkOrders(){
+    return useEstimatesAsWorkOrders; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setUseEstimatesAsWorkOrders(Boolean newVal) {
+    this.useEstimatesAsWorkOrders = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean wasteFactor;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getWasteFactor(){
+    return wasteFactor; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setWasteFactor(Boolean newVal) {
+    this.wasteFactor = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean showWordCount;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getShowWordCount(){
+    return showWordCount; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setShowWordCount(Boolean newVal) {
+    this.showWordCount = newVal;
+  }
+
+	/**
+   * @generated
+   */	
+ 	@Basic
+  private Boolean calcWasteInEachRun;
+
+	/**
+   * @generated
+ 	 */
+  public Boolean getCalcWasteInEachRun(){
+    return calcWasteInEachRun; 
+  }
+
+	/**
+   * @generated
+   */	
+  public void setCalcWasteInEachRun(Boolean newVal) {
+    this.calcWasteInEachRun = newVal;
+  }
 
 	/**
 	 * @generated
-	 */
+	 */		
 	@Transient
 	@Override
-	public Object getProperty(String propertyName)
-			throws UnknownPropertyException {
+	public Object getProperty(String propertyName) throws UnknownPropertyException {
     if (FOLIOLOCATION.equals(propertyName)) return getFolioLocation();
     if (GRIPLOCATION.equals(propertyName)) return getGripLocation();
     if (CLOSEAFTERCOPY.equals(propertyName)) return getCloseAfterCopy();
@@ -1639,16 +1965,21 @@ public class PreferencesEstimating extends ModelBase {
     if (DEFAULTHISTORYVIEW.equals(propertyName)) return getDefaultHistoryView();
     if (TWOSTAGECLEARSEARCH.equals(propertyName)) return getTwoStageClearSearch();
     if (FONTSTYLE.equals(propertyName)) return getFontStyle();
+    if (ADJUSTWORKANDTURN.equals(propertyName)) return getAdjustWorkAndTurn();
+    if (NOWASTEINRUNTIME.equals(propertyName)) return getNoWasteInRunTime();
+    if (USEESTIMATESASWORKORDERS.equals(propertyName)) return getUseEstimatesAsWorkOrders();
+    if (WASTEFACTOR.equals(propertyName)) return getWasteFactor();
+    if (SHOWWORDCOUNT.equals(propertyName)) return getShowWordCount();
+    if (CALCWASTEINEACHRUN.equals(propertyName)) return getCalcWasteInEachRun();
     return super.getProperty(propertyName);
   }
-
+	
 	/**
 	 * @generated
-	 */
+	 */		
 	@SuppressWarnings("unchecked")
 	@Override
-	public void setProperty(String propertyName, Object newValue)
-			throws PropertyException {
+	public void setProperty(String propertyName, Object newValue) throws PropertyException {
     if (FOLIOLOCATION.equals(propertyName)) setFolioLocation((String)newValue); else
     if (GRIPLOCATION.equals(propertyName)) setGripLocation((String)newValue); else
     if (CLOSEAFTERCOPY.equals(propertyName)) setCloseAfterCopy((Boolean)newValue); else
@@ -1711,16 +2042,21 @@ public class PreferencesEstimating extends ModelBase {
     if (DEFAULTHISTORYVIEW.equals(propertyName)) setDefaultHistoryView((Boolean)newValue); else
     if (TWOSTAGECLEARSEARCH.equals(propertyName)) setTwoStageClearSearch((Boolean)newValue); else
     if (FONTSTYLE.equals(propertyName)) setFontStyle((String)newValue); else
+    if (ADJUSTWORKANDTURN.equals(propertyName)) setAdjustWorkAndTurn((Boolean)newValue); else
+    if (NOWASTEINRUNTIME.equals(propertyName)) setNoWasteInRunTime((Boolean)newValue); else
+    if (USEESTIMATESASWORKORDERS.equals(propertyName)) setUseEstimatesAsWorkOrders((Boolean)newValue); else
+    if (WASTEFACTOR.equals(propertyName)) setWasteFactor((Boolean)newValue); else
+    if (SHOWWORDCOUNT.equals(propertyName)) setShowWordCount((Boolean)newValue); else
+    if (CALCWASTEINEACHRUN.equals(propertyName)) setCalcWasteInEachRun((Boolean)newValue); else
     super.setProperty(propertyName, newValue);
   }
-
+	
 	/**
 	 * @generated
-	 */
+	 */		
 	@Transient
 	@Override
-	public Class<?>[] getPropertyClass(String propertyName)
-			throws UnknownPropertyException {	
+	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (FOLIOLOCATION.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (GRIPLOCATION.equals(propertyName)) 
@@ -1845,16 +2181,28 @@ public class PreferencesEstimating extends ModelBase {
       return new Class<?>[] {Boolean.class};		
     if (FONTSTYLE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
+    if (ADJUSTWORKANDTURN.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (NOWASTEINRUNTIME.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (USEESTIMATESASWORKORDERS.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (WASTEFACTOR.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (SHOWWORDCOUNT.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
+    if (CALCWASTEINEACHRUN.equals(propertyName)) 
+      return new Class<?>[] {Boolean.class};		
     return super.getPropertyClass(propertyName);
   }
+	
 
 	/**
 	 * @generated
-	 */
+	 */		
 	@Transient
 	@Override
-	public Class<?> getPropertyOwner(String propertyName)
-			throws UnknownPropertyException {	
+	public Class<?> getPropertyOwner(String propertyName) throws UnknownPropertyException {	
     if (FOLIOLOCATION.equals(propertyName)) return PreferencesEstimating.class;
     if (GRIPLOCATION.equals(propertyName)) return PreferencesEstimating.class;
     if (CLOSEAFTERCOPY.equals(propertyName)) return PreferencesEstimating.class;
@@ -1917,12 +2265,18 @@ public class PreferencesEstimating extends ModelBase {
     if (DEFAULTHISTORYVIEW.equals(propertyName)) return PreferencesEstimating.class;
     if (TWOSTAGECLEARSEARCH.equals(propertyName)) return PreferencesEstimating.class;
     if (FONTSTYLE.equals(propertyName)) return PreferencesEstimating.class;
+    if (ADJUSTWORKANDTURN.equals(propertyName)) return PreferencesEstimating.class;
+    if (NOWASTEINRUNTIME.equals(propertyName)) return PreferencesEstimating.class;
+    if (USEESTIMATESASWORKORDERS.equals(propertyName)) return PreferencesEstimating.class;
+    if (WASTEFACTOR.equals(propertyName)) return PreferencesEstimating.class;
+    if (SHOWWORDCOUNT.equals(propertyName)) return PreferencesEstimating.class;
+    if (CALCWASTEINEACHRUN.equals(propertyName)) return PreferencesEstimating.class;
     return super.getPropertyOwner(propertyName);
   }
-
+	
 	/**
 	 * @generated
-	 */
+	 */			
 	@Override
 	public boolean deepEquals(Object obj) {
     if (! super.deepEquals(obj))
@@ -2052,6 +2406,18 @@ public class PreferencesEstimating extends ModelBase {
       return false;
     if (! SmartEquals(getFontStyle(), objT.getFontStyle()))
       return false;
+    if (! SmartEquals(getAdjustWorkAndTurn(), objT.getAdjustWorkAndTurn()))
+      return false;
+    if (! SmartEquals(getNoWasteInRunTime(), objT.getNoWasteInRunTime()))
+      return false;
+    if (! SmartEquals(getUseEstimatesAsWorkOrders(), objT.getUseEstimatesAsWorkOrders()))
+      return false;
+    if (! SmartEquals(getWasteFactor(), objT.getWasteFactor()))
+      return false;
+    if (! SmartEquals(getShowWordCount(), objT.getShowWordCount()))
+      return false;
+    if (! SmartEquals(getCalcWasteInEachRun(), objT.getCalcWasteInEachRun()))
+      return false;
     return true;
-  }
+  }			
 }

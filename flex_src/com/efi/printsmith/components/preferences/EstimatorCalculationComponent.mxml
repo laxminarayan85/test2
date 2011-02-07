@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:components="com.efi.printsmith.common.components.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.efi.printsmith.data.PreferencesEstimating;
+		
+			[Bindable] public var preferencesEstimating:PreferencesEstimating = new PreferencesEstimating();
+		]]>
+	</mx:Script>
+	
+	<mx:VBox width="100%" height="100%">
+	
+		<mx:Label
+			text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'genericPrefCmd.EstimatorCalculation')}"
+			textAlign="center" width="100%"/>
+			
+		<mx:HRule width="100%"/>
+		
+		<mx:HBox width="100%" height="100%">
+		
+			<mx:Spacer width="30"/>
+			
+			<mx:VBox width="100%" height="100%">
+			
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'otherPrefCmd.Adjustworkandturn')}"
+					dataHolder="{preferencesEstimating}" variableName="adjustWorkAndTurn" customText="{preferencesEstimating.adjustWorkAndTurn}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'otherPrefCmd.Nowasteinruntime')}"
+					dataHolder="{preferencesEstimating}" variableName="noWasteInRunTime" customText="{preferencesEstimating.noWasteInRunTime}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'otherPrefCmd.Calcwasteineachrun')}"
+					dataHolder="{preferencesEstimating}" variableName="calcWasteInEachRun" customText="{preferencesEstimating.calcWasteInEachRun}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'otherPrefCmd.UseEstimatesasWorkOr')}"
+					dataHolder="{preferencesEstimating}" variableName="useEstimatesAsWorkOrders" customText="{preferencesEstimating.useEstimatesAsWorkOrders}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'otherPrefCmd.WasteFactorfromRunLe')}"
+					dataHolder="{preferencesEstimating}" variableName="wasteFactor" customText="{preferencesEstimating.wasteFactor}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+					
+				<components:CustomCheckBoxComponent
+					label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE,'otherPrefCmd.ShowWordcountinthejo')}"
+					dataHolder="{preferencesEstimating}" variableName="showWordCount" customText="{preferencesEstimating.showWordCount}"
+					selectedValue="true" deSelectedValue="false" defaultValue="false"/>
+			
+			</mx:VBox>
+			
+		</mx:HBox>
+		
+	</mx:VBox>
+	
+</mx:Canvas>
