@@ -13,6 +13,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.efi.printsmith.events.PriceChargeEvent;
 			import com.efi.printsmith.util.ChargeCostingUtil;
 			import com.efi.printsmith.data.enums.ChargeMethod;
 			import com.efi.printsmith.data.enums.ChargeQtyType;
@@ -62,6 +63,9 @@
 				trackerConsoleJobs = ObjectUtil.copy(trackerConsoleJobsObj) as TrackerConsoleJobs;
 				if(trackerConsoleJobs.job!=null) {
 					dataService.getJob(trackerConsoleJobs.job.id);
+				} else if(trackerConsoleJobs.charge!=null) {
+					charge = trackerConsoleJobs.charge;
+					updateCosting();
 				}
 			}
 			
@@ -74,12 +78,12 @@
 					registerClassAlias("com.efi.printsmith.data.Job",Job);
 					localJob = ObjectUtil.copy(job) as Job;
 					mapTrackerActualsToJob();
-					updatePrice();
 				} else if(trackerConsoleJobs!=null && charge!=null) {
 					registerClassAlias("com.efi.printsmith.data.Charge",Charge);
 					localCharge = ObjectUtil.copy(charge) as Charge;
 					mapTrackerActualsToCharge();
 				}
+				updatePrice();
 			}
 			
 			private function mapTrackerActualsToJob():void {
@@ -208,7 +212,7 @@
 					if (chargeDefinition.quantityType == ChargeQtyType.Time)
 						changeChargeQuantity((trackerConsoleJobs.totalRunTime/(60*1000)),true);
 					else
-						changeChargeQuantity(charge.quantity,true);
+						changeChargeQuantity(trackerConsoleJobs.qtyOrdered,true);
 					
 					localCharge.actualCostingSetupTime = ((trackerConsoleJobs.totalSetUpTime / (60*1000)) / 60);		// put into hours
 					localCharge.actualCostingRunTime = (((trackerConsoleJobs.totalRunTime + trackerConsoleJobs.totalWashUpTime) / (60*1000)) / 60);
@@ -216,7 +220,10 @@
 					//
 					// recalcualte the new actual cost based on the given qty "time" or "count"
 					//
-					localCharge.chargeCostingRecord.totalCost = new ChargeCostingUtil().getChargeEstCost(localCharge);
+					if(localCharge.chargeCostingRecord!=null){
+						var chargeCostingUtil:ChargeCostingUtil = new ChargeCostingUtil();
+						localCharge.chargeCostingRecord.totalCost = chargeCostingUtil.getChargeEstCost(localCharge);
+					}
 															
 					//
 					// Find the estimated cost based on the time and qty
@@ -398,8 +405,13 @@
 			
 			private function updatePrice():void
 			{	
-				var priceJobEvent:PriceJobEvent = new PriceJobEvent(this.localJob, new mx.rpc.Responder(handlePriceJobComplete, handlePriceJobFault));
-				priceJobEvent.dispatch();
+				if(localJob!=null) {
+					var priceJobEvent:PriceJobEvent = new PriceJobEvent(this.localJob, new mx.rpc.Responder(handlePriceJobComplete, handlePriceJobFault));
+					priceJobEvent.dispatch();
+				} else if(localCharge!=null) {
+					var priceChargeEvent:PriceChargeEvent = new PriceChargeEvent(this.localCharge, new mx.rpc.Responder(handlePriceChargeComplete, handlePriceChargeFault));
+					priceChargeEvent.dispatch();
+				}
 			}
 			
 			private function handlePriceJobComplete(event:ResultEvent):void {
@@ -415,9 +427,33 @@
 				okBtnEnabled = true;
 			}
 			
+			private function handlePriceChargeComplete(event:ResultEvent):void {
+				var tmpCharge:Charge = event.result as Charge;
+				if(tmpCharge.chargeCostingRecord!=null){
+					trackerConsoleJobs.totalCost = tmpCharge.chargeCostingRecord.totalCost;
+				}
+				refresh_price_btn.visible = true;
+				pricing_throbber.stop();
+				pricing_throbber.visible = false;
+				okBtnEnabled = true;
+			}
+			
 			private function handlePriceJobFault(event:FaultEvent):void {
+				pricing_throbber.stop();
+				pricing_throbber.visible = false;
 				if (event != null && event.fault != null && event.fault.faultString != null) {				
 					Alert.show(event.fault.faultString, "Error in Pricing", 0, null);
+				} else {
+					Alert.show("Unknown error when pricing job", "Error in Pricing", 0, null);
+				}
+			}
+			
+			private function handlePriceChargeFault(ev:FaultEvent):void
+			{
+				pricing_throbber.stop();
+				pricing_throbber.visible = false;
+				if (ev != null && ev.fault != null && ev.fault.faultString != null) {				
+					Alert.show(ev.fault.faultString, "Error in Pricing", 0, null);
 				} else {
 					Alert.show("Unknown error when pricing job", "Error in Pricing", 0, null);
 				}
