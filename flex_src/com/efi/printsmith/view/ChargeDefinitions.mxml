@@ -2114,8 +2114,8 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			area_check.enabled= true;
 			if (charge_method_combo.selectedItem.data == ChargeMethod.PriceList ||
 			    charge_method_combo.selectedItem.data == ChargeMethod.RateList) {
-				in_set_mat_check.enabled = false;
-				in_sets_check.enabled = false;				    	
+				in_set_mat_check.enabled = true;
+				in_sets_check.enabled = true;				    	
 			} else {
 				in_set_mat_check.enabled = true;
 				in_sets_check.enabled = true;
@@ -2411,14 +2411,37 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 					<mx:TextInput x="453" y="338" restrict="0-9\.\-\," width="124" id="in_sets_edit" enabled="{in_sets_check.selected}" text="{charge.rateSetCount}" textAlign="right" focusOut="handleFocusOut(event)" change="setDocDirty()"/>
 					<mx:Label x="321" y="294" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.SalePriceperUnit')}" id="label1" textAlign="right"/>
 					<mx:Label x="112" y="294" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Markup')}" id="label2" width="69" textAlign="right"/>
-					<mx:ViewStack x="7" y="400" id="price_calc_stack" width="713" height="132" creationPolicy="all">
+					<mx:ViewStack x="10" y="401" id="price_calc_stack" width="713" height="132" creationPolicy="all">
 						<mx:Canvas width="100%" height="100%" id="job_aware_canvas" label="job_aware" showEffect="dissolveIn" hideEffect="dissolveOut">
 							<mx:RadioButtonGroup id="charge_group_1"  change="charge_group_1_change(event)"/>
 							<mx:RadioButtonGroup id="charge_group_2"  change="charge_group_2_change(event)"/>
 							<mx:RadioButtonGroup id="charge_group_3"  change="charge_group_3_change(event)"/>
 							<mx:RadioButtonGroup id="charge_group_4"  change="charge_group_4_change(event)"/>
 							<mx:Canvas x="10" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1">
+								<mx:RadioButton x="8" y="6" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_1" id="na1_radio" width="85" value="None" change="setDocDirty()"/>
+								<mx:RadioButton x="8" y="32" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ordered')}" groupName="charge_group_1" id="ordered_radio" width="85" value="Ordered" change="setDocDirty()"/>
+								<mx:RadioButton x="8" y="58" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Press')}" groupName="charge_group_1" id="press_radio" width="85" value="Press" change="setDocDirty()"/>
 							</mx:Canvas>
+							<mx:Text x="10" y="10" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Selectvaluesinjobtob')}" width="291" height="17" fontWeight="bold" id="text2"/>
+							<mx:Text x="123" y="70" text="x" id="multiplier_1_txt"/>
+							<mx:Text x="389" y="70" text="x" id="multiplier_2_txt"/>
+							<mx:Text x="256" y="70" text="x" id="multiplier_3_txt"/>
+							<mx:Canvas x="143" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas3">
+								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_2" id="na2_radio" width="83" value="NA" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Colors')}" groupName="charge_group_2" id="colors_radio" width="83" value="Colors" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides')}" groupName="charge_group_2" id="sides_radio" width="83" value = "Sides" change="setDocDirty()"/>
+							</mx:Canvas>
+							<mx:Canvas x="276" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas2">
+								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_3" id="na3_radio" width="83" value="NA" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sheets')}" groupName="charge_group_3" id="sheets_radio" width="83" value="Sheets" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Signatures')}" groupName="charge_group_3" id="signatures_radio" width="83" value="Signatures" change="setDocDirty()"/>
+							</mx:Canvas>
+							<mx:Canvas x="409" y="35" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas1">
+								<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_4" id="na4_radio" width="83" value="NA" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.xUp')}" groupName="charge_group_4" id="x_up_radio" width="83" value="xUp" change="setDocDirty()"/>
+								<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Up')}" groupName="charge_group_4" id="slash_up_radio" width="83" value="/Up" change="setDocDirty()"/>
+							</mx:Canvas>
+							<mx:CheckBox x="547" y="35" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.AdjustableUp')}" id="adjustable_up_check" selected="{charge.adjustUps}"  enabled="{slash_up_radio.selected ||x_up_radio.selected}"  change="setDocDirty()"/>
 						</mx:Canvas>
 						<mx:Canvas label="blank_canvas" width="100%" height="100%" id="blank_canvas" showEffect="dissolveIn" hideEffect="dissolveOut">
 						</mx:Canvas>
@@ -2449,29 +2472,6 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 					<mx:CheckBox x="599" y="361" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Adjustablematerial')}" id="adjustable_material_check" selected="{charge.adjustableMaterial}" enabled="{material_check.selected}" change="setDocDirty()"/>
 					<mx:Label x="17" y="184" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.FoldStyle')}" textAlign="right" id="fold_template_label" width="58" visible="false" />
 					<comp:VariableWidthComboBoxComponent x="83" y="182" width="132" id="fold_template_combo" dataProvider="{foldTemplates}" labelField="name" height="21" visible="false"/>
-					<mx:Text x="17" y="411" text="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Selectvaluesinjobtob')}" width="291" height="17" fontWeight="bold" id="text2"/>
-					<mx:Text x="130" y="471" text="x" id="multiplier_1_txt"/>
-					<mx:Text x="396" y="471" text="x" id="multiplier_2_txt"/>
-					<mx:Text x="263" y="471" text="x" id="multiplier_3_txt"/>
-					<mx:RadioButton x="25" y="441" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_1" id="na1_radio" width="85" value="None" change="setDocDirty()"/>
-					<mx:RadioButton x="25" y="467" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Ordered')}" groupName="charge_group_1" id="ordered_radio" width="85" value="Ordered" change="setDocDirty()"/>
-					<mx:RadioButton x="25" y="493" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Press')}" groupName="charge_group_1" id="press_radio" width="85" value="Press" change="setDocDirty()"/>
-					<mx:Canvas x="150" y="436" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas3">
-						<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_2" id="na2_radio" width="83" value="NA" change="setDocDirty()"/>
-						<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Colors')}" groupName="charge_group_2" id="colors_radio" width="83" value="Colors" change="setDocDirty()"/>
-						<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sides')}" groupName="charge_group_2" id="sides_radio" width="83" value = "Sides" change="setDocDirty()"/>
-					</mx:Canvas>
-					<mx:Canvas x="283" y="436" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas2">
-						<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_3" id="na3_radio" width="83" value="NA" change="setDocDirty()"/>
-						<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Sheets')}" groupName="charge_group_3" id="sheets_radio" width="83" value="Sheets" change="setDocDirty()"/>
-						<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Signatures')}" groupName="charge_group_3" id="signatures_radio" width="83" value="Signatures" change="setDocDirty()"/>
-					</mx:Canvas>
-					<mx:Canvas x="416" y="436" width="105" height="85" borderColor="#000000" borderStyle="solid" borderThickness="1" id="canvas1">
-						<mx:RadioButton x="10" y="5" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.NA')}" groupName="charge_group_4" id="na4_radio" width="83" value="NA" change="setDocDirty()"/>
-						<mx:RadioButton x="10" y="31" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.xUp')}" groupName="charge_group_4" id="x_up_radio" width="83" value="xUp" change="setDocDirty()"/>
-						<mx:RadioButton x="10" y="57" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.Up')}" groupName="charge_group_4" id="slash_up_radio" width="83" value="/Up" change="setDocDirty()"/>
-					</mx:Canvas>
-					<mx:CheckBox x="554" y="436" label="{resourceManager.getString(Snowmass.RESOURCE_BUNDLE, 'chargeDefCmd.AdjustableUp')}" id="adjustable_up_check" selected="{charge.adjustUps}"  enabled="{slash_up_radio.selected ||x_up_radio.selected}"  change="setDocDirty()"/>
 				</mx:Canvas>
 			</mx:Canvas>
 			<mx:Canvas label="charge_category_canvas" width="100%" height="100%" id="charge_category_canvas">
