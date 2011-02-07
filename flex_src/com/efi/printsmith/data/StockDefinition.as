@@ -28,7 +28,7 @@ package com.efi.printsmith.data
 		public var stocknumber:String = "";
 		public var vendor:Vendor;
 		public var basicsize:String = "";
-		public var parentsize:Dimension;
+		public var parentsize:DimensionInstance;
 		public var thickness:Number = 0;
 		public var mweight:Number = 0;
 		public var sheetspercarton:int = 0;
@@ -70,7 +70,7 @@ package com.efi.printsmith.data
 		public var listPerM4:int = 0;
 		public var listPerM5:int = 0;
 		public var listPerM6:int = 0;
-		public var normalRunSize:Dimension;
+		public var normalRunSize:DimensionInstance;
 		public var cutsPer100:Number = 0;
 		public var minCutCharge:Number = 0;
 		public var defaultPress:PressDefinition;

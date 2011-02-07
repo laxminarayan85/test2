@@ -596,9 +596,9 @@ public class StockDefinition extends ModelBase {
     this.isDeleted = isDeleted;
   }
 
-	public StockDefinition(Long id, String Name, Double weight,Dimension parentsize,String color, String genericcolor,
+	public StockDefinition(Long id, String Name, Double weight,DimensionInstance parentsize,String color, String genericcolor,
 			StockFinish finish, Double thickness, StockGrade grade, Double cwt1, Vendor vendor, String stocknumber, Integer onhand,
-			Integer committed, Integer ordered, Boolean shellitem, Dimension normalrunsize, StockType stocktype,
+			Integer committed, Integer ordered, Boolean shellitem, DimensionInstance normalrunsize, StockType stocktype,
 			StockGroup stkgroup, String coated, Integer minorder, BigDecimal cost1, Date priceexpire, String forestmanagement,
 			Double pcwrecycledpercent, Boolean fsccertified, Boolean sficertified, Boolean greensealcertified, Integer sheetsPerSet, String uom, Integer stockunit, Boolean standardItem) {
 		this.id = id;
@@ -967,25 +967,23 @@ public class StockDefinition extends ModelBase {
 	 */	
     @ManyToOne(optional=true)
 	@Where(clause="isdeleted <> 'TRUE'")
-	private Dimension parentsize;
+	private DimensionInstance parentsize;
 	
 	/**
 	 * @generated
  	 */
-	public Dimension getParentsize(){
+	public DimensionInstance getParentsize(){
     return parentsize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setParentsize(Dimension newVal) {
+   * @generated
+   */	
+  public void setParentsize(DimensionInstance newVal) {
     this.parentsize = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -1970,25 +1968,23 @@ public class StockDefinition extends ModelBase {
 	 */	
     @ManyToOne(optional=true)
 	@Where(clause="isdeleted <> 'TRUE'")
-	private Dimension normalRunSize;
+	private DimensionInstance normalRunSize;
 	
 	/**
 	 * @generated
  	 */
-	public Dimension getNormalRunSize(){
+	public DimensionInstance getNormalRunSize(){
     return normalRunSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setNormalRunSize(Dimension newVal) {
+   * @generated
+   */	
+  public void setNormalRunSize(DimensionInstance newVal) {
     this.normalRunSize = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -3937,7 +3933,7 @@ public class StockDefinition extends ModelBase {
     if (STOCKNUMBER.equals(propertyName)) setStocknumber((String)newValue); else
     if (VENDOR.equals(propertyName)) setVendor((Vendor)newValue); else
     if (BASICSIZE.equals(propertyName)) setBasicsize((String)newValue); else
-    if (PARENTSIZE.equals(propertyName)) setParentsize((Dimension)newValue); else
+    if (PARENTSIZE.equals(propertyName)) setParentsize((DimensionInstance)newValue); else
     if (THICKNESS.equals(propertyName)) setThickness((Double)newValue); else
     if (MWEIGHT.equals(propertyName)) setMweight((Double)newValue); else
     if (SHEETSPERCARTON.equals(propertyName)) setSheetspercarton((Integer)newValue); else
@@ -3979,7 +3975,7 @@ public class StockDefinition extends ModelBase {
     if (LISTPERM4.equals(propertyName)) setListPerM4((Integer)newValue); else
     if (LISTPERM5.equals(propertyName)) setListPerM5((Integer)newValue); else
     if (LISTPERM6.equals(propertyName)) setListPerM6((Integer)newValue); else
-    if (NORMALRUNSIZE.equals(propertyName)) setNormalRunSize((Dimension)newValue); else
+    if (NORMALRUNSIZE.equals(propertyName)) setNormalRunSize((DimensionInstance)newValue); else
     if (CUTSPER100.equals(propertyName)) setCutsPer100((BigDecimal)newValue); else
     if (MINCUTCHARGE.equals(propertyName)) setMinCutCharge((BigDecimal)newValue); else
     if (DEFAULTPRESS.equals(propertyName)) setDefaultPress((PressDefinition)newValue); else
@@ -4093,7 +4089,7 @@ public class StockDefinition extends ModelBase {
     if (BASICSIZE.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (PARENTSIZE.equals(propertyName)) 
-      return new Class<?>[] {Dimension.class};		
+      return new Class<?>[] {DimensionInstance.class};		
     if (THICKNESS.equals(propertyName)) 
       return new Class<?>[] {Double.class};		
     if (MWEIGHT.equals(propertyName)) 
@@ -4177,7 +4173,7 @@ public class StockDefinition extends ModelBase {
     if (LISTPERM6.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (NORMALRUNSIZE.equals(propertyName)) 
-      return new Class<?>[] {Dimension.class};		
+      return new Class<?>[] {DimensionInstance.class};		
     if (CUTSPER100.equals(propertyName)) 
       return new Class<?>[] {BigDecimal.class};		
     if (MINCUTCHARGE.equals(propertyName)) 

@@ -46,10 +46,10 @@ package com.efi.printsmith.data
 		public var runMethod:String = "";
 		public var washupTime:Number = 0;
 		public var stock:StockDefinition;
-		public var parentSize:Dimension;
-		public var runSize:Dimension;
-		public var finishSize:Dimension;
-		public var foldedSize:Dimension;
+		public var parentSize:DimensionInstance;
+		public var runSize:DimensionInstance;
+		public var finishSize:DimensionInstance;
+		public var foldedSize:DimensionInstance;
 		public var frontColors:int = 0;
 		public var backColors:int = 0;
 		public var frontPasses:int = 0;

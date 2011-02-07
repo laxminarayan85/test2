@@ -1457,97 +1457,89 @@ public class JobBase extends ModelBase {
 	 */	
     @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
-	private Dimension parentSize;
+	private DimensionInstance parentSize;
 	
 	/**
 	 * @generated
  	 */
-	public Dimension getParentSize(){
+	public DimensionInstance getParentSize(){
     return parentSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setParentSize(Dimension newVal) {
+   * @generated
+   */	
+  public void setParentSize(DimensionInstance newVal) {
     this.parentSize = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
     @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
-	private Dimension runSize;
+	private DimensionInstance runSize;
 	
 	/**
 	 * @generated
  	 */
-	public Dimension getRunSize(){
+	public DimensionInstance getRunSize(){
     return runSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setRunSize(Dimension newVal) {
+   * @generated
+   */	
+  public void setRunSize(DimensionInstance newVal) {
     this.runSize = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
     @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
-	private Dimension finishSize;
+	private DimensionInstance finishSize;
 	
 	/**
 	 * @generated
  	 */
-	public Dimension getFinishSize(){
+	public DimensionInstance getFinishSize(){
     return finishSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFinishSize(Dimension newVal) {
+   * @generated
+   */	
+  public void setFinishSize(DimensionInstance newVal) {
     this.finishSize = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
     @ManyToOne()
     @Where(clause="isdeleted <> 'TRUE'")
-	private Dimension foldedSize;
+	private DimensionInstance foldedSize;
 	
 	/**
 	 * @generated
  	 */
-	public Dimension getFoldedSize(){
+	public DimensionInstance getFoldedSize(){
     return foldedSize; 
   }
 
 	
 	/**
-	 * @generated
-	 */	
-	public void setFoldedSize(Dimension newVal) {
+   * @generated
+   */	
+  public void setFoldedSize(DimensionInstance newVal) {
     this.foldedSize = newVal;
   }
-	
- 	
-	
+
 	/**
 	 * @generated
 	 */	
@@ -4497,10 +4489,10 @@ public class JobBase extends ModelBase {
     if (RUNMETHOD.equals(propertyName)) setRunMethod((String)newValue); else
     if (WASHUPTIME.equals(propertyName)) setWashupTime((Double)newValue); else
     if (STOCK.equals(propertyName)) setStock((StockDefinition)newValue); else
-    if (PARENTSIZE.equals(propertyName)) setParentSize((Dimension)newValue); else
-    if (RUNSIZE.equals(propertyName)) setRunSize((Dimension)newValue); else
-    if (FINISHSIZE.equals(propertyName)) setFinishSize((Dimension)newValue); else
-    if (FOLDEDSIZE.equals(propertyName)) setFoldedSize((Dimension)newValue); else
+    if (PARENTSIZE.equals(propertyName)) setParentSize((DimensionInstance)newValue); else
+    if (RUNSIZE.equals(propertyName)) setRunSize((DimensionInstance)newValue); else
+    if (FINISHSIZE.equals(propertyName)) setFinishSize((DimensionInstance)newValue); else
+    if (FOLDEDSIZE.equals(propertyName)) setFoldedSize((DimensionInstance)newValue); else
     if (FRONTCOLORS.equals(propertyName)) setFrontColors((Integer)newValue); else
     if (BACKCOLORS.equals(propertyName)) setBackColors((Integer)newValue); else
     if (FRONTPASSES.equals(propertyName)) setFrontPasses((Integer)newValue); else
@@ -4692,13 +4684,13 @@ public class JobBase extends ModelBase {
     if (STOCK.equals(propertyName)) 
       return new Class<?>[] {StockDefinition.class};		
     if (PARENTSIZE.equals(propertyName)) 
-      return new Class<?>[] {Dimension.class};		
+      return new Class<?>[] {DimensionInstance.class};		
     if (RUNSIZE.equals(propertyName)) 
-      return new Class<?>[] {Dimension.class};		
+      return new Class<?>[] {DimensionInstance.class};		
     if (FINISHSIZE.equals(propertyName)) 
-      return new Class<?>[] {Dimension.class};		
+      return new Class<?>[] {DimensionInstance.class};		
     if (FOLDEDSIZE.equals(propertyName)) 
-      return new Class<?>[] {Dimension.class};		
+      return new Class<?>[] {DimensionInstance.class};		
     if (FRONTCOLORS.equals(propertyName)) 
       return new Class<?>[] {Integer.class};		
     if (BACKCOLORS.equals(propertyName)) 

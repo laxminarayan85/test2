@@ -90,12 +90,12 @@ public class StockType extends ModelBase {
  	@ManyToOne()
 	@Where(clause="isdeleted <> 'TRUE'")
 	@Basic
-	private Dimension size;
+	private DimensionInstance size;
 	
 	/**
 	 * @generated
  	 */
-	public Dimension getSize(){
+	public DimensionInstance getSize(){
     return size; 
   }
 
@@ -103,7 +103,7 @@ public class StockType extends ModelBase {
 	/**
    * @generated
    */	
-  public void setSize(Dimension newVal) {
+  public void setSize(DimensionInstance newVal) {
     this.size = newVal;
   }
 
@@ -170,7 +170,7 @@ public class StockType extends ModelBase {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setProperty(String propertyName, Object newValue) throws PropertyException {
-    if (SIZE.equals(propertyName)) setSize((Dimension)newValue); else
+    if (SIZE.equals(propertyName)) setSize((DimensionInstance)newValue); else
     if (NAME.equals(propertyName)) setName((String)newValue); else
     if (VIEWABLEID.equals(propertyName)) setViewableID((Integer)newValue); else
     super.setProperty(propertyName, newValue);
@@ -183,7 +183,7 @@ public class StockType extends ModelBase {
 	@Override
 	public Class<?>[] getPropertyClass(String propertyName) throws UnknownPropertyException {	
     if (SIZE.equals(propertyName)) 
-      return new Class<?>[] {Dimension.class};		
+      return new Class<?>[] {DimensionInstance.class};		
     if (NAME.equals(propertyName)) 
       return new Class<?>[] {String.class};		
     if (VIEWABLEID.equals(propertyName)) 

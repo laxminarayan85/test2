@@ -14,7 +14,7 @@ package com.efi.printsmith.data
 		}
 		public var isDeleted:Boolean=false;
 				
-		public var size:Dimension;
+		public var size:DimensionInstance;
 		public var name:String = "";
 		public var viewableID:int = 0;
 	
