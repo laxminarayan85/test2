@@ -1553,7 +1553,7 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 			ignore_global_price_changes_check.enabled = true;
 			integrated_ctp_device_check.enabled = true;
 			price_list_button.enabled = true;
-			waste_chart_button.enabled = true;
+			waste_chart_button.enabled = false;
 			newCanvas = job_aware_canvas;
 			base_linear_quantity_edit.visible = false;	
 			label3.visible =false;
@@ -2135,7 +2135,6 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 				case ChargeMethod.PriceList:
 				case ChargeMethod.RateList:
 				case ChargeMethod.Shipping:
-				case ChargeMethod.SquareArea:
 					cost_plus_radio.enabled =true;					
 					rate_check.enabled = true;
 					if( charge != null)
@@ -2154,6 +2153,27 @@ width="100%" height="100%" headerHeight="0" title="{resourceManager.getString(Sn
 					if (material_check.selected)
 						if( charge != null)
 							material_edit.text= charge.material.toString();
+					in_sets_check.enabled = rate_check.selected;
+					break;
+				case ChargeMethod.SquareArea:
+					cost_plus_radio.enabled =true;					
+					rate_check.enabled = true;
+					if( charge != null)
+						rate_check.selected = charge.useRate;
+					if (rate_check.selected)
+						if( charge != null)
+							rate_edit.text = charge.rate.toString();
+					
+					setup_check.enabled= true
+					if( charge != null)
+						setup_check.selected = charge.useSetup;
+					
+					material_check.enabled = false;
+					material_check.selected = false;
+					material_edit.text = "";
+					material_edit.enabled = false;
+					this.in_set_mat_check.selected = false;
+					this.in_set_mat_check.enabled = false;
 					in_sets_check.enabled = rate_check.selected;
 					break;
 				}
